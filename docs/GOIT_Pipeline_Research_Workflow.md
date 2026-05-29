@@ -72,6 +72,39 @@ Before starting research on a country, gather:
 - If you find information but cannot locate the exact URL, write in ResearcherNotes: "Source: [Company] press release dated [date], titled '[title]' — URL not verified" so the researcher can look it up manually.
 - After building the Excel file, spot-check a sample of URLs by fetching them to confirm they contain what's claimed.
 
+### Corroboration & Confidence — strongly preferred (near-requirement)
+
+Single-source data points are weak. For every material data point (status,
+capacity, length, diameter, ownership, FID, start/end locations, key dates),
+**TRY to find at least two independent sources that corroborate one another**
+before treating it as settled. Aim for 2+; a lone source is acceptable only when
+no second can be found, and is flagged as such.
+
+Confidence tiers — record the tier (and the corroborating sources) in
+`ResearcherNotes`. These map to the green/yellow/red confidence scoring used
+elsewhere in the project (e.g., the GulfPub comparison):
+- **High (green)** — 2+ independent sources agree.
+- **Medium (yellow)** — a single strong source (company filing, regulator, or
+  top-tier trade press) with no contradicting evidence found.
+- **Low (red)** — a single weak/secondary source, or sources that partially
+  conflict.
+- **Inferred/Presumed** — no verifiable source; flag per the URL rules above and,
+  for status changes, set `ShelvedCancelledType = Presumed` (no fabricated URL).
+
+What counts as **independent** corroboration:
+- Two facts from genuinely separate origins — e.g., a company press release AND a
+  regulator filing AND an OGJ article that reported it independently.
+
+What does **NOT** count (false corroboration):
+- The same wire story (Reuters / BusinessWire / PRNewswire) republished across
+  multiple sites.
+- Multiple outlets that all trace back to a single original report.
+- Any source that is itself citing GEM / gem.wiki — that loops back to our own
+  data (see the GEM self-citation rule) and is not independent corroboration.
+
+When sources conflict: prefer the one higher in the source hierarchy, note the
+conflict in `ResearcherNotes`, and lower the confidence tier accordingly.
+
 ### Expansion vs. New Construction Rule
 
 For any pipeline entry that is a **capacity expansion** (pump station additions, DRA injection, terminal upgrades, looping of existing pipe):
@@ -193,6 +226,7 @@ Before presenting the Excel file, verify:
 5. **Date consistency:** If status = Operating, there should be a StartYear. If status = Cancelled, there should be a CancelledYear (or StopYear = "presumed" for 4-year rule).
 6. **ResearcherNotes:** Every row with changes should have a ResearcherNotes entry explaining what changed, why, and any caveats (e.g., "Cost is total project, not pipeline-specific" or "Length is existing system total, not new construction").
 7. **No GEM self-citation:** Confirm that no [ref] URLs point to gem.wiki or globalenergymonitor.org unless Baird explicitly approved it.
+8. **Corroboration & confidence:** For each material data point, confirm whether 2+ independent sources back it. Record the confidence tier (high / medium / low / inferred) in ResearcherNotes, with the corroborating sources named. Flag any single-source data point as medium/low so it stands out for review, and make sure no "corroboration" is actually the same story republished or a source that circles back to GEM.
 
 ---
 

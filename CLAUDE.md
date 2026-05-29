@@ -33,6 +33,16 @@ Researcher initials in the tracker: **CB**.
    Inferred status changes → `ShelvedCancelledType = Presumed`, no fabricated URL.
 3. **Don't defend wrong findings.** Baird challenges data points actively.
    Acknowledge errors, revise on evidence, regenerate outputs.
+4. **Corroborate with 2+ independent sources (near-requirement).** When
+   researching any pipeline data point (status, capacity, length, diameter,
+   ownership, FID, dates, locations, route), TRY to find at least two
+   *independent* sources that agree, not just one. Confidence follows
+   corroboration: **2+ independent corroborating sources → high**; **a single
+   source → medium/low**; **no verifiable source → inferred/presumed** (see
+   rule 2). The same wire story republished across sites, multiple sources that
+   all trace back to one original report, and anything that itself cites GEM
+   (see rule 1 — circular) do NOT count as independent corroboration. Record the
+   confidence tier and the corroborating sources in `ResearcherNotes`.
 
 ---
 

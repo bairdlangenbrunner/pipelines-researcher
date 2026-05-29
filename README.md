@@ -47,8 +47,13 @@ print(df.shape)  # ~(2199, 107)
 └── working_files/             # active research workbooks
 ```
 
-## Standing rule
+## Standing rules
 
-Never use GEM (gem.wiki, globalenergymonitor.org, Global Energy Monitor) as a
-source or citation in research outputs unless explicitly approved. The goal of
-this work is to surface what *other*, independent sources exist.
+- **Never cite GEM** (gem.wiki, globalenergymonitor.org, Global Energy Monitor)
+  as a source in research outputs unless explicitly approved. The goal of this
+  work is to surface what *other*, independent sources exist.
+- **Corroborate with 2+ independent sources.** For every material data point, try
+  to find at least two independent sources that agree rather than relying on one.
+  2+ corroborating sources → high confidence; a single source → medium/low.
+  Republished wire copy or anything that circles back to GEM is not independent
+  corroboration. See `CLAUDE.md` and `docs/GOIT_Pipeline_Research_Workflow.md`.

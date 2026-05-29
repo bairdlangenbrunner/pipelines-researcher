@@ -111,6 +111,13 @@ EPSG:4326 is the standard projection.
 - **URL verification:** Never fabricate source URLs. If a URL can't be confirmed, describe the
   source precisely or flag as inferred/presumed. Inferred status changes →
   ShelvedCancelledType = Presumed, no fabricated URL.
+- **Corroboration & confidence (near-requirement):** For every material data point, TRY to find
+  2+ *independent* sources that corroborate one another rather than relying on a single one.
+  Confidence follows source count — 2+ independent corroborating sources → high; one source →
+  medium/low; none verifiable → inferred/presumed. Republished wire copy, multiple outlets
+  tracing to one original report, and anything citing GEM are NOT independent corroboration.
+  Record the tier and the corroborating sources in ResearcherNotes (maps to the green/yellow/red
+  confidence scoring used in the GulfPub comparison).
 - **Diameter flags** are review items, not auto-rejections.
 - **WKT/route-format checks** are permanently dropped from the QC workbook.
 - **Web search strategy:** Decompose pipeline IDs into component parts (trunk line, KP
