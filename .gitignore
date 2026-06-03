@@ -25,3 +25,22 @@ scratch/
 # Untracked working CSVs (snapshots ARE tracked; ad-hoc pulls are not)
 data/*_working.csv
 data/test.csv
+
+# Reference-dataset raw scrape data — large/external, pointed at via each manifest's
+# `path` (often a symlink to a sibling scrape repo). The manifest + NOTES.md are tracked.
+sources/**/data/*
+!sources/**/data/.gitkeep
+
+# Fetched GEM route GeoJSONs (re-fetchable by ProjectID via fetch_route.sh)
+routes_cache/
+
+# Batch deliverables — regenerable from staging; the user prunes old ones
+batches/*.xlsx
+batches/**/*.xlsx
+
+# Derived reconciliation artifacts — re-derivable from sources/ + the GEM snapshot.
+# Agent-authored staged_*.json under batches/staging/ IS committed (audit trail).
+batches/staging/**/canonical_records.json
+batches/staging/**/geometry_sidecar.json
+batches/staging/**/match_diff.json
+batches/staging/**/route_metrics.json

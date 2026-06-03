@@ -1,234 +1,204 @@
-# CLAUDE.md
+# Pipelines Researcher — operational guide
 
-Operational guide for Claude Code sessions in this repo. Read this first; the
-files in `docs/` go deeper on each topic.
-
----
-
-## What this repo is
-
-Working repo for maintaining and improving Global Energy Monitor's open-access
-pipeline databases:
+Backend scaffolding for an agentic research + reconciliation workflow that helps
+maintain Global Energy Monitor's open-access pipeline databases:
 
 - **GOIT** — Global Oil Infrastructure Tracker (crude oil + NGL pipelines, worldwide)
 - **GGIT** — Global Gas Infrastructure Tracker (gas pipelines)
-- Related trackers: LNG terminals, LNG carrier vessels
 
-Work spans: pipeline infrastructure research (global; deeper coverage in MENA,
-US, Iran, Iraq, Saudi Arabia), GIS/geospatial processing, database QC, and
-agentic AI research/reconciliation workflows.
+Deeper coverage in MENA, US, Iran, Iraq, Saudi Arabia. Researcher initials in the
+tracker: **CB**. The agent **never writes to the live Google Sheet or the routes
+repo** — every batch produces a reviewable Excel deliverable + staged JSON that
+Baird applies manually.
 
-Researcher initials in the tracker: **CB**.
+Where things live — **read on demand as the workflow dictates, not all at once**:
+
+- **Research methodology** (authoritative for *what* to research):
+  `docs/GOIT_Pipeline_Research_Workflow.md` (the 4-phase deep-research workflow).
+- **SOPs** (operational *how*): `docs/sops/` — `reconciliation.md` (pluggable
+  GEM↔dataset diff), `update.md`, `discovery.md`, `triage.md`, `qc.md`.
+- **Workflow recipes** (commands, in order): `docs/workflows.md`.
+- **Reference**: `docs/reference/` — `gem_schema.md`, `controlled_vocab.md`,
+  `confidence_tiers.md`, `workbook_conventions.md`, `route_conventions.md`,
+  `source_roster.md`; plus `docs/country_notes/`.
+- **Reference-dataset registry**: `sources/` — one `manifest.yml` (+ optional
+  `adapter.py`) per scraped dataset; GulfPub today. How to add one: `sources/README.md`.
+- **Scripts**: `scripts/` (engine + helpers).
+- **Full project context / pending items**: `docs/PROJECT_SETUP_AND_CONTEXT.md`.
 
 ---
 
 ## STANDING RULES — do not violate
 
-1. **Never cite GEM as a source.** Do not use gem.wiki, globalenergymonitor.org,
-   or any Global Energy Monitor surface as a citation in `[ref]` columns or
-   research outputs unless Baird explicitly says to. The goal is to surface
-   what *other*, independent sources exist.
-2. **Never fabricate source URLs.** If a URL can't be verified, describe the
-   source precisely in `ResearcherNotes` and flag as inferred/presumed.
-   Inferred status changes → `ShelvedCancelledType = Presumed`, no fabricated URL.
+1. **Never cite GEM as a source.** No gem.wiki, globalenergymonitor.org, or any GEM
+   surface in `[ref]` columns or outputs unless Baird explicitly says to. The goal
+   is to surface what *other*, independent sources exist.
+2. **Never fabricate source URLs.** If a URL can't be verified, describe the source
+   precisely in `ResearcherNotes` and flag inferred/presumed. Inferred status change
+   → `ShelvedCancelledType = Presumed`, no fabricated URL.
 3. **Don't defend wrong findings.** Baird challenges data points actively.
    Acknowledge errors, revise on evidence, regenerate outputs.
-4. **Corroborate with 2+ independent sources (near-requirement).** When
-   researching any pipeline data point (status, capacity, length, diameter,
-   ownership, FID, dates, locations, route), TRY to find at least two
-   *independent* sources that agree, not just one. Confidence follows
-   corroboration: **2+ independent corroborating sources → high**; **a single
-   source → medium/low**; **no verifiable source → inferred/presumed** (see
-   rule 2). The same wire story republished across sites, multiple sources that
-   all trace back to one original report, and anything that itself cites GEM
-   (see rule 1 — circular) do NOT count as independent corroboration. Record the
-   confidence tier and the corroborating sources in `ResearcherNotes`.
+4. **Corroborate with 2+ independent sources (near-requirement).** For any data
+   point (status, capacity, length, diameter, ownership, FID, dates, locations,
+   route), try to find two *independent* sources that agree. 2+ independent → high;
+   single → medium/low; none verifiable → inferred/presumed. The same wire story
+   republished, multiple outlets tracing to one original, and anything citing GEM
+   do NOT count. Record the tier + sources in `ResearcherNotes`. Detail:
+   `docs/reference/confidence_tiers.md`.
 
 ---
 
 ## Live data access (the only correct way)
 
-The backend Google Sheet (`1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`) is set
-to "Anyone with link can view" permanently. Pull tabs via bash + curl:
+Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek` ("Anyone with
+link can view"). Pull via `./scripts/refresh_csvs.sh`, or curl directly:
 
 ```bash
-# Oil/NGL tab (107 cols)
+# Oil/NGL tab (107 cols, GID 456134080); Gas tab (~140 cols, GID 1020144097)
 curl -sL "https://docs.google.com/spreadsheets/d/1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek/export?format=csv&gid=456134080" -o data/GOIT_oil_ngl.csv
-
-# Gas tab (~140 cols)
-curl -sL "https://docs.google.com/spreadsheets/d/1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek/export?format=csv&gid=1020144097" -o data/GGIT_gas.csv
 ```
 
-Or use the helper: `./scripts/refresh_csvs.sh`
-
-**Header is at CSV row index 2** for both tabs. Always load with:
-```python
-df = pd.read_csv(path, header=2, low_memory=False)
-```
-
-### Don't do these
-- ❌ Drive MCP `download_file_content` — returns only the first tab
-- ❌ Drive MCP `read_file_content` — lossy, truncates rows
-- ❌ `web_fetch` on the export URL — won't accept URLs not literally provided in-turn
+**Header is at CSV row index 2.** Always: `pd.read_csv(path, header=2, low_memory=False)`.
+Do **not** use Drive MCP `download_file_content` (first tab only) or
+`read_file_content` (lossy). Schema gotchas (multi-value diameter, buffer rows,
+`SheetRow = CSV index + 4`, `[ref]` pairing, segment-vs-network granularity):
+`docs/reference/gem_schema.md`.
 
 ---
 
-## Repo layout
+## Workflow router
 
-```
-pipelines-researcher/
-├── CLAUDE.md                              # this file
-├── README.md                              # human-facing repo readme
-├── requirements.txt                       # Python deps
-├── .gitignore
-├── docs/
-│   ├── PROJECT_SETUP_AND_CONTEXT.md       # full project context, pending items, tools list
-│   ├── GOIT_Pipeline_Research_Workflow.md # the deep-research agentic workflow
-│   └── ROUTE_DATA_REFERENCE.md            # how to fetch pipeline route GeoJSONs
-├── data/
-│   ├── GOIT_oil_ngl_snapshot_YYYYMMDD.csv # date-stamped snapshots
-│   └── GGIT_gas_snapshot_YYYYMMDD.csv
-├── working_files/
-│   └── GOIT_SaudiArabia_Gulfpub_Comparison.xlsx
-└── scripts/
-    ├── refresh_csvs.sh                    # pull latest CSV snapshots
-    └── fetch_route.sh                     # fetch a route GeoJSON by ProjectID
-```
+Read the relevant `docs/workflows.md` section + SOP before starting a batch.
+
+| Workflow | Trigger phrases | Recipe + rules |
+|---|---|---|
+| **Reconcile vs a scraped dataset** (the engine; per-source) | "reconcile gulfpub for <country>", "gulfpub diff", "compare GEM to <dataset>", "run reconciliation for <scope>" | `workflows.md` §1 + Reconciliation SOP |
+| **Update existing pipelines** (most common) | "update pipelines in <country>", "refresh <country>", "fill blank refs", "status sweep for <country>", "resolve the recon disagreements" | `workflows.md` §2 + Update SOP |
+| **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §3 + Discovery SOP |
+| **Triage** (plan the batch; memo) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §4 + Triage SOP |
+| **Quality control** (xlsx; detects → Update fixes) | "qc pass", "data-health audit", "rebuild the QC workbook", "link-rot sweep" | `workflows.md` §5 + QC SOP |
+
+Routing notes:
+- A reconciliation reference-only (`Addition`) row is usually **not** a missing
+  pipeline — **match it to an existing GEM pipeline under another name first**
+  (→ `OtherEnglishNames`); only genuine misses go to Discovery.
+- A scraped dataset is **one source in a conflict, never automatically
+  authoritative** — value disagreements route to Update's normal source-search.
+- QC never edits: it audits and routes fixes to Update ("QC detects, Update fixes").
 
 ---
 
-## Schema gotchas (oil sheet)
+## Reconciliation is pluggable (the one big difference from LNG)
 
-- Column order: **ask Baird to paste the header row** — the data dictionary's
-  `OilOrderInSheet` is unreliable.
-- Several oil-sheet columns are absent from the data dictionary:
-  `Disrupted`, `RMI`, `QCCOwner2025Update`, `OwnerEntityIDs`,
-  `AlternateRouteProjectIDs`.
-- Cost columns: `Cost`, `CostUnits`, `Cost [ref]` (NOT `ProjectLevelCost`).
-- `OtherEnglishNames`: semicolon-separated.
-- `SheetRow` = CSV index + 4.
-- Buffer rows (~104 reserved ProjectIDs) should be excluded from QC.
-- `Owner` field: `--` is a valid sentinel for unknown ownership; commas/
-  ampersands/slashes inside Owner strings are legitimate company-name
-  separators — do not flag them.
+The LNG-terminals project diffs one canonical PDF (GIIGNL) via a hard-coded
+extractor. Pipelines have **no canonical reference**. Each scraped route database is
+registered under `sources/<name>/` as a declarative `manifest.yml` (column maps,
+units, status map, geometry source, `source_tier`) + an optional `adapter.py` for
+custom parsing. `ingest.py` normalizes any source into one **canonical schema**
+(`sources/_schema/canonical_record.md`); `match.py` + `route_compare.py` +
+`reconcile.py` then run the **same** hybrid (name + attribute + route-geometry)
+diff. **Adding a dataset is config, not engine code** — drop a new manifest and run
+`reconcile.py --source <name>`.
 
 ---
 
-## Controlled-vocabulary casing (locked)
+## Hard requirements (override anything below)
 
-- **lowercase:** `Status`, `RouteAccuracy`, `PipelineType`
-- **Title Case (exceptions):** `DelayType`, `ShelvedCancelledType`, `FIDStatus`,
-  `Delayed`, `Opposition`
-- `very high (within meters)` is a valid `RouteAccuracy` value.
-- When in doubt, pull a real row from the sheet and match exact casing.
-
-Full vocabularies: see `docs/GOIT_Pipeline_Research_Workflow.md`.
-
----
-
-## Operational principles
-
-- **Expansion vs. new construction:** Always verify whether new physical pipe is
-  being built. If not → `LengthKnown = 0`, `Diameter = blank`.
-- **Diameter flags** are review items, not auto-rejections.
-- **WKT/route-format QC checks** are permanently dropped — do not rebuild them.
-- **Web search strategy:** When exact-string queries fail on pipeline IDs,
-  decompose into components (trunk line, KP reference, commodity, receiving
-  facility). Adding contract/procurement keywords (year ranges, "tender,"
-  "construction") beats route-based queries alone.
-- **Stepwise builds:** For multi-sheet QC workbooks, build one sheet at a time
-  to avoid token/message limits and allow review between steps.
+- **Never modify the live GEM Sheet or the routes repo.** Output is a staging xlsx +
+  staged JSON; the user applies edits manually.
+- **Pull a fresh GEM CSV at the start of every batch**; re-derive the column map
+  from the fresh header (schema drifts; don't hard-code offsets).
+- **Every URL passes `scripts/url_verifier.py` before going in the xlsx** — even
+  URLs that worked in prior batches. Reject GEM URLs.
+- **Never auto-apply a reference value.** A reconciliation finding is a *candidate*
+  for Update, not an applied edit. A single Tier-2 dataset never reaches green alone.
+- **A `ResearcherNotes` cell can document a deliberate GEM divergence** — flag the
+  delta but defer the recommendation (verify, don't overwrite).
+- **No orphan `[ref]` cells** — never fill a `[ref]` without a paired data value,
+  or leave a researched value without a `[ref]`.
+- **Expansion with no new physical pipe → `LengthKnown = 0`, `Diameter = blank`.**
+- **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner.
+- **A route is never auto-replaced.** A route-replacement candidate is flagged for a
+  separate human branch+PR against `GOIT-GGIT-pipeline-routes`.
+- **WKT/route-format QC checks are permanently dropped** — do not rebuild them.
 
 ---
 
-## Output conventions for Excel deliverables
+## Controlled vocabulary (locked — full table in `controlled_vocab.md`)
 
-- Headers: blue fill `4472C4`, white bold, center-aligned, wrap text.
-- Changed cells: red fill `FFCCCC`, red font `CC0000`.
-- New rows (discovery): green fill `E2EFDA`.
-- Freeze panes at row 2 (below headers).
-- Multiple URLs in `[ref]` columns: separated by `, ` (comma + space).
-- Key columns widened: `PipelineName` (45), `SegmentName` (50),
-  `Status [ref]` (55), `Owner` (55), `ResearcherNotes` (55).
+- **lowercase:** `Status`, `RouteAccuracy`, `PipelineType`.
+- **Title Case:** `DelayType`, `ShelvedCancelledType`, `FIDStatus`, `Delayed`, `Opposition`.
+- `very high (within meters)` is a valid `RouteAccuracy`.
+- When in doubt, pull a real row from the sheet and copy the exact casing.
 
 ---
 
-## Active workstreams (as of repo creation)
+## Active workstreams
 
-1. **Saudi Arabia GulfPub ↔ GEM comparison**
-   (`working_files/GOIT_SaudiArabia_Gulfpub_Comparison.xlsx`):
-   confidence-check logic (green/yellow/red) for matched records. In progress:
-   when a matched GEM pipeline has low/medium route accuracy, compare GEM route
-   to GulfPub route for spatial consistency and factor into confidence scoring.
-   GulfPub routes treated as more accurate for low/medium GEM entries; human
-   review step before any GEM route is replaced.
-2. **GOIT oil/NGL QC workbook** (`GOIT_oil_ngl_QC.xlsx`, NOT in this repo —
-   re-locate from separate resume bundle): Sheets 1–8 (Status, RouteAccuracy,
-   OtherVocab, Owner format, WikiLink Health, Geo Consistency, Name Uniqueness,
-   Date Logic) plus Sheet 9 (Diameter_OutOfRange) and Sheet 11 (BroadSweep_Misc).
-   Sheet 10 (route/WKT) permanently dropped. Clean rebuild of Sheets 1–8
-   against latest CSV was pending.
-3. **Country-level research:** 80+ countries covered in a prior global sweep;
-   Iraq, Iran, Saudi Arabia have had deep dives.
+1. **Reconciliation engine + GulfPub** — the pluggable framework (this build).
+   Generalizes the one-off `working_files/GOIT_SaudiArabia_Gulfpub_Comparison.xlsx`
+   (the golden reference) to any source/country/commodity, with a route-geometry
+   pass (GulfPub treated as more accurate than low/medium GEM routes; human review
+   before any replacement).
+2. **QC workbook** (`build_qc_workbook.py`) — rebuild of `GOIT_oil_ngl_QC.xlsx`
+   (Status, RouteAccuracy, OtherVocab, Owner, WikiLink, Geo, NameUniqueness,
+   DateLogic, Diameter, BroadSweep; route/WKT sheet dropped).
+3. **Country-level research** — 80+ countries swept; Iraq, Iran, Saudi Arabia deep.
 
 ### Pending country items
 - **Iran:** P6074 (Goureh–Persian Gulf Coast) needs verification before any
-  duplicate/removal decision. P5367 (Golpa–Moghanak) reclassification as a
-  Neka–Ray segment rather than standalone entry.
-- **Iraq:** Grand Faw Port third offshore pipeline (Esta/Micoperi, contracted
-  April 2025) entered as a single new row. Basra–Haditha (P0544) status may
-  need review (listed as "construction" but appeared still in pre-construction/
-  tender phase as of early 2026).
+  duplicate/removal. P5367 (Golpa–Moghanak) reclassify as a Neka–Ray segment.
+- **Iraq:** Grand Faw Port third offshore pipeline (Esta/Micoperi, contracted April
+  2025) entered as one new row. Basra–Haditha (P0544) status review (listed
+  `construction`, appeared still pre-construction/tender as of early 2026).
 
 ---
 
 ## External tools & resources
 
-- **Pipeline routes (GeoJSON):**
-  `https://github.com/GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes` — fetch via
-  raw URL or GitHub Contents API. See `docs/ROUTE_DATA_REFERENCE.md` and
-  `scripts/fetch_route.sh`.
-- **GEM Project Database MCP server:** wraps `gem-project-db.herokuapp.com`;
-  auth via `GEM_SESSION_COOKIE` env var (Django sessionid; rotates ~every 2
-  weeks).
-- **SFOC sheet** (LNG carrier reconciliation): ID
-  `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`; accessible ONLY via Drive MCP
-  `read_file_content` (pipe-delimited markdown); direct CSV export returns 401.
-- **GEM LNG tracker:** Sheet ID `1FjjeQD8AlQ_kQAMrohA3jAV3yZy7Lb61djt25D-4Fh8`,
-  GID `243795339`; CSV export works; header at row index 1.
-- **Python stack:** see `requirements.txt`.
-- **GIS:** QGIS, GeoPandas, GeoJSON/GeoPackage/Shapefile; EPSG:4326 standard.
+- **Pipeline routes (GeoJSON):** `GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes`
+  (sibling mirror `../GOIT-GGIT-pipeline-routes`). See `docs/reference/route_conventions.md`
+  + `scripts/fetch_route.sh`.
+- **Scraped reference datasets:** `../GOIT-GGIT-scraping` (GulfPub PE World Map);
+  registered under `sources/`.
+- **GEM Project Database MCP:** wraps `gem-project-db.herokuapp.com`; auth via
+  `GEM_SESSION_COOKIE` (Django sessionid; rotates ~2 weeks). Not needed for reconciliation.
+- **GEM LNG tracker:** Sheet `1FjjeQD8AlQ_kQAMrohA3jAV3yZy7Lb61djt25D-4Fh8`, GID
+  `243795339`; CSV export works; header at row index 1.
+- **SFOC sheet** (LNG carrier reconciliation): `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`;
+  Drive MCP `read_file_content` only (pipe-delimited markdown); CSV export → 401.
+- **Preferred sources** + the reference-dataset registry: `docs/reference/source_roster.md`.
+- **Python/GIS:** `requirements.txt`; QGIS, GeoPandas, shapely, fiona; EPSG:4326.
 
-### Preferred external sources for pipeline research
-OGJ, Rigzone, MEED, ATF Projects, S&P Global, Kpler, Shana, Tehran Times,
-Pipeline Technology Journal, Offshore Technology, KS Al-Hajri, Samsung E&A,
-Saudipedia, AramcoLife, Mehr News Agency, Interfax, IEA, EIA. Plus regulatory
-filings (FERC, PHMSA, MARAD, Texas RRC, Alaska DNR) for US work.
+---
+
+## When to escalate to the user
+
+- A reference disagrees on >10% of matched rows (material conflicts), or a source
+  produces >30 reference-only Additions in one country.
+- A whole class of GEM values looks systematically wrong (schema misunderstanding,
+  not a finding).
+- Discovery surfaces >5 candidate clusters in one country.
+- A QC spot-check shows >10% of sampled cells unsupported.
+- An OID-unstable source was re-scraped (cross-scrape identity needs a decision).
 
 ---
 
 ## Common commands
 
 ```bash
-# Refresh both CSV snapshots from the live sheet
-./scripts/refresh_csvs.sh
-
-# Fetch a pipeline route by ProjectID (e.g., P5367)
-./scripts/fetch_route.sh P5367
-
-# Install Python deps
+./scripts/refresh_csvs.sh                 # pull GOIT + GGIT snapshots from the live sheet
+./scripts/fetch_route.sh P5367            # fetch one route GeoJSON by ProjectID
+python scripts/ingest.py --source gulfpub --commodity both --out batches/staging/recon/<run>/
+python scripts/reconcile.py --source gulfpub --country "Saudi Arabia" --commodity both --staging batches/staging/recon/<run>/
+python scripts/build_recon_workbook.py --staging batches/staging/recon/<run>/ --output batches/pipelines_batch_<stamp>_<scope>_reconciliation.xlsx   # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"
 pip install -r requirements.txt
 ```
 
----
-
 ## When starting a new task
 
-1. Confirm the country + commodity scope.
-2. Refresh CSVs (`./scripts/refresh_csvs.sh`) — don't work from stale snapshots
-   for live research.
-3. Load with `pd.read_csv(path, header=2, low_memory=False)`.
-4. Follow the four-phase workflow in `docs/GOIT_Pipeline_Research_Workflow.md`:
-   inventory → research → discovery → structured Excel output.
-5. Run the quality checks listed at the end of the workflow doc before
-   delivering.
+1. Confirm country + commodity scope (and, for reconciliation, the `--source`).
+2. Refresh CSVs — don't work from stale snapshots for live research.
+3. Load with `pd.read_csv(path, header=2, low_memory=False)`; exclude buffer rows.
+4. Read the relevant `docs/workflows.md` section + SOP, then execute.
+5. Run the pre-delivery checks (`docs/sops/qc.md`) before presenting.

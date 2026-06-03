@@ -1,0 +1,102 @@
+# GulfPub (PE World Map) — scraped global pipeline route dataset.
+# Reconciled against GEM via:  python scripts/reconcile.py --source gulfpub ...
+# Pure-declarative: no adapter.py needed (owner "(NN%)" strings, OID hashing, and
+# Shape_* dropping are all handled by the engine + this manifest). See NOTES.md.
+
+source: gulfpub
+display_name: "GulfPub PE World Map"
+source_tier: 2                 # one scraped industry source — caps at yellow on its own
+default_crs: "EPSG:4326"
+
+provenance:
+  origin_url: "https://www.gulfpub.com (Pipeline & Gas Journal / PE World Map)"
+  scraped_date: "2024-05-16"   # fallback; datasets override below
+  oid_field: OBJECTID_1
+  oid_stability: unstable      # ESRI OIDs can renumber across scrapes -> see NOTES.md
+
+datasets:
+  # --- Oil / NGL: the Feb-2026 SDE refresh (1,645 features, fullest oil extract) ---
+  - name: oil
+    scraped_date: "2026-02-02"
+    commodity_default: oil
+    format: geojson
+    path: data/gulfpub-oil-global.geojson
+    geometry: feature
+    fuel_field: fuel_type
+    fuel_map: { "Oil": oil, "Oil Heavy": oil, "Crude": oil, "NGL": ngl }
+    column_map:
+      country: country
+      name: project_na
+      status: status
+      start_loc: start
+      end_loc: End_
+      operator: operator
+      owners: Shareholde
+      diameter_raw: diameter
+      length_raw: length
+      capacity: Capacity_Mbpd          # numeric, thousand bpd
+      capacity_units_const: "Mbpd"
+      capacity_raw: capacity           # the text field ("Not specified" / "350,000 bpd")
+      start_year: start_date
+      description: Scope
+      source_url: website
+    units:
+      diameter_units: in
+      length_units: mi                 # GulfPub oil 'length' is MILES -> x1.609344
+      length_commodity_quirk: true
+    status_map:
+      "Operating": operating
+      "Planned": proposed
+      "Under Construction": construction
+      "Non Operational": idle
+    dedup_keys: [OBJECTID_1]
+    ignore_garbage_fields: [Shape_STLe, Shape_ST_1, Shape_ST_2]   # NOT lengths (see NOTES.md)
+
+  # --- Gas: pe-world-map global (1,000 features; capped — see NOTES.md) ---
+  - name: gas
+    scraped_date: "2024-05-16"
+    commodity_default: gas
+    format: geojson
+    path: data/gulfpub-gas-global.geojson
+    geometry: feature
+    fuel_field: fuel_type
+    fuel_map: { "Natural Gas": gas, "Gas": gas, "Condensate": gas }
+    column_map:
+      country: country
+      name: Project
+      status: status
+      start_loc: Start
+      end_loc: End_
+      operator: operator
+      owners: Shareholde
+      diameter_raw: Diameter
+      length_raw: Length
+      capacity: Capacity_mmcfd
+      capacity_units_const: "MMcf/d"
+      capacity_raw: Cap
+      start_year: Comm_1               # NB gas start-year lives in Comm_1, not start_date
+      description: Descript
+      source_url: Web
+    units:
+      diameter_units: in
+      length_units: km                 # gas 'Length' appears km; geodesic from geometry is the cross-check
+      length_commodity_quirk: false
+    status_map:
+      "Operating": operating
+      "Planned": proposed
+      "Under construction": construction
+      "Non operational": idle
+    dedup_keys: [OBJECTID_1]
+    ignore_garbage_fields: []
+
+matching:
+  # GulfPub routes are often only an endpoint-to-endpoint sketch; lean a bit more on
+  # attributes than geometry, but geometry still corroborates strongly when present.
+  name_weight: 0.30
+  endpoint_weight: 0.25
+  diameter_weight: 0.15
+  length_weight: 0.10
+  geometry_weight: 0.20
+  green_threshold: 0.75
+  yellow_threshold: 0.45
+  buffer_km_for_overlap: 2.0

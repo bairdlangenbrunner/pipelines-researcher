@@ -1,0 +1,73 @@
+# Template manifest for a new reference dataset.
+# Copy this folder:  cp -r sources/_template sources/<name>
+# Then edit, validate:  python scripts/ingest.py --source <name> --commodity oil --out /tmp/<name>/
+# Schema: sources/_schema/manifest.schema.json   Canonical output: sources/_schema/canonical_record.md
+
+source: CHANGE_ME            # must equal the folder name; [a-z0-9_-]
+display_name: "Change Me Dataset"
+source_tier: 2               # 1=primary/regulator .. 4=weak. Tier>=2 alone cannot reach green.
+default_crs: "EPSG:4326"
+
+provenance:
+  scraped_date: "YYYY-MM-DD"
+  origin_url: "https://..."
+  oid_field: OBJECTID        # source property used as the stable id
+  oid_stability: stable      # 'unstable' -> ingest hashes a fallback ref_id and warns
+
+# adapter: adapter.py:MyAdapter   # uncomment ONLY if the declarative loader can't handle this source
+
+datasets:
+  - name: oil                # dataset key within this source
+    commodity_default: oil
+    format: geojson          # geojson | shapefile | csv | gpkg
+    path: data/CHANGE_ME.geojson
+    geometry: feature        # feature | wkt_column | none
+    # geometry_column: WKT   # required when geometry: wkt_column
+    # crs: "EPSG:4326"       # override only if this dataset's CRS differs from default_crs
+
+    fuel_field: fuel_type    # optional; per-row commodity override
+    fuel_map: { "Oil": oil, "NGL": ngl, "Crude": oil }
+
+    column_map:              # canonical field -> source property name
+      name: project_name
+      status: status
+      start_loc: start
+      end_loc: end
+      operator: operator
+      owners: shareholders
+      diameter_raw: diameter
+      length_raw: length
+      capacity_raw: capacity
+      capacity_units_const: "bpd"   # *_const = a literal value, not a column name
+      start_year: start_date
+      description: scope
+      source_url: website
+
+    units:
+      diameter_units: in
+      length_units: km       # set to 'mi' if the source stores miles
+      length_commodity_quirk: false
+
+    status_map:              # source status string -> GEM lowercase Status vocab
+      "Operating": operating
+      "Under construction": construction
+      "Planned": proposed
+      "Proposed": proposed
+      "Shelved": shelved
+      "Cancelled": cancelled
+      "Idle": idle
+      "Mothballed": mothballed
+
+    dedup_keys: [OBJECTID]
+    ignore_garbage_fields: []   # e.g. [Shape_STLe] — fields to drop defensively
+
+# Optional per-source matcher tuning (engine defaults apply if omitted):
+# matching:
+#   name_weight: 0.30
+#   endpoint_weight: 0.25
+#   diameter_weight: 0.15
+#   length_weight: 0.10
+#   geometry_weight: 0.20
+#   green_threshold: 0.75
+#   yellow_threshold: 0.45
+#   buffer_km_for_overlap: 2.0

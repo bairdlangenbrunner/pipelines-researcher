@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://gem/pipelines-researcher/sources/manifest.schema.json",
+  "title": "Reference dataset manifest",
+  "description": "Validated by scripts/ingest.py before a source is ingested.",
+  "type": "object",
+  "required": ["source", "display_name", "source_tier", "datasets"],
+  "additionalProperties": false,
+  "properties": {
+    "source": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Registry folder name; must match sources/<source>/."
+    },
+    "display_name": { "type": "string" },
+    "source_tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "description": "1=primary/regulator .. 4=weak. Tier>=2 caps confidence below green when this is the only source."
+    },
+    "default_crs": { "type": "string", "default": "EPSG:4326" },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "scraped_date": { "type": "string", "description": "ISO date of the scrape; goes in report_citation + README." },
+        "origin_url": { "type": "string" },
+        "oid_field": { "type": "string", "description": "Source property used as the stable id." },
+        "oid_stability": { "enum": ["stable", "unstable"], "default": "stable" }
+      }
+    },
+    "adapter": {
+      "type": "string",
+      "pattern": "^[\\w./-]+\\.py:[A-Za-z_][A-Za-z0-9_]*$",
+      "description": "Optional. 'adapter.py:ClassName' subclassing AdapterBase. Omit for pure-declarative sources."
+    },
+    "datasets": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/dataset" }
+    },
+    "matching": { "$ref": "#/definitions/matching" }
+  },
+  "definitions": {
+    "dataset": {
+      "type": "object",
+      "required": ["name", "format", "path", "column_map"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "description": "Dataset key within this source (e.g. oil, gas)." },
+        "scraped_date": { "type": "string", "description": "Per-dataset scrape date; overrides provenance.scraped_date in report_citation." },
+        "commodity_default": {
+          "enum": ["oil", "ngl", "gas", "hydrogen"],
+          "description": "Used when a row has no fuel_field, or fuel_map misses."
+        },
+        "format": { "enum": ["geojson", "shapefile", "csv", "gpkg"] },
+        "path": { "type": "string", "description": "Relative to the source folder (e.g. data/foo.geojson)." },
+        "geometry": {
+          "enum": ["feature", "wkt_column", "none"],
+          "default": "feature",
+          "description": "feature = on each GeoJSON/shapefile feature; wkt_column = a WKT string column; none = attributes only."
+        },
+        "geometry_column": { "type": "string", "description": "Column holding WKT when geometry=wkt_column." },
+        "crs": { "type": "string", "description": "Overrides default_crs for this dataset if its source CRS differs." },
+        "fuel_field": { "type": "string" },
+        "fuel_map": {
+          "type": "object",
+          "additionalProperties": { "enum": ["oil", "ngl", "gas", "hydrogen"] }
+        },
+        "column_map": {
+          "type": "object",
+          "description": "canonical field -> source property name. *_const keys carry a literal value instead.",
+          "additionalProperties": { "type": "string" }
+        },
+        "units": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "diameter_units": { "enum": ["in", "mm", "cm"], "default": "in" },
+            "length_units": { "enum": ["mi", "km", "m"], "default": "km" },
+            "length_commodity_quirk": {
+              "type": "boolean",
+              "default": false,
+              "description": "Marks a source where length unit differs by commodity (e.g. GulfPub oil = miles)."
+            }
+          }
+        },
+        "status_map": {
+          "type": "object",
+          "description": "source status string -> GEM lowercase Status vocab.",
+          "additionalProperties": { "type": "string" }
+        },
+        "dedup_keys": { "type": "array", "items": { "type": "string" } },
+        "ignore_garbage_fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Source properties to drop defensively (e.g. ESRI Shape_STLe, which is NOT a usable length)."
+        }
+      }
+    },
+    "matching": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional per-source tuning; engine defaults apply when omitted.",
+      "properties": {
+        "name_weight": { "type": "number", "default": 0.30 },
+        "endpoint_weight": { "type": "number", "default": 0.25 },
+        "diameter_weight": { "type": "number", "default": 0.15 },
+        "length_weight": { "type": "number", "default": 0.10 },
+        "geometry_weight": { "type": "number", "default": 0.20 },
+        "green_threshold": { "type": "number", "default": 0.75 },
+        "yellow_threshold": { "type": "number", "default": 0.45 },
+        "buffer_km_for_overlap": { "type": "number", "default": 2.0 }
+      }
+    }
+  }
+}

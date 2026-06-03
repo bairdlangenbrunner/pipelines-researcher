@@ -1,0 +1,49 @@
+# SOP — Update existing pipelines
+
+The bread-and-butter doer: refresh existing GOIT/GGIT rows (status changes,
+enrichment, blank `[ref]` fills). It also **consumes reconciliation candidates** —
+a value/status disagreement surfaced by the Reconciliation SOP is resolved here
+through normal source-search, not auto-applied.
+
+The deep research rules (source hierarchy, URL-verification, corroboration,
+expansion-vs-construction, divestiture sweeps, route research) live in the
+authoritative methodology, `docs/GOIT_Pipeline_Research_Workflow.md` Phase 2. This
+SOP is the operational sequence; cite the methodology for the *how*.
+
+## Inputs
+- Scope: country + commodity (oil / NGL / gas).
+- Tier: **standard** (default) = the worklist below; **exhaustive** = every field +
+  every existing `[ref]` on every in-scope row.
+
+## Sequence
+1. `scripts/refresh_csvs.sh` → fresh snapshot; load `header=2`; exclude buffer rows.
+2. **Derive the worklist** (standard tier): every `proposed`/`construction`/`shelved`
+   row in scope ∪ rows with blank `[ref]` paired to a filled value ∪ stale rows ∪
+   any reconciliation value-disagreements queued for this scope.
+3. For each pipeline:
+   - Research per methodology Phase 2 — source hierarchy in
+     `docs/reference/source_roster.md`, country tips in `docs/country_notes/`.
+   - **Expansion vs. new construction:** if no new physical pipe is built →
+     `LengthKnown = 0`, `Diameter = blank`; note the expansion type in `ResearcherNotes`.
+   - **Ownership divestitures:** if a divestiture touched multiple pipelines, update
+     **all** affected rows, not only those that surfaced in search.
+   - Record the confidence tier + corroborating sources in `ResearcherNotes`
+     (`docs/reference/confidence_tiers.md`).
+4. `scripts/url_verifier.py <url> <expected…>` on **every** URL before it enters the
+   workbook — no exceptions, even URLs that worked last batch. Reject GEM URLs.
+5. `scripts/entity_lookup.py "<owner>" "<country>"` before staging any new owner —
+   don't create duplicate entities.
+6. Stage findings as `batches/staging/<scope-slug>/staged_updates.json` (committed
+   audit trail).
+7. `scripts/build_recon_workbook.py`'s update mode (or `build_*` per the recipe) →
+   `batches/pipelines_batch_<stamp>_<scope>_update.xlsx`; `scripts/recalc.py`; present.
+
+## Pre-delivery checks
+URL spot-check (fetch 3–5), expansion-length, ownership consistency, status logic
+(2y→shelved / 4y→cancelled), date consistency, every changed row has a
+`ResearcherNotes` rationale, no GEM self-citation, corroboration tier recorded.
+See `docs/sops/qc.md` for the full checklist.
+
+## Iterate
+Expect Baird to challenge specific data points. Acknowledge the error, re-search
+with verified sources, regenerate — **do not defend** wrong findings (standing rule 3).
