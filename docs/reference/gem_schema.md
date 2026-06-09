@@ -4,24 +4,38 @@ How the two live tracker tabs are shaped, and the gotchas that bite every batch.
 The column **order** is unreliable — re-derive the column→index map from the fresh
 header row every run; never hard-code offsets (the schema drifts).
 
-## The two tabs
+## The tabs
 
 Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
 ("Anyone with link can view"). Pull via `scripts/refresh_csvs.sh` (curl).
 
-| Tracker | Commodity | GID | Cols | Rows (approx) |
-|---|---|---|---|---|
-| GOIT | crude oil + NGL | `456134080` | 107 | ~2,200 |
-| GGIT | gas | `1020144097` | ~140 | ~4,270 |
+| Tab | Commodity | GID | Cols | Rows (approx) | Header row |
+|---|---|---|---|---|---|
+| GOIT (oil/NGL tracker) | crude oil + NGL | `456134080` | 107 | ~2,200 | index 2 |
+| GGIT (gas tracker) | gas | `1020144097` | ~140 | ~4,270 | index 2 |
+| Pipeline operators/owners | oil **and** gas | `1489950650` | 44 | ~6,466 | **index 1** |
 
-- **Header is at CSV row index 2** for both tabs (rows 0–1 are metadata). Always
-  load with `pd.read_csv(path, header=2, low_memory=False)`.
-- `SheetRow = CSV index + 4` (CSV-row-0 data == sheet row 4).
-- **Buffer rows:** ~104 reserved/blank `ProjectID`s exist at the tail. Exclude
-  them from QC and matching (filter to rows with a real `PipelineName`/`Status`).
+- The two **tracker** tabs: **header at CSV row index 2** (rows 0–1 are metadata);
+  load with `pd.read_csv(path, header=2, low_memory=False)`. `SheetRow = CSV index + 4`.
+- **Buffer rows:** ~104 reserved/blank `ProjectID`s exist at the tail of each tracker
+  tab. Exclude them from QC and matching (filter to rows with a real `PipelineName`/`Status`).
 - Do **not** use Drive MCP `download_file_content` (first tab only) or
   `read_file_content` (lossy/truncates). curl the CSV export — it is the only
   lossless path.
+
+### Pipeline operators/owners tab (GID `1489950650`)
+Ownership/operator detail + their source refs, **ProjectID-keyed** (same `ProjectID`s as the
+tracker tabs; one tab covers both oil and gas). The tracker tabs carry the `Owner`/`Parent`
+*values* but **no `[ref]` column** — the actual reference cells live here.
+- **Header at CSV row index 1** (row 0 is a "apply a filter view" banner) — load with `header=1`.
+- Two ref-bearing data points, and here the **`[ref]` column PRECEDES its values** (opposite of
+  the tracker tabs, where `X [ref]` follows `X`):
+  - **`Operator [ref]`** → `Operator`, `OperatorLocalLanguage`, `QCCOwner(业主单位)`.
+  - **`Owner [ref]`** → `Owner1`/`Owner1%` … `Owner11`/`Owner11%` (+ `AggregateOwners`,
+    `Percentage Verification`).
+- So a Ref-Sweep owner/operator candidate for ProjectID *P* is pasted into `Owner [ref]` /
+  `Operator [ref]` on **this** tab's *P* row — not a tracker-tab cell, not `ResearcherNotes`.
+  Because it's ProjectID-keyed, the ref is per-pipeline (no entity-level de-dup).
 
 ## Row granularity (matters for reconciliation)
 

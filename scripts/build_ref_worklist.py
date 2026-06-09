@@ -2,7 +2,8 @@
 """Reference-sweep step 1: scan a country+tracker scope and emit a worklist of every
 ref-bearing data point that needs work — blank `[ref]` cells whose value is filled
 (MISSING_REF), and filled `[ref]` cells to re-verify (HAS_REF). Owner/Parent have no
-`[ref]` column so they're MISSING_REF_NO_COLUMN (corroboration → ResearcherNotes).
+`[ref]` column so they're MISSING_REF_NO_COLUMN (owner/operator source URLs live in the
+separate "Pipeline operators/owners" backend tab, not a pipeline-row cell).
 
 Pairing comes from ref_pairs.discover_ref_pairs (group-walk over the FRESH header).
 With --verify-existing, every existing ref URL is HTTP-checked up front (deterministic,
