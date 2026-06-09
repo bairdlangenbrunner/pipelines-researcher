@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Verify a [ref] URL before it goes in a workbook: resolves (HTTP 200) and (optionally)
 contains expected substrings. ALWAYS rejects GEM surfaces — never self-cite (standing
-rule 1) — and theodora.com (never an acceptable reference). Importable:
+rule 1) — and blocklisted tertiary aggregators (theodora.com; A Barrel Full /
+abarrelfull.wikidot.com and the wider wikidot.com platform) which are never acceptable
+references. Importable:
 `from url_verifier import verify_url, verify_many, surface_forms`.
 
     python scripts/url_verifier.py "https://example.com/x" "Pipeline Name" "2025"
@@ -12,9 +14,12 @@ import argparse
 import sys
 
 GEM_HOSTS = ("gem.wiki", "globalenergymonitor")
-# Never an acceptable reference (per Baird). Enforced at the verifier, not just the
-# harvester, so a theodora URL can never slip into a workbook by any path.
-BLOCKLIST_HOSTS = ("theodora.com", "theodora")
+# Never an acceptable reference (per Baird) — tertiary wiki/aggregator surfaces that
+# merely restate other sources. Enforced at the verifier, not just the harvester, so a
+# blocklisted URL can never slip into a workbook by any path (harvest_wiki_citations.py
+# imports this tuple). A Barrel Full lives at abarrelfull.wikidot.com; "abarrellfull"
+# covers the common double-l misspelling, "wikidot.com" the wider free-wiki platform.
+BLOCKLIST_HOSTS = ("theodora.com", "theodora", "abarrelfull", "abarrellfull", "wikidot.com")
 _UA = "Mozilla/5.0 (compatible; pipelines-researcher/1.0)"
 
 # per-domain politeness floor for verify_many (seconds between hits to one host)
@@ -31,8 +36,9 @@ def verify_url(url: str, *expected: str, any_of=None, timeout: int = 20) -> dict
         return {"ok": False, "status": None, "reason": "not an http(s) URL"}
     if any(h in low for h in GEM_HOSTS):
         return {"ok": False, "status": None, "reason": "GEM surface — never self-cite (standing rule 1)"}
-    if any(h in low for h in BLOCKLIST_HOSTS):
-        return {"ok": False, "status": None, "reason": "theodora — never an acceptable reference"}
+    hit = next((h for h in BLOCKLIST_HOSTS if h in low), None)
+    if hit:
+        return {"ok": False, "status": None, "reason": f"{hit} — blocklisted tertiary aggregator, never an acceptable reference"}
     try:
         import requests
     except ImportError:

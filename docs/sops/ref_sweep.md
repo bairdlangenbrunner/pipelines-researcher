@@ -79,7 +79,7 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 3. **Harvest** — `scripts/harvest_wiki_citations.py --worklist … --out …/wiki_citations.json`.
    Start research from the row's gem.wiki page: harvest its **outbound** external citations
    (once per ProjectID). We *visit* gem.wiki but **never cite it** — only the underlying
-   URLs (gem.wiki/globalenergymonitor/theodora are filtered out here and at the verifier).
+   URLs (gem.wiki/globalenergymonitor/theodora/abarrelfull/wikidot are filtered out here and at the verifier).
    Expect many harvested links to be dead — verify each before use.
 4. **Research loop (per ProjectID):**
    - **HAS_REF:** if `--verify-existing` shows all URLs live AND containing the value AND
@@ -117,13 +117,15 @@ green = ≥2 independent working sources · yellow = single source · red = low/
 
 ## Standing rules (echoed)
 Visit-but-**never-cite** gem.wiki/globalenergymonitor (rule 1) · **never theodora** ·
+**never A Barrel Full / abarrelfull.wikidot.com or any wikidot.com page** (tertiary
+aggregators; `url_verifier` rejects them — read for leads only, cite the underlying source) ·
 every URL through `url_verifier` (even ones that worked last batch) · no orphan refs ·
 **no fabricated URLs** (rule 2) · nothing auto-applied — the xlsx is a candidate set Baird
 pastes manually.
 
 ## Pre-delivery checks
 README present; every `Proposed ref(s)` cell verified (HTTP 200 + value present) and free
-of GEM/theodora; tier colors correct; no orphan refs; Unresolved units have a
+of GEM/theodora/abarrelfull/wikidot; tier colors correct; no orphan refs; Unresolved units have a
 `ResearcherNotes` reason and no fabricated URL. Full checklist: `docs/sops/qc.md`.
 
 ## Escalation gates
