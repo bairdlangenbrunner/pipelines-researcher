@@ -68,7 +68,7 @@ def _ref_columns():
         ("SheetRow", g("sheet_row"), 9),
         ("PipelineName", g("pipeline_name"), 32),
         ("SegmentName", g("segment_name"), 22),
-        ("Ref column", lambda r: r.get("ref_col") or "(Owner → ResearcherNotes)", 20),
+        ("Ref column", lambda r: r.get("ref_col") or "(Owner → Operators/Owners tab)", 24),
         ("Data point(s)", lambda r: r.get("primary_value_col") or J(list(r.get("values", {}).keys())), 18),
         ("Current value", lambda r: r.get("primary_value") or J([f"{k}={v}" for k, v in r.get("values", {}).items()]), 22),
         ("Current ref", g("current_ref"), 30),
@@ -131,8 +131,9 @@ def _backend_view(wb, title, resolutions):
     its `[ref]` column carrying the proposed ref(s), color-coded by corroboration tier
     (same green/yellow/red/blue key as the bucket tabs). Column order follows the sheet
     (first-appearance order of each ref unit in the staged resolutions, which are emitted
-    in row-then-pair order). Owner/Parent have no `[ref]` column — their corroboration
-    rides in a labeled (→ResearcherNotes) column."""
+    in row-then-pair order). Owner/Parent have no `[ref]` column on the pipeline tab —
+    their source URL belongs in the separate "Pipeline operators/owners" backend tab, so it
+    rides in a labeled (→ Operators/Owners tab) column here."""
     # ordered data points (one per distinct ref unit), by first appearance
     dp_order: list[str] = []                 # ordered keys
     dp_meta: dict[str, tuple[str, str]] = {}  # key -> (value header, ref header)
@@ -146,7 +147,7 @@ def _backend_view(wb, title, resolutions):
                 or key[: -len(" [ref]")]
             dp_meta[key] = (vcol, r["ref_col"])
         else:
-            dp_meta[key] = ("Owner", "Owner (→ResearcherNotes)")
+            dp_meta[key] = ("Owner", "Owner (→ Pipeline operators/owners tab)")
 
     # group resolutions by segment, preserving first-seen order
     seg_order: list[tuple] = []

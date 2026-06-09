@@ -30,9 +30,16 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
 `irregular:true` for reviewer sanity):
 - gas `Location [ref]` sources **both** start and end endpoint blocks (one ref, 8 cols).
 - gas `H2RepurposedKmOr% [ref]` → the H2 km/% cols.
-- `Owner`/`Parent` have **no** `[ref]` column → corroboration goes in `ResearcherNotes`,
-  not a `[ref]` cell (emitted as a synthetic `kind:'owner'` unit, class
-  `MISSING_REF_NO_COLUMN`).
+- `Owner`/`Parent` have **no** `[ref]` column on the tracker tab (emitted as a synthetic
+  `kind:'owner'` unit, class `MISSING_REF_NO_COLUMN`). **Owner/operator source URLs live in a
+  separate backend tab, "Pipeline operators/owners"** (GID `1489950650`, header at CSV row
+  index 1) — *not* in a tracker-row `[ref]` cell or `ResearcherNotes`. That tab is
+  **ProjectID-keyed** (same `ProjectID`s as the trackers), with `Owner [ref]` / `Operator [ref]`
+  columns whose `[ref]` **precedes** its values (opposite of the trackers). The sweep surfaces an
+  owner-ref candidate **per pipeline row** labeled `Owner (→ Pipeline operators/owners tab)`;
+  Baird pastes it onto that ProjectID's row of the operators/owners tab. Because the tab is
+  ProjectID-keyed (not entity-keyed), the ref is per-pipeline — no entity-level de-dup. See
+  `docs/reference/gem_schema.md` for the full column layout.
 - **Route/geometry is OUT OF SCOPE.** `RouteType`/`RouteAccuracy`/`RouteNotes` → `Route [ref]`
   is dropped by `discover_ref_pairs` (`SKIP_REF_COLS`); **never research, fill, or re-verify a
   `Route [ref]`.** Pipeline geometry is reconciled against the `GOIT-GGIT-pipeline-routes` repo

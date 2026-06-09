@@ -10,8 +10,10 @@ matches a column in the run (exact or prefix — `Capacity`→`Capacity`, `Lengt
 When no name matches (gas `Location [ref]` covers BOTH endpoints; `H2RepurposedKmOr%
 [ref]`), we keep the whole run and flag `irregular=True` for reviewer sanity.
 
-`Owner`/`Parent` have **no** `[ref]` column in either sheet — emitted as a synthetic
-`kind='owner'` pair (corroboration goes in `ResearcherNotes`, not a `[ref]` cell).
+`Owner`/`Parent` have **no** `[ref]` column on the pipeline tab — emitted as a synthetic
+`kind='owner'` pair. Owner/operator source URLs live in a **separate backend tab,
+"Pipeline operators/owners"** (entity-keyed), not in a `[ref]` cell or `ResearcherNotes`
+on the pipeline row.
 
 Pure stdlib, no pandas/I-O at import. Shared by build_ref_worklist.py and the
 BroadSweep check in build_qc_workbook.py (single source of truth for ref pairing).
