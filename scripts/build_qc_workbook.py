@@ -20,6 +20,7 @@ from openpyxl.utils import get_column_letter
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import normalize as N  # noqa: E402
 from match import load_gem_df  # noqa: E402
+from ref_pairs import discover_ref_pairs  # noqa: E402
 
 HEADER_FILL = PatternFill("solid", fgColor="4472C4")
 HEADER_FONT = Font(bold=True, color="FFFFFF")
@@ -142,20 +143,21 @@ def check_wikilink(df):
     return out
 
 
-REF_PAIRS = [("Status", "Status [ref]"), ("Owner", "Owner"), ("Capacity", "Capacity [ref]"),
-             ("Diameter", "Diameter [ref]"), ("LengthKnown", "Length [ref]")]
-
-
 def check_broadsweep(df):
+    """Orphan-ref sweep over EVERY discovered ref-pair (group-walk from the fresh header,
+    via ref_pairs.discover_ref_pairs — single source of truth, shared with the Ref Sweep
+    workflow). Flags a `[ref]` cell that is filled while all the value cols it sources are
+    blank. The reverse (value present, ref blank) is the Ref Sweep's job, not QC's."""
     out = []
+    pairs = [p for p in discover_ref_pairs(list(df.columns)) if p["ref_col"]]
     for _, r in df.iterrows():
-        for data_col, ref_col in REF_PAIRS:
-            if data_col == ref_col or ref_col not in df.columns or data_col not in df.columns:
+        for p in pairs:
+            ref = str(r.get(p["ref_col"], "")).strip()
+            if not ref:
                 continue
-            data = str(r.get(data_col, "")).strip()
-            ref = str(r.get(ref_col, "")).strip()
-            if ref and not data:
-                out.append({**_base(r), "Detail": f"orphan ref: {ref_col} filled but {data_col} blank"})
+            if not any(str(r.get(c, "")).strip() for c in p["value_cols"]):
+                cols = "/".join(p["value_cols"])
+                out.append({**_base(r), "Detail": f"orphan ref: {p['ref_col']} filled but {cols} all blank"})
     return out
 
 

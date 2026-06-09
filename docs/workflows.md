@@ -83,3 +83,39 @@ tier). Present; stop and ask.
 --output batches/pipelines_batch_<stamp>_<scope>_qc.xlsx` — one sheet at a time
 for large scopes (QC SOP sheet list; route/WKT sheet dropped). 3. `recalc.py`;
 present; route fixes to a follow-on Update batch.
+
+---
+
+## §6 Reference sweep (fill & re-verify every `[ref]`)
+
+Crawl every ref-bearing data point in scope and reach **≥2 working, independent links
+that contain the precise value** — fill blank `[ref]`s, re-verify filled ones. One
+tracker per batch. See the Ref Sweep SOP for the pair model, tiers, and standing rules.
+Distinct from §5 QC: **QC detects orphan refs; Ref Sweep researches & stages refs.**
+
+1. Fresh pull.
+2. **Worklist** (scope scan + classify; `--verify-existing` HTTP-checks existing refs up
+   front, deterministically — no agent tokens):
+   ```bash
+   python scripts/build_ref_worklist.py --tracker oil --country "Saudi Arabia" \
+     [--status proposed,construction] --verify-existing \
+     --out batches/staging/ref-sweep-saudi-arabia/worklist.json
+   ```
+3. **Harvest** the gem.wiki outbound citations (start research there; never cite gem.wiki):
+   ```bash
+   python scripts/harvest_wiki_citations.py \
+     --worklist batches/staging/ref-sweep-saudi-arabia/worklist.json \
+     --out batches/staging/ref-sweep-saudi-arabia/wiki_citations.json
+   ```
+4. **Research loop (per ProjectID, SOP §Sequence-4):** verify candidates with
+   `url_verifier` (search in-country languages where needed); reach ≥2 independent working
+   sources; assign tier. Stage `staged_resolutions.json` (`class_out` ∈ REFS_ADDED /
+   REVERIFIED / DEAD_LINK / UNRESOLVED). **Never auto-apply; no fabricated URLs.**
+5. **Build:**
+   ```bash
+   python scripts/build_ref_workbook.py \
+     --staging batches/staging/ref-sweep-saudi-arabia/ \
+     --output batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
+   python scripts/recalc.py batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
+   ```
+   Then present. Scale country-by-country on Baird's sign-off.
