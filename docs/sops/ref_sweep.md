@@ -33,6 +33,18 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
 - `Owner`/`Parent` have **no** `[ref]` column → corroboration goes in `ResearcherNotes`,
   not a `[ref]` cell (emitted as a synthetic `kind:'owner'` unit, class
   `MISSING_REF_NO_COLUMN`).
+- **Route/geometry is OUT OF SCOPE.** `RouteType`/`RouteAccuracy`/`RouteNotes` → `Route [ref]`
+  is dropped by `discover_ref_pairs` (`SKIP_REF_COLS`); **never research, fill, or re-verify a
+  `Route [ref]`.** Pipeline geometry is reconciled against the `GOIT-GGIT-pipeline-routes` repo
+  (a separate human branch + PR), not corroborated from media `[ref]` URLs.
+
+## Output (what Baird works from)
+The deliverable leads with **`<Cmdty>_Backend`** — a paste-ready mirror of the live-sheet
+layout: one row per pipeline segment, each touched data point shown as its **value column
+immediately followed by its `[ref]` column** carrying the proposed ref(s), the `[ref]` cell
+**color-coded by corroboration tier** (green/yellow/red/blue, below). This is the tab Baird
+works from. The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Unresolved` bucket tabs
+remain as supporting detail (full verifications, current-ref, notes) but are not the primary view.
 
 ## Sequence
 1. `scripts/refresh_csvs.sh` → fresh snapshot (don't sweep a stale CSV).
@@ -72,11 +84,13 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
    `batches/staging/ref-sweep-<scope>/staged_resolutions.json`.
 6. **Build** — `scripts/build_ref_workbook.py --staging batches/staging/ref-sweep-<scope>/
    --output batches/pipelines_batch_<stamp>_<scope>_refsweep.xlsx`; then `recalc.py`;
-   present. `<stamp>` from `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite.
+   present. Leads with the `<Cmdty>_Backend` paste-ready tab (see **Output** above), bucket
+   tabs follow. `<stamp>` from `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite.
 
 ## Tier → color
+Applied to each `[ref]` cell on the `<Cmdty>_Backend` tab (and the tier cell on the bucket tabs):
 green = ≥2 independent working sources · yellow = single source · red = low/none ·
-**blue = re-verified existing ref (no action)** · red Current-ref cell = dead/value-missing.
+**blue = re-verified existing ref (no action)** · red Current-ref cell (DeadLinks tab) = dead/value-missing.
 
 ## Standing rules (echoed)
 Visit-but-**never-cite** gem.wiki/globalenergymonitor (rule 1) · **never theodora** ·

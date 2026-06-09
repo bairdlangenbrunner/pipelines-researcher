@@ -92,6 +92,8 @@ Crawl every ref-bearing data point in scope and reach **≥2 working, independen
 that contain the precise value** — fill blank `[ref]`s, re-verify filled ones. One
 tracker per batch. See the Ref Sweep SOP for the pair model, tiers, and standing rules.
 Distinct from §5 QC: **QC detects orphan refs; Ref Sweep researches & stages refs.**
+**Route/geometry `[ref]` cells are OUT OF SCOPE** (geometry is reconciled against the
+routes repo, not media URLs) — `discover_ref_pairs` drops them automatically.
 
 1. Fresh pull.
 2. **Worklist** (scope scan + classify; `--verify-existing` HTTP-checks existing refs up
@@ -118,4 +120,7 @@ Distinct from §5 QC: **QC detects orphan refs; Ref Sweep researches & stages re
      --output batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
    python scripts/recalc.py batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
    ```
-   Then present. Scale country-by-country on Baird's sign-off.
+   Leads with **`<Cmdty>_Backend`** — a paste-ready mirror of the live-sheet layout (each
+   touched value next to its `[ref]`, `[ref]` cell colored by corroboration tier). Work from
+   that tab; the `*_Refs_*` bucket tabs are supporting detail. Then present. Scale
+   country-by-country on Baird's sign-off.
