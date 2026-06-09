@@ -30,37 +30,52 @@ name matches a column (exact/prefix) the cluster starts there. Known irregulars 
 `irregular:true` for reviewer sanity):
 - gas `Location [ref]` sources **both** start and end endpoint blocks (one ref, 8 cols).
 - gas `H2RepurposedKmOr% [ref]` → the H2 km/% cols.
-- `Owner`/`Parent` have **no** `[ref]` column on the tracker tab (emitted as a synthetic
-  `kind:'owner'` unit, class `MISSING_REF_NO_COLUMN`). **Owner/operator source URLs live in a
-  separate backend tab, "Pipeline operators/owners"** (GID `1489950650`, header at CSV row
-  index 1) — *not* in a tracker-row `[ref]` cell or `ResearcherNotes`. That tab is
-  **ProjectID-keyed** (same `ProjectID`s as the trackers), with `Owner [ref]` / `Operator [ref]`
-  columns whose `[ref]` **precedes** its values (opposite of the trackers). The sweep surfaces an
-  owner-ref candidate **per pipeline row** labeled `Owner (→ Pipeline operators/owners tab)`;
-  Baird pastes it onto that ProjectID's row of the operators/owners tab. Because the tab is
-  ProjectID-keyed (not entity-keyed), the ref is per-pipeline — no entity-level de-dup. See
-  `docs/reference/gem_schema.md` for the full column layout.
+- **Owner/operator refs come from a separate tab.** The tracker tab carries the `Owner`/`Parent`
+  *value* but has **no `[ref]` column** for it. The real refs live on the **"Pipeline
+  operators/owners" backend tab** (GID `1489950650`, header at CSV row index 1), which is
+  **ProjectID-keyed** (same `ProjectID`s as the trackers) and has two ref cols whose `[ref]`
+  **precedes** its values (opposite of the trackers): `Operator [ref]` → Operator block;
+  `Owner [ref]` → Owner1..Owner11(+%). `build_ref_worklist.py` joins that tab by ProjectID
+  (`--owners-csv`, default latest `GEM_operators_owners_snapshot_*.csv`; `--no-owners` to skip)
+  and emits **two real ref units per in-scope ProjectID** (`tab:'operators_owners'`,
+  `kind:'operator'|'owner'`), classified `MISSING_REF`/`HAS_REF` like any other unit — they go
+  through the same research + verifier loop. The deliverable routes them to a dedicated
+  **`<Cmdty>_OperatorsOwners`** paste-ready tab (ProjectID-keyed, ref-precedes-values), so Baird
+  pastes each `[ref]` onto that ProjectID's row of the operators/owners tab — *not* a tracker
+  row, *not* `ResearcherNotes`. Because the tab is ProjectID-keyed (not entity-keyed) the ref is
+  per-pipeline; no entity-level de-dup. (`discover_ref_pairs` still emits a synthetic
+  `kind:'owner'` placeholder for the QC BroadSweep, but the sweep drops it in favour of the join.)
+  Full column layout: `docs/reference/gem_schema.md`.
 - **Route/geometry is OUT OF SCOPE.** `RouteType`/`RouteAccuracy`/`RouteNotes` → `Route [ref]`
   is dropped by `discover_ref_pairs` (`SKIP_REF_COLS`); **never research, fill, or re-verify a
   `Route [ref]`.** Pipeline geometry is reconciled against the `GOIT-GGIT-pipeline-routes` repo
   (a separate human branch + PR), not corroborated from media `[ref]` URLs.
 
 ## Output (what Baird works from)
-The deliverable leads with **`<Cmdty>_Backend`** — a paste-ready mirror of the live-sheet
-layout: one row per pipeline segment, each touched data point shown as its **value column
-immediately followed by its `[ref]` column** carrying the proposed ref(s), the `[ref]` cell
-**color-coded by corroboration tier** (green/yellow/red/blue, below). This is the tab Baird
-works from. The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Unresolved` bucket tabs
-remain as supporting detail (full verifications, current-ref, notes) but are not the primary view.
+Two paste-ready, backend-mirroring tabs lead the deliverable:
+- **`<Cmdty>_Backend`** — mirror of the tracker tab: one row per pipeline segment, each touched
+  data point shown as its **value column immediately followed by its `[ref]` column** carrying
+  the proposed ref(s), the `[ref]` cell **color-coded by corroboration tier** (green/yellow/red/
+  blue, below).
+- **`<Cmdty>_OperatorsOwners`** — mirror of the separate "Pipeline operators/owners" backend tab
+  (GID `1489950650`): ProjectID-keyed, with the `[ref]` column **preceding** its values (as on
+  that tab); `Operator [ref]` / `Owner [ref]` cells carry the proposed ref(s), same tier colors.
+  Paste each `[ref]` back onto that tab by ProjectID — *not* onto a tracker row.
+
+The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Unresolved` bucket tabs remain as
+supporting detail (full verifications, current-ref, notes) but are not the primary view.
 
 ## Sequence
-1. `scripts/refresh_csvs.sh` → fresh snapshot (don't sweep a stale CSV).
+1. `scripts/refresh_csvs.sh` → fresh snapshots (don't sweep a stale CSV). This now also pulls
+   the **operators/owners tab** (`GEM_operators_owners_snapshot_<date>.csv`, header at row idx 1).
 2. **Worklist** — `scripts/build_ref_worklist.py --tracker <t> --country <C>
    [--status …] --verify-existing --out batches/staging/ref-sweep-<scope>/worklist.json`.
    Classifies each row×pair ref cell: `SKIP` (all values blank), `MISSING_REF` (value
-   filled, ref blank), `HAS_REF` (ref filled → re-verify), `MISSING_REF_NO_COLUMN` (owner).
-   `--verify-existing` HTTP-checks every existing ref URL up front (deterministic, **no
-   agent tokens**) so most `HAS_REF` units pre-classify live vs dead before research.
+   filled, ref blank), `HAS_REF` (ref filled → re-verify). It also **joins the operators/owners
+   tab by ProjectID** (default latest snapshot; `--owners-csv` to override, `--no-owners` to skip)
+   and emits real `Operator [ref]` / `Owner [ref]` units (`tab:'operators_owners'`) classified the
+   same way. `--verify-existing` HTTP-checks every existing ref URL up front (tracker + OO;
+   deterministic, **no agent tokens**) so most `HAS_REF` units pre-classify live vs dead.
 3. **Harvest** — `scripts/harvest_wiki_citations.py --worklist … --out …/wiki_citations.json`.
    Start research from the row's gem.wiki page: harvest its **outbound** external citations
    (once per ProjectID). We *visit* gem.wiki but **never cite it** — only the underlying
@@ -87,15 +102,16 @@ remain as supporting detail (full verifications, current-ref, notes) but are not
      (no fabricated URL — standing rule 2).
 5. Stage one resolution per unit (`class_out` ∈ `REFS_ADDED` / `REVERIFIED` / `DEAD_LINK` /
    `UNRESOLVED`, `proposed_refs`, `verifications`, `tier`, `independent`, `source_language`,
-   `researcher_notes`, `harvested_from_wiki`) into
+   `researcher_notes`, `harvested_from_wiki`; carry `tab` through for owner/operator units) into
    `batches/staging/ref-sweep-<scope>/staged_resolutions.json`.
 6. **Build** — `scripts/build_ref_workbook.py --staging batches/staging/ref-sweep-<scope>/
    --output batches/pipelines_batch_<stamp>_<scope>_refsweep.xlsx`; then `recalc.py`;
-   present. Leads with the `<Cmdty>_Backend` paste-ready tab (see **Output** above), bucket
-   tabs follow. `<stamp>` from `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite.
+   present. Leads with the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` paste-ready tabs
+   (see **Output** above), bucket tabs follow. `<stamp>` from
+   `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite.
 
 ## Tier → color
-Applied to each `[ref]` cell on the `<Cmdty>_Backend` tab (and the tier cell on the bucket tabs):
+Applied to each `[ref]` cell on the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` tabs (and the tier cell on the bucket tabs):
 green = ≥2 independent working sources · yellow = single source · red = low/none ·
 **blue = re-verified existing ref (no action)** · red Current-ref cell (DeadLinks tab) = dead/value-missing.
 

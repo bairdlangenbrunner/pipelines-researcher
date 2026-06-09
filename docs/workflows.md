@@ -94,6 +94,9 @@ tracker per batch. See the Ref Sweep SOP for the pair model, tiers, and standing
 Distinct from §5 QC: **QC detects orphan refs; Ref Sweep researches & stages refs.**
 **Route/geometry `[ref]` cells are OUT OF SCOPE** (geometry is reconciled against the
 routes repo, not media URLs) — `discover_ref_pairs` drops them automatically.
+**Owner/operator refs** don't live on the tracker tab — the worklist joins the separate
+**"Pipeline operators/owners" tab** (GID 1489950650, ProjectID-keyed) and stages
+`Operator [ref]` / `Owner [ref]` units onto a dedicated `<Cmdty>_OperatorsOwners` tab.
 
 1. Fresh pull.
 2. **Worklist** (scope scan + classify; `--verify-existing` HTTP-checks existing refs up
@@ -120,7 +123,8 @@ routes repo, not media URLs) — `discover_ref_pairs` drops them automatically.
      --output batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
    python scripts/recalc.py batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
    ```
-   Leads with **`<Cmdty>_Backend`** — a paste-ready mirror of the live-sheet layout (each
-   touched value next to its `[ref]`, `[ref]` cell colored by corroboration tier). Work from
-   that tab; the `*_Refs_*` bucket tabs are supporting detail. Then present. Scale
-   country-by-country on Baird's sign-off.
+   Leads with two paste-ready tabs: **`<Cmdty>_Backend`** (mirror of the tracker layout —
+   each touched value next to its `[ref]`, colored by tier) and **`<Cmdty>_OperatorsOwners`**
+   (mirror of the operators/owners tab — ProjectID-keyed, `[ref]` precedes its values; paste
+   back onto that tab by ProjectID). Work from those; the `*_Refs_*` bucket tabs are supporting
+   detail. Then present. Scale country-by-country on Baird's sign-off.

@@ -94,6 +94,9 @@ Routing notes:
   **Route/geometry `[ref]` cells are out of scope** for Ref Sweep (geometry → routes repo,
   not media URLs); the deliverable leads with a `<Cmdty>_Backend` tab that mirrors the
   live-sheet layout (value beside its `[ref]`, colored by corroboration tier).
+  **Owner/operator refs** live on the separate ProjectID-keyed "Pipeline operators/owners"
+  tab (GID 1489950650) — the worklist joins it and stages `Operator [ref]`/`Owner [ref]`
+  onto a dedicated `<Cmdty>_OperatorsOwners` tab (`[ref]` precedes its values there).
 
 ---
 

@@ -10,10 +10,13 @@ matches a column in the run (exact or prefix — `Capacity`→`Capacity`, `Lengt
 When no name matches (gas `Location [ref]` covers BOTH endpoints; `H2RepurposedKmOr%
 [ref]`), we keep the whole run and flag `irregular=True` for reviewer sanity.
 
-`Owner`/`Parent` have **no** `[ref]` column on the pipeline tab — emitted as a synthetic
-`kind='owner'` pair. Owner/operator source URLs live in a **separate backend tab,
-"Pipeline operators/owners"** (entity-keyed), not in a `[ref]` cell or `ResearcherNotes`
-on the pipeline row.
+`Owner`/`Parent` have **no** `[ref]` column on the tracker tab — `discover_ref_pairs`
+emits a synthetic `kind='owner'` placeholder pair (kept for the QC BroadSweep). The real
+owner/operator source URLs live in a **separate backend tab, "Pipeline operators/owners"**
+(GID 1489950650, header at CSV row index 1, **ProjectID-keyed**) whose `Operator [ref]` /
+`Owner [ref]` columns the reference sweep fills. On that tab the `[ref]` column **PRECEDES**
+its values (opposite of the trackers) — `discover_owner_ref_pairs` handles it with a forward
+group-walk.
 
 Pure stdlib, no pandas/I-O at import. Shared by build_ref_worklist.py and the
 BroadSweep check in build_qc_workbook.py (single source of truth for ref pairing).
@@ -144,11 +147,73 @@ def discover_ref_pairs(columns: list[str]) -> list[dict]:
     return pairs
 
 
+# ── Operators/owners tab (GID 1489950650) ───────────────────────────────────────
+# Separate ProjectID-keyed backend tab where owner/operator refs actually live. Unlike
+# the trackers, the `[ref]` column PRECEDES its value run, so we forward-walk. Header is
+# at CSV row index 1 (not 2). Two ref clusters: Operator [ref] → Operator block,
+# Owner [ref] → Owner1..Owner11(+%) block.
+OO_HEADER_INDEX = 1
+# identity / derived / summary columns on the OO tab that never belong to a ref cluster
+OO_NON_VALUE_COLS = {
+    "PipelineNetworkContainer", "PipelineName", "SegmentName", "Countries", "Wiki",
+    "ProjectID", "Researcher", "LastUpdated", "StartRegion", "EndRegion",
+    "LengthMergedKm", "Fuel", "Status", "PCI6", "AggregateOwners", "Notes/Links",
+    "Percentage Verification",
+}
+# canonical primary value col per OO ref (the human-readable name to verify against)
+OO_PRIMARY = {"Operator [ref]": "Operator", "Owner [ref]": "Owner1"}
+
+
+def discover_owner_ref_pairs(columns: list[str]) -> list[dict]:
+    """Pairs for the operators/owners tab — the `[ref]` column PRECEDES its values, so a
+    ref governs the FORWARD run of value cols until the next `[ref]` (or end), minus
+    identity/derived/summary cols. Returns the same pair-dict shape as discover_ref_pairs
+    plus `ref_leads: True` and `tab: 'operators_owners'`. `kind` ∈ 'operator'|'owner'."""
+    cols = list(columns)
+    n = len(cols)
+    pairs: list[dict] = []
+    for i, c in enumerate(cols):
+        if not c.endswith(REF_SUFFIX):
+            continue
+        value_cols = []
+        j = i + 1
+        while j < n and not cols[j].endswith(REF_SUFFIX):
+            if cols[j] not in OO_NON_VALUE_COLS:
+                value_cols.append(cols[j])
+            j += 1
+        if not value_cols:
+            continue
+        primary = OO_PRIMARY.get(c)
+        if primary not in value_cols:
+            primary = value_cols[0]
+        kind = "owner" if c == "Owner [ref]" else "operator"
+        pairs.append({
+            "ref_col": c,
+            "value_cols": value_cols,
+            "primary_value_col": primary,
+            "kind": kind,
+            "match_kind": "ref_leads",
+            "irregular": False,
+            "ref_leads": True,
+            "tab": "operators_owners",
+        })
+    return pairs
+
+
 def _main() -> None:
     import csv
     import sys
-    if len(sys.argv) != 2:
-        sys.exit("usage: python scripts/ref_pairs.py <GEM_csv>")
+    if len(sys.argv) not in (2, 3):
+        sys.exit("usage: python scripts/ref_pairs.py <GEM_csv> [--owners]")
+    if len(sys.argv) == 3 and sys.argv[2] == "--owners":
+        with open(sys.argv[1], newline="") as f:
+            header = list(csv.reader(f))[OO_HEADER_INDEX]   # OO header at row index 1
+        pairs = discover_owner_ref_pairs(header)
+        print(f"{len(header)} cols → {len(pairs)} operators/owners pairs:\n")
+        for p in pairs:
+            print(f"  {p['ref_col']:16s} [{p['kind']}] primary={p['primary_value_col']}")
+            print(f"      values: {p['value_cols']}")
+        return
     with open(sys.argv[1], newline="") as f:
         header = list(csv.reader(f))[2]   # header at row index 2
     pairs = discover_ref_pairs(header)
