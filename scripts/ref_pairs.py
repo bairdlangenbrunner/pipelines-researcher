@@ -60,12 +60,20 @@ ORPHAN_OK_VALUE_COLS = {
 # Owner cluster: no [ref] column exists. Handled as a synthetic pair.
 OWNER_VALUE_COLS = ["Owner", "Parent"]
 
+# Route / geometry cluster: deliberately OUT OF SCOPE for the reference sweep. Pipeline
+# geometry is reconciled against the GOIT-GGIT-pipeline-routes repo (a separate human
+# branch + PR) and is not corroborated from media `[ref]` URLs — so we neither fill nor
+# re-verify `Route [ref]`. The value cols are excluded from every cluster and the
+# `Route [ref]` column itself emits no pair (see SKIP_REF_COLS in discover_ref_pairs).
+ROUTE_VALUE_COLS = {"RouteType", "RouteAccuracy", "RouteNotes"}
+SKIP_REF_COLS = {"Route [ref]"}
+
 _UNIT_SUFFIXES = ("Units",)
 
 
 def _excluded(col: str, columns_set: set) -> bool:
     """True if `col` should never be part of a cluster."""
-    if col in NON_REF_VALUE_COLS or col in OWNER_VALUE_COLS:
+    if col in NON_REF_VALUE_COLS or col in OWNER_VALUE_COLS or col in ROUTE_VALUE_COLS:
         return True
     # orphan-ok only when it has no [ref] of its own
     if col in ORPHAN_OK_VALUE_COLS and (col + REF_SUFFIX) not in columns_set:
@@ -98,6 +106,9 @@ def discover_ref_pairs(columns: list[str]) -> list[dict]:
     run: list[str] = []
     for c in columns:
         if c.endswith(REF_SUFFIX):
+            if c in SKIP_REF_COLS:   # geometry is out of scope — drop the run, emit no pair
+                run = []
+                continue
             stripped = c[: -len(REF_SUFFIX)]
             primary, match_kind = _pick_primary(stripped, run)
             if match_kind in ("exact", "prefix") and primary in run:

@@ -91,6 +91,9 @@ Routing notes:
   (fills blank refs to the ≥2-independent-corroborating target AND re-verifies live
   ones). Update's "fill blank refs" is ad-hoc enrichment of in-dev rows; the dedicated
   at-scale crawl is Ref Sweep. They share one ref-pair model (`scripts/ref_pairs.py`).
+  **Route/geometry `[ref]` cells are out of scope** for Ref Sweep (geometry → routes repo,
+  not media URLs); the deliverable leads with a `<Cmdty>_Backend` tab that mirrors the
+  live-sheet layout (value beside its `[ref]`, colored by corroboration tier).
 
 ---
 
