@@ -3,8 +3,8 @@
 page, so the agent starts research from sources GEM already used. We are allowed to
 VISIT gem.wiki (we fetch it directly here) but must NEVER cite it (standing rule 1) —
 so this returns only the *underlying* external URLs the page links to, with gem.wiki /
-globalenergymonitor / theodora filtered out. Expect many to be dead; the agent verifies
-each with url_verifier before use.
+globalenergymonitor and the url_verifier blocklist (theodora, A Barrel Full / wikidot.com)
+filtered out. Expect many to be dead; the agent verifies each with url_verifier before use.
 
 Harvested ONCE per ProjectID (one fetch serves every ref cell on the row).
 
@@ -152,7 +152,7 @@ def main() -> None:
     ncites = sum(len(p["citations"]) for p in data["pages"].values())
     print(f"wrote {out}")
     print(f"  pages: {npages} ({nok} fetched ok) — {ncites} external citations harvested "
-          f"(gem.wiki/theodora excluded)")
+          f"(gem.wiki/theodora/abarrelfull/wikidot excluded)")
 
 
 if __name__ == "__main__":

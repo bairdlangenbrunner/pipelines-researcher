@@ -26,6 +26,7 @@ Baird works from. Route/geometry `[ref]` cells are out of scope (reconciled sepa
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import sys
 from pathlib import Path
@@ -38,6 +39,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from build_recon_workbook import (  # noqa: E402
     CONF_FILL, HEADER_FILL, J, _style_header, _write_sheet,
 )
+from ref_pairs import discover_ref_pairs  # noqa: E402
 
 BLUE_FILL = PatternFill("solid", fgColor="DDEBF7")   # re-verified (blue), per confidence_tiers
 
@@ -128,29 +130,62 @@ def _ref_cell_fill(r: dict):
     return CONF_FILL.get(_tier_color(r), PatternFill())
 
 
-def _backend_view(wb, title, resolutions):
+def _schema_clusters(meta: dict, staging: Path) -> dict:
+    """Map `{ref_col: value_cols}` derived from the ACTUAL GEM header (the schema), via the
+    same discover_ref_pairs the worklist uses — the authoritative cluster definition so the
+    Backend tab mirrors the backend's full value-col run (Cost+CostUnits, Capacity+
+    CapacityUnits, …) even for older staging whose resolutions predate per-unit value_cols.
+    Best-effort: returns {} if the snapshot CSV named in meta.scope.csv can't be located."""
+    csv_name = (meta.get("scope") or {}).get("csv")
+    if not csv_name:
+        return {}
+    # snapshots live in the repo data/ dir; tolerate either an absolute path or a bare name
+    cand = Path(csv_name)
+    if not cand.exists():
+        cand = Path(__file__).resolve().parent.parent / "data" / Path(csv_name).name
+    if not cand.exists():
+        return {}
+    try:
+        with cand.open(newline="") as f:
+            header = list(csv.reader(f))[2]   # tracker header at CSV row index 2
+    except (OSError, IndexError):
+        return {}
+    return {p["ref_col"]: p["value_cols"]
+            for p in discover_ref_pairs(header) if p["ref_col"]}
+
+
+def _backend_view(wb, title, resolutions, schema_clusters=None):
     """The PRIMARY tab: a paste-ready mirror of the GEM backend. One row per pipeline
-    segment; each touched data point is shown as its value column immediately followed by
-    its `[ref]` column carrying the proposed ref(s), color-coded by corroboration tier
-    (same green/yellow/red/blue key as the bucket tabs). Column order follows the sheet
-    (first-appearance order of each ref unit in the staged resolutions, which are emitted
-    in row-then-pair order). Owner/Parent have no `[ref]` column on the pipeline tab —
-    their source URL belongs in the separate "Pipeline operators/owners" backend tab, so it
-    rides in a labeled (→ Operators/Owners tab) column here."""
-    # ordered data points (one per distinct ref unit), by first appearance
-    dp_order: list[str] = []                 # ordered keys
-    dp_meta: dict[str, tuple[str, str]] = {}  # key -> (value header, ref header)
+    segment; each touched cluster is shown as ALL its value columns in schema order
+    (e.g. `Cost` then `CostUnits`; `Capacity` then `CapacityUnits`; `StartYear1`,
+    `StartMonth1`, … — not just the primary), immediately followed by its `[ref]` column
+    carrying the proposed ref(s), color-coded by corroboration tier (same green/yellow/
+    red/blue key as the bucket tabs). Column order follows the sheet (first-appearance
+    order of each ref unit in the staged resolutions, which are emitted in row-then-pair
+    order). Owner/Parent have no `[ref]` column on the pipeline tab — their source URL
+    belongs in the separate "Pipeline operators/owners" backend tab, so it rides in a
+    labeled (→ Operators/Owners tab) column here."""
+    # ordered clusters (one per distinct ref unit), by first appearance; capture the FULL
+    # value-col run so sibling cols (CostUnits, CapacityUnits, *Month, location sub-fields)
+    # are mirrored exactly as in the backend rather than collapsed to the primary value.
+    # Source of truth for the run: the schema (discover_ref_pairs on the real header), then
+    # the resolution's own value_cols, then — last resort — just the primary value col.
+    schema_clusters = schema_clusters or {}
+    dp_order: list[str] = []                        # ordered keys (ref_col)
+    dp_meta: dict[str, tuple[list[str], str]] = {}  # key -> (value headers, ref header)
     for r in resolutions:
         key = r.get("ref_col") or "Owner"
         if key in dp_meta:
             continue
         dp_order.append(key)
         if r.get("ref_col"):
-            vcol = r.get("primary_value_col") or next(iter(r.get("values", {})), "") \
-                or key[: -len(" [ref]")]
-            dp_meta[key] = (vcol, r["ref_col"])
+            vcols = list(schema_clusters.get(key) or r.get("value_cols") or [])
+            if not vcols:
+                vcols = [r.get("primary_value_col") or next(iter(r.get("values", {})), "")
+                         or key[: -len(" [ref]")]]
+            dp_meta[key] = (vcols, r["ref_col"])
         else:
-            dp_meta[key] = ("Owner", "Owner (→ Pipeline operators/owners tab)")
+            dp_meta[key] = (["Owner", "Parent"], "Owner (→ Pipeline operators/owners tab)")
 
     # group resolutions by segment, preserving first-seen order
     seg_order: list[tuple] = []
@@ -165,18 +200,19 @@ def _backend_view(wb, title, resolutions):
     ws = wb.create_sheet(title)
     base = ["ProjectID", "SheetRow", "PipelineName", "SegmentName"]
     headers = list(base)
+    ref_pos: dict[str, int] = {}      # key -> 1-based column index of its [ref] cell
     for key in dp_order:
-        vh, rh = dp_meta[key]
-        headers += [vh, rh]
+        vcols, rh = dp_meta[key]
+        headers.extend(vcols)
+        headers.append(rh)
+        ref_pos[key] = len(headers)
     ws.append(headers)
 
     base_w = [12, 9, 30, 22]
     for i, w in enumerate(base_w, 1):
         ws.column_dimensions[get_column_letter(i)].width = w
-    for j in range(len(dp_order)):
-        vcol = 5 + 2 * j
-        ws.column_dimensions[get_column_letter(vcol)].width = 16
-        ws.column_dimensions[get_column_letter(vcol + 1)].width = 46
+    for col, h in enumerate(headers[len(base):], start=len(base) + 1):
+        ws.column_dimensions[get_column_letter(col)].width = 46 if h.endswith(" [ref]") else 16
 
     for sk in seg_order:
         b = segs[sk]["base"]
@@ -184,15 +220,19 @@ def _backend_view(wb, title, resolutions):
         rowvals = [b.get("project_id", ""), b.get("sheet_row", ""),
                    b.get("pipeline_name", ""), b.get("segment_name", "")]
         for key in dp_order:
+            vcols, _ = dp_meta[key]
             r = by_key.get(key)
-            rowvals += [r.get("primary_value", "") if r else "", _ref_cell_text(r) if r else ""]
+            vals = r.get("values", {}) if r else {}
+            for vc in vcols:
+                rowvals.append(vals.get(vc, ""))
+            rowvals.append(_ref_cell_text(r) if r else "")
         ws.append(rowvals)
         rn = ws.max_row
-        for j, key in enumerate(dp_order):
+        for key in dp_order:
             r = by_key.get(key)
             if not r:
                 continue
-            cell = ws.cell(rn, 5 + 2 * j + 1)   # the [ref] cell
+            cell = ws.cell(rn, ref_pos[key])   # the [ref] cell
             cell.fill = _ref_cell_fill(r)
             cell.alignment = Alignment(wrap_text=False, vertical="top")
 
@@ -354,6 +394,10 @@ def main() -> None:
     columns = _ref_columns()
     sheet_defs = []
 
+    # authoritative cluster definition from the real GEM header (so the Backend tab mirrors
+    # the full value-col run — Cost+CostUnits, etc. — regardless of staging vintage)
+    schema_clusters = _schema_clusters(meta, Path(args.staging))
+
     # owner/operator refs land on the separate "Pipeline operators/owners" backend tab, so
     # they get their own paste-ready mirror; everything else mirrors the tracker tab.
     oo_res = [r for r in resolutions if r.get("tab") == "operators_owners"]
@@ -362,7 +406,7 @@ def main() -> None:
     # PRIMARY tab first (after README): the tracker backend-mirror, paste-ready view.
     if tracker_res:
         backend_title = f"{prefix}_Backend"
-        _backend_view(wb, backend_title, tracker_res)
+        _backend_view(wb, backend_title, tracker_res, schema_clusters)
         sheet_defs.append((backend_title,
                            "PRIMARY — paste-ready mirror of the GEM tracker backend: one row per segment, each "
                            "touched data point as <value> then <value> [ref] carrying the proposed ref(s). "

@@ -61,6 +61,10 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
 ## Forbidden / cautioned
 - **GEM.wiki / globalenergymonitor.org** — never self-cite (standing rule 1).
 - **Wikipedia** — never cite directly; use it only to reach original sources.
+- **A Barrel Full (`abarrelfull.wikidot.com`) and any `wikidot.com` page** — tertiary
+  wiki aggregators that restate other sources (same class as Wikipedia). Never cite;
+  read only to reach the underlying source. `url_verifier` rejects them.
+- **theodora.com** — never an acceptable reference (`url_verifier` rejects it).
 - A scraped dataset alone never reaches green (Tier-2 ceiling).
 
 ## Most productive search patterns
