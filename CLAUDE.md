@@ -76,7 +76,8 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Update existing pipelines** (most common) | "update pipelines in <country>", "refresh <country>", "fill blank refs", "status sweep for <country>", "resolve the recon disagreements" | `workflows.md` §2 + Update SOP |
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §3 + Discovery SOP |
 | **Triage** (plan the batch; memo) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §4 + Triage SOP |
-| **Quality control** (xlsx; detects → Update fixes) | "qc pass", "data-health audit", "rebuild the QC workbook", "link-rot sweep" | `workflows.md` §5 + QC SOP |
+| **Quality control** (xlsx; detects → Update fixes) | "qc pass", "data-health audit", "rebuild the QC workbook" | `workflows.md` §5 + QC SOP |
+| **Reference sweep** (xlsx; fill & re-verify every `[ref]`) | "ref sweep for <country>", "fill and verify refs", "corroborate the refs in <country>", "re-verify refs", "link-rot + refill" | `workflows.md` §6 + Ref Sweep SOP |
 
 Routing notes:
 - A reconciliation reference-only (`Addition`) row is usually **not** a missing
@@ -85,6 +86,11 @@ Routing notes:
 - A scraped dataset is **one source in a conflict, never automatically
   authoritative** — value disagreements route to Update's normal source-search.
 - QC never edits: it audits and routes fixes to Update ("QC detects, Update fixes").
+- **Ref Sweep vs QC vs Update:** QC *detects* orphan refs (ref filled, value blank);
+  Ref Sweep *systematically researches & stages* refs across all rows×ref-cells
+  (fills blank refs to the ≥2-independent-corroborating target AND re-verifies live
+  ones). Update's "fill blank refs" is ad-hoc enrichment of in-dev rows; the dedicated
+  at-scale crawl is Ref Sweep. They share one ref-pair model (`scripts/ref_pairs.py`).
 
 ---
 
