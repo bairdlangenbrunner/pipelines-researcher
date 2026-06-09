@@ -9,9 +9,12 @@ present, no GEM/theodora).
     # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"   (never overwrite)
 
 Sheets (commodity-prefixed; empty omitted; README first):
-  <Cmdty>_Backend          PRIMARY paste-ready view — mirrors the GEM backend layout (each
+  <Cmdty>_Backend          PRIMARY paste-ready view — mirrors the GEM tracker layout (each
                            touched data point as <value> then <value> [ref] carrying the
                            proposed ref(s), colored by corroboration tier). Work from this.
+  <Cmdty>_OperatorsOwners  paste-ready mirror of the separate "Pipeline operators/owners"
+                           backend tab (ProjectID-keyed; [ref] PRECEDES its values) — the
+                           Operator [ref] / Owner [ref] cells, colored by tier.
   <Cmdty>_Refs_Added       MISSING_REF resolved — green ≥2 independent / yellow single
   <Cmdty>_Refs_Reverified  HAS_REF, links live + contain value (blue)
   <Cmdty>_Refs_DeadLinks   HAS_REF with a dead/value-missing link + proposed replacement
@@ -198,6 +201,90 @@ def _backend_view(wb, title, resolutions):
     return ws
 
 
+def _prune_trailing_empty(value_cols, resolutions, ref_col):
+    """Drop trailing value cols that are blank across every in-scope row for this ref
+    (keeps the paste left-aligned; unused Owner2..Owner11 slots stay off-sheet). Always
+    keep at least the first value col."""
+    used = set()
+    for r in resolutions:
+        if r.get("ref_col") != ref_col:
+            continue
+        for c, v in r.get("values", {}).items():
+            if str(v).strip():
+                used.add(c)
+    last = -1
+    for i, c in enumerate(value_cols):
+        if c in used:
+            last = i
+    return value_cols[: last + 1] if last >= 0 else value_cols[:1]
+
+
+def _operators_owners_view(wb, title, resolutions):
+    """Paste-ready mirror of the backend "Pipeline operators/owners" tab (GID 1489950650),
+    where the `[ref]` column PRECEDES its values. ProjectID-keyed (one row per ProjectID);
+    for each ref unit the `[ref]` cell — carrying the proposed ref(s), color-coded by
+    corroboration tier — comes FIRST, then its value columns for context. Trailing all-empty
+    owner slots are pruned. Baird pastes each `[ref]` cell back onto that tab by ProjectID."""
+    # ref units in native order (Operator [ref] before Owner [ref]), by first appearance
+    ref_order: list[str] = []
+    ref_vcols: dict[str, list[str]] = {}
+    for r in resolutions:
+        rc = r.get("ref_col")
+        if rc and rc not in ref_vcols:
+            ref_order.append(rc)
+            ref_vcols[rc] = list(r.get("value_cols", []))
+    for rc in ref_order:
+        ref_vcols[rc] = _prune_trailing_empty(ref_vcols[rc], resolutions, rc)
+
+    # group by ProjectID (the OO tab is one row per ProjectID)
+    proj_order: list[str] = []
+    projs: dict[str, dict] = {}
+    for r in resolutions:
+        pid = r.get("project_id", "")
+        if pid not in projs:
+            projs[pid] = {"base": r, "by_ref": {}}
+            proj_order.append(pid)
+        projs[pid]["by_ref"][r.get("ref_col")] = r
+
+    ws = wb.create_sheet(title)
+    base = ["ProjectID", "PipelineName", "SegmentName"]
+    headers = list(base)
+    ref_pos: dict[str, int] = {}      # ref_col -> 1-based column index of its [ref] cell
+    for rc in ref_order:
+        headers.append(rc)            # ref FIRST (mirrors the tab)
+        ref_pos[rc] = len(headers)
+        headers.extend(ref_vcols[rc])  # then its value cols
+    ws.append(headers)
+
+    for i, w in enumerate([12, 30, 20], 1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    for col, h in enumerate(headers[len(base):], start=len(base) + 1):
+        ws.column_dimensions[get_column_letter(col)].width = 46 if h.endswith(" [ref]") else 18
+
+    for pid in proj_order:
+        b = projs[pid]["base"]
+        by_ref = projs[pid]["by_ref"]
+        rowvals = [pid, b.get("pipeline_name", ""), b.get("segment_name", "")]
+        for rc in ref_order:
+            r = by_ref.get(rc)
+            rowvals.append(_ref_cell_text(r) if r else "")
+            for vc in ref_vcols[rc]:
+                rowvals.append(r.get("values", {}).get(vc, "") if r else "")
+        ws.append(rowvals)
+        rn = ws.max_row
+        for rc in ref_order:
+            r = by_ref.get(rc)
+            if not r:
+                continue
+            cell = ws.cell(rn, ref_pos[rc])   # the [ref] cell
+            cell.fill = _ref_cell_fill(r)
+            cell.alignment = Alignment(wrap_text=False, vertical="top")
+
+    _style_header(ws, len(headers))
+    ws.freeze_panes = "D2"   # keep ProjectID..SegmentName visible while scrolling
+    return ws
+
+
 def _fill_readme(ws, meta, sheet_defs):
     ws.column_dimensions["A"].width = 26
     ws.column_dimensions["B"].width = 100
@@ -213,8 +300,10 @@ def _fill_readme(ws, meta, sheet_defs):
         ("", ""),
         ("Counts", J([f"{k}={v}" for k, v in counts.items()])),
         ("", ""),
-        ("Work from", f"the {meta.get('commodity', scope.get('tracker', 'oil')).capitalize()}_Backend tab — "
-                      "it mirrors the live-sheet layout (value next to its [ref]); the *_Refs_* tabs are detail."),
+        ("Work from", f"the {meta.get('commodity', scope.get('tracker', 'oil')).capitalize()}_Backend tab "
+                      "(mirrors the tracker layout, value next to its [ref]) and the _OperatorsOwners tab "
+                      "(owner/operator refs → the separate \"Pipeline operators/owners\" backend tab, "
+                      "ProjectID-keyed); the *_Refs_* tabs are supporting detail."),
         ("Color key", "[ref]-cell color = corroboration tier: green=≥2 independent working sources / "
                       "yellow=single / red=low or none. Blue=re-verified existing ref (no action). On the "
                       "*_Refs_DeadLinks tab, a red Current-ref cell = dead/value-missing link."),
@@ -265,16 +354,31 @@ def main() -> None:
     columns = _ref_columns()
     sheet_defs = []
 
-    # PRIMARY tab first (after README): the backend-mirror, paste-ready view.
-    if resolutions:
+    # owner/operator refs land on the separate "Pipeline operators/owners" backend tab, so
+    # they get their own paste-ready mirror; everything else mirrors the tracker tab.
+    oo_res = [r for r in resolutions if r.get("tab") == "operators_owners"]
+    tracker_res = [r for r in resolutions if r.get("tab") != "operators_owners"]
+
+    # PRIMARY tab first (after README): the tracker backend-mirror, paste-ready view.
+    if tracker_res:
         backend_title = f"{prefix}_Backend"
-        _backend_view(wb, backend_title, resolutions)
+        _backend_view(wb, backend_title, tracker_res)
         sheet_defs.append((backend_title,
-                           "PRIMARY — paste-ready mirror of the GEM backend: one row per segment, each "
+                           "PRIMARY — paste-ready mirror of the GEM tracker backend: one row per segment, each "
                            "touched data point as <value> then <value> [ref] carrying the proposed ref(s). "
                            "[ref] cell color = corroboration tier (green=≥2 independent / yellow=single / "
                            "red=low or none / blue=re-verified). Work from THIS tab; the *_Refs_* tabs below "
                            "are supporting detail."))
+
+    # operators/owners paste-ready mirror (ProjectID-keyed, ref-precedes-values)
+    if oo_res:
+        oo_title = f"{prefix}_OperatorsOwners"
+        _operators_owners_view(wb, oo_title, oo_res)
+        sheet_defs.append((oo_title,
+                           "PASTE-READY — mirror of the separate \"Pipeline operators/owners\" backend tab "
+                           "(GID 1489950650), ProjectID-keyed, where the [ref] column PRECEDES its values. "
+                           "Operator [ref] / Owner [ref] cells carry the proposed ref(s), color-coded by "
+                           "tier. Paste each back onto that tab by ProjectID — NOT onto a tracker row."))
 
     counts = {}
     for bucket in _ORDER:
