@@ -43,7 +43,7 @@ def _style_header(ws, ncols):
         cell = ws.cell(1, c)
         cell.fill = HEADER_FILL
         cell.font = HEADER_FONT
-        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=False)
     ws.freeze_panes = "A2"
 
 
@@ -223,7 +223,7 @@ def _fill_readme(ws, meta, sheet_defs):
         ws.cell(1, c).font = Font(bold=True, color="FFFFFF", size=13)
     for rn in range(2, ws.max_row + 1):
         ws.cell(rn, 1).font = Font(bold=True)
-        ws.cell(rn, 2).alignment = Alignment(wrap_text=True, vertical="top")
+        ws.cell(rn, 2).alignment = Alignment(wrap_text=False, vertical="top")
     ws.freeze_panes = "A2"
 
 

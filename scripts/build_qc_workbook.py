@@ -181,7 +181,7 @@ def _add_sheet(wb, title, rows):
     for c in range(1, len(cols) + 1):
         cell = ws.cell(1, c)
         cell.fill, cell.font = HEADER_FILL, HEADER_FONT
-        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+        cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=False)
         ws.column_dimensions[get_column_letter(c)].width = widths[c - 1]
     ws.freeze_panes = "A2"
     return len(rows)
