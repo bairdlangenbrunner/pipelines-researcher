@@ -113,17 +113,43 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 ## Deep sweep variant (ref sweep + deep-fill + validity check)
 The combined mode (`workflows.md §6b`): in one pass per row, do the standard ref sweep
 **plus** (a) research and fill **blank value fields** with paired refs (best-effort on weak
-fields like Capacity — don't force a number), and (b) judge each pipeline's **validity /
-existence** and flag concerns. Same deliverable, tabs, tiers, and standing rules — still
-read-and-stage only. Two schema extensions to `staged_resolutions.json`:
+fields like Capacity — don't force a number), and (b) **critically confirm the existing data
+points and judge each pipeline's validity / existence**. Same standing rules — still
+read-and-stage only.
+
+**Critically confirm, don't just check ref liveness (standing requirement).** A re-verified
+`[ref]` is not the goal; *a confirmed value* is. For every non-trivial data point (status,
+length, diameter, capacity, endpoints, owner/operator, classification, dates) actively ask
+whether independent sources **agree with the GEM value**, not merely whether a live page
+mentions the pipeline. When sources **materially disagree** with GEM, that is a finding —
+raise a `__VALIDITY__` record (`verdict="concern"`), never a silent `REVERIFIED`. Beyond
+per-value confirmation, take a skeptical pass on every pipeline and flag:
+- **existence** — no independent evidence the pipeline is real (possible hallucination / a
+  GEM-only entity entered from a misread source);
+- **duplicate** — likely the same physical pipe as another GEM row under a different name/relabel;
+- **classification** — not a transmission line at all, or wrong commodity (e.g. an NGL line
+  recorded as dry gas, a gathering/process/feeder line recorded as a trunk transmission line);
+- **attribution** — wrong owner/operator, province, FuelSource, or endpoint;
+- **spec** — length/diameter/capacity that independent sources contradict.
+
+Two schema extensions to `staged_resolutions.json`:
 - **`class_in="FILL"`** — a deep-fill record (blank value → researched value). `values`
   carries the filled field(s); `proposed_refs`/`verifications` corroborate them; `class_out`
   is `REFS_ADDED` if a paired ref verifies, else `UNRESOLVED`. `build_ref_workbook.py`
-  routes it like any value+ref pair on the `_Backend` tab.
-- **`ref_col="__VALIDITY__"`** — a per-pipeline validity flag, not a ref. No `proposed_refs`;
-  the finding lives in `researcher_notes` (wrong owner, province error, suspicious specs,
-  duplicate/relabel suspect, GEM-only entity). Surfaces in `ResearcherNotes` / the Unresolved
-  bucket without proposing an edit. One per flagged ProjectID.
+  routes these to a dedicated **`<Cmdty>_Fills`** tab (Outcome = `filled (corroborated)` vs
+  `not corroborated / dropped`), NOT the `_Backend` mirror.
+- **`ref_col="__VALIDITY__"`** — a per-pipeline validity flag, not a ref (one per flagged
+  ProjectID). Routed to a dedicated **`<Cmdty>_Validity`** tab. Emit these structured fields
+  so the tab reads them directly (the builder falls back to parsing `researcher_notes` only
+  for legacy shards that omit them):
+  - `verdict` — `"confirmed (caveat)"` (pipeline is real; lesser caveat noted) or `"concern"`
+    (open existence/duplicate/classification doubt). Drives the tab's red/green flag.
+  - `concern_type` — one of `existence` / `duplicate` / `classification` / `attribution` /
+    `spec` / `none`.
+  - `recommendation` — short human-facing next step (e.g. "reclassify as NGL", "merge into
+    P####", "verify endpoint before keeping").
+  - `researcher_notes` — the full finding (authoritative); `proposed_refs` + `verifications`
+    — the independent sources backing the judgment (encouraged, even though it is not a ref edit).
 
 ## At scale (subagent fan-out)
 A whole-country deep sweep is too large for one context. Fan out:

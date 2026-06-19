@@ -1,0 +1,87 @@
+{
+  "project_id": "P1921",
+  "pipeline_name": "Abu Ali-Berri Gas Pipeline",
+  "sheet_row": 1052,
+  "wiki": "https://www.gem.wiki/Abu_Ali-Berri_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Demote confidence: confirm the 2008 44km/30in dry-gas line exists independently or reclassify; the only non-GEM source (steel-network.com) has link-rotted.",
+      "researcher_notes": "Corridor is REAL: Abu Ali Island (Eastern Province, ~4.5 nm off Jubail) and Berri Gas Plant are genuine Aramco facilities, confirmed independently (en.wikipedia.org/wiki/Abu_Ali_Island; nsenergybusiness.com Berri Oil Field Expansion, both verified OK and name both Abu Ali + Berri + Aramco). But the SPECIFIC '44 km / 30 in / 2008 / 220 MMcf/d gas pipeline' entity is traceable ONLY to GEM and to the gem.wiki page's sole spec citation [3], an Arabic steel-network.com article (more=617). That URL now 301-redirects to steelnetwork.me and the article is GONE — url_verifier FAILs it for the Arabic token 'الجبيل', and a fetch of the redirect shows generic steel-news content with NO pipeline mention. The OPEC ASB 2011/2012 citations [1][2] are generic Saudi gas-stats refs: url_verifier confirms ASB2012.pdf does NOT contain 'Abu Ali' or 'Berri'. So no independent source corroborates this exact pipeline or its specs. The corridor exists; this specific GEM gas-line record rests on one dead source -> existence caveat, not confirmed.",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Abu_Ali_Island", "https://www.nsenergybusiness.com/projects/berri-oil-field-expansion/"],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Confirm P1921 (44km 'Main Pipeline') vs P7768 (22km 'Subsea Pipeline') are intentionally-separate segments of ONE system, not a double-count; both derive from one gem.wiki page + one source.",
+      "researcher_notes": "P1921 and P7768 are BOTH named 'Abu Ali-Berri Gas Pipeline', both Aramco, both 30 in, both start 2008, both cap 220, both end at Berri Gas Plant, and BOTH point to the identical single gem.wiki page (Abu_Ali-Berri_gas_pipeline) with the identical 3-citation set. The wiki page contains TWO infoboxes: 'Main Pipeline' = 44 km (=P1921) and 'Subsea Pipeline' = 22 km (=P7768). So GEM intends them as two segments (onshore main + offshore subsea) of one Abu Ali<->Berri system rather than an accidental relabel duplicate. Still flag: they share a single weak (dead) source for all specs and identical attributes, so a double-count / over-segmentation risk is real and should be human-reviewed alongside P7768.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Verify commodity/type: confirm this is a dry-gas TRANSMISSION line, not a crude/condensate or gathering line (Abu Ali<->Berri infrastructure in independent sources is oil-field/GOSP/condensate).",
+      "researcher_notes": "Every independent source found for Abu Ali<->Berri describes CRUDE/condensate infrastructure: the Berri Oil Field Increment, a Gas-Oil Separation Plant (GOSP) on Abu Ali Island, ~40,000 bpd hydrocarbon condensate to Khursaniyah, subsea OIL pipelines (Subsea7/L&T 2019, Saipem). GEM itself separately maintains an 'Abu Ali-Berri junction OIL pipeline' page. The dry-gas classification of P1921 rests solely on the dead steel-network article and the gem.wiki label. Plausible it is misclassified (NGL/condensate or gathering/feeder rather than a gas trunk). Needs commodity verification before treated as confirmed dry-gas transmission.",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/berri-oil-field-expansion/"],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Drop or flag Capacity=220 MMcf/d as unsourced; treat Length 44km / Diameter 30in / Start 2008 as single-weak (dead source) pending re-verification.",
+      "researcher_notes": "Capacity 220 MMcf/d is UNSOURCED: it is blank ('Capacity:') on the gem.wiki infobox and appears in NO independent source (web search explicitly could not find a 220 figure). The prior worklist 'ok:true' for the Capacity/Diameter ref was the verifier loose-matching a bare number on the steel-network page; that page's article is now gone, so even that loose match is invalid. Length 44 km, Diameter 30 in, Start 2008 trace only to the same dead steel-network citation + the GEM page = single weak source, no independent corroboration. None of these GEM numbers reach >=2 independent agreement; capacity in particular should not stand.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1052,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartState/Province",
+      "values": {"StartState/Province": "Eastern Province", "StartCountryOrArea": "Saudi Arabia", "EndState/Province": "Eastern Province", "EndCountryOrArea": "Saudi Arabia"},
+      "primary_value": "Eastern Province",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Abu_Ali_Island"],
+      "verifications": [{"url": "https://en.wikipedia.org/wiki/Abu_Ali_Island", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Geography corroborated: Abu Ali Island is in the Eastern Province of Saudi Arabia, in the Persian Gulf near Jubail; Berri Gas Plant is at Al Jubail, Eastern Province. Supports the Location province/country values only (NOT the gas-line specs)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1454,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Saudi Aramco", "Owner1%": "100.00%"},
+      "primary_value": "Saudi Aramco",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/berri-oil-field-expansion/"],
+      "verifications": [{"url": "https://www.nsenergybusiness.com/projects/berri-oil-field-expansion/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Saudi Aramco operates the Abu Ali / Berri infrastructure (Berri Oil Field Increment, Abu Ali Island GOSP) per nsenergybusiness; supports Aramco ownership of facilities at both endpoints. Owner identity is well-corroborated even though this specific gas line's existence is not."
+    }
+  ],
+  "summary": "Corridor real (Abu Ali Island near Jubail / Berri Gas Plant, Aramco) but the specific 44km/30in/220MMcf/2008 gas line rests on one dead source; capacity 220 unsourced; likely oil/condensate not dry gas; P1921=44km 'main' twins P7768=22km 'subsea' on one wiki page."
+}

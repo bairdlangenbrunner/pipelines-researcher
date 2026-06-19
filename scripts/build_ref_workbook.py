@@ -15,6 +15,10 @@ Sheets (commodity-prefixed; empty omitted; README first):
   <Cmdty>_OperatorsOwners  paste-ready mirror of the separate "Pipeline operators/owners"
                            backend tab (ProjectID-keyed; [ref] PRECEDES its values) — the
                            Operator [ref] / Owner [ref] cells, colored by tier.
+  <Cmdty>_Validity         DEEP SWEEP only — existence/duplicate/classification/attribution/
+                           spec concerns per pipeline (read-and-flag, never auto-applied).
+  <Cmdty>_Fills            DEEP SWEEP only — blank value fields researched + filled with a
+                           paired ref (or left blank when not corroborated).
   <Cmdty>_Refs_Added       MISSING_REF resolved — green ≥2 independent / yellow single
   <Cmdty>_Refs_Reverified  HAS_REF, links live + contain value (blue)
   <Cmdty>_Refs_DeadLinks   HAS_REF with a dead/value-missing link + proposed replacement
@@ -42,6 +46,7 @@ from build_recon_workbook import (  # noqa: E402
 from ref_pairs import discover_ref_pairs  # noqa: E402
 
 BLUE_FILL = PatternFill("solid", fgColor="DDEBF7")   # re-verified (blue), per confidence_tiers
+VALIDITY_REF = "__VALIDITY__"   # synthetic ref_col sentinel on deep-sweep validity records
 
 # class_out -> (sheet suffix, readme blurb)
 _BUCKETS = {
@@ -112,6 +117,134 @@ def _make_styler(columns, bucket: str):
     return styler
 
 
+# --- validity + fills (deep-sweep extensions) ------------------------------ #
+# Ordered most-important-first so the strongest signal wins; the Finding column is
+# authoritative — Concern type is only a sort/filter hint when the record carries no
+# explicit `concern_type` (older staging predates the structured field).
+_CONCERN_RULES = [
+    ("existence", ("does not exist", "doesn't exist", "no evidence", "cannot find",
+                   "can't find", "hallucinat", "phantom", "fabricat", "not a real",
+                   "non-existent", "nonexistent", "no independent evidence")),
+    ("duplicate", ("duplicate", "relabel", "same pipe", "same physical", "same as ",
+                   "already tracked", "redundant", "double-count", "double count")),
+    ("classification", ("not a transmission", "not dry gas", " ngl", "(ngl", "reclassif",
+                        "gathering line", "process line", "feeder line", "misclassif",
+                        "should be classified", "not a pipeline", "may be ngl",
+                        "commodity may be")),
+    ("attribution", ("wrong owner", "wrong operator", "wrong province", "wrong endpoint",
+                     "misattribut", "endpoint", "fuelsource", "start state", "province error",
+                     "naming", "operator")),
+    ("spec", ("length", "diameter", "capacity", "discrepancy", " km vs", "does not reconcile",
+              "conflict", "mismatch", "uncorroborated")),
+]
+
+
+# Phrasing that signals the agent CONFIRMED the pipeline is real (often while raising a
+# lesser caveat). Used to keep negated mentions ("NOT a duplicate/non-existent flag",
+# "exists and is correctly attributed") from being miscoded as existence/duplicate reds.
+_CONFIRM_SIGNALS = ("genuine", "genuinely exist", "exists and is correctly", "correctly attributed",
+                    "correctly identified", "not a duplicate", "non-existent flag", "existence ok",
+                    "existence is", "does exist", "is real", "well-sourced", "not an error",
+                    "segment exists", "pipeline exists", "plausibly exists")
+
+
+def _validity_verdict(r: dict) -> str:
+    v = (r.get("verdict") or "").strip()
+    if v:
+        return v
+    note = (r.get("researcher_notes") or "").lower()
+    return "confirmed (caveat)" if any(s in note for s in _CONFIRM_SIGNALS) else "concern"
+
+
+def _concern_type(r: dict) -> str:
+    explicit = (r.get("concern_type") or "").strip()
+    if explicit:
+        return explicit
+    note = (r.get("researcher_notes") or "").lower()
+    rules = _CONCERN_RULES
+    # If existence/identity is affirmatively confirmed, drop the existence/duplicate buckets
+    # (their keywords are usually negated here) — a confirmed pipeline can still be a spec,
+    # attribution, or classification (e.g. NGL-vs-gas) concern, so keep those.
+    if any(s in note for s in _CONFIRM_SIGNALS):
+        rules = [(l, k) for (l, k) in _CONCERN_RULES if l not in ("existence", "duplicate")]
+    for label, kws in rules:
+        if any(k in note for k in kws):
+            return label
+    return "review"
+
+
+_HIGH_CONCERN = {"existence", "duplicate", "classification"}
+
+
+def _validity_columns():
+    g = lambda k: (lambda r: r.get(k, ""))
+    return [
+        ("ProjectID", g("project_id"), 12),
+        ("SheetRow", g("sheet_row"), 9),
+        ("PipelineName", g("pipeline_name"), 30),
+        ("SegmentName", g("segment_name"), 22),
+        ("Verdict", _validity_verdict, 16),
+        ("Concern type", _concern_type, 16),
+        ("Finding", g("researcher_notes"), 72),
+        ("Recommendation", g("recommendation"), 40),
+        ("Sources", lambda r: J(r.get("proposed_refs", [])), 52),
+        ("Corroboration tier", g("tier"), 13),
+        ("Independent?", lambda r: "yes" if r.get("independent") else ("no" if r.get("proposed_refs") else ""), 11),
+        ("Source language", g("source_language"), 12),
+        ("Wiki (visited, not cited)", g("wiki"), 34),
+    ]
+
+
+def _validity_styler(columns):
+    idx = {h: i + 1 for i, (h, _, _) in enumerate(columns)}
+    tier_c = idx["Corroboration tier"]
+    concern_c = idx["Concern type"]
+    verdict_c = idx["Verdict"]
+
+    def styler(ws, rn, r):
+        ws.cell(rn, tier_c).fill = CONF_FILL.get(_tier_color(r), PatternFill())
+        is_concern = _validity_verdict(r) == "concern"
+        ws.cell(rn, verdict_c).fill = CONF_FILL["red"] if is_concern else CONF_FILL["green"]
+        # red the concern type only for an OPEN high-severity concern (phantom / duplicate /
+        # misclassified) — not when the pipeline was confirmed real with a lesser caveat.
+        if is_concern and ws.cell(rn, concern_c).value in _HIGH_CONCERN:
+            ws.cell(rn, concern_c).fill = CONF_FILL["red"]
+    return styler
+
+
+def _fills_columns():
+    g = lambda k: (lambda r: r.get(k, ""))
+    return [
+        ("ProjectID", g("project_id"), 12),
+        ("SheetRow", g("sheet_row"), 9),
+        ("PipelineName", g("pipeline_name"), 30),
+        ("SegmentName", g("segment_name"), 22),
+        ("Field", lambda r: r.get("primary_value_col") or J(r.get("value_cols", [])), 18),
+        ("Proposed value", lambda r: r.get("primary_value") or J([f"{k}={v}" for k, v in r.get("values", {}).items()]), 24),
+        ("Proposed ref(s)", lambda r: J(r.get("proposed_refs", [])), 52),
+        ("Verification status", _verif_summary, 22),
+        ("Outcome", lambda r: {"REFS_ADDED": "filled (corroborated)",
+                               "UNRESOLVED": "not corroborated / dropped"}.get(r.get("class_out", ""), r.get("class_out", "")), 24),
+        ("Corroboration tier", g("tier"), 13),
+        ("Independent?", lambda r: "yes" if r.get("independent") else ("no" if r.get("proposed_refs") else ""), 11),
+        ("Source language", g("source_language"), 12),
+        ("ResearcherNotes", g("researcher_notes"), 50),
+        ("Wiki (visited, not cited)", g("wiki"), 34),
+    ]
+
+
+def _fills_styler(columns):
+    idx = {h: i + 1 for i, (h, _, _) in enumerate(columns)}
+    tier_c = idx["Corroboration tier"]
+
+    def styler(ws, rn, r):
+        if r.get("class_out") == "UNRESOLVED":
+            ws.cell(rn, tier_c).fill = CONF_FILL["red"]
+        else:
+            ws.cell(rn, tier_c).fill = CONF_FILL.get(_tier_color(r), PatternFill())
+    return styler
+
+
 def _ref_cell_text(r: dict) -> str:
     """What to paste into the `[ref]` cell: the proposed ref(s); for a re-verified unit
     with no proposed change, the existing (re-checked) ref."""
@@ -175,6 +308,8 @@ def _backend_view(wb, title, resolutions, schema_clusters=None):
     dp_meta: dict[str, tuple[list[str], str]] = {}  # key -> (value headers, ref header)
     for r in resolutions:
         key = r.get("ref_col") or "Owner"
+        if key == VALIDITY_REF:   # never mirror the validity sentinel as a backend column
+            continue
         if key in dp_meta:
             continue
         dp_order.append(key)
@@ -398,10 +533,22 @@ def main() -> None:
     # the full value-col run — Cost+CostUnits, etc. — regardless of staging vintage)
     schema_clusters = _schema_clusters(meta, Path(args.staging))
 
+    # Deep-sweep records (class_in VALIDITY / FILL) get their own dedicated tabs — they are
+    # NOT ref-pairs, so they must never reach the backend mirror (a VALIDITY record's synthetic
+    # `__VALIDITY__` ref_col would otherwise leak in as a phantom column) or the class_out
+    # bucket tabs (where they'd be buried among ordinary unresolved refs).
+    # Key off the synthetic ref_col sentinel too, not just class_in: an agent occasionally
+    # mislabels a validity record's class_in (seen: HAS_REF) while still stamping the
+    # `__VALIDITY__` ref_col, and that sentinel must never reach the backend mirror.
+    is_validity = lambda r: r.get("class_in") == "VALIDITY" or r.get("ref_col") == VALIDITY_REF
+    validity_res = [r for r in resolutions if is_validity(r)]
+    fill_res = [r for r in resolutions if r.get("class_in") == "FILL" and not is_validity(r)]
+    ref_res = [r for r in resolutions if r.get("class_in") not in ("VALIDITY", "FILL") and not is_validity(r)]
+
     # owner/operator refs land on the separate "Pipeline operators/owners" backend tab, so
     # they get their own paste-ready mirror; everything else mirrors the tracker tab.
-    oo_res = [r for r in resolutions if r.get("tab") == "operators_owners"]
-    tracker_res = [r for r in resolutions if r.get("tab") != "operators_owners"]
+    oo_res = [r for r in ref_res if r.get("tab") == "operators_owners"]
+    tracker_res = [r for r in ref_res if r.get("tab") != "operators_owners"]
 
     # PRIMARY tab first (after README): the tracker backend-mirror, paste-ready view.
     if tracker_res:
@@ -424,9 +571,35 @@ def main() -> None:
                            "Operator [ref] / Owner [ref] cells carry the proposed ref(s), color-coded by "
                            "tier. Paste each back onto that tab by ProjectID — NOT onto a tracker row."))
 
+    # Validity tab (deep sweep): existence / duplicate / classification / attribution / spec
+    # concerns — read-and-flag only, no proposed edit. Placed prominently after the paste tabs.
+    if validity_res:
+        v_cols = _validity_columns()
+        v_title = f"{prefix}_Validity"
+        _write_sheet(wb, v_title, v_cols, validity_res, _validity_styler(v_cols))
+        sheet_defs.append((v_title,
+                           f"{len(validity_res)} — DEEP-SWEEP existence/identity check (NOT ref work, NOT auto-"
+                           "applied). Each row flags a concern for human review: Concern type red = "
+                           "existence / duplicate / classification (the pipeline may be phantom, a relabel of "
+                           "another GEM row, or misclassified — e.g. NGL vs dry gas / not a transmission line). "
+                           "Finding is authoritative; Sources back the judgment."))
+
+    # Fills tab (deep sweep): blank value fields researched + filled with a paired ref.
+    if fill_res:
+        f_cols = _fills_columns()
+        f_title = f"{prefix}_Fills"
+        _write_sheet(wb, f_title, f_cols, fill_res, _fills_styler(f_cols))
+        sheet_defs.append((f_title,
+                           f"{len(fill_res)} — DEEP-SWEEP blank-value fills: a previously empty data point "
+                           "researched and filled with a paired Proposed ref. Outcome 'filled (corroborated)' = "
+                           "ready to paste (tier-colored); 'not corroborated / dropped' (red) = no ≥2-independent "
+                           "value found — left blank, not fabricated (standing rule 2)."))
+
     counts = {}
+    counts["validity"] = len(validity_res)
+    counts["fills"] = len(fill_res)
     for bucket in _ORDER:
-        rows = [r for r in resolutions if r.get("class_out") == bucket]
+        rows = [r for r in ref_res if r.get("class_out") == bucket]
         counts[bucket.lower()] = len(rows)
         if not rows:
             continue

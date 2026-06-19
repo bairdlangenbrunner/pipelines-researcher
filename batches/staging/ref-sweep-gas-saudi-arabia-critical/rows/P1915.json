@@ -1,0 +1,76 @@
+{
+  "project_id": "P1915",
+  "pipeline_name": "Hawiyah-Uthmniyah Gas Pipeline",
+  "sheet_row": 1046,
+  "wiki": "https://www.gem.wiki/Hawiyah-Uthmniyah_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "existence",
+      "recommendation": "Keep the row (real asset = HUG-1); do not treat as hallucination, but see spec/attribution concerns below.",
+      "researcher_notes": "EXISTENCE CONFIRMED. A Hawiyah->Uthmaniyah gas pipeline is a real Saudi Aramco asset. MEED's 2005 Hawiyah-pipeline-programme report explicitly names the existing 'Hawiyah-Uthmaniyah gas line (HUG-1)' and describes a new 56-inch tie-in section (1 km) from the Hawiyah NGL plant into HUG-1. Aramco's own gas-portfolio material (Haradh & Hawiyah Increment) confirms increment/rich gas is piped from Hawiyah Gas Plant to Uthmaniyah Gas Plant for deep ethane recovery. Hawiyah and Uthmaniyah are both adjacent production areas of the Ghawar field (Wikipedia, nsenergybusiness), so a short trunk gas line between the two plants is physically expected. The GEM row is sourced ONLY to OPEC Annual Statistical Bulletin 2012 (a bulk import shared across the entire P1897-P1925 Saudi gas block), but independent operational reporting confirms the entity exists, so this is not a GEM-only phantom.",
+      "proposed_refs": ["https://www.meed.com/hawiyah-pipeline-programme-progresses/"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Change StartState/Province from 'Makkah' to 'Eastern Province' (Al-Ahsa Governorate).",
+      "researcher_notes": "LOCATION ERROR. GEM records StartState/Province = 'Makkah' while EndState/Province = 'Eastern Province'. This is wrong: Hawiyah (the start, = FuelSource 'Al Hawiyah') and Uthmaniyah (the end) are BOTH production areas of the Ghawar field, which lies entirely in the Eastern Province / Al-Ahsa Governorate (Wikipedia Ghawar Field: 'Ghawar has been subdivided into five production areas... Ain Dar and Shedgum, Uthmaniyah, Hawiyah and Haradh'; Saudipedia Hawiyah Gas Plant; nsenergybusiness Ghawar). The 'Makkah' value almost certainly stems from confusion with the unrelated Makkah-region locality 'Al Hawiyah' near Taif (cf. P3961 Madrakah-Al Hawiyah, a genuinely Makkah-area line). Both endpoints of P1915 are in the Eastern Province.",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Ghawar_Field", "https://www.nsenergybusiness.com/projects/ghawar-oil-field/"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Verify length (47 km) and diameter (32 in) against a primary Aramco/engineering source; current values are uncorroborated and conflict with the documented HUG-1 / NGL / increment lines.",
+      "researcher_notes": "SPEC UNCORROBORATED / POSSIBLE CONFLICT. GEM: LengthKnown=47 km, Diameter=32 in. The ONLY GEM citation is OPEC ASB 2012 p.75 (a bulk statistical import applied uniformly across P1897-P1925; the OPEC PDF is now paywalled/402 and could not be re-read to confirm the 47/32 pairing). NO independent source reports a 32-inch, 47-km Hawiyah->Uthmaniyah line. The documented Hawiyah<->Uthmaniyah lines instead are: (a) a 24-inch, 57-km NGL line from the Hawiyah NGL plant to the Uthmaniyah gas plant (MEED 2005) -- a distinct NGL asset, not this dry-gas row; (b) a recent 56-inch rich/increment gas pipeline for deep ethane recovery (Aramco Haradh & Hawiyah Increment, ~2023). The named existing trunk gas line 'HUG-1' (MEED 2005) is the right entity for this row, but MEED does not give its diameter/length, so 47 km / 32 in remains single-sourced to a bulk import and cannot be confirmed. Offshore-technology.com's data-insights profile repeats 47 km / 32 in but is GEM-derived and does NOT count as independent. Flag for primary-source verification; do not silently pass.",
+      "proposed_refs": ["https://www.meed.com/hawiyah-pipeline-programme-progresses/"],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1046,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.meed.com/hawiyah-pipeline-programme-progresses/"],
+      "verifications": [{"url": "https://www.meed.com/hawiyah-pipeline-programme-progresses/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status 'operating' is supported: MEED (2005) refers to the existing 'Hawiyah-Uthmaniyah gas line (HUG-1)' as an in-place asset that newer increment lines tie into, and Aramco confirms active Hawiyah->Uthmaniyah gas flow for ethane recovery. Medium tier: the line is clearly operational but no single source dates/names it as a standalone operating segment with these specs."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1046,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartState/Province",
+      "values": {"StartLocation": "Al Hawiyah", "StartState/Province": "Eastern Province", "StartCountryOrArea": "Saudi Arabia", "EndLocation": "Uthmaniya", "EndState/Province": "Eastern Province", "EndCountryOrArea": "Saudi Arabia"},
+      "primary_value": "Eastern Province",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Ghawar_Field", "https://www.nsenergybusiness.com/projects/ghawar-oil-field/"],
+      "verifications": [{"url": "https://en.wikipedia.org/wiki/Ghawar_Field", "ok": true, "contains_value": true}, {"url": "https://www.nsenergybusiness.com/projects/ghawar-oil-field/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Corrects StartState/Province from 'Makkah' to 'Eastern Province'. Hawiyah and Uthmaniyah are both Ghawar-field production areas in the Eastern Province / Al-Ahsa Governorate; two independent sources (Wikipedia Ghawar Field, nsenergybusiness Ghawar project) list both areas within the same Eastern-Province field. EndState/Province ('Eastern Province') is unchanged and confirmed."
+    }
+  ],
+  "summary": "P1915 (Hawiyah-Uthmaniyah / HUG-1) exists as a real Aramco Ghawar trunk gas line, but StartState/Province 'Makkah' is wrong (both endpoints are Eastern Province/Ghawar) and the 47 km / 32 in specs are single-sourced to OPEC ASB 2012 with no independent corroboration (documented Hawiyah-Uthmaniyah lines are 24in/57km NGL and a 56in increment line)."
+}
