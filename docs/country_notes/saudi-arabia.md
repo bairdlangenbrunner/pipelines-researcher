@@ -29,6 +29,25 @@ golden reference the engine generalizes).
 - Diameters are frequently multi-valued (`56,10,16`, `40/42/48`) — set-membership
   matching, not equality.
 
+## Gas-specific (from the 2026-06 gas deep sweep — all 65 GGIT rows)
+- **Sourceability bifurcates sharply.** In-construction **MGS-3 / East-West expansion**
+  segments (P6717–P6737) are well-documented — MEED, Blackridge, OGJ corroborate
+  packages, diameters (56-in), and 2028 schedules. Legacy **operating gathering /
+  GIS-node-coded** segments (P1897–P1925: names like `UBTG-1-km0-UBTG-1-km56`,
+  `AY-1 KP 943-Riyadh`) are internal Aramco route-database segments with essentially
+  **no public press footprint** — expect them to end UNRESOLVED, and don't mistake that
+  for a sweep failure. `FuelSource` on the gas rows is the upstream field/plant, not
+  "Natural Gas" (see `gem_schema.md`).
+- **Province tagging error:** P1915 / P1918 / P1919 carry `State/Province = Makkah`, but
+  Hawiyah / Haradh / Khuff are all in the **Eastern Province** (Ghawar / Al-Ahsa).
+- **Likely duplicate/relabel clusters** flagged for review: P1897 "A47-Yanbu"
+  (966 km, trunk-scale — echoes the MGS / Shedgum-Yanbu trunk); P3962 "East-West Gas"
+  Main Line maps to the Shedgum-Yanbu **NGL** line (commodity may be NGL, not gas);
+  near-identical pairs/triples P1922/P1923 and P1917/P1918/P1919.
+- **P0458 Qatar-Turkey** is a *transit* route — start (Qatar) and end (Türkiye) are
+  outside Saudi; Owner1 `Gassled` is wrong (should be QatarEnergy/Qatari state). Weakest
+  entity: **P1925 "Depco-Abqaiq"** — no independent source mentions it at all.
+
 ## Gotchas
 - Status_Conflicts seen in the POC: P2702 (Al Khafji Joint Operations Offshore) GEM
   `cancelled` vs GulfPub Operating; P0545 (IPSA) GEM `mothballed` vs GulfPub

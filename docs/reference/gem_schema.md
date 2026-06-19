@@ -94,3 +94,12 @@ Notes: `ResearcherNotes`, `Background` (+ `[ref]`).
 
 The gas sheet mirrors this with gas-specific extras. Re-derive the exact column
 list from the fresh header each run.
+
+### Gotcha — `FuelSource` (gas sheet) is the upstream field/plant, not a fuel type
+`FuelSource` (+ `[ref]`) names the **upstream gas source feeding the line** — a field,
+plant, or facility (e.g. `Abqaiq`, `Haradh`, `Berri Gas Plant`, `Hasbah Gas Field`,
+`Safianayh`). It is **not** the commodity/fuel type, so **never fill it with "Natural
+Gas"** (that's what `Fuel` already encodes). When researching `FuelSource`, find the
+named origin field/facility; if you can't attribute one, leave it blank and note why —
+do not default it. (Bit the first wave of the Saudi gas deep sweep; 12 "Natural Gas"
+fills had to be dropped.)

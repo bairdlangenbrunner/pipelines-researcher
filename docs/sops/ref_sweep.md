@@ -110,6 +110,49 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
    (see **Output** above), bucket tabs follow. `<stamp>` from
    `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite.
 
+## Deep sweep variant (ref sweep + deep-fill + validity check)
+The combined mode (`workflows.md §6b`): in one pass per row, do the standard ref sweep
+**plus** (a) research and fill **blank value fields** with paired refs (best-effort on weak
+fields like Capacity — don't force a number), and (b) judge each pipeline's **validity /
+existence** and flag concerns. Same deliverable, tabs, tiers, and standing rules — still
+read-and-stage only. Two schema extensions to `staged_resolutions.json`:
+- **`class_in="FILL"`** — a deep-fill record (blank value → researched value). `values`
+  carries the filled field(s); `proposed_refs`/`verifications` corroborate them; `class_out`
+  is `REFS_ADDED` if a paired ref verifies, else `UNRESOLVED`. `build_ref_workbook.py`
+  routes it like any value+ref pair on the `_Backend` tab.
+- **`ref_col="__VALIDITY__"`** — a per-pipeline validity flag, not a ref. No `proposed_refs`;
+  the finding lives in `researcher_notes` (wrong owner, province error, suspicious specs,
+  duplicate/relabel suspect, GEM-only entity). Surfaces in `ResearcherNotes` / the Unresolved
+  bucket without proposing an edit. One per flagged ProjectID.
+
+## At scale (subagent fan-out)
+A whole-country deep sweep is too large for one context. Fan out:
+1. After the worklist + harvest, **bundle rows into small batches** (~4 ProjectIDs each)
+   and write one input file per batch under `…/batches/batch_NN.json`.
+2. Spawn **one general-purpose subagent per batch**, each handed the same fixed **record
+   contract** (the per-unit staged-resolution schema: `project_id, sheet_row, ref_col,
+   value_cols, values, proposed_refs, verifications[{url,ok,contains_value}], class_out,
+   tier, researcher_notes`, + `tab:'operators_owners'` for OO units, + the `FILL` /
+   `__VALIDITY__` extensions). Each subagent researches its rows, runs `url_verifier` on
+   every URL itself, and writes its own **shard** to `…/shards/batch_NN.json`. Run in
+   background waves.
+3. **Validate the contract on the first shard before scaling** — confirm all required
+   keys present, zero blocklisted URLs, every `proposed_ref` has a passing verification,
+   OO units preserved. Only then launch the rest.
+4. **Merge** all shards → `staged_resolutions.json`, computing `meta` (commodity, scope,
+   project_ids, n_units, class_out_counts, tier_counts, n_operator_owner_units).
+
+### Merge-time QC normalization (run before `build_ref_workbook.py`)
+Subagents are not perfectly consistent; normalize deterministically at merge:
+- **Strip any `proposed_ref` whose verification is not `ok && contains_value`** (a
+  live-but-non-matching page is not a valid ref — no orphan/unsupported refs).
+- **Downgrade to `UNRESOLVED`** any `REFS_ADDED`/`REVERIFIED`/`DEAD_LINK` record left with
+  zero valid refs after stripping; add a `[QC]` note.
+- **Watch field semantics** — e.g. drop `FuelSource="Natural Gas"` fills (`FuelSource` is
+  the upstream field/plant, not the fuel type; `gem_schema.md`).
+- Re-assert the pre-delivery invariants (below) on the merged file: 0 unverified refs,
+  0 blocklisted URLs, every UNRESOLVED has a note.
+
 ## Tier → color
 Applied to each `[ref]` cell on the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` tabs (and the tier cell on the bucket tabs):
 green = ≥2 independent working sources · yellow = single source · red = low/none ·

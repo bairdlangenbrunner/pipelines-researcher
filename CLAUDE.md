@@ -78,6 +78,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Triage** (plan the batch; memo) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §4 + Triage SOP |
 | **Quality control** (xlsx; detects → Update fixes) | "qc pass", "data-health audit", "rebuild the QC workbook" | `workflows.md` §5 + QC SOP |
 | **Reference sweep** (xlsx; fill & re-verify every `[ref]`) | "ref sweep for <country>", "fill and verify refs", "corroborate the refs in <country>", "re-verify refs", "link-rot + refill" | `workflows.md` §6 + Ref Sweep SOP |
+| **Deep sweep** (xlsx; ref sweep + deep-fill blanks + per-row validity check, one pass) | "deep sweep <country>", "go deep on <country>'s pipelines", "ref sweep AND fill blanks AND check validity", "full pass on <country>" | `workflows.md` §6b + Ref Sweep SOP ("At scale" + "Schema extensions") |
 
 Routing notes:
 - A reconciliation reference-only (`Addition`) row is usually **not** a missing

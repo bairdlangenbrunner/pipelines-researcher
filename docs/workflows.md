@@ -128,3 +128,24 @@ routes repo, not media URLs) — `discover_ref_pairs` drops them automatically.
    (mirror of the operators/owners tab — ProjectID-keyed, `[ref]` precedes its values; paste
    back onto that tab by ProjectID). Work from those; the `*_Refs_*` bucket tabs are supporting
    detail. Then present. Scale country-by-country on Baird's sign-off.
+
+### §6b Deep sweep (ref sweep + deep-fill + validity check, one pass)
+
+The combined "go deep on a whole country+tracker" mode. Same engine and deliverable as
+§6, but each in-scope row gets **three things at once**:
+1. **Ref sweep** of already-filled values — re-verify live `[ref]`s, fill blank `[ref]`s
+   to the ≥2-independent target (the standard §6 job).
+2. **Deep-fill** of blank *value* fields — research the missing data point, fill it, and
+   stage a paired `[ref]` (best-effort on weak fields like Capacity — don't force a
+   number). Staged as `class_in="FILL"` records.
+3. **Validity / existence check** — judge whether the pipeline is real, correctly
+   attributed, and not a duplicate/relabel; flag concerns (wrong owner, province error,
+   suspicious specs, GEM-only entity) as `__VALIDITY__` records that surface in
+   `ResearcherNotes` without proposing an edit.
+
+This is the ref-sweep analogue of Update's `exhaustive` tier, extended with fills and
+existence-checking. It is **read-and-stage only** — still never auto-applies, still
+honours every standing rule. Schema extensions (`class_in="FILL"`, `__VALIDITY__`),
+how to run it at scale via subagent fan-out, and the merge-time QC normalization are in
+the **Ref Sweep SOP → "At scale" + "Schema extensions"**. Deliverable, tabs, and tier
+colors are unchanged from §6.
