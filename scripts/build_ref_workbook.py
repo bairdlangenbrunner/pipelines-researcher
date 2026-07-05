@@ -9,6 +9,9 @@ present, no GEM/theodora).
     # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"   (never overwrite)
 
 Sheets (commodity-prefixed; empty omitted; README first):
+  <Cmdty>_StatusReview     ANNUAL UPDATE only — one verdict per in-dev segment row: confirm /
+                           change (evidence-based, with proposed Status + date cols) / stale
+                           (dormancy rule -> Presumed) / unclear. Leads the packet when present.
   <Cmdty>_Backend          PRIMARY paste-ready view — mirrors the GEM tracker layout (each
                            touched data point as <value> then <value> [ref] carrying the
                            proposed ref(s), colored by corroboration tier). Work from this.
@@ -47,6 +50,7 @@ from ref_pairs import discover_ref_pairs  # noqa: E402
 
 BLUE_FILL = PatternFill("solid", fgColor="DDEBF7")   # re-verified (blue), per confidence_tiers
 VALIDITY_REF = "__VALIDITY__"   # synthetic ref_col sentinel on deep-sweep validity records
+STATUS_REF = "__STATUS__"       # synthetic ref_col sentinel on annual-update status reviews
 
 # class_out -> (sheet suffix, readme blurb)
 _BUCKETS = {
@@ -245,6 +249,49 @@ def _fills_styler(columns):
     return styler
 
 
+# --- status review (annual-update extension) ------------------------------- #
+_STATUS_VERDICT_FILL = {"confirm": "green", "change": "yellow", "stale": "red", "unclear": "red"}
+
+
+def _status_columns():
+    g = lambda k: (lambda r: r.get(k, ""))
+    return [
+        ("ProjectID", g("project_id"), 12),
+        ("SheetRow", g("sheet_row"), 9),
+        ("PipelineName", g("pipeline_name"), 30),
+        ("SegmentName", g("segment_name"), 22),
+        ("Current status", g("current_status"), 13),
+        ("Verdict", g("verdict"), 10),
+        ("Proposed status", g("proposed_status"), 13),
+        ("Proposed changes", lambda r: J([f"{k}={v}" for k, v in r.get("values", {}).items()]), 36),
+        ("Evidence date", g("evidence_date"), 12),
+        ("Staleness rule", g("staleness_rule"), 13),
+        ("Proposed ref(s)", lambda r: J(r.get("proposed_refs", [])), 52),
+        ("Verification status", _verif_summary, 22),
+        ("Corroboration tier", g("tier"), 13),
+        ("Independent?", lambda r: "yes" if r.get("independent") else ("no" if r.get("proposed_refs") else ""), 11),
+        ("Source language", g("source_language"), 12),
+        ("ResearcherNotes", g("researcher_notes"), 60),
+        ("Wiki (visited, not cited)", g("wiki"), 34),
+    ]
+
+
+def _status_styler(columns):
+    idx = {h: i + 1 for i, (h, _, _) in enumerate(columns)}
+    verdict_c = idx["Verdict"]
+    prop_c = idx["Proposed status"]
+    tier_c = idx["Corroboration tier"]
+
+    def styler(ws, rn, r):
+        v = (r.get("verdict") or "").lower()
+        ws.cell(rn, verdict_c).fill = CONF_FILL.get(_STATUS_VERDICT_FILL.get(v, "red"), PatternFill())
+        if r.get("proposed_status"):
+            ws.cell(rn, prop_c).fill = CONF_FILL["yellow"]
+        if r.get("proposed_refs"):
+            ws.cell(rn, tier_c).fill = CONF_FILL.get(_tier_color(r), PatternFill())
+    return styler
+
+
 def _ref_cell_text(r: dict) -> str:
     """What to paste into the `[ref]` cell: the proposed ref(s); for a re-verified unit
     with no proposed change, the existing (re-checked) ref."""
@@ -308,7 +355,7 @@ def _backend_view(wb, title, resolutions, schema_clusters=None):
     dp_meta: dict[str, tuple[list[str], str]] = {}  # key -> (value headers, ref header)
     for r in resolutions:
         key = r.get("ref_col") or "Owner"
-        if key == VALIDITY_REF:   # never mirror the validity sentinel as a backend column
+        if key in (VALIDITY_REF, STATUS_REF):   # never mirror a sentinel as a backend column
             continue
         if key in dp_meta:
             continue
@@ -541,14 +588,31 @@ def main() -> None:
     # mislabels a validity record's class_in (seen: HAS_REF) while still stamping the
     # `__VALIDITY__` ref_col, and that sentinel must never reach the backend mirror.
     is_validity = lambda r: r.get("class_in") == "VALIDITY" or r.get("ref_col") == VALIDITY_REF
+    is_status = lambda r: r.get("class_in") == "STATUS" or r.get("ref_col") == STATUS_REF
     validity_res = [r for r in resolutions if is_validity(r)]
-    fill_res = [r for r in resolutions if r.get("class_in") == "FILL" and not is_validity(r)]
-    ref_res = [r for r in resolutions if r.get("class_in") not in ("VALIDITY", "FILL") and not is_validity(r)]
+    status_res = [r for r in resolutions if is_status(r) and not is_validity(r)]
+    fill_res = [r for r in resolutions if r.get("class_in") == "FILL"
+                and not is_validity(r) and not is_status(r)]
+    ref_res = [r for r in resolutions if r.get("class_in") not in ("VALIDITY", "FILL", "STATUS")
+               and not is_validity(r) and not is_status(r)]
 
     # owner/operator refs land on the separate "Pipeline operators/owners" backend tab, so
     # they get their own paste-ready mirror; everything else mirrors the tracker tab.
     oo_res = [r for r in ref_res if r.get("tab") == "operators_owners"]
     tracker_res = [r for r in ref_res if r.get("tab") != "operators_owners"]
+
+    # Annual-update StatusReview tab leads the packet when present — the per-row status
+    # verdict is what researchers act on first in an update cycle.
+    if status_res:
+        s_cols = _status_columns()
+        s_title = f"{prefix}_StatusReview"
+        _write_sheet(wb, s_title, s_cols, status_res, _status_styler(s_cols))
+        sheet_defs.append((s_title,
+                           f"{len(status_res)} — ANNUAL-UPDATE status verdicts, one per in-dev segment row "
+                           "(NOT auto-applied). Verdict green=confirm (status verified, see evidence date) / "
+                           "yellow=change (evidence-based new status; Proposed changes lists the exact "
+                           "column=value edits, refs verified) / red=stale (dormancy rule -> inferred "
+                           "shelved/cancelled, ShelvedCancelledType=Presumed, no ref by design) or unclear."))
 
     # PRIMARY tab first (after README): the tracker backend-mirror, paste-ready view.
     if tracker_res:
@@ -596,6 +660,7 @@ def main() -> None:
                            "value found — left blank, not fabricated (standing rule 2)."))
 
     counts = {}
+    counts["status_reviews"] = len(status_res)
     counts["validity"] = len(validity_res)
     counts["fills"] = len(fill_res)
     for bucket in _ORDER:

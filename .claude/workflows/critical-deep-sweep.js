@@ -7,16 +7,51 @@ export const meta = {
 }
 
 // args (from `python scripts/build_deepsweep_args.py --staging <dir>`):
-//   { repo, staging, commodity, country, pids:[...], roster:[...] }
-if (!args || !Array.isArray(args.pids) || !args.pids.length) {
+//   { repo, staging, commodity, country, pids:[...], roster:[...], status_review?: true }
+// status_review: true = annual-update mode — each subagent ALSO stages a per-segment-row
+// status verdict (confirm / change / stale / unclear) as `status_reviews` in its shard.
+// tolerate a JSON-encoded string (some invocation paths stringify `args`)
+const A = (typeof args === 'string') ? JSON.parse(args) : (args || {})
+if (!Array.isArray(A.pids) || !A.pids.length) {
   throw new Error("critical-deep-sweep needs args.pids — run scripts/build_deepsweep_args.py and pass its JSON as `args`.")
 }
-const REPO = args.repo
-const STAGING = args.staging
-const COMMODITY = args.commodity || 'gas'
-const COUNTRY = args.country || ''
-const PIDS = args.pids
-const ROSTER = (args.roster || []).join("\n")
+const REPO = A.repo
+const STAGING = A.staging
+const COMMODITY = A.commodity || 'gas'
+const COUNTRY = A.country || ''
+const PIDS = A.pids
+const ROSTER = (A.roster || []).join("\n")
+const STATUS_REVIEW = !!A.status_review
+
+const statusInstr = STATUS_REVIEW ? `
+
+## STATUS REVIEW (annual-update mode — REQUIRED, one object per segment row)
+This is an in-development row being checked for the annual update. Beyond the audit above,
+determine the pipeline's CURRENT true status. Hunt for dated evidence NEWER than the sheet's
+(the roster line shows updated=LastUpdated). A status change is a claim like any other:
+>=2 independent sources, every URL through url_verifier. Verdict vocabulary:
+- "confirm" — the recorded Status is still right; say what confirms it, with the evidence date.
+- "change"  — evidence-based status change. Set proposed_status and proposed_changes as
+  {column: value} pairs — Status (controlled vocab, lowercase) plus the matching date columns
+  (e.g. now operating -> StartYear1; construction began -> ConstructionYear; newly shelved ->
+  ShelvedYear). A change without a verified ref will be downgraded at merge — source it.
+- "stale"   — NO independent news found. Apply the dormancy rules: proposed with no progress
+  >=2y -> shelved; shelved >=4y -> cancelled. proposed_changes MUST include
+  ShelvedCancelledType="Presumed" and the inference gets NO fabricated ref (standing rule 2);
+  set staleness_rule to "2y->shelved" or "4y->cancelled". If dormant but under the threshold,
+  use "confirm" and note the last-evidence date.
+- "unclear" — genuinely cannot tell; explain what you tried in researcher_notes.
+evidence_date = date of the MOST RECENT independent evidence found (YYYY-MM where possible).
+Add to the shard: "status_reviews": [
+  { "segment_name": "<or empty>", "sheet_row": <int from worklist>,
+    "current_status": "<from the sheet>", "verdict": "confirm|change|stale|unclear",
+    "proposed_status": "<or empty>", "proposed_changes": {"Status": "...", "...": "..."},
+    "evidence_date": "YYYY-MM", "staleness_rule": "" ,
+    "proposed_refs": ["https://...verified..."],
+    "verifications": [{"url":"https://...","ok":true,"contains_value":true}],
+    "tier": "high|medium|low", "independent": true, "source_language": "en",
+    "researcher_notes": "<what you searched, the newest dated evidence, your reasoning>" }
+]` : ''
 
 const contract = (pid) => `You are a meticulous, skeptical GEM pipeline researcher. Critically RE-AUDIT one ${COUNTRY}
 ${COMMODITY} pipeline: ProjectID ${pid}. This is a deep-sweep validity pass — your job is to CONFIRM the
@@ -62,7 +97,7 @@ ${ROSTER}
    It is NOT enough that a page mentions the pipeline — the source must AGREE with the GEM number.
    Material disagreement → concern_type="spec", verdict="concern" (never silently pass it).
 Also DEEP-FILL genuinely blank value fields with a paired, verified ref (best-effort; do not force a
-number on weak fields like Capacity — leave blank rather than fabricate).
+number on weak fields like Capacity — leave blank rather than fabricate).${statusInstr}
 
 A pipeline that is real and correctly classified but has a lesser caveat → verdict="confirmed (caveat)".
 Only open existence/duplicate/classification doubt → verdict="concern".
@@ -93,7 +128,7 @@ Write \`${STAGING}/rows/${pid}.json\` = a single JSON object EXACTLY shaped like
   "summary": "<one line>"
 }
 Emit at least one validity object per pipeline (use verdict="confirmed (caveat)", concern_type="none"
-if you found nothing wrong, summarizing what you confirmed). validity[].proposed_refs and all
+if you found nothing wrong, summarizing what you confirmed).${STATUS_REVIEW ? ' In annual-update mode also emit\nat least one status_reviews object per segment row (shaped as specified above).' : ''} validity[].proposed_refs and all
 fills[].proposed_refs must have passed url_verifier. Before finishing, run
 \`python -c "import json; json.load(open('${STAGING}/rows/${pid}.json'))"\` to confirm it parses.
 Return ONLY a 2-line summary: the verdict/concern_types you staged, and any UNRESOLVED. Your shard
