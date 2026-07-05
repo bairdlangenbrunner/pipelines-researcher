@@ -32,6 +32,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--staging", required=True, help="ref-sweep staging dir (has worklist.json)")
     ap.add_argument("--out", help="also write the JSON here (default: stdout only)")
+    ap.add_argument("--status-review", action="store_true",
+                    help="annual-update mode: subagents also stage a per-segment status verdict "
+                         "(confirm/change/stale/unclear) as status_reviews in each shard")
     args = ap.parse_args()
 
     staging = args.staging.rstrip("/")
@@ -57,6 +60,7 @@ def main():
     c_dia = _col(C, "Diameter")
     c_cap = _col(C, "Capacity")
     c_stat = _col(C, "Status")
+    c_upd = _col(C, "LastUpdated")
     c_sloc = _col(C, "StartLocation", "StartState/Province", "StartCountryOrArea")
     c_eloc = _col(C, "EndState/Province", "EndCountryOrArea")
     by_pid = {str(r[c_pid]): r for _, r in df.iterrows()}
@@ -78,7 +82,7 @@ def main():
         roster.append(
             f"{pid} | {cell(r, c_name)} | {cell(r, c_sloc)}->{cell(r, c_eloc)} | "
             f"len={cell(r, c_len)} dia={cell(r, c_dia)} cap={cell(r, c_cap)} | "
-            f"status={cell(r, c_stat)}"
+            f"status={cell(r, c_stat)} | updated={cell(r, c_upd)}"
         )
 
     payload = {
@@ -89,6 +93,8 @@ def main():
         "pids": pids,
         "roster": roster,
     }
+    if args.status_review:
+        payload["status_review"] = True
     out = json.dumps(payload, indent=1)
     if args.out:
         open(args.out, "w").write(out)

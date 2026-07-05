@@ -168,6 +168,7 @@ python scripts/build_ref_worklist.py --tracker gas --country "Saudi Arabia" --ve
 python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json --out $STG/wiki_citations.json
 # 2. derive the workflow args (in-scope PIDs + duplicate-detection roster) from the worklist:
 python scripts/build_deepsweep_args.py --staging $STG/         # prints JSON → pass as the Workflow `args`
+# (--status-review = annual-update mode: subagents also stage per-row status verdicts → §7)
 ```
 3. Invoke the workflow with that JSON as `args` (it has no FS access, so PIDs/roster must be
    passed in): `Workflow({ name: 'critical-deep-sweep', args: <the JSON> })`. One subagent per
@@ -178,3 +179,72 @@ python scripts/build_deepsweep_args.py --staging $STG/         # prints JSON →
 5. Build + recalc as in §6 step 5 (`_deepsweep.xlsx`); the `<Cmdty>_Validity` /
    `<Cmdty>_Fills` tabs render the findings. Present; escalate systemic blocks (a whole
    class tracing to one non-pipeline source) rather than patching row-by-row.
+
+---
+
+## §7 Annual country update packet (campaign mode)
+
+The country-by-country annual update: per country, an **in-dev status sweep** (deep sweep
+in annual-update mode, adds a per-row status verdict) + a **discovery run** (new AND
+missing projects). Researchers rely on the packet for those two legs and handle operating
+rows themselves. Rules, verdict vocabulary, escalation gates: **Annual Update SOP**
+(`docs/sops/annual_update.md`). Staged-JSON contract: `docs/reference/staged_json_schema.md`.
+
+```bash
+# 0. once per campaign (re-run anytime to refresh counts; manual tracking columns survive):
+python scripts/build_campaign_roster.py --tracker gas --campaign ggit-2026
+#    → campaigns/ggit-2026/roster.csv (pick the next country; track phase status there)
+
+# --- per country ------------------------------------------------------------
+STG=batches/staging/annual-gas-<country-slug>
+
+# A) in-dev status sweep = §6b deep sweep, in-dev statuses only, --status-review:
+python scripts/build_ref_worklist.py --tracker gas --country "<Country>" \
+  --status proposed,construction,shelved --verify-existing --out $STG/worklist.json
+python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json --out $STG/wiki_citations.json
+python scripts/build_deepsweep_args.py --staging $STG/ --status-review   # JSON → Workflow args
+#    → Workflow({ name: 'critical-deep-sweep', args: <the JSON> })  (one subagent per PID)
+# annual mode runs no separate ref-sweep research pass, so seed the ref baseline the merge
+# preserves onto (HAS_REF/MISSING_REF records + --verify-existing link-rot flags) from the worklist:
+python scripts/seed_resolutions_from_worklist.py --staging $STG/
+python scripts/merge_deepsweep_shards.py --staging $STG/
+# OPTIONAL targeted ref-research pass — the seed leaves blank/dead-link refs red
+# (class_out UNRESOLVED / DEAD_LINK) because annual mode does no ref hunting. To fill
+# those gap cells to the ≥2-independent target and fold the results into the SAME
+# annual-indev workbook: emit one per-PID brief for the gaps, fan out one research
+# subagent per PID (Agent tool, general-purpose — each reads its brief, verifies every
+# URL via url_verifier.py, writes ref_shards/<PID>.json), then fold + re-merge:
+python scripts/build_refsweep_briefs.py --staging $STG/     # → ref_shards/_briefs/<PID>.json
+#    → one general-purpose subagent per brief writes ref_shards/<PID>.json
+python scripts/merge_ref_shards.py --staging $STG/          # fold research onto staged_resolutions.prior.json
+python scripts/merge_deepsweep_shards.py --staging $STG/    # re-fold validity/fills/status onto the refreshed baseline
+python scripts/build_ref_workbook.py --staging $STG/ \
+  --output batches/pipelines_batch_<stamp>_<country-slug>-gas_annual-indev.xlsx
+python scripts/recalc.py batches/pipelines_batch_<stamp>_<country-slug>-gas_annual-indev.xlsx
+#    → <Cmdty>_StatusReview leads the workbook (confirm / change / stale / unclear per row);
+#      <Cmdty>_Refs_Added carries any newly-corroborated gap cells. Residual red cells are
+#      cells where NO independent source supports the current GEM value (often a value
+#      disagreement → route to Update/status review), not merely unsearched.
+
+# B) discovery (new + missing), same staging dir:
+python scripts/build_discovery_context.py --tracker gas --country "<Country>" --staging $STG/
+#    → Workflow({ name: 'country-discovery', args: <the printed JSON> })
+#      (strategy fan-out → consolidate/match-to-existing → one vetting agent per candidate)
+python scripts/merge_discovery_shards.py --staging $STG/
+python scripts/build_discovery_workbook.py --staging $STG/ \
+  --output batches/pipelines_batch_<stamp>_<country-slug>-gas_discovery.xlsx
+python scripts/recalc.py batches/pipelines_batch_<stamp>_<country-slug>-gas_discovery.xlsx
+```
+
+Present both workbooks together as the country packet; update the campaign roster row;
+stop at the SOP's escalation gates (>30% status changes; >5 discovery clusters; a whole
+missing network class).
+
+**Workflow-launch gotcha (learned on the Iraq pilot, 2026-07):** invoking a saved
+workflow by *name* can (a) deliver `args` to the script as a JSON-encoded *string* and
+(b) serve a **stale cached copy** of the script that predates same-session edits. The
+reliable launch path: bake the builder's JSON directly into a copy of the script
+(replace the `const A = …` args line with `const A = <the JSON object>`), `node --check`
+it, and launch with `Workflow({ scriptPath: <the copy> })`. Both workflow scripts also
+keep the string-tolerant `const A = (typeof args === 'string') ? JSON.parse(args) : …`
+guard for the by-name path.

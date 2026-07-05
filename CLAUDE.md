@@ -79,6 +79,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Quality control** (xlsx; detects → Update fixes) | "qc pass", "data-health audit", "rebuild the QC workbook" | `workflows.md` §5 + QC SOP |
 | **Reference sweep** (xlsx; fill & re-verify every `[ref]`) | "ref sweep for <country>", "fill and verify refs", "corroborate the refs in <country>", "re-verify refs", "link-rot + refill" | `workflows.md` §6 + Ref Sweep SOP |
 | **Deep sweep** (xlsx; ref sweep + deep-fill blanks + per-row validity check, one pass) | "deep sweep <country>", "go deep on <country>'s pipelines", "ref sweep AND fill blanks AND check validity", "full pass on <country>" | `workflows.md` §6b + Ref Sweep SOP ("At scale" + "Schema extensions") |
+| **Annual update packet** (campaign; per country: in-dev status sweep + discovery) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §7 + Annual Update SOP (`docs/sops/annual_update.md`); campaign roster in `campaigns/` |
 
 Routing notes:
 - A reconciliation reference-only (`Addition`) row is usually **not** a missing

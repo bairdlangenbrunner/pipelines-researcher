@@ -132,7 +132,7 @@ per-value confirmation, take a skeptical pass on every pipeline and flag:
 - **attribution** — wrong owner/operator, province, FuelSource, or endpoint;
 - **spec** — length/diameter/capacity that independent sources contradict.
 
-Two schema extensions to `staged_resolutions.json`:
+Three schema extensions to `staged_resolutions.json`:
 - **`class_in="FILL"`** — a deep-fill record (blank value → researched value). `values`
   carries the filled field(s); `proposed_refs`/`verifications` corroborate them; `class_out`
   is `REFS_ADDED` if a paired ref verifies, else `UNRESOLVED`. `build_ref_workbook.py`
@@ -150,6 +150,14 @@ Two schema extensions to `staged_resolutions.json`:
     P####", "verify endpoint before keeping").
   - `researcher_notes` — the full finding (authoritative); `proposed_refs` + `verifications`
     — the independent sources backing the judgment (encouraged, even though it is not a ref edit).
+- **`ref_col="__STATUS__"` (annual-update mode only)** — a per-segment-row status verdict,
+  staged when the deep sweep runs with `build_deepsweep_args.py --status-review` (workflows.md
+  §7). `verdict` ∈ `confirm` / `change` / `stale` / `unclear`; `values` carries the exact
+  column→value edits (`change`: Status + matching date cols, refs required; `stale`: the
+  dormancy-rule inference, `ShelvedCancelledType=Presumed` force-added at merge, no ref by
+  design). Routed to a dedicated **`<Cmdty>_StatusReview`** tab that leads the workbook.
+  Verdict vocabulary + QC rules: `docs/sops/annual_update.md`; full record schema:
+  `docs/reference/staged_json_schema.md`.
 
 ## At scale (subagent fan-out)
 A whole-country deep sweep is too large for one context. Fan out:
