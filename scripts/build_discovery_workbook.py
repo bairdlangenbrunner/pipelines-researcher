@@ -33,6 +33,46 @@ from build_recon_workbook import (  # noqa: E402
 
 NEW_FILL = PatternFill("solid", fgColor="E2EFDA")   # green tint = candidate new row
 
+# The tracker consolidates many attribute refs into a handful of [ref] columns, but
+# discovery agents often stage granular per-attribute ref keys. Remap them onto the real
+# tracker column so a researched value never lands without its [ref] (and so nothing is
+# silently dropped from the mirror).
+REF_ALIAS = {
+    "LengthKnown [ref]": "Length [ref]",
+    "LengthKnownKm [ref]": "Length [ref]",
+    "LengthEstimateKm [ref]": "Length [ref]",
+    "StartLocation [ref]": "Location [ref]",
+    "EndLocation [ref]": "Location [ref]",
+    "StartState/Province [ref]": "Location [ref]",
+    "EndState/Province [ref]": "Location [ref]",
+    "StartCountryOrArea [ref]": "Location [ref]",
+    "EndCountryOrArea [ref]": "Location [ref]",
+    "CountriesOrAreas [ref]": "Location [ref]",
+    "ProposalYear [ref]": "Proposal [ref]",
+    "ProposalMonth [ref]": "Proposal [ref]",
+    "ConstructionYear [ref]": "Construction [ref]",
+    "ConstructionMonth [ref]": "Construction [ref]",
+    "StartYear1 [ref]": "Start [ref]",
+    "StartMonth1 [ref]": "Start [ref]",
+    "DiameterInMm [ref]": "Diameter [ref]",
+}
+# Owner/Parent/Operator refs have NO column in the main tracker header — by convention
+# they live on the ProjectID-keyed operators/owners tab. Route them to a dedicated sheet
+# rather than dropping them (and never let a ref key overwrite an Owner/Parent value cell).
+OWNER_REF_KEYS = {"Owner [ref]", "Parent [ref]", "Operator [ref]", "ParentEntityIDs [ref]"}
+
+
+def _nonempty(v) -> bool:
+    return v is not None and str(v).strip() != ""
+
+
+def _dedup(seq):
+    out = []
+    for x in seq:
+        if x not in out:
+            out.append(x)
+    return out
+
 
 def _tracker_header(scope: dict) -> list[str]:
     csv_name = scope.get("csv")
@@ -48,25 +88,54 @@ def _tracker_header(scope: dict) -> list[str]:
 
 
 def _new_rows_view(wb, title, header, rows):
+    """PRIMARY paste-ready mirror. Only *non-empty* staged values/refs are written and
+    green-tinted — an empty cell is never coloured. A ref may only ever land in a `[ref]`
+    column (a value column is never overwritten by a ref), and granular ref keys are
+    consolidated onto the tracker's real ref columns via REF_ALIAS. Owner/Parent refs
+    (which have no tracker column) are returned for a separate operators/owners tab."""
     ws = wb.create_sheet(title)
     ws.append(header)
     col_of = {h: i + 1 for i, h in enumerate(header) if h}
     unmapped = set()
+    oo_rows = []   # (candidate, {owner_ref_key: [urls]}) → OperatorsOwners tab
     for c in rows:
-        cells = {}
+        cells = {}                       # value-column index -> value
         for k, v in (c.get("values") or {}).items():
+            if not _nonempty(v):
+                continue                 # looked, found nothing → leave white, do not colour
             (cells.__setitem__(col_of[k], v) if k in col_of else unmapped.add(k))
+        ref_urls = {}                    # ref-column index -> [urls]
+        oo = {}
         for rc, urls in (c.get("refs") or {}).items():
-            (cells.__setitem__(col_of[rc], J(urls)) if rc in col_of else unmapped.add(rc))
+            urls = [u for u in (urls if isinstance(urls, list) else [urls]) if _nonempty(u)]
+            if not urls:
+                continue
+            target = REF_ALIAS.get(rc, rc)
+            # a ref key MUST name a [ref] column; a bare value-column name (e.g. a
+            # mis-keyed "Owner") is coerced so it can never be written into that value cell.
+            if not target.endswith(" [ref]"):
+                target += " [ref]"
+            if target in OWNER_REF_KEYS:
+                oo.setdefault(target, []).extend(urls)
+            elif target in col_of:
+                ref_urls.setdefault(col_of[target], []).extend(urls)
+            else:
+                unmapped.add(rc)
+        for ci, us in ref_urls.items():
+            cells[ci] = J(_dedup(us))
         notes = c.get("researcher_notes", "")
-        if "ResearcherNotes" in col_of and col_of["ResearcherNotes"] not in cells:
+        if _nonempty(notes) and "ResearcherNotes" in col_of and col_of["ResearcherNotes"] not in cells:
             cells[col_of["ResearcherNotes"]] = notes
         ws.append([cells.get(i, "") for i in range(1, len(header) + 1)])
         rn = ws.max_row
-        for i in cells:
+        for i, v in cells.items():
+            if not _nonempty(v):
+                continue
             cell = ws.cell(rn, i)
             cell.fill = NEW_FILL
             cell.alignment = Alignment(wrap_text=False, vertical="top")
+        if oo:
+            oo_rows.append((c, oo))
     _style_header(ws, len(header))
     for i, h in enumerate(header, 1):
         ws.column_dimensions[get_column_letter(i)].width = 40 if h.endswith(" [ref]") else 16
@@ -74,6 +143,36 @@ def _new_rows_view(wb, title, header, rows):
     if unmapped:
         print(f"  WARN: {title}: staged keys not in the tracker header (dropped from the "
               f"mirror; still in staged_new.json): {sorted(unmapped)}")
+    return ws, oo_rows
+
+
+def _owner_refs_view(wb, title, oo_rows):
+    """Owner/operator [ref]s for the new rows. The main tracker has no Owner/Parent [ref]
+    column — these apply on the ProjectID-keyed operators/owners tab once the row has an
+    ID. Per that tab's convention the [ref] precedes its value. Only non-empty cells are
+    written/tinted."""
+    ws = wb.create_sheet(title)
+    header = ["Candidate name", "Owner [ref]", "Owner", "Parent [ref]", "Parent",
+              "Operator [ref]", "Operator"]
+    ws.append(header)
+    for c, oo in oo_rows:
+        vals = c.get("values", {})
+        row = [
+            c.get("name") or vals.get("PipelineName", ""),
+            J(_dedup(oo.get("Owner [ref]", []))), vals.get("Owner", ""),
+            J(_dedup(oo.get("Parent [ref]", []))), vals.get("Parent", ""),
+            J(_dedup(oo.get("Operator [ref]", []))), vals.get("Operator", ""),
+        ]
+        ws.append(row)
+        rn = ws.max_row
+        for ci in range(1, len(header) + 1):
+            if _nonempty(ws.cell(rn, ci).value):
+                ws.cell(rn, ci).fill = NEW_FILL
+                ws.cell(rn, ci).alignment = Alignment(wrap_text=False, vertical="top")
+    _style_header(ws, len(header))
+    for i, w in enumerate((34, 52, 28, 52, 28, 52, 28), 1):
+        ws.column_dimensions[get_column_letter(i)].width = w
+    ws.freeze_panes = "A2"
     return ws
 
 
@@ -152,10 +251,17 @@ def main() -> None:
 
     if new_rows:
         title = f"{prefix}_NewRows"
-        _new_rows_view(wb, title, _tracker_header(meta.get("scope", {})), new_rows)
+        _, oo_rows = _new_rows_view(wb, title, _tracker_header(meta.get("scope", {})), new_rows)
         sheet_defs.append((title,
                            f"{len(new_rows)} — PRIMARY paste-ready: exact tracker header, one green row per "
                            "candidate that clears the add-threshold, values + verified [ref]s in place."))
+        if oo_rows:
+            oo_title = f"{prefix}_OperatorsOwners"
+            _owner_refs_view(wb, oo_title, oo_rows)
+            sheet_defs.append((oo_title,
+                               f"{len(oo_rows)} — owner/operator [ref]s for the new rows. The main tracker has "
+                               "no Owner/Parent [ref] column; apply these on the ProjectID-keyed operators/owners "
+                               "tab once each row has an ID. [ref] precedes its value."))
     def _flag_col2(color):
         def styler(ws, rn, r):
             ws.cell(rn, 2).fill = CONF_FILL[color]

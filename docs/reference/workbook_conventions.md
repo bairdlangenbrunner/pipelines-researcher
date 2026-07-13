@@ -42,6 +42,18 @@ Standard cells (`Updated`, `New`, reconciliation `Overlaps` Confidence):
 - **blue** `4472C4` — value unchanged but re-verified this batch
 - **yellow fill** — a route-replacement-candidate cell
 
+**Never colour an empty cell.** A fill (green tint / tier colour / re-verified blue)
+means "this cell holds a value/ref I staged". If a value was searched for and not found,
+leave the cell **blank and white** — an empty coloured cell is always a builder bug.
+Corollary rules the builders enforce, not just style:
+- **A researched value and its `[ref]` travel together** — never a value with no `[ref]`,
+  never a `[ref]` with no value (both directions of the no-orphan rule).
+- **Links go only in `[ref]` or notes columns — never in a value column.** A URL in
+  `Owner`/`Status`/etc. is an error (usually a ref key mis-named without the ` [ref]`
+  suffix). Owner/Parent/Operator refs have no main-tracker column → they go on the
+  operators/owners tab (`[ref]` precedes its value), not into the value cell.
+- **Never emit placeholder strings** like `SYSTEM/NETWORK INFO` into any cell.
+
 See `docs/reference/confidence_tiers.md` for what earns each color.
 
 ## Reconciliation workbook (mode = `reconciliation`)
