@@ -1,0 +1,131 @@
+{
+  "project_id": "P3937",
+  "pipeline_name": "Badr El Din Spur Gas Pipelines",
+  "sheet_row": 1935,
+  "wiki": "https://www.gem.wiki/Badr_El_Din_Spur_Gas_Pipelines",
+  "validity": [
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Retain, but tier-flag the whole row (and its P3938 twin) as SINGLE-SOURCE. Every value traces to one 2020 Egypt Oil & Gas trade-table; no independent corroboration exists and the 130 km length conflicts with GulfPub's Badr El Din lines (19-63 km). Seek a second independent source before treating any spec as high-confidence; consider whether a field-to-connector feeder spur warrants a standalone tracker row.",
+      "researcher_notes": "EXISTENCE (single-source, specifically named): The only support for this row is the Egypt Oil & Gas feature 'The Western Desert: Egypt's Giant Petroleum Reservoir' (March 2020, Issue 159), the exact PDF the gem.wiki page cites (14 backlinks) and which the sheet even stored verbatim as the FuelSource value. Its table 'Natural Gas Infrastructure in the Western Desert' lists 13 gas lines; row 9 is 'Badr El Din Spur (1)': From = Badr El Din Fields, To = BED/Abu Sennan connector, Length 130 km, Diameter 20 in, Capacity 180 mmcf/d. GEM's values (130 km / 20 in / 180 MMcf/d / operating / Gas) are an EXACT transcription of that one table row. I extracted the table with pdfminer to confirm this letter-for-letter. Web searches (Egypt Oil & Gas, Zawya, OGJ, NS Energy, EgyptToday, Amwal Al Ghad) surfaced NOTHING that independently names a 'Badr El Din Spur' pipeline or confirms 130 km/20 in/180 mmcf/d - every hit either traces back to this same article or to GEM. So existence rests on a single trade-magazine table: the line is specifically named (not a generic citation), but corroboration is single-source only -> tier medium at best, independent = false.\nCLASSIFICATION: Correctly GAS (source table header is 'Natural Gas Infrastructure'; a separate crude line 'Badr El Din - El Hamra' is listed under the article's crude table, so this is not the oil line). But it is explicitly a 'Spur' feeding field gas from the Badr El Din Fields into the 'BED/Abu Sennan connector' junction, which in turn feeds the BED/AS-Ameryia trunk (GEM P3936, source row 8: connector->Ameryia, 160 km/24 in/350 mmcf/d). So functionally this is a field feeder/collector spur, not a standalone long-haul transmission trunk - a modelling caveat, though 20 in x 130 km is substantial.\nDUPLICATE: NOT a duplicate of P3938. The source table lists TWO parallel Badr El Din spurs with the same endpoints but distinct specs - Spur (1) = 20 in/180 mmcf/d (this row, P3937) and Spur (2) = 16 in/150 mmcf/d (P3938). They are genuine parallel loop lines, correctly split across two ProjectIDs under one cluster wiki page. No merge warranted.\nATTRIBUTION: Owner 'General Petroleum Co' (GPC, 100%) is SOURCE-CONSISTENT - the same article states 'General Petroleum Company (GPC) established a plant for gas and condensate processing in Abu Sennan (~85 mmcf/d)' and ties GPC to the southern Western Desert gas network connecting Abu Sennan/Abu Gharadig/Badr el Din. Note tension: the Badr El Din upstream fields themselves are operated by BAPETCO (Shell/EGPC JV, now Cheiron/Cairn), and GulfPub attributes nearby BED lines to Shell/Cheiron/Capricorn - so operator (field JV) vs owner (GPC gas-gathering network) differ; GEM's owner=GPC is defensible from the source but is single-sourced. Endpoints: sheet End District=Abu Sennan / Province=Matruh is essentially right (BED fields are in Matrouh governorate; the terminus is the BED/Abu Sennan connector in the Abu Gharadig basin) - the roster's '->Matruh' shorthand is imprecise but the structured fields are OK.\nSPEC / CONFLICT: GulfPub (Tier-2, Dec-2025 SDE) offers NO 130 km match. Its closest BED gas lines are 'Badr el Din Field - Alam El Shawish Pipeline' (20 in, 63 km, Shell) and 'Badr el Din 2 - Badr el Din Pipeline' (16 in, 19 km, Cheiron/Capricorn) - diameters echo Spur (1)/(2) but lengths (19-63 km) and endpoints (Alam El Shawish / BED GP) diverge sharply from GEM's 130 km to the Abu Sennan connector. Because endpoints differ these may be different lines, so this is a flag to watch rather than a proven error, but it means the 130 km figure has zero independent support and one Tier-2 source pointing shorter. Capacity 180 mmcf/d and diameter 20 in likewise rest solely on the EO&G table.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "sheet_row": 1935,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No independently verifiable ref could be staged. The sole supporting document is the Egypt Oil & Gas March-2020 Western Desert PDF - the same source GEM already derived every value from (not independent), and it is the URL already stored as the row's FuelSource. It is reachable (HTTP 200) and pdfminer confirms it contains 'Badr El Din Spur (1)', '130', '20', '180', but scripts/url_verifier.py cannot extract the PDF body text, so it FAILS the contains-token gate (verifier limitation on this PDF, not a dead link). Per the citation rule I did not stage it as a passed ref. UNRESOLVED: status 'operating' has no independent corroboration."
+    },
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "sheet_row": 1935,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "130.00", "LengthKnownUnits": "km"},
+      "primary_value": "130.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "130 km rests solely on the EO&G table; GulfPub's comparable BED lines are 19-63 km (different endpoints). No independent source confirms 130 km. UNRESOLVED - flag length as low-confidence, single-sourced, with a Tier-2 conflict pointing shorter."
+    },
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "sheet_row": 1935,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "20.00", "DiameterUnits": "in"},
+      "primary_value": "20.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "20 in from the EO&G table only. GulfPub's 'Badr el Din Field - Alam El Shawish' line is also 20 in (weak echo, different length/endpoints). No independent corroboration; UNRESOLVED."
+    },
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "sheet_row": 1935,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "180.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "180.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "180 mmcf/d from the EO&G table only; no independent source. GulfPub capacity is a 300 placeholder (unusable). UNRESOLVED."
+    },
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "sheet_row": 1935,
+      "oo_sheet_row": 2904,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "General Petroleum Co", "Owner1%": "100.00%"},
+      "primary_value": "General Petroleum Co",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Owner=GPC is consistent with the EO&G article (GPC runs the Abu Sennan gas plant and the southern Western Desert gas network) but is single-sourced, and GulfPub attributes physically-nearby BED lines to Shell/Cheiron (field operatorship). Owner (GPC network) vs operator (BAPETCO JV) tension; no second independent source stages cleanly. UNRESOLVED."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "Badr El Din Spur (1)",
+      "start_name": "Badr El Din (BED) fields, Western Desert (Matrouh Governorate)",
+      "start_lat": null,
+      "start_lon": null,
+      "end_name": "BED/Abu Sennan connector (junction feeding the BED/AS-Ameryia trunk), Abu Gharadig basin, northern Western Desert",
+      "end_lat": null,
+      "end_lon": null,
+      "waypoints": [],
+      "corridor_desc": "Per the Egypt Oil & Gas Western Desert table the line runs from the Badr El Din (BED) producing fields to the 'BED/Abu Sennan connector', a gathering junction in the Abu Gharadig basin of the northern Western Desert where BED field gas ties into the BED/AS-Ameryia trunk (GEM P3936) toward Ameryia/Alexandria. Both endpoints are corroborated as real: the BED fields sit in Matrouh Governorate (BAPETCO acreage; Zawya/BAPETCO Badr-15 discovery), and the Abu Sennan concession is a 644 km2 block in the Abu Gharadig basin, northern Western Desert (NS Energy). The corridor therefore lies within the northern Western Desert / Abu Gharadig basin, roughly bounded 29.8-30.7 N, 27.5-28.7 E, trending generally eastward from the BED fields to the Abu Sennan connector. I could NOT source precise field/junction coordinates, so point lat/lon are left null rather than fabricated; the ~130 km stated length is itself single-sourced and disputed by GulfPub (which places comparable BED lines at 19-63 km), so even the corridor length is low-confidence. Bound is loose (basin-level).",
+      "current_route_accuracy": "no route",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": [
+        "https://www.nsenergybusiness.com/projects/abu-sennan-concession/",
+        "https://www.zawya.com/en/economy/north-africa/egypt-bapetco-discovers-new-natural-gas-well-at-western-deserts-badr-15-concession-ptts831t"
+      ],
+      "verifications": [
+        {"url": "https://www.nsenergybusiness.com/projects/abu-sennan-concession/", "ok": true, "contains_value": true},
+        {"url": "https://www.zawya.com/en/economy/north-africa/egypt-bapetco-discovers-new-natural-gas-well-at-western-deserts-badr-15-concession-ptts831t", "ok": true, "contains_value": true}
+      ],
+      "tier": "low",
+      "source_language": "en",
+      "researcher_notes": "Endpoints established from the source table (BED fields -> BED/Abu Sennan connector) and corroborated as real places by NS Energy (Abu Sennan concession, Abu Gharadig basin, northern Western Desert) and Zawya/BAPETCO (BED fields, Matrouh, Western Desert). No source gives a routed alignment or endpoint coordinates, so lat/lon left null and only a basin-level corridor bound is offered. Fabrication of coordinates avoided."
+    }
+  ],
+  "summary": "P3937 Badr El Din Spur (1): real & correctly gas, not a duplicate of P3938, owner GPC source-consistent - but verdict=confirmed (caveat)/spec: every value (130km/20in/180mmcf/d) is a verbatim transcription of ONE 2020 Egypt Oil & Gas table with no independent corroboration, it's a field feeder spur, and GulfPub disputes the 130km length (19-63km). Route: BED fields -> BED/Abu Sennan connector, suggested accuracy low, coords null (unsourced)."
+}

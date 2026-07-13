@@ -1,0 +1,153 @@
+{
+  "project_id": "P1925",
+  "pipeline_name": "Depco-Abqaiq Gas Pipeline",
+  "sheet_row": 2943,
+  "wiki": "https://www.gem.wiki/Depco-Abqaiq_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Treat as a single-source (OPEC-only) entry and verify with an independent Aramco/engineering source before relying on it; identify or challenge the 'Depco' endpoint. Data faithfully reproduces OPEC ASB so it is NOT a GEM fabrication, but it fails the >=2-independent-sources bar and one endpoint cannot be placed. Consider flagging low-confidence / possible relabel of an internal Aramco station.",
+      "researcher_notes": "SOURCE-OF-RECORD TRACE: the gem.wiki stub is a bare bulk-import row (no article body); every value (owner, length, diameter) cites ONE publication -- OPEC Annual Statistical Bulletin (ref[1]=2012 p.75; ref[2]=52nd ASB 2017). I pulled both PDFs and found the exact row in Table 9.9 'Main gas pipelines in OPEC Members': asb-2017 (2016 data) line reads 'Depco/Abqaiq | Saudi Aramco | 20 | 40' and asb-2012 reads identically 'Depco/Abqaiq | Saudi Aramco | 20 | 40 | na | na'. The table header is explicitly 'Length (miles) / Diameter (inches) / Amount transported'. So the sheet's own numbers are a faithful transcription: 20 miles = 32.19 km -> GEM LengthKnown 32.00 km (correct conversion, wiki even shows '32 km / 20 miles'); Diameter 40 in direct; Owner/operator Saudi Aramco direct; Fuel=Gas (it sits in the gas-pipelines table); Capacity blank because the 'Amount transported' column is 'na'. NO SPEC ERROR -- the specs match the cited source. EXISTENCE PROBLEM: (1) the ONLY origin is OPEC ASB; the 2012 and 2017 editions are the SAME publisher and do NOT count as two independent sources. (2) No independent source anywhere names a 'Depco-Abqaiq' / 'Depco/Abqaiq' gas pipeline -- web + trade searches return only the GEM page. (3) 'Depco' is an UNIDENTIFIABLE endpoint: it matches no known Aramco gas plant, field, station, or Eastern Province town (Berri, Shedgum, Uthmaniya, Hawiyah, Haradh, Ju'aymah, Tanajib, Qatif, Aindar, Safaniya are all identifiable; 'Depco' is not) -- likely an internal Aramco station code or a transliteration artifact carried by OPEC. GULFPUB does NOT corroborate: the Dec-2025 SDE Saudi gas roster (20 features) has no 'Depco' line; the auto-suggested match 'Abqaiq-Qatif' (16 in, 14 km) is a different pipe (60% diameter delta, 56% length delta) -- a mismatch, not this line. NOT A DUPLICATE within the GEM roster: it maps 1:1 to a distinct OPEC row and no other 40-in/32-km Abqaiq gas line exists in the roster (P1913 Abqaiq-B-Shedgum is the 42-in/53-km 'Abqaiq-B/Shedgum' OPEC row, different). CLASSIFICATION is fine: OPEC files it under 'Main gas pipelines', 40-in trunk terminating at the Abqaiq hub. NET: real per its cited source and internally consistent, but zero independent corroboration and an unplaceable origin -> existence concern, not a clean pass.",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf", "https://www.opec.org/assets/assetdb/asb-2012.pdf"],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2943,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "32.00", "LengthKnownUnits": "km"},
+      "primary_value": "32.00",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf", "https://www.opec.org/assets/assetdb/asb-2012.pdf"],
+      "verifications": [
+        {"url": "https://www.opec.org/assets/assetdb/asb-2017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.opec.org/assets/assetdb/asb-2012.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB Table 9.9 lists Depco/Abqaiq at 20 miles (2012 & 2017 editions, identical). 20 mi = 32.19 km -> GEM 32.00 km. url_verifier returns 200 OK on both PDFs but the token check false-negatives on the compressed/deflate PDF body (documented PDF false-negative mode); content confirmed via pdftotext -layout on the downloaded files. SINGLE PUBLISHER only -> tier low, not independently corroborated."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2943,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "40", "DiameterUnits": "in"},
+      "primary_value": "40",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf", "https://www.opec.org/assets/assetdb/asb-2012.pdf"],
+      "verifications": [
+        {"url": "https://www.opec.org/assets/assetdb/asb-2017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.opec.org/assets/assetdb/asb-2012.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB Table 9.9 'Diameter (inches)' column = 40 for Depco/Abqaiq (2012 & 2017, identical). Confirmed via pdftotext. Single publisher -> tier low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2943,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf"],
+      "verifications": [
+        {"url": "https://www.opec.org/assets/assetdb/asb-2017.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The row appears in OPEC ASB Table 9.9 'Main gas pipelines in OPEC Members', supporting Fuel=Gas. Single publisher -> tier low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2943,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf"],
+      "verifications": [
+        {"url": "https://www.opec.org/assets/assetdb/asb-2017.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB lists Depco/Abqaiq as an existing/main gas pipeline (2016 data, 2017 edition) with no build-status qualifier -> supports operating. Weak: OPEC's table does not distinguish operating vs older lines beyond listing them as in service, and it is a single publisher -> tier low. No independent status confirmation found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2943,
+      "oo_sheet_row": 1458,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Saudi Aramco", "Owner1%": "100.00%"},
+      "primary_value": "Saudi Aramco",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf"],
+      "verifications": [
+        {"url": "https://www.opec.org/assets/assetdb/asb-2017.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB Table 9.9 'Owner or operator' column = Saudi Aramco for Depco/Abqaiq. Aramco ownership/operation of Saudi domestic gas transmission is general fact, hence medium rather than low, but for THIS specific line only OPEC names it. NB OPEC's column conflates owner and operator; both are Saudi Aramco here."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2943,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": ""},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Capacity genuinely unavailable: OPEC ASB 'Amount transported' column is 'na' for Depco/Abqaiq in both 2012 and 2017; GulfPub Capacity_mmcfd=300 is a known constant placeholder, never a real capacity; no independent source found. Left blank -- not forced."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "",
+      "start_name": "Depco (unidentified Aramco station/facility, Eastern Province, Saudi Arabia)",
+      "start_lat": null,
+      "start_lon": null,
+      "end_name": "Abqaiq (Buqayq) processing hub, Eastern Province, Saudi Arabia",
+      "end_lat": 25.93,
+      "end_lon": 49.67,
+      "waypoints": [],
+      "corridor_desc": "Only one endpoint is establishable. 'Abqaiq' is the well-known Saudi Aramco oil/gas processing centre and town in the Eastern Province (approx 25.93N, 49.67E for the named town/plant complex -- approximate, from the named place, not a surveyed pipeline coordinate). The origin 'Depco' cannot be identified against any known Aramco field, gas plant, station, or Eastern Province settlement, so its position is unknown and its lat/lon are left null (not fabricated). The only geometric bound is the OPEC-stated length of 20 miles (~32 km): the origin lies somewhere within roughly a 32 km radius of Abqaiq, direction unknown. This is a very loose bound and no defensible corridor can be drawn until 'Depco' is resolved.",
+      "current_route_accuracy": "no route",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": ["https://www.opec.org/assets/assetdb/asb-2017.pdf"],
+      "verifications": [
+        {"url": "https://www.opec.org/assets/assetdb/asb-2017.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "low",
+      "source_language": "en",
+      "researcher_notes": "End endpoint (Abqaiq) sourced as a named, well-known Aramco hub; coordinate is an approximate placement of that named town/facility, explicitly not a surveyed pipeline vertex. Start endpoint 'Depco' is unresolved -> lat/lon null, described in words, no coordinate invented. Length (32 km / 20 mi) from OPEC ASB gives the only radius bound. No route corridor should be added to the routes repo until 'Depco' is independently identified."
+    }
+  ],
+  "summary": "P1925 Depco-Abqaiq: verdict=concern (existence) -- specs (32 km/20 mi, 40 in, Aramco, gas) faithfully match its ONLY source (OPEC ASB 2012+2017, one publisher), but no independent corroboration exists, GulfPub does not confirm, and the 'Depco' endpoint is unidentifiable; not a duplicate or misclassification. Route: only Abqaiq endpoint placeable (low)."
+}
