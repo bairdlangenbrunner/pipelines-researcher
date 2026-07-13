@@ -6,9 +6,10 @@ This folds them into staged_resolutions.json:
 
 - Preserve every genuine ref record from the prior staged_resolutions.json
   (class_in HAS_REF / MISSING_REF and their class_out) — the ref sweep is not redone.
-- Drop any OLD FILL / VALIDITY / STATUS records (this fresh critical pass supersedes them).
-- Convert each shard's validity[] -> __VALIDITY__ records, fills[] -> FILL records, and
-  (annual-update mode) status_reviews[] -> __STATUS__ records, applying merge-time QC
+- Drop any OLD FILL / VALIDITY / STATUS / ROUTE records (this fresh critical pass supersedes them).
+- Convert each shard's validity[] -> __VALIDITY__ records, fills[] -> FILL records,
+  routes[] -> __ROUTE__ records, and (annual-update mode) status_reviews[] -> __STATUS__
+  records, applying merge-time QC
   (strip refs that did not pass verification; downgrade to UNRESOLVED; a status "change"
   with zero verified refs -> "unclear"; a "stale" shelved/cancelled inference always gets
   ShelvedCancelledType=Presumed).
@@ -50,13 +51,13 @@ def main():
     res = prior["resolutions"]
 
     def is_old_deepsweep(r):
-        return (r.get("class_in") in ("FILL", "VALIDITY", "STATUS")
-                or r.get("ref_col") in ("__VALIDITY__", "__STATUS__"))
+        return (r.get("class_in") in ("FILL", "VALIDITY", "STATUS", "ROUTE")
+                or r.get("ref_col") in ("__VALIDITY__", "__STATUS__", "__ROUTE__"))
 
     kept = [r for r in res if not is_old_deepsweep(r)]
 
     shards = sorted(glob.glob(os.path.join(S, "rows", "*.json")))
-    new_validity, new_fills, new_status, missing = [], [], [], []
+    new_validity, new_fills, new_status, new_routes, missing = [], [], [], [], []
 
     pid_set = {r.get("project_id") for r in res}
     seen_shard_pids = set()
@@ -131,17 +132,43 @@ def main():
                 "tier": s.get("tier", ""), "independent": s.get("independent", False),
                 "source_language": s.get("source_language", "en"), "researcher_notes": notes})
 
+        for rt in d.get("routes", []) or []:
+            refs = _verified(rt.get("proposed_refs", []), rt.get("verifications", []))
+            notes = rt.get("researcher_notes", "")
+            if rt.get("proposed_refs") and not refs:
+                notes = (notes + " [QC] dropped unverified ref(s).").strip()
+            # coordinates are never fabricated (standing rule 2): a suggestion with both
+            # endpoints coordinated is SUGGESTED; a corridor-only one (missing coords) is PARTIAL.
+            has_coords = all(rt.get(k) is not None for k in ("start_lat", "start_lon", "end_lat", "end_lon"))
+            new_routes.append({**ident,
+                "sheet_row": rt.get("sheet_row", d.get("sheet_row", "")),
+                "segment_name": rt.get("segment_name", ""),
+                "ref_col": "__ROUTE__", "value_cols": [], "primary_value_col": None,
+                "values": {}, "primary_value": "", "current_ref": "",
+                "class_in": "ROUTE", "class_out": "ROUTE_SUGGESTED" if has_coords else "ROUTE_PARTIAL",
+                "start_name": rt.get("start_name", ""), "start_lat": rt.get("start_lat"),
+                "start_lon": rt.get("start_lon"), "end_name": rt.get("end_name", ""),
+                "end_lat": rt.get("end_lat"), "end_lon": rt.get("end_lon"),
+                "waypoints": rt.get("waypoints", []) or [], "waypoint_note": rt.get("waypoint_note", ""),
+                "corridor_desc": rt.get("corridor_desc", ""),
+                "current_route_accuracy": rt.get("current_route_accuracy", ""),
+                "suggested_route_accuracy": rt.get("suggested_route_accuracy", ""),
+                "proposed_refs": refs, "verifications": rt.get("verifications", []) or [],
+                "tier": rt.get("tier", ""), "independent": rt.get("independent", False),
+                "source_language": rt.get("source_language", "en"), "researcher_notes": notes})
+
     for pid in sorted(pid_set):
         if pid and pid not in seen_shard_pids:
             missing.append(pid)
 
-    merged = kept + new_status + new_fills + new_validity
+    merged = kept + new_status + new_fills + new_validity + new_routes
     meta["n_units"] = len(merged)
     meta["class_out_counts"] = dict(collections.Counter(r.get("class_out") for r in merged))
     meta["class_in_counts"] = dict(collections.Counter(r.get("class_in") for r in merged))
     meta["n_validity_flags"] = len(new_validity)
     meta["n_fills"] = len(new_fills)
     meta["n_status_reviews"] = len(new_status)
+    meta["n_route_suggestions"] = len(new_routes)
     meta["verdict_counts"] = dict(collections.Counter(r.get("verdict") for r in new_validity))
     meta["concern_counts"] = dict(collections.Counter(
         r.get("concern_type") for r in new_validity if r.get("verdict") == "concern"))
@@ -150,6 +177,7 @@ def main():
     json.dump({"meta": meta, "resolutions": merged}, open(cur_path, "w"), indent=1)
     print(f"shards merged: {len(shards)} | missing PIDs: {len(missing)} {missing if missing else ''}")
     print(f"kept ref records: {len(kept)} | new fills: {len(new_fills)} | new validity: {len(new_validity)}"
+          + (f" | new routes: {len(new_routes)}" if new_routes else "")
           + (f" | new status reviews: {len(new_status)}" if new_status else ""))
     print(f"verdicts: {meta['verdict_counts']}")
     print(f"open concerns by type: {meta['concern_counts']}")

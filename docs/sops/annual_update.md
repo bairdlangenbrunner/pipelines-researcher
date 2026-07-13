@@ -84,6 +84,21 @@ incidents) + ref re-verification only for rows where `--verify-existing` flags d
 No deep-fill, no full ≥2-corroboration re-derivation of every field. To be specified as a
 `--tier operating-refresh` variant after the in-dev leg has run in a few countries.
 
+## Gotchas (seeding the ref baseline)
+
+Annual mode runs no separate ref-sweep pass, so the merge needs a **ref baseline** to preserve
+records onto: `seed_resolutions_from_worklist.py` converts worklist ref units into the initial
+`staged_resolutions.json`.
+- **Commodity is inferred from the snapshot filename** ("gas"/"ggit" → gas) into `meta.commodity`,
+  so `build_ref_workbook.py` prefixes tabs correctly. Without it, a gas packet mislabels tabs
+  `Oil_`.
+- **Re-seeding requires deleting the stale `staged_resolutions.prior.json`** first — the merge
+  snapshots the baseline to `.prior.json` on first run, and a stale snapshot (e.g. one captured
+  with an empty commodity) will be re-applied and re-break the tab prefix.
+- On resume, retrying only the failed workflow agents on a stronger model works because changing
+  an agent's `opts` (e.g. `model: 'opus'`) busts *that* agent's cache while completed agents
+  replay from cache untouched.
+
 ## Hand-off contract (data-ops)
 
 `staged_resolutions.json` and `staged_new.json` are the machine-readable outputs; their

@@ -2,17 +2,18 @@
 
 ## Data files (machine-specific symlinks under `data/`, gitignored)
 
-| Dataset | symlink `data/…` | points at | features | scraped |
+| Dataset | file `data/…` | source scrape | features | scraped |
 |---|---|---|---|---|
-| oil | `gulfpub-oil-global.geojson` | `_gem-docs/mapping/2026-oil/iraq/2026Q1/gulfpub.SDE.Oil_Pipelines_Global.geojson` | 1,645 | 2026-02 |
-| gas | `gulfpub-gas-global.geojson` | `GOIT-GGIT-scraping/scraping/pe-world-map/pe-world-map-gas-pipelines-global.geojson` | 1,000 | 2024-05 |
+| oil | `gulfpub-oil-global.geojson` (symlink) | `gulfpub.SDE.Oil_Pipelines_Global.geojson` | 1,645 | 2026-02 |
+| gas | `SDE.NG_Pipelines_Global.geojson` (copied in) | fuller PE World Map SDE scrape (incl. Iraq) | 5,346 | 2025-12-11 |
 
-Recreate the symlinks on a new machine (or set the `path:` in `manifest.yml` to
+Both are the December-2025 SDE (PE World Map / Petroleum Economist) scrape from the Esri
+Open_Data endpoint. Recreate on a new machine (or set the `path:` in `manifest.yml` to
 wherever the files live):
 
 ```bash
-ln -sf /abs/path/gulfpub.SDE.Oil_Pipelines_Global.geojson        sources/gulfpub/data/gulfpub-oil-global.geojson
-ln -sf /abs/path/pe-world-map-gas-pipelines-global.geojson       sources/gulfpub/data/gulfpub-gas-global.geojson
+ln -sf /abs/path/gulfpub.SDE.Oil_Pipelines_Global.geojson   sources/gulfpub/data/gulfpub-oil-global.geojson
+cp     /abs/path/SDE.NG_Pipelines_Global.geojson            sources/gulfpub/data/SDE.NG_Pipelines_Global.geojson
 ```
 
 ## Caveats (these drove the manifest)
@@ -27,10 +28,13 @@ ln -sf /abs/path/pe-world-map-gas-pipelines-global.geojson       sources/gulfpub
 - **Oil vs gas schemas differ** (`project_na`/`Project`, `start`/`Start`,
   `start_date`/`Comm_1`, lowercase vs Title-case status) — absorbed by the two
   per-dataset `column_map`s + `status_map`s. This is exactly why the manifest exists.
-- **Gas coverage is capped at 1,000 features** (a render/export cap on the May-2024
-  pe-world-map file). No fuller gas extract exists on disk (`all-geojsons.zip` holds
-  the same files; `query.json` is an unrelated ESRI polygon layer). When a complete
-  gas scrape arrives, repoint `datasets[name=gas].path` — the only change needed.
+- **Gas now uses the fuller Dec-2025 SDE scrape** (`SDE.NG_Pipelines_Global.geojson`,
+  5,346 features incl. 31 Iraq gas). This replaced the old May-2024 `pe-world-map` file,
+  which was capped at 1,000 features and had no Iraq coverage. The gas `column_map` already
+  matched the SDE schema (same PE World Map fields), so the repoint was **path + scraped_date
+  only**. If an even-newer scrape arrives, repoint `datasets[name=gas].path` again.
+- **`Capacity_mmcfd` is a constant `300` placeholder** in the gas schema — it is **not** a real
+  capacity and must never be used as a capacity corroboration (bit the Iraq gas sweep).
 - **OID instability:** `OBJECTID_1` is an ESRI OID that can renumber across scrapes,
   so `oid_stability: unstable`. `ref_id` is `gulfpub:<ds>:<OID>` and is stable
   *within* a scrape; cross-scrape identity should be re-confirmed (a documented

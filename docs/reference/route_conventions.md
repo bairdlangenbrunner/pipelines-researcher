@@ -80,3 +80,16 @@ reconciliation engine compares it spatially to the GEM route:
   that is a `Route_Conflicts` review item, **not** a replacement.
 
 Spatial metrics and the flag logic: `docs/sops/reconciliation.md` + `route_compare.py`.
+
+## Route suggestions from a deep sweep (weak `RouteAccuracy`)
+
+A **deep sweep** (`workflows.md §6b`, on request) suggests routes for rows whose
+`RouteAccuracy` is `no route` / `low` / `medium`. This is the one route work *in scope* for a
+sweep — distinct from route geometry `[ref]` cells (media URLs), which stay out of scope.
+
+- Depth is **corridor + endpoints**: named endpoints + **sourced** lat/lon + a corridor
+  description — not a full traced geometry.
+- Output is a **candidate** on the `<Cmdty>_RouteSuggestions` tab (staged as `routes[]` on the
+  subagent shard; schema in `docs/sops/ref_sweep.md`). It is delivered for a **human routes-repo
+  branch + PR**; the agent **never edits `GOIT-GGIT-pipeline-routes`** and **never fabricates
+  coordinates** — unsourced coords are null and flagged red.

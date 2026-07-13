@@ -19,6 +19,9 @@ const REPO = A.repo
 const STAGING = A.staging
 const COMMODITY = A.commodity || 'gas'
 const COUNTRY = A.country || ''
+// Prefer the cheapest sufficient model (standing rule). Sonnet handles the search,
+// roster-match consolidation, and per-candidate vetting well. Override via args.model.
+const MODEL = A.model || 'sonnet'
 const ROSTER = A.roster.join("\n")
 
 const STRATEGIES = A.strategies || [
@@ -139,12 +142,12 @@ Return ONLY a 2-line summary (class + strongest evidence). The shard is the deli
 phase('Search')
 log(`Discovery sweep for ${COUNTRY} (${COMMODITY}): ${STRATEGIES.length} strategy agents vs a roster of ${A.roster.length} existing rows.`)
 await parallel(STRATEGIES.map(s => () =>
-  agent(searchContract(s), { label: `search:${s.key}`, phase: 'Search', agentType: 'general-purpose' })
+  agent(searchContract(s), { label: `search:${s.key}`, phase: 'Search', agentType: 'general-purpose', model: MODEL })
 ))
 
 phase('Consolidate')
 const consolidated = await agent(consolidateContract, {
-  label: 'consolidate', phase: 'Consolidate', agentType: 'general-purpose', schema: QUEUE_SCHEMA,
+  label: 'consolidate', phase: 'Consolidate', agentType: 'general-purpose', schema: QUEUE_SCHEMA, model: MODEL,
 })
 if (!consolidated || !consolidated.queue.length) {
   log(`No candidates survived consolidation (matched: ${consolidated ? consolidated.matched : '?'}, dropped: ${consolidated ? consolidated.dropped : '?'}).`)
@@ -154,7 +157,7 @@ log(`${consolidated.queue.length} candidates queued for vetting (${consolidated.
 
 phase('Vet')
 const vetted = await parallel(consolidated.queue.map(q => () =>
-  agent(vetContract(q), { label: `vet:${q.slug}`, phase: 'Vet', agentType: 'general-purpose' })
+  agent(vetContract(q), { label: `vet:${q.slug}`, phase: 'Vet', agentType: 'general-purpose', model: MODEL })
 ))
 const done = vetted.filter(Boolean).length
 log(`Vetting complete: ${done}/${consolidated.queue.length}. Shards in ${STAGING}/discovery/vetted/ — next: scripts/merge_discovery_shards.py`)

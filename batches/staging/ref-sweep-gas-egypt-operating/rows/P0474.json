@@ -1,0 +1,130 @@
+{
+  "project_id": "P0474",
+  "pipeline_name": "Obaiyed-Amreya Northern Gas Pipeline",
+  "sheet_row": 2252,
+  "wiki": "https://www.gem.wiki/Obaiyed-Amreya_Northern_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep Status=operating, Fuel=Gas, Length=49.5km, Diameter=32in, Capacity=600 MMcf/d; add the Egypt Oil & Gas Western Desert table as a paired ref for Status/Fuel/Length/Capacity (staged in fills). Do NOT merge/dedupe this row with P6687 or P3934 despite the identical shared pipeline_name \"Obaiyed-Amreya Northern Gas Pipeline\" -- an independent trade-press engineering table shows these are three genuinely distinct, differently-specced legs of one corridor, not a duplicate entry.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/SPEC: real, well-documented onshore gas transmission trunk in Egypt's Western Desert (Matruh governorate). Primary independent source: Egypt Oil & Gas magazine report 'The Western Desert: Egypt's Giant Petroleum Reservoir' (March 2020, issue 159) -- already the sheet's Diameter [ref] URL. NOTE the url_verifier substring screen FAILs on this URL for tokens like 'Obaiyed'/'Tarek' because the page actually serves a compressed PDF (content-type header says text/html but the bytes are a PDF stream) -- a documented ligature/PDF false-negative per url_verifier.py's own docstring. I fetched the PDF directly and extracted text with pdfplumber, which resolved this: p.4 of the extracted text contains a table 'Natural Gas Infrastructure in the Western Desert' with columns Pipeline | From | To | Length(Km) | Diameter(Inches) | Capacity(mmcf/d), and the row 'Obaiyed-Tarek Connector | Obaiyed/Salam Connector | Tarek | 49.5 | 32 | 600' -- an EXACT match to GEM's current Length=49.50km, Diameter=32in, Capacity=600.00 MMcf/d for this segment (segment_name in GEM's own backend is 'Obaiyed-Tarek Gas Pipeline', matching the table's 'Obaiyed-Tarek Connector'). Verified live (200) via `python scripts/url_verifier.py <url>` liveness-only mode; content match confirmed manually per the documented workaround. This is a SINGLE specific source (tier=medium, independent=false) -- I could not find a second independent source with matching segment-level specs (a 2004 Apache/Shell EIA describes the aggregate 34-inch 'Northern Gas Pipeline' network, not this specific 49.5km/32in leg; GulfPub's PE World Map lists the corridor as one aggregate 'Western Desert Gas Project - North Line' Obaiyed field->Ameriya Refinery, dia=34in, len=196km, op=BAPETCO -- a different level of granularity, not directly comparable to this segment, and itself only Tier-2). CLASSIFICATION confirmed: this is a legitimate gas transmission export line (not gathering/plant-internal), carrying sales gas from Khalda-concession fields toward the coast -- consistent across the 2004 Apache EIA ('A 34 inch gas export line handles all of the gas exported from the Khalda concession, Matrouh concession, Ras Kanayis concession, Ras El Hekma concession, Umbarka concession & South Umbarka concession') and the 2020 trade-press table. DUPLICATE check: P0474, P6687 ('Obaiyed Spurline', 41.5km/26in/480), and P3934 ('Tarek-Ameryia Gas Pipeline', 231km/34in/950) all share the identical pipeline_name 'Obaiyed-Amreya Northern Gas Pipeline' in GEM -- this LOOKS like a duplicate cluster at first glance, but the SAME Egypt Oil & Gas table lists all three as separate named legs with different from/to points and different specs (Tarek-Ameryia: Tarek->Ameryia 231/34/950; Obaiyed-Tarek Connector: Obaiyed/Salam Connector->Tarek 49.5/32/600; Obaiyed Spurline: Obaiyed->Obaiyed/Salam Connector 41.5/26/480), and the combined ~322km of the three legs closely matches an independent 2004 Oil & Gas Journal description of a single '315 km gas pipeline from Shell's Obaiyed concession to Egypt's gas grid.' Conclusion: legitimate segmentation of one corridor into three GEM rows, NOT an erroneous duplicate -- no merge recommended.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartLocation/EndLocation for this specific segment to 'Obaiyed/Salam Connector' -> 'Tarek [gas plant]' (both Matruh governorate) rather than the network-level 'Obaiyed gas field' -> 'Amreya oil & gas plant' currently recorded (Amreya is ~280km further down the corridor, past the separate Tarek-Ameryia segment P3934). Separately, have a human re-verify current Owner1/Owner2: Apache Corp/Shell plc is sourced only to a 2004 EIA describing that era's ownership, and Shell divested its Western Desert onshore interests (incl. its BAPETCO 50:50 JV with EGPC, which operates the Obaiyed field/plant this segment originates at) to Cheiron Petroleum Corporation and Cairn Energy in a deal effective Jan 2020 and completed Sept 2021 -- three years before this row's 2024-07-30 update. Owner2=Shell plc is very likely stale.",
+      "researcher_notes": "ENDPOINT (attribution) issue: the sheet's Location [ref] cluster records StartLocation='Obaiyed gas field' / EndLocation='Amreya oil & gas plant' for THIS specific segment (segment_name='Obaiyed-Tarek Gas Pipeline'), but those are the endpoints of the overall multi-segment corridor/network, not of this segment. The same Egypt Oil & Gas 2020 table that exactly matches this segment's length/diameter/capacity (see companion validity entry) gives this leg's actual From/To as 'Obaiyed/Salam Connector' -> 'Tarek', consistent with the segment's own name ('Obaiyed-Tarek'). Amreya is the far endpoint of the downstream 'Tarek-Ameryia' leg (P3934, 231km), roughly 280km beyond Tarek -- so labeling this 49.5km segment as ending at Amreya is a real (network-vs-segment) location error, a known GEM granularity gotcha. OWNERSHIP (attribution) issue: current Owner1='Apache Corp', Owner2='Shell plc' traces (via gem.wiki's own outbound citation) to a Feb-2004 Apache Egypt Companies EIA filed with MIGA, which states the aggregate 'Northern Gas Pipeline' (34in) 'is jointly owned by Apache and Shell with Shell assuming operatorship of the line' (https://www.miga.org/documents/Apache_Egypt_2004_Egyptian_Oil_and_Gas_Activities_EIA.pdf, verified live). That is a 22-year-old snapshot. Independently confirmed via web search (Offshore Technology / OGJ / JPT-SPE coverage, March 2021 announcement, deal effective Jan. 1 2020, completed Sept. 2021): Shell sold its Egypt onshore Western Desert portfolio -- explicitly including its 50% stake in Badr El-Din Petroleum Company (BAPETCO), which 'owns 100% interest in Obaiyed...' field/plant -- to Cairn Energy and Cheiron Petroleum. Since this pipeline originates at Obaiyed and was Shell-operated per the same 2004 doc, Shell's operating/ownership interest in this specific pipeline asset most plausibly transferred as part of that 2021 sale along with the rest of the BAPETCO/Obaiyed infrastructure. Apache Corp's continuing interest is more plausible (Apache/APA remains active in the separate Khalda JV concession that feeds gas into this line), but I could not independently verify Apache's CURRENT % stake in the pipeline itself. Not fabricating a replacement owner -- flagging for a human ownership recheck rather than proposing an unverified substitute.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/",
+        "https://www.miga.org/documents/Apache_Egypt_2004_Egyptian_Oil_and_Gas_Activities_EIA.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "sheet_row": 2252,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/"],
+      "verifications": [{"url": "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Listed as an active, in-service leg in the Egypt Oil & Gas 'Natural Gas Infrastructure in the Western Desert' table (March 2020 report, extracted via pdfplumber -- url_verifier's substring screen false-negatives on this URL because it serves a compressed PDF; see validity notes). Status inferred from active-infrastructure context, not a literal 'operating' string match, per confidence_tiers guidance. Single source -> tier medium."
+    },
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "sheet_row": 2252,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/"],
+      "verifications": [{"url": "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Listed under the report's 'Natural Gas Infrastructure' table heading -- unambiguously a gas line."
+    },
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "sheet_row": 2252,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "49.50", "LengthKnownUnits": "km"},
+      "primary_value": "49.50",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/"],
+      "verifications": [{"url": "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact match: table row 'Obaiyed-Tarek Connector' Length=49.5 Km."
+    },
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "sheet_row": 2252,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "600.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "600.00",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/"],
+      "verifications": [{"url": "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact match: table row 'Obaiyed-Tarek Connector' Capacity=600 mmcf/d. Caveat: coincidentally the same figure (600 MMcfd) as GASCO's unrelated Western Desert Gas Complex 'Train D' processing-plant expansion at Amreya -- confirmed these are two different things (this is the pipeline table value from a 2020 report predating the Train D project); not a data-entry conflation, just noted so a future researcher doesn't second-guess it without checking."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "start_name": "Obaiyed/Salam Connector (near Obaiyed gas field & plant, Matruh Governorate)",
+      "start_lat": 31.13,
+      "start_lon": 26.98,
+      "end_name": "Tarek gas plant (Khalda concession, Matruh Governorate)",
+      "end_lat": 31.35,
+      "end_lon": 27.36,
+      "waypoints": [
+        {"name": "Marsa Matruh (city, reference anchor used to derive both endpoint approximations)", "lat": 31.3525, "lon": 27.2373}
+      ],
+      "corridor_desc": "Short (~50km) inland desert leg within Matruh Governorate, Western Desert, connecting the Obaiyed/Salam gas-gathering connector point (near the BAPETCO-operated Obaiyed field/plant, independently described as ~35km SW of Marsa Matruh) to Apache/Khalda's Tarek gas plant (independently described as ~7.5 miles / ~12km east of Apache's 'Matruh manifold', i.e. just east of Marsa Matruh town). This segment is the first leg of a longer corridor that continues northeast via the separate 'Tarek-Ameryia' segment (GEM P3934) toward the coast at Amreya, Alexandria -- so the true multi-segment corridor runs roughly SW-of-Matruh -> near-Matruh -> Ameryia, not the single Obaiyed-field-to-Amreya-plant straight line currently recorded as this row's Location.",
+      "current_route_accuracy": "high",
+      "suggested_route_accuracy": "medium",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/",
+        "https://www.ogj.com/general-interest/companies/article/17231857/egypts-western-desert-onshore-oil-and-gas-production-strong"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/reports/the-western-desert-egypts-giant-petroleum-reservoir/", "ok": true, "contains_value": true},
+        {"url": "https://www.ogj.com/general-interest/companies/article/17231857/egypts-western-desert-onshore-oil-and-gas-production-strong", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "source_language": "en",
+      "researcher_notes": "No source gives precise lat/lon for 'Obaiyed/Salam Connector' or 'Tarek gas plant'. Both endpoint coordinates here are DERIVED, not fabricated: computed from Marsa Matruh city's well-known coordinates (31.3525N, 27.2373E) plus an independently sourced approximate bearing+distance for each named facility (Obaiyed field '35 km southwest of Matruh' per the Egypt Oil & Gas 2020 Western Desert report; Tarek gas plant '7.5 miles [~12km] to the east' of Apache's Matruh manifold per a Nov. 2004 Oil & Gas Journal article on Western Desert production, both verified live). These are therefore approximate anchors, not survey-grade coordinates -- suggested_route_accuracy downgraded from the sheet's current 'high' to 'medium' pending a sourced route line, and because the sheet's own recorded endpoints (Obaiyed gas field -> Amreya oil & gas plant) are the wrong pair for this specific 49.5km segment (see attribution concern in validity)."
+    }
+  ],
+  "summary": "P0474 (Obaiyed-Tarek Gas Pipeline segment) is real, correctly classified, and its Length/Diameter/Capacity are an exact match to a specific Egypt Oil & Gas Western Desert infrastructure table (tier medium, single source) -- confirmed with caveat. Two attribution concerns staged: (1) this segment's Location fields wrongly carry the network-level endpoints (Obaiyed field -> Amreya plant) instead of its own true endpoints (Obaiyed/Salam Connector -> Tarek); (2) Owner2=Shell plc traces only to a 2004 EIA and is very likely stale given Shell's 2021 divestiture of its Western Desert/BAPETCO interests to Cheiron/Cairn. The shared 'pipeline_name' with P6687 and P3934 is legitimate three-way segmentation of one corridor per an independent source, not a duplicate -- no merge recommended."
+}

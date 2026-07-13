@@ -47,6 +47,11 @@ Tehran Times, Mehr News Agency, Saudipedia, country business press; conference
 press (ADIPEC, Gastech); NGO/opposition research (Earthjustice, Sierra Club,
 Earthworks) for opposition data only.
 
+**Iraq / Kurdistan (verified productive; some Arabic/FA-only):** Iraq Oil Report, MEES,
+Rudaw (Arabic), Shafaq, `attaqa.net`, `al-mirbad.com`, Wattan News (`wattaennews.net`),
+thenewregion, kurdistan24. Cross-border lines (Iran/Turkey/Jordan/Syria) usually need
+non-English search — seed from the row's `OtherLanguage*` names.
+
 ## Reference-dataset registry (scraped route DBs for reconciliation)
 
 Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
@@ -57,6 +62,15 @@ Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
 
 To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-URL
 `report_citation` (name + scrape date), never by a GEM URL.
+
+- **GulfPub ≡ "PE World Map" ≡ Petroleum Economist.** Gas source repointed 2025-12-11 to the
+  fuller SDE scrape (`SDE.NG_Pipelines_Global.geojson`, 5,346 feats incl. Iraq; the old 2024
+  export was 1,000 feats / no Iraq). **`Capacity_mmcfd` is a constant `300` placeholder — never
+  a capacity corroborator.**
+- **The master dataset-registry sheet is NOT public** — a `curl` CSV export hits an HTML login
+  wall. Read it via Google Drive MCP `download_file_content` (`exportMimeType=text/csv`). Sheet
+  ID + on-disk geojson paths are in the `datasets-registry-and-gulfpub-identity` memory. Large
+  geojsons (19 MB) can't go through context via Drive MCP — `find` them on local disk instead.
 
 ## Forbidden / cautioned
 - **GEM.wiki / globalenergymonitor.org** — never self-cite (standing rule 1).

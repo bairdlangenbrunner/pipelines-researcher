@@ -244,11 +244,15 @@ Write ${S}/ref_shards/${p.pid}.json = a single JSON object EXACTLY:
 }
 One resolution object per unit in the brief. Before finishing, run \`python -c "import json; json.load(open('${S}/ref_shards/${p.pid}.json'))"\` to confirm it parses. Return ONLY a 2-line summary (units REFS_ADDED vs UNRESOLVED, any value contradictions found). The shard file is the deliverable.`
 
+// Resume 2026-07-13: only PIDs whose ref_shards/<PID>.json is not yet on disk (21/50 done previously).
+const REF_REMAINING = new Set(["P3937","P6032","P6033","P6034","P6036","P6037","P6687","P6688","P6689","P6692","P6693","P6697","P6698","P6699","P6700","P6701","P6702","P6703","P6704","P7447","P7482","P7567","P7572","P7574","P7577","P7578","P7580","P7588","P7589"])
+const REF_PIDS = A.pids.filter(p => REF_REMAINING.has(p.pid))
+
 phase('Research')
-log(`Targeted ref research: ${A.pids.length} Egypt gas pipelines, one subagent each (Opus).`)
-const results = await parallel(A.pids.map(p => () =>
-  agent(contract(p), { label: `refs:${p.pid}`, phase: 'Research', agentType: 'general-purpose', model: 'opus' })
+log(`Targeted ref research: ${REF_PIDS.length} Egypt gas pipelines, one subagent each (Sonnet).`)
+const results = await parallel(REF_PIDS.map(p => () =>
+  agent(contract(p), { label: `refs:${p.pid}`, phase: 'Research', agentType: 'general-purpose', model: 'sonnet' })
 ))
 const done = results.filter(Boolean).length
-log(`Ref research complete: ${done}/${A.pids.length} subagents returned. Shards in ${S}/ref_shards/`)
-return { done, total: A.pids.length }
+log(`Ref research complete: ${done}/${REF_PIDS.length} subagents returned. Shards in ${S}/ref_shards/`)
+return { done, total: REF_PIDS.length }

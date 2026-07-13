@@ -87,6 +87,33 @@ Three sheets matching the GEM column structure:
 3. **Status Changes Summary** — Pipeline, Segment, Current Status, Recommended
    Status, Key Evidence, Source URL; recommended status highlighted red.
 
+## Ref-sweep / deep-sweep workbook (mode = `refsweep` / `deepsweep`)
+
+Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/finding tabs follow.
+
+- **`<Cmdty>_Backend` — a 1:1 mirror of the GEM tracker backend, NOT a diff view.** Reproduce
+  the **entire backend column set in exact sheet order** (every column, *including* computed/
+  formula ones: CapacityBcm/y, LengthKnownKm, DiameterInMm, StartRegion/SubRegion, CostUSD,
+  per-km costs, …), **one row per in-scope segment, with the current value prefilled in every
+  cell** from the snapshot CSV. Overlay only on *touched* cells: proposed ref(s) on the `[ref]`
+  cell (tier-colored) and any proposed value on its value cell. Prepend a single **`SheetRow`**
+  locator column (the tracker's row number, not a backend field) and freeze through `ProjectID`.
+  - Loaded by `_backend_snapshot(meta)` (full header at CSV row index 2; data rows keyed by the
+    composite **`(ProjectID, SheetRow)`**, since a multi-segment ProjectID has >1 row and
+    `SheetRow = CSV data-row index + 4`), rendered by `_backend_view`.
+  - **Paste-back caveat:** the computed/formula columns hold *snapshot-computed* values — **never
+    paste them back over the live-sheet formulas.** Paste only the touched (colored) cells.
+  - History: this replaced an earlier touched-columns-only mirror (Iraq `Gas_Backend` had 43 of
+    131 cols) after Baird required an exact, full reproduction of the backend.
+- **`<Cmdty>_OperatorsOwners`** — mirror of the ProjectID-keyed operators/owners tab (GID
+  `1489950650`); `[ref]` column **precedes** its values; paste back by ProjectID, not onto a
+  tracker row.
+- **Deep-sweep finding tabs:** `<Cmdty>_Validity`, `<Cmdty>_Fills`, and (route/GulfPub legs)
+  `<Cmdty>_RouteSuggestions`, `<Cmdty>_GulfPub`. Annual mode leads with `<Cmdty>_StatusReview`.
+- **Tier → cell color** (on `[ref]` cells): green = ≥2 independent working sources · yellow =
+  single · red = low/none (an empty red cell = "needs a source", **not an error**) · blue =
+  existing ref re-verified live.
+
 ## QC workbook (mode = `qc`)
 
 Rebuild of `GOIT_oil_ngl_QC.xlsx` (and a GGIT equivalent). One sheet per check:

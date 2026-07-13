@@ -1551,7 +1551,9 @@ const REPO = A.repo
 const STAGING = A.staging
 const COMMODITY = A.commodity || 'gas'
 const COUNTRY = A.country || 'Egypt'
-const PIDS = A.pids
+// Resume 2026-07-13: only the PIDs whose rows/<PID>.json shard is not yet on disk (20/50 done previously).
+const REMAINING = new Set(["P0474","P3932","P6037","P3934","P3343","P3346","P3366","P3659","P3929","P3930","P3931","P5132","P6032","P6033","P6034","P6036","P6689","P6697","P6698","P6699","P6700","P6701","P6702","P6704","P7447","P7567","P7572","P7574","P7580","P7588"])
+const PIDS = A.pids.filter(p => REMAINING.has(p))
 const ROSTER = (A.roster || []).join("\n")
 const RC = A.routes_context || {}
 const GULFPUB_GAS = A.gulfpub_gas_eg || ''
@@ -1683,7 +1685,7 @@ Your shard file is the deliverable, not your message.`
 phase('Audit')
 log(`Auditing ${PIDS.length} ${COUNTRY} ${COMMODITY} operating pipelines (existence+classification first, + corridor routes, + GulfPub gas corroboration), one subagent each.`)
 const results = await parallel(PIDS.map(pid => () =>
-  agent(contract(pid), { label: `audit:${pid}`, phase: 'Audit', agentType: 'general-purpose' })
+  agent(contract(pid), { label: `audit:${pid}`, phase: 'Audit', agentType: 'general-purpose', model: 'sonnet' })
 ))
 const done = results.filter(Boolean).length
 log(`Audit complete: ${done}/${PIDS.length} subagents returned. Shards in ${STAGING}/rows/`)

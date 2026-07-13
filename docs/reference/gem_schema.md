@@ -49,6 +49,14 @@ Each row is a pipeline **segment**, not a whole pipeline:
   under one `PipelineNetworkGrouping` (and occasionally the reverse). The matcher
   handles this with dual-level (segment + synthetic-network) matching — see
   `docs/sops/reconciliation.md`.
+- **`ProjectID` is NOT unique per row** — a multi-segment pipeline repeats its
+  ProjectID across rows (e.g. `P7445` has two segments). Any per-row join back to the
+  sheet (the `_Backend` snapshot key, a route match, a status verdict) must key on the
+  **composite `(ProjectID, SheetRow)`**, never ProjectID alone.
+- **Multi-match length deltas are granularity, not error.** A GEM network row (e.g.
+  `P2233`, 438 km) legitimately matches several shorter dataset segments (110/317/88/…);
+  the reconcile engine flags these as conflicts/ambiguous, but a human must read them as
+  segment-vs-network, not a data defect.
 
 ## `[ref]` pairing
 
