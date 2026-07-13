@@ -21,10 +21,20 @@ venv/
 tmp/
 scratch/
 *.tmp
+# Ad-hoc research fetches (HTML/PDF) sometimes land in the repo root; disposable.
+/scratch_*
+/scratchpad_*
+/sp_*
 
-# Untracked working CSVs (snapshots ARE tracked; ad-hoc pulls are not)
+# Untracked working CSVs (snapshots ARE tracked; ad-hoc pulls are not).
+# refresh_csvs.sh --working writes *_working.csv; older undated pulls also disposable.
 data/*_working.csv
+data/GOIT_oil_ngl.csv
+data/GGIT_gas.csv
+data/GEM_operators_owners.csv
 data/test.csv
+# Large/external reference geometries (often symlinks into ~/Downloads or a scrape repo).
+data/*.geojson
 
 # Reference-dataset raw scrape data — large/external, pointed at via each manifest's
 # `path` (often a symlink to a sibling scrape repo). The manifest + NOTES.md are tracked.
@@ -44,3 +54,9 @@ batches/staging/**/canonical_records.json
 batches/staging/**/geometry_sidecar.json
 batches/staging/**/match_diff.json
 batches/staging/**/route_metrics.json
+# Transient per-run logs / session-resume scratch under staging
+# (the staged_*.json audit trail is still tracked).
+batches/staging/**/*.log
+batches/staging/**/*.err
+batches/staging/**/_RESUME_STATE.md
+batches/staging/**/_resume_timer.sh
