@@ -123,8 +123,10 @@ routes repo, not media URLs) — `discover_ref_pairs` drops them automatically.
      --output batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
    python scripts/recalc.py batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
    ```
-   Leads with two paste-ready tabs: **`<Cmdty>_Backend`** (mirror of the tracker layout —
-   each touched value next to its `[ref]`, colored by tier) and **`<Cmdty>_OperatorsOwners`**
+   Leads with two paste-ready tabs: **`<Cmdty>_Backend`** (a **1:1 mirror of the full tracker
+   backend** — every column in exact sheet order, current values prefilled, proposed refs/values
+   overlaid + tier-colored only on touched cells, leading `SheetRow` locator; **don't paste the
+   computed/formula columns back over the live formulas**) and **`<Cmdty>_OperatorsOwners`**
    (mirror of the operators/owners tab — ProjectID-keyed, `[ref]` precedes its values; paste
    back onto that tab by ProjectID). Work from those; the `*_Refs_*` bucket tabs are supporting
    detail. Then present. Scale country-by-country on Baird's sign-off.
@@ -145,7 +147,24 @@ The combined "go deep on a whole country+tracker" mode. Same engine and delivera
    correctly classified (transmission line? right commodity?), correctly attributed, and
    not a duplicate/relabel; flag concerns as `__VALIDITY__` records (with structured
    `verdict` / `concern_type` / `recommendation`) → dedicated `<Cmdty>_Validity` tab.
-   Read-and-flag: never proposes an edit.
+   Read-and-flag: never proposes an edit. **Operating rows are a valid target** — a common
+   reason to deep-sweep operating pipelines is to hunt redundant/duplicate entries.
+
+On request (standing for the Iraq gas sweep), two more legs:
+4. **Route suggestions** for rows with weak `RouteAccuracy` (`no route`/`low`/`medium`):
+   corridor + endpoints (named endpoints + **sourced** lat/lon), staged as `routes[]` on the
+   shard → `<Cmdty>_RouteSuggestions` tab, as candidates for a human routes-repo branch. Never
+   auto-replaced; never fabricate coords. (Route geometry `[ref]` cells stay out of scope.)
+5. **GulfPub cross-comparison** — a reconcile pass vs the GulfPub/PE World Map dataset for
+   missing pipelines AND GEM-vs-dataset disagreements → `<Cmdty>_GulfPub` tab. A dataset
+   "addition" is often a mislabel (verify `country`/endpoints first); `Capacity_mmcfd` is a
+   `300` placeholder — never use it for capacity.
+   **Tooling (both legs are built in):** `merge_deepsweep_shards.py` collects each shard's
+   `routes[]` into `__ROUTE__` records and `build_ref_workbook.py` renders the
+   `<Cmdty>_RouteSuggestions` tab automatically. For the GulfPub tab, run the scoped recon
+   (`ingest.py` → `reconcile.py`) then `build_gulfpub_crosswalk.py --match-diff … --out
+   <staging>/gulfpub_crosswalk.json`; `build_ref_workbook.py` adds `<Cmdty>_GulfPub` whenever
+   that crosswalk is present in the staging dir.
 
 This is the ref-sweep analogue of Update's `exhaustive` tier, extended with fills and
 existence-checking. It is **read-and-stage only** — still never auto-applies, still

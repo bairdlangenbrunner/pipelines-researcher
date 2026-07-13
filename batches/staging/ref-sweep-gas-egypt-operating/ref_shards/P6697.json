@@ -1,0 +1,57 @@
+{
+ "project_id": "P6697",
+ "pipeline_name": "South Valley Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 3980,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.ogj.com/pipelines-transportation/pipelines/article/17217939/egypts-natural-gas-operations-and-plans-pico-moves-beyond-egypt-and-leftover-fields-new-lines-expand-the-grid",
+    "https://www.almasryalyoum.com/news/details/103848"
+   ],
+   "verifications": [
+    {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/17217939/egypts-natural-gas-operations-and-plans-pico-moves-beyond-egypt-and-leftover-fields-new-lines-expand-the-grid", "ok": true, "contains_value": true},
+    {"url": "https://www.almasryalyoum.com/news/details/103848", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Brief flagged the current ref (almasryalyoum.com/news/details/103848) as DEAD_LINK, but url_verifier.py returns OK 200 with full article text present -- false-negative liveness (the brief's earlier check must have hit a transient block); re-verified it live and kept it as one of two refs. That Al-Masry Al-Youm piece (Dec 2010, on Mubarak's inauguration of the full 930km South Valley/Upper Egypt gas line to Aswan) states in-body: the project runs from Dahshour to Aswan (930km, 30/32in) built in six stages, with 'Phase 1 extending from Dahshour to Al-Kuraimat, 90km, 36in' (Arabic: وتمتد المرحلة الأولى من دهشور إلى الكريمات بطول 90 كم وقطر 36 بوصة) -- this ceremonial completion article implicitly reports the whole chain, including Phase 1 Dahshour-Kuraimat, as a completed/operating system. Independently, Oil & Gas Journal ('Egypt's Natural Gas Operations and Plans') states plainly: 'Dahshour-Kuraimat pipeline, 90 km (56 miles) of 36 in., has a capacity of 37 MMcfd ... began operation in early 2007' -- direct, dated operating-status statement, ~3 years earlier and from an independent trade-press origin (not tracing to the newspaper piece or to GEM). Two independent sources, both consistent with Status=operating; no contradiction found. No evidence of any subsequent decommissioning/mothballing turned up in search."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 3980,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eib.org/files/pipeline/1162_Dahshour_Elkorimat_en.pdf",
+    "https://www.ogj.com/pipelines-transportation/pipelines/article/17217939/egypts-natural-gas-operations-and-plans-pico-moves-beyond-egypt-and-leftover-fields-new-lines-expand-the-grid"
+   ],
+   "verifications": [
+    {"url": "https://www.eib.org/files/pipeline/1162_Dahshour_Elkorimat_en.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/17217939/egypts-natural-gas-operations-and-plans-pico-moves-beyond-egypt-and-leftover-fields-new-lines-expand-the-grid", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "url_verifier.py returns 200-live for the EIB PDF but flags 'missing expected' for text tokens -- known false negative: the tool's substring screen does not extract PDF text. Downloaded and ran pdftotext manually: the EIB Environmental & Social Data Sheet 'GASCO Dahshour-ElKorimate Onshore Gas Pipeline' (Egyptian Natural Gas Co./GASCO EIA, Petrosafe, Sept 2005) states explicitly on p.~9 of the EIA text: 'The purpose of Dahshour – El Kuraimat 36\", 90km pipeline will be constructed for...' and gives start/end coordinates (valve room on the Amriya-Dahshour 32in line near Dahshour; El Koraimat power plant terminus) -- exact 90km match, official technical/financing-institution document, independent of press. Oil & Gas Journal ('Egypt's Natural Gas Operations and Plans') independently states: 'Dahshour-Kuraimat pipeline, 90 km (56 miles) of 36 in.' -- same figure, separate origin (trade journal vs. development-bank EIA disclosure). Also cross-checked by Al-Masry Al-Youm's Dec-2010 piece (used as a Status ref above), which likewise gives 'Phase 1: Dahshour to Al-Kuraimat, 90km, 36in' -- a third, independent confirmation of the 90km figure not used here to avoid over-loading one ref cell, but available if a third ref is wanted. No conflicting length figure found anywhere."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 3980,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eib.org/files/pipeline/1162_Dahshour_Elkorimat_en.pdf",
+    "https://www.almasryalyoum.com/news/details/103848"
+   ],
+   "verifications": [
+    {"url": "https://www.eib.org/files/pipeline/1162_Dahshour_Elkorimat_en.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.almasryalyoum.com/news/details/103848", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIB EIA doc ('GASCO Dahshour-ElKorimate Onshore Gas Pipeline') names the project exactly as 'Dahshour – El Koraimat pipeline' and gives explicit route description with coordinates: starts at a valve room on the Amriya-Dahshour 32in line (long 31°05'49\" lat 29°53'24\") heading south/east, terminating by crossing the Nile at El Koraimat power plant (long 31°13'11\" lat 29°16'30\", ~29.28N/31.22E) -- that end-coordinate matches the known site of the Kuraimat thermal/solar power complex, consistent with GEM's EndLocation='Al Kurimat'. Al-Masry Al-Youm (Dec 2010, Arabic) independently states 'Phase 1 extends from Dahshour to Al-Kuraimat' (من دهشور إلى الكريمات) as the first of six named stages of the South Valley line -- confirms both endpoint names directly, independent origin (national newspaper vs. development-bank EIA disclosure). Both endpoints (Dahshour, Al Kurimat/Al-Kuraimat) match GEM's StartLocation/EndLocation exactly; did not find independent confirmation of the specific 'Giza' governorate tag for the Al Kurimat end (Kuraimat/Kuraymat village is commonly described as Giza Governorate's southernmost point on the west bank, which is consistent, but no source here states the governorate name explicitly for that node) -- flagging as unverified sub-detail, not a contradiction."
+  }
+ ]
+}

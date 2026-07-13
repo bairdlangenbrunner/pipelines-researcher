@@ -94,8 +94,12 @@ Routing notes:
   ones). Update's "fill blank refs" is ad-hoc enrichment of in-dev rows; the dedicated
   at-scale crawl is Ref Sweep. They share one ref-pair model (`scripts/ref_pairs.py`).
   **Route/geometry `[ref]` cells are out of scope** for Ref Sweep (geometry → routes repo,
-  not media URLs); the deliverable leads with a `<Cmdty>_Backend` tab that mirrors the
-  live-sheet layout (value beside its `[ref]`, colored by corroboration tier).
+  not media URLs) — but a **deep sweep** may *suggest routes* (corridor + sourced endpoints →
+  `<Cmdty>_RouteSuggestions`, candidates for a human routes-repo PR) for `RouteAccuracy`-weak
+  rows; never auto-replace, never fabricate coords. The deliverable leads with a
+  `<Cmdty>_Backend` tab that is a **1:1 mirror of the FULL tracker backend** (every column in
+  sheet order, current values prefilled, overlays tier-colored only on touched cells, leading
+  `SheetRow` locator) — **don't paste the computed/formula columns back over the live formulas**.
   **Owner/operator refs** live on the separate ProjectID-keyed "Pipeline operators/owners"
   tab (GID 1489950650) — the worklist joins it and stages `Operator [ref]`/`Owner [ref]`
   onto a dedicated `<Cmdty>_OperatorsOwners` tab (`[ref]` precedes its values there).
@@ -135,6 +139,11 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **A route is never auto-replaced.** A route-replacement candidate is flagged for a
   separate human branch+PR against `GOIT-GGIT-pipeline-routes`.
 - **WKT/route-format QC checks are permanently dropped** — do not rebuild them.
+- **Fan-out subagents use the cheapest sufficient model.** Per-pipeline research agents
+  (deep-sweep audit, ref-research, discovery search/vet) default to **Sonnet**, not Opus —
+  it is sufficient for source-verification + skeptical-audit work. The saved workflows
+  default `MODEL = A.model || 'sonnet'`; baked one-off scripts set `model: 'sonnet'` on
+  their `agent()` calls. Only override upward for a genuinely harder pass.
 
 ---
 
@@ -165,6 +174,30 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **Iraq:** Grand Faw Port third offshore pipeline (Esta/Micoperi, contracted April
   2025) entered as one new row. Basra–Haditha (P0544) status review (listed
   `construction`, appeared still pre-construction/tender as of early 2026).
+- **Iraq gas (2026-07-05 deep sweep, staged not applied):** national dry-gas trunk likely
+  duplicated under three naming families (Strategic / Trans-Iraq / National-Gas — a human
+  de-dup pass); two rows wrong-tracker (P4067 crude→GOIT, P6824 products→not gas); several
+  status/attribution fixes. Full list: `docs/country_notes/iraq.md` "Open items — gas".
+- **Iran gas (2026-07-05 full packet — in-dev + discovery + operating deep sweep, staged not
+  applied):** class-wide Owner=NIOC→NIGC/IGTC on ~27 operating rows; duplicate/segmentation
+  cluster (P0748↔P3957 IGAT-1 double-count; P6022/P6023/P6024 one project split 3 ways; P6027);
+  existence cluster P6024/P6025/P6027 (one dead iranertebat source); P3951 Siri–Mobarak status
+  wrong; 5/8 in-dev status changes (P0452, P2225, P6006, P7104, P3174). Full list:
+  `docs/country_notes/iran.md` "Open items — gas".
+- **Saudi gas (2026-07-08 full packet — in-dev + discovery + operating deep sweep, staged not
+  applied):** in-dev clean (22/22 status `confirm`); class-wide existence gap on the 2022-vintage
+  GIS/km-post family P1897–P1925 (18 existence + 15 duplicate concerns — one class decision, not
+  row fixes); de-dup families UBTG-1 cluster, Haradh Khuff–Hawiyah triple, P1922/P1923,
+  P7545→P7544, P7768→P1921; P3962 East–West carries the crude Petroline's specs. Full list:
+  `docs/country_notes/saudi-arabia.md` "Open items — gas".
+- **Egypt gas (in-dev sweep delivered 2026-07-09, operating deep sweep delivered 2026-07-13,
+  staged not applied; Sonnet fan-out):** NO escalation gate — no class-wide existence gap (contrast
+  Saudi/Iran). In-dev 1/7 status changes (P3657→shelved). Operating (50 rows): 109 validity records,
+  concerns = attribution 37 (recurring GASCO-operator vs EGAS-owner nuance, row-specific not
+  class-wide; P0462 FuelSource Egypt→Israel), spec 31, existence 4 (P3938 = a CO2-EOR concept not a
+  built gas line; P0476/P6693/P6687 reref), duplicate 4 (P0477 network vs P6697–P6702 segments;
+  P6687/P0474/P3934 one Obaiyed trunk; P7574 vs P3930). Discovery (Leg B) NOT built — 6 vetted
+  candidates staged. Oil (GOIT) not yet swept. Full list: `docs/country_notes/egypt.md`.
 
 ---
 

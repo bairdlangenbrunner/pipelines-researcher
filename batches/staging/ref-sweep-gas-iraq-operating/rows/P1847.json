@@ -1,0 +1,64 @@
+{
+  "project_id": "P1847",
+  "pipeline_name": "Strategic-Hilla Gas Pipeline",
+  "sheet_row": 982,
+  "wiki": "https://www.gem.wiki/Strategy-Hilla_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Treat the length (72 km), diameter (16 in) and capacity (0.70 bcm/y) as unverified single-origin figures; do NOT green any spec [ref]. Physical gas feed to the Hilla gas power station is real, but every numeric attribute needs independent corroboration before it can be defended.",
+      "researcher_notes": "The sheet carries NO [ref] on any field (Status, Fuel, Capacity, Length, Diameter, Location, Owner all MISSING_REF). The only outbound citation on the gem.wiki page (wiki_citations.json) is OPEC Annual Statistical Bulletin 2012, p.75 — an aggregate country-level statistical bulletin (reserves/production/exports) that does NOT enumerate individual Iraqi gas pipelines and cannot support a named 'Strategic-Hilla' line or any of its 72 km / 16 in / 0.70 bcm/y figures. I found no independent source that names a 'Strategic-Hilla' (or 'Strategy-Hilla') gas pipeline or corroborates any of its specs. What IS independently corroborated: (a) the Hilla gas-fired power station exists (Babil province, ~250 MW, natural gas, grid-connected 2012 — power-technology.com, worldpowerplants.com, coords 32.5422N/44.3213E); and (b) Iraq's central dry-gas grid reaches Hilla and feeds its power station (rawabetcenter.com 'History of natural gas in Iraq' lists power stations at Nasiriyah, Harth, Khor Al-Zubair, Najaf and Hilla on the network; attaqa.net describes 3 dry-gas networks ~3000 km). So a gas feed to Hilla physically exists and the 'gas' + 'operating' classification is sound — but the pipeline as characterized (its name and all four specs) is single-origin/unverified. FuelSource=Gas and Status=operating are the only fields I can defend from independent evidence.",
+      "proposed_refs": [
+        "https://www.power-technology.com/marketdata/power-plant-profile-hilla-gas-fired-power-plant-iraq/",
+        "https://worldpowerplants.com/en-us/countries/iraq/hilla-second-gas-power-station",
+        "https://rawabetcenter.com/en/?p=1921"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Compare P1847 against P4062 'Trans-Iraq-Hilla-Gas Pipeline' (25 km / 24 in) — both are GEM gas lines terminating at Hilla. Determine whether they are two entries of one physical Hilla feed (possible relabel / trunk-offtake-plus-branch double count) or genuinely distinct segments; consolidate or add OtherEnglishNames as warranted.",
+      "researcher_notes": "GEM's Iraq gas roster contains TWO operating lines to Hilla: P1847 Strategic-Hilla (72 km, 16 in, 0.70 bcm/y, updated 2023-09-09) and P4062 Trans-Iraq-Hilla-Gas Pipeline (25 km, 24 in, no capacity, updated 2022-07-25). The specs differ, so this is not a certain duplicate, but both terminate at the same city/power station and both are branches off the central dry-gas grid. The naming pattern is suspicious: the 'Strategic-X' trio (P1846 Kabesa Cement, P1847 Hilla, P1848 Najaf) were all updated 2023-09-09 and all trace solely to OPEC ASB2012 p.75, while the 'Trans-Iraqi-X' set (P4062 Hilla, P4064 Najaf PWR St, P4065 Dewania, P4066 Daura) were all updated 2022-07-25 — i.e. GEM appears to hold two parallel import batches of the same central-grid city branches (Hilla and Najaf appear in BOTH sets). This strongly suggests segment/relabel double-counting rather than eight distinct pipes. Flagging P1847<->P4062 (and by extension P1848<->P4064) for human de-duplication.",
+      "proposed_refs": [
+        "https://rawabetcenter.com/en/?p=1921"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "routes": [
+    {
+      "segment_name": "",
+      "start_name": "Junction on Iraq's central dry-gas transmission grid (unlocated)",
+      "start_lat": null,
+      "start_lon": null,
+      "end_name": "Hilla (Al-Hillah) gas-fired power station, Babil province",
+      "end_lat": 32.5422,
+      "end_lon": 44.3213,
+      "waypoints": [],
+      "corridor_desc": "End is well-established: the Hilla gas power station in Babil province (32.5422N, 44.3213E; ~250 MW, natural gas, online 2012 — sourced from power-technology.com and worldpowerplants.com). The line is a branch of Iraq's central dry-gas grid, which runs down the middle of the country from the Baghdad area southward through northern Babil (the Musayyib/Iskandariyah industrial belt, ~32.78N/44.29E, which hosts major power stations on the same grid) toward the mid-Euphrates. The start point (the grid junction/compressor from which the Hilla branch tees off) could NOT be independently located, so no start coordinate is asserted. If the sheet's 72 km length is taken at face value, the origin would sit ~72 pipe-km up the grid from Hilla (roughly the Musayyib/southern-Baghdad corridor), but that length is itself unverified (see spec concern), so treat the corridor as a loose north-to-Hilla bound only. Do not treat this as a routable geometry.",
+      "current_route_accuracy": "no route",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": [
+        "https://www.power-technology.com/marketdata/power-plant-profile-hilla-gas-fired-power-plant-iraq/",
+        "https://worldpowerplants.com/en-us/countries/iraq/hilla-second-gas-power-station"
+      ],
+      "verifications": [
+        {"url": "https://www.power-technology.com/marketdata/power-plant-profile-hilla-gas-fired-power-plant-iraq/", "ok": true, "contains_value": true},
+        {"url": "https://worldpowerplants.com/en-us/countries/iraq/hilla-second-gas-power-station", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "source_language": "en",
+      "researcher_notes": "Only the END is sourceable to a named facility with coordinates (Hilla gas power station, Babil — 32.5422N/44.3213E, corroborated by two independent power-plant databases). The START and the intermediate route could not be independently established; no coordinate is fabricated for them. Corridor is a loose 'branch off the central dry-gas grid, running from the northern-Babil/Musayyib corridor down to the Hilla power station' bound. Suggested accuracy: low."
+    }
+  ],
+  "summary": "P1847 Strategic-Hilla: CONCERN (spec + duplicate) — named line + all specs (72km/16in/0.70bcm) single-origin (OPEC ASB aggregate, names no pipeline); Hilla gas plant + gas feed real but unquantified; likely duplicate of P4062 Trans-Iraq-Hilla."
+}

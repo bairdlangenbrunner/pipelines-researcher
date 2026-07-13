@@ -53,6 +53,33 @@ golden reference the engine generalizes).
   `cancelled` vs GulfPub Operating; P0545 (IPSA) GEM `mothballed` vs GulfPub
   Operating — verify true current status, don't auto-flip.
 
+## Open items — gas (staged, NOT applied — 2026-07-08 full packet: in-dev sweep + discovery + operating deep sweep; candidates for review)
+Workbooks: `pipelines_batch_20260708_1310_ET_saudi-arabia-gas_annual-indev.xlsx`,
+`pipelines_batch_20260707_0918_ET_saudi-arabia-gas_discovery.xlsx`,
+`pipelines_batch_20260708_1322_ET_saudi-arabia-gas_deepsweep.xlsx`.
+- **In-dev leg (22 rows, MGS-3 era):** all 22 status verdicts `confirm` — no status
+  edits proposed. 79/82 gap ref cells corroborated. 5 spec concerns (P7711 cost is the
+  package budget, not the line's; see Validity tab).
+- **Class-wide existence gap (the sweep's headline):** the 2022-07-19 GIS/km-post row
+  family (P1897–P1925: `UBTG-1-km…`, `AY-1 KP 943`, `Haradh Khuff-Hawiyah 1/2/3`) has
+  essentially **no independent per-line attestation** — 18 existence + 15 duplicate
+  concerns. These read as internal Aramco route-database segments, not independently
+  named pipelines. Treat as one class decision (keep-as-GIS-segments vs de-dup/merge),
+  not row-by-row fixes.
+- **De-dup families for a human pass:** UBTG-1 trunk cluster (P1898/P1899/P1900/P1901/
+  P1910/P1911/P1912); Haradh Khuff–Hawiyah triple (P1917/P1918/P1919 — identical
+  43 km/30 in); Berri–Abu Ali pair (P1922/P1923); P1897 "A47-Yanbu" + P1903 vs P3962
+  East–West; P7545 (subsea) is a sub-component of P7544 Marjan GOSP-4; P7768 offshore
+  leg double-counts P1921 (strip its Capacity if merged).
+- **P3962 East–West:** LengthKnown 1200 km / 48 in are the **crude Petroline's**
+  numbers, and the 48-in leg was NGL — commodity + specs need adjudication before the
+  row is trusted as gas transmission.
+- **Attribution fixes staged:** P1915/P1917/P1918 province `Makkah`→`Eastern Province`;
+  P3961 is the Haradh–Hawiyah "Free Flow Pipelines" (rename; StartYear 2024→~2019);
+  P1921 endpoint likely Khursaniyah, not Berri.
+- **Placeholder capacities:** P7766/P7767 `1.00 MMcf/d` and P7768 `220 MMcf/d` are
+  unsupported — blank or re-source.
+
 ## Open items
 - Finish the GulfPub route-consistency pass for low/medium-accuracy matches; stage
   route-replacement candidates for review before any GeoJSON swap.

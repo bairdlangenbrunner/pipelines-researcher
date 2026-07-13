@@ -1,0 +1,86 @@
+{
+  "project_id": "P7544",
+  "pipeline_name": "Marjan GOSP-4 Gas Pipeline",
+  "sheet_row": 2299,
+  "wiki": "https://www.gem.wiki/Marjan_GOSP-4_Gas_Pipelines",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "classification",
+      "recommendation": "Keep the row but re-label/scope it: this is the aggregate subsea-pipeline scope of Aramco's Marjan Increment Package 4 (offshore gas facilities), not a single gas transmission trunk. Consider flagging that the 531 km lumps trunk lines + offshore in-field (gathering) flowlines, and that the same Package 4 scope also contains ~70 km of oil-export pipe.",
+      "researcher_notes": "EXISTENCE: solidly real. Marjan Increment Development Program, Package 4 'offshore gas facilities', EPCI awarded to McDermott (with COOEC) by Saudi Aramco in July 2019. Independently documented by Argaam (Saudi) and GlobalData project profiles (offshore-technology.com / nsenergybusiness.com). Scope = 3 tie-in platforms + 7 wellhead platforms + 'subsea trunk lines and in-field pipelines exceeding 540 km' + '90 km of subsea cables'. Feeds the offshore Marjan GOSP-4 complex; crude+gas routed onshore to the Tanajib processing complex / new Tanajib Gas Plant. CLASSIFICATION CAVEAT: GEM represents the entire Package-4 subsea PIPELINE scope (540 km of trunk lines AND in-field flowlines) as one 531-km 'gas transmission' line. That 540 km is an aggregate of many offshore lines mixing field-gathering flowlines with trunk lines, and the same EPCI package also carries ~70 km of 36-in oil-export pipe. So the entity is legitimate as a GEM network row and does move associated gas to the Tanajib gas plant, but it is not literally a single gas transmission pipeline. gem.wiki's own three citations (McDermott project page [403], Offshore Energy 2019 contract story, ecns.cn platform-delivery story) are all about the Package-4 contract/platform, none describe a discrete point-to-point gas transmission line — consistent with this being a project-scope aggregate.",
+      "proposed_refs": ["https://www.argaam.com/en/article/articledetail/id/1300695", "https://www.offshore-technology.com/projects/marjan-oil-field-development/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Correct the capacity UNIT: value 750 is right but it is 750 MMscfd (GOSP-4 gas-handling capacity), so CapacityUnits should be mmcfd, not 'Mcf/d' (thousand cf/d). Length 531 km is fine as an aggregate. Replace the weak ahewar.org capacity ref with the GlobalData/Argaam sources.",
+      "researcher_notes": "LENGTH: GEM LengthKnown=330.00 mi = 531.08 km vs sourced 'in excess of 540 km' of subsea trunk + in-field pipelines (Argaam; offshore-technology; nsenergybusiness). Value matches (aggregate — see classification note). CAPACITY: GEM Capacity=750, CapacityUnits='Mcf/d'. Sources: 'the new GOSP will be designed to handle up to 475,000 bpd of oil and 750 MMscfd of gas' (nsenergybusiness; offshore-technology). So 750 is the GOSP-4 gas-handling capacity in MILLION scf/d. GEM's unit label 'Mcf/d' (thousand cf/d) understates by ~1000x and should be mmcfd. The existing capacity ref (ahewar.org Arabic debate forum) is a weak, non-independent source — replace. INDEPENDENCE CAVEAT: the 540 km and 750 MMscfd figures ultimately trace to the McDermott/Aramco Package-4 announcement and GlobalData profiles derived from it; treat as medium, not high.",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/marjan-field-expansion/", "https://www.offshore-technology.com/projects/marjan-oil-field-development/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "duplicate",
+      "recommendation": "Human check vs P7545 'Marjan GOSP-4 Gas Pipeline / Subsea Pipelines' (99.78 km): same name, same Package-4 project. Confirm P7545 is a child segment WITHIN the 531 km network and that its length is not being double-counted against P7544's 531 km.",
+      "researcher_notes": "P7545 shares the identical pipeline name with a '/ Subsea Pipelines' suffix and identical capacity (750) and endpoints (Arabian Gulf -> Eastern Coast). This is the normal GEM network(P7544)/segment(P7545) pattern, not a distinct pipeline — but because P7544's 531 km already represents the whole Package-4 subsea aggregate, the 99.78 km subsea segment (P7545) is almost certainly a subset of it. Flagging so a human confirms the two rows are not summing overlapping length. Not flagging any OTHER roster PID as a duplicate — no other Saudi row matches the Marjan/Tanajib offshore scope. No confident GulfPub counterpart either (GulfPub SA gas roster has no Marjan/Tanajib feature).",
+      "proposed_refs": ["https://www.argaam.com/en/article/articledetail/id/1300695"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2299,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Aramco", "Owner1%": "100.00%"},
+      "primary_value": "Aramco",
+      "proposed_refs": ["https://www.argaam.com/en/article/articledetail/id/1300695", "https://www.offshore-technology.com/projects/marjan-oil-field-development/"],
+      "verifications": [
+        {"url": "https://www.argaam.com/en/article/articledetail/id/1300695", "ok": true, "contains_value": true},
+        {"url": "https://www.offshore-technology.com/projects/marjan-oil-field-development/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner [ref] was blank on the operators/owners tab. Marjan is a wholly Saudi Aramco (owner and operator) offshore field; Package 4 awarded by Aramco. Argaam and the offshore-technology project profile both attribute the field/expansion to Saudi Aramco. Aramco is owner AND operator (100%)."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "",
+      "start_name": "Marjan offshore GOSP-4 complex (Arabian Gulf, offshore Saudi Arabia)",
+      "start_lat": 28.1,
+      "start_lon": 49.5,
+      "end_name": "Tanajib onshore processing complex / Tanajib Gas Plant (Ras Tanajib, Eastern Province)",
+      "end_lat": 27.86,
+      "end_lon": 48.85,
+      "waypoints": [],
+      "corridor_desc": "Associated gas gathered at the offshore Marjan GOSP-4 complex (built within ~10 km of GOSP-2/GOSP-3 in the Marjan field, Arabian Gulf) via subsea trunk + in-field pipelines, routed south-west ~85 km to the onshore Tanajib processing complex / new Tanajib Gas Plant on the eastern coast for processing. LOOSE bound: the 531 km GEM length is the AGGREGATE of the whole Package-4 subsea pipeline scope (many in-field flowlines + trunk lines), not a single point-to-point corridor, so only the field->Tanajib trunk (~85 km) is a defensible single corridor; the rest is an offshore network within the Marjan field. Coordinates are APPROXIMATE, inferred from the named facilities (Marjan field offshore; Ras Tanajib onshore) — not from published pipeline coordinates.",
+      "current_route_accuracy": "no route",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": ["https://www.offshore-technology.com/projects/marjan-oil-field-development/", "https://www.nsenergybusiness.com/projects/marjan-field-expansion/"],
+      "verifications": [
+        {"url": "https://www.offshore-technology.com/projects/marjan-oil-field-development/", "ok": true, "contains_value": true},
+        {"url": "https://www.nsenergybusiness.com/projects/marjan-field-expansion/", "ok": true, "contains_value": true}
+      ],
+      "tier": "low",
+      "source_language": "en",
+      "researcher_notes": "Endpoints established from sources: offshore Marjan GOSP-4 complex -> onshore Tanajib complex (~85 km, per Oil & Gas Middle East / offshore-technology). Marjan field lies offshore in the northern Saudi sector of the Arabian Gulf; Tanajib (Ras Tanajib) is the onshore processing site near Manifa. Lat/lon are approximate map positions for the named field/facility, explicitly NOT fabricated pipeline traces; a real route would need the routes-repo geometry. Suggested accuracy kept LOW because the GEM length is an aggregate network figure and offshore segment geometry is unpublished."
+    }
+  ],
+  "summary": "Real Aramco Marjan Increment Package-4 offshore gas project, but staged as confirmed(caveat) with classification+spec+duplicate flags: it is the ~540 km AGGREGATE subsea trunk+in-field pipeline scope (not one transmission line), capacity 750 is MMscfd not 'Mcf/d', and P7545 likely double-counts subsea length; endpoints Marjan GOSP-4 -> Tanajib (~85 km), route low."
+}

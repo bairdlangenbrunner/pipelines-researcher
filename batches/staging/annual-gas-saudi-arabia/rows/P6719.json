@@ -1,0 +1,98 @@
+{
+  "project_id": "P6719",
+  "pipeline_name": "MGS III Gas Pipelines",
+  "sheet_row": 3995,
+  "wiki": "https://www.gem.wiki/MGS_III_Gas_Pipelines",
+  "validity": [
+    {
+      "segment_name": "EWPS-1-EWPS-3 \"3\"",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep the row; it is a real, correctly classified segment of Aramco's Master Gas System Expansion Phase 3.",
+      "researcher_notes": "EXISTENCE (HIGH): P6719 is one line of Aramco's Master Gas System Expansion Phase 3 (MGS-3), a real ~$8.8bn LSTK / ~$10bn, 17-EPC-package megaproject adding ~3.15 bscfd and ~4,000-4,153 km of 56-inch east-west gas pipeline, construction commenced Q2 2024, target completion Q4 2028. Independently reported by MEED (verified: page contains 'EWPS-1', 'EWPS-3', '300', '56'), Pipeline Technology Journal (L&T completed a 120km 56-inch MGS Package 8 section, 2025-09-10), BlackRidge Research (Q4 2028 completion), and OGN. The sheet's own cited MEED source explicitly names 'Laying 56-inch east-west gas pipelines three and four from EWPS-1 to EWPS-3'. CLASSIFICATION (HIGH): correctly recorded as a gas transmission trunk (large-diameter east-west transport line) - not a gathering/process/feeder line. ATTRIBUTION (HIGH): Owner Aramco 100% is correct (MGS is an Aramco system). DUPLICATE CHECK: P6720 (roster: same 150km/56in, EWPS-1->EWPS-3) is the parallel companion line '4' of the same route - two physically distinct parallel pipes (line 3 and line 4), so two rows is a legitimate model, NOT a double-count/duplicate. DIAMETER 56in and StartYear1 2028 (= project in-service target, Q4 2028) both corroborated. See separate validity object for the length concern.",
+      "proposed_refs": [
+        "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion",
+        "https://www.pipeline-journal.net/news/lt-completes-major-gas-pipeline-section-saudi-aramcos-expansion-project",
+        "https://www.blackridgeresearch.com/project-profiles/latest-details-saudi-aramco-master-gas-system-expansion-project-phase3-saudi-arabia"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "EWPS-1-EWPS-3 \"3\"",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Verify per-line length: MEED gives EWPS-1->EWPS-3 as 300km; GEM records 150km per line. If 300km is the route distance both parallel lines span, P6719 and P6720 should each be ~300km, not 150km. Likely a systematic halving error across the whole EWPS pair-cluster (P6717/18, P6721/22, P6723/24, ...) - escalate for a cluster-wide length review.",
+      "researcher_notes": "LENGTH (MEDIUM, material factor-of-2 discrepancy). The sheet's cited MEED source states: 'Laying 56-inch east-west gas pipelines three and four from EWPS-1 to EWPS-3, covering 300km.' GEM entered P6719 (line 3) = 150km and P6720 (line 4) = 150km, i.e. it interpreted 300km as the COMBINED pipe for both lines (300/2 = 150 each). But the parallel-package wording ('...from EWPS-8 to EWPS-10, covering a distance of 480km', OGN) and the physical geometry argue the figures are ROUTE distances that BOTH lines span in full: the sibling package EWPS-3->EWPS-4 is a single inter-station gap of 166km (GEM halved it to 83+83 for P6721/P6722) - two parallel pipes each necessarily run the full inter-station gap, so halving a single-gap route across the two lines cannot be physically right. Under the route-distance reading, EWPS-1->EWPS-3 spans two station gaps (~300km) and each of line 3 and line 4 is ~300km, making GEM's 150km an undercount by ~2x. This appears systematic across the entire pair-cluster. I could not locate a source stating the individual line length explicitly, so I flag rather than overwrite; the recommended fix is a cluster-wide length verification. Do NOT silently pass.",
+      "proposed_refs": [
+        "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion",
+        "https://ognnews.com/Article/47456/Master_Gas_System_Expansion_-_Phase_3_-_Package_2"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "EWPS-1-EWPS-3 \"3\"",
+      "sheet_row": 3995,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "EndLocation", "StartCountryOrArea", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "EWPS-1", "EndLocation": "EWPS-3", "StartCountryOrArea": "Saudi Arabia", "EndCountryOrArea": "Saudi Arabia"},
+      "primary_value": "EWPS-1",
+      "proposed_refs": ["https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion"],
+      "verifications": [{"url": "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Location cluster had no [ref] (MISSING_REF) and blank endpoints. MEED explicitly names the EWPS-1 -> EWPS-3 endpoints for 56-inch east-west gas pipelines 3 and 4, within Saudi Arabia; verifier confirms the page contains 'EWPS-1' and 'EWPS-3'. Adds the ref plus the two station endpoints. Marked independent=false because the endpoint labels ultimately trace to Aramco's package description; endpoints are Aramco-internal station identifiers, so no province is asserted (the eastern portion lies in Eastern Province but I leave it blank rather than infer)."
+    },
+    {
+      "segment_name": "EWPS-1-EWPS-3 \"3\"",
+      "sheet_row": 3995,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": ""},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Capacity left blank deliberately. Sources give only a system-wide figure (MGS-3 adds ~3.15 bscfd; total ~15.7 bscfd) with no per-segment throughput for this individual line; assigning a number would be fabrication."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "EWPS-1-EWPS-3 \"3\"",
+      "sheet_row": 3995,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-09",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.pipeline-journal.net/news/lt-completes-major-gas-pipeline-section-saudi-aramcos-expansion-project",
+        "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion",
+        "https://www.blackridgeresearch.com/project-profiles/latest-details-saudi-aramco-master-gas-system-expansion-project-phase3-saudi-arabia"
+      ],
+      "verifications": [
+        {"url": "https://www.pipeline-journal.net/news/lt-completes-major-gas-pipeline-section-saudi-aramcos-expansion-project", "ok": true, "contains_value": true},
+        {"url": "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion", "ok": true, "contains_value": true},
+        {"url": "https://www.blackridgeresearch.com/project-profiles/latest-details-saudi-aramco-master-gas-system-expansion-project-phase3-saudi-arabia", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status 'construction' is still correct. MGS-3 construction commenced Q2 2024 and is actively underway toward Q4 2028 completion (BlackRidge, MEED). Newest independent dated evidence: Pipeline Technology Journal, 2025-09-10, reporting L&T completed a 120km 56-inch section of MGS Phase 3 (Package 8) - i.e. the wider program is in active construction, slightly newer than the sheet's 2025-08-06 LastUpdated. No evidence this EWPS-1->EWPS-3 line has entered service (in-service target 2028) and no evidence of shelving/cancellation, so no status change. Segment-level construction start/completion for EWPS-1->EWPS-3 specifically not separately reported; overall project construction is well documented."
+    }
+  ],
+  "summary": "P6719 real + correctly classified (Aramco MGS-3 56-inch east-west gas trunk, construction confirmed to 2025-09); flagged concern_type=spec: GEM length 150km likely a ~2x undercount (MEED gives EWPS-1->EWPS-3 = 300km route both lines span) - systematic across the pair-cluster."
+}

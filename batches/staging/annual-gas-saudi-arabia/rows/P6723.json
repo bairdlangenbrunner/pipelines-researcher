@@ -1,0 +1,71 @@
+{
+  "project_id": "P6723",
+  "pipeline_name": "MGS III Gas Pipelines",
+  "sheet_row": 3999,
+  "wiki": "https://www.gem.wiki/MGS_III_Gas_Pipelines",
+  "validity": [
+    {
+      "segment_name": "EWPS-4-EWPS-6 \"3\"",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as-is; note that LengthKnown=185 km is GEM's per-line split of the source's combined 370 km for lines 3 AND 4 (P6723 + P6724). Optionally fill endpoints StartLocation=EWPS-4 / EndLocation=EWPS-6.",
+      "researcher_notes": "EXISTENCE: confirmed, strong. MEED (industry trade press, the row's own cited source) explicitly lists the segment: 'Laying 56-inch east-west gas pipelines three and four from EWPS-4 to EWPS-6, covering 370km' as one of the 15 pipeline EPC packages of Aramco's Master Gas System Expansion Phase 3 (MGS-3). url_verifier confirmed the page returns 200 and contains the exact tokens 'EWPS-4 to EWPS-6', '370', and '56-inch'. Independently corroborated that MGS-3 is a real, awarded, under-construction ~$8.8bn/~4,000 km program by JPT/SPE (OK 200, 'Master Gas System'+'2028') and World Oil (OK 200). Not a GEM-only entity. CLASSIFICATION: correct — this is a 56-inch east-west gas transmission trunk (part of the national Master Gas System backbone), commodity gas, PipelineType transmission. Not gathering/process/lateral. DUPLICATE CHECK: P6724 ('EWPS-4-EWPS-6 \"4\"', also 185 km, 56 in) is the PARALLEL line 4 of the same EWPS-4->EWPS-6 corridor; MEED names 'pipelines three and four' (two physical lines), so P6723 (line 3) and P6724 (line 4) are two real parallel pipes, NOT a double-count. No duplicate against any other roster PID. ATTRIBUTION: Owner Aramco 100% correct — Aramco owns/operates the Master Gas System. FuelSource Gas correct. Endpoints EWPS-4 (East-West Pump Station 4) -> EWPS-6 within Saudi Arabia; province not stated per-segment so left unfilled (no fabrication). SPEC: Diameter 56 in explicitly confirmed by MEED. LengthKnown 185 km is a caveat — the source states 370 km for the PAIR of lines (3 and 4); GEM split it 185+185, which is arithmetically consistent (185x2=370) and a defensible per-line modeling choice, so no material disagreement, but the 185 figure is inferred, not directly sourced. Capacity blank and left blank — MGS-3 adds 3.15 bscfd across ~4,000 km total; no defensible per-segment capacity, so not fabricated. StartYear1 2028 matches the project's Q4 2028 target completion.",
+      "proposed_refs": [
+        "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion",
+        "https://jpt.spe.org/aramco-awards-25-billion-in-contracts-as-jafurah-shale-and-master-gas-system-expansion-enters-next-phase"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "EWPS-4-EWPS-6 \"3\"",
+      "sheet_row": 3999,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "EndLocation"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "EWPS-4", "EndLocation": "EWPS-6"},
+      "primary_value": "EWPS-4",
+      "proposed_refs": [
+        "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion"
+      ],
+      "verifications": [
+        {"url": "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Location [ref] was blank (MISSING_REF) while the row asserts a Saudi Arabia route. MEED explicitly names the endpoints 'from EWPS-4 to EWPS-6' (East-West Pump Stations 4 and 6), verified present on the page. Fills the two endpoint value cells and pairs them with a ref. Province/district not stated at segment level so left blank rather than fabricated. Single trade-press source for endpoint labels (independent=false vs the corroborating existence sources, which are the same origin family) -> would ideally get a second independent endpoint source, but the pump-station labels are unambiguous here."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "EWPS-4-EWPS-6 \"3\"",
+      "sheet_row": 3999,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-09",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion",
+        "https://jpt.spe.org/aramco-awards-25-billion-in-contracts-as-jafurah-shale-and-master-gas-system-expansion-enters-next-phase",
+        "https://www.pipeline-journal.net/news/lt-completes-major-gas-pipeline-section-saudi-aramcos-expansion-project"
+      ],
+      "verifications": [
+        {"url": "https://www.meed.com/aramco-selects-contractors-for-master-gas-system-expansion", "ok": true, "contains_value": true},
+        {"url": "https://jpt.spe.org/aramco-awards-25-billion-in-contracts-as-jafurah-shale-and-master-gas-system-expansion-enters-next-phase", "ok": true, "contains_value": true},
+        {"url": "https://www.pipeline-journal.net/news/lt-completes-major-gas-pipeline-section-saudi-aramcos-expansion-project", "ok": true, "contains_value": false}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status 'construction' still correct. MGS-3 EPC contracts were awarded March 2024; construction commenced Q2 2024; target completion Q4 2028 (MEED, JPT/SPE). Newer project-wide evidence of active construction: Pipeline Journal (Sep 2025, verified 200 - token check for 'EWPS' failed because the piece names a different package) reports L&T completing a 120 km 56-inch section of MGS-3 (Package 8) and mobilizing on a further 241 km section, confirming the program is mid-construction, not stalled. No independent evidence that the EWPS-4->EWPS-6 lines specifically are complete or delayed, and no start-up: so still 'construction', not 'operating'. Well under any dormancy threshold (awarded 2024, active 2025). StartYear1 2028 matches the Q4 2028 completion target. Aramco's own 2024 press release (aramco.com/...25bn-contract-awards) is a fourth corroborating source but repeatedly ReadTimeout'd in url_verifier, so it is intentionally NOT cited."
+    }
+  ],
+  "summary": "P6723 (MGS-3 EWPS-4->EWPS-6 line 3, 56in gas transmission) confirmed real, correctly classified, Aramco-owned, construction status valid; only caveat is LengthKnown 185 km = GEM's per-line split of the source's combined 370 km for lines 3+4 (P6724 is the legitimate parallel line, not a duplicate)."
+}
