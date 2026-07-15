@@ -16,6 +16,6 @@ before any doer runs.
    inferred-cancelled candidate; in-dev rows not refreshed recently → due.
 4. **Reconciliation backlog:** any unprocessed Additions / disagreements from a prior
    reconciliation batch; whether a fresh scrape of a registered source has landed.
-5. Write the memo to `batches/triage_<YYYYMMDD>_<HHMM>_ET.md`. Each option names the
+5. Write the memo to `notes/triage-<YYYY-MM-DD>.md`. Each option names the
    **workflow** (reconciliation / update / discovery / qc), the **scope**, and for
    update the **tier**. Present; **stop and ask** before spinning up any batch.

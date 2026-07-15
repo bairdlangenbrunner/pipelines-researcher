@@ -14,16 +14,20 @@ Run AFTER the country-discovery workflow and BEFORE build_discovery_workbook.py:
 
     python scripts/merge_discovery_shards.py --staging batches/staging/annual-gas-iraq/
 """
-import argparse, collections, glob, json, os
+import argparse, collections, glob, json, os, sys
+from pathlib import Path
 
-BLOCKLIST = ("gem.wiki", "globalenergymonitor", "theodora.com", "wikidot.com", "abarrelfull")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
+
+BLOCKLIST = GEM_HOSTS + BLOCKLIST_HOSTS
 
 
 def _clean_refs(urls, verifs):
     okset = {v.get("url") for v in (verifs or []) if v.get("ok") and v.get("contains_value")}
     out = []
     for u in urls or []:
-        if any(b in u for b in BLOCKLIST):
+        if any(b in u.lower() for b in BLOCKLIST):
             continue
         if verifs and u not in okset:
             continue

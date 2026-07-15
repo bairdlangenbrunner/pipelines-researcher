@@ -9,5 +9,5 @@ Start a new one from `_template.md`. Keep them short and high-signal. The deeper
 research methodology is `docs/GOIT_Pipeline_Research_Workflow.md`; tier-ranked
 sources are in `docs/reference/source_roster.md`.
 
-Seeded: `saudi-arabia`, `iran`, `iraq` (MENA deep-dives), `united-states`,
+Seeded: `saudi-arabia`, `iran`, `iraq`, `egypt` (MENA deep-dives), `united-states`,
 `nigeria`. 80+ countries were swept previously — add a note when you next touch one.

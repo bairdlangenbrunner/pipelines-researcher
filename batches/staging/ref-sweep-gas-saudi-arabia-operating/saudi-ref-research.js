@@ -200,9 +200,9 @@ Write ${S}/ref_shards/${p.pid}.json = a single JSON object EXACTLY:
 One resolution object per unit in the brief. Before finishing, run \`python -c "import json; json.load(open('${S}/ref_shards/${p.pid}.json'))"\` to confirm it parses. Return ONLY a 2-line summary (units REFS_ADDED vs UNRESOLVED, any value contradictions found). The shard file is the deliverable.`
 
 phase('Research')
-log(`Targeted ref research: ${A.pids.length} Saudi Arabia gas pipelines, one subagent each (Opus).`)
+log(`Targeted ref research: ${A.pids.length} Saudi Arabia gas pipelines, one subagent each (Sonnet).`)
 const results = await parallel(A.pids.map(p => () =>
-  agent(contract(p), { label: `refs:${p.pid}`, phase: 'Research', agentType: 'general-purpose', model: 'opus' })
+  agent(contract(p), { label: `refs:${p.pid}`, phase: 'Research', agentType: 'general-purpose', model: 'sonnet' })
 ))
 const done = results.filter(Boolean).length
 log(`Ref research complete: ${done}/${A.pids.length} subagents returned. Shards in ${S}/ref_shards/`)

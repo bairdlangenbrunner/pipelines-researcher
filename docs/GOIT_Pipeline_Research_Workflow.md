@@ -182,23 +182,13 @@ For every newly discovered pipeline, conduct a dedicated route search:
 
 ## Phase 4: Structured Output — Excel File
 
-**Goal:** Produce an Excel workbook with three sheets matching the GOIT column structure.
-
-### Sheet 1: Updated Existing Pipelines
-- One row per pipeline that has changes or new data.
-- Carry forward all existing data from the CSV for unchanged columns.
-- **Highlight changed/new cells in red** (red fill `FFCCCC` + red font `CC0000`) so the researcher can see what's been modified.
-- Unchanged cells retain their original values with no highlighting.
-
-### Sheet 2: New Pipelines (Discovery)
-- One row per newly discovered pipeline, using the same column structure.
-- **Highlight all populated cells in green** (`E2EFDA`) to distinguish from existing data.
-- Include all available data with verified [ref] URLs.
-
-### Sheet 3: Status Changes Summary
-- Quick-reference table with columns: Pipeline Name, Segment, Current GOIT Status, Recommended Status, Key Evidence, Source URL.
-- Highlight the "Recommended Status" column in red for changes.
-- Include ownership corrections, fuel type corrections, and data corrections (e.g., length fixes) alongside status changes.
+**Goal:** produce the staging workbook for the batch. Sheet layouts are defined in
+`docs/reference/workbook_conventions.md` (authoritative) and built by the `scripts/build_*`
+builders — `build_ref_workbook.py` (ref sweep / deep sweep: `<Cmdty>_Backend` backend-mirror
+tab + finding tabs), `build_discovery_workbook.py` (`<Cmdty>_NewRows` / `_OperatorsOwners` /
+`_MonitorList` / `_MatchedExisting`), `build_recon_workbook.py` (reconciliation). Do not
+hand-roll sheet layouts; per-cell color semantics (confidence tiers, never coloring an
+empty cell) live in `workbook_conventions.md`.
 
 ### Column formatting rules:
 - Headers: Blue fill (`4472C4`), white bold font, center-aligned, wrap text.

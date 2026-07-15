@@ -211,7 +211,7 @@ Return ONLY a 2-line summary (class + strongest evidence). The shard is the deli
 phase('Search')
 log(`Discovery sweep for ${COUNTRY} (${COMMODITY}): ${STRATEGIES.length} strategy agents vs a roster of ${A.roster.length} existing rows.`)
 await parallel(STRATEGIES.map(s => () =>
-  agent(searchContract(s), { label: `search:${s.key}`, phase: 'Search', agentType: 'general-purpose' })
+  agent(searchContract(s), { label: `search:${s.key}`, phase: 'Search', agentType: 'general-purpose', model: 'sonnet' })
 ))
 
 phase('Consolidate')
@@ -234,7 +234,7 @@ log(`${consolidated.queue.length} candidates queued for vetting (${consolidated.
 
 phase('Vet')
 const vetted = await parallel(consolidated.queue.map(q => () =>
-  agent(vetContract(q), { label: `vet:${q.slug}`, phase: 'Vet', agentType: 'general-purpose' })
+  agent(vetContract(q), { label: `vet:${q.slug}`, phase: 'Vet', agentType: 'general-purpose', model: 'sonnet' })
 ))
 const done = vetted.filter(Boolean).length
 log(`Vetting complete: ${done}/${consolidated.queue.length}. Shards in ${STAGING}/discovery/vetted/ — next: scripts/merge_discovery_shards.py`)

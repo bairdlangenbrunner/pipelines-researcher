@@ -24,7 +24,10 @@ Where things live — **read on demand as the workflow dictates, not all at once
 - **Reference-dataset registry**: `sources/` — one `manifest.yml` (+ optional
   `adapter.py`) per scraped dataset; GulfPub today. How to add one: `sources/README.md`.
 - **Scripts**: `scripts/` (engine + helpers).
-- **Full project context / pending items**: `docs/PROJECT_SETUP_AND_CONTEXT.md`.
+- **Research backlog** (unfinished/ongoing threads): `docs/research_backlog.md`.
+- **Session memos** (triage memos, escalation writeups): `notes/`.
+- **Historical project context**: `docs/PROJECT_SETUP_AND_CONTEXT.md` (pre-migration
+  snapshot; its pending-items list is stale — this file + country notes are authoritative).
 
 ---
 
@@ -54,11 +57,13 @@ Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek` ("Anyone wit
 link can view"). Pull via `./scripts/refresh_csvs.sh`, or curl directly:
 
 ```bash
-# Oil/NGL tab (107 cols, GID 456134080); Gas tab (~140 cols, GID 1020144097)
+# Oil/NGL tab (107 cols, GID 456134080); Gas tab (~140 cols, GID 1020144097);
+# Pipeline operators/owners tab (44 cols, GID 1489950650) — refresh_csvs.sh pulls all three
 curl -sL "https://docs.google.com/spreadsheets/d/1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek/export?format=csv&gid=456134080" -o data/GOIT_oil_ngl.csv
 ```
 
-**Header is at CSV row index 2.** Always: `pd.read_csv(path, header=2, low_memory=False)`.
+**Header is at CSV row index 2 for the two tracker tabs**: `pd.read_csv(path, header=2, low_memory=False)`.
+**The operators/owners tab's header is at row index 1** (`header=1`) — row 0 is a filter-view banner.
 Do **not** use Drive MCP `download_file_content` (first tab only) or
 `read_file_content` (lossy). Schema gotchas (multi-value diameter, buffer rows,
 `SheetRow = CSV index + 4`, `[ref]` pairing, segment-vs-network granularity):
@@ -139,11 +144,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **A route is never auto-replaced.** A route-replacement candidate is flagged for a
   separate human branch+PR against `GOIT-GGIT-pipeline-routes`.
 - **WKT/route-format QC checks are permanently dropped** — do not rebuild them.
-- **Fan-out subagents use the cheapest sufficient model.** Per-pipeline research agents
-  (deep-sweep audit, ref-research, discovery search/vet) default to **Sonnet**, not Opus —
-  it is sufficient for source-verification + skeptical-audit work. The saved workflows
-  default `MODEL = A.model || 'sonnet'`; baked one-off scripts set `model: 'sonnet'` on
-  their `agent()` calls. Only override upward for a genuinely harder pass.
+- **Subagent models are chosen at dispatch time, never pinned** (global standing rule —
+  user-level CLAUDE.md). Repo mechanics: the saved workflows fall back to
+  `MODEL = A.model || 'sonnet'`, so pass `args.model` to carry the dispatch-time choice;
+  baked one-off scripts set `model:` per `agent()` call.
 
 ---
 
@@ -162,7 +166,9 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    Generalizes the one-off `working_files/GOIT_SaudiArabia_Gulfpub_Comparison.xlsx`
    (the golden reference) to any source/country/commodity, with a route-geometry
    pass (GulfPub treated as more accurate than low/medium GEM routes; human review
-   before any replacement).
+   before any replacement). In practice GulfPub corroboration has so far shipped
+   inside the deep-sweep `<Cmdty>_GulfPub` crosswalk leg (`build_gulfpub_crosswalk.py`);
+   no standalone §1 reconciliation workbook has been delivered yet.
 2. **QC workbook** (`build_qc_workbook.py`) — rebuild of `GOIT_oil_ngl_QC.xlsx`
    (Status, RouteAccuracy, OtherVocab, Owner, WikiLink, Geo, NameUniqueness,
    DateLogic, Diameter, BroadSweep; route/WKT sheet dropped).
@@ -198,6 +204,15 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   built gas line; P0476/P6693/P6687 reref), duplicate 4 (P0477 network vs P6697–P6702 segments;
   P6687/P0474/P3934 one Obaiyed trunk; P7574 vs P3930). Discovery (Leg B) NOT built — 6 vetted
   candidates staged. Oil (GOIT) not yet swept. Full list: `docs/country_notes/egypt.md`.
+- **Saudi Arabia (general):** finish the GulfPub route-consistency pass for low/medium-accuracy
+  matches (stage route-replacement candidates for human review). Oil ref-sweep: 10-row batch
+  staged (`batches/staging/ref-sweep-saudi-arabia-10row/`), partial toward the intended 50-row run.
+- **United States (oil, staged not applied):** Delaware Express (P7995/P0354, researched
+  2026-06-12) and Permian Express I–IV (P0113/P2581/P2660/P2661, researched 2026-06-11)
+  update batches in `batches/staging/delaware-express/` + `permian-express/`. Open item:
+  keep deepwater-export terminal pipeline components distinct from terminal records.
+- **Nigeria:** sweep divestiture-affected rows for ownership consistency after each
+  package update (not started).
 
 ---
 

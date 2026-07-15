@@ -22,9 +22,13 @@ baseline). Idempotent: re-running with the same shards yields the same baseline.
 Usage:
     python scripts/merge_ref_shards.py --staging batches/staging/annual-gas-iraq/
 """
-import argparse, json, glob, os, collections
+import argparse, json, glob, os, collections, sys
+from pathlib import Path
 
-BLOCK = ("gem.wiki", "globalenergymonitor", "theodora", "abarrelfull", "abarrellfull", "wikidot.com")
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
+
+BLOCK = GEM_HOSTS + BLOCKLIST_HOSTS
 _VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
 
 
