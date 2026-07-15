@@ -1,7 +1,12 @@
 # GOIT/GGIT Project — Setup & Context
 
+> **Historical (pre-migration) snapshot.** `CLAUDE.md` is the authoritative operational
+> guide; its "Pending country items" supersedes §11 here, and the operators/owners tab
+> (GID `1489950650`, header row index 1) postdates this doc. Kept for background that
+> CLAUDE.md doesn't cover (external key-source list, Asana note, LNG-carrier thread).
+
 This document orients a fresh Claude session (in the migrated workspace project) to the
-GOIT/GGIT pipeline-research work. Read this first.
+GOIT/GGIT pipeline-research work.
 
 ---
 

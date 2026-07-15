@@ -35,7 +35,9 @@ SOP is the operational sequence; cite the methodology for the *how*.
    don't create duplicate entities.
 6. Stage findings as `batches/staging/<scope-slug>/staged_updates.json` (committed
    audit trail).
-7. `scripts/build_recon_workbook.py`'s update mode (or `build_*` per the recipe) →
+7. Build the update workbook (no generic builder yet — copy the per-batch
+   `build_update_workbook.py` pattern from `batches/staging/delaware-express/`;
+   layout per `docs/reference/workbook_conventions.md` "Update workbook") →
    `batches/pipelines_batch_<stamp>_<scope>_update.xlsx`; `scripts/recalc.py`; present.
 
 ## Pre-delivery checks

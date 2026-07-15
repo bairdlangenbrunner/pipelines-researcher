@@ -30,3 +30,10 @@ any country — use it for both attributes and routes.
 ## Open items
 - Keep deepwater-export terminal pipeline components distinct from the terminal
   records (LengthKnown often 0 — onshore expansion only).
+- **Staged, NOT applied (oil):** Delaware Express update batch (P7995 Targa NGL +
+  P0354 Medallion→Plains Oryx — same name, NOT duplicates: different commodities/
+  owners/vintages; researched 2026-06-12, `batches/staging/delaware-express/`) and
+  Permian Express I–IV batch (P0113/P2581/P2660/P2661 — Parent split 87.7/12.3,
+  Operator = Sunoco Pipeline L.P., PE1 capacity 200k→150k bpd, PE2 StartLocation
+  Wichita Falls→Midland, PE4 zeroed as expansion; researched 2026-06-11,
+  `batches/staging/permian-express/`).

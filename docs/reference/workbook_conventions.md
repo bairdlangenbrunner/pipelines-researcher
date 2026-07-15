@@ -76,16 +76,26 @@ yellow `Route replacement candidate?` cell. **Findings are candidates, never
 auto-applied** — `Additions` route to Discovery, value/status disagreements route
 to Update.
 
-## Research workbook (mode = `update` / `discovery`)
+## Update workbook (mode = `update`)
 
-Three sheets matching the GEM column structure:
+No generic builder yet — recent update batches (`batches/staging/delaware-express/`,
+`batches/staging/permian-express/`) shipped via a per-batch `build_update_workbook.py`
+staged alongside the JSON: a backend-mirror tab of the touched rows (current values
+prefilled, changed cells overlaid tier-colored, per the deep-sweep conventions below)
+plus an operators/owners tab. If the pattern recurs, promote a generic
+`scripts/build_update_workbook.py`.
 
-1. **Updated Existing Pipelines** — one row per changed pipeline; carry forward
-   unchanged columns; highlight changed/new cells red (`FFCCCC`/`CC0000`).
-2. **New Pipelines (Discovery)** — one row per discovery; all populated cells green
-   (`E2EFDA`); verified `[ref]` on every data point.
-3. **Status Changes Summary** — Pipeline, Segment, Current Status, Recommended
-   Status, Key Evidence, Source URL; recommended status highlighted red.
+## Discovery workbook (mode = `discovery`)
+
+Built by `scripts/build_discovery_workbook.py` from merged discovery shards:
+
+1. **`<Cmdty>_NewRows`** — one paste-ready backend-format row per vetted new pipeline;
+   verified `[ref]` on every data point (a candidate with zero surviving refs is
+   downgraded to the monitor list, never staged as a row).
+2. **`<Cmdty>_OperatorsOwners`** — operator/owner refs for the new rows.
+3. **`<Cmdty>_MonitorList`** — below-threshold candidates to re-check later.
+4. **`<Cmdty>_MatchedExisting`** — candidates matched to an existing GEM row
+   (→ `OtherEnglishNames`), not added.
 
 ## Ref-sweep / deep-sweep workbook (mode = `refsweep` / `deepsweep`)
 

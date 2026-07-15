@@ -15,8 +15,9 @@ const A = (typeof args === 'string') ? JSON.parse(args) : (args || {})
 if (!Array.isArray(A.pids) || !A.pids.length) {
   throw new Error("critical-deep-sweep needs args.pids — run scripts/build_deepsweep_args.py and pass its JSON as `args`.")
 }
-// Prefer the cheapest model sufficient for the research (standing rule); Sonnet is
-// plenty for this per-pipeline audit. Override with args.model if a run needs more.
+// Model is chosen by the orchestrator at dispatch time (standing rule: cheapest model
+// genuinely good enough for this run) and passed via args.model; 'sonnet' is only the
+// fallback when no choice is passed, not a pin.
 const MODEL = A.model || 'sonnet'
 const REPO = A.repo
 const STAGING = A.staging

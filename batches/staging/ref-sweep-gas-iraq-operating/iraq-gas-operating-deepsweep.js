@@ -433,7 +433,7 @@ Your shard file is the deliverable, not your message.`
 phase('Audit')
 log(`Auditing ${PIDS.length} ${COUNTRY} ${COMMODITY} operating pipelines (existence+classification first, + corridor routes), one subagent each.`)
 const results = await parallel(PIDS.map(pid => () =>
-  agent(contract(pid), { label: `audit:${pid}`, phase: 'Audit', agentType: 'general-purpose' })
+  agent(contract(pid), { label: `audit:${pid}`, phase: 'Audit', agentType: 'general-purpose', model: 'sonnet' })
 ))
 const done = results.filter(Boolean).length
 log(`Audit complete: ${done}/${PIDS.length} subagents returned. Shards in ${STAGING}/rows/`)

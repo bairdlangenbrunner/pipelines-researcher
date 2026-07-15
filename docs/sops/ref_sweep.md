@@ -266,12 +266,11 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
 
 ## At scale (subagent fan-out)
 A whole-country deep sweep is too large for one context. Fan out:
-0. **Use the cheapest model sufficient for the research** (standing rule). Per-pipeline
-   research subagents (audit, ref-research, discovery search/vet) run well on **Sonnet** —
-   default to it, not Opus. The saved workflows (`critical-deep-sweep.js`,
-   `country-discovery.js`) already default `MODEL = A.model || 'sonnet'`; pass `args.model`
-   only to override upward for a genuinely harder pass. Baked one-off scripts should set
-   `model: 'sonnet'` on their `agent()` calls the same way.
+0. **Choose each subagent's model at dispatch time** (global standing rule — see
+   CLAUDE.md). The saved workflows (`critical-deep-sweep.js`, `country-discovery.js`)
+   fall back to `MODEL = A.model || 'sonnet'` — pass `args.model` to carry the
+   dispatch-time choice; baked one-off scripts set `model:` on their `agent()` calls
+   the same way.
 1. After the worklist + harvest, **bundle rows into small batches** (~4 ProjectIDs each)
    and write one input file per batch under `…/batches/batch_NN.json`.
 2. Spawn **one general-purpose subagent per batch**, each handed the same fixed **record

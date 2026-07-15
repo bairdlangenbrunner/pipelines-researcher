@@ -22,13 +22,21 @@ it is snapshotted to staged_resolutions.prior.json on first run.
 Usage:
     python scripts/merge_deepsweep_shards.py --staging batches/staging/ref-sweep-gas-saudi-arabia/
 """
-import argparse, json, glob, os, collections
+import argparse, json, glob, os, collections, sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
+
+BLOCK = GEM_HOSTS + BLOCKLIST_HOSTS
 
 
 def _verified(refs, verifs):
-    """Keep only refs whose verification is ok && contains_value (no orphan/unsupported refs)."""
+    """Keep only refs whose verification is ok && contains_value (no orphan/unsupported refs).
+    GEM / blocklisted hosts are stripped regardless (defense in depth; the verifier rejects them too)."""
     okset = {v.get("url") for v in (verifs or []) if v.get("ok") and v.get("contains_value")}
-    return [u for u in (refs or []) if (not verifs or u in okset)]
+    return [u for u in (refs or [])
+            if (not verifs or u in okset) and not any(h in u.lower() for h in BLOCK)]
 
 
 def main():
