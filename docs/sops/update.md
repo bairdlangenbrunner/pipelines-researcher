@@ -1,9 +1,11 @@
-# SOP — Update existing pipelines
+# SOP — Update (targeted fixes)
 
-The bread-and-butter doer: refresh existing GOIT/GGIT rows (status changes,
-enrichment, blank `[ref]` fills). It also **consumes reconciliation candidates** —
-a value/status disagreement surfaced by the Reconciliation SOP is resolved here
-through normal source-search, not auto-applied.
+The small-batch doer: fix or refresh **specific** GOIT/GGIT rows — named rows, a
+handful of stale in-dev rows, fixes detected by a handoff packet. It also
+**consumes reconciliation candidates** — a value/status disagreement surfaced by
+the Reconciliation SOP is resolved here through normal source-search, not
+auto-applied. **Whole-country "re-verify everything" work is NOT an Update** —
+that is a Country Sweep (`docs/sops/sweep.md`, workflows.md §3).
 
 The deep research rules (source hierarchy, URL-verification, corroboration,
 expansion-vs-construction, divestiture sweeps, route research) live in the
@@ -11,15 +13,12 @@ authoritative methodology, `docs/GOIT_Pipeline_Research_Workflow.md` Phase 2. Th
 SOP is the operational sequence; cite the methodology for the *how*.
 
 ## Inputs
-- Scope: country + commodity (oil / NGL / gas).
-- Tier: **standard** (default) = the worklist below; **exhaustive** = every field +
-  every existing `[ref]` on every in-scope row.
+- Scope: country + commodity (oil / NGL / gas) + the specific rows/questions.
 
 ## Sequence
 1. `scripts/refresh_csvs.sh` → fresh snapshot; load `header=2`; exclude buffer rows.
-2. **Derive the worklist** (standard tier): every `proposed`/`construction`/`shelved`
-   row in scope ∪ rows with blank `[ref]` paired to a filled value ∪ stale rows ∪
-   any reconciliation value-disagreements queued for this scope.
+2. **Derive the worklist**: the named rows ∪ any reconciliation value-disagreements
+   or handoff-packet fixes queued for this scope ∪ (if asked) stale in-dev rows.
 3. For each pipeline:
    - Research per methodology Phase 2 — source hierarchy in
      `docs/reference/source_roster.md`, country tips in `docs/country_notes/`.

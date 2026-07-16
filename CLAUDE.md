@@ -15,8 +15,10 @@ Where things live — **read on demand as the workflow dictates, not all at once
 
 - **Research methodology** (authoritative for *what* to research):
   `docs/GOIT_Pipeline_Research_Workflow.md` (the 4-phase deep-research workflow).
-- **SOPs** (operational *how*): `docs/sops/` — `reconciliation.md` (pluggable
-  GEM↔dataset diff), `update.md`, `discovery.md`, `triage.md`, `qc.md`.
+- **SOPs** (operational *how*): `docs/sops/` — `triage.md`, `reconciliation.md`
+  (pluggable GEM↔dataset diff), `sweep.md` (Country Sweep — the research engine),
+  `discovery.md`, `update.md` (targeted fixes), `qc.md` (QC + handoff packet),
+  `annual_update.md` (campaign recipe).
 - **Workflow recipes** (commands, in order): `docs/workflows.md`.
 - **Reference**: `docs/reference/` — `gem_schema.md`, `controlled_vocab.md`,
   `confidence_tiers.md`, `workbook_conventions.md`, `route_conventions.md`,
@@ -77,14 +79,13 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 
 | Workflow | Trigger phrases | Recipe + rules |
 |---|---|---|
-| **Reconcile vs a scraped dataset** (the engine; per-source) | "reconcile gulfpub for <country>", "gulfpub diff", "compare GEM to <dataset>", "run reconciliation for <scope>" | `workflows.md` §1 + Reconciliation SOP |
-| **Update existing pipelines** (most common) | "update pipelines in <country>", "refresh <country>", "fill blank refs", "status sweep for <country>", "resolve the recon disagreements" | `workflows.md` §2 + Update SOP |
-| **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §3 + Discovery SOP |
-| **Triage** (plan the batch; memo) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §4 + Triage SOP |
-| **Quality control** (xlsx; detects → Update fixes) | "qc pass", "data-health audit", "rebuild the QC workbook" | `workflows.md` §5 + QC SOP |
-| **Reference sweep** (xlsx; fill & re-verify every `[ref]`) | "ref sweep for <country>", "fill and verify refs", "corroborate the refs in <country>", "re-verify refs", "link-rot + refill" | `workflows.md` §6 + Ref Sweep SOP |
-| **Deep sweep** (xlsx; ref sweep + deep-fill blanks + per-row validity check, one pass) | "deep sweep <country>", "go deep on <country>'s pipelines", "ref sweep AND fill blanks AND check validity", "full pass on <country>" | `workflows.md` §6b + Ref Sweep SOP ("At scale" + "Schema extensions") |
-| **Annual update packet** (campaign; per country: in-dev status sweep + discovery) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §7 + Annual Update SOP (`docs/sops/annual_update.md`); campaign roster in `campaigns/` |
+| **Triage** (plan the batch; memo, no xlsx) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §1 + Triage SOP |
+| **Reconcile vs a scraped dataset** (per-source diff) | "reconcile gulfpub for <country>", "gulfpub diff", "compare GEM to <dataset>", "run reconciliation for <scope>" | `workflows.md` §2 + Reconciliation SOP |
+| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `gulfpub`; presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "full pass on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
+| **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
+| **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
+| **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
+| **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 
 Routing notes:
 - A reconciliation reference-only (`Addition`) row is usually **not** a missing
@@ -92,22 +93,34 @@ Routing notes:
   (→ `OtherEnglishNames`); only genuine misses go to Discovery.
 - A scraped dataset is **one source in a conflict, never automatically
   authoritative** — value disagreements route to Update's normal source-search.
-- QC never edits: it audits and routes fixes to Update ("QC detects, Update fixes").
-- **Ref Sweep vs QC vs Update:** QC *detects* orphan refs (ref filled, value blank);
-  Ref Sweep *systematically researches & stages* refs across all rows×ref-cells
-  (fills blank refs to the ≥2-independent-corroborating target AND re-verifies live
-  ones). Update's "fill blank refs" is ad-hoc enrichment of in-dev rows; the dedicated
-  at-scale crawl is Ref Sweep. They share one ref-pair model (`scripts/ref_pairs.py`).
-  **Route/geometry `[ref]` cells are out of scope** for Ref Sweep (geometry → routes repo,
-  not media URLs) — but a **deep sweep** may *suggest routes* (corridor + sourced endpoints →
-  `<Cmdty>_RouteSuggestions`, candidates for a human routes-repo PR) for `RouteAccuracy`-weak
-  rows; never auto-replace, never fabricate coords. The deliverable leads with a
-  `<Cmdty>_Backend` tab that is a **1:1 mirror of the FULL tracker backend** (every column in
-  sheet order, current values prefilled, overlays tier-colored only on touched cells, leading
-  `SheetRow` locator) — **don't paste the computed/formula columns back over the live formulas**.
-  **Owner/operator refs** live on the separate ProjectID-keyed "Pipeline operators/owners"
-  tab (GID 1489950650) — the worklist joins it and stages `Operator [ref]`/`Owner [ref]`
-  onto a dedicated `<Cmdty>_OperatorsOwners` tab (`[ref]` precedes its values there).
+- **Sweep vs Update:** Update is *targeted* (named rows, specific questions);
+  anything whole-country / "re-verify everything" is a Country Sweep with the
+  right legs. The sweep's `refs` leg researches & stages refs across all
+  rows×ref-cells to the ≥2-independent target; both share one ref-pair model
+  (`scripts/ref_pairs.py`).
+- QC/handoff legs never edit: they detect and route ("QC detects, Update fixes").
+  The tracker-wide mechanical audit ("rebuild the QC workbook", "data-health
+  audit" → `build_qc_workbook.py`) is a standalone artifact — see the note in
+  `workflows.md` §6 + QC SOP.
+- **Route/geometry `[ref]` cells are out of scope** for the refs leg (geometry →
+  routes repo, not media URLs) — but the `routes` leg may *suggest routes*
+  (corridor + sourced endpoints → `<Cmdty>_RouteSuggestions`, candidates for a
+  human routes-repo PR) for `RouteAccuracy`-weak rows; never auto-replace, never
+  fabricate coords.
+- Sweep deliverables lead with a `<Cmdty>_Backend` tab — a **1:1 mirror of the FULL
+  tracker backend** (every column in sheet order, current values prefilled, overlays
+  tier-colored only on touched cells, leading `SheetRow` locator). The handoff packet
+  is TWO files: `…-actions.xlsx` (only suggested changes + open issues; its
+  `<Cmdty>_AllFillsBackend` is THE one paste surface — ALL fills AND paste-ready refs,
+  carried + own, unified in that same full backend layout; a tier-colored value cell =
+  a proposed value, a colored `[ref]` with an untinted value = ref-only work) and
+  `…-evidence.xlsx` (audit trail: confirmed/known-staged/info rows + per-fill/per-ref
+  detail). Either way,
+  **don't paste the computed/formula columns back over the live formulas**.
+  **Owner/operator refs** live on the separate ProjectID-keyed "Pipeline
+  operators/owners" tab (GID 1489950650) — the worklist joins it and stages
+  `Operator [ref]`/`Owner [ref]` onto a dedicated `<Cmdty>_OperatorsOwners` tab
+  (`[ref]` precedes its values there).
 
 ---
 
@@ -156,6 +169,8 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **lowercase:** `Status`, `RouteAccuracy`, `PipelineType`.
 - **Title Case:** `DelayType`, `ShelvedCancelledType`, `FIDStatus`, `Delayed`, `Opposition`.
 - `very high (within meters)` is a valid `RouteAccuracy`.
+- **`*CostUnits` = bare currency code** (`USD`, `EGP`, …) — never `EGP million` /
+  `USD (millions)`; the magnitude goes in the cost number itself.
 - When in doubt, pull a real row from the sheet and copy the exact casing.
 
 ---
@@ -167,52 +182,35 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    (the golden reference) to any source/country/commodity, with a route-geometry
    pass (GulfPub treated as more accurate than low/medium GEM routes; human review
    before any replacement). In practice GulfPub corroboration has so far shipped
-   inside the deep-sweep `<Cmdty>_GulfPub` crosswalk leg (`build_gulfpub_crosswalk.py`);
-   no standalone §1 reconciliation workbook has been delivered yet.
+   inside the Country Sweep's `gulfpub` crosswalk leg (`build_gulfpub_crosswalk.py`);
+   no standalone §2 reconciliation workbook has been delivered yet.
 2. **QC workbook** (`build_qc_workbook.py`) — rebuild of `GOIT_oil_ngl_QC.xlsx`
    (Status, RouteAccuracy, OtherVocab, Owner, WikiLink, Geo, NameUniqueness,
    DateLogic, Diameter, BroadSweep; route/WKT sheet dropped).
 3. **Country-level research** — 80+ countries swept; Iraq, Iran, Saudi Arabia deep.
 
 ### Pending country items
-- **Iran:** P6074 (Goureh–Persian Gulf Coast) needs verification before any
-  duplicate/removal. P5367 (Golpa–Moghanak) reclassify as a Neka–Ray segment.
-- **Iraq:** Grand Faw Port third offshore pipeline (Esta/Micoperi, contracted April
-  2025) entered as one new row. Basra–Haditha (P0544) status review (listed
-  `construction`, appeared still pre-construction/tender as of early 2026).
-- **Iraq gas (2026-07-05 deep sweep, staged not applied):** national dry-gas trunk likely
-  duplicated under three naming families (Strategic / Trans-Iraq / National-Gas — a human
-  de-dup pass); two rows wrong-tracker (P4067 crude→GOIT, P6824 products→not gas); several
-  status/attribution fixes. Full list: `docs/country_notes/iraq.md` "Open items — gas".
-- **Iran gas (2026-07-05 full packet — in-dev + discovery + operating deep sweep, staged not
-  applied):** class-wide Owner=NIOC→NIGC/IGTC on ~27 operating rows; duplicate/segmentation
-  cluster (P0748↔P3957 IGAT-1 double-count; P6022/P6023/P6024 one project split 3 ways; P6027);
-  existence cluster P6024/P6025/P6027 (one dead iranertebat source); P3951 Siri–Mobarak status
-  wrong; 5/8 in-dev status changes (P0452, P2225, P6006, P7104, P3174). Full list:
-  `docs/country_notes/iran.md` "Open items — gas".
-- **Saudi gas (2026-07-08 full packet — in-dev + discovery + operating deep sweep, staged not
-  applied):** in-dev clean (22/22 status `confirm`); class-wide existence gap on the 2022-vintage
-  GIS/km-post family P1897–P1925 (18 existence + 15 duplicate concerns — one class decision, not
-  row fixes); de-dup families UBTG-1 cluster, Haradh Khuff–Hawiyah triple, P1922/P1923,
-  P7545→P7544, P7768→P1921; P3962 East–West carries the crude Petroline's specs. Full list:
-  `docs/country_notes/saudi-arabia.md` "Open items — gas".
-- **Egypt gas (in-dev sweep delivered 2026-07-09, operating deep sweep delivered 2026-07-13,
-  staged not applied; Sonnet fan-out):** NO escalation gate — no class-wide existence gap (contrast
-  Saudi/Iran). In-dev 1/7 status changes (P3657→shelved). Operating (50 rows): 109 validity records,
-  concerns = attribution 37 (recurring GASCO-operator vs EGAS-owner nuance, row-specific not
-  class-wide; P0462 FuelSource Egypt→Israel), spec 31, existence 4 (P3938 = a CO2-EOR concept not a
-  built gas line; P0476/P6693/P6687 reref), duplicate 4 (P0477 network vs P6697–P6702 segments;
-  P6687/P0474/P3934 one Obaiyed trunk; P7574 vs P3930). Discovery (Leg B) NOT built — 6 vetted
-  candidates staged. Oil (GOIT) not yet swept. Full list: `docs/country_notes/egypt.md`.
-- **Saudi Arabia (general):** finish the GulfPub route-consistency pass for low/medium-accuracy
-  matches (stage route-replacement candidates for human review). Oil ref-sweep: 10-row batch
-  staged (`batches/staging/ref-sweep-saudi-arabia-10row/`), partial toward the intended 50-row run.
-- **United States (oil, staged not applied):** Delaware Express (P7995/P0354, researched
-  2026-06-12) and Permian Express I–IV (P0113/P2581/P2660/P2661, researched 2026-06-11)
-  update batches in `batches/staging/delaware-express/` + `permian-express/`. Open item:
-  keep deepwater-export terminal pipeline components distinct from terminal records.
-- **Nigeria:** sweep divestiture-affected rows for ownership consistency after each
-  package update (not started).
+
+One-line pointers only — the country notes hold the full open-items lists, and
+staged counts regenerate via `python scripts/staged_summary.py --country <C>
+--commodity <c>` (never hand-edit counts). Cross-country inventory:
+`docs/research_backlog.md`.
+
+- **Iran (gas packet 2026-07-05 staged not applied; + oil open items):**
+  `docs/country_notes/iran.md`.
+- **Iraq (gas packet 2026-07-05 staged not applied; + oil open items — Grand Faw
+  third line, P0544):** `docs/country_notes/iraq.md`.
+- **Saudi Arabia (gas packet 2026-07-08 staged not applied — hinges on the
+  P1897–P1925 class decision; GulfPub route-consistency pass + oil ref-sweep
+  partial):** `docs/country_notes/saudi-arabia.md`.
+- **Egypt (gas: handoff regenerated 2026-07-16 as the TWO-file split
+  `pipelines_batch_20260716_1156_ET_egypt-gas_handoff-{actions,evidence}.xlsx` —
+  the researcher works from the ACTIONS file, not the per-leg workbooks; Nitzana =
+  one linked decision; oil not yet swept):** `docs/country_notes/egypt.md`.
+- **United States (oil: Delaware Express + Permian Express batches staged not
+  applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
+- **Nigeria (divestiture ownership sweep not started):**
+  `docs/country_notes/nigeria.md`.
 
 ---
 

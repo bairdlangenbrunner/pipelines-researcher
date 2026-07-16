@@ -1,11 +1,13 @@
-# SOP — Annual country update packet (campaign mode)
+# SOP — Annual country update packet (campaign recipe)
 
-The country-by-country annual update. For each country, this repo produces a **packet**
-researchers can rely on **entirely** for two of the three legs of a normal update year:
+The country-by-country annual update — a **recipe over the standard workflows**,
+not its own machinery: per country, **Country Sweep `in-dev` preset (workflows.md
+§3) + Discovery (§4) + Handoff Packet (§6)**. Researchers can rely on the packet
+entirely for two of the three legs of a normal update year:
 
 1. **In-dev check** — every `proposed` / `construction` / `shelved` row re-audited, with a
-   per-row **status verdict** (the `__STATUS__` record type) plus the standard deep-sweep
-   ref/fill/validity work.
+   per-row **status verdict** (the `__STATUS__` record type) plus the sweep's standard
+   ref/validity work.
 2. **New + missing projects** — country-scoped discovery: newly announced projects AND
    older lines GEM never captured (the "maps" stance), consolidated with
    match-to-existing FIRST.
@@ -14,8 +16,9 @@ researchers can rely on **entirely** for two of the three legs of a normal updat
    ref re-verify only where the deterministic HTTP check finds dead links) is planned as a
    follow-on once in-dev batches prove out — design note below, not yet implemented.
 
-Commands, in order: `docs/workflows.md §7`. Everything here is **read-and-stage only** —
-all standing rules apply; nothing touches the live Sheet.
+Commands, in order: `docs/workflows.md §7` (and the sections it chains). Everything
+here is **read-and-stage only** — all standing rules apply; nothing touches the
+live Sheet.
 
 ## Campaign layer
 
@@ -28,9 +31,10 @@ all standing rules apply; nothing touches the live Sheet.
   both legs (worklist + shards for the in-dev sweep; `discovery_context.json` +
   `discovery/` for the discovery leg; `staged_resolutions.json` + `staged_new.json` as the
   committed audit trail).
-- The **packet** = the pair of deliverables for the country, same scope slug:
-  `…_<slug>_annual-indev.xlsx` (StatusReview / Backend / OperatorsOwners / Fills /
-  Validity tabs) + `…_<slug>_discovery.xlsx` (NewRows / MonitorList / MatchedExisting).
+- The **packet** the researcher works from is the **handoff workbook**
+  (`…_<slug>_handoff.xlsx`, workflows.md §6), which assembles everything the two
+  research legs staged. The per-leg deliverables (`…_<slug>_annual-indev.xlsx`,
+  `…_<slug>_discovery.xlsx`) remain as build artifacts / deep-dive detail.
 
 ## The status verdict (`__STATUS__` record, annual-update mode)
 
@@ -74,7 +78,7 @@ clusters in one country → escalate before mass-producing rows.
 - Discovery: the standing >5-clusters gate; also a `maps` strategy that surfaces a whole
   missing network class (e.g. a national grid GEM never covered) → scope discussion, not
   row-by-row adds.
-- The ref-sweep gates (Unresolved fraction, harvester hit-rate) apply to the in-dev leg.
+- The sweep gates (Unresolved fraction, harvester hit-rate) apply to the in-dev leg.
 
 ## Operating refresh (planned follow-on — do not run yet)
 
@@ -86,7 +90,7 @@ No deep-fill, no full ≥2-corroboration re-derivation of every field. To be spe
 
 ## Gotchas (seeding the ref baseline)
 
-Annual mode runs no separate ref-sweep pass, so the merge needs a **ref baseline** to preserve
+The in-dev preset runs no separate refs research pass, so the merge needs a **ref baseline** to preserve
 records onto: `seed_resolutions_from_worklist.py` converts worklist ref units into the initial
 `staged_resolutions.json`.
 - **Commodity is inferred from the snapshot filename** ("gas"/"ggit" → gas) into `meta.commodity`,

@@ -1,14 +1,23 @@
-# SOP — Reference sweep (fill & re-verify every `[ref]`)
+# SOP — Country Sweep (the research engine)
 
-Crawl every row and every ref-bearing data point in a country+tracker scope and, for
+One scoped pass over existing rows (country + commodity + status filter) with
+**selectable legs** — `refs`, `fills`, `validity`, `status-review`, `routes`,
+`gulfpub` — staged into ONE dir per scope. Presets (`refs-only`, `deep`, `in-dev`)
+and the command sequences: `docs/workflows.md §3`. This SOP is the operational
+rules: the `refs` leg first (the base every preset includes), then the further
+legs under "Legs beyond refs".
+
+## The `refs` leg (fill & re-verify every `[ref]`)
+
+Crawl every row and every ref-bearing data point in scope and, for
 each one, reach the target: **≥2 links that both WORK (HTTP 200, no error) AND
 corroborate each other AND contain the precise data point** being referenced.
 
 - **Blank `[ref]` + filled value** → research and add corroborating source URLs.
 - **Filled `[ref]`** → re-check the URLs still resolve *and* still contain the value.
 
-Distinct from QC's link-rot detection: **QC *detects*, Ref Sweep *researches & stages*.**
-QC's BroadSweep flags orphan refs (ref filled, value blank); the Ref Sweep fixes the
+Distinct from QC's link-rot detection: **QC *detects*, the sweep *researches & stages*.**
+QC's BroadSweep flags orphan refs (ref filled, value blank); the refs leg fixes the
 inverse (value present, ref blank) and re-verifies live refs. Both share the one ref-pair
 model in `scripts/ref_pairs.py`.
 
@@ -70,8 +79,9 @@ Two paste-ready, backend-mirroring tabs lead the deliverable:
   that tab); `Operator [ref]` / `Owner [ref]` cells carry the proposed ref(s), same tier colors.
   Paste each `[ref]` back onto that tab by ProjectID — *not* onto a tracker row.
 
-A **deep sweep** (§6b) adds up to four more tabs: `<Cmdty>_Validity`, `<Cmdty>_Fills`, and —
-when routes/GulfPub legs run — `<Cmdty>_RouteSuggestions` and `<Cmdty>_GulfPub`.
+The **`deep` preset** adds up to four more tabs: `<Cmdty>_Validity`, `<Cmdty>_Fills`, and —
+when the routes/gulfpub legs run — `<Cmdty>_RouteSuggestions` and `<Cmdty>_GulfPub`.
+The **`in-dev` preset** leads with `<Cmdty>_StatusReview`.
 
 The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Unresolved` bucket tabs remain as
 supporting detail (full verifications, current-ref, notes) but are not the primary view.
@@ -162,6 +172,19 @@ misses it — this is the eurasianet/P5984 failure):
   to 5.5 bcm" confirms P5984 = operating; the automated check failed only because it substring-
   searched for the literal token `operating`.) Treat a status `any_of` miss as **expected**, not
   disqualifying.
+- **VALUES are often phrased in prose / equivalent units — do the equivalence yourself.**
+  "an additional 6 BCM of natural gas to be exported to Egypt annually" fully supports
+  `Capacity = 6` + `CapacityUnits = bcm/y` — "annually" / "per year" / "a year" **is** the
+  `/y`, and spelled-out units ("billion cubic meters") and convertible figures
+  (600 MMcf/d ≈ 6.2 bcm/y) count too. The substring check only hunts for the literal
+  number/unit tokens and misses all of these. **Never write "the existing ref doesn't
+  support the value" off a failed substring check alone — read the passage and quote it in
+  `ResearcherNotes` either way.** (This is the Egypt P3620 failure: energy-sea.gov.il
+  states the 6-BCM-annually figure verbatim, but the note called the ref unconfirmable.)
+- **DATE columns can be supported by the source's own dateline.** An official announcement
+  of a proposal/approval dated May 2023 supports `ProposalYear = 2023` (and the month)
+  even if "2023" never appears in the body — the event's date IS the article date. Note
+  which milestone the date attaches to (first floated vs formal approval).
 - **NAME spelling varies by transliteration.** Backend `Chelavend` vs page `Chelavand`, `Kordkuy`
   vs `Kordkoy`, etc. Pass the pipeline/entity name to the verifier via **`name=`** (fuzzy on by
   default: `name_forms` + difflib token matching), instead of relying on an exact substring. Don't
@@ -178,13 +201,13 @@ No mode is a fabricated-URL exception (standing rule 2) — you must still *conf
 and supports the value* (by full-text read, `pdftotext`, `curl`, or a real Wayback capture) before
 keeping the ref.
 
-## Deep sweep variant (ref sweep + deep-fill + validity check)
-The combined mode (`workflows.md §6b`): in one pass per row, do the standard ref sweep
-**plus** (a) research and fill **blank value fields** with paired refs (best-effort on weak
-fields like Capacity — don't force a number), and (b) **critically confirm the existing data
-points and judge each pipeline's validity / existence**. Same standing rules — still
-read-and-stage only. **Operating-status rows are a legitimate deep-sweep target** (not just
-in-dev) — Baird often runs a deep sweep on operating pipelines specifically to catch
+## Legs beyond refs: `fills` + `validity` (the `deep` preset)
+The combined mode (`workflows.md §3`, `deep` preset): in one pass per row, do the standard
+refs leg **plus** (a) research and fill **blank value fields** with paired refs (best-effort
+on weak fields like Capacity — don't force a number), and (b) **critically confirm the
+existing data points and judge each pipeline's validity / existence**. Same standing rules —
+still read-and-stage only. **Operating-status rows are a legitimate deep-sweep target** (not
+just in-dev) — Baird often runs a deep sweep on operating pipelines specifically to catch
 **redundant/duplicate** entries, so the existence/duplicate leg can be the *driving* reason.
 
 Two further legs run on request (both were standing expectations for the Iraq gas sweep):
@@ -247,9 +270,9 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
     P####", "verify endpoint before keeping").
   - `researcher_notes` — the full finding (authoritative); `proposed_refs` + `verifications`
     — the independent sources backing the judgment (encouraged, even though it is not a ref edit).
-- **`ref_col="__STATUS__"` (annual-update mode only)** — a per-segment-row status verdict,
-  staged when the deep sweep runs with `build_deepsweep_args.py --status-review` (workflows.md
-  §7). `verdict` ∈ `confirm` / `change` / `stale` / `unclear`; `values` carries the exact
+- **`ref_col="__STATUS__"` (the `status-review` leg / `in-dev` preset)** — a per-segment-row
+  status verdict, staged when the sweep runs with `build_deepsweep_args.py --status-review`
+  (workflows.md §3). `verdict` ∈ `confirm` / `change` / `stale` / `unclear`; `values` carries the exact
   column→value edits (`change`: Status + matching date cols, refs required; `stale`: the
   dormancy-rule inference, `ShelvedCancelledType=Presumed` force-added at merge, no ref by
   design). Routed to a dedicated **`<Cmdty>_StatusReview`** tab that leads the workbook.

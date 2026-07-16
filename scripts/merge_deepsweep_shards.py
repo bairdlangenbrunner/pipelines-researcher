@@ -22,21 +22,11 @@ it is snapshotted to staged_resolutions.prior.json on first run.
 Usage:
     python scripts/merge_deepsweep_shards.py --staging batches/staging/ref-sweep-gas-saudi-arabia/
 """
-import argparse, json, glob, os, collections, sys
+import argparse, json, os, collections, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
-
-BLOCK = GEM_HOSTS + BLOCKLIST_HOSTS
-
-
-def _verified(refs, verifs):
-    """Keep only refs whose verification is ok && contains_value (no orphan/unsupported refs).
-    GEM / blocklisted hosts are stripped regardless (defense in depth; the verifier rejects them too)."""
-    okset = {v.get("url") for v in (verifs or []) if v.get("ok") and v.get("contains_value")}
-    return [u for u in (refs or [])
-            if (not verifs or u in okset) and not any(h in u.lower() for h in BLOCK)]
+from merge_qc import bad_cost_units, verified_refs, iter_shards, qc_note, status_qc  # noqa: E402
 
 
 def main():
@@ -64,16 +54,13 @@ def main():
 
     kept = [r for r in res if not is_old_deepsweep(r)]
 
-    shards = sorted(glob.glob(os.path.join(S, "rows", "*.json")))
+    n_shards = 0
     new_validity, new_fills, new_status, new_routes, missing = [], [], [], [], []
 
     pid_set = {r.get("project_id") for r in res}
     seen_shard_pids = set()
-    for p in shards:
-        try:
-            d = json.load(open(p))
-        except Exception as e:
-            print(f"  WARN unreadable shard {p}: {e}"); continue
+    for p, d in iter_shards(os.path.join(S, "rows", "*.json")):
+        n_shards += 1
         pid = d.get("project_id") or os.path.basename(p)[:-5]
         seen_shard_pids.add(pid)
         ident = {"project_id": pid, "pipeline_name": d.get("pipeline_name", ""),
@@ -93,11 +80,14 @@ def main():
                 "tier": v.get("tier", ""), "independent": v.get("independent", False),
                 "source_language": v.get("source_language", "en")})
         for f in d.get("fills", []) or []:
-            refs = _verified(f.get("proposed_refs", []), f.get("verifications", []))
+            refs = verified_refs(f.get("proposed_refs", []), f.get("verifications", []))
             notes = f.get("researcher_notes", "")
             cls = f.get("class_out", "UNRESOLVED")
             if f.get("proposed_refs") and not refs:
-                cls = "UNRESOLVED"; notes = (notes + " [QC] dropped unverified ref(s).").strip()
+                cls = "UNRESOLVED"; notes = qc_note(notes, "dropped unverified ref(s).")
+            for col, val in bad_cost_units(f.get("values")).items():
+                print(f"  WARN {pid} {f.get('ref_col', '')}: {col}={val!r} — units must be "
+                      "a bare currency code; put the magnitude in the cost number (fix the shard)")
             new_fills.append({**ident,
                 "sheet_row": f.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": f.get("segment_name", ""),
@@ -109,22 +99,12 @@ def main():
                 "tier": f.get("tier", ""), "independent": f.get("independent", False),
                 "source_language": f.get("source_language", "en"), "researcher_notes": notes})
         for s in d.get("status_reviews", []) or []:
-            refs = _verified(s.get("proposed_refs", []), s.get("verifications", []))
+            refs = verified_refs(s.get("proposed_refs", []), s.get("verifications", []))
             notes = s.get("researcher_notes", "")
-            verdict = (s.get("verdict") or "").strip().lower()
-            changes = dict(s.get("proposed_changes") or {})
             if s.get("proposed_refs") and not refs:
-                notes = (notes + " [QC] dropped unverified ref(s).").strip()
-            if verdict == "change" and not refs:
-                verdict = "unclear"
-                notes = (notes + " [QC] change proposed without a verified ref -> unclear.").strip()
-            if verdict == "stale":
-                if (changes.get("Status") or "").lower() in ("shelved", "cancelled") \
-                        and changes.get("ShelvedCancelledType") != "Presumed":
-                    changes["ShelvedCancelledType"] = "Presumed"
-                    notes = (notes + " [QC] added ShelvedCancelledType=Presumed (inferred change).").strip()
-            cls = {"confirm": "CONFIRMED", "change": "CHANGE_PROPOSED",
-                   "stale": "STALE"}.get(verdict, "UNRESOLVED")
+                notes = qc_note(notes, "dropped unverified ref(s).")
+            verdict, changes, cls, notes = status_qc(
+                s.get("verdict"), s.get("proposed_changes"), refs, notes)
             new_status.append({**ident,
                 "sheet_row": s.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": s.get("segment_name", ""),
@@ -141,10 +121,10 @@ def main():
                 "source_language": s.get("source_language", "en"), "researcher_notes": notes})
 
         for rt in d.get("routes", []) or []:
-            refs = _verified(rt.get("proposed_refs", []), rt.get("verifications", []))
+            refs = verified_refs(rt.get("proposed_refs", []), rt.get("verifications", []))
             notes = rt.get("researcher_notes", "")
             if rt.get("proposed_refs") and not refs:
-                notes = (notes + " [QC] dropped unverified ref(s).").strip()
+                notes = qc_note(notes, "dropped unverified ref(s).")
             # coordinates are never fabricated (standing rule 2): a suggestion with both
             # endpoints coordinated is SUGGESTED; a corridor-only one (missing coords) is PARTIAL.
             has_coords = all(rt.get(k) is not None for k in ("start_lat", "start_lon", "end_lat", "end_lon"))
@@ -183,7 +163,7 @@ def main():
     meta["status_verdict_counts"] = dict(collections.Counter(r.get("verdict") for r in new_status))
 
     json.dump({"meta": meta, "resolutions": merged}, open(cur_path, "w"), indent=1)
-    print(f"shards merged: {len(shards)} | missing PIDs: {len(missing)} {missing if missing else ''}")
+    print(f"shards merged: {n_shards} | missing PIDs: {len(missing)} {missing if missing else ''}")
     print(f"kept ref records: {len(kept)} | new fills: {len(new_fills)} | new validity: {len(new_validity)}"
           + (f" | new routes: {len(new_routes)}" if new_routes else "")
           + (f" | new status reviews: {len(new_status)}" if new_status else ""))

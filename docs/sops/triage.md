@@ -16,6 +16,10 @@ before any doer runs.
    inferred-cancelled candidate; in-dev rows not refreshed recently → due.
 4. **Reconciliation backlog:** any unprocessed Additions / disagreements from a prior
    reconciliation batch; whether a fresh scrape of a registered source has landed.
-5. Write the memo to `notes/triage-<YYYY-MM-DD>.md`. Each option names the
-   **workflow** (reconciliation / update / discovery / qc), the **scope**, and for
-   update the **tier**. Present; **stop and ask** before spinning up any batch.
+5. **Staged backlog:** `python scripts/staged_summary.py --all` — what's already
+   staged and awaiting application; don't propose re-researching it (a handoff
+   packet re-delivers it instead).
+6. Write the memo to `notes/triage-<YYYY-MM-DD>.md`. Each option names the
+   **workflow** (reconcile / sweep / discovery / update / handoff), the **scope**,
+   and for a sweep the **legs/preset**. Present; **stop and ask** before spinning
+   up any batch.

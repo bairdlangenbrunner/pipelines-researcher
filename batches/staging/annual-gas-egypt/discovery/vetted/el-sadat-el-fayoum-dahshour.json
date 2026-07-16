@@ -1,0 +1,72 @@
+{
+  "slug": "el-sadat-el-fayoum-dahshour",
+  "class": "new_row",
+  "matched_project_id": "",
+  "name": "El Sadat–El Fayoum (Dahshour) Gas Pipeline",
+  "values": {
+    "PipelineName": "El Sadat–El Fayoum Gas Pipeline",
+    "OtherEnglishNames": "El Sadat–El Fayoum (Dahshour) Gas Pipeline",
+    "Status": "operating",
+    "Fuel": "Gas",
+    "PipelineType": "transmission",
+    "CountriesOrAreas": "Egypt",
+    "StartLocation": "El Sadat",
+    "StartCountryOrArea": "Egypt",
+    "EndLocation": "Dahshour",
+    "EndCountryOrArea": "Egypt",
+    "LengthKnown": "76",
+    "LengthKnownUnits": "km",
+    "Diameter": "32",
+    "DiameterUnits": "in",
+    "Owner": "Egyptian Natural Gas Holding Co [100.%]",
+    "ProposalYear": "2007",
+    "RouteType": "Not mapped (but could be — route or endpoints are known)",
+    "RouteAccuracy": "no route",
+    "RouteNotes": "Endpoints and corridor known from the GASCO EIA (Nov 2009): starts at the El Sadat off-take room, runs south ~76 km parallel to the SUMED crude line and the El Ameriya–Dashour gas pipeline, through 6th of October City (crossing Mehwar 26 July road, the 6th of October–El Wahat road, and the Cairo–El Faiyum road), terminating at Dahshour compression station. No GIS geometry located."
+  },
+  "refs": {
+    "Status [ref]": [
+      "https://www.eib.org/en/projects/all/20070088",
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ],
+    "Fuel [ref]": [
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ],
+    "PipelineType [ref]": [
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ],
+    "Proposal [ref]": [
+      "https://www.eib.org/en/projects/all/20070088"
+    ],
+    "Length [ref]": [
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ],
+    "Diameter [ref]": [
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ],
+    "Location [ref]": [
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ],
+    "Route [ref]": [
+      "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf"
+    ]
+  },
+  "verifications": [
+    {
+      "url": "https://www.eib.org/en/projects/all/20070088",
+      "ok": true,
+      "contains_value": true
+    },
+    {
+      "url": "https://www.eib.org/files/pipeline/20070088_eia14_en.pdf",
+      "ok": true,
+      "contains_value": true,
+      "note": "url_verifier.py FAILs the substring screen on this URL because it fetches raw PDF bytes as r.text (documented false-negative class in url_verifier.py's own docstring for PDF text extraction). Manually confirmed live (HTTP 200, 13.2MB real PDF) and content via `pdftotext` + direct page read: exact match to 'el sadat – el fayoum gas pipeline with 76 Km length and 32\" diameter... starts from El Sadat off take room then extends toward south direction parallel to SUMID [SUMED] pipelines and El Ameriya Dashour pipeline for a distance about 76 km... until it reaches Dashour compression station (the end of the pipeline)', GASCO EIA, November 2009."
+    }
+  ],
+  "tier": "medium",
+  "independent": true,
+  "source_language": "en",
+  "monitor_reason": "",
+  "researcher_notes": "MATCH CHECK (rule 4, done first): re-checked against all 57 existing Egypt-gas rows in discovery_context.json AND the live GGIT_gas_snapshot_20260715.csv (filtered for Fayoum/Sadat/Faium/Dahshour/Dahshur across all columns — 6 hits, none a match). P3928 (Nubaria–Sadat, El Noubareya→El Sadat, 73 km/36 in) is the UPSTREAM feeder into El Sadat — different corridor, different endpoints. P3930 (New Administrative Capital–Dahshur, 70 km/32 in) reaches Dahshour from New Administrative Capital, a different origin altogether. P6686 (New Fayoum Gas Pipeline, construction, 40 km, 16/24 in) is a lateral into New Fayoum City (a newer satellite-city gas connection), not the historic El Sadat→El Fayoum trunk. P0477/P6697–P6702 (South Valley Gas Pipeline family) start AT Dahshour and run south to Aswan — downstream of, not overlapping with, this segment. None of the 57 rows covers El Sadat→Dahshour/El Fayoum itself. => new_row, not matched_existing.\n\nADD-THRESHOLD (all three legs met): (a) sponsor = EGAS (Egyptian Natural Gas Holding Co.) / GASCO (Egyptian Natural Gas Co., the promoter named on both cited documents); (b) endpoints = Egypt, El Sadat off-take room → Dahshour compression station (Nile Delta→Giza/6th-of-October corridor feeding Upper Egypt + Cairo); (c) concrete step = EIB loan SIGNED 09/10/2008 for the EGAS Gas Grid Reinforcement program (five pipelines, ~835 km total, EUR 280M EIB / EUR 588M total cost) plus a completed, dated Environmental Impact Assessment (GASCO, Nov 2009) with final engineered route and specs — well past MOU/rumor stage.\n\nSOURCES (2 independent, both verified live + content-confirmed):\n1. GASCO EIA PDF (eib.org/files/pipeline/20070088_eia14_en.pdf, Nov 2009) — PRIMARY project document, author = promoter (GASCO). States verbatim: 76 km, 32-inch, El Sadat off-take room → south, parallel to SUMED + El Ameriya-Dashour lines, through 6th of October City, terminating at Dahshour compression station. This is the same document also mirrored at yumpu.com (the consolidator's second evidence URL) — NOT counted as a second independent source since it's one underlying document; cited the eib.org original instead since yumpu's page-flip viewer doesn't serve extractable text to automated tools (confirmed via pdftotext against the downloaded PDF).\n2. EIB project page (eib.org/en/projects/all/20070088) — author = lender (EIB), independent of the promoter. Confirms 'Elsadat-Elfayoum' as one of five named EIA/segments within the same financed program, loan signed 2008, promoter EGAS/GASCO, total program cost.\nThese two are independently authored (promoter vs. lender) but both trace to the same 2007–2009 EIB financing event, so I'm rating EXISTENCE/NAME as corroborated by 2 sources but the exact LENGTH/DIAMETER numbers as effectively single-primary-sourced — hence tier=medium, not high.\n\nNON-CITABLE THIRD SOURCE (informs confidence, NOT used as a ref — wikidot is blocklisted per standing rule 1 / url_verifier.py BLOCKLIST_HOSTS): ENPPI's own project-reference portfolio lists 'El Nubaria/El Sadat & El Sadat/El Fayoum Pipelines,' client GASCO, EPC timeframe 2010/2012, but gives DIFFERENT specs for the El Sadat/El Fayoum leg: 42-inch, 80 km (vs. the 2009 EIA's 32-inch/76 km). This is a real, independently-tracked EPC project confirming the segment exists and was built ~2010–2012, but the spec discrepancy (32 in/76 km design-stage vs. 42 in/80 km as-built per the EPC contractor) is flagged for reviewer attention — staged LengthKnown/Diameter reflect the primary EIA design values, not the possibly-revised as-built ENPPI figures, since ENPPI can't be cited to override them.\n\nSTATUS: set to 'operating' by inference, not direct citation — flag before applying. Both citable sources are pre-construction (financing signed 2008, EIA Nov 2009); I found no citable EN source directly confirming commissioning/completion. The inference rests on: (a) the non-citable ENPPI reference showing EPC execution 2010–2012; (b) both bracketing segments in the same EGAS Gas Grid Reinforcement corridor — upstream P3928 (Nubaria–Sadat) and downstream P0477/P6697–P6702 (Dahshour–Aswan South Valley family) — are long-since 'operating' in the live GEM sheet, and this segment is the missing middle link needed to complete that corridor; (c) 17 years have passed since financing/EIA. Recommend a targeted GASCO/EGAS annual-report or current satellite-imagery check to convert this from inferred to directly-sourced before the row goes live.\n\nOWNER: set to 'Egyptian Natural Gas Holding Co [100.%]' (entity_lookup.py confirmed exact existing-entity match, no duplicate) to match the sibling-row convention on P3928/P3930/P0477 (all EGAS-owned per the live sheet), consistent with the project's own EGAS/GASCO promoter identification. Per project convention (owner refs live on the separate ProjectID-keyed operators/owners tab, not this tracker's ref columns), no inline 'Owner [ref]' is staged here.\n\nNOT POPULATED (left blank rather than guessed, per no-fabrication rule): StartState/Province, EndState/Province (El Sadat sits in Menoufia/Beheira border country, Dahshour in Giza Governorate, but I did not find a citable source pinning the precise administrative province for either endpoint of THIS pipeline specifically); ConstructionYear/StartYear1 (no citable specific year — only the non-citable ENPPI 2010/2012 EPC window); ProjectLevelCost (EIB's EUR 588M total is for the WHOLE five-pipeline, 835 km reinforcement program, not attributable to this one 76 km segment without fabricating an allocation); FIDStatus (only populated when Status=proposed, per controlled_vocab.md).\n\nCONFIDENCE = medium overall: existence/identity/route corroborated by 2 independently-authored, verified, citable sources (GASCO EIA + EIB project page) plus a non-citable third (ENPPI); exact length/diameter numbers effectively single-primary-sourced (the EIA) with a conflicting as-built figure from the non-citable ENPPI reference; operating status is inferred from strong circumstantial/corridor evidence, not directly cited — surface this caveat prominently before staging to the live sheet."
+}

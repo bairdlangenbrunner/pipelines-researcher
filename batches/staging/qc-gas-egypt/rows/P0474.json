@@ -1,0 +1,58 @@
+{
+  "project_id": "P0474",
+  "pipeline_name": "Obaiyed-Amreya Northern Gas Pipeline",
+  "sheet_row": 2252,
+  "wiki": "https://www.gem.wiki/Obaiyed-Amreya_Northern_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "sheet correct — no change. Diameter=32 in is right for the Obaiyed-Tarek segment specifically; the wiki's 26/32/34 in list is a page-level union across the three named legs of the same northern Western Desert network, not a single value the segment row should carry.",
+      "researcher_notes": "Independently pulled the Egypt Oil & Gas magazine report 'The Western Desert: Egypt's Giant Petroleum Reservoir' (same source already cited on this cell) and extracted its Natural Gas Infrastructure table via pdftotext (the automated url_verifier substring check false-negatives on this PDF — documented limitation in url_verifier.py's header re: PDF text extraction — so I manually confirmed the table content). The table lists each named leg separately: 'Tarek-Ameryia' (Tarek -> Ameryia, 231 km, 34 in, 950 mmcf/d), 'Obaiyed-Tarek' (Obaiyed/Salam Connector -> Tarek, 49.5 km, 32 in, 600 mmcf/d), and 'Obaiyed Spurline' (Obaiyed, 41.5 km, 26 in, 480 mmcf/d). The sheet row's SegmentName 'Obaiyed-Tarek Gas Pipeline' matches the table's 'Obaiyed-Tarek' leg exactly, and all three of its values (LengthKnown 49.50 km, Diameter 32 in, Capacity 600 MMcf/d) match the table row exactly — this is the same source underlying the current Diameter [ref] cell, just verified by reading the actual PDF instead of the HTML landing page (which is why the automated verifier flags it: the landing page text alone doesn't contain 'Obaiyed', and the PDF's binary encoding defeats the substring screen). The wiki page's 26/32/34 in union is exactly the three legs' diameters (26=Spurline, 32=Obaiyed-Tarek, 34=Tarek-Ameryia) rolled up at the page level, per the flag's own semantics for a multi-segment page. No sheet change warranted.",
+      "proposed_refs": ["https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-.pdf"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "sheet wrong — fill StartYear1=1999 (see fills[] below).",
+      "researcher_notes": "Status=operating with StartYear1 blank was a genuine gap. Two independent, contemporaneous, non-GEM sources corroborate 1999: (1) Oil & Gas Journal, 'Egypt western desert activity hits high gear' (Nov. 4, 1996) — reports Shell/Repsol's plan to build the 315 km Obaiyed-to-Ameriya gas pipeline picking up Khalda-concession gas, 'to begin service in 1999.' (2) Apache Corporation's SEC Form 10-K for FY1999 (filed 2000, EDGAR) — confirms actual completion: 'gas production from Khalda is delivered ... via a 34-inch gas pipeline, construction of which commenced in 1997 and was completed in August 1999,' and separately, 'the northern portion of the Western Desert Gas Pipeline in the Khalda concession was completed and first sales commenced in August 1999' (a distinct 'southern line' tying in further south near Qarun is explicitly called out as a separate project completing mid-2000, so it is not being conflated with this segment). The Obaiyed-Tarek segment (Obaiyed/Salam Connector -> Tarek, feeding the Tarek-Ameryia 34-in trunk to Alexandria) is part of that northern network, not the later southern line, so StartYear1=1999 is well supported.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000006769/000095012900001479/0000950129-00-001479.txt",
+        "https://www.ogj.com/general-interest/companies/article/17235044/egypt-western-desert-activity-hits-high-gear"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Obaiyed-Tarek Gas Pipeline",
+      "sheet_row": 2252,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1999"},
+      "primary_value": "1999",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000006769/000095012900001479/0000950129-00-001479.txt",
+        "https://www.ogj.com/general-interest/companies/article/17235044/egypt-western-desert-activity-hits-high-gear"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/0000006769/000095012900001479/0000950129-00-001479.txt", "ok": true, "contains_value": true},
+        {"url": "https://www.ogj.com/general-interest/companies/article/17235044/egypt-western-desert-activity-hits-high-gear", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Apache Corp FY1999 10-K (SEC EDGAR, primary/contemporaneous corporate filing): the 34-inch trunk delivering Khalda-concession gas to EGPC west of Alexandria was completed with 'first sales commenced in August 1999' for 'the northern portion of the Western Desert Gas Pipeline' — the network this Obaiyed-Tarek segment feeds. Oil & Gas Journal (Nov. 1996, independent trade press) corroborates the same 1999 target for the same Obaiyed-to-Ameriya project. StartMonth1 left blank (August is stated in the 10-K but tied to the aggregate trunk completion, not confirmed month-specific to this exact 49.5 km sub-segment, so only the year is staged)."
+    }
+  ],
+  "summary": "P0474 (Obaiyed-Tarek segment): Diameter=32in CONFIRMED correct (Egypt Oil & Gas Western Desert infrastructure table lists Obaiyed-Tarek at 49.5km/32in/600mmcf/d exactly; wiki's 26/32/34in is a page-level union of three separate legs, no change). Date_logic CONCERN resolved — staged StartYear1=1999 fill (tier high; Apache Corp SEC 10-K FY1999 + 1996 Oil & Gas Journal, both independent, both verified). No UNRESOLVED items."
+}

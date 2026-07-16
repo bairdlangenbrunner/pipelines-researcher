@@ -11,7 +11,8 @@ Written to the in-repo `batches/` directory:
 batches/pipelines_batch_<YYYYMMDD>_<HHMM>_ET[_<scope>]_<mode>.xlsx
 ```
 
-- `<mode>` (always present): `reconciliation` / `update` / `discovery` / `qc`.
+- `<mode>` (always present): `reconciliation` / `update` / `discovery` /
+  `refsweep` / `deepsweep` / `annual-indev` / `qc` / `handoff`.
 - `<scope>` slug (lowercase, hyphenated): a country (`saudi-arabia`), region
   (`mena`), or `<source>-<country>` for reconciliation (`gulfpub-saudi-arabia`).
   Omit only for a genuinely global batch.
@@ -81,7 +82,7 @@ to Update.
 No generic builder yet — recent update batches (`batches/staging/delaware-express/`,
 `batches/staging/permian-express/`) shipped via a per-batch `build_update_workbook.py`
 staged alongside the JSON: a backend-mirror tab of the touched rows (current values
-prefilled, changed cells overlaid tier-colored, per the deep-sweep conventions below)
+prefilled, changed cells overlaid tier-colored, per the sweep conventions below)
 plus an operators/owners tab. If the pattern recurs, promote a generic
 `scripts/build_update_workbook.py`.
 
@@ -97,7 +98,7 @@ Built by `scripts/build_discovery_workbook.py` from merged discovery shards:
 4. **`<Cmdty>_MatchedExisting`** — candidates matched to an existing GEM row
    (→ `OtherEnglishNames`), not added.
 
-## Ref-sweep / deep-sweep workbook (mode = `refsweep` / `deepsweep`)
+## Country Sweep workbook (mode = `refsweep` / `deepsweep` / `annual-indev`)
 
 Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/finding tabs follow.
 
@@ -118,8 +119,11 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
 - **`<Cmdty>_OperatorsOwners`** — mirror of the ProjectID-keyed operators/owners tab (GID
   `1489950650`); `[ref]` column **precedes** its values; paste back by ProjectID, not onto a
   tracker row.
-- **Deep-sweep finding tabs:** `<Cmdty>_Validity`, `<Cmdty>_Fills`, and (route/GulfPub legs)
-  `<Cmdty>_RouteSuggestions`, `<Cmdty>_GulfPub`. Annual mode leads with `<Cmdty>_StatusReview`.
+- **Finding tabs (deep preset):** `<Cmdty>_Validity`, `<Cmdty>_Fills`, and (routes/gulfpub legs)
+  `<Cmdty>_RouteSuggestions`, `<Cmdty>_GulfPub`. The in-dev preset leads with `<Cmdty>_StatusReview`.
+  The Fills tab's **`Target tab` column** says where each fill pastes: `tracker`, or
+  `operators/owners` for Operator/Owner fills (record `tab="operators_owners"`; the SheetRow
+  shown is the tracker locator, but the paste goes to the ProjectID-keyed oo tab).
 - **Tier → cell color** (on `[ref]` cells): green = ≥2 independent working sources · yellow =
   single · red = low/none (an empty red cell = "needs a source", **not an error**) · blue =
   existing ref re-verified live.
@@ -132,3 +136,48 @@ Rebuild of `GOIT_oil_ngl_QC.xlsx` (and a GGIT equivalent). One sheet per check:
 `BroadSweep_Misc`. **The route/WKT sheet (old Sheet 10) stays permanently dropped.**
 Build one sheet at a time for large scopes (token/review budget). Diameter
 out-of-range and similar are **review flags, not auto-rejections**.
+
+## Handoff packet (build_ref_workbook, `staged_actions.json` present)
+
+TWO workbooks per country+commodity (split adopted 2026-07-16; workflow recipe:
+`docs/workflows.md` §6), derived from the passed `--output`
+(`..._handoff.xlsx` → `..._handoff-actions.xlsx` + `..._handoff-evidence.xlsx`).
+The split axis is **act vs audit**: everything the researcher must do is in the
+actions file, grouped by destination (sheet paste / wiki edit / routes-repo PR /
+open judgment calls); everything confirmed / known-staged / info-only is in the
+evidence file. No row appears in both.
+
+**`<stem>-actions.xlsx`** — tab order = work order:
+
+`README` → **`<Cmdty>_Decisions`** (read FIRST — every OPEN validity concern for
+the scope, carried + this packet's own Leg-3 findings, high-concern rows sorted
+first; confirmed verdicts are NOT here) → `<Cmdty>_StatusChanges` (carried + own,
+verdict ≠ confirm; confirms are counts-only) → **`<Cmdty>_AllFillsBackend`** (THE
+one paste surface for the tracker tab: ALL corroborated fills AND all paste-ready
+ref work — REFS_ADDED + DEAD_LINK, carried + own — unified on the full backend
+mirror; a tier-colored VALUE cell = a proposed new value, a colored `[ref]` cell
+with an untinted value = ref-only work) → `<Cmdty>_OperatorsOwners` (same, for the
+oo tab; owner/operator fills AND refs) → `<Cmdty>_NewRows` / `<Cmdty>_NewRowRefs`
+/ `<Cmdty>_MatchedExisting` → `<Cmdty>_WikiUpdates` (flag-severity WIKI_UPDATE
+rows only — wiki link leftmost, stale wiki value red, Action column = the edit) →
+`<Cmdty>_RouteSuggestions` (carried + own, one tab; routes-repo destination) →
+`<Cmdty>_OpenFlags` (the open residue: uncovered mechanical flags, open route
+flags, unparseable wiki pages, UNRESOLVED ref units — each with a suggested next
+step).
+
+**`<stem>-evidence.xlsx`** — audit trail, no action required:
+
+`README` → `<Cmdty>_ConfirmedAudit` (validity checks that cleared the row) →
+`<Cmdty>_FillDetail` (per-fill verification detail behind the paste cells) →
+`<Cmdty>_RefWorkDetail` (per-ref detail, all buckets, with a `Bucket` column) →
+`<Cmdty>_WikiAlignment` (non-action diff context: SHEET_SUSPECT,
+WIKI_STALE_VS_STAGED, info-severity) → `<Cmdty>_RouteIntegrity` (covered/info) →
+`<Cmdty>_Flags` (covered only) → `<Cmdty>_MonitorList` → `<Cmdty>_GulfPub`.
+
+Empty tabs are omitted; carried rows carry a `Source packet` column (this
+packet's own rows say `(this packet)`). Blue notes = already covered; red = open.
+Each README names its companion file. Render inputs: `staged_resolutions.json` +
+`staged_actions.json` + `qc_flags.json` sidecars (render only — apply from the
+source dirs' canonical files; contract in `docs/reference/staged_json_schema.md`).
+Legacy qc dirs **without** `staged_actions.json` still render the old
+single-workbook layout (Concerns gatekeeper + per-leg tabs).

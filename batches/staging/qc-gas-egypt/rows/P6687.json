@@ -1,0 +1,58 @@
+{
+  "project_id": "P6687",
+  "pipeline_name": "Obaiyed-Amreya Northern Gas Pipeline",
+  "sheet_row": 2199,
+  "wiki": "https://www.gem.wiki/Obaiyed-Amreya_Northern_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Obaiyed Spurline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "sheet correct — no change. The gem.wiki page 'Obaiyed-Amreya Northern Gas Pipeline' is shared by three distinct GEM ProjectID segment rows, each with its own diameter: P6687 'Obaiyed Spurline' (this row, 26 in / 41.5 km), P0474 'Obaiyed-Tarek Gas Pipeline' (32 in / 49.5 km), and P3934 'Tarek-Ameryia Gas Pipeline' (34 in / 231 km). The wiki's page-level union of 26/32/34 in is exactly the union of those three segments' own sheet values — a page-level aggregation, not a conflict. Do not paste any other segment's diameter onto this row.",
+      "researcher_notes": "Checked the sheet's own P0474 and P3934 rows (same Wiki URL as P6687): their Diameter values are 32 in and 34.00 in respectively, and together with this row's 26 in they reproduce the wiki's '26 in; 32 in; 34 in' union precisely — so the apparent wiki disagreement is fully explained by the page covering three segments, not by an error on this row. Independently corroborated (not via gem.wiki) that a 34 in / 230 km trunk carrying Al-Obaiyed, Salam, Tarek and El-Qasr field gas into the Western Desert Gas Complex (Amreya) exists: GASCO's own site states 'the produced gases in fields are transported to the complex through a pipeline of 34 inches in diameter and 230 km in length' — closely matching P3934's 34 in / 231 km spec and lending real-world plausibility to the three-segment breakdown as a whole. I did not find a source that isolates a distinct, independently-named 26 in / 41.5 km 'Obaiyed Spurline' leg specifically — that existence/possible-triple-counting question (P6687 / P0474 / P3934 as one physical trunk) is already tracked as a separate open item in docs/country_notes/egypt.md and is out of scope for this diameter-alignment flag; flagging here only for completeness, no action taken.",
+      "proposed_refs": ["https://www.gasco.com.eg/index.php/gas-plants/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Obaiyed Spurline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "sheet incomplete — fill StartYear1 = 2000 (the Amreya-end Western Desert Gas Complex this pipeline feeds was commissioned in 2000; see fills[]).",
+      "researcher_notes": "Status=operating with no StartYear1 was a genuine gap. Two independent sources agree the receiving complex at the Amreya end of this pipeline (Western Desert Gas Complex / WDGC) was commissioned in 2000: Oil & Gas Journal states 'Commissioned in 2000, WDGC — which receives and treats Western Desert gases from Badr El-Din Petroleum Co.'s Al-Obayed and Khalda Petroleum Co.'s Salam, Tarek, and El-Qaser fields'; GASCO's own site/company profile independently states the complex's 'actual operation... began in March 2000' (foundation stone laid December 1997) and, on its separate gas-plants page, that 'operation began in May 2000' (month differs slightly across GASCO's own two documents — flagging that minor internal inconsistency rather than picking one arbitrarily, hence year only, no month staged). Since WDGC cannot process gas without this feeder pipeline already delivering it, 2000 is the best-evidenced start year for the pipeline itself; I did not find a source dating the pipeline's own commissioning as distinct from the complex's. Separately, one SPE/academic paper (via ResearchGate/OnePetro, both blocked to fetch — HTTP 403, no Wayback snapshot, so NOT used as a citable ref) describes the Obaiyed field's gathering system, gas plant and 'export pipelines' coming onstream in 1999 — a plausible earlier bound, but since I could not verify a working, citable URL for that claim, I am not staging 1999 and am relying on the two sources I could verify.",
+      "proposed_refs": [
+        "https://www.ogj.com/refining-processing/gas-processing/article/14168375/egypts-gasco-lets-contract-for-expansion-of-alexandria-gas-complex",
+        "https://www.gasco.com.eg/index.php/gas-plants/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Obaiyed Spurline",
+      "sheet_row": 2199,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2000"},
+      "primary_value": "2000",
+      "proposed_refs": [
+        "https://www.ogj.com/refining-processing/gas-processing/article/14168375/egypts-gasco-lets-contract-for-expansion-of-alexandria-gas-complex",
+        "https://www.gasco.com.eg/index.php/gas-plants/"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/refining-processing/gas-processing/article/14168375/egypts-gasco-lets-contract-for-expansion-of-alexandria-gas-complex", "ok": true, "contains_value": true},
+        {"url": "https://www.gasco.com.eg/index.php/gas-plants/", "ok": true, "contains_value": true, "note": "url_verifier.py raised SSLError (cert-chain) on this host; manually confirmed live + content present via curl -sk per the documented SSL-cert-chain false-negative workaround (url_verifier.py docstring / iraq-gas-sweep precedent). Same host/method also used to confirm https://www.gasco.com.eg/wp-content/uploads/2024/10/WDGC.pdf, a second GASCO document independently stating the complex's 'actual operation... began in March 2000' — not listed as a separate proposed_ref since it is the same primary entity as the gas-plants page, cited here for corroboration only."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2000 reflects when the Amreya-end Western Desert Gas Complex (WDGC) — which this pipeline feeds and cannot operate without — was commissioned, corroborated by an independent trade-press source (Oil & Gas Journal) and the operator's own site (GASCO). StartMonth1 intentionally left blank: GASCO's own gas-plants page says May 2000 while its 2024 WDGC company-profile PDF says March 2000 — an internal inconsistency I am not resolving by picking one. Not staging 1999 (the Obaiyed field's own onstream year per an SPE/academic paper) because I could not obtain a working, verifiable URL for that source (ResearchGate and OnePetro both returned HTTP 403 with no Wayback snapshot) — per standing rule 2/3, no fabricated or unverifiable-URL citation goes in the workbook."
+    }
+  ],
+  "summary": "Diameter: sheet correct, no change (wiki union = P6687 26in + P0474 32in + P3934 34in, three distinct segments on one shared wiki page). Date_logic: StartYear1 was genuinely blank; filled StartYear1=2000 (WDGC/Amreya commissioning, 2 independent sources), StartMonth1 left blank (GASCO's own sources conflict May vs March)."
+}

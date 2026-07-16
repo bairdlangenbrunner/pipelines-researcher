@@ -39,7 +39,10 @@ ID_COLS = ["ProjectID", "PipelineName", "SegmentName", "CountriesOrAreas"]
 
 
 def _base(row):
-    return {k: row.get(k, "") for k in ID_COLS}
+    d = {k: row.get(k, "") for k in ID_COLS}
+    if "SheetRow" in row:   # present when the caller precomputed it (build_qc_staging)
+        d["SheetRow"] = row["SheetRow"]
+    return d
 
 
 # --- checks: each returns list of dict rows with ID_COLS + 'Detail' ---------- #
@@ -145,9 +148,9 @@ def check_wikilink(df):
 
 def check_broadsweep(df):
     """Orphan-ref sweep over EVERY discovered ref-pair (group-walk from the fresh header,
-    via ref_pairs.discover_ref_pairs — single source of truth, shared with the Ref Sweep
-    workflow). Flags a `[ref]` cell that is filled while all the value cols it sources are
-    blank. The reverse (value present, ref blank) is the Ref Sweep's job, not QC's."""
+    via ref_pairs.discover_ref_pairs — single source of truth, shared with the Country
+    Sweep's refs leg). Flags a `[ref]` cell that is filled while all the value cols it
+    sources are blank. The reverse (value present, ref blank) is the sweep's job, not QC's."""
     out = []
     pairs = [p for p in discover_ref_pairs(list(df.columns)) if p["ref_col"]]
     for _, r in df.iterrows():
@@ -168,6 +171,12 @@ CHECKS = [
     ("Date_logic", check_date_logic), ("Diameter_OutOfRange", check_diameter),
     ("BroadSweep_Misc", check_broadsweep),
 ]
+
+
+def run_checks(df) -> dict[str, list[dict]]:
+    """Run all ten mechanical checks -> {check title: flag rows}. Importable
+    (build_qc_staging.py runs these country-scoped for the QC staging packet)."""
+    return {title: fn(df) for title, fn in CHECKS}
 
 
 def _add_sheet(wb, title, rows):
@@ -214,8 +223,7 @@ def main():
     wb.remove(wb.active)
     readme = wb.create_sheet("README")
     summary = []
-    for title, fn in CHECKS:
-        rows = fn(df)
+    for title, rows in run_checks(df).items():
         if rows:
             n = _add_sheet(wb, title, rows)
             summary.append((title, n))
