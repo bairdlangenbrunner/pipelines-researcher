@@ -27,6 +27,15 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 | `Delayed` | `Yes` | leave **blank** if not delayed — do **not** enter `No` |
 | `Opposition` | `Yes`, `No` | |
 
+## Cost units (all `*CostUnits` fields)
+
+`ProjectLevelCostUnits` / `SegmentCostUnits` / `H2CostUnits` hold a **bare
+currency code only** (`USD`, `EGP`, `EUR`, `RMB`, …) — **never a multiplier**
+(`EGP million`, `USD (millions)`, `bn`). The magnitude lives in the cost number
+itself: a "336 million EGP" source is staged as `ProjectLevelCost = 336000000`,
+`ProjectLevelCostUnits = EGP`. The shard merges WARN on multiplier strings
+(`merge_qc.bad_cost_units`) — fix the shard, don't hand-edit the merged JSON.
+
 ## Free-but-constrained fields
 
 - `RouteType` — match the exact dropdown strings from the sheet, e.g.

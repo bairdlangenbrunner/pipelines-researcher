@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Seed a baseline staged_resolutions.json from a ref worklist.
 
-The §6 ref sweep produces staged_resolutions.json as the output of its *research*
-pass. The §6b/§7 deep sweep then folds its shards (validity / fills / status) onto
-that preserved ref work. In annual-update mode (§7) there is no separate ref-sweep
-research pass — the deep sweep IS the research — so there is no prior
-staged_resolutions.json for merge_deepsweep_shards.py to preserve.
+A Country Sweep's refs leg (workflows.md §3) produces staged_resolutions.json as
+the output of its *research* pass; the fan-out merge then folds its shards
+(validity / fills / status) onto that preserved ref work. In the in-dev preset
+there is no separate refs research pass — the fan-out IS the research — so there
+is no prior staged_resolutions.json for merge_deepsweep_shards.py to preserve.
 
 This seeder bridges that gap: it turns every worklist unit into a ref record
 (class_in HAS_REF / MISSING_REF) so the merge has a baseline to fold shards onto.
@@ -19,9 +19,9 @@ It records ONLY what the worklist already knows — the existing `[ref]` and its
 - MISSING_REF                                        -> class_out UNRESOLVED
 - owner/operator units (kind owner/operator)         -> tab="operators_owners"
 
-Run AFTER build_ref_worklist.py and BEFORE the deep-sweep merge. Idempotent per
-staging dir, but refuses to clobber an existing staged_resolutions.json unless
---force (so it never overwrites a genuine ref-sweep result).
+Run AFTER build_ref_worklist.py and BEFORE merge_deepsweep_shards.py. Idempotent
+per staging dir, but refuses to clobber an existing staged_resolutions.json unless
+--force (so it never overwrites a genuine refs-leg research result).
 
 Usage:
     python scripts/seed_resolutions_from_worklist.py --staging batches/staging/annual-gas-iraq/

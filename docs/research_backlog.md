@@ -6,32 +6,28 @@ stays in `docs/country_notes/`, and this file just tracks what's open and where.
 
 ---
 
-## 1. The big one — global GGIT Stage A/B/C rollout (planned, never executed)
+## 1. Global GGIT Stage A/B/C rollout — RETIRED (2026-07-15)
 
-Plan: `docs/plans/ggit_update_2026-07.md` (decisions locked 2026-06-10; target
-end-June / early-July 2026 — now past its own deadline).
-
-- **Stage A** (in-dev status sweep, Baird's #2, runs first): ~998 rows / 137 countries
-  (China 326, US 131, Russia 70, Brazil 28, India 24, Saudi Arabia 21, …).
-- **Stage B** (stale tier-1 refs < 2024, Baird's #1): ~1,854 rows / 127 countries
-  (China 288, US 256, Russia 127, Italy 126, Australia 84, Pakistan 63, …).
-- **Stage C** (sweep-up, Baird's #3): ~1,495 rows, incl. 9 broken-status rows
-  (8 blank `Status`, 1 "mixed status") flagged as data bugs.
-
-Never built/created: `scripts/build_backfill_worklist.py` (Process B tooling) and the
-`batches/staging/ggit-update-2026-07/ledger.json` ledger. Only 4 of 137 queued
-countries (Iraq, Iran, Saudi Arabia, Egypt) were processed — and via the separate
-`campaigns/ggit-2026` annual-packet mechanism, not this machinery.
-**Needs: restart the plan (build the tooling + ledger) or explicitly retire the doc.**
+Plan doc: `docs/plans/ggit_update_2026-07.md` (decisions locked 2026-06-10) —
+**superseded by the campaign annual-packet mechanism** (`campaigns/ggit-2026` roster
++ per-country Country Sweep `in-dev` preset / Discovery / Handoff Packet,
+`docs/workflows.md §7`). Stage A's work (in-dev status sweep) IS the in-dev preset;
+Stage B/C's ref/sweep-up work is the sweep's refs leg, run per country as the
+campaign reaches it. The plan's Process-B tooling (`build_backfill_worklist.py`,
+the ledger) was never built and won't be. The plan doc's row counts remain useful
+as a scale reference (in-dev ~998 rows / 137 countries; stale tier-1 refs ~1,854
+rows; incl. 9 broken-status rows flagged as data bugs). 4 of 137 countries done so
+far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 
 ## 2. Research legs started but not finished
 
 | Thread | State | Source |
 |---|---|---|
-| **Egypt gas discovery (Leg B)** | 6 vetted candidates staged in `batches/staging/annual-gas-egypt/discovery/vetted/`; **workbook never built** — closest-to-done item in the repo | `docs/country_notes/egypt.md`; roster `discovery_status = pending` |
 | **Egypt oil (GOIT)** | never swept | `docs/country_notes/egypt.md` |
 | **Saudi oil ref-sweep** | 3-row validation slice (2026-06-08) + 10-row batch staged; partial toward intended 50-row run | `batches/staging/ref-sweep-saudi-arabia{,-10row}/`; `docs/country_notes/saudi-arabia.md` |
 | **Saudi GulfPub route-consistency pass** | low/medium-accuracy matches not finished; route-replacement candidates not staged | `docs/country_notes/saudi-arabia.md` |
+| **GulfPub route-comparison QC leg** | not started — Baird explicitly wants this later: extend the handoff packet's route-integrity leg to compare drawn routes against GulfPub *geometries* (ties into the unfinished Saudi route-consistency pass above). Distinct from the sweep's `gulfpub` *attribute* crosswalk, which IS built and shipping (`build_gulfpub_crosswalk.py`) | `docs/workflows.md` §6; `docs/sops/qc.md` |
+| **Handoff-packet rollout (researcher onboarding, Arabic-speaking gas)** | Egypt is the pilot (2026-07-15); next candidates by GGIT row count: Algeria 126, Qatar 59, UAE 39, Libya 38, Oman 23, Tunisia 21 | `docs/workflows.md` §6; `docs/country_notes/egypt.md` |
 | **Nigeria divestiture ownership sweep** | not started | `docs/country_notes/nigeria.md` |
 | **United States** | deepwater-export terminal open item; 131-row Stage A queue slot unstarted | `docs/country_notes/united-states.md`; plan doc |
 | **Iraq oil open items** | Grand Faw third offshore line (Esta/Micoperi) length/diameter/route; P0544 Basra–Haditha status review | `docs/country_notes/iraq.md`; CLAUDE.md |
@@ -53,8 +49,13 @@ signal of application status.
 - **Saudi gas** — full packet staged 2026-07-08 (discovery 2026-07-13). In-dev clean
   (22/22 confirm); hinges on the P1897–P1925 class decision (§4). xlsx on disk.
   `docs/country_notes/saudi-arabia.md`.
-- **Egypt gas** — in-dev 2026-07-09 + operating deep sweep 2026-07-13. No escalation
-  gate. xlsx on disk. `docs/country_notes/egypt.md`.
+- **Egypt gas** — in-dev 2026-07-09 + operating deep sweep 2026-07-13 + discovery
+  2026-07-15 (4 new rows / 3 monitor) + QC packet 2026-07-15. No escalation gate.
+  All assembled into ONE handoff workbook (regenerated 2026-07-16,
+  `pipelines_batch_20260716_0959_ET_egypt-gas_handoff.xlsx`) — work from that, not
+  the four per-leg workbooks. Apply the Nitzana items (P3620/P7864 duplicate +
+  discovery new-row Egyptian side) as one linked decision. xlsx on disk.
+  `docs/country_notes/egypt.md`.
 - **US oil: Delaware Express** (P7995/P0354, researched 2026-06-12) and
   **Permian Express I–IV** (P0113/P2581/P2660/P2661, researched 2026-06-11) —
   `batches/staging/{delaware,permian}-express/staged_updates.json`.
@@ -70,4 +71,3 @@ signal of application status.
   resurfaced in the 2026-07-08 packet. One decision closes both.
 - **Roster `applied` dates:** confirm whether the Iraq/Iran packets were actually
   applied to the live Sheet, and record dates in `campaigns/ggit-2026/roster.csv`.
-- **Retire or restart** the Stage A/B/C plan (§1).

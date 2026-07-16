@@ -6,7 +6,8 @@ Reconciliation `Additions` (reference-only rows) feed directly into this SOP —
 name** (capture as `OtherEnglishNames`); only genuine misses become discoveries.
 
 Deep search + route-research rules live in the methodology,
-`docs/GOIT_Pipeline_Research_Workflow.md` Phase 3.
+`docs/GOIT_Pipeline_Research_Workflow.md` Phase 3. Commands (incl. the
+`country-discovery` workflow runner): `docs/workflows.md §4`.
 
 ## Inputs
 - Region/country scope; whether to include early-stage proposals.

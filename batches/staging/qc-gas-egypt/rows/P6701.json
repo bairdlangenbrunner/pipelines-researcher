@@ -1,0 +1,47 @@
+{
+  "project_id": "P6701",
+  "pipeline_name": "South Valley Gas Pipeline",
+  "sheet_row": 3983,
+  "wiki": "https://www.gem.wiki/South_Valley_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Asyut-Girga Gas pipeline",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "sheet incomplete — fill Operator = Nile Valley Gas Company on the operators/owners tab (see fills[]).",
+      "researcher_notes": "Sheet Operator is blank; wiki (lead only, not evidence) shows 'Nile Valley Gas Company' for every one of the six phase segments on the same page, cited there to an Australian Pipeliner article. Verified independently: (1) The Australian Pipeliner, 'Upper Egypt Gas Pipeline reaches Sohag' (23 Sep 2009) states 'Petrojet has been constructing the 930 km pipeline for the Nile Valley Gas Company in stages' and describes the same phase breakdown the sheet uses to split this pipeline into segments (Cairo/Dahshour–Beni Suef–Abu Qurqas–Assiut–Sohag/Girga–Aswan), confirming NVGC is the entity Petrojet built this trunk for, not merely a downstream retail distributor. (2) BG Group plc's SEC Form 6-K (filed 2003, sec.gov/Archives/edgar/data/805260/000102123103000353/b701349.htm) independently confirms Nile Valley Gas Company (NVGC) as a real corporate entity holding 'a 25 year franchise to develop the gas market in Upper Egypt' with BG holding a 37.50% interest — corroborating NVGC's role as the Upper Egypt gas transmission/distribution franchise-holder from a wholly separate, contemporaneous origin (an SEC filing, not a trade press reprint of the same story). A third, weaker source (gulfoilandgas.com company directory) independently confirms NVGC is a real registered Cairo company, ruling out a phantom/misremembered name. I considered whether 'Nile Valley Gas Company' in modern (2020s) Arabic-language news is instead a household natural-gas connection/distribution subsidiary of Taqa Gas operating in Beni Suef — that is a plausible same-named downstream arm, but it does not contradict the two 2003/2009 sources tying NVGC to the construction/operation of this specific trunk pipeline; Owner remains correctly Egyptian Natural Gas Holding Co (EGAS) on both sheet and wiki, unaffected. No independent source contradicts the wiki's Operator claim, and two genuinely independent origins corroborate it, so the sheet's blank Operator is treated as a gap to fill, not a wiki-vs-sheet segment-level non-conflict. Checked entity_lookup.py — no existing 'Nile Valley Gas Company' entity on the operators/owners tab or elsewhere in the sheet, so this is a new entity, not a duplicate.",
+      "proposed_refs": [
+        "https://www.pipeliner.com.au/internationalnews/upper-egypt-gas-pipeline-reaches-sohag/",
+        "https://www.sec.gov/Archives/edgar/data/805260/000102123103000353/b701349.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Asyut-Girga Gas pipeline",
+      "sheet_row": 3983,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Nile Valley Gas Company"},
+      "primary_value": "Nile Valley Gas Company",
+      "proposed_refs": [
+        "https://www.pipeliner.com.au/internationalnews/upper-egypt-gas-pipeline-reaches-sohag/",
+        "https://www.sec.gov/Archives/edgar/data/805260/000102123103000353/b701349.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.pipeliner.com.au/internationalnews/upper-egypt-gas-pipeline-reaches-sohag/", "ok": true, "contains_value": true},
+        {"url": "https://www.sec.gov/Archives/edgar/data/805260/000102123103000353/b701349.htm", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Targets the SEPARATE ProjectID-keyed 'Pipeline operators/owners' tab (Operator / Operator [ref] columns), not the main GGIT gas tab — this row currently has Operator/Operator [ref] both blank there. The url_verifier.py automated check FAILs the SEC url with HTTP 403 (SEC's edgar server bot-walls the verifier's default user-agent, a documented false-negative family per the verifier's own docstring); manually confirmed live (curl with a browser user-agent → HTTP 200) and containing the exact text 'Nile Valley Gas Company (NVGC) BG has a 37.50% interest in NVGC which holds a 25 year franchise to develop the gas market in Upper Egypt.' The Pipeliner url passed url_verifier.py automatically (200, 'Nile Valley' present). Two independent origins (Australian trade-press article + BG Group SEC filing), neither GEM, neither the same wire story → tier high."
+    }
+  ],
+  "summary": "Flag confirmed: independent evidence (Australian Pipeliner 2009 + BG Group SEC 6-K 2003) corroborates the wiki's 'Nile Valley Gas Company' Operator claim for this same phased Upper Egypt trunk pipeline; staged as a fill on the operators/owners tab (Operator/Operator [ref], sheet row 3983). Nothing unresolved."
+}

@@ -158,6 +158,38 @@ def parse_year(s) -> int | None:
     return int(m.group()) if m else None
 
 
+# capacity unit -> multiplier to bcm/y (1 MMcf/d = 1e6 cf/d * 0.0283168 m3 * 365 / 1e9)
+_CAP_UNIT_FACTORS = [
+    (r"bcm\s*/\s*y|billion\s+cubic\s+met", 1.0),
+    (r"bcf\s*/\s*d|billion\s+cubic\s+feet\s+per\s+day", 10.336),
+    (r"mmcf|million\s+cubic\s+feet", 0.010336),          # per day assumed
+    (r"mcm\s*/\s*d|million\s+cubic\s+met", 0.365),       # per day
+    (r"m3\s*/\s*h|m³\s*/\s*h|cubic\s+met\w*\s+per\s+hour", 24 * 365 / 1e9),
+]
+
+
+def capacity_to_bcmy(value, units: str | None = None) -> tuple[float, float] | None:
+    """Capacity value (+ optional separate units string) -> (lo, hi) in bcm/y.
+    Handles embedded units ('180 MMcf/d', '12 billion cubic meters per year') and
+    ranges ('5-7 bcm/y'). Returns None when no number or no recognizable unit."""
+    if value is None:
+        return None
+    text = str(value).replace(",", "")
+    nums = [float(m) for m in re.findall(r"\d+(?:\.\d+)?", text)]
+    if not nums:
+        return None
+    # a range is exactly two numbers joined by -, – or 'to'
+    if len(nums) >= 2 and re.search(r"\d\s*(?:[-–—]|to)\s*\d", text):
+        lo, hi = min(nums[0], nums[1]), max(nums[0], nums[1])
+    else:
+        lo = hi = nums[0]
+    unit_text = f"{text} {units or ''}".lower()
+    for pat, factor in _CAP_UNIT_FACTORS:
+        if re.search(pat, unit_text):
+            return (round(lo * factor, 4), round(hi * factor, 4))
+    return None
+
+
 def parse_owners(s) -> list[str]:
     """Split an owner/shareholder string into entity names, stripping percentages.
     Handles 'Sonatrach (52%), Eni (48%)' and GEM-style 'Saudi Aramco [100.%]'.

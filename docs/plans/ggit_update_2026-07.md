@@ -1,4 +1,10 @@
-# GGIT gas update — program plan (target: end June / early July 2026)
+# GGIT gas update — program plan (RETIRED 2026-07-15)
+
+> **Retired.** Superseded by the campaign annual-packet mechanism
+> (`campaigns/ggit-2026` + `docs/workflows.md §7`); see
+> `docs/research_backlog.md §1`. The Process-B tooling below was never built.
+> Kept for the row-count scale reference; section refs and SOP names predate the
+> 2026-07-15 workflow consolidation (e.g. `ref_sweep.md` is now `sweep.md`).
 
 Plan of record for the mid-2026 gas-tracker update. Numbers from the
 `GGIT_gas_snapshot_20260610.csv` pull (4,269 rows). Decisions locked with Baird

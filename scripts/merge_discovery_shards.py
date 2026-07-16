@@ -14,25 +14,11 @@ Run AFTER the country-discovery workflow and BEFORE build_discovery_workbook.py:
 
     python scripts/merge_discovery_shards.py --staging batches/staging/annual-gas-iraq/
 """
-import argparse, collections, glob, json, os, sys
+import argparse, collections, json, os, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
-
-BLOCKLIST = GEM_HOSTS + BLOCKLIST_HOSTS
-
-
-def _clean_refs(urls, verifs):
-    okset = {v.get("url") for v in (verifs or []) if v.get("ok") and v.get("contains_value")}
-    out = []
-    for u in urls or []:
-        if any(b in u.lower() for b in BLOCKLIST):
-            continue
-        if verifs and u not in okset:
-            continue
-        out.append(u)
-    return out
+from merge_qc import bad_cost_units, verified_refs, iter_shards, qc_note  # noqa: E402
 
 
 def main():
@@ -45,18 +31,13 @@ def main():
     scope = json.load(open(ctx_path))["scope"] if os.path.exists(ctx_path) else {}
 
     candidates = []
-    for p in sorted(glob.glob(os.path.join(S, "discovery", "vetted", "*.json"))):
-        try:
-            d = json.load(open(p))
-        except Exception as e:
-            print(f"  WARN unreadable shard {p}: {e}")
-            continue
+    for p, d in iter_shards(os.path.join(S, "discovery", "vetted", "*.json")):
         cls = d.get("class", "monitor")
         notes = d.get("researcher_notes", "")
         values = dict(d.get("values") or {})
         refs, dropped_pairs = {}, []
         for rc, urls in (d.get("refs") or {}).items():
-            kept = _clean_refs(urls, d.get("verifications"))
+            kept = verified_refs(urls, d.get("verifications"))
             if kept:
                 refs[rc] = kept
             else:
@@ -68,10 +49,13 @@ def main():
             for c in doomed:
                 values.pop(c, None)
             if doomed:
-                notes = (notes + f" [QC] dropped {'/'.join(doomed)} (ref did not verify).").strip()
+                notes = qc_note(notes, f"dropped {'/'.join(doomed)} (ref did not verify).")
         if cls == "new_row" and not refs:
             cls = "monitor"
-            notes = (notes + " [QC] new_row with zero verified refs -> monitor.").strip()
+            notes = qc_note(notes, "new_row with zero verified refs -> monitor.")
+        for col, val in bad_cost_units(values).items():
+            print(f"  WARN {os.path.basename(p)}: {col}={val!r} — units must be a bare "
+                  "currency code; put the magnitude in the cost number (fix the shard)")
         candidates.append({
             "slug": d.get("slug", os.path.basename(p)[:-5]), "class": cls,
             "name": d.get("name", ""), "matched_project_id": d.get("matched_project_id", ""),

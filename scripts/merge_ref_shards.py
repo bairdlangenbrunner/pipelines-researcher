@@ -22,34 +22,13 @@ baseline). Idempotent: re-running with the same shards yields the same baseline.
 Usage:
     python scripts/merge_ref_shards.py --staging batches/staging/annual-gas-iraq/
 """
-import argparse, json, glob, os, collections, sys
+import argparse, json, os, collections, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
+from merge_qc import verified_refs, iter_shards, qc_note  # noqa: E402
 
-BLOCK = GEM_HOSTS + BLOCKLIST_HOSTS
 _VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
-
-
-def _clean(url):
-    u = (url or "").strip()
-    low = u.lower()
-    if not low.startswith("http"):
-        return None
-    if any(h in low for h in BLOCK):
-        return None
-    return u
-
-
-def _verified_urls(proposed, verifs):
-    ok = {v.get("url") for v in (verifs or []) if v.get("ok") and v.get("contains_value")}
-    out, seen = [], set()
-    for u in (proposed or []):
-        c = _clean(u)
-        if c and (not verifs or c in ok) and c not in seen:
-            seen.add(c); out.append(c)
-    return out
 
 
 def main():
@@ -75,13 +54,9 @@ def main():
         idx[(r.get("project_id", ""), r.get("ref_col", ""), str(r.get("sheet_row", "")))] = r
         idx.setdefault((r.get("project_id", ""), r.get("ref_col", "")), r)
 
-    shards = sorted(glob.glob(os.path.join(S, "ref_shards", "*.json")))
-    applied, unmatched, downgraded = 0, [], 0
-    for p in shards:
-        try:
-            d = json.load(open(p))
-        except Exception as e:
-            print(f"  WARN unreadable shard {p}: {e}"); continue
+    n_shards, applied, unmatched, downgraded = 0, 0, [], 0
+    for p, d in iter_shards(os.path.join(S, "ref_shards", "*.json")):
+        n_shards += 1
         pid = d.get("project_id") or os.path.basename(p)[:-5]
         for u in d.get("resolutions", []) or []:
             rc, sr = u.get("ref_col", ""), str(u.get("sheet_row", ""))
@@ -90,7 +65,7 @@ def main():
                 unmatched.append((pid, rc, sr)); continue
 
             verifs = u.get("verifications", []) or []
-            refs = _verified_urls(u.get("proposed_refs", []), verifs)
+            refs = verified_refs(u.get("proposed_refs", []), verifs)
             cls = (u.get("class_out") or "").strip().upper()
             if cls not in _VALID_OUT:
                 cls = "REFS_ADDED" if refs else "UNRESOLVED"
@@ -98,8 +73,7 @@ def main():
 
             if cls in ("REFS_ADDED", "REVERIFIED") and not refs:
                 cls = "DEAD_LINK" if r.get("class_in") == "HAS_REF" else "UNRESOLVED"
-                notes = (notes + " [QC] no verified corroborating ref -> "
-                         + cls.lower() + ".").strip()
+                notes = qc_note(notes, f"no verified corroborating ref -> {cls.lower()}.")
                 downgraded += 1
 
             r["class_out"] = cls
@@ -119,7 +93,7 @@ def main():
         r.get("class_out") for r in res if r.get("class_in") in ("HAS_REF", "MISSING_REF")))
     json.dump({"meta": meta, "resolutions": res}, open(prior_path, "w"), indent=1, ensure_ascii=False)
 
-    print(f"applied ref research to {applied} unit(s) across {len(shards)} shard(s) -> {prior_path}")
+    print(f"applied ref research to {applied} unit(s) across {n_shards} shard(s) -> {prior_path}")
     if downgraded:
         print(f"  QC downgraded {downgraded} unit(s) with no verified ref")
     if unmatched:

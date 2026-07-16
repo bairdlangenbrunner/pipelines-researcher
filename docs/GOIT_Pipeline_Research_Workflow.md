@@ -184,8 +184,9 @@ For every newly discovered pipeline, conduct a dedicated route search:
 
 **Goal:** produce the staging workbook for the batch. Sheet layouts are defined in
 `docs/reference/workbook_conventions.md` (authoritative) and built by the `scripts/build_*`
-builders — `build_ref_workbook.py` (ref sweep / deep sweep: `<Cmdty>_Backend` backend-mirror
-tab + finding tabs), `build_discovery_workbook.py` (`<Cmdty>_NewRows` / `_OperatorsOwners` /
+builders — `build_ref_workbook.py` (Country Sweep: `<Cmdty>_Backend` backend-mirror tab;
+handoff packet: `<Cmdty>_AllFillsBackend` unified fills-in-backend-layout tab; + finding
+tabs), `build_discovery_workbook.py` (`<Cmdty>_NewRows` / `_OperatorsOwners` /
 `_MonitorList` / `_MatchedExisting`), `build_recon_workbook.py` (reconciliation). Do not
 hand-roll sheet layouts; per-cell color semantics (confidence tiers, never coloring an
 empty cell) live in `workbook_conventions.md`.

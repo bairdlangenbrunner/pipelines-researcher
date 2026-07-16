@@ -1,0 +1,50 @@
+{
+  "project_id": "P0473",
+  "pipeline_name": "Cyprus–Egypt Gas Pipeline",
+  "sheet_row": 1107,
+  "wiki": "https://www.gem.wiki/Cyprus%E2%80%93Egypt_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "sheet wrong — set LengthKnown (=LengthKnownKm)=240 (km), not 310. The sheet's 310km/Damietta figure reflects the ORIGINAL 2018 proposal (Egypt Petroleum Minister/Cyprus Energy Minister MoU, Damietta Segas LNG terminal endpoint). That plan was superseded: the Feb 2025 Cypriot-government-approved Development and Production Plan (DPP) re-routes the export line to a shorter subsea tie-back landing at Port Said, not Damietta. Three independent, non-GEM sources (MEES trade press, Washington Institute think-tank, Arab Center DC think-tank) each report the current design as a ~240km/150-mile pipeline to Port Said — consistent with the drawn-route geodesic measurement of 215km (ratio 215/240=0.90, inside the 0.75–1.33 allowed band; the sheet's old 310km value gives 215/310=0.69, outside it). This resolves the flag as a stale LENGTH VALUE, not a wrong/partial drawn route — the drawn route is actually closer to the current reality than the sheet's own length figure is. Note (out of scope for this flag, flagging for a separate pass): EndLocation/EndState currently reads 'Damietta Segas LNG Terminal' / 'Damietta', which is also now stale per the same Port Said re-route — an EndLocation correction would likely also warrant a routes-repo geometry PR, but that is a distinct fix from the length value requested here.",
+      "researcher_notes": "Checked: (1) MEES (Middle East Economic Survey, subscription trade press, 21 Feb 2025) — explicit quote: 'a 17 February MoU that would see all Aphrodite output piped from an above-field floating production unit (FPU) to Egypt via a 240km tie-back to Port Said.' (2) Washington Institute policy analysis — 'the solution—as proposed by a consortium with production rights led by Chevron—is to pump the gas southward to Egypt via a shorter 150-mile seabed pipeline' (150mi=241.4km, consistent with MEES's 240km). (3) Arab Center DC — 'Chevron has proposed a production plan involving what it describes as a cost-effective 150-mile tieback pipeline to Port Said in Egypt, which was approved in February 2025.' All three are independent origins (specialist O&G trade press + two separate US think tanks), none reprints another, none cites GEM. Also confirmed via Rigzone (10 Apr 2026, on the April 2026 EGAS supply-term-sheet) that 'the final delivery point shall be determined at the metering station at the onshore terminal in Port Said, Egypt' — corroborating the Port Said (not Damietta) endpoint independently of the length figure. Did not find any 2025/2026-era source still citing 310km or Damietta as current — those figures only appear in 2018-vintage coverage and in GEM's own wiki mirror of the sheet (not used as evidence). Currently 'Length [ref]' on the sheet is blank (orphan value with no ref) — this fill also closes that gap.",
+      "proposed_refs": [
+        "https://www.mees.com/2025/2/21/oil-gas/cyprus-eyes-gas-riches-cronos-and-aphrodite-plans-advance-destination-egypt/62fbee60-f059-11ef-8c15-8346668c3120",
+        "https://www.washingtoninstitute.org/policy-analysis/east-med-politics-may-further-delay-cyprus-gas",
+        "https://arabcenterdc.org/resource/gas-and-geopolitics-in-the-eastern-mediterranean/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1107,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "240"},
+      "primary_value": "240",
+      "proposed_refs": [
+        "https://www.mees.com/2025/2/21/oil-gas/cyprus-eyes-gas-riches-cronos-and-aphrodite-plans-advance-destination-egypt/62fbee60-f059-11ef-8c15-8346668c3120",
+        "https://www.washingtoninstitute.org/policy-analysis/east-med-politics-may-further-delay-cyprus-gas",
+        "https://arabcenterdc.org/resource/gas-and-geopolitics-in-the-eastern-mediterranean/"
+      ],
+      "verifications": [
+        {"url": "https://www.mees.com/2025/2/21/oil-gas/cyprus-eyes-gas-riches-cronos-and-aphrodite-plans-advance-destination-egypt/62fbee60-f059-11ef-8c15-8346668c3120", "ok": true, "contains_value": true},
+        {"url": "https://www.washingtoninstitute.org/policy-analysis/east-med-politics-may-further-delay-cyprus-gas", "ok": true, "contains_value": true},
+        {"url": "https://arabcenterdc.org/resource/gas-and-geopolitics-in-the-eastern-mediterranean/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "LengthKnown currently=310 with no ref (orphan value). Replacing with 240km per the Feb 2025 approved DPP's Port Said tie-back (MEES: '240km tie-back to Port Said'; corroborated independently by Washington Institute and Arab Center DC at '150-mile' ≈241km). Do not overwrite LengthKnownKm/LengthEstimateKm/LengthMergedKm — those are computed/derived columns, not manual-entry fields; only LengthKnown (+ existing LengthKnownUnits=km) and the new Length [ref] should be staged. LengthEstimateKm=214.58 is the route-geometry engine's own straight-line estimate from the drawn route and should be left alone (it will naturally sit within the allowed ratio band of the corrected 240km value)."
+    }
+  ],
+  "summary": "route_integrity length_ratio flag CONFIRMED as a sheet error (concern): sheet's LengthKnown=310/Damietta reflects the superseded 2018 plan; three independent 2025-era sources (MEES, Washington Institute, Arab Center DC) put the current approved design at ~240km (150mi) to Port Said, which is consistent with the drawn route's 215km geodesic (ratio 0.90, in-range) — staged fill: LengthKnown=240 + Length [ref] (was an orphan/blank ref). No UNRESOLVED items; EndLocation/Damietta staleness noted in researcher_notes as an out-of-scope follow-up, not staged here."
+}

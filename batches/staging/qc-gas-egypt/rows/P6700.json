@@ -1,0 +1,37 @@
+{
+  "project_id": "P6700",
+  "pipeline_name": "South Valley Gas Pipeline",
+  "sheet_row": 3982,
+  "wiki": "https://www.gem.wiki/South_Valley_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Abu qurqas-Asyut Gas pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "sheet correct — no change; Capacity is a network-level (whole South Valley system) attribute, not a per-segment one, and it is already carried on the SYSTEM/NETWORK INFO row (P0477, Capacity=12.00 bcm/y). All five sibling segment rows (P6697-P6702, the six-phase Dahshour-Aswan build) leave Capacity blank exactly like P6700 — filling it here would duplicate the network value onto a segment and break that established convention.",
+      "researcher_notes": "Sheet-internal check: queried all 'South Valley Gas Pipeline' rows in the current GGIT snapshot. P0477 (SYSTEM/NETWORK INFO, RouteType='Mapped route') carries Capacity=12.00 bcm/y and Diameter='36, 32, 32,32,32,30' in, LengthKnownKm=930.00 — a page-level union across the six segments P6697 (Dahshour-Al Kurimat, 90km), P6698 (Al Kurimat-Beni Suef, 30km), P6699 (Beni Suef-Abu qurqas, 150km, 32in), P6700 (Abu qurqas-Asyut, 147km, 32in — this row), P6701 (Asyut-Girga, 121km, 32in), P6702 (Girga-Aswan, 390km, 30in). Every one of the six individual segment rows has Capacity blank; only the network row is populated. Independent context (never cited as evidence, only as sanity-check): Oil & Gas Journal ('Egypt's Natural Gas Operations and Plans', ogj.com) reports the south-valley grid's aggregate transmission capacity was ~166 MMcfd as of 2007 (pre-completion of this segment); Egypt's State Information Service (sis.gov.eg, Feb 2024) reports the Dahshur compressor station's south-valley throughput at 28 million m3/day rising to 46.2 million m3/day after expansion. 12 bcm/y (~32.9 million m3/day) sits squarely inside that system-wide range across different years, confirming the wiki's '12 billion cubic meters per year' is a whole-network figure, not an attribute of the 116-150km Abu Qurqas-Asyut segment specifically. No independent source gives a segment-specific throughput number for Abu Qurqas-Asyut alone, and the sheet's own convention (network row vs. segment rows) is internally consistent — leave P6700 Capacity blank.",
+      "proposed_refs": [
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/17217939/egypts-natural-gas-operations-and-plans-pico-moves-beyond-egypt-and-leftover-fields-new-lines-expand-the-grid"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Abu qurqas-Asyut Gas pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "sheet correct — no change; wiki's '30, 32, 36 inches' is the page-level union of all six South Valley segments' diameters (matches P0477's Diameter='36, 32, 32,32,32,30' exactly), and P6700's own segment value within that union is 32 in, which is what the sheet already carries.",
+      "researcher_notes": "Verified independently (not via gem.wiki) that the Abu Qurqas-Asyut segment specifically is 32 in.: (1) an EIB-hosted GASCO/Petrosafe Environmental Impact Assessment for this exact project ('Abu Qurqas-Asuit Onshore Gas Pipeline', eib.org/attachments/pipeline/1603_draft_eia_en.pdf) states in section 3.1: 'the purpose of construction Abu Qurqas - Asuit 32\", 116 km pipeline' — an explicit, segment-specific diameter+length statement from the constructing operator's own EIA. (2) Oil & Gas Journal (ogj.com, 'Egypt's Natural Gas Operations and Plans') independently corroborates: 'The second phase, from Menya [Minya, i.e. next to Abu Qurqas per the EIB summary sheet] to Assiut, is 136 km (85 miles) of 32 in.' Both sources, independent of each other and of GEM, agree on 32 in. for this segment. Cross-checked the sheet's own six-segment family (P6697-P6702): the wiki's dumped diameter list '36, 32, 32, 32, 32, 30' matches exactly, position-for-position, the per-segment diameters already in the sheet (P6697=36, P6698=32, P6699=32, P6700=32, P6701=32, P6702=30) — confirming this is the flag-semantics 'page-level union of a multi-segment page' case, not a discrepancy. Length differs slightly across sources (116km EIA vs 136km OGJ vs 147km sheet vs ~120km EIB summary sheet) but length was not a flagged field for this row, so left untouched here.",
+      "proposed_refs": [
+        "https://www.eib.org/en/projects/pipelines/all/20060137",
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/17217939/egypts-natural-gas-operations-and-plans-pico-moves-beyond-egypt-and-leftover-fields-new-lines-expand-the-grid"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Both flags resolve sheet-correct/no-change: Capacity stays blank on P6700 because it is a network-level metric already carried on the P0477 SYSTEM/NETWORK INFO row (consistent with all 5 sibling segments); Diameter=32in is independently confirmed for this specific Abu Qurqas-Asyut segment (EIB-hosted GASCO EIA + Oil & Gas Journal), and the wiki's 30/32/36in set is simply the page-level union across all six South Valley segments, matching the sheet's per-segment values exactly."
+}
