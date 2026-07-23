@@ -5,10 +5,10 @@ manually. The agent never writes to the Google Sheet or the routes repo.
 
 ## File naming and location
 
-Written to the in-repo `batches/` directory:
+Written to the scope's `deliverables/` directory in the in-repo `batches/` tree:
 
 ```
-batches/pipelines_batch_<YYYYMMDD>_<HHMM>_ET[_<scope>]_<mode>.xlsx
+batches/<country-slug>-<commodity>/deliverables/pipelines_batch_<YYYYMMDD>_<HHMM>_ET[_<scope>]_<mode>.xlsx
 ```
 
 - `<mode>` (always present): `reconciliation` / `update` / `discovery` /
@@ -18,7 +18,10 @@ batches/pipelines_batch_<YYYYMMDD>_<HHMM>_ET[_<scope>]_<mode>.xlsx
   Omit only for a genuinely global batch.
 - Stamp the timestamp at build time: `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`.
 - **Never overwrite** an existing batch file — every (re)build gets a new
-  timestamp. The user prunes old ones. Triage produces a markdown memo, not an xlsx.
+  timestamp. When a rebuild supersedes an older workbook (or a batch is applied to
+  the sheet), move the old file to the scope's `archive/`; then regenerate
+  `batches/INDEX.md` (`python scripts/staged_summary.py --index`). Triage produces
+  a markdown memo, not an xlsx.
 
 ## Universal formatting
 
@@ -79,8 +82,8 @@ to Update.
 
 ## Update workbook (mode = `update`)
 
-No generic builder yet — recent update batches (`batches/staging/delaware-express/`,
-`batches/staging/permian-express/`) shipped via a per-batch `build_update_workbook.py`
+No generic builder yet — recent update batches (`batches/united-states-oil/staging/update-delaware-express/`,
+`batches/united-states-oil/staging/update-permian-express/`) shipped via a per-batch `build_update_workbook.py`
 staged alongside the JSON: a backend-mirror tab of the touched rows (current values
 prefilled, changed cells overlaid tier-colored, per the sweep conventions below)
 plus an operators/owners tab. If the pattern recurs, promote a generic

@@ -32,12 +32,12 @@ SOP is the operational sequence; cite the methodology for the *how*.
    workbook — no exceptions, even URLs that worked last batch. Reject GEM URLs.
 5. `scripts/entity_lookup.py "<owner>" "<country>"` before staging any new owner —
    don't create duplicate entities.
-6. Stage findings as `batches/staging/<scope-slug>/staged_updates.json` (committed
+6. Stage findings as `batches/<scope>/staging/<run>/staged_updates.json` (committed
    audit trail).
 7. Build the update workbook (no generic builder yet — copy the per-batch
-   `build_update_workbook.py` pattern from `batches/staging/delaware-express/`;
+   `build_update_workbook.py` pattern from `batches/united-states-oil/staging/update-delaware-express/`;
    layout per `docs/reference/workbook_conventions.md` "Update workbook") →
-   `batches/pipelines_batch_<stamp>_<scope>_update.xlsx`; `scripts/recalc.py`; present.
+   `batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_update.xlsx`; `scripts/recalc.py`; present.
 
 ## Pre-delivery checks
 URL spot-check (fetch 3–5), expansion-length, ownership consistency, status logic

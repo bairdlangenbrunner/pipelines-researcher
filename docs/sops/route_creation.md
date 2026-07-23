@@ -21,7 +21,7 @@ endpoints to the endpoints/traced rungs.
   existing-route collision check.
 - `data/boundaries/ne_50m_admin_0_countries.shp` (Natural Earth) for the integrity leg.
 - The facility gazetteer (GOGET/GOGPT snapshots in `data/`) — endpoint anchors only.
-- Optional: GulfPub recon sidecars (`batches/staging/recon/*/`) for the rung-1 shortcut.
+- Optional: GulfPub recon sidecars (`batches/*/staging/recon-*/`) for the rung-1 shortcut.
 
 ## The source ladder (the heart)
 
@@ -108,7 +108,7 @@ not dropped); `warnings` are surfaced but pass.
 ## Output
 
 ```
-batches/staging/route-creation-<scope>/    # e.g. route-creation-gas-egypt, route-creation-p1234
+batches/<scope>/staging/route-creation[-<qualifier>]/   # e.g. batches/egypt-gas/staging/route-creation, batches/israel-gas/staging/route-creation-p3620-p3657
   worklist.json
   fetched_layers/                # raw fetched GIS layers + .meta.json (gitignored)
   candidate_routes/<PID>.geojson # THE deliverable — routes-repo-valid (committed)
@@ -117,7 +117,7 @@ batches/staging/route-creation-<scope>/    # e.g. route-creation-gas-egypt, rout
   staged_resolutions.json        # ROUTE_CANDIDATE records, meta.mode="route-creation"
 ```
 
-Workbook: `batches/pipelines_batch_<stamp>_<scope>_route-creation.xlsx`
+Workbook: `batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_route-creation.xlsx`
 (`<stamp>` = `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite).
 
 ## Standing rules (echoed)

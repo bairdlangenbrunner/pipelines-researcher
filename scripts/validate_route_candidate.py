@@ -20,7 +20,7 @@ route_integrity.py (single source of truth for the Natural Earth logic).
 
 Usage (module): imported by build_route_candidate.py.
 Usage (CLI, re-validate a staged batch or one file):
-  python scripts/validate_route_candidate.py --candidates batches/staging/route-creation-*/candidates.json
+  python scripts/validate_route_candidate.py --candidates batches/*/staging/route-creation-*/candidates.json
   python scripts/validate_route_candidate.py --file .../candidate_routes/P1234.geojson \\
       --sheet-km 220 --countries "Egypt,Israel" --method endpoints --replacement false
 """

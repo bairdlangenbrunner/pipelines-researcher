@@ -26,6 +26,12 @@ Where things live — **read on demand as the workflow dictates, not all at once
 - **Reference-dataset registry**: `sources/` — one `manifest.yml` (+ optional
   `adapter.py`) per scraped dataset; GulfPub today. How to add one: `sources/README.md`.
 - **Scripts**: `scripts/` (engine + helpers).
+- **Batches** (scope-first): `batches/<country-slug>-<commodity>/` holds
+  `staging/<mode[-qualifier]>/` (staged JSON — the canonical pending-state; recon
+  inputs are `staging/recon-<source>-<date>/`), `deliverables/` (current
+  workbooks), `archive/` (applied/superseded — lifecycle is by move). Whole-tree
+  lookup: `batches/INDEX.md`, regenerated via
+  `python scripts/staged_summary.py --index` — never hand-edited.
 - **Research backlog** (unfinished/ongoing threads): `docs/research_backlog.md`.
 - **Session memos** (triage memos, escalation writeups): `notes/`.
 - **Historical project context**: `docs/PROJECT_SETUP_AND_CONTEXT.md` (pre-migration
@@ -260,9 +266,9 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 ```bash
 ./scripts/refresh_csvs.sh                 # pull GOIT + GGIT snapshots from the live sheet
 ./scripts/fetch_route.sh P5367            # fetch one route GeoJSON by ProjectID
-python scripts/ingest.py --source gulfpub --commodity both --out batches/staging/recon/<run>/
-python scripts/reconcile.py --source gulfpub --country "Saudi Arabia" --commodity both --staging batches/staging/recon/<run>/
-python scripts/build_recon_workbook.py --staging batches/staging/recon/<run>/ --output batches/pipelines_batch_<stamp>_<scope>_reconciliation.xlsx   # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"
+python scripts/ingest.py --source gulfpub --commodity both --out batches/<scope>/staging/recon-gulfpub-<date>/
+python scripts/reconcile.py --source gulfpub --country "Saudi Arabia" --commodity both --staging batches/<scope>/staging/recon-gulfpub-<date>/
+python scripts/build_recon_workbook.py --staging batches/<scope>/staging/recon-gulfpub-<date>/ --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_reconciliation.xlsx   # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"
 pip install -r requirements.txt
 ```
 

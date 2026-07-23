@@ -33,7 +33,7 @@ Output: <staging>/route_integrity.json, records per the ROUTEQC class
 
 Usage:
   python scripts/route_integrity.py --csv data/GGIT_gas_snapshot_<date>.csv \
-      --country Egypt --commodity gas --staging batches/staging/qc-gas-egypt/ \
+      --country Egypt --commodity gas --staging batches/egypt-gas/staging/qc/ \
       [--pids P3620,P0462] [--staged-dir <dir> ...]
 """
 from __future__ import annotations

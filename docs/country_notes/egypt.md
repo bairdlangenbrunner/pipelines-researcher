@@ -9,7 +9,7 @@ MENA deep-coverage country (GGIT gas focus so far). Gas packet legs:
   independently re-vetted at delivery, one downgraded). See "Discovery (Leg B)" below.
 - **Sheet↔wiki↔route QC legs (handoff-packet pilot, researcher onboarding; workflows.md §6)** — delivered
   `pipelines_batch_20260715_1442_ET_egypt-gas_qc.xlsx` (57 rows; staging
-  `batches/staging/qc-gas-egypt/`): 12-row `Gas_Existence` tracking review (5 existence
+  `batches/egypt-gas/staging/qc/`): 12-row `Gas_Existence` tracking review (5 existence
   + 7 duplicate concerns carried from the prior staged packets — read first), 152 wiki
   diffs (77 WIKI_UPDATE / 67 SHEET_SUSPECT / 7 stale-vs-staged / 1 UNPARSED = P7864, no
   Wiki URL), 13 route length-ratio flags (11 already staged-annotated), 63 mechanical

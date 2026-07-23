@@ -12,7 +12,7 @@ Merge-time QC (subagents are not perfectly consistent; normalize deterministical
 
 Run AFTER the country-discovery workflow and BEFORE build_discovery_workbook.py:
 
-    python scripts/merge_discovery_shards.py --staging batches/staging/annual-gas-iraq/
+    python scripts/merge_discovery_shards.py --staging batches/iraq-gas/staging/annual/
 """
 import argparse, collections, json, os, sys
 from pathlib import Path

@@ -10,8 +10,8 @@ Workflow tool as `args`:
     { repo, staging, commodity, country, pids: [...], roster: ["P#### | name | a->b | len/dia/cap | status", ...] }
 
 Usage:
-    python scripts/build_deepsweep_args.py --staging batches/staging/ref-sweep-gas-saudi-arabia/
-    # optionally --out batches/staging/.../deepsweep_args.json
+    python scripts/build_deepsweep_args.py --staging batches/saudi-arabia-gas/staging/ref-sweep/
+    # optionally --out batches/<scope>/staging/.../deepsweep_args.json
 """
 import argparse, json, os, sys
 import pandas as pd

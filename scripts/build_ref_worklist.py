@@ -17,7 +17,7 @@ discover_owner_ref_pairs (forward walk — the OO `[ref]` PRECEDES its values). 
 (deterministic, no agent tokens) so most HAS_REF units pre-classify as live vs dead.
 
     python scripts/build_ref_worklist.py --tracker oil --country "Saudi Arabia" \
-        --verify-existing --out batches/staging/ref-sweep-saudi-arabia/worklist.json
+        --verify-existing --out batches/saudi-arabia-oil/staging/ref-sweep/worklist.json
 
 SheetRow = read_csv(header=2) index + 4. We deliberately do NOT use match.load_gem_df
 (it reset_index'es, which breaks that mapping) — we replicate its buffer-row drop while

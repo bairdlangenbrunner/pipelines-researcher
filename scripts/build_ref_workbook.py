@@ -4,7 +4,7 @@
 live Sheet manually. Every Proposed ref(s) cell has passed url_verifier (HTTP 200 + value
 present, no GEM/theodora).
 
-    python scripts/build_ref_workbook.py --staging batches/staging/ref-sweep-saudi-arabia/ \
+    python scripts/build_ref_workbook.py --staging batches/saudi-arabia-oil/staging/ref-sweep/ \
         --output batches/pipelines_batch_<stamp>_saudi-arabia_refsweep.xlsx
     # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"   (never overwrite)
 

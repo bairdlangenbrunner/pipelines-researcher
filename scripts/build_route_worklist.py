@@ -17,7 +17,7 @@ sheet or routes repo. No geometry is produced here — that's build_route_candid
 
 Usage:
   python scripts/build_route_worklist.py --csv data/GGIT_gas_snapshot_<date>.csv \\
-      --country Egypt --commodity gas --staging batches/staging/route-creation-gas-egypt/ \\
+      --country Egypt --commodity gas --staging batches/egypt-gas/staging/route-creation/ \\
       [--include-medium] [--pids P1234,P5678] [--no-gazetteer]
 """
 from __future__ import annotations
@@ -46,12 +46,10 @@ def _s(v) -> str:
 
 def _gulfpub_hits(pid: str) -> list[dict]:
     """Recon-run GulfPub sidecar matches for this PID (ref_id + whether it has
-    geometry). Best-effort across batches/staging/recon/*/."""
+    geometry). Best-effort across batches/*/staging/recon-*/."""
     hits = []
-    recon = paths.repo_root() / "batches" / "staging" / "recon"
-    if not recon.exists():
-        return hits
-    for run in sorted(recon.iterdir()):
+    batches = paths.repo_root() / "batches"
+    for run in sorted(batches.glob("*/staging/recon-*")):
         md = run / "match_diff.json"
         sc = run / "geometry_sidecar.json"
         if not md.exists():
@@ -72,7 +70,7 @@ def _gulfpub_hits(pid: str) -> list[dict]:
             if pid in pids:
                 ref = ov.get("ref", {})
                 rid = ref.get("ref_id", "")
-                hits.append({"recon_dir": run.name, "ref_id": rid,
+                hits.append({"recon_dir": f"{run.parent.parent.name}/{run.name}", "ref_id": rid,
                              "has_geometry": bool(ref.get("has_geometry")
                                                   and rid in sidecar_keys),
                              "confidence": ov.get("confidence", ""),

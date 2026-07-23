@@ -2,7 +2,7 @@
 """Build the reconciliation workbook from match_diff.json (generalizes the Saudi
 GulfPub POC to any source/country/commodity).
 
-    python scripts/build_recon_workbook.py --staging batches/staging/recon/<run>/ \
+    python scripts/build_recon_workbook.py --staging batches/<scope>/staging/recon-<source>-<date>/ \
         --output batches/pipelines_batch_<stamp>_ET_<scope>_reconciliation.xlsx
 
 Sheets (per-commodity prefixed): README, <Cmdty>_Overlaps, <Cmdty>_Additions,

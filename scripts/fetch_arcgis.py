@@ -15,7 +15,7 @@ Strategy (each falls back to the next):
   3. objectIds chunking  (servers that ignore resultOffset)
 
 Usage:
-  python scripts/fetch_arcgis.py --url <layer-url> --out batches/staging/.../fetched_layers/ \\
+  python scripts/fetch_arcgis.py --url <layer-url> --out batches/<scope>/staging/route-creation-<q>/fetched_layers/ \\
       [--where "COMMODITY='CRUDE'"] [--bbox minlon,minlat,maxlon,maxlat] \\
       [--source rrc_pipelines] [--max-features 50000] [--name rrc_crude]
   python scripts/fetch_arcgis.py --source rrc_pipelines --out ...     # url from gis_endpoints.yml

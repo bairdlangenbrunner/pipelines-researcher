@@ -24,7 +24,7 @@ script emits goes in a [ref] column.
 Usage:
   python scripts/wiki_alignment.py --csv data/GGIT_gas_snapshot_<date>.csv \
       --owners-csv data/GEM_operators_owners_snapshot_<date>.csv \
-      --country Egypt --staging batches/staging/qc-gas-egypt/ \
+      --country Egypt --staging batches/egypt-gas/staging/qc/ \
       [--pids P0462,P0477] [--refetch] [--staged-dir <dir> ...]
 """
 from __future__ import annotations

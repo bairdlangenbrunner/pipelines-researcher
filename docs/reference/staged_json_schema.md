@@ -5,7 +5,7 @@ tooling (Baird's manual paste workflow today; the goig-ggit-data-ops repo tomorr
 **Treat this document as the contract** — if a field changes, version-note it here.
 
 Two files, both living in the per-scope staging dir
-(`batches/staging/<scope-slug>/`, committed as the audit trail):
+(`batches/<scope>/staging/<run>/`, committed as the audit trail):
 
 - `staged_resolutions.json` — Country Sweeps (any preset: refs-only, deep, in-dev).
 - `staged_new.json` — discovery candidates.

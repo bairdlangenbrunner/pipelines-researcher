@@ -16,7 +16,7 @@ parts; disconnected ways are NEVER bridged (no fabricated pipe).
 
 Usage:
   python scripts/fetch_overpass.py --area "Egypt" --substance gas \\
-      --out batches/staging/.../fetched_layers/ [--name egypt_gas_osm]
+      --out batches/<scope>/staging/route-creation-<q>/fetched_layers/ [--name egypt_gas_osm]
   python scripts/fetch_overpass.py --bbox 24,22,37,32 --out ...
   # --substance filters on the OSM `substance` tag (gas|oil|...); omit for all pipelines
 """

@@ -90,7 +90,7 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 1. `scripts/refresh_csvs.sh` → fresh snapshots (don't sweep a stale CSV). This now also pulls
    the **operators/owners tab** (`GEM_operators_owners_snapshot_<date>.csv`, header at row idx 1).
 2. **Worklist** — `scripts/build_ref_worklist.py --tracker <t> --country <C>
-   [--status …] --verify-existing --out batches/staging/ref-sweep-<scope>/worklist.json`.
+   [--status …] --verify-existing --out batches/<scope>/staging/ref-sweep[-<qualifier>]/worklist.json`.
    Classifies each row×pair ref cell: `SKIP` (all values blank), `MISSING_REF` (value
    filled, ref blank), `HAS_REF` (ref filled → re-verify). It also **joins the operators/owners
    tab by ProjectID** (default latest snapshot; `--owners-csv` to override, `--no-owners` to skip)
@@ -135,9 +135,9 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 5. Stage one resolution per unit (`class_out` ∈ `REFS_ADDED` / `REVERIFIED` / `DEAD_LINK` /
    `UNRESOLVED`, `proposed_refs`, `verifications`, `tier`, `independent`, `source_language`,
    `researcher_notes`, `harvested_from_wiki`; carry `tab` through for owner/operator units) into
-   `batches/staging/ref-sweep-<scope>/staged_resolutions.json`.
-6. **Build** — `scripts/build_ref_workbook.py --staging batches/staging/ref-sweep-<scope>/
-   --output batches/pipelines_batch_<stamp>_<scope>_refsweep.xlsx`; then `recalc.py`;
+   `batches/<scope>/staging/ref-sweep[-<qualifier>]/staged_resolutions.json`.
+6. **Build** — `scripts/build_ref_workbook.py --staging batches/<scope>/staging/ref-sweep[-<qualifier>]/
+   --output batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_refsweep.xlsx`; then `recalc.py`;
    present. Leads with the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` paste-ready tabs
    (see **Output** above), bucket tabs follow. `<stamp>` from
    `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`; never overwrite.
