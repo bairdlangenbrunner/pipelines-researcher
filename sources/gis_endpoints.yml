@@ -1,0 +1,56 @@
+# Public GIS endpoints for route-creation rung 2 (fetch_arcgis.py / fetch_overpass.py).
+#
+# Registry of public vector sources for pipeline geometry. Each entry documents a
+# real, public portal; the exact numbered layer URL (`url`) is filled in once
+# verified at run time — we do NOT commit a guessed FeatureServer path (standing
+# rule: never fabricate source URLs). When you confirm a working layer URL during a
+# run, paste it into `url` here and add a one-line note in docs/reference/source_roster.md.
+#
+# Fields:
+#   kind      : arcgis | overpass
+#   url       : numbered layer URL (.../FeatureServer/0). Empty = discover + verify first.
+#   portal    : human landing page to discover the layer from (real, verified).
+#   coverage  : geographic/commodity scope
+#   commodities: [oil, gas, ngl, ...] or [all]
+#   license   : usage terms as published (verify before shipping any geometry)
+#   notes     : discovery hints, gotchas, transfer limits
+
+rrc_pipelines:
+  kind: arcgis
+  url: ""                       # discover the numbered layer under the RRC GIS REST services
+  portal: "https://www.rrc.texas.gov/resource-center/research/gis-viewer/"
+  coverage: "Texas, USA — intrastate pipelines"
+  commodities: [oil, gas, ngl]
+  license: "US public record (Texas RRC) — verify terms of use"
+  notes: >
+    Texas Railroad Commission publishes pipeline layers via ArcGIS REST. Find the
+    FeatureServer/MapServer layer from the GIS viewer's network tab, confirm it
+    returns f=geojson & outSR=4326, then set `url`. High-density state; use --bbox
+    or a county --where to stay under --max-features.
+
+boem_pipelines:
+  kind: arcgis
+  url: ""
+  portal: "https://www.data.boem.gov/Mapping/Files/PipelinesArcGIS.html"
+  coverage: "US Gulf of Mexico OCS — offshore pipelines"
+  commodities: [oil, gas]
+  license: "US federal public domain (BOEM) — verify"
+  notes: >
+    BOEM offshore pipeline geometry. Offshore lines: expect the landfall/endpoint
+    checks in validate_route_candidate.py to run in offshore-lenient mode.
+
+# NPMS (npms.phmsa.dot.gov) is intentionally NOT an arcgis entry: the National
+# Pipeline Mapping System blocks bulk/programmatic export (public viewer is
+# one-county-at-a-time, no REST query). Use it as a human cross-check only.
+
+osm_overpass:
+  kind: overpass
+  url: ""                       # not used for overpass; fetch_overpass.py takes --area/--bbox
+  portal: "https://www.openstreetmap.org/"
+  coverage: "worldwide — man_made=pipeline ways/relations"
+  commodities: [all]
+  license: "ODbL — © OpenStreetMap contributors (Baird's licensing call at review)"
+  notes: >
+    Not a per-layer URL — driven by fetch_overpass.py --area/--bbox --substance.
+    Every feature ships with source=OSM/license=ODbL provenance; whether ODbL
+    geometry can enter a GEM tracker is decided at review, never assumed.

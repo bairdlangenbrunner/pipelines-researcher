@@ -93,3 +93,32 @@ sweep — distinct from route geometry `[ref]` cells (media URLs), which stay ou
   subagent shard; schema in `docs/sops/sweep.md`). It is delivered for a **human routes-repo
   branch + PR**; the agent **never edits `GOIT-GGIT-pipeline-routes`** and **never fabricates
   coordinates** — unsourced coords are null and flagged red.
+
+## Candidate routes (§8 — drawn geometry)
+
+The Route-creation workflow (`workflows.md §8` + `docs/sops/route_creation.md`) goes one
+step further than a sweep suggestion: it produces an actual routes-repo-valid
+`<ProjectID>.geojson`, walking a **source ladder** whose rung sets the `RouteAccuracy`
+cap. Distinct from a sweep suggestion (corridor + endpoints prose, `ROUTE_SUGGESTED` /
+`ROUTE_PARTIAL`), which it consumes as input.
+
+- **Method → accuracy cap** (never suggest an accuracy the method can't earn):
+  GulfPub sidecar → `high`; ArcGIS / OSM → `high`; digitized (GCP-traced) → `medium`;
+  endpoints great-circle → `low`; corridor-only fallback stays `ROUTE_PARTIAL`.
+- **Files:** `candidate_routes/<PID>.geojson` (one per PID; multi-segment networks
+  merged into one `MultiLineString`); digitization `packets/<PID>/` when a map can't be
+  registered below `rmse ≤ max(5 km, 2% of length)`; raw fetched layers in
+  `fetched_layers/` (gitignored) each with a `.meta.json` provenance sidecar.
+- **No fabricated coordinates** (standing rule 2): lon/lat only from a vector source, a
+  fitted georeference transform, or a sourced endpoint. Traces are pixels; GCPs carry
+  `source_ref`.
+- **OSM/ODbL provenance** rides through to the workbook License column; ODbL
+  acceptability is Baird's review call, never the agent's.
+- **GOGET/GOGPT facility gazetteer** anchors endpoints internally only — never a
+  `[ref]`, never a corroboration source (standing rule 1).
+- **Replacement framing:** an existing GEM route → the candidate is flagged
+  `replacement=true` (yellow fill); a `high`/`very high` GEM route disagreeing badly is a
+  conflict/escalation, never a replacement. A route is **never auto-replaced** — every
+  candidate is a human branch+PR against `GOIT-GGIT-pipeline-routes`, staged in this repo
+  only. Staged as `ROUTE_CANDIDATE` records (schema: `docs/reference/staged_json_schema.md`);
+  rendered on the `<Cmdty>_RouteCandidates` tab.

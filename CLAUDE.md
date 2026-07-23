@@ -50,6 +50,11 @@ Where things live — **read on demand as the workflow dictates, not all at once
    republished, multiple outlets tracing to one original, and anything citing GEM
    do NOT count. Record the tier + sources in `ResearcherNotes`. Detail:
    `docs/reference/confidence_tiers.md`.
+5. **Banned source: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`).
+   Never use it as a reference, ever — not even alongside corroborating sources, not
+   in any output, note, or lane (Baird directive 2026-07-17, all GEM researcher
+   projects). If it's the only place a value appears, treat the value as unsourced;
+   chase whatever primary source it footnotes and cite that.
 
 ---
 
@@ -86,6 +91,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
+| **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 
 Routing notes:
 - A reconciliation reference-only (`Addition`) row is usually **not** a missing
@@ -112,8 +118,10 @@ Routing notes:
   tier-colored only on touched cells, leading `SheetRow` locator). The handoff packet
   is TWO files: `…-actions.xlsx` (only suggested changes + open issues; its
   `<Cmdty>_AllFillsBackend` is THE one paste surface — ALL fills AND paste-ready refs,
-  carried + own, unified in that same full backend layout; a tier-colored value cell =
-  a proposed value, a colored `[ref]` with an untinted value = ref-only work) and
+  carried + own, unified in that full backend layout but with NO leading `SheetRow`
+  locator, so every column aligns 1:1 with the sheet for copy-paste; a tier-colored
+  value cell = a proposed value, a colored `[ref]` with an untinted value = ref-only
+  work) and
   `…-evidence.xlsx` (audit trail: confirmed/known-staged/info rows + per-fill/per-ref
   detail). Either way,
   **don't paste the computed/formula columns back over the live formulas**.
@@ -155,7 +163,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **Expansion with no new physical pipe → `LengthKnown = 0`, `Diameter = blank`.**
 - **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner.
 - **A route is never auto-replaced.** A route-replacement candidate is flagged for a
-  separate human branch+PR against `GOIT-GGIT-pipeline-routes`.
+  separate human branch+PR against `GOIT-GGIT-pipeline-routes`; §8 candidate geometry
+  (`ROUTE_CANDIDATE` `<PID>.geojson`) is staged in this repo only — never fabricate
+  coordinates, and the GOGET/GOGPT facility gazetteer anchors endpoints internally but
+  is never a `[ref]` or a corroboration source.
 - **WKT/route-format QC checks are permanently dropped** — do not rebuild them.
 - **Subagent models are chosen at dispatch time, never pinned** (global standing rule —
   user-level CLAUDE.md). Repo mechanics: the saved workflows fall back to
@@ -204,7 +215,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   P1897–P1925 class decision; GulfPub route-consistency pass + oil ref-sweep
   partial):** `docs/country_notes/saudi-arabia.md`.
 - **Egypt (gas: handoff regenerated 2026-07-16 as the TWO-file split
-  `pipelines_batch_20260716_1156_ET_egypt-gas_handoff-{actions,evidence}.xlsx` —
+  `pipelines_batch_20260716_2359_ET_egypt-gas_handoff-{actions,evidence}.xlsx` —
   the researcher works from the ACTIONS file, not the per-leg workbooks; Nitzana =
   one linked decision; oil not yet swept):** `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not

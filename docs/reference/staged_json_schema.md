@@ -146,6 +146,33 @@ check); read-and-flag, never an edit — a route is never auto-replaced. Extra f
 extensions"); a `__ROUTE__` suggestion for the same PID annotates the `__ROUTEQC__`
 flag as "known — staged".
 
+**Route-candidate records** (`ref_col="__ROUTE__"`, `class_in="ROUTE"`,
+`class_out="ROUTE_CANDIDATE"`; the §8 Route-creation workflow, `build_route_candidate.py`;
+added 2026-07-22): one per PID — drawn geometry staged as a routes-repo-valid
+`candidate_routes/<PID>.geojson`, destined for a **human branch+PR against the routes
+repo, never the sheet**. The `method` is a *field*, not a family of class_outs (one
+`class_out` for all rungs). Extra fields:
+
+| field | meaning |
+|---|---|
+| `method` | `gulfpub_sidecar` \| `arcgis` \| `osm` \| `digitized` \| `endpoints_greatcircle` |
+| `geometry_file` | path to the candidate geojson (relative to the staging dir) |
+| `source` | `{name, url, ref_id?, license, odbl, fetched_utc, layer_meta?}` |
+| `georef` | `{order, n_gcps, rmse_km, loo_rmse_km, pass}` (rung-3 only) |
+| `endpoints` | `{start{name,lon,lat,ref,anchor?}, end{…}, snapped}` |
+| `length_km`, `sheet_length_km`, `length_ratio` | measured vs sheet, and their ratio |
+| `current_route_accuracy`, `suggested_route_accuracy` | current vs the rung's cap |
+| `replacement` | true when an existing GEM route is being replaced (yellow fill) |
+| `geometry_signals` | IoU / endpoint / Hausdorff / g_score vs any existing GEM route |
+| `qc_passed`, `qc` | gate verdict + `{errors, warnings, checks}` (FAIL ⇒ red QC cell, listed not dropped) |
+| `facility_anchors` | `[{gem_id, name, source, role, dist_km, citable:false}]` — GOGET/GOGPT usage, **audit only, never a citation** |
+
+The common-core ref fields (`values` empty, `proposed_refs`, `verifications`, `tier`,
+`independent`) are present so merge/apply tooling passes these records through
+untouched; the downstream carry predicate (`class_in=="ROUTE" or ref_col=="__ROUTE__"`)
+is `class_out`-agnostic, so a §6 handoff auto-carries them. `build_ref_workbook.py`
+renders the `<Cmdty>_RouteCandidates` tab.
+
 ---
 
 ## `staged_new.json`
