@@ -7,7 +7,7 @@
 # run, paste it into `url` here and add a one-line note in docs/reference/source_roster.md.
 #
 # Fields:
-#   kind      : arcgis | overpass
+#   kind      : arcgis | overpass | download (static file: georeferenced blueprint/shapefile bundle)
 #   url       : numbered layer URL (.../FeatureServer/0). Empty = discover + verify first.
 #   portal    : human landing page to discover the layer from (real, verified).
 #   coverage  : geographic/commodity scope
@@ -42,6 +42,24 @@ boem_pipelines:
 # NPMS (npms.phmsa.dot.gov) is intentionally NOT an arcgis entry: the National
 # Pipeline Mapping System blocks bulk/programmatic export (public viewer is
 # one-county-at-a-time, no REST query). Use it as a human cross-check only.
+
+israel_itur_tabot:
+  kind: download
+  url: "https://apps.land.gov.il/IturTabotData/download/jerus/<planID>.zip"
+  portal: "https://apps.land.gov.il/IturTabotData/"
+  coverage: "Israel — statutory plan (תב\"ע/תמ\"א) blueprints incl. gas pipeline strips"
+  commodities: [gas, oil]
+  license: "Israel Land Registry public record — verify terms before shipping geometry"
+  notes: >
+    Israel Land Registry plan-document store. Per plan ID, /takanonim/<bucket>/<id>.pdf
+    (regulations), /tabot/<bucket>/<id>/… (blueprint sheets), and /download/<bucket>/<id>.zip
+    (GIS bundle: scanned sheet JPG + JGW world file in EPSG:2039 ITM — exact georeferencing,
+    no GCP fit needed). The <bucket> (e.g. "jerus") is a file-tree label, not geographic.
+    Verified 2026-07-23 on plan 1053432 (TAMA 37/A/2/7, Ashdod–Ashkelon gas line): 0.42–1.02
+    m/px sheets; the green pipeline strip (רצועת צנרת) segments cleanly by color. Discover
+    plan IDs via mavat.iplan.gov.il or tabanow.co.il, then verify each URL. iplan MapServer
+    layers return attributes but geometry is disabled server-side — this store is the
+    workaround.
 
 osm_overpass:
   kind: overpass

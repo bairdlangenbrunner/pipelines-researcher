@@ -87,13 +87,19 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
 ## Public GIS endpoints (route geometry — §8 route creation)
 
 Machine-fetchable GIS layers for candidate route geometry, registered in
-`sources/gis_endpoints.yml` (name, kind `arcgis`|`overpass`, url, coverage,
+`sources/gis_endpoints.yml` (name, kind `arcgis`|`overpass`|`download`, url, coverage,
 commodities, license, notes). Fetched by `fetch_arcgis.py` / `fetch_overpass.py`; new
 endpoints found during a run get appended there + a line here.
 
 - **Texas RRC**, **BOEM** (US onshore/offshore) — ArcGIS REST; seeded as entries with
   an empty `url` + portal/discovery notes (no guessed FeatureServer paths — standing
   rule 2). **NPMS** blocks bulk export → human cross-check only, not an entry.
+- **Israel Land Registry plan store** (`israel_itur_tabot`) — statutory-plan (תמ"א/תב"ע)
+  GIS bundles at `apps.land.gov.il/IturTabotData/download/<bucket>/<planID>.zip`: scanned
+  blueprint JPG + JGW world file (EPSG:2039) = exact georeferencing, no GCP fit. Verified
+  2026-07-23 (plan 1053432, TAMA 37/A/2/7 Ashdod–Ashkelon). Israeli **Notices to Mariners**
+  (רספ"ן; official gov.il pages Cloudflare-403, mirrors work) publish pipe-lay corridors as
+  coordinate polygons — a citable vector source for offshore lines (NtM 113/2024 precedent).
 - **OSM (Overpass)** — `man_made=pipeline`; every feature carries ODbL provenance.
   **Caution:** ODbL is a share-alike license; whether it's acceptable for a GEM tracker
   is **Baird's review call**, surfaced end-to-end (workbook License column), never

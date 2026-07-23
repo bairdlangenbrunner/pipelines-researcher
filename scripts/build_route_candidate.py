@@ -20,7 +20,7 @@ source or a fitted georeference; endpoints coords must be independently sourced
 
 Usage examples:
   python scripts/build_route_candidate.py --pid P7597 --commodity gas \\
-      --staging batches/staging/route-creation-gas-egypt/ --method sidecar --ref-id gulfpub:gas:409
+      --staging batches/egypt-gas/staging/route-creation/ --method sidecar --ref-id gulfpub:gas:409
   python scripts/build_route_candidate.py --pid P0436 --commodity gas --staging <dir> \\
       --method endpoints --start 33.7984,31.1313 --end 34.8967,29.4917 \\
       --start-ref https://... --end-ref https://... --replace --densify-km 20
@@ -45,7 +45,7 @@ METHOD_ACCURACY = {
     "traced": "medium", "endpoints": "low",
 }
 METHOD_LABEL = {  # candidates.json / staged record method tag
-    "sidecar": "gulfpub_sidecar", "gis": "arcgis", "osm": "osm",
+    "sidecar": "gulfpub_sidecar", "gis": "gis_vector", "osm": "osm",
     "traced": "digitized", "endpoints": "endpoints_greatcircle",
 }
 
@@ -144,8 +144,8 @@ def _osm_provenance(fc: dict) -> dict | None:
 
 def _sidecar_geom(ref_id: str) -> tuple[dict | None, dict]:
     """Find geometry for a gulfpub ref_id across recon-run sidecars. -> (geom, source)."""
-    recon = paths.repo_root() / "batches" / "staging" / "recon"
-    for run in sorted(recon.glob("*")):
+    batches = paths.repo_root() / "batches"
+    for run in sorted(batches.glob("*/staging/recon-*")):
         sc = run / "geometry_sidecar.json"
         if not sc.exists():
             continue
@@ -166,7 +166,7 @@ def _sidecar_geom(ref_id: str) -> tuple[dict | None, dict]:
                 except Exception:  # noqa: BLE001
                     pass
             return data[ref_id], {"name": "GulfPub PE World Map", "ref_id": ref_id,
-                                  "recon_dir": run.name, "url": src_url,
+                                  "recon_dir": f"{run.parent.parent.name}/{run.name}", "url": src_url,
                                   "license": "GulfPub (tier-2 scraped route DB)"}
     return None, {}
 
@@ -235,7 +235,7 @@ def _route_record(pid: str, commodity: str, method: str, geom: dict, gj_name: st
                   source: dict, georef: dict | None, replacement: bool,
                   sig: dict, qc: dict, endpoints: dict, notes: str,
                   start_ref: str, end_ref: str, wl: dict | None,
-                  packet: str = "") -> dict:
+                  packet: str = "", suggested_accuracy: str | None = None) -> dict:
     refs = [r for r in (start_ref, end_ref) if r]
     wl = wl or {}
     rows = wl.get("sheet_rows") or []
@@ -256,7 +256,7 @@ def _route_record(pid: str, commodity: str, method: str, geom: dict, gj_name: st
         "length_km": length_km, "sheet_length_km": sheet_km,
         "length_ratio": round(length_km / sheet_km, 3) if (length_km and sheet_km) else None,
         "current_route_accuracy": wl.get("current_route_accuracy", ""),
-        "suggested_route_accuracy": METHOD_ACCURACY[method],
+        "suggested_route_accuracy": suggested_accuracy or METHOD_ACCURACY[method],
         "start_name": endpoints.get("start", {}).get("name", ""),
         "start_lon": endpoints.get("start", {}).get("lon"),
         "start_lat": endpoints.get("start", {}).get("lat"),
@@ -349,6 +349,10 @@ def main() -> None:
     ap.add_argument("--snap-end", help="lon,lat snap target for the end endpoint")
     ap.add_argument("--snap-max-km", type=float, default=10.0)
     # framing / provenance
+    ap.add_argument("--accuracy", choices=["high", "medium", "low"],
+                    help="downgrade the suggested RouteAccuracy below the method cap "
+                         "(e.g. a corridor midline from a gis vector source earns medium, "
+                         "not high); never allowed to exceed METHOD_ACCURACY[method]")
     ap.add_argument("--replace", action="store_true", help="frame as a route replacement")
     ap.add_argument("--source-url", default="")
     ap.add_argument("--source-name", default="")
@@ -357,6 +361,12 @@ def main() -> None:
                     "into the digitization packet when registration fails")
     ap.add_argument("--gcps", default="", help="(traced) gcps.json used — copied into the packet")
     args = ap.parse_args()
+
+    _rank = {"low": 0, "medium": 1, "high": 2}
+    if args.accuracy and _rank[args.accuracy] > _rank[METHOD_ACCURACY[args.method]]:
+        raise SystemExit(f"--accuracy {args.accuracy} exceeds the {args.method} "
+                         f"method cap '{METHOD_ACCURACY[args.method]}'")
+    sugg_accuracy = args.accuracy or METHOD_ACCURACY[args.method]
 
     staging = Path(args.staging)
     (staging / "candidate_routes").mkdir(parents=True, exist_ok=True)
@@ -487,7 +497,7 @@ def main() -> None:
         "length_km": length_km, "sheet_length_km": sheet_km,
         "length_ratio": round(length_km / sheet_km, 3) if sheet_km else None,
         "current_route_accuracy": (wl or {}).get("current_route_accuracy", ""),
-        "suggested_route_accuracy": METHOD_ACCURACY[args.method],
+        "suggested_route_accuracy": sugg_accuracy,
         "replacement": replacement, "geometry_signals": sig, "qc": qc,
         "packet": packet_rel,
         "facility_anchors": (wl or {}).get("facility_anchors", []),
@@ -501,12 +511,13 @@ def main() -> None:
 
     rec = _route_record(args.pid, args.commodity, args.method, geom, cand["geometry_file"],
                         source, georef, replacement, sig, qc, endpoints,
-                        " ".join(notes_bits), args.start_ref, args.end_ref, wl, packet_rel)
+                        " ".join(notes_bits), args.start_ref, args.end_ref, wl, packet_rel,
+                        suggested_accuracy=sugg_accuracy)
     _upsert(staging / "staged_resolutions.json", args.pid, rec, "resolutions", scope_meta)
 
     flag = "PASS" if qc["passed"] else "FAIL"
     print(f"{args.pid} [{METHOD_LABEL[args.method]}] → {gj_path.name}: {length_km} km, "
-          f"accuracy '{METHOD_ACCURACY[args.method]}', gate {flag}"
+          f"accuracy '{sugg_accuracy}', gate {flag}"
           + (f", replacement (iou={sig.get('iou')})" if replacement else ""))
     if packet_rel:
         print(f"  → digitization packet staged at {staging / packet_rel} "
