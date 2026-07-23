@@ -37,7 +37,6 @@ applied). See docs/workflows.md "Batch artifacts".
 ## israel-gas
 
 - `staging/new-row-p8000` [new-row] — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=1)
-- `staging/route-creation-p3620-p3657` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none)
 - `deliverables/pipelines_batch_20260722_1301_ET_israel-egypt-gas_p8000-new-row.xlsx`
 - `deliverables/pipelines_batch_20260722_1301_ET_israel-egypt-gas_p8000-wiki.txt`
 - `deliverables/pipelines_batch_20260723_1105_ET_israel-gas_route-creation.xlsx`
