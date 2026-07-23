@@ -28,7 +28,7 @@ overwrite a staged_resolutions.json that already holds merged validity/fills).
 
 Usage:
   python scripts/build_qc_staging.py --csv data/GGIT_gas_snapshot_<date>.csv \
-      --country Egypt --commodity gas --staging batches/staging/qc-gas-egypt/ \
+      --country Egypt --commodity gas --staging batches/egypt-gas/staging/qc/ \
       [--pids ...] [--staged-dir <dir> ...]
 """
 from __future__ import annotations

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ingest a registered reference dataset into canonical records.
 
-    python scripts/ingest.py --source gulfpub --commodity both --out batches/staging/recon/<run>/
+    python scripts/ingest.py --source gulfpub --commodity both --out batches/<scope>/staging/recon-<source>-<date>/
 
 Reads sources/<source>/manifest.yml (validated against the manifest schema), runs
 the declarative loader (or the source's adapter.py), and writes:

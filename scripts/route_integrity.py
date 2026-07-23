@@ -33,7 +33,7 @@ Output: <staging>/route_integrity.json, records per the ROUTEQC class
 
 Usage:
   python scripts/route_integrity.py --csv data/GGIT_gas_snapshot_<date>.csv \
-      --country Egypt --commodity gas --staging batches/staging/qc-gas-egypt/ \
+      --country Egypt --commodity gas --staging batches/egypt-gas/staging/qc/ \
       [--pids P3620,P0462] [--staged-dir <dir> ...]
 """
 from __future__ import annotations
@@ -84,7 +84,9 @@ def _record(row: dict, check: str, measured, expected, detail: str,
     }
 
 
-def _load_boundaries():
+def load_boundaries():
+    """Natural Earth 1:50m admin-0 GeoDataFrame with a normalized country column.
+    Public: shared by route_integrity and validate_route_candidate (§8 gate)."""
     import geopandas as gpd
     gdf = gpd.read_file(BOUNDARIES)[["NAME", "NAME_LONG", "geometry"]]
     gdf["country_norm"] = gdf["NAME"].map(normalize_country)
@@ -114,7 +116,7 @@ def _lines_only(shp) -> dict | None:
     return {"type": "MultiLineString", "coordinates": parts}
 
 
-def _landfall_countries(geom: dict, boundaries, min_km: float) -> dict[str, float]:
+def landfall_countries(geom: dict, boundaries, min_km: float) -> dict[str, float]:
     """{normalized country -> km of the line inside its polygon}, >= min_km only."""
     from shapely.geometry import shape
     line = shape(geom)
@@ -130,7 +132,7 @@ def _landfall_countries(geom: dict, boundaries, min_km: float) -> dict[str, floa
     return out
 
 
-def _point_country(pt, boundaries) -> str:
+def point_country(pt, boundaries) -> str:
     """Normalized country a lon/lat point falls in, '' if offshore."""
     from shapely.geometry import Point
     p = Point(pt[0], pt[1])
@@ -202,7 +204,7 @@ def check_row(row: dict, commodity: str, boundaries, ctx) -> tuple[list[dict], b
         c = normalize_country(_s(row.get(col)))
         if c:
             expected.add(c)
-    landfalls = _landfall_countries(geom, boundaries, MIN_LANDFALL_KM)
+    landfalls = landfall_countries(geom, boundaries, MIN_LANDFALL_KM)
     unlisted = {c: km for c, km in landfalls.items() if c not in expected}
     if unlisted and expected:
         recs.append(_record(
@@ -221,7 +223,7 @@ def check_row(row: dict, commodity: str, boundaries, ctx) -> tuple[list[dict], b
         for label, pt in zip(("first", "last"), ep):
             if not pt:
                 continue
-            pc = _point_country(pt, boundaries)
+            pc = point_country(pt, boundaries)
             if pc and pc not in allowed:
                 recs.append(_record(
                     row, "endpoint_country",
@@ -259,7 +261,7 @@ def main() -> None:
     staged_dirs = args.staged_dir or discover_staging_dirs(
         args.country, args.commodity, exclude=[args.staging])
     ctx = load_staged_context(staged_dirs)
-    boundaries = _load_boundaries()
+    boundaries = load_boundaries()
 
     records: list[dict] = []
     n_with_geom = 0

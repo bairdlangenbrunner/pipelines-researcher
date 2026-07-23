@@ -95,7 +95,7 @@ disagree badly → `Route_Conflicts`, not a replacement.
 - Honor standing rules: never cite GEM, never fabricate URLs, corroborate (the
   reference is one source — a single Tier-2 dataset never reaches green alone).
 
-## Audit trail (`batches/staging/recon/<source>_<scope>_<YYYYMMDD>/`)
+## Audit trail (`batches/<scope>/staging/recon-<source>-<YYYYMMDD>/`)
 
 Committed (agent-authored): `staged_recon_verdicts.json`,
 `staged_report_only_resolutions.json` (a reference-only row confirmed as an existing

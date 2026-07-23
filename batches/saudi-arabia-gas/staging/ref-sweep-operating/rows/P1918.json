@@ -1,0 +1,116 @@
+{
+  "project_id": "P1918",
+  "pipeline_name": "Haradh Khuff-Hawiyah 2 Gas Pipeline",
+  "sheet_row": 2937,
+  "wiki": "https://www.gem.wiki/Haradh_Khuff-Hawiyah_2_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Human de-dup review of the P1917/P1918/P1919 triplet: confirm with an independent source (Aramco/EPC record) that three parallel Haradh Khuff->Hawiyah lines physically exist; if not, collapse the '2'/'3' rows or mark them as parallel loops of one project. Do NOT auto-apply.",
+      "researcher_notes": "TRACED THE ORIGIN. The gem.wiki page for this row cites exactly one source: OPEC Annual Statistical Bulletin 2012, p.75 (the live opec.org PDF link is now dead — 302s to the OPEC homepage, returns an HTML shell, so it is both generic and rotted). I recovered the actual table from the ASB2013 Wayback snapshot: Table 4.10 'Gas pipelines in OPEC Members, 2012'. That single OPEC table is the origin of the ENTIRE GEM Saudi gas operating roster (every roster row maps 1:1 to a line there; lengths are in MILES, GEM converted to km). Critically, the table lists 'Haradh Khuff/Hawiyah | Saudi Aramco | 27 | 30' THREE TIMES consecutively, byte-identical (same length, same diameter, no capacity, no distinguishing attribute). GEM faithfully split those three identical rows into P1917 ('), P1918 ('2') and P1919 ('3') — the '2' suffix is a GEM-assigned label, not an OPEC name. Consequence: P1918 has NO independent basis as a pipeline distinct from P1917/P1919. Its sole support is one of three indistinguishable repetitions in a single source. These may be three genuine parallel Khuff-gas loops (Aramco routinely builds parallel loops), or the OPEC table simply repeated the row — I could not find any independent source (Aramco, MEED, Zawya, Argaam, trade press) that separately attests to three parallel Haradh Khuff->Hawiyah lines or that names a discrete '#2'. So this is flagged for human de-dup, not auto-resolved.",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html"],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct the location fields: End should be the Hawiyah Gas Plant in EASTERN PROVINCE (not Makkah); Start should be Haradh (Khuff-gas gathering area, southern Ghawar, Eastern Province) rather than blank. The current EndState/Province='Makkah' is a mis-assignment.",
+      "researcher_notes": "The sheet has StartLocation blank and End='Al Hawiyah' with EndState/Province='Makkah'. That province is WRONG. Independent sources (Saudipedia; OGJ/Arab News coverage of the 2007 Haradh gas-pipeline explosion; the Ghawar geography) place the Hawiyah Gas Plant — which recovers non-associated Khuff/Jawf sour gas — in the Eastern Province, in the Hawiyah sector of the Ghawar field (~24.80N, 49.39E), NOT in the Makkah region. 'Al Hawiyah' + Makkah appears to be a conflation with the Taif-area town of Al Hawiyah / the separate Madrakah-Al Hawiyah line (P3961). OPEC's Table 4.10 names the endpoints 'Haradh Khuff' -> 'Hawiyah', i.e. from the Haradh Khuff gas area (southern Ghawar) to the Hawiyah gas plant — both Eastern Province. The 2007 explosion (an Aramco Khuff-gas line 'near Haradh gas plant, ~30 km off the Hawiyah gas plant') independently confirms real Haradh<->Hawiyah Khuff-gas trunk infrastructure exists.",
+      "proposed_refs": ["https://saudipedia.com/en/article/1043/economy-and-business/energy-and-natural-resources/hawiyah-gas-plant", "https://www.ogj.com/pipelines-transportation/article/17286212/saudi-gas-pipeline-fire-kills-at-least-28"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Keep length/diameter/operator/fuel as-is but record that they rest on a single source (OPEC ASB, 2012 data). Capacity remains blank — no independent value found; leave blank rather than invent. Status 'operating' is 2012-vintage; still plausible for an established line.",
+      "researcher_notes": "Specs corroborate against the OPEC origin table (single but authoritative source): Length 27 mi = 43.45 km ≈ GEM 43.00 km OK; Diameter 30 in matches OPEC OK; carried in OPEC's GAS-pipelines table and Hawiyah plant processes non-associated Khuff gas, so Fuel='Gas' and classification as a gas line are correct (it is a field-to-plant gas trunk/feeder rather than a long-haul transmission trunk — noted, but a legitimate gas-tracker entry); Owner/operator 'Saudi Aramco' matches OPEC. No SECOND independent source reproduces the 43 km / 30 in figures (all other web hits parrot GEM), so specs are single-source medium at best. Capacity is blank in GEM and 'na' in OPEC — not fillable.",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "", "sheet_row": 2937, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html"],
+      "verifications": [{"url": "http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "OPEC ASB Table 4.10 lists the line among operating Saudi gas pipelines (2012 data). Single official source; status is dated but plausible for an established Aramco Khuff-gas line."
+    },
+    {
+      "segment_name": "", "sheet_row": 2937, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html", "https://saudipedia.com/en/article/1043/economy-and-business/energy-and-natural-resources/hawiyah-gas-plant"],
+      "verifications": [{"url": "http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html", "ok": true, "contains_value": true}, {"url": "https://saudipedia.com/en/article/1043/economy-and-business/energy-and-natural-resources/hawiyah-gas-plant", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "OPEC lists it in the GAS-pipelines table; Saudipedia independently confirms Hawiyah plant recovers non-associated Khuff sour gas. Two independent sources agree it is a gas line."
+    },
+    {
+      "segment_name": "", "sheet_row": 2937, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "43.00", "LengthKnownUnits": "km"}, "primary_value": "43.00",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html"],
+      "verifications": [{"url": "http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "OPEC ASB Table 4.10 gives 27 miles = 43.45 km, matching GEM 43.00 km. Single-source; no independent second source reproduces the figure."
+    },
+    {
+      "segment_name": "", "sheet_row": 2937, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "30", "DiameterUnits": "in"}, "primary_value": "30",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html"],
+      "verifications": [{"url": "http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "OPEC ASB Table 4.10 gives 30 in, matching GEM. Single-source."
+    },
+    {
+      "segment_name": "", "sheet_row": 1451, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1",
+      "values": {"Owner1": "Saudi Aramco", "Owner1%": "100.00%"}, "primary_value": "Saudi Aramco",
+      "proposed_refs": ["http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html"],
+      "verifications": [{"url": "http://web.archive.org/web/20210712202856/https://www.opec.org/opec_web/flipbook/ASB2013/ASB2013/assets/basic-html/page79.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "OPEC Table 4.10 lists 'Saudi Aramco' as owner/operator; consistent with all Aramco-run Ghawar Khuff-gas infrastructure. Owners/operators tab (oo_sheet_row 1451)."
+    },
+    {
+      "segment_name": "", "sheet_row": 2937, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "EndLocation", "EndState/Province"],
+      "primary_value_col": "EndState/Province", "values": {"EndState/Province": "Eastern Province"},
+      "primary_value": "Eastern Province",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Not staging a ref onto the CURRENT location values because EndState/Province='Makkah' is wrong (see attribution concern) — the Hawiyah Gas Plant is Eastern Province. Recommend a human correction (End='Hawiyah Gas Plant', EndState='Eastern Province'; Start='Haradh', Eastern Province) before any Location [ref] is attached. Left UNRESOLVED to avoid an orphan/endorsing ref on wrong values."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "",
+      "start_name": "Haradh Khuff gas gathering area, southern Ghawar (near Haradh Gas Plant), Eastern Province",
+      "start_lat": 24.14, "start_lon": 49.07,
+      "end_name": "Hawiyah Gas Plant, Hawiyah sector of Ghawar, Eastern Province",
+      "end_lat": 24.80, "end_lon": 49.39,
+      "waypoints": [],
+      "corridor_desc": "Runs north/north-east through the southern-to-central Ghawar field in Saudi Arabia's Eastern Province, from the Haradh Khuff non-associated-gas area up to the Hawiyah gas plant. OPEC gives 27 mi (~43 km); note the straight-line distance from Haradh TOWN (24.14,49.07) to the Hawiyah plant (24.80,49.39) is ~78 km, longer than 43 km — so the true 'Haradh Khuff' start is a Khuff-gas gathering point roughly 40 km south of the Hawiyah plant (consistent with the 2007 explosion being 'near Haradh gas plant, ~30 km off the Hawiyah gas plant'), not Haradh town itself. Corridor is therefore well-bounded (southern Ghawar, Eastern Province) but the exact endpoints are not pinned to meters.",
+      "current_route_accuracy": "medium",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": ["https://saudipedia.com/en/article/1043/economy-and-business/energy-and-natural-resources/hawiyah-gas-plant", "https://www.ogj.com/pipelines-transportation/article/17286212/saudi-gas-pipeline-fire-kills-at-least-28"],
+      "verifications": [{"url": "https://saudipedia.com/en/article/1043/economy-and-business/energy-and-natural-resources/hawiyah-gas-plant", "ok": true, "contains_value": true}, {"url": "https://www.ogj.com/pipelines-transportation/article/17286212/saudi-gas-pipeline-fire-kills-at-least-28", "ok": true, "contains_value": true}],
+      "tier": "low", "source_language": "en",
+      "researcher_notes": "End (Hawiyah Gas Plant) is well-sourced to the Hawiyah sector of Ghawar, Eastern Province (~24.80N,49.39E from the Hawiyah gas field/plant). Start coord uses Haradh town (24.14,49.07, well-established) as a defensible anchor but is flagged approximate/too-far-south per the 43 km length; no independent source pins the exact Khuff-gas gathering start, so lat/lon there is approximate not surveyed. No coordinates fabricated — both are tied to named, sourced places; corridor confidence is low because exact endpoints and the routing are not independently mapped."
+    }
+  ],
+  "summary": "P1918 traces solely to one OPEC ASB table that lists 'Haradh Khuff/Hawiyah' 3x identically (=P1917/18/19): duplicate + attribution (EndProvince 'Makkah' wrong -> Eastern Province) concerns; specs (43km/30in/Aramco/gas) confirmed single-source medium; capacity unresolved."
+}

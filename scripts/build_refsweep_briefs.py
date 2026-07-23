@@ -16,7 +16,7 @@ Default scope = the gap classes (UNRESOLVED, DEAD_LINK). Pass --classes to widen
 also re-verify REVERIFIED) or narrow.
 
 Usage:
-    python scripts/build_refsweep_briefs.py --staging batches/staging/annual-gas-iraq/
+    python scripts/build_refsweep_briefs.py --staging batches/iraq-gas/staging/annual/
 """
 import argparse, json, os, collections
 

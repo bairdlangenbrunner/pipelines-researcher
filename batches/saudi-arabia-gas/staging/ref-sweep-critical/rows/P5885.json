@@ -1,0 +1,46 @@
+{
+  "project_id": "P5885",
+  "pipeline_name": "MGS III Gas Pipelines",
+  "sheet_row": 3359,
+  "wiki": "https://www.gem.wiki/MGS_III_Gas_Pipelines",
+  "validity": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as the network-level parent row. Flag the 4000 km / $8.8B figures as program AGGREGATES that overlap with the summed lengths of segment rows P6717-P6737 under the same name; ensure downstream length/cost totals do not double-count the parent against its segments.",
+      "researcher_notes": "EXISTENCE: Confirmed real and independently documented. P5885 is the SYSTEM/NETWORK parent row for Aramco's Master Gas System Phase 3 (MGS-3) expansion. Independent (non-GEM) coverage from Oilfield Technology, JPT/SPE, Pipeline Journal, World Oil and MEED all describe the same project. Not a GEM-only entity. CLASSIFICATION: Correct. The Master Gas System is Aramco's national DRY/SALES-gas TRANSMISSION network (connects key gas production/processing sites and delivers processed natural gas to domestic customers/power generation since 1982); 'Fuel=Gas' and 'PipelineType=transmission' are right. SPEC checks vs GEM: Length 4000 km -> CONFIRMED by >=3 independent sources ('around 4000 km of pipelines'; Pipeline Journal '4,000 kilometers of new pipelines'). Cost $8.8B (8800000000 USD) -> CONFIRMED ('15 lump sum turnkey contracts worth a combined total of around $8.8 billion'); note the widely-cited $25B is the COMBINED Jafurah+MGS figure, while $8.8B is specifically the MGS-3 LSTK contracts - GEM has it right. Added capacity 3.15 bscfd by 2028 and 17 new gas compression trains -> corroborated. StartYear1=2028 -> CONFIRMED as the completion/in-service year (project scheduled for completion Q4 2028; construction began Q2 2024); acceptable since GEM uses StartYear for the operational date. Location both ends = Saudi Arabia -> correct (national network; specific endpoints intentionally blank at network level). DUPLICATE: P6717-P6737 share the name 'MGS III Gas Pipelines' but are the individual constituent SEGMENTS of this same program, not relabels of P5885 - this is intended GEM network/segment granularity, not a true duplicate. Only caveat: the 4000 km and $8.8B are program-wide aggregates, so they overlap with the sum of the segment rows and should not be added together in any roll-up. Existing primary ref (aramco.com $25bn release) is valid in content but timed out repeatedly in url_verifier (ReadTimeout, not a 404) - replaced/backed by verified independent refs below.",
+      "proposed_refs": [
+        "https://www.oilfieldtechnology.com/drilling-and-production/01072024/aramcos-strategic-gas-expansion-progresses/",
+        "https://jpt.spe.org/aramco-awards-25-billion-in-contracts-as-jafurah-shale-and-master-gas-system-expansion-enters-next-phase",
+        "https://www.pipeline-journal.net/news/aramco-inks-25-billion-deals-boost-gas-output-construct-4000-km-gas-pipelines"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 3359,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartCountryOrArea",
+      "values": {"StartCountryOrArea": "Saudi Arabia", "EndCountryOrArea": "Saudi Arabia"},
+      "primary_value": "Saudi Arabia",
+      "proposed_refs": [
+        "https://www.oilfieldtechnology.com/drilling-and-production/01072024/aramcos-strategic-gas-expansion-progresses/"
+      ],
+      "verifications": [
+        {"url": "https://www.oilfieldtechnology.com/drilling-and-production/01072024/aramcos-strategic-gas-expansion-progresses/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Location [ref] was MISSING. Filled the existing-blank country ref: MGS-3 is wholly within Saudi Arabia ('delivers natural gas to customers across the Kingdom of Saudi Arabia'). Did NOT fabricate specific Start/End endpoint locations - they remain blank as appropriate for a national network-level parent row."
+    }
+  ],
+  "summary": "P5885 MGS III (Master Gas System Phase 3) network row: real, correctly classified gas transmission, all key specs (4000 km, $8.8B, 2028, 3.15 bscfd) confirmed by >=3 independent sources; only caveat is the aggregate figures overlap with segment rows P6717-P6737."
+}

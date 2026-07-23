@@ -9,16 +9,19 @@ MENA deep-coverage country (GGIT gas focus so far). Gas packet legs:
   independently re-vetted at delivery, one downgraded). See "Discovery (Leg B)" below.
 - **Sheet↔wiki↔route QC legs (handoff-packet pilot, researcher onboarding; workflows.md §6)** — delivered
   `pipelines_batch_20260715_1442_ET_egypt-gas_qc.xlsx` (57 rows; staging
-  `batches/staging/qc-gas-egypt/`): 12-row `Gas_Existence` tracking review (5 existence
+  `batches/egypt-gas/staging/qc/`): 12-row `Gas_Existence` tracking review (5 existence
   + 7 duplicate concerns carried from the prior staged packets — read first), 152 wiki
   diffs (77 WIKI_UPDATE / 67 SHEET_SUSPECT / 7 stale-vs-staged / 1 UNPARSED = P7864, no
   Wiki URL), 13 route length-ratio flags (11 already staged-annotated), 63 mechanical
   flags (incl. 38 `Existence_support` thin-ref flags, ALL covered by the prior
   existence audit), 14-row Leg-3 research → 21 validity + 10 fills.
   See "Open items — QC packet" below.
-- **Handoff packet (regenerated 2026-07-16 as the two-file split)** — delivered
-  `pipelines_batch_20260716_1156_ET_egypt-gas_handoff-actions.xlsx` +
-  `…-evidence.xlsx` (same staging dir, `staged_actions.json` sidecar): **THE
+- **Handoff packet (regenerated 2026-07-16 as the two-file split; rebuilt same day
+  to drop the `SheetRow` locator from `Gas_AllFillsBackend` so all columns paste
+  1:1)** — delivered
+  `pipelines_batch_20260716_2359_ET_egypt-gas_handoff-actions.xlsx` +
+  `…-evidence.xlsx` (same staging dir, `staged_actions.json` sidecar; supersedes
+  the 1156 pair): **THE
   researcher deliverable** — supersedes working from the four workbooks above (and the
   earlier single-file 0959 handoff). The ACTIONS file holds only suggested changes +
   open issues: 79 open decisions (`Gas_Decisions`, high-concern first), 1 status change

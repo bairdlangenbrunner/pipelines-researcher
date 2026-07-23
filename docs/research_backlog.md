@@ -24,13 +24,14 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 | Thread | State | Source |
 |---|---|---|
 | **Egypt oil (GOIT)** | never swept | `docs/country_notes/egypt.md` |
-| **Saudi oil ref-sweep** | 3-row validation slice (2026-06-08) + 10-row batch staged; partial toward intended 50-row run | `batches/staging/ref-sweep-saudi-arabia{,-10row}/`; `docs/country_notes/saudi-arabia.md` |
+| **Saudi oil ref-sweep** | 3-row validation slice (2026-06-08) + 10-row batch staged; partial toward intended 50-row run | `batches/saudi-arabia-oil/staging/ref-sweep{,-10row}/`; `docs/country_notes/saudi-arabia.md` |
 | **Saudi GulfPub route-consistency pass** | low/medium-accuracy matches not finished; route-replacement candidates not staged | `docs/country_notes/saudi-arabia.md` |
 | **GulfPub route-comparison QC leg** | not started — Baird explicitly wants this later: extend the handoff packet's route-integrity leg to compare drawn routes against GulfPub *geometries* (ties into the unfinished Saudi route-consistency pass above). Distinct from the sweep's `gulfpub` *attribute* crosswalk, which IS built and shipping (`build_gulfpub_crosswalk.py`) | `docs/workflows.md` §6; `docs/sops/qc.md` |
 | **Handoff-packet rollout (researcher onboarding, Arabic-speaking gas)** | Egypt is the pilot (2026-07-15); next candidates by GGIT row count: Algeria 126, Qatar 59, UAE 39, Libya 38, Oman 23, Tunisia 21 | `docs/workflows.md` §6; `docs/country_notes/egypt.md` |
 | **Nigeria divestiture ownership sweep** | not started | `docs/country_notes/nigeria.md` |
 | **United States** | deepwater-export terminal open item; 131-row Stage A queue slot unstarted | `docs/country_notes/united-states.md`; plan doc |
 | **Iraq oil open items** | Grand Faw third offshore line (Esta/Micoperi) length/diameter/route; P0544 Basra–Haditha status review | `docs/country_notes/iraq.md`; CLAUDE.md |
+| **Israel gas: Ashdod–Ashkelon onshore gap (P3620)** | §8 route candidate (2026-07-23) covers only the Ashdod ~1.5 km; the Ashkelon-side ~2.4 km onshore run has no public vector yet (OSM empty, TAMA 37/A/2/7 blueprint sheets cover Ashdod only) — need the Ashkelon-side statutory sheet or an INGL/permit map before the candidate can pass the length gate. P3657 candidate is complete (gate PASS) | `batches/israel-gas/staging/route-creation-p3620-p3657/README.md` |
 | **Iran general open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md`; CLAUDE.md |
 | **LNG carrier quarterly reconciliation** | "designed and partially executed" vs SFOC data; referenced `instructions.md` methodology is **not in this repo** — orphaned | `docs/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
 
@@ -58,9 +59,9 @@ signal of application status.
   `docs/country_notes/egypt.md`.
 - **US oil: Delaware Express** (P7995/P0354, researched 2026-06-12) and
   **Permian Express I–IV** (P0113/P2581/P2660/P2661, researched 2026-06-11) —
-  `batches/staging/{delaware,permian}-express/staged_updates.json`.
+  `batches/united-states-oil/staging/update-{delaware,permian}-express/staged_updates.json`.
 - **Saudi oil ref-sweep 10-row batch** (108 units: 67 REFS_ADDED / 25 DEAD_LINK /
-  10 REVERIFIED / 6 UNRESOLVED) — `batches/staging/ref-sweep-saudi-arabia-10row/`.
+  10 REVERIFIED / 6 UNRESOLVED) — `batches/saudi-arabia-oil/staging/ref-sweep-10row/`.
 
 ## 4. Decisions needed from Baird
 

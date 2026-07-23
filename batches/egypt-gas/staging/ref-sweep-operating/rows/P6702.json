@@ -1,0 +1,91 @@
+{
+  "project_id": "P6702",
+  "pipeline_name": "South Valley Gas Pipeline",
+  "sheet_row": 3985,
+  "wiki": "https://www.gem.wiki/South_Valley_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Girga-Aswan Gas pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Keep current Length/Diameter/Status/Endpoints as-is; the 390km/Girga figure is actually better corroborated than the system's auto-flag suggested. No action required beyond adding the refs below.",
+      "researcher_notes": "EXISTENCE: strongly confirmed. This is the 6th/final construction stage of the South Valley Gas Pipeline (Dahshour->Aswan, 930km total, 6 phases), extending gas service to Aswan for the first time. Confirmed by: (1) almasryalyoum.com Arabic article (2010-12-29, 'Mubarak yaftatih khatt ghaz al-Sa'id fi Aswan al-khamis') already cited by the sheet -- read in full; it gives a phase-by-phase breakdown of ALL SIX stages and explicitly states phase 6 = 'al-marhala al-sadisa wal-akhira allati tamtaddu bayna Girga ila muhafazat Aswan bi-tul 390 km wa qutr 30 busa, allati tamma al-intihaa minha fi Nofembr 2009' = 'the sixth and final phase extending between Girga and Aswan governorate, 390km, 30in diameter, which was completed in November 2009' -- an EXACT match to GEM's Girga->Aswan / 390km / 30in / StartYear 2009. This is a segment-specific citation, not a generic backlink (the system's automated Status-value check failed only because it searched literally for the English word 'operating' in an Arabic page -- false negative; the Arabic text confirms completion + start of gas delivery). (2) Independent English trade press -- The Australian Pipeliner (2009-09-23, verified) and Petroleum Africa (2011-01-03, verified) both describe the SAME final stage as '408 km of 30 inch diameter pipeline from Sohag to Aswan.' These two appear to share one underlying wire story (near-identical phase-by-phase language), so they count as one lineage, not two independent corroborations -- but they do independently corroborate diameter (30in) and 'final stage terminates at Aswan.' CLASSIFICATION: correct -- gas transmission trunk, not gathering/plant-internal. DUPLICATE: none found in the 30-row Egypt-gas-operating roster; P6697-P6702 are six sequential, non-overlapping phases of one physical corridor (Dahshour->Aswan), which is GEM's existing intentional segment-level convention, not a double-count. SPEC CAVEAT: GulfPub's independent scrape (Dec-2025 SDE) lists a 'South Valley Gas Pipeline, Gerga->Aswan' record with dia=30.0 and len_km=242 -- the auto-flag read this as a 38% length delta vs GEM's 390km. On inspection, this is very likely a unit-mislabeling artifact in GulfPub, not a real disagreement: EVERY one of GulfPub's six South Valley segments is ~1.61x shorter than GEM's corresponding segment (242 vs 390, 75 vs 121, 91 vs 147, 93 vs 150, 19 vs 30, 56 vs 90) -- i.e. GulfPub's 'len_km' values are almost exactly miles (242mi x 1.609344 = 389.5km, matching GEM's 390km to <0.2%; same pattern holds for all 6 segments within 1%). GulfPub's total (576 as-labeled) also fails to match the well-corroborated 930km whole-project total (both almasryalyoum and Pipeliner independently state '930 km'/'$9.3B for 930km'), while 576mi=926.8km matches almost exactly. So GulfPub, once unit-corrected, is a SECOND independent corroboration of GEM's 390km, not a conflict -- the only genuine competing number is the 408km/Sohag-start figure from the Pipeliner/Petroleum-Africa wire lineage (a pre-completion estimate later reprinted without full correction). Given the exact match to the segment-specific 2010 source plus the unit-corrected GulfPub agreement, weight of evidence favors keeping GEM's current 390km/Girga value, but the 408km/Sohag-start variant should be visible to a human reviewer before any routes-repo work locks in an exact corridor length.",
+      "proposed_refs": ["https://www.almasryalyoum.com/news/details/103848"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "Girga-Aswan Gas pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Flag Owner/Operator for Update: research whether 'Nile Valley Gas Company' (the project company named across multiple independent sources) should be added as Operator, distinct from Owner1=Egyptian Natural Gas Holding Co (EGAS) at 100%.",
+      "researcher_notes": "GEM's Owner1 is 'Egyptian Natural Gas Holding Co' (EGAS) at 100%. The almasryalyoum source itself lists FIVE participating companies in construction of the main line -- EGAS, 'al-Qabidha li-Janoub al-Wadi' (South Valley Holding Co), GASCO, Petrojet, and Enppi -- not EGAS alone. Independently, The Australian Pipeliner (2009) states Petrojet built the pipeline 'for the Nile Valley Gas Company,' and GulfPub's scrape attributes operator='Nile Valley Gas Company' across all six South Valley segments including this one. 'Nile Valley Gas Company' / 'South Valley (Gas) Holding Co' plausibly names the same specific project-operating entity (likely an EGAS subsidiary/JV set up to run this corridor), distinct from EGAS as ultimate state holding parent. This doesn't necessarily make GEM's Owner wrong (EGAS may legitimately be the ultimate owner-of-record), but the Operator field (if populated) or a secondary owner note may be missing the entity that operationally runs the line day-to-day. Not fabricating a change -- flagging for Update's normal owner/operator research (entity_lookup.py dedup check first).",
+      "proposed_refs": ["https://www.pipeliner.com.au/internationalnews/upper-egypt-gas-pipeline-reaches-sohag/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Girga-Aswan Gas pipeline",
+      "sheet_row": 3985,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "390.00", "LengthKnownUnits": "km"},
+      "primary_value": "390.00",
+      "proposed_refs": ["https://www.almasryalyoum.com/news/details/103848"],
+      "verifications": [
+        {"url": "https://www.almasryalyoum.com/news/details/103848", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Source explicitly gives phase 6 as 'Girga to Aswan governorate, 390 km, 30in diameter' -- exact match. Cross-checked against GulfPub's Gerga->Aswan record (242, apparently mislabeled miles: 242mi x 1.609344=389.5km) as a second, unit-corrected corroboration; see validity notes."
+    },
+    {
+      "segment_name": "Girga-Aswan Gas pipeline",
+      "sheet_row": 3985,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Girga", "StartState/Province": "Sohag", "StartCountryOrArea": "Egypt", "EndLocation": "Aswan", "EndState/Province": "Aswan", "EndCountryOrArea": "Egypt"},
+      "primary_value": "Girga",
+      "proposed_refs": ["https://www.almasryalyoum.com/news/details/103848"],
+      "verifications": [
+        {"url": "https://www.almasryalyoum.com/news/details/103848", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Source names both endpoints specifically for this phase (Girga start, Aswan governorate end), matching GEM's Start/EndLocation and Start/EndState-Province exactly."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "Girga-Aswan Gas pipeline",
+      "start_name": "Girga, Sohag Governorate, Egypt",
+      "start_lat": 26.3352,
+      "start_lon": 31.8917,
+      "end_name": "Aswan, Aswan Governorate, Egypt",
+      "end_lat": 24.0889,
+      "end_lon": 32.8998,
+      "waypoints": [],
+      "corridor_desc": "Sourced endpoints are Girga (Sohag Governorate) and Aswan city/governorate, per the segment-specific 2010 almasryalyoum report and corroborated in general terms (final stage terminating at Aswan) by English trade press. No segment-specific waypoint list was found in any source checked. Geographically this stretch of the South Valley Gas Pipeline network must run south along the Nile Valley corridor through Qena and Luxor Governorates to reach Aswan (as the rest of the project does, per the ministry description of the pipeline paralleling the Nile Valley development corridor and crossing the Nile at three points somewhere along the full 930km route) -- but no source found specifies which bank, distance from the river/road, or exact crossing points for THIS phase specifically, so only city-to-city endpoints are given; no intermediate waypoint coordinates are asserted to avoid fabrication.",
+      "current_route_accuracy": "no route",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": ["https://www.almasryalyoum.com/news/details/103848"],
+      "verifications": [
+        {"url": "https://www.almasryalyoum.com/news/details/103848", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "source_language": "ar",
+      "researcher_notes": "Endpoint coordinates are standard city-center coordinates for Girga and Aswan (real, sourced places), not fabricated route geometry. No specific pass-through waypoints (e.g. Qena, Luxor) are asserted with coordinates because no source ties this specific pipeline segment's alignment to a named intermediate point -- only province-level corridor bound (Sohag/Girga -> Qena -> Luxor -> Aswan, following the Nile Valley) can be defended, hence suggested accuracy 'low' rather than 'medium'."
+    }
+  ],
+  "summary": "P6702 (South Valley Gas Pipeline, Girga-Aswan, 390km/30in) is confirmed real and correctly classified; sheet's existing Girga/390km/30in/2009 values are an exact match to a segment-specific 2010 Arabic source and, once a unit-mislabeling bug in GulfPub's scrape is corrected (miles mislabeled as km), independently corroborated a second time -- the system's auto-flagged '38% length delta' vs GulfPub is a false alarm. Two caveats staged: a competing 408km/Sohag-start figure from an older English wire-story lineage (weight of evidence favors GEM's current value), and an attribution question (Owner=EGAS 100% vs. 'Nile Valley Gas Company' named operator in 3 independent sources). Length and Location refs filled with the verified almasryalyoum source; route corridor suggested at 'low' accuracy (endpoints only, no sourced waypoints)."
+}

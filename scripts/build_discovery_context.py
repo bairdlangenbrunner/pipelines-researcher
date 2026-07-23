@@ -14,7 +14,7 @@ Writes <staging>/discovery_context.json and prints the workflow `args` JSON
 
 Usage:
     python scripts/build_discovery_context.py --tracker gas --country "Iraq" \
-        --staging batches/staging/annual-gas-iraq/
+        --staging batches/iraq-gas/staging/annual/
     # optionally --csv data/GGIT_gas_snapshot_<date>.csv (default: latest snapshot for the tracker)
 """
 import argparse, glob, json, os, sys

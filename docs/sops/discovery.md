@@ -29,7 +29,7 @@ Deep search + route-research rules live in the methodology,
 5. Collect all GEM columns with verified `[ref]` URLs for each discovery.
 6. `scripts/url_verifier.py` on all URLs; `scripts/entity_lookup.py` on every new
    owner/operator/parent.
-7. Stage `batches/staging/<scope-slug>/staged_new.json`; build
+7. Stage `batches/<scope>/staging/<run>/staged_new.json`; build
    `…_<scope>_discovery.xlsx` (new rows green-tinted); `recalc.py`; present.
 
 **Owner/operator refs on a new row have no tab home.** Owner/operator `[ref]`s live on the

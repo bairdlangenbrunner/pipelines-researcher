@@ -20,7 +20,7 @@ merge_deepsweep_shards.py (which then re-folds validity/fills/status onto the re
 baseline). Idempotent: re-running with the same shards yields the same baseline.
 
 Usage:
-    python scripts/merge_ref_shards.py --staging batches/staging/annual-gas-iraq/
+    python scripts/merge_ref_shards.py --staging batches/iraq-gas/staging/annual/
 """
 import argparse, json, os, collections, sys
 from pathlib import Path

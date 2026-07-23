@@ -1,0 +1,86 @@
+{
+  "project_id": "P7588",
+  "pipeline_name": "Edfu Gas Pipeline",
+  "sheet_row": 4171,
+  "wiki": "https://www.gem.wiki/Edfu_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as-is; fill the two MISSING_REF cells (Diameter, Operator) with the same verified Argaam/Shorouk citation already used for Length/Start/Location; note in ResearcherNotes that the underlying spec source is a single 2014 government press briefing (one origin, two outlets), not two independent sources, so tier is medium rather than high.",
+      "researcher_notes": "The gem.wiki page's 9 backlinked citations all point to ONE Argaam article (id/1058075). At first glance the article's headline only names the ‘Al-Noubareya–Al-Sadat’ line, which looked like a possible misattribution (i.e. the Edfu row citing a source that is actually about a different pipeline, P3928). Fetched the article with a browser UA (the bare curl fetch without a UA returns a broken ASP.NET error page — a liveness false-negative, not proof the source is dead) and confirmed the real article headline and body cover TWO lines announced together on 2014-10-03: 'النوبارية–السادات' (73km/36in) AND 'خط إدفو' (Edfu line). The Edfu paragraph reads (translated): 'the Edfu gas line, 37 km long and 12 inches in diameter, was completed at a cost of EGP 95 million, to deliver natural gas to sugar and paper factories as well as homes in the city of Edfu' — an exact match to GEM's Length=37km, Diameter=12in, SegmentCost=95,000,000 EGP. The digit-substring screen failed on Status ('operating' not literal — expected, status is inferable: a completed/inaugurated supply line) and on SegmentCost (article writes '95 مليون جنيه' in words, not digits) — both are content false-negatives, not real problems; I read the page directly and both values are supported. Traced the article's origin: Argaam explicitly bylines it as reprinted from Al-Shorouk (الشروق المصرية); found the original Shorouk News article (same date, same content) and a third reprint on emiratesvoice.com — all three trace to the same Oct-2014 Petroleum Ministry report to Minister Sherif Ismail, so per the standing corroboration rule these do NOT count as independent of each other (one origin, three reprints). For a genuinely separate line of evidence: (1) Misr Edfu Paper Company is a real, independently documented paper mill at Edfu (trade press), corroborating the article's stated purpose (gas to feed the paper/sugar factories); (2) a 2025-09-12 Youm7 report (unrelated outlet, unrelated date, does not cite the 2014 story) describes a fire on 'one of the natural gas lines' in Edfu city, confirming a live/operating gas pipeline presence in Edfu 11 years after the 2014 completion — consistent with Status=operating but without matching Length/Diameter specifics. Classification: PipelineType=transmission is consistent with GEM convention for other small-diameter (10–24in), short (30–50km) GASCO/Khalda supply spurs in this same roster (e.g. P6689 Abu Sennan Spur 45km/14in, P7580 Mahmoudiah PS 52km) — these are dedicated high-pressure trunk feeders off the national grid, not in-town low-pressure distribution mains, so 'transmission' is not a misclassification. Duplicate check: compared against the South Valley/'Upper Egypt' Gas Pipeline trunk (GEM P0477, Dahshour→Aswan, 930km, 30–36in — independently confirmed via a 2010 inauguration article and the EIB project page, which describe the trunk terminating AT Aswan city) and against GulfPub's Egypt roster (no 'Edfu'-named entry). At 12in/37km the Edfu line is far too small and short to be a re-entry of the 930km trunk; it reads as a distinct terminal extension/spur south of the Aswan grid terminus into Edfu (via or near Kom Ombo, where Arabic-language sources independently describe a natural-gas pressure-reduction/metering station serving Edfu, Kom Ombo and Nasr al-Nuba villages) — not a duplicate. Operator: GEM's 'Egyptian Natural Gas Co' matches the article's naming of GASCO ('شركة جاسكو') as the operator reporting on/implementing this reinforcement project. Net: real pipeline, correctly classified, not a duplicate, specs and operator match the cited (if single-origin) source — caveat only on source independence for the numeric fills, hence tier medium not high.",
+      "proposed_refs": [
+        "https://www.argaam.com/ar/article/articledetail/id/1058075",
+        "https://www.shorouknews.com/news/view.aspx?cdate=03102014&id=1166b216-df1f-46be-8510-83bdfb051ea1"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 4171,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12", "DiameterUnits": "in"},
+      "primary_value": "12",
+      "proposed_refs": ["https://www.argaam.com/ar/article/articledetail/id/1058075"],
+      "verifications": [
+        {"url": "https://www.argaam.com/ar/article/articledetail/id/1058075", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "Article body: 'خط إدفو بطول 37 كم وقطر 12 بوصة' (Edfu line, 37km long and 12 inches in diameter) — exact match to the existing GEM value. Same single-origin caveat as the validity note (2014 press briefing, reprinted by 2 outlets, not 2 independent origins) — tier medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4171,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Egyptian Natural Gas Co"},
+      "primary_value": "Egyptian Natural Gas Co",
+      "proposed_refs": ["https://www.argaam.com/ar/article/articledetail/id/1058075"],
+      "verifications": [
+        {"url": "https://www.argaam.com/ar/article/articledetail/id/1058075", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "Article names 'شركة جاسكو المشغل الرئيسى للشبكة القومية للغازات الطبيعية' (GASCO, the main operator of the national natural-gas network) as the entity whose report on this reinforcement project (incl. the Edfu line) went to the Petroleum Minister — supports GEM's 'Egyptian Natural Gas Co' operator value. Not a per-line operator statement, so kept at medium tier rather than high."
+    }
+  ],
+  "routes": [
+    {
+      "segment_name": "",
+      "start_name": "Edfu city, Aswan Governorate, Egypt (delivery point — sugar/paper factories + city households)",
+      "start_lat": 24.9781,
+      "start_lon": 32.8749,
+      "end_name": "National-grid tie-in point on the South Valley / 'Upper Egypt' Gas Pipeline trunk (Dahshour–Aswan), likely near Kom Ombo or the Aswan terminus — exact tie-in point not sourced",
+      "end_lat": null,
+      "end_lon": null,
+      "waypoints": [
+        {"name": "Kom Ombo, Aswan Governorate (independently documented gas pressure-reduction/metering station serving Edfu, Kom Ombo and Nasr al-Nuba)", "lat": 24.4762, "lon": 32.9317}
+      ],
+      "corridor_desc": "The GASCO 930km Dahshour–Aswan trunk (GEM P0477 / 'Upper Egypt Gas Pipeline') terminates at Aswan city (independently confirmed via a 2010 inauguration report and the EIB project page). The 37km Edfu line is a short terminal extension/spur south of that trunk, running along the Nile Valley corridor (west or east bank, unconfirmed which) toward Edfu town, ~45–55km north of Aswan and passing near or through the Kom Ombo area, where Arabic-language reporting independently documents a gas pressure-reduction/metering station used to distribute gas onward to Edfu, Kom Ombo and Nasr al-Nuba villages. The precise tie-in point (Aswan city vs. a point nearer Kom Ombo) is not established in sourced material — do not treat the waypoint/end coordinates as the confirmed route, only as the best-defensible corridor bound.",
+      "current_route_accuracy": "no route",
+      "suggested_route_accuracy": "low",
+      "proposed_refs": [
+        "https://1156-799.el-alt.com/webpro1/main/mainnews.asp?id=13705",
+        "https://www.eib.org/en/projects/all/20060137"
+      ],
+      "verifications": [],
+      "tier": "low",
+      "source_language": "en",
+      "researcher_notes": "Endpoint (Edfu town) coordinates are for the real, well-known named place, not measured off any pipeline map — do not upgrade past 'low' without a sourced map/KML. The trunk-terminus and Kom Ombo context are independently sourced (inauguration article + EIB page for the trunk; separate Arabic reporting for the Kom Ombo station) but no source draws the actual 37km Edfu spur route, so this is a corridor bound for a human routes-repo PR, not a route to auto-apply. Did not fabricate the tie-in coordinates — left null."
+    }
+  ],
+  "summary": "P7588 Edfu Gas Pipeline is real, correctly classified as a GASCO transmission spur (37km/12in, EGP 95M, completed 2014) feeding sugar/paper factories and homes in Edfu, Aswan Governorate; not a duplicate of the much larger South Valley/Upper Egypt trunk (P0477) which terminates at Aswan. Confirmed (caveat): all cited specs trace to one 2014 government press briefing reprinted by 2 outlets (not 2 independent origins) — tier medium, not high; filled the 2 MISSING_REF cells (Diameter, Operator) from the same verified source; proposed a low-confidence corridor (Edfu endpoint sourced/real, national-grid tie-in point near Aswan/Kom Ombo unconfirmed) for a human routes-repo PR."
+}

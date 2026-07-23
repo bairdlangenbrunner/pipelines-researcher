@@ -5,20 +5,23 @@ manually. The agent never writes to the Google Sheet or the routes repo.
 
 ## File naming and location
 
-Written to the in-repo `batches/` directory:
+Written to the scope's `deliverables/` directory in the in-repo `batches/` tree:
 
 ```
-batches/pipelines_batch_<YYYYMMDD>_<HHMM>_ET[_<scope>]_<mode>.xlsx
+batches/<country-slug>-<commodity>/deliverables/pipelines_batch_<YYYYMMDD>_<HHMM>_ET[_<scope>]_<mode>.xlsx
 ```
 
 - `<mode>` (always present): `reconciliation` / `update` / `discovery` /
-  `refsweep` / `deepsweep` / `annual-indev` / `qc` / `handoff`.
+  `refsweep` / `deepsweep` / `annual-indev` / `qc` / `handoff` / `route-creation`.
 - `<scope>` slug (lowercase, hyphenated): a country (`saudi-arabia`), region
   (`mena`), or `<source>-<country>` for reconciliation (`gulfpub-saudi-arabia`).
   Omit only for a genuinely global batch.
 - Stamp the timestamp at build time: `TZ=America/New_York date "+%Y%m%d_%H%M_ET"`.
 - **Never overwrite** an existing batch file — every (re)build gets a new
-  timestamp. The user prunes old ones. Triage produces a markdown memo, not an xlsx.
+  timestamp. When a rebuild supersedes an older workbook (or a batch is applied to
+  the sheet), move the old file to the scope's `archive/`; then regenerate
+  `batches/INDEX.md` (`python scripts/staged_summary.py --index`). Triage produces
+  a markdown memo, not an xlsx.
 
 ## Universal formatting
 
@@ -79,8 +82,8 @@ to Update.
 
 ## Update workbook (mode = `update`)
 
-No generic builder yet — recent update batches (`batches/staging/delaware-express/`,
-`batches/staging/permian-express/`) shipped via a per-batch `build_update_workbook.py`
+No generic builder yet — recent update batches (`batches/united-states-oil/staging/update-delaware-express/`,
+`batches/united-states-oil/staging/update-permian-express/`) shipped via a per-batch `build_update_workbook.py`
 staged alongside the JSON: a backend-mirror tab of the touched rows (current values
 prefilled, changed cells overlaid tier-colored, per the sweep conventions below)
 plus an operators/owners tab. If the pattern recurs, promote a generic
@@ -128,6 +131,28 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   single · red = low/none (an empty red cell = "needs a source", **not an error**) · blue =
   existing ref re-verified live.
 
+## Route-creation workbook (mode = `route-creation`)
+
+Built by `build_ref_workbook.py` from a `route-creation-<scope>` staging dir. A single
+finding tab, `<Cmdty>_RouteCandidates`, renders the `ROUTE_CANDIDATE` records (drawn
+`<PID>.geojson` candidate geometry; destination is the **ROUTES REPO via a human
+branch+PR**, never the sheet — see `docs/sops/route_creation.md`).
+
+- **Columns:** ProjectID, SheetRow, PipelineName, SegmentName, Current/Suggested
+  RouteAccuracy, Method, Geometry file, Length km / Sheet km / Ratio, Source, **License**
+  (ODbL flagged for OSM geometry), Georef RMSE km / GCPs, QC result, **Replacement?**,
+  Route IoU / g_score, Packet?, Proposed ref(s), Verification status, Corroboration
+  tier, Independent?, Source URL, ResearcherNotes.
+- **Color semantics:** tier fill on the Corroboration-tier cell (as elsewhere);
+  **yellow** on `Replacement?` when the candidate replaces an existing GEM route (reuses
+  the route-replacement-candidate convention); **red** on `QC result` when the gate
+  FAILed — a failed gate is listed loudly, never silently dropped. Never color empty
+  cells. `Packet?` = yes when digitization couldn't register below the RMSE threshold
+  and a `packets/<PID>/` was emitted.
+- These records are `class_out="ROUTE_CANDIDATE"` and are split out of the shared route
+  bucket (the `RouteSuggestions` tab keeps `ROUTE_SUGGESTED`/`ROUTE_PARTIAL`); a §6
+  handoff carries them onto the same tab automatically.
+
 ## QC workbook (mode = `qc`)
 
 Rebuild of `GOIT_oil_ngl_QC.xlsx` (and a GGIT equivalent). One sheet per check:
@@ -155,7 +180,10 @@ first; confirmed verdicts are NOT here) → `<Cmdty>_StatusChanges` (carried + o
 verdict ≠ confirm; confirms are counts-only) → **`<Cmdty>_AllFillsBackend`** (THE
 one paste surface for the tracker tab: ALL corroborated fills AND all paste-ready
 ref work — REFS_ADDED + DEAD_LINK, carried + own — unified on the full backend
-mirror; a tier-colored VALUE cell = a proposed new value, a colored `[ref]` cell
+mirror; **no leading `SheetRow` locator** — every column aligns 1:1 with the sheet
+so cells copy-paste with no offset, rows located by ProjectID (unlike the sweep
+`<Cmdty>_Backend` mirror, which keeps the locator); a tier-colored VALUE cell = a
+proposed new value, a colored `[ref]` cell
 with an untinted value = ref-only work) → `<Cmdty>_OperatorsOwners` (same, for the
 oo tab; owner/operator fills AND refs) → `<Cmdty>_NewRows` / `<Cmdty>_NewRowRefs`
 / `<Cmdty>_MatchedExisting` → `<Cmdty>_WikiUpdates` (flag-severity WIKI_UPDATE

@@ -25,6 +25,7 @@ link to original sources — use those.
 |---|---|
 | US — interstate gas/LNG | FERC eLibrary `elibrary.ferc.gov` |
 | US — pipeline safety / mapping | PHMSA + National Pipeline Mapping System `npms.phmsa.dot.gov` |
+| US — operator registry / mileage | PHMSA operator data (OpID master list + annual reports) — see note below |
 | US — deepwater ports | MARAD |
 | US — offshore | BOEM `data.boem.gov`, BSEE |
 | US — Texas | Texas RRC GIS viewer |
@@ -35,6 +36,17 @@ link to original sources — use those.
 
 Oil and Gas Watch (`oilandgaswatch.org`) — digitized routes + permit tracking,
 useful as a primary-adjacent lead.
+
+**PHMSA operator data (pulled 2026-07-20):** `www.phmsa.dot.gov` and its OBIEE
+portal (`portalpublic.phmsa.dot.gov`) block non-browser clients (Akamai 403 /
+login wall) — fetch the static files **via the Wayback Machine** instead
+(`web.archive.org/web/2026/<phmsa url>` works; direct curl does not). Local
+snapshots: `data/PHMSA_pipeline_operators_opids_20260508.csv` (OpID master list,
+~17.2k operators, per-program flags) and `working_files/phmsa/` (raw xlsx + the
+2010–present annual-report ZIPs for gas transmission/gathering and hazardous
+liquid — operator-level mileage by state, commodity, decade of install).
+Upstream index: phmsa.dot.gov → Data & Statistics → "Pipeline Operators - OpIDs"
+and "Distribution, Transmission & Gathering, LNG, and Liquid Annual Data".
 
 ## Tier 2 — Trade press & analytics (good leads; pair with a primary for green)
 Oil & Gas Journal (OGJ), Pipeline & Gas Journal, Pipeline Technology Journal,
@@ -71,6 +83,37 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
   wall. Read it via Google Drive MCP `download_file_content` (`exportMimeType=text/csv`). Sheet
   ID + on-disk geojson paths are in the `datasets-registry-and-gulfpub-identity` memory. Large
   geojsons (19 MB) can't go through context via Drive MCP — `find` them on local disk instead.
+
+## Public GIS endpoints (route geometry — §8 route creation)
+
+Machine-fetchable GIS layers for candidate route geometry, registered in
+`sources/gis_endpoints.yml` (name, kind `arcgis`|`overpass`|`download`, url, coverage,
+commodities, license, notes). Fetched by `fetch_arcgis.py` / `fetch_overpass.py`; new
+endpoints found during a run get appended there + a line here.
+
+- **Texas RRC**, **BOEM** (US onshore/offshore) — ArcGIS REST; seeded as entries with
+  an empty `url` + portal/discovery notes (no guessed FeatureServer paths — standing
+  rule 2). **NPMS** blocks bulk export → human cross-check only, not an entry.
+- **Israel Land Registry plan store** (`israel_itur_tabot`) — statutory-plan (תמ"א/תב"ע)
+  GIS bundles at `apps.land.gov.il/IturTabotData/download/<bucket>/<planID>.zip`: scanned
+  blueprint JPG + JGW world file (EPSG:2039) = exact georeferencing, no GCP fit. Verified
+  2026-07-23 (plan 1053432, TAMA 37/A/2/7 Ashdod–Ashkelon). Israeli **Notices to Mariners**
+  (רספ"ן; official gov.il pages Cloudflare-403, mirrors work) publish pipe-lay corridors as
+  coordinate polygons — a citable vector source for offshore lines (NtM 113/2024 precedent).
+- **OSM (Overpass)** — `man_made=pipeline`; every feature carries ODbL provenance.
+  **Caution:** ODbL is a share-alike license; whether it's acceptable for a GEM tracker
+  is **Baird's review call**, surfaced end-to-end (workbook License column), never
+  decided by the agent.
+
+## Facility gazetteer (GOGET / GOGPT — internal, non-citable)
+
+GEM's own extraction (GOGET) and oil-&-gas-plant (GOGPT) databases, snapshotted into
+`data/` by `refresh_facility_gazetteer.py`, back an endpoint gazetteer
+(`facility_gazetteer.py`) used **only** to resolve/snap route endpoints and note the
+facility a corridor serves (§8). As GEM databases they are bound by standing rule 1:
+**never written to a `[ref]` cell, never counted toward the 2-independent-source
+corroboration tier.** Every hit is flagged `citable: false`; each anchored endpoint
+still needs its own independent public `[ref]`.
 
 ## Forbidden / cautioned
 - **GEM.wiki / globalenergymonitor.org** — never self-cite (standing rule 1).

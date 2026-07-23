@@ -27,7 +27,7 @@ live Sheet.
   fresh snapshot, sorted by in-dev total. **Manual tracking columns survive refreshes**
   (`priority`, `indev_status`, `discovery_status`, `packet_file`, `applied`, `notes`) —
   update them by hand (or ask the agent) as countries move through the pipeline.
-- One staging dir per country: `batches/staging/annual-<tracker>-<country-slug>/` holds
+- One staging dir per country: `batches/<country-slug>-<tracker>/staging/annual/` holds
   both legs (worklist + shards for the in-dev sweep; `discovery_context.json` +
   `discovery/` for the discovery leg; `staged_resolutions.json` + `staged_new.json` as the
   committed audit trail).

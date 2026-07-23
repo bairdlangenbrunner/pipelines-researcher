@@ -20,7 +20,7 @@ Expects a prior ref-sweep staged_resolutions.json; if only staged_resolutions.js
 it is snapshotted to staged_resolutions.prior.json on first run.
 
 Usage:
-    python scripts/merge_deepsweep_shards.py --staging batches/staging/ref-sweep-gas-saudi-arabia/
+    python scripts/merge_deepsweep_shards.py --staging batches/saudi-arabia-gas/staging/ref-sweep/
 """
 import argparse, json, os, collections, sys
 from pathlib import Path

@@ -86,5 +86,5 @@ Workbooks: `pipelines_batch_20260708_1310_ET_saudi-arabia-gas_annual-indev.xlsx`
 - **Oil ref-sweep incomplete:** a 3-row validation slice (2026-06-08) then a 10-row
   batch (108 units: 67 REFS_ADDED / 25 DEAD_LINK / 10 REVERIFIED / 6 UNRESOLVED;
   redone after the abarrelfull/wikidot blocklist) are staged in
-  `batches/staging/ref-sweep-saudi-arabia{,-10row}/` — partial toward the intended
+  `batches/saudi-arabia-oil/staging/ref-sweep{,-10row}/` — partial toward the intended
   50-row run; staged, NOT applied.

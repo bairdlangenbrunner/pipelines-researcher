@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
-"""Canonical reader of the staged stores under batches/staging/ — the single
-join that keeps every downstream consumer (handoff assembly, wiki/route QC,
-summaries) consistent with corrections that are already staged but not yet
+"""Canonical reader of the staged stores under batches/<scope>/staging/ — the
+single join that keeps every downstream consumer (handoff assembly, wiki/route
+QC, summaries) consistent with corrections that are already staged but not yet
 applied to the live Sheet.
+
+Layout: one scope dir per country+commodity (`batches/<country-slug>-<commodity>/`,
+e.g. `batches/egypt-gas/`) holding `staging/<mode[-qualifier]>/` run dirs plus
+`deliverables/` and `archive/`. A staging dir is visible to discovery only via a
+store file (staged_resolutions.json / staged_new.json / staged_updates.json)
+whose meta carries the scope; recon input runs (`staging/recon-*`) have no store
+and are intentionally invisible here.
 
 Two entry points:
 
   discover_staging_dirs(country, commodity)
-      Depth-1 scan of batches/staging/: a dir is in scope when its
-      staged_resolutions.json or staged_new.json meta matches the requested
-      country+commodity. Assembled packets (meta.mode qc/handoff) are skipped
+      Scan of batches/*/staging/*: a dir is in scope when a store file's meta
+      matches the requested country+commodity (fallback: the parent scope-dir
+      name, with a WARN). Assembled packets (meta.mode qc/handoff) are skipped
       unless include_assembled=True — a packet's own records must not be
       re-imported as "prior staged work" into the next packet.
 
@@ -28,6 +35,9 @@ Two entry points:
       new_rows         [candidate + source_dir] from staged_new.json (all
                        classes); new_by_matched_pid indexes matched_existing
                        candidates by the GEM row they matched.
+      updates          per-column change records from staged_updates.json
+                       (targeted §5 Update batches); their `new` values also
+                       land in pending_values (kind='update').
       researched_pids / audited_pids — as before (any __VALIDITY__ record
                        counts as existence-audited; the deep-sweep contract
                        puts existence first).
@@ -51,7 +61,11 @@ import normalize as N
 from ref_pairs import OO_PRIMARY
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-STAGING_ROOT = REPO_ROOT / "batches" / "staging"
+BATCHES_ROOT = REPO_ROOT / "batches"
+
+# files that make a staging dir visible to discovery (any one, meta-scoped)
+_STORE_FILES = ("staged_resolutions.json", "staged_new.json",
+                "staged_updates.json")
 
 # meta.mode values that mark a dir as an ASSEMBLED packet, not primary research
 _ASSEMBLED_MODES = {"qc", "handoff"}
@@ -100,9 +114,9 @@ _STATUS_FIELDS = (
 
 
 def _dir_scope(d: Path) -> tuple[str, str] | None:
-    """(normalized_country, commodity) for a staging dir, or None if neither
+    """(normalized_country, commodity) for a staging dir, or None if no
     store file exists / carries scope metadata."""
-    for fn in ("staged_resolutions.json", "staged_new.json"):
+    for fn in _STORE_FILES:
         f = d / fn
         if not f.exists():
             continue
@@ -111,60 +125,76 @@ def _dir_scope(d: Path) -> tuple[str, str] | None:
         except (json.JSONDecodeError, OSError):
             continue
         scope = meta.get("scope") or {}
-        country = scope.get("country", "")
+        country = scope.get("country", "") or meta.get("country", "")
         commodity = (meta.get("commodity") or scope.get("tracker")
-                     or scope.get("commodity") or "")
+                     or scope.get("commodity") or meta.get("tracker") or "")
         if country and commodity:
             return N.normalize_country(country), commodity.lower()
     return None
 
 
 def _dir_mode(d: Path) -> str:
-    f = d / "staged_resolutions.json"
-    if not f.exists():
-        return ""
-    try:
-        return json.loads(f.read_text()).get("meta", {}).get("mode", "")
-    except (json.JSONDecodeError, OSError):
-        return ""
+    for fn in ("staged_resolutions.json", "staged_updates.json",
+               "staged_new.json"):
+        f = d / fn
+        if not f.exists():
+            continue
+        try:
+            mode = json.loads(f.read_text()).get("meta", {}).get("mode", "")
+        except (json.JSONDecodeError, OSError):
+            continue
+        if mode:
+            return mode
+    return ""
 
 
-def _slug_scope(name: str, country: str, commodity: str) -> bool:
-    """Fallback: infer scope from the dir slug (e.g. ref-sweep-gas-egypt-operating).
-    Requires the commodity token AND every word of the country present."""
-    tokens = name.lower().split("-")
-    if commodity.lower() not in tokens:
-        return False
-    country_tokens = N.normalize_country(country).lower().replace("-", " ").split()
-    return all(t in tokens for t in country_tokens)
+def scope_dirname(country: str, commodity: str) -> str:
+    """Canonical scope-dir slug: `<country-slug>-<commodity>`
+    (e.g. 'saudi-arabia-gas', 'united-states-oil')."""
+    return (f"{N.normalize_country(country).lower().replace(' ', '-')}"
+            f"-{commodity.lower()}")
+
+
+def dir_label(d: Path) -> str:
+    """Provenance label for records from this staging dir. Scope-qualified
+    ('egypt-gas/annual') so run names like 'annual' or 'qc' stay unambiguous
+    across scopes."""
+    d = Path(d)
+    if d.parent.name == "staging":
+        return f"{d.parent.parent.name}/{d.name}"
+    return d.name
 
 
 def discover_staging_dirs(country: str, commodity: str,
-                          root: str | Path = STAGING_ROOT,
+                          root: str | Path = BATCHES_ROOT,
                           exclude: tuple | list = (),
                           include_assembled: bool = False) -> list[Path]:
-    """All staging dirs holding staged work for this country+commodity.
+    """All staging dirs (batches/*/staging/*) holding staged work for this
+    country+commodity.
 
     Matching is on store metadata (meta.scope.country + meta.commodity /
-    meta.scope.tracker); dirs whose stores lack scope fields fall back to
-    slug parsing with a WARN. Assembled packets (meta.mode qc/handoff) are
-    excluded unless include_assembled. `exclude` paths (e.g. the packet's own
-    dir) are always skipped.
+    meta.scope.tracker, or update-store meta.country + meta.tracker); dirs
+    whose stores lack scope fields fall back to the parent scope-dir name
+    with a WARN. Assembled packets (meta.mode qc/handoff) are excluded unless
+    include_assembled. `exclude` paths (e.g. the packet's own dir) are always
+    skipped.
     """
     root = Path(root)
     want = (N.normalize_country(country), commodity.lower())
+    want_scope_dir = scope_dirname(country, commodity)
     skip = {Path(e).resolve() for e in exclude}
     out = []
     if not root.is_dir():
         return out
-    for d in sorted(root.iterdir()):
+    for d in sorted(root.glob("*/staging/*")):
         if not d.is_dir() or d.resolve() in skip:
             continue
         scope = _dir_scope(d)
         if scope is None:
-            if (d / "staged_resolutions.json").exists() or (d / "staged_new.json").exists():
-                if _slug_scope(d.name, country, commodity):
-                    print(f"WARN dir {d.name}: scope inferred from slug")
+            if any((d / fn).exists() for fn in _STORE_FILES):
+                if d.parent.parent.name == want_scope_dir:
+                    print(f"WARN dir {dir_label(d)}: store meta lacks scope; "
+                          "matched on parent scope-dir name")
                     out.append(d)
             continue
         if scope != want:
@@ -186,12 +216,14 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
         "route_staged": {},     # pid -> {class_out, source_dir, record}
         "new_rows": [],         # staged_new.json candidates, all classes
         "new_by_matched_pid": {},
+        "updates": [],          # staged_updates.json per-column changes
         "researched_pids": set(),
         "audited_pids": {},     # pid -> source_dir (any validity verdict = existence-audited)
         "dirs": [],
     }
     for d in staging_dirs:
         d = Path(d)
+        label = dir_label(d)
         loaded = False
         f = d / "staged_resolutions.json"
         if f.exists():
@@ -205,38 +237,38 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
                 ci = r.get("class_in", "")
                 if ci in ("HAS_REF", "MISSING_REF"):
                     rec = _with_tab({k: r.get(k, "") for k in _REF_WORK_FIELDS})
-                    rec["source_dir"] = d.name
+                    rec["source_dir"] = label
                     ctx["ref_work"].append(rec)
                     ctx["ref_counts"][r.get("class_out", "")] += 1
                 elif ci == "FILL" and r.get("class_out") == "REFS_ADDED":
                     rec = _with_tab({k: r.get(k, "") for k in _REF_WORK_FIELDS})
-                    rec["source_dir"] = d.name
+                    rec["source_dir"] = label
                     ctx["fills"].append(rec)
                     for col, val in (r.get("values") or {}).items():
                         if val in (None, ""):
                             continue
                         ctx["pending_values"].setdefault((pid, col), {
-                            "value": str(val), "source_dir": d.name,
+                            "value": str(val), "source_dir": label,
                             "tier": r.get("tier", ""),
                             "class_out": r.get("class_out", ""),
                             "kind": "fill",
                         })
                 elif ci == "STATUS" or r.get("ref_col") == "__STATUS__":
                     rec = {k: r.get(k, "") for k in _STATUS_FIELDS}
-                    rec["source_dir"] = d.name
+                    rec["source_dir"] = label
                     ctx["status_changes"].setdefault(pid, []).append(rec)
                     if r.get("verdict", "") in _STATUS_PENDING:
                         proposed = (r.get("proposed_status")
                                     or (r.get("values") or {}).get("Status", ""))
                         if proposed:
                             ctx["pending_values"][(pid, "Status")] = {
-                                "value": str(proposed), "source_dir": d.name,
+                                "value": str(proposed), "source_dir": label,
                                 "tier": r.get("tier", ""),
                                 "class_out": r.get("class_out", ""),
                                 "kind": "status",
                             }
                 elif ci == "VALIDITY" or r.get("ref_col") == "__VALIDITY__":
-                    ctx["audited_pids"].setdefault(pid, d.name)
+                    ctx["audited_pids"].setdefault(pid, label)
                     if r.get("concern_type", "none") == "none":
                         continue
                     ctx["concerns"].setdefault(pid, []).append({
@@ -250,11 +282,11 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
                         "proposed_refs": r.get("proposed_refs") or [],
                         "tier": r.get("tier", ""),
                         "independent": r.get("independent", ""),
-                        "source_dir": d.name,
+                        "source_dir": label,
                     })
                 elif ci == "ROUTE" or r.get("ref_col") == "__ROUTE__":
                     ctx["route_staged"][pid] = {"class_out": r.get("class_out", ""),
-                                                "source_dir": d.name,
+                                                "source_dir": label,
                                                 "record": r}
         f = d / "staged_new.json"
         if f.exists():
@@ -262,13 +294,38 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
             loaded = True
             for c in data.get("candidates", []):
                 cand = dict(c)
-                cand["source_dir"] = d.name
+                cand["source_dir"] = label
                 ctx["new_rows"].append(cand)
                 mpid = c.get("matched_project_id", "")
                 if mpid:
                     ctx["new_by_matched_pid"].setdefault(mpid, []).append(cand)
+        f = d / "staged_updates.json"
+        if f.exists():
+            data = json.loads(f.read_text())
+            loaded = True
+            for pid, row in (data.get("rows") or {}).items():
+                ctx["researched_pids"].add(pid)
+                for col, ch in (row.get("changes") or {}).items():
+                    rec = {"project_id": pid,
+                           "pipeline_name": row.get("pipeline", ""),
+                           "column": col,
+                           "old": ch.get("old", ""),
+                           "new": ch.get("new", ""),
+                           "action": ch.get("action", ""),
+                           "tier": ch.get("tier", ""),
+                           "refs": ch.get("refs") or [],
+                           "evidence": ch.get("evidence", ""),
+                           "source_dir": label}
+                    ctx["updates"].append(rec)
+                    if ch.get("new") not in (None, ""):
+                        ctx["pending_values"].setdefault((pid, col), {
+                            "value": str(ch["new"]), "source_dir": label,
+                            "tier": ch.get("tier", ""),
+                            "class_out": ch.get("action", ""),
+                            "kind": "update",
+                        })
         if loaded:
-            ctx["dirs"].append(d.name)
+            ctx["dirs"].append(label)
     return ctx
 
 

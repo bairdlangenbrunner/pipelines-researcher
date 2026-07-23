@@ -10,11 +10,11 @@ GulfPub (PE World Map / Petroleum Economist) is a Tier-2 source — this is read
 only; a single value here never reaches green, and nothing is applied.
 
 Typical deep-sweep chain (scoped to one country/commodity):
-    python scripts/ingest.py --source gulfpub --commodity gas --out batches/staging/recon/<run>/
+    python scripts/ingest.py --source gulfpub --commodity gas --out batches/<scope>/staging/recon-<source>-<date>/
     python scripts/reconcile.py --source gulfpub --country Iraq --commodity gas \
-        --staging batches/staging/recon/<run>/
-    python scripts/build_gulfpub_crosswalk.py --match-diff batches/staging/recon/<run>/match_diff.json \
-        --out batches/staging/<deep-sweep-dir>/gulfpub_crosswalk.json
+        --staging batches/<scope>/staging/recon-<source>-<date>/
+    python scripts/build_gulfpub_crosswalk.py --match-diff batches/<scope>/staging/recon-<source>-<date>/match_diff.json \
+        --out batches/<scope>/staging/<deep-sweep-dir>/gulfpub_crosswalk.json
 
 Drop the crosswalk into the deep-sweep staging dir; build_ref_workbook.py picks it up
 automatically (gulfpub_crosswalk.json present -> the <Cmdty>_GulfPub tab is added).

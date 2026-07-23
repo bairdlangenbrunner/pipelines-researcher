@@ -24,7 +24,7 @@ per staging dir, but refuses to clobber an existing staged_resolutions.json unle
 --force (so it never overwrites a genuine refs-leg research result).
 
 Usage:
-    python scripts/seed_resolutions_from_worklist.py --staging batches/staging/annual-gas-iraq/
+    python scripts/seed_resolutions_from_worklist.py --staging batches/iraq-gas/staging/annual/
 """
 import argparse, json, os, collections
 

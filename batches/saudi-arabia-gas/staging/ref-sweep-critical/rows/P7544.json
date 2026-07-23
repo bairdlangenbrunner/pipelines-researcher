@@ -1,0 +1,39 @@
+{
+  "project_id": "P7544",
+  "pipeline_name": "Marjan GOSP-4 Gas Pipeline",
+  "sheet_row": 3945,
+  "wiki": "https://www.gem.wiki/Marjan_GOSP-4_Gas_Pipelines",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Reconcile P7544 with P7545 (same name/wiki/sources, both Marjan GOSP-4 Package 4): the 330 mi figure is the AGGREGATE of all Package 4 subsea trunk + in-field pipelines, not one pipeline. Treat P7544 as the network-level row and P7545 (SegmentName 'Subsea Pipelines') as a sub-slice of the same scope; merge or clearly re-scope to avoid double-counting the same 540 km of pipe. Also fix capacity (see notes).",
+      "researcher_notes": "P7544 and P7545 share the exact same PipelineName ('Marjan GOSP-4 Gas Pipeline'), the same gem.wiki page, the identical citation set (McDermott Package 4 page, offshore-energy.biz, ecns.cn), the same field (Marjan), GOSP (GOSP-4), ConstructionYear 2019 and StartYear 2024. They are two rows describing the SAME Package 4 offshore-pipeline scope. EXISTENCE is solid and independent of GEM: Saudi Aramco awarded McDermott (with COOEC) the Marjan Increment Package 4 EPCI contract in 2019; first platform/Gas Compression Platform delivered from China 2024. SCOPE per multiple independent sources: McDermott/offshore-energy/Argaam all state 'installation of subsea trunk lines and in-field pipelines in excess of 330 miles (540 kilometers)' plus 'more than 55-62 miles (90 km) of subsea cables'; nsenergybusiness independently gives '540 km of subsea trunk lines and in-field pipelines' and '90 km of 230 kV composite subsea cables'. So GEM's LengthKnown=330 mi on P7544 is the TOTAL Package 4 pipeline footprint (=540 km), i.e. an aggregate of many trunk + in-field offshore lines, applied to a single 'pipeline' row. This is a duplicate/aggregate-disaggregation problem: one physical scope split across two ProjectIDs with overlapping/aggregate lengths. CLASSIFICATION caveat: these are offshore field gathering/trunk/in-field lines carrying associated and non-associated gas at a crude-oil increment GOSP (Marjan is fundamentally a 300,000 bpd crude increment), not a clean onshore dry-gas transmission trunkline; recording as 'transmission' is defensible only at the network level. ATTRIBUTION (owner Aramco, FuelSource Marjan field, Arabian Gulf / Eastern coast, Saudi Arabia, construction 2019, start 2024) checks out against the independent sources.",
+      "proposed_refs": [
+        "https://www.offshore-energy.biz/mcdermott-cooec-net-3b-marjan-field-offshore-contract/",
+        "https://www.nsenergybusiness.com/projects/marjan-field-expansion/",
+        "https://www.argaam.com/en/article/articledetail/id/1300695"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Treat Capacity 750 as the GOSP-4 facility gas-handling capacity, not a single-pipeline throughput, and reconcile the unit: P7544 records 750 Mcf/d while P7545 records 750 MMcf/d for the same number. The facility figure is 750 MMscfd (Mscfd in some sources). If a pipeline capacity is intended at all, P7544's 'Mcf/d' is off by ~1000x vs P7545.",
+      "researcher_notes": "GEM Capacity=750 on both P7544 (unit 'Mcf/d') and P7545 (unit 'MMcf/d'). Independent sources (nsenergybusiness: 'designed to handle up to 475,000bpd of oil and 750Mscfd of gas'; corroborated by GOSP-4 coverage) show 750 is the GOSP-4 GAS-PROCESSING-PLANT capacity, NOT the throughput of any one pipeline. It has been copied onto two pipeline rows, and the two rows even disagree on units (Mcf/d vs MMcf/d) for the identical figure. Either P7544's unit is a 1000x error, or capacity should not sit on the pipeline rows at all. Separately, P7545's LengthKnown=62 mi appears to trace to the SUBSEA CABLES figure, not pipe: the McDermott project page lists '62 miles of subsea cables', offshore-energy says '55 miles (90 km)' of subsea cables, and nsenergybusiness gives '90 km of 230 kV composite subsea cables' (electrical, not pipeline) - so the 62-mi length on a sibling row looks mis-derived from cable length. Diameter is blank in GEM and I could not confirm a single trunkline diameter from independent sources (the package is many lines of mixed diameter), so I am NOT forcing a diameter value.",
+      "proposed_refs": [
+        "https://www.nsenergybusiness.com/projects/marjan-field-expansion/",
+        "https://www.offshore-energy.biz/mcdermott-cooec-net-3b-marjan-field-offshore-contract/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P7544 (Marjan GOSP-4) is real (Aramco/McDermott Package 4, independently confirmed) but flagged: duplicate/aggregate of P7545 (330 mi = whole 540 km Package 4 pipeline scope, not one pipe) and spec concern (750 is GOSP-4 facility capacity duplicated onto two rows, unit Mcf/d vs MMcf/d inconsistent)."
+}

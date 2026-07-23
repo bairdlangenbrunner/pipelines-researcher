@@ -49,16 +49,22 @@ batches/*.xlsx
 batches/**/*.xlsx
 
 # Derived reconciliation artifacts — re-derivable from sources/ + the GEM snapshot.
-# Agent-authored staged_*.json under batches/staging/ IS committed (audit trail).
-batches/staging/**/canonical_records.json
-batches/staging/**/geometry_sidecar.json
-batches/staging/**/match_diff.json
-batches/staging/**/route_metrics.json
+# Agent-authored staged_*.json under batches/*/staging/ IS committed (audit trail).
+batches/*/staging/**/canonical_records.json
+batches/*/staging/**/geometry_sidecar.json
+batches/*/staging/**/match_diff.json
+batches/*/staging/**/route_metrics.json
 # Transient per-run logs / session-resume scratch under staging
 # (the staged_*.json audit trail is still tracked).
 # wiki_html/ = the wiki-alignment leg's polite-fetch page cache — re-fetchable.
-batches/staging/**/wiki_html/
-batches/staging/**/*.log
-batches/staging/**/*.err
-batches/staging/**/_RESUME_STATE.md
-batches/staging/**/_resume_timer.sh
+batches/*/staging/**/wiki_html/
+batches/*/staging/**/*.log
+batches/*/staging/**/*.err
+batches/*/staging/**/_RESUME_STATE.md
+batches/*/staging/**/_resume_timer.sh
+# route-creation §8: raw fetched GIS layers are re-fetchable (candidate_routes/ +
+# packets/ ARE committed — they're the deliverable + audit trail).
+batches/*/staging/**/fetched_layers/
+
+# raw phmsa bulk downloads too big for github (>100mb hard limit)
+working_files/phmsa/annual_gas_transmission_gathering_2010_present.zip

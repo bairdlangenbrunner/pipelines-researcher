@@ -2,7 +2,7 @@
 """Discovery deliverable: build the reviewable xlsx from staged_new.json. Nothing is
 auto-applied — Baird pastes qualifying new rows into the live Sheet manually.
 
-    python scripts/build_discovery_workbook.py --staging batches/staging/annual-gas-iraq/ \
+    python scripts/build_discovery_workbook.py --staging batches/iraq-gas/staging/annual/ \
         --output batches/pipelines_batch_<stamp>_<scope>_discovery.xlsx
     # <stamp> from: TZ=America/New_York date "+%Y%m%d_%H%M_ET"   (never overwrite)
 

@@ -2,7 +2,7 @@
 """Reconcile a scraped reference dataset against GEM (the orchestrator).
 
     python scripts/reconcile.py --source gulfpub --country "Saudi Arabia" \
-        --commodity both --staging batches/staging/recon/<run>/
+        --commodity both --staging batches/<scope>/staging/recon-<source>-<date>/
 
 Reads canonical_records.json (+ geometry_sidecar.json) produced by ingest.py, matches
 each reference record against GEM rows (segment + synthetic-network level) by name /

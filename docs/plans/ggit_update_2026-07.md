@@ -69,7 +69,7 @@ for in-dev rows (status logic 2y→shelved / 4y→cancelled, expansion rule,
 divestiture sweep, `entity_lookup.py` for any new owner).
 
 ### The ledger (how nothing falls through)
-`batches/staging/ggit-update-2026-07/ledger.json` — per ProjectID: which process
+`campaigns/ggit-update-2026-07/ledger.json` — per ProjectID: which process
 × mode × batch covered it, counts by class_out, UNRESOLVED carry-overs. Every
 batch build appends. Stage C's worklist = (rows in no batch) ∪ (UNRESOLVED units).
 
