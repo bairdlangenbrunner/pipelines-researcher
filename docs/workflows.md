@@ -17,7 +17,10 @@ Discovery (§4), Update (§5 — small targeted fixes). The **Handoff Packet** (
 assembles *everything currently staged* for a country+commodity — plus its own
 wiki-alignment / route-integrity / mechanical-QC legs — into an actions workbook
 the researcher works from + an evidence workbook (audit trail). The Annual packet
-(§7) is a *recipe*: Sweep `in-dev` preset + Discovery + Handoff.
+(§7) is a *recipe*: Sweep `in-dev` preset + Discovery + Handoff. **Route creation**
+(§8) stages candidate route *geometry* (`ROUTE_CANDIDATE` `<PID>.geojson` files) that
+§6 auto-carries — the one workflow whose deliverable targets the routes repo, not the
+sheet.
 
 **Staged JSON is the canonical pending-state.** Each staging dir's
 `meta.scope.country` + commodity make it auto-discoverable
@@ -300,6 +303,65 @@ python scripts/build_campaign_roster.py --tracker gas --campaign ggit-2026
 
 Update the campaign roster row; stop at the SOP's escalation gates (>30% status
 changes; >5 discovery clusters; a whole missing network class).
+
+---
+
+## §8 Route creation (candidate geometry)
+
+Produces candidate route **geometry** (a routes-repo-valid `<PID>.geojson`) for a
+single PID or every weak-`RouteAccuracy` row in a country, by walking a source ladder
+(GulfPub sidecar → public GIS/OSM → agent digitization → endpoints great-circle) and
+staging it for a **human branch+PR** against `GOIT-GGIT-pipeline-routes`. The agent
+never writes the routes repo or the sheet; no coordinate is ever fabricated. Consumes
+(does not duplicate) the sweep `routes` leg's corridor/endpoint suggestions. Rules,
+rung logic, GCP/RMSE thresholds, packet contents, escalation gates: Route Creation SOP
+(`docs/sops/route_creation.md`).
+
+1. Fresh pull, then build the worklist (group by ProjectID; gather existing-route km,
+   prior `__ROUTE__` suggestions, GulfPub sidecar hits, facility anchors):
+   ```bash
+   python scripts/build_route_worklist.py --csv data/GGIT_gas_snapshot_<date>.csv \
+     --country Egypt --commodity gas --staging batches/staging/route-creation-gas-egypt/ \
+     [--include-medium] [--pids P0436,P3935]
+   ```
+2. **Agent map/portal research** (non-script, rungs 2–3): find the best public GIS
+   layer / published map. **Every URL through `scripts/url_verifier.py`** (GEM URLs
+   rejected); new endpoints get a `sources/gis_endpoints.yml` entry + a roster line.
+3. Fetch or trace per rung (raw layers land in `fetched_layers/` with `.meta.json`):
+   ```bash
+   # both fetchers take a DIRECTORY --out + a --name basename → <name>.geojson + <name>.meta.json
+   python scripts/fetch_arcgis.py --source rrc_pipelines --bbox <minlon,minlat,maxlon,maxlat> \
+     --out batches/staging/route-creation-gas-egypt/fetched_layers/ --name rrc
+   python scripts/fetch_overpass.py --area Egypt --substance gas \
+     --out batches/staging/route-creation-gas-egypt/fetched_layers/ --name osm_eg   # ODbL flagged
+   python scripts/georef.py --gcps gcps.json --trace trace.json --order 1 \
+     --max-rmse-km 10 --out .../fetched_layers/P1234_traced.geojson --report .../P1234_georef.json
+   ```
+4. Assemble one candidate per PID per method (writes the geojson, runs the gate,
+   frames replacement + `geometry_signals`, upserts the `ROUTE_CANDIDATE` record):
+   ```bash
+   python scripts/build_route_candidate.py --pid P3935 --commodity gas \
+     --staging batches/staging/route-creation-gas-egypt/ --method sidecar \
+     --ref-id gulfpub:gas:20005 --replace
+   # rungs: --method gis|osm --geom <fetched.geojson> [--feature-index N|--where-prop K=V]
+   #        --method traced --geom <P1234_traced.geojson>
+   #        --method endpoints --start <lon,lat> --end <lon,lat> --start-name … --start-ref … --end-ref …
+   ```
+5. Re-validate (optional) + build the workbook + recalc:
+   ```bash
+   python scripts/validate_route_candidate.py \
+     --candidates batches/staging/route-creation-gas-egypt/candidates.json    # exit = # FAILs
+   python scripts/build_ref_workbook.py --staging batches/staging/route-creation-gas-egypt/ \
+     --output batches/pipelines_batch_<stamp>_egypt-gas_route-creation.xlsx
+   python scripts/recalc.py batches/pipelines_batch_<stamp>_egypt-gas_route-creation.xlsx
+   ```
+
+Deliverables: `candidate_routes/<PID>.geojson` (committed) + digitization
+`packets/<PID>/` (when RMSE fails) + the `<Cmdty>_RouteCandidates` workbook tab.
+Because `meta.mode="route-creation"` and `meta.scope` carry country+commodity, a later
+§6 handoff **auto-carries** these `ROUTE_CANDIDATE` records untouched. Refresh the
+facility gazetteer (`scripts/refresh_facility_gazetteer.py`) when the GOGET/GOGPT
+snapshots in `data/` are stale.
 
 ---
 

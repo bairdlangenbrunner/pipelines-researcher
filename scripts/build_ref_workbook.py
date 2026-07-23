@@ -37,7 +37,8 @@ Sheets (commodity-prefixed; empty omitted; README first):
                            <Cmdty>_Findings, and instead of a Backend mirror the packet leads
                            with <Cmdty>_AllFillsBackend: ALL corroborated fills (carried +
                            this packet's own) unified in the exact backend layout, values +
-                           [ref] overlaid tier-colored.
+                           [ref] overlaid tier-colored (no SheetRow locator — columns align
+                           1:1 with the sheet for copy-paste).
   <Cmdty>_Refs_Added       MISSING_REF resolved — green ≥2 independent / yellow single
   <Cmdty>_Refs_Reverified  HAS_REF, links live + contain value (blue)
   <Cmdty>_Refs_DeadLinks   HAS_REF with a dead/value-missing link + proposed replacement
@@ -395,7 +396,8 @@ def _backend_snapshot(meta: dict):
     return header, rows
 
 
-def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_values=False):
+def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_values=False,
+                  sheet_row_col=True):
     """The PRIMARY tab: a 1:1 paste-ready mirror of the GEM tracker backend. Reproduces the
     tracker's FULL column set in exact sheet order (every backend column, including computed
     ones), one row per in-scope segment, with current values prefilled from the snapshot.
@@ -403,9 +405,11 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
     coded by corroboration tier (same green ≥2-independent / yellow single / red low-or-none
     / blue re-verified key as the bucket tabs) — and any proposed value is overlaid on its
     value cell (tier-colored too when color_values, e.g. the handoff AllFillsBackend tab).
-    A single leading SheetRow locator column (the tracker's own row number, not a
-    backend field) rides in front so Baird can find each scattered row; everything after it
-    is the backend layout verbatim. Owner/Parent refs are staged on the separate
+    With sheet_row_col (the sweep Backend mirror) a single leading SheetRow locator column
+    (the tracker's own row number, not a backend field) rides in front so Baird can find
+    each scattered row; the AllFillsBackend paste tabs pass sheet_row_col=False so EVERY
+    column aligns 1:1 with the sheet and blocks copy-paste with no offset (rows located by
+    ProjectID). Owner/Parent refs are staged on the separate
     Operators/Owners tab, so they never overlay here (there is no Owner [ref] backend column).
     Falls back to identity columns only if the snapshot header can't be loaded."""
     # group resolutions by segment (ProjectID, SheetRow), first-seen order; index by ref_col
@@ -425,11 +429,12 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
         ["ProjectID", "PipelineName", "SegmentName"]
 
     ws = wb.create_sheet(title)
-    headers = ["SheetRow"] + header
+    headers = (["SheetRow"] if sheet_row_col else []) + header
     ws.append(headers)
 
-    # 1-based sheet-column index of each backend column (offset by the leading SheetRow col)
-    col_idx = {h: i + 2 for i, h in enumerate(header)}
+    # 1-based sheet-column index of each backend column (offset by the SheetRow col if present)
+    off = 2 if sheet_row_col else 1
+    col_idx = {h: i + off for i, h in enumerate(header)}
     ref_idx = {h: ci for h, ci in col_idx.items() if h.endswith(" [ref]")}
 
     for sk in seg_order:
@@ -441,7 +446,7 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
             current = {"ProjectID": b.get("project_id", ""),
                        "PipelineName": b.get("pipeline_name", ""),
                        "SegmentName": b.get("segment_name", "")}
-        ws.append([srow] + [current.get(h, "") for h in header])
+        ws.append(([srow] if sheet_row_col else []) + [current.get(h, "") for h in header])
         rn = ws.max_row
         for rc, r in segs[sk]["by_ref"].items():
             # overlay proposed value(s) onto their backend value cells (skip cols off-schema).
@@ -463,11 +468,12 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
                 cell.fill = _ref_cell_fill(r)
                 cell.alignment = Alignment(wrap_text=False, vertical="top")
 
-    ws.column_dimensions["A"].width = 9
+    if sheet_row_col:
+        ws.column_dimensions["A"].width = 9
     for h, ci in col_idx.items():
         ws.column_dimensions[get_column_letter(ci)].width = 46 if h.endswith(" [ref]") else 16
     _style_header(ws, len(headers))
-    # keep the SheetRow locator + identity columns (through ProjectID) visible while scrolling
+    # keep the locator/identity columns (through ProjectID) visible while scrolling
     anchor = get_column_letter(col_idx["ProjectID"] + 1) if "ProjectID" in col_idx else "B"
     ws.freeze_panes = f"{anchor}2"
     return ws
@@ -633,6 +639,66 @@ def _route_styler(columns):
             for cc in coord_cs:
                 if not str(ws.cell(rn, cc).value or "").strip():
                     ws.cell(rn, cc).fill = CONF_FILL["yellow"]
+    return styler
+
+
+def _route_candidate_columns():
+    """§8 route-creation candidates: staged <PID>.geojson geometry + provenance.
+    Destination is the ROUTES REPO (human branch+PR), never the sheet or an auto-edit."""
+    g = lambda k: (lambda r: r.get(k, ""))
+    src = lambda k: (lambda r: (r.get("source") or {}).get(k, ""))
+
+    def _license(r):
+        s = r.get("source") or {}
+        return s.get("license") or ("ODbL" if s.get("odbl") else "")
+
+    def _gr(k):
+        return lambda r: (r.get("georef") or {}).get(k, "") if r.get("georef") else ""
+
+    def _sig(k):
+        return lambda r: (r.get("geometry_signals") or {}).get(k, "")
+
+    return [
+        ("ProjectID", g("project_id"), 12),
+        ("SheetRow", g("sheet_row"), 10),
+        ("PipelineName", g("pipeline_name"), 28),
+        ("SegmentName", g("segment_name"), 22),
+        ("Current RouteAccuracy", g("current_route_accuracy"), 16),
+        ("Suggested RouteAccuracy", g("suggested_route_accuracy"), 16),
+        ("Method", g("method"), 18),
+        ("Geometry file", g("geometry_file"), 34),
+        ("Length km", g("length_km"), 10),
+        ("Sheet km", g("sheet_length_km"), 10),
+        ("Ratio", g("length_ratio"), 8),
+        ("Source", src("name"), 24),
+        ("License", _license, 14),
+        ("Georef RMSE km", _gr("rmse_km"), 12),
+        ("Georef GCPs", _gr("n_gcps"), 10),
+        ("QC result", lambda r: "pass" if r.get("qc_passed") else "FAIL", 10),
+        ("Replacement?", lambda r: "yes" if r.get("replacement") else "", 12),
+        ("Route IoU", _sig("iou"), 9),
+        ("Route g_score", _sig("g_score"), 11),
+        ("Packet?", lambda r: "yes" if (r.get("packet") or (r.get("georef") and not (r.get("georef") or {}).get("pass", True))) else "", 8),
+        ("Proposed ref(s)", lambda r: J(r.get("proposed_refs", [])), 52),
+        ("Verification status", _verif_summary, 20),
+        ("Corroboration tier", g("tier"), 13),
+        ("Independent?", lambda r: "yes" if r.get("independent") else ("no" if r.get("proposed_refs") else ""), 11),
+        ("Source URL", src("url"), 40),
+        ("ResearcherNotes", g("researcher_notes"), 50),
+    ]
+
+
+def _route_candidate_styler(columns):
+    idx = {h: i + 1 for i, (h, _, _) in enumerate(columns)}
+
+    def styler(ws, rn, r):
+        ws.cell(rn, idx["Corroboration tier"]).fill = CONF_FILL.get(_tier_color(r), PatternFill())
+        # a route-replacement candidate: yellow the Replacement? cell (routes-repo convention)
+        if r.get("replacement"):
+            ws.cell(rn, idx["Replacement?"]).fill = CONF_FILL["yellow"]
+        # gate failure is loud, not dropped — red the QC cell so the reviewer sees it
+        if not r.get("qc_passed"):
+            ws.cell(rn, idx["QC result"]).fill = CONF_FILL["red"]
     return styler
 
 
@@ -1153,7 +1219,10 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     covered_flags = [f for f in qc_flags if str(f.get("staged_note") or "").strip()]
     open_flags = _collect_open_flags(qc_flags, routeqc, wd_unparsed, unresolved_refs)
 
-    routes_all = parts["route"] + actions.get("routes", [])
+    routes_all_raw = parts["route"] + actions.get("routes", [])
+    is_route_candidate = lambda r: r.get("class_out") == "ROUTE_CANDIDATE"
+    routes_all = [r for r in routes_all_raw if not is_route_candidate(r)]
+    route_candidates = [r for r in routes_all_raw if is_route_candidate(r)]
     new_rows_all = actions.get("new_rows", [])
     nr_new = [c for c in new_rows_all if c.get("class") == "new_row"]
     nr_monitor = [c for c in new_rows_all if c.get("class") == "monitor"]
@@ -1184,14 +1253,17 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "no ref by design) or unclear. NOT auto-applied."))
     if afb_res:
         t = f"{prefix}_AllFillsBackend"
-        _backend_view(wb_a, t, afb_res, backend_header, snapshot_rows, color_values=True)
+        _backend_view(wb_a, t, afb_res, backend_header, snapshot_rows, color_values=True,
+                      sheet_row_col=False)
         defs_a.append((t,
                        f"PASTE-READY ({len(afb_res)} cell units) — THE one paste surface for the "
                        "tracker tab: ALL corroborated fills AND all paste-ready reference work "
                        "(new refs + dead-link replacements) for the scope, carried + this packet's "
                        "own, unified in the exact GEM backend layout: FULL column set in sheet "
-                       "order, one row per touched segment, current values prefilled (leading "
-                       "SheetRow = row locator). A tier-colored VALUE cell = a proposed new value "
+                       "order, one row per touched segment, current values prefilled. No extra "
+                       "locator column — every column aligns 1:1 with the sheet, so cells "
+                       "copy-paste with no offset; locate each row by ProjectID. "
+                       "A tier-colored VALUE cell = a proposed new value "
                        "(its [ref] cell is colored too — paste them together); a colored [ref] "
                        "cell with an untinted value = ref-only work (value already on the sheet). "
                        "Paste the colored cells only — never the computed/formula columns. "
@@ -1258,6 +1330,18 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "(endpoints not both coordinated — no fabricated coordinates, standing rule "
                        "2). These feed a SEPARATE human branch+PR against GOIT-GGIT-pipeline-routes "
                        "— a route is NEVER auto-replaced."))
+    if route_candidates:
+        rc_cols = _route_candidate_columns()
+        t = f"{prefix}_RouteCandidates"
+        _write_sheet(wb_a, t, rc_cols, route_candidates, _route_candidate_styler(rc_cols))
+        defs_a.append((t,
+                       f"{len(route_candidates)} — §8 candidate route GEOMETRY (staged "
+                       "<PID>.geojson files, destination: the ROUTES REPO via a human branch+PR). "
+                       "Method sets suggested RouteAccuracy (sidecar/gis/osm=high, digitized=medium, "
+                       "endpoints=low). License 'ODbL' = OSM-derived, acceptability is Baird's call. "
+                       "Red QC result = failed the validation gate (still listed, not applied). "
+                       "Yellow Replacement? = a route already exists — review before replacing; a "
+                       "route is NEVER auto-replaced."))
     if open_flags:
         of_cols = _openflags_columns()
         t = f"{prefix}_OpenFlags"
@@ -1351,6 +1435,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
         "backend_paste_units": len(afb_res), "oo_paste_units": len(oo_units),
         "new_rows": len(nr_new), "matched_existing": len(nr_matched),
         "wiki_updates": len(wiki_updates), "route_suggestions": len(routes_all),
+        "route_candidates": len(route_candidates),
         "open_flags": len(open_flags),
         "confirmed_audits": len(confirmed), "fill_detail": len(fill_detail),
         "ref_detail": len(ref_detail),
@@ -1636,12 +1721,13 @@ def main() -> None:
         if afb_res:
             afb_title = f"{prefix}_AllFillsBackend"
             _backend_view(wb, afb_title, afb_res, backend_header, snapshot_rows,
-                          color_values=True)
+                          color_values=True, sheet_row_col=False)
             sheet_defs.append((afb_title,
                                "PASTE-READY — ALL corroborated fills for the scope unified in the exact GEM "
                                "tracker backend layout: the carried pending fills from prior packets PLUS this "
                                "packet's own fills, FULL column set in sheet order, one row per segment that "
-                               "has a fill, current values prefilled (leading SheetRow = row locator). Filled "
+                               "has a fill, current values prefilled. No extra locator column — every column "
+                               "aligns 1:1 with the sheet (locate rows by ProjectID). Filled "
                                "values AND their paired [ref] cells are overlaid, colored by corroboration "
                                "tier (green=≥2 independent / yellow=single / red=low or none / "
                                "blue=re-verified). Paste the colored cells only — never the computed/formula "
@@ -1759,7 +1845,10 @@ def main() -> None:
     # handoff mode, route suggestions carried from prior packets render on the same tab
     # (Source packet column tells them apart; this run's own rows leave it blank).
     carried_routes = (actions or {}).get("routes", [])
-    all_routes = route_res + carried_routes
+    all_routes_raw = route_res + carried_routes
+    is_route_candidate = lambda r: r.get("class_out") == "ROUTE_CANDIDATE"
+    all_routes = [r for r in all_routes_raw if not is_route_candidate(r)]
+    route_candidates = [r for r in all_routes_raw if is_route_candidate(r)]
     if all_routes:
         rt_cols = _route_columns(with_source=bool(carried_routes))
         rt_title = f"{prefix}_RouteSuggestions"
@@ -1772,6 +1861,17 @@ def main() -> None:
                            "cells = corridor-only (endpoints not both coordinated — no fabricated coordinates, "
                            "standing rule 2). These feed a SEPARATE human branch+PR against the "
                            f"GOIT-GGIT-pipeline-routes repo — a route is NEVER auto-replaced.{carried_txt}"))
+    if route_candidates:
+        rc_cols = _route_candidate_columns()
+        rc_title = f"{prefix}_RouteCandidates"
+        _write_sheet(wb, rc_title, rc_cols, route_candidates, _route_candidate_styler(rc_cols))
+        sheet_defs.append((rc_title,
+                           f"{len(route_candidates)} — §8 candidate route GEOMETRY (staged <PID>.geojson, "
+                           "destination: the ROUTES REPO via a human branch+PR). Method sets suggested "
+                           "RouteAccuracy (sidecar/gis/osm=high, digitized=medium, endpoints=low). License "
+                           "'ODbL' = OSM-derived (Baird's licensing call). Red QC result = failed the "
+                           "validation gate (listed, not applied). Yellow Replacement? = a route already "
+                           "exists — a route is NEVER auto-replaced."))
 
     # GulfPub cross-comparison tab (deep sweep): scoped reconcile of the PE World Map dataset
     # vs GEM, if a crosswalk was generated for this staging dir (build_gulfpub_crosswalk.py).
@@ -1858,6 +1958,8 @@ def main() -> None:
     counts["validity"] = len(validity_res)
     counts["fills"] = len(fill_res)
     counts["route_suggestions"] = len(all_routes)
+    if route_candidates:
+        counts["route_candidates"] = len(route_candidates)
     counts["gulfpub_crosscompare"] = gulfpub_n
     for bucket in _ORDER:
         rows = [r for r in ref_res if r.get("class_out") == bucket]
