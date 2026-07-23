@@ -1,8 +1,14 @@
 # Route creation — Ashdod–Ashkelon Gas Pipeline (P3620 onshore, P3657 offshore)
 
-§8 route-creation run, 2026-07-22/23. Israel, gas (GGIT). Candidate geometry only —
-**nothing here touches the live sheet or the routes repo**; the geojsons are inputs
-to a human review → branch+PR on `GOIT-GGIT-pipeline-routes`.
+§8 route-creation run, 2026-07-22/23. Israel, gas (GGIT).
+
+**APPLIED to the routes repo 2026-07-23** (Baird-directed): after Baird's manual
+edit bridging the Ashdod HDD bore in P3620 (now 2.1 km, ending at the marine
+tie-in 31.8543N/34.6590E = P3657's start), both geojsons were committed to
+`GOIT-GGIT-pipeline-routes` main (merge `72d29de1`, local only — not yet pushed).
+Sheet edits APPLIED 2026-07-23 (Baird-directed, via Sheets API): both rows
+(1036/1063) RouteAccuracy high→medium, RouteNotes filled, Route [ref] replaced
+with the TAMA/NtM/INGL map sources.
 
 Sheet context: both rows claim `RouteAccuracy = high` / "Mapped route", but both
 routes-repo geojsons are **empty placeholders** — these candidates fill missing
@@ -18,12 +24,13 @@ geometry (`replacement: false`).
      (±~175 m; starts at the HDD shore-crossing compound = true landfall);
   2. NtM 113/2024 works-corridor midline for the remaining ~32 km (±~500 m —
      half the ~1.0 km corridor width).
-- **`candidate_routes/P3620.geojson`** — onshore segment, **PARTIAL**: only the
-  Ashdod ~1.5 km strip midline (±~20 m). Gate **FAIL on length ratio 0.378 —
-  expected and explained**: the Ashkelon-side ~2.4 km onshore run has no public
-  vector source (OSM empty; blueprint sheets cover Ashdod only), and we don't
-  fabricate. The ~0.6 km Ashdod HDD bore is deliberately not bridged. Gap is
-  logged in `docs/research_backlog.md`.
+- **`candidate_routes/P3620.geojson`** — onshore segment, **PARTIAL**: the
+  Ashdod ~1.5 km strip midline (±~20 m) plus the ~0.6 km HDD bore bridge added
+  by Baird 2026-07-23 (total 2.1 km, connecting to P3657's start). Gate **FAIL
+  on length ratio 0.52 — expected and explained**: the Ashkelon-side ~2.4 km
+  onshore run has no public vector source (OSM empty; blueprint sheets cover
+  Ashdod only), and we don't fabricate. Gap is logged in
+  `docs/research_backlog.md`.
 
 ## Derivation (fully reproducible, no hand-drawn coordinates)
 
