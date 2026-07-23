@@ -5,7 +5,7 @@
 **APPLIED to the routes repo 2026-07-23** (Baird-directed): after Baird's manual
 edit bridging the Ashdod HDD bore in P3620 (now 2.1 km, ending at the marine
 tie-in 31.8543N/34.6590E = P3657's start), both geojsons were committed to
-`GOIT-GGIT-pipeline-routes` main (merge `72d29de1`, local only — not yet pushed).
+`GOIT-GGIT-pipeline-routes` main (merge `72d29de1`, pushed to origin).
 Sheet edits APPLIED 2026-07-23 (Baird-directed, via Sheets API): both rows
 (1036/1063) RouteAccuracy high→medium, RouteNotes filled, Route [ref] replaced
 with the TAMA/NtM/INGL map sources.
