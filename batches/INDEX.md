@@ -36,10 +36,25 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## israel-gas
 
+- `staging/discovery-tmng-map` [discovery] — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=2)
 - `staging/new-row-p8000` [new-row] — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=1)
+- `staging/route-creation-tmng-map` [route-creation] — rows=5 fills=0 updates=0 status-pending=0 refs(none) routes=5 new(none)
+- `staging/validation-tmng-map` [update] — rows=5 fills=0 updates=16 status-pending=0 refs(none) routes=0 new(none)
 - `deliverables/pipelines_batch_20260722_1301_ET_israel-egypt-gas_p8000-new-row.xlsx`
 - `deliverables/pipelines_batch_20260722_1301_ET_israel-egypt-gas_p8000-wiki.txt`
 - `deliverables/pipelines_batch_20260723_1105_ET_israel-gas_route-creation.xlsx`
+- `deliverables/pipelines_batch_20260723_1606_ET_israel-gas_discovery.xlsx`
+- `deliverables/pipelines_batch_20260723_1606_ET_israel-gas_p8001-mari-b-ashdod-wiki.txt`
+- `deliverables/pipelines_batch_20260723_1606_ET_israel-gas_p8003-karish-tanin-wiki.txt`
+
+## libya-gas
+
+- `staging/annual` — rows=6 fills=10 updates=0 status-pending=1 refs(REFS_ADDED=19, REVERIFIED=24, UNRESOLVED=3) routes=0 new(new_row=1)
+- `staging/qc` — no store — invisible to discovery
+- `staging/recon-gulfpub-20260723` — recon inputs
+- `staging/ref-sweep-operating` — rows=30 fills=37 updates=0 status-pending=0 refs(DEAD_LINK=11, REVERIFIED=29, UNRESOLVED=201) routes=0 new(none)
+- `deliverables/pipelines_batch_20260723_1425_ET_libya-gas_annual-indev.xlsx`
+- `deliverables/pipelines_batch_20260723_1434_ET_libya-gas_discovery.xlsx`
 
 ## saudi-arabia-gas
 

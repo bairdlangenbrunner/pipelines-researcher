@@ -228,6 +228,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
 - **Nigeria (divestiture ownership sweep not started):**
   `docs/country_notes/nigeria.md`.
+- **Israel (gas: INGL/TMNG-map ground-truth batch 2026-07-23 staged not applied —
+  2 new rows P8001/P8003, 5 validation candidate edits, 5 route candidates
+  (P2197 QC-fail); Ashdod-vs-Ashkelon landfall + P3620 Ashkelon-gap open):**
+  `docs/country_notes/israel.md`.
 
 ---
 

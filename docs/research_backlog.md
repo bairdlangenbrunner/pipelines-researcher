@@ -57,6 +57,14 @@ signal of application status.
   the four per-leg workbooks. Apply the Nitzana items (P3620/P7864 duplicate +
   discovery new-row Egyptian side) as one linked decision. xlsx on disk.
   `docs/country_notes/egypt.md`.
+- **Israel gas: INGL/TMNG-map ground-truth batch** (2026-07-23) — 2 new discovery rows
+  (P8001 Mari-B–Ashdod, P8003 Karish–Tanin FPSO), 5 validation candidate edits
+  (P0462/P0479/P5276/P7604/P7606, none auto-applied), 5 route candidates (P7602/P7603/
+  P0480/P8003 QC-pass, **P2197 QC-fail** documented). Deliverables:
+  `pipelines_batch_20260723_1606_ET_israel-gas_discovery.xlsx` (+ P8001/P8003 wiki texts)
+  and `…_1105_ET_israel-gas_route-creation.xlsx`. Open: Ashdod-vs-Ashkelon landfall (P8001
+  geometry deferred), Karish gem.wiki duplicate check, P0462 diameter needs a 2nd source.
+  `docs/country_notes/israel.md`; `batches/israel-gas/staging/{discovery,validation}-tmng-map/`.
 - **US oil: Delaware Express** (P7995/P0354, researched 2026-06-12) and
   **Permian Express I–IV** (P0113/P2581/P2660/P2661, researched 2026-06-11) —
   `batches/united-states-oil/staging/update-{delaware,permian}-express/staged_updates.json`.
