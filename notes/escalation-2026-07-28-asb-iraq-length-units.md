@@ -92,6 +92,48 @@ carries genuine-mile decimals (Brega/Al Khums 399.9, Brega/Benghazi 152.52,
 Intisar/Zueitina 136.4). OPEC converted Libya and left Iraq alone. **Any future
 re-ingest of the Iraq block will reintroduce this.**
 
+**7. An independent Iraqi-government aggregate lands where the correction puts GEM.**
+Recovered during the ref-gap re-pass: a 2013 JCCP seminar presentation by **Nihad A.
+Moosa, Director General of the Iraqi Ministry of Oil's Oil Pipelines Company** — i.e.
+the official responsible for the network — states Iraq's gas pipeline length as
+`L.P.G = 1219 km And dry gas = 1088`, **≈ 2,307 km total**.
+
+Compare GEM's matching cohort (Iraq, `Status = operating`, `StartYear1 ≤ 2013` or blank —
+30 rows, 19 of them ASB-derived):
+
+| GEM state | total | vs. the DG's 2,307 km |
+|---|---|---|
+| as the sheet stands today | 3,832 km | **+66%** |
+| with this memo's 19-row length correction applied | 2,780 km | **+21%** |
+| …and minus P4061's 600 km cluster-C double count | 2,180 km | **−6%** |
+
+**Two independent escalations each move GEM toward a figure neither was derived from.**
+The length correction closes two-thirds of the gap; removing the P4061 aggregate/segment
+double count (`batches/iraq-gas/staging/redundancy/`, cluster C) closes almost all of the
+rest. Neither fix was tuned to this number — the length fix comes from arithmetic and
+route arbitration, the P4061 question from name/diameter overlap — so their landing
+together on an official total is genuine convergent evidence.
+
+> **Three caveats, stated rather than buried, because this is corroboration and not proof:**
+> (a) the slide text is garbled and internally inconsistent in places (it is extracted
+> from a presentation, and "L.P.G" vs "dry gas" is not a clean split of what GGIT models
+> as gas transmission — see the P1853 note about that row being a *system* carrying both);
+> (b) the cohort filter is approximate — treating blank `StartYear1` as pre-2013 and
+> `operating` as the DG's in-service definition are both judgement calls, and a handful of
+> rows could reasonably move either way; (c) ±6% agreement on a soft, round aggregate is
+> not a precision match. What it does establish is **direction and magnitude**: GEM's Iraq
+> gas network is currently ~66% too long, and the two staged corrections account for
+> essentially all of it.
+>
+> Source: `http://web.archive.org/web/20231114092911/https://www.jccp.or.jp/international/conference/docs/s2-3_simminar_oil_final1_130307.pdf`
+> (origin now 404s; Wayback snapshot 2023-11-14, 7.9 MB, read with `pdftotext` — another
+> row of `url_verifier.py`'s large-PDF blind spot). The same deck independently sources
+> P4061's own length: *"National dry gas 42\`\` is the main gas pipe line is length about
+> 600km"* — note **"about"**, which is exactly why the trunk-vs-segment reading in
+> cluster C matters. It also names a planned **52″ × 600 km "2nd National Gas P/L from
+> North Rumail(a)"** that has no GGIT row — logged as a discovery lead in
+> `docs/country_notes/iraq.md`.
+
 ## Proven scope, and the controls that prove it
 
 The defect is **per-country in the source**, not a blanket ingest bug. Tested both
@@ -164,7 +206,16 @@ measures 224.9 km, so 268 km is right and 431 km is far too long. The Libya memo
 Qatar and Saudi controls are unaffected and still hold. That memo has been corrected
 in place.
 
-## Companion finding: the capacity column is *fine* in Iraq (one row excepted)
+## Companion finding: the ASB *capacity* ingest is fine in Iraq (one row excepted)
+
+> **SUPERSEDED IN PART, 2026-07-28.** This section is still correct about the **ASB**
+> capacity ingest — Iraq's did not drop the `(1,000 scm/yr)` multiplier the way Libya's
+> did. But its framing of P1841 as a lone exception no longer holds: the ref-gap re-pass
+> found two more Iraq rows carrying a correct number under a wrong `CapacityUnits` label
+> (P7477 ~98× high, P4041 ~35× high, both non-ASB rows), making this a **three-row class**
+> with errors in *both* directions — so there is no blanket capacity fix either. Full
+> analysis, including a tracker-wide screen that finds a worse non-Iraqi row:
+> `notes/escalation-2026-07-28-iraq-capacity-units.md`.
 
 Worth stating because it isolates the defect to length. Libya's ASB capacity ingest
 dropped the `(1,000 scm/yr)` multiplier; **Iraq's did not** — 11 of 13 ASB2012 rows

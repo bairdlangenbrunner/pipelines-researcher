@@ -1,0 +1,57 @@
+[
+ {
+  "title": "ASB length mi->km defect (19 Iraq gas rows) — TWO families, TWO different one-cell fixes",
+  "summary": "OPEC's ASB length column is headed '(miles)' but the IRAQ block is tabulated in KILOMETRES, and the ingest converted anyway, so 19 rows are 1.609x too long. Route geometry arbitrates 6-0 for the raw figure. The fixes DIFFER by family: 13 rows (P18xx/P22xx) hold the converted km in LengthKnown with units 'km' -> correct the NUMBER; 6 rows (P40xx) hold the ASB integer verbatim with units 'mi' -> correct ONLY the UNIT LABEL, never the number (changing both would double-correct, and pasting the computed LengthKnownKm would silently revert on the next recalc). Iraq-and-Libya only: Qatar/Saudi/UAE blocks are genuine miles and a blanket sweep would corrupt them. OPEC never fixed Iraq (ASB2017 reprints the same integers), so any re-ingest reintroduces this. Independently corroborated: an Iraqi MoO Director General's own 2013 figure (~2,307 km) sits +66% below GEM as-is, +21% after this fix, and -6% after also removing P4061's double count.",
+  "memo": "notes/escalation-2026-07-28-asb-iraq-length-units.md"
+ },
+ {
+  "title": "CapacityUnits mislabelled on 3 Iraq rows — and the screen says it is tracker-wide",
+  "summary": "P7477 (130 MMcf/d tagged bcm/y, ~98x HIGH), P4041 (258 MMSCFD tagged MMSCMD, ~35x HIGH) and P1841 (2.41 bcm/y tagged MMcf/d, ~120x LOW) each store a CORRECT number under a WRONG unit label. The directions differ, so this is careless per-row tagging, not one systematic conversion -- there is no blanket fix. It is not cosmetic: P7477's 22 km 18-inch spur is currently the SECOND-LARGEST-CAPACITY ROW IN ALL OF GGIT (130.00 bcm/y, ahead of the 14,202 km Texas Eastern) and P4041 is 8th, so every Iraq and global capacity total is distorted. A diameter-based screen over 1,964 GGIT rows finds a WORSE non-Iraqi row -- P2009 Mountaineer (US), 4,750 MMcf/d on an 8-inch 5.5 km lateral, 157x its ceiling -- plus P0693 Frigg UK at 31x, so DO NOT close this as an Iraq item. Three one-cell edits here; a tracker-wide pass is a separate task (normalise Diameter units first -- P2459 holds 1420 mm in an inches column).",
+  "memo": "notes/escalation-2026-07-28-iraq-capacity-units.md"
+ },
+ {
+  "title": "P6824 is a DIESEL pipeline in the gas tracker (Arabic 'زيت الغاز' false friend)",
+  "summary": "P6824 'Shouibah-Khor Al-Zubair' is a gas oil (diesel) EXPORT line: its own al-Mirbad ref says 'أنبوب تصدير زيت الغاز' and matches GEM on every spec (46 km, 8-10in, Shuaiba -> Khor al-Zubair OIL port, Oil Pipelines Company, completed July 2024). 'زيت الغاز' is literally 'gas oil' = diesel, not natural gas -- the row is perfectly sourced and completely misfiled, with no internal inconsistency to catch it. REMOVE from GGIT and refer to GOIT; do not merely re-label Fuel. Second country with this exact class after Libya's three condensate lines -- recommend a tracker-wide screen for GGIT rows whose source describes a liquid (port/berth/refinery destinations, sub-12in with the word 'export', Arabic 'المكثفات'/'زيت الغاز').",
+  "memo": "notes/escalation-2026-07-28-iraq-gasoil-misfiled.md"
+ },
+ {
+  "title": "ASB provenance ruling — 12 of 16 duplicate/existence flags WITHDRAWN (my own earlier legs were wrong)",
+  "summary": "The OPEC ASB gas table is a PER-PIPELINE table, not an aggregate, so 8 'single-sourced, existence unproven' flags rested on a false premise: the 13-row crosswalk matches diameter 13/13 and capacity 10/13, clinched by 'Baiji-K3-/Al Kaem' -> 'Baiji-K3-Al Kaem Gas Pipeline' with the doubled hyphen surviving verbatim. Two more flags were url_verifier large-PDF artefacts (the Kabesa and Najaf tokens ARE in the PDF). And the 'Strategic-* vs Trans-Iraq(i)-*' duplicate theory is refuted BY the source: ASB2017 lists both families as separate rows off different trunks to DIFFERENT power stations (Hilla vs Hilla-2, Al-Najaf 23/16in vs Najaf 74/24in) -- GEM's ingest merely TRUNCATED 'Hilla-2' to 'Hilla'. Staged a rename, not a merge. What survives: ONE real duplicate (P4054 -> merge into P4066) and ONE open aggregate/segment question (cluster C below). Single-sourcing is still a real weakness; unproven existence is not.",
+  "memo": "notes/escalation-2026-07-28-asb-iraq-provenance.md"
+ },
+ {
+  "title": "Cluster C — P4061 national 42-inch trunk vs P1852 segment: a 600 km double count",
+  "summary": "P4061 'National dry gas' (600 km, 42in, 8.69 bcm/y) appears to aggregate P1852 (470 km, 42in, 11.03 bcm/y) rather than sit beside it. The tell is that the putative TRUNK carries LOWER capacity than its putative SEGMENT, which is physically backwards -- the same signature as Libya's cluster-A coastal double count. Independently supported by the aggregate test: removing P4061's 600 km is what takes GEM's Iraq operating total from +21% to -6% of the Iraqi MoO DG's own published figure. Needs the same ruling shape as Libya cluster A: either delete the member, or move P4061 to a PipelineNetworkGrouping label with a BLANK Status (note 'n/a' is not a valid Status). Both rows are staged as 'concern', tier medium -- neither is confirmed a duplicate on evidence alone.",
+  "memo": "batches/iraq-gas/staging/redundancy/"
+ },
+ {
+  "title": "Cluster B — P4054 is a third naming of P4066 (the one confirmed duplicate)",
+  "summary": "P4054 duplicates P4066 (Trans-Iraq dry gas -> Daura power station, 29 mi/18in in ASB2017). Merge P4054 INTO P4066, carrying any unique names to OtherEnglishNames. This is the only genuine duplicate to survive the provenance ruling above, so it is a clean, low-risk action -- but it needs a ruling because a merge deletes a published ProjectID.",
+  "memo": "batches/iraq-gas/staging/redundancy/"
+ },
+ {
+  "title": "P7457 Semel-Duhok has ZERO verifiable sources",
+  "summary": "Both of this row's refs failed and NEITHER is archived: pukmedia.com 403 (bot-wall, no Wayback snapshot) and drawmedia.net 404 (no Wayback snapshot). All six of its ref units are unverifiable. Its 40.00 km also has no independent support -- it was one of the four rows the ASB length memo explicitly REJECTED from the mi->km match, on the grounds that 40.00 is simply a round number. So the row rests on nothing checkable. Escalated as attribution rather than existence: a Semel-Duhok gas line in Duhok governorate is plausible, it is just unsourced as GEM holds it. Priority target for fresh research (KRG Ministry of Natural Resources, Duhok governorate releases).",
+  "memo": "batches/iraq-gas/staging/ref-gap-repass/"
+ },
+ {
+  "title": "Status is stale FORWARD on 2 rows — GEM is ahead of the evidence, not behind it",
+  "summary": "P7435 (Khor al-Zubair -> Shatt al-Arab, 40 km/42in) and P6826 are both marked 'operating' while their own live sources describe active construction: two independent March-2025 outlets say P7435 is 'progressing with the implementation' with 'receiving arms under construction', and al-Sharq (April 2024) says P6826's crews are 'currently laying and welding the pipes'. Nothing found reports commissioning for either. Both also carry unsourced StartYear1 values whose only ref is a Facebook post (HTTP 400, no archive). Worth a ruling as a pattern, not just two rows: the usual stale-status failure mode is GEM lagging a completion, and these are the opposite -- a construction start read as an in-service date.",
+  "memo": "batches/iraq-gas/staging/ref-gap-repass/"
+ },
+ {
+  "title": "P7436/P7437 owner is TotalEnergies' project, not the Ministry of Oil",
+  "summary": "Both rows carry Owner 'Iraq Ministry of Oil [100.%]' against a single ref that never mentions the Ministry: the Artawi GMP EPSCC Project is 'commissioned by TotalEnergies', with China Petroleum Pipeline Engineering as EPC contractor. Do NOT simply swap in TotalEnergies at 100% -- Ratawi/Artawi is a consortium, so establish the real split from a primary source first, and record it on the ProjectID-keyed operators/owners tab (GID 1489950650). The same ref DOES support both rows' specs exactly (83 km/20in and 114 km/26in sour gas), so only the ownership is wrong. Note the two rows also share an identical PipelineName with no SegmentName, which will read as a duplicate to any future name-based pass.",
+  "memo": "batches/iraq-gas/staging/ref-gap-repass/"
+ },
+ {
+  "title": "GulfPub<->GEM matching is unreliable for Iraq — do NOT act on its conflict list",
+  "summary": "The >10% conflict gate tripped numerically (13 of 39 = 33%) but NOT materially: zero of the 13 conflicts sit on a green match (all yellow, composite 0.455-0.653; the run produced only 4 green matches out of 39 overlaps) and matches collapse many-to-one. These are matching artefacts, not data disagreements. Recorded so the gate is not re-tripped and re-investigated next scrape. Genuine referrals were split out separately to batches/iraq-gas/staging/recon-gulfpub-followup/ (Mansuriyah-Kirkuk, Jera Pika-Mansuriyah).",
+  "memo": "notes/escalation-2026-07-28-gulfpub-iraq-match-quality.md"
+ },
+ {
+  "title": "url_verifier.py false negatives cost 22 of 41 'dead' refs — five families, one new",
+  "summary": "The ref-gap re-pass found only 15 of 41 DEAD_LINK units genuinely unverifiable. 22 recovered and 4 more turned out to have LIVE urls whose content CONTRADICTS the GEM value -- a worse problem than a dead link, and invisible while the unit was written off as dead. Every substantive defect in this packet (P6824 diesel, P7477 capacity, P7435/P6826 status, P7436/P7437 owner, P6827 dates) was found in a ref that had been marked dead. Families: large PDFs the verifier cannot read deep enough (saymar, Al-Jibawi, both ASB editions); NEW -- CAPTCHA interstitials returning HTTP 200 with a 2,654-byte / 267-character body (opc.oil.gov.iq, the correct primary source for P7471/P7474, so the fix is access not replacement); bot-wall 403 with no archive (pukmedia); Facebook permalinks returning 400 to non-browser clients; and Wayback replay truncating large files at exactly 5 MiB, leaving an unparseable PDF (qamarenergy, which is why P6823's capacity stays unsourced). Recommend a verifier change: never emit DEAD_LINK on a 2xx response, and retry large PDFs with a ranged fetch.",
+  "memo": "batches/iraq-gas/staging/ref-gap-repass/"
+ }
+]
