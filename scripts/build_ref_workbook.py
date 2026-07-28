@@ -396,6 +396,44 @@ def _backend_snapshot(meta: dict):
     return header, rows
 
 
+def _sheet_row_index(snapshot_rows: dict) -> dict:
+    """ProjectID -> its CURRENT SheetRow, from the freshly loaded snapshot (first row wins on
+    the rare duplicate ProjectID)."""
+    idx: dict[str, int] = {}
+    for pid, srow in snapshot_rows:
+        pid = str(pid).strip()
+        if pid and pid not in idx:
+            idx[pid] = srow
+    return idx
+
+
+def _restamp_sheet_rows(records, pid_row: dict) -> int:
+    """Re-derive every record's `sheet_row` from the CURRENT snapshot, keyed on ProjectID.
+
+    `sheet_row` is a POSITIONAL locator into the live sheet, so it goes stale the moment the
+    sheet is re-sorted — GGIT gas was re-ordered between the 2026-07-04 and 2026-07-05 pulls
+    (pre-07-05 exports are ProjectID-ascending), which silently invalidated every locator
+    staged by an earlier leg. Two ways that bites: the researcher is sent to the wrong row,
+    and the backend mirror's (ProjectID, SheetRow) prefill lookup MISSES so the row renders
+    identity-only — i.e. a paste surface of blanks over live data. Rebuilding the locator at
+    build time means a stale one can never reach a deliverable. Returns the number corrected.
+
+    ProjectIDs absent from the snapshot (new rows not yet in the tracker) keep their staged
+    value: there is no current row to point at.
+    """
+    fixed = 0
+    for r in records:
+        if not isinstance(r, dict):
+            continue
+        cur = pid_row.get(str(r.get("project_id", "")).strip())
+        if cur is None:
+            continue
+        if str(r.get("sheet_row", "")).strip() != str(cur):
+            r["sheet_row"] = cur
+            fixed += 1
+    return fixed
+
+
 def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_values=False,
                   sheet_row_col=True):
     """The PRIMARY tab: a 1:1 paste-ready mirror of the GEM tracker backend. Reproduces the
@@ -1627,6 +1665,18 @@ def main() -> None:
     actions_path = Path(args.staging) / "staged_actions.json"
     if actions_path.exists():
         actions = json.loads(actions_path.read_text())
+
+    # Rebuild every SheetRow locator against the snapshot BEFORE anything is rendered or
+    # partitioned. Staged locators from a leg built before a sheet re-sort are stale (see
+    # _restamp_sheet_rows) and would otherwise reach the deliverable as wrong row numbers.
+    pid_row = _sheet_row_index(snapshot_rows)
+    if pid_row:
+        restamped = _restamp_sheet_rows(resolutions, pid_row)
+        for key in ("concerns", "status_changes", "fills", "ref_work", "routes", "new_rows"):
+            restamped += _restamp_sheet_rows((actions or {}).get(key) or [], pid_row)
+        if restamped:
+            print(f"  re-derived {restamped} stale SheetRow locator(s) against "
+                  f"{(meta.get('scope') or {}).get('csv') or 'the snapshot'}")
     is_wikidiff = lambda r: r.get("class_in") == "WIKIDIFF" or r.get("ref_col") == WIKIDIFF_REF
     is_routeqc = lambda r: r.get("class_in") == "ROUTEQC" or r.get("ref_col") == ROUTEQC_REF
     wikidiff_res = [r for r in resolutions if is_wikidiff(r)]

@@ -49,7 +49,7 @@ engine is country-agnostic (Phase E validation target).
 ## Open items — gas (full pass 2026-07-28; ALL staged, NOTHING applied)
 
 **Work from the ACTIONS file, not the per-leg workbooks:**
-`batches/iraq-gas/deliverables/pipelines_batch_20260728_1530_ET_iraq-gas_handoff-actions.xlsx`
+`batches/iraq-gas/deliverables/pipelines_batch_20260728_1704_ET_iraq-gas_handoff-actions.xlsx`
 (100 open decisions · 9 status changes · 265 backend paste units · 27 operator/owner units ·
 5 new rows · 114 wiki updates · 36 route suggestions · 171 open flags), with the audit trail in
 the companion `…_handoff-evidence.xlsx` (37 confirmed audits · 118 fill detail · 339 ref detail ·

@@ -17,6 +17,17 @@ Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
 
 - The two **tracker** tabs: **header at CSV row index 2** (rows 0–1 are metadata);
   load with `pd.read_csv(path, header=2, low_memory=False)`. `SheetRow = CSV index + 4`.
+- **`SheetRow` is positional, so it goes stale whenever the sheet is re-sorted — never
+  trust a staged one.** GGIT gas was re-ordered between the 2026-07-04 and 2026-07-05
+  pulls (pre-07-05 exports are ProjectID-ascending, starting `P0061`; from 07-05 on they
+  start `P4458`), which silently invalidated every locator staged by an earlier leg —
+  1,463 of them across two Iraq gas legs, found only because one PID rendered two
+  different `SheetRow`s in the same workbook. Two ways it bites: the researcher is sent
+  to the wrong row, and a `(ProjectID, SheetRow)` prefill lookup MISSES, so a backend
+  mirror row renders identity-only — a paste surface of blanks over live data.
+  **Always re-derive from the current CSV, keyed on ProjectID.** `build_ref_workbook.py`
+  does this for every record at build time (`_restamp_sheet_rows`) and prints the count;
+  any new consumer must do the same rather than reading `sheet_row` from staged JSON.
 - **Buffer rows:** ~104 reserved/blank `ProjectID`s exist at the tail of each tracker
   tab. Exclude them from QC and matching (filter to rows with a real `PipelineName`/`Status`).
 - Do **not** use Drive MCP `download_file_content` (first tab only) or

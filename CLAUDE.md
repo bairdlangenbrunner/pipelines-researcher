@@ -217,7 +217,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/iran.md`.
 - **Iraq (gas: full pass re-run 2026-07-28 staged not applied — supersedes the
   2026-07-05 packet; work from
-  `…_20260728_1530_ET_iraq-gas_handoff-{actions,evidence}.xlsx`. TWELVE escalations
+  `…_20260728_1704_ET_iraq-gas_handoff-{actions,evidence}.xlsx`. TWELVE escalations
   open, structurally: the ASB Table 4.10/9.9 length mi→km defect on 19 rows (two
   families, two *different* one-cell fixes —
   `notes/escalation-2026-07-28-asb-iraq-length-units.md`), CapacityUnits on 3 rows,

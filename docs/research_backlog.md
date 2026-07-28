@@ -41,10 +41,24 @@ Roster `applied` column is blank for all four countries — log the date when pa
 Iraq/Iran xlsx deliverables are already pruned from disk, so file presence is not a
 signal of application status.
 
+> **Stale `SheetRow` locators in the packets delivered before 2026-07-28.** `SheetRow` is
+> positional, so it perishes as the sheet is re-sorted or rows are inserted (GGIT gas was
+> re-ordered between the 07-04 and 07-05 pulls). `build_ref_workbook.py` now re-derives every
+> locator from the fresh CSV at build time, so **Iraq gas is clean**, but the packets below
+> were built before that fix and their locators point at the wrong rows now:
+> **egypt-gas handoff** 43 cells (`Gas_Decisions` 33, `Gas_ConfirmedAudit` 10),
+> **saudi-arabia-gas deepsweep** 436, **saudi-arabia-gas annual-indev** 275.
+> The prefilled *values* in those files are correct (they were current at build time) and
+> nothing has been applied, so no damage — but **locate rows by ProjectID, not by the printed
+> `SheetRow`**, or just rebuild the packet from its staging dir to refresh them. The Saudi
+> sweep `Gas_Backend` tab is the one to be careful with: its leading `SheetRow` *is* the paste
+> locator. Staged-JSON locator drift by scope: saudi-arabia-gas 4,879 · egypt-gas 973 ·
+> saudi-arabia-oil 933 · iran-gas 600 · libya-gas 4 · israel-gas 1.
+
 - **Iraq gas** — **full pass re-run 2026-07-28** (refs sweep · cancelled review · redundancy
   clusters · GulfPub + OSM recon · wiki alignment · route integrity · ref-gap re-pass · Leg-3),
   superseding the 2026-07-05 packet and the 2026-07-07 ASB ref-harvest, both folded in. Work from
-  `pipelines_batch_20260728_1530_ET_iraq-gas_handoff-actions.xlsx` (100 open decisions ·
+  `pipelines_batch_20260728_1704_ET_iraq-gas_handoff-actions.xlsx` (100 open decisions ·
   9 status changes · 265 backend paste units · 114 wiki updates · 36 route suggestions ·
   171 open flags) + the `-evidence` companion. **Twelve escalations open** — the structural ones
   are the ASB length mi→km defect (19 rows, two families with two *different* one-cell fixes),
