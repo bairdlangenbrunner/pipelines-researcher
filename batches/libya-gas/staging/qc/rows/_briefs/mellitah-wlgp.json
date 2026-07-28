@@ -1,0 +1,221 @@
+{
+ "cluster": "mellitah-wlgp",
+ "title": "Mellitah complex / Western Libya Gas Project / Bahr Assalam offshore",
+ "context": "Mellitah Oil & Gas (the NOC-Eni 50:50 JV) is the operator across this group; the operators tab is blank for all six. Three notes so you do not waste effort: (1) P0482's flag says 'sheet Capacity is blank but wiki shows 30/36 inches' \u2014 that wiki value is a DIAMETER string, not a capacity, so the flag is a wiki-parse artifact. Do not stage a capacity from it. If you can source P0482's real diameter and/or capacity, do that instead and say what you found. (2) P0484's LengthKnownKm of 5246 is a known decimal-shift error against a drawn route of 526 km and is already staged in staging/redundancy cluster B \u2014 you only need the operator. (3) P6716 and P7617 are two SEGMENTS of one DP3-DP4-Sabratha pipeline; the route file holds the whole line (66 km) while P6716's row is just the 8.5 km DP3-DP4 leg, so its length_ratio flag is a segment-vs-network granularity artifact, not an error. Confirm the segment lengths if you can, but do not 'fix' 8.5 km to 66 km.",
+ "protocol": "batches/libya-gas/staging/qc/RESEARCH_PROTOCOL.md",
+ "write_shards_to": "batches/libya-gas/staging/qc/rows/<PID>.json",
+ "n_rows": 6,
+ "n_flags": 7,
+ "generated_utc": "2026-07-28T16:01:33+00:00",
+ "rows": [
+  {
+   "project_id": "P0482",
+   "sheet_row": 2670,
+   "pipeline_name": "Defa-Brega Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Defa-Brega_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Capacity",
+     "detail": "sheet Capacity is blank but wiki shows '30/36 inches' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "30/36 inches"
+    },
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Defa-Brega Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "299.00",
+    "Diameter": "",
+    "Capacity": "",
+    "CapacityUnits": "",
+    "StartLocation": "Defa gas field",
+    "EndLocation": "Brega",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Defa-Brega_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  },
+  {
+   "project_id": "P0484",
+   "sheet_row": 1305,
+   "pipeline_name": "Wafa-Mellitah Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Wafa-Mellitah_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 526 km but the sheet says 5246 km (ratio 0.10, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 526 km (ratio 0.10)",
+     "expected": "LengthKnownKm = 5246 km"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Wafa-Mellitah Gas Pipeline",
+    "SegmentName": "Pipeline 1",
+    "Status": "operating",
+    "StartYear1": "2004",
+    "LengthKnownKm": "5246.00",
+    "Diameter": "32",
+    "Capacity": "13.0",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Wafa gas field",
+    "EndLocation": "Mellitah Complex",
+    "Owner": "Libyan National Oil Corp [50.%]; Eni SpA [50.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Wafa-Mellitah_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 526.6 km, Wafa gas field (10.024E,28.889N) -> Mellitah (12.238E,32.854N)"
+  },
+  {
+   "project_id": "P6713",
+   "sheet_row": 2649,
+   "pipeline_name": "Bahr Assalam\u2013Mellitah Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Bahr_Assalam-Mellitah_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Mellitah Oil and Gas' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Mellitah Oil and Gas"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Bahr Assalam\u2013Mellitah Gas Pipeline",
+    "SegmentName": "Pipeline 2",
+    "Status": "operating",
+    "StartYear1": "2018",
+    "LengthKnownKm": "109.00",
+    "Diameter": "10",
+    "Capacity": "465166.0",
+    "CapacityUnits": "scm/y",
+    "StartLocation": "",
+    "EndLocation": "",
+    "Owner": "Libyan National Oil Corp [50.%]; Eni SpA [50.%]",
+    "RouteAccuracy": "no route",
+    "Wiki": "https://www.gem.wiki/Bahr_Assalam-Mellitah_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  },
+  {
+   "project_id": "P6715",
+   "sheet_row": 3990,
+   "pipeline_name": "E Structure-Mellitah Gas Pipeline",
+   "wiki": "https://www.gem.wiki/E_Structure-Mellitah_Gas_Pipeline",
+   "status": "construction",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Mellitah Oil & Gas' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Mellitah Oil & Gas"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "E Structure-Mellitah Gas Pipeline",
+    "SegmentName": "",
+    "Status": "construction",
+    "StartYear1": "2026",
+    "LengthKnownKm": "130.00",
+    "Diameter": "32",
+    "Capacity": "",
+    "CapacityUnits": "",
+    "StartLocation": "",
+    "EndLocation": "",
+    "Owner": "Libyan National Oil Corp [50.%]; Eni SpA [50.%]",
+    "RouteAccuracy": "medium",
+    "Wiki": "https://www.gem.wiki/E_Structure-Mellitah_Gas_Pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  },
+  {
+   "project_id": "P6716",
+   "sheet_row": 3991,
+   "pipeline_name": "DP3\u2013DP4\u2013Sabratha Gas Pipeline",
+   "wiki": "https://www.gem.wiki/DP3%E2%80%93DP4%E2%80%93Sabratha_Gas_Pipeline",
+   "status": "construction",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 66 km but the sheet says 8.5 km (ratio 7.76, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 66 km (ratio 7.76)",
+     "expected": "LengthKnownKm = 8.5 km"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "DP3\u2013DP4\u2013Sabratha Gas Pipeline",
+    "SegmentName": "DP3\u2013DP4",
+    "Status": "construction",
+    "StartYear1": "2028",
+    "LengthKnownKm": "8.50",
+    "Diameter": "14",
+    "Capacity": "",
+    "CapacityUnits": "",
+    "StartLocation": "",
+    "EndLocation": "Sabratha platform",
+    "Owner": "Libyan National Oil Corp [50.%]; Eni SpA [50.%]",
+    "RouteAccuracy": "low",
+    "Wiki": "https://www.gem.wiki/DP3%E2%80%93DP4%E2%80%93Sabratha_Gas_Pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "route file covers the whole DP3-DP4-Sabratha line, 65.8 km (13.190E,32.860N -> 12.495E,32.806N); the row is only the DP3-DP4 segment"
+  },
+  {
+   "project_id": "P7617",
+   "sheet_row": 4177,
+   "pipeline_name": "DP3\u2013DP4\u2013Sabratha Gas Pipeline",
+   "wiki": "https://www.gem.wiki/DP3%E2%80%93DP4%E2%80%93Sabratha_Gas_Pipeline",
+   "status": "construction",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Mellitah Oil & Gas' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Mellitah Oil & Gas"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "DP3\u2013DP4\u2013Sabratha Gas Pipeline",
+    "SegmentName": "DP4\u2013Sabratha",
+    "Status": "construction",
+    "StartYear1": "",
+    "LengthKnownKm": "20.00",
+    "Diameter": "10,4",
+    "Capacity": "",
+    "CapacityUnits": "",
+    "StartLocation": "Bouri Platform",
+    "EndLocation": "",
+    "Owner": "--",
+    "RouteAccuracy": "no route",
+    "Wiki": "https://www.gem.wiki/DP3%E2%80%93DP4%E2%80%93Sabratha_Gas_Pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  }
+ ]
+}

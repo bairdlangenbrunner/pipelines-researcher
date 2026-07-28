@@ -1,0 +1,190 @@
+{
+ "cluster": "sirte-east",
+ "title": "Sirte Basin east \u2014 Intesar / Bu-Attifel / Waha / Farigh feeders",
+ "context": "Zueitina Oil Co, Mellitah Oil & Gas and Waha Oil Co operate here and the operators tab already names them for these rows \u2014 but with NO `Operator [ref]`. Two specific things to chase: (1) P1860 'Waha-Nasser' and P1861 'Farigh-Intesar' both carry LengthKnownKm = 177.00 exactly, with blank endpoints and RouteAccuracy=low on both \u2014 an identical length on two different pipelines reads as a copy-paste, so find each line's real length independently. (2) P1858's 131.96 km is SOURCED (OPEC ASB lists Bu-Attifel/Intesar 34in at that length) while its drawn route is a 91 km straight line \u2014 that is a ROUTE problem, not a length problem, so do not propose changing the length; confirm the ASB figure and say so.",
+ "protocol": "batches/libya-gas/staging/qc/RESEARCH_PROTOCOL.md",
+ "write_shards_to": "batches/libya-gas/staging/qc/rows/<PID>.json",
+ "n_rows": 5,
+ "n_flags": 7,
+ "generated_utc": "2026-07-28T16:01:33+00:00",
+ "rows": [
+  {
+   "project_id": "P1856",
+   "sheet_row": 1635,
+   "pipeline_name": "Intesar-Brega Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Intesar-Brega_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 223 km but the sheet says 333 km (ratio 0.67, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 223 km (ratio 0.67)",
+     "expected": "LengthKnownKm = 333 km"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Intesar-Brega Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "333.00",
+    "Diameter": "42.00",
+    "Capacity": "42.48",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Intesar Oil field",
+    "EndLocation": "Mersa Brega",
+    "Owner": "Libyan National Oil Corp [81.%]; Occidental Petroleum [14.25%]; OMV [4.75%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Intesar-Brega_gas_pipeline"
+   },
+   "current_operator": "Zueitina Oil Co",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 223.0 km, Intesar (20.987E,28.926N) -> Brega (19.591E,30.409N)"
+  },
+  {
+   "project_id": "P1857",
+   "sheet_row": 1404,
+   "pipeline_name": "103D-103A Gas Pipeline",
+   "wiki": "https://www.gem.wiki/103D-103A_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "103D-103A Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "41.00",
+    "Diameter": "40.00",
+    "Capacity": "17.84",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "",
+    "EndLocation": "",
+    "Owner": "Libyan National Oil Corp [81.%]; Occidental Petroleum [14.25%]; OMV [4.75%]",
+    "RouteAccuracy": "no route",
+    "Wiki": "https://www.gem.wiki/103D-103A_gas_pipeline"
+   },
+   "current_operator": "Zueitina Oil Co",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  },
+  {
+   "project_id": "P1858",
+   "sheet_row": 2651,
+   "pipeline_name": "Bu-Attifel-Intesar Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Bu-Attifel-Intesar_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 92 km but the sheet says 131.96 km (ratio 0.69, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 92 km (ratio 0.69)",
+     "expected": "LengthKnownKm = 131.96 km"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Bu-Attifel-Intesar Gas Pipeline",
+    "SegmentName": "Pipeline 1",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "131.96",
+    "Diameter": "34.00",
+    "Capacity": "4134806.0",
+    "CapacityUnits": "scm/y",
+    "StartLocation": "Bu-Attifel Oil field",
+    "EndLocation": "Intesar Oil field",
+    "Owner": "Libyan National Oil Corp [50.%]; Eni SpA [50.%]",
+    "RouteAccuracy": "medium",
+    "Wiki": "https://www.gem.wiki/Bu-Attifel-Intesar_gas_pipeline"
+   },
+   "current_operator": "Mellitah Oil & Gas",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 91.4 km, Bu-Attifel (22.068E,28.880N) -> Intesar (21.130E,28.885N) \u2014 essentially a straight line, i.e. a schematic"
+  },
+  {
+   "project_id": "P1860",
+   "sheet_row": 1019,
+   "pipeline_name": "Waha-Nasser Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Waha-Nasser_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 70 km but the sheet says 177 km (ratio 0.39, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 70 km (ratio 0.39)",
+     "expected": "LengthKnownKm = 177 km"
+    },
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Waha-Nasser Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "177.00",
+    "Diameter": "24.00",
+    "Capacity": "5.66",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "",
+    "EndLocation": "",
+    "Owner": "Libyan National Oil Corp [59.18%]; ConocoPhillips [16.33%]; TotalEnergies SE [16.33%]; Hess Corp [8.16%]",
+    "RouteAccuracy": "low",
+    "Wiki": "https://www.gem.wiki/Waha-Nasser_gas_pipeline"
+   },
+   "current_operator": "Waha Oil Co",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 69.9 km, Waha (19.923E,28.302N) -> Nasser (19.770E,28.916N)"
+  },
+  {
+   "project_id": "P1861",
+   "sheet_row": 1085,
+   "pipeline_name": "Farigh-Intesar Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Faregh-Intesar_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 13 km but the sheet says 177 km (ratio 0.08, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 13 km (ratio 0.08)",
+     "expected": "LengthKnownKm = 177 km"
+    },
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Farigh-Intesar Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "177.00",
+    "Diameter": "24.00",
+    "Capacity": "7.08",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "",
+    "EndLocation": "",
+    "Owner": "Libyan National Oil Corp [59.18%]; ConocoPhillips [16.33%]; TotalEnergies SE [16.33%]; Hess Corp [8.16%]",
+    "RouteAccuracy": "low",
+    "Wiki": "https://www.gem.wiki/Faregh-Intesar_gas_pipeline"
+   },
+   "current_operator": "Waha Oil Co",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route only 13.3 km, (21.123E,28.887N) -> (20.994E,28.928N) \u2014 and its start point is within ~10 m of where P1858's route ENDS, so the drawn line is a stub between P1858's endpoint and Intesar, nowhere near the Farigh field"
+  }
+ ]
+}

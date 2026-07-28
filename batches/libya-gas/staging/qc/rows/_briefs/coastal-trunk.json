@@ -1,0 +1,245 @@
+{
+ "cluster": "coastal-trunk",
+ "title": "Libya coastal gas trunk (Brega -> Benghazi / Khoms / Tripoli / Mellitah)",
+ "context": "These rows are the western/coastal trunk. A separate redundancy pass (staging/redundancy, cluster A) has ALREADY flagged that P0483 'Libya Coastal Gas Pipeline' may be an aggregate that double-counts its member segments P1862/P1863/P1864/P1865, with P1789 a sixth overlapping row. Do NOT re-litigate that question \u2014 it is Baird's call and is already staged. Your job is narrower: the operator attribution and the route-vs-length disagreements. Note that four separate segments here have a drawn route 40-50% shorter than their stated length, which is a suspiciously consistent pattern: either the drawn routes are all straight-line schematics, or the stated lengths were derived from something other than the pipe. Find out which. The single most useful find would be a source giving the ACTUAL length of any one of these segments.",
+ "protocol": "batches/libya-gas/staging/qc/RESEARCH_PROTOCOL.md",
+ "write_shards_to": "batches/libya-gas/staging/qc/rows/<PID>.json",
+ "n_rows": 6,
+ "n_flags": 11,
+ "generated_utc": "2026-07-28T16:01:33+00:00",
+ "rows": [
+  {
+   "project_id": "P0483",
+   "sheet_row": 2262,
+   "pipeline_name": "Libya Coastal Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Libya_Coastal_Gas_Pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Libya National Oil Corporation' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Libya National Oil Corporation"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Libya Coastal Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "1983",
+    "LengthKnownKm": "1164.00",
+    "Diameter": "34",
+    "Capacity": "604.0",
+    "CapacityUnits": "MMcf/d",
+    "StartLocation": "Mellitah Complex",
+    "EndLocation": "Benghazi",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Libya_Coastal_Gas_Pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  },
+  {
+   "project_id": "P1789",
+   "sheet_row": 673,
+   "pipeline_name": "Khoms-Melita Pipeline",
+   "wiki": "https://www.gem.wiki/Khoms-Melita_Pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 250 km but the sheet says 25 km (ratio 9.98, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 250 km (ratio 9.98)",
+     "expected": "LengthKnownKm = 25 km"
+    },
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Khoms-Melita Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "25.00",
+    "Diameter": "34",
+    "Capacity": "2.0",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Khoms",
+    "EndLocation": "Melita",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "medium",
+    "Wiki": "https://www.gem.wiki/Khoms-Melita_Pipeline"
+   },
+   "current_operator": "Sirte Oil Co",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 249.2 km, (15.041E,32.210N) -> (12.575E,32.787N) \u2014 i.e. the WHOLE Misrata/Khoms-to-Mellitah coast, ~= P1864 (105 km) + P1865 (117 km) end to end, against a stated 25 km"
+  },
+  {
+   "project_id": "P1862",
+   "sheet_row": 1250,
+   "pipeline_name": "Brega-Benghazi Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Brega-Benghazi_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Sirte Oil' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Sirte Oil"
+    },
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 226 km but the sheet says 396 km (ratio 0.57, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 226 km (ratio 0.57)",
+     "expected": "LengthKnownKm = 396 km"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Brega-Benghazi Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "396.00",
+    "Diameter": "34.00",
+    "Capacity": "10.76",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Mersa Brega",
+    "EndLocation": "Benghazi",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Brega-Benghazi_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 225.9 km, Brega (19.597E,30.416N) -> Benghazi (20.056E,32.077N)"
+  },
+  {
+   "project_id": "P1863",
+   "sheet_row": 1272,
+   "pipeline_name": "Brega-Khoms Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Brega-Khoms_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Sirte Oil' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Sirte Oil"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Brega-Khoms Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "645.00",
+    "Diameter": "34.00",
+    "Capacity": "11.61",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Mersa Brega",
+    "EndLocation": "Khoms",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Brega-Khoms_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "no route drawn / not flagged"
+  },
+  {
+   "project_id": "P1864",
+   "sheet_row": 1402,
+   "pipeline_name": "Khoms-Tripoli Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Khoms-Tripoli_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 105 km but the sheet says 201 km (ratio 0.52, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 105 km (ratio 0.52)",
+     "expected": "LengthKnownKm = 201 km"
+    },
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Khoms-Tripoli Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "201.00",
+    "Diameter": "34.00",
+    "Capacity": "17.05",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Khoms",
+    "EndLocation": "Tripoli",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Khoms-Tripoli_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 105.2 km, Khoms (14.447E,32.518N) -> Tripoli (13.425E,32.766N)"
+  },
+  {
+   "project_id": "P1865",
+   "sheet_row": 1395,
+   "pipeline_name": "Tripoli-Mellitah Gas Pipeline",
+   "wiki": "https://www.gem.wiki/Tripoli-Mellitah_gas_pipeline",
+   "status": "operating",
+   "flags": [
+    {
+     "source": "wiki_alignment",
+     "field": "Operator",
+     "detail": "sheet Operator is blank but wiki shows 'Sirte Oil' \u2014 candidate sheet fill; verify independently (never cite the wiki)",
+     "sheet_value": "",
+     "wiki_value": "Sirte Oil"
+    },
+    {
+     "source": "route_integrity",
+     "field": "length_ratio",
+     "detail": "drawn route is 117 km but the sheet says 158 km (ratio 0.74, allowed 0.75\u20131.33) \u2014 wrong route, wrong length value, or a partial segment drawn",
+     "measured": "geodesic 117 km (ratio 0.74)",
+     "expected": "LengthKnownKm = 158 km"
+    },
+    {
+     "source": "mechanical",
+     "field": "Date_logic",
+     "detail": "Status=operating but no StartYear1"
+    }
+   ],
+   "current_sheet_values": {
+    "PipelineName": "Tripoli-Mellitah Gas Pipeline",
+    "SegmentName": "",
+    "Status": "operating",
+    "StartYear1": "",
+    "LengthKnownKm": "158.00",
+    "Diameter": "34.00",
+    "Capacity": "16.99",
+    "CapacityUnits": "bcm/y",
+    "StartLocation": "Tripoli",
+    "EndLocation": "Mellitah",
+    "Owner": "Libyan National Oil Corp [100.%]",
+    "RouteAccuracy": "high",
+    "Wiki": "https://www.gem.wiki/Tripoli-Mellitah_gas_pipeline"
+   },
+   "current_operator": "",
+   "current_operator_ref": "",
+   "drawn_geometry": "drawn route 116.6 km, Tripoli (13.425E,32.766N) -> Mellitah (12.205E,32.876N)"
+  }
+ ]
+}
