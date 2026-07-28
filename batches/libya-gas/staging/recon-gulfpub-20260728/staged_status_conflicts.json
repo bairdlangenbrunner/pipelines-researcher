@@ -1,0 +1,58 @@
+{
+ "meta": {
+  "generated_utc": "2026-07-28T15:48:32+00:00",
+  "scope": {
+   "country": "Libya",
+   "tracker": "gas"
+  },
+  "commodity": "gas",
+  "mode": "recon",
+  "source": "gulfpub",
+  "source_scraped_date": "2026-02-02",
+  "source_tier": 2,
+  "reconcile_commodity": "both",
+  "note": "Run with --commodity both to expose cross-tracker duplicates. Oil-side records are CONTEXT for the gas batch, not a completed Libya oil pass.",
+  "counts": {
+   "overlaps": 104,
+   "additions": 25,
+   "gem_only": 37,
+   "status_conflicts": 3,
+   "ambiguous": 36
+  }
+ },
+ "conflicts": [
+  {
+   "ref_id": "gulfpub:gas:473",
+   "ref_name": "Atshan - Awbari Power Plant",
+   "ref_status": "proposed",
+   "project_id": "P1872",
+   "gem_name": "Km-91.5-Brega Gas Pipeline",
+   "gem_status": "operating",
+   "verdict": "spurious_pairing",
+   "recommendation": "DISMISS as a status conflict; re-route to Discovery as a candidate ADDITION instead. Do not touch P1872's status.",
+   "researcher_notes": "Matched at composite 0.4552 on diameter + length only \u2014 name scored 0.26 and there is no endpoint or geometry agreement. Atshan-Awbari is a southwest-Libya line feeding the Awbari power plant; Km-91.5-Brega is a Sirte-Basin trunk in the northeast. They are unrelated, so 'proposed vs operating' is not a disagreement about one pipeline's status. Flagged here rather than silently dropped so the next scrape does not re-raise it as new."
+  },
+  {
+   "ref_id": "gulfpub:oil:576",
+   "ref_name": "Nafoora - Intisar",
+   "ref_status": "operating",
+   "project_id": "P5238/P5237",
+   "gem_name": "Nafoora-Zueitina Oil Pipeline",
+   "gem_status": "shelved",
+   "verdict": "out_of_scope_oil",
+   "recommendation": "OIL-TRACKER item \u2014 surfaced only because this run used --commodity both. Do not action in the gas batch; carry to a future Libya oil pass.",
+   "researcher_notes": "GEM holds two Nafoora-Zueitina rows (P5237 operating 68 km 24/16 in, P5238 shelved 68.5 km 12 in) and the matcher hit the shelved one. Worth a look on the oil side \u2014 a shelved and an operating row on the same endpoints at near-identical length is its own redundancy question \u2014 but it is outside this batch's gas scope and is NOT evidence about any gas row."
+  },
+  {
+   "ref_id": "gulfpub:oil:4967",
+   "ref_name": "As Sarah - Nafoora",
+   "ref_status": "operating",
+   "project_id": "P5238/P5237",
+   "gem_name": "Nafoora-Zueitina Oil Pipeline",
+   "gem_status": "shelved",
+   "verdict": "out_of_scope_oil",
+   "recommendation": "OIL-TRACKER item, same P5237/P5238 pair as above. Carry to a future Libya oil pass.",
+   "researcher_notes": "Second GulfPub record landing on the same shelved GEM row, which is itself a signal the P5237/P5238 pair needs oil-side attention. Out of gas scope."
+  }
+ ]
+}

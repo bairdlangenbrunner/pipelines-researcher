@@ -1,0 +1,93 @@
+{
+ "project_id": "P6713",
+ "pipeline_name": "Bahr Assalam–Mellitah Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2649,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+    "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/", "ok": true, "contains_value": true},
+    {"url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status not literal on any page but clearly inferable: OPEC ASB (Wayback-recovered PDF; live 2013 edition reprinting 2012-data Table 4.10 'Gas pipelines in OPEC Members') lists 'Bahr Assalam/Mellitah, Mellitah Oil and Gas, 68.2 mi, 10 in, 465,166' as a current, in-service line (p.75, second occurrence of the table). Offshore Technology's project page (current, live) and Offshore Magazine's 'Libya gas export project sets records' both describe the 36-in and 10-in Sabratha(Bahr Essalam)→Mellitah subsea lines as built and actively carrying gas and condensate respectively ('36-in. and 10-in. pipelines taking gas and condensate from the platform 100-km south to Mellitah'). Eni's 2018 Bahr Essalam Phase 2 press release confirms the field/system is still in active production. All consistent with GEM's 'operating'. NOTE (see __REDUNDANCY__): this 10-in line is the CONDENSATE line, not gas — see redundancy finding."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 2649,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FOUND THE EXACT SOURCE OF THE VALUE, AND A UNIT ERROR. OPEC ASB2013 (Wayback-recovered PDF; pdftotext -layout, line 6280) Table 4.10 'Gas pipelines in OPEC Members, 2012' lists: 'Bahr Assalam/Mellitah  Mellitah Oil and Gas  68.2 [mi]  10 [in]  465,166  na'. The table's Capacity column header (line ~6194) is explicitly '(1,000 scm/yr)' — i.e. the raw cell value 465,166 is in THOUSANDS of scm/yr, so the true OPEC-sourced design capacity is 465,166,000 scm/yr (≈ 0.465 bcm/yr), not 465,166 scm/yr as currently recorded in GEM. GEM's CapacityUnits ('scm/y') dropped the table's '1,000' multiplier — this is a unit-magnitude bug inherited from data entry, not a bad source. (The companion 36-in row on the same table, 'Bahr Assalam/Mellitah ... 36 ... 9,199,943', is P1855's capacity and has the identical bug — true value ≈ 9.2 bcm/yr, much closer to the ~11 bcm/yr design capacity Offshore Technology/Offshore Magazine report for the Mellitah gas train.) Separately: since this 10-in line is physically a CONDENSATE line (see __REDUNDANCY__), a 'scm/yr' gas-volume capacity is the wrong metric for it at all — real-world reporting on this same line (as GEM's own P6457 'Sabratha-Mellitah Condensate Pipeline' in the OIL/NGL tracker) describes condensate throughput in the 30,000–39,000 bbl/d range (Offshore Technology; Sabratha Compression Project reporting), and the Mellitah plant's condensate trains handle 31,000 bbl/d combined. Recommend: fix CapacityUnits/magnitude if this row is kept as a gas-tracker artifact, but the cleaner fix is the reclassification in __REDUNDANCY__. Not marking independent since only one source family (OPEC ASB) states the raw number; no non-OPEC source gives a directly comparable capacity figure in scm/yr for this specific line."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2649,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "OPEC ASB2013 Table 4.10 (Wayback, as above) lists the 10-in Bahr Assalam/Mellitah line at 68.2 miles = 109.75 km, rounding to the GEM value of 109 km almost exactly (also cross-checked against the ASB2017 edition's Table 9.9, 'Bahr es Salam/Mellitah (2), Mellitah Oil & Gas, 2 x 68 mi, 10/36 in', same ~109 km). Offshore Magazine's 'Libya gas export project sets records' independently (non-OPEC) describes the Sabratha-to-Mellitah subsea lines as running '100-km south to Mellitah' — a rounder, approximate figure that corroborates the order of magnitude but not the precise 109 km. Tier kept at medium (one precise/exact-converting source + one approximate independent corroborator, not two exact matches)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 2649,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records"
+   ],
+   "verifications": [
+    {"url": "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/", "ok": true, "contains_value": true},
+    {"url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both independent sources confirm the route: Bahr Essalam field (Sabratha platform), offshore Libya (~110–120 km northwest of Tripoli, Block NC41), to the onshore Mellitah Complex (Nuqat al Khams district, western Libya). Offshore Technology names the field/platform and Mellitah as endpoints; Offshore Magazine states the '36-in. and 10-in. pipelines taking gas and condensate from the platform 100-km south to Mellitah.' Matches GEM's StartPrefecture/District='Bahr Assalam' / EndPrefecture/District='Mellitah'."
+  },
+  {
+   "ref_col": "__REDUNDANCY__",
+   "sheet_row": 2649,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records",
+    "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/", "ok": true, "contains_value": true},
+    {"url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records", "ok": true, "contains_value": true},
+    {"url": "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "P6713 and P1855 are NOT simple duplicates of each other, but P6713 IS a genuine misclassification. Multiple independent sources agree the Bahr Essalam (Sabratha platform) field is tied to Mellitah by exactly TWO separate subsea lines, not one: a 36-in line carrying GAS and a 10-in line carrying CONDENSATE (liquids). Offshore Technology: '10-in diameter pipeline through which condensate is directly pumped and conveyed to Mellitah'; Offshore Magazine: '36-in. and 10-in. pipelines taking gas and condensate from the platform 100-km south to Mellitah.' P6713 has diameter=10in — it IS the condensate line, not a second gas line, despite carrying the same 'Gas Pipeline' name as P1855 (diameter=36in, the true gas line). The likely mechanical origin of the GEM duplication: OPEC's own ASB tables list BOTH diameters under one shared row/label ('Bahr Assalam/Mellitah ... 68.2 mi ... 36 in ... 9,199,943' and a second row 'Bahr Assalam/Mellitah ... 68.2 mi ... 10 in ... 465,166', both under the 'Gas pipelines' table heading even though the 10-in line is physically condensate) — someone appears to have carried both OPEC rows into GGIT as two separate 'Gas Pipeline' entities instead of recognizing the second as condensate. Critically, GEM ALREADY tracks this exact 10-in condensate line correctly, under GOIT (oil/NGL tracker): P6457 'Sabratha-Mellitah Condensate Pipeline' — Start='Sabratha platform', End='Mellitah', Length=107 km, Diameter=10 in, Status=operating — near-identical specs to P6713 (Bahr Assalam/Mellitah, 109 km, 10 in, operating). FINDING: P6713 in GGIT (gas) is a duplicate/misclassified twin of P6457 in GOIT (oil/NGL); it belongs in the oil tracker, not the gas tracker, and once reclassified is redundant with the already-existing P6457. Recommend retiring/removing P6713 from GGIT (or merging its provenance into P6457) rather than treating it as a distinct gas pipeline needing its own refs going forward."
+  }
+ ]
+}

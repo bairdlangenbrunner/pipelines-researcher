@@ -1,0 +1,126 @@
+{
+ "project_id": "P1866",
+ "pipeline_name": "Nasser-Brega Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.opec.org/assets/assetdb/asb-2012.pdf",
+    "https://libyaherald.com/2024/11/sirte-oil-increases-production-in-two-wells-by-2300-bpd-using-horizontal-drilling-technology/"
+   ],
+   "verifications": [
+    {"url": "https://www.opec.org/assets/assetdb/asb-2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyaherald.com/2024/11/sirte-oil-increases-production-in-two-wells-by-2300-bpd-using-horizontal-drilling-technology/", "ok": true, "contains_value": false}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "OPEC ASB 2012 Table 4.10 (p.75; live PDF at the URL above passes the general url_verifier check, and manual `pdftotext` extraction confirms the actual row 'Nasser/Brega  Sirte Oil  172  36  14,868,309  na' on p.75 under 'Gas pipelines in OPEC Members, 2011' — the automated substring screen can't match kerned PDF text, so this was confirmed by direct extraction) shows the line as an active, throughput-carrying gas pipeline as of 2011. No source states in so many words 'the Nasser-Brega gas pipeline is operating' as of 2026, so this is inferred, not literal (per protocol note on status inference): Libya Herald (Nov 2024) confirms Sirte Oil Company (operator of this line) drilled a new horizontal oil well in the Zilten/Zelten field in Nov 2024 (well C355H-6), i.e. the field this pipeline evacuates gas from remains an active Sirte Oil Co asset. No evidence of decommissioning or replacement found. Tier medium — status is inferred from continued upstream/operator activity, not a direct statement about this specific line's current flow."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.opec.org/assets/assetdb/asb-2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.opec.org/assets/assetdb/asb-2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "OPEC ASB 2012 explicitly lists 'Nasser/Brega' (Sirte Oil, 172, 36) in Table 4.10 'Gas pipelines in OPEC Members, 2011' (p.75) — confirms Fuel = Gas directly. A second, independent source (an engineering incident-report paper titled 'Explosion in the Gas Pipeline 36-inch diameter, Zelten-Brega' by Hussein Albashik, describing an Aug 2014 rupture at Km 18 of a Sirte Oil Co-operated 36in Zelten-Brega GAS line) corroborates this fully in its own title/abstract, but its host (academia.edu) returns HTTP 403 to both WebFetch and the url_verifier script and could not be confirmed live, so it is NOT included as a proposed_ref (rule: never cite an unverified/inaccessible URL) — noted here only as consistent independent context. Single citable source only, tier medium."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.opec.org/assets/assetdb/asb-2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.opec.org/assets/assetdb/asb-2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "OPEC ASB 2012 Table 4.10 (p.75, manually confirmed via pdftotext — automated substring screen can't match this figure inside the PDF's kerned text) gives 'Nasser/Brega  Sirte Oil  172  36  14,868,309  na', where the capacity column's unit (per the table's own header, '(1,000 scm/yr)') makes 14,868,309 thousand scm/yr = 14.868 bcm/y — matches GEM's stated 14.87 bcm/y almost exactly. Only one citable independent source found; a 1970-era engineering paper (inaccessible, see Fuel note) separately cites a 150 mmscfd handling capacity for the same 36in line at commissioning, which is roughly an order of magnitude lower than the OPEC 2011 figure (150 mmscfd annualized ≈ 1.6 bcm/y vs 14.87 bcm/y) — flagging this as a real discrepancy between an as-built 1970 capacity and a much higher 2011 OPEC capacity figure, though I could not access the paper directly to confirm its exact wording/scope. Tier medium given the single citable source, despite the near-exact numeric match."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1345,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source found supports 277.00 km. OPEC ASB 2012 Table 4.10 (p.75) gives the Nasser/Brega gas line as 172 (km, not literally miles despite the table's printed '(miles)' header — see cross-check below) with capacity/diameter otherwise matching GEM's values exactly. Independent corroboration for ~170-172 km: (1) Wikipedia 'Zelten oil field' states the field is ~169 km south of Brega; (2) a WebSearch synthesis of an accessible source states 'The plant processes associated gas from the Zelten, al-Aqila, Laheeb and al-Jabal fields, transported through a 170-kilometre pipeline.' Cross-check on the OPEC table's mislabeled unit: the OIL pipeline 'Nasser/Al-Brayqah' entry in the SAME 2012 OPEC document (Table 4.9, p.71) is also listed as '172' and this is corroborated elsewhere (GEM's own oil-tracker row P0599 carries 171.62 km, and web sources independently confirm ~169-172 km for that oil line) — confirming the OPEC table's 'miles' header is a mislabel and the values are actually km. So all available evidence points to the real length being ~170-172 km, not 277 km; I could not find any source supporting 277 km, nor could I identify what the 277 km figure might refer to (e.g. a longer routing via additional fields, or confusion with a different corridor) — flagging as a likely data error in the current GEM value rather than staging a ref for an unsupported number."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.opec.org/assets/assetdb/asb-2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.opec.org/assets/assetdb/asb-2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "OPEC ASB 2012 Table 4.10 (p.75, manually confirmed via pdftotext) gives Nasser/Brega diameter = 36in, matching GEM exactly. An inaccessible (403) engineering paper's title independently corroborates a '36-inch diameter' Zelten-Brega gas pipeline (with an Aug 2014 rupture at Km 18) but could not be verified live so is not included as a proposed_ref. One nuance worth flagging: a separate WebSearch synthesis (source unclear, possibly a different accessible page) states 'A 30-inch gas pipeline links Zelten field with the LNG plant and petrochemical complex at Marsa al-Brega' — this may describe a narrower spur/lateral specifically into the LNG train rather than the 36in trunk line the OPEC table and incident report both describe; flagging in case GEM's single 36in value is conflating a trunk line with a narrower LNG-plant lateral, though the preponderance of evidence (OPEC + the incident report) supports 36in for the main Nasser/Zelten-Brega gas trunk."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Zelten_oil_field",
+    "https://en.wikipedia.org/wiki/Brega",
+    "https://mapcarta.com/16776098"
+   ],
+   "verifications": [
+    {"url": "https://en.wikipedia.org/wiki/Zelten_oil_field", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/Brega", "ok": true, "contains_value": true},
+    {"url": "https://mapcarta.com/16776098", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Wikipedia 'Zelten oil field' confirms StartCountryOrArea=Libya (Zelten/Nasser field, Sirte Basin, operated by Sirte Oil Company) and the field's position ~169km south of Brega. For EndLocation='Mersa Brega'/EndState/Province='Al Wahat': Wikipedia 'Brega' states Brega was in the former Ajdabiya District, merged in 2007 into Al Wahat District, with 'Marsa Brega' listed as one of Al Wahat District's constituent Basic People's Congresses; Mapcarta independently tags 'Brega' as a town in Al Wahat District, Libya. Two independent, corroborating sources for the administrative location; high tier."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Sirte_Oil_Company",
+    "https://en.wikipedia.org/wiki/Zelten_oil_field"
+   ],
+   "verifications": [
+    {"url": "https://en.wikipedia.org/wiki/Sirte_Oil_Company", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/Zelten_oil_field", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Wikipedia 'Sirte Oil Company' states SOC operates as a subsidiary of Libya's state-owned National Oil Corporation (NOC), formed in 1981 out of the nationalized Esso Standard Libya Inc. assets (including the Zelten/Nasser field discovery); Wikipedia 'Zelten oil field' independently confirms Sirte Oil Company as the field's (and by extension this pipeline's) operator. Neither source states an exact ownership percentage for SOC-within-NOC, so '100.00%' for 'Libyan National Oil Corp' is supported as the ultimate state parent via a wholly state-owned subsidiary chain, not from an explicit percentage disclosure — tier medium rather than high on that basis, though the state-ownership relationship itself is corroborated by 2 independent sources."
+  },
+  {
+   "ref_col": "__REDUNDANCY__",
+   "sheet_row": 1345,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Read as: (b)-leaning but with an important caveat, not a clean (a) or (b). Evidence suggests P1866 (gas) and P0599 (oil) are most likely genuinely SEPARATE physical pipelines sharing the same Nasser(Zelten)-Brega corridor and nominal diameter, rather than one line double-entered across trackers — but GEM's own length value for the gas line (277 km) is unsupported and looks like an error, which is a separate problem from the redundancy question. Evidence for two distinct lines: (1) OPEC ASB 2012 lists them as two separate table rows in two separate tables — 'Nasser/Al-Brayqah' (Sirte, 172, 36, capacity 292 [implicitly Mt/kt-scale, oil units]) in Table 4.9 'Crude oil pipelines' (p.71), and 'Nasser/Brega' (Sirte Oil, 172, 36, capacity 14,868,309 [1,000 scm/yr]) in Table 4.10 'Gas pipelines' (p.75) — same owner/operator (Sirte Oil), same length (172) and diameter (36in), but a completely different, gas-appropriate capacity unit, i.e. OPEC itself treats them as two accounted flows, not a copy-paste of one row. (2) An independent 1970s-commissioning engineering incident-report paper (title: 'Explosion in the Gas Pipeline 36-inch diameter, Zelten-Brega', Hussein Albashik) describes a distinct '36in gas pipeline from Zelten to Brega' with its own rupture history (Aug 2014, Km 18) and 150 mmscfd design capacity from its 1970 commissioning — i.e. a real, physically documented gas asset independent of the 1961-built crude oil line (whose GEM wiki summary independently gives commissioning October 1961, separate from this line's 1970 commissioning) (this source itself is uncitable — academia.edu returned HTTP 403 to both WebFetch and url_verifier — so treat this only as directional evidence, not a stageable ref). (3) A WebSearch synthesis (source unconfirmed) also describes 'a 30-inch gas pipeline' linking Zelten field to the Brega LNG/petrochemical complex, suggesting there may even be more than one gas-carrying line/lateral in this corridor, further supporting that the gas and oil assets are not simply the same line re-entered. Caveat / what is NOT resolved: I found no source giving 277 km for the gas line specifically — every source on this corridor (OPEC, Wikipedia Zelten field, the WebSearch-synthesized 170km figure) converges on ~169-172 km, i.e. essentially the SAME length as the oil pipeline P0599 (171.62 km). If the two lines are truly parallel and co-built/co-routed (which fits '36in, Sirte Oil, same corridor' appearing twice in OPEC's own 2012 tables), a shared/near-identical length would be expected and is not itself evidence of duplication — but it does mean GEM's currently entered 277 km for P1866 cannot be independently justified as reflecting a materially longer or different route than P0599's 171.62 km, and the discrepancy should be resolved (most likely by correcting P1866's length toward ~172 km) independently of the redundancy question. Net read: keep both P0599 (oil) and P1866 (gas) as distinct entities — the weight of evidence favors two real, separate, same-corridor pipelines — but recommend a length correction on P1866, not a merge/removal of either row."
+  }
+ ]
+}

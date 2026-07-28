@@ -6,34 +6,35 @@
    "csv": "GGIT_gas_snapshot_20260728.csv",
    "oil_csv": "GOIT_oil_ngl_snapshot_20260728.csv",
    "country": "Libya",
-   "rows": 14,
-   "clusters": 6
+   "rows": 16,
+   "clusters": 7
   },
-  "generated": "2026-07-28T15:42:42Z",
-  "n_units": 14,
-  "n_validity_flags": 14,
+  "generated": "2026-07-28T15:50:27Z",
+  "n_units": 16,
+  "n_validity_flags": 16,
   "n_fills": 0,
   "n_status_reviews": 0,
   "n_route_suggestions": 0,
   "class_in_counts": {
-   "VALIDITY": 14
+   "VALIDITY": 16
   },
   "class_out_counts": {
-   "UNRESOLVED": 14
+   "UNRESOLVED": 16
   },
   "verdict_counts": {
-   "concern": 14
+   "concern": 16
   },
   "concern_counts": {
    "duplicate": 10,
-   "spec": 3,
+   "spec": 5,
    "classification": 1
   },
   "cluster_titles": {
    "A": "Coastal trunk aggregate vs its four member segments",
    "B": "Wafa-Mellitah: a cross-tracker duplicate + a 10x length bug (sourced)",
-   "C": "Bouri-Bahr Assalam recorded twice under a spelling variant",
-   "D": "Bahr Assalam-Mellitah Pipeline 2 carries condensate, not gas",
+   "C": "Bouri-Bahr Assalam: a real twinned pair (sourced) - but the 4in is condensate",
+   "D": "Bahr Assalam-Mellitah Pipeline 2: a condensate line GOIT already has (sourced)",
+   "G": "Bu-Attifel-Intesar: a real twinned pair, not a duplicate (sourced)",
    "E": "NC-41 and E Structure: one Mellitah export corridor described twice",
    "F": "Nasser-Brega in both trackers: two real lines (sourced) - but a bad length"
   },
@@ -254,16 +255,16 @@
    "class_in": "VALIDITY",
    "class_out": "UNRESOLVED",
    "verdict": "concern",
-   "concern_type": "duplicate",
-   "recommendation": "Reconcile against P6709 'Bouri-Bahr Asslam Gas Pipeline' (differs only by the misspelling 'Asslam'). Decide which row survives and fold the other's refs into it; the survivor should carry OtherEnglishNames with the variant spelling.",
+   "concern_type": "spec",
+   "recommendation": "KEEP - the duplicate hypothesis against P6709 is refuted (see notes). But CORRECT LengthKnownKm: 32 km appears stale. Later OPEC editions put BOTH lines on this corridor at ~12 mi (~19.3 km), which is exactly the 19.31 km P6709 carries. Propose ~19.3 km pending Baird's confirmation. ALSO re-check Status: the Bouri Gas Utilisation Project (BGUP) targets first gas Sept 2026 and may add or replace same-diameter twin lines on this exact corridor - verify what is operating before the next publish.",
    "proposed_refs": [],
    "verifications": [],
    "tier": "n/a",
    "independent": false,
    "source_language": "en",
    "redundancy_cluster": "C",
-   "redundancy_cluster_title": "Bouri-Bahr Assalam recorded twice under a spelling variant",
-   "researcher_notes": "[cluster C: Bouri-Bahr Assalam recorded twice under a spelling variant] P1859 (Pipeline 1, 32 km, 10in, 3.88 bcm/y) vs P6709 (Pipeline 2, 19.31 km, 4in). Near-identical names on the same Bouri->Bahr Assalam offshore corridor, both operating. Differing length/diameter means this may instead be two genuinely distinct parallel lines - which is exactly why it needs a human ruling rather than an automatic merge."
+   "redundancy_cluster_title": "Bouri-Bahr Assalam: a real twinned pair (sourced) - but the 4in is condensate",
+   "researcher_notes": "[cluster C: Bouri-Bahr Assalam: a real twinned pair (sourced) - but the 4in is condensate] RESOLVED WITH SOURCES (ref-sweep agent, 2026-07-28): OPEC ASB 2012, 2013 and 2017 consistently tabulate Bouri<->Bahr Essalam as TWO parallel lines, with ASB 2017 marking the entry explicitly '(2)' / '2 x 12 mi' / '4, 10 in'. Mellitah Oil & Gas's own 2019 Bouri Gas Upgrading Project tender independently specs '10\" CS and 4\" CS pipelines 20 km long' on the same route. So the near-identical names are two real assets, not one row entered twice under a misspelling - though P6709's 'Asslam' spelling should still be normalised or captured in OtherEnglishNames."
   },
   {
    "project_id": "P6709",
@@ -279,16 +280,16 @@
    "class_in": "VALIDITY",
    "class_out": "UNRESOLVED",
    "verdict": "concern",
-   "concern_type": "spec",
-   "recommendation": "Capacity=37213 scm/yr is not credible regardless of the merge decision: 37,213 standard cubic metres PER YEAR is ~0.0000372 bcm/y, about what a single household uses. Either the unit is wrong (scm/day?) or the magnitude is. Re-derive or blank it.",
+   "concern_type": "classification",
+   "recommendation": "MOVE TO GOIT - this is the 4in CONDENSATE line, not gas. Unlike P6705 (cluster B) and P6713 (cluster D), GOIT does NOT already carry it: the 2026-07-28 GOIT snapshot has no Bouri or Bahr Assalam row among Libya's 57 oil rows. So this one is a genuine reclassification that creates a new GOIT row, not a delete. Confirm the GOIT check still holds at apply-time. Capacity is separately wrong - see the scm/y defect below; true value ~0.04 bcm/y.",
    "proposed_refs": [],
    "verifications": [],
    "tier": "n/a",
    "independent": false,
    "source_language": "en",
    "redundancy_cluster": "C",
-   "redundancy_cluster_title": "Bouri-Bahr Assalam recorded twice under a spelling variant",
-   "researcher_notes": "[cluster C: Bouri-Bahr Assalam recorded twice under a spelling variant] Flagged alongside the P1859 duplicate question but independent of it - the value is wrong whichever row survives. Same pattern as P6713's 465166 scm/y; both look like an ingest that mislabelled the unit."
+   "redundancy_cluster_title": "Bouri-Bahr Assalam: a real twinned pair (sourced) - but the 4in is condensate",
+   "researcher_notes": "[cluster C: Bouri-Bahr Assalam: a real twinned pair (sourced) - but the 4in is condensate] RESOLVED WITH SOURCES - see P1859 for the twinned-pair evidence. The 4in of the pair is the condensate line. This is the THIRD condensate line found sitting in Libya's gas tracker in one batch (P6705, P6713, P6709), which is why the pattern is escalated as a class defect rather than three isolated fixes. Note the dispositions differ and must not be applied uniformly: two are deletes because GOIT already holds the asset, this one is a move because GOIT does not. ROOT CAUSE of the capacity figure: these come from OPEC ASB Table 4.10, whose column header reads '(1,000 scm/yr)'; the ingest took the raw cell and labelled it 'scm/yr', dropping the x1000. THE WORSE, SEPARATE DEFECT: 'scm/y' and 'scm/yr' are not units GGIT's CapacityBcm/y formula converts - all four Libya rows using them (P1858, P6709, P6713, P6714) compute CapacityBcm/y = 0.00 or blank and contribute ZERO to any Libya gas capacity total in the published tracker. Tracker-wide only 8 rows use this unit string: these 4 plus 4 Algeria rows (P6616, P6617, P6618, P6620), and all 8 read zero. Every other scm-family row in GGIT uses MMSCMD, which converts fine."
   },
   {
    "project_id": "P6713",
@@ -304,16 +305,66 @@
    "class_in": "VALIDITY",
    "class_out": "UNRESOLVED",
    "verdict": "concern",
-   "concern_type": "classification",
-   "recommendation": "Verify commodity before next publish: an independent engineering source describes the 10in Sabratha->Mellitah line as CONDENSATE. If confirmed, recode Fuel and move this segment to GOIT rather than leaving Fuel=Gas / PipelineType=transmission. Also re-derive Capacity=465166 scm/y (same implausible-unit pattern as P6709).",
+   "concern_type": "duplicate",
+   "recommendation": "DELETE from GGIT - same disposition as P6705 in cluster B, and for the same reason. The 10in Sabratha->Mellitah line is CONDENSATE and GOIT ALREADY CARRIES IT as P6457 'Sabratha-Mellitah Condensate Pipeline' (operating, 107.00 km, 10in, sheet row 1765) against P6713's 109.00 km / 10in. Do not reclassify into GOIT - that would duplicate P6457. Fold any refs into P6457 and drop the GGIT row. Separately, Capacity=465166 scm/y is subject to the scm/y defect (see cluster C / P6709): true value ~0.47 bcm/y.",
    "proposed_refs": [],
    "verifications": [],
    "tier": "n/a",
    "independent": false,
    "source_language": "en",
    "redundancy_cluster": "D",
-   "redundancy_cluster_title": "Bahr Assalam-Mellitah Pipeline 2 carries condensate, not gas",
-   "researcher_notes": "[cluster D: Bahr Assalam-Mellitah Pipeline 2 carries condensate, not gas] Same failure mode as P6705 in cluster B: a condensate line sitting in the gas tracker. Two of Libya's 30 'operating gas' rows being condensate would meaningfully change the country's gas pipeline count and km, so this is worth resolving before the annual publish."
+   "redundancy_cluster_title": "Bahr Assalam-Mellitah Pipeline 2: a condensate line GOIT already has (sourced)",
+   "researcher_notes": "[cluster D: Bahr Assalam-Mellitah Pipeline 2: a condensate line GOIT already has (sourced)] RESOLVED WITH SOURCES (ref-sweep agent, 2026-07-28): Offshore Technology and Offshore Magazine independently describe the Sabratha platform feeding Mellitah via exactly two lines - one 36in GAS line (= P1855) and one 10in CONDENSATE line. P6713 is that condensate line. This is the second instance of the identical failure mode in one country (P6705 in cluster B), which is why the pattern is escalated rather than filed as two isolated fixes: a condensate line gets entered in GGIT while GOIT already holds it, inflating the gas tracker's count and km. It also explains cluster D's original trigger - P1855 and P6713 sharing an exact 109.00 km is not a copy error, they are the two parallel lines of one riser bundle; only the tracker placement is wrong."
+  },
+  {
+   "project_id": "P1858",
+   "sheet_row": 2651,
+   "pipeline_name": "Bu-Attifel-Intesar Gas Pipeline",
+   "segment_name": "Pipeline 1",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "KEEP BOTH ROWS - the duplicate hypothesis is refuted (see notes). Two items remain on this row: (1) the scm/y capacity defect, see cluster C / P6709 - true value ~4.13 bcm/y; (2) verify the owner/operator split, which sources put at Mellitah Oil & Gas for THIS 34in line and Eni Oil for P6714's 10in line.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "en",
+   "redundancy_cluster": "G",
+   "redundancy_cluster_title": "Bu-Attifel-Intesar: a real twinned pair, not a duplicate (sourced)",
+   "researcher_notes": "[cluster G: Bu-Attifel-Intesar: a real twinned pair, not a duplicate (sourced)] RESOLVED WITH SOURCES (ref-sweep agent, 2026-07-28): OPEC ASB 2013 (2012 data) and ASB 2017 (2016 data), both Wayback-recovered and read with pdftotext, independently list 'Bu-Attifel/Intesar' as TWO PARALLEL LINES on one 82 mi / 131.96 km corridor - a 34in operated by Mellitah Oil & Gas and a 10in operated by Eni Oil. Each table's capacity matches its GEM row EXACTLY (4,134,806 -> P1858; 258,425 -> P6714). So the identical 2-decimal length that raised the flag is the correct answer, not a copy error: twinned lines share a route. This also disposes of the competing gas+condensate reading floated when the cluster was opened - OPEC carries both lines in its GAS table, so the 10in is not the condensate analogue of clusters B and D. Do not merge."
+  },
+  {
+   "project_id": "P6714",
+   "sheet_row": 2643,
+   "pipeline_name": "Bu-Attifel-Intesar Gas Pipeline",
+   "segment_name": "Pipeline 2",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "KEEP - see P1858. Same two remaining items: the scm/y capacity defect (true value ~0.26 bcm/y) and the operator check (sources say Eni Oil for this 10in line).",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "n/a",
+   "independent": false,
+   "source_language": "en",
+   "redundancy_cluster": "G",
+   "redundancy_cluster_title": "Bu-Attifel-Intesar: a real twinned pair, not a duplicate (sourced)",
+   "researcher_notes": "[cluster G: Bu-Attifel-Intesar: a real twinned pair, not a duplicate (sourced)] See P1858. Noting explicitly for the reviewer: this row was opened as a suspected duplicate and closed as a real asset. The pattern that made it look like a duplicate - a large and a small line sharing a name and an exact length - is genuine twinning here, even though the same signature in clusters B and D did turn out to be a misplaced condensate line. The signature is a reason to look, not a verdict."
   },
   {
    "project_id": "P6708",

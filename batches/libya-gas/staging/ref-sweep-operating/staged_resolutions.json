@@ -42,7 +42,11 @@
    "duplicate": 7,
    "classification": 2
   },
-  "status_verdict_counts": {}
+  "status_verdict_counts": {},
+  "sentinel_findings_harvested": {
+   "count": 10,
+   "generated_utc": "2026-07-28T15:51:40+00:00"
+  }
  },
  "resolutions": [
   {
@@ -12353,6 +12357,346 @@
    "tier": "medium",
    "independent": false,
    "source_language": "en"
+  },
+  {
+   "project_id": "P1865",
+   "sheet_row": 1395,
+   "pipeline_name": "Tripoli-Mellitah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Evidence supports a genuine double-count risk, though it does not resolve cleanly to 'yes, definitely redundant' vs 'no.' (1) P1862 Brega-Benghazi (396km) + P1863 Brega-Khoms (645km) + P1864 Khoms-Tripoli (201km) + this row P1865 Tripoli-Mellitah (158km) sum to exactly 1,400 km, retracing the identical Mellitah<->Benghazi coastal corridor that P0483 'Libya Coastal Gas Pipeline' also covers end-to-end as a single aggregate row (1,164 km). Both the 4-segment set and P0483 trace back to overlapping citations: the recovered OPEC ASB2012 Table 4.10 (which lists ONLY the 4 discrete Sirte-Oil-operated segments -- Brega/Benghazi, Brega/Khoms, Khoms/Tripoli, Tripoli/Mellitah -- with no aggregate 'Coastal Pipeline' total line of its own) and the World Bank/Tractebel 2017-18 report (which P0483's shard also used, and which this shard used independently). (2) The two source families do NOT even agree on how many physical trenches make up the western half: OPEC's table (and hence GEM's P1864/P1865 split) treats Khoms-Tripoli and Tripoli-Mellitah as two separate accounting segments (359 km combined), while the World Bank/Tractebel engineering report models the identical Mellitah<->Khoms run as ONE trench of only 222 km -- a 137 km (62%) gap that cannot be explained by rounding or unit error. This suggests OPEC's per-segment table may reflect tariff/ownership accounting boundaries (each stretch separately reported by Sirte Oil) rather than necessarily four separately-built physical pipelines, and raises the possibility the Tripoli split point is not a real physical joint recognized in independent engineering literature. (3) Separately, at least one LATER, smaller-spec 'Melitah-Tripoli'/'Tripoli-Mellitah' pipeline was built/completed circa 2005-2006 (ognnews.com project report; Al Wasat News 2006, Punj Lloyd contract, ~120 km, 200 MMcf/d, built to supply Zawiya power station) -- a different physical asset from the OPEC-table line this row's exact values (158km/34in/16.99 bcm/y) match, adding a further identification wrinkle but not itself evidence of double-counting against P0483. Net read: strong circumstantial evidence that P0483 (aggregate) and the P1862-P1865 segment set describe the SAME underlying physical corridor from overlapping sourcing, with an unreconciled ~20% total-length gap (1,400 km segment-sum vs 1,164 km aggregate) and an internally inconsistent western-half segmentation (OPEC's 2-segment Khoms-Tripoli/Tripoli-Mellitah split vs World Bank/Tractebel's single Mellitah-Khoms trench). This is a candidate for human review to decide whether P0483 should be retired/merged now that the more granular segment rows exist, or whether the segment set should itself be re-consolidated (e.g. merging P1864+P1865 into one Khoms-Mellitah row) to match the independent engineering source's trench boundaries -- not something this researcher can resolve unilaterally without fabricating a reconciliation.",
+   "harvested_from_shard": "P1865.json"
+  },
+  {
+   "project_id": "P1866",
+   "sheet_row": 1345,
+   "pipeline_name": "Nasser-Brega Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Read as: (b)-leaning but with an important caveat, not a clean (a) or (b). Evidence suggests P1866 (gas) and P0599 (oil) are most likely genuinely SEPARATE physical pipelines sharing the same Nasser(Zelten)-Brega corridor and nominal diameter, rather than one line double-entered across trackers \u2014 but GEM's own length value for the gas line (277 km) is unsupported and looks like an error, which is a separate problem from the redundancy question. Evidence for two distinct lines: (1) OPEC ASB 2012 lists them as two separate table rows in two separate tables \u2014 'Nasser/Al-Brayqah' (Sirte, 172, 36, capacity 292 [implicitly Mt/kt-scale, oil units]) in Table 4.9 'Crude oil pipelines' (p.71), and 'Nasser/Brega' (Sirte Oil, 172, 36, capacity 14,868,309 [1,000 scm/yr]) in Table 4.10 'Gas pipelines' (p.75) \u2014 same owner/operator (Sirte Oil), same length (172) and diameter (36in), but a completely different, gas-appropriate capacity unit, i.e. OPEC itself treats them as two accounted flows, not a copy-paste of one row. (2) An independent 1970s-commissioning engineering incident-report paper (title: 'Explosion in the Gas Pipeline 36-inch diameter, Zelten-Brega', Hussein Albashik) describes a distinct '36in gas pipeline from Zelten to Brega' with its own rupture history (Aug 2014, Km 18) and 150 mmscfd design capacity from its 1970 commissioning \u2014 i.e. a real, physically documented gas asset independent of the 1961-built crude oil line (whose GEM wiki summary independently gives commissioning October 1961, separate from this line's 1970 commissioning) (this source itself is uncitable \u2014 academia.edu returned HTTP 403 to both WebFetch and url_verifier \u2014 so treat this only as directional evidence, not a stageable ref). (3) A WebSearch synthesis (source unconfirmed) also describes 'a 30-inch gas pipeline' linking Zelten field to the Brega LNG/petrochemical complex, suggesting there may even be more than one gas-carrying line/lateral in this corridor, further supporting that the gas and oil assets are not simply the same line re-entered. Caveat / what is NOT resolved: I found no source giving 277 km for the gas line specifically \u2014 every source on this corridor (OPEC, Wikipedia Zelten field, the WebSearch-synthesized 170km figure) converges on ~169-172 km, i.e. essentially the SAME length as the oil pipeline P0599 (171.62 km). If the two lines are truly parallel and co-built/co-routed (which fits '36in, Sirte Oil, same corridor' appearing twice in OPEC's own 2012 tables), a shared/near-identical length would be expected and is not itself evidence of duplication \u2014 but it does mean GEM's currently entered 277 km for P1866 cannot be independently justified as reflecting a materially longer or different route than P0599's 171.62 km, and the discrepancy should be resolved (most likely by correcting P1866's length toward ~172 km) independently of the redundancy question. Net read: keep both P0599 (oil) and P1866 (gas) as distinct entities \u2014 the weight of evidence favors two real, separate, same-corridor pipelines \u2014 but recommend a length correction on P1866, not a merge/removal of either row.",
+   "harvested_from_shard": "P1866.json"
+  },
+  {
+   "project_id": "P1868",
+   "sheet_row": 1142,
+   "pipeline_name": "Km-81.5-Brega Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "OPEC ASB 2012 Table 4.10 (p.75, Libya) lists the Sirte Oil Company gathering network as SIX distinct milepost-to-milepost segments, each with its own length/diameter/capacity, not one aggregated line: Attahaddy/km-91.5 (25mi, 30in, 28,320,589); Km-81.5/Brega [= P1868] (82mi, 30in, 8,496,177); Raguba/km-110 (88mi, 20in, 3,964,882); Intesar/Sahel (80mi, 30in, 19,824,412); Sahel/km-81.5 (49mi, 30in, 19,541,206); Km-91.5/Brega (92mi, 36in, 21,240,442) \u2014 all attributed to 'Sirte Oil' as owner/operator, all reported in units of 1,000 scm/yr capacity. No source found (OPEC or otherwise) that describes this network as a single pipeline/line rather than a chain of discrete named segments. The official statistical source itself treats Km-81.5/Brega as a standalone segment with unique specs distinct from the other five (different length, and Sahel/km-81.5 and Km-91.5/Brega in particular have different endpoints and different capacity/diameter than Km-81.5/Brega despite sharing the 'km-81.5' or 'Brega' token), which supports these being genuine separate segments of one connected gathering trunk rather than double-counted duplicates of the same physical pipe. No evidence found either way of GEM having mis-split a single segment into two rows; based on available sources, no redundancy is indicated for P1868 specifically.",
+   "harvested_from_shard": "P1868.json"
+  },
+  {
+   "project_id": "P1872",
+   "sheet_row": 1464,
+   "pipeline_name": "Km-91.5-Brega Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "P1872 (Km-91.5-Brega) and P1868 (Km-81.5-Brega) are NOT the same pipeline double-counted \u2014 OPEC ASB Table 4.10 (2010-2011/2012 editions) tabulates them as distinct rows with different upstream feeders, diameters, and capacities: 'Km\u201391.5/Brega' (36in, 92mi, cap 21.24 bcm/y, fed by 'Attahaddy/km-91.5' 30in) vs 'Km\u201381.5/Brega' (30in, 82mi, cap 8.50 bcm/y, fed by 'Sahel/km-81.5' and 'Intesar/Sahel' 30in lines). Both are real, separately-dimensioned trunks of the same Sirte-Basin-to-Brega gas gathering system that happen to share Brega as their common terminus \u2014 i.e. they are parallel corridors into the same hub, not one line recorded twice. GEM's separate P1867 'Attahaddy-km-91.5' and P1871 'Sahel-km-81.5' rows correspond to the respective upstream feeder segments in the same OPEC table, reinforcing that the '91.5' and '81.5' junctions are two distinct nodes on the network, each with its own feeder + Brega-bound trunk, not a single shared trunk. No evidence found that P1872 and P1868 should be merged or that either is a phantom duplicate of the other.",
+   "harvested_from_shard": "P1872.json"
+  },
+  {
+   "project_id": "P3987",
+   "sheet_row": 3368,
+   "pipeline_name": "Intisar\u2013Sarir Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [
+    "https://sirtggp.com/ar/projects/%d8%aa%d8%b9%d8%af%d9%8a%d9%84-%d9%88%d8%aa%d9%83%d8%af%d9%8a%d8%b3-%d8%ae%d8%b7-%d8%a7%d9%86%d8%a7%d8%a8%d9%8a%d8%a8-%d8%a7%d9%86%d8%aa%d8%b5%d8%a7%d8%b1-%d8%a7%d9%84%d8%b3%d8%b1%d9%8a%d8%b1-20/"
+   ],
+   "verifications": [
+    {
+     "url": "https://sirtggp.com/ar/projects/%d8%aa%d8%b9%d8%af%d9%8a%d9%84-%d9%88%d8%aa%d9%83%d8%af%d9%8a%d8%b3-%d8%ae%d8%b7-%d8%a7%d9%86%d8%a7%d8%a8%d9%8a%d8%a8-%d8%a7%d9%86%d8%aa%d8%b5%d8%a7%d8%b1-%d8%a7%d9%84%d8%b3%d8%b1%d9%8a%d8%b1-20/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ar",
+   "researcher_notes": "P3987 (Intisar-Sarir) and P3988 (Fargh-Sarir) read as TWO DISTINCT physical lines, not a double-count, though both feed the same Sarir hub and their names/histories are easy to conflate. Evidence they are separate assets: (1) different named source fields -- Intisar (Sirte Basin concession-103 field) vs. Fargh/Faregh (a different, separately-named Waha field) -- feeding the same downstream Sarir station; (2) different specs in independent, dated source documents -- sirtggp.com's 2020 contract page gives Intisar-Sarir as 20-inch / 114 km, while Waha Oil's own 2020-11-23 news post (cited in the P3988 shard) gives Fargh-Sarir as 97 km, explicitly calling it 'khat al-Fargh-Sarir' (the Fargh-Sarir line) as its own named project, separate from the Intisar line; (3) GEM's own recorded lengths for the two rows (235 km vs 97 km) are far enough apart, and the two independently-sourced values I found (114 km for Intisar-Sarir vs. 97 km for Fargh-Sarir) are also clearly distinct, that this isn't the same segment measured two ways. I did not find a single source describing 'Intisar-Sarir' and 'Fargh-Sarir' as alternate names for one project; every source treats them as separate lines within the same Sirte-Basin-to-Sarir gas-gathering scheme (also distinct from P1861 Farigh-Intesar/Waha-Faregh's OPEC-sourced 110 mi / 177 km line, which runs the other direction, Faregh TO Intesar, not to Sarir). Net read: not a redundancy, but part of a genuinely multi-line network around Intisar/Fargh/Sarir that is easy to mis-merge -- worth a note in country docs that these are parallel/sequential feeder lines, not duplicate records of one pipeline. Also unrelated: a brand-new (April 2026) 42-inch, 130 km 'Intisar A/103-Brega' pipeline just entered trial operation per NOC/Libya Observer/Pipeline Technology Journal reporting -- confirmed via WebFetch this is a DIFFERENT route (different diameter, length, and destination -- Brega, not Sarir) and not a duplicate or update candidate for P3987/P3988; flagging only so it isn't mistaken for this pipeline in later research.",
+   "harvested_from_shard": "P3987.json"
+  },
+  {
+   "project_id": "P3988",
+   "sheet_row": 3369,
+   "pipeline_name": "Fargh\u2013Sarir Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ar/en",
+   "researcher_notes": "P3988 (Fargh\u2013Sarir, this row) and P1861 (Farigh-Intesar, per this batch's own P1861 shard) are NOT duplicates of each other: P1861 traces to OPEC ASB2012 Table 4.10 data from 2011 (110 mi / 177 km, 24 in diameter, 7.08 bcm/y capacity -- an older, pre-existing Waha line running Fargh field to the Intisar field/103 complex), while P3988 traces to a 2020 Waha Oil Company announcement of a NEWLY commissioned 97 km line running Fargh field to Sarir GAS/POWER STATION -- different destination, different specs, different vintage, and my primary Waha-2020 source itself distinguishes the two: it describes the Fargh-Sarir line (this row) separately from ongoing supply 'to the Intisar A field ... 70 million cubic meters of gas' (the P1861 corridor), i.e. Fargh field feeds two distinct downstream lines. Good evidence these are two real, separate pieces of infrastructure. P3987 (Intisar\u2013Sarir) is a different question: per GEM's own wiki text, P3987 is described as running from Intisar oil field (Sirte Basin) to Sarir oil field (Cyrenaica), status is explicitly '(presumed operating)' based solely on a 2017 agreement with 'no direct evidence' (GEM's own wording), sourced to a single eanlibya.com URL I could not locate/verify (search engines returned no matching eanlibya.com page under that slug) plus a generic Waha Facebook page and a wahaoil.ly article titled '\u0625\u0633\u062a\u0626\u0646\u0627\u0641 \u062a\u063a\u0630\u064a\u0629 \u062e\u0637 \u0645\u062d\u0637\u0629 \u0627\u0644\u0633\u0631\u064a\u0631 \u0628\u0634\u0643\u0644 \u0627\u0639\u062a\u064a\u0627\u062f\u064a' ('resumption of normal supply to the Sarir station LINE') -- that title describes a SUPPLY LINE TO SARIR STATION resuming normal operation, which is the same phrasing/subject as the Fargh\u2013Sarir gas-to-power-station story I independently corroborated for P3988 (Libya Observer 2022-07-24: 'Fargh field ... restarted pumping gas to the Sarir power station'; multiple Arabic sources found this session state plainly '\u062d\u0642\u0644 \u0627\u0644\u0641\u0627\u0631\u063a \u064a\u0645\u062b\u0644 \u0627\u0644\u0645\u0635\u062f\u0631 \u0627\u0644\u0631\u0626\u064a\u0633 \u0644\u062a\u063a\u0630\u064a\u0629 \u0645\u062d\u0637\u0629 \u0627\u0644\u0633\u0631\u064a\u0631' -- 'the Fargh field is THE MAIN source supplying Sarir station'). I found no independent corroboration anywhere (English or Arabic press, 2017-2026) of a physically distinct 'Intisar oil field to Sarir oil field' gas pipeline separate from the Fargh-to-Sarir line. My working suspicion (not confirmed) is that P3987 may be describing the same underlying Fargh\u2192Sarir gas supply chain/network under an older, less-precise 2017-vintage name (with Intisar possibly an intermediate junction or a source-confusion with the separate Fargh-Intisar line, P1861) rather than a third, independently-built pipeline -- but I could not verify this either way from primary sources, so flagging as UNRESOLVED per protocol rather than asserting duplication. Recommend a human reviewer compare P3987's actual GEM sourcing (the eanlibya.com/wahaoil.ly citations) against this shard's Fargh-Sarir sourcing before any merge/delete decision.",
+   "harvested_from_shard": "P3988.json"
+  },
+  {
+   "project_id": "P6705",
+   "sheet_row": 3986,
+   "pipeline_name": "Wafa-Mellitah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/",
+    "https://www.offshore-technology.com/marketdata/wafa-mellitah-oil-oil-pipeline-libya/",
+    "https://mellitahog.ly/en/about/company-achievements/",
+    "https://mellitahog.ly/en/activities/gas-division/production/",
+    "https://mellitahog.ly/en/sites/wafa-field/",
+    "https://mellitahog.ly/en/sites/mellitah-complex/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.offshore-technology.com/marketdata/wafa-mellitah-oil-oil-pipeline-libya/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://mellitahog.ly/en/about/company-achievements/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://mellitahog.ly/en/activities/gas-division/production/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://mellitahog.ly/en/sites/wafa-field/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://mellitahog.ly/en/sites/mellitah-complex/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "STRONG, CORROBORATED FINDING: P6705 (16in) is misclassified -- the 16in Wafa-Mellitah line is the OIL/CONDENSATE line, not a gas line, and does not belong in the gas tracker. Every source found that distinguishes the two parallel Wafa-Mellitah lines by diameter+service agrees, with no exceptions: (1) Offshore Technology's 'Wafa-Mellitah Gas' market-data page: 32in max diameter, carries natural gas / 'on-specification gas', ~13 MMSm3/day. (2) Offshore Technology's separate 'Wafa-Mellitah Oil' market-data page: 16in max diameter, product type 'Crude oil' (condensate). (3) Mellitah Oil & Gas Company Achievements page (operator's own site): 'The 525 Km onshore pipeline system comprises of 32\" gas and 16\" oil/condensates pipelines. Both pipelines run in parallel from Wafa Desert Plant to Mellitah... the sale gas is exported to Italy and the oil/condensate, after further treatment for LPG fractionation, is exported.' (4) Mellitah Oil & Gas gas-division production page: '32 inches... Carries: On-specification sales gas... ~13 MMSm3/day' vs '16 inches... Carries: Oil and condensate mixture... ~23,000 bbl/d NGL and ~38,000 bbl/d oil/condensate.' (5) Mellitah Oil & Gas Wafa-field site page: the field has a separate 'Gas compression station to Mellitah' and 'Oil pumping station to Mellitah' -- two distinct facilities/lines at the source. (6) Mellitah Oil & Gas Mellitah-Complex page: the Wafa Coastal Plant (within Mellitah Complex) specifically processes 'oil and natural gas liquids from the Wafa field', separately from the Mellitah Plant which handles gas/condensate from the offshore Sabratha platform (Bahr Essalam field) -- i.e. the Wafa-sourced onshore stream landing via the 16in line is treated as an oil/NGL stream, not sales gas. No source anywhere describes a 16in GAS line on this corridor, or a 32in oil/condensate line. CONCLUSION: P6705 (16in, currently in GGIT/gas tracker as 'Wafa-Mellitah Gas Pipeline') and P0484 (32in) are NOT duplicate/redundant entries of the same pipeline -- they are two real, physically distinct, genuinely parallel pipelines, correctly kept as separate rows. But P6705 is in the WRONG TRACKER: by diameter and service it is the oil/condensate line and belongs in GOIT (oil tracker), not GGIT. ACTION FLAG: gem.wiki already has a page titled 'Wafa-Mellitah_Oil_Pipeline' (surfaced incidentally in web search results during this research), which suggests GEM/GOIT may already carry this pipeline as a separate oil-tracker entry under that name -- before reclassifying/moving P6705, check GOIT for an existing 'Wafa-Mellitah Oil Pipeline' row to avoid creating a duplicate; if one already exists, P6705's gas-tracker row is likely a redundant/erroneous entry that should be removed (or corrected in place) rather than moved.",
+   "harvested_from_shard": "P6705.json"
+  },
+  {
+   "project_id": "P6709",
+   "sheet_row": 2640,
+   "pipeline_name": "Bouri-Bahr Asslam Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20130812032410/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+    "https://web.archive.org/web/20170906225244/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+    "https://mellitahog.ly/wp-content/uploads/2019/03/Attch-2-Scope-of-Work.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20130812032410/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://web.archive.org/web/20170906225244/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://mellitahog.ly/wp-content/uploads/2019/03/Attch-2-Scope-of-Work.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "NOT a duplicate \u2014 sources indicate GEM's P6709 and P1859 represent two genuinely different, parallel physical pipelines on the same Bouri-to-Bahr Essalam/Sabratah corridor, not a double-count of one line. Evidence: OPEC's Annual Statistical Bulletin tabulates this field-pair as TWO adjacent-but-separate rows in every edition checked (ASB2012, ASB2013, ASB2017): a 10-inch line carrying dehydrated GAS and a 4-inch line carrying CONDENSATE. ASB2017 Table 9.9 makes the pairing explicit: 'Bouri offshore/Bahr Es Salam (2) | Mellitha Oil & Gas | 2 x 12 [mi] | 4, 10 [in]' \u2014 the '(2)' notation plus '2 x 12' means two parallel 12-mile lines, one 4in and one 10in. Independently, Mellitah Oil & Gas's own 2019 prequalification tender for the 'Bouri Gas Upgrading Project' (BGUP) describes new '10\" CS and 4\" CS pipelines 20 km long connecting DP4 to Sabratah Platform for dehydrated gas and condensate export' \u2014 the same twin-diameter, same-route configuration (gas line + separate condensate line). So P6709 (4in) = the condensate line, P1859 (10in) = the gas line of the same corridor: different specs because they are different pipes, not a GEM data error in that specific sense. Two open caveats worth flagging to the researcher, though: (1) P1859's GEM length (32 km) doesn't match the ~12-12.4 mi (~19-20 km) that ASB2013/ASB2017 converge on for BOTH lines \u2014 32km (=20mi) traces to the earlier ASB2012 edition's figure for that same row, which later ASB editions revised down; P1859's length may merit a separate correction check. (2) The mellitahog.ly 2019 document frames its 10in/4in pipes as NEW/planned BGUP construction (feasibility stage 2019; Saipem's ~$1bn contract 2023; first gas still targeted Sept 2026 per Libya Herald), while the OPEC ASB entries (2011-2013 data) already show a same-diameter pairing years earlier \u2014 implying an older, smaller Bouri-Sabratha tie-in predates BGUP and BGUP is now building new/expanded twin lines of the same diameters on the same route. Current-day operating status of GEM's specific P6709/P1859 assets vs. the incoming BGUP lines is not resolved by the sources found; recommend a follow-up check once BGUP reaches first gas (targeted Sept 2026) to confirm whether these rows should be updated to as-built BGUP specs or retired/merged.",
+   "harvested_from_shard": "P6709.json"
+  },
+  {
+   "project_id": "P6713",
+   "sheet_row": 2649,
+   "pipeline_name": "Bahr Assalam\u2013Mellitah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/",
+    "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records",
+    "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.offshore-mag.com/business-briefs/equipment-engineering/article/16762877/libya-gas-export-project-sets-records",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "http://web.archive.org/web/20161118233424/http://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "P6713 and P1855 are NOT simple duplicates of each other, but P6713 IS a genuine misclassification. Multiple independent sources agree the Bahr Essalam (Sabratha platform) field is tied to Mellitah by exactly TWO separate subsea lines, not one: a 36-in line carrying GAS and a 10-in line carrying CONDENSATE (liquids). Offshore Technology: '10-in diameter pipeline through which condensate is directly pumped and conveyed to Mellitah'; Offshore Magazine: '36-in. and 10-in. pipelines taking gas and condensate from the platform 100-km south to Mellitah.' P6713 has diameter=10in \u2014 it IS the condensate line, not a second gas line, despite carrying the same 'Gas Pipeline' name as P1855 (diameter=36in, the true gas line). The likely mechanical origin of the GEM duplication: OPEC's own ASB tables list BOTH diameters under one shared row/label ('Bahr Assalam/Mellitah ... 68.2 mi ... 36 in ... 9,199,943' and a second row 'Bahr Assalam/Mellitah ... 68.2 mi ... 10 in ... 465,166', both under the 'Gas pipelines' table heading even though the 10-in line is physically condensate) \u2014 someone appears to have carried both OPEC rows into GGIT as two separate 'Gas Pipeline' entities instead of recognizing the second as condensate. Critically, GEM ALREADY tracks this exact 10-in condensate line correctly, under GOIT (oil/NGL tracker): P6457 'Sabratha-Mellitah Condensate Pipeline' \u2014 Start='Sabratha platform', End='Mellitah', Length=107 km, Diameter=10 in, Status=operating \u2014 near-identical specs to P6713 (Bahr Assalam/Mellitah, 109 km, 10 in, operating). FINDING: P6713 in GGIT (gas) is a duplicate/misclassified twin of P6457 in GOIT (oil/NGL); it belongs in the oil tracker, not the gas tracker, and once reclassified is redundant with the already-existing P6457. Recommend retiring/removing P6713 from GGIT (or merging its provenance into P6457) rather than treating it as a distinct gas pipeline needing its own refs going forward.",
+   "harvested_from_shard": "P6713.json"
+  },
+  {
+   "project_id": "P6714",
+   "sheet_row": 2643,
+   "pipeline_name": "Bu-Attifel-Intesar Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "primary_value": "",
+   "values": {},
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "redundancy",
+   "recommendation": "Agent research verdict \u2014 see researcher_notes. Cross-check against the cluster-level recommendation in staging/redundancy/ before acting; where they differ, the cluster file is the adjudicated one.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20190421045702/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+    "https://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20190421045702/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "NOT a double-count \u2014 evidence points to two real, parallel gas pipelines, not one line entered twice. Internal comparison: P1858 (34in, capacity 4,134,806) and P6714 (10in, capacity 258,425) share the identical length (131.96 km) and identical start/end (Bu-Attifel Oil Field -> Intesar Oil field, Sirte Basin). OPEC ASB2013 Table 4.10 ('Gas pipelines in OPEC Members, 2012', p.~74-75, recovered via Wayback, pdftotext-confirmed) lists them as TWO SEPARATE table rows with different operators: 'Bu-Attifel/Intesar   Mellitah Oil and Gas   82.46mi   34in   4,134,806' and 'Bu-Attifel/Intesar (103A)   Eni Oil   82.46mi   10in   258,425' -- exact match to P1858 and P6714 respectively, down to the capacity figures. OPEC ASB2017 Table 9.9 (2016 data, recovered via Wayback) independently corroborates this across a later edition, listing the connection as 'Bu Attifel/Intisar (2)' -- explicitly '(2)' = two lines -- '2 x 82mi', diameters '34, 10', joint owner field 'Mellitah Oil & Gas, Eni Oil' (i.e. one line per operator). Two OPEC editions four years apart, independently compiled, agree that this is a twinned/parallel pipeline pair (same corridor, different operators/diameters/capacities), not a single pipeline double-entered. Recommend: NOT a candidate for merging/removal; if anything, GEM's Owner/Operator data for these two rows should be checked to confirm P1858=Mellitah Oil & Gas and P6714=Eni Oil, matching the OPEC operator split (out of scope for this ref-only shard).",
+   "harvested_from_shard": "P6714.json"
   }
  ]
 }
