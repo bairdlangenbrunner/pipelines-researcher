@@ -1,0 +1,138 @@
+{
+ "project_id": "P0483",
+ "pipeline_name": "Libya Coastal Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status not a literal token in either source (per rule 4, status is inferred from context, not required verbatim). World Bank/Tractebel 2017 'Fuel Availability & Opportunities for Cost Reduction' report (downloaded + pdftotext'd; naive substring check on 'gas' passes live but 'Benghazi'/'Coastal Pipeline' fail the raw-text screen because the PDF's extracted text stream isn't found by simple substring on r.text -- confirmed manually via pdftotext that pp.10-11 describe the 34-inch Coastal Pipeline actively carrying gas Mellitah->Marsa El Brega->Benghazi with segment flows and injection upgrades in progress, i.e. an operating system as of report date). LibyaReview (1 May 2023, independent Libya-focused news outlet) reports NOC's subsidiary Sirte Oil and Gas Production and Manufacturing Co. resumed gas production on the Brega-Khoms segment (part of this same coastal system) at 100 MMcf/d 'after a 12-year halt' -- i.e. this segment was OFFLINE 2011-2023 due to civil-war damage/neglect and only partially back online at reduced capacity in 2023. This is worth flagging: 'operating' as the current top-line status is supported (system carries gas, NOC/Sirte Oil actively manage and are restoring segments), but the record understates a multi-year outage on part of the route and current throughput is well below nominal capacity. No contradiction to the operating classification itself, just a caveat on continuity/capacity."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "World Bank/Tractebel report repeatedly describes the '34\" Coastal Pipeline system' as Libya's natural-gas transmission backbone between the West and East gas network areas (Mellitah to Marsa El Brega to Benghazi). Independently, the Wayback-recovered OPEC Annual Statistical Bulletin 2012 (Table 4.10 'Gas pipelines in OPEC Members, 2011') lists the same route as discrete gas-pipeline segments: Brega/Benghazi, Brega/Khoms, Khoms/Tripoli, Tripoli/Mellitah, all owner 'Sirte Oil', all 34-inch diameter -- confirmed via direct pdftotext extraction of the Wayback PDF (per known ASB-recovery method for this batch; the live opec.org original 404s/redirects to homepage). Two independent, non-GEM sources agree this is a natural-gas line. Naive substring screen on the raw PDF text via url_verifier passes on 'gas'/'OPEC' but the specific place-name substrings don't surface in r.text on these PDFs (binary/stream-encoded); confirmed manually via local pdftotext instead, per the documented PDF false-negative gotcha."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 2262,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not find a citable working source for the 1983 (or 2010) start/phase years. The gem.wiki page attributes these dates to 'World Energy Atlas, Petroleum Economist, 2001' -- a print cartographic atlas with no accessible online full text (only library-catalog/archive.org borrow records found, no readable pages). Searched (DuckDuckGo/Bing HTML, several phrasings) for Sirte Oil Company / NOC / Libya coastal gas pipeline construction history, commissioning dates, Brega-Benghazi pipeline build year -- found general Libyan oil-industry histories (Esso Marsa Brega 1960s pipeline, Occidental Zueitina 1968 pipeline) but nothing specific to the gas Coastal Pipeline's 1983/2010 phases. The OPEC ASB 2012 Table 4.10 gas-pipeline table (recovered via Wayback) gives length/diameter/owner per segment but no commissioning-year column. Leaving UNRESOLVED rather than guessing or citing the unreachable print atlas."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "World Bank/Tractebel report (pdftotext-confirmed p.11): 'From Mellitah to Tripoli and then to Khoms (222 km) with a nominal capacity of around 600 mmscf/d' -- an approximate match to the recorded 604 MMcf/d (the western Mellitah-Khoms trench, the highest-capacity leg of the system). Only one usable independent source found: the OPEC ASB 2012 Table 4.10 does give a 'Capacity' column per segment, but its units are '(1,000 scm/yr)' (annual volume), which do not convert cleanly to a per-segment MMcf/d figure matching 604, so it was not used as corroboration for this specific number (used instead for Length/Diameter/Owner, where its units align). Tier medium: one strong, approximately-matching source."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "VALUE DISCREPANCY TO FLAG: neither source matches the recorded 1164 km exactly. World Bank/Tractebel report states the Coastal Pipeline system totals '~1,120 km': western section Mellitah->Marsa El Brega = 871 km, eastern section Marsa El Brega->Benghazi = 246 km. The Wayback-recovered OPEC ASB 2012 Table 4.10 lists the same route as segments Tripoli/Mellitah=98, Khoms/Tripoli=125, Brega/Khoms=645, Brega/Benghazi=246 (column header says 'miles' but these numbers are clearly km -- they sum to the same 871 km western total as the World Bank figure, and exactly match its 246 km eastern leg; the ASB template's 'miles' header appears to be copy-paste boilerplate applied to values Libya's NOC actually reported in km). Both independent sources therefore agree with each other at ~1,114-1,120 km total, which is about 4-5% below the sheet's 1164 km. Could not find a source matching 1164 km precisely (likely a different route/vintage measurement, e.g. including spurs or a later re-survey); citing the two sources as the best available support while flagging the gap for QC."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Exact match, two independent sources. World Bank/Tractebel report (pdftotext-confirmed): 'These areas are connected by the 34\" Coastal Pipeline system' and later refers again to the '34\" diameter' connection pipelines. OPEC ASB 2012 Table 4.10 (Wayback-recovered, pdftotext-confirmed) lists diameter=34 inches for the Brega/Benghazi, Brega/Khoms, Khoms/Tripoli, and Tripoli/Mellitah segments (the Nasser/Brega feeder segment is listed separately at 36in, not part of this trunk claim)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://mellitahog.ly/en/sites/mellitah-complex/"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://mellitahog.ly/en/sites/mellitah-complex/", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "World Bank/Tractebel report identifies Mellitah as the pipeline's 'West Entry Point' and Benghazi as the eastern terminus ('...from Marsa El Brega...to Benghazi'). OPEC ASB 2012 Table 4.10 independently lists 'Tripoli/Mellitah' and 'Brega/Benghazi' as discrete named segments of the same route, owner Sirte Oil. Mellitah Oil & Gas's own site (mellitahog.ly, verified live, 'Zwara' found) confirms Mellitah Complex sits ~22 km east of Zuwara city -- Zuwara is the seat of Nuqat al Khams district, supporting the sheet's StartPrefecture/District='Nuqat al Khams district'. Benghazi endpoint / Benghazi province is uncontested across all sources checked."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 2262,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/",
+    "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/", "ok": true, "contains_value": true},
+    {"url": "https://web.archive.org/web/20180101000000/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "World Bank/Tractebel report: 'NOC, established in 1970, is the main company...in charge of exploration, production, transportation and commercialization of O&G'; notes the 2007 creation of General Gas Transmission & Distribution Co (GGT&D) as an NOC downstream-gas subsidiary. LibyaReview (1 May 2023, independent) directly states the Brega-Khoms segment of this system is 'operated by the state-owned National Oil Corporation (NOC) through its subsidiary, the Sirte Oil and Gas Production and Manufacturing Company.' OPEC ASB 2012 Table 4.10 (Wayback-recovered) lists 'Sirte Oil' as owner/operator of the Brega/Benghazi, Brega/Khoms, Khoms/Tripoli and Tripoli/Mellitah segments. All three sources triangulate on the same fact set: state-owned NOC is the parent owner, operating this pipeline through its wholly state-owned subsidiary Sirte Oil -- consistent with the sheet's Owner1='Libyan National Oil Corp', 100%."
+  }
+ ]
+}

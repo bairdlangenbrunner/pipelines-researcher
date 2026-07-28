@@ -1,0 +1,130 @@
+{
+ "project_id": "P1857",
+ "pipeline_name": "103D-103A Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/", "ok": true, "contains_value": false}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The sheet's only cited support (per wiki_citations.json) was OPEC's ASB2012 PDF, whose live opec.org link is dead (redirects to homepage) -- the KNOWN GOTCHA for this batch. Recovered via Wayback: https://web.archive.org/web/20120722013100/.../ASB2012.pdf (CDX-confirmed 200 capture; url_verifier OK/200, and 'Libya' present in the raw text layer). Because the PDF's text stream is compressed, url_verifier's naive substring check can't see '103D' directly (FAIL on that token via requests), so I downloaded the capture and ran `pdftotext -layout` on it manually: Table 4.10 ('Gas pipelines in OPEC Members, 2011'), Libya section, p.75, contains the row '103D/103A | Zueitina | 26 [mi] | 40 [in] | 17,841,971 [1,000 scm/yr] | na [amount transported]'. This is a specific, named match for this exact pipeline (not a generic country bulletin) -- it independently justifies upgrading the row past the prior QC pass's 'existence concern': the pipeline IS individually listed by name in OPEC's dataset, with an assigned operator, diameter, length and capacity, i.e. treated by OPEC as extant transport infrastructure in 2011 (not proposed/planned), which supports Status=operating. Corroboration: Libya Herald (Feb 2026, verified live) reports Zueitina Oil Co currently developing gas-processing/H2S-treatment technology specifically 'for Field 103D' as part of a live 'Gas Cap Blowdown project' -- this doesn't name the pipeline or say 'operating' literally, but independently confirms Zueitina still runs active gas operations at the 103D end of this corridor as of 2026, consistent with continued operating status 15 years after the OPEC snapshot. Two independent origins (OPEC statistical body vs. Libyan trade press, 14 years apart) corroborate continuity of operations at this specific field pair, though only the OPEC source names the pipeline itself -- tier medium, not high."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same recovered Wayback ASB2012 capture, Table 4.10 'Gas pipelines in OPEC Members, 2011' (p.75, verified via manual pdftotext extraction -- see Status notes for the gotcha re: url_verifier's substring check not reaching the compressed PDF text layer). The '103D/103A' row appears specifically within this gas-pipeline table (as opposed to Table 4.11, the parallel petroleum-product-pipeline table a few pages later, which lists an entirely different Libya roster), so Fuel=Gas is definitional to which table the row sits in -- a single but categorically unambiguous source. No second independent source found naming this pipeline's fuel type; did not find a Libya Herald/NOC/Mellitah piece specific enough to corroborate. tier medium (1 strong/definitive source)."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012 (see Status notes), Table 4.10, Libya, row '103D/103A | Zueitina': Capacity column = 17,841,971 (units: 1,000 scm/yr, per the table's column header) = 17,841,971,000 scm/yr = 17.84 bcm/y -- an exact match to the sheet's value ('17.84') to 4 significant figures. This precision (matching to the fifth digit once converted) is strong evidence this is the sheet's original source data point, even though the live opec.org link died and no one had re-verified it via Wayback until now. Single source; did not find a second independent source stating this specific capacity figure (searches for the pipeline by name mostly returned nothing outside GEM/OPEC, and this session's web-search budget was exhausted before an exhaustive re-check could be completed -- see overall notes). tier medium."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CONTRADICTION TO FLAG: Recovered Wayback ASB2012, Table 4.10, Libya, '103D/103A | Zueitina' row gives Length = 26 miles = 41.84 km (26 x 1.609344), whereas the sheet's LengthKnown value is 41.00 km. These are close (about 2% apart / ~0.8 km) and clearly the same table row (operator 'Zueitina', diameter 40in and capacity 17,841,971 both match the sheet exactly -- see those units), so I'm confident this is the row GEM originally sourced from, but the length conversion does not land exactly on 41.00 km from the reported 26 mi. Possible explanations: GEM may have applied a slightly different rounding/conversion, or used a different-vintage edition of the same OPEC table (later ASB editions re-report the same routes with revised mileage as pipelines are re-surveyed; I attempted to pull ASB-2013/2014 editions from Wayback to check for a closer figure, but those particular captures are truncated/corrupt at the source -- archive.org's own crawler captured only ~5.2MB of a ~10.7MB file, so pdftotext could not open them; not pursued further given time). Citing this source with the discrepancy flagged rather than either fabricating a closer match or leaving the cell unresolved, since the identity of the row (same pipeline, same operator, matching diameter and capacity) is not in doubt -- only the exact length figure has a minor (~2%) unit-conversion-level gap. tier low given the imperfect numeric match."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012, Table 4.10, Libya, '103D/103A | Zueitina' row: Diameter column = 40 (inches) -- exact match to the sheet's value ('40.00', DiameterUnits='in'). Single source; no independent second source found stating this specific pipeline's diameter. tier medium."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://www.osti.gov/biblio/5071134"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.osti.gov/biblio/5071134", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Country-level value only (Start/EndCountryOrArea = Libya, both ends unnamed at the sub-national level in the brief). Two independent sources agree: (1) recovered Wayback ASB2012 Table 4.10 lists '103D/103A' under the 'Libya' section header alongside the other Sirte Basin Zueitina/Sirte Oil/Mellitah lines. (2) OSTI.gov bibliographic record (1970, SPE/JPT-derived) independently confirms the Intisar A and D fields -- the 103A/103D field pair this pipeline connects -- sit on Occidental's Concession 103, '220 miles south of Benghazi, Libya', i.e. within Libya. Trivial/low-information fact but genuinely corroborated by two unrelated origins (an industry statistics body and a 1970s petroleum-engineering record), so tier high per the mechanical rule, even though the underlying claim (country=Libya) is not in serious doubt."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 1404,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/",
+    "https://noc.ly/index.php/en/2015-11-05-14-30-32/affiliated-companies-eng/zueitina-oil-company"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/", "ok": true, "contains_value": true},
+    {"url": "https://noc.ly/index.php/en/2015-11-05-14-30-32/affiliated-companies-eng/zueitina-oil-company", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Operator='Zueitina Oil Co' confirmed by three independent sources spanning different decades/purposes: (1) recovered Wayback ASB2012 Table 4.10, Libya section, lists Owner/Operator = 'Zueitina' for the exact '103D/103A' row (2011 data). (2) Libya Herald (Feb 2026, verified live, contains 'Zueitina' and '103D') reports Zueitina Oil Co actively meeting with BlueVee Energy on gas-processing technology 'for Field 103D' -- confirms Zueitina is still the operating company at the 103D end of the corridor 15 years later. (3) NOC's own official affiliated-companies page (noc.ly, verified live) lists Zueitina Oil Company (Arabic: شركة الزويتينة للنفط) as one of its subsidiary operating companies -- confirms both the Operator value and, verbatim, the OperatorLocalLanguage value in the brief ('شركة الزويتينة للنفط'). Three genuinely independent origins (OPEC statistics body, Libyan trade press, NOC itself) -- tier high. Did not find any source giving the specific Owner1/2/3 percentage splits (NOC 81%, Occidental 14.25%, OMV 4.75%) -- see the separate Owner unit, left UNRESOLVED rather than guessed."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1404,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not verify the specific ownership percentages (Owner1=Libyan National Oil Corp 81.00%, Owner2=Occidental Petroleum 14.25%, Owner3=OMV 4.75%). Confirmed via NOC's own site (noc.ly) and other sources that Zueitina Oil Company is an NOC-affiliated joint-venture operator with Occidental and OMV as known legacy Concession-103 partners (consistent with the identities in the brief), but found no source -- NOC, OMV investor materials/annual reports, Occidental filings, or trade press -- stating these specific percentage splits. OMV's own site and Wikipedia page returned no Libya/Zueitina ownership detail on fetch, and this session's web-search tool budget was exhausted before a broader search (e.g. an OMV annual report or a Wood Mackenzie/Rystad summary that typically states JV equity splits) could be run to close this gap. Per standing rule 2 (never fabricate), leaving this UNRESOLVED rather than citing a source that doesn't actually state the percentages -- a future pass with search budget available should target OMV's annual report / 20-F-equivalent disclosures or an Africa Oil+Gas/APO-style JV factsheet for Concession 103's exact equity split."
+  }
+ ]
+}

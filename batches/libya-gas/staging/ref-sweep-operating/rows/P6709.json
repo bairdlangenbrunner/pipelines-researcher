@@ -1,0 +1,76 @@
+{
+  "project_id": "P6709",
+  "pipeline_name": "Bouri-Bahr Asslam Gas Pipeline",
+  "sheet_row": 2640,
+  "wiki": "https://www.gem.wiki/Bouri-Bahr_Assalam_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Fix Capacity/CapacityUnits: true capacity is ~0.0372 bcm/yr (37.213 million scm/yr), not '37213.00 scm/yr' as currently labeled. Also swap all four dead opec.org citation links (ASB2012, ASB2013 x2, ASB2017) for the Wayback Machine snapshots used here -- confirmed via curl that opec.org now 301-redirects every one of these paths to the OPEC homepage. Do NOT merge/dedupe with P1859 -- OPEC's own table treats these as two distinct parallel lines in the same corridor.",
+      "researcher_notes": "EXISTENCE: confirmed via an independent, non-GEM primary source -- OPEC's own Annual Statistical Bulletin, not just the gem.wiki page (which cites but no longer links live copies). I pulled the exact ASB2013 PDF (2012-data edition) via its Wayback Machine snapshot (http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf) and ran pdftotext -layout on it myself. Table 4.10 ('Gas pipelines in OPEC Members, 2012'), Libya section, contains the row: 'Bouri (offshore)/Bahr Asslam (Sabratah platform)   Mellitah Oil and Gas   12.4   4   37,213   na' -- an exact match on operator (Mellitah Oil and Gas), diameter (4 in, GEM: 4), and the raw capacity digits (37,213, GEM: 37213.00), with length 12.4 mi vs GEM's 12.00 mi (immaterial rounding, not a material disagreement). Note the source spells this line 'Bahr Asslam' (matching GEM's own pipeline_name spelling 'Asslam'), distinct from the neighboring row 'Bouri/Bahr Assalam ... 10 in ... 1,416,171' (spelled 'Assalam', matching P1859's spelling and specs) two rows above in the same table -- OPEC's own bulletin lists these as two separately-named, separately-specced lines in the same corridor, not one line double-counted. I further corroborated via the ASB2017 edition (Wayback: http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf), whose 2016-data Table 9.9 collapses both into one twin-line entry: 'Bouri offshore/Bahr Es Salam (2)   Mellitha Oil & Gas   2 x 12   4, 10' -- i.e. OPEC itself describes a ~12-mile, 4-inch line running parallel to a ~12-mile, 10-inch line on this same corridor, matching P6709 (4in) and P1859 (10in) respectively. This is decisive against a DUPLICATE flag: these are two real, separately-tracked physical lines per the primary source, not a GEM relabel/double-count of one pipe, so P6709 and P1859 should stay as separate rows. CLASSIFICATION holds (gas, transmission-grade feeder line into the Mellitah gas-gathering network, consistent with how the roster treats every other short Libyan inter-field segment). SPEC CONCERN: the OPEC table's capacity column header for this table is explicitly '(1,000 scm/yr)' (confirmed in the pdftotext output, e.g. Algeria section header on the same page layout) -- meaning the true capacity is 37,213 x 1,000 = 37,213,000 scm/yr = ~0.0372 bcm/yr. Sibling row P1859 converted this same table's units correctly (its OPEC figure of 3,879,921 -> GEM's recorded '3.88 bcm/y'), but P6709 instead recorded the bare OPEC digit as 'Capacity: 37213.00' with 'CapacityUnits: scm/yr' -- i.e. it dropped the x1,000 multiplier AND kept plain scm/yr instead of converting to bcm/y, so the recorded value reads as a physically implausible ~37,213 actual scm/yr (about 100 scm/day, far too small for an industrial gas line) when the real figure should read approximately 0.0372 bcm/yr. This is a genuine, source-confirmable spec/unit error, not a fabrication -- the underlying digits are an exact match to the primary source, only the scale/units are wrong. Caveat: I could not run these Wayback PDF URLs through url_verifier successfully -- the tool reports FAIL/'missing expected' for tokens like 'Bouri' and 'Bahr' against all three OPEC snapshots (both original opec.org, which now dead-redirect to the homepage, and the Wayback copies), because the verifier's plain-text substring check cannot read the compressed PDF byte stream; I confirmed the content manually via pdftotext -layout instead, which is the standard, more reliable extraction method for this class of document. All four ASB PDF URLs currently in the mainsheet's ref columns (Status, Fuel, PipelineType, Capacity, Diameter) point at dead opec.org paths that 301-redirect to the OPEC homepage -- recommend swapping to the Wayback snapshots below across all of this segment's ref columns.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Owner/operator hold as recorded; no action needed beyond what's already in the sheet.",
+      "researcher_notes": "Operator 'Mellitah Oil and Gas' is named directly in the OPEC ASB2013/ASB2017 table rows for this exact line (see spec entry above) and independently on Mellitah's own site. Owner split (NOC 50% / Eni 50%) is corroborated by two independent trade sources also used for sibling row P1859: offshore-technology.com ('a 50:50 joint venture between ... Eni and the National Oil Corporation of Libya (NOC)') and 2b1stconsulting.com ('Eni North Africa and NOC established Mellitah Oil and Gas B.V. in 2008 as 50/50 joint venture'), both re-verified live by me. Mellitah's own Arabic-language company page (mellitahog.ly, live, not gem.wiki) independently confirms the company was formed via an NOC/Eni-North-Africa merger agreement and operates the Bahr Essalam and Bouri fields feeding the Mellitah complex, though it does not itself state the 50/50 split -- caveat noted, not a conflict.",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/projects/structures-a-and-e-gas-fields-development-libya/",
+        "https://2b1stconsulting.com/mellitah-oil-and-gas-closed-date-for-libyan-offshore-a-structure-and-onshore-mellitah-complex/",
+        "https://mellitahog.ly/en/about/company-profile/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2640,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "12.00", "LengthKnownUnits": "mi"},
+      "primary_value": "12.00",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": false, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB2013 Table 4.10 (2012 data) lists this exact row ('Bouri (offshore)/Bahr Asslam (Sabratah platform)', Mellitah Oil and Gas, 4 in) at 12.4 miles -- close to GEM's recorded 12.00 mi (rounding, not a material conflict). url_verifier reports FAIL because it cannot substring-match against the compressed PDF byte stream; confirmed manually via pdftotext -layout instead (see validity notes)."
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2640,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartCountryOrArea", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartCountryOrArea": "Libya", "EndCountryOrArea": "Libya"},
+      "primary_value": "Libya",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found (OPEC tables, Mellitah's site, offshore-technology.com, or Wikipedia's Bouri Field/Greenstream pipeline articles) gives a finer-grained onshore reference point than 'Libya' -- both Bouri and the Bahr Essalam/Sabratah platform are offshore installations feeding the Mellitah industrial complex, with no distinct town/province endpoint to record. Left unfilled rather than fabricating a location."
+    }
+  ],
+  "summary": "P6709 is a real OPEC-documented gas line (Bouri offshore field to the Bahr Essalam/Sabratah platform tie-in, Mellitah Oil & Gas, 50/50 NOC-Eni) -- not a duplicate of sibling P1859, which is a separate parallel 10-inch line on the same corridor per OPEC's own table -- but its recorded Capacity (37213.00 scm/yr) is a units error: the true figure is ~0.0372 bcm/yr, since GEM dropped the source table's x1,000 multiplier that was correctly applied on the sibling row."
+}

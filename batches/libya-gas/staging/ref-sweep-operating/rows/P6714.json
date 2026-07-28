@@ -1,0 +1,98 @@
+{
+  "project_id": "P6714",
+  "pipeline_name": "Bu-Attifel-Intesar Gas Pipeline",
+  "sheet_row": 2643,
+  "wiki": "https://www.gem.wiki/Bu-Attifel-Intesar_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence, duplicate-check, and classification all clear. Swap the row's citations from the dead opec.org URLs (all 3 now redirect to the OPEC homepage) to the Wayback Machine snapshots used here.",
+      "researcher_notes": "EXISTENCE: the wiki page's own 3 citations (OPEC Annual Statistical Bulletin editions ASB2012, ASB2013, ASB2017) are all DEAD at opec.org -- curl -L on all three now 301-redirects to https://www.opec.org/ (homepage). This is why the sheet's own existing_ref_checks show 'value not found' for Status/Capacity against these URLs, and the 'ok' passes recorded for Fuel/PipelineType/Diameter against the same dead ASB2017 URL are FALSE POSITIVES -- the homepage happens to contain generic tokens like 'Gas'/'transmission'/'10' by coincidence, not because it supports this pipeline's data. I located live Wayback Machine snapshots of all three PDFs (200 OK, real PDF binaries this time, not a redirect) and extracted their text with pdftotext, since the compressed PDF byte-stream defeats url_verifier's raw substring check (a known content false-negative class, not proof of a dead source). All three editions independently name this exact corridor in a per-pipeline transportation table: ASB2012 Table (2011 data, natural-gas section) lists 'Bu-Attifel/Intesar, Mellitah Oil and Gas, 133mi, 34in, 11,328,236' (34in branch only); ASB2013 Table 4.10 'Gas pipelines in OPEC Members, 2012' lists BOTH branches on adjacent rows -- 'Bu-Attifel/Intesar, Mellitah Oil and Gas, 82.46mi, 34in, 4,134,806' AND 'Bu-Attifel/Intesar (103A), Eni Oil, 82.46mi, 10in, 258,425'; ASB2017 Table 9.9 'Main gas pipelines in OPEC Members, 2016' lists it as one combined twin-diameter entry: 'Bu Attifel/Intisar (2), Mellitha Oil & Gas, Eni Oil, 2 x 82mi, 34, 10in'. This CONFIRMS EXISTENCE (a named, operated line appearing across 3 independent annual editions of a primary industry-statistics publisher, not a GEM-only/hallucinated entity).\n\nDUPLICATE check against roster: P1858 ('Bu-Attifel-Intesar Gas Pipeline', dia=34.00, cap=4,134,806, segment_name='Pipeline 1') shares this row's exact name, exact gem.wiki URL, exact route (Bu-Attifel Oil Field->Intesar/Sirte Basin), and exact length (131.96km). On its face this looks like a duplicate, but the OPEC source resolves it: ASB2013's own table lists these as TWO separate named rows -- the plain 'Bu-Attifel/Intesar' (34in, operator Mellitah Oil and Gas, cap 4,134,806) and the parenthetical '(103A)' variant (10in, operator Eni Oil, cap 258,425) -- and ASB2017 explicitly groups them as a twin-diameter '(2)'-notation pair, i.e. OPEC itself documents two co-routed parallel lines of different diameter/operator sharing this corridor. GEM's split into P1858='Pipeline 1' (34in/Mellitah O&G) and P6714='Pipeline 2' (10in/Eni Oil) is therefore a CORRECT, deliberate representation of OPEC's documented twin-line system, not an accidental duplicate/double-count -- consistent with how this same reviewer batch treated the analogous P1855/P6713 twin-line pair (Bahr Assalam-Mellitah) and P1859/P6709 pair (Bouri-Bahr Assalam), where OPEC's tables likewise show parallel lines of differing diameter under one named corridor. Recommend AGAINST merging P6714 into P1858.\n\nCLASSIFICATION: Fuel=Gas and PipelineType=transmission both hold -- OPEC lists this line specifically under 'Gas pipelines in OPEC Members' (not the crude-oil pipeline table, which has a DIFFERENT, unrelated 'Bu-Attifel/Intesar' 30in crude-oil connector at 82mi -- do not conflate the two commodities' entries, which share the same place names but are separate tables/separate pipes). No independent source (unlike the P6713/Bahr-Assalam case, where a project writeup called the paired 10in line 'condensate') suggests this 10in branch carries anything other than gas, so I'm not raising a classification concern here.\n\nATTRIBUTION note: OPEC identifies the operator of THIS SPECIFIC 10in/258,425 branch as 'Eni Oil', distinct from P1858's 34in branch operator 'Mellitah Oil and Gas' -- worklist for P6714 has no Operator [ref] field to correct (unlike P1858, which already carries Operator='Mellitah Oil & Gas'), so this is out of scope to fill, but flagging in case the data team wants to add an Operator value to this row using the OPEC citation.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Capacity's raw digit (258,425) is correct per OPEC, but the recorded CapacityUnits ('scm/y') is off by 1000x from the source's actual unit scale ('1,000 scm/yr'). Either relabel CapacityUnits to reflect thousands (or convert the value to 258425000 and keep units as 'scm/y'/relabel to the sheet's standard unit, e.g. 0.258 bcm/y) -- do not carry the value forward as literally '258,425 scm/yr', which is a physically implausible capacity (about 258 thousand cubic meters/year -- less gas than a handful of households would burn) for a 10in transmission line.",
+      "researcher_notes": "ASB2013 Table 4.10's own column header (confirmed via pdftotext, quoted verbatim): 'Length (miles) / Diameter (inches) / Capacity (1,000 scm/yr) / Amount transported'. The exact row for this branch reads 'Bu-Attifel/Intesar (103A), Eni Oil, 82.46, 10, 258,425, na' -- the raw digit 258,425 matches GEM's recorded Capacity value exactly, confirming GEM correctly transcribed the source's number, but the source's own header states this figure is denominated in THOUSANDS of standard cubic meters per year, i.e. the true capacity is 258,425 x 1,000 = 258,425,000 scm/yr (~0.258 bcm/yr) -- not '258,425 scm/y' as currently labeled on the mainsheet. This is a material unit-scale disagreement per the standing rule (a source that states a value need not literally agree with GEM's number if GEM misapplied the source's units), so flagging as a spec concern rather than silently passing it, even though the underlying research (finding + transcribing the right OPEC row) was done correctly.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2643,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "131.96", "LengthKnownUnits": "km"},
+      "primary_value": "131.96",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Length ref was blank (MISSING_REF). ASB2013 Table 4.10 gives 82.46 miles for this branch ('Bu-Attifel/Intesar (103A), Eni Oil, 82.46, 10, 258,425, na'); 82 miles (a plausible source rounding) x 1.609344 = 131.97km, an essentially exact match to GEM's recorded 131.96km. Confirmed manually via pdftotext -- the verifier's raw substring check can't read the archived PDF's compressed text stream, so 'contains_value' is a false negative here, not a failure to support the value."
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2643,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Bu-Attifel Field"},
+      "primary_value": "Bu-Attifel Field",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource ref was blank (MISSING_REF). ASB2013's Libya gas-pipeline table names the route origin as 'Bu-Attifel' (an established Sirte Basin oil/associated-gas field, also the origin point of this same route's larger 34in twin, P1858), consistent with GEM's FuelSource value. Confirmed via pdftotext; verifier's substring check can't read the archived PDF's compressed stream."
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2643,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Bu-Attifel Oil Field", "StartState/Province": "Sirte Basin", "StartCountryOrArea": "Libya", "EndLocation": "Intesar Oil field", "EndState/Province": "Sirte Basin", "EndCountryOrArea": "Libya"},
+      "primary_value": "Bu-Attifel Oil Field",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Location ref was blank (MISSING_REF). ASB2013's Libya gas-pipeline table lists this exact route as 'Bu-Attifel/Intesar', both long-established Sirte Basin oil fields in Libya, matching GEM's recorded Start/End locations and Sirte Basin province/Libya country values. No finer-grained province than 'Sirte Basin' is given by this source (or found elsewhere within the WebSearch budget available this session), so I'm not proposing any change beyond confirming what's already recorded."
+    }
+  ],
+  "summary": "P6714 is a real, correctly-classified gas transmission line (confirmed via 3 independent editions of OPEC's Annual Statistical Bulletin, accessed through Wayback Machine snapshots since the live opec.org citations are all now dead/redirected) and is NOT a duplicate of the identically-named, identically-routed P1858 -- OPEC's own tables document this corridor as two deliberate parallel lines (34in/Mellitah O&G = P1858 'Pipeline 1'; 10in/Eni Oil = P6714 'Pipeline 2'), matching GEM's segment split exactly. One real spec issue found: Capacity's raw digit (258,425) is correctly transcribed from OPEC, but the source's column header specifies units of 'thousand scm/yr', not the 'scm/y' recorded on the mainsheet -- a 1000x unit-scale discrepancy flagged as a spec concern."
+}

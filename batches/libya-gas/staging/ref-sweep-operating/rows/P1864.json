@@ -1,0 +1,35 @@
+{
+  "project_id": "P1864",
+  "pipeline_name": "Khoms-Tripoli Gas Pipeline",
+  "sheet_row": 1402,
+  "wiki": "https://www.gem.wiki/Khoms-Tripoli_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Add the two refs below to Status/Fuel/Capacity/Length/Diameter/Location [ref] columns; replace the dead live OPEC URL with the Wayback snapshot when citing it.",
+      "researcher_notes": "EXISTENCE + SPEC confirmed by two independent sources. (1) OPEC Annual Statistical Bulletin 2012, Table 4.10 'Gas pipelines in OPEC Members, 2011', Libya section, p.75: row 'Khoms/Tripoli | Sirte Oil | 125 [miles] | 34 [in] | 17,048,995 [1,000 scm/yr] | na [amount transported]'. 125 mi = 201.17 km, matching GEM's LengthKnown=201.00 km almost exactly; diameter 34 in matches GEM's 34.00 in exactly; capacity 17,048,995 thousand scm/yr = 17.049 bcm/yr, matching GEM's Capacity=17.05 bcm/y essentially exactly. Same table row also lists Brega/Khoms (645 mi... actually miles=645? no - table gives Brega/Khoms len separately), Tripoli/Mellitah, and Brega/Benghazi (246 mi = 396 km, matching P1862's 396 km exactly) as separate rows -- this cross-check confirms the roster's segmentation (P1862/P1863/P1864/P1865 etc.) reflects genuinely distinct physical segments per OPEC, not double-counted duplicates of P1864. IMPORTANT CAVEAT ON THE OPEC LINK: the currently-cited live URL (https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf) is DEAD -- curl -I shows a 301 redirect to the OPEC homepage (https://www.opec.org), and url_verifier's automated 'OK' on that URL is a FALSE POSITIVE: it only matched the token 'Libya' because that word appears generically on the homepage (member-country nav), not because the ASB2012 content is actually served. I substituted the Wayback Machine snapshot (2025-01-10) of the same file, confirmed to be a genuine PDF via `file` (PDF document v1.6) and `pdftotext`, whose extracted text contains 'Khoms/Tripoli ... 125 ... 34 ... 17,048,995' verbatim. NOTE: url_verifier's automated substring check FAILS on this Wayback PDF URL (reports 'FAIL 200 but missing expected') despite the content genuinely containing 'Khoms' and 'Tripoli' -- this is the documented PDF content false-negative (verifier can't extract text from this PDF's encoding via naive scan); per the script's own docstring guidance I verified manually with pdftotext (confirmed) and curl (confirmed live 200) before citing. (2) alwasatnews.com, 2006-08-23 Arabic news article ('Bongs/Bonatti-Lloyd wins contract to implement Tripoli gas line project in Libya'): Sirte Oil Company awarded a construction contract (signed by chairman Ahmed Aoun and the contractor's CEO Athol Bongs) covering two projects: an extension of the existing Benghazi-Khoms gas line onward to Khoms-Tripoli (new 126 km section plus 32 km of branch lines, to supply Tripoli's southern power station), and separately a Tripoli-Mellitah supply line to the Zawiya power station. This independently corroborates the pipeline's existence, route (Khoms->Tripoli), and rough vintage (built out mid/late-2000s). The article's quoted capacity (106 million cubic feet/day for the NEW 2006 extension increment) is much lower than GEM's 17.05 bcm/y (~1,650 mmcf/d) -- this is NOT a spec conflict, since the article describes only the incremental capacity added by that one construction contract, not the pipeline's cumulative/full design capacity as later reported by OPEC for 2011. CLASSIFICATION: correct -- a gas transmission trunk line, not a gathering/process line, consistent with both sources. ATTRIBUTION nuance (not an error): GEM's Owner1 is 'Libyan National Oil Corp' (100%); both sources name the direct operator as 'Sirte Oil' / Sirte Oil Company, which is an NOC subsidiary responsible for gas production/transport in this corridor -- recording the parent (NOC) as owner is defensible, but the sheet could note Sirte Oil Company as operator if a separate operator field exists. Location (Khoms, Murqub district -> Tripoli) matches both sources' description of Khoms as ~120 km east of Tripoli. DUPLICATE check against full 30-pipeline roster: no other entry matches P1864's length/diameter/capacity combination (201 km / 34 in / 17.05 bcm/y is unique in the roster); OPEC's table independently confirms this as its own segment distinct from Brega-Khoms (P1863), Tripoli-Mellitah (P1865), Brega-Benghazi (P1862) -- no duplicate/relabel concern.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "http://www.alwasatnews.com/news/639479.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Fix the FuelSource field: it currently holds a reference URL (http://www.alwasatnews.com/news/639479.html) instead of an actual gas-source/origin name. Move that URL into 'FuelSource [ref]' and either populate FuelSource with the real origin (e.g. the Sirte Basin fields feeding this trunk, if known) or leave it blank rather than storing a URL as the value.",
+      "researcher_notes": "Data-quality issue, not a sourcing dispute: checked how 'FuelSource' is populated across the other 29 roster pipelines in this same worklist -- most carry an actual field/basin name (e.g. P6714/P1858 'Bu-Attifel Field', P6705 'Wafa Gas Field'), but P1864 (like P0439 Greenstream) has a bare URL sitting in the FuelSource value column itself rather than a source name. This looks like a copy/paste or column-mapping error at some point in the sheet's history, not evidence about the pipeline's existence or gas type (Fuel=Gas is independently confirmed above). Flagging so it can be cleaned up in the same pass as the missing refs.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P1864 Khoms-Tripoli Gas Pipeline: confirmed (caveat) -- existence, spec (201km/34in/17.05bcm/y), and classification all corroborated near-exactly by OPEC ASB2012 Table 4.10 (via Wayback, since the live opec.org URL is dead/redirects) + a 2006 alwasatnews.com construction-contract article; no duplicate/existence/classification problem. Secondary caveat: FuelSource field holds a URL instead of a source name (data-quality fix, not a factual error)."
+}

@@ -1,0 +1,110 @@
+{
+  "project_id": "P6705",
+  "pipeline_name": "Wafa-Mellitah Gas Pipeline",
+  "sheet_row": 3986,
+  "wiki": "https://www.gem.wiki/Wafa-Mellitah_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence and general routing (Wafa field -> Mellitah, ~525 km, built 2002-2004) are solidly confirmed by two independent primary sources.",
+      "researcher_notes": "EXISTENCE: gem.wiki's own citation list for this row is generic/thin (an unlabeled OPEC statistics-bulletin PDF, plus mellitahog.ly and Bonatti International pages that were only reachable as leads). I fetched the two non-GEM leads directly and both independently confirm a real, physical Wafa-Mellitah onshore pipeline system: mellitahog.ly (Mellitah Oil & Gas B.V., the NOC-Eni JV that operates the asset) states '[t]he 525 Km onshore pipeline system comprises of 32\" gas and 16\" oil/condensates pipelines... run[ning] in parallel from Wafa Desert Plant to Mellitah,' built under 'a contract awarded on 17/6/2002 and completed on 16/8/2004'; bonattinternational.com (the EPC contractor for the Mellitah complex/compressor station) independently corroborates the Wafa Desert field -> NC41 gas plant -> Mellitah -> GreenStream chain (11 bscm/yr gas + ~120,000 bpd oil produced). Two independent origins (operator + contractor), both en, confirming the system is real and the GEM start-year (2004) and length (~525 km vs sheet's 524.65) line up. No hallucination concern here.",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/about/company-achievements/",
+        "http://www.bonattinternational.com/mellitah-area-complex-and-gas-compressor-station"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Reclassify Fuel (and likely move out of the gas-pipeline tracker): the operator's own site states the 16-inch line is the OIL/CONDENSATE pipeline, not gas.",
+      "researcher_notes": "P6705 is GEM's 'Pipeline 2' segment of the Wafa-Mellitah system: 16 in diameter, 524.65 km -- this matches exactly the 16-inch leg of the twin-pipeline system. But mellitahog.ly (the operating JV's own site, an independent primary source, verified) is explicit that the system is TWO separate parallel lines with different cargo: '32\" gas and 16\" oil/condensates pipelines... the sale gas is exported to Italy and the oil/condensate, after further treatment for LPG fractionation, is exported via Jetty and SPM facilities.' In other words the 32-inch line (= GEM's P0484, 'Pipeline 1', already correctly Fuel=Gas) carries the gas, and the 16-inch line (= this row, P6705, 'Pipeline 2') carries OIL/CONDENSATE, not gas. GEM currently has P6705's Fuel field set to 'Gas' -- that appears to be wrong; it should be an oil/condensate/NGL line, which likely also means it does not belong in a Libya *gas* pipeline tracker at all (or should be flagged as a liquids line associated with the gas project). Diameter (16 in) itself is correctly recorded and independently confirmed. Only one independent primary source explicitly states the commodity split (mellitahog.ly), so tier=medium on this specific classification claim even though existence/routing is high-tier; recommend a human double-check before reclassifying given the consequence (moving the row out of a gas tracker).",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/about/company-achievements/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Owner ref is unrelated to this pipeline; verify actual ownership (likely Mellitah Oil & Gas B.V. / NOC-Eni JV, not necessarily 100% NOC) and replace the citation.",
+      "researcher_notes": "Current Owner ref (https://sk.kz/press-center/news/76886/?lang=ru) is a Samruk-Kazyna (Kazakhstan) press release about Kazakh-CNPC cooperation on Kazakh oil/gas projects -- it does not mention Libya, this pipeline, Libyan National Oil Corp, or Eni anywhere; it is a completely mismatched citation (very likely a copy/paste or row-shift error from an unrelated Central Asia pipeline entry). Separately, mellitahog.ly (verified) states the operator, Mellitah Oil & Gas, 'is a joint venture between National Oil Corporation of Libya and ENI Italy' but does not give an ownership percentage split. GEM's Owner1=Libyan National Oil Corp 100% may therefore be incomplete (Eni is a real co-participant in the underlying Wafa/Mellitah project even if the pipeline asset itself is nominally 100% NOC-owned with Eni only as operator/JV partner on production). Could not verify the exact split from sources fetched this pass -- flagging for a human check rather than asserting a number I can't source. Not proposing a replacement ref for Owner1=100% NOC since I cannot independently confirm that figure; the one thing I can state with confidence is that the CURRENT ref does not support it at all.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Replace the OPEC ASB2017 PDF citation on Status/Fuel/PipelineType/Diameter -- it does not actually mention this pipeline (or Libya/Mellitah/Wafa at all) and should not be treated as row-specific support.",
+      "researcher_notes": "Ran url_verifier against the shared current_ref (OPEC Annual Statistical Bulletin 2017 PDF) used for Status, Fuel, PipelineType, and Diameter on this row: it returns 200 but contains none of 'Wafa', 'Mellitah', 'pipeline', or 'condensate' anywhere in the document. The worklist's own existing_ref_checks already flagged the Status value ('operating') as not found in the PDF; my checks show the Fuel ('Gas') and PipelineType ('transmission') and Diameter ('16') 'ok:true' hits are false positives from generic word/number matches in a large statistical bulletin, not row-specific support -- this is a generic/aggregate citation, not evidence about this pipeline specifically. This compounds the classification concern above: the ONE field (Fuel) that is most in doubt is backed only by this non-specific reference. Diameter=16 is independently confirmed correct via mellitahog.ly (see classification finding) so I'd propose swapping its ref there; Status='operating' and PipelineType='transmission' are plausible/consistent with the system being active and long-distance but I found no independent source explicitly using the word 'transmission' or confirming current operating status as of a recent date -- leaving those as unresolved caveats rather than fabricating support.",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/about/company-achievements/"
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 3986,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "524.65", "LengthKnownUnits": "km"},
+      "primary_value": "524.65",
+      "proposed_refs": ["https://mellitahog.ly/en/about/company-achievements/"],
+      "verifications": [{"url": "https://mellitahog.ly/en/about/company-achievements/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source states 'The 525 Km onshore pipeline system' -- rounds to sheet's 524.65 km. Single primary source (pipeline operator); tier medium rather than high since only one independent origin gives the precise figure."
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 3986,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Wafa Gas Field"},
+      "primary_value": "Wafa Gas Field",
+      "proposed_refs": ["https://mellitahog.ly/en/about/company-achievements/"],
+      "verifications": [{"url": "https://mellitahog.ly/en/about/company-achievements/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source names the origin as 'Wafa Desert Plant'/Wafa field, matching FuelSource. Note: given the classification concern above, this pipeline segment likely carries associated oil/condensate rather than sales gas from the field, so 'FuelSource' as a gas-source label may itself need review alongside the Fuel field."
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 3986,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Wafa Gas Field", "StartPrefecture/District": "Nalut", "StartCountryOrArea": "Libya", "EndLocation": "Mellitah Complex", "EndPrefecture/District": "Nuqat al Khams district", "EndCountryOrArea": "Libya"},
+      "primary_value": "Wafa Gas Field",
+      "proposed_refs": ["https://mellitahog.ly/en/about/company-achievements/"],
+      "verifications": [{"url": "https://mellitahog.ly/en/about/company-achievements/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source confirms the route runs 'from Wafa Desert Plant to Mellitah,' matching StartLocation/EndLocation and both-Libya. Could NOT independently verify the district-level attributes (Nalut / Nuqat al Khams district) from sources fetched this pass -- those are plausible (Wafa field sits in far-southwest Libya near the Algerian border; Mellitah is the well-known coastal complex in the Zawiya/Nuqat al Khams area) but unconfirmed at the district-name level, so treat that portion as unresolved rather than verified."
+    }
+  ],
+  "summary": "P6705 (Wafa-Mellitah 'Pipeline 2', 16in/524.65km) is a real, well-corroborated physical line -- but the operator's own site (mellitahog.ly) says the 16in leg carries OIL/CONDENSATE, not gas, contradicting GEM's Fuel=Gas; the Owner ref is a completely unrelated Kazakhstan press release; and the shared OPEC PDF ref for Status/Fuel/PipelineType/Diameter doesn't actually mention this pipeline at all."
+}

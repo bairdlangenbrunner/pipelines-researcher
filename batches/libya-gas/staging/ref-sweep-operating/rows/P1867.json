@@ -1,0 +1,143 @@
+{
+  "project_id": "P1867",
+  "pipeline_name": "Attahaddy-km-91.5 Gas Pipeline",
+  "sheet_row": 1521,
+  "wiki": "https://www.gem.wiki/Attahaddy-km-91.5_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Cite the Wayback snapshot of OPEC ASB2012 (the live opec.org PDF link now 404s/redirects to the homepage) plus the Wikipedia Sirte Oil Company page as a second, independent existence corroborator; add Sirte Oil Company as the operating subsidiary alongside NOC as owner; leave the '12 in' portion of the compound Diameter value un-cited (see spec caveat) and Location unfilled (no source gives city/province).",
+      "researcher_notes": "EXISTENCE - confirmed, not GEM-only. The wiki page's sole citation ('Annual Statistics Bulletin, OPEC, 2012, p.75' -> opec.org/.../ASB2012.pdf) looked like it could be the generic-aggregate existence trap: the live URL now 200s but only serves the OPEC.org homepage shell (url_verifier FAILs for 'Attahaddy', as expected from a rotted link, not a content problem). I pulled the identical document from the Wayback Machine (web.archive.org/web/20250110032615/.../ASB2012.pdf), confirmed via `file` it is a genuine 7.8MB PDF (not an HTML stub), and ran `pdftotext -layout` on it directly. Page 75, Table 4.10 'Gas pipelines in OPEC Members, 2011', under the 'Libya (cont'd)' header, contains the exact row: 'Attahaddy/km-91.5   Sirte Oil   25 [mi]   30 [in]   28,320,589 [1,000 scm/yr]'. Converting: 25 mi x 1.60934 = 40.23 km, matching GEM's LengthKnown=40.00 km almost exactly (0.6% off, pure rounding); capacity 28,320,589 thousand scm/yr = 28.320589 bcm/yr, matching GEM's Capacity=28.32 bcm/y to two decimals. This is the SAME document/table that seeded the whole 30-pipeline Libya-gas roster (confirmed by sibling shards P1868/P1869/P1871 finding matching rows for Km-81.5-Brega, Raguba-Km-110, and Sahel-km-81.5 respectively in the identical table; the table also carries the immediately adjacent 'Km-91.5/Brega' row for P1872), so this is a genuine, specific, non-GEM-derived citation naming this exact pipeline by name and page - the opposite of a generic aggregate mention. url_verifier's automated FAIL is a false negative documented in the tool's own docstring (binary-PDF byte stream, no text extraction) and independently reproduced by three sibling researchers on this same source. SECOND INDEPENDENT SOURCE: the Wikipedia 'Sirte Oil Company' article (url_verifier OK, 200, contains 'Attahaddy') lists Attahaddy among SOC's Non-Associated Gas Fields (alongside Hateiba, Sahl/Sahel, Assamoud, Meghil, Sorrah) and states 'As of 2005, besides Nasser, SOC was in charge of two other gas fields - Attahadi and Assumud - plus the Marsa el-Brega liquefied natural gas (LNG) plant,' with those fields feeding a Brega LNG plant processing ~900 million cubic meters/year as of 2005. This independently confirms Attahaddy is a real, currently-producing, non-associated gas field (not a hallucinated waypoint) operated by Sirte Oil Company and physically oriented toward Brega - consistent with a gas transmission line running from the Attahaddy field toward the km-91.5 junction that then continues to Brega via P1872. Neither this Wikipedia source nor any other found gives the exact length/diameter/capacity figures, so the numeric spec still rests on one strong source (OPEC); tier=medium overall, matching the convention used by sibling shards in this batch for the same table. CLASSIFICATION - correct as recorded: Fuel=Gas is right (Attahaddy is explicitly a non-associated gas field per Wikipedia, and OPEC's table is titled 'Gas pipelines'), and at 28.32 bcm/y this sits among Libya's other named trunk gas pipelines in the same OPEC table (Nasser/Brega 14.87, Km-91.5/Brega 21.24, Intesar/Brega 42.48), not a gathering/process line - no reclassification needed. DUPLICATE - checked against all 30 roster rows: not a duplicate. Capacity 28.32 bcm/y and the compound '30, 12 in' diameter are unique to this row; the OPEC table lists 'Attahaddy/km-91.5' and 'Km-91.5/Brega' (P1872) as two separate, sequential line items sharing the km-91.5 junction (an Attahaddy field -> km-91.5 -> Brega chain, the same segmenting convention already confirmed for the Intesar/Sahel/km-81.5/Brega chain in sibling shards P1869/P1871/P1868) - GEM correctly split these into two rows rather than double-counting one pipe. ATTRIBUTION - minor caveat only, not scored as wrong: GEM records Owner1='Libyan National Oil Corp' (100%); the OPEC source names operator 'Sirte Oil' for this row, and a 2013 Canadian IRB research response (hosted on ecoi.net, url_verifier OK, contains 'Sirte') independently confirms Sirte Oil Company is state-owned / a wholly-owned subsidiary of the National Oil Corporation - so NOC as ultimate owner is defensible, though Sirte Oil Company would be the more precise operator entry (same pattern flagged by sibling shards for the other km-marker lines in this table). SPEC - length and capacity confirmed with no material disagreement (see existence section). One caveat, not escalated to a separate concern: GEM's Diameter='30, 12' (in) is a compound two-value field, but OPEC's table gives only a single diameter, 30 in, for this row - the '30' component matches exactly, but no source found corroborates the additional '12 in' value, so I have NOT added a ref to the Diameter field as fully confirmed (see fills: marked UNRESOLVED rather than force-citing a source that only supports half the value). This is a gap in corroboration, not a contradiction, so I'm not opening a separate concern object for it.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://en.wikipedia.org/wiki/Sirte_Oil_Company"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "url_verifier binary-PDF false-negative (documented tool limitation); manually confirmed via pdftotext that page 75 lists this pipeline with a stated 2011 transported-volume capacity in OPEC's active gas-pipelines table, which supports 'operating' by context per the verifier's own status-inference guidance."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB2012 p.75 lists Attahaddy/km-91.5 (Sirte Oil) in Table 4.10 'Gas pipelines in OPEC Members, 2011' with a capacity figure — being listed as an active gas pipeline transporting a stated volume as of the 2011 reporting year supports Status=operating."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "same binary-PDF false-negative; manually confirmed the row sits under OPEC's 'Gas pipelines in OPEC Members, 2011' table heading."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Row is listed directly in OPEC's gas-pipelines table, and Wikipedia's Sirte Oil Company page independently describes Attahaddy as a non-associated GAS field, confirming Fuel=Gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "28.32", "CapacityUnits": "bcm/y"},
+      "primary_value": "28.32",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives capacity 28,320,589 (1,000 scm/yr) = 28.320589 bcm/yr, matching GEM's 28.32 bcm/y to two decimals."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact numeric match after unit conversion (thousand scm/yr -> bcm/y). No second source with this granularity was found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "40.00", "LengthKnownUnits": "km"},
+      "primary_value": "40.00",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives 25 miles, which converts to 40.23 km, matching GEM's 40.00 km within rounding."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "25 mi x 1.60934 = 40.23 km, matching GEM's 40.00 km (0.6% off, consistent with mi/km rounding conventions seen elsewhere in this table)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "30, 12", "DiameterUnits": "in"},
+      "primary_value": "30, 12",
+      "proposed_refs": [],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "OPEC's table gives a single diameter, 30 in, for this row - matching only the first of GEM's two compound values. No source found for the second '12 in' value."}],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "GEM's recorded Diameter is a compound '30, 12' (in). OPEC ASB2012 confirms the 30 in component exactly but lists no second diameter for this segment. Not citing the OPEC ref here rather than implying it supports the full compound value; the '12 in' figure remains unverified (not contradicted, just uncorroborated) - flagged as a caveat in the validity section rather than fabricating support."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartCountryOrArea": "Libya", "EndCountryOrArea": "Libya"},
+      "primary_value": "Libya",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only country-level Libya is populated. Neither OPEC's table (no coordinates/province given) nor the Wikipedia Sirte Oil Company page (names the Attahaddy field but no province/district) gives a defensible city/province for the Attahaddy field or the 'km-91.5' junction marker (an internal Sirte Oil network waypoint, not a settlement) - left unresolved rather than guessing by proximity to sibling pipelines."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1521,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Libyan National Oil Corp", "Owner1%": "100.00%"},
+      "primary_value": "Libyan National Oil Corp",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://www.ecoi.net/en/document/1229285.html"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed the row names 'Sirte Oil' as owner/operator."},
+        {"url": "https://www.ecoi.net/en/document/1229285.html", "ok": true, "contains_value": true, "note": "url_verifier OK; page states Sirte Oil Company is state-owned / a subsidiary of the National Oil Corporation."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources: OPEC names the operating entity as 'Sirte Oil'; a 2013 Canadian Immigration and Refugee Board research response (ecoi.net) independently confirms Sirte Oil Company is state-owned / an NOC subsidiary. Together they support GEM's Owner1=Libyan National Oil Corp 100% (ultimate state owner via its wholly-owned operating subsidiary) - not an attribution error, though Sirte Oil Company would be the more precise operator-level entry."
+    }
+  ],
+  "summary": "P1867 (Attahaddy-km-91.5, Sirte Oil) is real and correctly classified/scoped, not a duplicate: OPEC ASB2012 Table 4.10 (Wayback-verified after the live opec.org link rotted to a homepage redirect) names this exact 25mi/30in/28,320,589-scm/yr segment matching GEM's 40km/28.32bcm/y within rounding, and Wikipedia's Sirte Oil Company page independently confirms Attahaddy as a real, currently/recently-producing non-associated gas field oriented toward Brega. Confirmed (caveat): tier=medium (spec rests mainly on the one OPEC source); minor attribution caveat that Sirte Oil Company (not directly NOC) is the OPEC-listed operator; the second '12 in' component of GEM's compound Diameter value is uncorroborated (UNRESOLVED, not cited) and Location beyond country-level Libya remains UNRESOLVED - no fabricated fills."
+}

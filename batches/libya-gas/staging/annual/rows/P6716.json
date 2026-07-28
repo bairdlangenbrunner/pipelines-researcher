@@ -1,0 +1,110 @@
+{
+  "project_id": "P6716",
+  "pipeline_name": "DP3–DP4–Sabratha Gas Pipeline",
+  "sheet_row": 3991,
+  "wiki": "https://www.gem.wiki/DP3%E2%80%93DP4%E2%80%93Sabratha_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "DP3–DP4",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence/duplicate. This is a real, heavily-documented, currently-active offshore construction project (Saipem's Bouri Gas Utilisation Project / BGUP for Mellitah Oil & Gas, the Eni-NOC Libya JV). Note: P6716 and roster-mate P7617 share the identical pipeline_name 'DP3–DP4–Sabratha Gas Pipeline' but are correctly two different physical segments of one 28km subsea system, not a duplicate: P6716=segment_name 'DP3–DP4' (8.5km, 14in, raw gas) and P7617=segment_name 'DP4–Sabratha' (20km, 10in/4in, dehydrated gas+condensate). 8.5+20=28.5km matches the JPT/Saipem/rivieramm/lywitness figure of '28 km of pipelines connecting the DP3, DP4 and Sabratha platforms' almost exactly, and nsenergybusiness.com + oedigital.com both independently break the 28km total down into exactly these same two segments with the same lengths/diameters GEM already has. Consider renaming P6716's pipeline_name to something segment-specific (e.g. 'DP3–DP4 Gas Pipeline') so it stops looking like an accidental duplicate of P7617's row at a glance — cosmetic only, not a data error.",
+      "researcher_notes": "Existence: independently confirmed by jpt.spe.org (SPE, 2023-08-09, verified OK), saipem.com press release (2023-08-09, verified OK), nsenergybusiness.com project page (verified OK) and news article (verified OK), rivieramm.com (verified OK), oedigital.com (2026-05-06, verified OK), Zawya/Reuters via tradingview.com (2026-05-07, verified OK), plus Arabic press lywitness.com and attaqa.net (both verified OK/live) and the operator's own site mellitahog.ly (verified OK, confirms DP3/DP4/Sabratha platforms exist and are operated by Mellitah Oil & Gas). Multiple fully independent origins (SPE trade press, Saipem corporate, two separate offshore-industry trade outlets, Reuters wire, Arabic Libyan press, operator site) all agree on the same project, same platform names, same 28km total — no hallucination risk here. Duplicate check against roster: ruled out, see recommendation — P6716 and P7617 are complementary segments of the same 28km system, each independently corroborated with matching per-segment lengths/diameters, not a double-count of one pipe."
+    },
+    {
+      "segment_name": "DP3–DP4",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Reclassify PipelineType from 'transmission' to 'gathering'.",
+      "researcher_notes": "GEM's controlled vocab for PipelineType is transmission / gathering / distribution (docs/reference/controlled_vocab.md). nsenergybusiness.com (verified OK) states explicitly this 8.5km/14in DP3-DP4 line's purpose is to 'transport raw gas from DP3 to DP4' — i.e. it moves unprocessed wellstream gas between two adjacent offshore production platforms so it can be treated at DP4, not treated/sales-quality gas moving to market. That is a textbook inter-platform gathering line, not a transmission trunk. (By contrast the downstream P7617 segment DP4-Sabratha carries already-dehydrated gas + condensate toward the onshore complex, which is a more defensible transmission call — that segment is out of scope here but worth a look too.) The sheet's only cited ref for PipelineType (jpt.spe.org) never uses the word 'transmission' or 'gathering' at all — it just describes the project generally — so the current classification isn't actually supported by its own citation.",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/bouri-gas-utilisation-project-libya/?cf-view"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "DP3–DP4",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct EndLocation from 'Sabratha platform' to 'DP4 Platform'; fill blank StartLocation with 'DP3 Platform'.",
+      "researcher_notes": "Sheet's Location cluster (MISSING_REF, no ref at all) currently has StartLocation blank and EndLocation='Sabratha platform' for the segment explicitly named 'DP3–DP4'. That's an endpoint mismatch: independent sources agree this specific 8.5km/14in segment runs DP3->DP4, not to Sabratha (Sabratha is the far end of the OTHER segment, P7617/DP4-Sabratha). nsenergybusiness.com (verified OK): 'DP3 to DP4 Pipeline ... Transport raw gas from DP3 to DP4.' oedigital.com (verified OK, 2026-05-06): '14-inch, 8-km pipeline between platforms' distinct from the separate '10-inch, 20-km pipeline to Sabratha.' The current EndLocation value looks like it was copied from the parent pipeline_name/title (which includes 'Sabratha') rather than this row's actual segment_name.",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/bouri-gas-utilisation-project-libya/?cf-view", "https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "DP3–DP4",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update StartYear1 from 2028 to 2026 (StartMonth1=09); the sheet's only cited Start ref (zawya.com epc-contracts-from-aramco page) is dead (HTTP 400, and on inspection is about an unrelated Aramco/Saudi project, not Bouri at all).",
+      "researcher_notes": "Two independent, dated, verified sources from May 2026 — well after the sheet's 2025-08-19 update — agree the project is on track for first gas in September 2026, not 2028: oedigital.com (2026-05-06, verified OK, contains 'September 2026'): 'scheduled to begin production in September 2026', and overall project 69% complete vs 62% planned as of the article. Zawya/Reuters via tradingview.com (2026-05-07, verified OK, contains '2026'): 'on track to commence gas production in September 2026.' Both also independently reconfirm the 8/8.5km-14in DP3-DP4 segment spec, and put total investment at $1.565bn (up from the original $1bn 2023 contract value). The sheet's existing StartYear1=2028 ref (zawya.com/.../saudis-gas-arabian-services-company-bags-2-epc-contracts-from-aramco...) verifies as HTTP 400 and, going by its own URL slug, is actually about a Saudi Aramco EPC contract — unrelated to this Libya pipeline — so it should never have supported this value.",
+      "proposed_refs": ["https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya", "https://www.tradingview.com/news/reuters.com,2026-05-07:newsml_Zaw754L0B:0-zawya-libya-s-mellitah-announces-fabrication-milestone-for-1-56bln-bouri-gas-project/"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "DP3–DP4",
+      "sheet_row": 3991,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "8.50", "LengthKnownUnits": "km"},
+      "primary_value": "8.50",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/bouri-gas-utilisation-project-libya/?cf-view", "https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya"],
+      "verifications": [
+        {"url": "https://www.nsenergybusiness.com/projects/bouri-gas-utilisation-project-libya/?cf-view", "ok": true, "contains_value": true},
+        {"url": "https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing value 8.50km already correct and matches both independent sources exactly ('8.5 km' / '8-km'); the row just had no citation at all. Added the two verified refs that specifically break out this DP3-DP4 segment length."
+    },
+    {
+      "segment_name": "DP3–DP4",
+      "sheet_row": 3991,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartCountryOrArea", "EndLocation", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "DP3 Platform", "StartCountryOrArea": "Libya", "EndLocation": "DP4 Platform", "EndCountryOrArea": "Libya"},
+      "primary_value": "DP3 Platform",
+      "proposed_refs": ["https://www.nsenergybusiness.com/projects/bouri-gas-utilisation-project-libya/?cf-view", "https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya"],
+      "verifications": [
+        {"url": "https://www.nsenergybusiness.com/projects/bouri-gas-utilisation-project-libya/?cf-view", "ok": true, "contains_value": true},
+        {"url": "https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fills blank StartLocation and CORRECTS the existing EndLocation (was wrongly 'Sabratha platform', which belongs to the other segment P7617/DP4-Sabratha, not this DP3-DP4 row). See attribution concern above. StartPrefecture/District, StartState/Province, EndPrefecture/District, EndState/Province left blank — these are subsea offshore platforms with no onshore province, and no source assigns one."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "DP3–DP4",
+      "sheet_row": 3991,
+      "current_status": "construction",
+      "verdict": "change",
+      "proposed_status": "construction",
+      "proposed_changes": {"Status": "construction", "StartYear1": "2026", "StartMonth1": "9"},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": ["https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya", "https://www.tradingview.com/news/reuters.com,2026-05-07:newsml_Zaw754L0B:0-zawya-libya-s-mellitah-announces-fabrication-milestone-for-1-56bln-bouri-gas-project/"],
+      "verifications": [
+        {"url": "https://www.oedigital.com/amp/news/538837-bouri-gas-project-modules-sail-for-installation-offshore-libya", "ok": true, "contains_value": true},
+        {"url": "https://www.tradingview.com/news/reuters.com,2026-05-07:newsml_Zaw754L0B:0-zawya-libya-s-mellitah-announces-fabrication-milestone-for-1-56bln-bouri-gas-project/", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status='construction' remains correct and is freshly reconfirmed: as of the May 2026 evidence, the project is 69% complete vs a 62% planned target, fabrication/assembly of major modules just finished in Ravenna and shipped, compressors already installed at the Sabratha platform, and DP3/DP4 tie-ins are the next offshore campaign — clearly still under active construction, not yet operating. However the sheet's StartYear1=2028 is stale/wrong: both oedigital.com (2026-05-06) and the Reuters/Zawya piece via tradingview.com (2026-05-07) independently give an expected first-gas date of September 2026, not 2028, and the sheet's own citation for the 2028 figure (a zawya.com URL) is dead (HTTP 400) and its slug indicates it's actually about an unrelated Saudi Aramco EPC contract. Recommend updating StartYear1/StartMonth1 to 2026-09 alongside keeping Status=construction."
+    }
+  ],
+  "summary": "P6716 (DP3-DP4 segment of the Bouri Gas Utilisation Project, offshore Libya) is real and well-corroborated (not a hallucination, not a duplicate of roster-mate P7617's DP4-Sabratha segment); flagged for reclassification (transmission->gathering, this carries raw untreated gas between platforms), an attribution fix (EndLocation wrongly says 'Sabratha platform', should be 'DP4 Platform'; StartLocation blank, should be 'DP3 Platform'), and a spec/date fix (StartYear1 should move from 2028 to 2026-09 per two independent May-2026 sources; the sheet's only Start-date citation is dead and appears to be about an unrelated Aramco contract). Status='construction' is reconfirmed current as of 2026-05 (69% complete). Length (8.50km) and Diameter (14in) values confirmed correct by independent sources and given fresh refs; Length ref was previously missing entirely."
+}

@@ -1,0 +1,203 @@
+{
+  "project_id": "P1856",
+  "pipeline_name": "Intesar-Brega Gas Pipeline",
+  "sheet_row": 1635,
+  "wiki": "https://www.gem.wiki/Intesar-Brega_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as a real, operating gas transmission trunk line; classification, operator, and endpoints are well supported. See separate spec concerns below for Length and Capacity, which need correction.",
+      "researcher_notes": "Started from the sheet's own cited sources (wiki_citations.json lists 2): (1) OPEC Annual Statistics Bulletin 2012 PDF, verified live (200, contains 'Libya'), but on full-text extraction (pdftotext) it is a generic country-level oil/gas statistics bulletin that never mentions 'Intisar', 'Intesar', or 'Brega' anywhere in the document — it does NOT name this pipeline and is not usable support for this row specifically (a generic-aggregate citation, per standing rule). (2) Zueitina Oil Co's own Arabic-language project page, 'Gas transfer project 103A [Intisar field] to the coastal network' (link_text/context confirm this). The live URL now 200s but is a bare React SPA shell with no content (the site was rebuilt; its public API only lists 4 current projects, none matching, and /api/v1/public/projects/34 returns 'Project item not found' -- the specific page is gone from the live site). Recovered the actual content via the Wayback Machine snapshot (2023-12-11), verified live and containing 'Zueitina', '207', and '42' -- this is the operative reference, not the dead live URL. The archived page is a genuine Zueitina Oil Company primary source (not GEM-derived, not wiki-derived) describing a real NOC-sponsored capacity-increase project that Zueitina oversees: piping natural gas via a 42-inch, internally/externally coated pipeline from 'field 103A' (part of the Intisar/Concession-103 complex Zueitina operates) to Al-Brega on the coast, feeding the coastal gas network toward both Tripoli and Benghazi branches -- exactly matching GEM's StartLocation ('Intesar Oil field'/Sirte Basin) and EndLocation ('Mersa Brega'/Al Wahat). This independently confirms the pipeline EXISTS as a real, named project (not a GEM-only/hallucinated entity) and is CLASSIFIED correctly as a major gas transmission trunk (not a gathering line) -- the article explicitly frames it as feeding heavy industrial complexes and power stations along the whole Libyan coast, at a target buildout of up to 1500 mmcf/d. Operator='Zueitina Oil Co' matches the source exactly (Zueitina is named as the company entrusted by NOC to oversee this project). Cross-checked against a second, unrelated independent source already used elsewhere in this batch (P1857's shard): a Feb 2026 Libya Herald article confirms Zueitina Oil Co is still the current, active operator of Field 103D (part of the same 103-series Intisar complex as 103A) -- reinforcing Operator=Zueitina Oil Co with a second, more recent independent source, and supporting Status=operating (the 103-field gas complex is described as active as of 2026). DUPLICATE check against the 30-pipeline roster: not a duplicate. It is distinct from P1857 (103D-103A, a short 41km internal field-to-field line), P1858/P6714/P6705 (Bu-Attifel-Intesar/Wafa-Mellitah, different origin fields), P3987 (Intisar-Sarir, same origin field but a different destination -- Sarir/Cyrenaica, not Brega), and P0482/P1866 (Defa-Brega/Nasser-Brega, different origin fields entirely). ConstructionYear=2010 is a caveat, not a hard confirmation: the archived article references a joint NOC/Zueitina meeting held 7 Feb 2010 and states the pipeline-laying phase was '85% complete' at time of writing (page last modified 2016-10-23, but that's a CMS timestamp, not a completion date) -- so 2010 is a reasonable year for when construction was underway/announced, but the source does not give a precise construction-start or completion year, so treat ConstructionYear as approximate.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar",
+        "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct Length -- the operator's own project description gives ~207 km for this exact route (field 103A to Brega), not 333 km. Recommend revising LengthKnown to ~207 km pending a second confirming source, or at minimum flagging the current 333 km figure as unverified/likely wrong.",
+      "researcher_notes": "The Zueitina archived primary source is explicit and unambiguous: 'ينقل الغاز الطبيعي عبر أنبوب قطره 42 بوصة ... وبطول 207 كيلو متر تقريباً من حقل 103أ إلى البريقة على الساحل' = 'transports natural gas through a pipe 42 inches in diameter ... approximately 207 km long, from field 103A to Al-Brega on the coast.' This is the SAME route as GEM's Start/EndLocation (Intisar field/103A -> Mersa Brega) and the diameter (42in) matches GEM exactly, which makes this a strong, specific, on-point source -- yet it gives a materially different length (~207 km vs GEM's 333 km, a ~60% overstatement in GEM). Per the standing rule, a source merely mentioning the pipeline is not enough; this source actively disagrees with GEM's number on the same route, so this is a genuine spec concern, not a pass. I could not find a second independent source to adjudicate between 207 km and 333 km (search-engine scraping for this specific route/company returned no further hits), so I'm not proposing a fill of the corrected number -- just flagging GEM's current value as contradicted by the pipeline's own operator.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct Capacity/CapacityUnits -- GEM's '42.48 bcm/y' looks like a units-conversion bug, not a supported figure. Recommend recalculating from the source's mmcf/d targets (see notes) rather than keeping 42.48 bcm/y as-is.",
+      "researcher_notes": "The Zueitina source states the project's gas delivery targets in mmcf/day, not bcm/y: Phase 1 = ~250 million standard cubic feet/day; full build-out (all phases) = ~1500 million standard cubic feet/day. Converting for cross-check: 1500 mmcf/d x 28,316.85 m3/mmcf = ~42.475 million m3/day (Mm3/d) -- this is suspiciously exactly GEM's recorded Capacity figure of 42.48. That strongly suggests GEM's Capacity value was taken directly from this project's daily mmcf/d target, correctly converted to million m3/DAY, but then mislabeled with CapacityUnits='bcm/y' (billion m3/YEAR) instead of the correct daily unit. Annualizing correctly: 42.475 Mm3/d x 365 = ~15.5 bcm/y -- so even at the FULL eventual build-out target, capacity should read ~15.5 bcm/y, not 42.48 bcm/y (a ~2.7x overstatement as currently recorded); and Phase 1 alone (250 mmcf/d) is only ~2.6 bcm/y. This is a clear, quantifiable spec error, not just a rounding disagreement. I'm not proposing a specific corrected number as a confident fill because it's unclear whether the pipeline today (2026) has reached the full 1500 mmcf/d build-out or remains at an intermediate phase -- flagging for correction/verification rather than guessing.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"],
+      "verifications": [{"url": "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Status is inferable, not literal, per standing guidance. The source describes an active NOC-sponsored capacity project transporting natural gas to the coastal network via this line, and a Feb 2026 Libya Herald article independently confirms Zueitina Oil Co is still actively operating gas infrastructure in the same 103-field complex today -- both support 'operating' by context even though neither uses that exact word."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"],
+      "verifications": [{"url": "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Explicit: 'الغاز الطبيعي' (natural gas) is what the pipeline transports, repeated multiple times in the source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2010"},
+      "primary_value": "2010",
+      "proposed_refs": ["http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"],
+      "verifications": [{"url": "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Weak/indirect support only: the source references a joint NOC/Zueitina meeting on 7 Feb 2010 and states pipe-laying was '85% complete' at time of writing -- consistent with construction being underway around 2010, but it is not an explicit 'construction began/completed in 2010' statement, so treat as a caveat rather than a firm confirmation."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "42.48", "CapacityUnits": "bcm/y"},
+      "primary_value": "42.48",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "Do not cite as-is -- see validity concern above. The source's own mmcf/d figures convert to ~15.5 bcm/y at full build-out (or ~2.6 bcm/y at Phase 1), not 42.48 bcm/y; 42.48 appears to be the daily Mm3/d figure mislabeled as an annual bcm/y figure. Leaving unresolved rather than proposing a guessed corrected number."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "333.00", "LengthKnownUnits": "km"},
+      "primary_value": "333.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "Do not cite as-is -- see validity concern above. The source states ~207 km for this exact route, contradicting GEM's 333 km. Leaving unresolved rather than citing a source that disagrees with the recorded value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "42.00", "DiameterUnits": "in"},
+      "primary_value": "42.00",
+      "proposed_refs": ["http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"],
+      "verifications": [{"url": "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Exact match: 'أنبوب قطره 42 بوصة' = 'a pipe 42 inches in diameter'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Intesar Oil field", "StartState/Province": "Sirte Basin", "StartCountryOrArea": "Libya", "EndLocation": "Mersa Brega", "EndState/Province": "Al Wahat", "EndCountryOrArea": "Libya"},
+      "primary_value": "Intesar Oil field",
+      "proposed_refs": ["http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar"],
+      "verifications": [{"url": "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Source: 'من حقل 103أ إلى البريقة على الساحل' = 'from field 103A to Al-Brega on the coast'. Field 103A is a designated production area of the Intisar/Concession-103 field complex operated by Zueitina, matching StartLocation; Al-Brega (Mersa Brega) on the Libyan coast matches EndLocation."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "oo_sheet_row": 1390,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Zueitina Oil Co", "OperatorLocalLanguage": "شركة الزويتينة للنفط"},
+      "primary_value": "Zueitina Oil Co",
+      "proposed_refs": [
+        "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar",
+        "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20231211222530/https://www.zueitina.com.ly/ar/projects-ar/item/34-gas-transfer-project-103-intisar-field-to-a-coastal-network-ar", "ok": true, "contains_value": true},
+        {"url": "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Two independent sources, different origins and years: Zueitina's own 2010-era project page (Zueitina named as the company entrusted by NOC to oversee this exact pipeline project) and a Feb 2026 Libya Herald article confirming Zueitina Oil Co as the current operator of Field 103D, part of the same 103-series Intisar complex. Owner1/2/3 percentages (NOC 81% / Occidental 14.25% / OMV 4.75%) are not addressed by either source -- left unresolved below."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1635,
+      "oo_sheet_row": 1390,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Libyan National Oil Corp", "Owner1%": "81.00%", "Owner2": "Occidental Petroleum", "Owner2%": "14.25%", "Owner3": "OMV", "Owner3%": "4.75%"},
+      "primary_value": "Libyan National Oil Corp",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "Neither of the two sources found for this row states ownership percentages. The NOC-majority/Occidental/OMV partner mix is broadly consistent with what's publicly known of Zueitina Oil Company's JV structure, but I found no source stating these exact shares this pass, so leaving unresolved rather than force-matching a generic reference to specific percentages."
+    }
+  ],
+  "summary": "Existence and classification CONFIRMED via an independent Zueitina Oil Co primary source (archived, since removed from the live site) naming this exact 42in pipeline from field 103A/Intisar to Brega; Operator corroborated further by a 2026 Libya Herald article. Two spec concerns flagged: Length (GEM 333km vs source's ~207km) and Capacity (GEM's 42.48 bcm/y appears to be a units-conversion error against the source's mmcf/d targets, correct order of magnitude ~15.5 bcm/y at full build-out). UNRESOLVED: Length, Capacity, and Owner percentages -- no supporting ref proposed for GEM's current values on those three."
+}

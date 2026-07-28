@@ -1,0 +1,126 @@
+{
+  "project_id": "P1873",
+  "pipeline_name": "Jakhira-Intesar Gas Pipeline",
+  "sheet_row": 727,
+  "wiki": "https://www.gem.wiki/Jakhira-Intesar_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence/classification/spec CONFIRMED, but replace both dead direct opec.org PDF links (Fuel/PipelineType/Diameter refs) with the Wayback Machine snapshots -- the direct URLs now 301-redirect to the OPEC homepage (curl -sIL confirms 301->https://www.opec.org, then 403 on retry), so they no longer serve the cited PDF at all even though a naive HEAD/200 check on the redirect target passes.",
+      "researcher_notes": "This row's only citations (per wiki_citations.json) are two OPEC Annual Statistical Bulletin (ASB) editions. Both direct opec.org URLs are DEAD in the literal sense that fetching them returns the OPEC homepage, not the PDF (verified via curl -sIL: ASB2017 URL gives HTTP 301 -> https://www.opec.org, and the retry gives 403). This would ordinarily be a strong existence-flag candidate (GEM's own cited source doesn't actually resolve). However I located working Wayback Machine snapshots of BOTH editions and downloaded/ran pdftotext on each -- the pipeline is genuinely named and independently tabulated in official OPEC data, not a GEM-only entity: (1) OPEC ASB 2017 edition (web.archive.org snapshot, Table 9.9 'Main gas pipelines in OPEC Members, 2016', Libya section) lists 'Jakhira/Intisar (2) | Wintershall | 2 x 50 [miles] | 8, 20 [inches]' -- this matches GEM's Diameter='20, 8'in exactly (same two values), and 2 x 50 mi = 100 mi = 160.9 km matches GEM's LengthKnown=160.00 km almost exactly (GEM appears to have summed both parallel pipes' lengths, consistent with the source's own '(2)'/2x notation). (2) OPEC ASB 2012 edition (separate Wayback snapshot, Table 4.10 'Gas pipelines in OPEC Members, 2011', Libya section) independently lists 'Jakhira/Intesar | Wintershall | 80 [miles] | 20 [inches] | 2,407,250 [1,000 scm/yr]' -- i.e., in 2011 this was recorded as a single 20in/80mi line (a second, 8in line appears to have been added by the 2016 data year), and its Capacity column (2,407,250 thousand scm/yr = 2.407 bcm/yr) matches GEM's Capacity=2.40 bcm/y closely. The two editions show materially different numbers (80mi/single-pipe/20in vs 2x50mi/two-pipe/8+20in) confirming they are genuinely separate data-collection years, not one document copy-pasted -- real independent-in-time corroboration from the same institutional publisher (not treating this as fully cross-origin independent, since both are OPEC ASB). Route/endpoints also check out: Jakhira and Intisar/Intesar are both real, well-documented Sirte Basin oil/gas fields (Jakhira: discovered 1969, operated historically by Wintershall AG, operatorship transferred 29 Oct 2020 to Sarir Oil Operations, a JV of Wintershall Aktiengesellschaft (WIAG) and Libya's NOC -- confirmed via Wintershall Dea's own newsroom, which names Jakhira and 'Sirte Basin' directly, and via a live Jan-2024 Sarir Oil Operations tender for firefighting-system upgrades at the 'Jakhira station GOSP', confirming the field/station is still active and maintained as recently as 2024. Intisar is a separate, large, independently documented Sirte Basin field (Occidental discovery, 1967) per AAPG/GeoScienceWorld literature (paywalled, not citable here, but corroborates the endpoint is real, well outside GEM). CAVEAT: StartState/Province and EndState/Province are both recorded as 'Sirte Basin', which is a geological/informal region, not a Libyan administrative province (the field itself sits in Al Wahat district per Wintershall Dea's own description) -- minor precision issue, not flagging as a standalone concern since 'Sirte Basin' is a widely used and unambiguous descriptor for this cluster of pipelines (matches the roster's convention for sibling rows).",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://wintershalldea.de/en/newsroom/libya-operatorship-wintershall-aktiengesellschafts-sirte-basin-oil-fields-transferred-new-joint"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct Owner1 from 'BASF' to 'Wintershall' (Wintershall Aktiengesellschaft / WIAG), and add a note/second owner reflecting the 29-Oct-2020 operatorship transfer to Sarir Oil Operations, the JV WIAG formed with Libya's NOC to run these Sirte Basin fields and their associated gas infrastructure.",
+      "researcher_notes": "GEM records Owner1='BASF' 100%, with no ref (MISSING_REF). But GEM's own cited source names the operator as 'Wintershall' directly, never 'BASF': both the OPEC ASB 2017 edition (Table 9.9, 'Jakhira/Intisar (2) | Wintershall | 2 x 50 | 8, 20') and the 2012 edition (Table 4.10, 'Jakhira/Intesar | Wintershall | 80 | 20 | 2,407,250') list the owner/operator column as 'Wintershall'. BASF is Wintershall's historical parent (Wintershall AG was a wholly-owned BASF subsidiary before the 2019 DEA merger created Wintershall Dea, majority-owned by LetterOne/BASF) -- so 'BASF' is a defensible but imprecise parent-company simplification, and it is now further stale: Wintershall Dea's own newsroom (verified, independent of OPEC) confirms operatorship of these exact Sirte Basin fields (Jakhira/As Sarah, Area 91) was transferred on 29 October 2020 from WIAG to Sarir Oil Operations (SOO), a new joint venture between WIAG and Libya's National Oil Corporation -- a fact corroborated independently by a live Jan-2024 SOO tender referring to 'Jakhira station GOSP' as an SOO facility. So as of any data currency check in the last 5+ years, neither 'BASF' alone nor even 'Wintershall' alone fully reflects current operatorship; the JV (Sarir Oil Operations, WIAG+NOC) is the more accurate current operator/owner attribution.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+        "https://wintershalldea.de/en/newsroom/libya-operatorship-wintershall-aktiengesellschafts-sirte-basin-oil-fields-transferred-new-joint",
+        "https://sarir-oil.com/en/tender/upgrade-of-firefighting-system-at-jakhira-station-gosp/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 727,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+        "https://sarir-oil.com/en/tender/upgrade-of-firefighting-system-at-jakhira-station-gosp/"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf", "ok": true, "contains_value": false},
+        {"url": "https://sarir-oil.com/en/tender/upgrade-of-firefighting-system-at-jakhira-station-gosp/", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Status inferred by context, not a literal label: OPEC's ASB lists this pipeline within an active 'Main gas pipelines' network table for both the 2011 and 2016 data years, and a live Jan-2024 Sarir Oil Operations tender for firefighting-system upgrades at the 'Jakhira station GOSP' confirms the Jakhira field/station is still an active, maintained facility as recently as 2024 -- consistent with, though not direct proof of, the specific gas line continuing to operate today."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 727,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "2.40", "CapacityUnits": "bcm/y"},
+      "primary_value": "2.40",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB 2012 edition, Table 4.10 ('Gas pipelines in OPEC Members, 2011'), Libya section, row 'Jakhira/Intesar | Wintershall | 80 | 20 | 2,407,250 | na' -- Capacity column is in 1,000 scm/yr, so 2,407,250 thousand scm/yr = 2.407 bcm/yr, matching GEM's recorded 2.40 bcm/y closely (rounding). Confirmed by direct pdftotext extraction of the Wayback-hosted PDF (direct opec.org link is dead/redirects, see validity notes). The 2017 ASB edition's equivalent table (9.9) does not include a Capacity column, so only the 2012 edition supports this figure -- single-source, tier=medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 727,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "160.00", "LengthKnownUnits": "km"},
+      "primary_value": "160.00",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB 2017 edition, Table 9.9 ('Main gas pipelines in OPEC Members, 2016'), Libya section, row 'Jakhira/Intisar (2) | Wintershall | 2 x 50 [mi] | 8, 20 [in]'. 2 x 50 miles = 100 miles = 160.9 km, matching GEM's LengthKnown=160.00 km (GEM's figure sums both parallel pipes' lengths, per the source's own '(2)' notation). Confirmed via direct pdftotext extraction of the Wayback snapshot (the direct opec.org link is dead, see validity notes). NOTE: the earlier 2012 ASB edition shows a single 80-mile (128.7km) line -- i.e. the second (8in) parallel pipe, and the 160km total, only appear from the 2016 data year onward; do not cite the 2012 edition for Length.",
+      "value_checked": true
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 727,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Jakhira Oasis", "StartState/Province": "Sirte Basin", "StartCountryOrArea": "Libya", "EndLocation": "Intesar Oil field", "EndState/Province": "Sirte Basin", "EndCountryOrArea": "Libya"},
+      "primary_value": "Jakhira Oasis",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+        "https://wintershalldea.de/en/newsroom/libya-operatorship-wintershall-aktiengesellschafts-sirte-basin-oil-fields-transferred-new-joint"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://wintershalldea.de/en/newsroom/libya-operatorship-wintershall-aktiengesellschafts-sirte-basin-oil-fields-transferred-new-joint", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB (both editions) names the connection as 'Jakhira/Intisar', matching GEM's Start/EndLocation. Independently, Wintershall Dea's own newsroom (different origin from OPEC) confirms Jakhira is a real Sirte Basin field (Area 91) it operated until the Oct-2020 Sarir Oil Operations handover. Intisar/Intesar is a separate, well-documented Sirte Basin field (Occidental discovery, 1967) per AAPG/GeoScienceWorld literature (could not get a citable non-paywalled URL, so not included in proposed_refs, but corroborates the endpoint independent of GEM). Country=Libya obviously correct. Kept StartState/Province='Sirte Basin' as-is despite it being a geological rather than administrative descriptor -- see validity notes caveat."
+    }
+  ],
+  "summary": "Confirmed real (not GEM-only) via two independent-year OPEC ASB editions accessed through Wayback (direct opec.org refs are dead/redirect) -- Length, Diameter, and Capacity all check out numerically; flagging an attribution concern (Owner1='BASF' should be 'Wintershall', now Sarir Oil Operations JV since Oct 2020) and filled Status/Capacity/Length/Location with verified refs."
+}

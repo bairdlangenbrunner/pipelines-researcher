@@ -1,0 +1,49 @@
+{
+  "project_id": "P1863",
+  "pipeline_name": "Brega-Khoms Gas Pipeline",
+  "sheet_row": 1272,
+  "wiki": "https://www.gem.wiki/Brega-Khoms_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as operating gas transmission pipeline (NOC/GGT&D); retain Status/Fuel/Length/Diameter/Owner but attach the World Bank/Tractebel 2016 report as the working reference since the wiki's own citation is dead.",
+      "researcher_notes": "The gem.wiki page's ONLY cited source is 'Annual Statistics Bulletin, OPEC, 2012, p.75' (opec.org PDF) -- this link is DEAD: curl -sIL shows a 301 redirect from the exact PDF path straight to https://www.opec.org (homepage), which itself then 403s; url_verifier's OK was a false positive because 'Libya' trivially appears in the homepage's nav/metadata, not because the ASB PDF resolved. So the sheet's own support is worthless and this row would otherwise be a pure existence-flag candidate (per standing rule: a row whose only support is a dead/non-naming citation is itself a flag). However, I found solid INDEPENDENT confirmation: a 2016 World Bank-commissioned consultancy report by Tractebel Engineering S.A. ('Libya - Supporting Electricity Sector Reform, Task B: Fuel Availability and Opportunities for Cost Reduction', hosted at documents1.worldbank.org) explicitly describes Libya's coastal gas transmission system as split into named segments, one of which is 'From Brega to Khoms (645 km) with a capacity of ~370 mmscf/d' -- this is an EXACT match to GEM's LengthKnown=645.00km, and it independently names this exact stretch as a real, distinct pipeline asset (also labelled 'El Khoms - El Brega Pipeline' in the report's utilization charts), not a GEM-derived or wiki-derived description. The same report states the coastal network's connection pipelines use 34-inch diameter -- consistent with GEM's Diameter=34.00in (a network-wide figure, not segment-specific, so treat as corroborating rather than dispositive). Status=operating is confirmed by the report's live 2017-2030 utilization/bottleneck forecasting for this exact segment (you don't forecast utilization of a pipe that doesn't exist and isn't flowing). Owner='Libyan National Oil Corp' is consistent with the report's description of NOC as the parent O&G authority and creator (2007) of General Gas Transmission and Distribution Company (GGT&D), the subsidiary that specifically builds/manages the natural gas distribution/transmission network -- GEM's NOC parent attribution is defensible, though GGT&D is the more precise operating subsidiary and isn't named in the GEM row. I verified the PDF is live (HTTP 200) via curl and pdftotext -layout locally, and confirmed 'Khoms', 'Brega', and '645' literally appear in the extracted text at the relevant passage; url_verifier's automated substring check FAILs on this URL only because it scans raw undecoded PDF bytes rather than extracted text (a known documented limitation for PDFs), not because the content is absent -- I manually verified the match per the tool's own guidance for this failure mode. CLASSIFICATION: correctly a transmission trunk segment (not a gathering/feeder line) per the same report's system-level treatment. DUPLICATE check against the 30-pipeline roster: no other PID shares this name, length (645km), or capacity (11.61 bcm/y) -- not a direct duplicate/relabel of a same-named entity.",
+      "proposed_refs": [
+        "https://documents1.worldbank.org/curated/en/817671527059474577/pdf/Libya-Supporting-electricity-sector-reform-task-B-consultancy-services-final-report-fuel-availability-and-opportunities-for-cost-reduction.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Reconcile with P0483 (Libya Coastal Gas Pipeline, Mellitah Complex->Benghazi, 1164km) -- confirm P0483's length/capacity are a genuinely separate physical asset and not simply the sum of this segment plus P1862/P1864/P1865, which would double-count length and capacity across the tracker if both the aggregate and its constituent segments are totalled.",
+      "researcher_notes": "The same World Bank/Tractebel report frames Libya's coastal gas system as ONE network of two 'legs': an eastern leg (Brega->Benghazi) and a western leg spanning 871km from Mellitah to Marsa El Brega, which it explicitly splits into two named sub-segments -- 'Mellitah to Tripoli and then to Khoms (222 km)' and 'Brega to Khoms (645 km)' -- i.e. this exact GEM row (P1863) is described in the source as ONE HALF of the western leg of the same corridor that GEM separately tracks end-to-end as P0483 (Mellitah Complex->Benghazi, 1164km). Summing GEM's own segment chain -- P1865 Tripoli-Mellitah (158km) + P1864 Khoms-Tripoli (201km) + P1863 Brega-Khoms (645km) + P1862 Brega-Benghazi (396km) = 1400km -- overshoots P0483's 1164km, while the WB report's own component lengths (222km Mellitah-Khoms + 645km Khoms-Brega + 246km Brega-Benghazi = 1113km) land close to P0483's 1164km, suggesting P0483 already represents the corridor as a whole and the individually-named segment rows (including this one) may be double-counted if summed alongside it in tracker-wide length/capacity totals. This is not proof P1863 should be deleted/merged -- GEM legitimately tracks both system-level and segment-level entities elsewhere, and the WB report itself independently names 'El Khoms - El Brega' as a distinct managed segment with its own utilization/bottleneck data (i.e. it has real standalone operational identity, matching GEM's segmentation choice) -- but it is a genuine aggregate/segment overlap risk worth a human reconciliation pass across P0483/P1862/P1863/P1864/P1865, consistent with the same flag raised on the P1862 (Brega-Benghazi) shard.",
+      "proposed_refs": [
+        "https://documents1.worldbank.org/curated/en/817671527059474577/pdf/Libya-Supporting-electricity-sector-reform-task-B-consultancy-services-final-report-fuel-availability-and-opportunities-for-cost-reduction.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-check Capacity=11.61 bcm/y against the independently-sourced ~370 mmscf/d (~3.8 bcm/y) nominal capacity for this exact segment; consider revising down or adding a caveat rather than keeping a single precise 11.61 bcm/y value.",
+      "researcher_notes": "GEM records Capacity=11.61 bcm/y for this segment. The World Bank/Tractebel 2016 report gives this EXACT segment ('Brega to Khoms') a nominal capacity of '~370 mmscf/d,' which annualizes to roughly 3.8 bcm/y (370 mmscf/d x 365 days = ~135.1 Bcf/yr; 135.1 Bcf x 0.0283168 bcm/Bcf = ~3.83 bcm/y) -- about 3x lower than GEM's 11.61 bcm/y, a material disagreement well beyond rounding or unit-conversion noise. The report's own utilization/bottleneck charts for this 'El Khoms - El Brega' segment show max capacity in the same ~350-400 mmscf/d range across multiple demand scenarios (2017-2030), reinforcing that ~370 mmscf/d is the figure the source actually stands behind, not a typo. I could not find a second fully independent source giving an explicit capacity figure to arbitrate further (tier=medium, one strong source in clear conflict with GEM) -- but per the standing rule that a page merely mentioning the pipeline is not enough (the source must AGREE with the GEM number), this is a genuine spec concern, not a pass. Length (645km) and diameter (34in, network-wide) both check out against the same source, so the capacity figure specifically -- not the pipeline's existence -- is what's in question.",
+      "proposed_refs": [
+        "https://documents1.worldbank.org/curated/en/817671527059474577/pdf/Libya-Supporting-electricity-sector-reform-task-B-consultancy-services-final-report-fuel-availability-and-opportunities-for-cost-reduction.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Pipeline exists and is correctly classified as a real coastal gas transmission segment (independently confirmed via a 2016 World Bank/Tractebel report, which names this exact 'Brega to Khoms' stretch at an exact-matching 645km, since the sheet's own OPEC 2012 citation is now a dead redirect); flagging a duplicate/aggregate-overlap concern with P0483 (Libya Coastal Gas Pipeline) and a spec concern on capacity (GEM 11.61 bcm/y vs. independently-reported ~370 mmscf/d / ~3.8 bcm/y)."
+}

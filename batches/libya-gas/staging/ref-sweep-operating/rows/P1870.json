@@ -1,0 +1,144 @@
+{
+  "project_id": "P1870",
+  "pipeline_name": "Intesar-Sahel Gas Pipeline",
+  "sheet_row": 1431,
+  "wiki": "https://www.gem.wiki/Intesar-Sahel_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Cite the Wayback snapshot of OPEC ASB2012 p.75 (the live opec.org PDF link now soft-404s to the homepage, which trivially passes a naive substring check on 'Libya' and would look like a live source if not manually inspected). Add Sirte Oil Company as the more precise operator alongside NOC as ultimate owner. Leave city/province location fields blank (no source names one).",
+      "researcher_notes": "EXISTENCE — the wiki page's sole cited source is 'Annual Statistics Bulletin, OPEC, 2012, p.75'. The literal live URL (opec.org/.../ASB2012.pdf) returns HTTP 200 but the bytes are actually the OPEC homepage HTML (soft-404/redirect target served with a 200 status) -- confirmed via `curl` + `file`: the downloaded 'PDF' is 'HTML document text'. This is a materially dead link, and would be a strong existence-flag on its own if that were the end of the trail. However the same file is preserved on the Wayback Machine (archived 2025-01-10) as a genuine 7.8MB PDF (confirmed via `file`), and pdftotext extraction of pages 70-80 (Table 4.10, 'Gas pipelines in OPEC Members, 2011', Libya section) contains a discrete, exact-match row: 'Intesar/Sahel | Sirte Oil | 80 [mi] | 30 [in] | 19,824,412 [1,000 scm/yr]'. This is NOT a generic/aggregate mention -- it specifically names this segment by both endpoints. Unit conversion: 80 mi x 1.609344 = 128.75 km, rounding to GEM's LengthKnown=129.00 km; diameter 30 in is an exact match to GEM's Diameter=30.00 in; capacity 19,824,412 thousand scm/yr = 19.824412 bcm/yr, matching GEM's Capacity=19.82 bcm/y to two decimal places. All three quantitative fields match precisely -- this is very likely GEM's own original source for this row, so it resolves existence/provenance (the entity is not a GEM-only hallucination -- the sheet's own citation, once actually retrieved, does name it) but is not an independently-corroborating second source for the spec values themselves. General plausibility is reinforced by the wider Sirte Basin gas-gathering context: the Intisar field (var. Intisar/Intesar, discovered 1967, Sirte Basin) is a well-known major Libyan oil/associated-gas field, and this exact same OPEC table lists an unbroken, internally-consistent chain of adjacent Sirte-Oil-operated segments through the same numbered junctions -- Intesar/Sahel (this row) -> Sahel/km-81.5 (roster P1871, 49mi/30in/19,541,206 -- matches P1871's 79km/30in/19.54bcm) -> km-81.5/Brega (roster P1868, 82mi/30in/8,496,177 -- matches P1868's 132km/30in/8.5bcm) -- a coherent, internally-consistent multi-segment corridor rather than an isolated/implausible entry. CLASSIFICATION -- correct. This is OPEC's own 'Gas pipelines' table (not the oil-pipelines table earlier in the same document), and Intesar/Sahel sits among Libya's other named Sirte-Basin gas trunk lines at transmission scale (19.8 bcm/y), not a small gathering/process line -- no reclassification needed. DUPLICATE -- checked against all 30 roster rows, in particular P1856 'Intesar-Brega Gas Pipeline' (Intesar Oil field->Al Wahat, 333km/42in/42.48bcm), which shares the 'Intesar' endpoint and looked like a candidate duplicate/relabel at first glance. The SAME OPEC table resolves this: it separately lists 'Intesar/Brega | Zueitina | 207 [mi] | 42 [in] | 42,480,884' as its own distinct line item -- 207mi=333.1km (matches P1856's 333km exactly), 42in (matches P1856's 42in exactly), 42.480884 bcm/y (matches P1856's 42.48 exactly) -- a DIFFERENT owner (Zueitina, not Sirte Oil) and different route/spec from the Intesar/Sahel/km-81.5/Brega chain. So P1856 is a separate, independently-operated direct Intesar-to-Brega line, not a duplicate or aggregate of the Sirte-Oil segmented chain that P1870 belongs to -- both are real, distinct, and correctly split. No other roster row references 'Sahel' as origin or shares this route/spec combination. ATTRIBUTION -- minor caveat, not scored as an error: GEM records Owner1='Libyan National Oil Corp' (100%); OPEC's table attributes the line to operator 'Sirte Oil' (Sirte Oil and Gas Manufacturing Company), a wholly NOC-owned subsidiary independently confirmed as state-owned/NOC subsidiary by a 2013 Canadian IRB research response (ecoi.net) -- consistent with how sibling rows in the same OPEC table (P1868, P1869, P1871, P1872, P1867, etc.) were already assessed in this sweep. NOC-as-ultimate-owner is defensible; Sirte Oil Company would be the more precise operator entry. SPEC -- confirmed, no material disagreement (see existence section: all three fields match within rounding). LOCATION -- only StartCountryOrArea/EndCountryOrArea=Libya can be supported; neither the gem.wiki page's own Location section, nor OPEC's table, nor general search names a city/province for the 'Intesar' or 'Sahel' waypoints (Sahel appears to be an internal Sirte Oil network junction name, not a settlement), so I left city/province unresolved rather than guessing. INDEPENDENT CORROBORATION -- could not find a second, fully independent source naming this exact 'Intesar/Sahel' segment (general Sirte Basin infrastructure writeups, USGS Minerals Yearbook Libya, and 2026 Libyan NOC/PGJ/Libya Observer network-upgrade news all discuss the broader Intisar/Sirte Oil gas-gathering system but none names this specific 80mi/30in segment) -- so tier=medium rather than high, matching the pattern already established for the sibling km-marker-chain rows (P1868, P1869, P1871) in this same sweep.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://www.ecoi.net/en/document/1229285.html"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "url_verifier passes on liveness/'Libya' but can't extract 'operating' literally from the binary PDF; status inferred from context -- listed as an active gas pipeline transporting a stated volume in OPEC's 2011 reporting-year table, per the verifier's documented status-inference guidance."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Being listed with a stated capacity/throughput in OPEC's 2011 operating-gas-pipelines table supports 'operating' as of that reporting year; no later source found contradicting operating status."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "binary-PDF false-negative on literal substring; manually confirmed via pdftotext the row sits in OPEC's 'Gas pipelines in OPEC Members, 2011' table, not the separate oil-pipelines table."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Row appears in OPEC's gas-pipelines table specifically, confirming Fuel=Gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "19.82", "CapacityUnits": "bcm/y"},
+      "primary_value": "19.82",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives 19,824,412 (1,000 scm/yr) = 19.824412 bcm/yr, matching GEM's 19.82 bcm/y to two decimal places."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match after unit conversion; only source found for this figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "129.00", "LengthKnownUnits": "km"},
+      "primary_value": "129.00",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives 80 miles, converting to 128.75 km, matching GEM's 129.00 km (rounded)."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match after unit conversion; only source found for this figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "30.00", "DiameterUnits": "in"},
+      "primary_value": "30.00",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives 30 inches diameter, an exact match, no conversion needed."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match, no unit conversion needed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartCountryOrArea", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartCountryOrArea": "Libya", "EndCountryOrArea": "Libya"},
+      "primary_value": "Libya",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed the row sits under OPEC's 'Libya (cont'd)' country heading."}],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Only country-level Libya is supportable. Neither the gem.wiki page, OPEC's table, nor general search names a settlement/province for the 'Intesar' or 'Sahel' waypoints (Sahel reads as an internal Sirte Oil network junction, not a town) -- left city/province UNRESOLVED rather than guessing."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1431,
+      "oo_sheet_row": 1404,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Libyan National Oil Corp", "Owner1%": "100.00%"},
+      "primary_value": "Libyan National Oil Corp",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://www.ecoi.net/en/document/1229285.html"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed the row names 'Sirte Oil' as owner/operator."},
+        {"url": "https://www.ecoi.net/en/document/1229285.html", "ok": true, "contains_value": true, "note": "url_verifier OK; confirms Sirte Oil Company is state-owned/an NOC subsidiary."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OPEC names operator 'Sirte Oil'; a 2013 Canadian IRB research response (ecoi.net) independently confirms Sirte Oil Company is state-owned/an NOC subsidiary -- together these support GEM's Owner1=Libyan National Oil Corp 100% as the ultimate owner via its wholly-owned operating subsidiary, not an attribution error. Sirte Oil Company would be the more precise direct-operator entry if GEM wants finer granularity."
+    }
+  ],
+  "summary": "P1870 (Intesar-Sahel Gas Pipeline, Sirte Oil) is real and correctly classified/scoped: OPEC ASB2012 Table 4.10 (Wayback-verified after the live opec.org link rotted to a soft-404 homepage) names this exact segment with length/diameter/capacity all matching GEM within rounding; not a duplicate of the similarly-named P1856 'Intesar-Brega' (same source shows that's a distinct Zueitina-operated direct line, different owner/spec). Confirmed (caveat): tier=medium (one strong, specific, non-GEM-derived source, no second corroborator despite search); minor attribution caveat that Sirte Oil Company (not directly NOC) is the OPEC-listed operator; Status/Fuel/Capacity/Length/Diameter/Owner refs filled, city/province location left UNRESOLVED (no source names one)."
+}

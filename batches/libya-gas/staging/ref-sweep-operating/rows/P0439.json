@@ -1,0 +1,53 @@
+{
+  "project_id": "P0439",
+  "pipeline_name": "Greenstream Gas Pipeline",
+  "sheet_row": 1433,
+  "wiki": "https://www.gem.wiki/Greenstream_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action — existence, classification, route, ownership, and status all independently confirmed",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: Greenstream is a real, extensively documented subsea international gas transmission pipeline (not a hallucination, not a gathering/feeder line) linking Libya's Mellitah gas complex to Gela, Sicily, Italy — operated by Eni/NOC Libya since 2004. Confirmed via Wikipedia, Reuters (2011 and 2013, both via Wayback since live Reuters 401-bot-walls this UA), Wood Mackenzie, Oil & Gas Journal, and a Weatherford/PPSA engineering case study — five independent origins, all naming the pipeline explicitly (the sheet's own cited sources are not GEM-derived filler). ROUTE/LOCATION: Mellitah Complex, Libya -> Gela, Italy confirmed identically across all 5 sources. OWNER: Eni SpA + Libyan National Oil Corp confirmed (OGJ: 'Libya's National Oil Company and Eni SPA each held equal shares in Greenstream BV Libyan Branch'; Wikipedia: Agip Gas BV JV of Eni and NOC) — matches GEM's Owner1/Owner2 exactly. STATUS='operating' confirmed across a 2011-2013 span despite a Feb-Oct 2011 civil-war shutdown (Reuters 2011 test-restart article, Reuters 2013 Berber-blockade article) — intermittent disruption does not change base classification. DUPLICATE CHECK: no other pipeline in the 30-row Libya roster runs to Italy/Gela or is subsea; not a duplicate of P0483 (Libya Coastal, Mellitah->Benghazi, domestic) or any other row. SEGMENTCOST: GEM's $6,600,000,000 matches the Arabic RT article's '$6.6 billion' construction-cost figure exactly. LENGTH: GEM's 520.00 km is the majority reading — Reuters 2011 (via Wayback) states 'The 520 km Greenstream pipeline...' verbatim and Wood Mackenzie states 'total length of the pipeline is 520 kilometres' — two independent sources matching GEM exactly. Minor caveat: Wikipedia and an Arabic RT (rt.com) article both instead give 540 km, and the Weatherford/PPSA case study gives 322 miles/518km — so there is a genuine 518-540km spread in the literature, but 520km (GEM's value) is directly supported by 2 independent sources verbatim, so treat as confirmed with this spread noted rather than a material conflict. DIAMETER: GEM records a composite '36, 32, 10' in — the subsea trunk's 32in diameter is independently confirmed twice (Wikipedia: 32in/810mm; PPSA case study: '32 inch diameter'); the additional 36in and 10in figures (likely onshore compressor/delivery segments) are plausible for a multi-segment GEM record but were not independently verifiable from the sources found — not contradicted, just unconfirmed.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Greenstream_pipeline",
+        "https://www.woodmac.com/reports/upstream-oil-and-gas-greenstream-pipeline-8809861",
+        "https://www.ppsa-online.com/case-studies/GreenStream.pdf",
+        "http://www.ogj.com/articles/2011/10/libya-eni-resume-greenstream-gas-pipeline-throughput.html",
+        "http://web.archive.org/web/20220417085746/https://www.reuters.com/article/eni-greenstream/update-3-eni-starts-tests-on-libya-greenstream-pipeline-idUSL5E7LD2N120111013",
+        "http://web.archive.org/web/20220416154655/https://www.reuters.com/article/us-libya-gas/libyan-berbers-shut-gas-pipeline-to-italy-cut-major-income-source-idUSBRE9AA0UT20131111"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct Capacity — GEM's 20.00 MMcf/d is off by roughly 40-50x versus every independent source; real-world nameplate is ~8-11 bcm/year (~774-1,064 MMcf/d)",
+      "researcher_notes": "GEM records Capacity=20.00 MMcf/d. This materially disagrees with every independent source found: Reuters 2011 (via Wayback, verbatim) states 'has a capacity of 8 billion cubic metres'; Wikipedia states initial capacity 8 bcm/year later increased to 11 bcm; the Arabic RT article independently states 'capacity reaches over 8 billion cubic meters annually.' Converting: 8 bcm/year = 35.3147 bcf/year = ~773.9 MMcf/day; 11 bcm/year = ~1,064 MMcf/day. So the real nameplate capacity is roughly 774-1,064 MMcf/d, not 20 MMcf/d — a ~40-50x discrepancy, almost certainly a unit-conversion or data-entry error (e.g. a bcm figure mis-mapped into an MMcf/d field, or a decimal/order-of-magnitude slip). This is corroborated by 3 independent sources (Reuters, Wikipedia, RT-Arabic) all agreeing with each other and all disagreeing with GEM, so flagging per the 'material disagreement' rule rather than silently passing it. Not proposing a specific replacement number as a hard fix (units need reconciling by whoever maintains the sheet's Capacity/CapacityUnits convention), but the correct order of magnitude is clearly ~800-1,000+ MMcf/d, not 20.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20220417085746/https://www.reuters.com/article/eni-greenstream/update-3-eni-starts-tests-on-libya-greenstream-pipeline-idUSL5E7LD2N120111013",
+        "https://en.wikipedia.org/wiki/Greenstream_pipeline"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "clean up FuelSource field — it currently stores a bare citation URL as the data VALUE rather than an actual fuel-source name",
+      "researcher_notes": "GEM's FuelSource field value is literally the URL 'https://arabic.rt.com/middle_east/1123021-...' (an Arabic RT news article) rather than a text description of the gas source. This looks like a sourcing/data-entry artifact: a reference link was pasted into the value cell instead of into the [ref] column. Fetched and translated the article: it identifies the Sabratha offshore platform (~110km off Tripoli) as feeding the Melitah complex, which in turn feeds Greenstream — so the underlying fact this URL was meant to support (fuel source = Sabratha platform / associated Wafa-area gas) is plausible and the source itself is legitimate, but the field as currently populated is not a usable data value. Recommend the sheet maintainer replace the URL-as-value with 'Sabratha platform' (or similar) and move this URL to the ref column where it belongs. Not counted as a standalone concern since the underlying fact is not contradicted, just mis-entered.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [],
+  "summary": "Greenstream is real, correctly classified, and not a duplicate — existence/route/owner/status/length/cost all independently confirmed (high tier); flagged one spec concern: Capacity=20.00 MMcf/d is off by ~40-50x vs. 3 independent sources agreeing on ~8-11 bcm/year (~774-1,064 MMcf/d); also flagged a low-severity data-entry issue where FuelSource holds a bare URL instead of a value. No UNRESOLVED fills — no genuinely blank value fields existed to fill."
+}

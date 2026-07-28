@@ -1,0 +1,40 @@
+{
+  "project_id": "P1868",
+  "pipeline_name": "Km-81.5-Brega Gas Pipeline",
+  "sheet_row": 1142,
+  "wiki": "https://www.gem.wiki/Km-81.5-Brega_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Cite the Wayback snapshot of OPEC ASB2012 (the live opec.org PDF link now 404s/redirects to the homepage); optionally add Sirte Oil Company as the operating subsidiary alongside NOC as owner; fill EndLocation/EndState-Province per the fills entry below.",
+      "researcher_notes": "EXISTENCE — confirmed, not GEM-only. The wiki page's sole citation (OPEC Annual Statistics Bulletin 2012) looks like a generic aggregate at first pass: the live URL now redirects/serves the OPEC homepage (which trivially contains the substring 'Libya', giving a false OK from a naive check), so the automated url_verifier screen FAILs on content. But the same PDF survives at the Wayback Machine (archived 2025-01-10, confirmed 200 OK and a genuine multi-MB PDF via `file`), and manual pdftotext extraction shows it is NOT generic: Table 4.10 'Gas pipelines in OPEC Members, 2011' contains a discrete row 'Km–81.5/Brega, Sirte Oil, 82 [mi], 30 [in], 8,496,177 [1,000 scm/yr]'. Converting: 82 mi = 131.97 km ≈ GEM LengthKnown 132.00 km; diameter 30 in = GEM Diameter 30.00 in exactly; capacity 8,496,177 thousand scm/yr = 8.496 bcm/y ≈ GEM Capacity 8.50 (rounds to same value, and the same table's Wafa/Mellitah row of 12,744,265 thousand scm/yr similarly rounds to GEM's 13.0 bcm/y, confirming the unit reading). All three quantitative fields match closely against an independent, non-GEM-derived table — this is a specific, verifiable citation, the opposite of a generic aggregate mention. CLASSIFICATION — correct as recorded: this is OPEC's own 'Gas pipelines' table, and Km-81.5/Brega is listed as a transmission-scale line (8.5 bcm/y) alongside Libya's other named trunk gas pipelines (Brega-Benghazi, Khoms-Tripoli, etc.) in the same table, not a gathering/process line; no reclassification needed. DUPLICATE — not a duplicate. The roster's P1871 'Sahel-km-81.5' (79 km/30 in/19.54 bcm) is a physically adjacent but DISTINCT segment: OPEC's table lists 'Sahel/km–81.5' and 'Km–81.5/Brega' as two separate line items (a Sahel→km81.5→Brega chain through the same numbered junction), confirming GEM correctly split these into two rows rather than double-counting one pipe. No other roster entry shares this route/spec combination. ATTRIBUTION — minor caveat only, not scored as wrong: GEM records Owner1='Libyan National Oil Corp' (100%); the OPEC source attributes the line to operator 'Sirte Oil' (Sirte Oil and Gas Manufacturing Co.), a wholly NOC-owned subsidiary that operates most of the Sirte Basin gas-gathering network (also the recorded operator for the Brega-Benghazi, Brega-Khoms, Khoms-Tripoli, Tripoli-Mellitah, Nasser-Brega, Attahaddy-km91.5, Raguba-km110, Intesar-Sahel and Sahel-km81.5 lines in the same table) — NOC as ultimate owner is defensible, but Sirte Oil Company would be the more precise operator entry. SPEC — confirmed, no material disagreement (see existence section above). INDEPENDENT CORROBORATION — searched extensively (English) for a second fully independent source naming this exact 'Km 81.5' segment: OPEC ASB reprints, Sirte Oil / SOC network maps (Scribd concession map — mentions no specific segment names), USGS Minerals Yearbook Libya 2019 (Brega/GreenStream mentioned, no km-marker table), and 2026 Libyan NOC/PGJ/Ecofin/Libya Observer news on the newly-commissioned adjacent Farigh-Brega and Intisar A/103-Brega projects. None independently names this specific 132 km/30 in segment, though the 2026 news confirms Sirte Oil's network still actively uses kilometer-post junction naming (e.g. a live 'kilometer 91' reception point), lending general plausibility to the whole km-marker cluster (P1857/P1867/P1869/P1871/P1872) without being a second confirmation of P1868 itself. Net: one strong, specific, non-GEM-derived source with an exact numeric match — tier=medium rather than high pending a second corroborator; no existence/classification/duplicate concern.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1142,
+      "ref_col": "Location [ref]",
+      "value_cols": ["EndLocation", "EndState/Province"],
+      "primary_value_col": "EndLocation",
+      "values": {"EndLocation": "Marsa el Brega", "EndState/Province": "Al Wahat"},
+      "primary_value": "Marsa el Brega",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Brega"],
+      "verifications": [{"url": "https://en.wikipedia.org/wiki/Brega", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The pipeline's fixed terminus is Marsa el Brega (Brega), on Libya's Gulf of Sidra coast; per Wikipedia (citing the 2007 administrative reorganization), Brega now sits in Al Wahat District (formerly Ajdabiya District) — this matches how GEM already records the endpoint of the adjacent Nasser-Brega line (P1866, End=Al Wahat), so it's consistent with existing sheet convention. StartLocation is intentionally left unfilled: per the OPEC source, 'Km 81.5' is an internal Sirte Oil network junction marker along the pipeline route, not a named settlement, so there is no genuine start-location name to assign."
+    }
+  ],
+  "summary": "P1868 (Km-81.5-Brega, Sirte Oil) is real and correctly classified/scoped: OPEC ASB2012 Table 4.10 (Wayback-verified after the live opec.org link rotted to a homepage redirect) names this exact segment with length/diameter/capacity all matching GEM within rounding, and the roster's neighboring Sahel-km-81.5 (P1871) is a distinct adjacent segment, not a duplicate. Confirmed (caveat): tier=medium (one strong independent source, no second corroborator found despite search); minor attribution caveat that Sirte Oil Company (not directly NOC) is the OPEC-listed operator; EndLocation/EndState-Province filled to Marsa el Brega / Al Wahat."
+}

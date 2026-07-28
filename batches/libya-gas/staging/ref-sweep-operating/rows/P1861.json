@@ -1,0 +1,49 @@
+{
+  "project_id": "P1861",
+  "pipeline_name": "Farigh-Intesar Gas Pipeline",
+  "sheet_row": 1085,
+  "wiki": "https://www.gem.wiki/Faregh-Intesar_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Swap the dead live opec.org URL for the Wayback-archived copy in the ref column; keep current Status/Fuel/Capacity/Length/Diameter/Operator values as-is (source matches exactly).",
+      "researcher_notes": "The gem.wiki page's sole citation is 'Annual Statistics Bulletin, OPEC, 2012, p.75' -> https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf. Ran url_verifier with expected token 'Libya': printed OK/200, but that is a FALSE POSITIVE — I fetched the URL directly (curl) and it now resolves to the generic OPEC.org homepage/nav shell (title 'Organization of the Petroleum Exporting Countries'), not the 2012 bulletin PDF; the word 'Libya' only appears twice as a generic member-country nav link, and 'Faregh'/'Farigh'/'Intesar'/'Intisar' appear zero times. On its face this is exactly the 'generic citation that doesn't name the pipeline' existence trap the brief warns about, and a sibling shard in this same batch (P1860, Waha-Nasser) reached an existence-concern verdict for the identical reason — it stopped at the dead live link and concluded the ASB could never have itemized named internal segments even when live. I do NOT think that conclusion holds: I pulled the SAME 2012 document from the Wayback Machine (http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf, confirmed a genuine 7.8MB PDF via `file` + pdftotext, not an HTML shell) and it turns out Table 4.10 'Gas pipelines in OPEC Members, 2011' (p.75) DOES itemize named Libyan segment-level pipelines row by row. The exact row: 'Faregh/Intesar   Waha   110   24   7,080,147   na' under columns Length(miles)/Diameter(inches)/Capacity(1,000 scm/yr). Converting: 110 mi = 177.0 km (GEM LengthKnown=177.00, exact match), Diameter 24 in (GEM=24.00, exact), Capacity 7,080,147 thousand scm/yr = 7.080 bcm/yr (GEM=7.08, exact), Owner/operator 'Waha' (GEM Operator='Waha Oil Co', matches). This is not a coincidental match — the same archived table also contains rows that line up 1:1 with several sibling roster pipelines (e.g. 'Waha/Nasser' 110mi/24in/5,664,118 -> P1860's 177km/24in/5.66bcm; 'Intesar/Brega' 207mi/42in/42,480,884 -> P1856's cap 42.48), confirming this whole 30-pipeline Libya-gas cluster in the GEM sheet was seeded from this exact 2011 OPEC statistical table. So: existence and every recorded spec (Status=operating [inferred from table's presence in an active-infrastructure statistics table], Fuel=Gas, Capacity, Length, Diameter, Operator) are CONFIRMED against a genuine, independent, official industry-statistics source — url_verifier's automated FAIL on the Wayback link is a content false-negative (raw-byte substring check can't read PDF-internal text streams; the doc's own docstring flags this class of miss), and I resolved it manually via `pdftotext -layout` extraction rather than discarding the source. Caveats keeping this at 'confirmed (caveat)' rather than a clean pass: (1) this is a single source (OPEC 2011/2012 bulletin) — no second, fully independent source was found in extensive EN-language web search (all hits are gem.wiki itself, its mirrors, or a DIFFERENT, newer, unrelated pipeline — see below) — so tier is medium, not high; (2) the OPEC figure is an ~2011 snapshot; nothing found independently reconfirms this specific 24-in Faregh-Intesar segment is still flowing in 2026, though the Faregh field itself is confirmed very much active (Waha Oil brought two new gas wells online there per 2026 reporting) and there is no evidence of this line's retirement, so 'operating' remains the reasonable read. DUPLICATE CHECK: web search surfaced a completely different, much newer pipeline that is easy to confuse with this one by name — the 'Farigh-Brega' / 'Intisar A/103-Brega' gas pipeline that Libya's NOC just tested in April 2026 after a 16-year stall (42-inch, ~130 km, connecting Intisar A/103 gas field to the Brega distribution network, commissioned by Sirte Oil Co and Zueitina Oil Co, not Waha) per Ecofin Agency, energycapitalpower.com and Pipeline Technology Journal reporting. Diameter (42 in vs 24 in), length (130 km vs 177 km) and operator (Sirte/Zueitina vs Waha) all differ, so this is NOT the same physical line as P1861 and not a duplicate — but flagging it explicitly since the names are confusingly close and a future sweep could easily conflate them.",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Ask Baird/GEM ownership team to reverify current Owner1-4 split for Waha Oil Co — Hess Corp's 8.16% may no longer be current.",
+      "researcher_notes": "GEM's current Owner values for this row (via the operators_owners tab): Libyan National Oil Corp 59.18%, ConocoPhillips 16.33%, TotalEnergies SE 16.33%, Hess Corp 8.16%. A January 28, 2026 Rigzone report on the just-signed Waha concession extension (to 2050) states: 'NOC operates the Waha concessions with a 59.16 percent [stake] through Waha Oil Co. ... ConocoPhillips owns 20.42 percent ... TotalEnergies owns a 20.42 percent stake' in the Waha concessions -- Hess is not mentioned anywhere in the piece, and the three disclosed percentages (59.16 + 20.42 + 20.42) sum to 100.00%, with no room left for a fourth partner. That is a materially different split from GEM's four-way 59.18/16.33/16.33/8.16 (NOC/ConocoPhillips/TotalEnergies/Hess), and 20.42% is suspiciously close to GEM's ConocoPhillips-share-plus-half-of-Hess-share (16.33 + 8.16/2 = 20.41), consistent with Hess having exited and its stake having been split evenly between the two remaining foreign partners at some point before this Jan 2026 deal. I could not find a dedicated announcement of a Hess divestment to confirm the mechanism, so I'm not proposing a replacement Owner value (would be fabricating certainty I don't have) — but the current Owner1-4 values look stale as of 2026 and should be reverified rather than taken at face value alongside the fresh Rigzone figures.",
+      "proposed_refs": ["https://www.rigzone.com/news/libya_extends_waha_concessions_to_2050-28-jan-2026-182868-article/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1085,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "EndLocation"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Faregh oil and gas field", "EndLocation": "Intisar oil field"},
+      "primary_value": "Faregh oil and gas field",
+      "proposed_refs": ["http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": false}],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB2012 Table 4.10 (via Wayback) names the pipeline's two endpoints only as field names ('Faregh' and 'Intesar/Intisar'), matching GEM's own naming convention for analogous roster rows (e.g. P1856 'Intesar Oil field->Al Wahat', P1858/P6714 'Bu-Attifel Oil field->Sirte Basin'). This is field-level, not town/coordinate-level, and url_verifier's automated substring check FAILs on this PDF for the same binary-encoding reason noted above (manually confirmed via pdftotext) -- I'm marking class_out UNRESOLVED rather than REFS_ADDED because the location value is an inference from the pipeline's own name/table entry rather than a source that explicitly describes a route, and I don't have a precise Prefecture/District or State/Province to add. Leaving StartPrefecture/District, StartState/Province, EndPrefecture/District, EndState/Province blank rather than guess."
+    }
+  ],
+  "summary": "Confirmed (caveat): OPEC ASB2012 Table 4.10 (recovered via Wayback Machine after the live opec.org link died) lists 'Faregh/Intesar, Waha, 110mi/24in/7,080,147 scm-yr' matching GEM's Status/Fuel/Length/Diameter/Capacity/Operator exactly (medium tier, single independent source; url_verifier false-negatived on the PDF and was overridden by manual pdftotext check) -- not a duplicate of the unrelated, newer 42-in/130km Intisar A/103-Brega line NOC tested in April 2026. Separate attribution concern flagged: current Owner1-4 split (incl. Hess Corp 8.16%) looks stale next to a Jan 2026 Rigzone report showing only NOC 59.16%/ConocoPhillips 20.42%/TotalEnergies 20.42% for Waha Oil Co. UNRESOLVED: proposed Start/EndLocation fill (field names only, no admin-division detail) left unresolved rather than force-added."
+}

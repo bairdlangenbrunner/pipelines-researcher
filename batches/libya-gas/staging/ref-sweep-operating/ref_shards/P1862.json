@@ -1,0 +1,119 @@
+{
+ "project_id": "P1862",
+ "pipeline_name": "Brega-Benghazi Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://en.wikipedia.org/wiki/Sirte_Oil_Company"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/Sirte_Oil_Company", "ok": true, "contains_value": false}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This batch's KNOWN GOTCHA row: the sheet's only prior support (per wiki_citations.json) was OPEC's ASB2012 PDF, whose live opec.org link is dead (redirects to homepage). Recovered via Wayback (CDX-confirmed 200 capture, url_verifier OK/200). url_verifier's naive substring check FAILs on plain tokens because the PDF's text stream is compressed, so I downloaded the capture and ran `pdftotext -layout` manually: Table 4.10 ('Gas pipelines in OPEC Members, 2011'), Libya section, p.75, contains the row 'Brega/Benghazi | Sirte Oil | 246 [mi] | 34 [in] | 10,761,824 [1,000 scm/yr] | na'. This is a specific, named match for this exact pipeline -- OPEC lists it individually as extant transport infrastructure with an assigned operator, diameter, length and capacity in its 2011 dataset (not proposed/planned), which supports Status=operating. Corroboration: Wikipedia's Sirte Oil Company article (verified live) confirms SOC -- the OPEC-listed operator of this line -- is headquartered at Brega and describes its port/LNG/petrochemical operations there in present tense (exports oil, gas, petrochemical products); this doesn't name the Brega-Benghazi line itself or say 'operating' literally (contains_value=false), so it is supportive context rather than line-specific proof. Did not find a post-2011, line-specific source (news of a cut/repair, a Benghazi power-station gas-supply story, etc.) confirming continued operation through the present day -- WebSearch budget for this session was already exhausted (200/200) before this shard began, and site-search on Libya Herald/Libya Observer returned only their homepages (JS-rendered search, not scrapable via curl) rather than genuine results. tier medium (1 line-specific, definitive source; second source is corroborating context only)."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same recovered Wayback ASB2012 capture (see Status notes re: the gotcha and manual pdftotext extraction), Table 4.10 'Gas pipelines in OPEC Members, 2011' (p.75). The 'Brega/Benghazi' row sits specifically within this gas-pipeline table (as opposed to Table 4.11, the parallel petroleum-product-pipeline table a few pages later, which lists a different Libya roster), so Fuel=Gas is definitional to which table the row appears in -- a single but categorically unambiguous source. No second independent source found stating this specific pipeline's fuel type (WebSearch budget exhausted this session; site-searches on trade press returned nothing usable). tier medium (1 strong/definitive source)."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012 (see Status notes), Table 4.10, Libya, row 'Brega/Benghazi | Sirte Oil': Capacity column = 10,761,824 (units: 1,000 scm/yr, per the table's column header) = 10,761,824,000 scm/yr = 10.761824 bcm/y -- an exact match to the sheet's value ('10.76') to 4 significant figures. This precision is strong evidence this is the sheet's original source data point, even though the live opec.org link died and no one had re-verified it via Wayback until now. Single source; no second independent source found stating this specific capacity figure -- this session's WebSearch budget was already exhausted before this shard began, and follow-on site-searches (Libya Herald, Libya Observer, Google, Bing, DuckDuckGo via curl) either returned unrelated content, were JS-gated, or bot-challenged. tier medium."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012, Table 4.10, Libya, 'Brega/Benghazi | Sirte Oil' row: Length = 246 miles = 395.90 km (246 x 1.609344), which rounds to the sheet's LengthKnown value of 396.00 km -- effectively an exact match (sub-0.1km rounding). Combined with the exact Capacity and Diameter matches on this same row, this strongly confirms it is the sheet's original source row. Single source; no independent second source found giving this specific pipeline's length. tier medium."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012, Table 4.10, Libya, 'Brega/Benghazi | Sirte Oil' row: Diameter column = 34 (inches) -- exact match to the sheet's value ('34.00', DiameterUnits='in'). Single source; no independent second source found stating this specific pipeline's diameter. tier medium."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://en.wikipedia.org/wiki/Al_Wahat_District"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/Al_Wahat_District", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources agree, at complementary levels of granularity: (1) recovered Wayback ASB2012 Table 4.10 lists 'Brega/Benghazi' under the 'Libya' section header, confirming StartCountryOrArea/EndCountryOrArea=Libya. (2) Wikipedia's Al Wahat District article (verified live) states Marsa Brega is one of the Basic People's Congresses within Al Wahat District as of the 2007 administrative reorganization -- an exact match to the brief's StartState/Province='Al Wahat'. Benghazi as EndLocation/EndState-Province is the self-evidently named district/city (Benghazi District), not independently sourced beyond the OPEC listing given time constraints, but is not in doubt. Two genuinely independent origins (an OPEC/industry statistics body and an encyclopedic administrative-geography source) corroborate the location values without conflict -- tier high."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1250,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://en.wikipedia.org/wiki/National_Oil_Corporation",
+    "https://noc.ly/index.php/en/2015-11-05-14-30-32/affiliated-companies-eng/sirte-oil-company"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/National_Oil_Corporation", "ok": true, "contains_value": true},
+    {"url": "https://noc.ly/index.php/en/2015-11-05-14-30-32/affiliated-companies-eng/sirte-oil-company", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The brief's Owner1='Libyan National Oil Corp' at 100.00%, single owner. OPEC's recovered Wayback ASB2012 Table 4.10 lists the operator of the 'Brega/Benghazi' line as 'Sirte Oil' (i.e. Sirte Oil Company, SOC), not NOC directly. Two further independent sources confirm SOC is itself an NOC subsidiary rather than a joint venture: Wikipedia's National Oil Corporation article (verified live) lists Sirte Oil Company (SOC) among NOC's subsidiaries alongside Waha/Agoco/Zueitina; NOC's own official site (noc.ly, verified live, Arabic) lists 'شركة سرت لإنتاج وتصنيع النفط والغاز' (Sirte Oil Company) among its affiliated companies. Unlike Waha Oil (a documented ConocoPhillips/Marathon/Hess joint venture per the same Wikipedia article) or Zueitina (a documented Occidental/OMV joint venture, per the P1857 shard in this batch), no source found describes Sirte Oil Company as having foreign JV partners -- it was formed from the nationalized former Esso Sirte assets and has operated as a state subsidiary since. This supports Owner1=Libyan National Oil Corp as the ultimate/100% owner of the Brega/Benghazi line's operator, though none of the three sources states the literal '100%' figure verbatim -- it is inferred from the absence of any documented JV partner for SOC specifically, unlike its sister NOC subsidiaries. Three independent origins (OPEC statistics body, Wikipedia, NOC's own site) agree on the underlying operator/subsidiary chain without conflict; tier medium rather than high because the exact ownership percentage is inferred, not stated outright, in any source."
+  }
+ ]
+}

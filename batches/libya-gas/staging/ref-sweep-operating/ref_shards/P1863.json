@@ -1,0 +1,131 @@
+{
+ "project_id": "P1863",
+ "pipeline_name": "Brega-Khoms Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/",
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/", "ok": true, "contains_value": true},
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status is inferable, not a literal token (per standing guidance). The line's own gem.wiki citation is the OPEC ASB2012 PDF, whose live opec.org link is dead (known batch gotcha) -- recovered via Wayback (CDX-confirmed 200 capture at 20120722013100) and pdftotext-verified: Table 4.10 'Gas pipelines in OPEC Members, 2011', Libya section, lists the row 'Brega/Khoms | Sirte Oil | 645 [mi-labeled but km] | 34 [in] | 11,611,442 [1,000 scm/yr] | na', i.e. treated as extant transport infrastructure in 2011. Independently, LibyaReview (1 May 2023, verified live, contains 'Khums'/'Brega') reports NOC announced resumption of natural gas production specifically 'from Brega to Al-Khums' at 100 MMcf/d 'after a 12-year halt' -- confirms the segment was offline 2011-2023 (war damage) and only partially restored at reduced throughput in 2023; worth flagging that current-day capacity utilization is well below the 2011 OPEC nameplate figure, though the line is described as back in service. Independently, the World Bank/Tractebel 2017-18 'Fuel Availability' report (downloaded + pdftotext'd; naive substring check misses place-names in the raw PDF stream, confirmed manually) describes 'From Brega to Khoms (645 km) with a capacity of ~370 mmscf/d' as one of the two trenches of the Coastal Pipeline system, i.e. an existing, named, capacity-rated line as of the report date. Three independent origins (OPEC statistical body, Libyan trade press, World Bank consultancy report), spanning 2011-2023, agree the line exists and (aside from a war-era outage, now resumed) carries gas -- supports Status=operating. No source suggests the line is shelved/cancelled today."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012 Table 4.10 (pdftotext-confirmed) lists 'Brega/Khoms' specifically within the 'Gas pipelines in OPEC Members, 2011' table (as opposed to Table 4.11, the parallel petroleum-product-pipeline table), so Fuel=Gas is definitional to this table. World Bank/Tractebel report independently describes 'From Brega to Khoms (645 km)' as one of the two trenches of the natural-gas 'Coastal Pipeline' system throughout the document. LibyaReview independently reports NOC resumed 'natural gas production from Brega to Al-Khums'. Three independent origins converge on gas."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012, Table 4.10, Libya, row 'Brega/Khoms | Sirte Oil': Capacity column = 11,611,442 (units: 1,000 scm/yr per the table's column header) = 11,611,442,000 scm/yr = 11.611 bcm/y -- an exact match (to 4 significant figures) of the sheet's recorded value (11.61 bcm/y). This precision strongly indicates this OPEC row is the sheet's original source datapoint. VALUE NOTE (not a contradiction, a different metric): the World Bank/Tractebel report gives a much lower 'current'/nominal figure for this same segment -- '~370 mmscf/d' (~3.8 bcm/y equivalent) -- and LibyaReview's 2023 resumption piece states only 100 MMcf/d (~1.0 bcm/y equivalent) was restored after the 12-year outage. These look like distinct concepts: OPEC's 2011 figure is a rated/design pipeline capacity (consistent methodology across the whole Table 4.10), whereas the World Bank (2017-18) and NOC/LibyaReview (2023) figures describe actual/nominal throughput after war damage and partial restoration -- i.e. utilization well below nameplate, not evidence the 11.61 bcm/y design figure is wrong. Flagging this distinction for QC rather than citing the throughput figures as corroboration of the same number. Only the OPEC source states the exact 11.61 bcm/y value; tier medium (one strong, precise, single-origin match)."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Exact match, two independent origins. Recovered Wayback ASB2012 Table 4.10: 'Brega/Khoms' row, Length column = 645 (the table's 'miles' header is boilerplate misapplied to values NOC actually reported in km, per the pattern already identified for this same corridor in the sibling P0483 'Libya Coastal Gas Pipeline' shard). Independently, the World Bank/Tractebel 2017-18 'Fuel Availability & Opportunities for Cost Reduction' report (pdftotext-confirmed, p.11) states verbatim: 'From Brega to Khoms (645 km) with a capacity of ~370 mmscf/d' -- describing this exact named segment as one of the two trenches of the Coastal Pipeline's western section. Both an OPEC statistical table (2011 vintage) and a World Bank/Tractebel consultancy report (2017-18 vintage), six years apart and independently sourced, agree on exactly 645 km for this specific segment."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recovered Wayback ASB2012 Table 4.10: 'Brega/Khoms' row, Diameter column = 34 (inches) -- exact match to the sheet's value (34.00 in). World Bank/Tractebel report independently states (pdftotext-confirmed, discussing this same western-section network immediately after naming the Brega-Khoms trench): the coastal network's connection pipelines run '34\" diameter' -- corroborating the same figure for this part of the system. Two independent origins agree on 34 inches."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf",
+    "https://en.wikipedia.org/wiki/Al_Wahat_District"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "http://documents.worldbank.org/curated/en/817671527059474577/pdf/01-Task-B-Fuel-Availability-Report-Final-Version-R1-clean.pdf", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/Al_Wahat_District", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "StartLocation=Mersa Brega/EndLocation=Khoms, both Libya. Recovered Wayback ASB2012 Table 4.10 lists 'Brega/Khoms' by name in the Libya section, alongside the other Sirte Oil-operated Libya gas lines. World Bank/Tractebel report independently names 'Marsa El Brega (the East Entry Point)' and describes the '...From Brega to Khoms (645 km)...' trench, confirming both endpoints as real, named locations on Libya's coastal gas network. Wikipedia's Al Wahat District article independently confirms Brega/Marsa El Brega is a town within Al Wahat District, supporting StartState/Province='Al Wahat'. No source independently pins Khoms to a specific sub-national province in the brief's value set (only EndLocation/EndCountryOrArea are asked for the end point), so this is not separately sourced beyond confirming Khoms as a real coastal Libyan town referenced identically across all three sources."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1272,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+    "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/",
+    "https://noc.ly/en/subsidiary-companies/"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+    {"url": "https://libyareview.com/34113/libyas-noc-resumes-gas-production-from-brega-to-al-khums/", "ok": true, "contains_value": true},
+    {"url": "https://noc.ly/en/subsidiary-companies/", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Owner1='Libyan National Oil Corp', 100%. Recovered Wayback ASB2012 Table 4.10 lists 'Sirte Oil' as the owner/operator of the 'Brega/Khoms' row. LibyaReview (1 May 2023, verified live) reports it was 'Libya's National Oil Corporation (NOC)' that announced the resumption of gas production 'from Brega to Al-Khums', crediting 'employees at the Sirte Oil and Gas Production and Manufacturing Company' -- i.e. NOC is the parent making the announcement and Sirte Oil is its operating subsidiary on this exact segment. NOC's own official subsidiary-companies page (noc.ly, verified live, contains 'Sirte') independently confirms Sirte Oil and Gas Production and Manufacturing Company is a wholly NOC-owned subsidiary. Three independent origins (OPEC statistical body, Libyan trade press, NOC itself) triangulate on NOC/state ownership operating through Sirte Oil, consistent with Owner1=Libyan National Oil Corp at 100%. No source gives a different (non-state, non-NOC) ownership stake for this line."
+  }
+ ]
+}

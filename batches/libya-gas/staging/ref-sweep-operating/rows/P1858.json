@@ -1,0 +1,130 @@
+{
+  "project_id": "P1858",
+  "pipeline_name": "Bu-Attifel-Intesar Gas Pipeline",
+  "sheet_row": 2651,
+  "wiki": "https://www.gem.wiki/Bu-Attifel-Intesar_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Fix CapacityUnits: OPEC's own table header labels the capacity column '(1,000 scm/yr)', not 'scm/y' as GEM has it — Capacity=4,134,806 is understated by 1000x as currently labeled (true capacity ~4.135 billion scm/yr). Set CapacityUnits to '1000 scm/y' (or equivalently change Capacity to 4134806000 / 'scm/y'). The same units bug almost certainly affects sibling rows pulled from this batch (P6714, P6713, P6709 all show the same raw OPEC 'thousand scm/yr' figure mislabeled as 'scm/y') — worth a batch-wide check, though only P1858 is in my scope here. Also: current_ref on the Fuel/PipelineType/Diameter fields (direct opec.org ASB2017 link) is now dead (301-redirects to opec.org homepage as of 2026-07-23) — replace with the Wayback snapshot cited below.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all check out. The wiki page's own cited sources (OPEC Annual Statistical Bulletin editions 2012/2013/2017) do name this exact pipeline, but the live opec.org URL for ASB2017 now 301-redirects to the OPEC homepage (confirmed via curl -I: 'location: https://www.opec.org') — the wiki_citations.json snapshot showing 'expected content present' for that URL predates the rot. Retrieved working Wayback Machine snapshots of ASB2013 and ASB2017 instead and read the actual gas-pipeline tables (pdftotext -layout, since url_verifier's plain-text substring check can't parse compressed PDF streams — a documented false-negative mode for this tool, confirmed manually rather than banked as a fail).\n\nASB2013 Table 4.10 ('Gas pipelines in OPEC Members, 2012'), Libya section, contains TWO rows for this exact connection, matching the sheet's split into 'Pipeline 1' (P1858) and 'Pipeline 2' / P6714: 'Bu–Attifel/Intesar | Mellitah Oil and Gas | 82.46 [mi] | 34 [in] | 4,134,806 | na' and 'Bu–Attifel/Intesar (103A) | Eni Oil | 82.46 | 10 | 258,425 | na'. ASB2017 Table 9.9 confirms the same 2-line system: 'Bu Attifel/Intisar (2) | Mellitha Oil & Gas, Eni Oil | 2 x 82 [mi] | 34, 10 [in]'. So P1858 (34in) and P6714 (10in) are NOT duplicates of each other — they are the correctly-split large/small lines of a genuine parallel 2-pipe bundle, exactly as OPEC's own '(2)' notation records it. Existence is solid: an international industry body (OPEC) lists this connection consistently across 3 editions spanning 2012-2016 data, and Mellitah Oil & Gas's own corporate site (mellitahog.ly/en/sites/abu-attifel-field/, fetched live, HTTP 200) independently lists 'Abu Attifel Field' (production start 1980) as one of its own operated sites, corroborating both the field's existence and the Operator attribution 'Mellitah Oil & Gas' (OPEC calls it 'Mellitah Oil and Gas' — same entity, spelling variant) — 2 independent origins (OPEC + the operator's own site), tier high.\n\nLength: GEM's 131.96 km matches ASB2017's rounded '82 miles' (82 x 1.609344 = 131.97 km) more closely than ASB2013's more precise '82.46 miles' (= 132.71 km, ~0.75 km / 0.6% off) — minor cross-edition rounding variance, not a material disagreement, both source editions independently support ~132 km.\n\nDiameter 34.00 in: matches both ASB2013 and ASB2017 exactly.\n\nCapacity 4,134,806: matches ASB2013's raw number exactly, BUT the ASB2013 table header (visible in pdftotext -layout output) reads 'Capacity ... (1,000 scm/yr)' for the Libya section — i.e. the true units are THOUSANDS of scm per year, not scm/y as GEM's CapacityUnits field states. As entered, GEM's number+units combination is off by a factor of 1000 (material spec disagreement — flagging per standing rule 5, not silently passing it).\n\nOwner1/Owner2 (Libyan National Oil Corp 50% / Eni SpA 50%): Mellitah Oil & Gas is publicly known as the NOC-Eni joint operating company, consistent with the operator being correctly identified, but I could not find an independently citable source (within this pass's access) that states the 50/50 split specifically for this pipeline rather than for Mellitah O&G generally — leaving this as unverified-but-plausible rather than fabricating support for it.\n\nPipelineType 'transmission': consistent with how OPEC itself groups this connection alongside undisputed long-haul trunk lines (Wafa/Mellitah, Greenstream) in the same 'Main gas pipelines' table, and with how every other pipeline in this 30-row Libya roster is classified — no reclassification indicated.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+        "https://mellitahog.ly/en/sites/abu-attifel-field/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 2651,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": false},
+        {"url": "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status inferred contextually, not literal: OPEC lists this connection in its active 'Main gas pipelines in OPEC Members' table continuously across the 2012, 2013, and 2016(2017-published) editions — a discontinued/decommissioned line would not still appear as a current operating connection. No explicit 'operating' token in the source (as expected for this kind of table), confirmed manually with pdftotext -layout since url_verifier's substring screen can't parse this PDF's text streams (documented false-negative mode)."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 2651,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "131.96", "LengthKnownUnits": "km"},
+      "primary_value": "131.96",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf",
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250206233526/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2017_13062017.pdf", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ASB2017 Table 9.9: 'Bu Attifel/Intisar (2) | Mellitha Oil & Gas, Eni Oil | 2 x 82 [miles] | 34, 10 [in]' — 82 mi x 1.609344 = 131.97 km, matching GEM's 131.96 almost exactly. ASB2013 gives a more precise 82.46 mi (=132.71 km), a ~0.75km/0.6% cross-edition rounding variance, not material. Confirmed via pdftotext -layout on Wayback snapshots (direct opec.org URLs now 301-redirect to the homepage)."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 2651,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Bu-Attifel Oil field", "StartState/Province": "Sirte Basin", "StartCountryOrArea": "Libya", "EndLocation": "Intesar Oil field", "EndState/Province": "Sirte Basin", "EndCountryOrArea": "Libya"},
+      "primary_value": "Bu-Attifel Oil field",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+        "https://mellitahog.ly/en/sites/abu-attifel-field/"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true},
+        {"url": "https://mellitahog.ly/en/sites/abu-attifel-field/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both Bu Attifel and Intisar are well-documented Sirte Basin oil fields in OPEC's own connection naming ('Bu-Attifel/Intesar'); Mellitah's own site independently confirms it operates 'Abu Attifel Field' (production start 1980)."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 2651,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Mellitah Oil & Gas"},
+      "primary_value": "Mellitah Oil & Gas",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf",
+        "https://mellitahog.ly/en/sites/abu-attifel-field/"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true},
+        {"url": "https://mellitahog.ly/en/sites/abu-attifel-field/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB2013 names the operator 'Mellitah Oil and Gas' for this exact connection; Mellitah's own corporate site independently lists Abu Attifel Field as one of its own operated sites — 2 independent origins."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 2651,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Libyan National Oil Corp", "Owner1%": "50.00%", "Owner2": "Eni SpA", "Owner2%": "50.00%"},
+      "primary_value": "Libyan National Oil Corp",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not find an independently citable source (within this pass's access — no live web search, and Wikipedia has no article on Mellitah Oil & Gas) confirming the specific 50/50 NOC/Eni ownership split for this pipeline. Mellitah Oil & Gas being an NOC-Eni joint operating company is well known and consistent with the confirmed operator attribution, but leaving the owner-percentage ref unresolved rather than fabricating support for it."
+    }
+  ],
+  "summary": "Confirmed real, correctly classified, and NOT a duplicate of P6714 (the two are the genuine large/small lines of one OPEC-documented 2-pipe bundle) — but Capacity is off by 1000x: OPEC's own table header reads capacity in '(1,000 scm/yr)', not the 'scm/y' GEM has recorded, and the cited ASB2017 direct link is now dead (redirects to opec.org homepage); added Wayback-verified refs for Status/Length/Location/Operator, left Owner% unresolved."
+}

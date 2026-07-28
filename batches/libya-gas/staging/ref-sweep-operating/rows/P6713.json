@@ -1,0 +1,65 @@
+{
+  "project_id": "P6713",
+  "pipeline_name": "Bahr Assalam–Mellitah Gas Pipeline",
+  "sheet_row": 2649,
+  "wiki": "https://www.gem.wiki/Bahr_Assalam-Mellitah_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Verify commodity before next release: independent engineering source says the 10in line from Sabratha to Mellitah carries CONDENSATE, not gas. Consider recoding Fuel (and possibly moving this segment to GEM's oil/NGL pipeline tracker) rather than leaving Fuel=Gas / PipelineType=transmission.",
+      "researcher_notes": "EXISTENCE: real infrastructure, not a hallucination. The Bahr Essalam gas & condensate field (offshore Libya, operated by Mellitah Oil & Gas, the 50/50 NOC-Eni JV) and its onshore link to the Mellitah Complex are independently documented by offshore-technology.com (https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/), a professional oil & gas projects database, confirmed live via url_verifier with tokens 'condensate'/'10in' both present. DUPLICATE check: the gem.wiki page 'Bahr Assalam-Mellitah gas pipeline' (fetched directly, since gem.wiki blocks WebFetch's default UA — 403 — but resolves 200 with a browser UA) documents TWO sub-entries on one page: Pipeline '1' (Operator Mellitah O&G, 109 km, 36in, capacity 9,199,943 scm/yr, Start 2005) = GEM ProjectID P1855, and Pipeline '2' (109 km, 10in, capacity 465,166 scm/yr, Start 2018) = this row, P6713. These are NOT duplicates of each other: different diameters, different in-service years, and offshore-technology.com independently corroborates a multi-line system ('production pipelines, piggy-backed service lines...') plus confirms Phase I first gas in 2005 (matches P1855's 2005) and Phase II first gas July 2018 (matches P6713's 2018) via FID-2015/first-gas-2018 language. So the split into two ProjectIDs for two physically distinct, differently-timed lines is legitimate — recommend AGAINST merging.\n\nCLASSIFICATION CONCERN (the real finding): offshore-technology.com's own project writeup distinguishes THREE separate lines from this field: (1) a 32in, 540km SEA LINE to the Green Stream compression station carrying export sales gas to Italy (a different pipeline, not this row); (2) a 36in line from the Sabratha platform to the onshore Mellitah plant carrying GAS — this matches P1855/Pipeline '1'; and (3), verbatim: 'Condensate is directly pumped and conveyed through a 10in diameter pipeline to Mellitah for further treatment and export.' That 10-inch condensate line is an exact diameter match for THIS row (P6713/Pipeline '2', Diameter=10in, currently ref'd to ASB2017 and confirmed live). GEM's mainsheet nonetheless records Fuel=Gas and PipelineType=transmission for P6713. The independent source is unambiguous that the 10in line's cargo is condensate (a liquid), not gas. I could not find a second independent source explicitly re-describing this exact 10in segment (OPEC ASB PDFs are generic OPEC-country aggregate statistical bulletins — confirmed by pulling ASB2013.pdf and grepping it: no pipeline-level table, only national production/reserves tables — they do not actually discuss this specific pipeline's cargo type), so tier=medium (one strong, on-point independent source) rather than high. Flagging as concern rather than silently passing per the instructions on material disagreement.\n\nATTRIBUTION: Owner (Libyan National Oil Corp 50% / Eni SpA 50%) is consistent with the well-established Mellitah Oil & Gas B.V. JV structure and the existing mellitahog.ly ref (live, 200) — no issue found. Location (Bahr Assalam/Sabratha field → Mellitah Complex, Libya) is consistent with offshore-technology.com. Start Year 2018 is corroborated: offshore-technology.com states Phase II FID completed 2015 and 'Phase two achieved first gas in July 2018' — solid match for this row's StartYear1=2018.\n\nSPEC (see separate spec finding below for Capacity).",
+      "proposed_refs": ["https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Treat Capacity=465166 (scm/y) as unsupported/likely erroneous — do not carry forward without re-derivation. Consider blanking pending a real source, or checking whether the true OPEC-table unit was 'thousand scm/day' (which the wiki-page editor may have mislabeled as an annual scm figure).",
+      "researcher_notes": "The cited ref for Capacity (OPEC ASB2013.pdf) was already flagged by the sheet's own existing_ref_checks as '200 but data value not found (none of 465,166 / 465166 / 465166.00)' — I pulled the actual PDF and confirmed independently: ASB2013 is a generic OPEC annual statistical bulletin with national-level production/reserves/refining tables (grepped for 'Libya' — only country-aggregate rows, no pipeline-specific table). It does not contain, and structurally could not contain, a named-pipeline capacity figure. Separately, on the gem.wiki page itself, the 'Capacity: 465166 scm/yr' line for Pipeline '2' carries NO footnote/citation marker at all (unlike the Length/Diameter/Start Year lines on the same entry, which do have footnotes) — i.e., this number was never actually sourced on the wiki page it was pulled from; GEM's mainsheet just inherited an orphan number and back-filled a plausible-looking OPEC citation. The magnitude is also implausible for stated units: 465,166 standard cubic meters PER YEAR is ~1,274 scm/day, negligible throughput for an industrial field-to-plant pipeline (compare Pipeline 1's paired figure of 9,199,943 scm/yr on the same page, ~20x larger but still oddly small for a stated 36in trunk line) — consistent with a units/scale transcription error (e.g., a 'thousand scm/day' OPEC column figure mislabeled as an annual total) rather than a real design capacity. I could not find any independent source giving this segment's throughput/capacity, so I'm not proposing a replacement value — leaving it flagged rather than fabricating a number.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2649,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartPrefecture/District": "Bahr Assalam", "StartCountryOrArea": "Libya", "EndPrefecture/District": "Mellitah", "EndCountryOrArea": "Libya"},
+      "primary_value": "Bahr Assalam",
+      "proposed_refs": ["https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/"],
+      "verifications": [{"url": "https://www.offshore-technology.com/projects/bahr-essalam-gas-and-condensate-field/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Location ref was blank (MISSING_REF). offshore-technology.com explicitly describes the Bahr Essalam field's Sabratha platform piping product 'to Mellitah for further treatment and export,' corroborating the Bahr Assalam(Essalam)→Mellitah, Libya endpoints already recorded. Single source only (tier medium), but it is the same on-point professional project writeup already used for Start Year/Diameter on this row."
+    },
+    {
+      "segment_name": "Pipeline 2",
+      "sheet_row": 2649,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "109.00", "LengthKnownUnits": "km"},
+      "primary_value": "109.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Length ref was blank (MISSING_REF). The gem.wiki page cites OPEC ASB2013 for this line's 109 km figure, but ASB2013 is a generic country-statistics bulletin with no pipeline-length table (confirmed by pulling and grepping the PDF) — it does not actually support a specific km value. offshore-technology.com describes the field's subsea/onshore lines qualitatively ('piggy-backed service lines') but gives no length figure for this specific segment (its only explicit distance figure, 540km, is for the separate Greenstream export sea-line to Italy, not this segment). Leaving UNRESOLVED rather than proposing a source that doesn't actually support the number; 109km is at least internally consistent with Pipeline 1/P1855's paired figure for the same physical corridor."
+    }
+  ],
+  "summary": "P6713 (Pipeline '2' of the twin Bahr Assalam-Mellitah system, paired with P1855's Pipeline '1') is real, correctly kept as a separate ProjectID from P1855 (distinct diameter/vintage, not a duplicate), but its Fuel=Gas/PipelineType=transmission classification is in doubt: an independent professional source (offshore-technology.com) describes the exact-diameter (10in) line to Mellitah as carrying CONDENSATE, not gas, and its Capacity value (465,166 scm/yr) is unsourced on the origin wiki page and unsupported by its cited OPEC ref, with an implausible magnitude suggesting a units error."
+}

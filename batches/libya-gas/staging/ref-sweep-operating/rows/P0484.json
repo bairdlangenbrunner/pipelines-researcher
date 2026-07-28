@@ -1,0 +1,190 @@
+{
+  "project_id": "P0484",
+  "pipeline_name": "Wafa-Mellitah Gas Pipeline",
+  "sheet_row": 1305,
+  "wiki": "https://www.gem.wiki/Wafa-Mellitah_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification; see separate spec and duplicate flags below.",
+      "researcher_notes": "Existence and classification independently confirmed. The pipeline is real: it is the 32in onshore gas trunkline (paired with a separate 16in oil/condensate line that has its own gem.wiki page 'Wafa-Mellitah_Oil_Pipeline', not part of this 30-pipeline batch) carrying sales gas from the Wafa gas field to the Mellitah Complex, part of Eni/NOC's Western Libya Gas Project. Confirmed live/independent: mellitahog.ly (operator's own site, 2 subpages: company-achievements and gas-division/production, describing the 32in gas + 16in oil/condensate parallel lines, contract awarded 17/6/2002, completed 16/8/2004, gas delivery started 1 Sept 2004); offshore-technology.com industry database profile ('Wafa-Mellitah Gas' pipeline, 525km, max diameter 32in, owned by Eni + National Oil Corporation of Libya, started operations 2004); Wikipedia's Greenstream pipeline article (Wafa field ~530km from Mellitah, supplies the Greenstream system); and pipeline-journal.net (Feb 2024/2025 article confirming gas flows from Wafa field resumed after a brief protest-related shutdown, i.e. still operating). Fuel=Gas and PipelineType=transmission both correctly recorded. Caveats: (1) the 'Western Libyan Gas Project' Wikipedia page cited on the gem.wiki row is now dead (404) -- link rot, no longer usable; (2) the current Status ref (OPEC ASB2017 PDF) is accessible (200) but the word 'operating' could not be confirmed in its extracted text (likely a scan/formatting issue) -- it's a legitimate primary source for Fuel/PipelineType but weak support for Status specifically; recommend supplementing with the pipeline-journal.net article below.",
+      "proposed_refs": [
+        "https://www.pipeline-journal.net/news/libya-resumes-gas-export-italy-key-pipeline-after-brief-shutdown-due-protests",
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/",
+        "https://en.wikipedia.org/wiki/Greenstream_pipeline"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Reconcile P0484 against P6705 (roster: 'Wafa-Mellitah Gas Pipeline', len=524.65 dia=16) -- likely the same physical corridor double-recorded. Investigate whether P6705 is actually the 16in oil/condensate line (which has its own separate gem.wiki page, 'Wafa-Mellitah_Oil_Pipeline') miscategorized into the gas-pipeline tracker under the same name, or a straight duplicate of P0484 that happens to carry the correct length. Either way, merge/relabel as appropriate and use P6705's length (524.65, which matches independent sources) to correct P0484's Length field.",
+      "researcher_notes": "Roster comparison: P6705 shares the exact name 'Wafa-Mellitah Gas Pipeline' and the same origin ('Wafa Gas Field') as P0484, but its length (524.65 km) matches the real-world figure confirmed by 3 independent sources (~525-530km, see spec finding below), while its diameter (16in) matches the OIL/condensate line's diameter, not the 32in gas trunkline that this row (P0484) correctly carries. This is a strong signature of cross-contamination between two records for the same corridor: P0484 has the right diameter (32in, gas) but a corrupted length; P6705 has the right length but the wrong pipeline's diameter attached to the 'Gas Pipeline' name. Not confirmed as a 100% duplicate without seeing P6705's own full sourcing, but the overlap is too specific to be coincidence and warrants a merge/reconciliation pass rather than treating both as independent operating pipelines.",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/",
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-oil-oil-pipeline-libya/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct Length (sheet_row 1305) from 5246.00 km to approximately 525 km (range 524.6-530 km across sources) -- this looks like a decimal-point data-entry error (524.6 mis-keyed as 5246.0), off by roughly 10x. 5246 km would be longer than the entire east-west extent of Libya and is not physically plausible for an onshore field-to-coast pipeline.",
+      "researcher_notes": "GEM's current Length value (5246.00 km) is contradicted by every independent source found: mellitahog.ly's company-achievements page states '525 Km onshore pipeline system'; mellitahog.ly's gas-division/production page states 'the 32'' pipeline (527 km)'; offshore-technology.com's industry profile states the pipeline is '525km-long'; Wikipedia's Greenstream pipeline article states the Wafa field is '530 kilometres... from Mellitah'. All four independent sources cluster tightly around 524.6-530 km, versus GEM's 5246.00 km -- a ~10x discrepancy consistent with a misplaced decimal point. Diameter (32in) by contrast is correctly recorded and consistently confirmed by the same sources.",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/activities/gas-division/production/",
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/",
+        "https://en.wikipedia.org/wiki/Greenstream_pipeline"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not treat 13.00 bcm/y as confirmed. It most likely originated from conflating the operator's daily delivery figure (13 MMSm3/day through the 32in line) with an annual bcm figure -- 13 MMSm3/day annualizes to roughly 4.7-4.9 bcm/y, not 13 bcm/y. No independent source states a 13 bcm/y annual capacity for this specific pipeline. Either correct to the ~4.7-4.9 bcm/y actual-throughput figure (with a note that it's delivery, not nameplate capacity), or leave Capacity blank pending a source with an explicit annual bcm figure for this pipeline specifically (as opposed to the broader Mellitah complex/Greenstream export capacity of 8-11 bcm/y).",
+      "researcher_notes": "Capacity field was MISSING_REF (no existing citation) with value 13.00 bcm/y. Sources found: mellitahog.ly's gas-division/production page states 'the average gas delivery is about 13 MMSm3/day' through the 32in Wafa-Mellitah pipeline (this is a daily figure, not annual -- annualized it is ~4.7-4.9 bcm/y, not 13); pipeline-journal.net states the downstream Greenstream export pipeline has 'an annual capacity of 8 billion cubic meters (bcm)'; other reporting places the Mellitah complex's overall design capacity at 10.0 bcm/y (8 bcm/y exported via Greenstream + 2 bcm/y to the domestic market). None of these support a 13 bcm/y figure for the Wafa-Mellitah gas pipeline itself -- the '13' in GEM's Capacity field looks like a units mix-up with the operator's '13 MMSm3/day' delivery statistic. Left as a flagged concern rather than a confident fill since I could not independently verify any single authoritative annual-bcm figure specific to this pipeline segment.",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/activities/gas-division/production/",
+        "https://www.pipeline-journal.net/news/libya-resumes-gas-export-italy-key-pipeline-after-brief-shutdown-due-protests"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Spot-check the start-point province/district (Nalut vs. Wadi Al-Shatii) against a Libyan administrative-boundary source; low confidence either way from what I could find, so not escalating to a hard concern.",
+      "researcher_notes": "GEM lists StartState/Province='Nalut' for the Wafa field. offshore-technology.com's pipeline profile, however, labels its 'Start Point' as 'Wadi Al-Shatii (Libya)' for this same pipeline -- a different Libyan district. mellitahog.ly describes Wafa field as ~525-540km SW of Tripoli and ~160km south of Ghadames near the Algerian border, which geographically sits closer to the Ghadames/Nalut area than to Wadi al-Shatii District (further southeast in Fezzan). I could not find a second source to confirm either province designation with confidence, so I'm flagging this as an open question rather than asserting GEM is wrong. Endpoint locations themselves (Wafa gas field -> Mellitah Complex) and the end-province ('Nuqat al Khams district', matching offshore-technology's 'End Point: Nuqat Al-Khams') are well corroborated and not in question.",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/"
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 1305,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "32", "DiameterUnits": "in"},
+      "primary_value": "32",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/",
+        "https://mellitahog.ly/en/activities/gas-division/production/"
+      ],
+      "verifications": [
+        {"url": "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/", "ok": true, "contains_value": true},
+        {"url": "https://mellitahog.ly/en/activities/gas-division/production/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both the operator's own site (32in pipeline explicitly named) and offshore-technology.com's industry profile ('maximum diameter of 32 inches') agree with GEM's existing 32in value."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 1305,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2004"},
+      "primary_value": "2004",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/activities/gas-division/production/",
+        "https://en.wikipedia.org/wiki/Greenstream_pipeline"
+      ],
+      "verifications": [
+        {"url": "https://mellitahog.ly/en/activities/gas-division/production/", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Greenstream_pipeline", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "mellitahog.ly: gas delivery from Wafa field to Mellitah started 1 September 2004. Wikipedia's Greenstream article: supplies to Italy began 1 October 2004 (formal inauguration 7 October 2004). Both independently agree on 2004 as the start year."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 1305,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2002"},
+      "primary_value": "2002",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/about/company-achievements/"
+      ],
+      "verifications": [
+        {"url": "https://mellitahog.ly/en/about/company-achievements/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "mellitahog.ly's company-achievements page: 'The contract was awarded on 17/6/2002 and completed on 16/8/2004', supporting ConstructionYear=2002. Only one source found for this specific date (single-origin, medium tier); note Wikipedia's Greenstream article separately states 'construction of the pipeline started in 2003', which may refer to a later physical-construction milestone versus this 2002 contract-award date, or to a different segment of the broader project -- flagging the minor discrepancy rather than treating it as a hard conflict."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 1305,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "EndLocation"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Wafa gas field", "EndLocation": "Mellitah Complex"},
+      "primary_value": "Wafa gas field",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/sites/wafa-field/",
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/"
+      ],
+      "verifications": [
+        {"url": "https://mellitahog.ly/en/sites/wafa-field/", "ok": true, "contains_value": true},
+        {"url": "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Endpoint names (Wafa gas field -> Mellitah Complex) confirmed by the operator's own site and by offshore-technology.com's industry profile. Note: StartState/Province ('Nalut') has an open question -- see attribution caveat in validity section; not changing the value, just flagging it unresolved."
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "sheet_row": 1305,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Libyan National Oil Corp", "Owner1%": "50.00%", "Owner2": "Eni SpA", "Owner2%": "50.00%"},
+      "primary_value": "Libyan National Oil Corp",
+      "proposed_refs": [
+        "https://mellitahog.ly/en/about/company-profile/",
+        "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/"
+      ],
+      "verifications": [
+        {"url": "https://mellitahog.ly/en/about/company-profile/", "ok": true, "contains_value": true},
+        {"url": "https://www.offshore-technology.com/marketdata/wafa-mellitah-gas-gas-pipeline-libya/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner identities (National Oil Corp + Eni, via their Mellitah Oil & Gas joint venture) confirmed by 2 independent sources. This is the (oo_sheet_row 425 in operators_owners tab) entry for P0484. Neither source I found states the exact 50/50 percentage split in text -- that split is the well-known standard for this JV but I could not pin an explicit citation for the number itself, so treating the identities as confirmed (tier would be high) but the percentages as medium/unconfirmed by these particular sources."
+    }
+  ],
+  "summary": "P0484 (Wafa-Mellitah Gas Pipeline) is a real, currently-operating 32in gas trunkline from the Wafa field to Mellitah, correctly classified as gas/transmission -- but its Length value (5246.00 km) is a ~10x data-entry error (real length ~525-530 km per 4 independent sources), its Capacity (13.00 bcm/y) is unconfirmed and likely a units mix-up with a daily-delivery figure, and it likely overlaps/duplicates roster entry P6705 which appears to hold the correct length under the same name but the wrong (oil-line) diameter."
+}

@@ -1,0 +1,53 @@
+{
+  "project_id": "P1872",
+  "pipeline_name": "Km-91.5-Brega Gas Pipeline",
+  "sheet_row": 1464,
+  "wiki": "https://www.gem.wiki/Km-91.5-Brega_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence/classification/attribution are solid -- cite the Wayback snapshot of OPEC ASB2012 (the live opec.org PDF link is dead, 301-redirects to the homepage). Optionally note Sirte Oil Company as the operating subsidiary alongside NOC as owner. See separate spec concern below re: Length and the secondary '16 in' diameter figure -- do not certify those with this ref.",
+      "researcher_notes": "EXISTENCE -- confirmed, not GEM-only. The gem.wiki page's sole citation is 'Annual Statistics Bulletin, OPEC, 2012, p.75' -> https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf. That live URL is now dead: curl -sIL shows a 301 to https://www.opec.org (homepage) then a 403; a naive GET (what url_verifier's substring screen sees) returns a 200 homepage shell that happens to contain the digits '75' incidentally, producing a false OK from the automated screen if taken at face value -- exactly the 'generic aggregate that doesn't actually name the pipeline' trap the brief warns about. I pulled the identical document from the Wayback Machine (http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf -- confirmed via `file` to be a genuine 7.8MB PDF, not an HTML stub) and ran pdftotext -layout on it directly. Table 4.10 'Gas pipelines in OPEC Members, 2011' (printed page 76, under a 'Libya (cont'd)' header -- one page off from the wiki's cited 'p.75', likely a front-matter/page-numbering offset) contains the exact row: 'Km-91.5/Brega | Sirte Oil | 92 [mi] | 36 [in] | 21,240,442 [1,000 scm/yr] | na'. This is the identical table that seeded the whole Libya-gas roster: sibling rows in this same table match GEM values almost exactly after mi->km conversion for P1867 Attahaddy-km-91.5 (25mi=40.2km), P1868 Km-81.5-Brega (82mi=131.97km), P1869 Raguba-Km-110 (88mi=141.6km), P1870 Intesar-Sahel (80mi=128.7km), and P1871 Sahel-km-81.5 (49mi=78.9km) -- all within rounding of GEM's recorded lengths -- confirming this is a genuine, specific, non-GEM-derived citation, not a generic aggregate. url_verifier's automated FAIL on the Wayback URL (missing '91.5'/'Brega') is a documented false negative: requests.get(...).text reads raw (deflate-compressed) PDF bytes, not pdftotext-extracted text, so it can never find the string even though the rendered PDF plainly contains it -- I verified the URL passes with a bare status check (OK/200, no content check) and confirmed content manually. CAPACITY: 21,240,442 thousand scm/yr = 21.240442 bcm/yr, an exact match to GEM's Capacity=21.24 bcm/y. FUEL/STATUS: table is explicitly OPEC's 'Gas pipelines' table (Fuel=Gas correct); listed with a live 2011 capacity figure (Status=operating reasonable, though note the source predates the 2011 civil war and subsequent instability -- same caveat applies across this whole sibling set and none of the other shards escalated it alone). CLASSIFICATION: correctly a transmission-scale trunk line (21.24 bcm/y) alongside Libya's other named Sirte Basin gas lines in the same table, not a gathering/process line. DUPLICATE: checked against all 30 roster rows -- this segment (into Brega from the 'km-91.5' junction) is a distinct waypoint from 'Km-81.5-Brega' (P1868, different marker/spec) and does not overlap the coastal Mellitah->Benghazi trunk (P0483) that already absorbed duplicate flags from P1862/P1863/P1866; not a duplicate. ATTRIBUTION: Owner1='Libyan National Oil Corp' 100% is defensible as ultimate state parent -- the OPEC table itself names the operator as 'Sirte Oil' (Sirte Oil and Gas Manufacturing Co.), a wholly NOC-owned subsidiary that operates the rest of this same Sirte Basin gas-gathering chain (also recorded operator for Attahaddy-km-91.5, Km-81.5-Brega, Raguba-Km-110, Sahel-km-81.5, Intesar-Sahel in the identical table) -- consistent with how sibling shards in this batch treated the same operator/owner relationship, so not scored as wrong. Only one specific source (the OPEC table) names/quantifies this exact segment; a general Wikipedia 'Sirte Oil Company' search (url_verifier OK, 200) confirms the company/network but does not itself mention '91.5', so this stays a single strong source (tier=medium), not independently double-corroborated at the segment level.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not add a ref for the current Length or the secondary '16 in' diameter value. Length: the sheet's own cited source (OPEC ASB2012 Table 4.10) gives 92 miles for this segment, which converts to 148.06 km -- materially different from GEM's recorded LengthKnown=184.00 km (a 35.94 km / ~24% overstatement, well outside the <1% rounding tolerance every sibling row in this same table showed). Flag for Baird to re-derive Length from a source that actually supports 184 km, or correct it toward ~148 km pending a second source. Diameter: the source lists a single 36 in pipe; GEM's secondary '16 in' figure is not supported by this citation and should be treated as unconfirmed (leave unref'd) rather than certified.",
+      "researcher_notes": "Length check: OPEC ASB2012 Table 4.10 row 'Km-91.5/Brega | Sirte Oil | 92 [mi] | 36 [in] | 21,240,442 [1,000 scm/yr]'. 92 mi x 1.609344 = 148.06 km. GEM's LengthKnown for P1872 is 184.00 km -- a 35.94 km (24.3%) disagreement with the only source the sheet itself cites. This stands out precisely because it is the ONE row in this table's whole Libya-gas run that does NOT convert cleanly: every sibling segment I or other shards checked in the identical table (Attahaddy-km-91.5, Km-81.5-Brega, Raguba-Km-110, Intesar-Sahel, Sahel-km-81.5, Brega-Benghazi, Brega-Khoms, Khoms-Tripoli, Tripoli-Mellitah, Nasser-Brega, 103D-103A, Intesar-Brega) converts from the table's mile figure to within <1% of GEM's recorded km length. That consistency makes this a genuine, well-supported material spec disagreement rather than rounding noise -- per the standing rule, a page merely mentioning the pipeline is not enough; the source must AGREE with the GEM number, and here it does not. I could not find a second, independent (non-OPEC, non-GEM-derived) source giving an explicit length for this specific 'km-91.5-to-Brega' segment to adjudicate which figure (92mi/148km vs 184km) is correct, so I am not proposing a replacement value -- just flagging the disagreement per the 'material disagreement -> concern' rule. Diameter: source states a single 36 in pipe for this row; GEM records 'Diameter=36, 16' -- the extra 16 in figure has no support in the cited source and I found no independent source for it either; leaving it unref'd rather than fabricating support.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1464,
+      "ref_col": "Location [ref]",
+      "value_cols": ["EndLocation", "EndState/Province"],
+      "primary_value_col": "EndLocation",
+      "values": {"EndLocation": "Marsa el Brega", "EndState/Province": "Al Wahat"},
+      "primary_value": "Marsa el Brega",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Brega"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Brega", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The pipeline's fixed terminus is Marsa el Brega (Brega), on Libya's Gulf of Sidra coast. Per Wikipedia (citing the 2007 Libyan administrative reorganization), Brega now sits in Al Wahat District (formerly Ajdabiya District) -- consistent with how GEM already records the endpoint of the adjacent Nasser-Brega line (P1866, End=Al Wahat) and how sibling shard P1868 filled the same field for Km-81.5-Brega. StartLocation is intentionally left unfilled: per the OPEC source, 'km-91.5' is an internal Sirte Oil network junction marker along the pipeline route, not a named settlement, so there is no genuine start-location name to assign."
+    }
+  ],
+  "summary": "Km-91.5-Brega Gas Pipeline is real and correctly classified (confirmed via the sheet's own OPEC ASB2012 citation, recovered from Wayback after the live opec.org link died) with Capacity/Fuel/Owner defensible, but its recorded Length (184.00 km) materially disagrees with that same source's 92 mi / 148.06 km figure -- flagged as a spec concern -- and the secondary '16 in' diameter is unsupported by any source found."
+}

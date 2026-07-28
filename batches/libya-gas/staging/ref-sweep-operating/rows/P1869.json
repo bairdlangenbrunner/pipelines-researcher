@@ -1,0 +1,157 @@
+{
+  "project_id": "P1869",
+  "pipeline_name": "Raguba-Km-110 Gas Pipeline",
+  "sheet_row": 867,
+  "wiki": "https://www.gem.wiki/Raguba-Km-110_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No structural changes needed. Keep current classification/attribution; see separate spec caveat below re: length.",
+      "researcher_notes": "EXISTENCE/PROVENANCE: the wiki page's only citation is 'Annual Statistics Bulletin, OPEC, 2012, p.75' but the literal URL (opec.org/.../ASB2012.pdf) is now DEAD at the live site — it 301-redirects to the opec.org homepage (confirmed via curl -I). However the same PDF is preserved on the Wayback Machine and I downloaded + pdftotext'd it directly: page 75 is exactly 'Table 4.10, Gas pipelines in OPEC Members, 2011', under a 'Libya (cont'd)' header, and it contains the row 'Raguba/km-110 | Sirte Oil | 88 (miles) | 20 (inches) | 3,964,882 (1,000 scm/yr)'. Every GEM value converts/matches exactly: 88 mi x 1.60934 = 141.6 km -> rounds to GEM's LengthKnown=142.00 km; 20 in diameter is an exact match; 3,964,882 thousand scm/yr = 3.964882 bcm/yr -> matches GEM's Capacity=3.96 bcm/y. So this is NOT a GEM-only/hallucinated entity — the sheet's own cited source, once retrieved from an archive, precisely names and quantifies this exact pipeline down to the page number. EXISTENCE independently reinforced: Raguba is a well-documented Sirte Oil-operated oil-AND-associated-gas field feeding the Sirte Basin/Brega network (Wikipedia 'Raguba field'; Oxford Institute for Energy Studies 2019 paper 'Oil and Gas in a New Libyan Era' table listing Brega/Lehib/Nasser/Raguba fields under Sirte Oil Company with Marsa al-Brega as the export terminal). 'Km-110' is a distance-marker node name, consistent with the same naming convention used by sibling roster entries in the identical OPEC table (Attahaddy-km-91.5=P1867, Km-81.5-Brega=P1868, Sahel-km-81.5=P1871, Km-91.5-Brega=P1872) — all Sirte Oil, all appear as adjacent rows in the same OPEC Table 4.10. CLASSIFICATION: correctly Fuel=Gas. Note GEM separately carries a distinct 'Raguba-Brega Feeder Oil Pipeline' (oil, 87.81 km, 20in, 7.469304 mtpa) — this confirms GEM has correctly split the Raguba oil export line and the Raguba associated-gas gathering line into two different entities rather than conflating them; they are not duplicates of each other (different specs, different commodity). DUPLICATE: checked all 30 roster rows — no other pipeline references 'Raguba' or the '110' waypoint, so P1869 is not a relabeled duplicate of any other row in scope. ATTRIBUTION: Owner1='Libyan National Oil Corp' 100% is consistent with two independent sources: the OPEC table itself (names 'Sirte Oil' as owner/operator) and a 2013 Canadian IRB (Immigration and Refugee Board) research response on ecoi.net confirming Sirte Oil Company is state-owned / a subsidiary of the National Oil Corporation. So NOC-as-ultimate-owner is correct, not an error. LOCATION: only StartCountryOrArea/EndCountryOrArea=Libya are populated (no city/province, no coordinates) — the gem.wiki page's own Location section is blank and OPEC's table gives no coordinates either, so I could only confirm country-level Libya; I did not fabricate a province/city.",
+      "proposed_refs": [
+        "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://www.ecoi.net/en/document/1229285.html"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not change GEM's current Length value (it exactly matches the page/table the wiki itself cites), but log an internal caveat: a later edition of OPEC's own Annual Statistical Bulletin gives a materially different length for the same-named segment. If a future researcher finds a third, non-OPEC source for this segment's length, use it to adjudicate.",
+      "researcher_notes": "Checked whether the OPEC figure persists in a later edition as a light corroboration check. In OPEC's ASB 2016 (Wayback-archived; live opec.org copy is also gone), Table 8.9 'Main gas pipelines in OPEC Members, 2015' again lists 'Raguba/KM-110, Sirte Oil, 55 (miles), 20 (inches)' — diameter still matches (20in) but length is 55 miles (~88.5 km), NOT 88 miles (~142 km) as in the 2012 edition GEM actually cites. That's a ~38% discrepancy for what is nominally the same named segment, from the same publisher (OPEC) two editions apart. This could reflect a genuine post-2011-civil-war resurvey/reconfiguration of the Sirte Basin gas network, or it could be an internal OPEC data-entry inconsistency (their gas-pipeline tables are known to carry forward stale/inconsistent figures across years). Because GEM's citation specifically names the 2012 edition and page 75, and GEM's recorded 142 km matches that specific source exactly, I am not overriding the current value — but per the standing rule against silently passing a material spec disagreement, flagging it here rather than treating the match to the 2012 source as fully closing the question. Both editions originate from the same institution (OPEC Secretariat compiling NOC-submitted data), so this is not full independent corroboration of either number.",
+      "proposed_refs": [
+        "https://www.opec.org/opec_web/static_files_project/media/downloads/publications/asb2016.pdf"
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "url_verifier reports 200 but a 'missing expected' FAIL because it cannot extract text from a binary PDF byte stream; manually confirmed via curl download + pdftotext that page 75 lists this pipeline in the 2011 operating-gas-pipelines table (status inferred from context per verifier's documented false-negative guidance, not a literal 'operating' string)."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OPEC ASB2012 p.75 lists this exact pipeline (Raguba/km-110, Sirte Oil) in 'Table 4.10, Gas pipelines in OPEC Members, 2011' — being listed as an active gas pipeline transporting a stated volume as of the 2011 reporting year supports 'operating'. Live opec.org URL 301-redirects to the homepage; cite via the Wayback capture in practice: https://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "same binary-PDF false-negative as above; manually confirmed the row sits under OPEC's 'Gas pipelines in OPEC Members, 2011' table heading."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Row is listed directly in OPEC's gas-pipelines table (not the separate oil-pipelines table a few pages earlier in the same document), confirming Fuel=Gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "3.96", "CapacityUnits": "bcm/y"},
+      "primary_value": "3.96",
+      "proposed_refs": ["https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives capacity 3,964,882 (1,000 scm/yr) = 3.964882 bcm/yr, matching GEM's 3.96 bcm/y exactly."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact numeric match after unit conversion (thousand scm/yr -> bcm/y). Only source found for this figure is OPEC ASB2012; the 2016 edition of the same OPEC table omits a capacity column entirely, so no second capacity figure exists to cross-check."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "142.00", "LengthKnownUnits": "km"},
+      "primary_value": "142.00",
+      "proposed_refs": ["https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives 88 miles, which converts to 141.6 km, matching GEM's 142.00 km (rounded)."}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See validity concern above: OPEC's own 2016 edition gives a conflicting length (55 mi / ~88.5 km) for the same-named segment. GEM's value matches the specific edition/page the wiki itself cites, so I'm attaching that ref rather than overriding the value, but the discrepancy is real and flagged separately as a spec concern."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "20.00", "DiameterUnits": "in"},
+      "primary_value": "20.00",
+      "proposed_refs": ["https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed via pdftotext: row gives diameter 20 inches, an exact match with no unit conversion needed."}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "20-inch diameter matches BOTH the 2012 and 2016 OPEC editions (the only field that agrees across both editions), so this is the best-corroborated spec on this row."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartCountryOrArea": "Libya", "EndCountryOrArea": "Libya"},
+      "primary_value": "Libya",
+      "proposed_refs": ["https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"],
+      "verifications": [{"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed the row sits under OPEC's 'Libya (cont'd)' country heading."}],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Can only source country-level Libya (matches). No source I could find (OPEC table, gem.wiki page itself, or general web search) gives city/province/coordinates for the 'Km-110' waypoint or the Raguba end, so I left province/city/coordinates UNRESOLVED rather than guessing a specific location along the Sirte Basin network."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 867,
+      "oo_sheet_row": 1403,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Libyan National Oil Corp", "Owner1%": "100.00%"},
+      "primary_value": "Libyan National Oil Corp",
+      "proposed_refs": [
+        "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+        "https://www.ecoi.net/en/document/1229285.html"
+      ],
+      "verifications": [
+        {"url": "https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": false, "contains_value": false, "note": "binary-PDF false-negative; manually confirmed the row names 'Sirte Oil' as owner/operator."},
+        {"url": "https://www.ecoi.net/en/document/1229285.html", "ok": true, "contains_value": true, "note": "url_verifier OK; page states multiple sources describe Sirte Oil Company as state-owned / a subsidiary of the National Oil Corporation."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources: OPEC names the operating entity as 'Sirte Oil'; a 2013 Canadian Immigration and Refugee Board research response (hosted on ecoi.net) independently confirms Sirte Oil Company is state-owned / an NOC subsidiary. Together they support GEM's Owner1=Libyan National Oil Corp 100% (ultimate state owner via its wholly-owned operating subsidiary), so this is not an attribution error."
+    }
+  ],
+  "summary": "P1869 (Raguba-Km-110 Gas Pipeline) is real and correctly classified: OPEC's ASB 2012 p.75 (the wiki's own dead citation, recovered via Wayback + pdftotext) names this exact segment and its length/diameter/capacity match GEM's recorded values precisely; not a duplicate of any other roster row (paired oil-only Raguba-Brega line is a distinct, correctly-split entity); owner (NOC via Sirte Oil) independently confirmed. One caveat: OPEC's own 2016 edition gives a conflicting length (~88.5 km vs GEM's/2012's 142 km) for the same-named segment, flagged as an open spec concern."
+}

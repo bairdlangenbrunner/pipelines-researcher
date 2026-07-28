@@ -1,0 +1,50 @@
+{
+  "project_id": "P1862",
+  "pipeline_name": "Brega-Benghazi Gas Pipeline",
+  "sheet_row": 1250,
+  "wiki": "https://www.gem.wiki/Brega-Benghazi_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as operating gas pipeline; retain state-owner NOC but note the actual operating subsidiary is Brega Petroleum Marketing Company (downstream) rather than upstream Sirte Oil Co.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/ATTRIBUTION CONFIRMED independently, not just via the sheet's own dead citation. The gem.wiki page's only cited source (OPEC Annual Statistical Bulletin 2012 PDF at opec.org) is DEAD -- url_verifier returns 200 but the URL now redirects (HTTP 301->200 to opec.org homepage per curl -L) and contains neither 'Brega' nor 'Benghazi'; confirmed via curl -sL that the link resolves to the OPEC homepage, not the cited PDF. So the sheet's own source is worthless and this row would otherwise be an existence-flag candidate. However, independent open-web sources DO confirm the pipeline is real: Libya Herald (2013-04, contemporary news report on an explosion incident on this exact pipeline) describes a '260-kilometre 34-inch pipeline, run by Brega Petroleum Marketing, [that] carries gas from the Brega plant to Benghazi's gas oil terminal and feeds Benghazi North Power Station, 14km north of the city' with the explosion occurring near Ajdabiya (consistent with a Brega-Ajdabiya-Benghazi coastal routing). Separately, Climate Change News (2018-01, independent climate-energy journalism, different origin) describes 'Libya's main gas pipeline [that] runs along the Mediterranean coast between the capital Tripoli and Libya's second city, Benghazi.' Both sources independently confirm gas (not oil) flows Brega->Benghazi to a power plant, matching GEM's Fuel=Gas classification and StartLocation/EndLocation. Diameter (34 in) matches GEM's recorded 34.00 in exactly. Province Al Wahat for Mersa Brega is independently confirmed (Marsa Brega was folded into Al Wahat District in the 2007 Libyan administrative reorganization). Owner is recorded as 'Libyan National Oil Corp' 100% -- defensible as the ultimate state parent (both Sirte Oil Co. and Brega Petroleum Marketing Co., the two entities independent sources name as actually running Brega-area gas infrastructure, are NOC subsidiaries), but the operating subsidiary itself is not named in the GEM row. NOTE: a WebSearch AI summary separately claimed Wikipedia's 'Sirte Oil Company' article states Marsa al-Brega is '240km west of Benghazi' -- I fetched/verified that page directly and this claim is NOT actually present in the article (search-summary fabrication); I am NOT relying on it and flag it here only as a caution against trusting unverified search summaries.",
+      "proposed_refs": [
+        "https://libyaherald.com/2013/04/explosion-on-brega-benghazi-gas-pipeline/",
+        "https://www.climatechangenews.com/2018/01/03/libya-burns-dirty-oil-electricity-islamic-state-disrupts-gas-plans/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Reconcile with P0483 (Libya Coastal Gas Pipeline, Mellitah Complex->Benghazi, len=1164km) -- check whether P0483's length/capacity totals already include this Brega->Benghazi stretch (and likely also P1863 Brega-Khoms, P1864 Khoms-Tripoli, P1865 Tripoli-Mellitah) as its 'eastern segment', which would double-count length/capacity if both the aggregate P0483 and the individual segment P1862 are summed in tracker-wide totals.",
+      "researcher_notes": "Independent reporting frames Libya's coast-hugging gas trunkline as ONE continuous system, not a chain of independently built, independently named pipelines: Climate Change News (2018, verified) states 'Libya's main gas pipeline runs along the Mediterranean coast between the capital Tripoli and Libya's second city, Benghazi' -- i.e. Tripoli/Mellitah to Benghazi as a single described pipeline, which is exactly P0483's recorded endpoints (Mellitah Complex->Benghazi, 1164km). Chaining the roster's individually-named coastal segments -- P1865 Tripoli-Mellitah (158km) + P1864 Khoms-Tripoli (201km) + P1863 Brega-Khoms (645km) + P1862 Brega-Benghazi (396km, or ~260km per the independently-sourced figure) -- sums to roughly the same west-east corridor P0483 covers end to end (~1160-1400km depending on which Brega-Benghazi length is used), i.e. P0483 plausibly already represents the aggregate of these segments rather than a genuinely separate physical asset. This is a real segment/aggregate double-count risk, not proof of an outright duplicate -- GEM sometimes legitimately tracks both a named backbone/system and its constituent segments as distinct rows, and Libya Herald's use of 'Brega-Benghazi gas pipeline' as a standalone named entity (with its own incident history and named operator, Brega Petroleum Marketing) shows the segment does have its own real-world identity. Flagging for a human reconciliation pass across P0483/P1862/P1863/P1864/P1865 rather than asserting P1862 should simply be merged/deleted.",
+      "proposed_refs": [
+        "https://www.climatechangenews.com/2018/01/03/libya-burns-dirty-oil-electricity-islamic-state-disrupts-gas-plans/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-check LengthKnown=396km against the 260km figure reported by Libya Herald; consider revising or adding a range/caveat rather than a single precise 396.00km value.",
+      "researcher_notes": "GEM records LengthKnown=396.00km. The only independent source found that states an explicit length for this exact named pipeline -- Libya Herald (2013-04, verified live, contemporary on-the-ground reporting about an explosion on this pipeline) -- states '260-kilometre 34-inch pipeline.' 396km vs 260km is a ~34% material disagreement, well beyond rounding/routing variance. Diameter (34in) matches GEM exactly, which raises my confidence Libya Herald's figures are describing the same asset (not a different pipeline), making the length conflict a genuine spec concern rather than an apples-to-oranges mismatch. I could not find a second independent source giving an explicit km figure to arbitrate between 396 and 260 (tier=medium, single strong source contradicting GEM). Capacity (10.76 bcm/y): I could not independently verify this figure. The only other number I found for this stretch (~410 mmcf/day, ~4.2 bcm/y) for the 'eastern segment, Benghazi-Brega' appeared only in wiki-adjacent/GEM-derived search summaries (gem.wiki itself, and Grokipedia text that reproduces GEM's own 396km/34in/10.76bcm figures verbatim) -- i.e. it is circular, not independent corroboration, so I am NOT staging it as a confirmed contradiction, just flagging the capacity field as unverified/unresolved for a future pass.",
+      "proposed_refs": [
+        "https://libyaherald.com/2013/04/explosion-on-brega-benghazi-gas-pipeline/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Pipeline exists and is correctly classified (independently confirmed by Libya Herald 2013 + Climate Change News 2018), but the sheet's own cited OPEC source is dead/non-naming; flagging a duplicate/segment-overlap concern with P0483 (Libya Coastal Gas Pipeline) and a spec concern on length (GEM 396km vs. independently-reported 260km)."
+}

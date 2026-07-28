@@ -1,0 +1,37 @@
+{
+  "project_id": "P1857",
+  "pipeline_name": "103D-103A Gas Pipeline",
+  "sheet_row": 1404,
+  "wiki": "https://www.gem.wiki/103D-103A_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Do not treat as confirmed until a source names this specific 41km/40in inter-field gas line. Endpoints and operator are real (keep those), but the pipeline entity itself is currently unsupported by any independent citation — seek an NOC/Zueitina technical or EPSA document that explicitly documents a 103D-103A gas line before upgrading past 'concern'.",
+      "researcher_notes": "Checked the sheet's own cited source first: wiki_citations.json lists exactly one reference for this page, OPEC's 'Annual Statistics Bulletin' 2012 PDF (opec.org/.../ASB2012.pdf). Verified live (url_verifier: 200, contains 'Libya') but it is a generic country-level statistics bulletin — it does NOT name '103D-103A', '103D', '103A', Zueitina, or any specific pipeline (verifier FAILs on token '103'). Per the standing rule, a row whose only cited support is a generic/aggregate source that doesn't name the pipeline is itself an existence flag, so I escalated to independent open-web research. Findings: (1) 'Intisar A' and 'Intisar D' (a.k.a. field 103A / 103D, from the original Esso-era 'Concession 103' numbering, Sirte Basin) are real, well-documented oil/gas reef fields — confirmed independently via OSTI.gov (a 1970 SPE/JPT-derived abstract: 'Intisar A and D fields on Occidental's Concession 103... located 220 miles south of Benghazi... 15 miles apart') and corroborated by multiple paywalled academic sources found in search snippets (OnePetro, ScienceDirect, ResearchGate — all 403'd on direct fetch, so not cited, but consistent with the OSTI account). (2) Zueitina Oil Company (GEM's listed Operator) is confirmed as the CURRENT real-world operator actively working gas infrastructure specifically at 'Field 103D': a Libya Herald article dated Feb 2026 reports Zueitina Oil Co meeting with US-based BlueVee Energy on H2S gas treatment / 'Gas Cap Blowdown project' technology 'for Field 103D' (verified live, contains 'Zueitina' and '103D' and 'BlueVee'). This independently supports both the Operator value and that 103D is an active gas site today (broadly consistent with Status=operating), but it is about gas processing AT the field, not about a pipeline BETWEEN 103D and 103A. (3) I found NO source, after multiple targeted searches (direct '103D-103A' pipeline queries, 'Zueitina Field 103D OR 103A gas pipeline km', Intisar+concession+103 queries), that names or documents this specific pipeline segment, its 41km length, 40in diameter, or 17.84 bcm/y capacity — those figures are corroborated nowhere outside GEM/the sheet's unhelpful OPEC citation. Given the two fields are real, ~15 miles (~24km) apart, and part of one integrated Occidental/Zueitina-operated production complex, an internal gas gathering/transfer line between them is entirely plausible from an engineering standpoint (this whole 30-pipeline batch is full of similar internal field-to-field/km-marker gathering lines), but plausibility is not the same as confirmation. Recommend downgrading confidence pending a dedicated source (NOC concession pipeline register, EPSA filing, or Zueitina/OMV technical report) rather than treating as confirmed on current sourcing. No duplicate found against the 30-pipeline roster (no other row uses 103A/103D or Intisar naming) and no classification issue beyond the field's own internal-gathering character, which matches the pattern of several other rows in this same batch (e.g. Km-81.5-Brega, Raguba-Km-110) and is not unique to P1857.",
+      "proposed_refs": [
+        "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/",
+        "https://www.osti.gov/biblio/5071134"
+      ],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Operator=Zueitina Oil Co is well supported independently; keep it. Owner split (NOC 81% / Occidental 14.25% / OMV 4.75%) could not be independently verified at the percentage level — no source found stating these exact shares — so treat the ownership percentages as unconfirmed even though the operator is solid and the OMV/Occidental/NOC partner set for legacy Concession 103 is broadly consistent with public knowledge of Zueitina Oil Company's ownership structure.",
+      "researcher_notes": "Operator 'Zueitina Oil Co' is independently confirmed current and active specifically at Field 103D via the Libya Herald Feb 2026 article described above (verified live). This is the strongest single finding in this review — a genuinely useful ref for the currently-blank Operator [ref] cell. Owner1/2/3 (NOC 81%, Occidental 14.25%, OMV 4.75%) is directionally consistent with what's publicly known about Concession 103's history (awarded to Occidental Libya in 1966 per a Wood Mackenzie report snippet; OMV holds legacy Libyan Sirte Basin interests) but I found no source stating these specific percentages, so I'm not proposing this as a verified fill — leaving Owner refs blank rather than force a match.",
+      "proposed_refs": [
+        "https://libyaherald.com/2026/02/zueitina-oil-discusses-technical-cooperation-with-us-based-bluevee-energy-to-develop-gas-processing-solutions-for-field-103d/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Existence concern: fields 103A/103D and operator Zueitina Oil Co are independently real (OSTI, Libya Herald), but no source anywhere names this specific 103D-103A pipeline or its 41km/40in/17.84bcm/y specs — the sheet's only citation (OPEC ASB2012) is a generic bulletin that doesn't mention it either."
+}

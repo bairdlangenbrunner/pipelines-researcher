@@ -1,0 +1,32 @@
+{
+  "project_id": "P1866",
+  "pipeline_name": "Nasser-Brega Gas Pipeline",
+  "sheet_row": 1345,
+  "wiki": "https://www.gem.wiki/Nasser-Brega_gas_pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Cross-check/likely merge with P0599 (Nasser-Brega Oil Pipeline, GOIT) before re-referencing; do not publish the 277km/14.87 bcm/y gas-specific figures without independent support for a distinct gas line.",
+      "researcher_notes": "The sheet's only cited source for this row (OPEC Annual Statistics Bulletin 2012, ASB2012.pdf) fails to name the pipeline at all: ran url_verifier against the live PDF for 'Nasser-Brega', 'Brega', and 'pipeline' -- all three came back FAIL ('200 but missing expected'). So the row's existing citation is a generic aggregate document that provides zero specific support -- exactly the existence-flag scenario. Independent web search turned up a SEPARATE, well-documented GEM entry, 'Nasser-Brega Oil Pipeline' (gem.wiki/Nasser-Brega_Oil_Pipeline), which is tracked in GOIT as ProjectID P0599: Fuel=Oil, Status=operating, StartLocation=Nasser oilfield, EndLocation=Brega, StartState/Province=EndState/Province=Al Wahat, Diameter=36in, Length=171.62km, Capacity=38.84 mtpa, Owner=Libyan National Oil Corp 100%, built October 1961 (also known as Zaltan-Al Brayqah), operator Sirte Oil Company. P1866's endpoints (Nasser oilfield -> Mersa Brega/Al Wahat) and diameter (36in) match P0599 EXACTLY; only the length (277km vs 171.62km) and capacity (14.87 bcm/y vs 38.84 mtpa, different units entirely -- gas volume vs oil mass) differ. Independently verified via offshore-technology.com that the Nasser field itself is classified as a conventional OIL field operated by Sirte Oil (not a gas field), and via Wikipedia's Zelten oil field article (Zelten = Nasser field's earlier name) that the field's documented pipeline connection is 'the main line between the Zelten field and Brega' in an oil-production context (associated gas is used for gas-lift, not described as a separate transmission pipeline to Brega). GEM's own GGIT gas-tracker page for this row is also strikingly thin (single-sentence description, single non-supporting citation, StartLocation left blank in the mainsheet, a stray unverifiable Facebook photo link sitting in ResearcherNotes that also does not mention Nasser or Brega when checked). Taken together this reads as a likely mis-tracked/duplicated entry -- the same physical Nasser-to-Brega corridor recorded once (correctly, well-cited) as an oil pipeline in GOIT and a second time (thinly, uncited) as a gas pipeline in GGIT -- rather than genuine evidence of a distinct 36in/277km gas transmission line on this route. Could not fully rule out that Nasser field's associated/lift gas is evacuated via a real parallel gas line, but no independent source names one, so verdict is concern rather than confirmed.",
+      "proposed_refs": ["https://www.offshore-technology.com/marketdata/oil-gas-field-profile-nasser-conventional-oil-field-libya/", "https://en.wikipedia.org/wiki/Zelten_oil_field"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not add refs for the current Length/Capacity/Diameter values as-is; if the row survives the duplicate review, re-derive spec values from independently-sourced material rather than re-using GEM-internal figures.",
+      "researcher_notes": "Because the row's sole citation (OPEC ASB2012) does not mention this pipeline at all, and no other independent source could be found naming a 'Nasser-Brega Gas Pipeline' with any length/diameter/capacity figures, none of Length=277km, Diameter=36in, or Capacity=14.87 bcm/y could be corroborated by >=2 independent sources as the task requires. This is a downstream symptom of the existence/duplicate concern above, not a separate fresh error.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Concern (duplicate + spec): P1866 'Nasser-Brega Gas Pipeline' shares identical endpoints (Nasser oilfield -> Brega, Al Wahat) and diameter (36in) with GOIT's well-documented P0599 'Nasser-Brega Oil Pipeline' (1961-built, Sirte Oil operated); the row's only citation (OPEC ASB2012) fails url_verifier for even 'Brega' or 'pipeline', and independent sources confirm Nasser field is an oil field -- likely a mis-tracked oil/gas duplicate rather than a distinct gas transmission line; no independently verifiable refs found for any of the existing Status/Fuel/Capacity/Length/Diameter/Owner/Location values, so no fills staged."
+}
