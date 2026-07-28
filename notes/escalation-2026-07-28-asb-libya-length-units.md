@@ -90,6 +90,19 @@ Four independent checks, two of which are controls from *outside* Libya:
   The practical difference is ~1 km, so this is a curiosity rather than a correction,
   but it hints the converting pass also mis-aligned a row.
 
+## The citable source
+
+    https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf
+
+Verified: HTTP 200, and the file it serves is **md5-identical** (`0f45d36b…`, 7,711,852
+bytes) to the PDF I extracted the table from. Table 4.10, Libya block, pp. 75–76. Use
+this in place of the dead `opec.org` link currently sitting in these rows' `[ref]` cells.
+
+Caveat for whoever re-verifies it: `scripts/url_verifier.py` returns OK on a generic
+token ("OPEC") but FAILS on "Jakhira" — it does not read that deep into a 7.7 MB PDF.
+That is a verifier limit, not a bad citation; confirm with `pdftotext -layout`. Noted in
+the verifier's own docstring.
+
 ## What is already staged vs. what this memo is the only record of
 
 Six of the 14 were found independently, row by row, by the Leg-3 research agents before

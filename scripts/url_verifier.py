@@ -18,6 +18,9 @@ links" were false):
     cite the Wayback snapshot (which passes) instead.
   * ligature-encoded (esp. Arabic) PDFs — the "contains value" substring check can't read
     contiguous Arabic; verify with `pdftotext` before discarding.
+  * LARGE PDFs — the extractor does not reach the whole document. The OPEC ASB2012 Wayback
+    PDF (7.7 MB, ~200pp) passes on "OPEC" and FAILS on "Jakhira", a token that is provably
+    in it. On a big PDF, a content FAIL says nothing; download it and `pdftotext -layout`.
   * SSL cert-chain errors (e.g. pgjonline.com) — confirm via `curl`/the www form/Wayback.
 
 Content false-negatives (a 200 the screen marks "value not found" that DOES support the value):
