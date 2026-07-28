@@ -48,7 +48,7 @@ curl -sL "https://raw.githubusercontent.com/GlobalEnergyMonitor/GOIT-GGIT-pipeli
 |---|---|
 | `RouteType` | dropdown — match the exact sheet strings (see `controlled_vocab.md`) |
 | `RouteLocation` | `Folder` if a GeoJSON is uploaded; blank if not yet created |
-| `RouteAccuracy` | `high` / `medium` / `low` / `no route` / `very high (within meters)` |
+| `RouteAccuracy` | `high` / `medium` / `low` / `no route` / `very high (within meters)` / `very low (straight line/schematic)` |
 | `RouteNotes` | map source, endpoint coords, link to the visual map used |
 | `Route [ref]` | URL to the best available map source |
 
@@ -57,8 +57,19 @@ curl -sL "https://raw.githubusercontent.com/GlobalEnergyMonitor/GOIT-GGIT-pipeli
 - `medium` — not a straight line but not precisely traced (e.g. digitized from a
   press-release map).
 - `low` — basic point-A-to-point-B from known endpoints.
+- `very low (straight line/schematic)` — a straight line or a schematic trace: it says
+  roughly *where* the pipe runs and nothing more.
 - `no route` — none available, or a capacity expansion with no new pipe.
 - `very high (within meters)` — survey-grade.
+
+**`very low (straight line/schematic)` is the newest value and the largest weak bucket** —
+GEM re-graded ~1,428 rows into it (911 gas + 517 oil), mostly from `low`, between the two
+2026-07-28 pulls. Any weak-accuracy selector must include it: it was missing from
+`build_route_worklist.ELIGIBLE_ACCURACY` and `build_qc_workbook.ROUTE_ACCURACY`, which
+silently excluded those rows from route creation and flagged all of them as vocab
+violations. Prefer an **allowlist of *good* values** (`route_compare.replacement_candidate`,
+`route_integrity._MEDIUM_PLUS`) over a denylist of weak ones — a new weak value then
+degrades safely instead of disappearing.
 
 **WKT/route-format QC checks are permanently dropped — do not rebuild route-format
 QC** (the QC workbook's old Sheet 10).

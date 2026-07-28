@@ -14,7 +14,7 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 | Field | Allowed values |
 |---|---|
 | `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idle`, `mothballed`, `retired` |
-| `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** `very high (within meters)` (a valid value, written exactly like that, mixed case) |
+| `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)` |
 | `PipelineType` | `transmission`, `gathering`, `distribution` |
 
 ## Title Case fields (the exceptions)

@@ -26,7 +26,8 @@ HEADER_FILL = PatternFill("solid", fgColor="4472C4")
 HEADER_FONT = Font(bold=True, color="FFFFFF")
 FLAG_FILL = PatternFill("solid", fgColor="FFCCCC")
 
-ROUTE_ACCURACY = {"high", "medium", "low", "no route", "very high (within meters)", ""}
+ROUTE_ACCURACY = {"high", "medium", "low", "no route", "very high (within meters)",
+                  "very low (straight line/schematic)", ""}
 PIPELINE_TYPE = {"transmission", "gathering", "distribution", ""}
 TITLE_VOCAB = {
     "FIDStatus": {"Pre-FID", "FID", ""},
