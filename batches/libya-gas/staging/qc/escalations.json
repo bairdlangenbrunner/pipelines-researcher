@@ -1,0 +1,27 @@
+[
+ {
+  "title": "ASB Table 4.10 mi->km length defect (14 gas rows)",
+  "summary": "LengthKnownKm is 1.609x too long on P1856/P1857/P1859/P1860/P1861/P1862/P1864/P1865/P1866/P1867/P1868/P1869/P1870/P1871 — ASB2012's Libya block is in km under a 'miles' header and the ingest converted anyway. 7 are staged as fills here; 7 appear only as spec concerns; P1859 is recorded nowhere. Libya-only — Qatar/Iraq/Saudi convert correctly, so do NOT sweep other countries. Fix lengths BEFORE judging any route-integrity flag.",
+  "memo": "notes/escalation-2026-07-28-asb-libya-length-units.md"
+ },
+ {
+  "title": "ASB Table 4.10 scm/y zero-capacity defect (8 rows: 4 Libya, 4 Algeria)",
+  "summary": "The '(1,000 scm/yr)' column multiplier was dropped at ingest and 'scm/yr' is not a unit CapacityBcm/y recognises, so all 8 rows read as zero-capacity. x1000 fits Libya's four and does NOT fit Algeria's — no blanket fix.",
+  "memo": "notes/escalation-2026-07-28-scm-capacity-units.md"
+ },
+ {
+  "title": "Cluster A — coastal double-count (P0483 + 5 members)",
+  "summary": "P0483 'Libya Coastal Gas Pipeline' appears to aggregate its own member segments P1862/P1863/P1864/P1865 (+P1789). Either delete the members or move P0483 to a network-route designation — note 'n/a' is NOT a valid Status; aggregates take a blank Status + a PipelineNetworkGrouping label.",
+  "memo": "batches/libya-gas/staging/redundancy/"
+ },
+ {
+  "title": "Three condensate lines misfiled in GGIT",
+  "summary": "P6705 and P6713 are already carried by GOIT (P0606, P6457) so they should be DELETED; P6709 has no GOIT counterpart so it should be MOVED. Same defect, three different actions — needs one ruling.",
+  "memo": "batches/libya-gas/staging/redundancy/"
+ },
+ {
+  "title": "GGIT small-diameter inclusion threshold",
+  "summary": "GulfPub's Libya run surfaced 6-8in field gathering laterals below the tracker-wide 12in 5th-percentile diameter, but GGIT already carries 34 gathering rows globally. A one-time scope ruling stops this being re-litigated at every scrape.",
+  "memo": "batches/libya-gas/staging/recon-gulfpub-20260728/staged_addition_scope.json"
+ }
+]

@@ -50,11 +50,18 @@ applied). See docs/workflows.md "Batch artifacts".
 ## libya-gas
 
 - `staging/annual` — rows=6 fills=10 updates=0 status-pending=1 refs(REFS_ADDED=19, REVERIFIED=24, UNRESOLVED=3) routes=0 new(new_row=1)
-- `staging/qc` — no store — invisible to discovery
-- `staging/recon-gulfpub-20260723` — recon inputs
-- `staging/ref-sweep-operating` — rows=30 fills=37 updates=0 status-pending=0 refs(DEAD_LINK=11, REVERIFIED=29, UNRESOLVED=201) routes=0 new(none)
+- `staging/cancelled-review` [sweep] — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=9, REVERIFIED=1, UNRESOLVED=6) routes=0 new(none)
+- `staging/qc` [assembled packet: handoff] — rows=38 fills=27 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/recon-gulfpub-20260728` — recon inputs
+- `staging/recon-osm-20260728` — recon inputs
+- `staging/redundancy` [redundancy] — rows=16 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/ref-sweep-operating` — rows=30 fills=37 updates=0 status-pending=0 refs(REFS_ADDED=192, REVERIFIED=30, UNRESOLVED=19) routes=0 new(none)
 - `deliverables/pipelines_batch_20260723_1425_ET_libya-gas_annual-indev.xlsx`
 - `deliverables/pipelines_batch_20260723_1434_ET_libya-gas_discovery.xlsx`
+- `deliverables/pipelines_batch_20260728_1148_ET_libya-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260728_1149_ET_libya-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-evidence.xlsx`
 
 ## saudi-arabia-gas
 

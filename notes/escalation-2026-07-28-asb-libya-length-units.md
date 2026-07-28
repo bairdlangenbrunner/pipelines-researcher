@@ -80,6 +80,10 @@ Four independent checks, two of which are controls from *outside* Libya:
 - **P1872 Km-91.5-Brega** (sheet 184, ASB 92) and **P1873 Jakhira-Intesar** (sheet 160,
   ASB 80) are each **exactly 2.00×** the ASB figure, not 1.609×. Different mechanism,
   unknown origin. Flagged, not diagnosed.
+  - The `sirte-grid` agent proposed that both are dual-diameter rows (`36, 16` and
+    `20, 8`) and may be summing two parallel pipes of the ASB length. Attractive, but
+    **P1867 is also dual-diameter (`30, 12`) and shows the ordinary ×1.609**, so
+    "parallel pipe" does not by itself separate the two groups. Left open.
 - **P0484 Wafa-Mellitah** at 5246.00 is `raw × 10` — the separate decimal-shift error
   already on record.
 - **P1855 / P1858 / P1863 / P6705 / P6709 / P6713 / P6714** carry the ASB figure
@@ -105,10 +109,13 @@ the verifier's own docstring.
 
 ## What is already staged vs. what this memo is the only record of
 
-Six of the 14 were found independently, row by row, by the Leg-3 research agents before
-the class pattern was visible, and are staged as ordinary fills with their own verified
-refs in `batches/libya-gas/staging/qc/rows/` — they will appear in the handoff actions
-workbook and can simply be applied:
+Three separate research agents hit this pattern independently, from different corridors
+and without being told about each other's findings — which is the main reason I am
+confident it is real and not a coincidence of arithmetic.
+
+**Seven are staged as ordinary fills** with their own verified refs in
+`batches/libya-gas/staging/qc/rows/`. They appear in the handoff actions workbook and
+can simply be applied:
 
 | PID | staged value | ASB raw | tier | note |
 |---|---|---|---|---|
@@ -118,16 +125,22 @@ workbook and can simply be applied:
 | P1862 | 246 | 246 | high | |
 | P1864 | 125 | 125 | medium | |
 | P1865 | 98 | 98 | medium | |
+| P1866 | 172 | 172 | medium | also corroborated by ASB's *oil* table 4.9, same corridor |
 
-That five of six landed on the ASB raw figure *from independent sources* is itself
+That six of seven landed on the ASB raw figure *from independent sources* is itself
 corroboration that the raw figure is the real length.
 
-The other **eight — P1857, P1859, P1866, P1867, P1868, P1869, P1870, P1871 — are not
-staged anywhere.** No agent was asked to re-length them; the defect was found by
-pattern-matching the whole block against the source table after the fact. This memo is
-their only record. P1857 is a partial exception: its research agent noted in passing
-that the line looked closer to ~26 km than the sheet's 41, without staging it — which
-is exactly the ASB figure.
+**Seven more are recorded only as `spec` validity concerns** — P1857, P1867, P1868,
+P1869, P1870, P1871, P1872, P1873 (eight rows; P1857 from the `sirte-east` agent, the
+rest from `sirte-grid`). Length was not their assigned flag, so the agents correctly
+declined to stage a fill and filed a "human should review this against the ASB figure"
+concern instead. They will surface in the handoff **evidence** workbook as open issues,
+not in the actions workbook as paste-ready values. If the class ruling goes the obvious
+way, these are the rows that still need converting into actual edits.
+
+**P1859 Bouri-Bahr Assalam (32.00 vs ASB 20) is recorded nowhere.** It carried no QC
+flag, so it was never in the Leg-3 worklist at all and no agent looked at it. This memo
+is its only record.
 
 ## Recommended disposition
 

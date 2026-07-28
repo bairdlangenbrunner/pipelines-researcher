@@ -1,0 +1,52 @@
+{
+ "project_id": "P1868",
+ "pipeline_name": "Km-81.5-Brega Gas Pipeline",
+ "sheet_row": 1142,
+ "wiki": "https://www.gem.wiki/Km-81.5-Brega_gas_pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Sirte Oil"},
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "gem.wiki's 'Sirte Oil' lead is independently confirmed by OPEC ASB2012 Table 4.10 'Gas pipelines in OPEC Members', which lists 'Km-81.5/Brega, Sirte, 82, 30' -- name, operator (Sirte, i.e. Sirte Oil Company), and diameter (30in, matching this row's Diameter=30.00) all line up. Also present with matching figures in the earlier ASB2009 edition. url_verifier.py substring check fails on the compressed PDF bytes (documented false-negative, see P1866's notes for the mechanism); content confirmed via pdftotext -layout extraction of the downloaded PDF. 'Sirte Oil' here refers to Sirte Oil Company (SOC); use whatever canonical entity name the operators/owners tab already has on file for SOC if this differs from the literal ASB table wording."
+  },
+  {
+   "ref_col": "StartYear1 [ref]",
+   "value_cols": ["StartYear1"],
+   "values": {},
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No citable commissioning year found. This is an intermediate km-marker segment (not tied to a single named field), which makes it especially hard to date via field-production-start proxies. Checked the same source set as the other rows in this cluster (Sirte Oil Company site -- unusable, see P1866/P1867 notes; NOC; Libya Herald/Observer; OPEC ASB -- gives length/diameter/capacity but no start date; the core.ac.uk Libya thesis -- no mention of this specific segment). Marking UNRESOLVED."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Human should review LengthKnownKm (currently 132.00) against the OPEC-sourced 82 km figure -- recommend correcting to 82 km pending confirmation, consistent with the P1866 precedent (which already has a staged correction from 277 to 172 for the same apparent error pattern).",
+   "researcher_notes": "Not a flagged question for this row (only Operator and Date_logic were flagged), so no fill proposed, but noting it since it emerged directly from the same ASB2012 table used above: OPEC lists this segment's length as 82 km, while the sheet's LengthKnownKm is 132.00. 132 / 82 = 1.610 -- matching the mile-to-km conversion factor (1.60934) almost exactly, the same double-conversion pattern documented on P1866 (277/172=1.611) and P1867 (40/25=1.60). This pattern recurs across P1868, P1869, P1870, P1871 (all single-diameter Sirte-grid segments; see their respective shards) at a consistent ~1.61x ratio, suggesting a systemic legacy error where an already-metric OPEC figure was treated as miles and converted to km a second time at ingest. None of these rows have a drawn route to catch the discrepancy via geometry (RouteAccuracy = 'no route' on all of them), unlike P1866 which did have a drawn route and got caught.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

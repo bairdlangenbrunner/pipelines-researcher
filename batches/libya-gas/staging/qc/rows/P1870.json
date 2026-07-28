@@ -1,0 +1,56 @@
+{
+ "project_id": "P1870",
+ "pipeline_name": "Intesar-Sahel Gas Pipeline",
+ "sheet_row": 1431,
+ "wiki": "https://www.gem.wiki/Intesar-Sahel_gas_pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Sirte Oil"},
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "gem.wiki's 'Sirte Oil' lead is independently confirmed by OPEC ASB2012 Table 4.10 'Gas pipelines in OPEC Members', which lists 'Intesar/Sahel, Sirte, 80, 30' -- name, operator, and diameter (30in, matching this row's Diameter=30.00) all line up. Also present with matching figures in the earlier ASB2009 edition. url_verifier.py substring check fails on the compressed PDF bytes (documented false-negative, see P1866's notes); content confirmed via pdftotext -layout extraction. 'Sirte Oil' refers to Sirte Oil Company (SOC); use the operators/owners tab's existing canonical entity name for SOC if it differs from this literal wording."
+  },
+  {
+   "ref_col": "StartYear1 [ref]",
+   "value_cols": ["StartYear1"],
+   "values": {"StartYear1": "1968"},
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20210627234719/https://core.ac.uk/download/pdf/40057706.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20210627234719/https://core.ac.uk/download/pdf/40057706.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No direct citation for this pipeline's own commissioning year was found. This is a field-first-production-year PROXY, which the protocol explicitly allows at tier=low with a caveat: a 2007 University of Salford PhD thesis (Edwik, 'Oil Dependency, Economic Diversification and Development: A Case Study of Libya', recovered via Wayback since the live core.ac.uk copy 404s; verified OK/200) states 'In 1968, Occidental began production from its Intisar field at a rate only slightly below that of Esso and Oasis.' Intisar (Intesar) is one of this pipeline's two named endpoints, and Occidental's Intisar concession is well documented (discovered 1967 per the same thesis) as the source field for associated/non-associated gas exports toward Sahel/Zueitina. 1968 is therefore the field's first-production year, NOT a confirmed pipeline commissioning date -- the actual gas trunk line could have been built at the same time as first oil production, or added later once gas handling capacity was developed. Flagging tier=low accordingly, per protocol guidance on this exact situation."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Human should review LengthKnownKm (currently 129.00) against the OPEC-sourced 80 km figure -- recommend correcting to 80 km pending confirmation, consistent with the same pattern flagged on the sibling rows in this cluster.",
+   "researcher_notes": "Not a flagged question for this row (Operator and Date_logic were flagged, not length), so no fill proposed for length, but noting it since it emerged directly from the OPEC ASB2012 table used above: length is listed as 80 km, sheet's LengthKnownKm is 129.00. 129 / 80 = 1.6125 -- matching the ~1.609 mile-to-km double-conversion pattern documented across this cluster. RouteAccuracy = 'no route' here too.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

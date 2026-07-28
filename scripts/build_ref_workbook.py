@@ -1112,6 +1112,8 @@ def _split_readme(ws, meta, sheet_defs, actions_file: bool, companion: str):
         ("Country", scope.get("country", meta.get("country", ""))),
         ("GEM CSV", scope.get("csv", "")),
         ("Prior staged packets", J(meta.get("staged_dirs", []))),
+        ("ESCALATIONS", J([f"{e.get('title','')} — {e.get('summary','')} [{e.get('memo','')}]"
+                           for e in meta.get("escalations", [])])),
         ("Companion file", companion),
         ("", ""),
         ("Counts", J([f"{k}={v}" for k, v in counts.items()])),
@@ -1494,6 +1496,8 @@ def _fill_readme(ws, meta, sheet_defs, handoff=False):
             ("Country", scope.get("country", meta.get("country", ""))),
             ("GEM CSV", scope.get("csv", "")),
             ("Prior staged packets", J(meta.get("staged_dirs", []))),
+        ("ESCALATIONS", J([f"{e.get('title','')} — {e.get('summary','')} [{e.get('memo','')}]"
+                           for e in meta.get("escalations", [])])),
             ("", ""),
             ("Counts", J([f"{k}={v}" for k, v in counts.items()])),
             ("", ""),
@@ -1584,6 +1588,12 @@ def main() -> None:
 
     data = json.loads((Path(args.staging) / "staged_resolutions.json").read_text())
     meta = data.get("meta", {})
+    # Optional: class-level escalations that no individual row action can carry (a whole
+    # class of GEM values is wrong, an ingest defect, a scope ruling). Without this they
+    # live only in notes/ and the researcher working from the workbook never sees them.
+    esc_path = Path(args.staging) / "escalations.json"
+    if esc_path.exists():
+        meta = {**meta, "escalations": json.loads(esc_path.read_text())}
     resolutions = data.get("resolutions", [])
     cmdty = (meta.get("commodity") or meta.get("scope", {}).get("tracker") or "oil")
     prefix = cmdty.capitalize()

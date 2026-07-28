@@ -30,24 +30,34 @@ MAP_ROOT = {
     "basemap_credit": "base map © Survey of Israel 2018",
     "disclaimer": "map is schematic → traced RouteAccuracy capped at medium",
     "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)",
+    "centerline_correction": "offshore white-band traces are recentered off the dark "
+                             "outline edge onto the band's bright-fill midpoint "
+                             "(recenter_traces.py); the raw BFS trace hugged the edge "
+                             "(~4px / ~415 m offset). Onshore lines on the topo basemap "
+                             "(e.g. P0480) are not amenable and stay human-review candidates.",
+    "digitization_scheme": "legend.md — the map's key (מקרא) is transcribed and its "
+                           "point symbols are used as trace anchors: routes pass "
+                           "dead-through each ⊕ well-marker / ○ marine-receiving-station "
+                           "centre (point-symmetry detection), stay straight through "
+                           "crossings, and follow the gas-suppliers white band centerline.",
 }
 
 # per-candidate lineage: the immediate parent artifact + which root it descends from
 LINEAGE = {
     "P7602": {
-        "derived_from": "traces/trace_leviathan.geojson",
+        "derived_from": "traces/trace_leviathan_centerline.geojson",
         "root": "map",
-        "method": "digitized (map trace)",
-        "tools": ["extract_offshore_lines.py", "build_route_candidate.py",
-                  "validate_route_candidate.py"],
+        "method": "digitized (map trace, band-centerline corrected)",
+        "tools": ["extract_offshore_lines.py", "recenter_traces.py",
+                  "build_route_candidate.py", "validate_route_candidate.py"],
         "route_accuracy_cap": "medium",
     },
     "P7603": {
-        "derived_from": "traces/trace_leviathan.geojson",
+        "derived_from": "traces/trace_leviathan_centerline.geojson",
         "root": "map",
-        "method": "digitized (map trace; shares P7602 corridor)",
-        "tools": ["extract_offshore_lines.py", "build_route_candidate.py",
-                  "validate_route_candidate.py"],
+        "method": "digitized (map trace, band-centerline corrected; shares P7602 corridor)",
+        "tools": ["extract_offshore_lines.py", "recenter_traces.py",
+                  "build_route_candidate.py", "validate_route_candidate.py"],
         "route_accuracy_cap": "medium",
     },
     "P0480": {
@@ -59,10 +69,17 @@ LINEAGE = {
         "route_accuracy_cap": "low",
     },
     "P8003": {
-        "derived_from": "traces/trace_karish.geojson",
+        "derived_from": "traces/trace_karish_centerline.geojson",
         "root": "map",
-        "method": "digitized (map trace); NEW discovery row, no prior GEM route",
-        "tools": ["extract_offshore_lines.py", "build_route_candidate.py",
+        "method": ("digitized (map trace, band-centerline corrected); re-traced through "
+                   "the map's legend point-anchors Tanin well-marker (⊕) → Karish/Energean "
+                   "FPSO well-marker (⊕) → Dor INGL OOAT marine-receiving-station (○), each "
+                   "hit dead-centre; NEW discovery row, no prior GEM route. FULL DRAWN "
+                   "EXTENT ~129 km — the Tanin→Karish leg is a drawn FUTURE line (קו עתידי, "
+                   "field tieback), Karish→OOAT is the operating export line; trim is a "
+                   "human decision at apply time."),
+        "tools": ["extract_offshore_lines.py", "recenter_traces.py",
+                  "retrace_karish_tanin.py", "build_route_candidate.py",
                   "validate_route_candidate.py"],
         "route_accuracy_cap": "medium",
     },

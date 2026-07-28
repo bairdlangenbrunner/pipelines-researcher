@@ -214,7 +214,15 @@ def wiki_p8003(v):
         g = f["geometry"]
         if g["type"] == "LineString":
             coords = g["coordinates"]
-    map_lines = ";\n".join(f"{lat},{lon}" for lon, lat in coords)
+    # The candidate carries the FULL drawn line Tanin ⊕ -> Karish ⊕ (a FUTURE field-
+    # tieback leg) -> Dor ○ (the operating export). This discovery row is the OPERATING
+    # export line, so the display map shows only the Karish-FPSO -> Dor segment; the
+    # future Tanin leg is staged in the route candidate for a human trim decision.
+    KARISH = (34.243301, 33.236991)
+    ki = min(range(len(coords)),
+             key=lambda i: (coords[i][0] - KARISH[0]) ** 2 + (coords[i][1] - KARISH[1]) ** 2)
+    export = coords[ki:]
+    map_lines = ";\n".join(f"{lat},{lon}" for lon, lat in export)
     OT = "https://www.offshore-technology.com/projects/karish-tanin-field-development-mediterranean-sea/"
     OM = "https://www.offshore-mag.com/regional-reports/middle-east/article/14234861/karish-offshore-gas-field-connected-to-israeli-distribution-system"
     NSE = "https://www.nsenergybusiness.com/projects/karish-gas-field-development/"

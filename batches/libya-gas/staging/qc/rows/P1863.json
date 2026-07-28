@@ -1,0 +1,30 @@
+{
+ "project_id": "P1863",
+ "pipeline_name": "Brega-Khoms Gas Pipeline",
+ "sheet_row": 1272,
+ "wiki": "https://www.gem.wiki/Brega-Khoms_gas_pipeline",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Sirte Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+      "https://en.wikipedia.org/wiki/National_Oil_Corporation"
+    ],
+    "verifications": [
+      {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+      {"url": "https://en.wikipedia.org/wiki/National_Oil_Corporation", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "Did not cite the wiki (which also names Sirte Oil), verified independently. OPEC ASB2012 Table 4.10 (Wayback-recovered, live opec.org original dead per the known batch gotcha; I ran pdftotext -layout on the PDF myself) names this exact segment's operator: 'Brega/Khoms Sirte Oil 645 34 11,611,442 na'. Wikipedia's National Oil Corporation article (verified live) independently confirms Sirte Oil Company as an NOC operating subsidiary. Two independent origins -> tier high. No length_ratio flag was raised on this row, and my own cross-check (below) confirms why: unlike the other three segments, this one's stated length is NOT inflated."
+  }
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "No length correction needed for this row -- the sheet's existing LengthKnownKm=645 already matches the independently-sourced value, unlike its three sibling segments (P1862, P1864, P1865) which needed a units-mislabeling correction. Leave as-is.",
+    "researcher_notes": "This row carries no length_ratio flag in the brief, and while researching the sibling segments' units problem I confirmed why: OPEC ASB2012's raw Table 4.10 entry for 'Brega/Khoms' is 645 (nominally tabulated under a 'Length (miles)' header, but for the Libya block these raw numbers are actually already km -- see the P1862 shard's researcher_notes for the full miles-vs-km deduction, corroborated by an independent World Bank/Tractebel report which states the western coastal section spans 645 km from Brega to Khoms with ~370 mmscf/d capacity). GEM's sheet already carries 645 km for this segment unconverted, i.e. correct, whereas the other three segments' sheet values (396, 201, 158) appear to have been produced by erroneously applying a miles->km conversion factor to OPEC's already-km raw numbers. This is a useful corroborating data point for the pattern documented on P1862/P1864/P1865, not an action item for this row.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

@@ -11,7 +11,9 @@
       "fetched": "2026-07-23",
       "basemap_credit": "base map © Survey of Israel 2018",
       "disclaimer": "map is schematic → traced RouteAccuracy capped at medium",
-      "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)"
+      "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)",
+      "centerline_correction": "offshore white-band traces are recentered off the dark outline edge onto the band's bright-fill midpoint (recenter_traces.py); the raw BFS trace hugged the edge (~4px / ~415 m offset). Onshore lines on the topo basemap (e.g. P0480) are not amenable and stay human-review candidates.",
+      "digitization_scheme": "legend.md — the map's key (מקרא) is transcribed and its point symbols are used as trace anchors: routes pass dead-through each ⊕ well-marker / ○ marine-receiving-station centre (point-symmetry detection), stay straight through crossings, and follow the gas-suppliers white band centerline."
     }
   },
   "routes": [
@@ -19,8 +21,8 @@
       "project_id": "P7602",
       "produced_by": "pipelines-researcher route-creation SOP §8",
       "batch": "israel-gas / route-creation-tmng-map",
-      "method": "digitized (map trace)",
-      "derived_from": "traces/trace_leviathan.geojson",
+      "method": "digitized (map trace, band-centerline corrected)",
+      "derived_from": "traces/trace_leviathan_centerline.geojson",
       "root_source": {
         "type": "raster map trace",
         "name": "INGL national natural-gas transmission map (\"big-map.jpg\")",
@@ -30,27 +32,30 @@
         "fetched": "2026-07-23",
         "basemap_credit": "base map © Survey of Israel 2018",
         "disclaimer": "map is schematic → traced RouteAccuracy capped at medium",
-        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)"
+        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)",
+        "centerline_correction": "offshore white-band traces are recentered off the dark outline edge onto the band's bright-fill midpoint (recenter_traces.py); the raw BFS trace hugged the edge (~4px / ~415 m offset). Onshore lines on the topo basemap (e.g. P0480) are not amenable and stay human-review candidates.",
+        "digitization_scheme": "legend.md — the map's key (מקרא) is transcribed and its point symbols are used as trace anchors: routes pass dead-through each ⊕ well-marker / ○ marine-receiving-station centre (point-symmetry detection), stay straight through crossings, and follow the gas-suppliers white band centerline."
       },
       "route_accuracy_cap": "medium",
-      "length_km": 119.3,
+      "length_km": 119.8,
       "sheet_length_km": 120.0,
       "replacement": false,
       "qc_gate": "PASS",
       "tools": [
         "extract_offshore_lines.py",
+        "recenter_traces.py",
         "build_route_candidate.py",
         "validate_route_candidate.py"
       ],
-      "researcher_notes": "traced from INGL transmission map (schematic → medium); Leviathan field lines to the Dor landfall/INGL OOAT. shared corridor with P7603 (II) and P7604/P7606 (III/IV).",
+      "researcher_notes": "traced from INGL transmission map (schematic → medium); Leviathan field lines to the Dor landfall/INGL OOAT. shared corridor with P7603 (II) and P7604/P7606 (III/IV); route recentered onto the band bright-fill CENTERLINE (recenter_traces.py; the raw BFS trace hugged the dark outline edge, ~4px/~415 m offset).",
       "generated": "2026-07-23"
     },
     {
       "project_id": "P7603",
       "produced_by": "pipelines-researcher route-creation SOP §8",
       "batch": "israel-gas / route-creation-tmng-map",
-      "method": "digitized (map trace; shares P7602 corridor)",
-      "derived_from": "traces/trace_leviathan.geojson",
+      "method": "digitized (map trace, band-centerline corrected; shares P7602 corridor)",
+      "derived_from": "traces/trace_leviathan_centerline.geojson",
       "root_source": {
         "type": "raster map trace",
         "name": "INGL national natural-gas transmission map (\"big-map.jpg\")",
@@ -60,19 +65,22 @@
         "fetched": "2026-07-23",
         "basemap_credit": "base map © Survey of Israel 2018",
         "disclaimer": "map is schematic → traced RouteAccuracy capped at medium",
-        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)"
+        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)",
+        "centerline_correction": "offshore white-band traces are recentered off the dark outline edge onto the band's bright-fill midpoint (recenter_traces.py); the raw BFS trace hugged the edge (~4px / ~415 m offset). Onshore lines on the topo basemap (e.g. P0480) are not amenable and stay human-review candidates.",
+        "digitization_scheme": "legend.md — the map's key (מקרא) is transcribed and its point symbols are used as trace anchors: routes pass dead-through each ⊕ well-marker / ○ marine-receiving-station centre (point-symmetry detection), stay straight through crossings, and follow the gas-suppliers white band centerline."
       },
       "route_accuracy_cap": "medium",
-      "length_km": 119.3,
+      "length_km": 119.8,
       "sheet_length_km": 120.0,
       "replacement": false,
       "qc_gate": "PASS",
       "tools": [
         "extract_offshore_lines.py",
+        "recenter_traces.py",
         "build_route_candidate.py",
         "validate_route_candidate.py"
       ],
-      "researcher_notes": "traced from INGL transmission map (schematic → medium); II shares the I corridor — map draws one line for the field-to-shore system.",
+      "researcher_notes": "traced from INGL transmission map (schematic → medium); II shares the I corridor — map draws one line for the field-to-shore system; route recentered onto the band bright-fill CENTERLINE (recenter_traces.py; the raw BFS trace hugged the dark outline edge, ~4px/~415 m offset).",
       "generated": "2026-07-23"
     },
     {
@@ -90,7 +98,9 @@
         "fetched": "2026-07-23",
         "basemap_credit": "base map © Survey of Israel 2018",
         "disclaimer": "map is schematic → traced RouteAccuracy capped at medium",
-        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)"
+        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)",
+        "centerline_correction": "offshore white-band traces are recentered off the dark outline edge onto the band's bright-fill midpoint (recenter_traces.py); the raw BFS trace hugged the edge (~4px / ~415 m offset). Onshore lines on the topo basemap (e.g. P0480) are not amenable and stay human-review candidates.",
+        "digitization_scheme": "legend.md — the map's key (מקרא) is transcribed and its point symbols are used as trace anchors: routes pass dead-through each ⊕ well-marker / ○ marine-receiving-station centre (point-symmetry detection), stay straight through crossings, and follow the gas-suppliers white band centerline."
       },
       "route_accuracy_cap": "low",
       "length_km": 54.1,
@@ -109,8 +119,8 @@
       "project_id": "P8003",
       "produced_by": "pipelines-researcher route-creation SOP §8",
       "batch": "israel-gas / route-creation-tmng-map",
-      "method": "digitized (map trace); NEW discovery row, no prior GEM route",
-      "derived_from": "traces/trace_karish.geojson",
+      "method": "digitized (map trace, band-centerline corrected); re-traced through the map's legend point-anchors Tanin well-marker (⊕) → Karish/Energean FPSO well-marker (⊕) → Dor INGL OOAT marine-receiving-station (○), each hit dead-centre; NEW discovery row, no prior GEM route. FULL DRAWN EXTENT ~129 km — the Tanin→Karish leg is a drawn FUTURE line (קו עתידי, field tieback), Karish→OOAT is the operating export line; trim is a human decision at apply time.",
+      "derived_from": "traces/trace_karish_centerline.geojson",
       "root_source": {
         "type": "raster map trace",
         "name": "INGL national natural-gas transmission map (\"big-map.jpg\")",
@@ -120,19 +130,23 @@
         "fetched": "2026-07-23",
         "basemap_credit": "base map © Survey of Israel 2018",
         "disclaimer": "map is schematic → traced RouteAccuracy capped at medium",
-        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)"
+        "georeference": "georef_params.json (ITM EPSG:2039, comb fit, ~92.5 m/px)",
+        "centerline_correction": "offshore white-band traces are recentered off the dark outline edge onto the band's bright-fill midpoint (recenter_traces.py); the raw BFS trace hugged the edge (~4px / ~415 m offset). Onshore lines on the topo basemap (e.g. P0480) are not amenable and stay human-review candidates.",
+        "digitization_scheme": "legend.md — the map's key (מקרא) is transcribed and its point symbols are used as trace anchors: routes pass dead-through each ⊕ well-marker / ○ marine-receiving-station centre (point-symmetry detection), stay straight through crossings, and follow the gas-suppliers white band centerline."
       },
       "route_accuracy_cap": "medium",
-      "length_km": 87.5,
+      "length_km": 129.2,
       "sheet_length_km": null,
       "replacement": false,
       "qc_gate": "PASS",
       "tools": [
         "extract_offshore_lines.py",
+        "recenter_traces.py",
+        "retrace_karish_tanin.py",
         "build_route_candidate.py",
         "validate_route_candidate.py"
       ],
-      "researcher_notes": "traced from INGL transmission map (schematic → medium); Energean Karish/Tanin FPSO to the Dor OOAT landfall. traced length 87.5 km vs sourced 90.3 km (Energean/Rigzone) — 3% match. NEW row P8003 (no prior GEM route). FPSO start is map-schematic (two sources ~15 km apart, medium); Dor landfall locality-level.",
+      "researcher_notes": "traced from INGL transmission map (schematic -> cap medium); routed through legend point-anchors Tanin well-marker (mikum ha-kiduach) -> Karish/Energean FPSO well-marker -> INGL OOAT marine receiving station. FULL DRAWN LINE ~129 km. SPLIT: the Tanin->Karish leg is drawn as a FUTURE line (kav atidi) = Tanin field subsea tieback to the Karish FPSO; the Karish->OOAT leg is the operating export line. Baird to decide whether P8003 keeps the full drawn extent or trims to the operating Karish->OOAT segment (~88 km). Karish/Tanin FPSO start is map-schematic. Route follows the band bright-fill CENTERLINE and passes dead-through each legend marker center; stays straight through the transverse crossing near the OOAT. Recentered off the dark outline edge (~4px/~415 m).",
       "generated": "2026-07-23"
     },
     {

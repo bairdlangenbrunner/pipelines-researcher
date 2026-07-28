@@ -1,0 +1,32 @@
+{
+ "project_id": "P0483",
+ "pipeline_name": "Libya Coastal Gas Pipeline",
+ "sheet_row": 2262,
+ "wiki": "https://www.gem.wiki/Libya_Coastal_Gas_Pipeline",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Sirte Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+      "https://en.wikipedia.org/wiki/National_Oil_Corporation",
+      "https://noc.ly/index.php/en/2015-11-05-14-30-32/affiliated-companies-eng/sirte-oil-company"
+    ],
+    "verifications": [
+      {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+      {"url": "https://en.wikipedia.org/wiki/National_Oil_Corporation", "ok": true, "contains_value": true},
+      {"url": "https://noc.ly/index.php/en/2015-11-05-14-30-32/affiliated-companies-eng/sirte-oil-company", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "The wiki's suggested 'Libya National Oil Corporation' for Operator conflates Owner and Operator -- a recurring pattern this protocol flags for Libya rows (NOC is the owner, one of its joint-venture operating companies is the operator). I did not cite the wiki; I verified independently. The live opec.org original of OPEC's Annual Statistical Bulletin 2012 is dead (known batch gotcha, redirects to homepage); I recovered the 2012-07-22 Wayback capture myself (curl 200, CDX-confirmed) and ran pdftotext -layout on the full PDF directly. Table 4.10 'Gas pipelines in OPEC Members, 2011' (printed p.75), Libya section, lists ALL FOUR segments making up this aggregate route with the SAME named operator: 'Brega/Benghazi Sirte Oil 246 34 10,761,824 na', 'Brega/Khoms Sirte Oil 645 34 11,611,442 na', 'Khoms/Tripoli Sirte Oil 125 34 17,048,995 na', 'Tripoli/Mellitah Sirte Oil 98 34 16,992,353 na' -- i.e. Sirte Oil Co, not NOC directly, is OPEC's own recorded operator of every constituent stretch of this aggregate corridor. Independently, Wikipedia's National Oil Corporation article (verified live) lists Sirte Oil Company (SOC) among NOC's subsidiaries, and NOC's own official site (noc.ly, verified live, Arabic, contains 'Sirte') lists 'Sirte Oil Company' among its affiliated companies -- both confirming SOC is NOC's wholly-owned operating subsidiary, consistent with the sheet's existing Owner1=Libyan National Oil Corp at 100%, while Operator should read Sirte Oil Co specifically. Two independent origins (an OPEC/industry statistics body naming the operator segment-by-segment, and NOC's own corporate-structure sources) triangulate on the same operator; tier high."
+  }
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "Adopt Operator=Sirte Oil Co (not 'Libya National Oil Corporation') alongside the existing Owner1=Libyan National Oil Corp -- the two fields describe different roles (owner vs. operating subsidiary), and the wiki conflated them.",
+    "researcher_notes": "See the Operator fill above. No separate action needed beyond the fill; noting explicitly because this is the general Libya-wide pattern the protocol calls out, and P0483's own wiki page is the clearest example of the conflation (it names NOC as 'Operator' when NOC is the pipeline's owner, not its operator).",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

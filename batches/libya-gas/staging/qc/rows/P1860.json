@@ -1,0 +1,52 @@
+{
+ "project_id": "P1860",
+ "pipeline_name": "Waha-Nasser Gas Pipeline",
+ "sheet_row": 1019,
+ "wiki": "https://www.gem.wiki/Waha-Nasser_gas_pipeline",
+ "fills": [
+  { "ref_col": "LengthKnownKm [ref]",
+    "value_cols": ["LengthKnownKm"],
+    "values": {"LengthKnownKm": "110"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+      "https://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+    ],
+    "verifications": [
+      {"url": "https://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+      {"url": "https://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "The sheet's 177.00 km is the same double-conversion bug found on P1856/P1857 in this cluster. OPEC ASB Table 4.10 (opec.org PDFs dead on the live site; recovered via Wayback + pdftotext per the protocol's gotcha; url_verifier FAILs on both PDFs because it can't substring-match compressed PDF text streams -- a known false-negative, manually confirmed by me) lists: ASB2012 (2011 data) 'Waha/Nasser, Waha, 110, 24in, 5,664,118' under a column headed '(miles)'; ASB2013 (2012 data) restates the same route as '68.2' under a column that IS genuine miles (68.2 x 1.609 = 109.75 km, matching ASB2012's raw '110' almost exactly). As established on P1856 (using the well-documented 540 km Greenstream pipeline in the same table as ground truth), ASB2012's 'miles' header is mislabeled -- those values are already in km. So the true sourced length is ~110 km, and the sheet's 177.00 km = 110 x 1.609, i.e. GEM re-applied a miles-to-km conversion to a value that was already in km. Proposing LengthKnownKm=110. Note the drawn route (69.9 km) is still short of even the corrected 110 km (ratio 0.64, still below the 0.75 tolerance floor) -- closer than the 0.39 ratio against 177 km, but not fully resolved; recommend the route also be reviewed (see validity note) even though the length fix is the primary and better-evidenced correction."
+  },
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Waha Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://www.ecofinagency.com/news-industry/2912-51684-beyond-the-barrel-waha-s-new-gas-wells-a-litmus-test-for-libya-s-grid-survival"
+    ],
+    "verifications": [
+      {"url": "https://www.ecofinagency.com/news-industry/2912-51684-beyond-the-barrel-waha-s-new-gas-wells-a-litmus-test-for-libya-s-grid-survival", "ok": true, "contains_value": true}
+    ],
+    "tier": "medium", "independent": false, "source_language": "en",
+    "researcher_notes": "Ecofin Agency (Dec 2025, verified live, contains 'Waha') confirms Waha Oil Company -- a joint venture of NOC, TotalEnergies and ConocoPhillips, matching the sheet's Owner field exactly -- operates the Farigh/Nasser Sirte-basin gas fields this line serves. OPEC ASB Table 4.10 (same recovered-PDF source cited for the length fill above) independently lists owner/operator 'Waha' for the Waha/Nasser route, corroborating the value, but I'm not double-counting that as a second independent source here since it's the same document family already cited for the length fix on this row. Tier medium: one genuinely distinct non-OPEC source found and verified before the session's WebSearch budget was exhausted."
+  },
+  { "ref_col": "StartYear1 [ref]",
+    "value_cols": ["StartYear1"],
+    "values": {},
+    "class_out": "UNRESOLVED",
+    "proposed_refs": [],
+    "verifications": [],
+    "tier": "low", "independent": false, "source_language": "en",
+    "researcher_notes": "No sourced commissioning year found for this specific gas line. OPEC ASB Table 4.10 (2011 data, recovered via Wayback + pdftotext) already lists 'Waha/Nasser' as an existing, operating, capacity-reporting line by end-2011, so it was commissioned no later than 2011 -- an upper bound only, not an answer. Waha Oil Company's Sirte-basin fields (Waha field discovered 1961 per Wikipedia's Sirte Basin article, verified) date the general concession back decades, but per the protocol a field's first-production year is not the pipeline's commissioning year, and no source ties a specific year to this 24in/110km gas line itself. Marking UNRESOLVED rather than guessing; same dead end as P1857 and P1861 in this cluster."
+  }
+ ],
+ "validity": [
+  { "verdict": "concern",
+    "concern_type": "spec",
+    "recommendation": "After correcting LengthKnownKm to 110 km (per the fill above), the drawn route (69.9 km) still falls short by more than the length_ratio tolerance (0.64 vs the 0.75 floor). Recommend a human re-check/redraw the route rather than treating the length fix alone as fully closing this flag.",
+    "researcher_notes": "See the LengthKnownKm fill's researcher_notes for the full OPEC ASB unit-mislabeling analysis.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

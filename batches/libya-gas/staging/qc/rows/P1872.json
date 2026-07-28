@@ -1,0 +1,40 @@
+{
+ "project_id": "P1872",
+ "pipeline_name": "Km-91.5-Brega Gas Pipeline",
+ "sheet_row": 1464,
+ "wiki": "https://www.gem.wiki/Km-91.5-Brega_gas_pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Sirte Oil"},
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "gem.wiki's 'Sirte Oil' lead is independently confirmed by OPEC ASB2012 Table 4.10 'Gas pipelines in OPEC Members', which lists 'km-91.5/Brega, Sirte, 92, 36' -- name, operator, and primary diameter (36in, matching this row's first listed Diameter value '36, 16') all line up. Also present with matching figures in the earlier ASB2009 edition. url_verifier.py substring check fails on the compressed PDF bytes (documented false-negative, see P1866's notes); content confirmed via pdftotext -layout extraction. 'Sirte Oil' refers to Sirte Oil Company (SOC); use the operators/owners tab's existing canonical entity name for SOC if it differs from this literal wording."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Human should review LengthKnownKm (currently 184.00) against the OPEC-sourced 92 km figure. Unlike the sibling rows in this cluster, the ratio here is exactly 2.0, not the ~1.61 mile/km factor -- worth checking whether the sheet value represents the combined length of the two parallel lines implied by the dual Diameter entry ('36, 16') rather than a unit-conversion error, before correcting.",
+   "researcher_notes": "Not a flagged question for this row (only Operator was flagged), so no fill proposed for length, but noting it since it emerged directly from OPEC ASB2012 Table 4.10 (see Operator fill above): length listed as 92 km. Sheet's LengthKnownKm is 184.00 -- exactly 92 x 2, not the ~1.61x mile-to-km double-conversion pattern seen on P1867/P1868/P1869/P1870/P1871 (and P1866 pre-correction). This row's Diameter field lists two values ('36, 16'), i.e. two parallel pipes, unlike the single-diameter values on the ~1.61x rows -- raising the possibility that 184 km reflects a summed length of two physical parallel lines (92 km each) rather than a conversion error. P1873 (Jakhira-Intesar) shows the identical exactly-2.0x pattern and also has a dual-diameter entry ('20, 8'), reinforcing this as a distinct, consistent sub-pattern rather than noise. RouteAccuracy = 'no route' here, so no drawn geometry to disambiguate.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

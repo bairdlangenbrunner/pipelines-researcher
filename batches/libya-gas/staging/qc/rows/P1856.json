@@ -1,0 +1,45 @@
+{
+ "project_id": "P1856",
+ "pipeline_name": "Intesar-Brega Gas Pipeline",
+ "sheet_row": 1635,
+ "wiki": "https://www.gem.wiki/Intesar-Brega_gas_pipeline",
+ "fills": [
+  { "ref_col": "LengthKnownKm [ref]",
+    "value_cols": ["LengthKnownKm"],
+    "values": {"LengthKnownKm": "215"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://www.meed.com/chinese-in-front-for-zueitina-pipeline/",
+      "https://www.meed.com/cpecc-takes-zueitina-pipeline/"
+    ],
+    "verifications": [
+      {"url": "https://www.meed.com/chinese-in-front-for-zueitina-pipeline/", "ok": true, "contains_value": true},
+      {"url": "https://www.meed.com/cpecc-takes-zueitina-pipeline/", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "Traced the 333.00 km sheet value to a unit-conversion error in GEM's own underlying source (read as a lead only, not cited): gem.wiki cites OPEC ASB2012 Table 4.10 (2011 data), which lists 'Intesar/Brega, Zueitina, 207, 42in, 42,480,884' under a column literally headed 'Length (miles)'. I recovered the dead opec.org PDF via Wayback (https://web.archive.org/web/20250110032615/https://opec.org/.../ASB2012.pdf) and pdftotext-extracted Table 4.10 directly (url_verifier FAILs on this PDF because it does a plain-text substring check on the raw file and can't parse the PDF's compressed text streams -- a known false-negative, not proof of a dead/unsupported source; I manually confirmed the exact row text). The ASB2012 column header is provably mislabeled: cross-checking against ASB2013 (2012 data, same table), the Mellitah/Gela entry (the well-documented Greenstream subsea pipeline) reads '334.8' under the same 'miles' header, and 334.8 mi x 1.609 = 538.7 km, matching both ASB2012's raw '540' AND Wikipedia's authoritative Greenstream length of 540 km (verified live) -- proving ASB2012's raw numbers are ALREADY in km despite the mile header, while ASB2013's are genuine miles. Applying the same check to Intesar/Brega: ASB2013 gives 128.34 mi x 1.609 = 206.5 km, matching ASB2012's raw '207' almost exactly. So the true sourced length is ~207 km, and GEM appears to have taken that 207-km ASB figure and mis-converted it AGAIN as if it were miles (207 x 1.609 = 333.06 -> 333.00), doubling the error. Independent, non-OPEC confirmation: two MEED articles on the original construction tender (Sept 2005 'Chinese in front for Zueitina pipeline', and Jan 2006 'CPECC takes Zueitina pipeline', both verified live and containing '215') both describe 'construction of a 42-inch-diameter, 215-kilometre-long steel pipeline' from 'Zueitina's 103A supply base in the Sirte basin to the Brega coastal pipeline,' contractor CPECC. Zueitina Oil Company's own project page (gas-transfer-project-103-intisar-field-to-a-coastal-network) independently describes '207 kilometers from the 103 field to Brega' per search-engine indexing, but the live page is a JS single-page app that renders empty to any scraper/verifier (confirmed via curl: static HTML has no body text) -- treated as a corroborating lead only, not a citable ref. Net: three converging figures (ASB raw 207, ASB-miles-recomputed 206.5, Zueitina's own 207) plus MEED's independently reported 215 all cluster at ~207-215 km, closely matching the drawn route (223 km, ratio 223/215=1.04). Proposing LengthKnownKm=215 (MEED, the cleanest single citable figure) as the correction; the drawn route is approximately right and the sheet's 333 km is the error, not the geometry."
+  },
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Zueitina Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://www.meed.com/chinese-in-front-for-zueitina-pipeline/",
+      "https://libyaherald.com/2026/04/noc-chairman-suleiman-hails-completion-of-42-inch-130-km-gas-pipeline-from-zueitina-field-103-to-sirte-oil-line-36b/"
+    ],
+    "verifications": [
+      {"url": "https://www.meed.com/chinese-in-front-for-zueitina-pipeline/", "ok": true, "contains_value": true},
+      {"url": "https://libyaherald.com/2026/04/noc-chairman-suleiman-hails-completion-of-42-inch-130-km-gas-pipeline-from-zueitina-field-103-to-sirte-oil-line-36b/", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "MEED (2005/2006, on the original pipeline construction contract) describes the line as running from 'Zueitina's 103A supply base'; Libya Herald (April 2026, on the recently completed connecting segment from Field 103 to Sirte Oil's Line 36B) explicitly attributes the works to Zueitina Oil Company under NOC. Both independently name Zueitina Oil Co as the operating entity for this Field-103/Intisar corridor, consistent with the sheet's existing (currently unreferenced) Operator value -- no change to the value, just adding refs. Note: a large new 42-inch, 130 km segment from Zueitina's Field 103 to Sirte Oil's Line 36B (also reported as the 'Farigh-Brega Gas Pipeline') was completed/trial-commissioned in April 2026 after being stalled since before 2011; this is very likely a related but distinct newer segment/expansion in the same corridor, not necessarily identical to the pipeline this GEM row represents -- flagged as a possible related-entity question for a human to consider (see validity note), not resolved here since it is outside the length_ratio flag this row was assigned."
+  }
+ ],
+ "validity": [
+  { "verdict": "concern",
+    "concern_type": "classification",
+    "recommendation": "Separately from the length fix above: check whether a NEW pipeline needs to be added (Discovery workflow, not this QC pass) for the just-completed 42-inch, ~130 km 'Field 103 to Sirte Oil Line 36B' segment (Libya Herald, April 2026; also called 'Farigh-Brega Gas Pipeline' in Ecofin/Libya Observer/Zawya coverage from around the same date), which NOC describes as a strategic project stalled since before 2011 and only now trial-commissioned. It shares the Field-103/Zueitina/Brega corridor with this row (P1856) but is reported with a different length (130 km) and a different named endpoint (Sirte Oil Line 36B, not Brega directly), so it reads as either a new connecting segment or a partial phase of the same network rather than a duplicate of P1856 -- a human should decide whether this is in scope for Discovery.",
+    "researcher_notes": "See fills[] researcher_notes for the full source trail (Libya Herald 2026/04, energycapitalpower.com, pgjonline.com, Ecofin Agency, Libya Observer, Zawya all covered this April 2026 commissioning). Not resolving the classification question myself -- out of scope for a length_ratio QC row -- just flagging it since it surfaced directly in the course of researching P1856's length.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

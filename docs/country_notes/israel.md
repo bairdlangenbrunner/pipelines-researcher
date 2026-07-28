@@ -64,14 +64,23 @@ Staging under `batches/israel-gas/staging/`; deliverables under `.../deliverable
   1 more source) + ResearcherNotes cleanup.
 - **Route candidates — 5** (`staging/route-creation-tmng-map/candidate_routes/`, medium,
   never auto-replaced): P7602 & P7603 Leviathan Subsea I/II (119.3 km, QC pass), P0480
-  Israel–Jordan (54.1 km, pass), P8003 Karish (87.5 km, pass, ends ~9.7 km short of Dor),
+  Israel–Jordan (54.1 km, pass), **P8003 Karish/Tanin (129.2 km, pass)** — re-traced
+  2026-07-23 through the map's legend point-anchors (Tanin ⊕ well-marker → Karish ⊕ FPSO
+  → Dor ○ INGL-OOAT marine-receiving-station, each hit dead-centre) and off the band edge
+  onto the bright-fill centerline; now ends AT the Dor OOAT marker (no longer ~9.7 km
+  short). Full drawn extent = Tanin→Karish (a FUTURE field-tieback leg, קו עתידי) +
+  Karish→Dor (operating export); trim is a human decision at apply time. See `legend.md`.
   **P2197 Ramle–Elyakim (90.0 km, QC FAIL — documented, not delivered as replacement)**.
 
 ## Open items
 - **P8001** — owner/parent (original Yam Tethys partners) and length (~42 km, single-lineage,
   unverified) still open; geometry deferred pending the Ashdod-vs-Ashkelon landfall question.
 - **P8003** — confirm no existing gem.wiki "Karish and Tanin Fields Gas Sales Pipeline" row
-  before publishing; route candidate ends ~9.7 km short of Dor (nearshore/onshore is INGL).
+  before publishing. Route candidate now runs dead through the Dor OOAT marker (no longer
+  short). Decide the extent: the drawn line includes a FUTURE Tanin field-tieback leg
+  (Tanin ⊕ → Karish ⊕) ahead of the operating Karish → Dor export — keep the full ~129 km
+  drawn line or trim to the ~88 km operating export. Discovery row + wiki display-map show
+  the operating segment only; nearshore/onshore last ~10 km is INGL's.
 - **P3620 Ashdod–Ashkelon** — routes/sheet applied 2026-07-23 but geometry still partial
   (2.1 of ~4 km); the Ashkelon-side ~2.4 km onshore run has no public vector yet (see
   `docs/research_backlog.md`). P3657 complete.

@@ -1,0 +1,37 @@
+{
+ "project_id": "P1857",
+ "pipeline_name": "103D-103A Gas Pipeline",
+ "sheet_row": 1404,
+ "wiki": "https://www.gem.wiki/103D-103A_gas_pipeline",
+ "fills": [
+  { "ref_col": "StartYear1 [ref]",
+    "value_cols": ["StartYear1"],
+    "values": {},
+    "class_out": "UNRESOLVED",
+    "proposed_refs": [],
+    "verifications": [],
+    "tier": "low", "independent": false, "source_language": "en",
+    "researcher_notes": "Could not find a sourced commissioning year for this specific internal 41 km/40in gas line between fields 103D and 103A (both in Zueitina Oil Co's Sirte-basin concession 103). What IS established: field 103 (Intisar/Idris) was discovered by Occidental in late 1967, with a 40-inch OIL export pipeline to Zueitina terminal built/operating by February 1968 (AAPG Explorer 'The Oil Hunters of Libya', verified live; OSTI biblio/6090661 on Occidental's Libyan gas-reinjection operations, verified/fetched). Critically, that OSTI paper describes the ORIGINAL 1968-era design as reinjecting associated gas back into the reservoir for pressure maintenance rather than piping it to shore -- meaning the gas-gathering pipelines (like this 103D-103A line) were very likely a later addition once gas began being piped/sold rather than reinjected, not contemporaneous with the 1968 oil buildout. Per the protocol, a field's first-production year is not automatically its pipeline's commissioning year, and I am treating the 1968 date as exactly that kind of non-answer -- flagging it, not using it. The only firm anchor I have is a upper bound: OPEC ASB Table 4.10 (2011 data, recovered from Wayback + pdftotext per the protocol's known gotcha) already lists '103D/103A, Zueitina, ...' as an existing, operating, capacity-reporting line in 2011, so it was commissioned no later than 2011. No dated news article, company history, or trade-press piece naming an actual construction/commissioning year for this specific segment turned up before the session's WebSearch budget was exhausted. Marking UNRESOLVED rather than guessing."
+  },
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Zueitina Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://www.meed.com/chinese-in-front-for-zueitina-pipeline/"
+    ],
+    "verifications": [
+      {"url": "https://www.meed.com/chinese-in-front-for-zueitina-pipeline/", "ok": true, "contains_value": true}
+    ],
+    "tier": "medium", "independent": false, "source_language": "en",
+    "researcher_notes": "MEED (2005 construction-tender article, verified live) describes 'Zueitina's 103A supply base in the Sirte basin', confirming Zueitina Oil Co as the operator of the field-103/103A infrastructure this internal gas line sits within, consistent with the sheet's existing (currently unreferenced) Operator value. Tier medium rather than high: this MEED mention is about the broader Field-103A supply-base project, not a citation naming the specific 103D-103A segment by name, and I could not find a second, fully independent source that names this exact 41 km internal line. OPEC ASB2012 Table 4.10 also lists '103D/103A' under owner/operator 'Zueitina' (same recovered-PDF source used for the length observation below), but I am not double-counting it as a second independent source here since it is the same underlying document family already cited for P1856/the length flag on this cluster."
+  }
+ ],
+ "validity": [
+  { "verdict": "concern",
+    "concern_type": "spec",
+    "recommendation": "Not flagged in this brief (no length_ratio flag was raised for P1857), so not proposing a fill -- but flagging for a human to check separately: OPEC ASB2012 Table 4.10 (recovered via Wayback + pdftotext, see P1856's shard for the full unit-mislabeling explanation) lists '103D/103A, Zueitina, 26, 40in, 17,841,971' where the raw '26' is very likely already in km (not miles, despite the column header) -- cross-checked against ASB2013's re-statement of the same route as '16.12' mi, and 16.12 x 1.609 = 25.9 km, matching ASB2012's raw 26 almost exactly. That would make the true length ~26 km, not the sheet's current 41.00 km (41.00 = 26 x 1.609, i.e. the same double-conversion bug identified on P1856's 333 km). I have not proposed changing LengthKnownKm here since it was not the flagged question for this row and I don't want to produce a conflicting verdict outside my assigned scope -- recommend a human re-run this specific check as a length_ratio item if one wasn't already staged elsewhere.",
+    "researcher_notes": "See P1856.json for the full methodology (Greenstream-pipeline ground-truth check proving ASB2012's 'miles' column is mislabeled and actually already in km for this specific edition/table).",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

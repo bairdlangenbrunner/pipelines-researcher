@@ -1,0 +1,57 @@
+{
+ "project_id": "P1861",
+ "pipeline_name": "Farigh-Intesar Gas Pipeline",
+ "sheet_row": 1085,
+ "wiki": "https://www.gem.wiki/Faregh-Intesar_gas_pipeline",
+ "fills": [
+  { "ref_col": "LengthKnownKm [ref]",
+    "value_cols": ["LengthKnownKm"],
+    "values": {"LengthKnownKm": "110"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+      "https://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf"
+    ],
+    "verifications": [
+      {"url": "https://web.archive.org/web/20250110032615/https://opec.org/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+      {"url": "https://web.archive.org/web/20250304105437/https://www.opec.org/opec_web/static_files_project/media/downloads/publications/ASB2013.pdf", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "IMPORTANT -- I could NOT find two independently-differing sourced lengths for Waha-Nasser (P1860) vs Faregh-Intesar (P1861); the best available source gives the SAME ~110 km figure for both, which explains (but does not eliminate) the duplicate-optics concern flagged in the brief. OPEC ASB Table 4.10 (opec.org PDFs dead live; recovered via Wayback + pdftotext per the protocol's gotcha; url_verifier FAILs on both PDFs -- can't substring-match compressed PDF streams, a known false-negative, manually confirmed by me) lists, in the SAME table, both editions: ASB2012 (2011 data) 'Faregh/Intesar, Waha, 110, 24in, 7,080,147' and ASB2013 (2012 data) the same route as '68.2' mi (68.2 x 1.609 = 109.75 km, matching ASB2012's raw 110 almost exactly) -- i.e. OPEC's own Waha-submitted data independently repeats the identical length (110 in both editions) for BOTH Waha/Nasser and Faregh/Intesar, with only the capacity/amount-transported columns differing between the two rows. This means the 177.00/177.00 duplicate now on the sheet is NOT a GEM copy-paste error -- it traces straight back to the primary source itself, which reports the same length twice (then GEM applied the same double miles/km conversion bug found on P1856/P1857/P1860 in this cluster: 110 x 1.609 = 176.99 -> 177.00 for both rows). Whether Waha Oil Co's two spur lines from Farigh and Waha to their respective junctions are genuinely near-identical in length, or whether this is an estimating shortcut/data-quality artifact in Waha's own OPEC submission, I cannot determine independently -- no non-OPEC source gives a length for this specific line at all. Proposing the corrected LengthKnownKm=110 (matching what the source actually says) while flagging the residual same-value-for-two-lines concern for a human (see validity note) rather than silently resolving it."
+  },
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Waha Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://www.ecofinagency.com/news-industry/2912-51684-beyond-the-barrel-waha-s-new-gas-wells-a-litmus-test-for-libya-s-grid-survival"
+    ],
+    "verifications": [
+      {"url": "https://www.ecofinagency.com/news-industry/2912-51684-beyond-the-barrel-waha-s-new-gas-wells-a-litmus-test-for-libya-s-grid-survival", "ok": true, "contains_value": true}
+    ],
+    "tier": "medium", "independent": false, "source_language": "en",
+    "researcher_notes": "Ecofin Agency (Dec 2025, verified live, contains 'Waha') reports Waha Oil Company -- joint venture of NOC, TotalEnergies and ConocoPhillips, matching the sheet's Owner field -- bringing new gas wells online at the Farigh field itself, directly confirming Waha Oil Co as operator of the Farigh-side infrastructure this pipeline draws from. OPEC ASB (same PDF family cited for the length fill) independently lists owner/operator 'Waha' for Faregh/Intesar, corroborating the value but not counted as a second independent source since it's the same document family already cited on this row. Tier medium."
+  },
+  { "ref_col": "StartYear1 [ref]",
+    "value_cols": ["StartYear1"],
+    "values": {},
+    "class_out": "UNRESOLVED",
+    "proposed_refs": [],
+    "verifications": [],
+    "tier": "low", "independent": false, "source_language": "en",
+    "researcher_notes": "No sourced commissioning year found. OPEC ASB Table 4.10 (2011 data, recovered via Wayback + pdftotext) already lists 'Faregh/Intesar' as an existing, operating, capacity-reporting line by end-2011 -- an upper bound only. No source ties a specific construction/commissioning year to this particular 24in gas line. Same dead end as P1857 and P1860 in this cluster; marking UNRESOLVED rather than guessing."
+  }
+ ],
+ "validity": [
+  { "verdict": "concern",
+    "concern_type": "duplicate",
+    "recommendation": "Even after correcting LengthKnownKm to 110 km on both P1860 and P1861 (per the fills above), the two rows will still carry an identical length value, now traced to the primary OPEC/Waha source itself rather than a GEM data-entry error. Recommend a human decide whether to accept the equal figure as accurate (two similar-length spur lines converging on the same Waha-operated corridor is plausible) or to chase a NOC/Waha-direct or Arabic-language primary source for a differentiated split -- I could not find one within this session's search budget.",
+    "researcher_notes": "See the LengthKnownKm fill's researcher_notes for the full source trail showing the duplicate is inherited from OPEC ASB Table 4.10 (both 2011 and 2012 editions independently repeat the same length for both routes), not fabricated by GEM.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false },
+  { "verdict": "concern",
+    "concern_type": "spec",
+    "recommendation": "Independent of the length question: the drawn route for this row is broken and should be redrawn regardless of which length value is used. Per the brief's own geometry note, the drawn line (13.3 km) starts within ~10 m of where P1858's (Bu-Attifel-Intesar) route ENDS and runs toward Intesar -- i.e. it traces a short stub near Intesar/P1858's endpoint, nowhere near the actual Farigh field. This looks like a mis-located or mis-copied trace, not a partial/schematic version of the real Farigh-to-Intesar corridor. Recommend flagging the route itself (not just the length) for redrawing in a future route-creation pass.",
+    "researcher_notes": "This is a geometry-placement problem, not a units/length problem -- noting it separately from the length_ratio fill above so the two are not conflated.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

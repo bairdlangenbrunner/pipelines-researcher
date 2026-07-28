@@ -1,0 +1,52 @@
+{
+ "project_id": "P1866",
+ "pipeline_name": "Nasser-Brega Gas Pipeline",
+ "sheet_row": 1345,
+ "wiki": "https://www.gem.wiki/Nasser-Brega_gas_pipeline",
+ "fills": [
+  {
+   "ref_col": "LengthKnownKm [ref]",
+   "value_cols": ["LengthKnownKm"],
+   "values": {"LengthKnownKm": "172"},
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "OPEC Annual Statistical Bulletin 2012 (data year 2011), recovered from Wayback since the live opec.org link is dead. Table 4.10 'Gas pipelines in OPEC Members' lists 'Nasser/Brega, Sirte, 172, 36' and Table 4.9 (oil pipelines) independently lists 'Nasser/Al-Brayqah, Sirte, 172, 36' (Al-Brayqah = Marsa el-Brega, same endpoint under its Arabic-derived name) -- both tables agree on 172 and diameter 36in, matching the sheet's Diameter=36. NOTE on units: the printed column header reads 'Length (miles)' but the values are already kilometres -- confirmed via the Greenstream pipeline control case (ASB2012 lists it as 540, matching its real-world 540 km, not 540 mi) and independently corroborated against a second edition (ASB2013 lists the same Greenstream route as 334.8, and 334.8 x 1.60934 = 538.7 (approx) 540, i.e. the OPEC *editors* mislabeled an already-metric column, they didn't tabulate miles). Verified live in a second, earlier edition too: ASB2009 (data year ~2008, Wayback) carries the same Sirte-basin gas-line table with matching figures for this corridor. This directly refutes the sheet's current 277 km, which is 172 x 1.611 -- almost exactly a mile-to-km conversion factor (1.60934) applied a second time to an already-metric OPEC figure, i.e. the sheet value looks like a legacy double-conversion error, not an independent measurement. The drawn route geodesic (174 km, per brief) closely matches 172 km, corroborating this fill from a second, non-documentary angle. url_verifier.py on the Wayback PDF returns liveness OK (200) but a raw substring check for a token like 'Nasser' fails, because the ASB PDF is deflate/zip-compressed at the byte level and requests.text can't extract contiguous readable text from it -- this is analogous to the tool's documented ligature-encoded-PDF false negative. I confirmed the actual table content by downloading the PDF and running `pdftotext -layout`, which decompresses properly and shows the exact rows quoted above. Recommend LengthKnownKm -> 172 (down from 277)."
+  },
+  {
+   "ref_col": "StartYear1 [ref]",
+   "value_cols": ["StartYear1"],
+   "values": {},
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No citable commissioning year found for the pipeline itself. Two leads chased, neither citable: (1) An academia.edu paper title 'Explosion in the Gas Pipeline 36-inch diameter Zelten-Brega. Learned lessons' -- WebSearch summaries and a read-only proxy fetch (r.jina.ai) both show text describing a 1970 commissioning, Sirte Oil Company operator, 150 mmscfd, 36in diameter, rupture at Km 18 -- consistent with this exact pipeline (36in, Nasser/Zelten to Brega). However the direct academia.edu URL returns 403 Forbidden to both WebFetch and url_verifier.py (checked with multiple user agents), and the Wayback CDX API shows zero snapshots for this URL, so it cannot be verified per protocol rule 3 and must not be cited. (2) Zelten (Nasser) oil field's own gas-lift system was installed 1969-1971 per Wikipedia (https://en.wikipedia.org/wiki/Zelten_oil_field, verified OK/200, contains 'gas-lift') -- this is suggestive of a similar-era build for an associated-gas trunk line out of the same field, but it describes the field's internal gas-lift equipment, not the export gas pipeline to Brega, so it is too indirect to serve as the pipeline's StartYear1 without stretching the evidence. Marking StartYear1 UNRESOLVED rather than citing either. A future session could try: Sirte Oil Company historical records, a paid/institutional-access copy of the academia.edu paper, or Libyan Petroleum Institute publications."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "duplicate",
+   "recommendation": "No new action on the cluster-F duplicate ruling itself (Baird's call, already staged in batches/libya-gas/staging/redundancy/staged_resolutions.json) -- this is corroborating evidence only, to sit alongside that decision.",
+   "researcher_notes": "OPEC ASB2012's OIL table (4.9) lists 'Nasser/Al-Brayqah, Sirte, 172, 36' -- essentially the same name/operator/length/diameter as the GAS table (4.10) entry 'Nasser/Brega, Sirte, 172, 36' used above for the LengthKnownKm fill. Al-Brayqah is the Arabic-derived name for Marsa el-Brega, the same terminus. This supports cluster F's existing conclusion that GOIT P0599 (oil corridor) and P1866 (gas corridor) are two genuinely distinct lines that happen to share the same corridor and a near-identical published length (172 km either way), rather than one pipeline duplicated across two rows -- OPEC itself tracks them as separate entries in separate commodity tables with matching but non-identical metadata. Not re-litigating the cluster ruling, just adding this as a second, independent-of-the-original-analysis confirmation.",
+   "proposed_refs": [
+    "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

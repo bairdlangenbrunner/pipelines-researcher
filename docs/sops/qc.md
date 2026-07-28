@@ -144,3 +144,19 @@ layout: `docs/reference/workbook_conventions.md` §Handoff packet.
 ## Escalate
 >10% of a spot-check sample unsupported, or a whole class of values looks
 systematically wrong → stop and discuss (schema misunderstanding, not a finding).
+
+**Write it in two places, not one.** A `notes/escalation-<date>-<slug>.md` memo holds
+the argument; a matching entry in `<staging>/escalations.json`
+(`[{title, summary, memo}]`) puts it in the `ESCALATIONS` README row of both handoff
+workbooks. The researcher works from the workbook and will not go looking in `notes/`.
+
+Two things a class memo must state explicitly, because both were nearly lost on the
+Libya ASB pass:
+- **Which affected rows are staged as applicable actions and which exist only in the
+  memo.** Rows found row-by-row before the pattern was visible become ordinary fills;
+  rows found by pattern-matching afterwards are staged nowhere, and a row carrying no
+  QC flag at all was never even looked at (P1859).
+- **The proven scope, and the control that proves it.** "Tracker-wide" is a guess until
+  tested. The Libya length defect looked tracker-wide and turned out Libya-only —
+  Qatar's Dolphin row converts to its real 364 km, so the same ingest is *correct*
+  elsewhere and a blanket fix would have introduced errors. Name the control row.

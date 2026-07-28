@@ -292,6 +292,14 @@ QC/Handoff SOP (`docs/sops/qc.md`); sidecar contract:
    gem.wiki is VISITED for the diff but NEVER cited as a source. No GulfPub route
    comparison in this pass (future work; see `docs/research_backlog.md`).
 
+   **Class-level escalations → `<staging>/escalations.json`** (optional). Anything no
+   single row action can carry — a whole class of wrong values, an ingest defect, a
+   scope ruling — goes in a `notes/escalation-*.md` memo AND a one-line entry here
+   (`[{title, summary, memo}]`), which `build_ref_workbook` renders as an
+   `ESCALATIONS` row in both READMEs. Without it the researcher working from the
+   workbook never learns the memo exists. Say in the summary which affected rows are
+   staged as fills and which are memo-only — that gap is the thing that gets lost.
+
 **Tracker-wide mechanical QC workbook** (global audits, no assembly):
 `python scripts/build_qc_workbook.py --tracker oil [--country <C>] --output
 batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_qc.xlsx` — one sheet at a time for large

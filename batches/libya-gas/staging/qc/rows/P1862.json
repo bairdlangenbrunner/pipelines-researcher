@@ -1,0 +1,45 @@
+{
+ "project_id": "P1862",
+ "pipeline_name": "Brega-Benghazi Gas Pipeline",
+ "sheet_row": 1250,
+ "wiki": "https://www.gem.wiki/Brega-Benghazi_gas_pipeline",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Sirte Oil Co"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf",
+      "https://en.wikipedia.org/wiki/National_Oil_Corporation"
+    ],
+    "verifications": [
+      {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true},
+      {"url": "https://en.wikipedia.org/wiki/National_Oil_Corporation", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "Did not cite the wiki (which also names Sirte Oil) even though it agrees; verified independently. OPEC ASB2012 Table 4.10 (recovered from the 2012-07-22 Wayback snapshot, live opec.org original dead, per the batch's known gotcha; I ran pdftotext -layout on the PDF myself) names the operator of the specific 'Brega/Benghazi' line as 'Sirte Oil' in a row-by-row operator column: 'Brega/Benghazi Sirte Oil 246 34 10,761,824 na'. Wikipedia's National Oil Corporation article (verified live) independently lists Sirte Oil Company as an NOC operating subsidiary, corroborating Sirte Oil as the correct operator (as distinct from NOC, the owner already on file). Two independent origins (OPEC statistical body naming this exact segment's operator; NOC's own corporate-structure record via Wikipedia) -> tier high. See also the contradiction noted under validity below."
+  },
+  { "ref_col": "LengthKnownKm [ref]",
+    "value_cols": ["LengthKnownKm"],
+    "values": {"LengthKnownKm": "246"},
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "http://documents1.worldbank.org/curated/en/099120523141527863/pdf/P17817806cc5f00b409e8905a731ac13a52.pdf",
+      "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf"
+    ],
+    "verifications": [
+      {"url": "http://documents1.worldbank.org/curated/en/099120523141527863/pdf/P17817806cc5f00b409e8905a731ac13a52.pdf", "ok": true, "contains_value": true},
+      {"url": "https://web.archive.org/web/20120722013100/http://www.opec.org:80/opec_web/static_files_project/media/downloads/publications/ASB2012.pdf", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "The sheet's stated 396 km fails the route-integrity check against a drawn geodesic route of 225.9 km (ratio 0.57). I found and personally re-extracted (curl + pdftotext -layout, since WebFetch's own extraction fails on this binary PDF) a World Bank/Tractebel gas-sector report (documents1.worldbank.org, redirected from the documents.worldbank.org landing page per WebFetch's own redirect instructions) which states explicitly: 'The eastern section of the pipeline comprises a section that stretches 246 km from Marsa El Brega (the East Entry Point) to Benghazi...' -- this matches OPEC ASB2012's raw Table 4.10 entry of 246 for this same segment (nominally tabulated under a 'Length (miles)' column header, but for the Libya block specifically the raw numbers are demonstrably already km, not miles -- see researcher_notes below for the cross-check). 246 km is also much closer to the drawn geodesic distance (225.9 km, a plausible fit once real pipeline routing/curvature is accounted for) than the sheet's current 396 km. Deduction on the miles-vs-km mislabeling: OPEC's Table 4.10 column header reads 'Length (miles)', and this literal conversion holds for other OPEC members in the same table (e.g. Saudi Aramco's Abqaiq-Yanbu line lists 741, and 741 mi = 1192 km, matching that pipeline's well-documented real length) -- but applying the same mi->km conversion to Libya's raw 246 would give 396 km, which is exactly the sheet's current (now-shown-wrong) value. This means GEM's existing 396 km figure was very likely produced by taking OPEC's raw Libya number and (incorrectly, for this block) applying the miles->km conversion anyway. The independent World Bank source proves the true value is 246 km, i.e. OPEC's raw Libya-block numbers are already km despite the column header. Tier high: two independent sources (WB/Tractebel report explicitly, in km, naming this segment; OPEC ASB raw number, corroborating once the units error is accounted for) converge on 246 km."
+  }
+ ],
+ "validity": [
+  { "verdict": "concern",
+    "concern_type": "attribution",
+    "recommendation": "Adopt Sirte Oil Co as Operator (per the two independent sources in the fill above) but flag for human awareness that a 2013 Libya Herald article names a different subsidiary, 'Brega Petroleum Marketing Company' (BPMC), in connection with this same corridor, with a length figure (~260 km) that is also close to but not identical to 246 km. Do not silently discard this; a human may want to check whether BPMC is a distribution-side sub-operator distinct from Sirte Oil's transmission role.",
+    "researcher_notes": "Libya Herald (2013, verified live via url_verifier) attributes a Brega-Benghazi gas-pipeline-linked news item to 'Brega Petroleum Marketing Company' rather than Sirte Oil. BPMC is a real, distinct NOC marketing/distribution subsidiary (not a fabrication), so this is a genuine attribution question rather than a bad source -- it is plausible NOC has both a transmission operator (Sirte Oil, per OPEC/Wikipedia) and a marketing/distribution-side entity (BPMC) associated with parts of this corridor's gas handling. I did not adopt BPMC as Operator because Sirte Oil has the stronger, more specific, multiply-corroborated sourcing (OPEC's segment-level operator table plus NOC's own subsidiary structure), while the Libya Herald piece does not explicitly describe BPMC as the pipeline's operator of record. Recommend a human check whether both entities should appear (e.g. Operator=Sirte Oil Co, with a ResearcherNotes mention of BPMC's involvement) rather than treating this as fully resolved.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}
