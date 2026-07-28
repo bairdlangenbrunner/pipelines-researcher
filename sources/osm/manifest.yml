@@ -1,0 +1,82 @@
+# OpenStreetMap (Overpass) — crowd-sourced pipeline geometry.
+# Reconciled against GEM via:  python scripts/reconcile.py --source osm ...
+# Pure-declarative: no adapter.py. Read NOTES.md before trusting any output —
+# OSM coverage is wildly uneven by country and this source is TIER 3.
+#
+# UNLIKE gulfpub, OSM has no global extract: each dataset below is a per-country,
+# per-substance Overpass pull produced by fetch_overpass.py BEFORE the run, e.g.
+#   python scripts/fetch_overpass.py --iso LY --substance gas --include-lifecycle \
+#     --out sources/osm/data/ --name osm-ly-gas
+# Adding a country = one fetch + one datasets entry. Use --iso (an OSM boundary's
+# `name` is in the local language, so --area "Libya" matches nothing).
+#
+# --include-lifecycle is REQUIRED here: without it Overpass returns only
+# man_made=pipeline (operating), so every proposed/construction GEM row falsely
+# reads as absent from OSM.
+
+source: osm
+display_name: "OpenStreetMap (Overpass)"
+source_tier: 3                 # crowd-sourced, per-feature provenance unverifiable
+default_crs: "EPSG:4326"
+
+provenance:
+  origin_url: "https://www.openstreetmap.org (Overpass API)"
+  scraped_date: "2026-07-28"   # fallback; datasets override below
+  oid_field: osm_id_key        # scalar join key stamped by fetch_overpass.py
+  oid_stability: stable        # OSM way IDs are stable; osm_id_key is their join
+  license: "ODbL — share-alike. Whether OSM-derived geometry may ship in a GEM
+    tracker is Baird's review call, never the agent's. Reading OSM to CORROBORATE
+    a GEM attribute (what this source does) is not redistribution; copying OSM
+    coordinates into a GEM route is."
+
+datasets:
+  # --- Libya, gas (2026-07-28): 6 features. See NOTES.md — effectively Greenstream
+  #     only; the other 4 are 0.0–0.1 km stubs. Not a reconciliation-grade extract.
+  - name: gas
+    scraped_date: "2026-07-28"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-ly-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Libya"       # the fetch is ISO-scoped; features carry no country tag
+      name: osm_name
+      status: lifecycle            # stamped by fetch_overpass from the man_made prefix
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm           # OSM `diameter` is millimetres unless suffixed
+      length_units: km             # no length tag in OSM; geodesic from geometry is used
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+
+matching:
+  # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so
+  # the engine default name_weight 0.30 would sink real matches. Geometry is the
+  # signal OSM actually has; attributes are sparse. Thresholds left at the default —
+  # tier 3 already prevents a green match from being treated as corroboration alone.
+  name_weight: 0.10
+  endpoint_weight: 0.30
+  diameter_weight: 0.10
+  length_weight: 0.05
+  geometry_weight: 0.45
+  green_threshold: 0.75
+  yellow_threshold: 0.45
+  # 10 km, not the 2 km engine default. OSM traces are hand-drawn and coarse, and
+  # offshore trunks are drawn from very rough public sources: OSM's Greenstream and
+  # GEM's P0439 share a corridor to ~13 km (identical bounds, length ratio 0.96) but
+  # score iou 0.07 at 2 km — the same pipeline reading as no match. 10 km recovers it
+  # (iou 0.37) without pulling in neighbours; Libya's next-nearest gas line is ~100 km
+  # off. Tighten if a country's OSM coverage is dense enough to create near-misses.
+  buffer_km_for_overlap: 10.0

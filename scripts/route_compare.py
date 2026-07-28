@@ -147,17 +147,29 @@ def geometry_signals(ref_geom: dict | None, gem_geom: dict | None, buffer_km: fl
         try:
             ma, mb = _to_metric(ref_geom, *ctr), _to_metric(gem_geom, *ctr)
             ba, bb = ma.buffer(buffer_km * 1000), mb.buffer(buffer_km * 1000)
+            inter = ba.intersection(bb).area
             union = ba.union(bb).area
             if union > 0:
-                out["iou"] = round(ba.intersection(bb).area / union, 3)
+                out["iou"] = round(inter / union, 3)
+            # IoU punishes PARTIAL references: a 97 km OSM fragment lying exactly on a
+            # 520 km GEM route scores iou≈0.02, indistinguishable from an unrelated
+            # line. Containment ("is the shorter one inside the longer one?") is the
+            # signal that actually holds for fragmentary sources — most of OSM.
+            smaller = min(ba.area, bb.area)
+            if smaller > 0:
+                out["containment"] = round(inter / smaller, 3)
             hd = ma.hausdorff_distance(mb) / 1000.0
             out["hausdorff_km"] = round(hd, 2)
             out["haus_score"] = round(math.exp(-hd / 10.0), 3)
         except Exception as e:  # projection/topology hiccup — keep the cheaper signals
             out["geom_error"] = str(e)[:120]
 
+    # `containment` carries the weight `iou` used to hold alone: co-located pipe scores
+    # on BOTH, but a partial reference scores only on containment — which is correct,
+    # and is exactly the case iou got wrong. length_ratio still records the size gap.
     comps = []
-    for w, k in ((0.45, "iou"), (0.25, "endpoint_score"), (0.20, "haus_score"), (0.10, "length_ratio")):
+    for w, k in ((0.25, "iou"), (0.25, "containment"), (0.20, "endpoint_score"),
+                 (0.20, "haus_score"), (0.10, "length_ratio")):
         if k in out:
             comps.append((w, out[k]))
     if comps:

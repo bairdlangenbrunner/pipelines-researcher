@@ -148,10 +148,33 @@ def _build_networks(segs: list[GemRow]) -> list[GemRow]:
 # --------------------------------------------------------------------------- #
 # attribute signals
 # --------------------------------------------------------------------------- #
+# Tokens that appear in a large share of ALL pipeline names and therefore carry no
+# identifying information. token_set_ratio scores on the token INTERSECTION, so two
+# names sharing only these boilerplate words score high: OSM's "Pipeline Gas
+# GreenStream" vs GEM's "Wafa-Mellitah Gas Pipeline" returns 0.67 on {gas, pipeline}
+# alone. Stripped before scoring so the match is driven by distinctive tokens.
+GENERIC_NAME_TOKENS = {
+    "pipeline", "pipelines", "pipe", "line", "lines", "system", "network",
+    "project", "phase", "segment", "section", "spur", "lateral", "loop",
+    "trunk", "transmission", "transport", "export", "import", "interconnector",
+    "gas", "oil", "natural", "crude", "ngl", "lpg", "lng", "condensate",
+    "petroleum", "products", "product", "refined", "liquids",
+}
+
+
+def _strip_generic(name: str) -> str:
+    """Drop boilerplate tokens; keep the original if nothing distinctive remains
+    (a name that is ONLY generic words has to be scored on what it has)."""
+    kept = [t for t in name.split() if t not in GENERIC_NAME_TOKENS]
+    return " ".join(kept) if kept else name
+
+
 def _name_score(ref_norm: str, variants: list) -> float:
     if not ref_norm or not variants:
         return 0.0
-    return round(max(fuzz.token_set_ratio(ref_norm, v) for v in variants) / 100.0, 3)
+    rs = _strip_generic(ref_norm)
+    return round(max(fuzz.token_set_ratio(rs, _strip_generic(v))
+                     for v in variants) / 100.0, 3)
 
 
 def _endpoint_score(ref_s, ref_e, gem_s, gem_e):

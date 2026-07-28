@@ -49,8 +49,22 @@ Reference records match against GEM rows of the **same commodity sheet**:
   `PipelineName`/`SegmentName`/`OtherEnglishNames`/`PipelineNetworkGrouping`),
   endpoints (best-orientation fuzzy + geocoded distance), diameter (multi-value
   **set subset/Jaccard**, never equality), length ratio (prefer geodesic).
-- **Geometry signals** (only when both routes exist): buffer-IoU (primary),
+  Boilerplate tokens (`gas`, `oil`, `pipeline`, `line`, `system`, … —
+  `match.GENERIC_NAME_TOKENS`) are **stripped before name scoring**: `token_set_ratio`
+  scores on the token intersection, so two unrelated names sharing only that
+  boilerplate scored ~0.7 and let one GEM row act as a magnet for every reference.
+- **Geometry signals** (only when both routes exist): buffer-IoU, **containment**
+  (intersection ÷ smaller buffer — the signal that survives a *partial* reference,
+  which IoU cannot: a 97 km fragment lying exactly on a 520 km route scores IoU 0.02),
   endpoint distance, Hausdorff, length ratio — computed in a metric CRS.
+- **Absent geometry is "untested", not "passed".** When the reference has a route and
+  the GEM row does not, `g_score` is set to `geometry_untested_score` (0.15) rather
+  than dropped. Dropping it renormalized the weights and scored that candidate as if
+  it had *passed* the geometry test — so routeless GEM rows structurally outranked
+  correctly-matched rows whose real geometry scored anything below perfect.
+- **`buffer_km_for_overlap` is per-source, and 2 km is an onshore-survey default.**
+  Coarse or offshore geometry needs more (OSM uses 10 km); too tight reads the same
+  pipeline as no match.
 - **Dual-level granularity:** score against individual GEM segment rows **and**
   synthetic network rows (grouped by `PipelineNetworkGrouping`, merged geometry /
   summed length / union diameter). Emit the better of the two; record the matched
@@ -58,6 +72,11 @@ Reference records match against GEM rows of the **same commodity sheet**:
 - **Confidence** = composite over present signals → green/yellow/red per
   `docs/reference/confidence_tiers.md`; a single Tier-2 source caps at yellow.
   Top-2 candidates within 10% → **ambiguous** (red), list both, never auto-resolve.
+  **Green additionally requires a physical signal** — endpoints, diameter, or a
+  *tested* geometry score (`reconcile.PHYSICAL_SIGNALS`). Name + length alone cannot
+  reach green however high the composite: names share boilerplate and length is a
+  bare ratio two unrelated lines match by coincidence. Such a match is capped at
+  yellow and the reason carries `capped at yellow — no physical signal`.
 
 ### 4. Diff + score → classify
 `reconcile.py` writes `match_diff.json` + `route_metrics.json` and classifies:

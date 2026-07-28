@@ -33,6 +33,14 @@ DEFAULTS = {
     "name_weight": 0.30, "endpoint_weight": 0.25, "diameter_weight": 0.15,
     "length_weight": 0.10, "geometry_weight": 0.20,
     "green_threshold": 0.75, "yellow_threshold": 0.45, "buffer_km_for_overlap": 2.0,
+    # When the REFERENCE has geometry but a GEM candidate has no route, the geometry
+    # test could not be run. Dropping g_score and renormalizing (the old behaviour)
+    # scored that candidate as if it had PASSED — so a routeless GEM row outranked a
+    # correctly-matched row whose real geometry scored anything less than perfect.
+    # Rows with no route were structurally advantaged. This is the untested stand-in:
+    # low, because the match is genuinely unverified, but not 0 — absence of geometry
+    # is not evidence against. Only applied when the reference itself has geometry.
+    "geometry_untested_score": 0.15,
 }
 _KEYMAP = {"s_name": "name_weight", "s_endpoints": "endpoint_weight",
            "s_diameter": "diameter_weight", "s_length": "length_weight", "g_score": "geometry_weight"}
@@ -72,8 +80,22 @@ def _system_key(g) -> str:
     return N.normalize_name(g.network_grouping or g.pipeline_name)
 
 
-def confidence(score: float, w: dict) -> str:
+# A physical signal — one that pins the pipe to the ground or the steel. Name and
+# length do neither: names share boilerplate, and length is a bare ratio two
+# unrelated lines match by coincidence. Composite renormalizes over PRESENT signals,
+# so a ref with only those two can score 0.90 on the weakest evidence the engine has.
+PHYSICAL_SIGNALS = ("s_endpoints", "s_diameter", "g_score")
+
+
+def confidence(score: float, w: dict, sig: dict | None = None) -> str:
     if score >= w["green_threshold"]:
+        # Green = "corroborated". Withhold it when no physical signal was available,
+        # even at a high composite; the ref drops to yellow for human adjudication.
+        # an untested g_score is a stand-in, not evidence — it must not satisfy the gate
+        have = [k for k in PHYSICAL_SIGNALS if sig and sig.get(k) is not None
+                and not (k == "g_score" and sig.get("g_untested"))]
+        if sig is not None and not have:
+            return "yellow"
         return "green"
     if score >= w["yellow_threshold"]:
         return "yellow"
@@ -176,10 +198,17 @@ def main() -> None:
             for i, (acomp, asig, reasons, g) in enumerate(scored):
                 sig = dict(asig)
                 gsig = {}
-                if i < TOPK_GEOMETRY and ref_geom is not None:
-                    gsig = geometry_signals(ref_geom, gem_geom(g), buffer_km)
+                if ref_geom is not None:
+                    if i < TOPK_GEOMETRY:
+                        gsig = geometry_signals(ref_geom, gem_geom(g), buffer_km)
+                    # untested, not passed (see geometry_untested_score). Applied to the
+                    # whole pool, not just the top-K, or the untested tail would keep the
+                    # free pass and could leapfrog a geometry-tested leader.
                     if gsig.get("g_score") is not None:
                         sig["g_score"] = gsig["g_score"]
+                    else:
+                        sig["g_score"] = w["geometry_untested_score"]
+                        sig["g_untested"] = True
                 cands.append({"comp": composite(w, sig), "sig": sig, "gsig": gsig,
                               "reasons": reasons, "gem": g})
             cands.sort(key=lambda c: c["comp"], reverse=True)
@@ -191,7 +220,9 @@ def main() -> None:
 
             if best["comp"] >= w["yellow_threshold"]:
                 g = best["gem"]
-                conf = confidence(best["comp"], w)
+                conf = confidence(best["comp"], w, best["sig"])
+                if conf == "yellow" and best["comp"] >= w["green_threshold"]:
+                    reason_str += "; capped at yellow — no physical signal"
                 # mark matched
                 if g.kind == "segment":
                     g.matched = True
