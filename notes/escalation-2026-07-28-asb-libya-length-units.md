@@ -1,6 +1,10 @@
 # Escalation — 14 Libya gas lengths carry a spurious miles→km conversion
 
-**Date:** 2026-07-28 (ET) · **Tracker:** GGIT (gas) · **Scope:** Libya only, 14 rows
+**Date:** 2026-07-28 (ET) · **Tracker:** GGIT (gas) · **Scope:** 14 Libya rows — but **no longer
+Libya-only as a class**: the Iraq gas pass the same day found 19 more rows with the identical
+defect (`notes/escalation-2026-07-28-asb-iraq-length-units.md`), which corrects this memo's
+original claim that Iraq was a clean control. See the correction block under Evidence 1. The
+Qatar, Saudi and UAE controls are unaffected and their conversions remain correct.
 **Origin:** Libya gas deep sweep, `batches/libya-gas/staging/qc/` (Leg-3 research fan-out)
 **Decision owner:** Baird · **Engine never auto-applies — this is a flag, not an edit.**
 

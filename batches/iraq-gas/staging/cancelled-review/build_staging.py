@@ -2,8 +2,10 @@
 """Build staged_resolutions.json for the Iraq gas cancelled/shelved status review.
 
 Four rows: P0481, P0450 (cancelled) and P5857, P4041 (shelved). 30 ref-cell units
-enumerated from the live header via ref_pairs.discover_ref_pairs, plus four
-__STATUS__ sentinels and eight __VALIDITY__ sentinels.
+enumerated from the live header via ref_pairs.discover_ref_pairs, plus THREE
+__STATUS__ sentinels and eight __VALIDITY__ sentinels. Three, not four: P5857's
+status ruling was consolidated into the `annual` leg's (see the note above STATUS)
+so the handoff carries one status decision per ProjectID.
 
 Row/value/current-ref data is read from the CSV so nothing is retyped by hand;
 only the research findings below are authored. Adapted from
@@ -448,25 +450,34 @@ STATUS = {
             "'stale' inference carries no ref by design."
         ),
     ),
-    "P5857": dict(
-        verdict="stale", class_out="STALE", current="shelved", proposed="shelved",
-        values={"ShelvedCancelledType": "Presumed"},
-        evidence_date="2011-05", rule="4y->cancelled",
-        refs=[], tier="low", indep=False, lang="en",
-        notes=(
-            "Verdict: retain 'shelved' and declare it an inference. Status carries no ref and no "
-            "source states a shelving. Last independent evidence: MEED, 24 May 2011, reporting bids "
-            "IN (20+ bidders, $150M, 10-month build, South Oil Company) -- an active tender. No "
-            "award, no construction, no cancellation in the 15 years since. Strictly the 4y ladder "
-            "would put 15 years of silence at 'cancelled', so 'shelved' is generous; I am NOT "
-            "proposing the harder change, because the standing lesson from the Libya cancelled "
-            "review is that absence of news is not evidence of cancellation, and Iraqi state "
-            "tenders of this era routinely went quiet without dying. Flagging the tension for the "
-            "reviewer and staging ShelvedCancelledType='Presumed' so the row stops implying a "
-            "sourced shelving. Separately: ResearcherNotes says 'NA: No update since 2022' but both "
-            "of the row's refs are from 2011 and no 2022-era source is cited -- see __VALIDITY__."
-        ),
-    ),
+    # P5857 (Zubair-Faw) DELIBERATELY HAS NO STATUS ENTRY -- consolidated into the
+    # `annual` leg's ruling (batches/iraq-gas/staging/annual/rows/P5857.json) so the
+    # handoff shows ONE status decision per ProjectID instead of two contradictory ones.
+    #
+    # This leg originally proposed: retain 'shelved', stage ShelvedCancelledType=
+    # 'Presumed', on the reasoning that the newest evidence was MEED 24-May-2011 (bids
+    # in: 20+ bidders, $150M, 10-month build, South Oil Company) with "no award, no
+    # construction, no cancellation in the 15 years since" -- and that the Libya
+    # cancelled-review lesson (absence of news is not evidence of cancellation, and
+    # Iraqi state tenders of that era routinely went quiet without dying) argued against
+    # the harder change the 4y ladder would otherwise force.
+    #
+    # WITHDRAWN because its central factual premise is wrong. The annual leg found the
+    # EPC WAS awarded: CPECC contract PRJ-11-4226, USD 72.35m FEED+EPCC, 98 km 18-in
+    # Zubair/1 depot -> Fao depot plus compressor station, execution window 15-Jul-2014
+    # to April 2016. So this is not fifteen years of silence after a tender; it is a
+    # contracted project whose execution window lapsed a decade ago, with the line
+    # absent from GulfPub's professional gas-pipeline map -- positive evidence of
+    # non-completion rather than mere absence of news. On that record the 4y->cancelled
+    # rung is properly satisfied and the annual leg's 'cancelled' is the better verdict.
+    #
+    # One thing carried FROM this leg INTO the consolidated ruling: no CancelledYear.
+    # The annual shard originally staged CancelledYear=2026, which is the year we
+    # noticed rather than a sourced cancellation date -- the same fabrication this
+    # leg's P0481 record explicitly refuses. Dropped there.
+    #
+    # This leg's __VALIDITY__ record for P5857 (ResearcherNotes claims 'No update since
+    # 2022' while both refs are from 2011) is unaffected and still stands.
     "P4041": dict(
         verdict="unclear", class_out="UNRESOLVED", current="shelved", proposed="",
         values={},
@@ -744,8 +755,11 @@ def main():
             })
             n_units += 1
 
-        # --- __STATUS__ sentinel
-        s = STATUS[pid]
+        # --- __STATUS__ sentinel (absent for a row consolidated into another leg's
+        #     ruling -- see the P5857 note above STATUS)
+        s = STATUS.get(pid)
+        if s is None:
+            continue
         resolutions.append({
             **base,
             "ref_col": "__STATUS__",

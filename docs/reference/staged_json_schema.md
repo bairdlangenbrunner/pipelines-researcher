@@ -124,6 +124,18 @@ Merge-time QC guarantees (enforced by `scripts/merge_deepsweep_shards.py`): no
 zero verified refs is downgraded to `unclear`; a `stale` shelved/cancelled inference
 always carries `ShelvedCancelledType=Presumed`.
 
+**GOTCHA — re-running the merge is destructive when a leg was enriched after its first
+merge.** `merge_deepsweep_shards.py` regenerates every FILL/VALIDITY/STATUS/ROUTE record
+from `rows/<PID>.json`, so any *post-merge* edit made directly to
+`staged_resolutions.json` — most importantly a harvest/verification step that upgrades a
+fill's `class_out` from `UNRESOLVED` to `REFS_ADDED` — is silently reverted to the
+shard's pre-harvest state. Record counts stay identical, which is why it is easy to miss;
+compare the `class_out` distribution against `git show HEAD:<path>` after any re-merge.
+(Hit on 2026-07-28: re-merging `batches/iraq-gas/staging/ref-sweep-operating/` to amend
+two records knocked `REFS_ADDED` 120 → 52 and `UNRESOLVED` 225 → 288.) To amend a record
+in an already-harvested leg, **edit both** the shard (provenance, so a future re-merge
+carries the text) **and** `staged_resolutions.json` in place — do not re-merge.
+
 **Wiki-diff records** (`ref_col="__WIKIDIFF__"`, `class_in="WIKIDIFF"`; the §6
 handoff packet, `scripts/wiki_alignment.py`): one per (pipeline, field) sheet↔wiki mismatch;
 read-and-flag, never an edit. Extra fields: `field` (sheet column), `wiki_key` (label

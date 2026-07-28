@@ -51,6 +51,18 @@ name agreed (`P5856` Gharraf 76 km/20″, `P6824` Shouibah 46 km/8-10″, `P7435
 Al-Zubair-Shatt Al Arab 40 km/42″, `P7457` Semel-Duhok 40 km/36″ — 40.00 km is simply a
 round number).
 
+> **All four rejections were later independently vindicated** (Leg-3 research,
+> 2026-07-28) — worth recording, because a rejection is the easiest thing in an
+> arithmetic match to get silently wrong. `P5856`: Al-Jibawi gives "76 km" verbatim, so
+> the sheet value is *correct as it stands*. `P7435`: Al-Jibawi gives "40 km", likewise
+> correct. `P6824`: turned out to be a **diesel** line that does not belong in GGIT at
+> all (`escalation-2026-07-28-iraq-gasoil-misfiled.md`) — a second, stronger reason to
+> exclude it. `P7457`: the sheet's 40.00 km **is** wrong, but not from this defect — KRG
+> MNR states the pipeline is 30 km, and 40 km is what DNO and OGJ give as the *distance
+> from field to plant*. So the "just a round number" instinct was right and the cause was
+> something else entirely; see the length-provenance escalation in
+> `batches/iraq-gas/staging/qc/`. **Zero of the four rejections was a false negative.**
+
 **3. Drawn routes arbitrate, 6–0.** Of the 19, seven have drawn geometry. Six agree with
 the **raw** value and **none** with the sheet value:
 
@@ -133,6 +145,38 @@ together on an official total is genuine convergent evidence.
 > cluster C matters. It also names a planned **52″ × 600 km "2nd National Gas P/L from
 > North Rumail(a)"** that has no GGIT row — logged as a discovery lead in
 > `docs/country_notes/iraq.md`.
+
+**8. Named short hops arbitrate geographically, and they arbitrate for kilometres.**
+The route-arbitration table above covers only the 7 of 19 rows that have drawn geometry.
+For rows with no route, the ASB entry's own *place names* give an independent test:
+where both endpoints are identifiable towns or plants, the real-world separation can be
+compared with the raw integer and with the converted figure. Every case tested favours
+the raw figure, and the short hops are the most decisive because a 1.609× error on a
+40 km line is geographically absurd rather than merely wrong:
+
+| ASB gas entry (Table 9.9, Iraq block) | raw | as miles → km | real-world separation | reads as |
+|---|---|---|---|---|
+| `Kirkuk/Baiji` | 90 | 144.8 | ~90 km | **km** |
+| `Mishraq cross road/Mousil PWR St` (= P4067's sibling P4068) | 38 | 61.2 | ~38 km | **km** |
+| `North Rumaila/Khor Al-Zubair gas dis station` | 54 | 86.9 | ~55 km | **km** |
+
+A cross-table control in the same publication points the same way: ASB2017 **Table 6.9
+(crude)** carries `(K3) Station/Iraqi-Syrian border  2 x 98`, and K3/Haditha to the
+Syrian border is ~98 km, not ~158 km. So the kilometre reading is a property of **OPEC's
+Iraq data**, not of the gas table alone — which is why a re-ingest of *either* table
+would reintroduce the defect.
+
+**Direct textual corroboration on one staged row.** `P4067` (Al-Ahdab→Al-Zubaydia,
+ASB raw 73) is independently reported by Al-Jibawi at **76 km**. That agrees with the raw
+integer to 4% and refutes the sheet's computed 117.48 km outright — the first of the 19
+rows to be confirmed by a *source statement* rather than by arithmetic or geometry.
+
+> Read this together with the P4067 classification note in `batches/iraq-gas/staging/qc/`:
+> Al-Jibawi's 76 km line is described as **crude oil**, and OPEC lists the Ahdab corridor's
+> crude and gas lines as separate rows in Tables 6.9 and 9.9. Whether the 76 km belongs to
+> the same physical line as ASB's 73 km gas entry is unresolved and flagged there. For the
+> *length* question it does not matter: either way the corridor is ~73–76 km, so 117.48 km
+> is wrong on this row.
 
 ## Proven scope, and the controls that prove it
 

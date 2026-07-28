@@ -3,19 +3,33 @@
 iraq-gas/ref-sweep-operating.
 
 Every dead URL was re-probed with a browser UA, then (where it failed) through the
-Wayback Machine, then read for content support. Result: only 15 of 41 units are
-genuinely unverifiable. 22 units RECOVER -- the URL is live or archived and does
-support the value -- and 4 units have a LIVE url whose content CONTRADICTS the GEM
-value, which is a worse problem than a dead link and could not be seen while the unit
-was written off as dead.
+Wayback Machine, then read for content support. Result: only 8 of the 41 units are
+left with no usable source at all. 31 units RECOVER -- the URL is live or archived and
+does support the value, or a replacement source was found -- and 2 units have a LIVE
+url whose content CONTRADICTS the GEM value, which is a worse problem than a dead link
+and could not be seen while the unit was written off as dead. (42 records: the 41 dead
+units plus P7457's Capacity, recorded because the Leg-3 research resolved an apparent
+conflict on it that a future pass would otherwise re-raise.)
 
-Five substantive defects fell out of the recovery, staged here as VALIDITY/STATUS
+Four substantive defects fell out of the recovery, staged here as VALIDITY/STATUS
 records:
   * P6824 is a GASOIL (diesel) products line, not a gas pipeline  -> wrong tracker
   * P7477 Capacity 130 tagged bcm/y where the source says 130 MMcf/d (~98x)
-  * P7435 and P6826 are under CONSTRUCTION, not operating
   * P7436/P7437 Owner is TotalEnergies' project, not the Ministry of Oil
   * P6827 dates a 2023 spur to 1980
+
+WITHDRAWN 2026-07-28, after this file was first written: this pass also staged
+"P7435 and P6826 are under CONSTRUCTION, not operating." The Leg-3 research REFUTED
+BOTH. Al-Jibawi (June 2025) reports each line's completion explicitly -- P7435 in May
+2025 by the Oil Minister, P6826 in 2024 -- so GEM's `operating` was right on both and
+the construction-stage reporting I had relied on simply predated the finish. Both
+records are now `confirm`, and the "status is stale FORWARD" escalation built on them
+is retracted. What survives from those two rows is smaller and different in kind:
+P6826's StartYear1 is 2024, not 2025, and P7435's blank StartYear1 can now be filled
+(2025-05). Al-Jibawi also RESOLVES the al-Sharq route contradiction on P6826 in
+favour of GEM's name. The lesson worth keeping: a source describing construction
+dates the construction, not the row -- always look for a later source before calling
+a status stale forward.
 
 Also records the false-negative families for the roster: large PDFs (3 sources),
 CAPTCHA interstitials returning 200 with a 267-char body (opc.oil.gov.iq), and
@@ -52,6 +66,17 @@ U = {
                 "%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D9%86%D9%81%D8%B7%D9%8A%D8%A9"
                 "-%D8%AA%D8%A8%D8%A7%D8%B4%D8%B1-%D8%A8%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D9%85%D8%B4/",
     "KIRKUKNOW": "https://kirkuknow.com/en/news/69751",
+    # KRG Ministry of Natural Resources -- PRIMARY, and the sources that overturn this
+    # file's original "P7457 has no other source" finding. The live host intermittently
+    # ConnectTimeouts, so the citable form is the Wayback snapshot.
+    "KRG_PIPE": "http://web.archive.org/web/20200701023037/"
+                "http://mnr.krg.org:80/index.php/en/gas/gas-pipeline",
+    "KRG_FIRSTGAS": "http://web.archive.org/web/20191207202114/"
+                    "http://mnr.krg.org/index.php/en/press-releases/"
+                    "375-first-gas-arrives-at-duhok-power-station",
+    "DNO": "http://web.archive.org/web/20210727130414/https://www.dno.no/en/investors/"
+           "announcements/dno-international-signs-gas-sales-and-purchase-agreement-"
+           "for-summail-field/",
     "GCEMENT":  "https://www.globalcement.com/news/item/"
                 "16753-new-gas-pipeline-built-at-najaf-cement-plant-in-iraq",
     "GCITEM":   "http://web.archive.org/web/20250811201121/https://www.globalcement.com/"
@@ -147,13 +172,21 @@ REFS = [
      "this row. Status = operating is correctly sourced ('إنجاز' = completed); it is the "
      "TRACKER that is wrong, not the status."),
 
-    # ---- P6826: live ref, contradicts operating ------------------------------
-    ("P6826", "Status [ref]", "UNRESOLVED", ["ALSHARQ"], "medium", False,
-     "NOT a dead link (HTTP 200) -- but the live content CONTRADICTS Status = operating. "
-     "al-Sharq, 15 April 2024: SCOP's South Projects Commission 'باشرت بالعمل في تنفيذ "
-     "المشروع' (commenced execution) and 'تعمل حاليا بعملية مد ولحام الأنابيب' (is currently "
-     "laying and welding pipe). That is CONSTRUCTION as of April 2024, not operating. See "
-     "the status record on this row."),
+    # ---- P6826: live ref + a later source that vindicates GEM ----------------
+    ("P6826", "Status [ref]", "REFS_ADDED", ["ALSHARQ", "JIBAWI"], "high", True,
+     "NOT a dead link (HTTP 200), and the row's status is CORRECT -- correcting my own "
+     "earlier reading of this unit. al-Sharq, 15 April 2024 reports SCOP's South Projects "
+     "Commission 'باشرت بالعمل في تنفيذ المشروع' (commenced execution) and 'تعمل حاليا بعملية "
+     "مد ولحام الأنابيب' (currently laying and welding pipe). I first read that as "
+     "contradicting Status = operating; it does not -- it dates the CONSTRUCTION, and the "
+     "build finished later the same year. Al-Jibawi (June 2025) closes it: OPC 'completed in "
+     "2024 the construction of a 24-inch dry gas pipeline extending for 8 km from the Majnoon "
+     "oil field ... to the NGL station in North Rumaila'. So operating is right and the two "
+     "sources are sequential, not contradictory. ADD Al-Jibawi as the second ref. It also "
+     "RESOLVES the route contradiction flagged on this row: the line runs Majnoon -> North "
+     "Rumaila NGL, so GEM's Majnoon-based NAME is right and al-Sharq's body was describing "
+     "the same corridor from the other end. The one residual defect is the date -- see the "
+     "StartYear1 record."),
 
     # ---- P6827 --------------------------------------------------------------
     ("P6827", "Status [ref]", "REVERIFIED", ["KIRKUKNOW"], "medium", False,
@@ -175,15 +208,20 @@ REFS = [
      "'Khormor-Jambur-Kirkuk' pipeline; the length is right and it is the NAME that is "
      "wrong -- this row is a 1,050 m spur, not a Khor Mor->Kirkuk trunk."),
 
-    # ---- P7435: live refs, contradict operating ------------------------------
-    ("P7435", "Status [ref]", "UNRESOLVED", ["BAGHDADTODAY", "IBN0316"], "high", True,
-     "NOT dead links -- BOTH are live (HTTP 200) and BOTH contradict Status = operating. "
-     "Baghdad Today, 28 Feb 2025: 'النفط تباشر بتنفيذ مشروع مد أنبوب نقل الغاز الجاف من خور "
-     "الزبير إلى شط العرب' (the Oil [Ministry] COMMENCES implementation of the project to "
-     "lay the dry-gas pipeline from Khor al-Zubair to Shatt al-Arab). Iraq Business News, "
-     "16 Mar 2025: 'is progressing with the implementation', 'where the pipeline's receiving "
-     "arms are under construction', 'Work is progressing rapidly'. Two independent sources, "
-     "both dated 2025, both describing an in-progress build. See the status record."),
+    # ---- P7435: live refs; a later source vindicates GEM ---------------------
+    ("P7435", "Status [ref]", "REFS_ADDED", ["BAGHDADTODAY", "IBN0316", "JIBAWI"], "high", True,
+     "NOT dead links -- all live (HTTP 200), and the status is CORRECT. Correcting my own "
+     "earlier reading of this unit. Baghdad Today, 28 Feb 2025: 'النفط تباشر بتنفيذ مشروع مد "
+     "أنبوب نقل الغاز الجاف من خور الزبير إلى شط العرب' (the Ministry COMMENCES implementation "
+     "of laying the dry-gas pipeline from Khor al-Zubair to Shatt al-Arab). Iraq Business News, "
+     "16 Mar 2025: 'is progressing with the implementation', 'the pipeline's receiving arms are "
+     "under construction'. I read those two as contradicting Status = operating. They do not -- "
+     "they date a build that finished ten weeks later, and I should have looked for a later "
+     "source before calling the status stale. Al-Jibawi (June 2025): 'In February 2025, SCOP "
+     "started to construct a 42-inch dry gas pipeline ... In May 2025, the Oil Minister, Hayan "
+     "Al-Sawad, declared the completion of the pipeline in a record time.' Both dates come from "
+     "one source that narrates start AND finish, which is exactly what the two earlier refs "
+     "could not do. ADD Al-Jibawi. Every spec is now confirmed as well: 40 km and 42 inch."),
     ("P7435", "Fuel [ref]", "REVERIFIED", ["IBN0316"], "medium", False,
      "NOT a dead link (HTTP 200). 'a dry gas pipeline to support power generation' -- "
      "supports Fuel = Gas."),
@@ -201,12 +239,14 @@ REFS = [
      "with SCOP (State Company for Oil Projects) named as executing agency -- supports "
      "Owner = Iraq Ministry of Oil. Belongs on the ProjectID-keyed operators/owners tab."),
     ("P7435", "Start [ref]", "UNRESOLVED", [], "low", False,
-     "The cited URL is a Facebook 'watch' video permalink. It returns HTTP 200 with a "
-     "460 KB body under a browser UA (so not strictly dead), but it is a video with no "
-     "extractable text, and a Facebook post is not an acceptable citation for a start year "
-     "in any case. NO START YEAR IS SOURCED for this row -- and per the status record the "
-     "row is still under construction as of March 2025, so StartYear1 should be blank or a "
-     "projection, not a fact. Replace the ref or clear the value."),
+     "REPLACE THE CITED URL. It is a Facebook 'watch' video permalink -- HTTP 200 with a "
+     "460 KB body under a browser UA, so not strictly dead, but a video with no extractable "
+     "text, and a Facebook post is not an acceptable citation for a start year regardless. "
+     "The value it should carry is now sourced elsewhere: Al-Jibawi dates completion to May "
+     "2025 ('In May 2025, the Oil Minister, Hayan Al-Sawad, declared the completion of the "
+     "pipeline'), so StartYear1 = 2025 / StartMonth1 = 5 is a FACT, not the projection I "
+     "earlier called it. The paired value+ref is staged as a FILL in the qc/ leg rather than "
+     "duplicated here -- apply it there so the value and its ref land together."),
 
     # ---- P7436 / P7437: live ref CONTRADICTS the owner ----------------------
     ("P7436", "Owner [ref]", "UNRESOLVED", ["IBN0616"], "high", False,
@@ -270,24 +310,61 @@ REFS = [
      "PDF with no trailer dictionary that pdftotext refuses. So Capacity = 3.4 bcm/y is "
      "currently unsupported. It is at least PLAUSIBLE (a 24-inch line's generous ceiling is "
      "~4.8 bcm/y), so this is a citation gap, not a suspected defect. Needs a fresh source."),
-    ("P6826", "Start [ref]", "DEAD_LINK", [], "low", False,
-     "GENUINELY DEAD. The Facebook post permalink returns HTTP 400 to any non-browser "
-     "client and has no archive. Combined with the status finding on this row (still under "
-     "construction in April 2024), StartYear1 = 2025 is an unsourced projection."),
+    ("P6826", "Start [ref]", "DEAD_LINK", ["JIBAWI"], "medium", False,
+     "The cited URL is GENUINELY DEAD -- a Facebook post permalink returning HTTP 400 to any "
+     "non-browser client, with no archive -- so it must be replaced either way. But the "
+     "conclusion I drew from that is now wrong. I wrote that StartYear1 = 2025 was 'an "
+     "unsourced projection' on a row still under construction; Al-Jibawi shows the line was "
+     "COMPLETED IN 2024, so the year is not a projection, it is simply off by one. Replace the "
+     "Facebook URL with Al-Jibawi and correct the value to 2024 -- see the StartYear1 record on "
+     "this row."),
 ]
-# P7457: both refs unrecoverable -> 6 units
-for c in ("Status", "Fuel", "PipelineType", "Start", "Length", "Diameter"):
-    REFS.append(("P7457", f"{c} [ref]", "DEAD_LINK", [], "low", False,
-        "GENUINELY DEAD, and this row has NO OTHER SOURCE. Both cited refs failed and "
-        "neither is archived: pukmedia.com returns HTTP 403 (bot-wall) with NO Wayback "
-        "snapshot, and drawmedia.net returns HTTP 404 with NO Wayback snapshot. So all six "
-        "of this row's ref units are unverifiable and Semel-Duhok currently rests on "
-        "nothing checkable. Note this is also one of the four rows the ASB length memo "
-        "REJECTED from the mi->km match (40.00 km being merely a round number), so its 40 km "
-        "has no independent support either. Escalating as an attribution concern rather than "
-        "an existence one: a Semel-Duhok gas line in Duhok governorate is entirely "
-        "plausible, it is simply unsourced as GEM holds it. Priority target for fresh "
-        "research (KRG Ministry of Natural Resources, Duhok governorate releases)."))
+# P7457: both CITED refs unrecoverable, but the row is now well sourced from elsewhere.
+# Retraction -- this block first read "GENUINELY DEAD, and this row has NO OTHER SOURCE",
+# and an escalation was raised on that basis. Leg-3 research found five verifiable
+# sources including two archived KRG government primaries.
+P7457_HEAD = (
+    "The two CITED urls are unrecoverable -- pukmedia.com 403 (bot-wall) and drawmedia.net "
+    "404, neither with a Wayback snapshot -- so both must be REPLACED. But my earlier "
+    "conclusion that 'this row has NO OTHER SOURCE' was WRONG and is retracted: the KRG "
+    "Ministry of Natural Resources documents this pipeline twice, and three secondary "
+    "sources corroborate. Replace the dead urls with the archived MNR primaries. ")
+for c, extra in (
+    ("Status", "MNR's 26 May 2014 press release announces 'the successful delivery via "
+               "pipeline of the first quantities of natural gas from the gas field at Summail "
+               "to fuel the Duhok Power Station' -- supports operating, independently "
+               "corroborated by Iraq Business News the following day."),
+    ("Fuel", "MNR: 'natural gas from the gas field at Summail'; the Summail field is a "
+             "dry-gas field developed by DNO under the Duhok PSC -- supports Fuel = Gas."),
+    ("PipelineType", "MNR calls it 'A 30-kilometre INTERCONNECTOR pipeline from Summail field "
+                     "to Duhok power plant' -- a field-to-plant interconnector, supporting "
+                     "transmission."),
+    ("Start", "SOURCED, and the value is right: MNR's press release is dated 26 May 2014 and "
+              "reports first gas, so StartYear1 = 2014 is CONFIRMED (Iraq Business News, "
+              "27 May 2014, independently). MNR's older page had projected 'by early 2014', "
+              "which the release then delivers."),
+    ("Length", "THE ONE REAL DEFECT ON THIS ROW. MNR states the pipeline is '30-kilometre'; "
+               "GEM holds 40.00 km. The 40 traces to a DISTANCE, not a length -- DNO and OGJ "
+               "both write that the plant is 'located 40 kilometers from the field'. A "
+               "field-to-city distance is not a pipeline length. This also vindicates the ASB "
+               "length memo's instinct to reject 40.00 as a suspiciously round number, though "
+               "for a different reason than that memo guessed: it never came from the ASB. "
+               "See the validity record in the qc/ leg."),
+    ("Diameter", "STILL UNSOURCED. None of the five recovered sources gives a diameter, so "
+                 "GEM's 36 inch is neither confirmed nor contradicted -- left alone, not "
+                 "endorsed. Note 36 inch would be large for a 30 km single-plant "
+                 "interconnector rated at 120 MMcf/d, so it is worth a look next pass."),
+):
+    REFS.append(("P7457", f"{c} [ref]", "REFS_ADDED", ["KRG_PIPE", "KRG_FIRSTGAS"], "high", True,
+                 P7457_HEAD + extra))
+REFS.append(("P7457", "Capacity [ref]", "REVERIFIED", ["KRG_FIRSTGAS", "DNO"], "high", True,
+    "Not in the original dead list -- recorded because the Leg-3 research resolved an "
+    "APPARENT conflict that would otherwise be re-raised. MNR, 26 May 2014: 'Long-term "
+    "deliveries are expected to reach 120 million cubic feet per day ... the KRG will purchase "
+    "up to 120mmscf/d' -- GEM's 120 MMcf/d exactly. DNO's 2013 GSA announcement says 'Initial "
+    "deliveries will be around 100 million cubic feet per day' and 'Initial volumes will start "
+    "at around 55mmscf/d, ramping up to 120mmscf/d', so 100 is a ramp-up figure, not a "
+    "competing rating. No conflict: GEM's capacity is correct and now double-sourced."))
 # P7471 (3) + P7474 (2): opc.oil.gov.iq CAPTCHA
 OPC_NOTE = (
     "NOT a dead link, but NOT verifiable either -- a new false-negative family worth adding "
@@ -427,48 +504,73 @@ DEFECTS = [
      "verbatim) and it was the name that misled -- logged because 'implausibly short length' "
      "is exactly the kind of flag a future pass would raise again.",
      ["JIBAWI", "KIRKUKNOW"], "high"),
+
+    ("P6826", "__VALIDITY__", "VALIDITY", "spec", {"StartYear1": "2024"}, "concern",
+     "Set StartYear1 2024 (was 2025). One cell. Status 'operating' stays, and the row's name, "
+     "length (8 km) and diameter (24in) are all confirmed -- do not touch them.",
+     "This is ALL THAT SURVIVES of the status change this pass first staged against P6826 (see "
+     "the status record, which retracts it). Al-Jibawi (June 2025): OPC 'completed in 2024 the "
+     "construction of a 24-inch dry gas pipeline extending for 8 km from the Majnoon oil field "
+     "... to the NGL station in North Rumaila'. Completion in 2024 means StartYear1 = 2025 is "
+     "one year late.\n\n"
+     "The 2025 was never sourced: the row's Start [ref] is a Facebook permalink that returns "
+     "HTTP 400 and has no archive. So this is a dead ref carrying a wrong value -- the pattern "
+     "this whole re-pass was built to find, and an argument for treating an unverifiable ref as "
+     "a data-quality flag on the VALUE, not just a citation gap. Corroborating detail: al-Sharq "
+     "(April 2024) has crews actively laying pipe, which is consistent with a 2024 finish and "
+     "not with a 2025 one.",
+     ["JIBAWI", "ALSHARQ"], "high"),
 ]
 
 STATUS = [
-    ("P7435", "change", "construction",
-     "Change Status 'operating' -> 'construction'. Two independent 2025 sources describe an "
-     "in-progress build and none reports commissioning. Also clear or footnote StartYear1 = "
-     "2025 (unsourced -- its only ref is a Facebook video), and re-check Capacity = 200 "
-     "MMcf/d, which neither source states.",
-     "Baghdad Today, 28 February 2025: 'النفط تباشر بتنفيذ مشروع مد أنبوب نقل الغاز الجاف من "
-     "خور الزبير إلى شط العرب' -- the Ministry COMMENCES implementation of laying the dry-gas "
-     "pipeline from Khor al-Zubair to Shatt al-Arab. Iraq Business News, 16 March 2025: "
-     "\"Iraq's Ministry of Oil is progressing with the implementation of a dry gas pipeline\", "
-     "officials 'inspected the Khor Al-Zubair terminal in Basra, where the pipeline's "
-     "receiving arms are under construction', 'Work is progressing rapidly'. Two independent "
-     "outlets, one Arabic and one English, three weeks apart, both unambiguously describing "
-     "construction. Nothing found reporting completion. Both sources also corroborate the "
-     "40 km and 42-inch specs exactly, so the row is otherwise in good shape -- it is the "
-     "status that is stale. Note the direction of this finding is the opposite of the usual "
-     "stale-status problem: GEM is AHEAD of the evidence, not behind it.",
-     ["BAGHDADTODAY", "IBN0316"], "high", True),
+    ("P7435", "confirm", "operating",
+     "NO STATUS EDIT -- this record WITHDRAWS the change this pass first staged. Status "
+     "'operating' is correct. Do fill the blank StartYear1 (2025, month 5) -- staged as a "
+     "fill in the qc/ leg -- and note Capacity = 200 MMcf/d remains unsourced by any source "
+     "found here.",
+     "RETRACTION. I first staged 'operating' -> 'construction' on this row, on two independent "
+     "2025 sources describing an in-progress build: Baghdad Today, 28 February 2025 ('النفط "
+     "تباشر بتنفيذ مشروع مد أنبوب نقل الغاز الجاف من خور الزبير إلى شط العرب' -- the Ministry "
+     "COMMENCES implementation) and Iraq Business News, 16 March 2025 ('is progressing with the "
+     "implementation', 'the pipeline's receiving arms are under construction'). Both quotes are "
+     "accurate. The inference from them was not: they date the CONSTRUCTION PHASE, and the "
+     "pipeline finished ten weeks later.\n\n"
+     "Al-Jibawi (June 2025) narrates both ends in one passage: 'In February 2025, SCOP started "
+     "to construct a 42-inch dry gas pipeline in Al Basrah Governorate. The pipeline extends "
+     "from Khor Al-Zubair to Nadhum Shatt Al-Basrah for 40 km to join the national dry gas "
+     "pipeline ... In May 2025, the Oil Minister, Hayan Al-Sawad, declared the completion of the "
+     "pipeline in a record time.' The February date matches Baghdad Today exactly, which is what "
+     "makes the May completion trustworthy rather than a competing claim -- the same source "
+     "reproduces the evidence I had and then continues past it. GEM was right.\n\n"
+     "The generalisable lesson, which is why this is written up rather than silently deleted: a "
+     "source reporting construction dates the construction, not the row. Before staging a "
+     "'stale forward' status change, look explicitly for a LATER source -- especially on short "
+     "lines, where 'under construction' can be months from 'operating'. The two refs also "
+     "corroborate 40 km and 42 inch exactly, so the row is in good shape throughout.",
+     ["JIBAWI", "BAGHDADTODAY", "IBN0316"], "high", True),
 
-    ("P6826", "change", "construction",
-     "Change Status 'operating' -> 'construction' pending a completion source, and treat "
-     "StartYear1 = 2025 as an unsourced projection. Separately resolve the route "
-     "contradiction below before trusting the row's identity.",
-     "al-Sharq, 15 April 2024: SCOP's South Projects Commission 'باشرت بالعمل في تنفيذ "
-     "المشروع' (commenced work on executing the project) and 'الملاكات ... تعمل حاليا بعملية "
-     "مد ولحام الأنابيب' (crews are CURRENTLY laying and welding the pipes). That is "
-     "construction as of April 2024. The row's only other ref (a Facebook post, for the "
-     "start year) returns HTTP 400 and is not archived, so nothing sources completion.\n\n"
-     "THE SOURCE CONTRADICTS ITSELF ON THE ROUTE, and I am flagging rather than resolving "
-     "it. The headline is about a gas pipeline at the MAJNOON oil field ('أنبوب غاز حقل "
-     "مجنون النفطي'), which is what GEM's name follows -- but the body describes the line as "
-     "'الممتد بطول ما يقارب ٨ كيلو متر من محطة قانصة السوائل في الرميلة الشمالية الى محطة "
-     "الغاز السائل الطبيعي (NGL)': roughly 8 km from the liquids-catcher station at NORTH "
-     "RUMAILA to the NGL plant. North Rumaila and Majnoon are different fields. GEM has "
-     "taken the diameter (24in) and length (8 km) from the body while taking the name from "
-     "the headline, so if the body is right the row is misnamed and its endpoints belong to "
-     "a different field; if the headline is right the specs may belong elsewhere. "
-     "Beneficiary is given as South Gas Company. Needs one more source to break the tie -- "
-     "do not silently pick a reading.",
-     ["ALSHARQ"], "medium", False),
+    ("P6826", "confirm", "operating",
+     "NO STATUS EDIT -- this record WITHDRAWS the change this pass first staged. Status "
+     "'operating' is correct, and the route contradiction is RESOLVED in favour of GEM's name. "
+     "One real defect survives: StartYear1 2025 -> 2024 (see the validity record).",
+     "RETRACTION, on the same failure mode as P7435. I staged 'operating' -> 'construction' on "
+     "al-Sharq, 15 April 2024, which reports SCOP's South Projects Commission 'باشرت بالعمل في "
+     "تنفيذ المشروع' (commenced work) and crews 'تعمل حاليا بعملية مد ولحام الأنابيب' (currently "
+     "laying and welding the pipes). Accurate quote, wrong inference -- the build completed "
+     "later that same year. Al-Jibawi (June 2025): OPC 'completed in 2024 the construction of a "
+     "24-inch dry gas pipeline extending for 8 km from the Majnoon oil field ... to the NGL "
+     "station in North Rumaila'.\n\n"
+     "THE SAME SENTENCE ALSO RESOLVES THE ROUTE CONTRADICTION I flagged and declined to "
+     "resolve. al-Sharq's headline named the MAJNOON field while its body described '8 km from "
+     "the liquids-catcher station at North Rumaila to the NGL plant', and I could not tell which "
+     "end the row belonged to. Al-Jibawi gives the whole line: Majnoon -> North Rumaila NGL. "
+     "Both al-Sharq statements are true of it, describing one corridor from opposite ends, and "
+     "GEM's Majnoon-based NAME is right. 24 inch and 8 km are confirmed exactly.\n\n"
+     "What survives is the date: GEM holds StartYear1 = 2025 against a 2024 completion. That is "
+     "a one-cell fix, not a status change -- a much smaller finding than the one I withdrew, "
+     "and worth noting that the Facebook ref behind the 2025 was dead, so the wrong year was "
+     "never sourced in the first place.",
+     ["JIBAWI", "ALSHARQ"], "high", True),
 ]
 
 
@@ -543,7 +645,9 @@ def main():
             "ref_col": "__STATUS__", "value_cols": ["Status"],
             "primary_value_col": "Status", "primary_value": newv,
             "values": {"Status": newv}, "current_ref": txt(pid, "Status [ref]"),
-            "class_in": "STATUS", "class_out": "CHANGE_PROPOSED",
+            "class_in": "STATUS",
+            "class_out": {"confirm": "CONFIRMED", "change": "CHANGE_PROPOSED",
+                          "stale": "STALE", "unclear": "UNRESOLVED"}[verdict],
             "verdict": verdict, "current_status": txt(pid, "Status"),
             "proposed_status": newv, "recommendation": recc,
             "proposed_refs": [U[k] for k in keys], "verifications": verifs(keys),
@@ -593,17 +697,24 @@ def main():
         },
         "note": (
             "Re-pass over the 41 DEAD_LINK ref units from iraq-gas/annual and "
-            "iraq-gas/ref-sweep-operating. Only 15 of 41 are genuinely unverifiable: 22 "
-            "RECOVER (the URL is live under a browser UA, or archived, and does support the "
-            "value) and 4 have a LIVE url whose content CONTRADICTS the GEM value -- a worse "
-            "problem than a dead link, and invisible while the unit was written off as dead. "
-            "Five substantive defects fell out of the recovery and are staged here: P6824 is "
+            "iraq-gas/ref-sweep-operating. Only 8 of 41 are left with no usable source: 31 "
+            "RECOVER (the URL is live under a browser UA, or archived, or a replacement source "
+            "was found) and 2 have a LIVE url whose content CONTRADICTS the GEM value -- a "
+            "worse problem than a dead link, and invisible while the unit was written off as "
+            "dead. "
+            "Four substantive defects fell out of the recovery and are staged here: P6824 is "
             "a GASOIL (diesel) products line misfiled in GGIT (Arabic 'زيت الغاز' = diesel, "
             "a false friend); P7477's Capacity 130 is tagged bcm/y where the source says 130 "
             "MMcf/d, making a 22 km 18-inch spur the 2nd-largest-capacity row in all of GGIT; "
-            "P7435 and P6826 are under construction, not operating; P7436/P7437's owner is "
-            "TotalEnergies' project, not the Ministry of Oil; and P6827 dates a 1,050 m 2023 "
-            "spur to 1980. The recovered JCCP deck (an Iraqi MoO Director General's 2013 "
+            "P7436/P7437's owner is TotalEnergies' project, not the Ministry of Oil; and P6827 "
+            "dates a 1,050 m 2023 spur to 1980. WITHDRAWN after Leg-3 research: a fifth finding, "
+            "'P7435 and P6826 are under construction, not operating', is RETRACTED -- Al-Jibawi "
+            "reports both completions (May 2025 and 2024), so GEM was right and the "
+            "construction-stage refs I relied on simply predated the finish. All that survives "
+            "is P6826's StartYear1 2025 -> 2024. Also retracted: 'P7457 has no other source' -- "
+            "the KRG Ministry of Natural Resources documents it twice, and the row's real defect "
+            "is LengthKnown 40 -> 30 km (40 km is the field-to-plant DISTANCE, not the pipe). "
+            "The recovered JCCP deck (an Iraqi MoO Director General's 2013 "
             "presentation) also yields an independent aggregate -- Iraq LPG 1,219 km + dry "
             "gas 1,088 km -- that corroborates BOTH the ASB length-unit correction and the "
             "cluster-C trunk double-count. Memos: "

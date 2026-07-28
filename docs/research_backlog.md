@@ -41,9 +41,19 @@ Roster `applied` column is blank for all four countries — log the date when pa
 Iraq/Iran xlsx deliverables are already pruned from disk, so file presence is not a
 signal of application status.
 
-- **Iraq gas** — full packet staged 2026-07-05 (+ OPEC-ASB ref-harvest re-pass
-  2026-07-07, 68 refs). 37.5% status-change rate **tripped the >30% escalation gate**.
-  `docs/country_notes/iraq.md`.
+- **Iraq gas** — **full pass re-run 2026-07-28** (refs sweep · cancelled review · redundancy
+  clusters · GulfPub + OSM recon · wiki alignment · route integrity · ref-gap re-pass · Leg-3),
+  superseding the 2026-07-05 packet and the 2026-07-07 ASB ref-harvest, both folded in. Work from
+  `pipelines_batch_20260728_1530_ET_iraq-gas_handoff-actions.xlsx` (100 open decisions ·
+  9 status changes · 265 backend paste units · 114 wiki updates · 36 route suggestions ·
+  171 open flags) + the `-evidence` companion. **Twelve escalations open** — the structural ones
+  are the ASB length mi→km defect (19 rows, two families with two *different* one-cell fixes),
+  CapacityUnits on 3 rows, P6824 as a diesel line misfiled in GGIT, and the ASB-provenance ruling
+  that **withdrew 12 of 16** of our own earlier duplicate/existence flags. **Three retractions —
+  do not act on the older findings:** P4067 is *not* a misfiled crude line (stays in GGIT),
+  "status stale forward" on P7435/P6826 is wrong (GEM was right), and P6007 is not a phantom.
+  The earlier 37.5% status-change rate that tripped the >30% gate does not recur — 9 status
+  changes across the country this pass. `docs/country_notes/iraq.md`.
 - **Iran gas** — full packet staged 2026-07-05 (+ re-pass 2026-07-07, 35 refs).
   62.5% in-dev change rate (gate tripped); class-wide Owner NIOC→NIGC/IGTC fix on
   ~27 operating rows. `docs/country_notes/iran.md`.
@@ -108,13 +118,19 @@ signal of application status.
   the `CapacityBcm/y` conversion recognises. ×1000 fits Libya's four and does **not**
   fit Algeria's, so no blanket fix.
   `notes/escalation-2026-07-28-scm-capacity-units.md`.
-- **14 Libya gas lengths are 1.609× too long:** ASB2012 Table 4.10's length column is
-  headed "miles" but the **Libya block is kilometres** — the ingest converted anyway.
-  Same table and same ingest as the `scm` defect above, different column, different
-  fix. Scope is Libya only and proven so: the Qatar/Iraq/Saudi blocks *are* miles and
-  their conversions are correct, so **do not sweep other countries**. Fixing it should
-  also clear most of Libya's route-integrity flags.
-  `notes/escalation-2026-07-28-asb-libya-length-units.md`.
+- **ASB length mi→km defect — now TWO countries, 33 rows: 14 Libya + 19 Iraq.** ASB Table
+  4.10/9.9's length column is headed "miles" but those countries' blocks are tabulated in
+  **kilometres** — the ingest converted anyway. Same table and same ingest as the `scm` defect
+  above, different column, different fix. **The Libya memo's original "scope is Libya only,
+  the Qatar/Iraq/Saudi blocks *are* miles" claim is superseded** — the Iraq gas pass
+  (2026-07-28) found 19 Iraq rows with the same defect, arbitrated 6–0 by route geometry. The
+  Qatar, Saudi and UAE controls *are* miles and their conversions stay correct, so the ingest is
+  not broken — but "Libya only" is dead as a scope claim, and the remaining ASB countries should
+  be tested the same way (take a row whose real length is independently known and see which
+  reading it matches). Iraq needs TWO different one-cell fixes (13 rows fix the number;
+  6 rows fix only the unit label). Fixing it should also clear most of both countries'
+  route-integrity flags. `notes/escalation-2026-07-28-asb-libya-length-units.md` +
+  `notes/escalation-2026-07-28-asb-iraq-length-units.md`.
 - **GGIT small-diameter inclusion threshold:** GulfPub's Libya run surfaced 6–8in field
   gathering laterals, below the tracker-wide 12in 5th-percentile diameter, but GGIT does
   already carry 34 gathering rows globally. A one-time scope ruling stops this being

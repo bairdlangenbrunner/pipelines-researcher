@@ -215,8 +215,17 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 
 - **Iran (gas packet 2026-07-05 staged not applied; + oil open items):**
   `docs/country_notes/iran.md`.
-- **Iraq (gas packet 2026-07-05 staged not applied; + oil open items — Grand Faw
-  third line, P0544):** `docs/country_notes/iraq.md`.
+- **Iraq (gas: full pass re-run 2026-07-28 staged not applied — supersedes the
+  2026-07-05 packet; work from
+  `…_20260728_1530_ET_iraq-gas_handoff-{actions,evidence}.xlsx`. TWELVE escalations
+  open, structurally: the ASB Table 4.10/9.9 length mi→km defect on 19 rows (two
+  families, two *different* one-cell fixes —
+  `notes/escalation-2026-07-28-asb-iraq-length-units.md`), CapacityUnits on 3 rows,
+  P6824 as a diesel line misfiled in GGIT, and the ASB-provenance ruling that
+  withdrew 12 of 16 of our own duplicate/existence flags. THREE retractions — P4067
+  is *not* a misfiled crude line, "stale forward" on P7435/P6826 is wrong, P6007 is
+  not a phantom. + oil open items — Grand Faw third line, P0544):**
+  `docs/country_notes/iraq.md`.
 - **Saudi Arabia (gas packet 2026-07-08 staged not applied — hinges on the
   P1897–P1925 class decision; GulfPub route-consistency pass + oil ref-sweep
   partial):** `docs/country_notes/saudi-arabia.md`.

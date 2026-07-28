@@ -92,6 +92,31 @@ The Libya gas pass (2026-07-28) escalated **three condensate lines misfiled in G
 same failure mode: **a liquids pipeline entering the gas tracker because one word in the
 source was read as "gas."**
 
+### A second Iraqi candidate was examined and **rejected** — the screen needs a guard
+
+`docs/country_notes/iraq.md` carries a standing finding from the 2026-07-07 ref-harvest
+re-pass that **P4067 (Al-Ahdab–Al-Zubaydia)** is likewise misfiled: *"crude oil → belongs
+in GOIT, not GGIT"*, sourced to Iraq Business News and BBC Arabic establishing that
+Al-Ahdab is a **crude-oil field**. **That finding is retracted** (see the P4067
+classification record in `batches/iraq-gas/staging/qc/`), and the reason is worth stating
+here because it is the failure mode this screen will produce if run naively:
+
+**Inferring a pipeline's fluid from its source field's principal product is invalid.**
+An oil field produces associated gas; P4067's destination is a **power station**
+(`Al-Zubaydia PWR St`); and a gas line from an oil field to a power plant is the most
+ordinary object in Iraq's gas network — Majnoon, Gharraf, Faiha, West Qurna and Buzergan
+rows are all exactly that shape. OPEC moreover lists the Ahdab corridor's crude and gas
+lines as **separate rows in separate tables** (ASB2017 Table 6.9 crude, Table 9.9 gas),
+so it distinguished them deliberately. P4067 stays in GGIT.
+
+So the screen below must key on **what the source says the pipe carries**, never on what
+its origin field produces. P6824 qualifies because its own headline names the *fluid*
+(`زيت الغاز` — gas oil); P4067 never did.
+
+*(Al-Jibawi's 2025 report does describe a genuinely new 16″/76 km **crude** line from
+Ahdab to Zubaidiya completed in early 2024 — that is a **GOIT discovery candidate**, not
+a GGIT removal, and it is logged as such.)*
+
 **Recommended tracker-wide screen** (out of scope for this pass, worth its own task):
 flag GGIT rows whose sourcing describes a liquid. High-yield signals —
 
