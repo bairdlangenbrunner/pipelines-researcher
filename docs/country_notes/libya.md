@@ -17,9 +17,16 @@ condensate/oil lines filed in the gas tracker.
   Wayback snapshots of the ASB PDF via `pdftotext`. A recovered Wayback ASB URL
   that actually names the pipeline is a valid ref; the bare dead opec.org link on
   the row is not.
-  - **Read its column header before using a number.** Table 4.10's capacity column
-    is headed **"(1,000 scm/yr)"**. GEM's ingest dropped that multiplier — see the
-    Gotchas section.
+  - **Read its column header before using a number — and then check whether the
+    header is telling the truth.** Both of Table 4.10's numeric columns have burned
+    GEM's Libya rows, in opposite directions:
+    - The **capacity** column is headed **"(1,000 scm/yr)"** and the ingest dropped
+      that multiplier — 4 rows read as zero-capacity.
+    - The **length** column is headed **"(miles)"** but the **Libya block is
+      actually in kilometres** (Qatar's, Iraq's and Saudi's are genuinely miles).
+      The ingest converted anyway — 14 rows are 1.609× too long. ASB2013 fixed the
+      source; ASB2012 did not.
+    Both in the Gotchas section, with a memo each.
 
 ## Key operators / owners
 NOC is the **owner**; the operator is almost always one of its joint-venture
@@ -51,9 +58,13 @@ not the tracker tab.
 
 ## Routing / GIS tips
 - 20 of 38 gas rows have drawn geometry. Route integrity flags **12** of them —
-  11 `length_ratio` and 1 `null_geometry` — which is a high rate and mostly means
-  the drawn line is a **straight-line schematic**, not that the length is wrong.
-  Check which of the two the evidence supports before touching either.
+  11 `length_ratio` and 1 `null_geometry`. Check which side is wrong before touching
+  either, because in Libya **both** failure modes are present and common:
+  - On the 14 ASB-derived rows the **length** is wrong (spurious mi→km — see
+    Gotchas). Six of the seven such rows with geometry pass the ratio test once the
+    length is corrected. Do not "fix" the route on these.
+  - Elsewhere the drawn line is a **straight-line schematic** and the length is fine
+    (P1858 is a 91 km two-point line against a sourced ~132 km).
 - Several Sirte Basin routes are literally two-point lines (P1858 is a 91 km
   straight segment against a sourced 131.96 km). Those are `RouteAccuracy`
   problems, not length problems.
@@ -95,13 +106,25 @@ not the tracker tab.
   `scm/yr` is not even a unit the `CapacityBcm/y` conversion recognises. Full
   writeup: `notes/escalation-2026-07-28-scm-capacity-units.md`. **Do not apply a
   blanket ×1000** — it fits Libya's four and does not fit Algeria's.
+- **14 Libya lengths are 1.609× too long.** ASB2012 Table 4.10 labels its length
+  column "miles", but the Libya block is tabulated in **kilometres**; the ingest
+  converted anyway. Every one of the 14 matches `ASB raw × 1.609344` to within 1 km.
+  Full list + the Qatar/Greenstream controls:
+  `notes/escalation-2026-07-28-asb-libya-length-units.md`. **This inverts the usual
+  reading of a `length_ratio` flag in Libya** — on these rows the length is wrong,
+  not the route, so don't downgrade `RouteAccuracy` before the lengths are fixed.
+  P1872 and P1873 are exactly 2.00× their ASB figure instead, which is a *different*,
+  undiagnosed mechanism.
 - **P0484 `LengthKnownKm = 5246`** against a 526 km drawn route: a decimal shift live
   in the published tracker.
 - **A shared name + an exact shared length is a reason to look, not a verdict.** In
   clusters B and D that signature was a misfiled condensate line; in clusters C, F
   and G it was genuine twinning, and OPEC ASB tabulates each line of the pair
   separately with its own capacity. Three of the seven redundancy clusters were
-  opened as duplicates and then **refuted with sources**.
+  opened as duplicates and then **refuted with sources**. The cleanest example:
+  P1860 and P1861 both read `LengthKnownKm = 177.00`, which looks exactly like a
+  copy-paste — but ASB2012 lists *both* Waha/Nasser and Faregh/Intesar at 110, so
+  both converted to the same wrong number. The duplication is in the source.
 - **`cancelled` is a claim like any other.** Both Libya cancelled rows failed review:
   P1728's cancellation is contradicted by World Bank (2013) and Libya Herald (2013)
   coverage of active discussions, and P3985's origin article shows the line ~60%
@@ -127,9 +150,9 @@ not the tracker tab.
   P1864 (105 km) + P1865 (117 km) laid end to end.
 - **Three condensate lines** (P6705 delete / P6713 delete / P6709 move) — above.
 - **`scm` capacity units** — 4 Libya + 4 Algeria rows — above.
-- **P1860 / P1861 both carry `LengthKnownKm = 177.00`** exactly, both with blank
-  endpoints and `RouteAccuracy = low`. An identical length on two different
-  pipelines reads as a copy-paste.
+- **14 lengths carry a spurious miles→km conversion** (P1856, P1857, P1859, P1860,
+  P1861, P1862, P1864, P1865, P1866, P1867, P1868, P1869, P1870, P1871) — above, and
+  `notes/escalation-2026-07-28-asb-libya-length-units.md`.
 - **Operator attribution is a systematic gap**: 27/38 blank, 38/38 unreferenced.
 - **Oil-side flags raised from the gas batch, not yet actioned** (a Libya oil pass
   would pick these up):

@@ -83,6 +83,17 @@ silently zero and would not stop the next ASB ingest repeating it.
    four rows read as *zero-capacity pipelines* today, which is worse than a wrong number
    — it is an invisible one.
 
+## The same table produced a second, independent defect
+
+**`notes/escalation-2026-07-28-asb-libya-length-units.md`** — ASB2012 Table 4.10's
+*length* column is headed "(miles)", but the Libya block is tabulated in **kilometres**.
+The ingest converted anyway, leaving 14 Libya gas lengths 1.609× too long. Same table,
+same ingest, adjacent column, opposite direction of error — which is the strongest
+argument for treating the ASB ingest itself as the thing to review, not the individual
+rows. P1858 appears in both lists. Note the scope difference: the length defect is
+provably **Libya-only** (Qatar/Iraq/Saudi convert correctly), whereas this capacity
+defect crosses at least Libya and Algeria.
+
 ## Related, same batch, separate memo-worthy items
 
 - Three condensate lines are sitting in the **gas** tracker (P6705, P6709, P6713) with

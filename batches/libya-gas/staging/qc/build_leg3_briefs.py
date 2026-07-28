@@ -80,6 +80,13 @@ CLUSTERS = {
     },
     "mellitah-wlgp": {
         "title": "Mellitah complex / Western Libya Gas Project / Bahr Assalam offshore",
+        # MIS-CLUSTERED (found 2026-07-28, after dispatch): P0482 Defa-Brega does NOT
+        # belong here. Defa is a Waha Oil Company field and Brega is Sirte Oil's hub —
+        # both organizationally distinct from the Eni-NOC Mellitah JV that runs the
+        # other five. The research agent caught the bad framing and refused to stage
+        # "Mellitah" as its operator, which is the correct outcome; left in place so
+        # the brief matches the shard that was actually produced. If these briefs are
+        # ever regenerated, move P0482 to a Sirte-Basin cluster.
         "pids": ["P0482", "P0484", "P6713", "P6715", "P6716", "P7617"],
         "context":
             "Mellitah Oil & Gas (the NOC-Eni 50:50 JV) is the operator across this "

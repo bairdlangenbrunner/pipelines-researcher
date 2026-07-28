@@ -75,7 +75,8 @@ signal of application status.
   `--commodity both`, 25 additions (under the escalation gate). OSM: coverage null
   result for Libya, but it exposed three engine defects now fixed in `match.py` /
   `reconcile.py` / `route_compare.py` that affect every source. Three structural
-  escalations are open (§4). `docs/country_notes/libya.md`;
+  escalations are open (§4), plus a fourth found late in the pass: 14 lengths carry a
+  spurious ASB miles→km conversion. `docs/country_notes/libya.md`;
   `batches/libya-gas/staging/{ref-sweep-operating,cancelled-review,redundancy,recon-gulfpub-20260728,recon-osm-20260728,qc}/`.
 - **US oil: Delaware Express** (P7995/P0354, researched 2026-06-12) and
   **Permian Express I–IV** (P0113/P2581/P2660/P2661, researched 2026-06-11) —
@@ -104,6 +105,13 @@ signal of application status.
   the `CapacityBcm/y` conversion recognises. ×1000 fits Libya's four and does **not**
   fit Algeria's, so no blanket fix.
   `notes/escalation-2026-07-28-scm-capacity-units.md`.
+- **14 Libya gas lengths are 1.609× too long:** ASB2012 Table 4.10's length column is
+  headed "miles" but the **Libya block is kilometres** — the ingest converted anyway.
+  Same table and same ingest as the `scm` defect above, different column, different
+  fix. Scope is Libya only and proven so: the Qatar/Iraq/Saudi blocks *are* miles and
+  their conversions are correct, so **do not sweep other countries**. Fixing it should
+  also clear most of Libya's route-integrity flags.
+  `notes/escalation-2026-07-28-asb-libya-length-units.md`.
 - **GGIT small-diameter inclusion threshold:** GulfPub's Libya run surfaced 6–8in field
   gathering laterals, below the tracker-wide 12in 5th-percentile diameter, but GGIT does
   already carry 34 gathering rows globally. A one-time scope ruling stops this being
