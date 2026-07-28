@@ -19,17 +19,29 @@ control is wrong, and Iraq is worse than Libya: OPEC fixed Libya in ASB2013 and
 
 ## Evidence
 
-**1. Arithmetic, not resemblance.** All 19 rows equal `ASB raw × 1.609344`. Two
-distinct sub-families, and the second one proves the mechanism outright:
+**1. Arithmetic, not resemblance.** All 19 rows resolve to `ASB raw × 1.609344`
+kilometres. Two distinct sub-families, and they got there by **different mechanisms** —
+which matters because it means they need different fixes:
 
-| family | rows | signature |
-|---|---|---|
-| `P18xx`/`P22xx` (13) | ASB2012-era | product **rounded to whole km** (431, 211, 56, 39, 72, 37, 77, 216, 470, 145, 34, 438, 87) |
-| `P40xx` (6) | ASB2017-era | product **with decimals retained** — 40.23, 119.09, 80.47, 46.67, 117.48, 61.16 |
+| family | rows | how the sheet holds it | signature |
+|---|---|---|---|
+| `P18xx`/`P22xx` (13) | ASB2012-era | `LengthKnown` = the **converted** figure, `LengthKnownUnits` = `km` | product **rounded to whole km** (431, 211, 56, 39, 72, 37, 77, 216, 470, 145, 34, 438, 87) |
+| `P40xx` (6) | ASB2017-era | `LengthKnown` = the **raw ASB integer**, `LengthKnownUnits` = **`mi`** | the sheet's own formula emits 40.23, 119.09, 80.47, 46.67, 117.48, 61.16 |
 
-`80.47 = 50 × 1.609344`. `117.48 = 73 × 1.609344`. `46.67 = 29 × 1.609344`. Nobody
-types 80.47 km by hand — those decimals are the residue of the conversion itself.
-**Two separate ingest passes, years apart, both applied it.**
+For the 13, someone multiplied on the way in and stored kilometres.
+
+For the 6, **nobody converted anything** — the ingest wrote the ASB integer verbatim
+and simply believed the column header, tagging it `mi`. `LengthKnownKm` is a computed
+column (`LengthKnown` converted per `LengthKnownUnits`), so the sheet's own formula
+produced 40.23 from `25 mi`. Those decimals are the spreadsheet's arithmetic, not an
+ingest artefact.
+
+> **CORRECTED 2026-07-28.** This item originally read the `P40xx` decimals as evidence
+> of "a second, decimal-retaining ingest pass" and concluded "two separate ingest
+> passes, years apart, both applied it." That is wrong: only one pass ever applied a
+> multiplication. The `P40xx` rows are a **unit-label** error, and their stored numbers
+> are already correct. The staged records were re-targeted accordingly — see
+> **Which rows are staged** below.
 
 **2. Diameter corroborates the row match.** Every one of the 19 matches its ASB row on
 diameter as well as on the length quotient — an independent attribute from the same
@@ -105,9 +117,26 @@ has to be empirical per country (route/independent length), not typographic.
 **All 19 are staged** — nothing here is memo-only. They are staged as
 `__VALIDITY__` / `concern_type: spec` records, **not** as fills, because each targets a
 *populated, published* value; per the standing rule a reference value is never
-auto-applied. Each record carries the exact proposed value in
-`values.LengthKnownKm` and a one-line `recommendation`, so applying is one step once
-you rule.
+auto-applied. Each record carries the exact proposed value and a one-line
+`recommendation`, so applying is one step once you rule.
+
+**Apply the right cell — the two families differ, and only one of them needs the number
+changed:**
+
+| family | edit | leave alone |
+|---|---|---|
+| 13 rows `P18xx`/`P22xx` | `LengthKnown` → the ASB figure | `LengthKnownUnits` (already `km`) |
+| 6 rows `P40xx` | `LengthKnownUnits` `mi` → **`km`** | `LengthKnown` — **already correct** |
+
+`LengthKnownKm` and `LengthMergedKm` are **computed columns — never paste over them.**
+Both fixes above correct `LengthKnownKm` automatically.
+
+> **CORRECTED 2026-07-28.** The staged records originally proposed a value for
+> `LengthKnownKm` on all 19 rows. That named a formula cell, and for the six `P40xx`
+> rows it would have been actively wrong: `LengthKnown` would still have held the ASB
+> integer tagged `mi`, so the sheet would have re-derived the inflated figure on the
+> next recalc and the fix would have silently reverted. Re-targeted by
+> `batches/iraq-gas/staging/asb-length-units/retarget_editable_cells.py` (idempotent).
 
 | | rows |
 |---|---|
