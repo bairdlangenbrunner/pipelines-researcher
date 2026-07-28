@@ -1,0 +1,1456 @@
+{
+ "meta": {
+  "commodity": "gas",
+  "scope": {
+   "csv": "GGIT_gas_snapshot_20260728.csv",
+   "country": "Iraq",
+   "tracker": "gas",
+   "statuses": [
+    "cancelled",
+    "shelved"
+   ],
+   "rows": 4,
+   "project_ids": 4
+  },
+  "mode": "sweep",
+  "leg": "status-review",
+  "n_units": 30,
+  "seeded_from": "GGIT_gas_snapshot_20260728.csv + ref_pairs.discover_ref_pairs",
+  "note": "The four Iraq gas rows with Status in {cancelled, shelved}: P0481, P0450 (cancelled) and P5857, P4041 (shelved). Status is itself under review here -- absence of news is not evidence of cancellation. Headline findings: (1) P4041's CapacityUnits is MMSCMD where its own cited source says MMSCFD, a proven 35.3x error that makes it the 2nd-highest capacity row in all of GGIT; screened as a one-row defect, not a class. (2) P4041's 'shelved' is contradicted -- its 56-inch crude twin GOIT P0544 reads 'construction' and work began ~May 2026 -- but the 2026 scope is publicly crude-only, so the verdict is 'unclear', not a proposed change. (3) P0481's Status [ref] reports Iraq SELECTING a contractor, the opposite of cancellation; its rationale lapsed when Kuwait reparations completed 13 Jan 2022. (4) P0450's Status [ref] is about a crude OIL pipeline and ShelvedCancelledType='confirmed' is wrong -- no cancellation was ever announced. (5) P5857 has no Status [ref] at all; MEED (2011) fully sources every spec.",
+  "generated_utc": "2026-07-28T18:06:27+00:00",
+  "ref_research_applied": 30,
+  "ref_class_out_counts": {
+   "REFS_ADDED": 16,
+   "REVERIFIED": 6,
+   "UNRESOLVED": 8
+  },
+  "class_out_counts": {
+   "REFS_ADDED": 16,
+   "REVERIFIED": 6,
+   "STALE": 3,
+   "UNRESOLVED": 17
+  },
+  "class_in_counts": {
+   "HAS_REF": 17,
+   "MISSING_REF": 13,
+   "STATUS": 4,
+   "VALIDITY": 8
+  },
+  "n_validity_flags": 8,
+  "n_fills": 0,
+  "n_status_reviews": 4,
+  "n_route_suggestions": 0,
+  "verdict_counts": {
+   "concern": 8
+  },
+  "concern_counts": {
+   "attribution": 3,
+   "existence": 1,
+   "spec": 4
+  },
+  "status_verdict_counts": {
+   "stale": 3,
+   "unclear": 1
+  }
+ },
+ "resolutions": [
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "cancelled"
+   },
+   "primary_value": "cancelled",
+   "current_ref": "https://gate.ahram.org.eg/News/1645401.aspx",
+   "class_in": "HAS_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en/ar",
+   "researcher_notes": "THE CITED REF CONTRADICTS THE VALUE. The Status [ref] is Al-Ahram Gate (22 Nov 2017, Reuters-sourced), which reports Iraq SELECTING Japan's Toyo Engineering to build the gas pipeline to Kuwait plus a petrochemical plant -- project initiation, the exact opposite of cancellation. It says the project's details 'have not yet been announced', Toyo proposed deliveries after 2019, and Toyo's CFO said talks were continuing with NO final investment decision; Kuwait had offered sovereign guarantees up to 80% of cost and talks had stalled over price (Kuwait wanting under $3/MMBtu). Nothing in it supports 'cancelled'. No source located in English or Arabic announces a cancellation, in any year. What HAS happened is that the project's stated rationale lapsed: the gas was to help settle Iraq's 1990-invasion reparations, and those completed with a final payment on 13 Jan 2022 (UNCC; $52.4bn against ~1.5M successful claims of 2.7M filed) -- funded by a levy on Iraqi OIL sales over 31 years, never by gas in kind. So the transaction the pipeline was meant to serve no longer exists, and there has been no project news since Nov 2017. That supports a presumed-dead reading on the staleness ladder, not a sourced cancellation. See __STATUS__. Leaving this ref UNRESOLVED rather than re-pointing it: the reparations sources document the rationale lapse, not a cancellation of this pipeline, so citing them on the Status cell would overstate them.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "https://gate.ahram.org.eg/News/1645401.aspx",
+   "class_in": "HAS_REF",
+   "class_out": "REVERIFIED",
+   "proposed_refs": [
+    "https://gate.ahram.org.eg/News/1645401.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://gate.ahram.org.eg/News/1645401.aspx",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ar",
+   "researcher_notes": "Existing ref re-verified live (HTTP 200; Arabic token present). It explicitly describes a GAS pipeline from Iraq to Kuwait, so Fuel='Gas' is supported. Single source only -- this is a Reuters wire republished by Al-Ahram, and no independent second attestation of the 2017 proposal was found, so medium/not-independent. NOTE for whoever re-checks: WebFetch returns HTTP 403 on gate.ahram.org.eg; the page reads fine via curl with a browser user-agent, and url_verifier passes it.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "2.06",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "2.06",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gate.ahram.org.eg/News/1645401.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://gate.ahram.org.eg/News/1645401.aspx",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ar",
+   "researcher_notes": "Clean missing-ref fill: the row's OWN existing source carries the capacity and the ref cell was simply left empty. Al-Ahram/Reuters: 'Last year Kuwait said it would be ready to buy up to 200 million cubic feet per day'. 200 MMcf/d = 2.067 bcm/y, which is exactly GEM's Capacity=2.06 bcm/y. So the value is sourced and correct; only the citation was absent. Recommend also considering recording the native unit (200 MMcf/d) rather than the derived bcm/y, per the sheet's usual practice on gas rows. Caveat: 200 MMcf/d is a stated Kuwaiti purchase WILLINGNESS, not a designed pipeline capacity -- no engineering capacity was ever published for this line.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Rumaila oilfield",
+    "StartPrefecture/District": "",
+    "StartState/Province": "Basra",
+    "StartCountryOrArea": "Iraq",
+    "EndLocation": "",
+    "EndPrefecture/District": "",
+    "EndState/Province": "",
+    "EndCountryOrArea": "Kuwait"
+   },
+   "primary_value": "Rumaila oilfield",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gate.ahram.org.eg/News/1645401.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://gate.ahram.org.eg/News/1645401.aspx",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ar",
+   "researcher_notes": "Al-Ahram/Reuters supports the country pair (Iraq -> Kuwait) and names Rumaila, so the cluster is sourced. BUT the same article says it was NOT yet settled whether the gas would come from the LUKOIL-operated West Qurna 2 field or BP-operated Rumaila. GEM asserts StartLocation='Rumaila oilfield' where the only source explicitly records the origin as undecided. Filed as a spec concern -- see __VALIDITY__ -- rather than blocking the fill, since StartState/Province=Basra, StartCountryOrArea=Iraq and EndCountryOrArea=Kuwait are all solid. EndLocation is blank and no source names a Kuwaiti receipt point.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__STATUS__",
+   "value_cols": [],
+   "primary_value_col": "Status",
+   "values": {
+    "ShelvedCancelledType": "Presumed"
+   },
+   "primary_value": "cancelled",
+   "current_ref": "https://gate.ahram.org.eg/News/1645401.aspx",
+   "class_in": "STATUS",
+   "class_out": "STALE",
+   "current_status": "cancelled",
+   "verdict": "stale",
+   "proposed_status": "cancelled",
+   "evidence_date": "2017-11",
+   "staleness_rule": "4y->cancelled",
+   "proposed_refs": [
+    "https://news.un.org/en/story/2022/02/1111632",
+    "https://www.rudaw.net/english/middleeast/iraq/10022022"
+   ],
+   "verifications": [
+    {
+     "url": "https://news.un.org/en/story/2022/02/1111632",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.rudaw.net/english/middleeast/iraq/10022022",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Verdict: keep 'cancelled' but declare it an inference. The only cited source (Al-Ahram/Reuters, 22 Nov 2017) reports Iraq SELECTING Toyo Engineering to build the line -- initiation, not cancellation -- and records that no FID had been taken and talks had stalled on price. No cancellation was ever announced, in English or Arabic. What is independently documented is that the project's rationale lapsed: the gas was intended to help settle Iraq's 1990-invasion reparations, and the UNCC confirmed the final payment on 13 Jan 2022 ($52.4bn; ~1.5M successful claims of 2.7M filed), funded throughout by a levy on Iraqi OIL sales rather than gas in kind (UN News + Rudaw, both verified and independent of each other). With ~9 years of silence since the only project news, the 4y->cancelled rung is satisfied comfortably -- but by silence plus a lapsed rationale, not by an announcement. Hence ShelvedCancelledType='Presumed'. Deliberately NOT staging a CancelledYear: no source dates a cancellation and inventing one would be fabrication. Per the staged-JSON contract a 'stale' inference carries no ref, so the two reparations URLs are recorded here as supporting context for the reviewer, not as a citation for the Status cell.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "cancelled"
+   },
+   "primary_value": "cancelled",
+   "current_ref": "https://www.tehrantimes.com/news/439647/Iran-seeks-to-revive-oil-pipeline-across-Iraq-to-Syria-amid-sanctions",
+   "class_in": "HAS_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "THE CITED REF IS ABOUT A DIFFERENT PIPELINE. Status [ref] points to a Tehran Times piece (26 Aug 2019) titled 'Iran seeks to revive oil pipeline...' -- a CRUDE OIL line (Iran->Baniyas, ~1.25 Mbbl/d). It never mentions this gas project and never mentions any cancellation. It cannot support Status='cancelled'. Substantively: no formal cancellation was ever announced. Syria's electricity minister said as late as 2021 that the project had NOT been abandoned; Assad's fall (Dec 2024) removed the political basis, and from Aug 2025 Syria pivoted to Azerbaijani (Shah Deniz) gas via Turkiye instead. So the project is dead in practice and by inference, never by announcement. Not re-pointing this cell: the post-Assad analyses (Atlantic Council, Karam Shaar) document the collapse of prospects, not a cancellation event, and citing them on the Status cell would misrepresent them. The consequence for the data is ShelvedCancelledType, which currently reads 'confirmed' and is not -- see __STATUS__.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "https://en.wikipedia.org/wiki/Iran%E2%80%93Iraq%E2%80%93Syria_pipeline",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+    "https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/syrias-energy-sector-and-its-impact-on-stability-and-regional-developments/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/syrias-energy-sector-and-its-impact-on-stability-and-regional-developments/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Replacing a Wikipedia citation with two independent non-tertiary sources. Natural Gas World (11 Feb 2013) describes the Iran-Iraq-Syria gas pipeline directly, with the same endpoints and the same 110 MMcm/d as GEM; the Atlantic Council issue brief on Syria's energy sector discusses the project in its regional gas context. Fuel='Gas' is not in doubt. Recommend dropping the Wikipedia ref here -- see the attribution __VALIDITY__ on this row: four separate value cells all cite the SAME single Wikipedia article, which fails the 2-independent-source target on its own.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "current_ref": "https://en.wikipedia.org/wiki/Iran%E2%80%93Iraq%E2%80%93Syria_pipeline",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Natural Gas World (Feb 2013) describes a long-distance export trunkline from Assalouyeh to Damascus, which is 'transmission' on GEM's vocabulary. Single independent source, so medium. Proposed in place of the row's Wikipedia ref.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "110.0",
+    "CapacityUnits": "MMSCMD"
+   },
+   "primary_value": "110.0",
+   "current_ref": "https://en.wikipedia.org/wiki/Iran%E2%80%93Iraq%E2%80%93Syria_pipeline",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Natural Gas World (Feb 2013) independently attests 110 MMcm/d, matching GEM's Capacity=110 MMSCMD exactly. Deliberately scored medium rather than high: NGW and the Wikipedia article most plausibly both trace back to the same 2011 tripartite announcement, so they are not confidently independent of each other. Unit is right here -- MMSCMD (cubic METRES) is what the source says, unlike P4041 in this same batch.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "5600.0",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "5600.0",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Cannot corroborate LengthKnown=5600 km and it is contradicted three ways. (1) Natural Gas World (Feb 2013), with the SAME endpoints and the SAME 110 MMcm/d, gives 1,600 km. (2) GEM's own drawn route for this row measures LengthEstimateKm=1987.78. (3) Asaluyeh->Damascus is ~1,700 km great-circle, so 5,600 km is ~3.3x the straight-line distance -- impossible for this corridor. 5600 appears to be Wikipedia's figure transcribed faithfully; 1,600 vs 5,600 is a plausible digit error at some upstream step. Leaving UNRESOLVED rather than staging 1,600 as a fill because the value is populated and published; filed as a spec __VALIDITY__ with the proposed correction so it is one step to apply once ruled.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "56",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "56",
+   "current_ref": "https://en.wikipedia.org/wiki/Iran%E2%80%93Iraq%E2%80%93Syria_pipeline",
+   "class_in": "HAS_REF",
+   "class_out": "REVERIFIED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing Wikipedia ref re-verified live and does carry 56 in, so the cell is not an orphan and not a dead link. No independent corroboration of the diameter was found anywhere -- the figure rests on one tertiary source for a pipeline that was never engineered past announcement. Tier low deliberately. Part of the single-Wikipedia-source cluster flagged in this row's attribution __VALIDITY__.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "South Pars gas field"
+   },
+   "primary_value": "South Pars gas field",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill. Natural Gas World (Feb 2013) sources the gas to South Pars via Assalouyeh, supporting FuelSource='South Pars gas field'. Single source, medium.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Asaluyeh",
+    "StartPrefecture/District": "",
+    "StartState/Province": "Bushehr",
+    "StartCountryOrArea": "Iran",
+    "EndLocation": "Damascus",
+    "EndPrefecture/District": "",
+    "EndState/Province": "",
+    "EndCountryOrArea": "Syria"
+   },
+   "primary_value": "Asaluyeh",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill. Natural Gas World (Feb 2013) gives Assalouyeh (Iran) -> Damascus (Syria), matching StartLocation='Asaluyeh' / StartCountryOrArea='Iran' / EndLocation='Damascus' / EndCountryOrArea='Syria'. StartState/Province='Bushehr' is correct for Asaluyeh but is not stated by the source. Separately: this row's Route [ref] cell holds a google.com/url?sa=i Google-Images click-through URL, which is not a source at all -- flagged in the attribution __VALIDITY__. Route/geometry refs are out of scope for ref work per CLAUDE.md, so it is flagged and not touched here.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__STATUS__",
+   "value_cols": [],
+   "primary_value_col": "Status",
+   "values": {
+    "ShelvedCancelledType": "Presumed"
+   },
+   "primary_value": "cancelled",
+   "current_ref": "https://www.tehrantimes.com/news/439647/Iran-seeks-to-revive-oil-pipeline-across-Iraq-to-Syria-amid-sanctions",
+   "class_in": "STATUS",
+   "class_out": "STALE",
+   "current_status": "cancelled",
+   "verdict": "stale",
+   "proposed_status": "cancelled",
+   "evidence_date": "2024-12",
+   "staleness_rule": "4y->cancelled",
+   "proposed_refs": [
+    "https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/syrias-energy-sector-and-its-impact-on-stability-and-regional-developments/",
+    "https://karamshaar.com/syria-in-figures/arab-gas-pipeline-syria-transit-state-or-energy-hub/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.atlanticcouncil.org/in-depth-research-reports/issue-brief/syrias-energy-sector-and-its-impact-on-stability-and-regional-developments/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://karamshaar.com/syria-in-figures/arab-gas-pipeline-syria-transit-state-or-energy-hub/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Verdict: keep 'cancelled', but ShelvedCancelledType must change from 'confirmed' to 'Presumed'. There was never a formal cancellation -- Wikipedia says so explicitly, and Syria's electricity minister stated in 2021 that the project had NOT been abandoned, a decade after the 2011 tripartite MoU. What ended it was political: Assad's fall in Dec 2024 removed the Iran-Syria basis for the corridor, and from Aug 2025 Syria began importing Azerbaijani (Shah Deniz) gas via Turkiye instead -- a different corridor serving the same demand. 'confirmed' asserts a cancellation event that no source records, which is the specific error here; the pipeline is dead by inference, and the row should say so. Also note the Status [ref] is an article about a crude OIL pipeline and does not belong on this cell (see that unit). The two refs recorded here are supporting analyses of the project's collapse, not a cancellation citation -- a 'stale' inference carries no ref by design.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "shelved"
+   },
+   "primary_value": "shelved",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Status='shelved' carries NO ref at all and no source states a shelving. The last independent evidence of any kind is MEED, 24 May 2011, reporting bids IN for the line (20+ bidders, 10-month build) -- i.e. an active tender, not a shelving. No award, no construction, no cancellation found in the 15 years since. Strictly, 15 years of silence sits well past the 4y->cancelled rung of the staleness ladder, so 'shelved' is if anything generous. Not proposing a change on silence alone -- that is the standing Libya lesson (absence of news is not evidence of cancellation) -- but the tension is recorded, and __STATUS__ stages ShelvedCancelledType='Presumed' so the row at least declares that the status is an inference.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "https://www.bncnetwork.net/project/Zubair-Oil-Field-Fao-Pipeline/ODcwMjk=/",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MEED (24 May 2011) independently confirms this is a gas pipeline, alongside the existing bncnetwork ref. IMPORTANT CAVEAT on bncnetwork: url_verifier returns HTTP 200 but the page is JS-rendered / content-gated -- fetching it yields only the header, so its content cannot actually be read or verified. It is retained (not a dead link) but should not be counted as a readable corroborating source. MEED is doing the real work on every spec on this row.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "current_ref": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+   "class_in": "HAS_REF",
+   "class_out": "REVERIFIED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing MEED ref re-verified live. It describes a dedicated field-to-depot trunk line (Zubair depot -> Fao depot), consistent with PipelineType='transmission'.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "100.0",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "100.0",
+   "current_ref": "https://www.bncnetwork.net/project/Zubair-Oil-Field-Fao-Pipeline/ODcwMjk=/",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MEED (24 May 2011): the line would carry 'up to 100 million cubic feet a day', matching Capacity=100 MMcf/d exactly, unit included. Adding MEED alongside the unreadable bncnetwork ref gives this cell one genuinely verifiable source.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "105.0",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "105.0",
+   "current_ref": "https://www.bncnetwork.net/project/Zubair-Oil-Field-Fao-Pipeline/ODcwMjk=/",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MEED (24 May 2011) gives 105 km, matching LengthKnown=105 km exactly. Corroborating cross-tracker detail: GOIT P6196 'Zb1-Al Faw Oil Pipeline' runs Zubair 1 -> Al Faw and also carries 105.00 km -- the same right-of-way, which is where the figure comes from. That is a parallel line, NOT a duplicate: P6196 is 48-inch crude and operating, this row is 18-inch gas. Confirmed not a duplicate; see __VALIDITY__ for the corridor cross-ref.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "18",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "18",
+   "current_ref": "https://www.bncnetwork.net/project/Zubair-Oil-Field-Fao-Pipeline/ODcwMjk=/",
+   "class_in": "HAS_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MEED (24 May 2011) specifies 18-inch carbon steel, matching Diameter=18 in exactly.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Zubair"
+   },
+   "primary_value": "Zubair",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill. MEED (24 May 2011) sources the gas to the Zubair oil field, supporting FuelSource='Zubair'. Single readable source, medium.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "",
+    "StartPrefecture/District": "",
+    "StartState/Province": "Basrah",
+    "StartCountryOrArea": "Iraq",
+    "EndLocation": "Al Faw",
+    "EndPrefecture/District": "",
+    "EndState/Province": "Al-Faw Peninsula",
+    "EndCountryOrArea": "Iraq"
+   },
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill. MEED (24 May 2011): from the Zubair field depot near Basra to the Fao depot, developed by South Oil Company at ~$150M. Supports StartState/Province='Basrah', StartCountryOrArea='Iraq', EndLocation='Al Faw', EndState/Province='Al-Faw Peninsula'. StartLocation is blank; 'Zubair depot' would be the sourced value if a fill is wanted.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "__STATUS__",
+   "value_cols": [],
+   "primary_value_col": "Status",
+   "values": {
+    "ShelvedCancelledType": "Presumed"
+   },
+   "primary_value": "shelved",
+   "current_ref": "",
+   "class_in": "STATUS",
+   "class_out": "STALE",
+   "current_status": "shelved",
+   "verdict": "stale",
+   "proposed_status": "shelved",
+   "evidence_date": "2011-05",
+   "staleness_rule": "4y->cancelled",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Verdict: retain 'shelved' and declare it an inference. Status carries no ref and no source states a shelving. Last independent evidence: MEED, 24 May 2011, reporting bids IN (20+ bidders, $150M, 10-month build, South Oil Company) -- an active tender. No award, no construction, no cancellation in the 15 years since. Strictly the 4y ladder would put 15 years of silence at 'cancelled', so 'shelved' is generous; I am NOT proposing the harder change, because the standing lesson from the Libya cancelled review is that absence of news is not evidence of cancellation, and Iraqi state tenders of this era routinely went quiet without dying. Flagging the tension for the reviewer and staging ShelvedCancelledType='Presumed' so the row stops implying a sourced shelving. Separately: ResearcherNotes says 'NA: No update since 2022' but both of the row's refs are from 2011 and no 2022-era source is cited -- see __VALIDITY__.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "shelved"
+   },
+   "primary_value": "shelved",
+   "current_ref": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+   "class_in": "HAS_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "The cited ref does not support 'shelved' AND the value is contradicted by 2026 events. The saymar.org ref is an SCOP 'Technical Presentation (Scope of Work)' roadshow deck (Oct 2020) whose own status line reads 'FEED & EISHA completed for Pump Stations, and Concept for the Pipeline' -- an ACTIVE early-stage project as of late 2020, not a shelved one. Since then the parent project has entered execution: Iraq's PM directed implementation (26 Apr 2026), $1.5bn was approved under the Iraqi-Chinese agreement, and work began ~1 May 2026 on the ~700 km Basra-Haditha system (2.25 Mbbl/d Basra-Haditha + 1 Mbbl/d Haditha-Aqaba), with 56-inch pipe manufacturing under way. See __STATUS__ for why this is 'unclear' and not a proposed change: every 2026 source describes the CRUDE line only. QC detects, Update fixes.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+   "class_in": "HAS_REF",
+   "class_out": "REVERIFIED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing saymar.org SCOP ref re-verified (HTTP 200, application/pdf). It describes the 28-inch line as carrying 'Sales and Fuel Gas', so Fuel='Gas' is supported. Verifier caveat: url_verifier passes the fetch but FAILS on deep content tokens because the file is 4.2 MB -- the documented large-PDF limit. Content was confirmed locally with pdftotext.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "current_ref": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+   "class_in": "HAS_REF",
+   "class_out": "REVERIFIED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing saymar.org ref re-verified. The deck describes a 350 km inter-governorate sales/fuel gas trunk laid in an existing pipeline corridor with pump/compression stations -- 'transmission' is right.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2019.0",
+    "ProposalMonth": ""
+   },
+   "primary_value": "2019.0",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "ProposalYear=2019 could not be sourced. The saymar.org deck is dated Oct 2020 and does not give a proposal date; nothing else located names 2019 for the gas leg. Not contradicted either -- 2019 is plausible given FEED was complete by late 2020 -- so this is genuinely unresolved rather than wrong. Distinguish from ConstructionYear=2019, which IS contradicted (see below).",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2019.0",
+    "ConstructionMonth": ""
+   },
+   "primary_value": "2019.0",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "ConstructionYear=2019 is CONTRADICTED by the row's own cited source. The saymar.org SCOP deck (Oct 2020) states the pipeline was still 'at a Concept Study level' and that FEED covered only North Rumailah (PS1A) to Haditha (PS5A) -- i.e. no construction had started a full year after the claimed construction year. Actual construction on the parent (crude) system began ~May 2026. Filed as a date-logic __VALIDITY__ with a proposed blank; not staged as a fill because the value is populated and published.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "258.0",
+    "CapacityUnits": "MMSCMD"
+   },
+   "primary_value": "258.0",
+   "current_ref": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+   "class_in": "HAS_REF",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "UNIT DEFECT, proven from the row's own source. The saymar.org SCOP deck says '258 MMSCFD ultimate capacity of Sales and Fuel Gas 28\" pipeline (350 km)' -- million standard cubic FEET per day. GEM recorded CapacityUnits='MMSCMD' (cubic METRES), so the computed CapacityBcm/y reads 94.17 instead of ~2.67. The ratio 94.17/2.67 = 35.3 is exactly the cf->m3 factor. Mechanical confirmation: the PDF text contains 'MMSCFD' three times and 'MMSCMD' zero times. The number is right; only the unit is wrong. Ref left UNRESOLVED because the existing ref is the correct source for a value the sheet has mis-transcribed -- re-affirming it would endorse 94.17 bcm/y. Fix the unit, then this becomes a clean REVERIFIED. Full argument and the tracker-wide plausibility evidence in __VALIDITY__.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "350.0",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "350.0",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill from the row's own existing source. The saymar.org deck states 'The approximate length of the pipelines is 350 km', and its own table row reads 'Gas Pipeline 28\" / 348km'; the station-to-station legs sum to the same figure (PS1A->PS2A 180 km + PS2A->PS3A 167.5 km = 347.5 km). Supports LengthKnown=350 km. Single source, medium. Note the tension with the row's LengthEstimateKm=518.81 drawn route on a row marked RouteAccuracy='high' -- flagged in __VALIDITY__, not fixed here.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "28",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "28",
+   "current_ref": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+   "class_in": "HAS_REF",
+   "class_out": "REVERIFIED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing saymar.org ref re-verified. The deck is explicit and repeats it: 'There will be 2 parallel pipelines: A crude oil pipeline, with a 56\" diameter; and A gas pipeline (fuel gas and sales gas), with a 28\" diameter'. Diameter=28 in confirmed.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Rumela"
+   },
+   "primary_value": "Rumela",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill. The saymar.org deck puts the origin at North Rumailah (pump station PS1A), supporting FuelSource='Rumela'. Spelling note: GEM writes 'Rumela'; the source and the dominant English usage are 'Rumailah'/'Rumaila'. Worth normalising, and worth adding to OtherEnglishNames on this row -- the GulfPub match-quality memo for Iraq shows exactly this class of transliteration gap (Okaz/Akkas) defeating the matcher.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "",
+    "StartPrefecture/District": "Rumela",
+    "StartState/Province": "Basrah",
+    "StartCountryOrArea": "Iraq",
+    "EndLocation": "Al-Najaf",
+    "EndPrefecture/District": "",
+    "EndState/Province": "Al-Najaf",
+    "EndCountryOrArea": "Iraq"
+   },
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Missing-ref fill. The saymar.org deck traces the route from North Rumailah (PS1A) through PS2A to PS3A, with the 350 km figure covering that extent -- supporting StartPrefecture/District='Rumela', StartState/Province='Basrah', EndLocation='Al-Najaf', EndState/Province='Al-Najaf'. Single source, medium. Scope caveat worth carrying: the FEED describes the full corridor as running on to Haditha (PS5A), so 'Al-Najaf' is an intermediate station, not the project terminus -- this row may be one leg of a longer line rather than a complete pipeline.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__STATUS__",
+   "value_cols": [],
+   "primary_value_col": "Status",
+   "values": {},
+   "primary_value": "shelved",
+   "current_ref": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+   "class_in": "STATUS",
+   "class_out": "UNRESOLVED",
+   "current_status": "shelved",
+   "verdict": "unclear",
+   "proposed_status": "",
+   "evidence_date": "2026-05",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://www.thenationalnews.com/business/energy/2026/05/01/iraq-starts-work-on-basra-haditha-pipeline-for-crude-exports/",
+    "https://shafaq.com/en/Economy/Iraq-advances-Basra-Haditha-oil-pipeline-pipe-manufacturing",
+    "https://www.hydrocarbonprocessing.com/news/2026/05/iraq-starts-work-on-basra-haditha-oil-pipeline/",
+    "https://www.agbi.com/oil-and-gas/2026/04/iraq-gives-go-ahead-for-basra-oil-pipeline-under-deal-with-china/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.thenationalnews.com/business/energy/2026/05/01/iraq-starts-work-on-basra-haditha-pipeline-for-crude-exports/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://shafaq.com/en/Economy/Iraq-advances-Basra-Haditha-oil-pipeline-pipe-manufacturing",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.hydrocarbonprocessing.com/news/2026/05/iraq-starts-work-on-basra-haditha-oil-pipeline/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.agbi.com/oil-and-gas/2026/04/iraq-gives-go-ahead-for-basra-oil-pipeline-under-deal-with-china/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Verdict UNCLEAR -- 'shelved' is contradicted, but I cannot responsibly name the replacement. This row is the 28-inch sales/fuel gas leg of the Basra(North Rumaila)-Haditha corridor, and its own cited source (SCOP deck, Oct 2020) describes 2 PARALLEL pipelines in ONE existing corridor under one EPCF scope: 56-inch crude + 28-inch gas. The 56-inch crude twin is tracked in GOIT as P0544 'Basra-Aqaba Oil Pipeline' with Status='construction' -- so the two legs of one trenched project currently read 'construction' and 'shelved' in GEM's two trackers. And the crude leg really is moving: PM directive 26 Apr 2026, $1.5bn approved under the Iraqi-Chinese agreement, work started ~1 May 2026, 56-inch pipe manufacturing under way (The National, Shafaq, Hydrocarbon Processing, AGBI -- four independent, all verified). WHY NOT PROPOSE A CHANGE: every one of those 2026 reports describes the CRUDE line only. None mentions sales gas, fuel gas, a 28-inch line, or any gas infrastructure -- I checked Shafaq's scope reporting specifically for this. So the gas leg's presence in the executed scope rests on the 2020 EPCF scope document plus a third-party project listing, which is not enough to flip a status. Route to Update: confirm with SCOP/Ministry of Oil whether the 28-inch gas line is in the 2026 award. If yes -> 'construction'; if the crude line was carved out alone -> 'proposed' or 'shelved' with a current source. Either way 'shelved' as it stands is unsupported. Note this row also carries a proven capacity-unit defect and a contradicted ConstructionYear -- see __VALIDITY__.",
+   "ref_researched": true
+  },
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Re-check StartLocation. The only source says the gas source was undecided between West Qurna 2 (LUKOIL) and Rumaila (BP); GEM asserts Rumaila. Consider blanking to the governorate level (Basra) or noting both candidates in ResearcherNotes.",
+   "proposed_refs": [
+    "https://gate.ahram.org.eg/News/1645401.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://gate.ahram.org.eg/News/1645401.aspx",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ar",
+   "researcher_notes": "Al-Ahram/Reuters (22 Nov 2017): it was not yet clear whether the gas would come from the LUKOIL-operated West Qurna 2 field or the BP-operated Rumaila field. StartLocation='Rumaila oilfield' therefore states as fact something the source explicitly leaves open. Low-stakes on its own, but it matters here because Rumaila is ALSO the origin of the genuine pre-1990 Iraq->Kuwait gas line (see the existence concern on this row), so an unsourced 'Rumaila' invites conflating the two."
+  },
+  {
+   "project_id": "P0481",
+   "sheet_row": 712,
+   "pipeline_name": "Iraq-Kuwait Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "existence",
+   "recommendation": "Discovery candidate + conflation check: a real Iraq->Kuwait gas pipeline from Rumaila (~400 MMcf/d) operated until 1990 and appears untracked in GGIT. Confirm P0481 describes the 2017 proposal only, and assess the historic line as a separate retired entity.",
+   "proposed_refs": [
+    "https://gate.ahram.org.eg/News/1645401.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://gate.ahram.org.eg/News/1645401.aspx",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "ar",
+   "researcher_notes": "The same Al-Ahram/Reuters article records that 'Iraq used to supply Kuwait with gas from Rumaila, around 400 million cubic feet per day, halted shortly after the 1990 invasion'. That is a distinct, physically-built, now-retired pipeline -- different era, different capacity (400 vs 200 MMcf/d) -- and I did not find it as a row in GGIT's Iraq set. Two consequences. (1) Discovery: it may warrant a retired row, subject to the usual 2-independent-source test; a single 2017 news aside is not enough on its own to create an entity. (2) Data hygiene on P0481: because both share the Rumaila origin and the Iraq->Kuwait pair, there is a real risk the row silently blends the historic line with the 2017 Toyo proposal. The 2.06 bcm/y capacity is traceable to the 2017 proposal's 200 MMcf/d, so the row does look like the proposal -- but confirm rather than assume."
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {
+    "LengthKnown": "1600",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "LengthKnown=5600 km is unsupported and physically implausible for Asaluyeh->Damascus. Candidate correction: 1,600 km (Natural Gas World, same endpoints and same capacity), consistent with GEM's own 1,987.78 km drawn route. Verify before applying.",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Three independent contradictions of 5,600 km. (1) Natural Gas World (11 Feb 2013), describing the same project with the same Asaluyeh->Damascus endpoints and the same 110 MMcm/d, gives 1,600 km. (2) GEM's own drawn route for this row measures LengthEstimateKm=1987.78 -- 2.8x shorter than the stated length, which no routing allowance explains. (3) Asaluyeh->Damascus is ~1,700 km great-circle, so 5,600 km would be ~3.3x the straight line. 5600 is Wikipedia's figure transcribed faithfully; 1,600 -> 5,600 is a plausible digit corruption somewhere upstream. Staged as a concern rather than a fill because the value is populated and published and a reference value is never auto-applied. Note the proposed 1,600 km rests on a single source and is itself below the drawn route, so it is a candidate, not a confirmed value."
+  },
+  {
+   "project_id": "P0450",
+   "sheet_row": 1836,
+   "pipeline_name": "Iran\u2013Iraq\u2013Syria Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Four value cells (Fuel, PipelineType, Capacity, Diameter) all cite the SAME single Wikipedia article -- fails the 2-independent-source target. Re-point to Natural Gas World and the post-Assad analyses (staged on the individual units). Separately, Route [ref] holds a Google-Images click-through URL and should be cleared.",
+   "proposed_refs": [
+    "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasworld.com/iran-iraq-and-syria-gas-pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "The row looks well-referenced by cell count but is effectively single-sourced on one tertiary page: en.wikipedia.org/wiki/Iran-Iraq-Syria_pipeline appears in Fuel [ref], PipelineType [ref], Capacity [ref] and Diameter [ref]. Per standing rule 4 that is one source, not four, and it is tertiary. Replacements are staged on the individual ref units (Natural Gas World for fuel/type/capacity/source/location; diameter has NO independent corroboration and is left at tier low). Second, unrelated defect on the same row: Route [ref] contains a 'google.com/url?sa=i&...' Google-Images click-through, which is a search-result redirect rather than a source. Geometry refs are out of scope for the refs leg per CLAUDE.md, so it is flagged here and not modified -- but it should be cleared whenever the row's route is next touched."
+  },
+  {
+   "project_id": "P5857",
+   "sheet_row": 1817,
+   "pipeline_name": "Zubair-Faw Gas Pipeline Iraq",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "ResearcherNotes says 'No update since 2022' but both refs are from 2011 (MEED, 24 May 2011) and no 2022-era source is cited. Either surface the 2022 source or correct the note to 2011. Also cross-reference GOIT P6196, the 48-inch crude line in the same 105 km corridor -- parallel line, not a duplicate.",
+   "proposed_refs": [
+    "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.meed.com/bids-in-for-iraq-zubair-field-pipeline/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "(a) The 2022 date in ResearcherNotes is unexplained. Everything citable on this row dates to May 2011; if a 2022 check happened, its source is not recorded, and as written the note implies 11 more years of currency than the references support. This matters because the staleness ladder is applied to that date. (b) NOT A DUPLICATE, but worth linking: GOIT P6196 'Zb1-Al Faw Oil Pipeline' shares this row's endpoints (Zubair 1 -> Al Faw) and its exact 105.00 km. Two lines in one right-of-way -- P6196 is 48-inch crude and operating, P5857 is 18-inch gas and never built. I checked this specifically because same-endpoints-same-length is the classic cross-tracker duplicate signature; the diameters and fuels settle it. Recommend recording the corridor relationship (OtherEnglishNames / PipelineNetworkGrouping / ResearcherNotes) so a future pass does not re-open it as a duplicate."
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {
+    "Capacity": "258",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "CAPACITY UNIT DEFECT: change CapacityUnits from 'MMSCMD' to 'MMcf/d', leaving Capacity=258. The source says 258 MMSCFD (cubic FEET). This corrects the computed CapacityBcm/y from 94.17 to ~2.67 -- a 35.3x error. Highest-priority item on this row.",
+   "proposed_refs": [
+    "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Proven from the row's own cited source, not inferred. The saymar.org SCOP deck states: '2.25 MMBOPD ultimate capacity of 56\" Crude Oil pipeline (350 km) & 258 MMSCFD ultimate capacity of Sales and Fuel Gas 28\" pipeline (350 km)'. MMSCFD = million standard cubic FEET per day. GEM recorded MMSCMD (cubic METRES), and 94.17 / 2.665 = 35.3, exactly the cf->m3 conversion factor -- arithmetic, not resemblance. Mechanical check on the PDF text: 'MMSCFD' appears 3 times, 'MMSCMD' 0 times. The deck's FEED section separately gives 284 MMSCFD, same unit. WHY IT MATTERS BEYOND ONE CELL: at 94.17 bcm/y this row is the SECOND-HIGHEST capacity in the entire GGIT tracker, behind only P4122 (Luxembourg, 104.34) and ahead of P0160 (Canadian Mainline, 71.18) -- on a 350 km 28-inch line. Nord Stream 1 moved 55 bcm/y on twin 48-inch. Physically impossible, and it distorts any Iraq or global capacity aggregate. SCOPE TESTED, NOT A CLASS: I screened all 63 MMSCMD rows with a parseable diameter against a generous diameter-based capacity ceiling. Only 4 exceed it by >2x, and P4041 is a lone extreme -- 14.2x, against 3.8x (P7697 Chile), 3.1x (P3297 India) and 3.0x (P7795 Brazil), all three of which are within the noise of a crude ceiling and may be legitimate. So this is one bad row, NOT a systematic MMSCMD ingest defect, and no cross-country sweep is warranted. One loose end worth a separate look: P4122 (Luxembourg, 104.34 bcm/y) fell out of the screen only because it has no parseable diameter, and 104 bcm/y for Luxembourg deserves its own check -- flagging, not claiming."
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {
+    "ConstructionYear": ""
+   },
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "ConstructionYear=2019 is contradicted by the row's own source, which shows the pipeline still at Concept Study level in Oct 2020. Blank it (or move 2019 to ProposalYear if that is where it belongs). Actual construction on the parent crude system began ~May 2026.",
+   "proposed_refs": [
+    "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://saymar.org/wp/wp-content/uploads/2020/10/1485449570186424.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Date-logic defect. The saymar.org SCOP deck (Oct 2020) states 'FEED Design was completed ... between North Rumailah (PS1A) to Haditha (PS5A) while the pipeline is at a Concept Study level', and gives project status as 'FEED & EISHA completed for Pump Stations, and Concept for the Pipeline'. A pipeline at concept stage in late 2020 did not begin construction in 2019. ProposalYear=2019 is a separate matter and is merely unsourced, not contradicted -- do not blank both on the same reasoning."
+  },
+  {
+   "project_id": "P4041",
+   "sheet_row": 2041,
+   "pipeline_name": "North Rumela-Al-Najaf Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "primary_value_col": "",
+   "values": {},
+   "primary_value": "",
+   "current_ref": "",
+   "class_in": "VALIDITY",
+   "class_out": "UNRESOLVED",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "CROSS-TRACKER INCONSISTENCY: this row (28-inch gas leg) reads 'shelved' while its 56-inch crude twin, GOIT P0544 'Basra-Aqaba Oil Pipeline', reads 'construction' -- two parallel lines in one trench under one EPCF scope. Reconcile the pair, and re-check the route: LengthEstimateKm=518.81 against a sourced 350 km on a row marked RouteAccuracy='high'.",
+   "proposed_refs": [
+    "https://www.thenationalnews.com/business/energy/2026/05/01/iraq-starts-work-on-basra-haditha-pipeline-for-crude-exports/",
+    "https://shafaq.com/en/Economy/Iraq-advances-Basra-Haditha-oil-pipeline-pipe-manufacturing"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.thenationalnews.com/business/energy/2026/05/01/iraq-starts-work-on-basra-haditha-pipeline-for-crude-exports/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://shafaq.com/en/Economy/Iraq-advances-Basra-Haditha-oil-pipeline-pipe-manufacturing",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "(a) The pairing is not a guess -- the row's own source says '2 parallel pipelines' (56-inch crude + 28-inch gas) in 'an existing pipeline corridor', one scope, one EPCF. GOIT P0544 (Basra -> Haditha, 685 km, 56-inch) is that crude leg and sits at 'construction'. Whatever the correct answer is, the two rows cannot both be right as they stand. This is the kind of split that neither tracker's own QC can see, since the legs live in different trackers. Resolution needs the 2026 award scope (see __STATUS__ -- the public 2026 reporting covers the crude line only). (b) Route, separate defect: the drawn route measures 518.81 km against a sourced 350 km (and 348 km / 347.5 km station-to-station in the same deck) -- a 1.48x ratio, outside the route-integrity band -- yet RouteAccuracy is 'high'. Since the FEED corridor continues past Al-Najaf to Haditha (PS5A), the likeliest explanation is that the drawn route covers a longer extent than the row's 350 km leg, i.e. a row-scope problem rather than a bad trace. Route work is out of scope here; flagged for the routes lane. Do not downgrade RouteAccuracy before the extent question is settled."
+  }
+ ]
+}
