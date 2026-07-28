@@ -96,22 +96,51 @@
           "type": "array",
           "items": { "type": "string" },
           "description": "Source properties to drop defensively (e.g. ESRI Shape_STLe, which is NOT a usable length)."
+        },
+        "matching": {
+          "$ref": "#/definitions/matching",
+          "description": "Per-DATASET tuning, layered over the source-level `matching`. Use this when one country's extract behaves differently from the rest of the source: source weights are global, so retuning them to fix one country silently rewrites every already-committed run of that source."
         }
       }
     },
     "matching": {
       "type": "object",
       "additionalProperties": false,
-      "description": "Optional per-source tuning; engine defaults apply when omitted.",
+      "description": "Optional tuning; engine defaults apply when omitted. Resolution order: engine DEFAULTS <- source `matching` <- dataset `matching`.",
       "properties": {
         "name_weight": { "type": "number", "default": 0.30 },
         "endpoint_weight": { "type": "number", "default": 0.25 },
         "diameter_weight": { "type": "number", "default": 0.15 },
         "length_weight": { "type": "number", "default": 0.10 },
         "geometry_weight": { "type": "number", "default": 0.20 },
+        "geoarea_weight": {
+          "type": "number",
+          "default": 0.0,
+          "description": "Weight on the admin-area signal (scripts/geo_signals.py): the reference trace's Natural Earth admin-0/admin-1 footprint vs the GEM row's declared Start/End Country + State/Province + Prefecture/District. DEFAULT 0.0 = OFF, so enabling this feature moves no already-committed composite. Turn it on for sources whose features are largely unnamed (OSM), where it is often the only live signal."
+        },
         "green_threshold": { "type": "number", "default": 0.75 },
         "yellow_threshold": { "type": "number", "default": 0.45 },
-        "buffer_km_for_overlap": { "type": "number", "default": 2.0 }
+        "buffer_km_for_overlap": { "type": "number", "default": 2.0 },
+        "geometry_untested_score": {
+          "type": "number",
+          "default": 0.15,
+          "description": "Stand-in g_score when the reference has geometry but the GEM candidate has no route, so the geometry test could not run. Low (the match is unverified) but non-zero (absent geometry is not evidence against)."
+        },
+        "near_miss_delta": {
+          "type": "number",
+          "default": 0.10,
+          "description": "A best match scoring within this much BELOW yellow_threshold is bucketed as a near miss for human review rather than silently reported as a source-only Addition. A false Addition masks a real one."
+        },
+        "route_containment_threshold": {
+          "type": "number",
+          "default": 0.60,
+          "description": "Fraction of an unmatched reference trace lying inside a GEM route at/above which it is dispositioned FRAGMENT_OF_EXISTING (a partial trace of a tracked line) instead of DISCOVERY_CANDIDATE. Containment, not IoU: a short trace sitting exactly on a long GEM route scores near-zero IoU."
+        },
+        "spatial_candidates": {
+          "type": "integer",
+          "default": 8,
+          "description": "GEM rows pulled into the geometry pass by PROXIMITY, unioned with the attribute-ranked top-K. Without this the geometry candidates are chosen by an attribute ranking that is meaningless when the reference is unnamed."
+        }
       }
     }
   }

@@ -53,8 +53,19 @@ all per-source knowledge lives in the manifest (+ adapter).
 4. Validate + smoke-test: `python scripts/ingest.py --source <name> --commodity oil --out /tmp/<name>/`
    and spot-check `canonical_records.json` against the raw file.
 5. Reconcile: `python scripts/reconcile.py --source <name> --country "<C>" --commodity both …`.
-   **No engine code changes** — the workflow is identical to GulfPub.
-6. Add the source to the registry table in `docs/reference/source_roster.md` with
+   **No engine code changes** — the workflow is identical to GulfPub. Read the run's
+   `meta.diagnostics` before trusting the counts: it reports whether the matcher had live
+   signal at all, and a zero-overlap run is **not** a discovery set.
+6. Tune matching only if the diagnostics say you must — and **tune at the `datasets[]`
+   level, not the source level**. Source weights are global, so retuning them to fix one
+   country silently rewrites every already-committed run of that source. For largely
+   unnamed sources set `geoarea_weight` (default 0.0 = off) to enable the admin-area
+   signal. Resolution order: engine defaults ← source `matching` ← dataset `matching`.
+7. Surface it in a sweep/handoff workbook:
+   `python scripts/build_recon_crosswalk.py --match-diff <match_diff.json> --sweep-dir <sweep staging dir>`
+   → one `<Cmdty>_<Source>` tab, picked up by glob. Without this the diff never reaches a
+   reviewer.
+8. Add the source to the registry table in `docs/reference/source_roster.md` with
    its tier, and note quirks in `sources/<name>/NOTES.md`.
 
 A scraped dataset is cited by a non-URL `report_citation` (name + scrape date),

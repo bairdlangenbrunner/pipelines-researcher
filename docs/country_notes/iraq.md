@@ -19,6 +19,43 @@ engine is country-agnostic (Phase E validation target).
   country-agnostic validation run.
 - Gas: the fuller Dec-2025 SDE gas scrape (`SDE.NG_Pipelines_Global.geojson`, incl. 31
   Iraq gas features) is now the `gulfpub` gas source — earlier gas file had no Iraq.
+- **OSM is registered for both commodities** (`osm/gas_iq` 52 features, `osm/oil_iq` 246)
+  and runs by default in the `deep` preset. Both carry a per-dataset
+  `geoarea_weight: 0.30`: Iraq's OSM features are essentially unnamed and 34 of 54 GEM gas
+  rows have no drawn route, so name and geometry are both dead and the admin-area signal
+  is the only live axis. Without it the gas run scored **0 overlaps from 52 features** —
+  top composite 0.438 against a 0.45 threshold — and that null passed as a finding.
+  Detail: `sources/osm/NOTES.md`.
+
+### Reference-dataset re-run, 2026-07-28 (staged, nothing applied)
+
+| Scope · source | Overlaps | Unmatched (by disposition) | Deliverable |
+|---|---|---|---|
+| gas · OSM | 8 (5 `partial`) | 44 — ROUTE_FOR_EXISTING 30, DISCOVERY 10, NEAR_MISS 2, FRAGMENT 2 | `Gas_OSMActions` / `Gas_OSM` in the handoff packet |
+| gas · GulfPub | 39 (4 green) | 8 — NEAR_MISS 7, DISCOVERY 1; 13 status conflicts | `Gas_GulfPubActions` / `Gas_GulfPub` |
+| oil · OSM | 71 | 175 — DISCOVERY 84, FRAGMENT 61, ROUTE_FOR_EXISTING 21, NEAR_MISS 9 | `…_1804_ET_iraq-oil_osm-reconciliation.xlsx` |
+| oil · GulfPub | 20 (2 green) | 1 NEAR_MISS; 8 status conflicts | `…_1804_ET_iraq-oil_gulfpub-reconciliation.xlsx` |
+
+What to look at first:
+
+- **Gas, route candidates.** [OSM way/1494626715](https://www.openstreetmap.org/way/1494626715)
+  (116.6 km, Iraq/Diyala → Iran/Kermanshah) and way/301655831 (42.6 km) are both candidate
+  geometry for **P5855 Iran-Iraq Gas Pipeline**, which currently has `no route`, blank
+  Diameter and `LengthKnownKm='--'`. Filed ROUTE_FOR_EXISTING at composite 0.4324 — under
+  threshold deliberately, because nothing physical corroborates the identification. Also
+  way/1526522308_1526522309 (1.7 km) → **P7459**. The other 27 ROUTE_FOR_EXISTING traces
+  are sub-kilometre stubs clustered on P7445 (17) and P7459 (10).
+- **Gas, status conflict.** Five OSM stubs along the Zubair–Faw corridor are mapped
+  `operating`; GEM has **P5857** as `shelved`. Tier 3, so a lead rather than evidence — but
+  a lead on the row's whole premise.
+- **Oil, the big unmatched traces.** 80.9 km in Arbil near **P0548** and 52.3 km in
+  At-Ta'mim near **P0577** (both FRAGMENT_OF_EXISTING); 86.1 km across
+  Al-Muthannia/Dhi-Qar as candidate geometry for **P6255**; 80.3 + 53.6 km in Al-Anbar
+  scoring just under threshold against **P7898**. The 84 DISCOVERY_CANDIDATE traces
+  (366 km total, largest 26.5 km in At-Ta'mim) are **untriaged** — each needs the
+  match-to-an-existing-row-under-another-name check before any of it reaches Discovery.
+- **Coverage guard.** 5 of the 8 gas overlaps are `partial`: a 0.1–0.5 km OSM stub matched
+  to a 100 km GEM row corroborates *location* only, never length, capacity or extent.
 
 ## Gotchas
 - Kirkuk–Ceyhan and cross-border lines are multi-country (`CountriesOrAreas`
@@ -49,13 +86,15 @@ engine is country-agnostic (Phase E validation target).
 ## Open items — gas (full pass 2026-07-28; ALL staged, NOTHING applied)
 
 **Work from the ACTIONS file, not the per-leg workbooks:**
-`batches/iraq-gas/deliverables/pipelines_batch_20260728_1704_ET_iraq-gas_handoff-actions.xlsx`
+`batches/iraq-gas/deliverables/pipelines_batch_20260728_1804_ET_iraq-gas_handoff-actions.xlsx`
 (100 open decisions · 9 status changes · 265 backend paste units · 27 operator/owner units ·
-5 new rows · 114 wiki updates · 36 route suggestions · 171 open flags), with the audit trail in
+5 new rows · 114 wiki updates · 36 route suggestions · 171 open flags · **104 recon rows needing a
+decision** on the new `Gas_GulfPubActions` + `Gas_OSMActions` tabs), with the audit trail in
 the companion `…_handoff-evidence.xlsx` (37 confirmed audits · 118 fill detail · 339 ref detail ·
-150 re-verified). Legs: refs sweep · cancelled review (4 rows) · redundancy/duplicate clusters ·
-GulfPub crosswalk · OSM recon · wiki alignment (158 diffs) · route integrity (13 rows) · ref-gap
-re-pass · Leg-3 targeted research (15 rows). Live counts:
+150 re-verified · the full 115-row `Gas_GulfPub` / `Gas_OSM` cross-comparisons). Legs: refs sweep ·
+cancelled review (4 rows) · redundancy/duplicate clusters · GulfPub crosswalk · OSM recon ·
+wiki alignment (158 diffs) · route integrity (13 rows) · ref-gap re-pass · Leg-3 targeted research
+(15 rows). The 1704 packet is superseded (archived) — it predates the recon tabs. Live counts:
 `python scripts/staged_summary.py --country Iraq --commodity gas`.
 
 ### Twelve escalations awaiting a ruling
@@ -140,6 +179,8 @@ ESCALATIONS row in both workbook READMEs). The structural ones:
   (medium), Halfaya–Kahla (medium). Monitors: Akkas–Syria, Al-Faw LNG–Abu Ghraib, Chemchemal–Erbil
   industrial, Diyala gas fields, Miran export.
 - 36 route suggestions staged for a separate human routes-repo PR (never auto-replaced).
+- **The OSM recon findings are new and untriaged** (see the section below) — 44 unmatched
+  traces, 30 of them candidate geometry for routeless GEM rows.
 
 ### Prior gas work folded into the above
 2026-07-05 deep sweep and the 2026-07-07 ref-harvest re-pass (68 refs added, chiefly ASB2012 p.75

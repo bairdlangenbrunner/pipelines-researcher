@@ -27,11 +27,12 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 | **Egypt oil (GOIT)** | never swept | `docs/country_notes/egypt.md` |
 | **Saudi oil ref-sweep** | 3-row validation slice (2026-06-08) + 10-row batch staged; partial toward intended 50-row run | `batches/saudi-arabia-oil/staging/ref-sweep{,-10row}/`; `docs/country_notes/saudi-arabia.md` |
 | **Saudi GulfPub route-consistency pass** | low/medium-accuracy matches not finished; route-replacement candidates not staged | `docs/country_notes/saudi-arabia.md` |
-| **GulfPub route-comparison QC leg** | not started — Baird explicitly wants this later: extend the handoff packet's route-integrity leg to compare drawn routes against GulfPub *geometries* (ties into the unfinished Saudi route-consistency pass above). Distinct from the sweep's `gulfpub` *attribute* crosswalk, which IS built and shipping (`build_gulfpub_crosswalk.py`) | `docs/workflows.md` §6; `docs/sops/qc.md` |
+| **GulfPub route-comparison QC leg** | not started — Baird explicitly wants this later: extend the handoff packet's route-integrity leg to compare drawn routes against GulfPub *geometries* (ties into the unfinished Saudi route-consistency pass above). Distinct from the sweep's *attribute* crosswalk, which IS built and shipping (`build_recon_crosswalk.py`) | `docs/workflows.md` §6; `docs/sops/qc.md` |
 | **Handoff-packet rollout (researcher onboarding, Arabic-speaking gas)** | Egypt is the pilot (2026-07-15); **Libya 38 done 2026-07-28**; remaining candidates by GGIT row count: Algeria 126, Qatar 59, UAE 39, Oman 23, Tunisia 21. Do Algeria next — 4 of its rows share the Libya `scm/y` capacity defect, so the fix and the sweep are one job | `docs/workflows.md` §6; `docs/country_notes/{egypt,libya}.md` |
 | **Nigeria divestiture ownership sweep** | not started | `docs/country_notes/nigeria.md` |
 | **United States** | deepwater-export terminal open item; 131-row Stage A queue slot unstarted | `docs/country_notes/united-states.md`; plan doc |
 | **Iraq oil open items** | Grand Faw third offshore line (Esta/Micoperi) length/diameter/route; P0544 Basra–Haditha status review | `docs/country_notes/iraq.md`; CLAUDE.md |
+| **Iraq oil: OSM + GulfPub recon untriaged** | First-ever OSM run for Iraq oil (2026-07-28, 246 features): 71 overlaps, 175 unmatched — **84 DISCOVERY_CANDIDATE (366 km, largest 26.5 km)**, 61 FRAGMENT_OF_EXISTING (incl. 80.9 km near P0548, 52.3 km near P0577), 21 ROUTE_FOR_EXISTING (86.1 km → P6255), 9 NEAR_MISS (80.3 + 53.6 km near P7898). GulfPub oil re-run: 20 overlaps, 8 status conflicts, 1 near-miss. Nothing triaged; no oil sweep or handoff packet exists to carry it | `batches/iraq-oil/deliverables/pipelines_batch_20260728_1804_ET_iraq-oil_{osm,gulfpub}-reconciliation.xlsx`; `docs/country_notes/iraq.md` |
 | **Israel gas: Ashdod–Ashkelon onshore gap (P3620)** | routes + sheet edits APPLIED 2026-07-23 (Baird bridged the Ashdod HDD bore so P3620 meets P3657; routes-repo merge `72d29de1`; sheet RouteAccuracy→medium/RouteNotes/Route [ref] written rows 1036/1063; batch archived), but P3620 geometry is still partial — 2.1 of 4 sheet km; the Ashkelon-side ~2.4 km onshore run has no public vector yet (OSM empty, TAMA 37/A/2/7 blueprint sheets cover Ashdod only) — need the Ashkelon-side statutory sheet or an INGL/permit map to finish it. P3657 is complete | `batches/israel-gas/archive/route-creation-p3620-p3657/README.md` |
 | **Iran general open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md`; CLAUDE.md |
 | **LNG carrier quarterly reconciliation** | "designed and partially executed" vs SFOC data; referenced `instructions.md` methodology is **not in this repo** — orphaned | `docs/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
@@ -73,9 +74,11 @@ per cell rather than trusting either signal.
 - **Iraq gas** — **full pass re-run 2026-07-28** (refs sweep · cancelled review · redundancy
   clusters · GulfPub + OSM recon · wiki alignment · route integrity · ref-gap re-pass · Leg-3),
   superseding the 2026-07-05 packet and the 2026-07-07 ASB ref-harvest, both folded in. Work from
-  `pipelines_batch_20260728_1704_ET_iraq-gas_handoff-actions.xlsx` (100 open decisions ·
+  `pipelines_batch_20260728_1804_ET_iraq-gas_handoff-actions.xlsx` (100 open decisions ·
   9 status changes · 265 backend paste units · 114 wiki updates · 36 route suggestions ·
-  171 open flags) + the `-evidence` companion. **Twelve escalations open** — the structural ones
+  171 open flags · 104 recon rows needing a decision) + the `-evidence` companion. The recon
+  legs were **re-run 2026-07-28 with the fixed engine** and now reach the workbook: the earlier
+  OSM null (0 overlaps from 52 features) was a matcher failure, not a coverage finding. **Twelve escalations open** — the structural ones
   are the ASB length mi→km defect (19 rows, two families with two *different* one-cell fixes),
   CapacityUnits on 3 rows, P6824 as a diesel line misfiled in GGIT, and the ASB-provenance ruling
   that **withdrew 12 of 16** of our own earlier duplicate/existence flags. **Three retractions —

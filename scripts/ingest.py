@@ -100,6 +100,14 @@ def main() -> None:
     sidecar: dict[str, dict] = {}
     per_dataset: dict[str, int] = {}
     geom_count = 0
+    # ref_id is the sidecar key, so a collision does not merely duplicate an id — the
+    # second record OVERWRITES the first record's geometry and both are then scored
+    # against one trace. OSM's osm_id_key is built from a merged way's contributing ids
+    # and is not unique across differently-merged features (Iraq gas 2026-07-28: 3
+    # colliding pairs, e.g. w1526687293_1526687294 carrying both a 0.476 km and a
+    # 0.095 km trace). Suffix the duplicates and say so.
+    seen: dict[str, int] = {}
+    collisions: list[str] = []
 
     for dataset in select_datasets(manifest, args.commodity):
         n = 0
@@ -109,6 +117,12 @@ def main() -> None:
                 continue
             if want_country and rec.country != want_country:
                 continue
+            base = rec.ref_id
+            seen[base] = seen.get(base, 0) + 1
+            if seen[base] > 1:
+                collisions.append(base)
+                rec.ref_id = f"{base}#{seen[base]}"
+                rec.geometry_ref = rec.ref_id
             geom = rec.__dict__.pop("_geometry", None)
             if geom is not None:
                 sidecar[rec.geometry_ref] = geom
@@ -129,6 +143,12 @@ def main() -> None:
           f"({', '.join(f'{k}={v}' for k, v in per_dataset.items())})"
           f"{f' [country={args.country}]' if args.country else ''}")
     print(f"  with geometry: {geom_count}/{len(records)}")
+    if collisions:
+        uniq = sorted(set(collisions))
+        print(f"  !! {len(collisions)} ref_id collision(s) on {len(uniq)} id(s) — suffixed #2.. to keep "
+              f"geometries distinct. The manifest's provenance.oid_field is NOT unique for this "
+              f"dataset; cross-scrape identity is unreliable until it is fixed: "
+              f"{', '.join(uniq[:5])}{' …' if len(uniq) > 5 else ''}", file=sys.stderr)
     if records:
         import collections
         st = collections.Counter(r["status"] for r in records)

@@ -94,6 +94,52 @@ datasets:
       retired: retired
     dedup_keys: [osm_id_key]
     ignore_garbage_fields: [attribution, source, license]
+    matching:
+      # DATASET-level, not source-level, on purpose. Only 2 of these 52 features are
+      # named and 34 of 54 GEM Iraq gas rows have no drawn route, so name and geometry
+      # are both dead and the 2026-07-28 run returned 0 overlaps from 52 features with a
+      # top composite of 0.438. The admin-area signal is the only live axis left, and it
+      # is weighted like endpoint_weight because that is what it is: the endpoint signal
+      # in the form both sides actually populate (GEM fills Start/EndState/Province far
+      # more often than Start/EndLocation). Scoped to gas_iq so Libya's committed run
+      # reproduces unchanged — promote to source level only after re-running the others.
+      geoarea_weight: 0.30
+
+  # --- Iraq, oil (2026-07-28): 246 features, all substance=oil / lifecycle=operating.
+  #     By far the richest OSM extract we hold — and still only 5 named, three of them
+  #     variant spellings of Kirkuk–Baiji / Kirkuk–Baniyas plus the Arabic
+  #     "خط أنابيب كركوك-جيهان" (Kirkuk–Ceyhan). Same profile as gas_iq, so the same
+  #     admin-area override applies.
+  - name: oil_iq
+    scraped_date: "2026-07-28"
+    commodity_default: oil
+    format: geojson
+    path: data/osm-iq-oil.geojson
+    geometry: feature
+    column_map:
+      country_const: "Iraq"
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    matching:
+      geoarea_weight: 0.30   # same rationale as gas_iq above
 
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so

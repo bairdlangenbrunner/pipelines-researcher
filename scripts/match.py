@@ -58,7 +58,45 @@ class GemRow:
     diameter_raw: str = ""          # raw GEM Diameter string, for display
     start_raw: str = ""             # raw StartLocation, for display
     end_raw: str = ""               # raw EndLocation, for display
+    # Declared geography — the signal that survives when name/route/diameter/length are
+    # all blank. GEM fills these far more often than StartLocation/EndLocation: P5855
+    # has empty Start/EndLocation but EndState/Province='Diyala', StartCountryOrArea=
+    # 'Iran', EndCountryOrArea='Iraq'. Scored against a reference trace's admin
+    # footprint by geo_signals.geoarea_score.
+    start_state: str = ""
+    end_state: str = ""
+    start_country: str = ""
+    end_country: str = ""
+    start_district: str = ""
+    end_district: str = ""
+    # Networks aggregate their members' geography (a synthetic network has no single
+    # Start/End row of its own); segments leave these empty and fall back to the
+    # Start/End fields above.
+    extra_admin_texts: list = field(default_factory=list)
+    extra_country_texts: list = field(default_factory=list)
     matched: bool = field(default=False)   # set by reconcile when used as a best match
+
+    def admin_area_texts(self) -> list:
+        """Every state/province/district string this row declares (deduped, ordered)."""
+        return _dedup(self.start_state, self.end_state,
+                      self.start_district, self.end_district, *self.extra_admin_texts)
+
+    def endpoint_admin_texts(self) -> list:
+        """Only the terminus provinces — a GEM Start/End field names where the pipe
+        ENDS, so a footprint hit here is worth more than one on a transited province."""
+        return _dedup(self.start_state, self.end_state, self.start_district, self.end_district)
+
+    def country_texts(self) -> list:
+        return _dedup(self.start_country, self.end_country, *self.extra_country_texts)
+
+
+def _dedup(*vals) -> list:
+    out = []
+    for v in vals:
+        s = str(v or "").strip()
+        if s and s not in out:
+            out.append(s)
+    return out
 
 
 def _variants(*names) -> list:
@@ -98,6 +136,12 @@ def gem_rows_for_country(df: pd.DataFrame, country: str):
             diameter_raw=str(row.get("Diameter") or "").strip(),
             start_raw=str(row.get("StartLocation") or "").strip(),
             end_raw=str(row.get("EndLocation") or "").strip(),
+            start_state=str(row.get("StartState/Province") or "").strip(),
+            end_state=str(row.get("EndState/Province") or "").strip(),
+            start_country=str(row.get("StartCountryOrArea") or "").strip(),
+            end_country=str(row.get("EndCountryOrArea") or "").strip(),
+            start_district=str(row.get("StartPrefecture/District") or "").strip(),
+            end_district=str(row.get("EndPrefecture/District") or "").strip(),
         ))
     return segs, _build_networks(segs)
 
@@ -141,6 +185,8 @@ def _build_networks(segs: list[GemRow]) -> list[GemRow]:
             wiki=members[0].wiki,
             diameter_raw=", ".join(str(int(d)) if d == int(d) else str(d)
                                    for d in sorted({d for m in members for d in m.diameter_set})),
+            extra_admin_texts=_dedup(*[t for m in members for t in m.admin_area_texts()]),
+            extra_country_texts=_dedup(*[t for m in members for t in m.country_texts()]),
         ))
     return nets
 

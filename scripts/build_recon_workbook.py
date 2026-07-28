@@ -14,11 +14,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
+
+from build_recon_crosswalk import DISPOSITION_ACTION  # noqa: E402
 
 HEADER_FILL = PatternFill("solid", fgColor="4472C4")
 HEADER_FONT = Font(bold=True, color="FFFFFF")
@@ -67,6 +72,7 @@ def _overlap_columns():
     g = lambda k: (lambda o: o["gem"].get(k))
     return [
         ("Confidence", lambda o: o["confidence"], 11),
+        ("Coverage", lambda o: o.get("coverage", ""), 11),
         ("Match reason / notes", lambda o: o["reason"], 46),
         ("Ref OID", r("oid"), 9), ("Ref Name", r("name"), 34), ("Ref Status", r("status"), 12),
         ("Ref Start", r("start"), 26), ("Ref End", r("end"), 26),
@@ -84,9 +90,16 @@ def _overlap_columns():
     ]
 
 
+# What a reviewer should DO with each disposition — same table the sweep crosswalk uses.
+_DISP_ORDER = ["ROUTE_FOR_EXISTING", "FRAGMENT_OF_EXISTING", "NEAR_MISS", "DISCOVERY_CANDIDATE"]
+
+
 def _addition_columns():
     r = lambda k: (lambda a: a["ref"].get(k))
     return [
+        ("Disposition", lambda a: a.get("disposition", ""), 22),
+        ("What to do", lambda a: DISPOSITION_ACTION.get(a.get("disposition", ""), ""), 76),
+        ("Trace crosses", lambda a: a.get("trace_footprint", ""), 34),
         ("Ref OID", r("oid"), 9), ("Ref Name", r("name"), 36), ("Ref Status", r("status"), 12),
         ("Ref Start", r("start"), 28), ("Ref End", r("end"), 28),
         ("Ref Diameter (in)", r("diameter"), 12), ("Ref Length (km)", r("length_km"), 12),
@@ -138,12 +151,25 @@ def main():
             _write_sheet(wb, f"{cap}_Overlaps", _overlap_columns(), ov, ov_style)
             sheet_defs.append((f"{cap}_Overlaps", f"{len(ov)} matched {t} pairs; Confidence colored "
                                "green/yellow/red; yellow flag = GulfPub route may replace a low-accuracy GEM route."))
-        add = by_tracker(diff["additions"], t)
+        # Sorted by disposition, longest trace first: an unmatched reference route is
+        # presumptively REAL pipe, and the handful that are candidate geometry for a
+        # routeless GEM row must not be buried under a run of sub-kilometre stubs.
+        add = sorted(by_tracker(diff["additions"], t),
+                     key=lambda a: (_DISP_ORDER.index(a["disposition"])
+                                    if a.get("disposition") in _DISP_ORDER else len(_DISP_ORDER),
+                                    -((a.get("ref") or {}).get("geodesic_km") or 0)))
         if add:
             _write_sheet(wb, f"{cap}_Additions", _addition_columns(), add,
                          lambda ws, rn, a, n=len(_addition_columns()): [setattr(ws.cell(rn, c), "fill", ADDITION_FILL) for c in range(1, n + 1)])
-            sheet_defs.append((f"{cap}_Additions", f"{len(add)} {t} reference-only rows → Discovery candidates "
-                               "(match to an existing GEM pipeline under another name FIRST)."))
+            from collections import Counter as _C
+            _d = _C(a.get("disposition") or "?" for a in add)
+            sheet_defs.append((f"{cap}_Additions", f"{len(add)} {t} reference records with no GEM match "
+                               f"({', '.join(f'{k}={v}' for k, v in _d.most_common())}). A reference route is "
+                               "presumptively REAL pipe — read Disposition + What to do: ROUTE_FOR_EXISTING = "
+                               "candidate geometry for a routeless GEM row (human routes-repo PR, NEVER "
+                               "auto-replaced), FRAGMENT_OF_EXISTING = partial trace of a tracked line, "
+                               "NEAR_MISS = adjudicate by hand, DISCOVERY_CANDIDATE = match to an existing "
+                               "GEM pipeline under another name FIRST."))
         go = by_tracker(diff["gem_only"], t)
         if go:
             _write_sheet(wb, f"{cap}_GEM_only", _gem_only_columns(), go)

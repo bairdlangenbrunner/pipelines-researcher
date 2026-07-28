@@ -16,7 +16,9 @@ python scripts/fetch_overpass.py --iso LY --substance gas --include-lifecycle \
 
 | Dataset | file `data/…` | features | fetched |
 |---|---|---|---|
-| gas (Libya) | `osm-ly-gas.geojson` | 6 | 2026-07-28 |
+| `gas` (Libya) | `osm-ly-gas.geojson` | 6 | 2026-07-28 |
+| `gas_iq` (Iraq) | `osm-iq-gas.geojson` | 52 | 2026-07-28 |
+| `oil_iq` (Iraq) | `osm-iq-oil.geojson` | 246 | 2026-07-28 |
 | (reference) all Libya | `osm-ly-all.geojson` | 545 | 2026-07-28 |
 
 Adding a country = one fetch + one `datasets:` entry. No code.
@@ -36,6 +38,14 @@ Adding a country = one fetch + one `datasets:` entry. No code.
 - **Query the lifecycle keys as one regex, not a union.** A 6-key × (way|relation)
   union over a whole country reliably times Overpass out; `[~"^(man_made|proposed:man_made|…)$"~"^pipeline$"]`
   does not. (`:` is not a regex metacharacter — do not escape it.)
+- **`osm_id_key` is NOT unique.** It is built from a merged way's contributing OSM ids, and
+  two differently-merged features can land on the same key (Iraq gas: 3 colliding pairs;
+  Iraq oil: 12). Because `ref_id` is the geometry-sidecar key, a collision silently
+  *overwrote* one trace and scored both records against the survivor —
+  `osm:gas_iq:w1526687293_1526687294` carried a 0.476 km and a 0.095 km trace with
+  identical containment and IoU. `ingest.py` now suffixes duplicates `#2..` and warns; the
+  warning also means **cross-scrape identity is unreliable** for that dataset until the
+  manifest's `provenance.oid_field` names something actually unique.
 
 ## Matching config (why it differs from the engine defaults)
 
@@ -98,25 +108,45 @@ Findings the run produced (routed into the Iraq gas packet):
 - **P4053 route displacement.** Endpoint distance ~26 km despite a length ratio of 0.955 —
   a `RouteAccuracy` candidate, not a length problem.
 
-### Why the reconcile still scored 0 overlaps
+### The 0-overlap run, and what fixed it
 
-`route_metrics.json` is empty and there are **no overlaps**, but that is *not* a geometry
-failure — `reconcile.py` only writes `route_metrics` inside the overlap branch, so an
-empty file is a consequence of 0 overlaps, not a cause. The near-miss is instructive:
-P4053 scored composite **0.438** against `yellow_threshold` **0.45**. Two causes, both
-structural:
+The first Iraq gas run returned **0 overlaps from 52 features** with an empty
+`route_metrics.json`, and it looked like a legitimate "OSM has nothing here" finding for
+weeks. It was not. `reconcile.py` only writes `route_metrics` inside the overlap branch,
+so the empty file was a *consequence* of the null, not a cause. Every matching axis was
+dead at once: only 2 of 52 features are named (against `name_weight: 0.10`), and 34 of 54
+GEM Iraq gas rows have `no route`, so the 0.45-weight geometry signal collapsed to the
+`geometry_untested_score` floor on most rows. Top composite in the whole country: **0.438**
+against a 0.45 threshold. **A null run is a claim about the matcher until you check the
+health line** — `reconcile.py` now emits a `MATCH_QUALITY` escalation for exactly this
+shape, and it fires on both Iraq datasets.
 
-1. **The `matching:` block is tuned for Libya** — `name_weight: 0.10` was set because
-   Libya's OSM features are essentially unnamed. Iraq has an *exact* name match available
-   ("Erbil - Duhok Gas Pipeline" ↔ P4053) and the 0.10 weight makes it unreachable.
-2. **34 of 54 GEM Iraq gas rows have `no route`**, so geometry — the 0.45-weight signal
-   OSM actually has — is untested on most rows and falls back to the floor.
+The fix was **not** a lower threshold and **not** retuning the shared source-level block
+(that would move Libya's committed run). It was two things:
 
-**Do not retune the block to rescue Iraq**: the weights are source-level and shared, so
-changing them would alter the committed Libya results. A per-dataset `matching:` override
-is the real fix and the manifest does not support one yet. Until then, treat OSM Iraq as a
-**corroboration source read by hand**, not a scored reconciliation — which is how the two
-P4053 findings above were obtained.
+1. **A per-dataset `matching:` override** — the manifest schema now supports one, and
+   `gas_iq`/`oil_iq` carry `geoarea_weight: 0.30`. Libya reproduces bit-identically.
+2. **The admin-area signal** (`scripts/geo_signals.py`): resolve the trace's Natural Earth
+   admin-0/admin-1 footprint and score it against the GEM row's declared geography. This
+   is the endpoint signal in the form both sides actually populate — GEM fills
+   `Start/EndState/Province` far more often than `Start/EndLocation`. Only *foreign*
+   countries score on the country component: inside a country-scoped run, "both are in
+   Iraq" discriminates nothing.
 
-Same lesson as GulfPub Iraq (`notes/escalation-2026-07-28-gulfpub-iraq-match-quality.md`):
-in Iraq the binding constraint on every source's matchability is **missing GEM geometry**.
+Re-run (2026-07-28, same 52 features): **8 overlaps**, 44 unmatched — and the acceptance
+test, [way/1494626715](https://www.openstreetmap.org/way/1494626715), now resolves to
+**P5855 Iran-Iraq Gas Pipeline** on `geo-foreign 1/1 (iran); geo-admin1 Diyala=endpoint`,
+footprint `Iraq/Diyala; Iran/Kermanshah`. It lands at composite 0.4324 — still just under
+threshold, filed `ROUTE_FOR_EXISTING` rather than forced over the line, because nothing
+physical corroborates it (P5855 has blank Diameter, `LengthKnownKm='--'`, `no route`). That
+is the correct outcome: candidate geometry for a human, not a claimed match.
+
+Iraq oil (`oil_iq`, 246 features — the richest OSM extract we hold, still only 5 named)
+had **never been run at all**: 71 overlaps, 175 unmatched (84 DISCOVERY_CANDIDATE / 61
+FRAGMENT_OF_EXISTING / 21 ROUTE_FOR_EXISTING / 9 NEAR_MISS).
+
+Two standing cautions survive the fix. **Five of the eight gas overlaps are `partial`
+coverage** — a 0.1–0.5 km stub matched to a 100 km row corroborates *location* and nothing
+else; never read one as length or extent evidence. And Iraq's binding constraint on every
+source's matchability is still **missing GEM geometry**, the same lesson as GulfPub Iraq
+(`notes/escalation-2026-07-28-gulfpub-iraq-match-quality.md`).

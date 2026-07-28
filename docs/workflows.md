@@ -115,15 +115,15 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 | `validity` | skeptical existence / duplicate / classification / attribution / spec check (`__VALIDITY__`, read-and-flag) |
 | `status-review` | per-segment-row status verdict confirm/change/stale/unclear (`__STATUS__`) |
 | `routes` | corridor + sourced-endpoint route suggestions for weak `RouteAccuracy` (`__ROUTE__`; candidates for a human routes-repo PR) |
-| `gulfpub` | GulfPub/PE World Map crosswalk tab from a scoped §2 recon |
+| `recon` | one crosswalk tab per registered reference dataset (`gulfpub`, `osm`, …) from a scoped §2 recon. Formerly the `gulfpub` leg — that name still works, but it means "GulfPub only" |
 
 **Presets:**
 - **`in-dev`** = status-review + refs + validity, scope
   `--status proposed,construction,shelved` (the annual packet's leg A) →
   `…_annual-indev.xlsx`.
-- **`deep`** = refs + fills + validity + routes + gulfpub, any statuses —
-  **operating rows are a prime target** (duplicate/existence hunting) →
-  `…_deepsweep.xlsx`.
+- **`deep`** = refs + fills + validity + routes + recon (**gulfpub AND osm** — both
+  run by default; see §3's recon-leg block), any statuses — **operating rows are a
+  prime target** (duplicate/existence hunting) → `…_deepsweep.xlsx`.
 - **`refs-only`** = refs alone → `…_refsweep.xlsx`.
 
 **Two follow-on passes the `validity` leg keeps generating** (own run dirs, same scope,
@@ -188,12 +188,42 @@ and is **dropped with a WARN** — the refs land, the sourced verdict vanishes.
 WARN count you haven't reconciled (Sweep SOP §Sentinels).
 
 The `routes` leg is carried on the shards automatically (`routes[]` →
-`__ROUTE__` at merge). The `gulfpub` leg: run the scoped §2 recon, then
+`__ROUTE__` at merge). The `recon` leg runs **once per reference dataset** — in the
+`deep` preset that is **both `gulfpub` and `osm`**, not GulfPub alone. OSM needs a
+per-country Overpass pull first (see `sources/osm/NOTES.md`); GulfPub is a global
+extract already on disk.
 
 ```bash
-python scripts/build_gulfpub_crosswalk.py --match-diff <recon>/match_diff.json \
-  --out $STG/gulfpub_crosswalk.json     # build_ref_workbook adds <Cmdty>_GulfPub when present
+# OSM only: fetch the country+substance extract, then register it in sources/osm/manifest.yml
+python scripts/fetch_overpass.py --iso IQ --substance gas --include-lifecycle \
+  --out sources/osm/data/ --name osm-iq-gas          # --iso, NOT --area; lifecycle REQUIRED
+
+for SRC in gulfpub osm; do
+  R=batches/<scope>/staging/recon-$SRC-<DATE>
+  python scripts/ingest.py --source $SRC --commodity gas --country "<Country>" --out $R/
+  python scripts/reconcile.py --source $SRC --country "<Country>" --commodity gas --staging $R/
+  python scripts/build_recon_crosswalk.py --match-diff $R/match_diff.json --sweep-dir $STG/
+done
+# → $STG/recon_<source>_crosswalk.json; build_ref_workbook globs them and emits one
+#   <Cmdty>_<Source> tab each. Adding a source needs no workbook edit.
 ```
+
+**Read the run's health line before trusting a thin result.** `reconcile.py` emits a
+`MATCH_QUALITY` escalation when the name and geometry axes are both mostly dead
+(unnamed reference features × routeless GEM rows), which is the normal OSM condition —
+Iraq gas 2026-07-28 scored 0 overlaps from 52 features with a top composite of 0.438
+against a 0.45 threshold, and that null read as a legitimate finding for weeks. The fix
+is the admin-area signal (`geoarea_weight`, per-dataset in the manifest), not a lower
+threshold.
+
+**Triage by `Disposition`, not by matched/unmatched.** A reference route is
+presumptively REAL pipe: `ROUTE_FOR_EXISTING` = candidate geometry for a routeless GEM
+row (human routes-repo PR; never auto-replaced), `FRAGMENT_OF_EXISTING` = partial trace
+of a tracked line, `NEAR_MISS` = adjudicate by hand, `DISCOVERY_CANDIDATE` = check for an
+existing row under another name (→ `OtherEnglishNames`) *before* treating it as new. A
+`partial` Coverage label means the trace corroborates LOCATION only — a 0.1 km OSM stub
+is not evidence about a 105 km line. Check the tab's License column before any OSM
+geometry is reused (ODbL share-alike; Baird's call).
 
 ### Build (all presets)
 

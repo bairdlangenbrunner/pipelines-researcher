@@ -122,8 +122,12 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
 - **`<Cmdty>_OperatorsOwners`** — mirror of the ProjectID-keyed operators/owners tab (GID
   `1489950650`); `[ref]` column **precedes** its values; paste back by ProjectID, not onto a
   tracker row.
-- **Finding tabs (deep preset):** `<Cmdty>_Validity`, `<Cmdty>_Fills`, and (routes/gulfpub legs)
-  `<Cmdty>_RouteSuggestions`, `<Cmdty>_GulfPub`. The in-dev preset leads with `<Cmdty>_StatusReview`.
+- **Finding tabs (deep preset):** `<Cmdty>_Validity`, `<Cmdty>_Fills`, and (routes/recon legs)
+  `<Cmdty>_RouteSuggestions` plus **one tab per reconciled reference dataset** —
+  `<Cmdty>_GulfPub`, `<Cmdty>_OSM`, and any source registered later (discovered by glob over
+  `recon_*_crosswalk.json`, never named in the builder). Unmatched reference records are
+  grouped **by disposition**, not as one "additions" block.
+  The in-dev preset leads with `<Cmdty>_StatusReview`.
   The Fills tab's **`Target tab` column** says where each fill pastes: `tracker`, or
   `operators/owners` for Operator/Owner fills (record `tab="operators_owners"`; the SheetRow
   shown is the tracker locator, but the paste goes to the ProjectID-keyed oo tab).
@@ -191,7 +195,14 @@ rows only — wiki link leftmost, stale wiki value red, Action column = the edit
 `<Cmdty>_RouteSuggestions` (carried + own, one tab; routes-repo destination) →
 `<Cmdty>_OpenFlags` (the open residue: uncovered mechanical flags, open route
 flags, unparseable wiki pages, UNRESOLVED ref units — each with a suggested next
-step).
+step) → `<Cmdty>_<Source>Actions`, one per reconciled reference dataset
+(`<Cmdty>_GulfPubActions`, `<Cmdty>_OSMActions`, …): every unmatched reference
+record, every ambiguous match, and only those overlaps where GEM and the dataset
+actually **disagree**. A reference route is presumptively real pipe, so the
+unmatched rows are proposed additions and proposed geometry — filing all of them
+as evidence would be the same failure as the crosswalk being GulfPub-only: the
+finding exists and nobody is asked to act on it. Clean overlaps stay in the
+evidence file's full `<Cmdty>_<Source>` tab.
 
 **`<stem>-evidence.xlsx`** — audit trail, no action required:
 
@@ -200,7 +211,8 @@ step).
 `<Cmdty>_RefWorkDetail` (per-ref detail, all buckets, with a `Bucket` column) →
 `<Cmdty>_WikiAlignment` (non-action diff context: SHEET_SUSPECT,
 WIKI_STALE_VS_STAGED, info-severity) → `<Cmdty>_RouteIntegrity` (covered/info) →
-`<Cmdty>_Flags` (covered only) → `<Cmdty>_MonitorList` → `<Cmdty>_GulfPub`.
+`<Cmdty>_Flags` (covered only) → `<Cmdty>_MonitorList` → the per-source recon tabs
+(`<Cmdty>_GulfPub`, `<Cmdty>_OSM`, …).
 
 Empty tabs are omitted; carried rows carry a `Source packet` column (this
 packet's own rows say `(this packet)`). Blue notes = already covered; red = open.

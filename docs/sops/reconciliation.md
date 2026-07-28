@@ -71,6 +71,21 @@ Reference records match against GEM rows of the **same commodity sheet**:
 - **`buffer_km_for_overlap` is per-source, and 2 km is an onshore-survey default.**
   Coarse or offshore geometry needs more (OSM uses 10 km); too tight reads the same
   pipeline as no match.
+- **Admin-area signal** (`scripts/geo_signals.py`, `s_geoarea`) — the signal that survives
+  when name, endpoints, diameter, length *and* route are all blank. It resolves the
+  reference trace's vertices against Natural Earth admin-0/admin-1 and scores that
+  footprint against the GEM row's declared `Start`/`End CountryOrArea` +
+  `State/Province` + `Prefecture/District`, which GEM fills far more often than
+  `Start`/`EndLocation`. **`geoarea_weight` defaults to 0.0 (OFF)**, so enabling it moves
+  no already-committed composite; a dataset opts in via its manifest `matching:` block.
+  It is **excluded from `PHYSICAL_SIGNALS`**: province-coarse evidence routes a finding to
+  a human, it never unlocks green on its own.
+- **Geometry candidates = attribute top-K ∪ physically closest rows** (`spatial_candidates`,
+  default 8). The costly geometry pass used to go to the attribute leaders only — a
+  meaningless ranking when the reference is unnamed, so the true match was never tested.
+- **Weights layer: engine defaults ← source `matching` ← dataset `matching`.** Tune one
+  country's extract at the **dataset** level; source weights are global, so retuning them
+  to fix one country silently rewrites every already-committed run of that source.
 - **Dual-level granularity:** score against individual GEM segment rows **and**
   synthetic network rows (grouped by `PipelineNetworkGrouping`, merged geometry /
   summed length / union diameter). Emit the better of the two; record the matched
@@ -90,15 +105,49 @@ Reference records match against GEM rows of the **same commodity sheet**:
 | Class | → routes to | Workbook sheet |
 |---|---|---|
 | **Overlap** (matched) | confidence bump / Update if a value disagrees | `<Cmdty>_Overlaps` |
-| **Addition** (reference-only) | **Discovery** (try to match to an existing GEM pipeline under another name FIRST) | `<Cmdty>_Additions` |
+| **Addition** (reference-only) | **by disposition**, see below — never one undifferentiated pile | `<Cmdty>_Additions` |
 | **GEM-only** | usually log only (the source has gaps) | `<Cmdty>_GEM_only` |
 | **Status conflict** | verify true status (Update) — never auto-flip | `Status_Conflicts` |
 | **Ambiguous** | manual review | `Ambiguous_Clusters` |
+
+**An unmatched reference record is dispositioned, not dumped.** A route in a reference
+dataset is presumptively *real pipe* — the open question is only which kind of finding it
+is, and a single "Addition" bucket let 52 Iraq OSM traces be filed as one untriaged pile.
+`reconcile.disposition()` labels each one (most specific first):
+
+| Disposition | Meaning | Action |
+|---|---|---|
+| `FRAGMENT_OF_EXISTING` | ≥ `route_containment_threshold` (0.60) of the trace lies inside a drawn GEM route | partial trace of a tracked line — log, don't discover |
+| `ROUTE_FOR_EXISTING` | nearest GEM row has **no route** and its declared geography matches the trace | candidate **geometry** for that row → §8 / a human routes-repo PR |
+| `NEAR_MISS` | composite within `near_miss_delta` (0.10) below the yellow threshold | adjudicate by hand — **a false Addition hides a real one** |
+| `DISCOVERY_CANDIDATE` | no plausible GEM row | Discovery — but match to an existing row under another name FIRST (→ `OtherEnglishNames`) |
+
+Two guards ride alongside. **`coverage`** flags an overlap as `partial` when the reference
+covers < 25% of the GEM row, so a 0.1 km OSM stub is never read as corroborating a 105 km
+pipeline (and can never nominate itself as a route replacement). And `meta.diagnostics`
+records whether the matcher had anything to work with — % of reference records named, % of
+GEM rows routed, the composite distribution — because a zero-overlap run is otherwise
+ambiguous between "GEM is missing all of this" and "every signal was blank". It raises a
+`MATCH_QUALITY` escalation when both the name and geometry axes are mostly dead, or when a
+run of ≥5 records returns zero overlaps. **Never read a null run as a discovery set.**
 
 ### 5. Build the workbook
 `scripts/build_recon_workbook.py` → the per-commodity `Oil_`/`Gas_` sheets +
 `Routes_WKT` + README (sheet defs + counts). `scripts/recalc.py` to confirm no
 formula errors. Present the file. Layout + colors: `docs/reference/workbook_conventions.md`.
+
+To surface the same diff **inside a sweep/handoff workbook** instead, flatten it with
+`scripts/build_recon_crosswalk.py` (source-agnostic — it replaces the GulfPub-only
+`build_gulfpub_crosswalk.py`, now a deprecated shim):
+
+```bash
+python scripts/build_recon_crosswalk.py --match-diff $RECON/match_diff.json --sweep-dir $STG/
+```
+
+`build_ref_workbook.py` globs `recon_*_crosswalk.json` out of the staging dir, so dropping
+the file in is the whole wiring step — one `<Cmdty>_<Source>` tab per reconciled dataset
+(`Gas_GulfPub`, `Gas_OSM`, …). A legacy `gulfpub_crosswalk.json` still reads. Skipping this
+step is why a reconciliation can run clean and still never reach a reviewer.
 
 ## Route reconciliation specifics
 

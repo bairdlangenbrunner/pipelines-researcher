@@ -25,9 +25,11 @@ Sheets (commodity-prefixed; empty omitted; README first):
                            paired ref (or left blank when not corroborated).
   <Cmdty>_RouteSuggestions DEEP SWEEP only — sourced endpoint coords + corridor for weak-
                            RouteAccuracy rows (feeds the routes repo via a separate human PR).
-  <Cmdty>_GulfPub          DEEP SWEEP only — GulfPub (PE World Map, Tier 2) cross-comparison:
-                           overlaps / additions / ambiguous, present when gulfpub_crosswalk.json
-                           was generated (build_gulfpub_crosswalk.py) for the staging dir.
+  <Cmdty>_<Source>         DEEP SWEEP / handoff — one tab per reconciled reference dataset
+                           (<Cmdty>_GulfPub, <Cmdty>_OSM, …): overlaps, then unmatched
+                           reference records BY DISPOSITION, then ambiguous. Emitted for every
+                           recon_<source>_crosswalk.json in the staging dir
+                           (build_recon_crosswalk.py); a legacy gulfpub_crosswalk.json still reads.
   <Cmdty>_WikiAlignment    QC PACKET only (meta.mode "qc") — per-field sheet↔wiki diffs
                            (WIKI_UPDATE / SHEET_SUSPECT / WIKI_STALE_VS_STAGED / UNPARSED).
   <Cmdty>_RouteIntegrity   QC PACKET only — drawn GeoJSON vs the row's own attributes
@@ -740,33 +742,75 @@ def _route_candidate_styler(columns):
     return styler
 
 
-# --- GulfPub cross-comparison (deep-sweep extension) ------------------------ #
-def _gulfpub_view(wb, title, crosswalk: dict):
-    """Flat cross-comparison of the scoped GulfPub (PE World Map) reconciliation against GEM:
-    one row per overlap (matched pair), then GulfPub-only additions, then ambiguous matches.
-    GulfPub is a Tier-2 source — a single value here NEVER reaches green on its own; conflicts
-    route to Update's normal ≥2-independent source search. Read-and-flag only, nothing applied.
-    Reads the crosswalk produced by build_gulfpub_crosswalk.py (from reconcile's match_diff.json)."""
+# --- reference-dataset cross-comparison (sweep extension) ------------------- #
+# Legacy gulfpub_crosswalk.json used GulfPub-specific field names. The crosswalk is now
+# source-agnostic (build_recon_crosswalk.py); this keeps old staging dirs readable.
+_LEGACY_CW_FIELDS = {
+    "ref_name": "gulfpub_name", "ref_status": "gp_status", "ref_start": "gp_start",
+    "ref_end": "gp_end", "ref_diam": "gp_diam", "ref_len_km": "gp_len_km",
+    "ref_has_geom": "gp_has_geom", "ref_operator": "gp_operator", "ref_owners": "gp_owners",
+    "ref_capacity": "gp_capacity", "ref_startyear": "gp_startyear", "ref_desc": "gp_desc",
+}
+
+# Dispositions that say "this belongs to a row GEM already has" vs "this may be new".
+_DISP_FILL = {"ROUTE_FOR_EXISTING": "yellow", "FRAGMENT_OF_EXISTING": "yellow",
+              "NEAR_MISS": "yellow", "DISCOVERY_CANDIDATE": "red"}
+
+
+def _cw_get(rec: dict, key: str):
+    v = rec.get(key)
+    if v in (None, ""):
+        v = rec.get(_LEGACY_CW_FIELDS.get(key, key), "")
+    return "" if v is None else v
+
+
+def _num(v):
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def _recon_view(wb, title, crosswalk: dict, label: str):
+    """Flat cross-comparison of one scoped reference-dataset reconciliation against GEM:
+    overlaps (matched pairs) first, then unmatched reference records BY DISPOSITION, then
+    ambiguous multi-candidate matches. Works for any registered source; read-and-flag only,
+    nothing applied, and a single Tier-2/3 value never reaches green alone.
+
+    The Disposition + Action columns are the point. An unmatched reference route is
+    presumptively REAL pipe, so what a reviewer needs is which kind it is — candidate
+    geometry for a routeless GEM row, a fragment of a tracked line, a near miss, or a
+    genuine discovery — not merely that it failed to match. Coverage guards the opposite
+    error: a 0.1 km trace matched to a 105 km row is labelled `partial` so it is never
+    read as whole-line corroboration."""
     cols = [
-        ("Kind", 18), ("GEM ProjectID", 13), ("GEM name", 28), ("GEM segment", 20),
-        ("GulfPub name", 28), ("Match conf", 11), ("Composite", 10),
-        ("GEM status", 12), ("GP status", 12), ("Status conflict", 14),
-        ("GEM diam", 10), ("GP diam", 10), ("Diam flag", 12),
-        ("GEM len km", 11), ("GP len km", 11), ("Len flag", 12),
-        ("GEM route acc", 14), ("GP start", 26), ("GP end", 26), ("GP has geom", 11),
-        ("GP operator", 24), ("GP owners", 24), ("GP capacity", 11), ("GP startyear", 11),
-        ("Candidates", 30), ("GP description", 60),
+        ("Kind", 12), ("Disposition", 22), ("GEM ProjectID", 13), ("GEM name", 28),
+        ("GEM segment", 20), (f"{label} name", 28), ("Match conf", 11), ("Composite", 10),
+        ("Coverage", 11), ("GEM status", 12), (f"{label} status", 13), ("Status conflict", 14),
+        ("GEM diam", 10), (f"{label} diam", 11), ("Diam flag", 12),
+        ("GEM len km", 11), (f"{label} len km", 12), ("Len flag", 12),
+        ("GEM route acc", 14), ("Route IoU", 10), ("Replace route?", 13),
+        ("Trace crosses", 34), (f"{label} start", 26), (f"{label} end", 26),
+        (f"{label} has geom", 12), (f"{label} operator", 24), (f"{label} owners", 24),
+        (f"{label} capacity", 12), (f"{label} startyear", 12), ("Candidates", 30),
+        ("Action", 80), ("License", 40), (f"{label} id", 26), (f"{label} description", 60),
     ]
     field = {
-        "Kind": "kind", "GEM ProjectID": "gem_pid", "GEM name": "gem_name",
-        "GEM segment": "gem_segment", "GulfPub name": "gulfpub_name", "Match conf": "match_conf",
-        "Composite": "composite", "GEM status": "gem_status", "GP status": "gp_status",
-        "Status conflict": "status_conflict", "GEM diam": "gem_diam", "GP diam": "gp_diam",
-        "Diam flag": "diam_flag", "GEM len km": "gem_len_km", "GP len km": "gp_len_km",
-        "Len flag": "len_flag", "GEM route acc": "gem_route_acc", "GP start": "gp_start",
-        "GP end": "gp_end", "GP has geom": "gp_has_geom", "GP operator": "gp_operator",
-        "GP owners": "gp_owners", "GP capacity": "gp_capacity", "GP startyear": "gp_startyear",
-        "Candidates": "candidates", "GP description": "gp_desc",
+        "Kind": "kind", "Disposition": "disposition", "GEM ProjectID": "gem_pid",
+        "GEM name": "gem_name", "GEM segment": "gem_segment", f"{label} name": "ref_name",
+        "Match conf": "match_conf", "Composite": "composite", "Coverage": "coverage",
+        "GEM status": "gem_status", f"{label} status": "ref_status",
+        "Status conflict": "status_conflict", "GEM diam": "gem_diam",
+        f"{label} diam": "ref_diam", "Diam flag": "diam_flag", "GEM len km": "gem_len_km",
+        f"{label} len km": "ref_len_km", "Len flag": "len_flag",
+        "GEM route acc": "gem_route_acc", "Route IoU": "route_iou",
+        "Replace route?": "route_replacement_candidate", "Trace crosses": "trace_footprint",
+        f"{label} start": "ref_start", f"{label} end": "ref_end",
+        f"{label} has geom": "ref_has_geom", f"{label} operator": "ref_operator",
+        f"{label} owners": "ref_owners", f"{label} capacity": "ref_capacity",
+        f"{label} startyear": "ref_startyear", "Candidates": "candidates",
+        "Action": "action", "License": "license", f"{label} id": "ref_id",
+        f"{label} description": "ref_desc",
     }
     ws = wb.create_sheet(title)
     headers = [h for h, _ in cols]
@@ -775,22 +819,30 @@ def _gulfpub_view(wb, title, crosswalk: dict):
         ws.column_dimensions[get_column_letter(i)].width = wdt
     idx = {h: i + 1 for i, (h, _) in enumerate(cols)}
 
-    rows = (crosswalk.get("overlaps") or []) + (crosswalk.get("additions") or []) \
-        + (crosswalk.get("ambiguous") or [])
+    # Unmatched records sort by disposition (most actionable first), then longest trace
+    # first — not in source order, so the handful of real findings are not buried under a
+    # run of sub-kilometre stubs.
+    order = ["ROUTE_FOR_EXISTING", "FRAGMENT_OF_EXISTING", "NEAR_MISS", "DISCOVERY_CANDIDATE"]
+    adds = sorted((crosswalk.get("additions") or []),
+                  key=lambda r: (order.index(r.get("disposition")) if r.get("disposition") in order
+                                 else len(order),
+                                 -(_num(_cw_get(r, "ref_len_km")) or 0)))
+    rows = (crosswalk.get("overlaps") or []) + adds + (crosswalk.get("ambiguous") or [])
     n = 0
     for rec in rows:
-        vals = []
-        for h, _ in cols:
-            v = rec.get(field[h], "")
-            vals.append("" if v is None else v)
-        ws.append(vals)
+        ws.append([_cw_get(rec, field[h]) for h, _ in cols])
         rn = ws.max_row
         n += 1
-        # match confidence cell → tier color
+        # match confidence cell -> tier color
         mc = str(rec.get("match_conf", "")).lower()
         if mc in ("green", "yellow", "red"):
             ws.cell(rn, idx["Match conf"]).fill = CONF_FILL[mc]
-        # status/spec disagreements → red/yellow flags
+        disp = str(rec.get("disposition", ""))
+        if disp in _DISP_FILL:
+            ws.cell(rn, idx["Disposition"]).fill = CONF_FILL[_DISP_FILL[disp]]
+        if str(rec.get("coverage", "")) == "partial":
+            ws.cell(rn, idx["Coverage"]).fill = CONF_FILL["yellow"]
+        # status/spec disagreements -> red/yellow flags
         if str(rec.get("status_conflict", "")).upper() == "CONFLICT":
             ws.cell(rn, idx["Status conflict"]).fill = CONF_FILL["red"]
         for flag_col, cell_col in (("diam_flag", "Diam flag"), ("len_flag", "Len flag")):
@@ -799,8 +851,90 @@ def _gulfpub_view(wb, title, crosswalk: dict):
                 ws.cell(rn, idx[cell_col]).fill = CONF_FILL["yellow"]
 
     _style_header(ws, len(headers))
-    ws.freeze_panes = "E2"   # keep Kind..GulfPub name visible while scrolling
+    ws.freeze_panes = "G2"   # keep Kind..source name visible while scrolling
     return ws, n
+
+
+def _recon_crosswalks(staging):
+    """(path, crosswalk, label) for every reference dataset reconciled into this sweep.
+
+    Globs recon_*_crosswalk.json, so registering a new source needs no workbook change.
+    The single hard-coded gulfpub_crosswalk.json path this replaces is why an OSM run that
+    completed successfully still produced no tab and its findings were never triaged."""
+    out, seen = [], set()
+    for p in sorted(Path(staging).glob("recon_*_crosswalk.json")) + [Path(staging) / "gulfpub_crosswalk.json"]:
+        if not p.exists() or p.name in seen:
+            continue
+        seen.add(p.name)
+        try:
+            cw = json.loads(p.read_text())
+        except Exception:
+            continue
+        src = cw.get("source") or (cw.get("meta") or {}).get("source") or "gulfpub"
+        label = {"gulfpub": "GulfPub", "osm": "OSM"}.get(src, src.replace("_", " ").title())
+        out.append((p, cw, label))
+    return out
+
+
+def _recon_actionable(cw: dict) -> dict:
+    """The subset of a crosswalk that asks the researcher for a DECISION.
+
+    The full cross-comparison is audit trail and belongs in the evidence file, but under
+    the standing framing — a reference route is presumptively real pipe — an unmatched
+    trace is a proposed addition or a proposed route, not a footnote. Filing all of it as
+    evidence is the same failure mode as the crosswalk being GulfPub-only: the finding
+    exists and nobody is asked to act on it. Overlaps come along only where the two
+    datasets actually disagree."""
+    def _flagged(o):
+        return (str(o.get("status_conflict", "")).upper() == "CONFLICT"
+                or str(o.get("route_replacement_candidate", "")).upper() == "YES"
+                or any(str(o.get(f, "")).lower() not in ("", "ok")
+                       for f in ("diam_flag", "len_flag")))
+    return {**cw,
+            "overlaps": [o for o in (cw.get("overlaps") or []) if _flagged(o)],
+            "additions": list(cw.get("additions") or []),
+            "ambiguous": list(cw.get("ambiguous") or [])}
+
+
+def _recon_actions_blurb(cw: dict, label: str, n: int, n_full: int) -> str:
+    tier = cw.get("source_tier") or (cw.get("meta") or {}).get("source_tier")
+    diag = cw.get("diagnostics") or {}
+    bits = ", ".join(f"{k}={v}" for k, v in (diag.get("dispositions") or {}).items() if v)
+    return (f"{n} of {n_full} - {cw.get('display_name') or label} (Tier {tier}) rows that need a "
+            f"DECISION: every unmatched reference record, every ambiguous match, and only those "
+            f"overlaps where GEM and the dataset DISAGREE (status / diameter / length / a route "
+            f"worth replacing). A reference route is presumptively REAL pipe, so work the "
+            f"Disposition + Action columns: ROUTE_FOR_EXISTING = candidate geometry for a "
+            f"routeless GEM row (human routes-repo PR, NEVER auto-replaced), FRAGMENT_OF_EXISTING "
+            f"= partial trace of a line GEM already has, NEAR_MISS = adjudicate by hand, "
+            f"DISCOVERY_CANDIDATE = rule out an existing row under another name "
+            f"(-> OtherEnglishNames) BEFORE adding. Yellow Coverage 'partial' = corroborates "
+            f"LOCATION only. Value disagreements go to Update's >=2-independent source search - a "
+            f"single Tier-2/3 value NEVER reaches green alone; nothing here is applied. Check the "
+            f"License column before reusing geometry. Full cross-comparison incl. clean overlaps: "
+            f"the {label} tab in the EVIDENCE file."
+            + (f" (dispositions: {bits})" if bits else ""))
+
+
+def _recon_tab_blurb(cw: dict, label: str, n: int, deep: bool) -> str:
+    tier = cw.get("source_tier") or (cw.get("meta") or {}).get("source_tier")
+    diag = cw.get("diagnostics") or {}
+    bits = ", ".join(f"{k}={v}" for k, v in (diag.get("dispositions") or {}).items() if v)
+    esc = "; ".join(e["code"] for e in diag.get("escalations", []))
+    return (f"{n} - {'DEEP-SWEEP ' if deep else ''}{cw.get('display_name') or label} "
+            f"(Tier {tier}) cross-comparison vs GEM: matched overlaps (Match conf tier-colored), "
+            f"then UNMATCHED reference records sorted by Disposition, then ambiguous "
+            f"multi-candidate matches. A reference route is presumptively REAL pipe - read the "
+            f"Disposition + Action columns: ROUTE_FOR_EXISTING = candidate geometry for a "
+            f"routeless GEM row (human routes-repo PR, NEVER auto-replaced), FRAGMENT_OF_EXISTING "
+            f"= partial trace of a tracked line, NEAR_MISS = adjudicate by hand, "
+            f"DISCOVERY_CANDIDATE = match to an existing GEM row under another name FIRST. "
+            f"Yellow Coverage 'partial' = corroborates LOCATION only, not length/capacity/extent. "
+            f"Red Status conflict / yellow Diam or Len flag route to Update's >=2-independent "
+            f"source search - a single Tier-2/3 value NEVER reaches green alone; nothing here is "
+            f"applied. Check the License column before any geometry is reused."
+            + (f" (dispositions: {bits})" if bits else "")
+            + (f" DIAGNOSTIC ESCALATION: {esc} - see match_diff.json meta.diagnostics." if esc else ""))
 
 
 # --- wiki-alignment / route-integrity / mechanical flags (QC-workflow extensions) --- #
@@ -1458,16 +1592,24 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
         defs_b.append((t,
                        f"{len(nr_monitor)} — DISCOVERY candidates below the add-threshold: watch for "
                        "the concrete step, do NOT add yet."))
-    cw_path = staging / "gulfpub_crosswalk.json"
-    gulfpub_n = 0
-    if cw_path.exists():
-        crosswalk = json.loads(cw_path.read_text())
-        t = f"{prefix}_GulfPub"
-        _, gulfpub_n = _gulfpub_view(wb_b, t, crosswalk)
-        defs_b.append((t,
-                       f"{gulfpub_n} — GulfPub (PE World Map, Tier 2) cross-comparison context. "
-                       "Disagreements route to Update's ≥2-independent source search — a single "
-                       "Tier-2 value NEVER reaches green alone; nothing here is applied."))
+    # One tab per reconciled reference dataset (GulfPub, OSM, …) — see _recon_crosswalks.
+    # Split across the two files the way every other leg is: rows needing a decision go to
+    # ACTIONS, the full cross-comparison stays in EVIDENCE.
+    recon_n = recon_act_n = 0
+    for _cwp, crosswalk, label in _recon_crosswalks(staging):
+        lab = label.replace(" ", "")
+        t = f"{prefix}_{lab}"
+        _, n_cw = _recon_view(wb_b, t, crosswalk, label)
+        recon_n += n_cw
+        defs_b.append((t, _recon_tab_blurb(crosswalk, label, n_cw, deep=False)))
+        act_cw = _recon_actionable(crosswalk)
+        ta = f"{prefix}_{lab}Actions"[:31]
+        _, n_act = _recon_view(wb_a, ta, act_cw, label)
+        if n_act:
+            recon_act_n += n_act
+            defs_a.append((ta, _recon_actions_blurb(crosswalk, label, n_act, n_cw)))
+        else:
+            del wb_a[ta]
 
     a_counts = (actions.get("meta") or {}).get("counts", {})
     counts = {
@@ -1484,7 +1626,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                            + own_status_confirms,
         "wiki_context": len(wiki_rest), "flags_covered": len(covered_flags),
         "route_covered": len(covered_routeqc), "monitor": len(nr_monitor),
-        "gulfpub_crosscompare": gulfpub_n,
+        "recon_crosscompare": recon_n, "recon_actions": recon_act_n,
     }
     meta = {**meta, "counts": counts}
     _split_readme(readme_a, meta, defs_a, actions_file=True, companion=out_b.name)
@@ -1933,23 +2075,15 @@ def main() -> None:
                            "validation gate (listed, not applied). Yellow Replacement? = a route already "
                            "exists — a route is NEVER auto-replaced."))
 
-    # GulfPub cross-comparison tab (deep sweep): scoped reconcile of the PE World Map dataset
-    # vs GEM, if a crosswalk was generated for this staging dir (build_gulfpub_crosswalk.py).
-    cw_path = Path(args.staging) / "gulfpub_crosswalk.json"
-    gulfpub_n = 0
-    if cw_path.exists():
-        crosswalk = json.loads(cw_path.read_text())
-        gp_title = f"{prefix}_GulfPub"
-        _, gulfpub_n = _gulfpub_view(wb, gp_title, crosswalk)
-        cw_counts = (crosswalk.get("meta") or {}).get("counts", {})
-        sheet_defs.append((gp_title,
-                           f"{gulfpub_n} — DEEP-SWEEP GulfPub (PE World Map / Petroleum Economist, Tier 2) "
-                           "cross-comparison: overlaps (matched pairs, Match conf tier-colored), GulfPub-only "
-                           "additions (match to an existing GEM row FIRST before treating as a discovery), and "
-                           "ambiguous multi-candidate matches. Red Status conflict / yellow Diam or Len flag = "
-                           "a disagreement to resolve via Update's ≥2-independent source search — a single "
-                           "Tier-2 value NEVER reaches green alone; nothing here is applied. "
-                           f"(counts: {J([f'{k}={v}' for k, v in cw_counts.items()])})"))
+    # Reference-dataset cross-comparison tabs (deep sweep): one per source reconciled into
+    # this staging dir — GulfPub, OSM, whatever else is registered. Sources are discovered by
+    # glob, not named here, so adding a dataset never needs a workbook edit.
+    recon_n = 0
+    for _cwp, crosswalk, label in _recon_crosswalks(Path(args.staging)):
+        t = f"{prefix}_{label.replace(' ', '')}"
+        _, n_cw = _recon_view(wb, t, crosswalk, label)
+        recon_n += n_cw
+        sheet_defs.append((t, _recon_tab_blurb(crosswalk, label, n_cw, deep=True)))
 
     # HANDOFF: discovery candidates carried from staged_new.json — paste-ready NewRows
     # mirror (exact tracker header, from the snapshot already loaded for the Backend tab),
@@ -2020,7 +2154,7 @@ def main() -> None:
     counts["route_suggestions"] = len(all_routes)
     if route_candidates:
         counts["route_candidates"] = len(route_candidates)
-    counts["gulfpub_crosscompare"] = gulfpub_n
+    counts["recon_crosscompare"] = recon_n
     for bucket in _ORDER:
         rows = [r for r in ref_res if r.get("class_out") == bucket]
         counts[bucket.lower()] = len(rows)

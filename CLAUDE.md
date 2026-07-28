@@ -93,7 +93,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 |---|---|---|
 | **Triage** (plan the batch; memo, no xlsx) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §1 + Triage SOP |
 | **Reconcile vs a scraped dataset** (per-source diff) | "reconcile gulfpub for <country>", "gulfpub diff", "compare GEM to <dataset>", "run reconciliation for <scope>" | `workflows.md` §2 + Reconciliation SOP |
-| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `gulfpub`; presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
+| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `recon` (gulfpub + osm); presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
@@ -102,9 +102,20 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
 
 Routing notes:
-- A reconciliation reference-only (`Addition`) row is usually **not** a missing
-  pipeline — **match it to an existing GEM pipeline under another name first**
-  (→ `OtherEnglishNames`); only genuine misses go to Discovery.
+- **A reference route is presumptively REAL pipe** — an unmatched OSM/GulfPub trace is
+  either geometry GEM is missing or a pipeline GEM is missing, never noise to filter.
+  Triage by `disposition`, never as one undifferentiated "Addition" pile:
+  `ROUTE_FOR_EXISTING` (candidate geometry for a routeless GEM row → human routes-repo
+  PR, never auto-replaced), `FRAGMENT_OF_EXISTING`, `NEAR_MISS` (adjudicate by hand),
+  `DISCOVERY_CANDIDATE` — and even then **match it to an existing GEM pipeline under
+  another name first** (→ `OtherEnglishNames`); only genuine misses go to Discovery.
+  A `partial` coverage label = corroborates LOCATION only, not length/capacity/extent.
+- **A null or thin recon run is a claim about the matcher until you read its health
+  line.** `reconcile.py` emits `MATCH_QUALITY` when the name and geometry axes are both
+  mostly dead (unnamed reference features × routeless GEM rows). Fix it with the
+  per-dataset `geoarea_weight` override in the source manifest — never by lowering a
+  threshold, and never by retuning a shared source-level block (that moves committed
+  runs in other countries).
 - A scraped dataset is **one source in a conflict, never automatically
   authoritative** — value disagreements route to Update's normal source-search.
 - **Sweep vs full pass vs Update:** Update is *targeted* (named rows, specific
@@ -204,8 +215,13 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    (the golden reference) to any source/country/commodity, with a route-geometry
    pass (GulfPub treated as more accurate than low/medium GEM routes; human review
    before any replacement). In practice GulfPub corroboration has so far shipped
-   inside the Country Sweep's `gulfpub` crosswalk leg (`build_gulfpub_crosswalk.py`);
-   no standalone §2 reconciliation workbook has been delivered yet.
+   inside the Country Sweep's recon crosswalk leg (`build_recon_crosswalk.py`, one
+   `<Cmdty>_<Source>` tab per registered dataset — `build_gulfpub_crosswalk.py` is now a
+   deprecated shim). First standalone §2 workbooks delivered 2026-07-28 (Iraq oil, OSM +
+   GulfPub). **OSM is a second registered source and runs by default in the `deep`
+   preset**; unmatched reference records are bucketed by `disposition`
+   (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
+   standing principle that a reference route is presumptively real pipe.
 2. **QC workbook** (`build_qc_workbook.py`) — rebuild of `GOIT_oil_ngl_QC.xlsx`
    (Status, RouteAccuracy, OtherVocab, Owner, WikiLink, Geo, NameUniqueness,
    DateLogic, Diameter, BroadSweep; route/WKT sheet dropped).
@@ -222,14 +238,19 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/iran.md`.
 - **Iraq (gas: full pass re-run 2026-07-28 staged not applied — supersedes the
   2026-07-05 packet; work from
-  `…_20260728_1704_ET_iraq-gas_handoff-{actions,evidence}.xlsx`. TWELVE escalations
+  `…_20260728_1804_ET_iraq-gas_handoff-{actions,evidence}.xlsx`. TWELVE escalations
   open, structurally: the ASB Table 4.10/9.9 length mi→km defect on 19 rows (two
   families, two *different* one-cell fixes —
   `notes/escalation-2026-07-28-asb-iraq-length-units.md`), CapacityUnits on 3 rows,
   P6824 as a diesel line misfiled in GGIT, and the ASB-provenance ruling that
   withdrew 12 of 16 of our own duplicate/existence flags. THREE retractions — P4067
   is *not* a misfiled crude line, "stale forward" on P7435/P6826 is wrong, P6007 is
-  not a phantom. + oil open items — Grand Faw third line, P0544):**
+  not a phantom. Recon legs re-run 2026-07-28 with the fixed engine and now IN the
+  packet — 104 GulfPub/OSM rows needing a decision, incl. 30 OSM traces that are
+  candidate geometry for routeless rows. + oil open items — Grand Faw third line,
+  P0544, and an UNTRIAGED first OSM oil run: 175 unmatched traces, 84 of them
+  discovery candidates, delivered as
+  `…_20260728_1804_ET_iraq-oil_{osm,gulfpub}-reconciliation.xlsx`):**
   `docs/country_notes/iraq.md`.
 - **Saudi Arabia (gas packet 2026-07-08, rebuilt 2026-07-28 as
   `…_20260728_1731_ET_saudi-arabia-gas_{annual-indev,deepsweep}.xlsx` — and

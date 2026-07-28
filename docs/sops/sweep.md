@@ -2,7 +2,8 @@
 
 One scoped pass over existing rows (country + commodity + status filter) with
 **selectable legs** — `refs`, `fills`, `validity`, `status-review`, `routes`,
-`gulfpub` — staged into ONE dir per scope. Presets (`refs-only`, `deep`, `in-dev`)
+`recon` (formerly `gulfpub`; now one pass per registered reference dataset —
+`gulfpub` AND `osm` in the `deep` preset) — staged into ONE dir per scope. Presets (`refs-only`, `deep`, `in-dev`)
 and the command sequences: `docs/workflows.md §3`. This SOP is the operational
 rules: the `refs` leg first (the base every preset includes), then the further
 legs under "Legs beyond refs".
@@ -79,8 +80,10 @@ Two paste-ready, backend-mirroring tabs lead the deliverable:
   that tab); `Operator [ref]` / `Owner [ref]` cells carry the proposed ref(s), same tier colors.
   Paste each `[ref]` back onto that tab by ProjectID — *not* onto a tracker row.
 
-The **`deep` preset** adds up to four more tabs: `<Cmdty>_Validity`, `<Cmdty>_Fills`, and —
-when the routes/gulfpub legs run — `<Cmdty>_RouteSuggestions` and `<Cmdty>_GulfPub`.
+The **`deep` preset** adds `<Cmdty>_Validity`, `<Cmdty>_Fills`, `<Cmdty>_RouteSuggestions`
+(routes leg), and **one tab per reference dataset** from the recon leg — `<Cmdty>_GulfPub`,
+`<Cmdty>_OSM`, and any source registered later, discovered by glob rather than named in the
+builder.
 The **`in-dev` preset** leads with `<Cmdty>_StatusReview`.
 
 The `<Cmdty>_Refs_Added / _Reverified / _DeadLinks / _Unresolved` bucket tabs remain as
@@ -230,23 +233,47 @@ Two further legs run on request (both were standing expectations for the Iraq ga
   is the one route work that is *in scope* for a deep sweep; route *geometry `[ref]` cells*
   (media URLs for `RouteType`/`RouteAccuracy`/`RouteNotes`) stay out of scope. See
   `docs/reference/route_conventions.md`.
-- **(d) GulfPub cross-comparison.** Fold in a reconcile pass against the registered GulfPub /
-  PE World Map dataset to catch pipelines GEM is **missing** *and* rows where **GEM's data
-  disagrees** with the dataset. Delivered on a `<Cmdty>_GulfPub` tab. Watch two dataset traps:
+- **(d) Reference-dataset cross-comparison.** Fold in a reconcile pass against **every**
+  registered dataset in scope — GulfPub / PE World Map *and* OSM by default in the `deep`
+  preset — to catch pipelines GEM is **missing**, geometry GEM **lacks**, and rows where
+  **GEM's data disagrees**. Delivered as one `<Cmdty>_<Source>` tab per dataset. Traps:
   a scraped **"addition" is often a mislabel, not a miss** (the 2 GulfPub-only Iraq gas additions
   were Iran pipelines with `country=Iraq` — verify the `country`/endpoints before treating an
-  addition as discovery); and **`Capacity_mmcfd` is a constant `300` placeholder** in the gas
-  schema — never use it as a capacity corroboration.
+  addition as discovery); **`Capacity_mmcfd` is a constant `300` placeholder** in the GulfPub gas
+  schema — never a capacity corroboration; and **OSM's `osm_id_key` is not unique** across
+  differently-merged ways, so `ingest.py` suffixes collisions `#2..` and warns — a warning there
+  means cross-scrape identity for that dataset is unreliable until the manifest's `oid_field`
+  is fixed.
 
 **Tooling status (all four legs are built in):** legs (a)/(b) and the `_Validity`/`_Fills`
 tabs are wired into the committed `critical-deep-sweep` workflow + `build_ref_workbook.py`.
 Legs (c)/(d) are now committed too: `merge_deepsweep_shards.py` folds each shard's `routes[]`
 into `__ROUTE__` records (`class_out` `ROUTE_SUGGESTED` when both endpoints are coordinated,
 `ROUTE_PARTIAL` otherwise), and `build_ref_workbook.py` renders `<Cmdty>_RouteSuggestions`
-whenever they're present. For the GulfPub leg, run the scoped recon (`ingest.py` →
-`reconcile.py`) then `build_gulfpub_crosswalk.py --match-diff <recon>/match_diff.json --out
-<staging>/gulfpub_crosswalk.json`; `build_ref_workbook.py` adds `<Cmdty>_GulfPub` whenever that
-crosswalk file is in the staging dir. Nothing here is auto-applied.
+whenever they're present. For the recon leg, run the scoped recon (`ingest.py` →
+`reconcile.py`) **once per source** then `build_recon_crosswalk.py --match-diff
+<recon>/match_diff.json --sweep-dir <staging>/`; `build_ref_workbook.py` globs
+`recon_*_crosswalk.json` and emits one `<Cmdty>_<Source>` tab each. Nothing here is
+auto-applied.
+
+**A reference route is presumptively real pipe.** The leg's output is not "matched vs
+noise" — every unmatched reference record carries a `Disposition` saying what it most
+likely IS: `ROUTE_FOR_EXISTING` (candidate geometry for a routeless GEM row → human
+routes-repo PR, never auto-replaced), `FRAGMENT_OF_EXISTING`, `NEAR_MISS` (scored just
+under threshold — adjudicate by hand), `DISCOVERY_CANDIDATE` (rule out an existing row
+under another name → `OtherEnglishNames` before treating as new; only genuine misses go
+to §4). Never dismiss the unmatched bucket wholesale. Two guards on over-reading it: a
+`partial` Coverage label means the trace corroborates LOCATION only (a 0.1 km stub says
+nothing about a 105 km line), and the License column governs reuse of OSM coordinates
+(ODbL share-alike — Baird's call, never the agent's).
+
+**Check the run's health before believing a thin result.** `reconcile.py` emits
+`MATCH_QUALITY` when the name and geometry axes are both mostly dead — unnamed reference
+features against routeless GEM rows — which is OSM's normal condition and produces a
+convincing-looking zero. Iraq gas 2026-07-28: 52 features, 0 overlaps, top composite
+0.438 against a 0.45 threshold. The remedy is the admin-area signal (`geoarea_weight`,
+set per-dataset in the source manifest so committed runs elsewhere stay reproducible),
+never a lowered threshold.
 
 **Critically confirm, don't just check ref liveness (standing requirement).** A re-verified
 `[ref]` is not the goal; *a confirmed value* is. For every non-trivial data point (status,
