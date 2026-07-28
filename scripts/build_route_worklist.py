@@ -34,7 +34,12 @@ from normalize import normalize_country, parse_number, split_countries  # noqa: 
 from route_compare import load_gem_route  # noqa: E402
 from staged_store import discover_staging_dirs, load_staged_context  # noqa: E402
 
-ELIGIBLE_ACCURACY = {"", "no route", "low"}   # +"medium" with --include-medium
+# +"medium" with --include-medium. `very low (straight line/schematic)` is a REAL sheet
+# value (added GEM-side; 1,428 rows carried it as of the 2026-07-28 re-pull, 911 gas + 517
+# oil, largely re-graded from `low`). Omitting it silently excluded the very rows this
+# worklist exists to fix — the worst geometry in the tracker — so it is eligible by
+# definition, not by option.
+ELIGIBLE_ACCURACY = {"", "no route", "very low (straight line/schematic)", "low"}
 
 
 def _s(v) -> str:
