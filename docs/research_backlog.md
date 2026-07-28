@@ -76,7 +76,10 @@ signal of application status.
   result for Libya, but it exposed three engine defects now fixed in `match.py` /
   `reconcile.py` / `route_compare.py` that affect every source. Three structural
   escalations are open (§4), plus a fourth found late in the pass: 14 lengths carry a
-  spurious ASB miles→km conversion. `docs/country_notes/libya.md`;
+  spurious ASB miles→km conversion. Deliverable:
+  `pipelines_batch_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx` (work
+  from ACTIONS; its README's `ESCALATIONS` row lists all five rulings needed).
+  `docs/country_notes/libya.md`;
   `batches/libya-gas/staging/{ref-sweep-operating,cancelled-review,redundancy,recon-gulfpub-20260728,recon-osm-20260728,qc}/`.
 - **US oil: Delaware Express** (P7995/P0354, researched 2026-06-12) and
   **Permian Express I–IV** (P0113/P2581/P2660/P2661, researched 2026-06-11) —

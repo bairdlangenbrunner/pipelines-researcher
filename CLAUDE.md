@@ -233,7 +233,8 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   (P2197 QC-fail); Ashdod-vs-Ashkelon landfall + P3620 Ashkelon-gap open):**
   `docs/country_notes/israel.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
-  review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet. Four
+  review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet
+  `…_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`. Four
   structural escalations open: cluster-A coastal double-count, three condensate
   lines misfiled in GGIT, and two OPEC-ASB Table 4.10 ingest defects — the `scm/y`
   zero-capacity rows (`notes/escalation-2026-07-28-scm-capacity-units.md`) and 14

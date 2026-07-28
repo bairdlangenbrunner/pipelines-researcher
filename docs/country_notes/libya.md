@@ -138,6 +138,17 @@ not the tracker tab.
   the source's "Mellitah" was the operator, and the line is a 4in backup feed
   entirely inside the Abu Attifel field.
 
+## Deliverable
+
+`batches/libya-gas/deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`
+(gitignored — regenerate from `batches/libya-gas/staging/qc/` if missing). **Work from
+the ACTIONS file**, not the per-leg workbooks: 89 open decisions, 229 paste-ready
+backend cell units, 65 operator/owner units, 1 new row, 97 wiki updates, 51 open flags.
+Both READMEs carry an `ESCALATIONS` row listing the five class-level rulings needed.
+
+Ref work across the scope: 220 REFS_ADDED / 55 re-verified / 28 unresolved. Operator
+attribution went from 0 referenced rows to referenced on every row Leg 3 touched.
+
 ## Open items
 - **Cluster A — the structural double-count (Baird's ruling needed).** P0483 "Libya
   Coastal Gas Pipeline" appears to aggregate its own member segments P1862 / P1863 /
