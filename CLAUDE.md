@@ -24,7 +24,8 @@ Where things live — **read on demand as the workflow dictates, not all at once
   `confidence_tiers.md`, `workbook_conventions.md`, `route_conventions.md`,
   `source_roster.md`; plus `docs/country_notes/`.
 - **Reference-dataset registry**: `sources/` — one `manifest.yml` (+ optional
-  `adapter.py`) per scraped dataset; GulfPub today. How to add one: `sources/README.md`.
+  `adapter.py`) per scraped dataset; GulfPub + OpenStreetMap today. How to add one:
+  `sources/README.md`.
 - **Scripts**: `scripts/` (engine + helpers).
 - **Batches** (scope-first): `batches/<country-slug>-<commodity>/` holds
   `staging/<mode[-qualifier]>/` (staged JSON — the canonical pending-state; recon
@@ -92,12 +93,13 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 |---|---|---|
 | **Triage** (plan the batch; memo, no xlsx) | "what should we work on", "what's stale", "where are the gaps" | `workflows.md` §1 + Triage SOP |
 | **Reconcile vs a scraped dataset** (per-source diff) | "reconcile gulfpub for <country>", "gulfpub diff", "compare GEM to <dataset>", "run reconciliation for <scope>" | `workflows.md` §2 + Reconciliation SOP |
-| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `gulfpub`; presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "full pass on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
+| **Country Sweep** (THE research engine — legs `refs` / `fills` / `validity` / `status-review` / `routes` / `gulfpub`; presets `refs-only`, `deep`, `in-dev`) | "ref sweep for <country>", "deep sweep <country>", "go deep on <country>", "re-verify refs", "in-dev status sweep", "check the in-dev segments in <country>" | `workflows.md` §3 + Sweep SOP (`docs/sops/sweep.md`) |
 | **Discover new pipelines** | "find new pipelines in <country>", "discovery run", "what's missing in <country>" | `workflows.md` §4 + Discovery SOP |
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
 | **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
+| **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
 
 Routing notes:
 - A reconciliation reference-only (`Addition`) row is usually **not** a missing
@@ -105,8 +107,11 @@ Routing notes:
   (→ `OtherEnglishNames`); only genuine misses go to Discovery.
 - A scraped dataset is **one source in a conflict, never automatically
   authoritative** — value disagreements route to Update's normal source-search.
-- **Sweep vs Update:** Update is *targeted* (named rows, specific questions);
-  anything whole-country / "re-verify everything" is a Country Sweep with the
+- **Sweep vs full pass vs Update:** Update is *targeted* (named rows, specific
+  questions); a Country Sweep is one scoped pass with selected legs; a **full pass
+  (§9)** is the composite of several sweeps + every recon + the handoff, each in its
+  own run dir — don't try to run it as one sweep.
+  Anything whole-country / "re-verify everything" is a Country Sweep with the
   right legs. The sweep's `refs` leg researches & stages refs across all
   rows×ref-cells to the ≥2-independent target; both share one ref-pair model
   (`scripts/ref_pairs.py`).
@@ -226,13 +231,17 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   is *not* a misfiled crude line, "stale forward" on P7435/P6826 is wrong, P6007 is
   not a phantom. + oil open items — Grand Faw third line, P0544):**
   `docs/country_notes/iraq.md`.
-- **Saudi Arabia (gas packet 2026-07-08 staged not applied — hinges on the
-  P1897–P1925 class decision; GulfPub route-consistency pass + oil ref-sweep
-  partial):** `docs/country_notes/saudi-arabia.md`.
-- **Egypt (gas: handoff regenerated 2026-07-16 as the TWO-file split
-  `pipelines_batch_20260716_2359_ET_egypt-gas_handoff-{actions,evidence}.xlsx` —
-  the researcher works from the ACTIONS file, not the per-leg workbooks; Nitzana =
-  one linked decision; oil not yet swept):** `docs/country_notes/egypt.md`.
+- **Saudi Arabia (gas packet 2026-07-08, rebuilt 2026-07-28 as
+  `…_20260728_1731_ET_saudi-arabia-gas_{annual-indev,deepsweep}.xlsx` — and
+  **PARTIALLY APPLIED already**: 100/199 annual-indev + 46/306 deepsweep ref units are
+  live, 32 of 40 operating rows edited on the sheet since 07-08, so check each cell
+  before pasting; hinges on the P1897–P1925 class decision; GulfPub route-consistency
+  pass + oil ref-sweep partial):** `docs/country_notes/saudi-arabia.md`.
+- **Egypt (gas: handoff regenerated 2026-07-16 as the TWO-file split, rebuilt 2026-07-28 as
+  `pipelines_batch_20260728_1731_ET_egypt-gas_handoff-{actions,evidence}.xlsx` —
+  the researcher works from the ACTIONS file, not the per-leg workbooks; 16/284 ref
+  units already live; Nitzana = one linked decision; oil not yet swept):**
+  `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
 - **Nigeria (divestiture ownership sweep not started):**

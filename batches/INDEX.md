@@ -12,9 +12,9 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/qc` [assembled packet: qc] — rows=57 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260708` — recon inputs
 - `staging/ref-sweep-operating` — rows=50 fills=119 updates=0 status-pending=0 refs(REFS_ADDED=240, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none)
-- `deliverables/pipelines_batch_20260716_2359_ET_egypt-gas_handoff-actions.xlsx`
-- `deliverables/pipelines_batch_20260716_2359_ET_egypt-gas_handoff-evidence.xlsx`
-- `archive/` — 4 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
+- `archive/` — 6 superseded/applied file(s)
 
 ## iran-gas
 
@@ -81,9 +81,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/ref-sweep` — rows=65 fills=6 updates=0 status-pending=0 refs(DEAD_LINK=40, REFS_ADDED=130, REVERIFIED=179, UNRESOLVED=155) routes=0 new(none)
 - `staging/ref-sweep-critical` — rows=65 fills=103 updates=0 status-pending=0 refs(DEAD_LINK=40, REFS_ADDED=130, REVERIFIED=179, UNRESOLVED=153) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=40 fills=66 updates=0 status-pending=0 refs(REFS_ADDED=198, REVERIFIED=53, UNRESOLVED=45) routes=40 new(none)
-- `deliverables/pipelines_batch_20260708_1310_ET_saudi-arabia-gas_annual-indev.xlsx`
-- `deliverables/pipelines_batch_20260708_1322_ET_saudi-arabia-gas_deepsweep.xlsx`
 - `deliverables/pipelines_batch_20260713_1305_ET_saudi-arabia-gas_discovery.xlsx`
+- `deliverables/pipelines_batch_20260728_1731_ET_saudi-arabia-gas_annual-indev.xlsx`
+- `deliverables/pipelines_batch_20260728_1731_ET_saudi-arabia-gas_deepsweep.xlsx`
+- `archive/` — 2 superseded/applied file(s)
 
 ## saudi-arabia-oil
 

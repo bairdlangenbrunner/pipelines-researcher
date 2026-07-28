@@ -76,6 +76,13 @@ reconciliation engine compares it spatially to the GEM route:
 - This **never edits** the routes repo. Replacing a GeoJSON is a separate,
   human-initiated step (new branch + PR against `GOIT-GGIT-pipeline-routes`),
   done only after review.
+- **OSM geometry is not interchangeable with GulfPub's here.** It needs a wider
+  overlap buffer (10 km vs 2 km) and, being Tier 3, never justifies a replacement on
+  its own. It also carries a **licensing** question GulfPub doesn't: ODbL is
+  share-alike, so whether OSM-derived coordinates may ship in a GEM route is **Baird's
+  call, surfaced end-to-end** (workbook License column) — never the agent's. Reading
+  OSM to *corroborate* an attribute is not redistribution; copying its coordinates
+  into a GEM route is.
 - If the GEM route is already `high`/`very high` and the geometries disagree badly,
   that is a `Route_Conflicts` review item, **not** a replacement.
 

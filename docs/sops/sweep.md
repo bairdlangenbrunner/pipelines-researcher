@@ -147,8 +147,10 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 value**. The substring check is a **screen, not the verdict** — *you* read the page and make the
 call. Two families of false negative:
 
-**Liveness false-negatives** (page is live; don't class `DEAD_LINK` — Iraq gas sweep: **6 of 27
-"dead links" were false**):
+**Liveness false-negatives** (page is live; don't class `DEAD_LINK`). **Six families now**, and
+the hit rate is not marginal: the Iraq ref-gap re-pass (2026-07-28) found **33 of 41 "dead" refs
+were false negatives** (an earlier Iraq sweep: 6 of 27). Treat a `DEAD_LINK` classification as a
+hypothesis you still have to test by hand:
 - **401 bot-walls.** Some live pages (e.g. `iraq-businessnews.com`) return HTTP 401 to the
   verifier's UA. Confirm the page manually / via a normal browser; if genuinely live, cite the
   **Wayback Machine** snapshot (`web.archive.org/web/…`) — which itself passes the verifier — and
@@ -161,6 +163,15 @@ call. Two families of false negative:
   the verifier raises `SSLError` (seen: `pgjonline.com`, `eeer.org` bare host). Confirm the page is
   live + contains the value via `curl` (or use the `https://www.…` form / a Wayback snapshot, which
   verify cleanly), then keep the ref and note the cert issue in `ResearcherNotes`.
+- **Large PDFs.** A token FAIL on a big PDF (OPEC ASB editions, ministry annual reports) is **not
+  evidence the source lacks the value** — the verifier may never have read far enough into the
+  document. Extract with `pdftotext` and search the table yourself before ruling.
+- **CAPTCHA / bot interstitials that return HTTP 200.** The response is a challenge page, not the
+  article, but nothing in the status code says so. Pair this with the stub-body flag below: a 200
+  whose body is short *or* reads as a challenge is an unread page, not a missing value.
+- **JS-gated stubs.** The server returns a 200 shell and the article text is injected client-side,
+  so the substring check sees an empty article. Fetch the rendered page (or a Wayback capture,
+  which usually snapshots the hydrated HTML) before concluding anything.
 
 **Content false-negatives** (page is live *and supports the value*, but the dumb substring check
 misses it — this is the eurasianet/P5984 failure):
@@ -252,6 +263,34 @@ per-value confirmation, take a skeptical pass on every pipeline and flag:
 - **attribution** — wrong owner/operator, province, FuelSource, or endpoint;
 - **spec** — length/diameter/capacity that independent sources contradict.
 
+### Two follow-on passes the `validity` leg keeps generating (Libya + Iraq, 2026-07)
+
+Both are separate run dirs under the same scope, not new legs — they *adjudicate* what
+the row-by-row legs detected. Both are read-and-flag only.
+
+- **Redundancy-cluster adjudication** (`staging/redundancy/`). The row-by-row legs emit
+  *pairwise* duplicate flags ("compare P0483 against P1862"). Resolving those one pair
+  at a time is wrong: the real unit of decision is the **cluster** (an aggregate corridor
+  row plus its member segments). Detection stays in the prior dirs; adjudication happens
+  here, staging one `__VALIDITY__` record per implicated row carrying the **cluster-level**
+  recommendation, so the handoff shows one coherent ruling instead of N contradictory pairs.
+  Built by a per-batch one-off `build_redundancy.py` in the run dir (the clusters are
+  country-specific findings, not a reusable algorithm) — copy the Libya or Iraq script.
+  **Resolve to in-tracker precedent, not invention** — see the aggregate-corridor
+  convention in `docs/reference/gem_schema.md`, and cite the precedent rows in the record.
+  The pass cuts both ways: on Iraq it **withdrew 12 of our own 16** duplicate/existence
+  flags once ASB provenance was understood (`notes/escalation-2026-07-28-asb-iraq-provenance.md`).
+  Retracting your own flag is a first-class outcome here.
+- **Cancelled/shelved review** (`staging/cancelled-review/`). `cancelled` rows fall through
+  both the operating sweep and the `in-dev` preset's `--status proposed,construction,shelved`
+  filter, so a country's dead rows go unswept indefinitely. This pass asks three questions
+  per row — is the status still right, are the values credible, can each ref cell be sourced
+  — staging `__STATUS__` + `__VALIDITY__` sentinels alongside ordinary ref units. Enumerate
+  the units from the live header via `ref_pairs.discover_ref_pairs` and read row/value/current-ref
+  data from the CSV so nothing is retyped; only findings are authored by hand. Consolidate a
+  status ruling into whichever leg already owns that ProjectID so the handoff carries **one
+  status decision per ProjectID**.
+
 Schema extensions to `staged_resolutions.json` (and to each subagent shard):
 - **`class_in="FILL"`** — a deep-fill record (blank value → researched value). `values`
   carries the filled field(s); `proposed_refs`/`verifications` corroborate them; `class_out`
@@ -308,6 +347,25 @@ A whole-country deep sweep is too large for one context. Fan out:
    OO units preserved. Only then launch the rest.
 4. **Merge** all shards → `staged_resolutions.json`, computing `meta` (commodity, scope,
    project_ids, n_units, class_out_counts, tier_counts, n_operator_owner_units).
+
+### Sentinels get silently dropped by the ref merge — harvest them back
+
+`merge_ref_shards.py` matches each shard resolution to a baseline record by
+`(project_id, ref_col, sheet_row)`. A **sentinel** (`__VALIDITY__`, `__REDUNDANCY__`)
+deliberately has no baseline record — it isn't a ref cell, it's the agent answering
+"is this row real / is it a double-count?". So the merge prints
+`WARN N shard unit(s) matched no baseline record` and **drops them**: the refs survive
+and the sourced verdict is lost. These are the highest-value findings in a batch (the
+three misfiled Libya condensate lines came from them), so **never wave that WARN through**:
+
+```bash
+python scripts/harvest_sentinel_findings.py --staging $STG/    # accepts repeated --staging
+```
+
+It appends each dropped sentinel as a proper `__VALIDITY__` resolution (`class_out:
+UNRESOLVED` — validity is read-and-flag, never an applied edit) and is idempotent, so a
+re-run replaces rather than duplicates. Run it after `merge_ref_shards.py` whenever a
+ref-gap pass rode along with validity work, and reconcile the count against the WARN.
 
 ### Merge-time QC normalization (run before `build_ref_workbook.py`)
 Subagents are not perfectly consistent; normalize deterministically at merge:

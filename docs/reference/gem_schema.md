@@ -69,6 +69,25 @@ Each row is a pipeline **segment**, not a whole pipeline:
   the reconcile engine flags these as conflicts/ambiguous, but a human must read them as
   segment-vs-network, not a data defect.
 
+### The aggregate-corridor convention (an aggregate row is not automatically a duplicate)
+
+An aggregate row sitting alongside its own member segments looks like a double-count and
+often isn't. **The in-tracker convention** for representing a corridor at both levels
+without double-counting is: the aggregate row carries a **blank `Status`** plus a
+`PipelineNetworkGrouping` label, so status-filtered totals skip it while the member
+segments keep their own status / length / capacity. Verified precedent rows (GGIT,
+2026-07-28): `P3656` Moomba Sydney Pipeline System, `P3672` NSW Gas Network, `P3966`
+East-West Gas Pipeline and `P5885` MGS III (both `Master Gas System`), `P7150` OQGN.
+
+Two traps when adjudicating one of these clusters (Libya/Iraq redundancy passes):
+
+- **`n/a` is not in the `Status` vocab, and `mixed status` is not a convention** — the one
+  row using it (`P6249` Guizhou) is a non-vocab one-off. Don't copy either.
+- **Resolve to precedent, not invention**, and cite the precedent rows in the staged
+  recommendation. Whichever representation is dropped from an aggregate must be excluded
+  from length/capacity totals explicitly, as a family-level decision — never fixed from
+  one row's side. Procedure: `docs/sops/sweep.md` §"Two follow-on passes".
+
 ## `[ref]` pairing
 
 Most data columns have a paired `X [ref]` source-URL column (`Status` / `Status

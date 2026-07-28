@@ -76,7 +76,7 @@ Nothing in either file is ever auto-applied. Every URL has passed
 | `project_id` | str | GEM ProjectID (`P####`) |
 | `sheet_row` | int | live-sheet row (`CSV index + 4`) |
 | `pipeline_name`, `segment_name` | str | identity, from the snapshot |
-| `ref_col` | str | the `[ref]` column this record targets; sentinels `__VALIDITY__` / `__STATUS__` / `__ROUTE__` / `__WIKIDIFF__` / `__ROUTEQC__` mark non-ref records |
+| `ref_col` | str | the `[ref]` column this record targets; sentinels `__VALIDITY__` / `__REDUNDANCY__` / `__STATUS__` / `__ROUTE__` / `__WIKIDIFF__` / `__ROUTEQC__` mark non-ref records |
 | `value_cols` | [str] | the value columns the ref cluster governs |
 | `primary_value_col`, `primary_value` | str | the headline value |
 | `values` | {col: value} | exact column→value payload (for FILL/STATUS: the proposed edits) |
@@ -106,6 +106,15 @@ other (no orphan values/refs). `class_out` `REFS_ADDED` = corroborated;
 Extra fields: `verdict` (`"confirmed (caveat)"` \| `"concern"`), `concern_type`
 (`existence`/`duplicate`/`classification`/`attribution`/`spec`/`none`),
 `recommendation` (short human next step). `class_out` is always `UNRESOLVED`.
+
+**`__REDUNDANCY__` is a shard-only sentinel, not a stored `ref_col`.** Research subagents
+emit it when answering "is this row a double-count?", but it has no baseline record, so
+`merge_ref_shards.py` drops it with a WARN. `harvest_sentinel_findings.py` re-appends each
+one **as a `__VALIDITY__` record** (marked `harvested_from_shard: true`, `class_out:
+UNRESOLVED`), which is the only shape that reaches a store or a workbook. So: expect
+`__REDUNDANCY__` in `shards/`/`ref_shards/`, never in a merged `staged_resolutions.json`.
+The cluster-level redundancy pass (`staging/redundancy/`) likewise stages plain
+`__VALIDITY__` records — one per implicated row, carrying the cluster's ruling.
 
 **Status records** (`ref_col="__STATUS__"`, annual-update mode): one per in-dev segment
 row. Extra fields: `current_status`, `verdict` (`confirm`/`change`/`stale`/`unclear`),

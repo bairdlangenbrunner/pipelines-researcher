@@ -37,6 +37,37 @@ link to original sources — use those.
 Oil and Gas Watch (`oilandgaswatch.org`) — digitized routes + permit tracking,
 useful as a primary-adjacent lead.
 
+### OPEC Annual Statistical Bulletin (ASB) — the workhorse for OPEC members
+
+The single most productive spec source for Iraq and Libya, and the origin of most of
+GEM's existing citations on those rows. **It is a per-pipeline table, not a
+country-aggregate compendium** — the gas-pipeline table names individual lines with
+their own length/diameter/capacity. That ruling matters: a row whose only citation is
+a bare `"OPEC Annual Statistical Bulletin, p. 75"` is **supported, not unsourced**.
+Reading the citation as an aggregate withdrew 12 of 16 of our own duplicate/existence
+flags on the Iraq pass — `notes/escalation-2026-07-28-asb-iraq-provenance.md`.
+
+- **Table numbers move between editions**: gas pipelines = Table 4.10 (ASB2012),
+  Table 9.9 (ASB2017); crude = Table 4.9 / Table 6.9. Cite the edition, not just a page.
+- **Access:** live `opec.org` PDF links are dead (they 302 to the homepage). Recover
+  the tables from **Wayback snapshots of the ASB PDF via `pdftotext`**. A recovered
+  Wayback ASB URL that actually names the pipeline is a valid ref; the bare dead
+  `opec.org` link sitting on the row is not.
+- **Read the column header before using a number — then check whether the header is
+  telling the truth.** Both numeric columns of the gas table have already corrupted
+  GEM rows, in opposite directions:
+  - **Length** is headed `"(miles)"` but the **Iraq and Libya blocks are tabulated in
+    kilometres** (Qatar, Saudi and UAE are genuinely miles). The ingest converted
+    anyway → 14 Libya + 19 Iraq rows are 1.609344× too long. ASB2013 fixed the source;
+    ASB2012 did not. Memos: `notes/escalation-2026-07-28-asb-{libya,iraq}-length-units.md`.
+  - **Capacity** is headed `"(1,000 scm/yr)"` and the ingest dropped the multiplier →
+    8 rows (4 Libya, 4 Algeria) compute to zero `CapacityBcm/y`.
+    `notes/escalation-2026-07-28-scm-capacity-units.md`.
+- The operator string in the tables is often the pipeline company (Iraq: **OPC**, Oil
+  Pipelines Company) — which does *not* corroborate a ministry-level `Owner` value.
+- A `url_verifier` token FAIL on a large ASB PDF is **not** evidence the source lacks
+  the value (see the false-negative families in `docs/sops/sweep.md`).
+
 **PHMSA operator data (pulled 2026-07-20):** `www.phmsa.dot.gov` and its OBIEE
 portal (`portalpublic.phmsa.dot.gov`) block non-browser clients (Akamai 403 /
 login wall) — fetch the static files **via the Wayback Machine** instead
@@ -71,6 +102,7 @@ Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
 | Dataset | `source_tier` | Commodities | Coverage | Has route geometry | Manifest |
 |---|---|---|---|---|---|
 | **GulfPub** (PE World Map) | 2 | oil, gas | global | yes (WKT/GeoJSON) | `sources/gulfpub/manifest.yml` |
+| **OpenStreetMap** (Overpass) | 3 | oil, gas | per-country pulls (Libya gas today) | yes (ODbL) | `sources/osm/manifest.yml` |
 
 To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-URL
 `report_citation` (name + scrape date), never by a GEM URL.
@@ -79,6 +111,16 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
   fuller SDE scrape (`SDE.NG_Pipelines_Global.geojson`, 5,346 feats incl. Iraq; the old 2024
   export was 1,000 feats / no Iraq). **`Capacity_mmcfd` is a constant `300` placeholder — never
   a capacity corroborator.**
+- **OSM has no global extract** — unlike GulfPub, each `datasets:` entry is one
+  per-country, per-substance Overpass pull produced **before** the run
+  (`fetch_overpass.py --iso LY --substance gas --include-lifecycle --out sources/osm/data/`).
+  Two flags are mandatory, both learned the hard way: `--iso` (an OSM boundary's `name`
+  is in the local language, so `--area "Libya"` matches nothing) and
+  `--include-lifecycle` (without it Overpass returns only `man_made=pipeline`, so every
+  proposed/construction GEM row falsely reads as absent). OSM also needs a wider
+  `buffer_km_for_overlap` (10 km vs GulfPub's 2 km). Coverage is wildly uneven — the
+  Libya gas pull is 6 features, effectively Greenstream only. Tier 3: a lead or a
+  second voice, never corroboration on its own. Full quirks: `sources/osm/NOTES.md`.
 - **The master dataset-registry sheet is NOT public** — a `curl` CSV export hits an HTML login
   wall. Read it via Google Drive MCP `download_file_content` (`exportMimeType=text/csv`). Sheet
   ID + on-disk geojson paths are in the `datasets-registry-and-gulfpub-identity` memory. Large

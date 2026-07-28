@@ -1,6 +1,7 @@
 # SOP — Reconciliation (GEM ↔ a scraped reference dataset)
 
-Diff a registered external pipeline dataset (GulfPub today; more later) against the
+Diff a registered external pipeline dataset (GulfPub and OpenStreetMap today; more
+later — the registry table is in `docs/reference/source_roster.md`) against the
 live GOIT/GGIT trackers, and produce a reviewable workbook of candidates. **This SOP
 surfaces work; it does not perform it** — fixes go through the Update and Discovery
 SOPs. Reconciliation **never edits** the Google Sheet or the routes repo.
@@ -30,14 +31,19 @@ its manifest. These go in the workbook README sheet.
 ### 2. Ingest + normalize the reference
 1. Fresh GEM pull: `scripts/refresh_csvs.sh` (don't reconcile against a stale
    snapshot). Re-derive the column→index map from the fresh header.
-2. `scripts/ingest.py --source <name> --commodity <c>` runs the source's manifest
+2. **Sources with no global extract need a pre-fetch first.** GulfPub ships one global
+   file; OSM does not — pull the scoped extract into `sources/osm/data/` and add its
+   `datasets[]` entry before ingesting
+   (`fetch_overpass.py --iso <ISO2> --substance <c> --include-lifecycle`; both flags are
+   mandatory — see `sources/osm/NOTES.md` and the roster).
+3. `scripts/ingest.py --source <name> --commodity <c>` runs the source's manifest
    (via the declarative loader, or its `adapter.py` if present) → `canonical_records.json`
    + a geometry sidecar. The canonical schema (`sources/_schema/canonical_record.md`)
    is GEM-aligned: status mapped to GEM lowercase vocab, diameter parsed to an
    inch-set, length converted to km, **geodesic km computed from geometry** (never
    from an embedded projected shape-length field), source cited by non-URL
    `report_citation`.
-3. Sanity-check record counts against the raw file before proceeding.
+4. Sanity-check record counts against the raw file before proceeding.
 
 ### 3. Match (hybrid: attributes + geometry)
 `scripts/match.py` + `scripts/route_compare.py`, orchestrated by `reconcile.py`.

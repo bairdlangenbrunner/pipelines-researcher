@@ -62,8 +62,9 @@ Present; **stop and ask** before spinning up any batch. Detail: Triage SOP.
 
 ## §2 Reconcile against a scraped dataset
 
-The pluggable diff engine. `<source>` is any folder under `sources/` (GulfPub
-today). See the Reconciliation SOP for phase detail.
+The pluggable diff engine. `<source>` is any folder under `sources/` — `gulfpub`
+(tier 2, global) and `osm` (tier 3, per-country Overpass pulls that must be **fetched
+before** the run) today. See the Reconciliation SOP for phase detail.
 
 1. Confirm parameters (SOP §1): `--source`, `--commodity oil|gas|both`, `--country`,
    lifecycle states, geometry pass on (default). Note the source's `scraped_date`.
@@ -125,6 +126,13 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
   `…_deepsweep.xlsx`.
 - **`refs-only`** = refs alone → `…_refsweep.xlsx`.
 
+**Two follow-on passes the `validity` leg keeps generating** (own run dirs, same scope,
+read-and-flag only; rules + how to build each: Sweep SOP §"Two follow-on passes"):
+`staging/redundancy/` resolves the row-by-row *pairwise* duplicate flags into
+**cluster-level** `__VALIDITY__` rulings (per-batch one-off `build_redundancy.py` — copy
+the Libya or Iraq script), and `staging/cancelled-review/` sweeps the `cancelled` rows
+that fall through both the operating sweep and the `in-dev` status filter.
+
 ### Common first steps (all presets)
 
 ```bash
@@ -169,8 +177,15 @@ in the SAME workbook):
 python scripts/build_refsweep_briefs.py --staging $STG/   # → ref_shards/_briefs/<PID>.json
 #   → one research subagent per brief writes ref_shards/<PID>.json
 python scripts/merge_ref_shards.py --staging $STG/        # fold onto staged_resolutions.prior.json
+python scripts/harvest_sentinel_findings.py --staging $STG/  # REQUIRED if that printed a WARN
 python scripts/merge_deepsweep_shards.py --staging $STG/  # re-fold validity/fills/status
 ```
+
+`merge_ref_shards.py` matches shards by `(project_id, ref_col, sheet_row)`, so any
+`__VALIDITY__`/`__REDUNDANCY__` sentinel a research subagent wrote has no baseline record
+and is **dropped with a WARN** — the refs land, the sourced verdict vanishes.
+`harvest_sentinel_findings.py` folds them back in (idempotent). Never ship a batch whose
+WARN count you haven't reconciled (Sweep SOP §Sentinels).
 
 The `routes` leg is carried on the shards automatically (`routes[]` →
 `__ROUTE__` at merge). The `gulfpub` leg: run the scoped §2 recon, then
@@ -387,6 +402,46 @@ Because `meta.mode="route-creation"` and `meta.scope` carry country+commodity, a
 §6 handoff **auto-carries** these `ROUTE_CANDIDATE` records untouched. Refresh the
 facility gazetteer (`scripts/refresh_facility_gazetteer.py`) when the GOGET/GOGPT
 snapshots in `data/` are stale.
+
+---
+
+## §9 Full country pass (composite recipe)
+
+"**Full pass on `<country>`**" is not one sweep — it is the whole-country recipe below,
+run identically for Libya gas and Iraq gas (both 2026-07-28) and now the de facto
+deepest workflow. Each numbered step is its **own run dir** under
+`batches/<scope>/staging/`, so each stays separately reviewable and the §6 packet
+auto-discovers all of them. Order matters only where noted.
+
+| # | Step | Run dir | Recipe |
+|---|---|---|---|
+| 1 | Sweep, `deep` preset, **operating** rows | `ref-sweep-operating/` | §3 |
+| 2 | Sweep, `in-dev` preset | `annual/` | §3 + §7 |
+| 3 | Cancelled/shelved review | `cancelled-review/` | §3 + Sweep SOP |
+| 4 | Redundancy-cluster adjudication (**after** 1–3) | `redundancy/` | §3 + Sweep SOP |
+| 5 | Reconcile every registered source | `recon-<source>-<date>/` | §2 |
+| 6 | Handoff packet (wiki · route · mechanical · Leg-3) | `qc/` | §6 |
+| 7 | Ref-gap re-pass, if step 1–3 left red cells | `ref-gap-repass/` | §3 |
+
+Notes that cost real work to learn:
+
+- **Steps 1–3 detect; step 4 adjudicates.** Don't try to resolve duplicate flags inside
+  the row-by-row legs — the decision unit is the cluster, and pairwise rulings contradict
+  each other. Step 4 is also where you *retract* your own flags (Iraq: 12 of 16 withdrawn).
+- **A class defect needs its own staging dir, not just a memo.** When a finding spans N
+  rows (the ASB length units → `iraq-gas/staging/asb-length-units/`, 19 `__VALIDITY__`
+  records), stage a per-row record targeting the **editable** cell so the packet actually
+  carries the work. A memo alone reaches nobody — and state in it which affected rows are
+  staged and which are memo-only (QC SOP §Escalate).
+- **Run the recon step even when you expect a null result.** OSM found nothing for Libya
+  but exposed three engine defects in `match.py` / `reconcile.py` / `route_compare.py`
+  that affected *every* source.
+- **A re-run supersedes; it does not append.** Both passes folded in and superseded
+  earlier packets, and both produced **retractions** of earlier findings. Archive the
+  superseded deliverables (lifecycle is by move) and write the retractions into the
+  country note explicitly — a stale finding left standing is worse than no finding.
+- Close with `staged_summary.py --country <C> --commodity <c>` + `--index`, and reconcile
+  the country note, `docs/research_backlog.md` and CLAUDE.md's pending-items line.
 
 ---
 

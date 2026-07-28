@@ -11,10 +11,12 @@ entirely for two of the three legs of a normal update year:
 2. **New + missing projects** — country-scoped discovery: newly announced projects AND
    older lines GEM never captured (the "maps" stance), consolidated with
    match-to-existing FIRST.
-3. **Operating pipelines** — researchers handle these themselves this cycle. A lighter
-   *operating refresh* tier (event scan: shutdown / idle / expansion / ownership change;
-   ref re-verify only where the deterministic HTTP check finds dead links) is planned as a
-   follow-on once in-dev batches prove out — design note below, not yet implemented.
+3. **Operating pipelines** — out of scope *for the annual campaign leg*; researchers
+   handle these themselves this cycle. But they are no longer unswept in practice: when
+   Baird asks for a full pass (`docs/workflows.md §9`), operating rows get the **full
+   `deep` preset** in their own `ref-sweep-operating/` run dir — duplicate/existence
+   hunting on operating rows is often the *point* of that sweep. The lighter
+   `--tier operating-refresh` variant sketched below was never needed and is unbuilt.
 
 Commands, in order: `docs/workflows.md §7` (and the sections it chains). Everything
 here is **read-and-stage only** — all standing rules apply; nothing touches the
@@ -80,13 +82,15 @@ clusters in one country → escalate before mass-producing rows.
   row-by-row adds.
 - The sweep gates (Unresolved fraction, harvester hit-rate) apply to the in-dev leg.
 
-## Operating refresh (planned follow-on — do not run yet)
+## Operating refresh (design note only — superseded, unbuilt)
 
-Same fan-out machinery, cheaper contract: per-row **event scan only** (status-changing
-events since last update: shutdown, idle, retirement, expansion, ownership change,
-incidents) + ref re-verification only for rows where `--verify-existing` flags dead URLs.
-No deep-fill, no full ≥2-corroboration re-derivation of every field. To be specified as a
-`--tier operating-refresh` variant after the in-dev leg has run in a few countries.
+The original plan: same fan-out machinery, cheaper contract — per-row **event scan only**
+(shutdown, idle, retirement, expansion, ownership change, incidents) + ref re-verification
+only where `--verify-existing` flags dead URLs; no deep-fill, no full ≥2-corroboration
+re-derivation. **Superseded in practice** by running the `deep` preset on operating rows
+in its own run dir (§9 step 1), which is what Libya and Iraq actually got. Kept here as a
+design note in case a cheap tier is wanted later; there is no `--tier operating-refresh`
+flag, and none is planned.
 
 ## Gotchas (seeding the ref baseline)
 

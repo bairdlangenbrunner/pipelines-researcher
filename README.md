@@ -7,12 +7,13 @@ crude oil + NGL) and Global Gas Infrastructure Tracker (GGIT, gas).
 It mirrors the governance model of the sibling LNG-terminals researcher (modular
 SOPs, reference docs, "surface candidates, never auto-apply"), and adds a
 **pluggable, geometry-aware reconciliation engine**: scraped pipeline route
-databases (GulfPub today, more later) register via a declarative manifest and get
+databases (GulfPub + OpenStreetMap today, more later) register via a declarative manifest and get
 diffed against GEM by name, attributes, and route geometry — producing a reviewable
 Excel deliverable, never a live edit. Around the engine sit the research workflows
 (routed from CLAUDE.md): country sweeps, discovery, targeted updates, QC/handoff
-packets, annual-update campaigns, and route creation (candidate route GeoJSON
-staged for a human PR against the routes repo).
+packets, annual-update campaigns, route creation (candidate route GeoJSON staged for a
+human PR against the routes repo), and the **full country pass** (`docs/workflows.md`
+§9) that chains them — the deepest workflow, and the one most country work looks like.
 
 ## Quick start
 
@@ -50,7 +51,8 @@ python scripts/build_recon_workbook.py --staging batches/<scope>/staging/recon-g
 ├── data/            date-stamped CSV snapshots of the live tabs
 ├── batches/         scope-first: <country>-<commodity>/{staging,deliverables,archive}; INDEX.md
 ├── campaigns/       annual-update campaign rosters (e.g. ggit-update-2026-07)
-├── notes/           session memos (triage memos, escalation writeups)
+├── notes/           session memos: triage memos + class-level escalation writeups
+├── .claude/workflows/  saved subagent fan-outs (critical-deep-sweep, country-discovery)
 └── working_files/   active workbooks (incl. the Saudi GulfPub golden reference)
 ```
 

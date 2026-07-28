@@ -18,10 +18,15 @@ MENA deep-coverage country (GGIT gas focus so far). Gas packet legs:
   See "Open items — QC packet" below.
 - **Handoff packet (regenerated 2026-07-16 as the two-file split; rebuilt same day
   to drop the `SheetRow` locator from `Gas_AllFillsBackend` so all columns paste
-  1:1)** — delivered
-  `pipelines_batch_20260716_2359_ET_egypt-gas_handoff-actions.xlsx` +
+  1:1; rebuilt again 2026-07-28 against `GGIT_gas_snapshot_20260728.csv` to fix 43
+  stale `SheetRow` locators — 33 `Gas_Decisions` + 10 `Gas_ConfirmedAudit`)** — delivered
+  `pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx` +
   `…-evidence.xlsx` (same staging dir, `staged_actions.json` sidecar; supersedes
-  the 1156 pair): **THE
+  the 2359 pair, now in `archive/`). Counts below are from the 07-28 rebuild;
+  the fresher snapshot also refreshed the prefilled current values (57 newly
+  populated + 118 changed cells on `Gas_AllFillsBackend`, incl. 27 `LastUpdated`),
+  and **16 of 284 staged ref units are already live in their target `[ref]` cell**
+  (26 more partially) — check the cell before pasting. **THE
   researcher deliverable** — supersedes working from the four workbooks above (and the
   earlier single-file 0959 handoff). The ACTIONS file holds only suggested changes +
   open issues: 79 open decisions (`Gas_Decisions`, high-concern first), 1 status change

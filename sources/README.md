@@ -11,11 +11,16 @@ sources/
 ├── _template/                   # copy this to start a new source
 │   ├── manifest.yml
 │   └── adapter.py
-└── gulfpub/                     # a real source
-    ├── manifest.yml             # declarative mapping (column maps, units, status map, geometry)
-    ├── adapter.py               # OPTIONAL — only when the declarative loader isn't enough
-    ├── NOTES.md                 # quirks, scrape date, OID caveats
-    └── data/                    # the raw scrape (gitignored; usually symlinks to ../../GOIT-GGIT-scraping)
+├── gis_endpoints.yml            # public GIS layers for §8 route creation — NOT a reconciliation source
+├── gulfpub/                     # a real source (tier 2, global extract)
+│   ├── manifest.yml             # declarative mapping (column maps, units, status map, geometry)
+│   ├── adapter.py               # OPTIONAL — only when the declarative loader isn't enough
+│   ├── NOTES.md                 # quirks, scrape date, OID caveats
+│   └── data/                    # the raw scrape (gitignored; usually symlinks to ../../GOIT-GGIT-scraping)
+└── osm/                         # a real source (tier 3, per-country Overpass pulls; manifest-only)
+    ├── manifest.yml
+    ├── NOTES.md
+    └── data/
 ```
 
 `scripts/ingest.py` reads `sources/<name>/manifest.yml`, validates it against
@@ -39,6 +44,11 @@ all per-source knowledge lives in the manifest (+ adapter).
 1. `cp -r sources/_template sources/<name>` and edit `manifest.yml`.
 2. Point `datasets[].path` at the raw file(s). Keep large raw data in
    `sources/<name>/data/` (gitignored) — a symlink to the scrape repo is fine.
+   **If the source has no global extract** (e.g. OSM/Overpass), each `datasets[]`
+   entry is one scoped pull produced *before* the run by a fetcher
+   (`fetch_overpass.py`, `fetch_arcgis.py`) writing into `sources/<name>/data/`.
+   Extending coverage to a new country is then one fetch + one `datasets[]` entry,
+   still no code.
 3. Map columns, set `units`, `status_map`, `source_tier`, `provenance`.
 4. Validate + smoke-test: `python scripts/ingest.py --source <name> --commodity oil --out /tmp/<name>/`
    and spot-check `canonical_records.json` against the raw file.

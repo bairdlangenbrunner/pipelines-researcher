@@ -53,10 +53,21 @@ golden reference the engine generalizes).
   `cancelled` vs GulfPub Operating; P0545 (IPSA) GEM `mothballed` vs GulfPub
   Operating — verify true current status, don't auto-flip.
 
-## Open items — gas (staged, NOT applied — 2026-07-08 full packet: in-dev sweep + discovery + operating deep sweep; candidates for review)
-Workbooks: `pipelines_batch_20260708_1310_ET_saudi-arabia-gas_annual-indev.xlsx`,
-`pipelines_batch_20260707_0918_ET_saudi-arabia-gas_discovery.xlsx`,
-`pipelines_batch_20260708_1322_ET_saudi-arabia-gas_deepsweep.xlsx`.
+## Open items — gas (2026-07-08 full packet: in-dev sweep + discovery + operating deep sweep; PARTIALLY applied — candidates for review)
+Workbooks (**rebuilt 2026-07-28** against `GGIT_gas_snapshot_20260728.csv`; the 07-08
+originals had 275 + 436 stale `SheetRow` locators and are now in `archive/`):
+`pipelines_batch_20260728_1731_ET_saudi-arabia-gas_annual-indev.xlsx`,
+`pipelines_batch_20260713_1305_ET_saudi-arabia-gas_discovery.xlsx`,
+`pipelines_batch_20260728_1731_ET_saudi-arabia-gas_deepsweep.xlsx`.
+
+**Not "unapplied" any more.** Testing each staged ref URL against its live `[ref]` cell
+on 2026-07-28: **annual-indev 100 of 199 ref units are already live** (4 partial),
+**deepsweep 46 of 306** (5 partial). Independently, **32 of the 40 in-scope operating rows
+were edited on the live sheet between the 07-08 and 07-28 pulls** — `Researcher`/`LastUpdated`
+churn on 28, plus `RouteNotes`/`StartLocation`/`ResearcherNotes` fills (146 newly populated +
+143 changed cells on `Gas_Backend`). Who applied them, and whether the whole packet was worked
+or only part, is unknown. The rebuilt workbooks prefill the 07-28 state but do **not** drop
+already-satisfied units: **check each cell before pasting.**
 - **In-dev leg (22 rows, MGS-3 era):** all 22 status verdicts `confirm` — no status
   edits proposed. 79/82 gap ref cells corroborated. 5 spec concerns (P7711 cost is the
   package budget, not the line's; see Validity tab).

@@ -93,7 +93,9 @@ single **Tier-2** source (GulfPub) keeps the adopted value at medium/yellow unti
 second independent source corroborates it ("GulfPub is one source, never
 authoritative"). So a row can be a green *match* whose GulfPub-sourced *value* is
 still only yellow-confidence to apply. Tier-1 reference data (e.g. a regulator's own
-GIS) can settle a value on its own.
+GIS) can settle a value on its own. A **Tier-3** dataset (OSM — crowd-sourced, so
+per-feature provenance is unverifiable) never adopts a value at all: it is a lead, or
+a second voice beside a real source, and a match against it alone stays red.
 
 The human-readable reason string (e.g. `name match (0.75); endpoints (1.00);
 diameter ✓; route IoU 0.71`) is built from the present signals and written to the

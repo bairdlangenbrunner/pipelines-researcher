@@ -1,8 +1,9 @@
 # Research backlog — unfinished / ongoing projects
 
-Inventory of started-but-unfinished research threads, as of **2026-07-15** (full-repo
-audit). Update this file when a thread closes or a new one opens; per-country detail
-stays in `docs/country_notes/`, and this file just tracks what's open and where.
+Inventory of started-but-unfinished research threads. Baselined **2026-07-15** by a
+full-repo audit and maintained continuously since (latest entries 2026-07-28). Update
+this file when a thread closes or a new one opens; per-country detail stays in
+`docs/country_notes/`, and this file just tracks what's open and where.
 
 ---
 
@@ -39,21 +40,35 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 
 Roster `applied` column is blank for all four countries — log the date when pasted.
 Iraq/Iran xlsx deliverables are already pruned from disk, so file presence is not a
-signal of application status.
+signal of application status. Neither is the blank roster column: Saudi and Egypt turn
+out to be **partially applied** on the live sheet (see the second note below), so verify
+per cell rather than trusting either signal.
 
-> **Stale `SheetRow` locators in the packets delivered before 2026-07-28.** `SheetRow` is
-> positional, so it perishes as the sheet is re-sorted or rows are inserted (GGIT gas was
-> re-ordered between the 07-04 and 07-05 pulls). `build_ref_workbook.py` now re-derives every
-> locator from the fresh CSV at build time, so **Iraq gas is clean**, but the packets below
-> were built before that fix and their locators point at the wrong rows now:
-> **egypt-gas handoff** 43 cells (`Gas_Decisions` 33, `Gas_ConfirmedAudit` 10),
-> **saudi-arabia-gas deepsweep** 436, **saudi-arabia-gas annual-indev** 275.
-> The prefilled *values* in those files are correct (they were current at build time) and
-> nothing has been applied, so no damage — but **locate rows by ProjectID, not by the printed
-> `SheetRow`**, or just rebuild the packet from its staging dir to refresh them. The Saudi
-> sweep `Gas_Backend` tab is the one to be careful with: its leading `SheetRow` *is* the paste
-> locator. Staged-JSON locator drift by scope: saudi-arabia-gas 4,879 · egypt-gas 973 ·
-> saudi-arabia-oil 933 · iran-gas 600 · libya-gas 4 · israel-gas 1.
+> **Stale `SheetRow` locators — RESOLVED 2026-07-28.** `SheetRow` is positional, so it
+> perishes as the sheet is re-sorted or rows are inserted (GGIT gas was re-ordered between
+> the 07-04 and 07-05 pulls), which silently invalidated every locator staged by an earlier
+> leg. Fixed three ways: `build_ref_workbook.py` now re-derives every locator from the fresh
+> CSV at build time (`_restamp_sheet_rows`); all staged JSON was corrected at rest
+> (8,853 nodes — saudi-arabia-gas 4,879 · egypt-gas 973 · saudi-arabia-oil 933 · iran-gas 600 ·
+> libya-gas 4 · israel-gas 1 — a provably value-only diff); and the three affected packets were
+> rebuilt against `GGIT_gas_snapshot_20260728.csv` (egypt-gas handoff, 43 bad cells →
+> `…_20260728_1731_ET_…`; saudi-arabia-gas deepsweep 436 →; annual-indev 275 →), with the
+> pre-fix files moved to each batch's `archive/`. **All 19 current deliverables now audit
+> 0-bad against the live sheet.** No values were ever wrong (they were current at build time)
+> and nothing was auto-applied. Any *new* consumer must re-derive from the current CSV keyed on
+> ProjectID rather than trusting a staged `sheet_row` — see `docs/reference/gem_schema.md`.
+>
+> **Found while rebuilding: parts of these packets are already on the live sheet.** Measured by
+> testing whether each staged ref URL is now present in its target `[ref]` cell —
+> **saudi annual-indev 100 of 199** ref units fully live (4 partial), **saudi deepsweep 46 of
+> 306** (5 partial), **egypt handoff 16 of 284** (26 partial); Iraq gas is 0 of 134, so the
+> test isn't over-reporting. Corroborating: 32 of 40 in-scope Saudi *operating* rows were
+> edited live between the 07-08 and 07-28 pulls (`Researcher`/`LastUpdated` churn on 28,
+> plus `RouteNotes`/`StartLocation`/`ResearcherNotes` fills). So "staged, not applied" is
+> wrong for Saudi and Egypt — they are **partially applied**, by whom and how deliberately is
+> unknown. Because the rebuilt workbooks prefill from the 07-28 snapshot they now show that
+> state, but nothing de-duplicates it: **before pasting Saudi/Egypt, check whether the cell
+> already carries the ref.**
 
 - **Iraq gas** — **full pass re-run 2026-07-28** (refs sweep · cancelled review · redundancy
   clusters · GulfPub + OSM recon · wiki alignment · route integrity · ref-gap re-pass · Leg-3),
@@ -71,16 +86,17 @@ signal of application status.
 - **Iran gas** — full packet staged 2026-07-05 (+ re-pass 2026-07-07, 35 refs).
   62.5% in-dev change rate (gate tripped); class-wide Owner NIOC→NIGC/IGTC fix on
   ~27 operating rows. `docs/country_notes/iran.md`.
-- **Saudi gas** — full packet staged 2026-07-08 (discovery 2026-07-13). In-dev clean
-  (22/22 confirm); hinges on the P1897–P1925 class decision (§4). xlsx on disk.
-  `docs/country_notes/saudi-arabia.md`.
+- **Saudi gas** — full packet staged 2026-07-08 (discovery 2026-07-13), **partially applied**
+  and **rebuilt 2026-07-28** as `pipelines_batch_20260728_1731_ET_saudi-arabia-gas_{annual-indev,
+  deepsweep}.xlsx` (the 07-08 originals are in `archive/`). In-dev clean (22/22 confirm);
+  hinges on the P1897–P1925 class decision (§4). `docs/country_notes/saudi-arabia.md`.
 - **Egypt gas** — in-dev 2026-07-09 + operating deep sweep 2026-07-13 + discovery
   2026-07-15 (4 new rows / 3 monitor) + QC packet 2026-07-15. No escalation gate.
-  All assembled into ONE handoff workbook (regenerated 2026-07-16,
-  `pipelines_batch_20260716_0959_ET_egypt-gas_handoff.xlsx`) — work from that, not
-  the four per-leg workbooks. Apply the Nitzana items (P3620/P7864 duplicate +
-  discovery new-row Egyptian side) as one linked decision. xlsx on disk.
-  `docs/country_notes/egypt.md`.
+  All assembled into ONE two-file handoff packet, **rebuilt 2026-07-28** as
+  `pipelines_batch_20260728_1731_ET_egypt-gas_handoff-{actions,evidence}.xlsx` (supersedes the
+  07-16 pairs, now in `archive/`) — work from ACTIONS, not the four per-leg workbooks. Apply the
+  Nitzana items (P3620/P7864 duplicate + discovery new-row Egyptian side) as one linked
+  decision. Partially applied already (16/284 ref units live). `docs/country_notes/egypt.md`.
 - **Israel gas: INGL/TMNG-map ground-truth batch** (2026-07-23) — 2 new discovery rows
   (P8001 Mari-B–Ashdod, P8003 Karish–Tanin FPSO), 5 validation candidate edits
   (P0462/P0479/P5276/P7604/P7606, none auto-applied), 5 route candidates (P7602/P7603/
