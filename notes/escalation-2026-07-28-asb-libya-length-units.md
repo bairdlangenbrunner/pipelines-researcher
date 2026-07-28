@@ -130,13 +130,15 @@ can simply be applied:
 That six of seven landed on the ASB raw figure *from independent sources* is itself
 corroboration that the raw figure is the real length.
 
-**Seven more are recorded only as `spec` validity concerns** — P1857, P1867, P1868,
-P1869, P1870, P1871, P1872, P1873 (eight rows; P1857 from the `sirte-east` agent, the
-rest from `sirte-grid`). Length was not their assigned flag, so the agents correctly
-declined to stage a fill and filed a "human should review this against the ASB figure"
-concern instead. They will surface in the handoff **evidence** workbook as open issues,
-not in the actions workbook as paste-ready values. If the class ruling goes the obvious
-way, these are the rows that still need converting into actual edits.
+**Six more are recorded only as `spec` validity concerns** — P1857 (from the
+`sirte-east` agent), P1867, P1868, P1869, P1870, P1871 (from `sirte-grid`). Length was
+not their assigned flag, so the agents correctly declined to stage a fill and filed a
+"human should review this against the ASB figure" concern instead. They surface in the
+handoff **evidence** workbook as open issues, not in the actions workbook as
+paste-ready values. If the class ruling goes the obvious way, these are the rows that
+still need converting into actual edits. The two ×2.00 outliers, **P1872 and P1873**,
+are filed the same way and need the same conversion — but only after their different
+mechanism is understood.
 
 **P1859 Bouri-Bahr Assalam (32.00 vs ASB 20) is recorded nowhere.** It carried no QC
 flag, so it was never in the Leg-3 worklist at all and no agent looked at it. This memo
