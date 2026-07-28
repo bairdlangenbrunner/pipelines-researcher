@@ -75,3 +75,48 @@ Untagged features (248 here) are excluded by the `--substance gas` filter, so so
 real gas pipe may be sitting in that bucket unlabelled. Fetching without `--substance`
 and matching on geometry alone is possible but produces mostly oil — not worth it
 unless a country's tagging is known to be good.
+
+## Coverage reality check — Iraq, 2026-07-28
+
+**Iraq is thin but genuinely usable — the opposite call from Libya.** The `--substance gas`
+fetch returns **52 features**, all tagged `lifecycle=operating`. Length distribution is
+what matters: **5 features carry real length** (122.8 / 116.6 / 108.3 / 64.6 / 42.6 km =
+455 of the 483 km total) and **40 of 52 are <0.5 km stubs**. So the usable payload is five
+traces, not fifty-two.
+
+Only **2 features are named**, both "Erbil - Duhok Gas Pipeline" (GEM **P4053**). The
+value here is in the *unnamed* features, which unusually carry real attributes:
+
+- two **Dana Gas 24″** lines totalling ~173 km tracing Khor Mor → Chamchamal → Kirkuk —
+  corroborates GEM **P6827** and the Chemchemal discovery candidates;
+- one **42″, 116 km** line.
+
+Findings the run produced (routed into the Iraq gas packet):
+
+- **P4053 diameter conflict.** OSM tags 36″, and vemak.com.tr agrees; GEM carries "52″
+  confirmed". A material spec conflict on an operating-status candidate.
+- **P4053 route displacement.** Endpoint distance ~26 km despite a length ratio of 0.955 —
+  a `RouteAccuracy` candidate, not a length problem.
+
+### Why the reconcile still scored 0 overlaps
+
+`route_metrics.json` is empty and there are **no overlaps**, but that is *not* a geometry
+failure — `reconcile.py` only writes `route_metrics` inside the overlap branch, so an
+empty file is a consequence of 0 overlaps, not a cause. The near-miss is instructive:
+P4053 scored composite **0.438** against `yellow_threshold` **0.45**. Two causes, both
+structural:
+
+1. **The `matching:` block is tuned for Libya** — `name_weight: 0.10` was set because
+   Libya's OSM features are essentially unnamed. Iraq has an *exact* name match available
+   ("Erbil - Duhok Gas Pipeline" ↔ P4053) and the 0.10 weight makes it unreachable.
+2. **34 of 54 GEM Iraq gas rows have `no route`**, so geometry — the 0.45-weight signal
+   OSM actually has — is untested on most rows and falls back to the floor.
+
+**Do not retune the block to rescue Iraq**: the weights are source-level and shared, so
+changing them would alter the committed Libya results. A per-dataset `matching:` override
+is the real fix and the manifest does not support one yet. Until then, treat OSM Iraq as a
+**corroboration source read by hand**, not a scored reconciliation — which is how the two
+P4053 findings above were obtained.
+
+Same lesson as GulfPub Iraq (`notes/escalation-2026-07-28-gulfpub-iraq-match-quality.md`):
+in Iraq the binding constraint on every source's matchability is **missing GEM geometry**.

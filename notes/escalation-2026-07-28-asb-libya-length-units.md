@@ -43,10 +43,20 @@ Four independent checks, two of which are controls from *outside* Libya:
 1. **Qatar is the control that proves the header is normally honest.** ASB2012 lists the
    Dolphin line Ras Laffan→Abu Dhabi at 230. GEM converted it to 364.00 km — and 364 km
    is the well-documented real length of Dolphin. So for Qatar the tabulated figure
-   genuinely *is* miles and GEM's conversion is *correct*. Same for Iraq (Baiji→Al-Qaim
-   268 → 431 km, right for that route; 268 km would be far too short) and Saudi Arabia
-   (Abqaiq→Yanbu 741 mi ≈ 1,193 km, the known East-West figure). **The ingest is not
-   broken. One country's block in the source is.**
+   genuinely *is* miles and GEM's conversion is *correct*. Same for Saudi Arabia
+   (Abqaiq→Yanbu 741 mi ≈ 1,193 km, the known East-West figure) and the UAE
+   (Habshan/Maqta 81 mi ≈ 130 km, against a real ~125 km). **The ingest is not
+   broken. Some countries' blocks in the source are.**
+
+   > **CORRECTED 2026-07-28.** This item originally also cited Iraq as a control
+   > ("Baiji→Al-Qaim 268 → 431 km, right for that route; 268 km would be far too
+   > short"). **That was wrong, and Iraq is a second instance of the defect, not a
+   > control.** Baiji→Al-Qaim is ~225 km great-circle and P1841's own drawn route
+   > measures 224.9 km, so 268 km is correct and 431 km is far too long. 19 Iraq gas
+   > rows are affected — and unlike Libya, OPEC never corrected the Iraq block (ASB2017
+   > still prints the same integers). See
+   > `notes/escalation-2026-07-28-asb-iraq-length-units.md`. The Qatar, Saudi and UAE
+   > controls are unaffected.
 2. **Greenstream is the control inside Libya.** ASB2012 lists Mellitah/Gela at 540. The
    real Greenstream is ~520 km. 540 miles would be 869 km, which is impossible for a
    Mellitah→Gela crossing. So the Libya block's numbers are kilometres. GEM's P0439
@@ -154,11 +164,14 @@ is its only record.
    downgrade `RouteAccuracy` on these rows before the lengths are fixed.
 3. **Check the same 14 rows' capacity values** against the companion `scm` memo — same
    table, same ingest, and P1858 sits in both lists.
-4. **Do not sweep other countries for this.** The Qatar/Iraq/Saudi controls show their
-   conversions are correct; a blanket "un-convert ASB lengths" pass would introduce 
-   errors where none exist. If another country is ever suspected, the test is the one
-   used here: pick a row whose real length is independently well known and see which
-   reading it matches.
+4. **Do not sweep other countries blindly for this — but do test them.** The
+   Qatar/Saudi/UAE controls show their conversions are correct; a blanket "un-convert
+   ASB lengths" pass would introduce errors where none exist. If another country is
+   suspected, the test is the one used here: pick a row whose real length is
+   independently well known and see which reading it matches. **Iraq was tested this way
+   on 2026-07-28 and failed — 19 rows, same defect** (`notes/escalation-2026-07-28-asb-iraq-length-units.md`).
+   Countries still untested against this: Algeria, Iran, Nigeria, Venezuela (all print
+   with decimals, which *suggests* genuine miles but has not been route-verified).
 5. Worth asking whether the ingest can record *which* ASB edition a value came from.
    ASB2012 and ASB2013 disagree on the units of the same Libya rows, so "OPEC ASB" alone
    is not a reproducible citation.
