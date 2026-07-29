@@ -221,9 +221,29 @@ def main():
     print(f"wrote {out}  ({len(wb.sheetnames)} sheets: {', '.join(wb.sheetnames)})")
 
 
+def _signal_line(diag: dict) -> str:
+    """The per-axis health of the pairing: which signals actually carried the matching."""
+    if not diag:
+        return ""
+    bits = []
+    for label, key in (("refs named", "pct_reference_named"),
+                       ("with geometry", "pct_reference_with_geometry"),
+                       ("geoarea-scored", "pct_reference_geoarea_scored")):
+        if diag.get(key) is not None:
+            bits.append(f"{diag[key]}% {label}")
+    for cmdty, pool in (diag.get("gem_pool") or {}).items():
+        if pool.get("pct_with_route") is not None:
+            bits.append(f"GEM {cmdty} routes {pool['pct_with_route']}% "
+                        f"({pool.get('with_route')}/{pool.get('rows')})")
+    if diag.get("overlap_rate") is not None:
+        bits.append(f"overlap rate {diag['overlap_rate']}%")
+    return "; ".join(bits)
+
+
 def _fill_readme(ws, meta, sheet_defs):
     ws.column_dimensions["A"].width = 26
     ws.column_dimensions["B"].width = 96
+    diag = meta.get("diagnostics") or {}
     rows = [
         ("GEM ↔ reference reconciliation", ""),
         ("Source", f"{meta.get('display_name')} (tier {meta.get('source_tier')})"),
@@ -231,7 +251,20 @@ def _fill_readme(ws, meta, sheet_defs):
         ("GEM CSV(s)", J([f"{k}: {v}" for k, v in (meta.get('gem_csv') or {}).items()])),
         ("", ""),
         ("Counts", J([f"{k}={v}" for k, v in meta.get("counts", {}).items()])),
-        ("", ""),
+    ]
+    # Matcher health. A null or thin run is a claim about the MATCHER until its health line is
+    # read, and reconcile.py only ever printed these to stdout — so the one person who needed
+    # them (whoever opens the workbook) never saw them. Iraq/Egypt gas OSM both matched almost
+    # entirely on the province-coarse admin-area signal; that has to travel with the findings.
+    escalations = [(e.get("code") or "ESCALATION",
+                    " ".join(x for x in (e.get("detail"), e.get("action")) if x))
+                   for e in (diag.get("escalations") or [])]
+    signal = _signal_line(diag)
+    if signal:
+        rows.append(("Signal", signal))
+    rows.extend(escalations)
+    rows.append(("", ""))
+    rows += [
         ("Color key", "Confidence: green=strong match / yellow=review / red=weak. "
                       "Green-tint row=reference-only Addition. Yellow cell=route-replacement candidate."),
         ("Hard rule", "Findings are CANDIDATES, never auto-applied. Additions→Discovery; "
@@ -250,6 +283,13 @@ def _fill_readme(ws, meta, sheet_defs):
     for rn in range(2, ws.max_row + 1):
         ws.cell(rn, 1).font = Font(bold=True)
         ws.cell(rn, 2).alignment = Alignment(wrap_text=False, vertical="top")
+    # A matcher-health warning that reads like an ordinary README row gets skimmed past, so
+    # tint it with the same red the workbook already uses for "weak".
+    codes = {c for c, _ in escalations}
+    for rn in range(2, ws.max_row + 1):
+        if ws.cell(rn, 1).value in codes:
+            for c in (1, 2):
+                ws.cell(rn, c).fill = CONF_FILL["red"]
     ws.freeze_panes = "A2"
 
 

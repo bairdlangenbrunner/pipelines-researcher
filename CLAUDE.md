@@ -239,10 +239,15 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    `<Cmdty>_<Source>` tab per registered dataset — `build_gulfpub_crosswalk.py` is now a
    deprecated shim). First standalone §2 workbooks delivered 2026-07-28 (Iraq oil, OSM +
    GulfPub); Egypt gas followed 2026-07-29, then Iraq/Saudi/Iran gas the same day off the
-   length-units re-run. **A standalone §2 workbook is NOT picked up by a
+   length-units re-run, and **Iraq gas moved its recon OUT of the packet entirely the same
+   day** (both sources standalone at `20260729_1104_ET`; the packet's recon tabs retired).
+   **A standalone §2 workbook is NOT picked up by a
    handoff packet** — the packet only carries staging dirs listed in its "Prior staged
-   packets" line, so Libya's and Egypt's recon output are separate review surfaces that must
-   be worked alongside the actions file (both logged in `docs/research_backlog.md` §2).
+   packets" line, so Libya's, Egypt's and Iraq's recon output are separate review surfaces
+   that must be worked alongside the actions file (all logged in
+   `docs/research_backlog.md` §2). Whether recon ships inside the packet or standalone is a
+   per-country choice, so **read the packet's `recon_actions` count before assuming**:
+   `0` means the recon findings are in separate files.
    **A unit declared in a manifest is a claim to verify, not a given** — the gas
    `length_units` sat wrong (`km`, actually miles) through a scrape repoint and four
    countries' workbooks. `units.length_units_by_country` exists for the case where one
@@ -267,18 +272,24 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 
 - **Iran (gas packet 2026-07-05 staged not applied; + oil open items):**
   `docs/country_notes/iran.md`.
-- **Iraq (gas: full pass re-run 2026-07-28 staged not applied — supersedes the
-  2026-07-05 packet; work from
-  `…_20260728_1804_ET_iraq-gas_handoff-{actions,evidence}.xlsx`. TWELVE escalations
+- **Iraq (gas: full pass 2026-07-28 rebuilt 2026-07-29, staged not applied — supersedes
+  the 2026-07-05 packet. **FOUR files to work** (Libya's shape), all stamped
+  `20260729_1104_ET`: `…_iraq-gas_handoff-{actions,evidence}.xlsx` +
+  `…_iraq-gas_reconciliation-{gulfpub,osm}.xlsx` — recon is now STANDALONE and the
+  packet's `Gas_GulfPubActions`/`Gas_OSMActions` tabs are retired (`recon_actions=0`),
+  so ~150 GulfPub/OSM decisions live ONLY in those two files, incl. 30 OSM traces that
+  are candidate geometry for routeless rows and an OSM `MATCH_QUALITY` warning
+  (3.8% of refs named × 35.7% of GEM rows routed). The 07-29 rebuild was necessary
+  twice over: the GGIT gas tab was re-sorted to ProjectID order between the two pulls
+  (4,262/4,370 rows moved → every 07-28 locator wrong), and the retired GulfPub tab
+  came from the pre-fix miles-as-km run. THIRTEEN escalations
   open, structurally: the ASB Table 4.10/9.9 length mi→km defect on 19 rows (two
   families, two *different* one-cell fixes —
   `notes/escalation-2026-07-28-asb-iraq-length-units.md`), CapacityUnits on 3 rows,
   P6824 as a diesel line misfiled in GGIT, and the ASB-provenance ruling that
   withdrew 12 of 16 of our own duplicate/existence flags. THREE retractions — P4067
   is *not* a misfiled crude line, "stale forward" on P7435/P6826 is wrong, P6007 is
-  not a phantom. Recon legs re-run 2026-07-28 with the fixed engine and now IN the
-  packet — 104 GulfPub/OSM rows needing a decision, incl. 30 OSM traces that are
-  candidate geometry for routeless rows. + oil open items — Grand Faw third line,
+  not a phantom. + oil open items — Grand Faw third line,
   P0544, and an UNTRIAGED first OSM oil run: 175 unmatched traces, 84 of them
   discovery candidates, delivered as
   `…_20260728_1804_ET_iraq-oil_{osm,gulfpub}-reconciliation.xlsx`):**

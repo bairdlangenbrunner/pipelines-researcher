@@ -136,6 +136,12 @@ run of ≥5 records returns zero overlaps. **Never read a null run as a discover
 `Routes_WKT` + README (sheet defs + counts). `scripts/recalc.py` to confirm no
 formula errors. Present the file. Layout + colors: `docs/reference/workbook_conventions.md`.
 
+The README carries the matcher health with the findings: a **`Signal`** row (the per-axis
+percentages above) plus one red-tinted row per `meta.diagnostics.escalations` entry. Until
+2026-07-29 `reconcile.py` only printed these to stdout, so the person who most needed
+them — whoever opens the workbook — never saw them. Read the `Signal` row before trusting
+any single match.
+
 To surface the same diff **inside a sweep/handoff workbook** instead, flatten it with
 `scripts/build_recon_crosswalk.py` (source-agnostic — it replaces the GulfPub-only
 `build_gulfpub_crosswalk.py`, now a deprecated shim):

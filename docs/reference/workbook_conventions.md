@@ -69,7 +69,7 @@ source / country / commodity. Sheets are per-commodity-prefixed (`Oil_`, `Gas_`)
 
 | Sheet | Contents |
 |---|---|
-| `README` | params, source + scrape date, color key, per-sheet defs, counts |
+| `README` | params, source + scrape date, counts, a **`Signal`** row (matcher health: % refs named / with geometry / geoarea-scored, % GEM rows routed, overlap rate) and one **red-tinted row per matcher escalation** (`MATCH_QUALITY` etc.) — read these before trusting a match; then color key, per-sheet defs |
 | `<Cmdty>_Overlaps` | matched pairs: `Confidence`, `Match reason / notes`, all reference cols (OID, Name, Status, Start, End, Diameter, Length, **Geodesic km (computed)**, Capacity, Operator, StartYear, Description), all matched GEM cols (ProjectID, PipelineName, SegmentName, Status, Diameter, Length, Start/End, Owner, StartYear1, RouteAccuracy, Wiki, `Route present?`), plus `GEM segments` (network-match member list), `Route IoU`, `Route replacement candidate?` |
 | `<Cmdty>_Additions` | reference-only rows → **discovery candidates** (GEM cols blank); default red until reviewed |
 | `<Cmdty>_GEM_only` | GEM rows in scope with no reference match (ProjectID, names, Status, Fuel, Country, Owner, Diameter, Length, Start/End, StartYear1, Wiki, `Note`) |

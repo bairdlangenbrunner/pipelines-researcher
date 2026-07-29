@@ -31,18 +31,33 @@ engine is country-agnostic (Phase E validation target).
 
 | Scope · source | Overlaps | Unmatched (by disposition) | Deliverable |
 |---|---|---|---|
-| gas · OSM | 8 (5 `partial`) | 44 — ROUTE_FOR_EXISTING 30, DISCOVERY 10, NEAR_MISS 2, FRAGMENT 2 | `Gas_OSMActions` / `Gas_OSM` in the handoff packet |
-| gas · GulfPub | 39 (4 green) | 8 — NEAR_MISS 7, DISCOVERY 1; 13 status conflicts | `Gas_GulfPubActions` / `Gas_GulfPub` |
+| gas · OSM | 8 (5 `partial`) | 44 — ROUTE_FOR_EXISTING 30, DISCOVERY 10, NEAR_MISS 2, FRAGMENT 2 | `…_20260729_1104_ET_iraq-gas_reconciliation-osm.xlsx` |
+| gas · GulfPub | 39 (4 green) | 8 — NEAR_MISS 7, DISCOVERY 1; 13 status conflicts | `…_20260729_1104_ET_iraq-gas_reconciliation-gulfpub.xlsx` |
 | oil · OSM | 71 | 175 — DISCOVERY 84, FRAGMENT 61, ROUTE_FOR_EXISTING 21, NEAR_MISS 9 | `…_1804_ET_iraq-oil_osm-reconciliation.xlsx` |
 | oil · GulfPub | 20 (2 green) | 1 NEAR_MISS; 8 status conflicts | `…_1804_ET_iraq-oil_gulfpub-reconciliation.xlsx` |
 
-**GulfPub gas re-run 2026-07-29 — the packet's `Gas_GulfPub` tab has a bad length column.**
-The gas `Length` unit was miles read as km, so every `Ref Length (km)` cell in the 07-28
-packet is ~38% short (display only; matching scores on `geodesic_km`, and the re-run
-reproduces the same 39 overlaps / 8 unmatched / 13 status conflicts). Corrected standalone
-workbook: `…_20260729_0941_ET_iraq-gas_reconciliation-gulfpub.xlsx` (`--commodity both`, so
-it also carries the oil tabs). Use it for any length comparison; everything else in the
-packet's recon tabs still stands. `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+**Gas recon moved OUT of the packet into two standalone workbooks, 2026-07-29 (Libya's
+shape) — FOUR files to work, not two.** The 07-28 packet's `Gas_GulfPubActions` /
+`Gas_OSMActions` / `Gas_GulfPub` / `Gas_OSM` tabs are retired and their crosswalks archived
+to `batches/iraq-gas/archive/qc-recon-crosswalks-20260728-superseded-by-standalone/`: the
+GulfPub tab was built from the pre-fix run in which the gas `Length` unit was miles read as
+km, so every `Ref Length (km)` cell in it is ~38% short (display only — matching scores on
+`geodesic_km`, and the re-run reproduces the same 39 overlaps / 8 unmatched / 13 status
+conflicts). Replacements, both against the fresh 07-29 snapshot:
+`…_20260729_1104_ET_iraq-gas_reconciliation-gulfpub.xlsx` (`--commodity both`, so it also
+carries UNTRIAGED oil tabs belonging to the iraq-oil scope) and
+`…_20260729_1104_ET_iraq-gas_reconciliation-osm.xlsx`. The packet's `ESCALATIONS` README row
+now names both files and their counts, so the actions file no longer hides them. Nothing in
+either is staged as a fill — all of it is memo-only until adjudicated.
+`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+
+**The OSM run carries a `MATCH_QUALITY` warning, now printed in its README.** Only 3.8% of
+its reference records are named and just 35.7% of Iraq GEM gas rows have a drawn route, so
+96.2% of the matching rests on the province-coarse admin-area signal — that routes a finding
+to a human, it never confirms a match. GulfPub by contrast is healthy (100% named, 83%
+overlap rate). `build_recon_workbook.py` previously dropped these health lines on the floor
+(`reconcile.py` only printed them to stdout); it now renders a `Signal` row plus a red-tinted
+row per escalation in every §2 workbook.
 
 What to look at first:
 
@@ -91,21 +106,36 @@ What to look at first:
 - **P0544 (Basra–Haditha)** — status review: listed `construction` but appeared
   still pre-construction/tender as of early 2026.
 
-## Open items — gas (full pass 2026-07-28; ALL staged, NOTHING applied)
+## Open items — gas (full pass rebuilt 2026-07-29; ALL staged, NOTHING applied)
 
-**Work from the ACTIONS file, not the per-leg workbooks:**
-`batches/iraq-gas/deliverables/pipelines_batch_20260728_1804_ET_iraq-gas_handoff-actions.xlsx`
-(100 open decisions · 9 status changes · 265 backend paste units · 27 operator/owner units ·
-5 new rows · 114 wiki updates · 36 route suggestions · 171 open flags · **104 recon rows needing a
-decision** on the new `Gas_GulfPubActions` + `Gas_OSMActions` tabs), with the audit trail in
-the companion `…_handoff-evidence.xlsx` (37 confirmed audits · 118 fill detail · 339 ref detail ·
-150 re-verified · the full 115-row `Gas_GulfPub` / `Gas_OSM` cross-comparisons). Legs: refs sweep ·
-cancelled review (4 rows) · redundancy/duplicate clusters · GulfPub crosswalk · OSM recon ·
-wiki alignment (158 diffs) · route integrity (13 rows) · ref-gap re-pass · Leg-3 targeted research
-(15 rows). The 1704 packet is superseded (archived) — it predates the recon tabs. Live counts:
+**FOUR files to work, and the packet does NOT subsume the recon two:**
+1. `batches/iraq-gas/deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-actions.xlsx`
+   (100 open decisions · 9 status changes · 265 backend paste units · 27 operator/owner units ·
+   5 new rows · 114 wiki updates · 36 route suggestions · 171 open flags) — start here.
+2. `…_20260729_1104_ET_iraq-gas_handoff-evidence.xlsx` — audit trail (37 confirmed audits ·
+   118 fill detail · 339 ref detail · 150 re-verified).
+3. `…_20260729_1104_ET_iraq-gas_reconciliation-gulfpub.xlsx` — 47 refs; gas 19 overlaps /
+   7 additions / 40 GEM-only, plus UNTRIAGED oil tabs (`--commodity both`); 13 status
+   conflicts, 14 ambiguous clusters.
+4. `…_20260729_1104_ET_iraq-gas_reconciliation-osm.xlsx` — 52 refs; 8 overlaps (5 `partial`),
+   44 unmatched (30 ROUTE_FOR_EXISTING, 10 DISCOVERY, 2 FRAGMENT, 2 NEAR_MISS), 5 status
+   conflicts. Read its red `MATCH_QUALITY` README row before trusting any match.
+
+Legs: refs sweep · cancelled review (4 rows) · redundancy/duplicate clusters · GulfPub recon ·
+OSM recon · wiki alignment (158 diffs) · route integrity (13 rows) · ref-gap re-pass · Leg-3
+targeted research (15 rows). Live counts:
 `python scripts/staged_summary.py --country Iraq --commodity gas`.
 
-### Twelve escalations awaiting a ruling
+**Why the 07-28 packet was rebuilt (both reasons matter).** (a) The GGIT gas tab was
+**re-sorted to ProjectID order between the 07-28 and 07-29 pulls** — 4262 of 4370 rows moved,
+so every `SheetRow` locator staged before 07-29 pointed at the wrong row; the rebuild
+re-derived 312 of them against the fresh snapshot (430 verified, 0 mismatched). A stale
+locator is not cosmetic: the backend mirror's `(ProjectID, SheetRow)` prefill misses and the
+paste surface renders blanks over live data. (b) The recon tabs came out (see above). Content
+is otherwise identical — every other count matches the 07-28 build exactly. The 1804 and 1704
+packets are archived.
+
+### Thirteen escalations awaiting a ruling
 Full list + memo paths: `batches/iraq-gas/staging/qc/escalations.json` (rendered as the
 ESCALATIONS row in both workbook READMEs). The structural ones:
 - **ASB length mi→km, 19 rows — TWO families, TWO different one-cell fixes.** OPEC's ASB length
@@ -187,8 +217,9 @@ ESCALATIONS row in both workbook READMEs). The structural ones:
   (medium), Halfaya–Kahla (medium). Monitors: Akkas–Syria, Al-Faw LNG–Abu Ghraib, Chemchemal–Erbil
   industrial, Diyala gas fields, Miran export.
 - 36 route suggestions staged for a separate human routes-repo PR (never auto-replaced).
-- **The OSM recon findings are new and untriaged** (see the section below) — 44 unmatched
-  traces, 30 of them candidate geometry for routeless GEM rows.
+- **The OSM recon findings are new and untriaged** — 44 unmatched traces, 30 of them candidate
+  geometry for routeless GEM rows. They live in the standalone
+  `…_1104_ET_iraq-gas_reconciliation-osm.xlsx`, **not** in the actions file.
 
 ### Prior gas work folded into the above
 2026-07-05 deep sweep and the 2026-07-07 ref-harvest re-pass (68 refs added, chiefly ASB2012 p.75

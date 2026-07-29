@@ -36,14 +36,15 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-gulfpub-20260705` — recon inputs
 - `staging/recon-gulfpub-20260729` — recon inputs
 - `staging/recon-gulfpub-followup` [update] — rows=5 fills=4 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/recon-osm-20260728` — recon inputs
+- `staging/recon-osm-20260729` — recon inputs
 - `staging/redundancy` [redundancy] — rows=15 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/ref-gap-repass` [ref-gap-repass] — rows=16 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=2, REFS_ADDED=15, REVERIFIED=16, UNRESOLVED=9) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=36 fills=66 updates=0 status-pending=0 refs(DEAD_LINK=37, REFS_ADDED=54, REVERIFIED=57, UNRESOLVED=138) routes=36 new(none)
-- `deliverables/pipelines_batch_20260728_1804_ET_iraq-gas_handoff-actions.xlsx`
-- `deliverables/pipelines_batch_20260728_1804_ET_iraq-gas_handoff-evidence.xlsx`
-- `deliverables/pipelines_batch_20260729_0941_ET_iraq-gas_reconciliation-gulfpub.xlsx`
-- `archive/` — 8 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-evidence.xlsx`
+- `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-osm.xlsx`
+- `archive/` — 11 superseded/applied file(s)
 
 ## iraq-oil
 
