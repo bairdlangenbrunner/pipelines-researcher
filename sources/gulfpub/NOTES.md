@@ -22,17 +22,19 @@ cp     /abs/path/SDE.NG_Pipelines_Global.geojson            sources/gulfpub/data
   0.07–1713 (it's an ESRI projected shape-length in junk units). It's in
   `ignore_garbage_fields`. Real length = the `length`/`Length` attribute; the
   reliable length is `geodesic_km`, computed from the geometry by the engine.
-- **Length is in MILES for BOTH oil and gas.** Oil is configured correctly
-  (`units.length_units: mi`). **Gas is still configured as `km` and that is WRONG** —
-  re-confirmed 2026-07-29 on the Dec-2025 SDE scrape: median `geodesic_km ÷ Length` is
-  1.595 over 5,284 features, 74.5% within 10% of 1.609344 and only 3.2% near 1.0, and
-  reading Egypt's overlaps as miles lifts GEM agreement from 4% to 29% (±10%) with eight
-  hits inside 3%. **Canada is the exception** (median 0.943 — its block really is km), and
-  `length_units` is per-dataset with no per-country override, which is why the fix is a
-  decision and not yet applied. Full writeup, options and blast radius:
-  `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`. Until it is settled, use the
-  `Ref Geodesic (km)` column (computed from geometry, unaffected) and treat every
-  `Ref Length` cell in a shipped gas workbook as ~38% short.
+- **Length is in MILES for BOTH oil and gas** — both datasets carry
+  `units.length_units: mi`. Gas was misconfigured as `km` until **2026-07-29**; the
+  re-confirmation on the Dec-2025 SDE scrape gives median `geodesic_km ÷ Length` = 1.595
+  over 5,345 features, 73.7% within 10% of 1.609344 vs 3.1% near 1.0. **Canada is the only
+  exception** (median 0.938, n=204 — its block really is km) and is handled by
+  `units.length_units_by_country: {Canada: km}`, the per-country override added to the
+  manifest schema for exactly this. Sweeping every country at n≥5, no other favours km.
+  Do **not** "fix" a suspect length by lowering it back to km — check
+  `geodesic_km ÷ Length` per country first. Fixed, re-run and blast radius:
+  `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`. Any gas workbook stamped
+  **before 20260729_0941_ET** has `Ref Length (km)` ~38% short (display only — matching
+  scores on `geodesic_km`, so no match was ever mis-scored); those five workbooks are
+  rebuilt and the pre-fix runs are in `batches/<scope>/archive/…-prefix-gulfpub-gas-miles/`.
 - **Oil vs gas schemas differ** (`project_na`/`Project`, `start`/`Start`,
   `start_date`/`Comm_1`, lowercase vs Title-case status) — absorbed by the two
   per-dataset `column_map`s + `status_map`s. This is exactly why the manifest exists.

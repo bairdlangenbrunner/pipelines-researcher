@@ -10,13 +10,15 @@
 # operators/owners tab (GID 1489950650) has its header at row index 1 (load with header=1);
 # it is ProjectID-keyed and holds the Operator [ref] / Owner [ref] source columns.
 #
-# TWO PATHS, in order. The anonymous `export?format=csv&gid=` URL is tried first because
-# it needs no auth — but it began returning 401 on every tab on 2026-07-29 (the sheet is
-# in a shared drive and its link-sharing was tightened). When it fails we fall back to an
-# AUTHENTICATED per-tab read via gws (~/.config/gws-gem, read-only work profile) in
-# scripts/_sheets_pull.py, which reproduces the export byte-shape (verified against the
-# 07-28 snapshots: identical headers, identical row counts). If the fallback also fails
-# with an auth error, ask Baird to run `gws-gem auth login` — it needs a browser.
+# ONE PATH: an AUTHENTICATED per-tab read via gws (~/.config/gws-gem, the read-only work
+# profile) in scripts/_sheets_pull.py. Baird is deliberately removing anonymous access to
+# these documents, so the authenticated CLI/MCP path is the standing method for every
+# shared-drive and Google Docs/Sheets operation — not a fallback.
+#
+# The old anonymous `export?format=csv&gid=` URL began returning 401 on every tab on
+# 2026-07-29 and is gone for good; don't re-add it. The GIDs below are kept only because
+# they identify the tabs in docs and CSV-export URLs elsewhere in the repo.
+# If the read fails with an auth error, ask Baird to run `gws-gem auth login` (needs a browser).
 
 set -euo pipefail
 
@@ -24,7 +26,7 @@ SHEET_ID="1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek"
 OIL_GID="456134080"
 GAS_GID="1020144097"
 OWNERS_GID="1489950650"
-# Tab titles for the authenticated fallback (values.get takes a title, not a gid)
+# Tab titles drive the pull — Sheets values.get takes a title, not a gid
 OIL_TAB="Oil/NGL pipelines"
 GAS_TAB="Gas pipelines"
 OWNERS_TAB="Pipeline operators/owners"
@@ -46,19 +48,10 @@ else
   OWNERS_OUT="${DATA_DIR}/GEM_operators_owners_snapshot_${STAMP}.csv"
 fi
 
-base_url="https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid"
-
 # pull <label> <gid> <tab title> <out path>
 pull() {
   local label="$1" gid="$2" tab="$3" out="$4"
-  echo "→ ${label} → ${out}"
-  if curl -fsSL "${base_url}=${gid}" -o "${out}" 2>/dev/null \
-     && ! head -c 32 "${out}" | grep -qi "<html\|<!DOCTYPE"; then
-    echo "   (anonymous export)"
-    return 0
-  fi
-  echo "   anonymous export failed — falling back to authenticated read"
-  rm -f "${out}"
+  echo "→ ${label} (gid ${gid}) → ${out}"
   python3 "${SCRIPT_DIR}/_sheets_pull.py" "${tab}" "${out}"
 }
 

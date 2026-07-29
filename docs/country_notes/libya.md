@@ -147,19 +147,20 @@ not the tracker tab.
    backend cell units, 65 operator/owner units, 1 new row, 97 wiki updates, 51 open flags.
    Both READMEs carry an `ESCALATIONS` row listing the five class-level rulings needed.
    (`…_handoff-evidence.xlsx` is its audit trail, not a work surface.)
-2. `pipelines_batch_20260728_1148_ET_libya-gas_reconciliation-gulfpub.xlsx` and
-   `…_1149_ET_libya-gas_reconciliation-osm.xlsx` — **NOT subsumed by the handoff.** The
+2. `pipelines_batch_20260729_0941_ET_libya-gas_reconciliation-gulfpub.xlsx` and
+   `…_20260728_1149_ET_libya-gas_reconciliation-osm.xlsx` — **NOT subsumed by the handoff.** The
    packet README's "Prior staged packets" line omits both recon dirs and it carries
-   `gulfpub_crosscompare=0`, so ~100 gas rows needing a decision (32 GulfPub overlaps, 8
-   additions, 18 GEM-only, 3 status conflicts, 36 ambiguous clusters; 5 OSM additions, 37
+   `gulfpub_crosscompare=0`, so ~100 gas rows needing a decision (32 GulfPub gas overlaps, 8
+   additions, 18 GEM-only, 1 status conflict, 11 ambiguous clusters; 5 OSM additions, 37
    GEM-only) exist **only** in these two files. Do not archive them with the packet.
-   - The GulfPub file also carries `Oil_*` tabs (72 overlaps / 17 additions / 19 GEM-only)
-     because the recon ran `--commodity both`. Libya oil has never been swept, so that is
-     the only oil-facing output that exists for Libya — untriaged, and out of scope for
-     this gas batch.
-   - **⚠️ `Ref Length (km)` in the GulfPub file is MILES, ~38% short** — a dataset-wide
-     manifest defect found on 2026-07-29, not yet fixed. Use `Ref Geodesic (km)` instead and
-     treat no length disagreement as a finding:
+   - The GulfPub file also carries `Oil_*` tabs (72 overlaps / 17 additions / 19 GEM-only /
+     2 status conflicts / 24 ambiguous) because the recon ran `--commodity both`. Libya oil
+     has never been swept, so that is the only oil-facing output that exists for Libya —
+     untriaged, and out of scope for this gas batch.
+   - The GulfPub file was **rebuilt 2026-07-29** (`0941_ET`; the `07-28 1148_ET` version is in
+     `archive/`) after the dataset-wide fix to `Ref Length (km)`, which had been miles read as
+     km, ~38% short. Counts are unchanged; three overlaps moved yellow→green and one re-targeted
+     from a day of GEM drift, not from the unit fix (matching scores length on `geodesic_km`).
      `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
 
 Archived 2026-07-29 as subsumed by the handoff (in `archive/`, not deleted): the 07-23

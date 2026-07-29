@@ -79,8 +79,13 @@ datasets:
       source_url: Web
     units:
       diameter_units: in
-      length_units: km                 # gas 'Length' appears km; geodesic from geometry is the cross-check
-      length_commodity_quirk: false
+      length_units: mi                 # gas 'Length' is MILES, same as oil -> x1.609344 (confirmed 2026-07-29:
+                                       # median geodesic_km/Length = 1.595 over 5,345 feats, 73.7% within 10% of
+                                       # 1.609344 vs 3.1% near 1.0). Was wrongly 'km' until 2026-07-29 — see NOTES.md.
+      length_units_by_country:
+        Canada: km                     # the ONLY country whose block is really km (median 0.938, n=204,
+                                       # 46% near 1.0 vs 10% near 1.6). No other country favours km at n>=5.
+      length_commodity_quirk: false    # no longer a quirk: oil and gas are both miles
     status_map:
       "Operating": operating
       "Planned": proposed

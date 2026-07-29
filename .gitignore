@@ -50,10 +50,16 @@ batches/**/*.xlsx
 
 # Derived reconciliation artifacts — re-derivable from sources/ + the GEM snapshot.
 # Agent-authored staged_*.json under batches/*/staging/ IS committed (audit trail).
+# Covers archive/ too: a superseded run keeps its derived files on disk for
+# provenance (a re-run after a manifest fix can be tens of MB) but never in git.
 batches/*/staging/**/canonical_records.json
 batches/*/staging/**/geometry_sidecar.json
 batches/*/staging/**/match_diff.json
 batches/*/staging/**/route_metrics.json
+batches/*/archive/**/canonical_records.json
+batches/*/archive/**/geometry_sidecar.json
+batches/*/archive/**/match_diff.json
+batches/*/archive/**/route_metrics.json
 # Transient per-run logs / session-resume scratch under staging
 # (the staged_*.json audit trail is still tracked).
 # wiki_html/ = the wiki-alignment leg's polite-fetch page cache — re-fetchable.

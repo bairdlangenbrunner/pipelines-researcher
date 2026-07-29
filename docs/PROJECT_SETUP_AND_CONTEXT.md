@@ -40,11 +40,18 @@ The live backend Google Sheet is set to "Anyone with link can view" permanently.
 
 **Sheet ID:** `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
 
-Pull individual tabs via bash + curl using the CSV export URL:
+Pull the tabs with `./scripts/refresh_csvs.sh`, which reads each one through an
+**authenticated** Sheets `values.get` (`gws-gem`, read-only) in `scripts/_sheets_pull.py`:
 
 ```bash
-curl -sL "https://docs.google.com/spreadsheets/d/1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek/export?format=csv&gid={GID}" -o tab.csv
+./scripts/refresh_csvs.sh              # dated snapshots into data/
+./scripts/refresh_csvs.sh --working    # data/{tracker}_working.csv (gitignored)
 ```
+
+**The anonymous `export?format=csv&gid=` URL no longer works** (401 on every tab since
+2026-07-29; the sheet is in a shared drive and anonymous access to work documents is being
+withdrawn deliberately). Don't curl it, and don't re-add it as a fallback — the authenticated
+CLI/MCP path is the standing method for all shared-drive and Google Docs/Sheets work.
 
 **Tab GIDs:**
 - oil/NGL = `456134080` (107 cols)
@@ -56,12 +63,13 @@ curl -sL "https://docs.google.com/spreadsheets/d/1foPLE6K-uqFlaYgLPAUxzeXfDO5wOO
 Each tab is well under 10 MB.
 
 **Do NOT:**
+- curl the anonymous CSV export (dead since 2026-07-29 — see above)
 - Use Drive MCP `download_file_content` (returns only the first tab)
 - Use Drive MCP `read_file_content` (lossy summary, truncates rows)
 - Use `web_fetch` on the export URL (won't accept URLs not literally provided in-turn)
 
 The `data/` folder in this bundle contains dated CSV snapshots of both tabs so the project has
-offline data immediately. Re-pull with the curl commands above to refresh.
+offline data immediately. Re-pull with `refresh_csvs.sh` to refresh.
 
 ---
 
@@ -180,10 +188,12 @@ EPSG:4326 is the standard projection.
   env var); ~10 tools (`list_projects`, `get_project`, `list_units`, `get_unit`,
   `list_entities`, etc.); session cookie expires ~every 2 weeks.
 - **SFOC Google Sheet** (LNG carrier reconciliation): ID
-  `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`; accessible ONLY via Drive MCP
-  `read_file_content` (pipe-delimited markdown); direct CSV export returns HTTP 401.
+  `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`; authenticated read only — Sheets
+  `values.get` via `gws-gem`, or Drive MCP `read_file_content` for its pipe-delimited
+  markdown; anonymous CSV export returns HTTP 401.
 - **GEM LNG tracker:** Sheet ID `1FjjeQD8AlQ_kQAMrohA3jAV3yZy7Lb61djt25D-4Fh8`,
-  GID `243795339`; accessible via direct CSV export; header at row index 1.
+  GID `243795339`; header at row index 1. Read it authenticated like everything else —
+  anonymous access to work documents is being withdrawn.
 - **Asana:** country-assignment tracking lives here (not in Google Drive).
 - **Python stack:** pandas, openpyxl, geopandas, shapely, fiona.
 - **GIS tools:** QGIS, Python/GeoPandas, GeoJSON, GeoPackage, Shapefile; EPSG:4326.

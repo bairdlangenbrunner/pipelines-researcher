@@ -210,6 +210,16 @@ class AdapterBase:
 
         name = (val("name") or "").strip()
         country_raw = (val("country") or props.get("country") or "").strip()
+        country = N.normalize_country(country_raw)
+        # A scraped dataset can tabulate one country's block in different units than the
+        # column header claims (GulfPub gas 'Length' is miles everywhere except Canada).
+        # units.length_units_by_country overrides the dataset default; keys are matched
+        # on the NORMALIZED country, so a manifest may write any alias.
+        length_units = units.get("length_units", "km")
+        for _ck, _cu in (units.get("length_units_by_country") or {}).items():
+            if N.normalize_country(_ck) == country:
+                length_units = _cu
+                break
         start_loc = (val("start_loc") or "").strip()
         end_loc = (val("end_loc") or "").strip()
         status_raw = (val("status") or "").strip()
@@ -230,7 +240,7 @@ class AdapterBase:
             dataset=ds_name,
             source_tier=self.tier,
             commodity=commodity,
-            country=N.normalize_country(country_raw),
+            country=country,
             country_raw=country_raw,
             name=name,
             name_norm=N.normalize_name(name),
@@ -242,7 +252,7 @@ class AdapterBase:
             end_pt=end_pt,
             diameter_in=N.parse_diameter_set(val("diameter_raw"), units.get("diameter_units", "in")),
             diameter_raw=str(val("diameter_raw") or "").strip(),
-            length_km=N.parse_length_km(val("length_raw"), units.get("length_units", "km")),
+            length_km=N.parse_length_km(val("length_raw"), length_units),
             length_raw=str(val("length_raw") or "").strip(),
             geodesic_km=geodesic_km(geom),
             capacity=N.parse_number(val("capacity")),

@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Authenticated tab->CSV pull for the backend sheet (fallback path for refresh_csvs.sh).
+"""Authenticated tab->CSV pull for the backend sheet — THE way refresh_csvs.sh reads it.
 
-The anonymous `export?format=csv&gid=` URL started returning 401 on 2026-07-29 for
-every tab (the sheet lives in a shared drive, driveId 0AFOra93TfZAeUk9PVA, and its
-link-sharing was tightened). Drive's file-level export is not a substitute: for a
-spreadsheet it emits the FIRST tab only. So we read each tab through the Sheets API
-values endpoint and write the CSV ourselves.
+Anonymous access to these documents is being deliberately withdrawn, so the
+authenticated gws CLI (or the Drive/Sheets MCP) is the standing path for every
+shared-drive and Google Docs/Sheets operation. The old
+`export?format=csv&gid=` URL started returning 401 on every tab on 2026-07-29 (the sheet
+lives in a shared drive, driveId 0AFOra93TfZAeUk9PVA); it is not a fallback to keep warm.
+Drive's file-level export is not a substitute either: for a spreadsheet it emits the FIRST
+tab only. So we read each tab through the Sheets API values endpoint and write the CSV
+ourselves.
 
 Values come back FORMATTED_VALUE, which is what the CSV export produced, so the row
 offsets the whole repo depends on are preserved (header at index 2 for the two

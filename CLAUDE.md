@@ -72,19 +72,24 @@ Where things live — **read on demand as the workflow dictates, not all at once
 Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`. Pull via
 `./scripts/refresh_csvs.sh` — **always use the script, don't hand-roll a curl.**
 
-**The anonymous CSV export stopped working on 2026-07-29** (401 on every tab; the sheet
-lives in shared drive `0AFOra93TfZAeUk9PVA` and its link-sharing was tightened). The script
-now tries the anonymous URL first and falls back to an **authenticated per-tab read** via
-`gws` + `scripts/_sheets_pull.py` (read-only `~/.config/gws-gem`), which reproduces the
-export's byte-shape — verified against the 07-28 snapshots: identical headers, identical row
-counts. If the fallback fails on auth, ask Baird to run `gws-gem auth login` (needs a
-browser). Tabs: Oil/NGL (107 cols, GID 456134080), Gas (131 cols, GID 1020144097), Pipeline
-operators/owners (44 cols, GID 1489950650) — the script pulls all three.
+**AUTHENTICATED ACCESS IS THE ONLY PATH — for this sheet and for every other work
+shared-drive / Google Docs-Sheets-Slides object.** Baird is deliberately withdrawing
+anonymous link access, so reach for the `gws` CLI (`gws-gem`, read-only, the default) or the
+Google Drive MCP tools first, never a public export URL, and never treat auth as a fallback.
+The anonymous CSV export died 2026-07-29 (401 on every tab; the sheet lives in shared drive
+`0AFOra93TfZAeUk9PVA`) and has been removed from the script — don't re-add it. `refresh_csvs.sh`
+reads each tab through Sheets `values.get` in `scripts/_sheets_pull.py`, reproducing the
+export's byte-shape (verified against the 07-28 snapshots: identical headers and row counts).
+If it fails on auth, ask Baird to run `gws-gem auth login` (needs a browser) — don't try it
+headlessly. Writes still require per-edit authorization and `gws-gem-write` (see Hard
+requirements). Tabs: Oil/NGL (107 cols, GID 456134080), Gas (131 cols, GID 1020144097),
+Pipeline operators/owners (44 cols, GID 1489950650) — the script pulls all three.
 
 **Header is at CSV row index 2 for the two tracker tabs**: `pd.read_csv(path, header=2, low_memory=False)`.
 **The operators/owners tab's header is at row index 1** (`header=1`) — row 0 is a filter-view banner.
-Do **not** use Drive MCP `download_file_content` (first tab only) or
-`read_file_content` (lossy). Schema gotchas (multi-value diameter, buffer rows,
+For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
+`download_file_content` (first tab only) or `read_file_content` (lossy). Schema gotchas
+(multi-value diameter, buffer rows,
 `SheetRow = CSV index + 4`, `[ref]` pairing, segment-vs-network granularity):
 `docs/reference/gem_schema.md`.
 
@@ -233,13 +238,18 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    inside the Country Sweep's recon crosswalk leg (`build_recon_crosswalk.py`, one
    `<Cmdty>_<Source>` tab per registered dataset — `build_gulfpub_crosswalk.py` is now a
    deprecated shim). First standalone §2 workbooks delivered 2026-07-28 (Iraq oil, OSM +
-   GulfPub); Egypt gas followed 2026-07-29. **A standalone §2 workbook is NOT picked up by a
+   GulfPub); Egypt gas followed 2026-07-29, then Iraq/Saudi/Iran gas the same day off the
+   length-units re-run. **A standalone §2 workbook is NOT picked up by a
    handoff packet** — the packet only carries staging dirs listed in its "Prior staged
    packets" line, so Libya's and Egypt's recon output are separate review surfaces that must
    be worked alongside the actions file (both logged in `docs/research_backlog.md` §2).
-   **Open defect: the GulfPub gas `Length` column is miles, manifested as km** — biases every
-   gas recon's length comparison ~38% short; use `Ref Geodesic (km)`
-   (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`). **OSM is a second registered source and runs by default in the `deep`
+   **A unit declared in a manifest is a claim to verify, not a given** — the gas
+   `length_units` sat wrong (`km`, actually miles) through a scrape repoint and four
+   countries' workbooks. `units.length_units_by_country` exists for the case where one
+   country's block differs (GulfPub gas: Canada is km, everything else miles); fixed and
+   re-run 2026-07-29 (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`). Any gas
+   recon workbook stamped before `20260729_0941_ET` has `Ref Length (km)` ~38% short.
+   **OSM is a second registered source and runs by default in the `deep`
    preset**; unmatched reference records are bucketed by `disposition`
    (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
    standing principle that a reference route is presumptively real pipe.
@@ -322,9 +332,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **GEM Project Database MCP:** wraps `gem-project-db.herokuapp.com`; auth via
   `GEM_SESSION_COOKIE` (Django sessionid; rotates ~2 weeks). Not needed for reconciliation.
 - **GEM LNG tracker:** Sheet `1FjjeQD8AlQ_kQAMrohA3jAV3yZy7Lb61djt25D-4Fh8`, GID
-  `243795339`; CSV export works; header at row index 1.
+  `243795339`; header at row index 1. Read it through `gws-gem`/Drive MCP like everything
+  else — if an anonymous CSV export still happens to work here, it is being withdrawn too.
 - **SFOC sheet** (LNG carrier reconciliation): `1LwgbR4jnMrzaTIyhWeuOf0Z4Foj0lOMGEABBd58eIhY`;
-  Drive MCP `read_file_content` only (pipe-delimited markdown); CSV export → 401.
+  authenticated read only (Sheets `values.get`, or Drive MCP `read_file_content` for its
+  pipe-delimited markdown); anonymous CSV export → 401.
 - **Preferred sources** + the reference-dataset registry: `docs/reference/source_roster.md`.
 - **Python/GIS:** `requirements.txt`; QGIS, GeoPandas, shapely, fiona; EPSG:4326.
 

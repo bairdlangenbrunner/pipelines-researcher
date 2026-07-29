@@ -36,6 +36,14 @@ engine is country-agnostic (Phase E validation target).
 | oil · OSM | 71 | 175 — DISCOVERY 84, FRAGMENT 61, ROUTE_FOR_EXISTING 21, NEAR_MISS 9 | `…_1804_ET_iraq-oil_osm-reconciliation.xlsx` |
 | oil · GulfPub | 20 (2 green) | 1 NEAR_MISS; 8 status conflicts | `…_1804_ET_iraq-oil_gulfpub-reconciliation.xlsx` |
 
+**GulfPub gas re-run 2026-07-29 — the packet's `Gas_GulfPub` tab has a bad length column.**
+The gas `Length` unit was miles read as km, so every `Ref Length (km)` cell in the 07-28
+packet is ~38% short (display only; matching scores on `geodesic_km`, and the re-run
+reproduces the same 39 overlaps / 8 unmatched / 13 status conflicts). Corrected standalone
+workbook: `…_20260729_0941_ET_iraq-gas_reconciliation-gulfpub.xlsx` (`--commodity both`, so
+it also carries the oil tabs). Use it for any length comparison; everything else in the
+packet's recon tabs still stands. `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+
 What to look at first:
 
 - **Gas, route candidates.** [OSM way/1494626715](https://www.openstreetmap.org/way/1494626715)

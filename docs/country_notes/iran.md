@@ -13,6 +13,17 @@ corroboration.
 - Tehran Times, Mehr News Agency, Interfax — corroborators for Shana reports
   (watch for the same wire being republished — not independent).
 
+## Reconciliation notes
+- **Fresh standalone GulfPub gas recon, 2026-07-29:**
+  `…_20260729_0941_ET_iran-gas_reconciliation-gulfpub.xlsx` (43 refs → 25 overlaps,
+  18 additions, 25 GEM-only, 3 status conflicts, 10 ambiguous; NEAR_MISS 14 /
+  DISCOVERY_CANDIDATE 4). Produced by the gas length-units fix re-run
+  (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`) and **not in any packet**.
+  **Read it as a fresh run, not a delta.** The superseded 07-05 run predates the admin-area
+  geo signal, the per-dataset matching overrides and the 'very low' route-accuracy re-grade;
+  it had collapsed 20+ references onto two rows (P2015, P5855), which the current engine
+  spreads across the IGAT series (P0440–P0459). The 07-05 packet's GulfPub content is stale.
+
 ## Gotchas
 - Sanctions/force-majeure and frequent renaming; verify "operating" claims.
 - Many segments belong to large network groupings (e.g. trunk gas lines IGAT

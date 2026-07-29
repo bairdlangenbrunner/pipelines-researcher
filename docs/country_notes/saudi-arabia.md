@@ -28,6 +28,14 @@ golden reference the engine generalizes).
   `medium`) — prime targets for the geometry pass + human review.
 - Diameters are frequently multi-valued (`56,10,16`, `40/42/48`) — set-membership
   matching, not equality.
+- **Fresh standalone GulfPub gas recon, 2026-07-29:**
+  `…_20260729_0941_ET_saudi-arabia-gas_reconciliation-gulfpub.xlsx` (20 refs → 18 overlaps,
+  2 additions, 23 GEM-only, **9 status conflicts**, 1 ambiguous). Produced by the gas
+  length-units fix re-run (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`), and
+  **not in any packet**. Read it as a fresh run, not a delta: the superseded 07-06 run
+  predates the admin-area geo signal, the per-dataset matching overrides and the 'very low'
+  route-accuracy re-grade, so its overlap targets moved for reasons unrelated to units. The
+  07-08 packet's GulfPub content is stale on both axes.
 
 ## Gas-specific (from the 2026-06 gas deep sweep — all 65 GGIT rows)
 - **Sourceability bifurcates sharply.** In-construction **MGS-3 / East-West expansion**

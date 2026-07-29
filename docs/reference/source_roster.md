@@ -122,9 +122,12 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
   Libya gas pull is 6 features, effectively Greenstream only. Tier 3: a lead or a
   second voice, never corroboration on its own. Full quirks: `sources/osm/NOTES.md`.
 - **The master dataset-registry sheet is NOT public** — a `curl` CSV export hits an HTML login
-  wall. Read it via Google Drive MCP `download_file_content` (`exportMimeType=text/csv`). Sheet
-  ID + on-disk geojson paths are in the `datasets-registry-and-gulfpub-identity` memory. Large
-  geojsons (19 MB) can't go through context via Drive MCP — `find` them on local disk instead.
+  wall, and that is now the norm rather than the exception (anonymous access to work documents
+  is being withdrawn deliberately). Read it authenticated: `gws-gem sheets spreadsheets values
+  get` per tab, or Google Drive MCP `download_file_content` (`exportMimeType=text/csv`) if it
+  is single-tab. Sheet ID + on-disk geojson paths are in the
+  `datasets-registry-and-gulfpub-identity` memory. Large geojsons (19 MB) can't go through
+  context via Drive MCP — `find` them on local disk instead.
 
 ## Public GIS endpoints (route geometry — §8 route creation)
 

@@ -30,9 +30,11 @@ Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
   any new consumer must do the same rather than reading `sheet_row` from staged JSON.
 - **Buffer rows:** ~104 reserved/blank `ProjectID`s exist at the tail of each tracker
   tab. Exclude them from QC and matching (filter to rows with a real `PipelineName`/`Status`).
-- Do **not** use Drive MCP `download_file_content` (first tab only) or
-  `read_file_content` (lossy/truncates). curl the CSV export — it is the only
-  lossless path.
+- **Pull it with `./scripts/refresh_csvs.sh`** (authenticated Sheets `values.get` per tab via
+  `gws-gem`). The anonymous CSV export died 2026-07-29 and anonymous access to these documents
+  is being withdrawn deliberately — don't curl an export URL. Drive MCP is not a substitute
+  either: `download_file_content` returns the first tab only and `read_file_content` is
+  lossy/truncating. `FORMATTED_VALUE` per-tab reads are the lossless path.
 
 ### Pipeline operators/owners tab (GID `1489950650`)
 Ownership/operator detail + their source refs, **ProjectID-keyed** (same `ProjectID`s as the

@@ -52,6 +52,14 @@ all per-source knowledge lives in the manifest (+ adapter).
 3. Map columns, set `units`, `status_map`, `source_tier`, `provenance`.
 4. Validate + smoke-test: `python scripts/ingest.py --source <name> --commodity oil --out /tmp/<name>/`
    and spot-check `canonical_records.json` against the raw file.
+   **Prove the length unit, don't assume it.** A source's own header lies often enough that
+   this is a required check: `geodesic_km ÷ length_km` should cluster at 1.0 if `length_units`
+   is right (≈1.609 means the column is miles). Run it **per country** and over the whole
+   dataset — GulfPub gas is miles everywhere but km in Canada, so a global median hides a bad
+   block. `units.length_units_by_country: {Canada: km}` covers that case; keys match the
+   normalized country name. An unverified unit is a **blocking** item on any repoint of the
+   dataset, not a footnote in NOTES.md — see
+   `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md` for what carrying one costs.
 5. Reconcile: `python scripts/reconcile.py --source <name> --country "<C>" --commodity both …`.
    **No engine code changes** — the workflow is identical to GulfPub. Read the run's
    `meta.diagnostics` before trusting the counts: it reports whether the matcher had live

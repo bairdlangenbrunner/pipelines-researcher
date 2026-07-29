@@ -130,18 +130,22 @@ Concerns by type: **attribution 37, spec 31, existence 4, duplicate 4.**
 
 Run to give Egypt the same recon coverage Libya has. Both are **separate review surfaces**:
 nothing here is folded into `…_handoff-actions.xlsx`, and nothing is staged as an edit.
-Deliverables: `pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`;
-inputs in `staging/recon-{gulfpub,osm}-20260729/`.
+Deliverables: `pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
+(rebuilt from the `0910_ET` version after the length-units fix below — work the `0941` file;
+`0910` is in `archive/`) and `pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
+(OSM has no length attribute, unaffected). Inputs in `staging/recon-{gulfpub,osm}-20260729/`.
 
 - **GulfPub** (92 Egypt gas features): **52 overlaps** (45 yellow / 7 green), **40 additions —
   all `NEAR_MISS`**, 43 GEM-only, 3 status conflicts, 12 ambiguous clusters, 1 route-replacement
   candidate. 40 reference-only additions is **over the >30 escalation gate** — but every one
   bucketed `NEAR_MISS` rather than `DISCOVERY_CANDIDATE`, i.e. the engine thinks each is close
   to an existing row. Adjudicate by hand before any is treated as a discovery.
-- **⚠️ The `Ref Length (km)` column in the GulfPub workbook is MILES, ~38% short.** Found by
-  the required ingest spot-check on this run; it is a dataset-wide manifest defect, not
-  Egypt-specific, and it is **not yet fixed** (Canada complicates the one-line change). Use
-  the adjacent `Ref Geodesic (km)` column, and treat no length disagreement here as a finding.
+- **`Ref Length (km)` was MILES, ~38% short — FIXED, and this workbook was rebuilt.** Found by
+  the required ingest spot-check on this run: a dataset-wide manifest defect, not Egypt-specific.
+  The manifest now reads `length_units: mi` with a `Canada: km` per-country override, and the
+  `0941_ET` rebuild carries corrected lengths — GEM agreement went 2/52 → 15/52 within ±10%.
+  Matching was never affected (`match.py` scores length on `geodesic_km`): the re-run against
+  the same snapshot changed `s_length` on 0 pairs and left all counts identical.
   `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
 - **OSM** (21 features / 476.6 km, first Egypt OSM run): **0 overlaps**, both `MATCH_QUALITY`
   escalations raised — 0 of 21 features named and 62 of 78 GEM rows `no route`/`very low`, so

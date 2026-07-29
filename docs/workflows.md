@@ -77,6 +77,12 @@ before** the run) today. See the Reconciliation SOP for phase detail.
    Reads `sources/gulfpub/manifest.yml` (+ `adapter.py` if present). Spot-check 5
    records vs the raw GeoJSON (status mapped, diameter set, length→km, geodesic
    computed, geometry sidecar present).
+   **If `geodesic_km ÷ length_km` sits near 1.609 on those records, stop — the manifest's
+   `length_units` is wrong.** Confirm it dataset-wide *and per country* before continuing
+   (one country's block can differ: `units.length_units_by_country`), fix the manifest, and
+   re-run. That is a manifest fix plus a re-run, not an escalation — and re-run every other
+   country already shipped off the same dataset, because their `Ref Length` columns are wrong
+   too. `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
 4. **Reconcile** (match + geometry + diff + score):
    ```bash
    python scripts/reconcile.py --source gulfpub --country "Saudi Arabia" \

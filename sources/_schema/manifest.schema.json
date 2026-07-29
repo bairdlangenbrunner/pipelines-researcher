@@ -79,6 +79,11 @@
           "properties": {
             "diameter_units": { "enum": ["in", "mm", "cm"], "default": "in" },
             "length_units": { "enum": ["mi", "km", "m"], "default": "km" },
+            "length_units_by_country": {
+              "type": "object",
+              "description": "Per-country override of length_units, for a source whose block for one country is tabulated in different units than the rest of the file (GulfPub gas: miles everywhere, km in Canada). Keys are matched on the normalized country name, so any alias works.",
+              "additionalProperties": { "enum": ["mi", "km", "m"] }
+            },
             "length_commodity_quirk": {
               "type": "boolean",
               "default": false,
