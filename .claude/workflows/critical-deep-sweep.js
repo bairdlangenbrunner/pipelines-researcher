@@ -26,6 +26,9 @@ const COUNTRY = A.country || ''
 const PIDS = A.pids
 const ROSTER = (A.roster || []).join("\n")
 const STATUS_REVIEW = !!A.status_review
+// optional scope-specific guidance (e.g. China: research in Chinese, geo-blocked-site
+// workarounds) appended verbatim to every subagent contract
+const EXTRA = A.extra_brief ? `\n\n## Scope-specific guidance (from the orchestrator)\n${A.extra_brief}` : ''
 
 const statusInstr = STATUS_REVIEW ? `
 
@@ -101,7 +104,7 @@ ${ROSTER}
    It is NOT enough that a page mentions the pipeline — the source must AGREE with the GEM number.
    Material disagreement → concern_type="spec", verdict="concern" (never silently pass it).
 Also DEEP-FILL genuinely blank value fields with a paired, verified ref (best-effort; do not force a
-number on weak fields like Capacity — leave blank rather than fabricate).${statusInstr}
+number on weak fields like Capacity — leave blank rather than fabricate).${statusInstr}${EXTRA}
 
 A pipeline that is real and correctly classified but has a lesser caveat → verdict="confirmed (caveat)".
 Only open existence/duplicate/classification doubt → verdict="concern".
