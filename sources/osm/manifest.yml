@@ -141,6 +141,47 @@ datasets:
     matching:
       geoarea_weight: 0.30   # same rationale as gas_iq above
 
+  # --- Egypt, gas (2026-07-29): 21 features / 24 ways, all lifecycle=operating,
+  #     476.6 km total. Richer than Libya's null (11 features carry real length:
+  #     106.7 / 77.6 / 69.1 / 61.8 / 61.5 / 52.8 / 28.5 / 11.6 / 3.5 / 1.5 / 0.7 km)
+  #     but attribute-blind: ZERO named, zero diameter, zero operator, and 10 of 21
+  #     are <0.5 km stubs. See NOTES.md.
+  - name: gas_eg
+    scraped_date: "2026-07-29"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-eg-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Egypt"       # the fetch is ISO-scoped; features carry no country tag
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    matching:
+      # Same dead-axes condition gas_iq documents, and worse on the name side: NONE of
+      # Egypt's 21 features carry a name, and 62 of 78 GEM Egypt gas rows are
+      # 'no route' (49) or 'very low' (13), so name and geometry are both mostly dead.
+      # Admin area is the live axis — GEM fills Start/EndState/Province on 63/78 and
+      # 66/78 rows. Dataset-scoped so committed Libya/Iraq runs reproduce unchanged.
+      geoarea_weight: 0.30
+
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so
   # the engine default name_weight 0.30 would sink real matches. Geometry is the

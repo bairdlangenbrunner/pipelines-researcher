@@ -69,14 +69,17 @@ Where things live — **read on demand as the workflow dictates, not all at once
 
 ## Live data access (the only correct way)
 
-Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek` ("Anyone with
-link can view"). Pull via `./scripts/refresh_csvs.sh`, or curl directly:
+Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`. Pull via
+`./scripts/refresh_csvs.sh` — **always use the script, don't hand-roll a curl.**
 
-```bash
-# Oil/NGL tab (107 cols, GID 456134080); Gas tab (~140 cols, GID 1020144097);
-# Pipeline operators/owners tab (44 cols, GID 1489950650) — refresh_csvs.sh pulls all three
-curl -sL "https://docs.google.com/spreadsheets/d/1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek/export?format=csv&gid=456134080" -o data/GOIT_oil_ngl.csv
-```
+**The anonymous CSV export stopped working on 2026-07-29** (401 on every tab; the sheet
+lives in shared drive `0AFOra93TfZAeUk9PVA` and its link-sharing was tightened). The script
+now tries the anonymous URL first and falls back to an **authenticated per-tab read** via
+`gws` + `scripts/_sheets_pull.py` (read-only `~/.config/gws-gem`), which reproduces the
+export's byte-shape — verified against the 07-28 snapshots: identical headers, identical row
+counts. If the fallback fails on auth, ask Baird to run `gws-gem auth login` (needs a
+browser). Tabs: Oil/NGL (107 cols, GID 456134080), Gas (131 cols, GID 1020144097), Pipeline
+operators/owners (44 cols, GID 1489950650) — the script pulls all three.
 
 **Header is at CSV row index 2 for the two tracker tabs**: `pd.read_csv(path, header=2, low_memory=False)`.
 **The operators/owners tab's header is at row index 1** (`header=1`) — row 0 is a filter-view banner.
@@ -230,7 +233,13 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    inside the Country Sweep's recon crosswalk leg (`build_recon_crosswalk.py`, one
    `<Cmdty>_<Source>` tab per registered dataset — `build_gulfpub_crosswalk.py` is now a
    deprecated shim). First standalone §2 workbooks delivered 2026-07-28 (Iraq oil, OSM +
-   GulfPub). **OSM is a second registered source and runs by default in the `deep`
+   GulfPub); Egypt gas followed 2026-07-29. **A standalone §2 workbook is NOT picked up by a
+   handoff packet** — the packet only carries staging dirs listed in its "Prior staged
+   packets" line, so Libya's and Egypt's recon output are separate review surfaces that must
+   be worked alongside the actions file (both logged in `docs/research_backlog.md` §2).
+   **Open defect: the GulfPub gas `Length` column is miles, manifested as km** — biases every
+   gas recon's length comparison ~38% short; use `Ref Geodesic (km)`
+   (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`). **OSM is a second registered source and runs by default in the `deep`
    preset**; unmatched reference records are bucketed by `disposition`
    (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
    standing principle that a reference route is presumptively real pipe.
@@ -273,8 +282,12 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **Egypt (gas: handoff regenerated 2026-07-16 as the TWO-file split, rebuilt 2026-07-28 as
   `pipelines_batch_20260728_1731_ET_egypt-gas_handoff-{actions,evidence}.xlsx` —
   the researcher works from the ACTIONS file, not the per-leg workbooks; 16/284 ref
-  units already live; Nitzana = one linked decision; oil not yet swept):**
-  `docs/country_notes/egypt.md`.
+  units already live; Nitzana = one linked decision. **+ §2 recon added 2026-07-29 to match
+  Libya's coverage — TWO standalone workbooks NOT in the handoff**
+  (`…_20260729_0910_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`): GulfPub 52 overlaps /
+  40 all-`NEAR_MISS` additions (over the >30 gate) / 3 status conflicts, and a first OSM run
+  that returned 0 overlaps on both `MATCH_QUALITY` escalations → 9 `ROUTE_FOR_EXISTING` +
+  10 `DISCOVERY_CANDIDATE`. Oil not yet swept):** `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
 - **Nigeria (divestiture ownership sweep not started):**
@@ -285,7 +298,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/israel.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
   review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet
-  `…_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`. Four
+  `…_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`. **THREE files to work:**
+  the actions file plus the two recon workbooks, which the packet does NOT subsume (~100 gas
+  rows live only there; the GulfPub one also holds untriaged `Oil_*` tabs from a
+  `--commodity both` run). The 07-23 annual-indev + discovery workbooks were archived
+  2026-07-29 as subsumed. Four
   structural escalations open: cluster-A coastal double-count, three condensate
   lines misfiled in GGIT, and two OPEC-ASB Table 4.10 ingest defects — the `scm/y`
   zero-capacity rows (`notes/escalation-2026-07-28-scm-capacity-units.md`) and 14

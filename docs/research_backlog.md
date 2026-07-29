@@ -33,6 +33,8 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 | **United States** | deepwater-export terminal open item; 131-row Stage A queue slot unstarted | `docs/country_notes/united-states.md`; plan doc |
 | **Iraq oil open items** | Grand Faw third offshore line (Esta/Micoperi) length/diameter/route; P0544 Basra–Haditha status review | `docs/country_notes/iraq.md`; CLAUDE.md |
 | **Iraq oil: OSM + GulfPub recon untriaged** | First-ever OSM run for Iraq oil (2026-07-28, 246 features): 71 overlaps, 175 unmatched — **84 DISCOVERY_CANDIDATE (366 km, largest 26.5 km)**, 61 FRAGMENT_OF_EXISTING (incl. 80.9 km near P0548, 52.3 km near P0577), 21 ROUTE_FOR_EXISTING (86.1 km → P6255), 9 NEAR_MISS (80.3 + 53.6 km near P7898). GulfPub oil re-run: 20 overlaps, 8 status conflicts, 1 near-miss. Nothing triaged; no oil sweep or handoff packet exists to carry it | `batches/iraq-oil/deliverables/pipelines_batch_20260728_1804_ET_iraq-oil_{osm,gulfpub}-reconciliation.xlsx`; `docs/country_notes/iraq.md` |
+| **Egypt gas: OSM + GulfPub recon untriaged** | Run 2026-07-29 to give Egypt the coverage Libya has; **both workbooks are standalone and NOT in the handoff packet**, so nothing routes them into the actions file. GulfPub (92 features): 52 overlaps, **40 additions all bucketed `NEAR_MISS`** (over the >30 escalation gate — adjudicate each against the near row before treating any as a discovery), 43 GEM-only, 3 status conflicts, 12 ambiguous clusters, 1 route-replacement candidate. First-ever Egypt OSM run (21 features / 476.6 km): **0 overlaps**, both `MATCH_QUALITY` escalations raised (0/21 named × 62/78 GEM rows routeless; top composite 0.4094 vs 0.45, threshold NOT lowered) → 9 `ROUTE_FOR_EXISTING`, 2 `FRAGMENT_OF_EXISTING`, 10 `DISCOVERY_CANDIDATE`. ⚠️ Ignore `Ref Length (km)` — it's miles (see §4) | `batches/egypt-gas/deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`; `docs/country_notes/egypt.md` |
+| **Libya gas: OSM + GulfPub recon untriaged** | Same structural gap as Egypt's — the 2026-07-28 full pass built both recon workbooks but the handoff packet does **not** subsume them (`gulfpub_crosscompare=0`; neither recon dir appears in "Prior staged packets"), so ~100 gas rows needing a decision live only in those two files: 32 GulfPub overlaps / 8 additions / 18 GEM-only / 3 status conflicts / 36 ambiguous, plus 5 OSM additions / 37 GEM-only. The GulfPub file also holds **untriaged `Oil_*` tabs** (72 overlaps / 17 additions / 19 GEM-only) from a `--commodity both` run — the only oil-facing Libya output that exists, and Libya oil has never been swept | `batches/libya-gas/deliverables/pipelines_batch_20260728_114{8,9}_ET_libya-gas_reconciliation-{gulfpub,osm}.xlsx`; `docs/country_notes/libya.md` |
 | **Israel gas: Ashdod–Ashkelon onshore gap (P3620)** | routes + sheet edits APPLIED 2026-07-23 (Baird bridged the Ashdod HDD bore so P3620 meets P3657; routes-repo merge `72d29de1`; sheet RouteAccuracy→medium/RouteNotes/Route [ref] written rows 1036/1063; batch archived), but P3620 geometry is still partial — 2.1 of 4 sheet km; the Ashkelon-side ~2.4 km onshore run has no public vector yet (OSM empty, TAMA 37/A/2/7 blueprint sheets cover Ashdod only) — need the Ashkelon-side statutory sheet or an INGL/permit map to finish it. P3657 is complete | `batches/israel-gas/archive/route-creation-p3620-p3657/README.md` |
 | **Iran general open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md`; CLAUDE.md |
 | **LNG carrier quarterly reconciliation** | "designed and partially executed" vs SFOC data; referenced `instructions.md` methodology is **not in this repo** — orphaned | `docs/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
@@ -164,6 +166,17 @@ per cell rather than trusting either signal.
   6 rows fix only the unit label). Fixing it should also clear most of both countries'
   route-integrity flags. `notes/escalation-2026-07-28-asb-libya-length-units.md` +
   `notes/escalation-2026-07-28-asb-iraq-length-units.md`.
+- **GulfPub gas `Length` is MILES, manifest says km — dataset-wide, affects 4 shipped
+  countries.** Re-confirmed 2026-07-29 on the Dec-2025 SDE scrape (median `geodesic_km ÷
+  Length` = 1.595 over 5,284 features; 74.5% within 10% of 1.609, 3.2% near 1.0), which is
+  the re-confirmation `sources/gulfpub/NOTES.md` had asked for and never got. Every
+  `Ref Length (km)` cell in the Egypt / Libya / Iraq gas recon workbooks is ~38% short, and
+  the matcher's length signal has been comparing km against miles. **Canada is genuinely km**
+  (median 0.943) and `length_units` is per-dataset with no per-country override, so the
+  decision is: flip to `mi` and accept Canada wrong (nothing shipped regresses — no Canada
+  recon has run), add per-country overrides to the schema, or leave it and rely on
+  `Ref Geodesic (km)`. No GEM cell is wrong from this — it only mis-informed comparisons.
+  `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
 - **GGIT small-diameter inclusion threshold:** GulfPub's Libya run surfaced 6–8in field
   gathering laterals, below the tracker-wide 12in 5th-percentile diameter, but GGIT does
   already carry 34 gathering rows globally. A one-time scope ruling stops this being

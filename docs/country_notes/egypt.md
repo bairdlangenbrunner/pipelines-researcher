@@ -122,7 +122,35 @@ Concerns by type: **attribution 37, spec 31, existence 4, duplicate 4.**
   auto-applied).
 - GulfPub/PE World Map cross-comparison (95 Egypt features) → `Gas_GulfPub`; treat dataset
   "additions" as likely mislabels until endpoints/country verified; `Capacity_mmcfd`=300 is
-  a placeholder, never a capacity source.
+  a placeholder, never a capacity source. **Superseded as the recon surface** by the two
+  standalone §2 workbooks below — the 07-28 handoff rebuild carries `gulfpub_crosscompare=0`,
+  so no recon content reaches the actions file.
+
+### Reconciliation (§2, 2026-07-29 — TWO standalone workbooks, NOT in the handoff)
+
+Run to give Egypt the same recon coverage Libya has. Both are **separate review surfaces**:
+nothing here is folded into `…_handoff-actions.xlsx`, and nothing is staged as an edit.
+Deliverables: `pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`;
+inputs in `staging/recon-{gulfpub,osm}-20260729/`.
+
+- **GulfPub** (92 Egypt gas features): **52 overlaps** (45 yellow / 7 green), **40 additions —
+  all `NEAR_MISS`**, 43 GEM-only, 3 status conflicts, 12 ambiguous clusters, 1 route-replacement
+  candidate. 40 reference-only additions is **over the >30 escalation gate** — but every one
+  bucketed `NEAR_MISS` rather than `DISCOVERY_CANDIDATE`, i.e. the engine thinks each is close
+  to an existing row. Adjudicate by hand before any is treated as a discovery.
+- **⚠️ The `Ref Length (km)` column in the GulfPub workbook is MILES, ~38% short.** Found by
+  the required ingest spot-check on this run; it is a dataset-wide manifest defect, not
+  Egypt-specific, and it is **not yet fixed** (Canada complicates the one-line change). Use
+  the adjacent `Ref Geodesic (km)` column, and treat no length disagreement here as a finding.
+  `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+- **OSM** (21 features / 476.6 km, first Egypt OSM run): **0 overlaps**, both `MATCH_QUALITY`
+  escalations raised — 0 of 21 features named and 62 of 78 GEM rows `no route`/`very low`, so
+  name and geometry are both dead and only the admin-area signal (52.4% of records, via the
+  documented `geoarea_weight: 0.30`) was live. Top composite 0.4094 vs the 0.45 threshold.
+  **The threshold was not lowered.** Triage by disposition instead: **9 `ROUTE_FOR_EXISTING`**
+  (candidate geometry for routeless rows → human routes-repo PR; the run's real value), 2
+  `FRAGMENT_OF_EXISTING`, 10 `DISCOVERY_CANDIDATE` (match each to an existing row under
+  another name first). Do NOT read the 0 overlaps as "GEM is missing all 21".
 
 ### Discovery (Leg B, 2026-07-15: 7 candidates → 4 new rows / 3 monitor)
 

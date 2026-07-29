@@ -19,6 +19,7 @@ python scripts/fetch_overpass.py --iso LY --substance gas --include-lifecycle \
 | `gas` (Libya) | `osm-ly-gas.geojson` | 6 | 2026-07-28 |
 | `gas_iq` (Iraq) | `osm-iq-gas.geojson` | 52 | 2026-07-28 |
 | `oil_iq` (Iraq) | `osm-iq-oil.geojson` | 246 | 2026-07-28 |
+| `gas_eg` (Egypt) | `osm-eg-gas.geojson` | 21 | 2026-07-29 |
 | (reference) all Libya | `osm-ly-all.geojson` | 545 | 2026-07-28 |
 
 Adding a country = one fetch + one `datasets:` entry. No code.
@@ -40,7 +41,10 @@ Adding a country = one fetch + one `datasets:` entry. No code.
   does not. (`:` is not a regex metacharacter — do not escape it.)
 - **`osm_id_key` is NOT unique.** It is built from a merged way's contributing OSM ids, and
   two differently-merged features can land on the same key (Iraq gas: 3 colliding pairs;
-  Iraq oil: 12). Because `ref_id` is the geometry-sidecar key, a collision silently
+  Iraq oil: 12; Egypt gas: 3 features on one key —
+  `w1324000712_1324000713_1324000717`, a Y junction whose three branches all merge from
+  the same way set, so the key cannot tell them apart). Because `ref_id` is the
+  geometry-sidecar key, a collision silently
   *overwrote* one trace and scored both records against the survivor —
   `osm:gas_iq:w1526687293_1526687294` carried a 0.476 km and a 0.095 km trace with
   identical containment and IoU. `ingest.py` now suffixes duplicates `#2..` and warns; the
@@ -150,3 +154,27 @@ coverage** — a 0.1–0.5 km stub matched to a 100 km row corroborates *locatio
 else; never read one as length or extent evidence. And Iraq's binding constraint on every
 source's matchability is still **missing GEM geometry**, the same lesson as GulfPub Iraq
 (`notes/escalation-2026-07-28-gulfpub-iraq-match-quality.md`).
+
+## Coverage reality check — Egypt, 2026-07-29
+
+**Between Libya's null and Iraq's thin-but-usable, and the worst name coverage yet.** The
+`--substance gas --iso EG` pull returns **21 features from 24 ways, 476.6 km total**, all
+`lifecycle=operating`. Eleven carry real length (106.7 / 77.6 / 69.1 / 61.8 / 61.5 / 52.8 /
+28.5 / 11.6 / 3.5 / 1.5 / 0.7 km) and 10 are <0.5 km stubs — so unlike Libya there is real
+trunk geometry here. But the attributes are empty: **0 of 21 named, 0 with diameter, 0 with
+operator.**
+
+The run returned **0 overlaps** and raised both `MATCH_QUALITY` escalations, which is the
+expected reading, not a defect: 0.0% of reference records are named and only 39.5% of GEM
+Egypt gas rows have a drawn route (49 of 78 are `no route`, 13 more `very low`), so the
+name and geometry axes are both dead and the admin-area signal — live on 52.4% of records,
+via `geoarea_weight: 0.30` on `gas_eg`, the same override `gas_iq`/`oil_iq` carry — is
+alone. Top composite reached 0.4094 against the 0.45 threshold.
+
+**The threshold was NOT lowered and the weight was not tuned past the documented 0.30.**
+The 21 unmatched features are triaged by disposition instead, which is what the disposition
+model is for: **9 `ROUTE_FOR_EXISTING`** (candidate geometry for routeless GEM rows — the
+run's real value, and a human routes-repo PR, never an auto-replacement), **2
+`FRAGMENT_OF_EXISTING`**, **10 `DISCOVERY_CANDIDATE`** (each still needs matching to an
+existing row under another name before it is treated as a miss). Do not read the 0 overlaps
+as "GEM is missing all 21".

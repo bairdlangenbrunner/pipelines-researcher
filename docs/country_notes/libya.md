@@ -138,13 +138,33 @@ not the tracker tab.
   the source's "Mellitah" was the operator, and the line is a 4in backup feed
   entirely inside the Abu Attifel field.
 
-## Deliverable
+## Deliverables — THREE files to work, not one
 
-`batches/libya-gas/deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`
-(gitignored — regenerate from `batches/libya-gas/staging/qc/` if missing). **Work from
-the ACTIONS file**, not the per-leg workbooks: 89 open decisions, 229 paste-ready
-backend cell units, 65 operator/owner units, 1 new row, 97 wiki updates, 51 open flags.
-Both READMEs carry an `ESCALATIONS` row listing the five class-level rulings needed.
+`batches/libya-gas/deliverables/` (all gitignored — regenerable from staging):
+
+1. `pipelines_batch_20260728_1235_ET_libya-gas_handoff-actions.xlsx` — **the main surface.**
+   Work from the ACTIONS file, not the per-leg workbooks: 89 open decisions, 229 paste-ready
+   backend cell units, 65 operator/owner units, 1 new row, 97 wiki updates, 51 open flags.
+   Both READMEs carry an `ESCALATIONS` row listing the five class-level rulings needed.
+   (`…_handoff-evidence.xlsx` is its audit trail, not a work surface.)
+2. `pipelines_batch_20260728_1148_ET_libya-gas_reconciliation-gulfpub.xlsx` and
+   `…_1149_ET_libya-gas_reconciliation-osm.xlsx` — **NOT subsumed by the handoff.** The
+   packet README's "Prior staged packets" line omits both recon dirs and it carries
+   `gulfpub_crosscompare=0`, so ~100 gas rows needing a decision (32 GulfPub overlaps, 8
+   additions, 18 GEM-only, 3 status conflicts, 36 ambiguous clusters; 5 OSM additions, 37
+   GEM-only) exist **only** in these two files. Do not archive them with the packet.
+   - The GulfPub file also carries `Oil_*` tabs (72 overlaps / 17 additions / 19 GEM-only)
+     because the recon ran `--commodity both`. Libya oil has never been swept, so that is
+     the only oil-facing output that exists for Libya — untriaged, and out of scope for
+     this gas batch.
+   - **⚠️ `Ref Length (km)` in the GulfPub file is MILES, ~38% short** — a dataset-wide
+     manifest defect found on 2026-07-29, not yet fixed. Use `Ref Geodesic (km)` instead and
+     treat no length disagreement as a finding:
+     `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+
+Archived 2026-07-29 as subsumed by the handoff (in `archive/`, not deleted): the 07-23
+`…_annual-indev.xlsx` (its `staging/annual` is a listed prior staged packet; 8 decisions
+carried) and `…_discovery.xlsx` (its single new row is the packet's `Gas_NewRows`).
 
 Ref work across the scope: 220 REFS_ADDED / 55 re-verified / 28 unresolved. Operator
 attribution went from 0 referenced rows to referenced on every row Leg 3 touched.

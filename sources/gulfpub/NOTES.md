@@ -22,9 +22,17 @@ cp     /abs/path/SDE.NG_Pipelines_Global.geojson            sources/gulfpub/data
   0.07–1713 (it's an ESRI projected shape-length in junk units). It's in
   `ignore_garbage_fields`. Real length = the `length`/`Length` attribute; the
   reliable length is `geodesic_km`, computed from the geometry by the engine.
-- **Oil length is in MILES** (`units.length_units: mi`); gas appears to be km. The
-  geometry-derived `geodesic_km` is the cross-check the matcher prefers, so a wrong
-  unit guess degrades gracefully. Re-confirm the gas unit if a fuller gas scrape lands.
+- **Length is in MILES for BOTH oil and gas.** Oil is configured correctly
+  (`units.length_units: mi`). **Gas is still configured as `km` and that is WRONG** —
+  re-confirmed 2026-07-29 on the Dec-2025 SDE scrape: median `geodesic_km ÷ Length` is
+  1.595 over 5,284 features, 74.5% within 10% of 1.609344 and only 3.2% near 1.0, and
+  reading Egypt's overlaps as miles lifts GEM agreement from 4% to 29% (±10%) with eight
+  hits inside 3%. **Canada is the exception** (median 0.943 — its block really is km), and
+  `length_units` is per-dataset with no per-country override, which is why the fix is a
+  decision and not yet applied. Full writeup, options and blast radius:
+  `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`. Until it is settled, use the
+  `Ref Geodesic (km)` column (computed from geometry, unaffected) and treat every
+  `Ref Length` cell in a shipped gas workbook as ~38% short.
 - **Oil vs gas schemas differ** (`project_na`/`Project`, `start`/`Start`,
   `start_date`/`Comm_1`, lowercase vs Title-case status) — absorbed by the two
   per-dataset `column_map`s + `status_map`s. This is exactly why the manifest exists.
