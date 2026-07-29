@@ -1,0 +1,256 @@
+{
+  "project_id": "P6042",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 3501,
+  "wiki": "https://www.gem.wiki/Guangxi_LNG_Terminal_Transport_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/duplicate. Add the two refs found below to Length/Diameter/Capacity/SegmentCost/Owner/Operator/Fuel/PipelineType/Start.",
+      "researcher_notes": "This is a REAL, correctly-classified project, not a GEM-only entity or a duplicate of anything else in the 43-row Guangxi roster (no other row shares its length/diameter/endpoints). Found the row's own official approval decree still live: Guangxi Development & Reform Commission document 桂发改油气〔2019〕1136号, '广西壮族自治区发展和改革委员会关于广西天然气支线管网项目河池-南丹天然气支线管道工程项目核准的批复' (approval of the Hechi-Nandan gas branch pipeline project), dated 2019-12-03. Confirmed via TWO independent access paths to the SAME underlying document: (1) an archive.org screenshot cited by the wiki page (https://archive.org/details/2023-09-30-211609), which I downloaded and read directly (it is an image, not text -- url_verifier necessarily FAILs a screenshot's substring check, so I visually confirmed the Chinese text myself); (2) the issuing agency's own gxzf.gov.cn page, live via Wayback (found through search, not the wiki page), which I fetched with curl and decoded as UTF-8 by hand -- url_verifier also FAILed this one on an encoding false-negative (requests auto-detected the wrong charset and mangled the CJK text), but my own UTF-8 decode shows the identical paragraph verbatim, including '113.56km' and '河池...南丹'. Document body: project unit 广西广投天然气管网有限公司 (project route: 河池市境内, 途径金城江、宜州、南丹县(区) -- i.e. Hechi city, via Jinchengjiang, Yizhou, to Nandan county, matching the segment's Hechi->Nandan framing); ~113.56km new pipeline (EXACT match to GEM's LengthKnown=113.56); new Nandan distribution station + 4 valve chambers; design throughput 5.15亿m3/年 = 0.515 bcm/y (GEM records Capacity=0.52 bcm/y -- ~1% rounding difference, not material); design pressure 4.0MPa; diameters DN300 (Hechi station-Nandan station) and DN250 (Nandan station-downstream gas gate station) (EXACT match to GEM's Diameter='300/250' mm); total investment ~41,346万元 = RMB 413,460,000.00 (EXACT match to GEM's SegmentCost). A THIRD wiki-cited screenshot (https://archive.org/details/2023-09-30-212740) is the cover page of this same project's EIA report ('河池-南丹天然气支线管道工程环境影响报告书'), which names the construction unit as 广西燃气集团有限公司 (Guangxi Gas Group) rather than 广西广投天然气管网有限公司 -- likely an upstream parent/predecessor entity in the corporate structure (Guangxi's gas-network assets have been reorganized more than once during PipeChina's provincial-network consolidation); noting as a caveat, not a contradiction, since the approval decree (the more specific, later-stage document) names the same operator GEM already records. StartYear1=2022/StartMonth1=9 and Status=operating are independently corroborated by a separate, different-origin source -- see status_reviews. Two open caveats: (1) I could not independently confirm the exact village-level endpoints (Podi Village/Dongjiang Town and Weiyong Village/Nandan County) beyond the county/prefecture-level route the approval decree gives; (2) the existing Status [ref] cell already holds a live, correct citation (archive.org/details/2023-09-30-212529) that url_verifier's existing_ref_checks flagged as failing 'operating' -- that is a false negative from the same image-vs-text problem, not evidence the ref is wrong; I viewed the underlying screenshot myself and it fully supports 'operating' (see status_reviews).",
+      "proposed_refs": [
+        "https://archive.org/details/2023-09-30-211609",
+        "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Clear or correct FuelSource -- it currently just restates the pipeline's own name, which the schema gotcha explicitly bans (FuelSource must name the upstream field/plant feeding the line, never the line itself).",
+      "researcher_notes": "GEM's FuelSource for this row is 'Guangxi Gas Pipeline Network Hechi Branch' -- i.e. the pipeline's own name/segment, not an upstream gas field or plant. docs/reference/gem_schema.md's own gotcha section says exactly this pattern is wrong ('FuelSource...is not the commodity/fuel type...When researching FuelSource, find the named origin field/facility; if you can't attribute one, leave it blank and note why -- do not default it'). None of the three sources I read for this row (2019 approval decree, 2022 news article, EIA cover page) name a specific upstream field/plant/import terminal feeding the Hechi-Nandan branch specifically -- the broader Guangxi provincial network draws on a mix of West-East Gas Pipeline Line 2 supply and Beihai LNG imports, but attributing one specific source to this one branch without a document that actually says so would be a fabrication. Leaving FuelSource unresolved (blank) is the correct move per the schema's own instruction, rather than keeping the current self-referential value.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-211609"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Approval decree describes the project as building ~113.56km of 天然气管道 (natural gas pipeline). url_verifier FAILs on this URL because it is an archive.org screenshot image, not extractable text; I read the image directly and confirmed the wording."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-211609"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Inferential, not literal: the decree describes a 4.0MPa branch running from a Hechi distribution station to a new Nandan distribution station and onward to a downstream gas gate station -- a high-pressure branch feeding city-gate/distribution infrastructure, consistent with GEM's 'transmission' classification used across every other row in this Guangxi cluster. No source uses the literal word 'transmission'."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2022", "StartMonth1": "9"},
+      "primary_value": "2022",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-212529"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-212529", "ok": false, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "河池日报 (Hechi Daily), 2022-09-14: '大任产业园管输天然气正式通气' -- on 2022-09-13 the Da Ren industrial park held its gas-connection ceremony, explicitly naming the '河池-南丹天然气支线管道工程（大任段）' (this project's Da Ren section, 15.5km) as the first commissioned segment of Guangxi Gas Group's county-to-county buildout. Supports StartYear1=2022/StartMonth1=9. url_verifier FAILs (screenshot image); I read it directly."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "0.52", "CapacityUnits": "bcm/y"},
+      "primary_value": "0.52",
+      "proposed_refs": [
+        "https://archive.org/details/2023-09-30-211609",
+        "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml"
+      ],
+      "verifications": [
+        {"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Decree gives design throughput as 5.15亿m3/年 = 0.515 bcm/y. GEM records 0.52 -- a ~1% rounding difference, not a material disagreement; keeping GEM's value with this ref. Confirmed the SAME decree from two origins (an archive.org screenshot and the issuing agency's own gxzf.gov.cn page via Wayback); both FAIL url_verifier's automated screen (image content / encoding auto-detect mangling CJK respectively) -- I manually decoded/read both and they are identical and match."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "113.56", "LengthKnownUnits": "km"},
+      "primary_value": "113.56",
+      "proposed_refs": [
+        "https://archive.org/details/2023-09-30-211609",
+        "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml"
+      ],
+      "verifications": [
+        {"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Decree: '新建约113.56km的天然气管道' -- exact match. Same two-origin confirmation as Capacity above."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "300/250", "DiameterUnits": "mm"},
+      "primary_value": "300/250",
+      "proposed_refs": [
+        "https://archive.org/details/2023-09-30-211609",
+        "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml"
+      ],
+      "verifications": [
+        {"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Decree: '管径分别为DN300(河池分输站-南丹分输站)和DN250(南丹分输站-下游燃气门站)' -- exact match to GEM's dual-diameter '300/250'. Same two-origin confirmation as Capacity above."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "413460000.00", "SegmentCostUnits": "RMB"},
+      "primary_value": "413460000.00",
+      "proposed_refs": [
+        "https://archive.org/details/2023-09-30-211609",
+        "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml"
+      ],
+      "verifications": [
+        {"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250702171024/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198568.shtml", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Decree: '本项目总投资约41346万元' = RMB 413,460,000 -- exact match. Same two-origin confirmation as Capacity above. Decree does not state a cost year; leaving SegmentCostYear untouched."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Podi Village, Dongjiang Town, Jinchengjiang District", "EndLocation": "Weiyong Village, Nandan County"},
+      "primary_value": "Podi Village, Dongjiang Town, Jinchengjiang District",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-211609"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Decree confirms the route only at prefecture/county level: '项目建设地点位于河池市境内,途径金城江、宜州、南丹县(区)' (Hechi city, via Jinchengjiang, Yizhou, to Nandan county) -- consistent with StartPrefecture=Hechi/EndPrefecture=Hechi and Start in Jinchengjiang District/End in Nandan County. I could NOT independently confirm the exact village-level names already on the sheet (Podi Village/Dongjiang Town, Weiyong Village) -- targeted searches for those specific village names turned up nothing. Staging this ref for the district/county level only; flagging tier=low because it doesn't reach village-level precision."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "oo_sheet_row": 4760,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"QCCOwner(业主单位)": "广西广投天然气管网有限公司"},
+      "primary_value": "广西广投天然气管网有限公司",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-211609"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Decree: '项目单位为广西广投天然气管网有限公司' -- exact match to the QCCOwner value already on the operators/owners tab. Caveat: the same wiki page's EIA-report screenshot (archive.org/details/2023-09-30-212740) names the construction unit as 广西燃气集团有限公司 (Guangxi Gas Group) instead -- likely a parent/predecessor entity given Guangxi's provincial gas-network reorganizations; the 2019 decree is the more specific, later document and matches GEM's existing value, so citing it."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "oo_sheet_row": 4760,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Guangxi Guangtou Natural Gas Pipeline Network Co Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Guangxi Guangtou Natural Gas Pipeline Network Co Ltd",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-211609"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-211609", "ok": false, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same decree names 广西广投天然气管网有限公司 as the sole project unit -- supports 100% ownership by this entity. No other owner named in any source I found."
+    },
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Not filling: the CURRENT value ('Guangxi Gas Pipeline Network Hechi Branch') is itself wrong per the gem_schema.md FuelSource gotcha (must name the upstream field/plant, never the line's own name). No source I found names a specific upstream field/plant/terminal feeding this particular branch, so per the schema's own instruction I am leaving it unresolved rather than fabricating an upstream source. See validity[1] (attribution concern)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Hechi-Nandan Branch Pipeline",
+      "sheet_row": 3501,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2022-09",
+      "staleness_rule": "",
+      "proposed_refs": ["https://archive.org/details/2023-09-30-212529"],
+      "verifications": [{"url": "https://archive.org/details/2023-09-30-212529", "ok": false, "contains_value": true}],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The sheet's own current_ref for Status (archive.org/details/2023-09-30-212529) is a screenshot of 河池日报 (Hechi Daily), 2022-09-14: '大任产业园管输天然气正式通气' -- on 2022-09-13 the Hechi-Nandan gas branch pipeline's Da Ren section held its official gas-connection ceremony (explicitly named as this project by segment name). This directly supports Status=operating; the sheet's automated existing_ref_checks flagged this ref as failing (200 but 'operating' not found as a substring) purely because the citation is an archive.org screenshot IMAGE, not extractable text -- I downloaded and read the image myself and it fully supports the status. I also found a separate 2023-12-05 industry article (shpgx.com) describing the operator (广投管网/Guangtou Pipeline Network Co) as having achieved gas connectivity to 11 cities including 河池/Hechi, consistent with continued operation well past the 2022 commissioning. No evidence of the line being shut down, reversed, or reclassified. Searched for a full-line completion/acceptance notice beyond the 15.5km Da Ren section but found none newer than the 2022 commissioning; that does not indicate dormancy -- the project's own 2019 approval decree, 2022 partial-commissioning news, and 2023 network-coverage description form a consistent, still-current picture. No dormancy rule applies (status is operating, not proposed/shelved)."
+    }
+  ],
+  "summary": "P6042 (Guangxi Gas Pipeline Network, Hechi-Nandan Branch Pipeline) is real and correctly classified -- confirmed via a live 2019 Guangxi gov approval decree (two independent access paths) that exact-matches GEM's length/diameter/cost and near-matches capacity, plus a separate 2022 news article confirming operating status and StartYear1/Month1=2022/9; filled 9 missing refs (Fuel, PipelineType, Start, Capacity, Length, Diameter, SegmentCost, Operator, Owner), left Location at low-confidence district-level only, and flagged FuelSource as an attribution concern (current value self-referentially repeats the pipeline's own name rather than naming an upstream source, per the schema's own gotcha) -- UNRESOLVED, recommend blanking it."
+}

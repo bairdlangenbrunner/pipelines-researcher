@@ -1,0 +1,77 @@
+{
+  "project_id": "P7657",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4056,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Liucheng Branch pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Real project, correctly classified and routed. Swap all three [ref] cells that currently cite dead links (Status/Construction/Start/Diameter ref -> njsggzy.cn ConnectTimeout; Fuel/PipelineType ref -> fgw.gxzf.gov.cn ConnectTimeout; Proposal/Capacity/Pressure/Length/Location/SegmentCost ref -> fgw.liuzhou.gov.cn 404) for the three verified sources below via the ref-gap pass.",
+      "researcher_notes": "This is the '柳城天然气支线管道工程' (Liucheng natural gas branch pipeline project), part of the 广西天然气支线管网项目 (Guangxi Natural Gas Branch Pipeline Network Project). All three URLs currently cited on this row's ref cells are dead: http://www.njsggzy.cn:180/... (ConnectTimeout, direct curl and WebFetch both refused/timed out, no Wayback snapshot), http://fgw.gxzf.gov.cn/.../t2198570.shtml (ConnectTimeout to the subdomain even though the parent domain gxzf.gov.cn responds; no Wayback snapshot), and http://fgw.liuzhou.gov.cn/.../t20200817_1926352.shtml (base domain fgw.liuzhou.gov.cn is live/200, but this specific document path 404s; no Wayback snapshot). None of the three has any archive.org capture, so the underlying documents cannot be recovered as-cited. Independent re-verification: found and read (raw HTML fetch, not AI-summarized) two live, unrelated-origin sources that describe the SAME project: (1) www.liucheng.gov.cn (Liucheng County government portal, notice dated 2019-06-14): '建设单位：广西广投天然气管网有限公司。建设项目：广西天然气支线管网项目柳城天然气支线管道工程。项目概况：柳城天然气支线管道建设，在柳城境内管道长度约28km，新建柳城分输站和社冲阀室' (owner Guangxi Guangtou Natural Gas Pipeline Network Co.; ~28km of pipe within Liucheng County; builds a new Liucheng distribution station + Shechong valve chamber -- the Liucheng distribution station matches the sheet's EndLocation field, which names '...柳城分输站' at Shapu Town, Liucheng County). (2) www.gxtngs.com.cn (the EIA consultancy engaged by the builder, two separate notices dated 2019-05-31 and 2019-09-16): '本工程位于柳州市柳南区和柳城县，新建管道线路全长约46km，扩建柳州分输站，新建柳城分输站、洛满阀室和社冲阀室' (project spans Liunan District, Liuzhou and Liucheng County; total new pipeline ~46km; expands the Liuzhou distribution station and builds the Liucheng distribution station + Luoman valve chamber + Shechong valve chamber). Total length ~46km from an independent EIA-consultancy notice is a close match to GEM's LengthKnown=45km, and the Liunan-District-to-Liucheng-County routing matches GEM's StartLocation ('Liunan Taiyang Town') -> EndLocation ('柳城分输站' / Liucheng distribution station). Two independent, non-GEM origins (county government + EIA firm) agree on existence, route, and approximate total length -> existence/route/length verdict is high confidence despite every originally-cited ref being dead. PipelineType='transmission' is reasonable for a ~45km, cross-county, mid-pressure (4 MPa per sheet) branch line feeding city-gate distribution stations; no basis found to dispute. Checked the 43-pipeline Guangxi roster for a duplicate/relabel: no other row matches this route (Liunan Taiyang Town -> Liucheng) or this combination of length (45km)/diameter (323.9mm); P7656 shares the 323.9mm diameter but is only 8.9km/0.67 bcm/y and unrelated in route -- not a duplicate.",
+      "proposed_refs": [
+        "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml",
+        "http://www.gxtngs.com.cn/newsitem/30971",
+        "http://www.gxtngs.com.cn/newsitem/30942"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Liucheng Branch pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-source Diameter, Capacity, Pressure, SegmentCost, and Proposal/Construction/Start dates from a live document (try the NDRC-equivalent approval reply '广西壮族自治区发展和改革委员会关于...项目核准的批复', reply to 柳发改报字〔2019〕312号, or the full EIA report PDF referenced by www.gxtngs.com.cn/newsitem/30942) -- none of these figures could be independently corroborated in this pass.",
+      "researcher_notes": "Length and route corroborate (see the existence/route validity entry), but Diameter (323.9mm), Capacity (0.42 bcm/y), Pressure (4 MPa), SegmentCost (207,300,000 RMB, 2020), ProposalYear/Month (2020-03), ConstructionYear/Month (2020-05), and StartYear1/Month1 (2021-12) all rest solely on the three dead-link refs and could not be independently confirmed here. The two live replacement sources found (Liucheng county govt + gxtngs EIA notices, both dated 2019) are pre-construction environmental/social-risk disclosures and do not state diameter, capacity, pressure, cost, or exact approval/construction/startup dates. A follow-up web search surfaced what looked like a matching NDRC approval reply at fgw.gxzf.gov.cn/.../t10409859.shtml (same series as the dead-cited t2198570.shtml, referencing 柳发改报字〔2019〕312号) plus AI-summarized figures (45km, 4 MPa, 4.16亿m3/年 capacity) that looked suspiciously close to the sheet's own values; re-querying the identical search returned 'no results' for those exact figures, so I am treating that summary as unverified/possibly hallucinated and NOT citing it. fgw.gxzf.gov.cn itself times out from this environment (direct curl and WebFetch both fail to connect), so t10409859.shtml could not be independently read or verified live. Net: existence/route/length pass; the numeric specs and exact dates are unconfirmed pending a working source and should not be treated as independently verified.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Liucheng Branch pipeline",
+      "sheet_row": 4056,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Sino-Myanmar Gas Pipeline"},
+      "primary_value": "Sino-Myanmar Gas Pipeline",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource value is present with no ref (MISSING_REF). Could not independently confirm or dispute that this Liucheng branch's gas is sourced from the Sino-Myanmar pipeline within the available research budget (WebSearch quota was exhausted this session; the two live sources found describe construction/route/EIA process only and do not name a gas source). Left unresolved rather than fabricating a ref -- flag for the ref-gap pass."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Liucheng Branch pipeline",
+      "sheet_row": 4056,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2019-09",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "http://www.gxtngs.com.cn/newsitem/30942",
+        "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml"
+      ],
+      "verifications": [
+        {"url": "http://www.gxtngs.com.cn/newsitem/30942", "ok": true, "contains_value": true},
+        {"url": "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Newest independently-dated evidence found is the Sept 2019 EIA pre-approval notice (project moving toward regulatory approval, matches GEM's ProposalYear=2020 shortly following EIA approval). I could not find any post-construction news (commissioning, gas-flow, inauguration) dated after the sheet's own StartYear1=2021-12 to directly confirm current operating status -- WebSearch budget was exhausted and targeted queries for '竣工/投产/通气' (commissioning/put into service) news returned no results. The 'operating' status is not contradicted by anything found, and the dormancy/staleness rules in this workflow apply to proposed/shelved statuses, not operating ones, so there is no basis to downgrade. Recommend the ref-gap pass keep hunting for a post-2021 operational confirmation, but there is no evidence-based reason to change Status here."
+    }
+  ],
+  "summary": "P7657 (Liucheng Branch pipeline) is a real, correctly-classified, correctly-routed project (Liunan District, Liuzhou -> Liucheng County distribution station) confirmed via two independent non-GEM sources agreeing on ~46km total length (vs GEM's 45km) even though all three refs currently cited on the sheet are dead links with no Wayback capture; diameter/capacity/pressure/cost/exact dates remain unverified and FuelSource has no ref -- both flagged for the ref-gap pass."
+}

@@ -1,0 +1,53 @@
+{
+  "project_id": "P7660",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4059,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Hezhou Branch",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Retry sourcing this segment from a China-resident network/proxy (or once search quota resets) before treating it as confirmed; if still unreachable, downgrade confidence on all spec fields rather than leaving them at their current implied confidence.",
+      "researcher_notes": "All seven data points on this segment (Status, Capacity, Pressure, LengthKnown, Location, SegmentCost) cite ONE source: http://www.xpjylgwapp.net/zfxxgk/zfxxgkgl/fdzdgknr/hjjccf/hjyxpj/t11218502.shtml (a Hezhou-area government-information-disclosure portal, path pattern consistent with an EIA public-notice page: zfxxgk=government info disclosure, hjyxpj=environmental impact assessment). This domain resolves (154.80.201.184) but every connection attempt (curl, WebFetch, archive.org) times out / is refused from this network -- it appears to be geo-blocked to China-only traffic, not a dead or fabricated URL. Fuel and PipelineType cite a second source, https://news.bjx.com.cn/html/20210326/1144324-4.shtml (BJX is a real, well-known Chinese energy-news portal), but every fetch of that URL -- direct curl, WebFetch, and even the page's own just-created archive.org snapshot -- returns Alibaba Cloud's anti-bot JS challenge page (obfuscated 'acw_sc__v2' cookie-set script), not the article body; 0 occurrences of the plaintext string for Hezhou anywhere in the returned HTML. I could not get past this WAF through any available tool. WebSearch was unavailable for this task (session budget of 200/200 already exhausted by parallel sibling agents in this fan-out), and WebFetch against Bing/Baidu either returned unrelated forum results or a Baidu bot-captcha redirect, so I could not independently corroborate this segment's existence via a third route either. One structural point in the citation's favor: the bjx.com.cn URL's own date-in-path (20210326) matches the recorded ProposalYear/ProposalMonth (2021/3) exactly, which is a real (if weak) signal the ref was picked for the right reason rather than mis-cited. The segment's profile (small proposed branch, ~61 km, 0.03 bcm/y) is also stylistically consistent with sibling rows in the same 'Guangxi Gas Pipeline Network' family (P7654-P7690), which all appear to be sourced from the same class of municipal EIA disclosures -- so this is not an isolated oddity within the roster. Net: I found no roster duplicate (no other 'Hezhou' branch in the 43-pipeline list, no endpoint overlap), so this is not a relabel/double-count concern. But because I could not independently confirm either underlying source's content -- only that the domains are live and topically plausible -- I am flagging existence as unresolved rather than confirming it outright, per the standing rule that inaccessible-and-unverified sourcing is itself a flag, not a pass.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Hezhou Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No roster duplicate/relabel action needed; revisit only if the existence concern above resolves negatively.",
+      "researcher_notes": "Checked P7660 against all 42 other in-scope roster rows for a same-physical-pipe match (Hezhou endpoint, ~61.1 km length, ~0.03 bcm/y capacity). No other row names Hezhou or has an overlapping endpoint/length/capacity profile that would suggest this is a relabeled duplicate or a fragment of another segment already on the roster (e.g. P7654-P7690 all have distinct named endpoints -- Bobai, Xingbin, Liudong, Long'an, Guiping, Xincheng, Daren, Tieshan Port, Hepu Baisha -- none of which is Hezhou). Classification (transmission, Fuel=Gas) is internally consistent with the rest of the batch even though I could not independently verify the specific citation content (see the existence finding above).",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Hezhou Branch",
+      "sheet_row": 4059,
+      "current_status": "proposed",
+      "verdict": "stale",
+      "proposed_status": "shelved",
+      "proposed_changes": {
+        "Status": "shelved",
+        "ShelvedCancelledType": "Presumed"
+      },
+      "evidence_date": "2021-03",
+      "staleness_rule": "2y->shelved",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "The only dated evidence tied to this segment is the ProposalYear/Month (2021-03), matching the bjx.com.cn article's URL date. I could not access that article's actual content (WAF-blocked, see validity notes), could not reach the government EIA-disclosure source (geo-blocked), and WebSearch was unavailable this session (budget exhausted by sibling fan-out agents) and Bing/Baidu WebFetch attempts turned up nothing relevant. I found zero independent evidence of any progress (construction start, updated EIA filing, local news) on this specific Hezhou branch since March 2021 -- more than 5 years of apparent dormancy on a 'proposed' project. That exceeds the 2-year proposed-with-no-progress threshold, so per the dormancy rule this should move to 'shelved' with ShelvedCancelledType=Presumed and no fabricated ref. Recommend re-checking once a working route into the two cited sources (or fresh search budget) is available, since a positive hit there could either confirm continued dormancy or surface real progress that would override this presumption."
+    }
+  ],
+  "summary": "P7660 (Hezhou Branch, Guangxi Gas Pipeline Network): existence/spec unresolved -- both cited sources (a geo-blocked Hezhou gov EIA portal and a WAF-blocked bjx.com.cn article) were unreachable through every tool available this session, so all seven data points resting on them are effectively single-source-unverified, not independently confirmed; no roster duplicate found. Status flagged stale: proposed since 2021-03 with zero independent evidence of progress since (>2y dormancy) -> propose shelved (Presumed). No UNRESOLVED fills attempted (Diameter left blank, no accessible source to fill it)."
+}

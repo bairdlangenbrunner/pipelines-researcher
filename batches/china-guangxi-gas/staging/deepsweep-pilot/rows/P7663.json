@@ -1,0 +1,45 @@
+{
+  "project_id": "P7663",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4062,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Teng County Branch",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Re-verify via a JS-capable browser (the WAF blocks all automated fetch) or locate a mirror of the source article; if a Teng County gas branch cannot be located inside it, treat this row as unsupported and consider Discovery/removal review.",
+      "researcher_notes": "P7663 has NO gem.wiki page (wiki field empty in worklist; absent from wiki_citations.json, unlike 19 of its 20 harvested Guangxi siblings), so there is no wiki-side citation list to cross-check for this specific segment -- the ONLY support is the row's own current_ref, https://news.bjx.com.cn/html/20210326/1144324-4.shtml, used identically for Status/Fuel/PipelineType/ProposalYear. That same URL is the shared citation for at least 12 other Guangxi branch rows in this batch (P7652 Luchuan, P7654 Nanning-Fusui, P7655 Xingye, P7656 Sinopec Nanning-Zhongran Gate, P7658 Binyang, P7659 Wuzhou, P7660 Hezhou, P7661 Fangchenggang, P7662 Guilin-Yangshuo-Lipu, P7664 Beihai Tieshan Port, P7665 Donggang Industrial Park, P7666 Beihai), and cross-referencing the gem.wiki citation metadata for those siblings (P4487's reference list, cite_note-:5-28) recovers the article's actual title: '附171个电源项目全名单！《广西“能源网”建设2021年工作推进方案》发布 - 北极星火力发电网' (bjx.com.cn thermal-power channel, 2021-03-26) -- i.e. 'Attached: full list of 171 POWER-SOURCE (electricity generation) projects! Guangxi \"Energy Network\" Construction 2021 Work-Advancement Plan released'. The headline topic is power-generation projects, not gas pipelines, so on its face the citation does not self-evidently name any gas pipeline, let alone a 'Teng County' branch -- though a provincial 'energy network' work plan could plausibly bundle a gas-pipeline annex on a later page (this URL is explicitly page 4 of a multi-page article, consistent with a trailing table of gas-network sub-projects), which is the charitable reading. I could NOT resolve which reading is correct because the page itself is unreadable: curl (plain and Googlebot UA), WebFetch, and the r.jina.ai reader proxy all return an Aliyun WAF slider-CAPTCHA challenge page instead of content (title 'Access Verification' / '百度安全验证'-class block), and archive.org has NO historical snapshot of this URL (CDX query empty) -- the one 'available' snapshot the Wayback API reported was triggered live today (timestamp 20260729) and is the same WAF challenge page, not real content. This matches url_verifier.py's own documented bot-wall false-negative pattern. The url_verifier existing_ref_checks in the worklist already show 'value not found' for Status='proposed' and ProposalYear='2021' on EVERY one of the ~13 sibling rows that cite this URL (100% failure), while Fuel/PipelineType checks all read ok only because they weren't given a value string to search for -- i.e. the failure is uniform across all rows and looks like a page-access problem, not evidence specific to Teng County being wrong. Independent corroboration attempts all failed for tooling reasons this session: WebSearch quota was exhausted (200/200) mid-task; DuckDuckGo, Baidu, and 360so.com all returned their own bot-challenge pages to a plain curl; WebFetch against Google/Bing search URLs returned no usable result snippets for '藤县 天然气管道' (Teng County natural gas pipeline) queries. Net result: I can neither confirm nor refute that a Teng County Guangxi gas branch exists -- the single citation on file is unreadable to any automated tool available this session and no second, independent source could be located. Per the standing rule that an unverifiable/GEM-only-support row is an existence flag, I am flagging it, but note this reads as a tooling/access-blocked citation rather than positive evidence of fabrication -- recommend a manual browser-based re-check of the source (or of a possible mirror/reprint of '广西“能源网”建设2021年工作推进方案' elsewhere) before deciding whether to keep, reclassify, or drop this row. No other roster entry names Teng County, so this is not a duplicate of an existing Guangxi row.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Teng County Branch",
+      "sheet_row": 4062,
+      "current_status": "proposed",
+      "verdict": "unclear",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "",
+      "staleness_rule": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://news.bjx.com.cn/html/20210326/1144324-4.shtml",
+          "ok": false,
+          "contains_value": false
+        }
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cannot determine current true status. The only date on file, ProposalYear=2021 (March), comes from the same WAF-blocked, unverifiable bjx.com.cn citation flagged in the validity finding -- if that 2021 proposal date is accurate, the row has been sitting at 'proposed' for ~5 years with LastUpdated only as recent as 2025-08-25 (this batch import, not a fresh status check), which would trigger the >=2y proposed->shelved dormancy rule. But I have no independent confirmation the project (or its 2021 date) is real in the first place, so applying that dormancy math would compound an unverified premise with an unverified inference. Searched (Chinese and English) for any independent news of a Teng County / 藤县 gas pipeline via curl/WebFetch against Bing, Google, DuckDuckGo, Baidu, and 360so.com -- all either bot-walled the query or returned no relevant results; WebSearch tool quota was exhausted this session before I could run a broader query set. Recommend re-running this status review once (a) the source article can be read via a real browser or a mirror is found, and (b) WebSearch capacity is available, before committing to a stale/shelved call."
+    }
+  ],
+  "summary": "P7663 (Teng County Branch, Guangxi Gas Pipeline Network) -- existence concern: its sole support is a bjx.com.cn URL shared across ~13 sibling rows whose own gem.wiki citation metadata reveals the article is actually headlined as a list of 171 POWER-GENERATION projects (not gas pipelines), and the page cannot be read by any tool available this session (Aliyun WAF slider CAPTCHA; no Wayback history; search engines all bot-walled); no independent corroboration found. No fills staged (nothing to safely add) and status verdict is 'unclear' rather than a forced stale/shelved call. UNRESOLVED: existence of the Teng County Branch itself, and therefore its current Status."
+}

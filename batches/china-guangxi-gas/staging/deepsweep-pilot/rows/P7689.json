@@ -1,0 +1,90 @@
+{
+  "project_id": "P7689",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4088,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Daren-Nandan Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence/classification/specs — retrieved the actual government source line item (via Wayback Machine, since fgw.gxzf.gov.cn itself ConnectTimeouts from this environment) and it matches GEM almost exactly.",
+      "researcher_notes": "GEM's cited ref (http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml) times out live from this sandbox, but the Wayback Machine has a clean 200 snapshot (2025-04-13) confirming the page is genuine: Guangxi Zhuang Autonomous Region Development & Reform Commission (DRC) notice '关于印发《广西能源基础设施建设2023年工作推进方案》的通知' (issued 2023-04-03, drafted 2023-03-25, doc# 桂发改电力〔2023〕205号). That notice links six attachment tables; Attachment 5 ('附表5：全区2023年能源项目投资计划表（油气及煤炭储运）', oil/gas & coal storage-transport investment table) is also Wayback-archived (2025-04-13, HTTP 200, valid .xlsx opened directly with openpyxl) and contains item #21: '大任—南丹天然气支线项目' (Daren-Nandan gas branch-line project) — an EXACT match to the GEM row: '新建输气管道约97公里...设计压力4.0兆帕，管径DN300' (new-build ~97km gas transmission pipeline, design pressure 4.0 MPa, diameter DN300) = LengthKnown 97 km, Diameter 300mm, Pressure 4.0 MPa all confirmed exact; 项目总投资 4.25亿元 = 425,000,000 RMB matches SegmentCost exactly; 项目业主 (project owner) 广西燃气集团有限公司 = 'Guangxi Gas Group Co Ltd' matches Owner1/Operator exactly. This is a real, correctly-classified (new transmission pipeline, not a gathering/feeder line) project — existence and classification confirmed. Checked the full 43-pipeline Guangxi roster for a name/route match — no other PID names Daren or Nandan; this is not a relabeling/duplicate of another row. Single-origin primary source (one government table row, but highly specific — includes a named responsible official and phone number, i.e. not a generic aggregate mention) so tier=medium rather than high; see separate concern entries below for two things this same source contradicts on GEM's sheet (location and proposal date).",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250413122044/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml",
+        "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Daren-Nandan Branch",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartPrefecture/District and EndPrefecture/District from 'Laibin' to 'Hechi' (河池市). Also worth revisiting StartLocation 'Daren' — likely refers to the 市大任产业园 (Municipal Daren Industrial Park), a Hechi-city-level industrial park, not a place in Laibin.",
+      "researcher_notes": "GEM lists BOTH StartPrefecture/District and EndPrefecture/District as 'Laibin' for this row (and the worklist itself flags the Location [ref] cell as 'irregular': true). But GEM's own cited source — the same DRC 2023 investment-plan table row 29 — lists '项目管理层级' (jurisdiction/management level) as 河池市 (Hechi City) and '主要责任单位' (responsible approving unit) as 河池市发展改革委 (Hechi Municipal DRC), not Laibin. Nandan County (南丹县) is administratively one of Hechi City's counties, not Laibin's — Laibin is a separate, non-adjacent prefecture-level city in central Guangxi. Independent corroboration: a 163.com news article (www.163.com/dy/article/I1LS14H30552R5WK.html, published 2023-04-06, reporting on the same DRC notice) explicitly lists '大任—南丹天然气支线项目' among Hechi City's slate of energy projects ('还建设了金城江电站工程、大任—南丹天然气支线项目等项目' — grouped with the Jinchengjiang [a Hechi urban district] power project). A further web search surfaced a Hechi city-government news item referencing '河池·南丹工业园区、市大任产业园' (Hechi-Nandan Industrial Park, Municipal Daren Industrial Park) in the same sentence — consistent with 'Daren' being a Hechi-city-level industrial park, likely in or near Jinchengjiang District, not a Laibin location. Net: both endpoints point to Hechi, not Laibin — this looks like a straightforward prefecture mix-up on the existing row.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx",
+        "https://www.163.com/dy/article/I1LS14H30552R5WK.html"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Daren-Nandan Branch",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-derive ProposalYear/ProposalMonth. GEM has ProposalYear=2023 / ProposalMonth=12, but in the cited source table Dec-2023 ('2023-12') is the '开工年月' (planned construction-START month), a different field entirely, while the document that actually proposes/lists the project was issued 2023-04-03 (drafted 2023-03-25). It looks like the construction-start-month cell was copied into ProposalMonth by mistake. Recommend ProposalYear stays 2023 but ProposalMonth is corrected to 03 or 04 (matching the DRC notice's issuance), and — if the schema has a ConstructionYear/ConstructionMonth style field — the Dec-2023 value be moved there instead (flagged as planned, not confirmed-started; see status_reviews entry, no independent evidence construction actually began in Dec 2023 was found).",
+      "researcher_notes": "Row 29 of the same investment-plan table has both '开工年月' (construction start) = 2023-12-01 and '竣工年月' (completion) = 2024-12-01, plus '2023年建设任务' (2023 construction task) = '施工入场，开展项目征地' (enter construction site, carry out land acquisition) and '项目代码' (project code) = '未取得' (not yet obtained) — i.e. as of this March/April-2023 document the project hadn't even received a formal project code, consistent with a still-early 'proposed' project whose Dec-2023 date is a FORWARD-LOOKING construction-start target, not the date it was proposed. GEM's ProposalMonth=12 (December) reads as if it were lifted from that construction-start cell rather than from the document's own issuance date.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Daren-Nandan Branch",
+      "sheet_row": 6057,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Guangxi Gas Group Co Ltd", "OperatorLocalLanguage": "广西燃气集团有限公司"},
+      "primary_value": "Guangxi Gas Group Co Ltd",
+      "proposed_refs": [
+        "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Operator [ref] on the operators/owners tab was MISSING_REF though the value was already populated. Row 29 '项目业主' (project owner) field = '广西燃气集团有限公司' (Guangxi Gas Group Co Ltd), exact match — same source already cited for Owner [ref] on this row (the url_verifier substring check fails on this URL because it's a binary .xlsx, a documented false-negative pattern for compressed/binary files; I opened the file directly with openpyxl and confirmed the cell text myself, and the URL itself resolves 200 via Wayback)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Daren-Nandan Branch",
+      "sheet_row": 4088,
+      "current_status": "proposed",
+      "verdict": "stale",
+      "proposed_status": "shelved",
+      "proposed_changes": {"Status": "shelved", "ShelvedCancelledType": "Presumed"},
+      "evidence_date": "2023-04",
+      "staleness_rule": "2y->shelved",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Newest independent evidence found is from April 2023 (the DRC notice, drafted 2023-03-25/issued 2023-04-03, plus a 2023-04-06 163.com writeup of the same announcement) — at that point the project had 未取得 project code (not yet obtained), was only slated to 'enter the construction site and begin land acquisition' in 2023, with a planned construction window of Dec-2023 to Dec-2024. Searched (WebFetch-routed DuckDuckGo/Bing, plus 163.com follow-through; the session's direct WebSearch tool budget was already exhausted by parallel fan-out agents before I could use it) for any later Guangxi DRC energy-plan update (2024/2025/2026), construction-start news, land-acquisition completion, or commissioning of this specific branch — found nothing beyond reprints of the same April-2023 notice. No independent evidence surfaced of the project reaching construction, being shelved, or being cancelled in the ~3.3 years since. Applying the dormancy rule for a still-'proposed' row with no progress found >=2y: presumed shelved. This is an inference, not a sourced status change — no ref attached per standing rule 2. Recommend a follow-up check with a fuller Chinese-language search (ideally a native web-search tool, or the 2024/2025 editions of '广西能源基础设施建设XX年工作推进方案' from fgw.gxzf.gov.cn, which I could not locate) before finalizing shelved vs. still-proposed-but-delayed."
+    }
+  ],
+  "summary": "P7689 (Daren-Nandan Branch) is a real, correctly-classified gas transmission project — length/diameter/pressure/cost/owner all confirmed exact against GEM's own cited DRC 2023 investment-plan source (read via Wayback since the live .gov.cn times out) — but StartPrefecture/District & EndPrefecture/District ('Laibin') look wrong (source + independent news both place it in Hechi/河池), ProposalMonth=12 looks miscopied from the source's construction-start field rather than its issuance date, and with no independent progress evidence since April 2023 the still-'proposed' Status is stale enough to presume shelved."
+}

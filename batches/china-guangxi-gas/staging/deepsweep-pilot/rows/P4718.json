@@ -1,0 +1,129 @@
+{
+  "project_id": "P4718",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "sheet_row": 2620,
+  "wiki": "https://www.gem.wiki/Guangxi_LNG_Terminal_Transport_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Liuzhou Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Keep row; note StartYear1=2013 as unconfirmed-but-plausible (one weak source implies 2015 construction start for a differently-scoped 'Liuzhou' branch project) and Length/Diameter (29km/610mm) as independently unverified (not contradicted, just not found in any open source). No action needed on existence, classification, or duplicate status.",
+      "researcher_notes": "EXISTENCE/DUPLICATE/CLASSIFICATION checked first, per priority order. (1) The gem.wiki page's own 53-item reference list was read in full for leads (never cited): NOT ONE citation on the page mentions Liuzhou/Liudong/Luonan/Liunan (checked for every variant: 柳州, 柳南, 罗村, 柳东) — the page's citations are almost all for OTHER segments sharing this same wiki article (南宁-凭祥, 桂林-灵川-兴安, 河池-南丹, 来宾-武宣-象州-金秀, 梧州-峑溪, 南宁-崇左, etc.). A row whose only wiki support is a generic aggregate page that never names it is an existence flag by the brief's own rule, so I went straight to independent open-web search. (2) Found a Tier-1 independent confirmation: the PRC National Development and Reform Commission's official Dec-2023 cross-provincial gas pipeline tariff table (ndrc.gov.cn PDF, read directly — not via the lossy substring extractor) lists as its own line item #15: '广西LNG外输管线' (Guangxi LNG External Transmission Pipeline), start 广西北海 (Beihai), end 广西柳州 (Liuzhou), with named branches '柳东支线、粤西支线、桂林支线' (Liudong Branch, Yuexi/West-Guangdong Branch, Guilin Branch). '柳东支线' = Liudong Branch is an EXACT structural match to P4718's route (Liuzhou Transmission Station → Liudong Transmission Station) — this is real, officially tariffed infrastructure, not a phantom. (3) Second independent source: a Guangxi-bureau chinanews.com.cn article (2022-08-03, verified live + content-checked with a corrected UTF-8 decode after the verifier's default encoding auto-detect mis-flagged it as ISO-8859-1 — the raw bytes do contain 广西天然气管道有限责任公司, 柳州, 柳州东城燃气, 柳州中燃) confirms this same operator company actively supplies downstream Liuzhou gas retailers, and states the whole '广西LNG管道' network is now 735km through 7 cities. (4) DUPLICATE check against the roster: P4719 shares the identical start point (Liuzhou Transmission Station, Luoman Town, Liunan District) but is 155.7km/813mm vs P4718's 29km/610mm, and is very likely the network's separate, larger '桂林支线' (Guilin Branch, per the same NDRC list — corroborated by a 14th-Five-Year-Plan item accelerating a 'Guangxi LNG external pipeline Guilin branch (Liuzhou–Guilin)') — a genuinely different, longer, larger-diameter line to a different destination than P4718's short local spur into Liudong New Area (柳东新区), a well-known development district inside Liuzhou city itself. Different NDRC-named branches, different endpoints, different diameters — not a double-count. (5) CLASSIFICATION: Fuel=Gas is correct; this is a genuine natural-gas transmission branch, not a gathering/feeder line. CAVEAT (SPEC): could not independently confirm the exact 29km length, 610mm diameter, or 2013 StartYear1 for this specific branch in any open source — a single weak trade-press source (shiyouyuzhuangbei.com, 2016) states that natural-gas branch pipeline construction in '柳州' (among several named cities) began in 2015, which chronologically could not precede a 2013 in-service date IF it refers to the same segment; however the sentence names Liuzhou only as one of several general-purpose branch projects and does not specify which route, so this may describe a different Liuzhou-area line entirely. Flagging rather than silently passing it, per the standing rule, but not escalating to a hard 'concern' given the single-source ambiguity.",
+      "proposed_refs": [
+        "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Liuzhou Branch",
+      "sheet_row": 2620,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"
+      ],
+      "verifications": [
+        {"url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf", "ok": true, "contains_value": true},
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Both sources are natural-gas (天然气) pipeline documents/articles describing this exact network (NDRC's official cross-provincial gas tariff table; chinanews Guangxi bureau on the Guangxi LNG pipeline). url_verifier flagged both as content-FAIL on automated re-check (PDF text-extraction gap on the NDRC file; response.encoding mis-detected as ISO-8859-1 on the GB-encoded chinanews page) — both are documented false-negative classes per the tool's own docstring. I read the NDRC PDF directly (native PDF reader, not the lossy extractor) and re-decoded the chinanews page explicitly as UTF-8; both confirm the expected content is genuinely present."
+    },
+    {
+      "segment_name": "Liuzhou Branch",
+      "sheet_row": 2620,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml",
+        "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf"
+      ],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true},
+        {"url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Status inferred from context, not a literal label (per the verifier's own status-inference rule): the 2022 chinanews article describes the network actively, currently delivering gas to named Liuzhou downstream retailers (柳州东城燃气, 柳州中燃); the 2023-12 NDRC document lists this branch as a currently-tariffed, in-service asset of the national pipeline network. Neither source is segment-specific to the 29km spur itself, so tier is medium rather than high."
+    },
+    {
+      "segment_name": "Liuzhou Branch",
+      "sheet_row": 2620,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Guangxi Natural Gas Pipeline Co Ltd", "OperatorLocalLanguage": "广西天然气管道有限责任公司"},
+      "primary_value": "Guangxi Natural Gas Pipeline Co Ltd",
+      "proposed_refs": ["http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The English 'Operator' column was blank in the worklist — only the Chinese QCCOwner cell was populated (广西天然气管道有限责任公司). This chinanews.com.cn article (2022-08-03) is literally titled around this exact company and names it as the operator managing gas transport/supply for the network, matching Owner1's existing English form 'Guangxi Natural Gas Pipeline Co Ltd' — proposing the English Operator value and OperatorLocalLanguage to match. Single independent source (tier=medium, not high)."
+    },
+    {
+      "segment_name": "Liuzhou Branch",
+      "sheet_row": 2620,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Guangxi Natural Gas Pipeline Co Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Guangxi Natural Gas Pipeline Co Ltd",
+      "proposed_refs": ["http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same source names 广西天然气管道有限责任公司 as managing this network's gas transport — consistent with a 100% sole-owner. Single independent source (tier=medium); could not find a second source naming ownership structure specifically (vs. just operations)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Liuzhou Branch",
+      "sheet_row": 2620,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2023-12",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"
+      ],
+      "verifications": [
+        {"url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf", "ok": true, "contains_value": true},
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Searched extensively (Chinese-language) for anything newer than the sheet's 2025-08-25 LastUpdated that would suggest a status change — found nothing suggesting shelving/cancellation/expansion for this specific spur. Newest dated independent evidence located: the Dec-2023 NDRC national pipeline tariff table, which lists this network (with its Liudong/柳东 branch) as a currently active, tariffed cross-provincial asset — a pipeline that had been shelved or cancelled would not appear on this list. A 2022-08-03 chinanews article separately confirms the network is actively, presently supplying Liuzhou-area downstream gas retailers. No newer segment-specific news (2024-2026) was found either confirming or contradicting continued operation, but nothing points to any change either, and the network's broader 2024-2026 expansion news (Baise-Wenshan duplex line starting construction Aug 2024, various new branch approvals) show a still-active, expanding parent network in the same period, consistent with this in-service local branch remaining operational. Dormancy rules do not apply (this is an 'operating' row with confirming evidence within the lookback window, not a stalled proposed/shelved row)."
+    }
+  ],
+  "summary": "P4718 (Liuzhou Branch, 29km/610mm) checked out as real, correctly classified, non-duplicate infrastructure: an NDRC 2023 official tariff document independently names a '柳东支线' (Liudong Branch) exactly matching this route, distinct from P4719's larger Guilin-bound branch off the same Liuzhou hub; status confirmed operating via 2022-2023 sources; added refs for Fuel/Status/Operator/Owner. No UNRESOLVED items forced — Length/Diameter/StartYear1 left unfilled as genuinely unconfirmed (not contradicted) rather than fabricated."
+}

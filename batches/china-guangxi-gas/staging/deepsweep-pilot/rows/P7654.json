@@ -1,0 +1,55 @@
+{
+  "project_id": "P7654",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4053,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Nanning-Fusui Branch",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Re-source this segment from a live primary source before next update; all 4 currently-cited refs are non-functional and open web search found no independent trace of a 'Nanning-Fusui' gas pipeline branch with these specs.",
+      "researcher_notes": "This row has no gem.wiki page (wiki field blank, and P7654 was not among the pages the wiki-citation harvest captured), so the 4 GEM-cited [ref] URLs are the ONLY support and none currently verify. (1) gxsngc.com (backs Status=operating, StartYear1=2023): loads 200 but is an EMPTY/broken CMS article template -- literal placeholder text '新闻标题' (News Title), date '0000-00-00', author '作者' (Author), source '无' (none), with no article body at all. It is a tendering/engineering-supervision firm's site (广西双宁工程项目管理有限公司) and does not name this pipeline or support 'operating'/2023 in any form. (2) bjx.com.cn (backs Fuel=Gas, PipelineType=transmission): loads 200 but the article body is JS-obfuscated/encrypted (bjx's normal anti-scrape behavior) -- unreadable via curl or WebFetch (no JS execution), so I could NOT confirm it actually names a Nanning-Fusui segment specifically; the '-4.shtml' suffix suggests a paginated multi-part piece, plausibly a province-by-province roundup rather than a dedicated article on this branch. (3) fgw.gxzf.gov.cn (backs ProposalYear=2017-12): connection refused on every attempt (curl + WebFetch), domain resolves via DNS but the server itself rejects the connection. (4) fgw.nanning.gov.cn (backs Capacity=0.85 bcm/y, Pressure=6.3 MPa, LengthKnown=20 km, Diameter=355.6mm -- i.e. EVERY spec number on this row): this domain currently does NOT RESOLVE AT ALL -- confirmed independently via Google (8.8.8.8), Cloudflare (1.1.1.1) resolvers, and Cloudflare DoH, which returns SERVFAIL with 'No Reachable Authority at delegation nanning.gov.cn'. No Wayback Machine snapshot exists for either gov.cn URL. So the single source underpinning all four spec numbers is currently unreachable globally, not just from this environment. Independent web search (multiple targeted Chinese-language queries: 南宁 扶绥 天然气管道, \"南宁-扶绥\" 天然气管道, 6.3MPa 355.6, 广西能源发展十四五规划 南宁 崇左 扶绥) found NO independent source naming a dedicated 'Nanning-Fusui' gas pipeline branch with these specs. It DID surface: (a) confirmation that Fusui County (under Chongzuo City) has its own local piped-gas distribution/pricing system (a 2026-06-30 Fusui county government notice on piped-gas distribution pricing), so gas service reaching Fusui is plausible in principle; and (b) Guangxi's 14th Five-Year energy plan references a newly-built 'Nanning-Chongzuo branch' (南宁—崇左支线) corridor, and Fusui is a county within Chongzuo prefecture -- so this GEM segment could conceivably be a real sub-branch of that broader corridor, but I could not independently confirm the specific name, the 20km length, 355.6mm diameter, 0.85 bcm/y capacity, or the 2023 start date. Given 3 of 4 cited sources are dead/unreachable, the 4th is empty placeholder content, and no independent corroboration exists for this specific segment under this specific name, this does not clear the existence bar as currently sourced.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Nanning-Fusui Branch",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Compare P7654 against P4725 side by side (both touch Fusui and share identical Diameter=355.6mm and Capacity=0.85 bcm/y) before treating them as two independent segments -- confirm they are genuinely distinct pipe, not a relabeled/double-counted entry.",
+      "researcher_notes": "Roster comparison: P4725 ('Fusui County->Guangxi', len=83.0, dia=355.60, cap=0.85, status=construction, updated 2025-08-25) shares P7654's exact Diameter (355.6mm) and exact Capacity (0.85 bcm/y) and also touches Fusui, but reports a different length (83km vs P7654's 20km) and a different status (construction vs P7654's operating). This could genuinely be two different segments of one corridor (e.g. a longer trunk segment into Fusui still under construction plus a shorter completed feeder from Nanning), which would be legitimate, but the matching diameter+capacity pair on two nominally distinct 'Guangxi Gas Pipeline Network' rows both anchored at Fusui is a coincidence GEM has not flagged before and was not resolvable from open sources given P7654's own refs are non-functional (see existence finding above). Flagging for human side-by-side review rather than asserting a firm duplicate, since I cannot rule out that these are legitimately separate segments.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Nanning-Fusui Branch",
+      "sheet_row": 4053,
+      "current_status": "operating",
+      "verdict": "unclear",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "",
+      "staleness_rule": "",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://www.gxsngc.com/143747-143877.html?newsid=471623&_t=1688351652", "ok": false, "contains_value": false},
+        {"url": "https://news.bjx.com.cn/html/20210326/1144324-4.shtml", "ok": true, "contains_value": false},
+        {"url": "http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t10409673.shtml", "ok": false, "contains_value": false},
+        {"url": "https://fgw.nanning.gov.cn/fggz/nyfz/t2141407.html", "ok": false, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Cannot confirm or refute the recorded Status='operating' (StartYear1=2023). The cited gxsngc.com ref that nominally backs Status/Start is an empty CMS placeholder page with no actual article content -- it does not support 'operating' or '2023' in any form. The other candidate spec source (fgw.nanning.gov.cn) is currently globally unresolvable (DNS SERVFAIL on Google/Cloudflare resolvers, no Wayback snapshot) and fgw.gxzf.gov.cn refuses connection. Targeted Chinese-language web search for a Nanning-Fusui gas pipeline commissioning/start-of-operations news around 2023 turned up nothing specific to this segment. This is not evidence the pipeline is NOT operating -- Fusui County does have its own confirmed local piped-gas distribution system -- but I found no independent dated evidence, positive or negative, to confirm or move the recorded status. Recommend re-attempting once fgw.nanning.gov.cn is reachable again, or sourcing a fresh primary reference for this segment."
+    }
+  ],
+  "summary": "Existence concern: all 4 cited refs are non-functional (one empty placeholder page, one JS-obfuscated/unverifiable, two gov.cn domains unreachable -- one with a confirmed global DNS SERVFAIL), no independent corroboration found for a 'Nanning-Fusui' branch with these specs; also flagged a duplicate-adjacent overlap with P4725 (matching diameter+capacity, both touching Fusui) for human side-by-side review; status review is unclear pending a working source."
+}

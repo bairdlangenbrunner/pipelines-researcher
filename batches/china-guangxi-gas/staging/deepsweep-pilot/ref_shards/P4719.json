@@ -1,0 +1,58 @@
+{
+  "project_id": "P4719",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 2621,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gx.chinanews.com.cn/cj/2023-09-30/detail-ihctnzfm4536753.shtml"
+      ],
+      "verifications": [
+        {"url": "https://www.gx.chinanews.com.cn/cj/2023-09-30/detail-ihctnzfm4536753.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "current_ref was flagged DEAD_LINK by the automated triage, but it is NOT dead: url_verifier returns 200 and the token '桂林支线' is present; the earlier fail was a false negative on the literal token '2.5' (see Capacity note below), matching what the deep-sweep audit shard (rows/P4719.json) already flagged as a probable encoding/token artifact. WebFetch of the live page confirms: 广西LNG配套外输管道桂林支线工程 (Guangxi LNG Guilin Branch Pipeline), Liuzhou Transmission Station -> Guilin Transmission Station, completed its 72-hour trial run at 8 MPa and was formally commissioned 2023-09-29 -- i.e. genuinely 'operating', not merely under trial. This is the same evidence-date/source the deep-sweep row researcher already used for their status_reviews 'confirm' verdict. Searched (WebSearch budget for this session was already exhausted by the time I reached this unit) for a second independent source specifically confirming operating status post-2023-09; the only other segment-specific candidate in the wiki seed citations (a 2023-09-13 toutiao.com/管道保护 piece, archived via web.archive.org) is JS-rendered client-side and returns no article text to either url_verifier or WebFetch (fails the 'token present' bar), so it is not citable. No reversal/incident evidence found since commissioning. Tier held at medium (1 strong, non-independent-corroborated source) rather than fabricating a second cite."
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 2621,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gx.chinanews.com.cn/cj/2023-09-30/detail-ihctnzfm4536753.shtml"
+      ],
+      "verifications": [
+        {"url": "https://www.gx.chinanews.com.cn/cj/2023-09-30/detail-ihctnzfm4536753.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same URL as Status; NOT a dead link. The article states the branch's initial-phase design capacity as '25亿方/年' (with an ultimate post-compression capacity of 71亿方/年) -- in Chinese convention 25亿 立方米 = 2.5 billion m3 = 2.5 bcm, exactly matching the recorded GEM value 'Capacity=2.50, CapacityUnits=bcm/y'. The automated DEAD_LINK/verifier fail was a literal-substring miss: it searched for '2.5' but the source text reads '25亿方' (25-with-亿-suffix, not '2.5亿'), a unit-magnitude quirk of Chinese numbering, not a value mismatch -- re-verified url_verifier with the correct token ('25亿方') and it passes (200, token present). Same corroboration-search effort as the Status unit; no independent second source found for the specific 2.50 bcm/y figure (the 2019-12 sasac.gov.cn construction-start article gives a different, non-comparable interim metric -- '新增供气能力3000万立方米/天', an aggregate corridor benefit statement, not this segment's design capacity -- so I did not cite it here to avoid implying it corroborates the specific bcm/y value). Tier held at medium."
+    },
+    {
+      "ref_col": "Operator [ref]",
+      "sheet_row": 2621,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "No segment-specific (Liuzhou-Guilin branch) source found naming the operator. Reused the deep-sweep audit's lead (sasac.gov.cn EIA filing confirming the umbrella entity '国家管网集团西南管道有限责任公司南宁输油气分公司' operates ~80% of Guangxi's long-distance gas/oil pipe) but that is province-wide, not segment-specific, so per the no-fabrication/no-weak-generic-ref standard I did not stage it as support. Checked one additional lead not in the audit shard: a 2024-06-13 cnstock.com piece (seed_citations #2) titled '国家管网广西公司赖少川...' -- fetched via curl/WebFetch; it discusses the Guangxi company's province-wide network strategy (Nanning-Chongzuo line, cross-province gas transfers) but never names the Liuzhou-Guilin/Guilin branch specifically, and it labels the entity '国家管网广西公司' (PipeChina Guangxi Company) rather than the sheet's recorded '国家管网集团西南管道有限责任公司' (Southwest Pipeline Co Ltd) -- a possible shorthand for the same parent, or a distinct provincial subsidiary; either way not a confident segment-level match to the recorded value, so not cited (this naming variance may be worth a separate Update-workflow look, not resolved here since it isn't a clean corroboration of the recorded value). WebSearch budget was exhausted this session before I could run a fresh general search; left UNRESOLVED rather than pair a weak/mismatched ref."
+    },
+    {
+      "ref_col": "Owner [ref]",
+      "sheet_row": 2621,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same gap as Operator: Owner1 = 'National Pipe Network Group Southwest Pipeline Co Ltd' (100%) has no segment-specific (Liuzhou-Guilin branch) sourcing available. Same searches as the Operator unit turned up only province-wide corroboration (sasac EIA filing) and the cnstock.com piece with the non-matching short entity name '国家管网广西公司' -- neither is a confident segment-level match, so left UNRESOLVED rather than staging a weak/generic ref. A dedicated ownership-sweep pass with fresh WebSearch budget (this session's was exhausted) would be the next step."
+    }
+  ]
+}

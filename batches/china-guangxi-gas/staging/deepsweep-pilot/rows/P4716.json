@@ -1,0 +1,153 @@
+{
+  "project_id": "P4716",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "sheet_row": 2618,
+  "wiki": "https://www.gem.wiki/Guangxi_LNG_Terminal_Transport_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep as a real, distinct planned project (not a duplicate of P4721's operating 684km Tieshangang trunk). Length/Diameter/FuelSource/Location still have no verifiable independent source — keep hunting for an NDRC/EIA approval document before treating those fields as more than GEM-internal estimates.",
+      "researcher_notes": "Existence check: the sheet's own cited Status ref (https://www.163.com/dy/article/II35TJ100530QRMB.html, a '人民资讯' wire reprint dated 2023-10-27 of a Guangxi/Sichuan gas resource-and-market promotion conference held in Nanning) explicitly lists '规划建设广西LNG外输管道复线（北海LNG-贵港）、防城港LNG外输管道、百色-隆林管道（海气入黔）等干线管道，总投资近150亿元，管道长度近1250公里' i.e. the Beihai LNG-Guigang duplicate line is named, by that exact bracketed label, among three 14th-Five-Year-Plan trunk projects still at the PLANNED stage (~15bn yuan / ~1250km combined across all three, not this segment alone). This directly supports Status=proposed and refutes the worklist's automated existing_ref_checks failure, which was a false negative from literally string-matching the English word 'proposed' against Chinese-language text — the ref does support the value once actually read. I independently re-verified this URL live (url_verifier.py: OK, 200, both '北海LNG' and '贵港' tokens present). A second, differently-sourced mention of the same named project ('广西LNG外输管道复线（北海LNG-贵港）项目涉海段建设工程初步勘察测量技术服务', a 2021-08-12 procurement-tender listing on 采招网/bidcenter, which is also the wiki page's own cite_note-nnbvvcp-22 sourced from dlzb.com) turned up repeatedly in independent web search but the underlying dlzb.com URL itself timed out on both WebFetch and url_verifier.py (ConnectTimeout) — so I could NOT independently re-confirm its live content and am not counting it toward the 2-independent-source bar; tier is set to medium (one verified source) rather than high. Duplicate check against the roster: P4721 (Tieshangang District→Guangxi, 684km, operating) is almost certainly the SAME already-built main trunk that this 244km segment is described as a '复线' (duplicate/second/parallel line) of — that is expected and correct, not an accidental double-count: a '复线' is a second pipe added for capacity alongside an existing corridor, still under feasibility/survey as of 2021 and still 'planned to be built' as of Oct 2023, whereas P4721 is already operating. The two rows describe different physical pipe (existing vs planned parallel addition) and should stay separate. Classification (commodity=Gas, transmission trunk) is consistent with the whole LNG-fed network this row sits in — no reason to doubt it substantively, see paired classification-concern entry below re: the specific citation attached to Fuel/PipelineType.",
+      "proposed_refs": [
+        "https://www.163.com/dy/article/II35TJ100530QRMB.html"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Re-source Fuel [ref] / PipelineType [ref] — the currently attached citation does not actually describe this segment. Either find/verify a citation that names the Beihai LNG-Guigang duplicate line specifically, or leave the ref blank rather than keep a mismatched one.",
+      "researcher_notes": "The worklist's current_ref for both Fuel ('Gas') and PipelineType ('transmission') is https://www.gx.chinanews.com.cn/cj/2023-09-30/detail-ihctnzfm4536753.shtml. The existing_ref_checks marked this 'ok' only because the URL returns 200 — value_checked was false, i.e. nobody had confirmed it actually discusses THIS pipeline. I fetched it: it is a 2023-09-30 article about commissioning of a DIFFERENT Guangxi LNG-network branch line, explicitly '全长155.7km，管径813mm，设计压力10MPa' — i.e. 155.7km/813mm, which matches nothing about this row's 244km/1016mm Beihai-Guigang segment (it appears to be the article behind P4719's spec, 155.7/813, not P4716's). It does not name Guigang, Tieshangang, or a '复线' project at all, and never mentions an operator. So the ref is a real, live, on-topic (Guangxi LNG network) source, but it is attached to the wrong row/segment — it verifies neither Fuel nor PipelineType for P4716 specifically. The values themselves (Gas; transmission) are very likely still correct given the project's place in the same LNG-fed trunk network, so I am not flagging existence/classification as substantively wrong, just the sourcing.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "244.00", "LengthKnownUnits": "km"},
+      "primary_value": "244.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Extensive Chinese-language searching (tender listings, EIA/NDRC approval pages, gas.in-en.com, provincial DRC sites) found only the same generic project-existence mentions already used above — no source giving this segment's 244km figure specifically. Left unfilled rather than pairing a ref that doesn't actually state the length."
+    },
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "1016", "DiameterUnits": "mm"},
+      "primary_value": "1016",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same search effort as Length turned up no source stating a 1016mm/DN1000 diameter for this specific segment. Not fabricating a ref."
+    },
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Guangxi LNG Terminal"},
+      "primary_value": "Guangxi LNG Terminal",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Plausible (the whole cluster of rows on this wiki page is fed by the Beihai/Guangxi LNG receiving terminal) but I found no segment-specific source pairing FuelSource to this particular duplicate-line project; leaving unref'd rather than reusing an unrelated citation."
+    },
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Tieshangang First Station, Tieshangang District", "EndLocation": "Guigang Compression Station, Genzhu Village, Genzhu Town, Gangbei District"},
+      "primary_value": "Tieshangang First Station, Tieshangang District",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Endpoints are geographically consistent with the named project (Beihai LNG's Tieshangang terminal to Guigang) but no source I could verify gives these exact facility names; left unresolved."
+    },
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"QCCOwner(业主单位)": "国家管网集团西南管道有限责任公司"},
+      "primary_value": "国家管网集团西南管道有限责任公司",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "PipeChina's Southwest Pipeline Company plausibly operates this whole Beihai-LNG-fed cluster (it shows up in the wiki's own citations for sibling rows, e.g. the CNPC Southwest Pipeline Branch facilities PDF), but I found no source naming it specifically for this duplicate-line segment; left unresolved rather than assumed."
+    },
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "National Pipe Network Group Southwest Pipeline Co Ltd", "Owner1%": "100.00%"},
+      "primary_value": "National Pipe Network Group Southwest Pipeline Co Ltd",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same as Operator — plausible but not independently verified for this specific segment; left unresolved."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Beihai LNG-Guigang Gas Pipeline",
+      "sheet_row": 2618,
+      "current_status": "proposed",
+      "verdict": "stale",
+      "proposed_status": "shelved",
+      "proposed_changes": {"Status": "shelved", "ShelvedCancelledType": "Presumed"},
+      "evidence_date": "2023-10",
+      "staleness_rule": "2y->shelved",
+      "proposed_refs": [
+        "https://www.163.com/dy/article/II35TJ100530QRMB.html"
+      ],
+      "verifications": [
+        {"url": "https://www.163.com/dy/article/II35TJ100530QRMB.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Newest independent, dated evidence I could find naming this exact project ('广西LNG外输管道复线（北海LNG-贵港）') is the 2023-10-27 conference wire piece, which itself lists it only among '规划建设' (still-to-be-built) 14th-Five-Year-Plan trunk lines — no approval, EIA, or construction-start date given even there. I searched specifically for anything newer (2024–2026): NDRC/MEE approval-document indices, gas.in-en.com, Guigang/Beihai municipal DRC project-approval pages, and its sibling project's own press trail. Its sibling '广西LNG外输管道复线（百色—文山）' (part of the same 3-line ~1250km/~15bn-yuan 2023 announcement) got an EIA approval in Dec 2023, broke ground Aug 2024, and had a further EIA-change review as recently as Jan 2026 — i.e. it left clear public tracks. The Beihai LNG-Guigang line has none of that: no EIA filing, no NDRC core approval notice, and no construction/tender news later than the 2021-08 preliminary-survey tender already on the wiki page. Given the sheet's own LastUpdated (2025-08-25) does not correspond to any new evidence I could find (it looks like a housekeeping touch, not a re-verification), and the most recent substantive evidence of this specific line's status is now ~2.75 years old with a comparable sibling project having visibly progressed while this one shows nothing, applying the dormancy rule: proposed with no progress ≥2y → shelved (presumed, per standing rule 2 — no fabricated ref for the inference itself)."
+    }
+  ],
+  "summary": "P4716 (Beihai LNG-Guigang, proposed, 244km/1016mm): existence and status='proposed' independently confirmed as of the sheet's own cited 2023-10 article (a real, named 14th-Five-Year-Plan duplicate-line project, not a duplicate of operating P4721); flagged one misattributed ref (Fuel/PipelineType cite an unrelated 155.7km/813mm branch, values probably still fine); Length/Diameter/FuelSource/Location/Operator/Owner all UNRESOLVED (no independently verifiable source found despite extensive search); status-review verdict='stale' → proposed shelved (dormancy rule, no newer evidence than 2023-10 while a directly comparable sibling project visibly progressed through 2024-2026)."
+}

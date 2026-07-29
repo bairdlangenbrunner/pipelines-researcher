@@ -1,0 +1,76 @@
+{
+  "project_id": "P7656",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4055,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Sinopec Nanning Station-Zhongran Gate pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change needed to existence/classification. Fill blank Location fields (done in fills[]) and consider replacing the WAF-blocked Fuel/PipelineType ref with the working gxnews.com.cn article.",
+      "researcher_notes": "This is a real, independently confirmed pipeline, not a phantom/duplicate. The sheet's own Length/Construction/Start ref (https://v.gxnews.com.cn/a/19496068, Guangxi Daily via Guangxi News Net, dated 2020-04-30) is a genuine regional-government news outlet article headlined '南宁：天然气专供管道工程项目开工' (Nanning: Natural Gas Dedicated Pipeline Project groundbreaking). It names the exact project '南宁市天然气专供管道工程（中石化南宁站-南宁中燃门站段）' -- i.e. 'Sinopec Nanning Station - Nanning Zhongran(中燃) Gate Station section', matching GEM's segment_name exactly -- and states the route lies entirely within Yongning District (邕宁区), running from Sinopec Nanning Station to a newly-built Pumiao distribution station (蒲庙分输站, Pumiao Town) near Leilai Village, total length 'approximately 8.9 km' (全长约8.9公里, matches GEM's LengthKnown=8.9 exactly), total investment 67.55 million yuan, groundbreaking 2020-04-28, planned 8-month construction (matches GEM ConstructionYear=2020/Month=4). Verified via url_verifier with three independent tokens from the raw HTML (中燃, 邕宁, 蒲庙) -- all OK/200. Independent corroboration of the project's existence and name also comes from two separate government-site page titles surfaced in search (广西壮族自治区发展和改革委员会 project-approval notice AND 广西壮族自治区自然资源厅 land-use pre-review notice), both using the identical project title -- two different agencies, same project, so this is not a single-source claim. Classification (Fuel=Gas, PipelineType=transmission) is consistent with a project literally named a 'natural gas dedicated pipeline' feeding a city gate station at 4.0 MPa design pressure (a transmission-grade pressure, not local distribution). Checked the 42-pipeline Guangxi roster for a duplicate/relabel: no other row references Nanning/邕宁/中燃/Yongning/Pumiao, and the only other Nanning-area entry (P4732, Nanning-Pingxiang gas pipeline, 125 km, dia 457mm) is a materially different, much longer inter-city trunk -- no duplicate found.",
+      "proposed_refs": ["https://v.gxnews.com.cn/a/19496068"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Sinopec Nanning Station-Zhongran Gate pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Fix the ProposalYear/ConstructionYear sequencing bug (currently 2021 -> 2020, i.e. proposed AFTER construction began, which is impossible) and replace the Proposal/Fuel/PipelineType ref (news.bjx.com.cn, 1144324-4.shtml) with a working source, since it is Aliyun-WAF-obfuscated and unreadable by any automated fetch -- its actual support for these values cannot be confirmed at all. Separately, re-verify Diameter/Pressure/Status against the cited gxzf.gov.cn approval page by hand (browser), since this sandbox cannot reach either gxzf.gov.cn path variant (ConnectTimeout on both http://fgw.gxzf.gov.cn/zfxxgkzl/... and the correct current path http://fgw.gxzf.gov.cn/zwgk/wjzx/xmpf/xiangmuhezhunpifu/t2198361.shtml, and on the related dnr.gxzf.gov.cn land-review page -- same IP, same failure, looks like a network-level block on gxzf.gov.cn from this environment rather than the page being down).",
+      "researcher_notes": "Sheet: ProposalYear=2021 (ProposalMonth=3), ConstructionYear=2020 (ConstructionMonth=4). A pipeline cannot be 'proposed' a year after its construction physically began -- this is an internal date-logic defect, not a minor caveat. The cited Proposal ref (https://news.bjx.com.cn/html/20210326/1144324-4.shtml) already failed the sheet's own existing_ref_check ('200 but data value not found: 2021/2,021'); I fetched the raw page directly (curl) and confirmed it is entirely served behind an Aliyun WAF JS challenge (renderData/arg1 obfuscation blob, no article text at all) -- so this is not a case of the number being on the page in different formatting, the page's real content is simply unreadable by any bot, and possibly a generic multi-project industry roundup (the '-4' suffix suggests page 4 of a longer piece) rather than a citation specific to this segment. Independent search-engine snippets describing the actual gxzf.gov.cn approval-notice title (a different agency document, 广西壮族自治区发展和改革委员会 project approval) put the original approval around 2019, which would be consistent with construction starting April 2020 and is NOT consistent with a 2021 proposal date -- suggesting 2021 is simply wrong, likely miscopied from an unrelated 2021 article. I could not independently refetch the gxzf.gov.cn approval page myself (ConnectTimeout / connection refused from this sandbox on both the cited path and the current live path found via search), so I'm not proposing a fabricated replacement date -- flagging for a human check with browser access. Diameter (323.9mm) and Pressure (4.0MPa) both exactly match the specs described in independent search-result summaries of that same gxzf.gov.cn approval notice (also giving a design capacity of 6.72亿立方米/year = 0.672 bcm/y, consistent with GEM's Capacity=0.67 bcm/y), so I have no reason to think those two values are wrong -- I simply could not re-verify the primary citation URL through url_verifier this pass because the host is unreachable, so treat this as an access gap, not a value error.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Sinopec Nanning Station-Zhongran Gate pipeline",
+      "sheet_row": 4055,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "EndLocation", "EndPrefecture/District"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Sinopec Nanning Station",
+        "StartPrefecture/District": "Yongning District, Nanning",
+        "EndLocation": "Nanning Zhongran Gate Station (Pumiao distribution station, Pumiao Town, near Leilai Village)",
+        "EndPrefecture/District": "Yongning District, Nanning"
+      },
+      "primary_value": "Sinopec Nanning Station",
+      "proposed_refs": ["https://v.gxnews.com.cn/a/19496068"],
+      "verifications": [
+        {"url": "https://v.gxnews.com.cn/a/19496068", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The two Location value_cols (StartLocation/EndLocation/Prefecture-District) were entirely blank with no ref (MISSING_REF). The already-verified gxnews.com.cn groundbreaking article states the pipeline runs entirely within Yongning District (邕宁区), starting at Sinopec Nanning Station and ending at a newly-built Pumiao distribution station (蒲庙分输站) near Leilai Village, Pumiao Town -- west of Shugang Avenue. The end-facility's geographic/functional name ('Pumiao station') and the project's formal title ('...-Zhongran Gate Station section', matching GEM's segment name and confirmed independently via two separate gxzf.gov.cn / dnr.gxzf.gov.cn page titles) most likely refer to the same city-gate facility under two different names (geographic vs. operator/function), so I recorded both rather than asserting one as wrong."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Sinopec Nanning Station-Zhongran Gate pipeline",
+      "sheet_row": 4055,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2020-04",
+      "staleness_rule": "",
+      "proposed_refs": ["https://v.gxnews.com.cn/a/19496068"],
+      "verifications": [
+        {"url": "https://v.gxnews.com.cn/a/19496068", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Newest independent evidence found is the 2020-04-30 groundbreaking article (construction started 2020-04-28, planned 8-month build). No independent post-completion/commissioning article was found confirming actual in-service operation (web-search budget for this session was exhausted before I could push further on a completion-announcement search). However this is not a 'no progress found' dormancy case: the project had committed funding (67.55M yuan), a firm short 8.9km scope, government-priority status ('Nanning energy-network campaign key project'), and a fixed schedule (April 2020 + 8 months = ~December 2020) that lines up exactly with the sheet's own StartYear1=2020/StartMonth1=12 -- strongly suggesting the recorded operating date was itself derived from this same construction-schedule evidence and completed close to plan, with no counter-evidence anywhere of delay, cancellation, or shelving. Given a small, funded, actively-under-construction distribution/feeder segment with a hard completion date already ~5.5 years in the past and zero contrary signal, dormancy/staleness rules (2y->shelved, 4y->cancelled) do not apply here -- those are for projects with NO subsequent progress evidence, not projects whose only gap is a missing post-completion press clipping. Recommend a human researcher do one follow-up search for a 2020/2021 commissioning announcement if a stronger evidence date is wanted, but I see no basis to challenge 'operating'."
+    }
+  ],
+  "summary": "P7656 (Sinopec Nanning Station-Zhongran Gate pipeline, Guangxi) is a real, independently-confirmed project -- confirmed (caveat): no existence/duplicate/classification problem, but flagging a genuine ProposalYear(2021)>ConstructionYear(2020) date-logic bug riding on a WAF-blocked/unverifiable ref, plus an unreachable gxzf.gov.cn primary source for Diameter/Pressure/Status that a human should re-check with browser access; filled the blank Location fields from a verified source."
+}

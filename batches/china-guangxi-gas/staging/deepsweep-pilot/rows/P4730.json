@@ -1,0 +1,90 @@
+{
+  "project_id": "P4730",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 2631,
+  "wiki": "https://www.gem.wiki/Guangxi_Gas_Pipeline_Network",
+  "validity": [
+    {
+      "segment_name": "Tiandong-Debao-Jingxi Branch Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Real, correctly classified, no duplicate. Replace the dead-end Status [ref] (mguangfu.bjx.com.cn — 200 but does not verifiably name/support this segment) with the verified gigeps.com Oct-2024 completion-acceptance notice, which directly names this pipeline and its operator. When the gxzf.gov.cn domain becomes reachable, re-verify and cite the 2018 DRC approval (桂发改能源〔2018〕334号) directly for Length/Diameter/Capacity/SegmentCost/ProposalMonth=3 — its figures already match GEM's recorded values exactly.",
+      "researcher_notes": "EXISTENCE: confirmed independent of GEM. The wiki page's own reference #32 cites the 2018-03-30 Guangxi DRC project-approval document (桂发改能源〔2018〕334号) for the 田东-德保-靖西天然气支线管道工程 (Tiandong-Debao-Jingxi gas branch pipeline). I located the live government URL (http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2453930.shtml, and a second, independent Guangxi Water Resources Dept river-crossing permit for the same pipeline at http://slt.gxzf.gov.cn/zfxxgk/xxgknr/xzxk/t7109353.shtml) via web search, and search-engine text extracts from that approval doc give: total length 120km (39km Tiandong + 74km Debao + 7km Jingxi), pipe diameter D355.6mm, design pressure 6.3MPa, design capacity 4.5亿m3/year (=0.45 bcm/y), 4 valve stations + new Debao/Jingxi distribution stations, total investment ~42,149.35万元 (=421,493,500 RMB) — every one of these EXACTLY matches GEM's current LengthKnown=120.00km, Diameter=355.60mm, Capacity=0.45 bcm/y, and SegmentCost=421,493,500 RMB. HOWEVER every *.gxzf.gov.cn domain (fgw.gxzf.gov.cn AND slt.gxzf.gov.cn) ConnectTimeout'd on every direct fetch attempt from this sandbox (curl and url_verifier both), so I could NOT independently re-fetch/verify these government pages myself in this session and cannot cite them as proposed_refs (standing rule: only url_verifier-passing URLs go in refs) — this reads as a network-reachability limitation of this environment toward Chinese government sites, not evidence the source is fake (the search engine's cached text is internally consistent across two separate queries). CLASSIFICATION: correct — a gas transmission/distribution branch of the Guangxi trunk network, gas commodity, matches project title. DUPLICATE: checked against the full 43-row roster; no other segment (P4724 Youjiang, P4725 Fusui, P4729 Xingbin, P4731 Dapo Town/Longwei, etc.) shares Tiandong/Debao/Jingxi place names or this segment name — no double-count found. ATTRIBUTION: Owner1 'Guangxi Guangtou Natural Gas Pipeline Network Co Ltd' / QCCOwner '广西广投天然气管网有限公司' is directly confirmed as the operator of exactly this pipeline by a verified Oct-2024 tender notice (gigeps.com) titled '广西广投天然气管网有限公司田东-德保-靖西、田东、钦北安全设施竣工验收项目'. Endpoints (Tiandong distribution station -> Jingxi distribution station near Ling'ai Village) match the approval-doc route description. SPEC: no material disagreement found on any checked field; caveat is purely that the best-matching primary source is currently unreachable from this environment for re-verification. Found a separate ADDITIONAL false-negative in url_verifier itself worth flagging to the team: requests' encoding auto-detection defaults to ISO-8859-1 on sites that don't send an explicit charset header (confirmed on shpgx.com — r.encoding comes back 'ISO-8859-1' while r.apparent_encoding is correctly 'utf-8'), so a real, on-topic Chinese-language page can fail the 'missing expected' substring screen purely on a garbled decode, not a genuine content miss (shpgx.com's Dec-2023 article does contain '田东-德保-靖西项目' verbatim when read via WebFetch/proper UTF-8 decode, but url_verifier reports 'missing expected'). This likely affects other rows' Chinese refs across the sweep and is worth a proper fix (decode with apparent_encoding when no charset header is present), separate from this row's audit.",
+      "proposed_refs": ["https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Tiandong-Debao-Jingxi Branch Pipeline",
+      "sheet_row": 2631,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm"],
+      "verifications": [{"url": "https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Tender notice is for 广西广投天然气管网有限公司 (Guangxi Guangtou NATURAL GAS Pipeline Network Co Ltd)'s completion-acceptance project on this exact pipeline — confirms gas commodity directly."
+    },
+    {
+      "segment_name": "Tiandong-Debao-Jingxi Branch Pipeline",
+      "sheet_row": 2631,
+      "oo_sheet_row": 3583,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"QCCOwner(业主单位)": "广西广投天然气管网有限公司"},
+      "primary_value": "广西广投天然气管网有限公司",
+      "proposed_refs": ["https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm"],
+      "verifications": [{"url": "https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Oct-2024 procurement notice names 广西广投天然气管网有限公司 as the company running the 田东-德保-靖西 completion-acceptance project — i.e. the pipeline's own operator, exact string match to the sheet's QCCOwner value."
+    },
+    {
+      "segment_name": "Tiandong-Debao-Jingxi Branch Pipeline",
+      "sheet_row": 2631,
+      "oo_sheet_row": 3583,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Guangxi Guangtou Natural Gas Pipeline Network Co Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Guangxi Guangtou Natural Gas Pipeline Network Co Ltd",
+      "proposed_refs": ["https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm"],
+      "verifications": [{"url": "https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same entity as Operator (广西广投天然气管网有限公司 = 'Guangxi Guangtou Natural Gas Pipeline Network Co Ltd'); this company is a wholly-owned subsidiary structure (Owner1%=100%) and is directly named as the pipeline's builder/operator in the verified tender notice."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Tiandong-Debao-Jingxi Branch Pipeline",
+      "sheet_row": 2631,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2024-10",
+      "staleness_rule": "",
+      "proposed_refs": ["https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm"],
+      "verifications": [{"url": "https://www.gigeps.com/cms/channel/xmgg5fw/49186.htm", "ok": true, "contains_value": true}],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The sheet's own current Status [ref] (mguangfu.bjx.com.cn, an April-2025-dated mirror of what appears to be an originally ~2023 article on planned Baise-area energy projects) fails url_verifier and, per its indexed text, only says the pipeline was 'completed, about to be commissioned' (已完工即将投运) — language that describes ~2023, not a current (2025) not-yet-operating state, since the article is a syndicated repost of older 2023-2024-planning content, not fresh reporting. Stronger, dated evidence: an Oct-28-2024 tender-award notice on the operator's own procurement portal (gigeps.com, verified) for '田东-德保-靖西...安全设施竣工验收' (safety-facilities completion/acceptance) on this exact pipeline — 竣工验收 (completion acceptance) is a late-stage regulatory sign-off that normally accompanies or follows entering service, not a still-under-construction state. A Dec-2023 company article (shpgx.com — content manually confirmed via WebFetch; failed url_verifier's automated screen due to a Chinese-encoding decode bug in the tool, not a real content miss) separately names a dedicated '田东-德保-靖西' team active on pipeline operations during a province-wide winter gas-supply-security period, consistent with the line already carrying gas by late 2023. ConstructionYear=2023(Feb) is consistent with a ~1.5-2yr build timeline reaching substantial completion by the Sept-2023 date GEM's Status was last set. No independent evidence found that contradicts 'operating'; recommend keeping Status as-is and swapping in the gigeps.com URL as the supporting ref."
+    }
+  ],
+  "summary": "P4730 (Tiandong-Debao-Jingxi Branch Pipeline) is real and correctly classified — existence, operator, and Status=operating all independently confirmed (best new ref: gigeps.com Oct-2024 completion-acceptance notice); no duplicate found against the 43-row roster; Length/Diameter/Capacity/SegmentCost match a 2018 gxzf.gov.cn approval doc exactly but that gov domain timed out on every direct fetch this session so it couldn't be cited as a ref."
+}

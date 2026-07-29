@@ -1,0 +1,76 @@
+{
+  "project_id": "P7656",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 4055,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": ["https://v.gxnews.com.cn/a/19496068"],
+      "verifications": [
+        {"url": "https://v.gxnews.com.cn/a/19496068", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Original ref (fgw.gxzf.gov.cn approval notice) is dead: the whole gxzf.gov.cn domain (fgw.gxzf.gov.cn AND dnr.gxzf.gov.cn) ConnectTimeouts from this sandbox -- consistent with the brief's geo-block note. Checked web.archive.org: no snapshot exists for this specific approval-notice path (CDX exact-match query returns empty; only the fgw.gxzf.gov.cn homepage has old snapshots) -- a legitimate no-snapshot case, not a retry-harder case. Fresh Chinese search found no alternate working URL republishing the approval notice. Substituting the sheet's own verified Guangxi Daily/Guangxi News Net groundbreaking article (2020-04-30, '南宁：天然气专供管道工程项目开工'), already used elsewhere on this row and re-verified here (200 OK, tokens 中燃/邕宁/蒲庙/8.9 present). It confirms the project broke ground 2020-04-28 with a firm 8-month construction schedule (implying ~Dec 2020 completion, matching the sheet's own StartYear1=2020/StartMonth1=12), committed funding (6755万元), and government-priority status, with zero contrary signal (no delay/shelving/cancellation found anywhere in a fresh search for post-2020 news on this segment). This is support for 'operating' by schedule-completion + absence-of-contrary-evidence, not a direct post-commissioning confirmation, hence medium not high tier -- flagging that a human with browser access to gxzf.gov.cn, or a dedicated completion-announcement search, could firm this up to high."
+    },
+    {
+      "ref_col": "Proposal [ref]",
+      "sheet_row": 4055,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Original ref (news.bjx.com.cn/html/20210326/1144324-4.shtml) is unreadable, not merely offline: fetched it directly (curl) and also pulled it via web.archive.org (both the live host and IA's own on-demand capture of the -4 page) -- all three return the identical Aliyun-WAF JS-challenge blob (renderData/arg1 obfuscation, zero article text). An earlier-dated IA snapshot (2021-04-10) exists only for the base page (no '-4' suffix, i.e. page 1 of what the URL structure implies is a 4-page article) and IS readable: it is '附171个电源项目全名单！《广西能源网建设2021年工作推进方案》' (Guangxi DRC's 2021 'Energy Network' work plan, doc 桂发改电力〔2021〕184号, dated 2021-03-15), a province-wide policy notice covering 171 power projects + gas pipeline construction totals in aggregate -- it does NOT name this specific Sinopec Nanning Station-Zhongran Gate segment anywhere in the readable page-1 text (the segment, if listed at all, would be in the unreachable page-4 appendix table). Separately, and more importantly: fresh Chinese search for the project's actual approval history (multiple independent search snippets of the gxzf.gov.cn approval notice title, plus the natural-resources-bureau land-use pre-review page at dnr.gxzf.gov.cn) consistently gives the approval document as 南发改报〔2019〕623号, issued 2019-11-19 -- i.e. approved in 2019, which precedes and is inconsistent with a 2021-03 Proposal date on a project that had ALREADY broken ground 2020-04-28. This is a disagreement with the recorded ProposalYear=2021/ProposalMonth=3, not merely an access gap, so per the no-different-value rule I am not proposing a replacement ref or date -- flagging the sequencing conflict (Proposal 2021 > Construction-start 2020, and approval evidence points to 2019) for the value-change workflow rather than resolving it here. Could not independently re-verify the 2019-11-19 approval date itself through url_verifier this pass (same gxzf.gov.cn block, no snapshot -- see Capacity/Pressure/Diameter units)."
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 4055,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Original ref (https://v.gxnews.com.cn/a/19496068) loads fine (200 OK, re-verified) but does not actually contain a capacity figure -- it covers length (8.9km), investment (6755万元) and schedule only, no design throughput, so it never supported Capacity=0.67 bcm/y (matches the brief's DEAD_LINK/value-mismatch classification). The design capacity (6.72亿立方米/年 = 0.672 bcm/y, matching the sheet's 0.67) appears consistently in fresh search-engine snippets that describe the gxzf.gov.cn approval-notice content, but that page itself is unreachable (whole gxzf.gov.cn domain ConnectTimeouts from this sandbox) and has no web.archive.org snapshot (CDX exact-match query empty). No other host was found (searched gigeps.com procurement pages, in-en.com/bjx.com.cn aggregators, sohu/sina) that republishes the specific design-capacity figure with a fetchable URL. Per standing rule, not fabricating/citing a URL I can't pass through url_verifier -- this is a legitimate no-snapshot UNRESOLVED, value itself is not in dispute (search snippets consistently corroborate 0.67 bcm/y, just not via a citable working URL)."
+    },
+    {
+      "ref_col": "Pressure [ref]",
+      "sheet_row": 4055,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same root cause as Capacity/Diameter: original ref is the fgw.gxzf.gov.cn approval notice, unreachable (whole gxzf.gov.cn domain ConnectTimeouts) with no web.archive.org snapshot (CDX exact-match empty). Fresh Chinese search-engine snippets of that same approval notice consistently give design pressure 4.0MPa, matching the sheet's recorded value, but I found no alternate host that republishes the figure with a URL that passes url_verifier (checked gigeps.com pipe-procurement notices for this segment -- they reference the project by name but the search snippets returned do not carry this specific pressure spec verbatim, only a different, unrelated Guangxi pipeline's 6.3MPa spec). Legitimate no-snapshot UNRESOLVED; value not in dispute, just uncitable this pass."
+    },
+    {
+      "ref_col": "Diameter [ref]",
+      "sheet_row": 4055,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same root cause as Capacity/Pressure: original ref is the fgw.gxzf.gov.cn approval notice, unreachable (whole gxzf.gov.cn domain ConnectTimeouts) with no web.archive.org snapshot (CDX exact-match empty). Fresh Chinese search-engine snippets of that same approval notice consistently give pipe diameter D323.9mm, matching the sheet's recorded value, but no alternate fetchable URL was found carrying this exact spec for this exact segment (a gigeps.com procurement search surfaced a different Guangxi project with the same nominal diameter but a different, unrelated pressure class, so it was not usable as corroboration for this segment specifically). Legitimate no-snapshot UNRESOLVED; value not in dispute, just uncitable this pass."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 4055,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": ["https://v.gxnews.com.cn/a/19496068"],
+      "verifications": [
+        {"url": "https://v.gxnews.com.cn/a/19496068", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "No current_ref existed (blank, MISSING_REF). Recorded values are StartState/Province=Guangxi, StartCountryOrArea=China, EndState/Province=Guangxi, EndCountryOrArea=China -- i.e. both endpoints in Guangxi, China. The Guangxi Daily/Guangxi News Net groundbreaking article (re-verified: 200 OK, tokens 中燃/邕宁/蒲庙/8.9 present) directly states the pipeline runs entirely within Yongning District, Nanning, Guangxi (该管道全线位于邕宁区境内), from Sinopec Nanning Station to a newly-built distribution station near Pumiao Town (蒲庙镇) -- a single strong, government-outlet source fully supporting the province/country-level values, hence tier medium (one strong source; not marking high since only one outlet was found, even though it is a primary regional-government news source, not a republication)."
+    }
+  ]
+}

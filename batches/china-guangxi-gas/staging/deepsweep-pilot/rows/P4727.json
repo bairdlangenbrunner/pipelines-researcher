@@ -1,0 +1,146 @@
+{
+  "project_id": "P4727",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 2628,
+  "wiki": "https://www.gem.wiki/Guangxi_Gas_Pipeline_Network",
+  "validity": [
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Fix ProposalMonth to 06 (not 10); ProposalYear=2022 is correct. Also see status_reviews: the sheet's own cited Status source (the 2024-04 land-use approval) actually argues AGAINST 'proposed' and for 'construction'.",
+      "researcher_notes": "EXISTENCE + SPEC: found and read the actual Guangxi DRC approval document on the issuing agency's own site (fgw.gxzf.gov.cn, doc 桂发改油气〔2022〕640号, dated 2022-06-10/published 2022-06-15; also reprinted by 北极星 bjx.com.cn the next day, same text) for '桂东北天然气环网桂林-阳朔-荔浦段天然气管道项目' (Northeast-Guilin gas ring network Guilin-Yangshuo-Lipu section pipeline project). It states VERBATIM: route start '广西液化天然气外输管道桂林站' (Guangxi LNG external transport pipeline's Guilin Station) end '荔浦输气站' (Lipu gas station); route entirely within 临桂区/阳朔县/荔浦市 (Lingui District / Yangshuo County / Lipu City, all in Guilin prefecture, Guangxi); length '管道全长约106公里' (~106 km); design pressure 6.3 MPa; diameter 'D406.4毫米' (406.4 mm); steel grade L360; design capacity '8.4×10^8立方米/年' = 0.84 bcm/y; total investment '58485万元' = RMB 584,850,000; project unit (operator/owner) '国家管网集团西南油气管道有限责任公司南宁输油气分公司'. EVERY ONE of these matches the GEM row's recorded LengthKnown (106.00 km), Diameter (406.40 mm), Capacity (0.84 bcm/y), SegmentCost (584850000.00 RMB), StartLocation/EndLocation, and Operator/Owner almost exactly (see attribution caveat below) -- this is about as strong a confirmation as a single-document primary source can give, and the row is REAL, correctly located and correctly classified as a gas transmission branch line (6.3 MPa transmission-grade pressure, not a gathering/process line). No duplicate: checked the full 43-PID Guangxi roster and nothing else names Yangshuo or Lipu or matches this corridor/spec combination -- P4726 (Guilin Distribution Station, Lingui District, shelved) is a different, unrelated Guilin-area branch. HOWEVER: the approval is dated 2022-06 (成文日期 2022年06月10日, 批复 issued 2022-06-15), not October -- GEM's ProposalMonth=10 does not match; I could not find any dated document naming an October 2022 milestone for this project (the underlying municipal request 市发改报〔2022〕196号 is undated in the text I could access). Recommend correcting ProposalMonth to 06, keeping ProposalYear=2022.",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Minor: GEM's Operator/QCCOwner name drops '油气' from the full legal name (should be 西南油气管道 not 西南管道); FuelSource's specific 'Liuzhou-Guilin Branch' qualifier is not independently verified and the source shows a SECOND upstream connection (China-Myanmar pipeline's Guilin station) that GEM's single-value FuelSource field omits.",
+      "researcher_notes": "The 2022-06 DRC approval (fgw.gxzf.gov.cn, same doc as above) names the project unit as '国家管网集团西南油气管道有限责任公司南宁输油气分公司' (PipeChina Southwest OIL AND GAS Pipeline Co Ltd, Nanning Oil and Gas Transport Branch) -- GEM's Operator/QCCOwner field reads '国家管网集团西南管道有限责任公司南宁输油气分公司', omitting '油气' from '西南管道'. Same entity, just an abbreviated company name in GEM; not flagging as wrong, just noting the fuller official form for a future correction. Separately, the approval text says the project 'expands the Guangxi LNG external transport pipeline's Guilin Station AND the China-Myanmar pipeline's Guilin gas station' (扩建广西液化天然气外输管道桂林站、中缅管道桂林输气站) as its two upstream tie-ins -- i.e. gas can be sourced from BOTH the Guangxi LNG Terminal Transport Pipeline network and the China-Myanmar pipeline. GEM's FuelSource field records only 'Guangxi LNG Terminal Transport Pipeline, Liuzhou-Guilin Branch' -- a specific sub-segment name I could not find named anywhere else (not in the 43-PID roster, not elsewhere in the sourced text), and it silently drops the China-Myanmar connection. Not calling this a hard error since the general LNG-network linkage is genuinely supported, but it is incomplete/unverified in its specific form.",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": false, "source_language": "zh",
+      "researcher_notes": "Official DRC approval doc for '...天然气管道项目' (a natural gas pipeline project) throughout; commodity is unambiguous."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "106.00", "LengthKnownUnits": "km"}, "primary_value": "106.00",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Approval text: '管道全长约106公里' -- exact match to GEM's 106.00 km. Single primary origin (also reprinted verbatim by bjx.com.cn), so tier=medium not high."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "406.40", "DiameterUnits": "mm"}, "primary_value": "406.40",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Approval text: '管径D406.4毫米' -- exact match."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "0.84", "CapacityUnits": "bcm/y"}, "primary_value": "0.84",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Approval text: '设计输量8.4×10^8立方米/年' = 840,000,000 m3/yr = 0.84 bcm/y -- exact match."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "584850000.00", "SegmentCostUnits": "RMB"}, "primary_value": "584850000.00",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Approval text: '本项目总投资为58485万元' = RMB 584,850,000 -- exact match."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "LNG Guilin Station", "StartPrefecture/District": "Guilin", "StartState/Province": "Guangxi", "StartCountryOrArea": "China",
+        "EndLocation": "LNG Lipu Station, Lipu County", "EndPrefecture/District": "Guilin", "EndState/Province": "Guangxi", "EndCountryOrArea": "China"
+      },
+      "primary_value": "LNG Guilin Station",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Approval text: start '广西液化天然气外输管道桂林站' (Guangxi LNG external transport pipeline's Guilin Station), end '荔浦输气站' (Lipu gas station); route within 临桂区(Lingui District)/阳朔县(Yangshuo County)/荔浦市(Lipu City), all Guilin prefecture, Guangxi, China -- matches GEM's recorded Start/End locations and province/prefecture."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Guangxi LNG Terminal Transport Pipeline, Liuzhou-Guilin Branch"},
+      "primary_value": "Guangxi LNG Terminal Transport Pipeline, Liuzhou-Guilin Branch",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Source confirms the project connects to (expands) the Guangxi LNG Terminal Transport Pipeline's Guilin Station -- supports the general upstream-network claim. Caveat: the specific 'Liuzhou-Guilin Branch' qualifier is not independently confirmed by this text, and the source also names a SECOND tie-in (China-Myanmar pipeline's Guilin station) that GEM's field omits -- see attribution note in validity[]."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 3580, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"], "primary_value_col": "Operator",
+      "values": {"QCCOwner(业主单位)": "国家管网集团西南管道有限责任公司南宁输油气分公司"},
+      "primary_value": "国家管网集团西南管道有限责任公司南宁输油气分公司",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Approval names '项目单位：国家管网集团西南油气管道有限责任公司南宁输油气分公司' -- same entity as GEM's recorded value, GEM's form just drops '油气'. See attribution caveat re: fuller legal name."
+    },
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 3580, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1",
+      "values": {"Owner1": "Nanning Oil and Gas Transportation Branch of State Pipe Network Group Southwest Pipeline Co Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Nanning Oil and Gas Transportation Branch of State Pipe Network Group Southwest Pipeline Co Ltd",
+      "proposed_refs": ["http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"],
+      "verifications": [{"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "zh",
+      "researcher_notes": "Same source names this branch of PipeChina Southwest as the sole project unit -- consistent with 100% single-owner attribution."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Guilin-Yangshuo-Lipu Branch", "sheet_row": 2628,
+      "current_status": "proposed",
+      "verdict": "change",
+      "proposed_status": "construction",
+      "proposed_changes": {"Status": "construction", "ConstructionYear": "2023"},
+      "evidence_date": "2024-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "http://tzcjj.liuzhou.gov.cn/xwzx/lzdt/t19700101_3248714.shtml",
+        "http://web.archive.org/web/20240606152119/https://dnr.gxzf.gov.cn/zfxxgk/fdzdgknr/ygzd/jsydpfwj/t17941774.shtml",
+        "http://web.archive.org/web/20250528135216/https://dnr.gxzf.gov.cn/zfxxgk/fdzdgknr/ygzd/jsydpfwj/t18327386.shtml",
+        "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml"
+      ],
+      "verifications": [
+        {"url": "http://tzcjj.liuzhou.gov.cn/xwzx/lzdt/t19700101_3248714.shtml", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20240606152119/https://dnr.gxzf.gov.cn/zfxxgk/fdzdgknr/ygzd/jsydpfwj/t17941774.shtml", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250528135216/https://dnr.gxzf.gov.cn/zfxxgk/fdzdgknr/ygzd/jsydpfwj/t18327386.shtml", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20250405032043/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t12032049.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "high", "independent": true, "source_language": "zh",
+      "researcher_notes": "The sheet's own recorded Status source is the 2024-04-18 dnr.gxzf.gov.cn land-use approval for the project's Lipu section (the row's current_ref) -- but that document is actually evidence AGAINST 'proposed': it is a land-expropriation approval, the second-to-last step before physical construction, issued nearly two years after the June 2022 project approval. Independent corroboration: (1) a Liuzhou municipal government investment-promotion-bureau article (tzcjj.liuzhou.gov.cn, published 2023-04-07) listing Guangxi's 2023 annual energy-project investment plan explicitly names '桂东北天然气环网桂林—阳朔—荔浦段天然气管道项目' as one of 11 '续建' (continuing/carry-over CONSTRUCTION) projects under '油气及煤炭储运项目' -- i.e. by April 2023 the project was already classed as under construction, not merely proposed; (2) a SECOND, separate dnr.gxzf.gov.cn land-use approval (2024-01-29, doc 桂政土批函〔2024〕10号) for the project's 临桂 (Lingui) section, confirming staged land acquisition continuing into 2024; (3) the original June 2022 DRC project approval (fgw.gxzf.gov.cn) as the baseline. Together these are 3 distinct government-agency documents (Guangxi DRC 2022, Liuzhou city govt 2023, Guangxi Natural Resources Dept x2 in 2024) independently confirming the project moved from approved (2022-06) to active/continuing construction (by 2023) with rolling land acquisition through segments in 2024. I could not find a more specific construction-START month/date, so ConstructionYear=2023 is the earliest year I can defensibly source (the true start could be anywhere from mid-2022 to early 2023); I did not find any 2025/2026 completion or commissioning announcement for this specific Guilin-Yangshuo-Lipu segment (distinct from the already-operating, larger-diameter 'Guilin branch' referenced elsewhere on the wiki page, e.g. P4487), so I am not proposing 'operating'."
+    }
+  ],
+  "summary": "Real, correctly-classified project (桂东北天然气环网桂林-阳朔-荔浦段, verified verbatim against the issuing Guangxi DRC's own approval posting: length/diameter/capacity/cost/operator/endpoints all match exactly); flagged ProposalMonth (10->06) as a spec error, minor attribution caveats on Operator's full legal name and FuelSource's unverified branch qualifier, and staged a status change from proposed to construction (2023) backed by 3 independent government documents (2022 approval, 2023 provincial investment plan, 2024 land approvals)."
+}

@@ -90,14 +90,22 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 
 | province | scope (grid rows) | status | batch |
 |---|---|---|---|
-| Guangxi | 43 (+9 trunk excluded) | pilot queued 2026-07-29 | `batches/china-guangxi-gas/` (not started) |
+| Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260729_1929_ET_china-guangxi-gas_deepsweep.xlsx`; staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
 
 ## Open items
 
-- **Guangxi pilot** — first province batch (legs TBD at kickoff: refs + fills +
-  in-dev status-review with the 15th-FYP angle).
+- **Guangxi pilot — DELIVERED 2026-07-29, staged not applied.** Full deep sweep +
+  status-review over all 43 grid rows
+  (`…_20260729_1929_ET_china-guangxi-gas_deepsweep.xlsx`, 9 tabs). Headline: 219/295
+  existing ref links dead (116 = geo-blocked `fgw.gxzf.gov.cn` alone); ref-gap
+  fan-out recovered 235/364 gap units with verified (mostly zh) sources, 129
+  UNRESOLVED; 75 refs re-verified live. Status review: 23 confirm / 10 stale /
+  3 change / 7 unclear. Validity: 43 concerns incl. 6 existence, 2 duplicate,
+  10 attribution. 89 fills. Baird reviews the workbook; nothing applied.
 - `docs/reference/source_roster.md` has no China section yet — seed it from the
-  pilot's verified sources.
+  pilot's verified sources (live: news.bjx.com.cn, gx.chinanews.com.cn,
+  gx.xinhuanet.com, ndrc.gov.cn, pipechina.com.cn, cnpc.com.cn, sinopec.com,
+  sasac.gov.cn, wsbs.liuzhou.gov.cn; archive.org snapshots for fgw.gxzf.gov.cn).
 - **`url_verifier.py` vs Chinese domains — smoke-tested 2026-07-29:** NDRC, 北极星,
   PipeChina, CNPC, Sinopec, Guangdong DRC, Zhejiang DRC all pass. **`fgw.gxzf.gov.cn`
   (Guangxi DRC) ConnectTimeouts on both schemes — likely overseas geo-blocking**, so

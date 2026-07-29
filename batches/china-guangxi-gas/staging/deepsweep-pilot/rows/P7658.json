@@ -1,0 +1,65 @@
+{
+  "project_id": "P7658",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4057,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Binyang Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence, classification (transmission), Diameter, Pressure and Capacity all confirmed independently of GEM/gem.wiki; see spec concern below for Length/Cost.",
+      "researcher_notes": "This segment is real and correctly classified. The sheet's own cited ref for most fields (fgw.gxzf.gov.cn t2198317.shtml, the 2019 Guangxi DRC project-approval notice) is currently unreachable from here (ConnectTimeout, same as wiki_citations.json's existing_ref_checks recorded) so I could not re-verify it directly, but I found the identical named project ('广西天然气支线管网项目宾阳天然气支线管道工程' / Guangxi Natural Gas Branch Pipeline Network Project – Binyang Branch Engineering) independently confirmed by two dated, government-mandated post-construction environmental filings published by the builder (Guangxi Gas Group Co., Ltd. / 广西燃气集团有限公司) on the third-party engineering-acceptance disclosure platform yanshougs.com — not GEM/gem.wiki/abarrelfull: (1) 'environmental facilities completion disclosure' dated 2025-07-30 (www.yanshougs.com/content/107398.html) and (2) the formal 'completion environmental protection acceptance investigation report' dated 2026-07-23 (www.yanshougs.com/content/110210.html, public-notice window 2026-07-23 to 2026-08-19 — i.e. literally this week). Both independently state: design pressure 4MPa (matches GEM's Pressure=4), pipe diameter D273.1mm (matches GEM's Diameter=273.1), design throughput 2.91×10^8 Nm3/a = 0.291 bcm/y (matches GEM's Capacity=0.29 bcm/y), L290 ERW steel pipe, route from the existing Leitang (黎塘) distribution station (built for Sinopec's Guangxi LNG project) west through Leitang/Yangqiao/Wangling/Daqiao townships to the Binyang distribution station near Tangbiao village — all within Binyang County, Nanning, Guangxi, consistent with GEM's StartLocation/EndLocation='Binyang'. No duplicate found in the 43-row Guangxi roster — no other row references Leitang/Yangqiao/Wangling/Daqiao/Tangbiao or this station pairing.",
+      "proposed_refs": [
+        "https://www.yanshougs.com/content/107398.html",
+        "https://www.yanshougs.com/content/110210.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Binyang Branch",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct LengthKnown from 27 km to ~23.9–23.925 km (as-built). Flag SegmentCost as a proposal-stage estimate vs. actual realized cost — verify with Baird whether GEM should carry the approved-estimate figure or switch to the as-built figure.",
+      "researcher_notes": "GEM records LengthKnown=27 km, sourced to the 2019 project-approval doc (fgw.gxzf.gov.cn t2198317.shtml, currently unreachable/ConnectTimeout for me to re-check the number directly). Both independent 2025 and 2026 completion filings give the AS-BUILT length as 23.9196 km (2025-07-30 filing) and 23.925 km (2026-07-23 final acceptance filing) — i.e. ~3 km / ~11% shorter than what's on the sheet. This reads as the normal 'approved-planning estimate vs. as-built measurement' gap (27 km was presumably the 2019 pre-construction estimate), not a hallucination, but the current GEM value is stale/wrong for present-day length and should be updated to the as-built ~23.9–23.925 km, citing the two completion filings. Separately: the same two filings state EIA-stage estimated total investment was 12,643 万元 (126.43M RMB, close to GEM's recorded SegmentCost=131,020,000 RMB/2019) while ACTUAL realized total investment was 10,500 万元 (105M RMB) — about 20% lower than the approved estimate GEM currently carries. Not flagging this as a hard error since GEM may intentionally record the approved/proposal-year cost, but noting the as-built figure exists now in case Baird wants the tracker to reflect realized cost instead.",
+      "proposed_refs": [
+        "https://www.yanshougs.com/content/107398.html",
+        "https://www.yanshougs.com/content/110210.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Binyang Branch",
+      "sheet_row": 4057,
+      "current_status": "proposed",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {
+        "Status": "operating",
+        "StartYear1": "2025"
+      },
+      "evidence_date": "2026-07",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.yanshougs.com/content/107398.html",
+        "https://www.yanshougs.com/content/110210.html"
+      ],
+      "verifications": [
+        {"url": "https://www.yanshougs.com/content/107398.html", "ok": true, "contains_value": true},
+        {"url": "https://www.yanshougs.com/content/110210.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Sheet Status='proposed' (last updated 2025-08-25) is stale. Searched Chinese-language sources beyond the sheet's dead-linked 2019 approval ref and found dated construction-completion evidence GEM missed: (1) 2025-07-30 'environmental facilities completion disclosure' (环保设施竣工公示) for this exact named project, filed by Guangxi Gas Group, stating the pipeline and its environmental facilities are built; (2) 2026-07-23 formal 'completion environmental protection acceptance investigation report' (竣工环境保护验收调查报告) — the final mandatory post-construction environmental sign-off, currently in its public-comment window (2026-07-23–2026-08-19). In China this filing type is issued only after physical construction is complete and the line is built/commissioned, so Status should move from 'proposed' to 'operating', with StartYear1 set to 2025 (year the completion disclosure was filed). Tier set to 'medium' rather than 'high' because both filings trace to the same builder's own mandatory regulatory submissions (two sequential stages of one process, not two editorially independent outlets) even though they are separately dated, separately reviewed documents that agree closely (23.9196 km vs 23.925 km) — recommend a human sanity-check that the pipeline has actually begun flowing gas (vs. sitting at 'construction complete, awaiting commissioning') before applying, but the evidence strongly contradicts 'proposed'."
+    }
+  ],
+  "summary": "P7658 (Binyang Branch, Guangxi Gas Pipeline Network) is a real, correctly classified transmission line, confirmed via two independent 2025/2026 Chinese completion-filing sources (not GEM); but Length is overstated (27 km on sheet vs. 23.9–23.925 km as-built) and Status is stale ('proposed' vs. strong evidence of construction-complete/operating as of 2025–2026) — both flagged with verified refs; no duplicate or existence problem found."
+}

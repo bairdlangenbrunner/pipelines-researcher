@@ -1,0 +1,83 @@
+{
+  "project_id": "P7660",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK on http://www.xpjylgwapp.net/zfxxgk/zfxxgkgl/fdzdgknr/hjjccf/hjyxpj/t11218502.shtml -- direct curl times out (000, geo-blocked, consistent with the known fgw/gxzf.gov.cn class). Web search located what is almost certainly the SAME document under the environment department's own domain (the disclosure portal appears to have migrated off xpjylgwapp.net): 'http://sthjt.gxzf.gov.cn/zfxxgk/zfxxgkgl/fdzdgknr/hjjccf/hjyxpj/t11218502.shtml' -- identical trailing path t11218502.shtml, title '广西壮族自治区生态环境厅关于广西天然气支线管网项目贺州天然气支线管道工程（富川段、昭平段和信都段）环境影响报告表的批复' (EIA report-table approval for the Hezhou branch, Fuchuan/Zhaoping/Xindu sections). But this URL is ALSO unreachable: direct curl times out (000), WebFetch returns ECONNREFUSED, and r.jina.ai's headless-browser proxy independently times out navigating to it (15s page.goto timeout) -- three independent tools agree this is a live-but-geo-blocked gxzf.gov.cn host, not a dead/retired page. No web.archive.org snapshot exists for either URL (CDX search empty for both). The secondary current_ref on this row, https://news.bjx.com.cn/html/20210326/1144324-4.shtml, is also unusable: it 200s but serves an Alibaba Cloud WAF slide-to-verify challenge page (confirmed via curl and r.jina.ai, both got the captcha shell, zero article text); archive.org's only snapshot of that URL was captured today and is itself the WAF challenge page, not the 2021 article. Net: found the correct-looking replacement URL for the government approval notice but cannot fetch or verify its content through any available tool, so I cannot confirm the 'proposed' status wording. Legitimate UNRESOLVED per the geo-block guidance (no snapshot exists)."
+    },
+    {
+      "ref_col": "Proposal [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "current_ref https://news.bjx.com.cn/html/20210326/1144324-4.shtml is WAF-blocked (Alibaba Cloud slide-captcha, confirmed via curl and r.jina.ai headless proxy -- no article text reachable by any tool), and its own archive.org snapshot (captured today) is the same captcha page, not 2021 content. The URL's own path date (20210326) is at least structurally consistent with the recorded ProposalYear=2021/ProposalMonth=3, but that is not independent confirmation of the value, only a weak signal the ref was originally picked for the right reason. The likely-replacement gxzf.gov.cn EIA-approval page found via search (see Status unit notes) carries a filename/PDF date of 2022-01-18 (P020220118...), which is the *approval* date, not the proposal date, and that page is itself unreachable (geo-blocked, no snapshot) so its content can't be used to corroborate 2021-03 either. UNRESOLVED -- no accessible, verifiable source for the proposal date."
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK, same xpjylgwapp.net URL as Status (geo-blocked, no snapshot -- see Status unit for full access-attempt detail). A web search snippet paraphrasing the likely-replacement gxzf.gov.cn EIA approval notice gives per-segment annual capacities: Fuchuan section 0.2x10^8 m3/y (0.02 bcm/y), Zhaoping section 0.3x10^8 m3/y (0.03 bcm/y), Xindu section 0.65x10^8 m3/y (0.065 bcm/y). The recorded single Capacity=0.03 bcm/y matches the Zhaoping-section figure exactly, which is suggestive, but (a) the branch has three segments with three different capacities and it's unclear which one this row's single Capacity field is meant to represent, and (b) I could not fetch the source page myself through any tool (direct curl, WebFetch, r.jina.ai headless proxy all fail/time out against gxzf.gov.cn) to confirm the paraphrase or read it in context, so this cannot be cited. UNRESOLVED -- suggestive but unverifiable and ambiguous which segment it refers to."
+    },
+    {
+      "ref_col": "Pressure [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK, same xpjylgwapp.net URL (geo-blocked, no snapshot -- see Status unit). A web search snippet paraphrasing the likely-replacement gxzf.gov.cn EIA approval notice gives design pressures of 4.0 MPa for the Fuchuan and Zhaoping sections and 6.3 MPa for the Xindu section -- an exact match to the recorded Pressure='4, 6.3' MPa (two design pressures across the branch's segments). This is a strong content match, but I could not myself fetch or read the source page through any available tool (curl, WebFetch, and r.jina.ai headless proxy all fail against gxzf.gov.cn with the same geo-block signature used elsewhere in this sweep), so I cannot verify the search engine's paraphrase against the primary text or cite the URL (it fails the liveness check outright). UNRESOLVED -- value looks correct but the source is inaccessible for citation."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK, same xpjylgwapp.net URL (geo-blocked, no snapshot -- see Status unit). IMPORTANT DISAGREEMENT: a web search snippet paraphrasing the likely-replacement gxzf.gov.cn EIA approval notice states the branch is built in three sections -- Fuchuan 39.6 km, Zhaoping 29.3 km, Xindu 2.2 km -- totalling 71.1 km, not the recorded LengthKnown=61.1 km. I could not fetch the primary page myself (geo-blocked across curl/WebFetch/r.jina.ai) to confirm this figure directly or rule out a search-summarization error, so I am NOT proposing this as a corroborating ref per the standing rule against citing a source for a different value than what's recorded. Flagging the 71.1 vs 61.1 km discrepancy for Update-workflow review rather than silently supporting the current 61.1 km figure. UNRESOLVED -- both because the source is inaccessible and because what little content I could see does not agree with the recorded value."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK, same xpjylgwapp.net URL (geo-blocked, no snapshot -- see Status unit). A web search snippet paraphrasing the likely-replacement gxzf.gov.cn EIA approval notice places the project across Hezhou's Babu district, Zhongshan county, Pinggui district and Fuchuang Yao autonomous county, Zhaoping county, plus Wuzhou's Mengshan county -- consistent with (does not contradict) the recorded Hezhou/Guangxi start and end prefecture, though the route apparently also touches Wuzhou prefecture, a nuance worth a future look but not a contradiction of the recorded Start/EndPrefecture=Hezhou. Could not fetch the source myself through any tool (same geo-block signature as the other units on this row), so cannot cite it. UNRESOLVED."
+    },
+    {
+      "ref_col": "SegmentCost [ref]",
+      "sheet_row": 4059,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK, same xpjylgwapp.net URL (geo-blocked, no snapshot -- see Status unit). A web search snippet paraphrasing the likely-replacement gxzf.gov.cn EIA approval notice states total project investment of 29,888 (万元RMB) -- i.e. RMB 298,880,000 -- an exact match to the recorded SegmentCost=298880000.00 RMB, and the notice's own filename/PDF carries a 2022-01-18 date, consistent with SegmentCostYear=2022. This is a strong content match, but I could not fetch or read the source page myself through any available tool (curl, WebFetch, r.jina.ai headless proxy all fail against gxzf.gov.cn with the geo-block signature confirmed elsewhere on this row), so I cannot independently verify the paraphrase or produce a citable, passing URL. UNRESOLVED -- value looks correct but the source is inaccessible for citation."
+    }
+  ]
+}

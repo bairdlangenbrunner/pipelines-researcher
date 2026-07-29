@@ -133,6 +133,14 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         return {"ok": False, "status": None, "reason": f"request failed: {type(e).__name__}"}
     if r.status_code != 200:
         return {"ok": False, "status": r.status_code, "reason": f"HTTP {r.status_code}"}
+    # requests falls back to ISO-8859-1 (the HTTP default for text/*) whenever the server
+    # omits an explicit charset in Content-Type — common on Chinese gov/news sites that DO
+    # serve utf-8 but don't declare it. Left uncorrected this mangles the body into
+    # mojibake and produces false "value not found" negatives on real, live pages (e.g.
+    # ndrc.gov.cn). Only override the generic default, never a charset the server actually
+    # declared, so a genuine non-utf-8 declaration (e.g. real GBK) is left alone.
+    if (r.encoding or "").lower() in ("iso-8859-1", "ascii") and r.apparent_encoding:
+        r.encoding = r.apparent_encoding
     body = r.text or ""
     text = body.lower()
     # A content check against a suspiciously short body is not a trustworthy negative — it is

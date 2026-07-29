@@ -1,0 +1,56 @@
+{
+  "project_id": "P4715",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "sheet_row": 2617,
+  "wiki": "https://www.gem.wiki/Guangxi_LNG_Terminal_Transport_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Beihai-Maoming Branch",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix EndState/Province from 'Guangxi' to 'Guangdong' — Maoming (茂名) is a Guangdong-administered prefecture-level city, not a Guangxi one; StartState/Province='Guangxi' (Beihai) is correct.",
+      "researcher_notes": "The sheet records EndLocation='Maoming Transmission Station' with EndState/Province='Guangxi'. Maoming is unambiguously in Guangdong province (confirmed via the Guangdong provincial government portal gd.gov.cn and zh.wikipedia.org — 茂名市 is 广东省 地级市, not Guangxi). The pipeline itself is correctly described elsewhere in the sourcing as crossing from Guangxi into Guangdong ('联通广西和广东，横穿湛江市' — 'connects Guangxi and Guangdong, crossing Zhanjiang city', per the 2022-08-09 Zhanjiang commercial-operation article), so the province field for the Guangdong-side endpoint is simply mis-tagged as Guangxi. This is a location/attribution bug, not an existence problem — the branch is real and the endpoint name (Maoming) is itself corroborated (see spec finding below).",
+      "proposed_refs": ["http://www.gdzjdaily.com.cn/p/2833833.html"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Beihai-Maoming Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the EndState/Province fix above; diameter (559mm) could not be independently corroborated and should be treated as unverified (not contradicted).",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, operating gas transmission pipeline, confirmed by 2 independent Chinese-language sources that are NOT GEM-derived and do not trace to a common wire story: (1) china5e.com, 2019-10-09, reporting the initial Zhakou-to-Zhanjiang gas-station section (闸口输气站至湛江输气站段, 126km) coming online 2019-10-08 as part of Sinopec's Guangxi pipeline 粤西支线 (Yuexi/West-Guangdong branch), fed by the Beihai LNG receiving terminal; (2) gdzjdaily.com.cn (Zhanjiang municipal media), 2022-08-09, reporting the SAME branch's full commercial operation starting 2022-08-08 once it reached the Maoming gas transmission station (茂名输气站) — '8月8日，广西管道公司粤西支线茂名输气站开始向广东省管网连续平稳输气300万方，标志着粤西支线全面投入运营实现商业输气'. Together these two sources independently corroborate the branch's existence, its Beihai(Zhakou)->Zhanjiang->Maoming routing, and a staged 2019/2022 buildout consistent with the sheet's StartYear1=2022/StartMonth1=8 for full operation. SPEC: capacity 33亿立方米/年 (3.3 bcm/y) in the 2022 article is an EXACT match to GEM's Capacity=3.30 bcm/y. Length '全长约204km' in the 2022 article is very close to GEM's LengthKnown=207.00 km (~1.5% variance — plausibly different measurement termini/rounding, not treated as a material disagreement). Diameter (GEM: 559mm) is NOT mentioned in either sourced article and I could not find an independent figure for it after additional targeted searches (design-pressure 10MPa is mentioned instead) — leaving it unverified rather than fabricating corroboration. NOTE ON VERIFIER: url_verifier.py FALSE-NEGATIVEs on the gdzjdaily.com.cn URL for CJK expected-substrings (likely a requests-library encoding/charset-detection issue on this server, since the server's declared charset in the raw HTML is utf-8 and the literal Chinese substrings ARE present verbatim in the raw curl'd bytes and in the WebFetch-rendered extraction) — manually confirmed live (HTTP 200, 55606 bytes) and content-bearing via curl + WebFetch before citing; this is analogous to the documented ligature/encoding false-negative classes in the verifier's own docstring.",
+      "proposed_refs": [
+        "https://www.china5e.com/news/news-1072005-1.html",
+        "http://www.gdzjdaily.com.cn/p/2833833.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Beihai-Maoming Branch",
+      "sheet_row": 2617,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2022-08",
+      "staleness_rule": "",
+      "proposed_refs": ["http://www.gdzjdaily.com.cn/p/2833833.html"],
+      "verifications": [
+        {"url": "https://www.china5e.com/news/news-1072005-1.html", "ok": true, "contains_value": true},
+        {"url": "http://www.gdzjdaily.com.cn/p/2833833.html", "ok": false, "contains_value": false}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Searched for evidence newer than the sheet's Status/StartYear (2022-08, LastUpdated 2025-08-25). Found the 2022-08-09 Zhanjiang-media article confirming full commercial operation as of 2022-08-08 (matches GEM's recorded start month/year exactly) and an earlier 2019-10-09 china5e.com article confirming the first section's commissioning. Attempted to pull a more recent (2023-2024) confirmation from a 2024-06-13 cnstock.com/Shanghai Securities News piece about PipeChina's Guangxi subsidiary ('从一根道到一张网的飞跃', cited on the wiki page) but its body is JS-rendered and not extractable via WebFetch; did not find independent 2023-2025 coverage specific to this branch. Status='operating' is well-supported by hard 2019/2022 commissioning evidence and there is no dormancy concern (this is an in-service asset, not a proposed/shelved one awaiting the 2y/4y staleness thresholds) — confirming as-is."
+    }
+  ],
+  "summary": "Beihai-Maoming Branch (P4715) is a real, operating pipeline strongly corroborated by 2 independent Chinese sources (existence, 2022-08 operating date, and 3.30 bcm/y capacity all confirmed); one genuine attribution bug found — EndState/Province is wrongly 'Guangxi' when Maoming is in Guangdong — and diameter (559mm) remains unverified (not contradicted)."
+}

@@ -1,0 +1,48 @@
+{
+  "project_id": "P7666",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4065,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Beihai Branch",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Likely double-count / superseded stub — review for merge into P7664 (Beihai Tieshan Port loop gas pipe line) and/or P7665 (Donggang Industrial Park branch), both already tracked with real specs and government-sourced refs.",
+      "researcher_notes": "P7666's ONLY citation is https://news.bjx.com.cn/html/20210326/1144324-4.shtml (dated 2021-03-26), which the sheet uses to source Status='proposed', Fuel='Gas', PipelineType='transmission', and ProposalYear=2021. I could not verify ANY of this: the page returns HTTP 200 but its body is bjx.com.cn's anti-scraping JS challenge payload (base64/encrypted blob, no readable Chinese text) both live and via the Wayback Machine's freshest crawl (today, same obfuscated payload) -- the automated ref-checker in worklist.json independently flagged the same failure ('200 but data value not found' for both 'proposed' and '2021'). This is not a case of a rotted link; the source is categorically unreadable by any tool available to me, so the row's Status/Fuel/PipelineType/ProposalYear are effectively unsourced pending a human/JS-capable read.\n\nMore importantly: the row itself is a near-total blank -- StartLocation, EndLocation, LengthKnownKm, DiameterInMm, CapacityBcm/y are ALL '--', RouteAccuracy='no route', and even the Location [ref] cell is empty (MISSING_REF). The only content is OtherLanguageAlternativePipelineNames='北海支线' (literally 'Beihai branch line') sitting inside the umbrella PipelineNetworkGrouping '广西输气管网' / OtherLanguagePrimaryPipelineName '广西天然气支线管网' (Guangxi Gas Branch Pipeline Network project).\n\nThat exact umbrella project already has TWO much more specific, well-sourced Beihai-area rows in this same PID family: P7664 'Beihai Tieshan Port loop gas pipe line' (北海铁山港天然气支线项目/环网, Tieshan Port->Tieshan Port, 30km, 4.0 bcm/y, proposed, sourced to gxzf.gov.cn) and P7665 'Donggang Industrial Park branch' (广西北海铁山东港产业园天然气支线管道, Hepu Baisha->Tieshan Langen, 12.3km, 1.76 bcm/y, OPERATING, also gxzf.gov.cn). Open-web search (DuckDuckGo) surfaced independent corroboration that this umbrella project's Beihai-area work is specifically the Tieshan Port loop + Tieshan/Donggang industrial-park spur -- e.g. a Feb-2024 bjx.com.cn piece on Guangxi Energy Group's equity-acquisition signing for '北海铁山东港天然气支线管道项目', and a Beihai Tieshan Port District EIA report for the same. I found NO independent source describing a 'Beihai branch' (北海支线) as a distinct THIRD piece of gas infrastructure separate from those two -- and structurally it wouldn't make sense for Beihai (which hosts Guangxi's LNG import terminal and is the SOURCE of the whole network, per P4715/P4716/P4718/P4719/P4721) to also need a prefecture-level 'dedicated supply branch' the way inland cities (Beiliu, Luchuan, Hezhou, Wuzhou, Fangchenggang, etc.) do under the same branch-network company's 14-city rollout.\n\nConclusion: P7666 reads as the project's earliest (2021), vaguest news mention of 'the Beihai branch,' captured as a placeholder row before the two concrete engineering sub-projects (P7664 loop, P7665 spur) were documented and separately entered. It has not been updated with any real specifics in the 4+ years since, while P7664/P7665 accumulated real land-use, procurement, and EIA paper trails. Recommend Baird/CB compare P7666 against P7664+P7665 for a merge/retirement rather than carrying it as a fourth independent Beihai line; if it IS meant to be distinct, it needs a real location, length, and a readable source before it can be corroborated at all.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Beihai Branch",
+      "sheet_row": 4065,
+      "current_status": "proposed",
+      "verdict": "stale",
+      "proposed_status": "shelved",
+      "proposed_changes": {
+        "Status": "shelved",
+        "ShelvedCancelledType": "Presumed"
+      },
+      "evidence_date": "2021-03",
+      "staleness_rule": "2y->shelved",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://news.bjx.com.cn/html/20210326/1144324-4.shtml",
+          "ok": false,
+          "contains_value": false
+        }
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "No independent news found advancing this specific row past its March-2021 proposal mention (the mention itself can't even be read -- see validity note: the bjx.com.cn source is an anti-scraping JS-obfuscated page, unreadable live and via the freshest Wayback snapshot). Searched (DuckDuckGo, zh + en) for '北海支线'/'Beihai branch' gas pipeline news 2021-2026, Guangxi 14th Five-Year gas plans, and the umbrella '广西天然气支线管网' project -- found real, dated progress (2023 EIA, 2024 equity-acquisition signing, steel-pipe procurement) but all of it attaches to the two already-separately-tracked rows P7664 (still proposed) and P7665 (now operating), never to a distinct third 'Beihai branch' item. Applying the dormancy rule at face value (proposed 2021, no progress in 5 years -> shelved, ShelvedCancelledType=Presumed, no fabricated ref per standing rule 2). CAVEAT: this status-change recommendation is secondary to the duplicate finding in validity[] -- if P7666 is confirmed to be the same physical project as P7664/P7665 on merge review, the correct fix is retiring/merging this row rather than independently marking it shelved while its sibling rows show active/operating status."
+    }
+  ],
+  "summary": "P7666 'Beihai Branch' is a near-blank placeholder row (no location/length/diameter/capacity, empty Location ref) sourced ONLY to a bjx.com.cn article that is unreadable by any tool (anti-scraping JS obfuscation, live and via Wayback) -- flagged concern/duplicate, likely subsumed by P7664 (Beihai Tieshan Port loop) + P7665 (Donggang Industrial Park branch, now operating); dormancy rule separately suggests shelved if kept standalone. No UNRESOLVED fills (none attempted -- no verifiable specifics found)."
+}

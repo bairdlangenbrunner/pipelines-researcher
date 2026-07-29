@@ -1,0 +1,53 @@
+{
+ "project_id": "P7661",
+ "pipeline_name": "Guangxi Gas Pipeline Network",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 4060,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml",
+    "https://news.qq.com/rain/a/20250117A01W2T00"
+   ],
+   "verifications": [
+    {"url": "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml", "ok": true, "contains_value": true},
+    {"url": "https://news.qq.com/rain/a/20250117A01W2T00", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Brief flagged the gx.cnr.cn current_ref as DEAD_LINK, but re-verified live now (200, content present) via scripts/url_verifier.py checking for 8000万/40公里 tokens -- likely a transient failure on the earlier check, not a true dead link. 2025-01-17 央广网 (CNR) article, '韩凯：建设防城港至东兴天然气支线管道': Fangchenggang Development & Reform Commission Party Secretary Han Kai publicly recommends the government build this ~40km Fangchenggang-Dongxing gas branch and urges relevant departments to include it in the 2025 construction-start plan -- i.e. as of the newest evidence it is still only a proposal/recommendation, matching Status='proposed'. Same story re-syndicated same-day at news.qq.com (identical quotes/date) -- cited as a second working URL but per the corroboration rule this is the SAME wire story, not an independent source (does not upgrade tier past medium; independent=false), consistent with the deep-sweep audit shard's finding on this row."
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "sheet_row": 4060,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [
+    {"url": "https://news.bjx.com.cn/html/20210326/1144324-4.shtml", "ok": false, "contains_value": false}
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "current_ref (news.bjx.com.cn/html/20210326/1144324-4.shtml) is dead: url_verifier.py returns 200-but-token-missing, and a raw curl shows the page is an Aliyun WAF anti-bot challenge page (obfuscated JS, no article text) -- confirmed the same for pages -1 through -5 and the base 1144324.shtml. Checked web.archive.org: a snapshot now exists (captured today, 20260729) but it is a capture of the SAME WAF challenge page, not real content -- unusable. Identified via web search what the underlying bjx article actually is: '附171个电源项目全名单！《广西能源网建设2021年工作推进方案》发布' -- a broad roundup of a Guangxi DRC provincial energy-network work plan (桂发改电力〔2021〕184号, issued 2021-03-15) covering 171 power projects plus attached power/EV-charging/grid/oil-gas-pipeline project lists, NOT an article specific to this Fangchenggang-Dongxing branch. Found and read the archived 2021-03-23 fgw.gxzf.gov.cn notice page for that same plan (web.archive.org snapshot from 2021-08-01, real content, confirms the 2021-03-15 issue date) -- but it is only a cover notice linking to unarchived attachment files (incl. '附件5.2021年能源网大会战项目-油气管网项目推进计划.xlsx'), with no visible project-level text, so I cannot confirm this specific 40km Fangchenggang-Dongxing segment appears in it. Web searches for '防城港 东兴 天然气支线 2021' and '立项 2021' turned up nothing pipeline-specific. Per the deep-sweep audit shard's own concern: the only content-verifiable source (2025-01-17 CNR/QQ) frames this exact project as a brand-new legislative recommendation with no reference to a 2021 precedent, which is in tension with ProposalYear=2021. Cannot find independent support for ProposalYear=2021/ProposalMonth=3 for THIS segment specifically -- leaving UNRESOLVED rather than proposing a ref that doesn't actually confirm the value, per the never-fabricate / support-the-recorded-value rule. Recommend routing the 2021 vs 2025 chronology tension to Update for a closer look at whether ProposalYear was inherited from network-level (not segment-level) planning content."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 4060,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml",
+    "https://news.qq.com/rain/a/20250117A01W2T00"
+   ],
+   "verifications": [
+    {"url": "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml", "ok": true, "contains_value": true},
+    {"url": "https://news.qq.com/rain/a/20250117A01W2T00", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Same current_ref as the Status unit, also flagged DEAD_LINK in the brief but re-verified live now via url_verifier.py checking for the 8000万 token. Same 2025-01-17 CNR article states the recommended pipeline's 'zong touzi yue 8000 wan yuan' (total investment ~80 million yuan), matching SegmentCost=80,000,000 RMB. Re-syndicated same-day at news.qq.com with identical figures -- cited as a second working URL but the SAME wire story (independent=false, tier capped at medium), matching the deep-sweep audit shard's finding that both numbers (40km length, RMB80M cost) trace to this one CNR story."
+  }
+ ]
+}

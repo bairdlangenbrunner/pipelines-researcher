@@ -1,0 +1,117 @@
+{
+ "project_id": "P4694",
+ "pipeline_name": "Guangdong West Gas Pipeline Network",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20220808003927/http://district.ce.cn/newarea/roll/202202/11/t20220211_37322460.shtml",
+    "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20220808003927/http://district.ce.cn/newarea/roll/202202/11/t20220211_37322460.shtml", "ok": true, "contains_value": true},
+    {"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "current_ref (district.ce.cn + toutiao) was DEAD_LINK; found a working web.archive.org snapshot of the district.ce.cn half of the original ref (toutiao has no Wayback snapshot). The archived Maoming municipal government 2022 work report explicitly states, reviewing 2021 achievements: '粤西天然气主干管网湛江至茂名、茂名至阳江干线建成投产' (the West Guangdong gas trunk network's Zhanjiang-Maoming and Maoming-Yangjiang lines were built and commissioned) — direct, literal confirmation of 'operating' for this exact segment (verifier passed on token '建成投产', GBK-encoded page correctly decoded). Second independent source: archived Guangdong provincial govt portal/Nanfang Daily article (2021-09-29) describing pipe-laying completion 93 days ahead of schedule on 2021-09-28 and pending pre-commissioning trial-run prep — corroborates the construction timeline leading into the 2021 commissioning confirmed by the first source. No 2022-2026 news found suggesting any status change since."
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF"
+   ],
+   "verifications": [
+    {"url": "https://gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "current_ref classed DEAD_LINK, but this is a false negative: the site is live, just slow to serve this 33MB/608-page scanned EIA PDF (requests confirmed HTTP 200 in ~45s, well past url_verifier's 20s default timeout, and past the CLI's non-configurable timeout too — same pattern as other gov.cn hosts noted in the brief). I downloaded the full file directly (curl, no timeout cap) and ran pdftotext -layout myself: the document states verbatim '粤西天然气主干管网茂名-阳江干线项目已于 2019 年 8 月 15 日取得项目核准' (the project obtained its approval document on Aug 15, 2019) — exact match for ProposalYear=2019/ProposalMonth=8. Also confirms 156.12km length and 308369.5万元 total investment (see Length/SegmentCost units below) in the same document, so this PDF is a single high-confidence source but I could not find a second independent source citing the specific August 2019 approval date/number (other sources reference 2019 land-pre-approval and 2018 project-code stages, not the same 核准 milestone) — medium tier, single strong primary-document source."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20220808003927/http://district.ce.cn/newarea/roll/202202/11/t20220211_37322460.shtml",
+    "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20220808003927/http://district.ce.cn/newarea/roll/202202/11/t20220211_37322460.shtml", "ok": true, "contains_value": true},
+    {"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "Same two sources as Status (current_ref was the same dead district.ce.cn+toutiao pair; only district.ce.cn has a Wayback snapshot). The 2022 Maoming government work report reviews 2021 as the year this segment was '建成投产' (built/commissioned), supporting StartYear1=2021. The 2021-09-29 gd.gov.cn/Nanfang Daily article independently corroborates the same-year timeline: pipe-laying fully connected 2021-09-28 (93 days ahead of schedule), with pre-commissioning trial-run prep beginning immediately after. Could not find a citable source for the specific StartMonth1 (the row's own deep-sweep audit separately flagged a likely December 2021 commissioning date as UNRESOLVED for lack of a verifier-passing URL — cnr.cn is GB18030-garbled and gd.gov.cn's post_3730117.html 404s with no snapshot); this unit only requires supporting StartYear1=2021, which both sources do."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF",
+    "https://www.sohu.com/a/394258188_100175918"
+   ],
+   "verifications": [
+    {"url": "https://gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF", "ok": true, "contains_value": true},
+    {"url": "https://www.sohu.com/a/394258188_100175918", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "current_ref classed DEAD_LINK is a false negative (see Proposal unit note — site is live, just slow to serve a 33MB PDF past the verifier's timeout). Direct download + pdftotext -layout confirms the EIA states '线路全长 156.12km' / '本项目管道全长 156.12km' verbatim, multiple times, exact match. Second, fully independent source: Sohu/阳江观察 news (2020-05-10), url_verifier OK on token '156.12', also states the line is 156.12km. Two independent sources agreeing on the precise figure — high tier."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF"
+   ],
+   "verifications": [
+    {"url": "https://gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "current_ref classed DEAD_LINK is a false negative (same slow-33MB-PDF pattern as Proposal/Length above; HTTP 200 confirmed via direct curl download, no timeout cap). pdftotext -layout of the full document shows, twice: '占项目总投资额 308369.5 万元' (percentage-of-total-investment framing, total investment = 308,369.5万元 = 3,083,695,000 RMB) — exact match to the sheet's SegmentCost=3,083,695,000.00/RMB. Searched (WebSearch, multiple query variants) for a second independent source quoting this specific investment figure and found none — other coverage of this segment (Sohu, gd.gov.cn, Zhanjiang/Yangjiang govt announcements) covers technical specs and timeline but not cost. Medium tier, single strong primary-document (EIA) source."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "current_ref was empty (UNRESOLVED). The archived Guangdong provincial govt portal/Nanfang Daily article (2021-09-29, url_verifier OK on '国家管网集团广东省网公司') names the builder/operator as '国家管网集团广东省网公司' (PipeChina Guangdong Network Company) — an informal-name match for the sheet's QCCOwner value '国家管网集团广东省管网有限公司' (same entity, shorthand vs. full legal name; also cross-checked against a separate, smaller PDF I pulled directly — 广东省交通运输厅 waterway-crossing review 粤交航政函〔2020〕311号 — which addresses the project applicant as '广东省天然气管网有限公司', the pre-rename name of the same PipeChina provincial subsidiary; not cited here as it doesn't contain the QCC-form legal name and is redundant with the gd.gov.cn source). Medium tier given the informal/shorthand-name variant rather than an exact legal-name string match; could not find a second source using the full QCC legal name."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 2596,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"
+   ],
+   "verifications": [
+    {"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "current_ref was empty (UNRESOLVED). Same source as Operator: the article describes '国家管网集团广东省网公司' (PipeChina Guangdong Network Company) as the builder and sole operator of this line, consistent with the sheet's Owner1='PipeChina Guangdong Natural Gas Pipeline Company' at 100%. This project is part of PipeChina's 'one national network' (全省一张网) nationalization of provincial trunk lines, in which PipeChina's provincial subsidiary is standardly the sole owner — consistent with a 100% single-owner structure. Medium tier for the same informal-name-variant reason as Operator; no second independent source found stating an explicit ownership percentage."
+  }
+ ]
+}

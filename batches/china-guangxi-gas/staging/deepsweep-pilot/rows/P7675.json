@@ -1,0 +1,93 @@
+{
+  "project_id": "P7675",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4074,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Longming-Wu'an Branch",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct FuelSource from 'Sino-Myanmar Gas Pipeline' to the West-East Gas Pipeline (Line 2) Nanning-Baise branch — the row's own cited source names a different upstream trunk than the value on the sheet.",
+      "researcher_notes": "The row's current ref for FuelSource (and for Status/Length/Capacity/SegmentCost/Start) is https://www.nationalee.com/newsinfo/8103128.html, a republished Guangxi Energy Group (广西能源集团) press release dated 2025-03-04 ('来源：广西能源集团'). The page's shell HTML is a ~1KB JS-loader stub (this is why url_verifier's automated screen FAILs it as a likely block/stub — body under 1500 chars), but I fetched the site's underlying render-data script directly (the .Body.js asset the stub's own <script> tag loads) and it contains the full article text. It states, verbatim: '管道起自国家管网西二线南宁-百色支线5#阀室' — 'the pipeline originates from PipeChina's West-East Gas Pipeline Line 2 (Xi'er Xian), Nanning-Baise branch, valve chamber #5.' That is the West-East Gas Pipeline (Line 2), NOT the Sino-Myanmar Gas Pipeline (中缅天然气管道), which is a geographically and administratively separate PipeChina trunk (Ruili/Yunnan entry via Guizhou to Guigang, Guangxi) that this branch has no stated tie-in to. The sheet's FuelSource value is contradicted by its own cited source, not merely unconfirmed — this reads as a genuine misattribution (plausibly confused with the many other Guangxi branch lines in this network that DO tap the Sino-Myanmar line) rather than noise. I could not independently name the exact GEM entity ID for the West-East Line 2 Nanning-Baise branch (it is not in the 43-row Guangxi roster provided, which covers only intra-Guangxi distribution segments) — flagging for a researcher to confirm/create the correct FuelSource target rather than guessing an ID.",
+      "proposed_refs": ["https://www.nationalee.com/newsinfo/8103128.html"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Longming-Wu'an Branch",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Diameter (323 mm), Pressure (6.30 MPa) and ProposalYear (2017-06) rest on a single source that is currently unreachable and has no Wayback snapshot — re-source or re-verify before treating these as solid.",
+      "researcher_notes": "All three fields cite only http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t10409723.shtml (a Guangxi provincial NDRC project-approval filing). It ConnectTimeouts on every attempt (curl, url_verifier) and archive.org's Wayback API returns zero snapshots for the URL, so there is no way to confirm these three values right now, and there is no second source anywhere in this row's citations that mentions diameter, pressure, or a 2017 proposal date. This isn't a disagreement — I have no reason to think the numbers are wrong — but per the 2+-independent-source standard this leaves Diameter/Pressure/ProposalYear resting on an unverifiable single citation and they should be downgraded to low-tier / re-checked when the gxzf.gov.cn site (or an archived copy) becomes reachable, rather than carried at whatever confidence the sheet currently implies.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Longming-Wu'an Branch",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Minor: the GEM segment_name 'Longming-Wu'an Branch' garbles the two place names (隆安 Long'an + 武鸣 Wuming) into 'Longming'/'Wu'an' — rename to 'Long'an-Wuming Branch' to match StartLocation/EndLocation and the Chinese name 隆安—武鸣天然气支线管道工程.",
+      "researcher_notes": "StartLocation='Long'an', EndLocation='Wuming District' are both correct and independently confirmed by the nationalee.com article ('...标志着武鸣区、隆安县正式进入管道天然气时代'). But the segment_name field itself reads 'Longming-Wu'an Branch', which appears to be a transcription slip that cross-blends the two toponyms (Long'an + Wuming -> 'Longming'/'Wu'an'). Cosmetic, not a data-value error, but worth a clean-up since it's user-facing.",
+      "proposed_refs": ["https://www.nationalee.com/newsinfo/8103128.html"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Longming-Wu'an Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence, classification, length, capacity, cost, status, start date, location, or operator — all independently confirmed against the row's own primary source once its full text was retrieved (see spec/attribution concerns above for the two exceptions).",
+      "researcher_notes": "This is a real, physically-built pipeline, not a GEM-only entity: the nationalee.com article (a Guangxi Energy Group press release, dated 2025-03-04, source line '来源：广西能源集团') gives a detailed, internally consistent account that matches or supports GEM's values: (1) Length 50 km — '新建管道50公里' ('newly built pipeline is 50 km') — exact match. (2) SegmentCost 180,000,000 RMB / 2025 — '总投资约1.8亿元' ('total investment about 180 million RMB') — exact match. (3) Capacity 0.44 bcm/y — '年均可输送天然气4.4亿立方米' ('can transmit an average of 440 million m3 of gas annually') = 0.44 bcm/y — exact match. (4) Status=operating, StartYear1=2025/StartMonth1=3 — the article (published 2025-03-04) reports the Long'an distribution station '顺利投产' (successfully commissioned) and the Wuming station '成功进气' (successfully received gas), explicitly called Guangtou Pipe Network's 'first commissioning project of 2025' — matches Start=2025-03 and Status=operating. (5) Fuel=Gas, PipelineType=transmission — a natural-gas branch trunk feeding two county-level gas grids, consistent with the rest of the Guangxi roster's small branch lines classified the same way. (6) Location: StartLocation='Long'an' (start), EndLocation='Wuming District' (end), both Nanning prefecture, Guangxi — confirmed verbatim ('武鸣区、隆安县'). (7) Operator='Guangxi Guangtou Natural Gas Pipe Network Co Ltd' (广西广投天然气管网有限公司) — the article names the builder/investor as '广投管网公司' ('Guangtou Pipe Network Company'), a subsidiary of Guangxi Energy Group (广西能源集团) — consistent abbreviation of the same operator. No duplicate found: cross-checked against all 42 other roster PIDs (incl. P4732 Nanning-Pingxiang and P6042 in Jinchengjiang District, the other named/located branches) — none share Long'an or Wuming as an endpoint, so this is not a relabeled duplicate. Only a single primary source was available for these fields (this article, itself a corroborating GEM-independent company press release, republished on nationalee.com); I found no second independent outlet covering this specific March-2025 commissioning, so tier is medium (single strong primary source) rather than high, despite high internal consistency.",
+      "proposed_refs": ["https://www.nationalee.com/newsinfo/8103128.html"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Longming-Wu'an Branch",
+      "sheet_row": 4074,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Guangxi Guangtou Natural Gas Pipe Network Co Ltd", "OperatorLocalLanguage": "广西广投天然气管网有限公司"},
+      "primary_value": "Guangxi Guangtou Natural Gas Pipe Network Co Ltd",
+      "proposed_refs": ["https://www.nationalee.com/newsinfo/8103128.html"],
+      "verifications": [
+        {"url": "https://www.nationalee.com/newsinfo/8103128.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The Operator [ref] cell is blank (MISSING_REF). The article naming this project's builder/owner as '广投管网公司' (Guangtou Pipe Network Company), a Guangxi Energy Group subsidiary, is consistent with the GEM Operator value. Note: url_verifier's automated fetch FAILs this URL (its shell HTML is a ~1KB JS-loader stub with no visible text — the site renders content client-side from a separate script asset). I manually retrieved that underlying render-data script and confirmed the full article text is real and on-topic; verification here reflects that manual read, not the automated substring screen, per url_verifier.py's own documented guidance to re-fetch full text on a stub-classed FAIL rather than treat it as proof the source is dead."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Longming-Wu'an Branch",
+      "sheet_row": 4074,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-03",
+      "staleness_rule": "",
+      "proposed_refs": ["https://www.nationalee.com/newsinfo/8103128.html"],
+      "verifications": [
+        {"url": "https://www.nationalee.com/newsinfo/8103128.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Sheet's last-updated stamp is 2025-08-25 with Status=operating. Found dated, on-topic evidence NEWER in substance than that stamp implies was checked: a 2025-03-04 Guangxi Energy Group press release (republished at nationalee.com/newsinfo/8103128.html) reporting the Long'an distribution station '顺利投产' (successfully commissioned/put into production) and the Wuming distribution station '成功进气' (successfully received gas), explicitly labeled the operator's 'first commissioning project of 2025'. This is the same evidence already underlying the sheet's Start/Status fields (see validity block). No newer (post-March-2025) status-change evidence found (WebSearch budget was exhausted this session before a broader post-2025-03 search could be run; gxzf.gov.cn, the row's other citation, is unreachable with no Wayback copy). Status='operating' is confirmed as of 2025-03; no basis found to change it."
+    }
+  ],
+  "summary": "P7675 (Long'an-Wuming branch): real, independently confirmed operating pipeline (length/capacity/cost/dates/location/operator all check out against its own cited source's full text) but FuelSource is wrong per that same source (says West-East Line 2 Nanning-Baise branch, not Sino-Myanmar Gas Pipeline) and Diameter/Pressure/ProposalYear rest on a single dead, unarchived source."
+}

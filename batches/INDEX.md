@@ -6,6 +6,11 @@ hand-edit. Layout: `batches/<country>-<commodity>/` holds
 `deliverables/` (current workbooks), `archive/` (superseded or
 applied). See docs/workflows.md "Batch artifacts".
 
+## china-guangxi-gas
+
+- `staging/deepsweep-pilot` — rows=43 fills=54 updates=0 status-pending=13 refs(REFS_ADDED=235, REVERIFIED=75, UNRESOLVED=129) routes=0 new(none)
+- `deliverables/pipelines_batch_20260729_1929_ET_china-guangxi-gas_deepsweep.xlsx`
+
 ## egypt-gas
 
 - `staging/annual` — rows=7 fills=16 updates=0 status-pending=1 refs(REFS_ADDED=44, REVERIFIED=19, UNRESOLVED=1) routes=0 new(monitor=3, new_row=4)

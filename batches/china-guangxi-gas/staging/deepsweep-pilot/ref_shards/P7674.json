@@ -1,0 +1,66 @@
+{
+ "project_id": "P7674",
+ "pipeline_name": "Guangxi Gas Pipeline Network",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 4073,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml"
+   ],
+   "verifications": [
+    {"url": "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Brief flagged this as DEAD_LINK, but a fresh check (curl + url_verifier.py, tokens '鹿寨'/'验收') shows it resolving 200 with content present -- this looks like a transient/false-negative liveness flag, not an actual dead link (slj.liuzhou.gov.cn is on the confirmed-reachable list, not the geo-blocked list). Fetched and read the full page: it is the Liuzhou Municipal Water Resources Bureau's 2022-06-24 'soil and water conservation facility self-acceptance filing receipt' (水土保持设施自主验收报备回执) for '广西天然气支线管网项目鹿寨天然气支线管道工程' -- the exact formal name of this pipeline (Luzhai Branch). A construction-acceptance filing for this named project in June 2022 is the best available evidence that the line reached completion/regulatory sign-off and entered service around that date, consistent with Status=operating and StartYear1/Month1=2022/6. This is the same source (and same read) the row's own deep-sweep audit (rows/P7674.json) already banked for the status review, at tier=medium (single document; no independent 2023-2026 evidence of continued operation was found, though none contradicts it either -- WebSearch budget was exhausted this session, same constraint the prior researcher hit)."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 4073,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml"
+   ],
+   "verifications": [
+    {"url": "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Brief flagged this as DEAD_LINK, but it resolves fine (200, wsbs.liuzhou.gov.cn is on the confirmed-reachable host list) -- another apparent false-negative liveness flag. Fetched the full page (Liuzhou Administrative Approval Bureau 2016 EIA public notice for this exact project, 广西天然气支线管网项目鹿寨天然气支线管道工程) and read the raw text directly: '本工程设计输量为1.1x10^8 Nm3/a' (design throughput 1.1x10^8 Nm3/a = 0.11 bcm/y), an exact match to Capacity=0.11/CapacityUnits=bcm/y; the same passage also gives DN300 diameter, 6.3 MPa pressure and 31 km total length, all matching the sheet. Verifier token check on the literal string '1.1' fails because the HTML inserts whitespace between the digits from the design's scientific-notation markup (same false-negative the prior deep-sweep researcher flagged in rows/P7674.json) -- verified instead with '鹿寨'/'DN300'/'6.3' tokens, which pass, and confirmed the '1.1x10^8 Nm3/a' figure by eye in the extracted plain text. Single document states the capacity figure itself, hence tier=medium rather than high."
+  },
+  {
+   "ref_col": "FuelSource [ref]",
+   "sheet_row": 4073,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://lzzx.liuzhou.gov.cn/xw/201901/t20190102_1232618.html"
+   ],
+   "verifications": [
+    {"url": "http://lzzx.liuzhou.gov.cn/xw/201901/t20190102_1232618.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Prior deep-sweep pass (rows/P7674.json) left this UNRESOLVED because WebSearch budget was exhausted before a supplementary search could run; hit the same exhausted WebSearch budget this pass, so searched via direct HTTP fetches of search-engine result pages (sogou.com, DuckDuckGo lite) instead. Found a 2019-01-02 article on lzzx.liuzhou.gov.cn (an official Liuzhou municipal government news portal, citing the city's Development and Reform Commission/市发改委) reporting that on 2018-10-18 '中缅天然气长输管道柳州专供管道完成天然气置换氮气工作，广西管网公司柳东分输站进气投产' (the Sino-Myanmar long-distance gas pipeline's Liuzhou dedicated supply line completed gas-for-nitrogen displacement and Guangxi Pipeline Network Co's Liudong distribution station began gas intake/went into service) -- Liudong distribution station (柳东分输站) is exactly the upstream node this Luzhai Branch runs from per the sheet's route and the 2016 EIA notice. The article explicitly connects this to '中石油中缅管线桂林支线' (PetroChina Sino-Myanmar pipeline Guilin branch) upstream, and its closing line names the pipeline's own next construction phase as '中缅天然气长输管道鹿寨支线' (Sino-Myanmar Gas Pipeline Luzhai Branch) -- i.e. it names this exact segment (P7674) as part of the Sino-Myanmar Gas Pipeline system. Also found (via a sogou.com cached search snippet) a 2016-01-25 construction-bid announcement on cbi360.net titled '中缅天然气柳州市天然气专供管道分输站-中石化柳东分输站-雒容燃气站次高压天然气管道工程施工' which independently names the same 中缅天然气-Liudong station link, but that host rate-limits after one hit and fails re-verification now (body collapses to a 64-char block/stub page) -- not cited since it can't currently be confirmed live. Left at tier=medium (one strong government source) rather than high for lack of a second citable independent source; value is not disputed, no disagreement found."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 4073,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://shuidi.cn/company-0052d7a4a32f59f47d026e39b9f33d5d.html"
+   ],
+   "verifications": [
+    {"url": "https://shuidi.cn/company-0052d7a4a32f59f47d026e39b9f33d5d.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Prior deep-sweep pass (rows/P7674.json) left this UNRESOLVED: the 2016 EIA notice names the construction unit as 广西广投天然气管道有限公司 ('...Pipeline Co Ltd'), a close-but-not-exact variant of the sheet's Operator 广西广投天然气管网有限公司 ('...Pipe Network Co Ltd'), and was correctly not cited as a match. Located the sheet's exact company name (管网, not 管道) on a business-registry aggregator (水滴信用/shuidi.cn, which mirrors China's National Enterprise Credit Information Publicity System): confirms 广西广投天然气管网有限公司 is a real registered entity, unified social credit code 91450000579400256F, established 2011-07-05, legal representative 李勤刚, registered capital RMB 400 million, registered address at the 广投能源管理中心 (Guangtou Energy Management Center) in Nanning -- i.e. part of the Guangxi Guangtou (广投) provincial energy group, exactly as OperatorLocalLanguage states -- with stated business scope '天然气管道建设、输送及相关技术服务；天然气销售' (natural gas pipeline construction, transmission and related technical services; natural gas sales), matching the Operator value. This resolves the prior researcher's caveat by confirming the EXACT (管网, not 管道) company name is the real, separately-registered entity. Also found an identical listing on a second aggregator (gongshang.mingluji.com, same unified social credit code / legal rep / figures) but both trace to the same underlying government registry record, so not counted as a second independent source -- tier=medium (1 strong source), not high."
+  }
+ ]
+}

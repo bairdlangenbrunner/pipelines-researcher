@@ -1,0 +1,62 @@
+{
+  "project_id": "P7652",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4051,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Luchuan Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Pipeline is real and correctly classified/spec'd; tighten StartLocation to the actual physical start (Shatian Town, Fumian District) rather than 'Bobai', and replace both current [ref] URLs — one is dead, one is a fake-200 anti-bot page.",
+      "researcher_notes": "This is the 陆川天然气支线管道工程 (Luchuan gas branch pipeline project), part of the Guangxi natural gas branch network operated by 广西广投天然气管网有限公司 (Guangxi Guangtou Natural Gas Pipeline Co.). Existence and specs corroborate against the sheet's own cited government approval (桂发改能源〔2019〕480号, approved 2019-05-15 per search-engine indexing of http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2197970.shtml) PLUS an independently fetchable second institutional source: Guangxi Investment Group's own e-procurement platform (gigeps.com), which carries a live paper trail of contracts explicitly naming this project ('广西天然气支线管网项目陆川支线(陆川段)和陆川分输站...', procurement code PCJH202567717, June 2025) and the same owner company, plus multiple other Luchuan-station bidding notices spanning 2022-2025 (secondary high-pressure connector design 2022; occupational-health/safety evaluation 2024; pipeline signage 2025) confirming the station and branch line are physically built and continuously operated, not a phantom sheet entry. Specs check out against the approval doc as indexed: length ~27km (GEM: 28km, consistent within rounding), design pressure 4MPa (GEM: 4.00MPa, exact match), cost ~116.57 million RMB (GEM: 116,000,000 RMB, matches within 0.5%), design capacity 0.84x10^8 m3/yr which annualizes to ~0.23 million Sm3/day (GEM: 0.20 million Sm3/day — same order of magnitude, ~13% off depending on assumed operating-days basis; not a red flag on its own). Classification as 'transmission' is consistent with the D273.1mm branch feeding a county distribution station, matching every other row in this Guangxi network roster. CAVEAT 1 (location): the approval doc's own route description has the pipe starting at the Shatian metering/pigging station in Shatian Town, Fumian District (福绵区) -- NOT literally in Bobai county -- continuing east through Luchuan county to the Luchuan distribution station. 'Bobai' in the pipeline's naming/StartLocation reflects that this branch continues on from the separately-built Bobai natural gas branch pipeline, not that the physical start point sits in Bobai county; StartPrefecture/District='Yulin' is fine (both Fumian and Bobai are within Yulin prefecture) but StartLocation='Bobai' is imprecise and should arguably read 'Shatian' with district 'Fumian'. CAVEAT 2 (ref quality, important): BOTH of the row's current citations are functionally useless even though one shows as reachable. http://fgw.gxzf.gov.cn/fzgggz/mtyq/t18577091.shtml (used for Status/Fuel/Start/Capacity/Length/Location/SegmentCost) fails to connect at all from this environment -- persistent ConnectTimeout, matching the sheet's own existing_ref_checks. https://news.bjx.com.cn/html/20210326/1144324-4.shtml (used for PipelineType/Proposal) returns HTTP 200 and would pass a naive reachability check, but the response body is an Aliyun WAF anti-bot JS challenge page with no real article text at all (confirmed by direct curl + WebFetch, both returned only obfuscated challenge-page JS, zero Chinese article content) -- so this ref does NOT actually support the 'transmission' classification or the 2021 proposal value it's attached to; it is a false-positive 200. Could not independently fetch the primary .gov.cn approval document from this environment to pull the exact D273.1mm diameter, 27km length, or 2019-05-15 approval date as directly-quotable text (same persistent ConnectTimeout as the sheet's own ref, likely a network/geo restriction rather than the page not existing -- multiple independent search-engine results consistently quote the same document number, date, and figures). No fill staged for the currently-blank Diameter field because I could not produce a URL that passes url_verifier with the literal figure visible -- flagging the D273.1mm lead here for a researcher with China-based network access to confirm and paste, rather than fabricating a ref.",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm",
+        "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm",
+        "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Luchuan Branch",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify ProposalYear/ProposalMonth (currently 2021-03) against the primary approval document; a formal government project approval (核准) necessarily post-dates the proposal, so 2021 cannot be right if the approval date is 2019-05-15. Correct to <=2019 pending direct document access.",
+      "researcher_notes": "GEM records ProposalYear=2021, ProposalMonth=3, cited to https://news.bjx.com.cn/html/20210326/1144324-4.shtml -- a URL that (per the finding above) is actually an anti-bot WAF challenge page with no real content, so it cannot genuinely support '2021' (the sheet's own existing_ref_checks already flagged this: '200 but data value not found'). Independently, multiple search-engine results consistently and repeatedly quote a formal Guangxi Development and Reform Commission project-approval document -- 广西壮族自治区发展和改革委员会关于广西天然气支线管网项目陆川天然气支线管道工程项目核准的批复（桂发改能源〔2019〕480号）-- dated 2019-05-15, approving this exact project (same route description, same ~27km length, same D273.1mm/4MPa spec). A project cannot be formally approved by a government commission two years before it was first proposed, so ProposalYear=2021 is very likely wrong; it should be <=2019 (the true first-proposed/announced date is probably earlier still, since 2019-05 is only the approval/核准 milestone, not necessarily the initial proposal). I could not independently fetch the primary fgw.gxzf.gov.cn document from this environment (persistent ConnectTimeout, same failure the sheet's own ref-check already recorded) to pull a directly-quotable '2019' string that would pass url_verifier, so I am not proposing a replacement ref here -- flagging this as a concern for a researcher with working access to the Guangxi DRC site (or a China-based network path) to confirm the 2019-05-15 date and correct ProposalYear/ProposalMonth accordingly, rather than pasting an unverified change.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Luchuan Branch",
+      "sheet_row": 4051,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-06",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm",
+        "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm",
+        "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm", "ok": true, "contains_value": true},
+        {"url": "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm", "ok": true, "contains_value": true},
+        {"url": "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Sheet records StartYear1=2024-06 (operating). No single news article confirming the exact 'gas-on' date for June 2024 could be found. However, Guangxi Investment Group's own e-procurement platform (gigeps.com) shows a continuous, dated operational/engineering paper trail tied to the Luchuan distribution station and its downstream network: secondary high-pressure connector design to Longhao gas station (2022-04), occupational-health-hazard control evaluation for the Luchuan facility (procurement window closing 2024-06-04, service period 2024 -- i.e. a live, staffed, regulated facility as of mid-2024, consistent with a recently-commissioned operating line), and forestland-restoration/reclamation bidding for the Luchuan section right-of-way (2025-06-16, the standard post-construction land-reclamation step). This multi-year, multi-vendor activity pattern is only consistent with a genuinely built and operating pipeline/station, not a stalled or phantom project, and is broadly consistent with (does not contradict) the recorded June 2024 operating start. No dormancy trigger applies. Status='operating' confirmed."
+    }
+  ],
+  "summary": "P7652 (Luchuan Branch) confirmed real and correctly classified via an independent second source (gigeps.com procurement trail, 2022-2025) corroborating the sheet's own 2019 government-approval citation on length/pressure/cost/capacity, with two caveats staged: an attribution/location nuance (StartLocation 'Bobai' should read Shatian/Fumian District) bundled with a ref-quality flag (both current [ref] URLs are functionally dead -- one ConnectTimeout, one a 200-OK anti-bot WAF page with no real content), and a spec concern that ProposalYear=2021 conflicts with an independently-corroborated 2019-05-15 government approval date. No fills staged (a Diameter=D273.1mm lead was found but could not be backed by a url_verifier-passing citation from this network, so left blank per standing rule). UNRESOLVED: exact ProposalYear correction and Diameter fill both need a researcher with working access to fgw.gxzf.gov.cn (or China-based network) to pull the primary document text directly."
+}

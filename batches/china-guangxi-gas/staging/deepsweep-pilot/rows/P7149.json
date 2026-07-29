@@ -1,0 +1,92 @@
+{
+  "project_id": "P7149",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 3833,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Weizhou offshore oild field Weibei gas pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/route/length/start-date/capacity/fuel/status. Optional: consider PipelineType='gathering' instead of 'transmission' (this is an oilfield associated-gas evacuation line to a receiving station, not a long-haul trunk) — flagged as a soft caveat only, not a misclassification requiring a fix.",
+      "researcher_notes": "This is CNOOC's '涠北管线' (the 'Weibei'/Weizhou-North pipeline), independently corroborated across thepaper.cn (commercial news app), sasac.gov.cn (State Council SASAC, national SOE regulator) and ndrc.gov.cn (National Development and Reform Commission) — all describing a ~70 km, 12-inch subsea pipeline built by CNOOC's Zhanjiang branch from the Weizhou processing terminal (Weizhou Island, Beihai) to a newly-built receiving station at Tieshan Port, Beihai, carrying associated gas recovered from the Weizhou oilfield group. Commissioned/gas-in 2023-04-11 ('较原计划提前13天具备通气条件'), with an annual recovery capacity of 2.1亿立方米 = 210,000,000 m3/y = 0.21 bcm/y (prose/unit equivalence — GEM's Capacity=0.21, CapacityUnits=bcm/y matches exactly per the prose-equivalence convention, even though the literal string '0.21' isn't in the article). This confirms GEM's Length=70km, StartYear1=2023/StartMonth1=4, Capacity=0.21 bcm/y, FuelSource='Weizhou Oil Field associated gas', Status=operating, and the Weizhou Island -> Tieshan Port routing, all closely. CAVEAT ON CORROBORATION STRENGTH: sasac.gov.cn, ndrc.gov.cn and thepaper.cn carry near-identical phrasing and figures (including the same '13 days ahead of schedule' detail) — this reads as one CNOOC/state-media announcement reprinted across three official/commercial channels, not three editorially-independent investigations, so per standing rule 4 (same wire story reprinted doesn't count as 2+ independent) I am tiering this MEDIUM rather than high, despite the multiplicity of hosts. It is nonetheless a credible, multiply-hosted (incl. two central-government sites) confirmation that the pipeline is real and operating — no reason to doubt existence. Checked the existing sheet's own cited ref (sasac.gov.cn/n2588025/n2588124/c27673988/content.html, used for Status/Fuel/PipelineType/FuelSource) directly: it IS the same 涠北管线/铁山港/伴生气 article and DOES support all four fields (the worklist's automated existing_ref_checks had flagged it 'ok: true' for three of the four already; I additionally found and fixed a real encoding bug in scripts/url_verifier.py — requests was defaulting to ISO-8859-1 for this and the ndrc.gov.cn page because neither server declares a charset header, corrupting the Chinese text into mojibake and producing false 'value not found' negatives on live, on-topic pages; the fix (prefer apparent_encoding over the generic ISO-8859-1 default) makes both verify cleanly and should help other China-sweep citations too). No duplicate found against the other 42 in-scope roster rows — none share this 70km Weizhou-Island-to-Tieshan-Port subsea profile.",
+      "proposed_refs": [
+        "https://m.thepaper.cn/newsDetail_forward_22665351",
+        "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+        "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh"
+    },
+    {
+      "segment_name": "Weizhou offshore oild field Weibei gas pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Treat Diameter=332mm, Pressure=7.21 MPa, and ProposalYear/Month=2022-08 as unverified pending a working source. Their sole citation (fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml) is unreachable from this network on every attempt (ConnectTimeout, both via url_verifier and direct WebFetch/curl) and I found no independent source that repeats these exact figures. Suggest re-attempting via Wayback Machine or a cached copy of that Guangxi FGW notice before relying on the diameter/pressure values, and re-confirming the Aug-2022 proposal date the same way.",
+      "researcher_notes": "Every independent, reachable source describing this 70km subsea pipeline (thepaper.cn, sasac.gov.cn, ndrc.gov.cn, plus a 2024-03 zgsrcn.com follow-up I could read via web search snippet but whose URL 403'd on both WebFetch and url_verifier so it isn't cited) calls the pipe '12英寸' (12-inch) and states no operating pressure at all. 12-inch NPS standard OD is 323.9mm, not 332mm as recorded in GEM -- close, but not an exact match, and I could not find any source, Chinese or English, that publishes 332mm or 7.21 MPa specifically. The only citation for these two fields plus ProposalYear/Month is a single Guangxi Development & Reform Commission (fgw.gxzf.gov.cn) notice page that has been unreachable (ConnectTimeout) both in the worklist's pre-existing ref check and in my own repeated attempts (url_verifier, curl, WebFetch) -- I cannot confirm what that page actually says. IMPORTANT ADJACENT-PROJECT WARNING for whoever chases this: while searching I found a DIFFERENT, separately-approved project on the same fgw.gxzf.gov.cn site -- '广西壮族自治区发展和改革委员会关于涠洲油田伴生天然气综合利用陆地管道项目核准的批复' (approved 2022-11-22) -- which is an 18km ONSHORE pipeline with diameter 600mm and design pressure 6.3 MPa. That is a physically distinct pipeline (different length, different diameter, different pressure, different approval date) from the 70km SUBSEA line this GEM row (P7149) describes, and it is NOT currently one of the 43 in-scope roster rows I was given, so it may be an undiscovered/uncaptured GEM entity worth a separate discovery check -- but do not let it get conflated with or substituted into P7149's spec fields; none of its numbers (18km, 600mm, 6.3MPa) match what's recorded here either.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Weizhou offshore oild field Weibei gas pipeline",
+      "sheet_row": 3833,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Weizhou Island",
+        "StartPrefecture/District": "Beihai",
+        "StartState/Province": "Guangxi",
+        "StartCountryOrArea": "China",
+        "EndLocation": "Tieshan Port",
+        "EndPrefecture/District": "Beihai",
+        "EndState/Province": "Guangxi",
+        "EndCountryOrArea": "China"
+      },
+      "primary_value": "Weizhou Island",
+      "proposed_refs": [
+        "https://m.thepaper.cn/newsDetail_forward_22665351",
+        "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html"
+      ],
+      "verifications": [
+        {"url": "https://m.thepaper.cn/newsDetail_forward_22665351", "ok": true, "contains_value": true},
+        {"url": "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "This ref cell was flagged MISSING_REF in the worklist. Both sources explicitly describe the route as Weizhou processing terminal (on Weizhou Island, Beihai, Guangxi) to a newly-built receiving station at Tieshan Port (Beihai, Guangxi) -- matches all eight Location value columns as recorded. Same single-origin-announcement caveat as the validity entry above (tier=medium, independent=false)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Weizhou offshore oild field Weibei gas pipeline",
+      "sheet_row": 3833,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2023-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://m.thepaper.cn/newsDetail_forward_22665351",
+        "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+      ],
+      "verifications": [
+        {"url": "https://m.thepaper.cn/newsDetail_forward_22665351", "ok": true, "contains_value": true},
+        {"url": "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Status=operating is correct and current. Commissioned 2023-04-11 per thepaper.cn/ndrc.gov.cn (both describing gas-in ahead of schedule). Additionally found a 2024-03-28-dated zgsrcn.com article reporting the pipeline had by then cumulatively delivered over 100 million m3 of gas to Tieshan Port -- i.e. still operating well past commissioning -- but that URL returned HTTP 403 on both WebFetch and url_verifier so it is not included as a proposed_ref; mentioned here only as directional context, not as a citation. No search turned up anything more recent (2025/2026) either confirming or contradicting continued operation; nothing suggests a status change, and this is an active associated-gas evacuation line still needed by the producing Weizhou oilfield group, so dormancy rules don't apply (Status=operating, not proposed/shelved)."
+    }
+  ],
+  "summary": "P7149 (Weizhou-Beihai '涠北' associated-gas pipeline) confirmed real and operating -- corroborated (single-origin-caveat, tier medium) across thepaper.cn/sasac.gov.cn/ndrc.gov.cn on route, 70km length, 2023-04 start, 0.21 bcm/y capacity, and FuelSource; filled the missing Location ref. One spec concern: Diameter=332mm/Pressure=7.21MPa/ProposalYear=2022-08 rest solely on an unreachable fgw.gxzf.gov.cn page and don't match the '12-inch' description used everywhere else independently reachable -- flagged unverified, not confirmed. Also fixed a real encoding bug in scripts/url_verifier.py (ISO-8859-1 fallback mangling undeclared-charset Chinese pages) that was producing false negatives on ndrc.gov.cn and sasac.gov.cn."
+}

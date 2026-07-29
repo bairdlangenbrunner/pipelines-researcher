@@ -1,0 +1,122 @@
+{
+  "project_id": "P4718",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 2620,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml",
+        "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf"
+      ],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true},
+        {"url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Status inferred from context, not a literal label. (1) gx.chinanews.com.cn (2022-08-03, url_verifier PASSES live) describes 广西天然气管道有限责任公司 actively, presently supplying gas to named downstream Liuzhou retailers (柳州东城燃气, 柳州中燃) -- gas reaching Liuzhou-area users confirms an operating, in-service line into the Liuzhou/Liudong area. (2) NDRC's Dec-2023 official cross-provincial gas pipeline tariff table lists '广西LNG外输管线' (Beihai->Liuzhou) with its '柳东支线' (Liudong Branch) as a currently-tariffed national-network asset -- a shelved/non-operating line would not appear on a live tariff schedule. NOTE on the NDRC PDF: url_verifier's automated substring check FAILs on this URL (200 but token not found) -- a documented multi-column-table PDF-extraction false negative per the tool's own docstring. Downloaded the PDF and ran `pdftotext -layout` directly: line 43 reads '15  广西LNG外输管线  广西北海  广西柳州  柳东支线、粤西支线、桂林支线' -- token genuinely present, recorded ok:true on that manual-verification basis. Neither source names the 29km spur by segment specifically, so tier is medium not high."
+    },
+    {
+      "ref_col": "Fuel [ref]",
+      "sheet_row": 2620,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml",
+        "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf"
+      ],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true},
+        {"url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Both sources unambiguously identify this as a natural-gas (天然气) pipeline network: the chinanews article is entirely about 天然气 transport/supply by Guangxi Natural Gas Pipeline Co Ltd (url_verifier PASSES live); the NDRC document is a national cross-provincial NATURAL GAS pipeline tariff schedule listing this exact branch (confirmed via manual `pdftotext -layout`, same PDF-extraction override noted on the Status unit). Two genuinely independent, separate-origin sources (bureau news vs. national regulator's own tariff table) agree -> high tier."
+    },
+    {
+      "ref_col": "Start [ref]",
+      "sheet_row": 2620,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Searched extensively (Chinese) for a source confirming StartYear1=2013 as this branch's in-service/commissioning year. Found the Sinopec 广西液化天然气(LNG)项目输气管道工程竣工环境保护验收调查报告 (completion/acceptance inspection report, trqi.sinopec.com PDF) for the engineering project containing this exact 柳州支线(柳州输气站-柳东末站): the terminal/receiving-station works broke ground 2013-07-30 (trial production 2016-04), while the TRANSMISSION-PIPELINE works (主干线+柳州支线+粤西支线 together, i.e. including this branch) broke ground 2013-10-15, reached 工程中交 (construction handover) only on 2018-05-30, with final acceptance 2019-10-08. This is a POTENTIAL CONFLICT with StartYear1=2013 if that field means in-service/operational start (this source implies the pipeline engineering including this branch wasn't complete until 2018-2019) -- though it could instead SUPPORT 2013 if the field captures construction-start year (2013-10-15 is an exact-year match, but for the whole engineering project, not this branch alone). Per the standing rule against proposing a ref for a value the evidence may contradict, NOT citing this source for Start; flagging the conflict for a human/Update pass to resolve against GEM's exact StartYear1 definition. Also searched '柳州支线 2013 投产/通气' and found only China-Myanmar pipeline (中缅天然气管道) Guangxi-branch commissioning stories from Oct 2013 -- a DIFFERENT network that must not be conflated with P4718's LNG-terminal-fed network despite the coincidental '柳州支线' phrase; not used. current_ref was blank so no Wayback snapshot to check."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 2620,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Found a highly specific, exact-segment-matched source -- the same Sinopec 竣工环境保护验收调查报告 (trqi.sinopec.com PDF) -- with a dedicated comparison table (表2.2-3) for '柳州支线（柳州输气站-柳东末站）': EIA-stage design length 26.98km, ACTUAL AS-BUILT length 29.4km (Ф610mm both stages). The recorded LengthKnown=29.00km is close to but not identical to the as-built 29.4km (0.4km / ~1.4% difference), so per the standing rule against proposing refs for a different value, NOT citing this as support here. Flagging clearly: 29.4km (as-built, name-matched segment) is the best open-source figure found and should inform a future Update-workflow length correction/confirmation rather than being pasted as a ref for the current 29.00 value. No other source found gives any length figure for this specific branch."
+    },
+    {
+      "ref_col": "Diameter [ref]",
+      "sheet_row": 2620,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+      ],
+      "verifications": [
+        {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Sinopec 广西液化天然气(LNG)项目输气管道工程竣工环境保护验收调查报告 (completion/acceptance inspection report), table 表2.2-3, names this exact segment '柳州支线（柳州输气站-柳东末站）' with pipe spec Ф610 (610mm) at BOTH the EIA-design stage and the as-built stage -- an exact match to Diameter=610/mm. url_verifier could not complete automatically on this file (42MB PDF; its extractor times out before reaching the relevant page -- a documented large-PDF false-negative class per the tool's own docstring). Confirmed liveness via curl (HTTP 200) and content via `pdftotext -layout` directly, which shows 'Ф610' at the exact line naming this segment (line ~1176 and again in the summary table at ~1240). Single source (no second independent document gives a diameter for this specific spur) -> tier medium, not high."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 2620,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+      ],
+      "verifications": [
+        {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same Sinopec completion inspection report supports both endpoints, more granularly than the generic city-level NDRC/chinanews sources. (1) It names this segment '柳州支线（柳州输气站-柳东末站）': start = 柳州输气站 (Liuzhou Transmission Station), end = 柳东末站 -- GEM's 'Liudong Transmission Station' corresponds to this 柳东末站 (末站 literally = terminal/end station; GEM's English rendering as 'Transmission Station' is a translation choice, not a different facility -- flagging the wording nuance transparently rather than treating it as an exact lexical match). (2) It geographically anchors the Liuzhou Transmission Station siting: the route crosses the Shankun expressway near 南渠村 (Nanqu village) then runs ~1560m east to the planned 柳州输气站; the SAME document's highway-crossing table elsewhere locates 南渠 explicitly as '柳江县洛满镇南渠' (Nanqu, Luoman Town, then-Liujiang County) -- Luoman Town is exactly GEM's recorded StartLocation town. (Administrative note, read for context only, never cited: Luoman Town was transferred from Liujiang District to Liunan District in June 2019 per zh.wikipedia.org/wiki/柳南区 -- so the source's pre-2019 '柳江县洛满镇' and GEM's current 'Luoman Town, Liunan District' describe the same physical place under sequential administrative names.) Single independent source -> tier medium. Manual content verification as on the Diameter unit: automated url_verifier could not complete on this 42MB PDF; confirmed HTTP 200 via curl and content via `pdftotext -layout`."
+    },
+    {
+      "ref_col": "Operator [ref]",
+      "sheet_row": 2620,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"
+      ],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The English 'Operator' column is blank; only the Chinese QCCOwner cell (广西天然气管道有限责任公司) was populated. This chinanews.com.cn article (2022-08-03, url_verifier PASSES live) is centered on this exact company -- named in full as 国家管网广西天然气管道有限责任公司 (PipeChina's Guangxi Natural Gas Pipeline Co Ltd) -- and describes it operating/managing the network's gas transport, matching Owner1's existing English form 'Guangxi Natural Gas Pipeline Co Ltd'. Only one independent source found naming the operator explicitly (the NDRC tariff table lists route/branch names but not the operating company) -- tier medium, not high."
+    },
+    {
+      "ref_col": "Owner [ref]",
+      "sheet_row": 2620,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml"
+      ],
+      "verifications": [
+        {"url": "http://www.gx.chinanews.com.cn/qc/2022-08-03/detail-ihcavfph4032223.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same source as Operator: names 广西天然气管道有限责任公司 (Guangxi Natural Gas Pipeline Co Ltd) as the entity that manages/oversees the network's gas transport (under national operator PipeChina/国家管网), consistent with Owner1 = 100%. Single independent source (tier medium) -- could not find a second source specifically stating ownership/equity structure (as opposed to operational management)."
+    }
+  ]
+}

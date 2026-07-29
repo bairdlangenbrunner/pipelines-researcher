@@ -1,0 +1,43 @@
+{
+  "project_id": "P7663",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 4062,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://news.bjx.com.cn/html/20210326/1144324-4.shtml", "ok": false, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "current_ref confirmed dead: news.bjx.com.cn returns an Aliyun WAF slider-CAPTCHA challenge page (verified via url_verifier.py -- 200 but token missing; also confirmed via curl with a full desktop UA, same WAF JS payload). archive.org has NO snapshot of this exact URL (wayback/available returns empty archived_snapshots as of 2026-07-29). Traced the underlying real document: the bjx article republishes 广西发改委 桂发改电力〔2021〕184号 《广西\"能源网\"建设2021年工作推进方案》 (2021-03-15, published 2021-03-23) -- confirmed via an archive.org snapshot of the DRC's own page (http://web.archive.org/web/20210801050232/http://fgw.gxzf.gov.cn/zwgk/wjzx/zyzc/t8348400.shtml), which lists five attachments including 附件5.2021年\"能源网\"大会战项目-油气管网项目推进计划.xlsx (the itemized oil/gas pipeline project list, 31 projects per the plan text). That xlsx attachment itself has NO wayback snapshot, and the live fgw.gxzf.gov.cn origin is geo-blocked (ConnectTimeout, confirmed), so the itemized 31-project list -- which would show whether 'Teng County' is on it -- cannot be read. A full-text reproduction of the plan on a solar-industry news site (kesolar.com, fetched and verified live) names the specific 2021 gas-pipeline work items narratively: 广西LNG外输管道桂林支线, 新疆煤制气外输管道广西支干线工程, 钦南柳管道-茂昆线成品油管道联通工程, \"县县通\"天然气工程建设, 北海LNG接收站二/三期 -- none of these name 藤县 (Teng County). Ran multiple Bing searches via curl (WebSearch tool quota was exhausted at 200/200 this session, same limit the prior deep-sweep researcher hit) for 藤县+天然气/支线/输气管道/天然气管网/立项/核准 in various combinations: zero pipeline-related results: returned only unrelated Teng County tourism/government/business-registry pages. Cannot confirm the recorded Status='proposed' (or any status) for a Teng County gas branch from any accessible source. This reinforces the existing rows/P7663.json existence concern rather than resolving it -- recommend the same manual/browser-based re-check of the bjx page or the un-archived xlsx attachment before deciding to keep this row."
+    },
+    {
+      "ref_col": "Proposal [ref]",
+      "sheet_row": 4062,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://news.bjx.com.cn/html/20210326/1144324-4.shtml", "ok": false, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Same dead current_ref as the Status unit (WAF-blocked, no wayback snapshot). The underlying government plan (桂发改电力〔2021〕184号, dated 2021-03-15) is real and confirmed via an archive.org snapshot of fgw.gxzf.gov.cn/zwgk/wjzx/zyzc/t8348400.shtml, which is broadly consistent with a March-2021 ProposalYear/Month IF the Teng County branch is in fact one of the plan's 31 itemized oil/gas projects -- but that itemization (附件5 xlsx) is unarchived and the origin is geo-blocked, so I could not confirm Teng County is actually on the list rather than just plausible timing. No independent source (Bing searches via curl for 藤县 + various gas-pipeline/approval terms; WebSearch quota exhausted) names a Teng County branch with any date. Cannot corroborate ProposalYear=2021/Month=3 for this specific segment -- proposing the date without confirming the segment it attaches to would risk supporting a value with no genuine source-to-record link, so leaving unresolved rather than reusing the plan-existence finding as if it named Teng County."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 4062,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "No current_ref exists for this cell and none of my searches produced one. Searched (Chinese, via curl against Bing since WebSearch tool quota is exhausted at 200/200 this session) for 藤县 + 天然气支线/输气管道/天然气管网/管道; also site: filters against gx.chinanews.com.cn and gx.xinhuanet.com -- zero results connecting Teng County to any gas pipeline. Also checked the two archived fgw.gxzf.gov.cn pages for the parent 2021 \"能源网\" plan (the main notice and its 解读/interpretation page) for any itemized project-location text -- neither names 藤县; the itemized project list lives only in an un-archived, geo-blocked xlsx attachment. Cannot independently corroborate that a Guangxi/China-located Teng County branch of this pipeline network exists as a real, locatable segment. This is the same underlying existence gap flagged in rows/P7663.json (validity concern) -- a Location ref cannot responsibly be sourced until that concern is resolved."
+    }
+  ]
+}

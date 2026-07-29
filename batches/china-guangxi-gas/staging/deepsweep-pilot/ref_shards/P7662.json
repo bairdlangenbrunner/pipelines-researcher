@@ -1,0 +1,131 @@
+{
+  "project_id": "P7662",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 4061,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Cannot support recorded Status='proposed' -- strong, freshly-verified evidence shows the project is already OPERATING. A Guangxi Daily/Xinhua article dated 2025-12-27 (http://www.gx.xinhuanet.com/20251227/b62e55f6d9b7414e8d2ab60661a01b9d/c.html, url_verifier OK, tokens '桂林'/'阳朔'/'荔浦'/'试运投产' all present) states verbatim: '12月24日，随着桂林—阳朔—荔浦天然气支线管道72小时联合运行结束，该工程实现试运投产一次成功，广西新增投产天然气长输管道107公里' (On Dec 24 [2025], following completion of the Guilin-Yangshuo-Lipu gas branch pipeline's 72-hour joint trial run, the project achieved successful trial operation and commissioning on the first attempt, adding 107km of newly commissioned long-distance gas pipeline to Guangxi) -- i.e. this exact segment (matching GEM's own 'Branch' naming) went into service 2025-12-24. This corroborates and sharpens the prior deep-sweep audit's status_review (rows/P7662.json), which had already flagged the 'proposed' status as stale and recommended 'construction' off less-verifiable 2022/2023 leads; this new source shows the project has progressed even further, to operating. Per task rules I cannot propose a ref for a status other than the recorded one, so this unit is UNRESOLVED rather than REFS_ADDED -- routing the Status change (recommend 'operating', ConstructionYear/StartYear1=2025) to Update/QC rather than staging it here. NOT proposed as a supporting ref for 'proposed' -- it is evidence AGAINST the recorded value.",
+      "disagreement_flag": true,
+      "disagreement_evidence": ["http://www.gx.xinhuanet.com/20251227/b62e55f6d9b7414e8d2ab60661a01b9d/c.html"]
+    },
+    {
+      "ref_col": "Proposal [ref]",
+      "sheet_row": 4061,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK current_ref (news.bjx.com.cn/html/20210326/1144324-4.shtml, dated 2021-03-26) could not be recovered: the live page returns HTTP 200 but is an Alibaba-Cloud WAF bot-challenge shell with no real article text (confirmed via curl), and the Wayback snapshot (web.archive.org/web/20260729122809/...) is an ARCHIVED COPY OF THAT SAME CHALLENGE PAGE, not real content -- functionally dead by any route. Fresh Chinese-language search for a March 2021 announcement of this project turned up nothing (site:bjx.com.cn and keyword searches for the article ID/date returned zero hits). More importantly, the primary planning-stage documents I found for this exact project (广西天然气支线管网项目桂林-阳朔-荔浦天然气支线管道工程) are dated EARLIER than the recorded ProposalYear=2021: a 2019-07-29 EIA public-participation notice (gxtngs.com.cn, engineering consultant) and a 2019-11-07 design-services tender notice (gigeps.com, Guangxi Investment Group's e-procurement platform) -- both url_verifier OK. I cannot rule out that the dead bjx article was a later media write-up (rather than the original proposal date), but given I have no way to read its actual content and my strongest independently-verified evidence places initial public proposal/permitting activity in mid-to-late 2019, not 2021, I am marking this UNRESOLVED rather than fabricating support for the recorded 2021-03 date. Flagging for Update: ProposalYear/Month may need revision toward 2019 (candidate sources: gxtngs.com.cn newsitem/30951 dated 2019-07-29, or gigeps.com xmgg1fw/781 dated 2019-11-07).",
+      "disagreement_flag": true,
+      "disagreement_evidence": ["http://www.gxtngs.com.cn/newsitem/30951", "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm"]
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 4061,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Guangxi Investment Group e-procurement platform (gigeps.com), 2019-11-07 design-services tender notice for '广西天然气支线管网项目桂林-阳朔-荔浦天然气支线管道工程' -- the exact same project named in the dead current_ref (fgw.gxzf.gov.cn/.../t2198137.shtml, the corresponding NDRC project-approval reply). States '设计输量1.79×10^8Nm3/a' (design annual capacity 1.79x10^8 Nm3 = ~0.179 bcm/y), closely matching recorded Capacity=0.17 bcm/y (design-estimate rounding, ~5% apart -- same order of magnitude, same parameter, not treated as a disagreement). A second document for this project, an earlier 2019-07-29 EIA public-participation notice (gxtngs.com.cn/newsitem/30951, also url_verifier OK), gives a DIFFERENT preliminary capacity figure (2.72x10^8 Nm3/a) from an earlier design stage -- explicitly a superseded estimate, not a competing corroboration, so tier stays medium (single source matching the final/recorded figure) rather than high.",
+      "value_note": "Source figure 1.79e8 Nm3/a (~0.179 bcm/y) vs recorded 0.17 bcm/y -- minor rounding gap, treated as supporting."
+    },
+    {
+      "ref_col": "Pressure [ref]",
+      "sheet_row": 4061,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm",
+        "http://www.gxtngs.com.cn/newsitem/30951"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm", "ok": true, "contains_value": true},
+        {"url": "http://www.gxtngs.com.cn/newsitem/30951", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Two independent primary documents for the exact same project (广西天然气支线管网项目桂林-阳朔-荔浦天然气支线管道工程) both state '设计压力4.0MPa': (1) gigeps.com 2019-11-07 design-services tender notice (Guangxi Investment Group procurement platform); (2) gxtngs.com.cn 2019-07-29 EIA public-participation notice (engineering consultant 广西泰能工程咨询). Exact match to recorded Pressure=4/PressureUnits=MPa."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 4061,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm",
+        "http://www.gxtngs.com.cn/newsitem/30951"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm", "ok": true, "contains_value": true},
+        {"url": "http://www.gxtngs.com.cn/newsitem/30951", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Two independent primary documents both state '管道全长约100km' for this exact project: gigeps.com 2019-11-07 tender notice and gxtngs.com.cn 2019-07-29 EIA notice. Exact match to recorded LengthKnown=100/LengthKnownUnits=km. FYI only (not treated as a conflict): a 2025-12-27 Xinhua/Guangxi Daily commissioning article (gx.xinhuanet.com, separately verified for the Status unit above) reports the as-built/commissioned length as 107km -- normal design-estimate-vs-as-built variance, not a value dispute for the recorded (design-stage-sourced) 100km figure."
+    },
+    {
+      "ref_col": "Diameter [ref]",
+      "sheet_row": 4061,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm",
+        "http://www.gxtngs.com.cn/newsitem/30951"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm", "ok": true, "contains_value": true},
+        {"url": "http://www.gxtngs.com.cn/newsitem/30951", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Two independent primary documents both state the pipe diameter as D273.1mm for this exact project: gigeps.com 2019-11-07 tender notice ('设计管径273.1mm') and gxtngs.com.cn 2019-07-29 EIA notice ('管径D273.1mm', also naming the pipe material as L290M straight-seam HFW steel). Exact match to recorded Diameter=273.1/DiameterUnits=mm."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 4061,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm",
+        "http://www.gxtngs.com.cn/newsitem/30951"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm", "ok": true, "contains_value": true},
+        {"url": "http://www.gxtngs.com.cn/newsitem/30951", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Two independent primary documents agree on the route: starts at the 广投管网桂林分输站 (Guangtou Pipeline Network's Guilin distribution station) in 临桂区 (Lingui District, part of Guilin prefecture-level city), runs southeast via Yangshuo County (阳朔县, supplying gas to it) and ends at the 荔浦分输站 (Lipu distribution station) in 荔浦县马岭镇田岭村 (Lipu County, also administered under Guilin prefecture-level city). Confirms recorded StartPrefecture/District=Guilin, StartState/Province=Guangxi, StartCountryOrArea=China, EndLocation=Lipu, EndPrefecture/District=Guilin (Lipu County sits within Guilin municipality), EndState/Province=Guangxi, EndCountryOrArea=China. Sources: gigeps.com 2019-11-07 tender notice; gxtngs.com.cn 2019-07-29 EIA notice."
+    },
+    {
+      "ref_col": "SegmentCost [ref]",
+      "sheet_row": 4061,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "gigeps.com 2019-11-07 design-services tender notice states '项目总投资约34604万元' (total project investment ~346,040,000 RMB), an exact match to recorded SegmentCost=346040000.00/SegmentCostUnits=RMB/SegmentCostYear=2019 (document dated 2019, matching the recorded cost year). A second document for this project, the 2019-07-29 EIA notice (gxtngs.com.cn/newsitem/30951, url_verifier OK), gives a DIFFERENT, earlier preliminary estimate ('工程总投资37655万元') from an earlier design stage -- an explicitly superseded figure, not independent corroboration of the recorded (final/later) number, so tier stays medium rather than high."
+    }
+  ]
+}

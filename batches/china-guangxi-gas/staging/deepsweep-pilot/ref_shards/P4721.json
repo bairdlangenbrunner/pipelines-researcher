@@ -1,0 +1,153 @@
+{
+ "project_id": "P4721",
+ "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.cnstock.com/commonDetail/198194",
+    "https://www.jiemian.com/article/5214032.html"
+   ],
+   "verifications": [
+    {"url": "https://www.cnstock.com/commonDetail/198194", "ok": true, "contains_value": true},
+    {"url": "https://www.jiemian.com/article/5214032.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "Status inferred from context (not a literal 'operating' token), per project convention. cnstock.com (2024-06-13) profiles the still-active 国家管网广西公司 (PipeChina Guangxi Co.) managing the region's gas pipeline network. jiemian.com (2020-11-03) reports a fatal fire at the Beihai LNG receiving station's dock-2 platform pipeline, occurring during live operations one month after the Sept 30, 2020 Sinopec-to-PipeChina asset handover -- confirms the terminal/pipeline system was actively conveying gas in 2020. A third primary source (Sinopec completion-acceptance report, cited on the Capacity/Fuel/Location units below) additionally states the pipeline had transported 32.67x10^8 m3 of gas by 2020-06-30 since entering trial production -- consistent operating status through the 2013-2024 span, no contrary evidence found."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.cnstock.com/commonDetail/198194",
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.cnstock.com/commonDetail/198194", "ok": true, "contains_value": true},
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "cnstock.com identifies the operating entity via its full name '广西天然气管道有限责任公司' (Guangxi NATURAL GAS Pipeline Co. Ltd.) -- '天然气' token verified present. The Sinopec completion-acceptance report for this exact project ('广西液化天然气（LNG）项目输气管道工程') states directly: '管道输送介质为天然气' (the pipeline's transport medium is natural gas). PDF verification note: this is a 42MB/~200-page scanned PDF -- the automated verifier's raw-bytes text extraction cannot reach embedded text (a documented false-negative class per url_verifier.py's own header docs: 'LARGE PDFs...download it and pdftotext -layout'). I downloaded the full file directly (curl, 200, 42,288,483 bytes) and ran `pdftotext -layout`, confirming the exact quoted Chinese text is present verbatim; citing per the tool's own documented remedy for this exception."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.ljzfin.com/news/info/54828.html",
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.ljzfin.com/news/info/54828.html", "ok": true, "contains_value": true},
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "StartYear1=2013 (primary_value): 2 independent sources agree. ljzfin.com states construction of the Beihai LNG external-transmission pipeline began July 2013. The Sinopec completion-acceptance report is more precise: '输气管道工程于2013年10月15日开工建设' (the gas transmission pipeline works began construction Oct 15, 2013) -- same year, exact date. StartYear3=2019: the SAME Sinopec report states '2019年10月8日，全线投入试生产' (Oct 8, 2019, the entire line entered trial production) -- direct match, but only one source found (manually PDF-verified per the Fuel unit's note above, same large-PDF caveat). StartYear2=2015: searched (ljzfin gives March-2016 trial ops for a different/larger network scope; a 2015-07-14 Beihai Daily article that would likely have covered a 2015 milestone is now 404/dead with no Wayback snapshot) but found no source pinning 2015 specifically -- remains unsourced. Downgraded to medium tier overall because one of three recorded years (2015) has zero support and another (2019) rests on a single manually-verified source; 2013 alone clears the 2-independent bar."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf",
+    "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"
+   ],
+   "verifications": [
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true},
+    {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "Sinopec's completion-acceptance report for this exact project states design throughput '设计输量为40.5x10^8m3/a', i.e. 40.5x10^8 m3/yr = 4.05 bcm/y -- a near-exact match to GEM's recorded 4.00 bcm/y (within ~1.25%, ordinary rounding across report vintages), stated directly in gas-volume units (no conversion needed). ihouse.ifeng.com's 2011 EIA gives an earlier planning-stage figure in mass units instead: '管线设计输量300万吨/年' (3 million tonnes LNG/year), which converts to roughly 4.0-4.1 bcm/y gas equivalent using standard LNG mass-to-gas conversion (~1.36) -- directionally consistent but requires an inference step, so treated as corroborating rather than a clean independent match. Tier held at medium (not high) because the stronger, more precise 40.5x10^8m3/a source is the same large PDF the automated verifier cannot text-check (manually confirmed via full download + pdftotext -layout, per the Fuel unit's note)."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2623,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "zh",
+   "researcher_notes": "Found a genuine, well-sourced conflict rather than clean support, so leaving this UNRESOLVED per project rules rather than citing a disagreeing figure. ihouse.ifeng.com's 2011 EIA states '干线全长684.17公里' (trunk total length 684.17 km) -- an essentially exact match to GEM's recorded 684.00 km (verified live). HOWEVER, Sinopec's much more authoritative 2020 completion/environmental-acceptance report for this exact project ('广西液化天然气（LNG）项目输气管道工程') gives a materially different AS-BUILT figure for the geographically identical segment: '主干线（北海市登陆点-柳州输气站）...长约501.97km' (main trunk, Beihai landing point to Liuzhou gas transmission station -- i.e. GEM's own Start/End points -- approx. 501.97 km). The same document separately gives an overall-system total of 1,336.88 km (1 trunk + 6 branches, matching the 2011 EIA's system total exactly) and an unrelated 717-735km figure describing a different bundle of segments (trunk+Liuzhou branch+Guangdong branch together). In short: the 684km figure is a real, independently-verifiable PLANNING-STAGE estimate, but the actual AS-BUILT completion report for the identical Beihai-to-Liuzhou route gives ~502km instead -- a >25% discrepancy that predates and reinforces the prior researcher's already-flagged spec concern on this row. This looks like a value-correction candidate (684km may be the stale pre-construction design figure) rather than a refs-only gap; recommend routing to Update for a length-value review citing the Sinopec report, rather than pasting either number in as a ref-only fill."
+  },
+  {
+   "ref_col": "FuelSource [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml",
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+   ],
+   "verifications": [
+    {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true},
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "Both sources tie the pipeline directly to the Beihai/Tieshangang LNG receiving terminal as its feedstock source. ihouse.ifeng.com's EIA (for '广西液化天然气（LNG）项目输气管道工程') references the 铁山港 (Tieshan Port, i.e. Tieshangang District) 接收站 (receiving terminal) as the project's origin. The Sinopec completion report is explicit: the pipeline's start point is '北海市铁山港区铁山港接收站登陆点' (the Tieshan Port receiving terminal's landing point, Tieshangang District, Beihai) -- confirming FuelSource = Guangxi LNG Terminal."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml",
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+   ],
+   "verifications": [
+    {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true},
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "ihouse.ifeng.com's EIA confirms the route starts at 铁山港 (Tieshan Port / Tieshangang District), Beihai, matching StartLocation/StartPrefecture. The Sinopec completion report is precise and directly on-topic: the main trunk 'starts at the Beihai landing point' (起始于[北海市]登陆点), passes through 北海、钦州、南宁、来宾、柳州 (Beihai, Qinzhou, Nanning, Laibin, Liuzhou), and 'terminates at Liuzhou gas transmission station' (终止于柳州输气站) -- an exact match to GEM's Start=Tieshangang District/Beihai and End Prefecture=Liuzhou."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20230927041543/https://www.bidcenter.com.cn/newscontent-100063232-1.html",
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20230927041543/https://www.bidcenter.com.cn/newscontent-100063232-1.html", "ok": true, "contains_value": true},
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "Both sources name the exact QCC entity '广西天然气管道有限责任公司' (Guangxi Natural Gas Pipeline Co., Ltd.) verbatim. The bidcenter.com.cn procurement notice (2020-07-09, archived via Wayback since the origin now 404s) is a tender issued BY this company for pipeline risk-management works along its own route. The Sinopec completion report separately states the company commissioned the 2019-2020 environmental acceptance study in its own name ('广西天然气管道有限责任公司于2019年2月委托...'). Two independent, primary/near-primary confirmations of the exact legal entity."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 2623,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20230927041543/https://www.bidcenter.com.cn/newscontent-100063232-1.html",
+    "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20230927041543/https://www.bidcenter.com.cn/newscontent-100063232-1.html", "ok": true, "contains_value": true},
+    {"url": "http://trqi.sinopec.com/trqi/news/com_news/Documents/20200928/doc_20200928_527694089618.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "zh",
+   "researcher_notes": "GEM's Owner1='Guangxi Natural Gas Pipeline Co Ltd' (100%) is the English rendering of the same '广西天然气管道有限责任公司' confirmed under the Operator unit above -- same two sources (bidcenter procurement notice; Sinopec completion report naming the company as the commissioning/建设单位 client) independently establish this entity as the company responsible for/managing the pipeline. Note (not actioned, flagged only): an unconfirmed, non-cited Baidu Baike lead in the prior deep-sweep audit for this row suggested an equity change around 2025-08-11 giving PipeChina 100% direct control -- worth a human chasing through an actual PipeChina/SASAC filing, but not something I can act on from a wiki-tier source; the recorded Owner1 name itself is well supported regardless of any equity-percentage question."
+  }
+ ]
+}

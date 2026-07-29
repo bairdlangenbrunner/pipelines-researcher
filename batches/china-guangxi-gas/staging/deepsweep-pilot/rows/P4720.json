@@ -1,0 +1,43 @@
+{
+  "project_id": "P4720",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "sheet_row": 2622,
+  "wiki": "https://www.gem.wiki/Guangxi_LNG_Terminal_Transport_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Qinzhou-Fangchenggang Branch",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not treat Status=cancelled as settled. Re-derive Status and ProposalYear from primary sources (the branch is a real, EIA-documented 2011 plan item of the Beihai/Guangxi LNG transport network, not a 2022 proposal) and replace the current Status [ref] with something that actually names this pipeline, or route to Update for a proper status re-research.",
+      "researcher_notes": "The sheet's current_ref for Status=cancelled (https://archive.org/details/screenshot-2024-09-24-at-4.37.58-pm) fails url_verifier for the English place names and, on inspection, is a screenshot of a 2019-01-08 Fangchenggang municipal AIR-QUALITY bulletin ('防城港市环境空气质量优良率连续四年') -- it never mentions a gas pipeline at all and cannot possibly attest to a status. Worse, it is dated 2019, three years BEFORE the sheet's own ProposalYear=2022, so even if it were about this pipeline it could not document a cancellation of a project not yet proposed. ProposalYear/ProposalMonth (2022-08) and the Location fields have no ref at all (MISSING_REF). So the only sourced field on this row (Status) is sourced to something that cannot support it, and existing_ref_checks already flagged this as a value_checked=false fail before I started. Existence itself is NOT in doubt, however: an independent, non-GEM, non-wiki 2011 environmental-impact-assessment article (ihouse.ifeng.com, verified via url_verifier) explicitly describes a '防城港支线' (Fangchenggang branch) of the Guangxi/Beihai LNG transport pipeline network that 'passes through Qinzhou and Fangchenggang' ('防城港支线先后经过钦州、防城港2个地市') with a length of exactly 70.44 km ('防城港支线全长约70.44公里') -- this matches, digit for digit, the length (70.44 km) that GEM's own (uncitable) wiki narrative currently shows for this same named segment, alongside Status=Operating and a 2018 start year, sourced to citations #11 (this same 2011 EIA) and #17 (the mismatched air-quality screenshot). That is a direct, internal GEM contradiction: the live spreadsheet says cancelled/no-length/proposed-2022, while GEM's own wiki article for the identical segment name says operating/70.44km/2018. I could not find any independent source (Chinese or English) reporting a 2022-proposed Qinzhou-Fangchenggang gas line that was subsequently cancelled -- searches for '钦州-防城港天然气管道 2022 核准/取消' returned nothing on point. Caution: there is a textually similar but almost certainly DIFFERENT pipeline -- the China-Myanmar import gas pipeline's Guangxi 'Fangchenggang branch' (防城港支线), 65.12 km, gas sourced overland from Myanmar (not LNG), completed and put into stable operation 2015-07-16 per chinca.org and 人民日报 (People's Daily, 2015-07-27) -- outside this 43-pipeline roster and NOT the same asset as the 70.44 km LNG-sourced branch documented in the 2011 EIA; the two should not be conflated when someone next researches this row. Net: this row's specific data (cancelled/2022/no length) looks unsupportable as recorded, and its true likely status (given the wiki-vs-EIA convergence on 70.44 km / operating) needs a proper Update pass rather than a rubber stamp. Separately, Fuel=Gas and PipelineType=transmission both cite http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198133.shtml, which times out on every attempt (ConnectTimeout via url_verifier, ECONNREFUSED via direct fetch) -- unverifiable right now, though both values are plausible defaults for this network and I am not flagging them as wrong, just unconfirmed.",
+      "proposed_refs": ["https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "Qinzhou-Fangchenggang Branch",
+      "sheet_row": 2622,
+      "current_status": "cancelled",
+      "verdict": "unclear",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2011-12",
+      "staleness_rule": "",
+      "proposed_refs": ["https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"],
+      "verifications": [
+        {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true},
+        {"url": "https://archive.org/details/screenshot-2024-09-24-at-4.37.58-pm", "ok": true, "contains_value": false},
+        {"url": "http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198133.shtml", "ok": false, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Cannot confirm 'cancelled' is right, and cannot independently confirm any specific alternative status either, so calling this 'unclear' rather than guessing. What I found: (1) the sheet's own Status ref does not and chronologically cannot support 'cancelled' (2019 air-quality bulletin, predates the sheet's own ProposalYear=2022 by 3 years); (2) an independent 2011 EIA article (ihouse.ifeng.com) documents this exact 70.44km Fangchenggang branch of the Beihai/Guangxi LNG transport network as a planned item as far back as 2011 -- meaning the true proposal date is likely much earlier than the sheet's 2022, which itself undermines the 2022-proposed/cancelled narrative; (3) GEM's own wiki article for this identical segment name (uncitable, used only as an internal lead) currently narrates Status=Operating, 70.44km, start year 2018 -- directly contradicting the spreadsheet; (4) searches in Chinese for a 2022 approval or cancellation notice specific to this branch returned nothing; (5) a real, similarly-named but almost certainly separate pipeline (China-Myanmar Guangxi Fangchenggang branch, 65.12km, gas sourced overland from Myanmar, operating since July 2015, per chinca.org / 人民日报) exists and should not be conflated with this LNG-sourced 70.44km branch when someone next resolves this. Net recommendation: route to Update for a dedicated status re-research (starting from the 2011 EIA and the wiki-vs-sheet discrepancy) rather than accepting 'cancelled' as-is or having me guess a replacement status without firmer sourcing."
+    }
+  ],
+  "summary": "P4720 (Qinzhou-Fangchenggang Branch, cancelled): sourcing is broken -- the Status ref is an unrelated 2019 air-quality bulletin that predates the sheet's own 2022 ProposalYear and cannot support 'cancelled'; an independent 2011 EIA confirms a real, matching 70.44km branch (existence OK) but GEM's own wiki contradicts the sheet by calling this segment Operating since 2018, so status/spec flagged as UNRESOLVED pending an Update-workflow re-research, not accepted as-is."
+}

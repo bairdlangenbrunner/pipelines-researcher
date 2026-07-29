@@ -1,0 +1,75 @@
+{
+  "project_id": "P7674",
+  "pipeline_name": "Guangxi Gas Pipeline Network",
+  "sheet_row": 4073,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Luzhai Branch",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change needed. Optionally chase the Operator company-name variant (广西广投天然气管道有限公司 in the 2016 EIA notice vs 广西广投天然气管网有限公司 on the sheet — 管道 'pipeline' vs 管网 'pipe network') against a corporate registry before treating Operator as fully closed.",
+      "researcher_notes": "Both of the sheet's own cited refs were fetched and read in full (not just HTTP-200 checked). Ref1 (wsbs.liuzhou.gov.cn, Liuzhou Administrative Approval Bureau, published 2016-12-30, internally dated 2016-11-23) is a first-round EIA public notice for '广西天然气支线管网项目鹿寨天然气支线管道工程' (Guangxi Gas Branch Pipeline Network Project — Luzhai Gas Branch Pipeline Project). It gives an exact route (Liudong distribution station -> Fulutun -> Liangting village -> Diliao -> crosses into Liucheng County -> Dashan village/Sijiao/Shanchang -> enters Luzhai County -> Baihua village -> Luorong valve room -> Luzhai distribution station), a segmented length breakdown (4.3 km in Liudong New District + 6.9 km in Liucheng County + 19.8 km in Luzhai County = 31.0 km total, matching LengthKnown exactly), design pressure 6.3 MPa (matches Pressure), pipe diameter DN300 (matches Diameter=300mm), and design throughput 1.1x10^8 Nm3/a = 0.11 bcm/y (matches Capacity=0.11 bcm/y exactly -- note the worklist's automated existing_ref_check flagged Capacity as 'value not found' on this URL because it searched for the literal string '0.11' and missed the scientific-notation '1.1 x10 8 Nm3/a' phrasing; manually confirmed the value IS present and correct, this is a false-negative in the automated checker, not a real discrepancy). Construction unit named as 广西广投天然气管道有限公司 ('Guangxi Guangtou Natural Gas Pipeline Co Ltd'), which is a close but not verbatim match to the sheet's Operator 广西广投天然气管网有限公司 ('...Pipe Network Co Ltd') -- flagging as a caveat, not a hard error, since Guangxi Guangtou is a known provincial SOE energy group and subsidiary renaming/reorganization (esp. around China's 2019-2020 pipeline-asset consolidation into provincial network companies) is a very plausible explanation. Ref2 (slj.liuzhou.gov.cn, Liuzhou Water Resources Bureau, published 2022-06-24) is a soil-and-water-conservation-facility self-acceptance filing receipt for the SAME named project ('广西天然气支线管网项目鹿寨天然气支线管道工程'), confirming the project reached construction completion / official filing stage in June 2022 -- this independently corroborates ProposalYear/Month (2016-12, matching the EIA notice's publication date) and StartYear1/Month1 (2022-06). These are two different Liuzhou municipal government bureaus (Administrative Approval Bureau vs Water Resources Bureau), publishing 5.5 years apart, both naming this exact project by its full formal name -- this clears the 2-independent-source bar for existence, route, length, diameter, pressure, capacity, and both key dates. PipelineType=transmission is consistent with the document's description (DN300 branch line feeding a distribution station off the Liuzhou dedicated gas supply pipeline, not an intra-city distribution network). Checked against the full 43-pipeline Guangxi roster for a duplicate/relabel: no other row shares this length/diameter/capacity/route combination (P7673, the nearest neighbor by naming pattern, is a distinct Liujiang District segment at 27km/335.6mm/0.37bcm/y) -- not a duplicate. FuelSource='Sino-Myanmar Gas Pipeline' could not be independently corroborated: neither cited document names the ultimate upstream gas source for the Liudong distribution station feed, and open web search was unavailable this session (session WebSearch budget exhausted at 200/200 before a supplementary search could run) -- left unresolved rather than guessed.",
+      "proposed_refs": [
+        "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml",
+        "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Luzhai Branch",
+      "sheet_row": 4073,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Sino-Myanmar Gas Pipeline"},
+      "primary_value": "Sino-Myanmar Gas Pipeline",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Neither of the sheet's own cited government notices names the upstream gas source feeding the Liudong distribution station that this branch draws from. WebSearch budget for the session was exhausted (200/200) before a supplementary open-web search could be attempted, so this could not be independently confirmed or refuted this pass. Leaving the existing value in place but unref'd rather than fabricating a citation -- worth a follow-up pass with search budget available."
+    },
+    {
+      "segment_name": "Luzhai Branch",
+      "sheet_row": 4073,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Guangxi Guangtou Natural Gas Pipe Network Co Ltd", "OperatorLocalLanguage": "广西广投天然气管网有限公司"},
+      "primary_value": "Guangxi Guangtou Natural Gas Pipe Network Co Ltd",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "The 2016 EIA notice (http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml) names the construction unit as 广西广投天然气管道有限公司 ('Guangxi Guangtou Natural Gas Pipeline Co Ltd') -- close to but not verbatim the sheet's 广西广投天然气管网有限公司 ('...Pipe Network Co Ltd'). Not citing it as a direct ref for Operator given the name is not an exact match (could be an earlier/reorganized entity name); flagged instead as a caveat in the validity note. Left as UNRESOLVED rather than forcing a ref onto a name that doesn't exactly match the sheet value."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Luzhai Branch",
+      "sheet_row": 4073,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2022-06",
+      "staleness_rule": "",
+      "proposed_refs": ["http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml"],
+      "verifications": [{"url": "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml", "ok": true, "contains_value": true}],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Most recent independent evidence found is the Liuzhou Water Resources Bureau's June 2022 soil-and-water-conservation self-acceptance filing receipt for this exact project, which indicates the pipeline had reached construction completion / regulatory sign-off by mid-2022, consistent with StartYear1=2022/StartMonth1=6 and with a status of operating from that point forward. No newer (2023-2026) independent evidence was found confirming continued operation or any decommissioning/status change -- WebSearch budget for the session was exhausted (200/200) before a targeted 2023-2026 search for this specific pipeline (e.g. commissioning/gas-flow announcements, Guangxi Guangtou annual reports) could be run. Given the pipeline is a completed, filed, in-service branch line (not proposed/shelved, so the 2y/4y dormancy rules do not apply) and there is no contrary evidence, 'operating' stands confirmed on the strongest available evidence rather than reclassified as stale. Recommend a follow-up open-web pass for 2023+ evidence when search budget is available."
+    }
+  ],
+  "summary": "P7674 (Luzhai Branch, Liudong->Luzhai, 31km/DN300/6.3MPa/0.11 bcm-y) confirmed real and correctly specified against its own two cited sources -- a 2016 Liuzhou Administrative Approval Bureau EIA notice and a 2022 Liuzhou Water Resources Bureau construction-acceptance filing, two independent municipal bureaus 5.5 years apart both naming this exact project -- with length/diameter/pressure/capacity/proposal-date/start-date all matching (the automated capacity-ref check was a false negative on scientific notation, not a real mismatch); no duplicate found in the 43-pipeline roster. Status=operating confirmed as of last independent evidence (2022-06); FuelSource and an exact Operator-name match are UNRESOLVED pending a follow-up search (session WebSearch budget was exhausted before a supplementary pass could run)."
+}

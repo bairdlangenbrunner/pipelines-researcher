@@ -1,0 +1,97 @@
+{
+  "project_id": "P4694",
+  "pipeline_name": "Guangdong West Gas Pipeline Network",
+  "sheet_row": 2596,
+  "wiki": "https://www.gem.wiki/Guangdong_West_Gas_Pipeline_Network",
+  "validity": [
+    {
+      "segment_name": "Maoming–Yangjiang Gas Pipeline",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix StartState/Province: currently 'Guangxi', should be 'Guangdong'. EndState/Province is already correctly 'Guangdong' on the same row — the row is internally inconsistent for a pipeline that never leaves Guangdong.",
+      "researcher_notes": "EXISTENCE: real, well-documented project. The cited EIA report (gdee.gd.gov.cn/attachment/0/393/393845/3008234.PDF, '粘西天然气主干管网茂名-阳江干线项目环境影响报告书', May 2020) directly names this exact segment. I downloaded the full 608-page scanned PDF (33MB) and confirmed verbatim: '线路全长 156.12km，管径 D813mm，设计压力 9.2Mpa' and '本工程设计输量 40×108m3/a' and '项目总投资额 308369.5 万元' and '已于 2019 年 8 月 15 日取得项目核准文件' — these exactly match GEM's Length=156.12km, Diameter=813mm, Pressure=9.2MPa, Capacity=4.0bcm/y (40×10^8 m3/a), SegmentCost=3,083,695,000 RMB, and ProposalYear/Month=2019/8. NOTE: the worklist's automated existing_ref_checks flagged Length/SegmentCost/ProposalYear as 'value not found' against this same PDF — that is a false negative (the checker's PDF-text extraction apparently didn't reach/parse the relevant late-document section); I independently verified all three are present verbatim, so the current refs are valid and do not need restaging. A second, fully independent source — Sohu/阳江观察 news, 2020-05-10, passes url_verifier cleanly — separately confirms length 156.12km, pressure 9.2MPa, the same start/end locations, and gives construction start as 2020-03-30 (exact match to GEM's ConstructionYear/Month=2020/3). A third independent source, the Guangdong provincial government portal republishing Nanfang Daily (archived, verifier-passed), dated 2021-09-29, confirms pipe-laying completion on 2021-09-28 (93 days ahead of schedule), capacity 40億m3/年 (4.0bcm/y) again, and the same route: '东起阳江市红丰镇，西至茂名市公馆镇' — gives length as a rounded '154公里' (vs the EIA's precise 156.12km; a 1.4% rounding variance, not material). CLASSIFICATION: correct — Fuel=Gas and PipelineType=transmission both confirmed by every source ('天然气主干管网'/trunk gas network throughout); the EIA classifies it under China's 200km+ oil-and-gas trunk pipeline EIA category (combined with adjoining segments), consistent with a transmission trunk line, not a distribution/gathering line. DUPLICATE: none — checked against the full 43-PID Guangxi roster; every other roster entry is a genuine Guangxi-province pipeline (Nanning, Liuzhou, Guilin, Baise, Hepu, etc.) or Guangxi LNG-terminal transport line. P4694 is part of a wholly separate PipeChina Guangdong provincial network ('Guangdong West Gas Pipeline Network' / 粘西天然气主干管网) that happens to sit adjacent to Guangxi — no geometry or naming overlap with any Guangxi roster row. ATTRIBUTION (the actual defect): StartLocation='Gongguan Town, Maonan District' and StartPrefecture/District='Maoming' are both correct (confirmed verbatim in the EIA and Sohu texts: '茂名市茂南区公馆镇'), but StartState/Province is recorded as 'Guangxi' — Maoming is unambiguously a prefecture-level city of Guangdong Province; there is no 'Maoming' in Guangxi. Every one of the four independent sources checked (2020 EIA, 2020 Sohu, 2021 gd.gov.cn/Nanfang Daily, 2022 Maoming municipal government work report) places the entire pipeline inside Guangdong (Zhanjiang–Maoming–Yangjiang–Jiangmen corridor); the pipeline's own name ('粘西' = 'West Guangdong') confirms it. Likely origin of the error: the EIA PDF names the origin station '广西 LNG 茂名输气站' (using '广西'/Guangxi) in exactly one place, versus 63 other correct uses of '广东'/Guangdong elsewhere in the same 608-page document — almost certainly an OCR/typo for '粘西' or '广东'; separately, the 2021 completion article notes the pipeline's *western terminus interconnects with* a different Guangxi–Guangdong branch line ('西与广西管道粘桂支线互联') — an interconnection point, not this pipeline's location. Either artifact plausibly explains how 'Guangxi' entered GEM's StartState/Province field. This misattribution is likely also why this Guangdong pipeline was swept into the china-guangxi-gas batch scope in the first place.",
+      "proposed_refs": [
+        "https://www.sohu.com/a/394258188_100175918",
+        "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Maoming–Yangjiang Gas Pipeline",
+      "sheet_row": 2596,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"QCCOwner(业主单位)": "国家管网集团广东省管网有限公司"},
+      "primary_value": "国家管网集团广东省管网有限公司",
+      "proposed_refs": ["http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"],
+      "verifications": [{"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "The 2021-09-29 Guangdong provincial government portal / Nanfang Daily article (verifier-passed) names the builder/operator as '国家管网集团广东省网公司' (PipeChina Guangdong Network Company) — an informal-name match for the sheet's QCCOwner value '国家管网集团广东省管网有限公司' (same entity, shorthand vs. full legal name). The EIA report separately names the responsible party '广东省天然气管网有限公司' (a plausible pre-PipeChina-rename predecessor name for the same provincial subsidiary) — I confirmed this string is present in my own full-text extraction of the PDF, but url_verifier's own PDF-text extraction did not find it (same false-negative pattern noted in validity), so I am not citing the PDF itself here, only the cleanly-verified gov.cn/Nanfang source. Medium tier given the naming variant rather than an exact legal-name match."
+    },
+    {
+      "segment_name": "Maoming–Yangjiang Gas Pipeline",
+      "sheet_row": 2596,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "PipeChina Guangdong Natural Gas Pipeline Company", "Owner1%": "100.00%"},
+      "primary_value": "PipeChina Guangdong Natural Gas Pipeline Company",
+      "proposed_refs": ["http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"],
+      "verifications": [{"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same source as the Operator fill: '国家管网集团广东省网公司' (PipeChina Guangdong Network Company) is described as the builder/100%-owner-operator of this exact line. Sole-owner (100%) structure is consistent with PipeChina's standard provincial-subsidiary ownership model for trunk lines nationalized into the 'one national network' (全省一张网) system, which this article explicitly places this project within. Medium tier for the same informal-name-variant reason as the Operator fill."
+    },
+    {
+      "segment_name": "Maoming–Yangjiang Gas Pipeline",
+      "sheet_row": 2596,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartMonth1"],
+      "primary_value_col": "StartMonth1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "StartMonth1 is blank on the sheet. Multiple search snippets (cnr.cn/China National Radio, and a separate Guangdong gov.cn/Nanfang Daily article at post_3730117.html) independently describe the West Guangdong trunk system's ceremonial commissioning as 2021-12-20 ('12月20日，在茂名市茂南区茂名分输站，国家管网集团广东省网公司宣告粘西天然气主干管道启动投产'), consistent with StartYear1=2021. However I could not get a citable, verifier-passing URL for this specific date: cnr.cn's page is GBK-encoded and url_verifier's extraction (like mine on first pass) reads it as garbled UTF-8 and fails the token check even though I manually re-decoded the raw bytes as GB18030 and confirmed the date/text is genuine; gd.gov.cn's post_3730117.html returns a live 404 and has no Wayback snapshot. Leaving StartMonth1 unresolved rather than cite an uncited/unverifiable month — flagging for a follow-up pass with a working URL for this date (e.g. via a Baidu/Google cache, or re-checking cnr.cn once the verifier can handle GB18030 pages)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Maoming–Yangjiang Gas Pipeline",
+      "sheet_row": 2596,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2021-12",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.sohu.com/a/394258188_100175918",
+        "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html"
+      ],
+      "verifications": [
+        {"url": "https://www.sohu.com/a/394258188_100175918", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20211008013345/http://www.gd.gov.cn/gdywdt/dsdt/content/post_3554793.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Searched for evidence newer than the sheet's operating status and newer than its 2026-07-28 LastUpdated stamp (that date reflects this sweep touching the row, not new field evidence). Timeline reconstructed from independent sources: 2020-05-10 Sohu/阳江观察 — construction underway since 2020-03-30, forecast commissioning 'end of 2021'. 2021-09-29 Guangdong gov.cn/Nanfang Daily (archived, verifier-passed) — pipe-laying fully connected 2021-09-28, 93 days ahead of schedule, pre-commissioning trial-run prep still pending at that point. 2021-12-20/21 cnr.cn (China National Radio) and a second gd.gov.cn/Nanfang Daily piece (both found via search, but neither cleanly citable — cnr.cn fails url_verifier on encoding, the gd.gov.cn URL 404s live with no Wayback snapshot) — describe an official commissioning ceremony at Maoming Distribution Station announcing the whole West Guangdong trunk (of which this segment is part) started operation, benefiting 27.05 million people across Maoming/Zhanjiang/Yangjiang/Jiangmen. 2022-02-11 Maoming municipal government work report (district.ce.cn, GBK-encoded — url_verifier false-negatives on encoding but I manually re-decoded and confirmed) reconfirms, in a review of 2021 achievements: '粘西天然气主干管网湛江至茂名、茂名至阳江干线建成投产' (the Zhanjiang-Maoming and Maoming-Yangjiang trunk lines built and put into operation). No 2023–2026 news found suggesting decommissioning, an outage, or any status change for this segment specifically — later coverage of the wider Guangdong grid (e.g. cumulative-throughput and expansion articles) treats the West Guangdong trunk, including this segment, as an established, operating part of the network. Status=operating stands confirmed with strong (2+ independent, one high-tier gov-portal/state-media, one clean verifier-passed local-news) corroboration; well within currency, dormancy rules don't apply to a confirmed-operating asset."
+    }
+  ],
+  "summary": "P4694 (Maoming–Yangjiang segment of the Guangdong West Gas Pipeline Network) is a real, correctly classified, operating transmission trunk line with all specs (length, diameter, pressure, capacity, cost, dates) independently confirmed — but StartState/Province is wrongly recorded as 'Guangxi' when the pipeline runs entirely within Guangdong (confirmed by 4 independent sources); recommend correcting to 'Guangdong'. Added medium-tier Operator/Owner refs; StartMonth1 (likely December 2021) left UNRESOLVED for lack of a citable URL."
+}

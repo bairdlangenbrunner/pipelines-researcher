@@ -1,0 +1,71 @@
+{
+  "project_id": "P4720",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 2622,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://archive.org/details/screenshot-2024-09-24-at-4.37.58-pm", "ok": true, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK for Status=cancelled. The current_ref is an archived screenshot of a 2019-01-08 Fangchenggang municipal air-quality bulletin ('防城港市环境空气质量优良率连续四年') that never mentions a gas pipeline and cannot attest to any status -- and it is dated 2019, three years before this row's own ProposalYear=2022, so it could not document a cancellation of a not-yet-proposed project even if it were on-topic (this repeats the row shard's own critical-deep-sweep finding at batches/china-guangxi-gas/staging/deepsweep-pilot/rows/P4720.json; url_verifier's substring pass on this URL is a false positive off the archive.org page's metadata description tag, not the actual screenshot content). I searched (Chinese, targeted at 钦州-防城港 天然气管道 2022/取消/核准) for any independent source specifically reporting a 2022-proposed-then-cancelled Qinzhou-Fangchenggang gas line and found none. What I did find is an independent, non-GEM 2011 EIA public notice (ihouse.ifeng.com) documenting a same-named, same-length (70.44km) '防城港支线' of the Guangxi/Beihai LNG transport network as a planned item as far back as 2011 -- i.e. evidence pointing toward this branch being real infrastructure with a much earlier planning history, not a 2022 proposal that was cancelled. This disagrees with (does not support) the recorded Status=cancelled/ProposalYear=2022 combination, so per instructions I am not proposing a ref for a different value here -- flagging UNRESOLVED and deferring to Update workflow, consistent with the row shard's own 'unclear/route to Update' verdict."
+    },
+    {
+      "ref_col": "Fuel [ref]",
+      "sheet_row": 2622,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": ["https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"],
+      "verifications": [
+        {"url": "http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198133.shtml", "ok": false, "contains_value": false},
+        {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "DEAD_LINK: current_ref fgw.gxzf.gov.cn is a known-blocked host with zero Wayback captures for this exact URL (checked via /wayback/available and CDX search on the xiangmuhezhunpifu directory -- no snapshot of t2198133.shtml exists at any timestamp), so this is a legitimate no-archive dead link, not a retry-worthy geo-block. Fresh Chinese search found an independent, non-GEM 2011 official EIA public-notice article (ihouse.ifeng.com, 广西液化天然气(LNG)项目 environmental-impact second public notice) describing the same-named Fangchenggang branch (防城港支线, 70.44km) as part of the project's '输气管道工程' (natural gas transmission pipeline works) -- this is the LNG regasification transport network's gas pipeline, supporting Fuel=Gas. Single strong primary-source document (EIA public notice with exact matching length figure), so tier medium rather than high; could not find a second fully independent corroborating source for this specific branch's fuel type in the time available (web-search quota was exhausted for this session; search-engine scraping via curl was blocked/returned no results)."
+    },
+    {
+      "ref_col": "PipelineType [ref]",
+      "sheet_row": 2622,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": ["https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"],
+      "verifications": [
+        {"url": "http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198133.shtml", "ok": false, "contains_value": false},
+        {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Same DEAD_LINK situation as the Fuel unit (no Wayback capture exists for the fgw.gxzf.gov.cn current_ref). The same 2011 EIA article (ihouse.ifeng.com) explicitly labels this project's pipeline component '输气管道工程' (gas transmission pipeline works), gives a total network length of 1336.88km with a trunk line (干线, 684.17km) plus named branches including this 70.44km 防城港支线, states design pressure 10.0 MPa and 18 process stations/50 block valve chambers along the route -- all consistent with a transmission-grade trunk/branch pipeline, supporting PipelineType=transmission. Single strong source, tier medium; no second independent source found in the time available (see Fuel unit note re: exhausted web-search quota)."
+    },
+    {
+      "ref_col": "Proposal [ref]",
+      "sheet_row": 2622,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "No current_ref existed for ProposalYear=2022/ProposalMonth=8. I checked the Guangxi DRC's own 项目核准结果 (project-approval) index directory (fgw.gxzf.gov.cn/.../xiangmuhezhunpifu/, retrieved via a Dec-2022 Wayback snapshot of the index page since the origin geo-blocks) for any August 2022 approval notice naming Qinzhou (钦州) and Fangchenggang (防城港) together for a gas pipeline -- the index lists every other Guangxi gas-branch approval from that window (e.g. the 2022-08-24 Laibin/来宾 branch approval) but has no entry for a Qinzhou-Fangchenggang gas line in or near August 2022. The nearest topically-related item found was a 2022-10-10 notice about a '钦北天然气支线管道' road-crossing pipeline relocation (a different, narrower project). Combined with the 2011 EIA evidence (see Status unit) suggesting this branch's actual planning predates 2022 by roughly a decade, I could not find any independent source supporting a 2022-08 proposal date for this specific segment. Web-search quota was exhausted mid-session (WebSearch tool returned 'budget used' for further Chinese-language queries) and curl-based scraping of Bing/DuckDuckGo/Baidu returned no usable organic results (bot-blocked), so this remains a legitimate UNRESOLVED rather than a confirmed non-existence."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 2622,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": ["https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"],
+      "verifications": [
+        {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "No current_ref existed. The 2011 EIA article (ihouse.ifeng.com) explicitly states the route: '防城港支线先后经过钦州、防城港2个地市' (\"the Fangchenggang branch passes through the two prefecture-level cities of Qinzhou and Fangchenggang, in that order\") -- directly supporting StartPrefecture/District=Qinzhou, EndPrefecture/District=Fangchenggang, both State/Province=Guangxi, CountryOrArea=China. Single strong primary source (official EIA public notice naming this exact branch and route), tier medium; no independent second source located given the exhausted web-search quota this session (see Fuel unit note)."
+    }
+  ]
+}

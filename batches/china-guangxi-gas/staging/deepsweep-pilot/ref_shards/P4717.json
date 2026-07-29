@@ -1,0 +1,47 @@
+{
+  "project_id": "P4717",
+  "pipeline_name": "Guangxi LNG Terminal Transport Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 2619,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://gas.in-en.com/html/gas-3040179.shtml", "ok": false, "contains_value": false},
+        {"url": "http://web.archive.org/web/20240528154925/https://gas.in-en.com/html/gas-3040179.shtml", "ok": true, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "zh",
+      "researcher_notes": "Current_ref was empty; the only candidate citation for this row (gas.in-en.com/html/gas-3040179.shtml, footnote [16] on the gem.wiki page) fails live (403). Fetched its web.archive.org snapshot (20240528154925) instead of retrying the geo/rate-blocked origin: it loads fine (200) but its full text is entirely about a DIFFERENT, unrelated approval -- the Fusui-Chongzuo branch (扶绥-崇左天然气支线管道工程) -- with zero occurrences of 贵港 (Guigang) or 玉林 (Yulin) anywhere in the page. So even the archived original never supported this row; it was mis-cited from the start. The gem.wiki page's 'Status: Cancelled' tag for this entry itself carries no footnote in the raw markup (per the deep-sweep audit shard for this PID) -- it is an unsourced editorial call. I searched (贵港-玉林 天然气支线管道 项目核准; 玉林支线 贵港 天然气管道 取消) and the deep-sweep audit shard for this same PID independently ran equivalent Chinese queries -- neither turned up any approval notice, EIA, or news article naming a single Guigang-to-Yulin gas line, cancelled or otherwise. The one plausible primary source that plausibly seeded the wiki entry (2011 ifeng EIA, see Location unit) describes two separate spurs, neither of which is a 'Guigang-Yulin' line, so there is no independent basis to confirm OR refute 'cancelled' for the segment as currently named. Leaving UNRESOLVED rather than citing a source that (a) doesn't verify live at its origin and (b) doesn't actually discuss this segment even in its archived form."
+    },
+    {
+      "ref_col": "Fuel [ref]",
+      "sheet_row": 2619,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": ["https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml"],
+      "verifications": [
+        {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "Live (200), Chinese-language 2011-12-01 EIA notice titled '广西液化天然气（LNG）项目环境影响评价' (Guangxi LNG Project Environmental Impact Assessment) on 广西新闻网/ifeng.com, describing the whole Guangxi Beihai-LNG-terminal transport network (this row's own parent name is literally 'Guangxi LNG Terminal Transport Pipeline' / zh 广西北海LNG外输管道) as a natural-gas (天然气) transmission network with a 684.17 km main trunk plus branch spurs including one to Yulin (玉林支线) and one to Guigang (贵港支线). This confirms Fuel=Gas for the network this row belongs to. Only single-sourced (tier medium, not high) because -- per the Location/Status units below -- this specific row's exact route identity ('Guigang-Yulin' as one combined segment) does not clearly match either the Yulin spur or the Guigang spur described in this or any other source found, so I did not chase a second source narrowly matched to this exact segment name; the fuel-type finding rests on the parent network being unambiguously a natural-gas (not oil/NGL) project."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 2619,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://ihouse.ifeng.com/news/2011_12_01-21016148_0.shtml", "ok": true, "contains_value": true},
+        {"url": "https://gas.in-en.com/html/gas-3040179.shtml", "ok": false, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": true,
+      "source_language": "zh",
+      "researcher_notes": "DISAGREEMENT, not a gap -- per task rules, not proposing this as support. The recorded value is one combined segment from Guigang to Yulin (StartPrefecture=Guigang, EndPrefecture=Yulin). The only primary source that plausibly underlies the wiki entry -- the 2011-12-01 ifeng.com EIA (live, 200, contains '贵港' and '137.7') -- instead documents TWO SEPARATE, non-contiguous spurs off the shared 684.17 km Beihai-Hechi trunk: (1) 玉林支线 (Yulin Branch), 137.7 km, routed Beihai->Yulin ('先后经过北海、玉林2个地市'), and (2) 贵港支线 (Guigang Branch), 50.0 km, routed Nanning->Guigang ('先后经过南宁、贵港2个地市'). Guigang and Yulin are the far endpoints of two different branches off the trunk in this source, not two ends of one 'Guigang-Yulin' pipeline -- so this source does not support the recorded combined Location and I am not citing it as if it did. The other candidate citation (gas.in-en.com/html/gas-3040179.shtml, footnote [16]) is dead at origin (403) and its web.archive.org snapshot (20240528154925) is entirely about an unrelated branch (扶绥-崇左/Fusui-Chongzuo), with zero mentions of 贵港 or 玉林. I ran additional Chinese searches (贵港-玉林 天然气支线管道 项目核准; 玉林支线 贵港 天然气管道) and found no approval notice, EIA, or news article naming a single Guigang-to-Yulin route. This matches and reinforces the existence/attribution concern already logged in this PID's deep-sweep audit shard (rows/P4717.json) -- recommend that concern be resolved (is this row mislabeled Yulin Branch, mislabeled Guigang Branch, or a genuinely separate line with no source found yet?) before a Location ref is sought, since finding a ref for the wrong route would create a fabricated-support problem, not fix a gap."
+    }
+  ]
+}
