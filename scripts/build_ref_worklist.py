@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Reference-sweep step 1: scan a country+tracker scope and emit a worklist of every
+"""Reference-sweep step 1: scan a country (optionally sub-country via --province /
+--exclude-network-regex, e.g. China's province batches) + tracker scope and emit a worklist of every
 ref-bearing data point that needs work — blank `[ref]` cells whose value is filled
 (MISSING_REF), and filled `[ref]` cells to re-verify (HAS_REF).
 
@@ -147,12 +148,29 @@ def _classify(kind: str, ref_col, any_value_filled: bool, current_ref: str) -> s
 
 
 def build(csv: str, country: str | None, statuses: set[str] | None,
-          verify_existing: bool, owners_csv: str | None = None) -> dict:
+          verify_existing: bool, owners_csv: str | None = None,
+          province: str | None = None,
+          exclude_network_regex: str | None = None) -> dict:
     df = _load_indexed(csv)
     cols = set(df.columns)
     if country:
         want = N.normalize_country(country)
         df = df[df["CountriesOrAreas"].map(lambda s: want in N.split_countries(s))]
+    if province:
+        # In scope if EITHER terminus sits in a wanted province. Transited provinces
+        # don't count — a trunk line crossing the province belongs to its own scope.
+        wants = {p.strip().lower() for p in province.split(",") if p.strip()}
+        prov_cols = [c for c in ("StartState/Province", "EndState/Province") if c in cols]
+        if not prov_cols:
+            sys.exit(f"--province given but no Start/EndState/Province columns in {csv}")
+        mask = pd.Series(False, index=df.index)
+        for c in prov_cols:
+            mask |= df[c].map(lambda s: str(s).strip().lower() in wants)
+        df = df[mask]
+    if exclude_network_regex:
+        rx = re.compile(exclude_network_regex)
+        if "PipelineNetworkGrouping" in cols:
+            df = df[~df["PipelineNetworkGrouping"].map(lambda s: bool(rx.search(str(s))))]
     if statuses:
         df = df[df["Status"].map(lambda s: str(s).strip().lower() in statuses)]
 
@@ -233,6 +251,8 @@ def build(csv: str, country: str | None, statuses: set[str] | None,
             "csv": Path(csv).name,
             "owners_csv": owners_csv_name,
             "country": country or "global",
+            "province": province,
+            "exclude_network_regex": exclude_network_regex,
             "statuses": sorted(statuses) if statuses else "all",
             "rows": int(df.shape[0]),
             "project_ids": len(scope_ctx),
@@ -276,6 +296,14 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--tracker", required=True, choices=["oil", "gas"])
     ap.add_argument("--country")
+    ap.add_argument("--province",
+                    help="comma-separated Start/EndState/Province filter (row in scope if EITHER "
+                         "terminus matches; transited provinces don't count). Combine with "
+                         "--country for sub-country batches, e.g. China by province")
+    ap.add_argument("--exclude-network-regex",
+                    help="drop rows whose PipelineNetworkGrouping matches this regex (re.search). "
+                         "China idiom: '^(?!.*输气管网$)' keeps only provincial-grid rows, "
+                         "excluding national trunk systems (their own batch scope)")
     ap.add_argument("--status", help="comma-separated Status filter (e.g. proposed,construction)")
     ap.add_argument("--csv", help="GEM CSV (default: latest snapshot for the tracker)")
     ap.add_argument("--owners-csv",
@@ -311,14 +339,16 @@ def main() -> None:
     if args.status:
         statuses = {s.strip().lower() for s in args.status.split(",") if s.strip()}
 
-    wl = build(csv, args.country, statuses, args.verify_existing, owners_csv=owners_csv)
+    wl = build(csv, args.country, statuses, args.verify_existing, owners_csv=owners_csv,
+               province=args.province, exclude_network_regex=args.exclude_network_regex)
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(wl, indent=2, ensure_ascii=False))
 
     s, m = wl["scope"], wl["summary"]
     print(f"wrote {out}")
-    print(f"  scope: {s['country']} | {args.tracker} | {s['rows']} rows | "
+    prov = f" / {s['province']}" if s.get("province") else ""
+    print(f"  scope: {s['country']}{prov} | {args.tracker} | {s['rows']} rows | "
           f"statuses={s['statuses']} | {s['pairs']} ref-pairs"
           + (f" | owners={s['owners_csv']}" if s.get("owners_csv") else " | owners=skipped"))
     print(f"  units: {m['units']}  by_class={m['by_class']}  "

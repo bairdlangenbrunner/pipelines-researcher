@@ -93,7 +93,10 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 1. `scripts/refresh_csvs.sh` → fresh snapshots (don't sweep a stale CSV). This now also pulls
    the **operators/owners tab** (`GEM_operators_owners_snapshot_<date>.csv`, header at row idx 1).
 2. **Worklist** — `scripts/build_ref_worklist.py --tracker <t> --country <C>
-   [--status …] --verify-existing --out batches/<scope>/staging/ref-sweep[-<qualifier>]/worklist.json`.
+   [--province <P> [--exclude-network-regex …]] [--status …] --verify-existing
+   --out batches/<scope>/staging/ref-sweep[-<qualifier>]/worklist.json`.
+   `--province` scopes sub-country by Start/End province (either terminus; China's
+   province batches — idiom + trunk-exclusion regex in `docs/country_notes/china.md`).
    Classifies each row×pair ref cell: `SKIP` (all values blank), `MISSING_REF` (value
    filled, ref blank), `HAS_REF` (ref filled → re-verify). It also **joins the operators/owners
    tab by ProjectID** (default latest snapshot; `--owners-csv` to override, `--no-owners` to skip)

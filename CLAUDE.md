@@ -317,6 +317,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   2 new rows P8001/P8003, 5 validation candidate edits, 5 route candidates
   (P2197 QC-fail); Ashdod-vs-Ashkelon landfall + P3620 Ashkelon-gap open):**
   `docs/country_notes/israel.md`.
+- **China (gas: province-level program agreed 2026-07-29 — agent batches run AHEAD of
+  Maggie Zheng's province queue (she has routes/wiki + the trunk systems; cycle plan in
+  gem-desk `research-cycles/ggit-2026-pipelines-update/`); scope via
+  `build_ref_worklist.py --province` + trunk-exclusion regex; Guangxi pilot queued;
+  oil out of scope until post-cycle):** `docs/country_notes/china.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
   review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet
   `…_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`. **THREE files to work:**
