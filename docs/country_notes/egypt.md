@@ -41,6 +41,28 @@ MENA deep-coverage country (GGIT gas focus so far). Gas packet legs:
 
 Oil (GOIT) not yet swept.
 
+## Live-sheet review — NA's P8004–P8019 additions (2026-07-28)
+
+16 new Egypt gas rows were entered directly on the live sheet 2026-07-27/28
+(SheetRows 4277–4292), sourced mainly to the Ministry of Petroleum's house magazine
+*مجلة البترول* (petro-mag.org) and, for P8013–P8019, to an egyptoil-gas.com **search
+URL** that carries no data. Full parse of both magazine issues, row-by-row verdicts,
+and the reusable source-assessment rules:
+**`notes/review-2026-07-28-na-egypt-gas-additions.md`**.
+
+Attribution is **NA** (`Researcher` col J, read 2026-07-29) — *not* NF, a different
+researcher. Col J was blank in the 07-28 snapshot, so read it rather than inferring.
+
+Headlines: the pipe is largely real but P8005 "SUMED Gas Pipeline" is a mis-named
+FSRU send-out line (BL's flag confirmed); P8007 length is 8 km not 7; P8008 is 15 km
+not 15.5 and is a Sinai *loop*, not a new line; P8013–P8019 are unsourced as entered.
+Systemic: refs pasted into `LengthDoubleCounting` instead of `Length [ref]`
+(**45 gas rows tracker-wide, not only NA** — includes our own P3620/P3657; **fixed on
+the live sheet 2026-07-28**, backup in `notes/2026-07-28-lengthdoublecounting-fix-backup.csv`),
+and **P8001/P8003 collide with the IDs reserved by the Israel gas batch**, which must
+be re-numbered before it is applied. `Researcher` was blank on all 16 at review time
+and now reads `NA`. Remaining fixes belong in a §5 Update batch, not in-place edits.
+
 ## Open items — gas (staged, NOT applied — candidates for review)
 
 **No escalation gate tripped.** Unlike Saudi (P1897–P1925 GIS/km-post family) and Iran

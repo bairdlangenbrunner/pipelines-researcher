@@ -51,6 +51,12 @@ Staging under `batches/israel-gas/staging/`; deliverables under `.../deliverable
 `pipelines_batch_20260723_1606_ET_israel-gas_discovery.xlsx` + P8001/P8003 wiki texts).
 
 - **Discovery — 2 new rows** (`staging/discovery-tmng-map/staged_new.json`):
+  - **⚠️ ProjectID collision — RE-NUMBER BEFORE APPLYING.** Both IDs below were taken
+    on the live sheet 2026-07-24/27 by NA's Egypt gas additions (P8001 =
+    NORPETCO–Abu Gharadig, P8003 = Fayoum–Giza; see
+    `notes/review-2026-07-28-na-egypt-gas-additions.md`). Re-derive the next free
+    ProjectID from a fresh CSV at apply time — the staged IDs, the two wiki texts and
+    the route candidate all carry the stale numbers.
   - **P8001 Mari-B–Ashdod Gas Pipeline** — operating, 30 in, ~6 bcm/y, start 2004; owner/parent
     open item; geometry deferred (Ashdod-vs-Ashkelon).
   - **P8003 Karish–Tanin FPSO Gas Export Pipeline** — operating, first gas 26 Oct 2022,

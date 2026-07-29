@@ -58,9 +58,9 @@ python scripts/build_recon_workbook.py --staging batches/<scope>/staging/recon-g
 
 ## Batches: what "staging" means
 
-The agent never writes to the systems of record (the live Google Sheet and the
-`GOIT-GGIT-pipeline-routes` repo), so **everything this repo produces is pending
-until a human applies it**. The `batches/` tree makes that lifecycle literal.
+No batch is ever written straight to the systems of record (the live Google Sheet
+and the `GOIT-GGIT-pipeline-routes` repo), so **everything this repo produces is
+pending until a human applies it**. The `batches/` tree makes that lifecycle literal.
 Everything for one country+commodity lives under
 `batches/<country-slug>-<commodity>/` (e.g. `batches/egypt-gas/`):
 
@@ -89,5 +89,7 @@ never hand-edit.
 - **Never cite GEM** (gem.wiki, globalenergymonitor.org) as a source unless approved.
 - **Corroborate with 2+ independent sources**; a scraped dataset is one source,
   never authoritative on its own.
-- The agent **never writes** to the live Sheet or the routes repo — every batch is a
-  reviewable file the user applies manually.
+- The agent **never writes** the routes repo, and never writes the live Sheet to apply
+  a batch — every batch is a reviewable file the user applies manually. A direct sheet
+  write happens only as a separately authorized, mechanical one-off (backup first,
+  verify after); see the hard requirements in `CLAUDE.md`.

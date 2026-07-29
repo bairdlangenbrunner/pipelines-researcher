@@ -7,9 +7,11 @@ maintain Global Energy Monitor's open-access pipeline databases:
 - **GGIT** — Global Gas Infrastructure Tracker (gas pipelines)
 
 Deeper coverage in MENA, US, Iran, Iraq, Saudi Arabia. Researcher initials in the
-tracker: **CB**. The agent **never writes to the live Google Sheet or the routes
-repo** — every batch produces a reviewable Excel deliverable + staged JSON that
-Baird applies manually.
+tracker: **CB**. The agent **never writes to the routes repo**, and by default
+doesn't write the live Google Sheet either — every batch produces a reviewable
+Excel deliverable + staged JSON that Baird applies manually. Direct sheet writes
+are allowed only as a **separately authorized one-off** (see the hard requirement
+below), never as a way to "apply" a batch.
 
 Where things live — **read on demand as the workflow dictates, not all at once**:
 
@@ -170,8 +172,18 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 
 ## Hard requirements (override anything below)
 
-- **Never modify the live GEM Sheet or the routes repo.** Output is a staging xlsx +
-  staged JSON; the user applies edits manually.
+- **Never modify the routes repo.** Batch output is a staging xlsx + staged JSON; the
+  user applies edits manually. **The live GEM Sheet is writable only on explicit
+  authorization** — Baird asks for the edit, or the agent asks permission and gets a
+  yes, *for that specific edit*. Approval never carries to the next task. Never write
+  the sheet to "apply" a batch: batches go through the deliverable, always. An
+  authorized write must be **mechanical and pre-verified** (a fix whose correctness is
+  established before writing, not a research judgment applied live), and must:
+  (1) read the target range with `valueRenderOption: FORMULA` first and abort on any
+  formula cell; (2) write a before/after backup CSV to `notes/` and commit it;
+  (3) use `valueInputOption: RAW` and cell-scoped ranges, never whole rows/columns;
+  (4) re-read afterwards and verify against the plan. Use `gws-gem-write`
+  (`gws-gem` is read-only and stays the default).
 - **Pull a fresh GEM CSV at the start of every batch**; re-derive the column map
   from the fresh header (schema drifts; don't hard-code offsets).
 - **Every URL passes `scripts/url_verifier.py` before going in the xlsx** — even

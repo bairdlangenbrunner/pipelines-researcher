@@ -1,7 +1,9 @@
 # Output workbook conventions
 
 Every deliverable is a reviewable Excel file the user applies to the live sheet
-manually. The agent never writes to the Google Sheet or the routes repo.
+manually — the agent never writes the Google Sheet or the routes repo to apply a
+batch. (Separately authorized one-off sheet fixes exist; they never come through
+this path. See `CLAUDE.md`.)
 
 ## File naming and location
 
