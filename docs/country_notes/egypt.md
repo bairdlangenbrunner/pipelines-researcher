@@ -204,10 +204,12 @@ placeholders in `GOIT-GGIT-pipeline-routes` (merge `0c8c01f4`, via its `qc_route
 written for those 37 rows (111 cells, batch verified on readback; backup
 `notes/sheet-write-2026-07-30-egypt-gas-route-columns.csv`): `RouteNotes` += CB method
 stamp + the full researcher notes, `RouteCreator` += `CB`, `Route [ref]` += informing
-URLs — all appends, nothing overwritten. **Still sheet-side open:** `RouteAccuracy` /
-`RouteLocation` were NOT written (suggested accuracies are in the workbook — the 19
-endpoints rows should become `very low (straight line/schematic)`), and the 18
-ROUTE_PARTIAL rows keep `no route`.
+URLs — all appends, nothing overwritten. **RouteAccuracy also written same day**
+(37 cells: 19 `very low (straight line/schematic)` / 15 `high` / 3 `medium`, backup
+`notes/sheet-write-2026-07-30-egypt-gas-route-accuracy.csv`); Baird flipped the six
+South Valley `RouteType` cells to `Mapped route (at any accuracy)` himself, settling
+the per-segment decision. (`RouteLocation` no longer exists as a sheet column.) The
+18 ROUTE_PARTIAL rows keep `no route`.
 
 - **5 intentional gate FAILs, each a sheet-length question, not a geometry defect:**
   P6697 (ratio 0.685), P6687 (2.303 — Obaiyed→Tarek portion vs 41.5 km sheet), P7447

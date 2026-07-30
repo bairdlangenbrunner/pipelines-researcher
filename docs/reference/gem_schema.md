@@ -127,7 +127,7 @@ Endpoints: `StartLocation` / `StartState/Province` / `StartCountryOrArea`,
 `EndLocation` / `EndState/Province` / `EndCountryOrArea` (+ `[ref]`).
 Lifecycle/finance: `ProposalYear`, `ConstructionYear`, `StartYear1`, `Cost`,
 `FIDStatus`, `FIDYear`, `Opposition`, `Delayed`, `ShelvedCancelledType`.
-Route: `RouteType`, `RouteLocation`, `RouteAccuracy`, `RouteNotes`, `Route [ref]`
+Route: `RouteType`, `RouteAccuracy`, `RouteNotes`, `RouteCreator`, `Route [ref]`
 (geometry itself lives in the routes repo, not the sheet — see
 `docs/reference/route_conventions.md`).
 Notes: `ResearcherNotes`, `Background` (+ `[ref]`).

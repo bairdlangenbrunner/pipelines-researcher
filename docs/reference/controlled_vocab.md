@@ -42,8 +42,8 @@ itself: a "336 million EGP" source is staged as `ProjectLevelCost = 336000000`,
   `Not mapped (but could be — route or endpoints are known)`,
   `Mapped route (at any accuracy)`, `Unavailable (cannot find route)`.
   Pull a live row to confirm the current exact strings before populating.
-- `RouteLocation` — `Folder` when a GeoJSON has been uploaded to the routes repo;
-  blank if not yet created.
+- `RouteLocation` — REMOVED from both tabs (2026-07-30): a repo geojson is the
+  source of truth; don't stage values for it.
 
 ## Status-logic conventions (from the research workflow)
 

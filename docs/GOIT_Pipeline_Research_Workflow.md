@@ -173,7 +173,6 @@ For every newly discovered pipeline, conduct a dedicated route search:
 
 6. **Record in the spreadsheet:**
    - `RouteType`: Type of route (mapped, estimated, etc.)
-   - `RouteLocation`: Where the GeoJSON is stored ("Folder" if uploaded, blank if not yet created)
    - `RouteAccuracy`: high / medium / low / no route
    - `RouteNotes`: Description of map source, endpoint coordinates if known, link to visual map image
    - `Route [ref]`: URL to the best available map source

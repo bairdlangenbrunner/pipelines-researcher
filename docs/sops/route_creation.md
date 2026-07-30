@@ -166,7 +166,7 @@ systematically off (likely a segment-vs-network granularity misread, not a findi
 ## Review flow (Baird, after delivery)
 
 Open candidates in geojson.io / QGIS → branch on `GOIT-GGIT-pipeline-routes` → run its
-`qc_routes.py --copy` → PR → then the sheet-side `RouteAccuracy` / `RouteLocation` /
+`qc_routes.py --copy` → PR → then the sheet-side `RouteAccuracy` /
 `RouteNotes` / `Route [ref]` land via a separate §5 Update batch.
 
 ## Iterate

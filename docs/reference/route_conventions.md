@@ -47,7 +47,6 @@ curl -sL "https://raw.githubusercontent.com/GlobalEnergyMonitor/GOIT-GGIT-pipeli
 | Column | Meaning |
 |---|---|
 | `RouteType` | dropdown — match the exact sheet strings (see `controlled_vocab.md`) |
-| `RouteLocation` | `Folder` if a GeoJSON is uploaded; blank if not yet created |
 | `RouteAccuracy` | `high` / `medium` / `low` / `no route` / `very high (within meters)` / `very low (straight line/schematic)` |
 | `RouteNotes` | map source, endpoint coords, link to the visual map used |
 | `Route [ref]` | URL to the best available map source |

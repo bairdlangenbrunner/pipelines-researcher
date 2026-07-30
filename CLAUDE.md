@@ -310,8 +310,9 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   that returned 0 overlaps on both `MATCH_QUALITY` escalations → 9 `ROUTE_FOR_EXISTING` +
   10 `DISCOVERY_CANDIDATE`. **+ §8 route creation 2026-07-30: all 55 no-route gas rows —
   37 candidate geojsons APPLIED same day (routes-repo merge `0c8c01f4` + authorized
-  sheet write of RouteNotes/RouteCreator/Route [ref], backup in `notes/`); 18 corridor
-  partials + sheet-side RouteAccuracy still open; workbook
+  sheet write of RouteNotes/RouteCreator/Route [ref] + RouteAccuracy, backups in
+  `notes/`; South Valley RouteType flipped by Baird); 18 corridor partials still open;
+  workbook
   `…_20260730_1239_ET_egypt-gas_route-creation.xlsx`.** Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
