@@ -1,0 +1,29 @@
+{
+  "resolution": "ENDPOINTS",
+  "start": {
+    "name_zh": "市大任产业园（河池市金城江区一带，近似）",
+    "name_en": "Municipal Daren Industrial Park, Hechi City (Jinchengjiang District used as a proxy)",
+    "lon": 108.0331781,
+    "lat": 24.6923245,
+    "geocode_source": "Nominatim query '金城江区, 河池市, 广西' (OSM node 619176423, district/city-level) used as a proxy -- '大任产业园' (Daren Industrial Park) itself did not resolve in Nominatim and its exact location within Hechi was not independently sourced this session",
+    "refs": ["https://www.163.com/dy/article/I1LS14H30552R5WK.html"]
+  },
+  "end": {
+    "name_zh": "南丹县",
+    "name_en": "Nandan County",
+    "lon": 107.5383659,
+    "lat": 24.9788462,
+    "geocode_source": "Nominatim query '南丹, 河池市, 广西' (OSM node 244081386, county-seat/city-level)",
+    "refs": ["https://www.163.com/dy/article/I1LS14H30552R5WK.html"]
+  },
+  "corridor_notes": "GEM row = Daren-Nandan Branch ('大任—南丹天然气支线项目'), operator Guangxi Gas Group, proposed. The pilot pass retrieved the actual government line-item via Wayback Machine (fgw.gxzf.gov.cn t16217273.shtml notice + its Attachment-5 investment-plan xlsx, snapshotted 2025-04-13): ~97km new-build transmission pipeline, DN300, 4.0MPa, RMB 425M investment, owner Guangxi Gas Group -- an exact match to GEM's specs. That same source table lists '项目管理层级' (jurisdiction/management level) as Hechi City (河池市), not Laibin as GEM's sheet currently records (see the pilot's separate attribution concern -- out of scope for this route-creation task, but the geocoding in this file follows Hechi, not Laibin, per that finding). 163.com (2023-04-06, verified this session) independently reports the same DRC notice and explicitly groups this project ('大任—南丹天然气支线项目') among Hechi City's slate of energy projects, alongside the Jinchengjiang power project -- corroborating the Hechi attribution and confirming Nandan as the terminus. Neither source pins 'Daren' to a specific township within Hechi (it is presumed to be 市大任产业园, a city-level industrial park, but its exact location was not found this session) -- Jinchengjiang District, Hechi's main urban district, is used only as a coordinate proxy.",
+  "route_refs": [
+    "https://www.163.com/dy/article/I1LS14H30552R5WK.html",
+    "http://web.archive.org/web/20250413122044/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml",
+    "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Pilot pass already flagged that StartPrefecture/District and EndPrefecture/District should be corrected from 'Laibin' to 'Hechi' (河池市), and that ProposalMonth (12) is likely a mis-copy of a construction-start-month field rather than the true proposal date -- both out of scope for this route-creation task, noted here for the parallel validity-fix workstream. Start-point precision is the main open gap for route creation: 'Daren' as a named place could not be independently pinned to a township/village this session.",
+  "blockers": "Daren Industrial Park's precise location within Hechi City is not independently sourced -- the start coordinate is a Jinchengjiang-District-level proxy, not a geocoded hit on 'Daren' itself. The Wayback xlsx attachment (route-level table) intermittently fails to load (ConnectionError on repeat attempts, though it returned HTTP 200 at least once this session and was opened directly with openpyxl during the pilot pass) -- treat as flaky-but-real, a known binary-file false-negative pattern for url_verifier, not evidence the page is dead."
+}

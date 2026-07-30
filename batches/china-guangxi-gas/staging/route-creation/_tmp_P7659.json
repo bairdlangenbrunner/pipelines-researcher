@@ -1,0 +1,31 @@
+{
+  "resolution": "PARTIAL",
+  "start": {
+    "name_zh": "荔浦市 (荔浦门站/LNG荔浦站，推定)",
+    "name_en": "Lipu (city/county seat) — plausible tie-in point of the Mengshan sub-segment's \"Guilin-Lipu\" 30km leg",
+    "lon": 110.3904799,
+    "lat": 24.4914297,
+    "geocode_source": "Nominatim query 'q=荔浦县,桂林,广西&format=json&limit=3' (note: 荔浦 was upgraded from 县 to 市 in 2019, so OSM resolves it as 荔浦市); picked the top/only result (osm relation 2773818, administrative boundary centroid for 荔浦市, addresstype=city) as the best available proxy for a station-level point — no more precise station location could be sourced.",
+    "refs": [
+      "http://www.eiafans.com/thread-1279941-1-1.html"
+    ]
+  },
+  "end": {
+    "name_zh": "蒙山县 (蒙山分输站，推定)",
+    "name_en": "Mengshan County town seat — representative endpoint for the new Mengshan distribution station (蒙山分输站) named in the EIA notice",
+    "lon": 110.5202451,
+    "lat": 24.1962534,
+    "geocode_source": "Nominatim query 'q=蒙山县,梧州,广西&format=json&limit=3'; two results returned (an administrative-boundary relation, osm_id 2044152, centroid 24.1216889/110.5657193; and a place node, osm_id 244081197, 24.1962534/110.5202451). Picked the place node (town-seat point, addresstype=city) over the boundary centroid as a closer proxy for a station sited near the county's built-up area — still county/town-level precision, not the actual station.",
+    "refs": [
+      "http://www.eiafans.com/thread-1279941-1-1.html"
+    ]
+  },
+  "corridor_notes": "IMPORTANT STRUCTURAL CAVEAT: P7659 'Wuzhou Branch' merges TWO physically separate, non-contiguous sub-segments under one GEM row per the source EIA notice: (1) Mengshan section (蒙山段) = Guilin-Lipu Co. 30km + Wuzhou-Mengshan Co. 29.2km = 59.2km, ending at a new Mengshan distribution station; (2) Cangwu section (苍梧段) = Hezhou-Babu Dist. 12.6km + Wuzhou-Cangwu Co. 21.9km = 34.5km, ending at a new Cangwu distribution station. These do NOT form one continuous line -- Mengshan County and Cangwu County are ~110km apart with Wuzhou city between them, and nothing in the source describes a Mengshan-to-Cangwu connector. The start/end pair given here represents ONLY the Mengshan sub-segment (chosen as representative because it is the longer/first-listed of the two, and because its start ties into a corroborated sibling GEM pipeline). Likely tie-in point identified: GEM row P4727 'Guangxi Gas Pipeline Network' / SegmentName 'Guilin-Yangshuo-Lipu Branch' already ends at 'LNG Lipu Station, Lipu County' -- this matches the '桂林-荔浦支线 30km' leg named in the P7659 EIA notice as the Mengshan section's origin, i.e. the Mengshan section plausibly branches off the existing/planned Guilin-Yangshuo-Lipu line near Lipu. This is inference from matching place-names + distances across two independently-staged GEM rows, not a direct citation in either source -- flag for a human reviewer to confirm before drawing a route. The Cangwu sub-segment (start near Babu District, Hezhou -- 24.4155435/111.5464663 -- end near Cangwu County seat -- 23.8692290/111.5423435, both Nominatim county/district-seat proxies) is NOT represented in the start/end fields above and would need its own separate route object if GEM ever splits this row into two segments (a recommendation already on record in the prior validity pilot pass, not re-litigated here). No coordinates more precise than county/town-seat level could be sourced for either the Mengshan or Cangwu distribution stations themselves -- targeted searches for '蒙山分输站' and '苍梧分输站' by name returned nothing, and the full underlying EIA report (searched docin.com, book118.com, general web) could not be located, only the 2019-12-27 first-round public-notice summary already on file.",
+  "route_refs": [
+    "http://www.eiafans.com/thread-1279941-1-1.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Status is correctly CANCELLED/shelved -- not re-litigated. Task was limited to sourcing planned endpoints from the 2019 EIA notice for historical route-drawing. Re-verified the notice URL (url_verifier.py: OK, 200) and re-read it via WebFetch attempt (blocked -- ECONNREFUSED from this session's network path; web.archive.org fetch also unavailable to this tool) so all detail here relies on the prior pilot pass's already-extracted quotes (Guilin-Lipu Co. 30km / Wuzhou-Mengshan Co. 29.2km / Hezhou-Babu Dist. 12.6km / Wuzhou-Cangwu Co. 21.9km, per-segment totals, new-station language) plus one new cross-reference this pass: GEM sibling row P4727 (same PipelineName, SegmentName 'Guilin-Yangshuo-Lipu Branch') independently ends at 'LNG Lipu Station, Lipu County,' which lines up with the Mengshan sub-segment's stated 30km Guilin-Lipu origin leg -- the most useful new finding from this pass. No document host (docin.com/book118.com) or web search turned up the full EIA report, exact GPS/station coordinates, or named villages/townships beyond county level for either distribution station. Given the low-effort/low-priority instruction and the two-sub-segment structural problem (a single route object cannot honestly represent this row), stopping here at PARTIAL with county/town-seat proxies is the right call rather than fabricating precision.",
+  "blockers": "Two non-contiguous sub-segments (Mengshan + Cangwu) under one GEM row -- no single clean route is representable. No precise station-level coordinates found for either 蒙山分输站 or 苍梧分输站; only county/town-seat level Nominatim proxies. Full underlying EIA report not locatable via docin.com/book118.com/general web search. Direct refetch of the source URL was blocked by this session's network (ECONNREFUSED to eiafans.com; web.archive.org also unreachable) -- content relies on the prior pilot pass's extraction, not a fresh re-read this session, though url_verifier.py confirms the URL itself is still live (200)."
+}

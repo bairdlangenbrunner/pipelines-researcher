@@ -1,0 +1,33 @@
+{
+  "P7523": {
+    "resolution": "ENDPOINTS",
+    "start": {
+      "name_zh": "丹寨输气站，丹寨县长青乡大朗村",
+      "name_en": "Danzhai Gas Station, Dalang Village, Changqing Township, Danzhai County",
+      "lon": 107.8280563,
+      "lat": 26.2267156,
+      "geocode_source": "nominatim: 长青乡, 丹寨县, 贵州省, 中国 (township-level fallback; village 大朗村 not resolvable by Nominatim)",
+      "refs": [
+        "https://sthj.qdn.gov.cn/xxgk_0/fdzdgknr/xzsp_5819700/spqgs_5819703/202012/t20201229_65832000.html"
+      ]
+    },
+    "end": {
+      "name_zh": "雷山输气站，雷山县丹江镇掌排村",
+      "name_en": "Leishan Gas Station, Zhangpai Village, Danjiang Town, Leishan County",
+      "lon": 108.0720000,
+      "lat": 26.3869000,
+      "geocode_source": "nominatim: 丹江镇, 雷山县, 贵州省, 中国 (township-level fallback; village 掌排村 not resolvable by Nominatim)",
+      "refs": [
+        "https://sthj.qdn.gov.cn/xxgk_0/fdzdgknr/xzsp_5819700/spqgs_5819703/202012/t20201229_65832000.html"
+      ]
+    },
+    "corridor_notes": "Source (Qiandongnan Prefecture Ecology & Environment Bureau EIA pre-approval notice, 2020-07-28) gives an explicit corridor description: line departs 丹寨输气站 (Danzhai Gas Station) at 大朗村, 长青乡, 丹寨县, running southwest-to-northeast (自西南向东北), passing south of 乌西村 (Wuxi village), north of 乌猛村 (Wumeng village), southeast of 排佐村 (Paizuo village), south of 卓佐村 (Zhuozuo village) — where one valve chamber 达卓佐阀室 (Dazhuozuo valve room) is sited — then north of 乌佐 (Wuzuo), entering Leishan county north of 乌哩村 (Wuli village), then north of 独南村 (Dunan village), south of 乌局村 (Wuju village), west of 掌排村 (Zhangpai village), terminating at 雷山输气站 (Leishan Gas Station). This is Phase 3 of the Qiandongnan prefecture county-to-county gas pipeline program (黔东南州县县通天然气管道工程三期项目), built by 贵州东黎能源投资股份有限公司 (Guizhou Dongli Energy Investment Co., Ltd.); EIA firm 贵州鼎科环保科技有限公司.",
+    "route_refs": [
+      "https://sthj.qdn.gov.cn/xxgk_0/fdzdgknr/xzsp_5819700/spqgs_5819703/202012/t20201229_65832000.html"
+    ],
+    "duplicate_of": null,
+    "map_or_vector": null,
+    "researcher_notes": "Single strong primary source: Qiandongnan (黔东南州) prefecture ecology/environment bureau's EIA-approval pre-publication notice (公示), dated 2020-07-28, covering three pipeline projects together (Danzhai-Leishan, Luoxiang-Rongjiang, Rongjiang-Leishan) under 黔东南州县县通天然气管道工程三期项目. This one source states BOTH endpoint station names/villages AND an intermediate corridor description AND a length ('管道平面长度约29.57公里，实际长度约32.53公里') that matches GEM's LengthMergedKm=32.53 exactly, which is strong internal corroboration this is the correct project even though only one outlet carries the full text (state media/other outlets were not found republishing this specific EIA notice, so it counts as one source, not 2+ independent — recommend treating RouteAccuracy confidence as medium/single-source per project confidence-tier rules, not high, unless a second corroborating source is later found). The task brief's guessed Chinese characters for the start village ('大浪村') do NOT match the source text, which consistently reads '大朗村' (Dalang/Dàlǎng village) across all 3 occurrences in the raw HTML — flagging in case the GEM sheet cell itself has the same '浪/朗' discrepancy and needs a one-character fix. The existing sheet ref (https://web.archive.org/save/https://sthj.qdn.gov.cn/...) is a broken archive.org SAVE-request URL, not a retrievable snapshot; the underlying original .gov.cn URL is live, un-blocked, and passed url_verifier.py on multiple substrings ('丹寨输气站', '雷山输气站', '32.53') — recommend swapping the sheet's [ref] to the plain original URL (drop the '/save/' prefix) rather than trying to fix the archive link. Villages (大朗村, 掌排村) could not be resolved by Nominatim under any query variant tried (Chinese full path, Chinese without county, English romanization) — endpoint coordinates are therefore township-level (长青乡 / 丹江镇) fallbacks, not exact village or station coordinates; both fall well within Guizhou's bounding box, sanity-checked OK. No GIS/vector layer or map image found. No duplicate GEM Guizhou-gas row shares this 32.53 km length; P7492/P7509/P7513/P7515/P7517/P7524 are separate nearby-numbered Guizhou segments with distinct lengths, not this one.",
+    "blockers": "Endpoint coordinates are township-level, not station/village-level: Nominatim could not resolve 大朗村 (Dalang village, start) or 掌排村 (Zhangpai village, end) at any granularity finer than the enclosing township (长青乡 / 丹江镇). A finer fix would require a source with explicit lat/lon, a cadastral/village-boundary gazetteer, or manual placement of the named 丹寨输气站/雷山输气站 stations on satellite imagery (out of scope here per the no-eyeballing rule). Only one independent source found for the whole endpoint+corridor claim (see researcher_notes) — a second corroborating source was not located."
+  }
+}

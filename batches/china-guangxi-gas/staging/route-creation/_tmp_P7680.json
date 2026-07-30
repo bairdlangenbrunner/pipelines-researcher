@@ -1,0 +1,33 @@
+{
+  "resolution": "PARTIAL",
+  "start": {
+    "name_zh": "忻城县",
+    "name_en": "Xincheng County (county seat)",
+    "lon": 108.6632172,
+    "lat": 24.0692756,
+    "geocode_source": "Nominatim query '忻城县' (https://nominatim.openstreetmap.org/search?q=%E5%BF%BB%E5%9F%8E%E5%8E%BF) -- used the county-seat/city-type node (place_rank 16) rather than the wider county boundary centroid, for a tighter anchor. GEM's own StartLocation field is simply 'Xincheng' with no finer detail available in any source found.",
+    "refs": [
+      "http://www.gxxc.gov.cn/zfxxgk/fdzdgknr/zdlyxxgk_1/shgysy/hjbhly/jsxmhjyxpjsp/t883391.shtml"
+    ]
+  },
+  "end": {
+    "name_zh": "忻城县",
+    "name_en": "Xincheng County (county seat)",
+    "lon": 108.6632172,
+    "lat": 24.0692756,
+    "geocode_source": "Same as start -- Nominatim query '忻城县' (https://nominatim.openstreetmap.org/search?q=%E5%BF%BB%E5%9F%8E%E5%8E%BF). GEM's own EndLocation field is also simply 'Xincheng', identical to StartLocation, and no source found distinguishes a separate end point.",
+    "refs": [
+      "http://www.gxxc.gov.cn/zfxxgk/fdzdgknr/zdlyxxgk_1/shgysy/hjbhly/jsxmhjyxpjsp/t883391.shtml"
+    ]
+  },
+  "corridor_notes": "GEM records this as a 29km branch pipeline entirely within Xincheng County (Laibin prefecture), operator 广西广投天然气管网有限公司 (Guangxi Guangtou Natural Gas Pipeline Network Co. -- the same operator as the other three sibling branches in this batch, and the builder named in the Xincheng County EPB notice). No EIA public notice, land-use approval, bidding notice, or news report naming specific stations, townships, or a start/end alignment within the county was found in this pass or the prior pilot pass, despite targeted Chinese-language searching. A site search on gxtngs.com.cn (the EIA consultancy that published the detailed route notices used for P7657 and P7674) returned zero hits for '忻城'. DuckDuckGo-HTML search (used as a WebSearch substitute after the session's WebSearch budget was exhausted) returned no usable results either.",
+  "route_refs": [
+    "http://www.gxxc.gov.cn/zfxxgk/fdzdgknr/zdlyxxgk_1/shgysy/hjbhly/jsxmhjyxpjsp/t883391.shtml",
+    "https://www.docin.com/p-2110410944.html",
+    "https://www.doc88.com/p-4791790273462.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Resolves the prior pilot pass's core existence puzzle: the pilot's extensive search for a literal 'Xincheng'/'新城' place name in Laibin came up empty because 'Xincheng' in GEM's fields is a romanization of 忻城 (Xincheng County, an established Guangxi county under Laibin City), not a mistransliterated or fictional name -- confirmed by cross-referencing the GEM CSV's OtherLanguageAlternativePipelineNames field, which this pass consulted directly. Re-searching with the correct Chinese term ('忻城天然气支线管道') immediately surfaced a NEW existence confirmation the pilot missed: 忻城县环境保护局 (Xincheng County Environmental Protection Bureau) issued a formal EIA approval public notice dated 2018-06-04, titled '忻城县环境保护局关于广西天然气支线管网项目忻城天然气支线管道工程审批公示', independently naming this exact project and stating '建设地点：忻城县' (construction location: Xincheng County). This document's canonical URL had to be recovered from the page's own <meta name='Url'> tag after an initially guessed URL 404'd; the recovered URL passes url_verifier.py live. This source is independent of and postdates the pilot's two docin.com/doc88.com EIA-report-listing refs (also re-verified live in this pass), giving 2 independent sources confirming existence and general (county-level) location -- a real upgrade from the pilot's 'concern/existence' verdict (zero verifiable support at all) to 'existence confirmed at county level, route detail unknown.' Despite this upgrade, NO source found by either pass states a station name, township, or any sub-county route detail -- GEM's own Start/EndLocation fields are both simply 'Xincheng', and no finer document exists in the government-portal or consultancy sites searched. Since start and end therefore resolve to the identical county-seat coordinate, this cannot support route geometry; PARTIAL resolution reflects a genuine documentation gap, not a search shortfall.",
+  "blockers": "No station-level or township-level endpoint detail exists in any source found across two research passes (prior pilot + this one). Start and end both collapse to the Xincheng county-seat centroid, which is insufficient for route drawing. If GEM's own StartLocation/EndLocation is ever updated with a more specific place name (e.g. a township or station name), this row should be re-researched; until then, no candidate route geometry can be drawn beyond 'somewhere within Xincheng County'."
+}

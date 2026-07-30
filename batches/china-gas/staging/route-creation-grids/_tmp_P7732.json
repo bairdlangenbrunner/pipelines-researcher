@@ -1,0 +1,30 @@
+{
+  "resolution": "ENDPOINTS",
+  "start": {
+    "name_zh": "瑞安市（瑞安西—起点具体站点未确认）",
+    "name_en": "Rui'an City (western area — exact tie-in station not confirmed)",
+    "lon": 120.6513814,
+    "lat": 27.7821010,
+    "geocode_source": "Nominatim q=瑞安市人民政府 (Rui'an City government building, used as a central city-level proxy point; the pipeline's actual western-Rui'an tie-in station could not be pinned down within available search tools)",
+    "refs": [
+      "https://sthjj.wenzhou.gov.cn/col/col1317633/art/2026/art_b38ba74c3b5e4f3586637a96da9ddcfe.html",
+      "https://sthjj.wenzhou.gov.cn/col/col1317636/art/2026/art_375fceebbd074311a0596f0c475262f8.html"
+    ]
+  },
+  "end": {
+    "name_zh": "大峃镇（文成县县城）",
+    "name_en": "Dahong Town (Wencheng County seat)",
+    "lon": 120.0863334,
+    "lat": 27.7895866,
+    "geocode_source": "Nominatim q=文成县人民政府 (Wencheng County government building, located in Dahong/Dakuang Town — the first-listed and county-seat town in the route's Wencheng-County town list; exact terminus among the 5 listed towns not confirmed)",
+    "refs": [
+      "https://www.wencheng.gov.cn/col/col1229355256/art/2025/art_50f542b55cd34ccfabc6abe2216c3306.html"
+    ]
+  },
+  "corridor_notes": "Per Wenzhou Ecology & Environment Bureau's EIA acceptance notice (受理公告, 2026-05-25) and approval notice (审批意见, 批复 2026-06-12, 温环建﹝2026﹞045号), the pipeline (建设单位: 浙江浙能天然气管网有限公司) is located '温州市瑞安市、平阳县、文成县境内' — within Rui'an City, Pingyang County, AND Wencheng County (three counties, not just the two implied by GEM's Start=Rui'an/End=Wencheng — Pingyang County is an intermediate pass-through not currently reflected in GEM's location fields). Per a 2025 land-use pre-review public notice from Wencheng County's Bureau of Natural Resources & Planning, within Wencheng County the route passes through five towns/townships in this listed order: 大峃镇 (Dahong, the county seat), 峃口镇 (Kuangkou), 周山畲族乡 (Zhoushan She Ethnic Township), 公阳乡 (Gongyang), 平和乡 (Pinghe) — total project length 37.6km, of which 18.5km lies within Wencheng County (land area 1.7014 ha total / 0.7494 ha in Wencheng). This 37.6km total does NOT match GEM's LengthMergedKm=45.00 — a ~7.4km discrepancy, possibly reflecting scope/design changes between the 2025 pre-review stage and the 2026 EIA approval stage, or a difference in what is counted as the 'pipeline' vs ancillary works. A separate, likely-DISTINCT facility — 瑞安分输站 (Rui'an Distribution Station) in 汀田街道 (Tingtian Subdistrict), Rui'an City — was found as the tie-in hub for a different but nearby project (the Cangnan branch of the Yong-Tai-Wen trunk pipeline); it was NOT confirmed as this project's actual western-Rui'an start point, so it is not used as the sourced start location.",
+  "route_refs": [],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Resolution reached at county/town-seat precision, not station-level, because the WebSearch tool's session-wide budget was exhausted partway through this task (shared cap consumed by concurrent sibling research agents working other PID groups in the same parent session) and fallback search engines (DuckDuckGo direct via curl, Baidu, Bing) were largely blocked by bot-detection/CAPTCHA when queried directly via curl; a workaround (WebFetch on DuckDuckGo's HTML endpoint) worked intermittently and surfaced the Wencheng town list used here, but could not further resolve a specific station name for the Rui'an-side start or confirm the exact terminus among the 5 Wencheng towns. The Rui'an-Pingyang-Wencheng EIA full report PDF (which likely has precise chainage/coordinates) is hosted on a Zhejiang government OSS bucket that returns HTTP 403 to non-China-based requests (geo-blocked) — could not be retrieved or verified. Length discrepancy (37.6km per pre-review notice vs GEM's 45.00km) flagged for a future update pass, not resolved here.",
+  "blockers": "Station-level start/end precision not achieved: WebSearch budget exhausted mid-task; geo-blocked EIA PDF (403) could not be read; DuckDuckGo/Baidu/Bing scraping via curl was intermittently blocked by bot detection. County/town-seat-level coordinates used instead, each backed by a verified official government source."
+}

@@ -1,0 +1,1017 @@
+{
+ "P7149": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Weizhou offshore oild field Weibei gas pipeline",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Weizhou Island",
+  "EndLocation": "Tieshan Port",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "70.00",
+  "LengthKnown": 70.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No action needed on existence/route/length/start-date/capacity/fuel/status. Optional: consider PipelineType='gathering' instead of 'transmission' (this is an oilfield associated-gas evacuation line to a receiving station, not a long-haul trunk) — flagged as a soft caveat only, not a misclassification requiring a fix.",
+     "notes": "This is CNOOC's '涠北管线' (the 'Weibei'/Weizhou-North pipeline), independently corroborated across thepaper.cn (commercial news app), sasac.gov.cn (State Council SASAC, national SOE regulator) and ndrc.gov.cn (National Development and Reform Commission) — all describing a ~70 km, 12-inch subsea pipeline built by CNOOC's Zhanjiang branch from the Weizhou processing terminal (Weizhou Island, Beihai) to a newly-built receiving station at Tieshan Port, Beihai, carrying associated gas recovered from the Weizhou oilfield group. Commissioned/gas-in 2023-04-11 ('较原计划提前13天具备通气条件'), with an annual recovery capacity of 2.1亿立方米 = 210,000,000 m3/y = 0.21 bcm/y (prose/unit equivalence — GEM's Capacity=0.21, CapacityUnits=bcm/y matches exactly per the prose-equivalence convention, even though the literal string '0.21' isn't in the article). This confirms GEM's Length=70km, StartYear1=2023/StartMonth1=4, Capacity=0.21 bcm/y, FuelSource='Weizhou Oil Field associated gas', Status=operating, and the Weizhou Island -> Tieshan Port routing, all closely. CAVEAT ON CORROBORATION STRENGTH: sasac.gov.cn, ndrc.gov.cn and thepaper.cn carry near-identical phrasing and figures (including the same '13 days ahead of schedule' detail) — this reads as one CNOOC/state-media announcement reprinted across three official/commercial channels, not three editorially-independent investigations, so per standing rule 4 (same wire story reprinted doesn't count as 2+ independent) I am tiering this MEDIUM rather than high, despite the multiplicity of hosts. It is nonetheless a credible, multiply-hosted (incl. two central-government sites) confirmation that the pipeline is real and operating — no reason to doubt existence. Checked the existing sheet's own cited ref (sasac.gov.cn/n2588025/n2588124/c27673988/content.html, used for Status/Fuel/PipelineType/FuelSource) directly: it IS the same 涠北管线/铁山港/伴生气 article and DOES support all four fields (the worklist's automated existing_ref_checks had flagged it 'ok: true' for three of the four already; I additionally found and fixed a real encoding bug in scripts/url_verifier.py — requests was defaulting to ISO-8859-1 for this and the ndrc.gov.cn page because neither server declares a charset header, corrupting the Chinese text into mojibake and producing false 'value not found' negatives on live, on-topic pages; the fix (prefer apparent_encoding over the generic ISO-8859-1 default) makes both verify cleanly and should help other China-sweep citations too). No duplicate found against the other 42 in-scope roster rows — none share this 70km Weizhou-Island-to-Tieshan-Port subsea profile.",
+     "proposed_refs": [
+      "https://m.thepaper.cn/newsDetail_forward_22665351",
+      "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+      "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Treat Diameter=332mm, Pressure=7.21 MPa, and ProposalYear/Month=2022-08 as unverified pending a working source. Their sole citation (fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml) is unreachable from this network on every attempt (ConnectTimeout, both via url_verifier and direct WebFetch/curl) and I found no independent source that repeats these exact figures. Suggest re-attempting via Wayback Machine or a cached copy of that Guangxi FGW notice before relying on the diameter/pressure values, and re-confirming the Aug-2022 proposal date the same way.",
+     "notes": "Every independent, reachable source describing this 70km subsea pipeline (thepaper.cn, sasac.gov.cn, ndrc.gov.cn, plus a 2024-03 zgsrcn.com follow-up I could read via web search snippet but whose URL 403'd on both WebFetch and url_verifier so it isn't cited) calls the pipe '12英寸' (12-inch) and states no operating pressure at all. 12-inch NPS standard OD is 323.9mm, not 332mm as recorded in GEM -- close, but not an exact match, and I could not find any source, Chinese or English, that publishes 332mm or 7.21 MPa specifically. The only citation for these two fields plus ProposalYear/Month is a single Guangxi Development & Reform Commission (fgw.gxzf.gov.cn) notice page that has been unreachable (ConnectTimeout) both in the worklist's pre-existing ref check and in my own repeated attempts (url_verifier, curl, WebFetch) -- I cannot confirm what that page actually says. IMPORTANT ADJACENT-PROJECT WARNING for whoever chases this: while searching I found a DIFFERENT, separately-approved project on the same fgw.gxzf.gov.cn site -- '广西壮族自治区发展和改革委员会关于涠洲油田伴生天然气综合利用陆地管道项目核准的批复' (approved 2022-11-22) -- which is an 18km ONSHORE pipeline with diameter 600mm and design pressure 6.3 MPa. That is a physically distinct pipeline (different length, different diameter, different pressure, different approval date) from the 70km SUBSEA line this GEM row (P7149) describes, and it is NOT currently one of the 43 in-scope roster rows I was given, so it may be an undiscovered/uncaptured GEM entity worth a separate discovery check -- but do not let it get conflated with or substituted into P7149's spec fields; none of its numbers (18km, 600mm, 6.3MPa) match what's recorded here either.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Status=operating is correct and current. Commissioned 2023-04-11 per thepaper.cn/ndrc.gov.cn (both describing gas-in ahead of schedule). Additionally found a 2024-03-28-dated zgsrcn.com article reporting the pipeline had by then cumulatively delivered over 100 million m3 of gas to Tieshan Port -- i.e. still operating well past commissioning -- but that URL returned HTTP 403 on both WebFetch and url_verifier so it is not included as a proposed_ref; mentioned here only as directional context, not as a citation. No search turned up anything more recent (2025/2026) either confirming or contradicting continued operation; nothing suggests a status change, and this is an active associated-gas evacuation line still needed by the producing Weizhou oilfield group, so dormancy rules don't apply (Stat",
+    "refs": [
+     "https://m.thepaper.cn/newsDetail_forward_22665351",
+     "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+    ]
+   },
+   "refs": [
+    "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+    "https://m.thepaper.cn/newsDetail_forward_22665351",
+    "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+   ]
+  }
+ },
+ "P7652": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Luchuan Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Bobai",
+  "EndLocation": "Luchuan",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "28.00",
+  "LengthKnown": 28.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "attribution",
+     "recommendation": "Pipeline is real and correctly classified/spec'd; tighten StartLocation to the actual physical start (Shatian Town, Fumian District) rather than 'Bobai', and replace both current [ref] URLs — one is dead, one is a fake-200 anti-bot page.",
+     "notes": "This is the 陆川天然气支线管道工程 (Luchuan gas branch pipeline project), part of the Guangxi natural gas branch network operated by 广西广投天然气管网有限公司 (Guangxi Guangtou Natural Gas Pipeline Co.). Existence and specs corroborate against the sheet's own cited government approval (桂发改能源〔2019〕480号, approved 2019-05-15 per search-engine indexing of http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2197970.shtml) PLUS an independently fetchable second institutional source: Guangxi Investment Group's own e-procurement platform (gigeps.com), which carries a live paper trail of contracts explicitly naming this project ('广西天然气支线管网项目陆川支线(陆川段)和陆川分输站...', procurement code PCJH202567717, June 2025) and the same owner company, plus multiple other Luchuan-station bidding notices spanning 2022-2025 (secondary high-pressure connector design 2022; occupational-health/safety evaluation 2024; pipeline signage 2025) confirming the station and branch line are physically built and continuously operated, not a phantom sheet entry. Specs check out against the approval doc as indexed: length ~27km (GEM: 28km, consistent within rounding), design pressure 4MPa (GEM: 4.00MPa, exact match), cost ~116.57 million RMB (GEM: 116,000,000 RMB, matches within 0.5%), design capacity 0.84x10^8 m3/yr which annualizes to ~0.23 million Sm3/day (GEM: 0.20 million Sm3/day — same order of magnitude, ~13% off depending on assumed operating-days basis; not a red flag on its own). Classification as 'transmission' is consistent with the D273.1mm branch feeding a county distribution station, matching every other row in this Guangxi network roster. CAVEAT 1 (location): the approval doc's own route description has the pipe starting at the Shatian metering/pigging station in Shatian Town, Fumian District (福绵区) -- NOT literally in Bobai county -- continuing east through Luchuan county to the Luchuan distribution station. 'Bobai' in the pipeline's naming/StartLocation reflects that this branch continues on from the separately-built Bobai natural gas branch pipeline, not that the physical start point sits in Bobai county; StartPrefecture/District='Yulin' is fine (both Fumian and Bobai are within Yulin prefecture) but StartLocation='Bobai' is imprecise and should arguably read 'Shatian' with district 'Fumian'. CAVEAT 2 (ref quality, important): BOTH of the row's current citations are functionally useless even though one shows as reachable. http://fgw.gxzf.gov.cn/fzgggz/mtyq/t18577091.shtml (used for Status/Fuel/Start/Capacity/Length/Location/SegmentCost) fails to connect at all from this environment -- persistent ConnectTimeout, matching the sheet's own existing_ref_checks. https://news.bjx.com.cn/html/20210326/1144324-4.shtml (used for PipelineType/Proposal) returns HTTP 200 and would pass a naive reachability check, but the response body is an Aliyun WAF anti-bot JS challenge page with no real article text at all (confirmed by direct curl + WebFetch, both returned only obfuscated challenge-page JS, zero Chinese article content) -- so this ref does NOT actually support the 'transmission' classification or the 2021 proposal value it's attached to; it is a false-positive 200. Could not independently fetch the primary .gov.cn approval document from this environment to pull the exact D273.1mm diameter, 27km length, or 2019-05-15 approval date as directly-quotable text (same persistent ConnectTimeout as the sheet's own ref, likely a network/geo restriction rather than the page not existing -- multiple independent search-engine results consistently quote the same document number, date, and figures). No fill staged for the currently-blank Diameter field because I could not produce a URL that passes url_verifier with the literal figure visible -- flagging the D273.1mm lead here for a researcher with China-based network access to confirm and paste, rather than fabricating a ref.",
+     "proposed_refs": [
+      "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm",
+      "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm",
+      "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-verify ProposalYear/ProposalMonth (currently 2021-03) against the primary approval document; a formal government project approval (核准) necessarily post-dates the proposal, so 2021 cannot be right if the approval date is 2019-05-15. Correct to <=2019 pending direct document access.",
+     "notes": "GEM records ProposalYear=2021, ProposalMonth=3, cited to https://news.bjx.com.cn/html/20210326/1144324-4.shtml -- a URL that (per the finding above) is actually an anti-bot WAF challenge page with no real content, so it cannot genuinely support '2021' (the sheet's own existing_ref_checks already flagged this: '200 but data value not found'). Independently, multiple search-engine results consistently and repeatedly quote a formal Guangxi Development and Reform Commission project-approval document -- 广西壮族自治区发展和改革委员会关于广西天然气支线管网项目陆川天然气支线管道工程项目核准的批复（桂发改能源〔2019〕480号）-- dated 2019-05-15, approving this exact project (same route description, same ~27km length, same D273.1mm/4MPa spec). A project cannot be formally approved by a government commission two years before it was first proposed, so ProposalYear=2021 is very likely wrong; it should be <=2019 (the true first-proposed/announced date is probably earlier still, since 2019-05 is only the approval/核准 milestone, not necessarily the initial proposal). I could not independently fetch the primary fgw.gxzf.gov.cn document from this environment (persistent ConnectTimeout, same failure the sheet's own ref-check already recorded) to pull a directly-quotable '2019' string that would pass url_verifier, so I am not proposing a replacement ref here -- flagging this as a concern for a researcher with working access to the Guangxi DRC site (or a China-based network path) to confirm the 2019-05-15 date and correct ProposalYear/ProposalMonth accordingly, rather than pasting an unverified change.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Sheet records StartYear1=2024-06 (operating). No single news article confirming the exact 'gas-on' date for June 2024 could be found. However, Guangxi Investment Group's own e-procurement platform (gigeps.com) shows a continuous, dated operational/engineering paper trail tied to the Luchuan distribution station and its downstream network: secondary high-pressure connector design to Longhao gas station (2022-04), occupational-health-hazard control evaluation for the Luchuan facility (procurement window closing 2024-06-04, service period 2024 -- i.e. a live, staffed, regulated facility as of mid-2024, consistent with a recently-commissioned operating line), and forestland-restoration/reclamation bidding for the Luchuan section right-of-way (2025-06-16, the standard post-construction land-rec",
+    "refs": [
+     "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm",
+     "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm",
+     "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+    ]
+   },
+   "refs": [
+    "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm",
+    "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm",
+    "https://www.cpem.org.cn/list2/111820.html",
+    "http://www.yulin.gov.cn/gkzl/fadingzhudonggongkaineirong/zdjsxmpzhsslygk/sgjzlaqjd/t1290149.shtml",
+    "http://www.luchuan.gov.cn/xxgk/fdgk/zwdt/zwyw/t1301919.shtml",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml",
+    "https://dy.163.com/article/FNE82EOS05129O3K.html",
+    "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+   ]
+  }
+ },
+ "P7654": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Nanning-Fusui Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": null,
+  "EndLocation": "Fusui",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "20.00",
+  "LengthKnown": 20.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "existence",
+     "recommendation": "Re-source this segment from a live primary source before next update; all 4 currently-cited refs are non-functional and open web search found no independent trace of a 'Nanning-Fusui' gas pipeline branch with these specs.",
+     "notes": "This row has no gem.wiki page (wiki field blank, and P7654 was not among the pages the wiki-citation harvest captured), so the 4 GEM-cited [ref] URLs are the ONLY support and none currently verify. (1) gxsngc.com (backs Status=operating, StartYear1=2023): loads 200 but is an EMPTY/broken CMS article template -- literal placeholder text '新闻标题' (News Title), date '0000-00-00', author '作者' (Author), source '无' (none), with no article body at all. It is a tendering/engineering-supervision firm's site (广西双宁工程项目管理有限公司) and does not name this pipeline or support 'operating'/2023 in any form. (2) bjx.com.cn (backs Fuel=Gas, PipelineType=transmission): loads 200 but the article body is JS-obfuscated/encrypted (bjx's normal anti-scrape behavior) -- unreadable via curl or WebFetch (no JS execution), so I could NOT confirm it actually names a Nanning-Fusui segment specifically; the '-4.shtml' suffix suggests a paginated multi-part piece, plausibly a province-by-province roundup rather than a dedicated article on this branch. (3) fgw.gxzf.gov.cn (backs ProposalYear=2017-12): connection refused on every attempt (curl + WebFetch), domain resolves via DNS but the server itself rejects the connection. (4) fgw.nanning.gov.cn (backs Capacity=0.85 bcm/y, Pressure=6.3 MPa, LengthKnown=20 km, Diameter=355.6mm -- i.e. EVERY spec number on this row): this domain currently does NOT RESOLVE AT ALL -- confirmed independently via Google (8.8.8.8), Cloudflare (1.1.1.1) resolvers, and Cloudflare DoH, which returns SERVFAIL with 'No Reachable Authority at delegation nanning.gov.cn'. No Wayback Machine snapshot exists for either gov.cn URL. So the single source underpinning all four spec numbers is currently unreachable globally, not just from this environment. Independent web search (multiple targeted Chinese-language queries: 南宁 扶绥 天然气管道, \"南宁-扶绥\" 天然气管道, 6.3MPa 355.6, 广西能源发展十四五规划 南宁 崇左 扶绥) found NO independent source naming a dedicated 'Nanning-Fusui' gas pipeline branch with these specs. It DID surface: (a) confirmation that Fusui County (under Chongzuo City) has its own local piped-gas distribution/pricing system (a 2026-06-30 Fusui county government notice on piped-gas distribution pricing), so gas service reaching Fusui is plausible in principle; and (b) Guangxi's 14th Five-Year energy plan references a newly-built 'Nanning-Chongzuo branch' (南宁—崇左支线) corridor, and Fusui is a county within Chongzuo prefecture -- so this GEM segment could conceivably be a real sub-branch of that broader corridor, but I could not independently confirm the specific name, the 20km length, 355.6mm diameter, 0.85 bcm/y capacity, or the 2023 start date. Given 3 of 4 cited sources are dead/unreachable, the 4th is empty placeholder content, and no independent corroboration exists for this specific segment under this specific name, this does not clear the existence bar as currently sourced.",
+     "proposed_refs": []
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "duplicate",
+     "recommendation": "Compare P7654 against P4725 side by side (both touch Fusui and share identical Diameter=355.6mm and Capacity=0.85 bcm/y) before treating them as two independent segments -- confirm they are genuinely distinct pipe, not a relabeled/double-counted entry.",
+     "notes": "Roster comparison: P4725 ('Fusui County->Guangxi', len=83.0, dia=355.60, cap=0.85, status=construction, updated 2025-08-25) shares P7654's exact Diameter (355.6mm) and exact Capacity (0.85 bcm/y) and also touches Fusui, but reports a different length (83km vs P7654's 20km) and a different status (construction vs P7654's operating). This could genuinely be two different segments of one corridor (e.g. a longer trunk segment into Fusui still under construction plus a shorter completed feeder from Nanning), which would be legitimate, but the matching diameter+capacity pair on two nominally distinct 'Guangxi Gas Pipeline Network' rows both anchored at Fusui is a coincidence GEM has not flagged before and was not resolvable from open sources given P7654's own refs are non-functional (see existence finding above). Flagging for human side-by-side review rather than asserting a firm duplicate, since I cannot rule out that these are legitimately separate segments.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Cannot confirm or refute the recorded Status='operating' (StartYear1=2023). The cited gxsngc.com ref that nominally backs Status/Start is an empty CMS placeholder page with no actual article content -- it does not support 'operating' or '2023' in any form. The other candidate spec source (fgw.nanning.gov.cn) is currently globally unresolvable (DNS SERVFAIL on Google/Cloudflare resolvers, no Wayback snapshot) and fgw.gxzf.gov.cn refuses connection. Targeted Chinese-language web search for a Nanning-Fusui gas pipeline commissioning/start-of-operations news around 2023 turned up nothing specific to this segment. This is not evidence the pipeline is NOT operating -- Fusui County does have its own confirmed local piped-gas distribution system -- but I found no independent dated evidence, positi",
+    "refs": []
+   },
+   "refs": [
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7655": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Xingye Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": null,
+  "EndLocation": null,
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "8.00",
+  "LengthKnown": 8.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "existence",
+     "recommendation": "Do not treat current sourcing as adequate; task a fresh Chinese-language search for a dedicated Xingye (兴业) gas-branch source (local govt approval notice, tender announcement, or Yulin/Guangxi energy-bureau release) before the next annual update. Until found, downgrade Status/Start/Length/Diameter/Pressure to unsourced rather than 'HAS_REF'.",
+     "notes": "All three ref URLs currently on this row were checked live and NONE actually support the value they are attached to. (1) https://gxsngc.com/143747-143877.html?newsid=471623 (cited for Status=operating and StartYear1=2023) resolves to the generic homepage/template of an unrelated Nanning engineering-consulting firm (广西双宁工程项目管理有限公司) — nav menu only (网站首页/公司介绍/公司动态/招标信息/公司业绩), zero pipeline content, zero mention of Xingye/兴业 or any gas project. This is a dead/broken citation, not merely unverified. (2) https://news.bjx.com.cn/html/20210326/1144324-4.shtml (cited for Fuel=Gas, PipelineType=transmission, ProposalYear=2021) is blocked by an Aliyun WAF JS challenge on direct fetch, but a search confirmed its real title: '附171个电源项目全名单！《广西“能源网”建设 2021年工作推进方案》发布' (Guangxi 'Energy Network' Construction 2021 Work Plan, listing 171 power/energy projects region-wide). Its natural-gas section names the Guilin LNG branch and Xinjiang-coal-to-gas Guangxi branch specifically, then only generically references 'accelerating county-by-county (县县通) natural gas construction' — it never names an 'Xingye Branch' or any 8km/273mm line. This is exactly the generic/aggregate-citation pattern that is itself an existence flag: the source is real but does not name this pipeline. (3) https://gas.in-en.com/html/gas-2699330.shtml (cited for Length=8km, Diameter=273mm, Pressure=6.3MPa) returned HTTP 403 on every fetch attempt (tool WebFetch, curl with browser UA + referer) — completely unreachable/unverifiable by any method tried. Independent search for a dedicated 'Xingye' (兴业) gas-branch pipeline source turned up nothing specific in English or Chinese (tried '兴业 天然气管道 支线 广西', '兴业支线 天然气 玉林', '兴业县 天然气利用工程 通气', '玻林兴业 县县通天然气 管道工程'). One search DID return a snippet (from a Yulin '两湾' regional development plan, hosted at ybj.gxzf.gov.cn) stating that Yulin plans to accelerate natural-gas branch pipeline construction for Beiliu, Rong County, Bobai, Xingye and Luchuan counties — i.e. independent, plausible corroboration that a Xingye gas-branch program exists in principle — but the page itself was unreachable both via WebFetch (ECONNREFUSED) and url_verifier (ConnectTimeout), so it cannot be verified or cited per the standing rule (every URL must pass url_verifier before citation). Net result: the row's entire citation set fails to substantively confirm existence, status, or any spec value for this specific 8km/273mm segment. Xingye County itself is real and plausibly within Guangxi's broader county-level gas-branch build-out, so this is flagged as a sourcing/existence concern rather than a confident 'this pipeline is fake' call — but as currently cited, none of Status=operating, StartYear1=2023, Length=8km, Diameter=273mm, Pressure=6.3MPa, Fuel=Gas, PipelineType=transmission, or ProposalYear=2021 is actually supported by a working, on-topic, independent source. No duplicate candidate found in the 43-PID Guangxi roster (no other row matches an 8km/273mm segment near Xingye/Bobai).",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Cannot confirm or refute Status=operating / StartYear1=2023 with any working source. The Status/Start ref (gxsngc.com) is a dead link resolving to an unrelated company's homepage with no pipeline content whatsoever. The Fuel/Type/Proposal ref (bjx.com.cn) is WAF-blocked on direct fetch; via search its real content is confirmed as a 2021 omnibus 171-project Guangxi energy-network policy article that only generically mentions 'accelerating county-by-county natural gas construction' — it does not name this pipeline or give a 2023 start date. The Length/Diameter/Pressure ref (gas.in-en.com) is a hard 403 on every fetch attempt. Independent search found no dedicated Xingye-branch news article, tender notice, or completion/commissioning announcement in Chinese or English. One tangential hit (Yul",
+    "refs": []
+   },
+   "refs": [
+    "https://www.gigeps.com/cms/channel/xmgg4fw/79585.htm",
+    "https://www.gigeps.com/cms/channel/xmgg4fw/55045.htm",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7656": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Sinopec Nanning Station-Zhongran Gate pipeline",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": null,
+  "EndLocation": null,
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "8.90",
+  "LengthKnown": 8.9,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No change needed to existence/classification. Fill blank Location fields (done in fills[]) and consider replacing the WAF-blocked Fuel/PipelineType ref with the working gxnews.com.cn article.",
+     "notes": "This is a real, independently confirmed pipeline, not a phantom/duplicate. The sheet's own Length/Construction/Start ref (https://v.gxnews.com.cn/a/19496068, Guangxi Daily via Guangxi News Net, dated 2020-04-30) is a genuine regional-government news outlet article headlined '南宁：天然气专供管道工程项目开工' (Nanning: Natural Gas Dedicated Pipeline Project groundbreaking). It names the exact project '南宁市天然气专供管道工程（中石化南宁站-南宁中燃门站段）' -- i.e. 'Sinopec Nanning Station - Nanning Zhongran(中燃) Gate Station section', matching GEM's segment_name exactly -- and states the route lies entirely within Yongning District (邕宁区), running from Sinopec Nanning Station to a newly-built Pumiao distribution station (蒲庙分输站, Pumiao Town) near Leilai Village, total length 'approximately 8.9 km' (全长约8.9公里, matches GEM's LengthKnown=8.9 exactly), total investment 67.55 million yuan, groundbreaking 2020-04-28, planned 8-month construction (matches GEM ConstructionYear=2020/Month=4). Verified via url_verifier with three independent tokens from the raw HTML (中燃, 邕宁, 蒲庙) -- all OK/200. Independent corroboration of the project's existence and name also comes from two separate government-site page titles surfaced in search (广西壮族自治区发展和改革委员会 project-approval notice AND 广西壮族自治区自然资源厅 land-use pre-review notice), both using the identical project title -- two different agencies, same project, so this is not a single-source claim. Classification (Fuel=Gas, PipelineType=transmission) is consistent with a project literally named a 'natural gas dedicated pipeline' feeding a city gate station at 4.0 MPa design pressure (a transmission-grade pressure, not local distribution). Checked the 42-pipeline Guangxi roster for a duplicate/relabel: no other row references Nanning/邕宁/中燃/Yongning/Pumiao, and the only other Nanning-area entry (P4732, Nanning-Pingxiang gas pipeline, 125 km, dia 457mm) is a materially different, much longer inter-city trunk -- no duplicate found.",
+     "proposed_refs": [
+      "https://v.gxnews.com.cn/a/19496068"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Fix the ProposalYear/ConstructionYear sequencing bug (currently 2021 -> 2020, i.e. proposed AFTER construction began, which is impossible) and replace the Proposal/Fuel/PipelineType ref (news.bjx.com.cn, 1144324-4.shtml) with a working source, since it is Aliyun-WAF-obfuscated and unreadable by any automated fetch -- its actual support for these values cannot be confirmed at all. Separately, re-verify Diameter/Pressure/Status against the cited gxzf.gov.cn approval page by hand (browser), since this sandbox cannot reach either gxzf.gov.cn path variant (ConnectTimeout on both http://fgw.gxzf.gov.cn/zfxxgkzl/... and the correct current path http://fgw.gxzf.gov.cn/zwgk/wjzx/xmpf/xiangmuhezhunpifu/t2198361.shtml, and on the related dnr.gxzf.gov.cn land-review page -- same IP, same failure, looks like a network-level block on gxzf.gov.cn from this environment rather than the page being down).",
+     "notes": "Sheet: ProposalYear=2021 (ProposalMonth=3), ConstructionYear=2020 (ConstructionMonth=4). A pipeline cannot be 'proposed' a year after its construction physically began -- this is an internal date-logic defect, not a minor caveat. The cited Proposal ref (https://news.bjx.com.cn/html/20210326/1144324-4.shtml) already failed the sheet's own existing_ref_check ('200 but data value not found: 2021/2,021'); I fetched the raw page directly (curl) and confirmed it is entirely served behind an Aliyun WAF JS challenge (renderData/arg1 obfuscation blob, no article text at all) -- so this is not a case of the number being on the page in different formatting, the page's real content is simply unreadable by any bot, and possibly a generic multi-project industry roundup (the '-4' suffix suggests page 4 of a longer piece) rather than a citation specific to this segment. Independent search-engine snippets describing the actual gxzf.gov.cn approval-notice title (a different agency document, 广西壮族自治区发展和改革委员会 project approval) put the original approval around 2019, which would be consistent with construction starting April 2020 and is NOT consistent with a 2021 proposal date -- suggesting 2021 is simply wrong, likely miscopied from an unrelated 2021 article. I could not independently refetch the gxzf.gov.cn approval page myself (ConnectTimeout / connection refused from this sandbox on both the cited path and the current live path found via search), so I'm not proposing a fabricated replacement date -- flagging for a human check with browser access. Diameter (323.9mm) and Pressure (4.0MPa) both exactly match the specs described in independent search-result summaries of that same gxzf.gov.cn approval notice (also giving a design capacity of 6.72亿立方米/year = 0.672 bcm/y, consistent with GEM's Capacity=0.67 bcm/y), so I have no reason to think those two values are wrong -- I simply could not re-verify the primary citation URL through url_verifier this pass because the host is unreachable, so treat this as an access gap, not a value error.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Newest independent evidence found is the 2020-04-30 groundbreaking article (construction started 2020-04-28, planned 8-month build). No independent post-completion/commissioning article was found confirming actual in-service operation (web-search budget for this session was exhausted before I could push further on a completion-announcement search). However this is not a 'no progress found' dormancy case: the project had committed funding (67.55M yuan), a firm short 8.9km scope, government-priority status ('Nanning energy-network campaign key project'), and a fixed schedule (April 2020 + 8 months = ~December 2020) that lines up exactly with the sheet's own StartYear1=2020/StartMonth1=12 -- strongly suggesting the recorded operating date was itself derived from this same construction-schedul",
+    "refs": [
+     "https://v.gxnews.com.cn/a/19496068"
+    ]
+   },
+   "refs": [
+    "https://v.gxnews.com.cn/a/19496068",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7657": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Liucheng Branch pipeline",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Liunan Taiyang Town",
+  "EndLocation": "柳城县沙浦镇三北高速柳城服务区西侧的柳城分输站",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "45.00",
+  "LengthKnown": 45.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "Real project, correctly classified and routed. Swap all three [ref] cells that currently cite dead links (Status/Construction/Start/Diameter ref -> njsggzy.cn ConnectTimeout; Fuel/PipelineType ref -> fgw.gxzf.gov.cn ConnectTimeout; Proposal/Capacity/Pressure/Length/Location/SegmentCost ref -> fgw.liuzhou.gov.cn 404) for the three verified sources below via the ref-gap pass.",
+     "notes": "This is the '柳城天然气支线管道工程' (Liucheng natural gas branch pipeline project), part of the 广西天然气支线管网项目 (Guangxi Natural Gas Branch Pipeline Network Project). All three URLs currently cited on this row's ref cells are dead: http://www.njsggzy.cn:180/... (ConnectTimeout, direct curl and WebFetch both refused/timed out, no Wayback snapshot), http://fgw.gxzf.gov.cn/.../t2198570.shtml (ConnectTimeout to the subdomain even though the parent domain gxzf.gov.cn responds; no Wayback snapshot), and http://fgw.liuzhou.gov.cn/.../t20200817_1926352.shtml (base domain fgw.liuzhou.gov.cn is live/200, but this specific document path 404s; no Wayback snapshot). None of the three has any archive.org capture, so the underlying documents cannot be recovered as-cited. Independent re-verification: found and read (raw HTML fetch, not AI-summarized) two live, unrelated-origin sources that describe the SAME project: (1) www.liucheng.gov.cn (Liucheng County government portal, notice dated 2019-06-14): '建设单位：广西广投天然气管网有限公司。建设项目：广西天然气支线管网项目柳城天然气支线管道工程。项目概况：柳城天然气支线管道建设，在柳城境内管道长度约28km，新建柳城分输站和社冲阀室' (owner Guangxi Guangtou Natural Gas Pipeline Network Co.; ~28km of pipe within Liucheng County; builds a new Liucheng distribution station + Shechong valve chamber -- the Liucheng distribution station matches the sheet's EndLocation field, which names '...柳城分输站' at Shapu Town, Liucheng County). (2) www.gxtngs.com.cn (the EIA consultancy engaged by the builder, two separate notices dated 2019-05-31 and 2019-09-16): '本工程位于柳州市柳南区和柳城县，新建管道线路全长约46km，扩建柳州分输站，新建柳城分输站、洛满阀室和社冲阀室' (project spans Liunan District, Liuzhou and Liucheng County; total new pipeline ~46km; expands the Liuzhou distribution station and builds the Liucheng distribution station + Luoman valve chamber + Shechong valve chamber). Total length ~46km from an independent EIA-consultancy notice is a close match to GEM's LengthKnown=45km, and the Liunan-District-to-Liucheng-County routing matches GEM's StartLocation ('Liunan Taiyang Town') -> EndLocation ('柳城分输站' / Liucheng distribution station). Two independent, non-GEM origins (county government + EIA firm) agree on existence, route, and approximate total length -> existence/route/length verdict is high confidence despite every originally-cited ref being dead. PipelineType='transmission' is reasonable for a ~45km, cross-county, mid-pressure (4 MPa per sheet) branch line feeding city-gate distribution stations; no basis found to dispute. Checked the 43-pipeline Guangxi roster for a duplicate/relabel: no other row matches this route (Liunan Taiyang Town -> Liucheng) or this combination of length (45km)/diameter (323.9mm); P7656 shares the 323.9mm diameter but is only 8.9km/0.67 bcm/y and unrelated in route -- not a duplicate.",
+     "proposed_refs": [
+      "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml",
+      "http://www.gxtngs.com.cn/newsitem/30971",
+      "http://www.gxtngs.com.cn/newsitem/30942"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-source Diameter, Capacity, Pressure, SegmentCost, and Proposal/Construction/Start dates from a live document (try the NDRC-equivalent approval reply '广西壮族自治区发展和改革委员会关于...项目核准的批复', reply to 柳发改报字〔2019〕312号, or the full EIA report PDF referenced by www.gxtngs.com.cn/newsitem/30942) -- none of these figures could be independently corroborated in this pass.",
+     "notes": "Length and route corroborate (see the existence/route validity entry), but Diameter (323.9mm), Capacity (0.42 bcm/y), Pressure (4 MPa), SegmentCost (207,300,000 RMB, 2020), ProposalYear/Month (2020-03), ConstructionYear/Month (2020-05), and StartYear1/Month1 (2021-12) all rest solely on the three dead-link refs and could not be independently confirmed here. The two live replacement sources found (Liucheng county govt + gxtngs EIA notices, both dated 2019) are pre-construction environmental/social-risk disclosures and do not state diameter, capacity, pressure, cost, or exact approval/construction/startup dates. A follow-up web search surfaced what looked like a matching NDRC approval reply at fgw.gxzf.gov.cn/.../t10409859.shtml (same series as the dead-cited t2198570.shtml, referencing 柳发改报字〔2019〕312号) plus AI-summarized figures (45km, 4 MPa, 4.16亿m3/年 capacity) that looked suspiciously close to the sheet's own values; re-querying the identical search returned 'no results' for those exact figures, so I am treating that summary as unverified/possibly hallucinated and NOT citing it. fgw.gxzf.gov.cn itself times out from this environment (direct curl and WebFetch both fail to connect), so t10409859.shtml could not be independently read or verified live. Net: existence/route/length pass; the numeric specs and exact dates are unconfirmed pending a working source and should not be treated as independently verified.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Newest independently-dated evidence found is the Sept 2019 EIA pre-approval notice (project moving toward regulatory approval, matches GEM's ProposalYear=2020 shortly following EIA approval). I could not find any post-construction news (commissioning, gas-flow, inauguration) dated after the sheet's own StartYear1=2021-12 to directly confirm current operating status -- WebSearch budget was exhausted and targeted queries for '竣工/投产/通气' (commissioning/put into service) news returned no results. The 'operating' status is not contradicted by anything found, and the dormancy/staleness rules in this workflow apply to proposed/shelved statuses, not operating ones, so there is no basis to downgrade. Recommend the ref-gap pass keep hunting for a post-2021 operational confirmation, but there is no ev",
+    "refs": [
+     "http://www.gxtngs.com.cn/newsitem/30942",
+     "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml"
+    ]
+   },
+   "refs": [
+    "http://www.gxtngs.com.cn/newsitem/30971",
+    "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml",
+    "http://www.gxtngs.com.cn/newsitem/30942"
+   ]
+  }
+ },
+ "P7658": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Binyang Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": "Binyang",
+  "EndLocation": "Binyang",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "27.00",
+  "LengthKnown": 27.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "Existence, classification (transmission), Diameter, Pressure and Capacity all confirmed independently of GEM/gem.wiki; see spec concern below for Length/Cost.",
+     "notes": "This segment is real and correctly classified. The sheet's own cited ref for most fields (fgw.gxzf.gov.cn t2198317.shtml, the 2019 Guangxi DRC project-approval notice) is currently unreachable from here (ConnectTimeout, same as wiki_citations.json's existing_ref_checks recorded) so I could not re-verify it directly, but I found the identical named project ('广西天然气支线管网项目宾阳天然气支线管道工程' / Guangxi Natural Gas Branch Pipeline Network Project – Binyang Branch Engineering) independently confirmed by two dated, government-mandated post-construction environmental filings published by the builder (Guangxi Gas Group Co., Ltd. / 广西燃气集团有限公司) on the third-party engineering-acceptance disclosure platform yanshougs.com — not GEM/gem.wiki/abarrelfull: (1) 'environmental facilities completion disclosure' dated 2025-07-30 (www.yanshougs.com/content/107398.html) and (2) the formal 'completion environmental protection acceptance investigation report' dated 2026-07-23 (www.yanshougs.com/content/110210.html, public-notice window 2026-07-23 to 2026-08-19 — i.e. literally this week). Both independently state: design pressure 4MPa (matches GEM's Pressure=4), pipe diameter D273.1mm (matches GEM's Diameter=273.1), design throughput 2.91×10^8 Nm3/a = 0.291 bcm/y (matches GEM's Capacity=0.29 bcm/y), L290 ERW steel pipe, route from the existing Leitang (黎塘) distribution station (built for Sinopec's Guangxi LNG project) west through Leitang/Yangqiao/Wangling/Daqiao townships to the Binyang distribution station near Tangbiao village — all within Binyang County, Nanning, Guangxi, consistent with GEM's StartLocation/EndLocation='Binyang'. No duplicate found in the 43-row Guangxi roster — no other row references Leitang/Yangqiao/Wangling/Daqiao/Tangbiao or this station pairing.",
+     "proposed_refs": [
+      "https://www.yanshougs.com/content/107398.html",
+      "https://www.yanshougs.com/content/110210.html"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Correct LengthKnown from 27 km to ~23.9–23.925 km (as-built). Flag SegmentCost as a proposal-stage estimate vs. actual realized cost — verify with Baird whether GEM should carry the approved-estimate figure or switch to the as-built figure.",
+     "notes": "GEM records LengthKnown=27 km, sourced to the 2019 project-approval doc (fgw.gxzf.gov.cn t2198317.shtml, currently unreachable/ConnectTimeout for me to re-check the number directly). Both independent 2025 and 2026 completion filings give the AS-BUILT length as 23.9196 km (2025-07-30 filing) and 23.925 km (2026-07-23 final acceptance filing) — i.e. ~3 km / ~11% shorter than what's on the sheet. This reads as the normal 'approved-planning estimate vs. as-built measurement' gap (27 km was presumably the 2019 pre-construction estimate), not a hallucination, but the current GEM value is stale/wrong for present-day length and should be updated to the as-built ~23.9–23.925 km, citing the two completion filings. Separately: the same two filings state EIA-stage estimated total investment was 12,643 万元 (126.43M RMB, close to GEM's recorded SegmentCost=131,020,000 RMB/2019) while ACTUAL realized total investment was 10,500 万元 (105M RMB) — about 20% lower than the approved estimate GEM currently carries. Not flagging this as a hard error since GEM may intentionally record the approved/proposal-year cost, but noting the as-built figure exists now in case Baird wants the tracker to reflect realized cost instead.",
+     "proposed_refs": [
+      "https://www.yanshougs.com/content/107398.html",
+      "https://www.yanshougs.com/content/110210.html"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Sheet Status='proposed' (last updated 2025-08-25) is stale. Searched Chinese-language sources beyond the sheet's dead-linked 2019 approval ref and found dated construction-completion evidence GEM missed: (1) 2025-07-30 'environmental facilities completion disclosure' (环保设施竣工公示) for this exact named project, filed by Guangxi Gas Group, stating the pipeline and its environmental facilities are built; (2) 2026-07-23 formal 'completion environmental protection acceptance investigation report' (竣工环境保护验收调查报告) — the final mandatory post-construction environmental sign-off, currently in its public-comment window (2026-07-23–2026-08-19). In China this filing type is issued only after physical construction is complete and the line is built/commissioned, so Status should move from 'proposed' to 'oper",
+    "refs": [
+     "https://www.yanshougs.com/content/107398.html",
+     "https://www.yanshougs.com/content/110210.html"
+    ]
+   },
+   "refs": [
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml",
+    "https://www.yanshougs.com/content/107398.html",
+    "https://www.yanshougs.com/content/110210.html"
+   ]
+  }
+ },
+ "P7659": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Wuzhou Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "shelved",
+  "StartLocation": null,
+  "EndLocation": null,
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "--",
+  "LengthKnown": null,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "Existence of a real proposed Wuzhou-area branch of the Guangxi Gas Pipeline Network (Guangxi Guangtou Natural Gas Pipeline Network Co., Ltd.) is corroborated; Fuel=Gas and PipelineType=transmission are consistent with all independent sources found. No action required on existence/classification.",
+     "notes": "The sheet's own cited ref for Status (http://www.eiafans.com/thread-1279941-1-1.html) is a repost, on a Chinese EIA-professional forum, of a first-round environmental-impact public notice dated 2019-12-27: '广西天然气支线管网项目梧州天然气支线管道工程（蒙山段、苍梧段）环境影响评价第一次公示' (Guangxi Natural Gas Branch Pipeline Network Project — Wuzhou Natural Gas Branch Pipeline Works, Mengshan section + Cangwu section — first EIA public notice), filed by 广西广投天然气管网有限公司 (Guangxi Guangtou Natural Gas Pipeline Network Co., Ltd.), the same parent developer behind most of the other 'Guangxi Gas Pipeline Network' rows in this roster (confirmed independently via a Baidu Baike company page and multiple sibling-branch EIA/approval notices on official Guangxi government sites, e.g. sthjt.gxzf.gov.cn for the Hezhou branch, fgw.gxzf.gov.cn for the Cenxi branch). Verified live: url_verifier OK on eiafans for tokens '广西' / '蒙山' / '苍梧'. This independently confirms a real, named proposed project matching the GEM segment name ('Wuzhou Branch') and pipeline type (natural gas transmission branch line with new distribution/let-down stations and valve chambers — consistent with Fuel=Gas, PipelineType=transmission). CAVEAT 1: the notice's own body text contains an internal inconsistency — the 'project name' line reads '广西天然气支线管网项目宾阳天然气支线管道工程' (...Binyang branch pipeline works), which does not match the Wuzhou/Mengshan/Cangwu title — almost certainly a copy-paste template error by the original forum poster reusing boilerplate from a different notice (Binyang is itself a separate GEM row, P7658), not evidence P7659 and P7658 are the same physical pipe (different segment names, different specs, different counties). Flagging for awareness, not recommending a merge. CAVEAT 2: the notice describes the Wuzhou branch as covering TWO distinct sub-segments under one public notice — Mengshan section (Guilin-Lipu Co. 30km + Wuzhou-Mengshan Co. 29.2km = 59.2km total, new Mengshan distribution station) and Cangwu section (Hezhou-Babu Dist. 12.6km + Wuzhou-Cangwu Co. 21.9km = 34.5km total, new Cangwu distribution station) — i.e. two separate branch lines merged under one GEM row with no Length recorded. Did not stage a Length fill given caveat 1 above (would want a second, independent confirmation of the exact km figures before pasting a value from a notice with a demonstrated copy-paste defect elsewhere in the same text) — recommend a human researcher pull the full underlying EIA report (docin.com/book118.com host similar Guangxi-Guangtou EIA reports for sibling segments) to confirm the 59.2km+34.5km figures before filling Length (~93.7km combined) and to decide whether this row should instead be split into two segments matching the source's own Mengshan/Cangwu split.",
+     "proposed_refs": [
+      "http://www.eiafans.com/thread-1279941-1-1.html"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-verify ProposalYear/ProposalMonth (currently 2021-03) and the Fuel/PipelineType ref; the current ref (bjx.com.cn, dated 2021-03-26) is unreachable for independent content verification, and the sheet's own eiafans source shows the project already at EIA-first-public-notice stage in 2019-12, which is hard to reconcile with a 2021 proposal date (EIA notices normally follow, not precede, initial project proposal by a meaningful margin).",
+     "notes": "The Fuel/PipelineType/ProposalYear ref (https://news.bjx.com.cn/html/20210326/1144324-4.shtml) returns HTTP 200 but the page body is an Aliyun WAF JS anti-bot challenge (confirmed via both WebFetch and a direct curl fetch — raw response is an obfuscated JS challenge script, no article text at all), so its content cannot be independently verified by any method available this session; url_verifier correctly fails it (missing even its own article-ID token '1144324' in the served HTML). This matches the automated existing_ref_checks flag (Proposal check already failed: 'value not found'; the Fuel/PipelineType checks only passed on bare reachability, not content match). Separately, the sheet's OWN cited Status ref (the eiafans EIA notice) shows this project already reached '环境影响评价第一次公示' (first EIA public notice — a formal, fairly late-stage planning milestone) on 2019-12-27, roughly 15 months BEFORE the recorded 2021-03 ProposalYear/Month. Could not find an accessible independent source (searched Chinese-language government/industry sites, EIA aggregators, forums) to confirm either date. Recommend a human researcher attempt bjx.com.cn through a JS-capable browser/session (blocked here) or locate an alternate copy of the article, and reconcile the proposal date against the 2019-12 EIA-notice evidence. Also note: this row's Status ref (eiafans, 2019-12) supports the project's EXISTENCE and general description but does not itself say anything about being 'shelved' — see the paired status_reviews entry proposing a status change based on multi-year dormancy, not on this ref's content.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "cancelled",
+    "notes": "Most recent independent evidence found for THIS specific project (Wuzhou branch / Mengshan+Cangwu sections, developer Guangxi Guangtou Natural Gas Pipeline Network Co.) is the 2019-12-27 first EIA public notice — no second-round EIA notice, no formal government approval (核准批复), no construction or commissioning news was found despite multiple targeted Chinese-language searches (site-restricted and general), spanning >6.5 years to today (2026-07). This is a meaningful contrast: sibling Guangxi-Guangtou branch projects under the same umbrella program (Hezhou branch [Fuchuan/Zhaoping/Xindu sections], Cenxi branch) DID progress to published government approval and are documented on official gxzf.gov.cn pages, and a separate, unrelated Wuzhou-area trunk project run by a different developer (Pipe",
+    "refs": []
+   },
+   "refs": [
+    "http://www.eiafans.com/thread-1279941-1-1.html",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7660": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Hezhou Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": null,
+  "EndLocation": null,
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "61.10",
+  "LengthKnown": 61.1,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "existence",
+     "recommendation": "Retry sourcing this segment from a China-resident network/proxy (or once search quota resets) before treating it as confirmed; if still unreachable, downgrade confidence on all spec fields rather than leaving them at their current implied confidence.",
+     "notes": "All seven data points on this segment (Status, Capacity, Pressure, LengthKnown, Location, SegmentCost) cite ONE source: http://www.xpjylgwapp.net/zfxxgk/zfxxgkgl/fdzdgknr/hjjccf/hjyxpj/t11218502.shtml (a Hezhou-area government-information-disclosure portal, path pattern consistent with an EIA public-notice page: zfxxgk=government info disclosure, hjyxpj=environmental impact assessment). This domain resolves (154.80.201.184) but every connection attempt (curl, WebFetch, archive.org) times out / is refused from this network -- it appears to be geo-blocked to China-only traffic, not a dead or fabricated URL. Fuel and PipelineType cite a second source, https://news.bjx.com.cn/html/20210326/1144324-4.shtml (BJX is a real, well-known Chinese energy-news portal), but every fetch of that URL -- direct curl, WebFetch, and even the page's own just-created archive.org snapshot -- returns Alibaba Cloud's anti-bot JS challenge page (obfuscated 'acw_sc__v2' cookie-set script), not the article body; 0 occurrences of the plaintext string for Hezhou anywhere in the returned HTML. I could not get past this WAF through any available tool. WebSearch was unavailable for this task (session budget of 200/200 already exhausted by parallel sibling agents in this fan-out), and WebFetch against Bing/Baidu either returned unrelated forum results or a Baidu bot-captcha redirect, so I could not independently corroborate this segment's existence via a third route either. One structural point in the citation's favor: the bjx.com.cn URL's own date-in-path (20210326) matches the recorded ProposalYear/ProposalMonth (2021/3) exactly, which is a real (if weak) signal the ref was picked for the right reason rather than mis-cited. The segment's profile (small proposed branch, ~61 km, 0.03 bcm/y) is also stylistically consistent with sibling rows in the same 'Guangxi Gas Pipeline Network' family (P7654-P7690), which all appear to be sourced from the same class of municipal EIA disclosures -- so this is not an isolated oddity within the roster. Net: I found no roster duplicate (no other 'Hezhou' branch in the 43-pipeline list, no endpoint overlap), so this is not a relabel/double-count concern. But because I could not independently confirm either underlying source's content -- only that the domains are live and topically plausible -- I am flagging existence as unresolved rather than confirming it outright, per the standing rule that inaccessible-and-unverified sourcing is itself a flag, not a pass.",
+     "proposed_refs": []
+    },
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No roster duplicate/relabel action needed; revisit only if the existence concern above resolves negatively.",
+     "notes": "Checked P7660 against all 42 other in-scope roster rows for a same-physical-pipe match (Hezhou endpoint, ~61.1 km length, ~0.03 bcm/y capacity). No other row names Hezhou or has an overlapping endpoint/length/capacity profile that would suggest this is a relabeled duplicate or a fragment of another segment already on the roster (e.g. P7654-P7690 all have distinct named endpoints -- Bobai, Xingbin, Liudong, Long'an, Guiping, Xincheng, Daren, Tieshan Port, Hepu Baisha -- none of which is Hezhou). Classification (transmission, Fuel=Gas) is internally consistent with the rest of the batch even though I could not independently verify the specific citation content (see the existence finding above).",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "shelved",
+    "notes": "The only dated evidence tied to this segment is the ProposalYear/Month (2021-03), matching the bjx.com.cn article's URL date. I could not access that article's actual content (WAF-blocked, see validity notes), could not reach the government EIA-disclosure source (geo-blocked), and WebSearch was unavailable this session (budget exhausted by sibling fan-out agents) and Bing/Baidu WebFetch attempts turned up nothing relevant. I found zero independent evidence of any progress (construction start, updated EIA filing, local news) on this specific Hezhou branch since March 2021 -- more than 5 years of apparent dormancy on a 'proposed' project. That exceeds the 2-year proposed-with-no-progress threshold, so per the dormancy rule this should move to 'shelved' with ShelvedCancelledType=Presumed and ",
+    "refs": []
+   },
+   "refs": [
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7661": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Fangchenggang Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": null,
+  "EndLocation": "Dongxing",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "40.00",
+  "LengthKnown": 40.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No action on existence/length/cost/route; keep monitoring for a formal approval/开工 announcement.",
+     "notes": "This is a real, well-documented pipeline proposal, not a phantom entity. The sheet's own Status/Length/SegmentCost ref (gx.cnr.cn, 2025-01-17) is a 央广网 (CNR) article titled '韩凯：建设防城港至东兴天然气支线管道' quoting Han Kai, Party Secretary/Director of the Fangchenggang Development & Reform Commission, at the 2025 Guangxi 'two sessions': he recommends building a Fangchenggang-to-Dongxing natural gas branch pipeline, 'quan chang yue 40 gongli, zong touzi yue 8000 wan yuan' (total length ~40 km, total investment ~80 million yuan) and urges relevant departments to put it in the 2025 construction-start plan. Both numbers match GEM exactly (LengthKnown=40 km; SegmentCost=80,000,000 RMB, 2025). Route (Fangchenggang -> Dongxing, both within Fangchenggang prefecture-level city; Dongxing is administratively a county-level city under Fangchenggang) matches GEM's Start/End location fields. Fuel=Gas is trivially correct (explicitly 天然气 in every source). The article's own framing ('I recommend expediting construction ... and including it in the 2025 construction-start plan') shows this is a legislative RECOMMENDATION, not yet an approved/funded project -- consistent with GEM's Status='proposed'. Found the identical story re-syndicated at news.qq.com/rain/a/20250117A01W2T00 (same quotes, same date) -- useful as a second working URL but it is the SAME wire story, not an independent source, per the corroboration rule (does not upgrade tier past medium). Checked the 43-pipeline Guangxi roster for a duplicate/relabel: no other row shares a Fangchenggang<->Dongxing route. Also found a separate, unrelated ~70 km 'China-Myanmar pipeline Fangchenggang branch duplicate line' (Qinzhou->Fangchenggang, 406.4mm, 0.68 bcm/y, EIA-stage news from Apr-May 2026) that also serves the Fangchenggang gas market but runs a different route (Qinzhou-based, does not reach Dongxing) and is a larger trunk project distinct from this local ~40 km branch -- ruled out as a duplicate.",
+     "proposed_refs": [
+      "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml",
+      "https://news.qq.com/rain/a/20250117A01W2T00"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-verify ProposalYear/ProposalMonth (currently 2021/3).",
+     "notes": "Re-verify ProposalYear/ProposalMonth (currently 2021/3). Its sole ref, news.bjx.com.cn/html/20210326/1144324-4.shtml, is blocked by an anti-bot CAPTCHA/obfuscation wall on every fetch method tried (direct curl in multiple encodings, WebFetch, Jina.ai reader proxy, Wayback Machine has no snapshot older than today) -- its actual content cannot be confirmed to discuss this specific 40 km Fangchenggang-Dongxing segment. There is also a chronology tension: the only content-verifiable source (2025-01-17, CNR/QQ) frames this exact 40km/RMB80M project as a brand-new recommendation a representative is pushing for the FIRST time, urging its inclusion in the 2025 construction-start plan, with no reference to a 2021 precedent -- which is odd if the project had already been formally proposed 4 years earlier. Plausible explanations: (a) bjx's 2021 article is a broader/generic Guangxi gas-network planning piece and ProposalYear was attributed to this row from network-level content rather than this specific branch, or (b) there were genuinely two separate proposal events (2021 then a 2025 renewed push) and 2021 is correct. Cannot resolve from the source as currently inaccessible.",
+     "proposed_refs": []
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "classification",
+     "recommendation": "Low-priority: confirm PipelineType='transmission' is intentional network convention (matches sibling 'Guangxi Gas Pipeline Network' rows in the roster) rather than a mis-classified local distribution branch.",
+     "notes": "PipelineType's sole ref is the same inaccessible bjx.com.cn page (see spec concern above), so it cannot be independently checked. The only readable description of this pipeline (CNR/QQ, 2025-01-17) calls it a '支线管道' (branch pipeline) whose purpose is to supply residential/commercial/industrial gas demand to Dongxing -- language more typical of a distribution feeder than a long-haul transmission trunk. However every other segment in the 43-pipeline Guangxi roster under the same 'Guangxi Gas Pipeline Network' umbrella name appears to use the same transmission classification for comparably short branch lines, so this may simply be this dataset's standing convention rather than an error specific to P7661 -- flagging for awareness, not recommending a unilateral change.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "proposed",
+    "notes": "Newest dated evidence found is 2025-01-17 (CNR, re-syndicated same-day at QQ News): a Fangchenggang district official publicly recommends the government build this pipeline and include it in the 2025 construction-start plan -- i.e. as of the most recent evidence, it is STILL only a recommendation, not an approved/funded/under-construction project. Searched for any later news (construction start, bidding/tender notices, EIA filings) specific to this Fangchenggang-Dongxing branch through mid-2026 and found none (only unrelated Fangchenggang-area infrastructure: a Fangchenggang-Dongxing railway expansion, and a separate China-Myanmar pipeline Fangchenggang branch duplicate line project). Elapsed time from evidence date (2025-01) to now (2026-07) is ~1.5 years, under the 2-year proposed->shelv",
+    "refs": [
+     "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml",
+     "https://news.qq.com/rain/a/20250117A01W2T00"
+    ]
+   },
+   "refs": [
+    "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml",
+    "https://news.qq.com/rain/a/20250117A01W2T00",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7662": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Guilin-Yangshuo-Lipu Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": null,
+  "EndLocation": "Lipu",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "100.00",
+  "LengthKnown": 100.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "Existence and classification confirmed independently; no duplicate found. See status_reviews for a material Status staleness finding (proposed vs. likely construction) and note below on unverifiable primary source.",
+     "notes": "EXISTENCE: this row is NOT a GEM-only entity. The sheet's own cited value ref (fgw.gxzf.gov.cn/.../t2198137.shtml, a Guangxi Development & Reform Commission project-approval notice) could not be loaded directly in this environment -- every Guangxi/China .gov.cn domain tested (fgw.gxzf.gov.cn, dnr.gxzf.gov.cn, guilin.gov.cn, nynct.gxzf.gov.cn) returned ConnectTimeout/ECONNREFUSED both via url_verifier and WebFetch, and gx.chinanews.com failed DNS resolution -- this looks like a network-level block on this sandbox rather than evidence the sources don't exist (Wayback Machine has no snapshot of the specific approval page either, only of the fgw.gxzf.gov.cn homepage). The sheet's Fuel/PipelineType ref (news.bjx.com.cn/html/20210326/1144324-4.shtml) returns HTTP 200 but is actually an Alibaba-Cloud WAF bot-challenge page with no real article text (confirmed by raw curl + r.jina.ai render, both showing only a 'slide to verify' captcha shell) -- this explains why url_verifier's ProposalYear check ('data value not found') came back negative: the page never delivered real content to any automated fetch, not that the article omits the pipeline. Despite all of that, an independent Chinese-language search (Sogou, since the WebSearch tool's session budget was already exhausted) surfaced the project under its full official name '桂东北天然气环网桂林—阳朔—荔浦段' (Northeast-Guilin gas ring network, Guilin-Yangshuo-Lipu section) in at least five mutually independent, non-GEM sources spanning 2021-2025: (1) Guangxi Daily (广西日报) epaper, 2021-11-15, an EIA public-comment notice for this exact project naming the project company as China National Pipeline Group (PipeChina) Southwest Oil & Gas Pipeline Co., Nanning Branch -- URL VERIFIED live (see proposed_refs); (2) Guangxi NDRC (广西发改委) project-approval reply dated 2022-06-10, reported by Bjx power-industry news 2022-06-16 ('同意建设' = approved for construction) -- underlying gov.cn doc and the specific bjx URL both unreachable/WAF-blocked from this session; (3) China News Guangxi (中新网 gx.chinanews.com), 2023-12-27, reporting the Lipu section (荔浦段) had reached 90% of construction workload -- DNS-blocked from this session; (4-5) Guangxi provincial government land-conversion approvals for the Yangshuo/Lipu section (published 2024-01-15 and 2024-04-18) and the Lingui section (2023-04-18, still referenced as recently as 2025-02-21 by the Guangxi Agriculture & Rural Affairs Dept) -- all on dnr.gxzf.gov.cn / nynct.gxzf.gov.cn, unreachable from this session. All five snippets independently name the same project, same three place names (Guilin/Yangshuo/Lipu), consistent with GEM's StartPrefecture=Guilin / EndLocation=Lipu. CLASSIFICATION: correctly a gas transmission branch/segment of the wider Guangxi network, not a gathering/process line -- no issue. DUPLICATE: checked against all 42 other Guangxi rows in the roster; no other row shares this Guilin-Yangshuo-Lipu routing (the other 'Guangxi Gas Pipeline Network' rows are named for different towns/counties: Bobai, Binyang, Xingbin, Fusui, etc.) -- not a duplicate/relabel. SPEC: length (100km), diameter (273.1mm), capacity (0.17 bcm/y), pressure (4 MPa) and cost (RMB 346.04m, 2019) all trace to the single unreachable fgw.gxzf.gov.cn approval doc; I could not independently corroborate the numeric values this session given the network block, so I am not flagging them wrong, only unconfirmed -- recommend a re-check from an unrestricted network. RECOMMENDATION: do not treat existence as in doubt; the real open issue is the Status value going stale (see status_reviews).",
+     "proposed_refs": [
+      "http://epaper.gxrb.com.cn/gxrb2/html/2021-11/15/content_1805920.htm"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "construction",
+    "notes": "The sheet's Status was last touched 2025-08-25 and still reads 'proposed', but independent Chinese-language reporting shows the project moved well past the proposal stage years earlier: EIA public comment ran Nov 2021 (Guangxi Daily, URL verified live and quoted above -- names the project company as PipeChina Southwest Oil & Gas Pipeline Co., Nanning Branch); Guangxi NDRC issued a formal project-approval reply on 2022-06-10 ('同意建设', agreeing to construction), reported by Bjx industry news 2022-06-16; and China News Guangxi reported on 2023-12-27 that the project's Lipu section (荔浦段) had already reached 90% of construction workload. Provincial land-conversion approvals for the Yangshuo and Lipu sections followed in Jan/Apr 2024, and a Guangxi Agriculture & Rural Affairs Dept item from 2025-",
+    "refs": [
+     "http://epaper.gxrb.com.cn/gxrb2/html/2021-11/15/content_1805920.htm"
+    ]
+   },
+   "refs": [
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml",
+    "https://www.gigeps.com/cms/channel/xmgg1fw/781.htm",
+    "http://www.gxtngs.com.cn/newsitem/30951",
+    "http://epaper.gxrb.com.cn/gxrb2/html/2021-11/15/content_1805920.htm"
+   ]
+  }
+ },
+ "P7663": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Teng County Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": null,
+  "EndLocation": null,
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "--",
+  "LengthKnown": null,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "existence",
+     "recommendation": "Re-verify via a JS-capable browser (the WAF blocks all automated fetch) or locate a mirror of the source article; if a Teng County gas branch cannot be located inside it, treat this row as unsupported and consider Discovery/removal review.",
+     "notes": "P7663 has NO gem.wiki page (wiki field empty in worklist; absent from wiki_citations.json, unlike 19 of its 20 harvested Guangxi siblings), so there is no wiki-side citation list to cross-check for this specific segment -- the ONLY support is the row's own current_ref, https://news.bjx.com.cn/html/20210326/1144324-4.shtml, used identically for Status/Fuel/PipelineType/ProposalYear. That same URL is the shared citation for at least 12 other Guangxi branch rows in this batch (P7652 Luchuan, P7654 Nanning-Fusui, P7655 Xingye, P7656 Sinopec Nanning-Zhongran Gate, P7658 Binyang, P7659 Wuzhou, P7660 Hezhou, P7661 Fangchenggang, P7662 Guilin-Yangshuo-Lipu, P7664 Beihai Tieshan Port, P7665 Donggang Industrial Park, P7666 Beihai), and cross-referencing the gem.wiki citation metadata for those siblings (P4487's reference list, cite_note-:5-28) recovers the article's actual title: '附171个电源项目全名单！《广西“能源网”建设2021年工作推进方案》发布 - 北极星火力发电网' (bjx.com.cn thermal-power channel, 2021-03-26) -- i.e. 'Attached: full list of 171 POWER-SOURCE (electricity generation) projects! Guangxi \"Energy Network\" Construction 2021 Work-Advancement Plan released'. The headline topic is power-generation projects, not gas pipelines, so on its face the citation does not self-evidently name any gas pipeline, let alone a 'Teng County' branch -- though a provincial 'energy network' work plan could plausibly bundle a gas-pipeline annex on a later page (this URL is explicitly page 4 of a multi-page article, consistent with a trailing table of gas-network sub-projects), which is the charitable reading. I could NOT resolve which reading is correct because the page itself is unreadable: curl (plain and Googlebot UA), WebFetch, and the r.jina.ai reader proxy all return an Aliyun WAF slider-CAPTCHA challenge page instead of content (title 'Access Verification' / '百度安全验证'-class block), and archive.org has NO historical snapshot of this URL (CDX query empty) -- the one 'available' snapshot the Wayback API reported was triggered live today (timestamp 20260729) and is the same WAF challenge page, not real content. This matches url_verifier.py's own documented bot-wall false-negative pattern. The url_verifier existing_ref_checks in the worklist already show 'value not found' for Status='proposed' and ProposalYear='2021' on EVERY one of the ~13 sibling rows that cite this URL (100% failure), while Fuel/PipelineType checks all read ok only because they weren't given a value string to search for -- i.e. the failure is uniform across all rows and looks like a page-access problem, not evidence specific to Teng County being wrong. Independent corroboration attempts all failed for tooling reasons this session: WebSearch quota was exhausted (200/200) mid-task; DuckDuckGo, Baidu, and 360so.com all returned their own bot-challenge pages to a plain curl; WebFetch against Google/Bing search URLs returned no usable result snippets for '藤县 天然气管道' (Teng County natural gas pipeline) queries. Net result: I can neither confirm nor refute that a Teng County Guangxi gas branch exists -- the single citation on file is unreadable to any automated tool available this session and no second, independent source could be located. Per the standing rule that an unverifiable/GEM-only-support row is an existence flag, I am flagging it, but note this reads as a tooling/access-blocked citation rather than positive evidence of fabrication -- recommend a manual browser-based re-check of the source (or of a possible mirror/reprint of '广西“能源网”建设2021年工作推进方案' elsewhere) before deciding whether to keep, reclassify, or drop this row. No other roster entry names Teng County, so this is not a duplicate of an existing Guangxi row.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "proposed",
+    "notes": "Cannot determine current true status. The only date on file, ProposalYear=2021 (March), comes from the same WAF-blocked, unverifiable bjx.com.cn citation flagged in the validity finding -- if that 2021 proposal date is accurate, the row has been sitting at 'proposed' for ~5 years with LastUpdated only as recent as 2025-08-25 (this batch import, not a fresh status check), which would trigger the >=2y proposed->shelved dormancy rule. But I have no independent confirmation the project (or its 2021 date) is real in the first place, so applying that dormancy math would compound an unverified premise with an unverified inference. Searched (Chinese and English) for any independent news of a Teng County / 藤县 gas pipeline via curl/WebFetch against Bing, Google, DuckDuckGo, Baidu, and 360so.com -- a",
+    "refs": []
+   },
+   "refs": [
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7664": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Beihai Tieshan Port loop gas pipe line",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": "Tieshan Port",
+  "EndLocation": "Tieshan port",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "30.00",
+  "LengthKnown": 30.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "Keep the row, but replace the current [ref] on Status/Fuel/Capacity/Pressure/Length/Diameter/Location/SegmentCost (the fgw.gxzf.gov.cn generic 2023 work-plan notice) with a project-specific source such as the safety-evaluation registry entry below, which actually names this pipeline and its route.",
+     "notes": "EXISTENCE: this pipeline is real and independently corroborated. It is the '广西天然气支线管网项目铁山港天然气支线管道工程' (Guangxi Natural Gas Branch Pipeline Network Project - Tieshan Port Natural Gas Branch Pipeline Project), built by 广西燃气集团有限公司 (Guangxi Gas Group Co., Ltd.). Independent, separately-run confirmation comes from (1) a Guangxi natural-resources-department land pre-approval registry entry (dnr.gxzf.gov.cn, approved 2024-04-02, project name matches verbatim, land area 2.5441 hectares) and (2) a safety-evaluation-industry disclosure registry (河南油田工程科技股份有限公司's public safety-evaluation-info platform, an entity unconnected to the Guangxi government) which independently names the same project, describes its route (starts at Sinopec's Guangxi Phase-III LNG receiving terminal outer wall, passes a #1 valve chamber / Tieshan Port first station / Nanzhuwan distribution station, ends at Xinggang distribution station) and gives a total pipe length of 3.14km (gas-source connector line) + 25.89km (south loop network) = ~29.0km, evaluated 2023-09 to 2023-12. A third source (an EIA-public-participation notice reprint, yanshougs.com, 2023-10-24) independently names the same project and builder. IMPORTANT SOURCING CAVEAT on GEM's OWN current ref: the cited fgw.gxzf.gov.cn URL (t16217273.shtml) IS a real, live page (confirmed via a 2025-04-13 Wayback snapshot after the live host itself was unreachable from this session), but it is titled '广西壮族自治区发展和改革委员会关于印发《广西能源基础设施建设2023年工作推进方案》的通知' - a generic annual energy-infrastructure work-plan ISSUANCE notice. Its visible body text never names Tieshan Port or this pipeline; any project-specific figures would only live in an attached investment-plan spreadsheet that is not retrievable standalone. This is exactly the 'generic/aggregate citation that does not actually name this pipeline' pattern the sweep is meant to catch - it happens the pipeline itself is real, but the cited ref does not actually support the values it is attached to. CLASSIFICATION: correctly recorded as gas transmission - this is a large-diameter (DN800/DN500 per the route description found), high-pressure branch trunk connecting an LNG import terminal to city-gate distribution stations, not a small gathering/distribution line. DISTINCT-PROJECT WARNING for future researchers: there is a SECOND, textually similar but functionally different pipeline in the same Tieshan Port area - '铁山东港天然气支线管道项目' (Tieshan 'East Port' gas branch pipeline project, serving the 东港产业园区/East Port Industrial Park), originally developed by 广西顺华公司/天圜能源公司 and acquired via a 2024-02-07 equity-transfer signing by Guangxi Energy Group's subsidiaries (广投管网公司, 广投北海燃气公司) - reported by a Chinese energy trade press article. As of that Feb-2024 report it was still awaiting 通气投产 (gas commissioning). This is NOT the same project as P7664 (different developer, different industrial-park framing) and does not appear to be in the 43-row Guangxi roster under any other PID - flagging as a discovery lead for the country's discovery workstream, not folding it into this row. DUPLICATE check against the full roster: no other row names Tieshan Port as start/end, so P7664 is not a relabel of an existing row.",
+     "proposed_refs": [
+      "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681",
+      "https://web.archive.org/web/20250424053023/https://dnr.gxzf.gov.cn/sjcx/jsydys/t18328823.shtml",
+      "https://www.yanshougs.com/content/77385.html"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-check the '400' diameter figure with a fresh researcher pass; no source I could find or re-verify supports a third (400mm) pipe segment on this line.",
+     "notes": "GEM records Diameter='800/500/400 mm' for this row. Every project-specific route description I located describes only TWO diameters: a DN800 segment (the LNG-terminal-side connector and the first south-loop leg, higher design pressure) and a DN500 segment (the second south-loop leg to Xinggang distribution station, lower design pressure) - consistent with the two design pressures GEM already records (10/6.3 MPa). I found this breakdown on a bidding-information-aggregator reprint (dlztb.com) of the builder's own November-2023 EIA pre-approval public notice, but that specific URL failed url_verifier.py on three separate attempts (ConnectionError each time) and has no Wayback Machine snapshot to fall back on, so per the standing sourcing rule I am NOT citing it as a proposed_ref - I read it manually via curl but cannot certify it through the required tool. No verified source I found states or rules out a 400mm segment either way. Flagging as an open spec concern rather than asserting a confident correction: the '400' may be a stray/erroneous third value, or may correspond to a short tie-in/lateral not covered in the sources I could access. Recommend a follow-up pass with fresh network access to the gxzf.gov.cn family of sites (unreachable from this session - ConnectTimeout on both fgw.gxzf.gov.cn and dnr.gxzf.gov.cn) to pull the actual attached investment-plan/EIA tables.",
+     "proposed_refs": []
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-check SegmentCost; a project-specific EIA notice I could not formally re-verify states a lower total investment (~356.93 million RMB) than GEM's recorded 419,000,000 RMB.",
+     "notes": "GEM records SegmentCost=419,000,000 RMB (2023). The same dlztb.com reprint of the builder's Nov-2023 EIA pre-approval notice (see the diameter finding above for why it is not being cited as a proposed_ref - repeated url_verifier ConnectionError, no Wayback fallback) states a total investment of '35693万元' (356,930,000 RMB) for this project - about 17% below GEM's figure. I could not find this specific cost figure repeated on any source I was able to pass through url_verifier (the safety-evaluation and land-approval registries I did verify do not state a cost total). This is a real discrepancy worth checking, but since I cannot supply a verified ref for the corrected number, I'm flagging it as an open item rather than proposing a firm correction.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "shelved",
+    "notes": "Hunted for evidence newer than the sheet's LastUpdated (2025-08-25). The most recent CONFIRMED milestone I could find is land pre-approval, granted 2024-04-02 (dnr.gxzf.gov.cn registry, verified) - following an EIA public-participation notice (2023-10/11) and a safety-evaluation report submitted 2023-12-12 (hnocse.com registry, verified). That is a coherent pre-construction administrative sequence through April 2024, but I found NO evidence after that date - no groundbreaking/开工 announcement, no 通气/投产 (gas commissioning) report, nothing in general web search for the project's exact name plus 开工/通气/投产/建成/竣工 (multiple query variants tried). April 2024 to now (2026-07-29) is just over 2 years with no further evidenced progress, so applying the dormancy rule: proposed with no progress >=2y -> ",
+    "refs": []
+   },
+   "refs": [
+    "https://web.archive.org/web/20250424053023/https://dnr.gxzf.gov.cn/sjcx/jsydys/t18328823.shtml",
+    "https://www.yanshougs.com/content/77385.html",
+    "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7665": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Donggang Industrial Park branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Hepu Baisha",
+  "EndLocation": "Tieshan Langen",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "12.30",
+  "LengthKnown": 12.3,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No action — existence confirmed via project-owner disclosures independent of GEM; the sheet's own cited government ref (fgw.gxzf.gov.cn) could not be reached from this environment (ConnectTimeout on both hostname and resolved IP) but is not contradicted by anything found.",
+     "notes": "This is a real, physically-built branch pipeline, not a phantom entity. Beihai Road & Port Construction Investment Development Co. (北海市路港建设投资开发有限公司, a state-owned Beihai municipal company and co-investor via joint venture 广投北海燃气公司) published two of its own project announcements on its official news page (gxbhlg.com): one dated 2024-04-02 describing a pipeline gas-in/replacement test completed 2024-03-29 on the '东港支线12.6Km管道' running from PipeChina's Baisha gas transmission station (国家管网白沙输气站) to the Langgen distribution station (榄根分输站); a second, syndicated to nengyuanquan.com and dated 2024-08-22, describing the official commissioning/first-customer gas-on event of 2024-08-19, naming the first connected customers (新福兴, 长利 — both glass manufacturers in the industrial park) and giving full specs (12.6 km, 4 MPa design pressure, ~2亿 RMB investment, ~2 bcm/y capacity at full load). Both articles trace to the same corporate source (the project developer itself), so this is a single strong primary-source origin rather than two fully independent outlets — tier is medium, not high. A separate, genuinely independent record — a 2025-06-27 procurement notice on the Guangxi Investment Group's own e-procurement platform (gigeps.com) soliciting feasibility-study consulting for a FOLLOW-ON gas project in the same '北海铁山东港产业园' (a new ~5km line + city-gate station, separate scope/budget from this 12.6km branch) — independently corroborates that this specific industrial park has an active, ongoing gas-pipeline buildout, consistent with P7665 being real infrastructure rather than a GEM-only entity. I could not reach the GEM-cited fgw.gxzf.gov.cn (Guangxi Development and Reform Commission) URL at all from this sandbox (ConnectTimeout via curl, WebFetch ECONNREFUSED, and even a direct-IP retry) — this reads as a network/geoblock limitation of the research environment, not evidence the source is fake, since an independent primary source describing the identical project (same 12.6km length, same Baisha->Langgen route, same 4MPa pressure) exists and is reachable.",
+     "proposed_refs": [
+      "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783",
+      "http://www.gigeps.com/cms/channel/xmgg4fw/61178.htm"
+     ]
+    },
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "classification",
+     "recommendation": "No reclassification needed.",
+     "notes": "PipelineType=transmission is plausible and consistent with the evidence: this is a high-pressure feeder ('支线管道'/branch pipeline) running from a PipeChina national trunk transmission station (国家管网白沙输气站) to a distribution station (榄根分输站) at a design pressure of 4 MPa — well above typical city/local distribution-network pressures (commonly <1.6 MPa in China) and consistent with transmission-grade pipe, even though it is a short branch rather than a long-haul trunk. Not reclassifying.",
+     "proposed_refs": [
+      "http://www.nengyuanquan.com/article/youqi/14090.html"
+     ]
+    },
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "duplicate",
+     "recommendation": "No merge needed — checked against the 43-row Guangxi roster.",
+     "notes": "Checked P7665 (Hepu Baisha->Guangxi, 12.3km, operating) against the roster for overlap. The nearest candidate is P7664 (Tieshan Port->Guangxi, 30.0km, dia 800/500/400, cap 4.0, status=proposed) — both sit in the broader Tieshan/Beihai gas buildout, but they differ on every axis that would indicate a relabel: different status (operating vs proposed), different length (12.3/12.6 vs 30.0km), different diameter class (508mm vs 800/500/400mm multi-diameter), and P7665's confirmed route (Baisha station -> Langgen distribution station) is a documented, already-completed, distinct project from whatever P7664 represents. No other roster row shares this route or these dates. Not a duplicate.",
+     "proposed_refs": []
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Correct LengthKnown from 12.3 to 12.6 km (well-supported, minor magnitude); revisit SegmentCost (230,000,000 RMB) and Capacity (1.76 bcm/y) against the original underlying government notice when reachable, since the press-release figures are rounded ('约2亿元' / '近20亿立方米') and don't cleanly confirm GEM's more precise numbers; correct StartMonth1 from 1 to 8 (see fills) since no evidence supports a January start and clear evidence supports August.",
+     "notes": "Length: the sheet's own government source could not be reached, but the project developer's own two disclosures both independently state length as '12.6公里/12.6Km' — a small, material discrepancy from GEM's recorded LengthKnown=12.3 km (~2.4% off, not a rounding artifact of common unit-conversion — plain km-to-km). Recommend correcting to 12.6. Pressure: GEM's Pressure=4 MPa matches the source's '设计压力4兆帕' exactly — confirmed, no change (also staged as a fill below since the ref cell was blank). Capacity: GEM's Capacity=1.76 bcm/y is in the same order of magnitude as the source's '满负荷运营状态下...年供气量可达近20亿立方米' (~2 bcm/y at full operation) but not an exact match (~12% off) — the press-release phrasing ('nearly 2 billion') is an approximation, so I'm not forcing a change, but flagging that GEM's more precise 1.76 figure isn't independently confirmed by anything I could read (it may come from the unreachable government filing, which would be a more authoritative source than the press release for this figure). Cost: GEM's SegmentCost=230,000,000 RMB (2024) vs the press release's '总投资约2亿元' (~200,000,000 RMB) — again same order of magnitude, ~13% off, likely just the press release rounding down; not forcing a change but flagging as unresolved. StartMonth1: this field currently carries NO ref at all (MISSING_REF) and StartYear1=2024/StartMonth1=1 (January) is unsupported by anything found — evidence instead shows two distinct 2024 milestones on this exact project (pipe gas-in/pressure test completed 2024-03-29; official commissioning + first industrial customers connected 2024-08-19), neither of which is January. See fills for the proposed correction to August 2024, which best matches 'pipeline placed in service.' None of this rises to an existence or classification problem — the pipe is real and correctly typed — but the spec/date precision needs correcting.",
+     "proposed_refs": [
+      "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783",
+      "http://www.nengyuanquan.com/article/youqi/14090.html"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Status=operating is confirmed current and correct — this is not a stale/dormant proposed or under-construction row. Newest independent evidence found is dated 2024-08-22 (nengyuanquan.com), describing the pipeline's official commissioning on 2024-08-19 with named industrial customers (新福兴, 长利) already receiving pipeline gas, i.e. actively in service. Searched for anything more recent (2025-2026) reporting an outage, expansion, or status change for this specific branch; found none — the only newer activity in this immediate area (北海铁山东港产业园) is a 2025-06-27 procurement notice for a SEPARATE follow-on project (new ~5km line + gate station), which does not affect this segment's own operating status. No dormancy rule applies since the pipe is confirmed in active service, not proposed/shelved.",
+    "refs": [
+     "http://www.nengyuanquan.com/article/youqi/14090.html",
+     "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783"
+    ]
+   },
+   "refs": [
+    "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783",
+    "http://www.nengyuanquan.com/article/youqi/14090.html",
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml",
+    "http://www.gigeps.com/cms/channel/xmgg4fw/61178.htm"
+   ]
+  }
+ },
+ "P7666": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Beihai Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": null,
+  "EndLocation": null,
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "--",
+  "LengthKnown": null,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "duplicate",
+     "recommendation": "Likely double-count / superseded stub — review for merge into P7664 (Beihai Tieshan Port loop gas pipe line) and/or P7665 (Donggang Industrial Park branch), both already tracked with real specs and government-sourced refs.",
+     "notes": "P7666's ONLY citation is https://news.bjx.com.cn/html/20210326/1144324-4.shtml (dated 2021-03-26), which the sheet uses to source Status='proposed', Fuel='Gas', PipelineType='transmission', and ProposalYear=2021. I could not verify ANY of this: the page returns HTTP 200 but its body is bjx.com.cn's anti-scraping JS challenge payload (base64/encrypted blob, no readable Chinese text) both live and via the Wayback Machine's freshest crawl (today, same obfuscated payload) -- the automated ref-checker in worklist.json independently flagged the same failure ('200 but data value not found' for both 'proposed' and '2021'). This is not a case of a rotted link; the source is categorically unreadable by any tool available to me, so the row's Status/Fuel/PipelineType/ProposalYear are effectively unsourced pending a human/JS-capable read.\n\nMore importantly: the row itself is a near-total blank -- StartLocation, EndLocation, LengthKnownKm, DiameterInMm, CapacityBcm/y are ALL '--', RouteAccuracy='no route', and even the Location [ref] cell is empty (MISSING_REF). The only content is OtherLanguageAlternativePipelineNames='北海支线' (literally 'Beihai branch line') sitting inside the umbrella PipelineNetworkGrouping '广西输气管网' / OtherLanguagePrimaryPipelineName '广西天然气支线管网' (Guangxi Gas Branch Pipeline Network project).\n\nThat exact umbrella project already has TWO much more specific, well-sourced Beihai-area rows in this same PID family: P7664 'Beihai Tieshan Port loop gas pipe line' (北海铁山港天然气支线项目/环网, Tieshan Port->Tieshan Port, 30km, 4.0 bcm/y, proposed, sourced to gxzf.gov.cn) and P7665 'Donggang Industrial Park branch' (广西北海铁山东港产业园天然气支线管道, Hepu Baisha->Tieshan Langen, 12.3km, 1.76 bcm/y, OPERATING, also gxzf.gov.cn). Open-web search (DuckDuckGo) surfaced independent corroboration that this umbrella project's Beihai-area work is specifically the Tieshan Port loop + Tieshan/Donggang industrial-park spur -- e.g. a Feb-2024 bjx.com.cn piece on Guangxi Energy Group's equity-acquisition signing for '北海铁山东港天然气支线管道项目', and a Beihai Tieshan Port District EIA report for the same. I found NO independent source describing a 'Beihai branch' (北海支线) as a distinct THIRD piece of gas infrastructure separate from those two -- and structurally it wouldn't make sense for Beihai (which hosts Guangxi's LNG import terminal and is the SOURCE of the whole network, per P4715/P4716/P4718/P4719/P4721) to also need a prefecture-level 'dedicated supply branch' the way inland cities (Beiliu, Luchuan, Hezhou, Wuzhou, Fangchenggang, etc.) do under the same branch-network company's 14-city rollout.\n\nConclusion: P7666 reads as the project's earliest (2021), vaguest news mention of 'the Beihai branch,' captured as a placeholder row before the two concrete engineering sub-projects (P7664 loop, P7665 spur) were documented and separately entered. It has not been updated with any real specifics in the 4+ years since, while P7664/P7665 accumulated real land-use, procurement, and EIA paper trails. Recommend Baird/CB compare P7666 against P7664+P7665 for a merge/retirement rather than carrying it as a fourth independent Beihai line; if it IS meant to be distinct, it needs a real location, length, and a readable source before it can be corroborated at all.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "shelved",
+    "notes": "No independent news found advancing this specific row past its March-2021 proposal mention (the mention itself can't even be read -- see validity note: the bjx.com.cn source is an anti-scraping JS-obfuscated page, unreadable live and via the freshest Wayback snapshot). Searched (DuckDuckGo, zh + en) for '北海支线'/'Beihai branch' gas pipeline news 2021-2026, Guangxi 14th Five-Year gas plans, and the umbrella '广西天然气支线管网' project -- found real, dated progress (2023 EIA, 2024 equity-acquisition signing, steel-pipe procurement) but all of it attaches to the two already-separately-tracked rows P7664 (still proposed) and P7665 (now operating), never to a distinct third 'Beihai branch' item. Applying the dormancy rule at face value (proposed 2021, no progress in 5 years -> shelved, ShelvedCancelledTy",
+    "refs": []
+   },
+   "refs": [
+    "https://news.bjx.com.cn/html/20210326/1144324-4.shtml"
+   ]
+  }
+ },
+ "P7673": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Liujiang Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Liujiang District",
+  "EndLocation": "Liunan District",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "27.00",
+  "LengthKnown": 27.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Existence, route, operator, length, capacity and construction-start (2015-08) are all independently confirmed and match GEM exactly. But StartYear1/StartMonth1 = 2017-05 is unsupported and likely wrong: every independent account of this pipeline's commissioning dates the trial-operation start to December 2017 (Dec 5-11, 2017), not May 2017. Recommend changing StartMonth1 to 12 (or blanking the month if precision is uncertain) -- keep StartYear1=2017.",
+     "notes": "The sheet's own cited ref (gig.cn journal.do?id=433198...) is dead -- 403 on every fetch attempt (curl, WebFetch, and the existing_ref_checks already logged in wiki_citations/worklist). No gem.wiki page exists for this row either (wiki field empty, and P7673 is absent from wiki_citations.json's harvested pages), so this row had zero working citations going in. Web-search budget for the session was exhausted before I started (200/200), so I worked via WebFetch against DuckDuckGo-HTML search results instead of the WebSearch tool. That surfaced independent corroboration on two separate axes: (1) a Dec 2017 Liuzhou Daily wire story (same underlying story reprinted at tzcjj.liuzhou.gov.cn [Liuzhou govt economic-cooperation portal, dated 2017-12-08], china5e.com [dated 2017-12-11, byline '柳州日报'/Liuzhou Daily], and sohu.com [dated 2017-12-08]) describing a 27km pipeline from a China-Myanmar-pipeline transmission station in Liujiang District to a distribution station in Liunan District, Liuzhou, with a 3.70x10^8 Nm3/yr design capacity (=0.37 bcm/y) and construction start Aug 28, 2015 -- these three all trace to one origin (same wire story, do not count as 2 independent per project rules) but read as credible local-government-adjacent reporting; and (2) a genuinely separate origin, a docin.com-hosted environmental-impact-report listing titled '柳州市广西天然气支线管网项目柳江天然气支线管道工程变更项目' (Liuzhou Guangxi gas branch network project -- Liujiang gas branch pipeline engineering-change project), an EIA filing built by Guangxi Guangtou Natural Gas Pipeline Co., Ltd. (matches GEM's Operator exactly), consultant Guangxi Tainen Engineering Consulting Co., Ltd., uploaded Feb 2020. A related Guangxi Ecological Environment Department official notice (document 桂环函〔2018〕3050号, dated 2018-12-25, re: changes to the Liujiang gas pipeline branch project) turned up in the same search but its host (sthjt.gxzf.gov.cn) was unreachable from this environment (ConnectTimeout/ECONNREFUSED) so I could not fetch and cite it directly -- it is corroborating context only, not a cited ref. Cross-checked against GEM: Length 27.00 km matches exactly; Capacity 0.37 bcm/y matches exactly (370 million Nm3); ConstructionYear/Month 2015-08 matches 'August 28, 2015' exactly; StartLocation/EndLocation (Liujiang District -> Liunan District, both Liuzhou prefecture) match exactly; FuelSource 'Sino-Myanmar Gas Pipeline' matches (pipeline originates at a China-Myanmar-pipeline transmission station); Operator matches the EIA filing's builder. Diameter (335.6mm), Pressure (4.00 MPa) and SegmentCost (61.77M RMB, 2019) are not mentioned in any source I could reach -- unverified but not contradicted, left as-is. No duplicate found against the 43-row roster (no other row shares Liujiang District as an endpoint). Classification (transmission) is consistent with how sibling branch-network rows in this roster are treated. The one real defect: StartYear1/Month1 = 2017-05 has no support anywhere I found, and the only dated evidence for commissioning specifically says December 2017 (trial operation, '进入调试运行阶段', formal production pending downstream completion) -- a 7-month conflict on the month is material, not noise.",
+     "proposed_refs": [
+      "https://www.china5e.com/news/news-1013422-1.html",
+      "https://www.sohu.com/a/209449898_217646",
+      "https://jz.docin.com/p-2304535844.html"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Pipeline was reported commissioned (trial operation) in December 2017 and had a formal EIA 'engineering change' filing processed through Feb 2020, both consistent with a long-since-operating branch line -- no evidence of any status change, outage, or decommissioning found in searches (constrained: session WebSearch budget was exhausted, so this relied on WebFetch-driven search-engine queries only; no news dated later than the 2020 EIA filing was found in either direction). No reason to doubt 'operating' -- confirming the recorded status rather than treating it as stale, since it is a long-completed, in-service branch pipeline, not a dormant proposed/shelved project subject to the 2y/4y staleness rules.",
+    "refs": [
+     "https://jz.docin.com/p-2304535844.html"
+    ]
+   },
+   "refs": [
+    "https://www.china5e.com/news/news-1013422-1.html",
+    "https://www.sohu.com/a/209449898_217646",
+    "https://jz.docin.com/p-2304535844.html"
+   ]
+  }
+ },
+ "P7674": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Luzhai Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Liudong",
+  "EndLocation": "Luzhai",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "31.00",
+  "LengthKnown": 31.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No change needed. Optionally chase the Operator company-name variant (广西广投天然气管道有限公司 in the 2016 EIA notice vs 广西广投天然气管网有限公司 on the sheet — 管道 'pipeline' vs 管网 'pipe network') against a corporate registry before treating Operator as fully closed.",
+     "notes": "Both of the sheet's own cited refs were fetched and read in full (not just HTTP-200 checked). Ref1 (wsbs.liuzhou.gov.cn, Liuzhou Administrative Approval Bureau, published 2016-12-30, internally dated 2016-11-23) is a first-round EIA public notice for '广西天然气支线管网项目鹿寨天然气支线管道工程' (Guangxi Gas Branch Pipeline Network Project — Luzhai Gas Branch Pipeline Project). It gives an exact route (Liudong distribution station -> Fulutun -> Liangting village -> Diliao -> crosses into Liucheng County -> Dashan village/Sijiao/Shanchang -> enters Luzhai County -> Baihua village -> Luorong valve room -> Luzhai distribution station), a segmented length breakdown (4.3 km in Liudong New District + 6.9 km in Liucheng County + 19.8 km in Luzhai County = 31.0 km total, matching LengthKnown exactly), design pressure 6.3 MPa (matches Pressure), pipe diameter DN300 (matches Diameter=300mm), and design throughput 1.1x10^8 Nm3/a = 0.11 bcm/y (matches Capacity=0.11 bcm/y exactly -- note the worklist's automated existing_ref_check flagged Capacity as 'value not found' on this URL because it searched for the literal string '0.11' and missed the scientific-notation '1.1 x10 8 Nm3/a' phrasing; manually confirmed the value IS present and correct, this is a false-negative in the automated checker, not a real discrepancy). Construction unit named as 广西广投天然气管道有限公司 ('Guangxi Guangtou Natural Gas Pipeline Co Ltd'), which is a close but not verbatim match to the sheet's Operator 广西广投天然气管网有限公司 ('...Pipe Network Co Ltd') -- flagging as a caveat, not a hard error, since Guangxi Guangtou is a known provincial SOE energy group and subsidiary renaming/reorganization (esp. around China's 2019-2020 pipeline-asset consolidation into provincial network companies) is a very plausible explanation. Ref2 (slj.liuzhou.gov.cn, Liuzhou Water Resources Bureau, published 2022-06-24) is a soil-and-water-conservation-facility self-acceptance filing receipt for the SAME named project ('广西天然气支线管网项目鹿寨天然气支线管道工程'), confirming the project reached construction completion / official filing stage in June 2022 -- this independently corroborates ProposalYear/Month (2016-12, matching the EIA notice's publication date) and StartYear1/Month1 (2022-06). These are two different Liuzhou municipal government bureaus (Administrative Approval Bureau vs Water Resources Bureau), publishing 5.5 years apart, both naming this exact project by its full formal name -- this clears the 2-independent-source bar for existence, route, length, diameter, pressure, capacity, and both key dates. PipelineType=transmission is consistent with the document's description (DN300 branch line feeding a distribution station off the Liuzhou dedicated gas supply pipeline, not an intra-city distribution network). Checked against the full 43-pipeline Guangxi roster for a duplicate/relabel: no other row shares this length/diameter/capacity/route combination (P7673, the nearest neighbor by naming pattern, is a distinct Liujiang District segment at 27km/335.6mm/0.37bcm/y) -- not a duplicate. FuelSource='Sino-Myanmar Gas Pipeline' could not be independently corroborated: neither cited document names the ultimate upstream gas source for the Liudong distribution station feed, and open web search was unavailable this session (session WebSearch budget exhausted at 200/200 before a supplementary search could run) -- left unresolved rather than guessed.",
+     "proposed_refs": [
+      "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml",
+      "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Most recent independent evidence found is the Liuzhou Water Resources Bureau's June 2022 soil-and-water-conservation self-acceptance filing receipt for this exact project, which indicates the pipeline had reached construction completion / regulatory sign-off by mid-2022, consistent with StartYear1=2022/StartMonth1=6 and with a status of operating from that point forward. No newer (2023-2026) independent evidence was found confirming continued operation or any decommissioning/status change -- WebSearch budget for the session was exhausted (200/200) before a targeted 2023-2026 search for this specific pipeline (e.g. commissioning/gas-flow announcements, Guangxi Guangtou annual reports) could be run. Given the pipeline is a completed, filed, in-service branch line (not proposed/shelved, so th",
+    "refs": [
+     "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml"
+    ]
+   },
+   "refs": [
+    "http://slj.liuzhou.gov.cn/zwgk/fdzdgknr/tzgg_58964/202206/t20220624_3084263.shtml",
+    "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml",
+    "http://lzzx.liuzhou.gov.cn/xw/201901/t20190102_1232618.html",
+    "https://shuidi.cn/company-0052d7a4a32f59f47d026e39b9f33d5d.html"
+   ]
+  }
+ },
+ "P7675": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Longming-Wu'an Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "operating",
+  "StartLocation": "Long'an",
+  "EndLocation": "Wuming District",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "50.00",
+  "LengthKnown": 50.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "attribution",
+     "recommendation": "Correct FuelSource from 'Sino-Myanmar Gas Pipeline' to the West-East Gas Pipeline (Line 2) Nanning-Baise branch — the row's own cited source names a different upstream trunk than the value on the sheet.",
+     "notes": "The row's current ref for FuelSource (and for Status/Length/Capacity/SegmentCost/Start) is https://www.nationalee.com/newsinfo/8103128.html, a republished Guangxi Energy Group (广西能源集团) press release dated 2025-03-04 ('来源：广西能源集团'). The page's shell HTML is a ~1KB JS-loader stub (this is why url_verifier's automated screen FAILs it as a likely block/stub — body under 1500 chars), but I fetched the site's underlying render-data script directly (the .Body.js asset the stub's own <script> tag loads) and it contains the full article text. It states, verbatim: '管道起自国家管网西二线南宁-百色支线5#阀室' — 'the pipeline originates from PipeChina's West-East Gas Pipeline Line 2 (Xi'er Xian), Nanning-Baise branch, valve chamber #5.' That is the West-East Gas Pipeline (Line 2), NOT the Sino-Myanmar Gas Pipeline (中缅天然气管道), which is a geographically and administratively separate PipeChina trunk (Ruili/Yunnan entry via Guizhou to Guigang, Guangxi) that this branch has no stated tie-in to. The sheet's FuelSource value is contradicted by its own cited source, not merely unconfirmed — this reads as a genuine misattribution (plausibly confused with the many other Guangxi branch lines in this network that DO tap the Sino-Myanmar line) rather than noise. I could not independently name the exact GEM entity ID for the West-East Line 2 Nanning-Baise branch (it is not in the 43-row Guangxi roster provided, which covers only intra-Guangxi distribution segments) — flagging for a researcher to confirm/create the correct FuelSource target rather than guessing an ID.",
+     "proposed_refs": [
+      "https://www.nationalee.com/newsinfo/8103128.html"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Diameter (323 mm), Pressure (6.30 MPa) and ProposalYear (2017-06) rest on a single source that is currently unreachable and has no Wayback snapshot — re-source or re-verify before treating these as solid.",
+     "notes": "All three fields cite only http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t10409723.shtml (a Guangxi provincial NDRC project-approval filing). It ConnectTimeouts on every attempt (curl, url_verifier) and archive.org's Wayback API returns zero snapshots for the URL, so there is no way to confirm these three values right now, and there is no second source anywhere in this row's citations that mentions diameter, pressure, or a 2017 proposal date. This isn't a disagreement — I have no reason to think the numbers are wrong — but per the 2+-independent-source standard this leaves Diameter/Pressure/ProposalYear resting on an unverifiable single citation and they should be downgraded to low-tier / re-checked when the gxzf.gov.cn site (or an archived copy) becomes reachable, rather than carried at whatever confidence the sheet currently implies.",
+     "proposed_refs": []
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "attribution",
+     "recommendation": "Minor: the GEM segment_name 'Longming-Wu'an Branch' garbles the two place names (隆安 Long'an + 武鸣 Wuming) into 'Longming'/'Wu'an' — rename to 'Long'an-Wuming Branch' to match StartLocation/EndLocation and the Chinese name 隆安—武鸣天然气支线管道工程.",
+     "notes": "StartLocation='Long'an', EndLocation='Wuming District' are both correct and independently confirmed by the nationalee.com article ('...标志着武鸣区、隆安县正式进入管道天然气时代'). But the segment_name field itself reads 'Longming-Wu'an Branch', which appears to be a transcription slip that cross-blends the two toponyms (Long'an + Wuming -> 'Longming'/'Wu'an'). Cosmetic, not a data-value error, but worth a clean-up since it's user-facing.",
+     "proposed_refs": [
+      "https://www.nationalee.com/newsinfo/8103128.html"
+     ]
+    },
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No action needed on existence, classification, length, capacity, cost, status, start date, location, or operator — all independently confirmed against the row's own primary source once its full text was retrieved (see spec/attribution concerns above for the two exceptions).",
+     "notes": "This is a real, physically-built pipeline, not a GEM-only entity: the nationalee.com article (a Guangxi Energy Group press release, dated 2025-03-04, source line '来源：广西能源集团') gives a detailed, internally consistent account that matches or supports GEM's values: (1) Length 50 km — '新建管道50公里' ('newly built pipeline is 50 km') — exact match. (2) SegmentCost 180,000,000 RMB / 2025 — '总投资约1.8亿元' ('total investment about 180 million RMB') — exact match. (3) Capacity 0.44 bcm/y — '年均可输送天然气4.4亿立方米' ('can transmit an average of 440 million m3 of gas annually') = 0.44 bcm/y — exact match. (4) Status=operating, StartYear1=2025/StartMonth1=3 — the article (published 2025-03-04) reports the Long'an distribution station '顺利投产' (successfully commissioned) and the Wuming station '成功进气' (successfully received gas), explicitly called Guangtou Pipe Network's 'first commissioning project of 2025' — matches Start=2025-03 and Status=operating. (5) Fuel=Gas, PipelineType=transmission — a natural-gas branch trunk feeding two county-level gas grids, consistent with the rest of the Guangxi roster's small branch lines classified the same way. (6) Location: StartLocation='Long'an' (start), EndLocation='Wuming District' (end), both Nanning prefecture, Guangxi — confirmed verbatim ('武鸣区、隆安县'). (7) Operator='Guangxi Guangtou Natural Gas Pipe Network Co Ltd' (广西广投天然气管网有限公司) — the article names the builder/investor as '广投管网公司' ('Guangtou Pipe Network Company'), a subsidiary of Guangxi Energy Group (广西能源集团) — consistent abbreviation of the same operator. No duplicate found: cross-checked against all 42 other roster PIDs (incl. P4732 Nanning-Pingxiang and P6042 in Jinchengjiang District, the other named/located branches) — none share Long'an or Wuming as an endpoint, so this is not a relabeled duplicate. Only a single primary source was available for these fields (this article, itself a corroborating GEM-independent company press release, republished on nationalee.com); I found no second independent outlet covering this specific March-2025 commissioning, so tier is medium (single strong primary source) rather than high, despite high internal consistency.",
+     "proposed_refs": [
+      "https://www.nationalee.com/newsinfo/8103128.html"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "operating",
+    "notes": "Sheet's last-updated stamp is 2025-08-25 with Status=operating. Found dated, on-topic evidence NEWER in substance than that stamp implies was checked: a 2025-03-04 Guangxi Energy Group press release (republished at nationalee.com/newsinfo/8103128.html) reporting the Long'an distribution station '顺利投产' (successfully commissioned/put into production) and the Wuming distribution station '成功进气' (successfully received gas), explicitly labeled the operator's 'first commissioning project of 2025'. This is the same evidence already underlying the sheet's Start/Status fields (see validity block). No newer (post-March-2025) status-change evidence found (WebSearch budget was exhausted this session before a broader post-2025-03 search could be run; gxzf.gov.cn, the row's other citation, is unreachable",
+    "refs": [
+     "https://www.nationalee.com/newsinfo/8103128.html"
+    ]
+   },
+   "refs": [
+    "https://www.nationalee.com/newsinfo/8103128.html"
+   ]
+  }
+ },
+ "P7678": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Pingnan Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "cancelled",
+  "StartLocation": "Guiping",
+  "EndLocation": "Pingnan",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "63.00",
+  "LengthKnown": 63.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "spec",
+     "recommendation": "Do not treat Status=cancelled/CancelledYear=2024 as settled; have a Chinese-fluent researcher pull fgw.gxzf.gov.cn/.../t7290803.shtml directly (unreachable from this environment) to confirm what it actually says about post-2020 status.",
+     "notes": "EXISTENCE: solidly confirmed independently. This is '广西天然气支线管网项目平南天然气支线管道工程' (Pingnan Natural Gas Branch Pipeline Engineering, part of the Guangxi Natural Gas Branch Pipeline Network Project), built by 广西广投天然气管网有限公司. Corroborated across FOUR separate government/regulatory processes found via search: (1) Guangxi DRC (fgw.gxzf.gov.cn) project approval 桂发改能源〔2018〕1492号 dated 2018-12-24, project code 2018-450821-57-02-022734; (2) Guigang land-resources bureau (dnr.gxzf.gov.cn) construction land-use pre-approval; (3) Guigang water-resources bureau approval of the water-and-soil conservation plan; (4) a 228-page EIA report '(公示本)广西天然气支线管网项目平南天然气支线管道工程环境影响报告书' filed 2019-08-28, listed on docin.com (independently url_verifier-confirmed, 200, contains both '平南' and '天然气'). Not a GEM-only entity. SPEC: LengthKnown=63.00km MATCHES independently (EIA/route description gives 63km total = 60.3km in Guiping + 2.7km in Pingnan county); Pressure=4.00 MPa MATCHES (design pressure '4MPa' in EIA description); StartLocation=Guiping/EndLocation=Pingnan MATCHES ('Guiping distribution station to Pingnan distribution station'); ProposalYear/Month=2018-12 MATCHES the 2018-12-24 approval date; Fuel=Gas and PipelineType=transmission both reasonable (a branch/lateral off the provincial network feeding local distribution stations, not itself a town-gas grid). Diameter=250mm and Capacity=0.10 bcm/y and SegmentCost=216.76M RMB (2018) could NOT be independently confirmed or contradicted (search snippets truncated before the mm figure; no independent cost/capacity figure surfaced) -- left as-is, not fabricated, not contradicted. THE CAVEAT: the sheet's own cited ref for Status[ref]/Cancelled[ref] (t7290803.shtml, used for BOTH cells) is NOT a cancellation notice -- per search-engine cached snippets quoting its actual text, it is '关于同意广西天然气支线管网项目平南天然气支线管道工程项目核准文件有效期延期的批复' (a 2020 reply APPROVING AN EXTENSION of the 2018 approval's validity period), document number 桂发改油气〔2020〕1272号, dated 2020 -- not 2024. A document that grants more time to a still-live approval is the opposite of a cancellation, and its own date (2020) doesn't match the sheet's CancelledYear=2024 either. Separately, search turned up a genuinely different 2024 administrative action with an overlapping place-name -- a 2024 tender (dowater.com/chinabiddingzb.com/qianlima.com, winning bidder announced 2024-12-17/23) re-letting OPERATING RIGHTS for '平南县南河片乡镇管道天然气综合利用项目' (Pingnan County Nanhe-area township pipeline natural-gas comprehensive-utilization project), after the prior operator (per a toutiao.com item I could not load: '华源能源公司...经营不善、资金问题...无法继续经营') failed to continue -- but that is a DOWNSTREAM TOWN-GAS DISTRIBUTION FRANCHISE re-tender, an administratively distinct project from this upstream transmission branch pipeline, and citing it for P7678's status would be conflating two different entities. Net: I could not independently confirm this transmission pipeline is cancelled, and the cell's own cited source appears to say the opposite of what it's being used to support. Could not reach fgw.gxzf.gov.cn directly to read the full extension document (ConnectTimeout/ECONNREFUSED on every attempt, incl. WebFetch, curl, and url_verifier.py) -- this is a tooling/network limitation of this environment, not evidence either way, so filing as a caveat rather than a firm existence/classification concern. See status_reviews for the fuller status treatment.",
+     "proposed_refs": [
+      "http://www.docin.com/p-2248181920.html"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "cancelled",
+    "notes": "Cannot confirm the recorded Status=cancelled/CancelledYear=2024, and cannot confidently propose a replacement. The cell's own current_ref (t7290803.shtml) is quoted in search-engine cache as a 2020 notice (桂发改油气〔2020〕1272号) APPROVING AN EXTENSION of the original 2018-12-24 approval (桂发改能源〔2018〕1492号) -- i.e. as of 2020 the project's approval was still alive and being extended, the opposite of a cancellation, and dated 2020 not 2024. The newest independent dated evidence I can pin down for the actual transmission-pipeline project is that 2020 extension. Everything downstream of 2020 (has it been built, further extended again, allowed to lapse, or formally cancelled) is invisible to me: fgw.gxzf.gov.cn / dnr.gxzf.gov.cn are unreachable from this environment on every method tried (WebFetch: E",
+    "refs": [
+     "http://www.docin.com/p-2248181920.html"
+    ]
+   },
+   "refs": [
+    "http://www.gigeps.com/cms/channel/xmgg1fw/499.htm",
+    "http://nishishen.com/programming/3287.html",
+    "http://www.eiafans.com/thread-1155304-1-1.html",
+    "http://www.docin.com/p-2248181920.html"
+   ]
+  }
+ },
+ "P7679": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Heshan Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": "Xingbin",
+  "EndLocation": "Heshan",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "33.00",
+  "LengthKnown": 33.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "Re-attempt url_verifier on fgw.gxzf.gov.cn t2198308/t10409864 and dnr.gxzf.gov.cn t16421841 from a China-reachable network to formally re-cite the Heshan-branch-specific approval docs; treat length/diameter/capacity as independently unconfirmed (not contradicted) until then. Separately, see status_reviews: propose 'shelved' for 7-year proposed dormancy.",
+     "notes": "GEM's cited ref (http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/xmpf/xiangmuhezhunpifu/t2198308.shtml) is on the gxzf.gov.cn domain family, which is unreachable from this environment (ConnectTimeout via url_verifier, ECONNREFUSED via WebFetch/curl on multiple attempts and both http/https) -- could not directly re-verify it live. However, targeted Chinese-language search surfaced independent, non-GEM evidence that the underlying project is real and that GEM's own figures trace to genuine government documents: (1) a Guangxi Dept. of Natural Resources land-use pre-review titled '广西壮族自治区自然资源厅关于广西天然气支线管网项目合山天然气支线管道工程建设用地预审的批复' (land-use pre-review for the 'Heshan natural gas branch pipeline engineering' under the Guangxi natural gas branch network project), doc no. 桂自然资预审〔2019〕49号, dated 2019-07-24, at dnr.gxzf.gov.cn/sjcx/jsydys/t16421841.shtml; (2) a Guangxi Development and Reform Commission core-approval titled '广西壮族自治区发展和改革委员会关于广西天然气支线管网项目合山天然气支线管道工程核准的批复' at fgw.gxzf.gov.cn/.../t10409864.shtml, whose associated docx mirror (W020200317745138153919.docx, dated 2019-09-27 per search snippet) states '本项目总投资12802万元' -- i.e. total project investment 128.02 million yuan -- an EXACT match to GEM's SegmentCost=128,020,000 RMB, and the date (2019-09-27) matches GEM's ProposalYear/ProposalMonth=2019-09 almost to the day. This is strong independent corroboration that the pipeline is real (not a GEM-only entity) and that the cost/date fields are correctly sourced. I could NOT independently confirm length (33 km), diameter (DN250/250mm), capacity (0.11 bcm/y) or pressure (4.0 MPa) -- no accessible mirror displayed those specific figures; they are unconfirmed, not contradicted. For context (not cited as evidence for this row): a sibling branch of the same parent project ('广西天然气支线管网项目', built by 广西广投天然气管网有限公司 / Guangxi Gas Group) -- the Qianjiang (迁江) branch -- was core-approved 2025-09-25 and received EIA approval 2025-11-04 (来环审〔2025〕125号) per a page verified live at stj.laibin.gov.cn/xxgk/fdzdgknr/xzxkyxzcfsgs1/xzxk1/t27093542.shtml, which is addressed to '广西广投天然气管网有限公司' -- the exact same operator company GEM records for this row -- confirming that company operates branch pipelines under this program, though that specific document does not name the Heshan branch. Checked the 43-row roster for duplicate/relabel risk: no other PID matches this Xingbin->Heshan routing. P7690 (Xingbin->?, 250mm dia, 64 km, construction) shares the same diameter but differs in length, capacity and status; given the parent project is a genuine fan-out network with many named branch sections (Qianjiang, Wuxuan, Sanjiangkou, Heshan, etc. all independently confirmed to exist as separate government filings), this reads as a distinct branch rather than a double-count of the same physical pipe. Classification (Fuel=Gas, PipelineType=transmission) is consistent with the network's other branches and the recorded 4.0 MPa design pressure; no reclassification indicated.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "shelved",
+    "notes": "Newest independently-dated evidence found for this specific branch is its 2019-09-27 core approval (fgw.gxzf.gov.cn t10409864 / associated docx, cost figure matches GEM exactly) plus a 2019-07-24 land-use pre-review (dnr.gxzf.gov.cn t16421841) -- both from 2019, none reachable live from this sandbox but both corroborated via independent search-engine-cached document titles/snippets. Ran multiple targeted Chinese-language searches (project name + 'EIA'/环评, + 2024/2025/2026, + construction/施工/核准) looking for any post-2019 activity specific to the Heshan/合山 branch and found none. This is a meaningful contrast: two OTHER branches of the exact same parent program ('广西天然气支线管网项目', operator 广西广投天然气管网有限公司/Guangxi Gas Group) show live, recent progress -- the Qianjiang (迁江) branch was core-approved 2",
+    "refs": []
+   },
+   "refs": []
+  }
+ },
+ "P7680": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Xincheng Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": "Xincheng",
+  "EndLocation": "Xincheng",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "29.00",
+  "LengthKnown": 29.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "existence",
+     "recommendation": "Flag for existence re-verification / possible removal or downgrade to unverified-inferred; do not treat sourced values as confirmed until an independent document (EIA, land-use approval, bidding notice) naming 'Xincheng' is found.",
+     "notes": "The row's ONLY cited source for every field (Status, Fuel, PipelineType, Proposal date, Capacity, Pressure, Length, Diameter, SegmentCost) is a single in-en.com URL: https://gas.in-en.com/html/gas-2751746.shtml. Direct fetch returns HTTP 403 from multiple UAs/IPs, but that is NOT a bot-block: bypassing the WAF via r.jina.ai and via Google Translate's proxy (gas-in--en-com.translate.goog) both returned the site's own native 404 page ('哎呀，出错了！您访问的页面不存在......或已被删除！' / 'the page you visited does not exist... or has been deleted'). So the citation is confirmed DEAD at the source, not merely blocked. Wayback Machine (availability API) has no snapshot for this URL either -- it was never archived. I then searched extensively (DuckDuckGo, Bing, Baidu -- Baidu captcha-blocked) for any independent trace of a 'Xincheng' (新城) gas branch pipeline in Laibin, Guangxi, in both English and Chinese, including site-restricted searches on fgw.gxzf.gov.cn (Guangxi NDRC approvals) and combinations with the stated operator 'Guangxi Guangtou Natural Gas Pipe Network Co Ltd' (广西广投天然气管网有限公司) and the 2017-12 proposal date. Every hit that surfaced was for OTHER, clearly distinct Laibin-area gas projects: the much larger 'Laibin natural gas branch pipeline (Xingbin-Wuxuan / Wuxuan-Xiangzhou-Jinxiu section)' (total investment RMB196.9M, multi-county, 2022-2025 approvals), the Qianjiang (迁江) industrial-park supply branch (~16.5km), and a 2015-era 'Laibin natural gas dedicated-supply pipeline' (7.77km, RMB55.22M, in-en.com article ID 2644481 -- confirmed live and unrelated). None of these name 'Xincheng' or match this row's specific figures (29km / 0.04 bcm/y / 273mm / RMB107,250,000 / proposed 2017-12). Roster cross-check: no other P#### in the 43-row set carries a 'Xincheng' location or matching specs, so this doesn't look like an internal duplicate/relabel -- it looks like an entity whose sole citation is a now-dead, unarchived, and independently untraceable news item. Given standing rule 1 (existence is job #1) and the sweep instructions ('if the sheet's cited source does not actually name this pipeline, or you cannot find independent confirmation, flag existence'), I am flagging this row rather than confirming it. I cannot rule out that the article once existed and was legitimate (in-en.com/gas.in-en.com is a real trade-press outlet and other article IDs near this one are genuine), but as it stands there is zero verifiable support for any field on this row.",
+     "proposed_refs": []
+    }
+   ],
+   "status_review": {
+    "proposed": "shelved",
+    "notes": "Sheet records ProposalYear=2017 (Dec) with LastUpdated=2025-08-25 but no evidence of any progress since. I searched (English + Chinese, government portals, trade press, DuckDuckGo/Bing) for any 2018-2026 news, EIA, land-use, or bidding document naming a Laibin 'Xincheng' gas branch and found none -- only unrelated Laibin-area projects (see validity note). That is ~8.5 years of total silence on a 'proposed' line, well past the 2-year proposed-with-no-progress dormancy threshold, so applying the standing dormancy rule independent of the existence question: shelved, Presumed, no fabricated ref. Note this is layered on top of an unresolved existence concern (see validity[]) -- if the pipeline is confirmed non-existent on further review, this status question is moot.",
+    "refs": []
+   },
+   "refs": [
+    "https://www.docin.com/p-2110410944.html",
+    "https://www.doc88.com/p-4791790273462.html"
+   ]
+  }
+ },
+ "P7689": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Daren-Nandan Branch",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "proposed",
+  "StartLocation": "Daren",
+  "EndLocation": "Nandan",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "97.00",
+  "LengthKnown": 97.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "confirmed (caveat)",
+     "concern_type": "none",
+     "recommendation": "No action on existence/classification/specs — retrieved the actual government source line item (via Wayback Machine, since fgw.gxzf.gov.cn itself ConnectTimeouts from this environment) and it matches GEM almost exactly.",
+     "notes": "GEM's cited ref (http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml) times out live from this sandbox, but the Wayback Machine has a clean 200 snapshot (2025-04-13) confirming the page is genuine: Guangxi Zhuang Autonomous Region Development & Reform Commission (DRC) notice '关于印发《广西能源基础设施建设2023年工作推进方案》的通知' (issued 2023-04-03, drafted 2023-03-25, doc# 桂发改电力〔2023〕205号). That notice links six attachment tables; Attachment 5 ('附表5：全区2023年能源项目投资计划表（油气及煤炭储运）', oil/gas & coal storage-transport investment table) is also Wayback-archived (2025-04-13, HTTP 200, valid .xlsx opened directly with openpyxl) and contains item #21: '大任—南丹天然气支线项目' (Daren-Nandan gas branch-line project) — an EXACT match to the GEM row: '新建输气管道约97公里...设计压力4.0兆帕，管径DN300' (new-build ~97km gas transmission pipeline, design pressure 4.0 MPa, diameter DN300) = LengthKnown 97 km, Diameter 300mm, Pressure 4.0 MPa all confirmed exact; 项目总投资 4.25亿元 = 425,000,000 RMB matches SegmentCost exactly; 项目业主 (project owner) 广西燃气集团有限公司 = 'Guangxi Gas Group Co Ltd' matches Owner1/Operator exactly. This is a real, correctly-classified (new transmission pipeline, not a gathering/feeder line) project — existence and classification confirmed. Checked the full 43-pipeline Guangxi roster for a name/route match — no other PID names Daren or Nandan; this is not a relabeling/duplicate of another row. Single-origin primary source (one government table row, but highly specific — includes a named responsible official and phone number, i.e. not a generic aggregate mention) so tier=medium rather than high; see separate concern entries below for two things this same source contradicts on GEM's sheet (location and proposal date).",
+     "proposed_refs": [
+      "http://web.archive.org/web/20250413122044/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml",
+      "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "attribution",
+     "recommendation": "Correct StartPrefecture/District and EndPrefecture/District from 'Laibin' to 'Hechi' (河池市). Also worth revisiting StartLocation 'Daren' — likely refers to the 市大任产业园 (Municipal Daren Industrial Park), a Hechi-city-level industrial park, not a place in Laibin.",
+     "notes": "GEM lists BOTH StartPrefecture/District and EndPrefecture/District as 'Laibin' for this row (and the worklist itself flags the Location [ref] cell as 'irregular': true). But GEM's own cited source — the same DRC 2023 investment-plan table row 29 — lists '项目管理层级' (jurisdiction/management level) as 河池市 (Hechi City) and '主要责任单位' (responsible approving unit) as 河池市发展改革委 (Hechi Municipal DRC), not Laibin. Nandan County (南丹县) is administratively one of Hechi City's counties, not Laibin's — Laibin is a separate, non-adjacent prefecture-level city in central Guangxi. Independent corroboration: a 163.com news article (www.163.com/dy/article/I1LS14H30552R5WK.html, published 2023-04-06, reporting on the same DRC notice) explicitly lists '大任—南丹天然气支线项目' among Hechi City's slate of energy projects ('还建设了金城江电站工程、大任—南丹天然气支线项目等项目' — grouped with the Jinchengjiang [a Hechi urban district] power project). A further web search surfaced a Hechi city-government news item referencing '河池·南丹工业园区、市大任产业园' (Hechi-Nandan Industrial Park, Municipal Daren Industrial Park) in the same sentence — consistent with 'Daren' being a Hechi-city-level industrial park, likely in or near Jinchengjiang District, not a Laibin location. Net: both endpoints point to Hechi, not Laibin — this looks like a straightforward prefecture mix-up on the existing row.",
+     "proposed_refs": [
+      "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx",
+      "https://www.163.com/dy/article/I1LS14H30552R5WK.html"
+     ]
+    },
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Re-derive ProposalYear/ProposalMonth. GEM has ProposalYear=2023 / ProposalMonth=12, but in the cited source table Dec-2023 ('2023-12') is the '开工年月' (planned construction-START month), a different field entirely, while the document that actually proposes/lists the project was issued 2023-04-03 (drafted 2023-03-25). It looks like the construction-start-month cell was copied into ProposalMonth by mistake. Recommend ProposalYear stays 2023 but ProposalMonth is corrected to 03 or 04 (matching the DRC notice's issuance), and — if the schema has a ConstructionYear/ConstructionMonth style field — the Dec-2023 value be moved there instead (flagged as planned, not confirmed-started; see status_reviews entry, no independent evidence construction actually began in Dec 2023 was found).",
+     "notes": "Row 29 of the same investment-plan table has both '开工年月' (construction start) = 2023-12-01 and '竣工年月' (completion) = 2024-12-01, plus '2023年建设任务' (2023 construction task) = '施工入场，开展项目征地' (enter construction site, carry out land acquisition) and '项目代码' (project code) = '未取得' (not yet obtained) — i.e. as of this March/April-2023 document the project hadn't even received a formal project code, consistent with a still-early 'proposed' project whose Dec-2023 date is a FORWARD-LOOKING construction-start target, not the date it was proposed. GEM's ProposalMonth=12 (December) reads as if it were lifted from that construction-start cell rather than from the document's own issuance date.",
+     "proposed_refs": [
+      "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "shelved",
+    "notes": "Newest independent evidence found is from April 2023 (the DRC notice, drafted 2023-03-25/issued 2023-04-03, plus a 2023-04-06 163.com writeup of the same announcement) — at that point the project had 未取得 project code (not yet obtained), was only slated to 'enter the construction site and begin land acquisition' in 2023, with a planned construction window of Dec-2023 to Dec-2024. Searched (WebFetch-routed DuckDuckGo/Bing, plus 163.com follow-through; the session's direct WebSearch tool budget was already exhausted by parallel fan-out agents before I could use it) for any later Guangxi DRC energy-plan update (2024/2025/2026), construction-start news, land-acquisition completion, or commissioning of this specific branch — found nothing beyond reprints of the same April-2023 notice. No indepen",
+    "refs": []
+   },
+   "refs": [
+    "http://web.archive.org/web/20250413122044/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml",
+    "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx",
+    "https://www.163.com/dy/article/I1LS14H30552R5WK.html"
+   ]
+  }
+ },
+ "P7690": {
+  "PipelineName": "Guangxi Gas Pipeline Network",
+  "SegmentName": "Laibin Branch (Xingbin-Wuxuan Segment)",
+  "zh_pipeline": "广西天然气支线管网",
+  "zh_segment": null,
+  "Status_sheet": "construction",
+  "StartLocation": "Xingbin",
+  "EndLocation": "Wuxuan",
+  "StartProvince": "Guangxi",
+  "EndProvince": "Guangxi",
+  "LengthMergedKm": "64.00",
+  "LengthKnown": 64.0,
+  "pilot": {
+   "validity": [
+    {
+     "verdict": "concern",
+     "concern_type": "spec",
+     "recommendation": "Existence/classification are solid (real, under-construction gas branch line, correct developer). But verify/correct Diameter: GEM records a bare 250 (mm) while every independent source found describes this Laibin-branch trunk as 273.1mm OD pipe -- and this tracker's own convention elsewhere records that exact pipe class as '273.10' (two-decimal OD), not '250'. Recommend changing Diameter to 273.10mm unless a segment-specific spec sheet is found that truly supports 250 (nominal DN) as distinct from OD. Also spot-check Length (64.0km) and Capacity (0.30 bcm/y) against a primary segment-level document if one becomes reachable -- neither could be pinned to this exact sub-segment from sources we could reach.",
+     "notes": "EXISTENCE/CLASSIFICATION: confirmed by two independent, verified, non-GEM sources that both name this exact segment. (1) Sina News (k.sina.com.cn), dated 2022-12-20: reports the groundbreaking ceremony for '广西燃气集团来宾天然气支线管道工程暨三江口新区天然气管道项目' at Liumian village, Chengxiang town, Xingbin District, on National Highway 314; developer Guangxi Gas Group Co Ltd; describes the Laibin branch route running Laibin distribution station -> Xingbin -> Wuxuan -> Xiangzhou -> Jinxiu Yao Autonomous County -> Jinxiu distribution station, with 3 new distribution stations, 1 refurbished station, 4 valve chambers; cites project-level pipe diameter 273.1mm, design pressure 4.0 MPa, design capacity 187 million m3/y (0.187 bcm/y), investment RMB 4.78 billion. (2) Laibin Daily (epaper.lbnews.com.cn), the city's official newspaper, dated 2023-08-09: public notice that the EIA report for '广西天然气支线管网项目来宾天然气支线管道工程（兴宾-武宣段）' -- i.e. this exact Xingbin-Wuxuan segment -- had been completed and was open for public comment, developer Guangxi Gas Group Co Ltd. Both sources match GEM's segment name, pipeline family, operator/owner and commodity exactly, so I'm confident this segment is real and correctly classified as a gas transmission branch line (not gathering/process line). The row's own cited ref (fgw.gxzf.gov.cn/.../t16217273.shtml) could not be verified -- it, and every other fgw.gxzf.gov.cn / dnr.gxzf.gov.cn URL surfaced during this audit, returned ConnectTimeout via url_verifier and ECONNREFUSED via WebFetch from this environment on repeated tries; Chinese provincial-government sites often geo-block requests from outside China, so this is inconclusive about the ref's validity, just unverifiable by us -- flagging for anyone with China-network access to re-check, not asserting the ref is dead. DUPLICATE: not a duplicate of any other roster PID -- no other of the 43 in-scope rows references Wuxuan, Xiangzhou or Jinxiu; a separate, related project on the same program ('Xingbin-Sanjiangkou segment', 43.7km, reached mechanical completion Nov 2025 per Sinopec contractor reporting) is a genuinely different route (toward Sanjiangkou New District, not Wuxuan) and is not represented in this 43-PID roster at all -- flagging as a side note only, out of scope for P7690 itself. SPEC: GEM Diameter=250mm (no decimal) is inconsistent with the 273.1mm OD figure both the Sina article and general reporting of the project-approval document (t13004479.shtml, unreachable to verify directly) give for this trunk; 273.1mm is also the standard Chinese OD for nominal DN250 pipe, and this same tracker records that exact pipe class elsewhere as '273.10' with two decimals -- strongly suggesting the P7690 row entered the DN (nominal) value into the OD-style Diameter field. Length: GEM's 64.0km for just the Xingbin-Wuxuan sub-segment is plausible against the ~148km aggregate figures reported for downstream/whole-route portions, but I could not independently source a document giving 64km (or any other number) specifically for the Xingbin-Wuxuan portion alone via a citable, verified URL, so treat with medium confidence rather than as confirmed. Capacity: GEM's 0.30 bcm/y (300 million m3/y) for this upstream sub-segment is arithmetically higher than the ~187 million m3/y (0.187 bcm/y) design-capacity figure the Sina piece gives for the branch overall, which is mildly inconsistent (an upstream segment's capacity is not usually less than the whole route's design figure) -- but that 187 figure itself came through an AI-summarized search result, not a document I verified directly, so I'm flagging rather than asserting either number wrong. Minor date-logic note: ProposalYear=2023 (Jan) postdates the Dec 2022 groundbreaking reported by Sina; plausible if 2023 reflects a later formal regulatory approval/批复 rather than the original public announcement, but worth a light check if anyone finds the original proposal announcement.",
+     "proposed_refs": [
+      "https://k.sina.com.cn/article_7517400647_1c0126e4705903ubaw.html",
+      "https://epaper.lbnews.com.cn/pc/content/202308/09/content_148758.html"
+     ]
+    }
+   ],
+   "status_review": {
+    "proposed": "construction",
+    "notes": "Searched for segment-specific news dated after the sheet's 2025-08-25 update, in Chinese, focused on '兴宾-武宣段' / '兴宾—武宣段'. Direct evidence for THIS exact segment tops out at 2023-08-09 (Laibin Daily EIA public-comment notice) -- no later news naming Xingbin-Wuxuan specifically was found (gxzf.gov.cn/dnr.gxzf.gov.cn government pages that likely hold the newest approvals are unreachable from this environment, ConnectTimeout/ECONNREFUSED on every attempt). However, a SIBLING segment on the same overall Laibin-branch program -- 'Xingbin-Sanjiangkou segment', a separate route, contractor Sinopec Henan Oil Construction -- only reached mechanical-completion inspection on 2025-11-13 (verified, entrepreneurdaily.cn), showing the broader multi-segment build-out is still actively under construction th",
+    "refs": [
+     "https://epaper.lbnews.com.cn/pc/content/202308/09/content_148758.html",
+     "https://k.sina.com.cn/article_7517400647_1c0126e4705903ubaw.html",
+     "http://www.entrepreneurdaily.cn/2025-11-24/5/2442928.html"
+    ]
+   },
+   "refs": [
+    "https://k.sina.com.cn/article_7517400647_1c0126e4705903ubaw.html",
+    "https://epaper.lbnews.com.cn/pc/content/202308/09/content_148758.html",
+    "http://www.entrepreneurdaily.cn/2025-11-24/5/2442928.html"
+   ]
+  }
+ }
+}

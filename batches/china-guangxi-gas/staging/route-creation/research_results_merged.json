@@ -1,0 +1,742 @@
+{
+ "P7149": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "中海油涠洲终端",
+   "name_en": "CNOOC Weizhou Terminal (Weizhou oilfield associated-gas processing terminal, Weizhou Island)",
+   "lon": 109.0871,
+   "lat": 21.0453,
+   "geocode_source": "Nominatim query '涠洲终端' -> OSM way 271082275 '中海油涠洲终端' (industrial landuse), 涠洲镇, 海城区, 北海市",
+   "refs": [
+    "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+    "https://m.thepaper.cn/newsDetail_forward_22665351"
+   ]
+  },
+  "end": {
+   "name_zh": "铁山港登陆点接收站（未见具体命名）",
+   "name_en": "Unnamed receiving station at the Tieshan Port landfall point (pigging/filtering/metering station)",
+   "lon": 109.4793,
+   "lat": 21.5623,
+   "geocode_source": "Both cited sources use identical phrasing '在铁山港登陆点建设一座...接收站' with no proper station name given; anchored to Nominatim query '铁山港区' -> OSM relation 3241956 administrative-boundary centroid, 北海市 (county/district level, not a station-level fix)",
+   "refs": [
+    "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+    "https://m.thepaper.cn/newsDetail_forward_22665351"
+   ]
+  },
+  "corridor_notes": "~70km subsea pipeline (CNOOC's '涠北管线'/Weibei line) between Weizhou Island and Tieshan Port, Beihai. Sources state the pipe runs directly between the Weizhou terminal and the Tieshan Port landfall receiving station with no named intermediate onshore waypoints (subsea route). One routing detail: in Jan 2023 the line crossed beneath Beihai's planned 300,000-DWT shipping channel near Weizhou Island; to avoid impacting the channel the project team used sea-to-sea trenchless horizontal directional drilling (HDD), routing the pipe 18-22m below the seabed through the mud layer beneath the planned channel. Commissioned/gas-in 2023-04-11, 13 days ahead of schedule.",
+  "route_refs": [
+   "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+   "https://m.thepaper.cn/newsDetail_forward_22665351",
+   "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Builds on the pilot digest's confirmed-existence finding (medium tier per standing rule 4: sasac.gov.cn/thepaper.cn/ndrc.gov.cn are one CNOOC/state-media announcement reprinted across three hosts, not editorially independent). This pass re-verified all three URLs live (all 200) and pulled the raw article text directly (curl, not AI-summarized) to confirm the precise start/end station language: start = '涠洲终端' (Weizhou terminal, on Weizhou Island, matched to a named OSM industrial feature '中海油涠洲终端'); end = an unnamed receiving station built specifically for this project at the 'Tieshan Port landfall point' ('铁山港登陆点'), fitted with pigging-receiver/filter/metering functions. No source found (including a re-check of the SASAC/thepaper/NDRC texts and a search for the prior pass's leads) gives the receiving station a proper name, a village/township-level location, or coordinates, so the end anchor is geocoded only to the Tieshan Port District (铁山港区) centroid, not a station-level fix. No GIS/vector layer found.",
+  "blockers": "End-point precision is district-level only: no source names or precisely locates the Tieshan Port receiving station beyond 'Tieshan Port landfall point'. A human researcher with China-based network access could try the still-unreachable fgw.gxzf.gov.cn notice (t16217273.shtml) that the sheet cites for Diameter/Pressure/ProposalYear, which might carry a more specific siting description, but it has been unreachable (ConnectTimeout) across two independent research passes.",
+  "_group": "beihai"
+ },
+ "P7664": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "中石化广西三期LNG接收站（南部环网段起点，围墙外2米）",
+   "name_en": "Sinopec Guangxi Phase-3 LNG Receiving Terminal (start of the project's south loop network segment, 2m outside its wall)",
+   "lon": 109.4793,
+   "lat": 21.5623,
+   "geocode_source": "No OSM/Overpass feature found for '中石化广西LNG接收站' or 'Sinopec'+'LNG' within a Tieshan Port District bounding box (21.27-21.68N, 109.30-109.62E) — LNG terminal is not individually mapped in OSM. Anchored to Nominatim '铁山港区' -> OSM relation 3241956 administrative-boundary centroid as a district-level fallback.",
+   "refs": [
+    "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681"
+   ]
+  },
+  "end": {
+   "name_zh": "兴港分输站",
+   "name_en": "Xinggang Distribution Station (end of the south loop network segment)",
+   "lon": 109.5376,
+   "lat": 21.5832,
+   "geocode_source": "Nominatim query '兴港' bounded to Tieshan Port District -> OSM node 5133273338 '兴港镇' (Xinggang Town), 铁山港区, 北海市 — town centroid, matches the distribution station's name; not a station-level fix.",
+   "refs": [
+    "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681"
+   ]
+  },
+  "corridor_notes": "SPECIAL NOTE: this is a branching network, not a single point-to-point line — the project's own safety-evaluation registry entry (hnocse.com) describes TWO pipe segments under one project name ('广西天然气支线管网项目铁山港天然气支线管道工程'): (1) a 3.14km 'gas-source connector line' (气源联络线) from 2m outside the wall of Guangxi Pipeline's Beihai First Station (广西管道北海首站) to this project's #1 valve chamber (1#阀室); and (2) a 25.89km 'south loop network' (南部环网管道) from 2m outside the wall of Sinopec's Guangxi Phase-3 LNG receiving station (中石化广西三期LNG接收站) through the #1 valve chamber, Tieshan Port first station (铁山港首站), and Nanzhuwan distribution station (南珠湾分输站), terminating at Xinggang distribution station (兴港分输站). Combined length ~29.0km (close to GEM's recorded 30km). Given the topology, the two anchors chosen for candidate-route purposes are the Sinopec LNG terminal (south-loop start / effective gas source for the loop) and Xinggang distribution station (loop terminus); the gas-source connector to Beihai First Station and the three intermediate stations (#1 valve chamber, Tieshan Port first station, Nanzhuwan distribution station) should be treated as required waypoints/branch points on any drawn route, not skipped as a straight line between the two anchors. Large-diameter (DN800/DN500 per pilot digest), high-pressure (10/6.3 MPa) branch trunk.",
+  "route_refs": [
+   "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681",
+   "https://www.yanshougs.com/content/77385.html",
+   "https://web.archive.org/web/20250424053023/https://dnr.gxzf.gov.cn/sjcx/jsydys/t18328823.shtml"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Re-verified hnocse.com, yanshougs.com and the dnr.gxzf.gov.cn Wayback snapshot live this pass (all 200 via url_verifier). hnocse.com is the single best source found for this row: a safety-evaluation-industry registry entry that names the project and gives the exact two-segment route description with all station names (quoted in corridor_notes). Could not geocode the Sinopec LNG terminal, Beihai First Station, #1 valve chamber, Tieshan Port first station, or Nanzhuwan distribution station individually — none appear in OSM/Overpass under these names within the Tieshan Port District bounding box, so the LNG terminal start anchor falls back to the district centroid (coarser than the confirmed town-level fix for Xinggang). No GIS/vector layer found. Per the pilot digest's own cross-check: a separately-reported 'Tieshan East Port gas branch pipeline project' (铁山东港天然气支线管道项目, Feb-2024 equity-acquisition report) that the prior pass flagged as a possible undiscovered THIRD Beihai-area pipeline appears, on this pass's reading of P7665's sourcing, to actually just BE P7665 (Donggang Industrial Park branch) under an alternate name — same operator chain (广投管网公司/天圜能源(广西)有限公司 both named in P7665's own commissioning article) — so that lead is resolved, not a new discovery candidate.",
+  "blockers": "Sinopec LNG terminal and the three named intermediate stations (#1阀室, 铁山港首站, 南珠湾分输站) could not be individually geocoded — none found in OSM/Overpass by name within the district. Diameter breakdown (800/500/400mm — third value unconfirmed) and SegmentCost discrepancy flagged by the pilot digest remain open and are outside this route-creation task's scope.",
+  "_group": "beihai"
+ },
+ "P7665": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "国家管网白沙输气站",
+   "name_en": "PipeChina Baisha Gas Transmission Station",
+   "lon": 109.6842,
+   "lat": 21.7064,
+   "geocode_source": "Nominatim query '合浦县白沙镇' -> OSM node 5133129625 '白沙镇' (Baisha Town), 合浦县, 北海市 — town centroid, matches GEM's StartLocation 'Hepu Baisha' and the station's township exactly.",
+   "refs": [
+    "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783"
+   ]
+  },
+  "end": {
+   "name_zh": "榄根分输站",
+   "name_en": "Langgen Distribution Station (Tieshan Donggang Industrial Park)",
+   "lon": 109.6115,
+   "lat": 21.6051,
+   "geocode_source": "Nominatim query '榄根' bounded to Beihai/Hepu -> OSM way 991683301 '榄根路' (Langgen Road), 合浦县, 北海市, adjacent to OSM way 1135120005 '铁山东港区玉林海港码头' (Tieshan Donggang Yulin sea port terminal) confirming the industrial-park location; road centroid used as a proxy for the co-located station.",
+   "refs": [
+    "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783"
+   ]
+  },
+  "corridor_notes": "12.6km branch ('东港支线') from PipeChina's national-trunk Baisha gas transmission station (国家管网白沙输气站, Baisha Town, Hepu County) to Langgen distribution station (榄根分输站) inside the Tieshan Donggang Industrial Park (铁山东港产业园), on the Hepu County/Tieshan Port District boundary. Design pressure 4 MPa. Built/operated by Guangxi Beihai Guangtou Gas Co. (广西北海广投燃气有限公司) with 广投管网公司 (Guangxi Investment Group's pipeline-network subsidiary). Gas-in/pressure test completed 2024-03-29 (18:35 gas from Baisha reached Langgen; pressure test to 3.8MPa completed 2024-03-29 14:06); official commissioning with first industrial customers (新福兴, 长利 — both glass manufacturers) 2024-08-19.",
+  "route_refs": [
+   "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783",
+   "http://www.gigeps.com/cms/channel/xmgg4fw/61178.htm"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Re-verified gxbhlg.com and gigeps.com live this pass (both 200). gxbhlg.com (the project co-developer's own news page) is a strong single-source route description naming both stations and the exact 12.6km length directly. nengyuanquan.com (the pilot digest's second corroborating source, syndicating the same story with commissioning-date detail) failed url_verifier this pass (ConnectTimeout) and the Wayback API was rate-limited (429) on repeated attempts, so it is NOT included as a ref here even though the pilot digest read it successfully — flagging as a re-check item. gigeps.com/61178 (2025-06-27 feasibility-study procurement notice for a FOLLOW-ON project in the same industrial park) corroborates the area's active buildout but does not itself name P7665's two endpoint stations. Pilot digest already checked P7665 against the roster (incl. P7664) for duplicates and found none (different route, different status, different diameter class) — reconfirmed on this pass; not a duplicate.",
+  "blockers": null,
+  "_group": "beihai"
+ },
+ "P7666": {
+  "resolution": "PARTIAL",
+  "start": {
+   "name_zh": null,
+   "name_en": null,
+   "lon": null,
+   "lat": null,
+   "geocode_source": null,
+   "refs": []
+  },
+  "end": {
+   "name_zh": null,
+   "name_en": null,
+   "lon": null,
+   "lat": null,
+   "geocode_source": null,
+   "refs": []
+  },
+  "corridor_notes": "No route information exists for this row. GEM's StartLocation/EndLocation are both blank and LengthKnown is blank ('--'). The row's only citation (news.bjx.com.cn, 2021-03-26) is an Aliyun-WAF-obfuscated anti-bot page unreadable by any tool tried across two research passes (curl, WebFetch, and a fresh Wayback-snapshot attempt this pass, which was rate-limited 429 on the Wayback availability API after repeated tries by parallel sibling agents in this batch). Open web search for '北海支线'/'Beihai branch' gas pipeline turned up nothing describing a THIRD, distinct piece of Beihai-area gas infrastructure beyond the two already-tracked, well-documented sub-projects P7664 (Tieshan Port loop, still proposed) and P7665 (Donggang Industrial Park branch, now operating) — consistent with the pilot digest's own conclusion.",
+  "route_refs": [],
+  "duplicate_of": "P7664",
+  "map_or_vector": null,
+  "researcher_notes": "No new sourcing found beyond the pilot digest (WebSearch budget for this session was exhausted before this PID could be researched fresh; relying on the pilot digest's search coverage plus a re-check of the one cited URL and one more Wayback attempt, both unsuccessful). P7666's SegmentName 'Beihai Branch' (alt name '北海支线') most closely echoes P7664's segment name ('Beihai Tieshan Port loop gas pipe line') and status (both 'proposed'/unbuilt), rather than P7665 ('Donggang Industrial Park branch', already 'operating' as a concretely differentiated later sub-project) — so duplicate_of is set to P7664 as the best single candidate per the task's instruction to name one, while flagging that P7666 may equally be an undifferentiated placeholder for the WHOLE Beihai-area buildout (i.e., a precursor stub that was later split into both P7664 and P7665, rather than a clean duplicate of either one alone). Recommend Baird/CB treat this as a merge/retirement candidate against P7664+P7665 jointly, per the pilot digest's original recommendation, rather than a straightforward 1:1 duplicate.",
+  "blockers": "No coordinates possible — zero sourced location data exists for this row and its only citation is unreadable by any tool available. Cannot produce candidate route geometry. Recommend retiring/merging this row rather than continuing to chase a route for it.",
+  "_group": "beihai"
+ },
+ "P7679": {
+  "resolution": "PARTIAL",
+  "start": {
+   "name_zh": "兴宾区",
+   "name_en": "Xingbin District, Laibin",
+   "lon": 109.2307732,
+   "lat": 23.729648,
+   "geocode_source": "Nominatim query 'Xingbin District, Laibin, Guangxi, China' (OSM node 6416739750, city/district-level; no finer station or township was sourced for this row)",
+   "refs": []
+  },
+  "end": {
+   "name_zh": "合山市",
+   "name_en": "Heshan City",
+   "lon": 108.8855377,
+   "lat": 23.8144989,
+   "geocode_source": "Nominatim query 'Heshan, Laibin, Guangxi, China' (OSM node 244080578, city-level; no finer station or township was sourced for this row)",
+   "refs": []
+  },
+  "corridor_notes": "GEM row = Heshan Branch of the Guangxi Gas Branch Pipeline Network (广西天然气支线管网项目合山天然气支线管道工程), operator Guangxi Gas Group (广西广投天然气管网有限公司); Xingbin District -> Heshan City, ~33km, proposed. The pilot (prior) pass located two 2019 government filings that independently name this exact project -- a Guangxi Dept. of Natural Resources land-use pre-review (dnr.gxzf.gov.cn t16421841, doc 桂自然资预审〔2019〕49号, dated 2019-07-24) and a Guangxi DRC core-approval (fgw.gxzf.gov.cn t10409864, ~2019-09-27, investment RMB 128.02M -- an exact match to GEM's SegmentCost) -- confirming existence and general corridor (Xingbin to Heshan), but neither document names a specific 分输站 (distribution station) or township along the route. This session re-attempted both live and via Wayback Machine; neither was reachable (see blockers). No alternate publication naming a finer point was found before this session's WebSearch budget was exhausted.",
+  "route_refs": [],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Existence of this exact branch is independently corroborated (2019 land-use pre-review + DRC core-approval, investment figure exact match to GEM) even though neither underlying document could be re-fetched this session. Per the pilot's separate status_review (out of scope for this route-creation task), this branch shows no independently-dated activity after 2019 -- 7 years dormant vs. sibling branches on the same program (e.g. Qianjiang) that show 2025 activity -- a 'shelved' status recommendation is already logged elsewhere.",
+  "blockers": "No verifiable ([ref]-passable) URL was found for either endpoint at station or township granularity, matching the outcome anticipated in this task's SPECIAL NOTES. The two known primary documents (dnr.gxzf.gov.cn t16421841; fgw.gxzf.gov.cn t10409864) are on the gxzf.gov.cn domain family, which ConnectTimeouts/ECONNREFUSEDs from this environment on every attempt (curl and WebFetch). Wayback Machine (archive.org) lookups for these two URLs returned persistent HTTP 429 (rate-limited) throughout this session, likely from concurrent sibling agents sharing this sandbox's egress IP -- could not obtain an archived snapshot either. Coordinates given are county/city-level Nominatim centroids only, not a sourced pipeline endpoint or station.",
+  "_group": "laibin"
+ },
+ "P7690": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "城厢镇",
+   "name_en": "Chengxiang Town, Xingbin District, Laibin",
+   "lon": 109.2462902,
+   "lat": 23.7398029,
+   "geocode_source": "Nominatim query '城厢镇, 来宾市, 广西' (OSM node 3784998846, town-level)",
+   "refs": [
+    "https://k.sina.com.cn/article_7517400647_1c0126e4705903ubaw.html"
+   ]
+  },
+  "end": {
+   "name_zh": "武宣县",
+   "name_en": "Wuxuan County",
+   "lon": 109.6583496,
+   "lat": 23.5965829,
+   "geocode_source": "Nominatim query 'Wuxuan County, Guangxi, China' (OSM relation 2775861, county-level; no finer station or township was sourced for the Wuxuan side of this segment)",
+   "refs": [
+    "https://epaper.lbnews.com.cn/pc/content/202308/09/content_148758.html"
+   ]
+  },
+  "corridor_notes": "GEM row = Laibin Branch, Xingbin-Wuxuan Segment (广西天然气支线管网项目来宾天然气支线管道工程（兴宾-武宣段）), operator Guangxi Gas Group, under construction. Sina News (k.sina.com.cn, 2022-12-20, verified) reports the groundbreaking ceremony for the wider Laibin branch (来宾天然气支线管道工程暨三江口新区天然气管道项目) took place at Liumian village (刘冕村), Chengxiang town (城厢镇), Xingbin District, on National Highway 314 -- village-level precision, but Liumian village itself did not resolve in Nominatim, so the town centroid is used as the plotted start point. The same article describes the overall Laibin-branch route as Laibin distribution station -> Xingbin -> Wuxuan -> Xiangzhou -> Jinxiu, pipe OD 273.1mm, 4.0MPa design pressure. Laibin Daily (epaper.lbnews.com.cn, 2023-08-09, verified) separately confirms the EIA for this EXACT sub-segment (兴宾-武宣段) was completed and open for public comment, developer Guangxi Gas Group -- confirming the segment terminates in Wuxuan County, but without naming a specific Wuxuan-side station or township. A separate 2019-era dnr.gxzf.gov.cn land-use approval (t19512609, unreachable/unverified this session) additionally names Nansi Township (南泗乡) and Mengcun Town (蒙村镇) within Xingbin District as land crossed by the '兴宾段' (Xingbin portion) of this same project -- consistent context, not used as a cited ref since the page itself is unreachable.",
+  "route_refs": [
+   "https://k.sina.com.cn/article_7517400647_1c0126e4705903ubaw.html",
+   "https://epaper.lbnews.com.cn/pc/content/202308/09/content_148758.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Pilot pass already flagged a Diameter spec concern (GEM records a bare 250mm while every independent source gives 273.1mm OD) -- out of scope for this route-creation task, noted for the parallel validity-fix workstream. The groundbreaking-ceremony location (Chengxiang town) is a reasonable proxy for a route start point but is not itself confirmed as the literal pipeline terminus/station -- flagging as a caveat for the human router.",
+  "blockers": "Wuxuan-side endpoint is sourced only to county granularity -- no station/township-level document was found or reachable this session (the analogous dnr.gxzf.gov.cn land-use filing for the '武宣段' portion, mirroring the Xingbin-side t19512609 filing, was not located before the WebSearch budget was exhausted).",
+  "_group": "laibin"
+ },
+ "P7678": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "蒙圩镇",
+   "name_en": "Mengwei (Mengxu) Town, Guiping City",
+   "lon": 109.9895798,
+   "lat": 23.3205383,
+   "geocode_source": "Nominatim query '蒙圩镇, 桂平市, 广西' (OSM node 3505531438, town-level)",
+   "refs": [
+    "http://www.gigeps.com/cms/channel/xmgg1fw/499.htm"
+   ]
+  },
+  "end": {
+   "name_zh": "镇隆镇",
+   "name_en": "Zhenlong Town, Pingnan County",
+   "lon": 110.410498,
+   "lat": 23.411945,
+   "geocode_source": "Nominatim query 'Zhenlong Town, Pingnan County, Guangxi, China' (OSM node 3505204982, town-level); the route source additionally names Zhuangzhai Village (庄寨村) within this town as the exact distribution-station site, but that village did not resolve in Nominatim",
+   "refs": [
+    "http://www.gigeps.com/cms/channel/xmgg1fw/499.htm"
+   ]
+  },
+  "corridor_notes": "GEM row = Pingnan Branch (广西天然气支线管网项目平南天然气支线管道工程), operator Guangxi Gas Group, GEM Status=cancelled/CancelledYear=2024 (pilot pass found this contradicted by the row's own cited ref, which actually reads as a 2020 approval-extension, not a cancellation notice -- separate status_review finding, out of scope here). gigeps.com (verified; a project-information portal republishing the EIA route description) gives a precise route: starts at Guiping distribution station in Mengwei/Mengxu Town (蒙圩镇), Guiping City; runs ~5.7km east crossing the Xiajiang River to valve station #17; ~9.6km further east (parallel to the existing West-2nd-Line Nanning branch) crossing the Yujiang River to the Shesbu valve station; ~14.2km further crossing the Guiwa Expressway and Nanguang high-speed rail; ~8km northeast to the Shespo valve station; then enters Pingnan County through Mule Township and terminates at Pingnan Distribution Station in Zhuangzhai Village (庄寨村), Zhenlong Town (镇隆镇). Total ~58km per this source (55.3km Guiping + 2.7km Pingnan) vs. GEM's 63.00km -- broadly consistent (treated as a rounding/methodology difference, not a contradiction).",
+  "route_refs": [
+   "http://www.gigeps.com/cms/channel/xmgg1fw/499.htm",
+   "http://www.docin.com/p-2248181920.html",
+   "http://www.eiafans.com/thread-1155304-1-1.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Endpoint place names (Mengwei/Mengxu Town start; Zhuangzhai Village/Zhenlong Town end) are the most precise found -- village-level for the end point per the source prose -- but Nominatim could not resolve either specific village, so town-level centroids stand in as the plotted coordinates. A human router could refine geometry further using the valve-station chain (17# valve station, Shesbu valve station, Shespo valve station, Mule Township) described in corridor_notes if finer intermediate waypoints are wanted. Two spellings appear for the start town across sources ('蒙圩镇' in government-filing titles vs. 'Mengwei' in the gigeps.com English-rendered summary) -- same place, 蒙圩镇/Mengxu Town, Guiping.",
+  "blockers": null,
+  "_group": "laibin"
+ },
+ "P7689": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "市大任产业园（河池市金城江区一带，近似）",
+   "name_en": "Municipal Daren Industrial Park, Hechi City (Jinchengjiang District used as a proxy)",
+   "lon": 108.0331781,
+   "lat": 24.6923245,
+   "geocode_source": "Nominatim query '金城江区, 河池市, 广西' (OSM node 619176423, district/city-level) used as a proxy -- '大任产业园' (Daren Industrial Park) itself did not resolve in Nominatim and its exact location within Hechi was not independently sourced this session",
+   "refs": [
+    "https://www.163.com/dy/article/I1LS14H30552R5WK.html"
+   ]
+  },
+  "end": {
+   "name_zh": "南丹县",
+   "name_en": "Nandan County",
+   "lon": 107.5383659,
+   "lat": 24.9788462,
+   "geocode_source": "Nominatim query '南丹, 河池市, 广西' (OSM node 244081386, county-seat/city-level)",
+   "refs": [
+    "https://www.163.com/dy/article/I1LS14H30552R5WK.html"
+   ]
+  },
+  "corridor_notes": "GEM row = Daren-Nandan Branch ('大任—南丹天然气支线项目'), operator Guangxi Gas Group, proposed. The pilot pass retrieved the actual government line-item via Wayback Machine (fgw.gxzf.gov.cn t16217273.shtml notice + its Attachment-5 investment-plan xlsx, snapshotted 2025-04-13): ~97km new-build transmission pipeline, DN300, 4.0MPa, RMB 425M investment, owner Guangxi Gas Group -- an exact match to GEM's specs. That same source table lists '项目管理层级' (jurisdiction/management level) as Hechi City (河池市), not Laibin as GEM's sheet currently records (see the pilot's separate attribution concern -- out of scope for this route-creation task, but the geocoding in this file follows Hechi, not Laibin, per that finding). 163.com (2023-04-06, verified this session) independently reports the same DRC notice and explicitly groups this project ('大任—南丹天然气支线项目') among Hechi City's slate of energy projects, alongside the Jinchengjiang power project -- corroborating the Hechi attribution and confirming Nandan as the terminus. Neither source pins 'Daren' to a specific township within Hechi (it is presumed to be 市大任产业园, a city-level industrial park, but its exact location was not found this session) -- Jinchengjiang District, Hechi's main urban district, is used only as a coordinate proxy.",
+  "route_refs": [
+   "https://www.163.com/dy/article/I1LS14H30552R5WK.html",
+   "http://web.archive.org/web/20250413122044/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/t16217273.shtml",
+   "http://web.archive.org/web/20250413122355/http://fgw.gxzf.gov.cn/zfxxgkzl/wjzx/tzgg/P020230920437194637655.xlsx"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Pilot pass already flagged that StartPrefecture/District and EndPrefecture/District should be corrected from 'Laibin' to 'Hechi' (河池市), and that ProposalMonth (12) is likely a mis-copy of a construction-start-month field rather than the true proposal date -- both out of scope for this route-creation task, noted here for the parallel validity-fix workstream. Start-point precision is the main open gap for route creation: 'Daren' as a named place could not be independently pinned to a township/village this session.",
+  "blockers": "Daren Industrial Park's precise location within Hechi City is not independently sourced -- the start coordinate is a Jinchengjiang-District-level proxy, not a geocoded hit on 'Daren' itself. The Wayback xlsx attachment (route-level table) intermittently fails to load (ConnectionError on repeat attempts, though it returned HTTP 200 at least once this session and was opened directly with openpyxl during the pilot pass) -- treat as flaky-but-real, a known binary-file false-negative pattern for url_verifier, not evidence the page is dead.",
+  "_group": "laibin"
+ },
+ "P7662": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "临桂区",
+   "name_en": "Linggui District, Guilin",
+   "lon": 110.2077616,
+   "lat": 25.2418788,
+   "geocode_source": "Nominatim query '临桂区, 桂林市, 广西' (OSM node 4452850266, district/city-level); the EIA notice names Shanggaoqiao Village (上高桥村) within Linggui as an affected village, but that village did not resolve in Nominatim",
+   "refs": [
+    "http://epaper.gxrb.com.cn/gxrb2/html/2021-11/15/content_1805920.htm"
+   ]
+  },
+  "end": {
+   "name_zh": "荔浦市（荔城镇）",
+   "name_en": "Lipu City (Licheng Town, the county seat)",
+   "lon": 110.3948573,
+   "lat": 24.4869232,
+   "geocode_source": "Nominatim query 'Lipu, Guilin, Guangxi, China' (OSM node 703052953, 荔城镇 town-level -- Lipu's county seat)",
+   "refs": [
+    "http://epaper.gxrb.com.cn/gxrb2/html/2021-11/15/content_1805920.htm"
+   ]
+  },
+  "corridor_notes": "GEM row = Guilin-Yangshuo-Lipu Branch, officially '广西天然气支线管网项目桂林—阳朔—荔浦天然气支线管道工程' per the row's own (unreachable) fgw.gxzf.gov.cn ref (t2198137), later also referred to as '桂东北天然气环网桂林-阳朔-荔浦段' (Northeast-Guilin gas ring network) in 2022-2023 government/press coverage -- same physical route, developer PipeChina Southwest Oil & Gas Pipeline Co., Nanning Branch. Guangxi Daily (epaper.gxrb.com.cn, 2021-11-15, verified) EIA public-comment notice names Shanggaoqiao Village (上高桥村) and Xiazhuang among affected villages within Guilin, and gives the construction company as the PipeChina Southwest Nanning branch -- consistent with a Linggui District start. General (non-single-URL) reporting breaks the ~100km route down as ~50km in Linggui District, ~32km in Yangshuo County, ~18km in Lipu; GEM's own EndLocation=Lipu with StartLocation left null in the sheet, so Linggui is used as the plotted start here on the strength of the Guangxi Daily notice's Guilin-area village names plus that county-level breakdown. Liuzhou Investment Promotion Bureau's republication of a Guangxi Daily energy-project roundup (tzcjj.liuzhou.gov.cn, 2023-04-07, verified) independently confirms the ring-network project as one of 11 'continuing construction' (续建) oil/gas projects in Guangxi's 2023 plan -- corroborates the pilot's status_review finding that this project is past 'proposed' by 2023 (a status-staleness item, out of scope here), not a route detail.",
+  "route_refs": [
+   "http://epaper.gxrb.com.cn/gxrb2/html/2021-11/15/content_1805920.htm",
+   "http://tzcjj.liuzhou.gov.cn/xwzx/lzdt/t19700101_3248714.shtml"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "GEM's own StartLocation cell is null for this row -- Linggui District is inferred here from independent sourcing (Guangxi Daily's affected-village list + a general county-level length breakdown), not copied from GEM. Recommend a human reviewer confirm Linggui (临桂, not the similarly-named neighboring Lingchuan/灵川) before finalizing -- Linggui is the district explicitly named in the length breakdown and matches the 临政函〔2019〕9号 Lingui District government route/valve-chamber approval referenced in search results (unreachable to verify directly this session, cited only as directional corroboration, not a formal ref in this file).",
+  "blockers": null,
+  "_group": "laibin"
+ },
+ "P7657": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "柳州分输站（柳南区太阳村镇新圩村）",
+   "name_en": "Liuzhou Distribution Station (Xinxu Village, Taiyangcun Town, Liunan District) -- expanded under this project",
+   "lon": 109.305924,
+   "lat": 24.372428,
+   "geocode_source": "Nominatim query '新圩村,柳南区' (https://nominatim.openstreetmap.org/search?q=%E6%96%B0%E5%9C%A9%E6%9D%91%2C%E6%9F%B3%E5%8D%97%E5%8C%BA) -- village-level administrative boundary centroid. Village/town name comes from the gxtngs.com.cn EIA notice ('扩建柳州分输站') describing the project as located in Liunan District & Liucheng County; GEM's own StartLocation field ('Liunan Taiyang Town') matches. This is the same 柳州分输站 station used as the terminus of sibling branch P7673 (Liujiang Branch), per that segment's own sourcing.",
+   "refs": [
+    "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml",
+    "http://www.gxtngs.com.cn/newsitem/30971",
+    "http://www.gxtngs.com.cn/newsitem/30942"
+   ]
+  },
+  "end": {
+   "name_zh": "柳城分输站（柳城县沙浦镇，三北高速柳城服务区西侧）",
+   "name_en": "Liucheng Distribution Station (Shapu Town, Liucheng County, west of the Sanbei Expressway Liucheng service area) -- newly built under this project",
+   "lon": 109.3302911,
+   "lat": 24.6081806,
+   "geocode_source": "Nominatim query '沙浦镇,柳城县' (https://nominatim.openstreetmap.org/search?q=%E6%B2%99%E6%B5%A6%E9%95%87%2C%E6%9F%B3%E5%9F%8E%E5%8E%BF) -- town-level administrative boundary centroid. The specific expressway-service-area descriptor comes from GEM's own EndLocation field ('柳城县沙浦镇三北高速柳城服务区西侧的柳城分输站'); county-level existence of a new '柳城分输站' is independently confirmed by liucheng.gov.cn ('新建柳城分输站') and gxtngs.com.cn ('新建柳城分输站、洛满阀室和社冲阀室').",
+   "refs": [
+    "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml",
+    "http://www.gxtngs.com.cn/newsitem/30971",
+    "http://www.gxtngs.com.cn/newsitem/30942"
+   ]
+  },
+  "corridor_notes": "~45-46km branch line linking the Liuzhou distribution station (Taiyangcun Town, Liunan District) to a newly built Liucheng distribution station (Shapu Town, Liucheng County), passing through the Luoman (洛满) and Shechong (社冲) valve chambers en route. Per liucheng.gov.cn, ~28km of the route lies within Liucheng County itself; per gxtngs.com.cn, total new pipeline is ~46km across both Liunan District and Liucheng County (close to GEM's LengthKnown=45km). Design pressure ~4 MPa per GEM.",
+  "route_refs": [
+   "http://www.liucheng.gov.cn/xxgk/fdzdgknr/tzgg/202106/t20210626_2837189.shtml",
+   "http://www.gxtngs.com.cn/newsitem/30971",
+   "http://www.gxtngs.com.cn/newsitem/30942"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Builds on the prior pilot pass, which already established existence/route/length via these same three refs (all three originally-cited sheet refs -- njsggzy.cn, fgw.gxzf.gov.cn, fgw.liuzhou.gov.cn -- are dead and should be swapped for these). This pass re-verified all three refs live via url_verifier.py and re-fetched the two gxtngs.com.cn EIA notices directly (raw curl, not AI-summarized) to confirm the literal route/station text: '本工程位于柳州市柳南区和柳城县，新建管道线路全长约46km，扩建柳州分输站，新建柳城分输站、洛满阀室和社冲阀室。' Diameter (323.9mm), capacity, pressure, cost, and exact proposal/construction/start dates remain unconfirmed by any live source (pilot's separate spec-concern entry) -- out of scope for endpoint geocoding but flagged for the record. Endpoint precision: start resolved to village level (新圩村), matching P7673's shared origin station; end resolved to town level (沙浦镇), with the more specific expressway-service-area descriptor sourced from GEM's own field rather than an independently found document.",
+  "blockers": null,
+  "_group": "liuzhou"
+ },
+ "P7673": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "柳州输气站（柳江区流山镇流山村）",
+   "name_en": "Liuzhou Gas Transmission Station (Liushan Village, Liushan Town, Liujiang District) -- on the China-Myanmar gas pipeline branch trunk line",
+   "lon": 109.1188646,
+   "lat": 24.4599728,
+   "geocode_source": "Nominatim query '流山镇,柳州' (https://nominatim.openstreetmap.org/search?q=%E6%B5%81%E5%B1%B1%E9%95%87%2C%E6%9F%B3%E5%B7%9E) -- town-level administrative boundary centroid. Exact village/town name from a sohu.com on-camera interview with 广西广投天然气管网有限公司柳州分输站站长刘卫东 (station chief): '起点是在柳江区流山镇流山村柳州输气站'.",
+   "refs": [
+    "https://www.china5e.com/news/news-1013422-1.html",
+    "https://www.sohu.com/a/209449898_217646",
+    "https://jz.docin.com/p-2304535844.html"
+   ]
+  },
+  "end": {
+   "name_zh": "柳州分输站（柳南区太阳村镇新圩村）",
+   "name_en": "Liuzhou Distribution Station (Xinxu Village, Taiyangcun Town, Liunan District)",
+   "lon": 109.305924,
+   "lat": 24.372428,
+   "geocode_source": "Nominatim query '新圩村,柳南区' (https://nominatim.openstreetmap.org/search?q=%E6%96%B0%E5%9C%A9%E6%9D%91%2C%E6%9F%B3%E5%8D%97%E5%8C%BA) -- village-level administrative boundary centroid. Same interview: '经过十二个村到柳南区太阳村镇新圩村柳州分输站'. This is the same 柳州分输站 later expanded to also feed sibling branch P7657 (Liucheng Branch).",
+   "refs": [
+    "https://www.china5e.com/news/news-1013422-1.html",
+    "https://www.sohu.com/a/209449898_217646",
+    "https://jz.docin.com/p-2304535844.html"
+   ]
+  },
+  "corridor_notes": "27km branch line from a China-Myanmar-gas-pipeline transmission station in Liushan Town, Liujiang District, passing through twelve villages, to the Liuzhou distribution station in Taiyangcun Town, Liunan District (china5e.com: '该管道起于中缅天然气管道支干线柳州输气站...终于柳南区太阳村镇新圩村柳州分输站...沿线经过柳江区、柳南区两个区'; sohu.com station-chief quote gives the village-level detail: '起点是在柳江区流山镇流山村柳州输气站，经过十二个村到柳南区太阳村镇新圩村柳州分输站'). Overall direction northwest-to-southeast. Construction started 2015-08-28; entered trial operation 2017-12-05. Design capacity 3.70x10^8 Nm3/yr (0.37 bcm/y), matching GEM exactly.",
+  "route_refs": [
+   "https://www.china5e.com/news/news-1013422-1.html",
+   "https://www.sohu.com/a/209449898_217646",
+   "https://jz.docin.com/p-2304535844.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Builds directly on the prior pilot pass, which had already verified existence/route/length/capacity/construction-date via these same three refs but only had a paraphrased route description (district-level only). This pass fetched china5e.com and sohu.com directly (raw curl, not AI-summarized) and extracted the literal station names and village-level route description, upgrading endpoint precision from district-level to village-level for both ends. Note the three refs (china5e.com, tzcjj.liuzhou.gov.cn per pilot, sohu.com) all trace to one original wire story per project rules and do not count as 2 independent sources on their own; jz.docin.com (the EIA-filing listing, uploaded by a different party in 2020) is the genuinely separate second origin. Prior pilot's flagged StartMonth1 concern (sheet says 2017-05; sources say trial operation began Dec 2017) is a data-field issue outside this task's endpoint-geometry scope but is reiterated here for the record.",
+  "blockers": null,
+  "_group": "liuzhou"
+ },
+ "P7674": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "柳东分输站（柳东新区）",
+   "name_en": "Liudong Distribution Station (Liudong New District) -- part of the Liuzhou City dedicated gas supply pipeline project, expanded under this project",
+   "lon": 109.5424121,
+   "lat": 24.3784609,
+   "geocode_source": "Nominatim query '柳东新区' (https://nominatim.openstreetmap.org/search?q=%E6%9F%B3%E4%B8%9C%E6%96%B0%E5%8C%BA) -- suburb/district boundary centroid. Station name from the wsbs.liuzhou.gov.cn EIA public notice: '输气线路起自柳州市天然气专供管道工程柳东分输站，出站后经福禄屯、凉亭村和底料，穿越057乡道进入柳城县境内'.",
+   "refs": [
+    "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml"
+   ]
+  },
+  "end": {
+   "name_zh": "鹿寨分输站（鹿寨县）",
+   "name_en": "Luzhai Distribution Station (Luzhai County) -- newly built under this project",
+   "lon": 109.7459829,
+   "lat": 24.4758562,
+   "geocode_source": "Nominatim query '鹿寨县' (https://nominatim.openstreetmap.org/search?q=%E9%B9%BF%E5%AF%A8%E5%8E%BF) -- used the county-seat/city-type node (place_rank 16) rather than the wider county administrative boundary centroid, for a tighter anchor. Station name from same EIA notice: '管道出阀室后绕过柳东新区规划区后向东南方向敷设至鹿寨分输站'.",
+   "refs": [
+    "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml"
+   ]
+  },
+  "corridor_notes": "~31km branch line running from the Liudong distribution station (Liudong New District) via Fulutun, Liangting Village and Diliao into Liucheng County; the line then routes around the Liudong New District planning area, turning northeast through Dashan Village, Sijiao and Shanchang into Luzhai County; continues northeast via Baihua Village to the Luorong (雒容) valve room; then heads southeast (again routing around the Liudong New District planning area) to the new Luzhai distribution station. Length breakdown matches GEM exactly: 4.3km in Liudong New District + 6.9km in Liucheng County + 19.8km in Luzhai County = 31.0km total. Design capacity 1.1x10^8 Nm3/yr, design pressure 6.3 MPa, diameter DN300; one new station (Luzhai distribution station) and one new valve room (Luorong) built, plus expansion of the Liudong distribution station. Note: the source text references bypassing the Liudong New District planning area twice (once near the start of the route, again near the end just before reaching the Luzhai distribution station) -- reads as a possible drafting quirk/repetition in the original EIA text rather than a real routing detail; flagged, not resolved.",
+  "route_refs": [
+   "http://wsbs.liuzhou.gov.cn/xwzx/dtgg/202008/t20200813_1912487.shtml"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Best-documented of this batch's four PIDs. The prior pilot pass had already located this exact wsbs.liuzhou.gov.cn EIA public notice with a route description whose per-county length breakdown matches GEM's LengthMergedKm to the decimal. This pass re-fetched the page directly (raw curl, after an earlier WebFetch attempt on a different URL pattern returned ECONNRESET; not AI-summarized) to confirm the verbatim Chinese route text and extract literal station/place names (柳东分输站, 鹿寨分输站, 雒容阀室) for geocoding. Despite additional searching, this remains a SINGLE-SOURCE finding -- no second independent document was found by either pass. Per the project's 2+ independent source rule this would rate medium (not high) confidence on the standard corroboration scale, even though the route/length detail is unusually specific and internally consistent with GEM's own figures.",
+  "blockers": "Only one independent source (wsbs.liuzhou.gov.cn) found for this segment despite targeted searching in both this pass and the prior pilot pass; does not meet the 2+ independent source corroboration target even though the single source is detailed and highly consistent with GEM's own data.",
+  "_group": "liuzhou"
+ },
+ "P7680": {
+  "resolution": "PARTIAL",
+  "start": {
+   "name_zh": "忻城县",
+   "name_en": "Xincheng County (county seat)",
+   "lon": 108.6632172,
+   "lat": 24.0692756,
+   "geocode_source": "Nominatim query '忻城县' (https://nominatim.openstreetmap.org/search?q=%E5%BF%BB%E5%9F%8E%E5%8E%BF) -- used the county-seat/city-type node (place_rank 16) rather than the wider county boundary centroid, for a tighter anchor. GEM's own StartLocation field is simply 'Xincheng' with no finer detail available in any source found.",
+   "refs": [
+    "http://www.gxxc.gov.cn/zfxxgk/fdzdgknr/zdlyxxgk_1/shgysy/hjbhly/jsxmhjyxpjsp/t883391.shtml"
+   ]
+  },
+  "end": {
+   "name_zh": "忻城县",
+   "name_en": "Xincheng County (county seat)",
+   "lon": 108.6632172,
+   "lat": 24.0692756,
+   "geocode_source": "Same as start -- Nominatim query '忻城县' (https://nominatim.openstreetmap.org/search?q=%E5%BF%BB%E5%9F%8E%E5%8E%BF). GEM's own EndLocation field is also simply 'Xincheng', identical to StartLocation, and no source found distinguishes a separate end point.",
+   "refs": [
+    "http://www.gxxc.gov.cn/zfxxgk/fdzdgknr/zdlyxxgk_1/shgysy/hjbhly/jsxmhjyxpjsp/t883391.shtml"
+   ]
+  },
+  "corridor_notes": "GEM records this as a 29km branch pipeline entirely within Xincheng County (Laibin prefecture), operator 广西广投天然气管网有限公司 (Guangxi Guangtou Natural Gas Pipeline Network Co. -- the same operator as the other three sibling branches in this batch, and the builder named in the Xincheng County EPB notice). No EIA public notice, land-use approval, bidding notice, or news report naming specific stations, townships, or a start/end alignment within the county was found in this pass or the prior pilot pass, despite targeted Chinese-language searching. A site search on gxtngs.com.cn (the EIA consultancy that published the detailed route notices used for P7657 and P7674) returned zero hits for '忻城'. DuckDuckGo-HTML search (used as a WebSearch substitute after the session's WebSearch budget was exhausted) returned no usable results either.",
+  "route_refs": [
+   "http://www.gxxc.gov.cn/zfxxgk/fdzdgknr/zdlyxxgk_1/shgysy/hjbhly/jsxmhjyxpjsp/t883391.shtml",
+   "https://www.docin.com/p-2110410944.html",
+   "https://www.doc88.com/p-4791790273462.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Resolves the prior pilot pass's core existence puzzle: the pilot's extensive search for a literal 'Xincheng'/'新城' place name in Laibin came up empty because 'Xincheng' in GEM's fields is a romanization of 忻城 (Xincheng County, an established Guangxi county under Laibin City), not a mistransliterated or fictional name -- confirmed by cross-referencing the GEM CSV's OtherLanguageAlternativePipelineNames field, which this pass consulted directly. Re-searching with the correct Chinese term ('忻城天然气支线管道') immediately surfaced a NEW existence confirmation the pilot missed: 忻城县环境保护局 (Xincheng County Environmental Protection Bureau) issued a formal EIA approval public notice dated 2018-06-04, titled '忻城县环境保护局关于广西天然气支线管网项目忻城天然气支线管道工程审批公示', independently naming this exact project and stating '建设地点：忻城县' (construction location: Xincheng County). This document's canonical URL had to be recovered from the page's own <meta name='Url'> tag after an initially guessed URL 404'd; the recovered URL passes url_verifier.py live. This source is independent of and postdates the pilot's two docin.com/doc88.com EIA-report-listing refs (also re-verified live in this pass), giving 2 independent sources confirming existence and general (county-level) location -- a real upgrade from the pilot's 'concern/existence' verdict (zero verifiable support at all) to 'existence confirmed at county level, route detail unknown.' Despite this upgrade, NO source found by either pass states a station name, township, or any sub-county route detail -- GEM's own Start/EndLocation fields are both simply 'Xincheng', and no finer document exists in the government-portal or consultancy sites searched. Since start and end therefore resolve to the identical county-seat coordinate, this cannot support route geometry; PARTIAL resolution reflects a genuine documentation gap, not a search shortfall.",
+  "blockers": "No station-level or township-level endpoint detail exists in any source found across two research passes (prior pilot + this one). Start and end both collapse to the Xincheng county-seat centroid, which is insufficient for route drawing. If GEM's own StartLocation/EndLocation is ever updated with a more specific place name (e.g. a township or station name), this row should be re-researched; until then, no candidate route geometry can be drawn beyond 'somewhere within Xincheng County'.",
+  "_group": "liuzhou"
+ },
+ "P7654": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "吴圩分输清管站",
+   "name_en": "Wuxu Distribution/Pigging Station (tie-in with West-East Gas Pipeline Line 2, Nanning-Baise branch)",
+   "lon": 108.2305054,
+   "lat": 22.6564012,
+   "geocode_source": "Nominatim query '吴圩镇,江南区' (https://nominatim.openstreetmap.org/search?q=%E5%90%B4%E5%9C%A9%E9%95%87%2C%E6%B1%9F%E5%8D%97%E5%8C%BA) -- returned a school landmark in Wuxu town, Jiangnan District, Nanning as township-level anchor; the station itself is not separately mapped in OSM. Province/city sanity-checked (Jiangnan District, Nanning, Guangxi).",
+   "refs": [
+    "https://www.gigeps.com/cms/channel/xmgg1gc/481.htm"
+   ]
+  },
+  "end": {
+   "name_zh": "扶绥清管站",
+   "name_en": "Fusui Pigging Station (on the Fusui-Chongzuo branch; pipeline terminates 2m outside its perimeter wall)",
+   "lon": 107.9001036,
+   "lat": 22.6386482,
+   "geocode_source": "Nominatim query '扶绥县' (https://nominatim.openstreetmap.org/search?q=%E6%89%B6%E7%BB%A5%E5%8E%BF) -- county-seat town-level anchor (city-type node) for Fusui County, Chongzuo, Guangxi; the pigging station itself is not separately mapped.",
+   "refs": [
+    "https://www.gigeps.com/cms/channel/xmgg1gc/481.htm"
+   ]
+  },
+  "corridor_notes": "The Guangxi Gas Investment Engineering & Procurement (gigeps.com) project-announcement page for '广西天然气支线管网项目南宁-扶绥天然气支线管道工程' states the line starts at '西气东输二线南宁-百色支线工程吴圩分输清管站' (the Wuxu distribution/pigging station on PipeChina's West-East Gas Pipeline Line 2, Nanning-Baise branch), located in Jiangnan District, Nanning, and ends at '扶绥-崇左支线扶绥清管站围墙外 2m' (2m outside the perimeter wall of the Fusui pigging station on the Fusui-Chongzuo branch), Fusui County, Chongzuo. Route runs '沿线途经南宁市江南区及崇左市扶绥县' (Jiangnan District, Nanning through to Fusui County, Chongzuo). Stated length ~19.50 km (vs GEM's 20.00 km -- close, plausible planning-estimate vs as-built rounding), diameter D355.6mm (exact match to GEM's Diameter), design pressure 6.3MPa (exact match to GEM's Pressure), L360M ERW steel pipe. No major river/rail/highway crossings noted, but the filing flags 'san chuan' (three types of minor crossings) in its construction scope.",
+  "route_refs": [
+   "https://www.gigeps.com/cms/channel/xmgg1gc/481.htm"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "This resolves the pilot pass's EXISTENCE concern: all 4 of GEM's originally-cited refs were dead/unreachable/empty, but an independent project-announcement page on gigeps.com (Guangxi's official gas-infrastructure-investment engineering & procurement portal) names the identical project ('广西天然气支线管网项目南宁-扶绥天然气支线管道工程') and independently corroborates Diameter (355.6mm, exact) and Pressure (6.3MPa, exact match to the sheet's cited-but-dead fgw.nanning.gov.cn values), plus a length (~19.5km) very close to GEM's 20km. Additional corroboration: a DuckDuckGo search also surfaced two Guangxi Water Resources Department (slt.gxzf.gov.cn) filings referencing the identical project name for its soil-and-water-conservation plan, but both slt.gxzf.gov.cn URLs are unreachable from this sandbox (ECONNREFUSED, same geo-block pattern as fgw.gxzf.gov.cn) and have no Wayback snapshot obtainable right now (archive.org rate-limited this session) -- not used as refs, but their existence (real government agency, real project name) further supports this segment being genuinely real, not phantom. On the pilot's DUPLICATE concern vs P4725 ('Fusui County->Guangxi', 83km, same diameter 355.6mm/capacity 0.85bcm/y, status=construction): this newly-found source describes P7654 as tapping the West-East Line 2 (Nanning-Baise branch) at Wuxu and terminating just outside the Fusui pigging station on a *separate* named corridor ('扶绥-崇左支线', the Fusui-Chongzuo branch) -- i.e. P7654 (Wuxu->Fusui, ~19.5-20km) reads as a distinct feeder segment INTO the Fusui pigging station, while P4725 (83km, under construction) is plausibly further downstream on that same Fusui-Chongzuo branch corridor, not the same physical pipe. Shared diameter/capacity across two segments of one corridor network is unsurprising (same design spec applied network-wide) rather than evidence of a relabeled duplicate. Not setting duplicate_of, but flagging this reasoning for human side-by-side review since I could not obtain the Fusui-Chongzuo branch's full alignment to rule it out with certainty.",
+  "blockers": null,
+  "_group": "nanning"
+ },
+ "P7656": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "中石化南宁站",
+   "name_en": "Sinopec Nanning Station",
+   "lon": 108.4828656,
+   "lat": 22.7612144,
+   "geocode_source": "Nominatim query '邕宁区,南宁市' (https://nominatim.openstreetmap.org/search?q=%E9%82%95%E5%AE%81%E5%8C%BA%2C%E5%8D%97%E5%AE%81%E5%B8%82) -- the source article states only that 'the entire pipeline lies within Yongning District' (该管道全线位于邕宁区境内) without a finer address for the Sinopec station itself, so this is a district-level anchor (Yongning District place node), not station-precise.",
+   "refs": [
+    "https://v.gxnews.com.cn/a/19496068"
+   ]
+  },
+  "end": {
+   "name_zh": "蒲庙分输站",
+   "name_en": "Pumiao Distribution Station",
+   "lon": 108.4902633,
+   "lat": 22.7516109,
+   "geocode_source": "Nominatim query '蒲庙镇,邕宁区' (https://nominatim.openstreetmap.org/search?q=%E8%92%B2%E5%BA%99%E9%95%87%2C%E9%82%95%E5%AE%81%E5%8C%BA) -- returned Pumiao Town government office (蒲庙镇人民政府) as a town-level anchor; the source pins the station more precisely as west of 蕾赖村 (Leilai village) and east of 疏港大道 (Harbor Road), but neither the village nor the road segment is separately resolvable in Nominatim.",
+   "refs": [
+    "https://v.gxnews.com.cn/a/19496068"
+   ]
+  },
+  "corridor_notes": "Guangxi Daily / Guangxi News Net article (v.gxnews.com.cn, 2020-04-30) on the groundbreaking of '南宁市天然气专供管道工程（中石化南宁站-南宁中燃门站段）' states verbatim: '工程起自中石化南宁站' (the project begins at Sinopec Nanning Station) and '止于邕宁区蒲庙镇蕾赖村西侧、疏港大道东侧的新建蒲庙分输站' (terminates at the newly-built Pumiao distribution station, west of Leilai village and east of Harbor Road, Pumiao Town, Yongning District), adding '该管道全线位于邕宁区境内' (the entire pipeline lies within Yongning District). Total length ~8.9km (exact match to GEM's LengthKnown), groundbreaking 2020-04-28, planned 8-month construction, total investment 67.55 million RMB.",
+  "route_refs": [
+   "https://v.gxnews.com.cn/a/19496068"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Building on the pilot pass, which already confirmed existence/classification/specs via this same source: this pass extracted the precise start/end station names and corridor description needed for route drawing. Both endpoints resolve only to district/town level in open geocoding (the underlying source names the stations but not a street address); the finer village/road detail (蕾赖村, 疏港大道) narrows the likely true site of the end station but could not be independently pinned with Nominatim.",
+  "blockers": null,
+  "_group": "nanning"
+ },
+ "P7658": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "黎塘分输站",
+   "name_en": "Leitang Distribution Station (built for Sinopec's Guangxi LNG project pipeline)",
+   "lon": 109.129485,
+   "lat": 23.20284,
+   "geocode_source": "Nominatim query '黎塘镇' (https://nominatim.openstreetmap.org/search?q=%E9%BB%8E%E5%A1%98%E9%95%87) -- returned the Leitang town place node (Binyang County, Nanning, Guangxi), a town-level anchor since the station's exact plot is not separately mapped in OSM.",
+   "refs": [
+    "https://www.yanshougs.com/content/107398.html",
+    "https://www.yanshougs.com/content/110210.html"
+   ]
+  },
+  "end": {
+   "name_zh": "宾阳分输站",
+   "name_en": "Binyang Distribution Station",
+   "lon": 108.8056648,
+   "lat": 23.2211517,
+   "geocode_source": "Nominatim query '宾阳镇,宾阳县' (https://nominatim.openstreetmap.org/search?q=%E5%AE%BE%E9%98%B3%E9%95%87%2C%E5%AE%BE%E9%98%B3%E5%8E%BF) -- returned the Binyang County government office as a county-seat anchor. The source pins the station more precisely as northeast of 塘表村 (Tangbiao village), but that village name returned no match in Nominatim (only same-named villages in Guangdong/Qinzhou, wrong location) -- so this is a county-seat-level fallback, coarser than the source's own village-level description.",
+   "refs": [
+    "https://www.yanshougs.com/content/107398.html",
+    "https://www.yanshougs.com/content/110210.html"
+   ]
+  },
+  "corridor_notes": "Two government-mandated post-construction environmental filings by Guangxi Gas Group (2025-07-30 completion disclosure and 2026-07-23 final acceptance report, both on yanshougs.com) state verbatim: '出自中石化广西液化天然气（LNG）项目输气管道已建的黎塘分输站' (originates from the existing Leitang distribution station, built for Sinopec's Guangxi LNG project pipeline) and '终于位于宾阳县塘表村东北侧的宾阳分输站' (terminates at the Binyang distribution station, northeast of Tangbiao village, Binyang County). Route runs westward from Leitang through four townships: 黎塘镇 (Leitang), 洋桥镇 (Yangqiao), 王灵镇 (Wangling), 大桥镇 (Daqiao) -- all within Binyang County, Nanning. As-built length 23.9196-23.925 km (the two filings differ slightly), D273.1mm pipe, 4MPa design pressure, design throughput 2.91e8 Nm3/a (0.291 bcm/y) -- Diameter, Pressure and Capacity all exact matches to GEM's recorded values; Length is ~3km/~11% shorter than GEM's current 27km (reads as pre-construction estimate vs as-built, flagged by the pilot pass, not corrected here).",
+  "route_refs": [
+   "https://www.yanshougs.com/content/107398.html",
+   "https://www.yanshougs.com/content/110210.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Confirms and extends the prior pass's findings exactly -- both yanshougs.com URLs re-verified OK via url_verifier this pass. Township order along the route (west from Leitang): Leitang -> Yangqiao -> Wangling -> Daqiao -> Binyang distribution station near Tangbiao village. No duplicate found elsewhere in the Guangxi roster referencing these place names.",
+  "blockers": "Village-level precision for the Binyang end (塘表村/Tangbiao) could not be geocoded via Nominatim -- coordinates fall back to the Binyang county-seat point, coarser than the sourced description.",
+  "_group": "nanning"
+ },
+ "P7675": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "隆安分输站",
+   "name_en": "Long'an Distribution Station",
+   "lon": 107.691556,
+   "lat": 23.1695545,
+   "geocode_source": "Nominatim query '隆安县,南宁市' (https://nominatim.openstreetmap.org/search?q=%E9%9A%86%E5%AE%89%E5%8E%BF%2C%E5%8D%97%E5%AE%81%E5%B8%82) -- returned the Long'an county-seat place node; multiple independent sources (finance.sina.com.cn, nationalee.com, and a bibenet.com procurement listing) name '隆安分输站' as a specific facility but do not give a finer address, so this is a county-level fallback.",
+   "refs": [
+    "https://www.nationalee.com/newsinfo/8103128.html",
+    "https://finance.sina.com.cn/roll/2025-02-28/doc-inemzuik9859174.shtml"
+   ]
+  },
+  "end": {
+   "name_zh": "武鸣分输站",
+   "name_en": "Wuming Distribution Station",
+   "lon": 108.271124,
+   "lat": 23.1612746,
+   "geocode_source": "Nominatim query '武鸣区,南宁市' (https://nominatim.openstreetmap.org/search?q=%E6%AD%A6%E9%B8%A3%E5%8C%BA%2C%E5%8D%97%E5%AE%81%E5%B8%82) -- returned the Wuming district-seat place node; district-level fallback, same reasoning as the start point.",
+   "refs": [
+    "https://www.nationalee.com/newsinfo/8103128.html",
+    "https://finance.sina.com.cn/roll/2025-02-28/doc-inemzuik9859174.shtml"
+   ]
+  },
+  "corridor_notes": "A 2025-02-28 Sina Finance article (re-syndicated from a Guangxi Energy Group / Guangtou Pipe Network release, and matching the nationalee.com press release already cited by GEM) states: '隆安—武鸣天然气支线管道工程...管道起自国家管网西二线南宁-百色支线5#阀室，新建管道50公里、2座分输站和1座阀室' (the Long'an-Wuming gas branch pipeline originates at Valve Chamber #5 on PipeChina's West-East Gas Pipeline Line 2, Nanning-Baise branch; newly built 50 km of pipe, 2 distribution stations and 1 monitoring valve chamber) and names the two stations explicitly: '沿线设置分输站2座（隆安分输站、武鸣分输站）' (Long'an distribution station and Wuming distribution station). Design specs: horizontal length 49.46km, D323.9mm, 6.3MPa design pressure, design throughput 4.4e8 Nm3/a (0.44 bcm/y) -- all consistent with GEM's recorded values. '隆安分输站顺利投产，武鸣分输站成功进气' (Long'an station commissioned, Wuming station received gas) as of the 2025-03 commissioning. Neither source gives the exact township/village for either station beyond the county/district name.",
+  "route_refs": [
+   "https://www.nationalee.com/newsinfo/8103128.html",
+   "https://finance.sina.com.cn/roll/2025-02-28/doc-inemzuik9859174.shtml"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Builds on the pilot pass, which flagged FuelSource misattribution (should be West-East Line 2 Nanning-Baise branch, not Sino-Myanmar) and a segment_name transcription slip ('Longming-Wu'an' should be 'Long'an-Wuming') -- both confirmed again here via a second, independently-published outlet (finance.sina.com.cn, matching the nationalee.com wire story almost verbatim, still counts only as corroborating republication per the corroboration rule, not a second independent source). This second fetch additionally surfaced the exact station names (隆安分输站, 武鸣分输站) and the tie-in point (5# valve chamber on West-East Line 2's Nanning-Baise branch), which the pilot pass's single source did not spell out. A bibenet.com procurement notice ('公路一期涉及横县支线与上林至横县高速公路交叉改线工程和隆安-武鸣支线接驳国家管网南百线改扩建工程隆安分输站段线路工程施工') independently confirms the project name and the Long'an-station tie-in construction scope but returned HTTP 403 on fetch attempts, so it was not used as a ref, only as supporting context.",
+  "blockers": null,
+  "_group": "nanning"
+ },
+ "P7661": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "防城港市（港口区一带）",
+   "name_en": "Fangchenggang City (Gangkou District urban core)",
+   "lon": 108.3590243,
+   "lat": 21.7023451,
+   "geocode_source": "Nominatim query '防城港市' (https://nominatim.openstreetmap.org/search?q=%E9%98%B2%E5%9F%8E%E6%B8%AF%E5%B8%82) -- returned the Fangchenggang prefecture-level-city place node, sited in Gangkou District (the city's main urban/port core). This is a city-level anchor: the project is still status='proposed' with no announced station siting, so no finer level is sourced yet.",
+   "refs": [
+    "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml"
+   ]
+  },
+  "end": {
+   "name_zh": "东兴市",
+   "name_en": "Dongxing City",
+   "lon": 107.9679792,
+   "lat": 21.5506387,
+   "geocode_source": "Nominatim query '东兴市,防城港市' (https://nominatim.openstreetmap.org/search?q=%E4%B8%9C%E5%85%B4%E5%B8%82%2C%E9%98%B2%E5%9F%8E%E6%B8%AF%E5%B8%82) -- returned the Dongxing city-seat place node (东兴镇), a county-level-city anchor. Same reasoning as start: proposal-stage only, no station-level siting published yet.",
+   "refs": [
+    "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml"
+   ]
+  },
+  "corridor_notes": "央广网 (CNR) article dated 2025-01-17, titled '韩凯：建设防城港至东兴天然气支线管道', quotes Han Kai (Party Secretary/Director, Fangchenggang Development & Reform Commission) at the 2025 Guangxi 'two sessions' recommending the government build a Fangchenggang-to-Dongxing natural gas branch pipeline: '全长约40公里，总投资约8000万元' (total length ~40 km, total investment ~80 million RMB) -- both exact matches to GEM. This is explicitly framed as a legislative recommendation ('我建议加快建设...并纳入2025年开工计划', urging inclusion in the 2025 construction-start plan), consistent with GEM's Status='proposed'. No station names, specific townships, or a detailed alignment have been published -- this is pre-approval/pre-EIA, so only the two endpoint cities are sourced.",
+  "route_refs": [
+   "https://gx.cnr.cn/cnrgx/hydt/20250117/t20250117_527043834.shtml",
+   "https://news.qq.com/rain/a/20250117A01W2T00"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Confirms the pilot pass's finding: this is a real, publicly-recommended proposal (not a phantom entry) but remains pre-approval as of the newest evidence (2025-01-17); no construction-start, tender, or EIA filing was found in this pass either, so no finer-than-city route detail exists to source yet. news.qq.com/rain/a/20250117A01W2T00 is the identical wire story re-syndicated same-day -- verified OK but does not count as a second independent source per the corroboration rule, so this stays medium-confidence on a single primary source (the CNR original). Coordinates are necessarily coarse (city-level) given the proposal stage; a route-creation pass should revisit once an approval/EIA names actual stations.",
+  "blockers": "No station-level or township-level route detail is publicly available yet -- this is a legislative recommendation with no formal approval, EIA, or engineering filing found. Endpoint coordinates are city-level anchors, not a sourced alignment.",
+  "_group": "nanning"
+ },
+ "P7652": {
+  "resolution": "ENDPOINTS",
+  "start": {
+   "name_zh": "沙田阀室（福绵区沙田镇）",
+   "name_en": "Shatian valve station, Shatian Town, Fumian District, Yulin",
+   "lon": 110.0484712,
+   "lat": 22.3820256,
+   "geocode_source": "Nominatim query q=沙田镇,福绵区,玉林市,广西 -> town node, Fumian District, Yulin, Guangxi (province sanity-checked)",
+   "refs": [
+    "https://www.163.com/dy/article/FNE82EOS05129O3K.html"
+   ]
+  },
+  "end": {
+   "name_zh": "陆川分输站（陆川县温泉镇）",
+   "name_en": "Luchuan distribution station, Wenquan Town, Luchuan County, Yulin",
+   "lon": 110.2566957,
+   "lat": 22.3042937,
+   "geocode_source": "Nominatim query q=温泉镇,陆川县,玉林市,广西 -> town node, Luchuan County, Yulin, Guangxi (province sanity-checked)",
+   "refs": [
+    "https://www.163.com/dy/article/FNE82EOS05129O3K.html",
+    "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+   ]
+  },
+  "corridor_notes": "163.com (Guangxi Daily/网易订阅 republication, dated 2020-09-26) reports first welding on the 陆川天然气支线管道工程 (Luchuan gas branch pipeline project), built by 广西广投天然气管网有限公司 (Guangxi Guangtou Natural Gas Pipeline Network Co.): '陆川支线起自玉林市福绵区沙田阀室，止于陆川县温泉镇陆川分输站，全长27km，其中福绵境内18km，陆川境内9km。中间设有大路塘阀室一座，设计压力为4MPa，设计年输量为0.85亿m3，项目总投资11657万元。' (The Luchuan branch starts at the Shatian valve station in Fumian District, Yulin, and ends at the Luchuan distribution station in Wenquan Town, Luchuan County; total length 27km -- 18km within Fumian, 9km within Luchuan -- with one intermediate valve station, Dalutang (大路塘阀室); design pressure 4MPa; design annual capacity 0.85x10^8 m3; total investment 116.57 million RMB.) This closely matches GEM's recorded LengthMergedKm=28 (27km as-designed, consistent within rounding), and corroborates the prior-pass finding (pilot_digest) that the true physical start is Shatian Town/Fumian District, not 'Bobai' as currently recorded in GEM's StartLocation -- 'Bobai' appears to reflect that this branch continues on from the separately-built Bobai gas branch, not the literal start point. A second gigeps.com e-procurement notice (18592.htm, a 2023-era design-service tender for a secondary high-pressure connector) independently names '陆川分输站' as a real, physically built anchor point, connecting onward to a third-party 'Longhao natural gas station' (龙豪天然气场站) -- confirming the Luchuan distribution station is an operating hub, not a phantom sheet entry. No exact station-level coordinates (only place names) were found for either 沙田阀室 or 陆川分输站 despite targeted searches; both endpoints are geocoded at town centroid (Shatian Town / Wenquan Town) as the finest independently sourced level.",
+  "route_refs": [
+   "https://www.163.com/dy/article/FNE82EOS05129O3K.html",
+   "https://www.gigeps.com/cms/channel/xmgg4fw/60480.htm",
+   "https://www.gigeps.com/cms/channel/xmgg4fw/42701.htm",
+   "https://www.gigeps.com/cms/channel/xmgg4fw/18592.htm"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Builds on the prior-pass (pilot_digest) finding that identified the government approval doc (桂发改能源〔2019〕480号, approved 2019-05-15) as the primary source but found it unreachable (fgw.gxzf.gov.cn ConnectTimeout, confirmed again this pass -- also no Wayback Machine snapshot exists for that URL, checked via the wayback availability API). This pass found and directly verified (raw curl of the served HTML, not just an AI summary) a genuine, independent, reachable news republication (163.com/网易订阅, dated 2020-09-26, reporting the pipeline's first-weld milestone) that states the exact same start/end route description in its own words, naming both endpoint stations and the Fumian/Luchuan county split (18km + 9km = 27km). This URL passes url_verifier with content tokens '沙田'/'陆川分输站'/'温泉镇' present. A WebSearch snippet of the (unreachable) primary gxzf.gov.cn approval document independently corroborates the same start/end wording (Shatian sub-station -> Luchuan distribution station west of Datian Chong/大田冲 in Wenquan Town) but was not used as a citation since I could not independently fetch and verify it live (per standing rule, no fabricated/unverifiable refs) -- it is directional confirmation only, not a citation. Diameter (D273.1mm per the gxzf.gov.cn search snippet) remains unfilled/unsourced from a verifiable URL, consistent with the prior pass's finding -- out of scope for this route-creation task, flagged only for awareness.",
+  "blockers": null,
+  "_group": "yulin"
+ },
+ "P7655": {
+  "resolution": "PARTIAL",
+  "start": {
+   "name_zh": "国家管网西二线贵港—玉林支线5#阀室",
+   "name_en": "PipeChina West-2 Line, Guigang–Yulin Branch, Valve Chamber No. 5",
+   "lon": null,
+   "lat": null,
+   "geocode_source": null,
+   "refs": [
+    "https://www.gigeps.com/cms/channel/xmgg4fw/55045.htm"
+   ]
+  },
+  "end": {
+   "name_zh": "兴业分输站",
+   "name_en": "Xingye Distribution Station",
+   "lon": 109.734702,
+   "lat": 22.603969,
+   "geocode_source": "Nominatim query '城隍镇,兴业县,玉林' (Chenghuang Town, the Xingye County seat) — town-level proxy only, NOT the station's own coordinates. The station itself is documented as sitting on the G80 Guangkun Expressway's Xingye connector line (兴业连接线), right side, K7+950–K7+970, within Xingye County — no OSM/Nominatim entry for the station or the connector-line milepost exists, so Chenghuang Town (the county's administrative/population center) is the finest resolvable point.",
+   "refs": [
+    "https://www.gigeps.com/cms/channel/xmgg4fw/79585.htm",
+    "https://www.gigeps.com/cms/channel/xmgg4fw/55045.htm",
+    "https://www.gigeps.com/cms/channel/xmgg4fw/77172.htm"
+   ]
+  },
+  "corridor_notes": "Short (~8km per GEM) feeder from a valve-chamber tie-in on PipeChina's West-2 Line Guigang–Yulin branch (5# valve chamber, gas taken from its reserved distribution outlet) east/southeast to the Xingye distribution station sited on the G80 Guangkun Expressway's Xingye connector line (K7+950–K7+970), Xingye County, Yulin — both points sit within Xingye County given the short length.",
+  "route_refs": [
+   "https://www.gigeps.com/cms/channel/xmgg4fw/55045.htm",
+   "https://www.gigeps.com/cms/channel/xmgg4fw/79585.htm",
+   "https://www.gigeps.com/cms/channel/xmgg4fw/77172.htm"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "MAJOR UPDATE to the prior researcher's existence concern: a fresh search surfaced a Guangxi Investment Group e-procurement (gigeps.com) feasibility/design-consulting tender, '兴业天然气支线管道工程-西二线贵玉支线5#阀室分输改造工程可行性研究技术咨询和设计服务' (Xingye Natural Gas Branch Pipeline Engineering — West-2 Line Guiyu Branch 5# Valve Chamber Redistribution Modification Project, code GCJS-2025002, posted 2025-02-25), which explicitly names this pipeline, states it runs from the West-2 Line's Guigang–Yulin branch 5# valve chamber to the Xingye distribution station, and gives Diameter=D273.1mm and Pressure=6.3MPa. CROSS-CHECKED against the live GEM GGIT sheet (P7655, row 4054/CSV idx 4050): Diameter=273 and Pressure=6.30 MPa are ALREADY on the row — an exact match to the tender's D273.1mm/6.3MPa — but the sheet's only ref for Pressure is the dead-403 gas.in-en.com link the prior researcher flagged; this gigeps tender is a working, independent replacement corroborating that same value and should be swapped in on a future Update pass (out of scope here — endpoints only). A second gigeps.com notice (79585.htm, a road-access safety-evaluation tender for the Xingye station's entrance) independently corroborates the station's existence and pins its location to the G80 Xingye connector line, K7+950–970, citing an existing road-traffic permit (桂交玉林 11/2023) due for renewal by 2026-04-12 — active permit-renewal activity is itself evidence the facility is a real, currently-operating asset (matches sheet Status=operating). A THIRD gigeps.com notice (77172.htm, an earlier/parallel version of the same road-safety-evaluation tender) independently repeats the same station/permit/location details, giving three separate independent postings in total. All three URLs verified live via url_verifier.py (200 + expected content). This resolves the EXISTENCE concern: the pipeline is real and under active engineering/procurement activity — recommend the prior existence flag be downgraded/cleared. What remains unresolved is PRECISE geocoding: no source gives GPS/lat-lon for either the 5# valve chamber or the station itself, and neither appears in OSM/Nominatim. The Xingye distribution station is anchored to a named road milepost (G80 Xingye connector K7+950–970) but not a mappable point; Nominatim confirms Chenghuang Town (城隍镇) is a real, separately-named place within Xingye County (22.603969, 109.734702) and is the county seat, used here as the best available town-level proxy. The valve chamber has no location description beyond 'on the Guigang–Yulin branch' (a corridor that runs roughly Guigang → Xingye → Yulin, so it is presumably a few km outside Xingye town along that corridor, but nothing found names a village/township for it). Web-search budget was exhausted this session before the Yulin '两湾' regional plan (ybj.gxzf.gov.cn) or yanshougs.com could be re-checked; both remain open leads.",
+  "blockers": "Existence and named endpoints (5# valve chamber → Xingye distribution station) are now well-sourced (3 independent gigeps.com postings) and spec-matched against the live sheet (Diameter/Pressure both confirmed), but neither endpoint could be geocoded to better than town-level (used Xingye County's seat, Chenghuang Town, as the nearest resolvable point for the station; the valve chamber has no coordinate or sub-county place name in any source found). Not precise enough for a real two-point route without further sourcing (e.g. Amap/Baidu satellite spotting of the G80 K7+950-970 milepost, or the underlying feasibility-study PDF if it can be located). This session's WebSearch budget was exhausted before ybj.gxzf.gov.cn (Yulin regional gas-branch plan) or yanshougs.com could be re-checked for the valve chamber's township — try those next, plus fgw.gxzf.gov.cn via VPN/China-based access (geo-blocked here).",
+  "_group": "yulin(salvaged)"
+ },
+ "P7659": {
+  "resolution": "PARTIAL",
+  "start": {
+   "name_zh": "荔浦市 (荔浦门站/LNG荔浦站，推定)",
+   "name_en": "Lipu (city/county seat) — plausible tie-in point of the Mengshan sub-segment's \"Guilin-Lipu\" 30km leg",
+   "lon": 110.3904799,
+   "lat": 24.4914297,
+   "geocode_source": "Nominatim query 'q=荔浦县,桂林,广西&format=json&limit=3' (note: 荔浦 was upgraded from 县 to 市 in 2019, so OSM resolves it as 荔浦市); picked the top/only result (osm relation 2773818, administrative boundary centroid for 荔浦市, addresstype=city) as the best available proxy for a station-level point — no more precise station location could be sourced.",
+   "refs": [
+    "http://www.eiafans.com/thread-1279941-1-1.html"
+   ]
+  },
+  "end": {
+   "name_zh": "蒙山县 (蒙山分输站，推定)",
+   "name_en": "Mengshan County town seat — representative endpoint for the new Mengshan distribution station (蒙山分输站) named in the EIA notice",
+   "lon": 110.5202451,
+   "lat": 24.1962534,
+   "geocode_source": "Nominatim query 'q=蒙山县,梧州,广西&format=json&limit=3'; two results returned (an administrative-boundary relation, osm_id 2044152, centroid 24.1216889/110.5657193; and a place node, osm_id 244081197, 24.1962534/110.5202451). Picked the place node (town-seat point, addresstype=city) over the boundary centroid as a closer proxy for a station sited near the county's built-up area — still county/town-level precision, not the actual station.",
+   "refs": [
+    "http://www.eiafans.com/thread-1279941-1-1.html"
+   ]
+  },
+  "corridor_notes": "IMPORTANT STRUCTURAL CAVEAT: P7659 'Wuzhou Branch' merges TWO physically separate, non-contiguous sub-segments under one GEM row per the source EIA notice: (1) Mengshan section (蒙山段) = Guilin-Lipu Co. 30km + Wuzhou-Mengshan Co. 29.2km = 59.2km, ending at a new Mengshan distribution station; (2) Cangwu section (苍梧段) = Hezhou-Babu Dist. 12.6km + Wuzhou-Cangwu Co. 21.9km = 34.5km, ending at a new Cangwu distribution station. These do NOT form one continuous line -- Mengshan County and Cangwu County are ~110km apart with Wuzhou city between them, and nothing in the source describes a Mengshan-to-Cangwu connector. The start/end pair given here represents ONLY the Mengshan sub-segment (chosen as representative because it is the longer/first-listed of the two, and because its start ties into a corroborated sibling GEM pipeline). Likely tie-in point identified: GEM row P4727 'Guangxi Gas Pipeline Network' / SegmentName 'Guilin-Yangshuo-Lipu Branch' already ends at 'LNG Lipu Station, Lipu County' -- this matches the '桂林-荔浦支线 30km' leg named in the P7659 EIA notice as the Mengshan section's origin, i.e. the Mengshan section plausibly branches off the existing/planned Guilin-Yangshuo-Lipu line near Lipu. This is inference from matching place-names + distances across two independently-staged GEM rows, not a direct citation in either source -- flag for a human reviewer to confirm before drawing a route. The Cangwu sub-segment (start near Babu District, Hezhou -- 24.4155435/111.5464663 -- end near Cangwu County seat -- 23.8692290/111.5423435, both Nominatim county/district-seat proxies) is NOT represented in the start/end fields above and would need its own separate route object if GEM ever splits this row into two segments (a recommendation already on record in the prior validity pilot pass, not re-litigated here). No coordinates more precise than county/town-seat level could be sourced for either the Mengshan or Cangwu distribution stations themselves -- targeted searches for '蒙山分输站' and '苍梧分输站' by name returned nothing, and the full underlying EIA report (searched docin.com, book118.com, general web) could not be located, only the 2019-12-27 first-round public-notice summary already on file.",
+  "route_refs": [
+   "http://www.eiafans.com/thread-1279941-1-1.html"
+  ],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Status is correctly CANCELLED/shelved -- not re-litigated. Task was limited to sourcing planned endpoints from the 2019 EIA notice for historical route-drawing. Re-verified the notice URL (url_verifier.py: OK, 200) and re-read it via WebFetch attempt (blocked -- ECONNREFUSED from this session's network path; web.archive.org fetch also unavailable to this tool) so all detail here relies on the prior pilot pass's already-extracted quotes (Guilin-Lipu Co. 30km / Wuzhou-Mengshan Co. 29.2km / Hezhou-Babu Dist. 12.6km / Wuzhou-Cangwu Co. 21.9km, per-segment totals, new-station language) plus one new cross-reference this pass: GEM sibling row P4727 (same PipelineName, SegmentName 'Guilin-Yangshuo-Lipu Branch') independently ends at 'LNG Lipu Station, Lipu County,' which lines up with the Mengshan sub-segment's stated 30km Guilin-Lipu origin leg -- the most useful new finding from this pass. No document host (docin.com/book118.com) or web search turned up the full EIA report, exact GPS/station coordinates, or named villages/townships beyond county level for either distribution station. Given the low-effort/low-priority instruction and the two-sub-segment structural problem (a single route object cannot honestly represent this row), stopping here at PARTIAL with county/town-seat proxies is the right call rather than fabricating precision.",
+  "blockers": "Two non-contiguous sub-segments (Mengshan + Cangwu) under one GEM row -- no single clean route is representable. No precise station-level coordinates found for either 蒙山分输站 or 苍梧分输站; only county/town-seat level Nominatim proxies. Full underlying EIA report not locatable via docin.com/book118.com/general web search. Direct refetch of the source URL was blocked by this session's network (ECONNREFUSED to eiafans.com; web.archive.org also unreachable) -- content relies on the prior pilot pass's extraction, not a fresh re-read this session, though url_verifier.py confirms the URL itself is still live (200).",
+  "_group": "yulin(salvaged)"
+ },
+ "P7660": {
+  "resolution": "PARTIAL",
+  "start": {
+   "name_zh": "信都镇（八步区）",
+   "name_en": "Xindu Town, Babu District, Hezhou",
+   "lon": 111.7212934,
+   "lat": 23.9941972,
+   "geocode_source": "Nominatim query '信都镇,八步区,贺州,广西' -> node 5042607335 (town-level)",
+   "refs": []
+  },
+  "end": {
+   "name_zh": "富阳镇（富川瑶族自治县）",
+   "name_en": "Fuyang Town, Fuchuan Yao Autonomous County, Hezhou",
+   "lon": 111.2710999,
+   "lat": 24.8181281,
+   "geocode_source": "Nominatim query '富阳镇,富川瑶族自治县,贺州,广西' -> node 4261999695 (town-level; Fuyang is the Fuchuan county seat, site of the project's Fuchuan distribution station per the EIA approval's county-level siting)",
+   "refs": []
+  },
+  "corridor_notes": "Not a simple two-point line: this is a three-way branching network under one project name, 广西天然气支线管网项目贺州天然气支线管道工程（富川段、昭平段和信都段） (Guangxi Gas Branch Network Project — Hezhou Branch Pipeline Engineering, Fuchuan/Zhaoping/Xindu sections), builder 广西燃气集团有限公司 (Guangxi Gas Group). Per the Guangxi Ecology & Environment Dept's approval-reply title and a public-notice page (both on sthjt.gxzf.gov.cn, both unreachable from this environment on every attempt incl. Wayback), it spans Babu District, Zhongshan County, Pinggui District, Fuchuan Yao Autonomous County, and Zhaoping County (all Hezhou City) plus Mengshan County (Wuzhou City), building THREE new distribution stations -- Xindu (信都), Fuchuan (富川), Zhaoping (昭平) -- plus two valve rooms, total 71.1 km of DN273 pipe at 4.0 MPa design pressure, split: Xindu section 2.2km/6.3MPa/0.65e8 m3-yr (short, higher-pressure -- reads as the trunk tie-in/hub spur into Babu District), Fuchuan section 39.6km/4.0MPa/0.2e8 m3-yr, Zhaoping section 29.3km/4.0MPa/0.3e8 m3-yr. I've picked Xindu (the hub/tie-in, sited in Babu District where Hezhou's city gas supply enters) as START and Fuchuan (the longest documented leg, 39.6km) as END for a representative two-point route; the Zhaoping leg (29.3km) is a second branch off the same hub not captured by this pair -- a human drawing the actual route should treat this as a Y-shaped corridor, not a straight line, and decide whether GEM's single 'Hezhou Branch' row should eventually be split to match the source's own three-section structure. GEM's recorded LengthKnown=61.1km does not cleanly match any subset of the sourced section lengths (39.6+29.3=68.9; +2.2=71.1 total) -- flagging as a probable stale/pre-final-design figure, not something I'm correcting here.",
+  "route_refs": [],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Existence is now much better corroborated than the prior pass found: fresh WebSearch surfaced the EXACT approval-reply title (广西壮族自治区生态环境厅关于广西天然气支线管网项目贺州天然气支线管道工程（富川段、昭平段和信都段）环境影响报告表的批复, at http://sthjt.gxzf.gov.cn/zfxxgk/zfxxgkgl/fdzdgknr/hjjccf/hjyxpj/t11218502.shtml -- note this is a DIFFERENT gxzf.gov.cn path/page than the xpjylgwapp.net URL the sheet currently cites, though both are plausibly indexing/mirroring the same underlying EIA record) plus a SEPARATE public-notice-of-approval page (t11157853.shtml, public comment window 2022-01-18 to 2022-01-24) -- two distinct document types from the same regulator, both independently naming this project, its three sections, station names, lengths, pressures and capacities in essentially identical detail via Google's indexed snippet/summary. This is much stronger corroboration of EXISTENCE than the prior pass had (which could not even confirm the topic of its sole citation). HOWEVER: neither sthjt.gxzf.gov.cn URL could be reached by ANY method this session -- direct curl/url_verifier both ConnectTimeout (consistent with the prior finding that gxzf.gov.cn family domains are geo-blocked from this environment), and archive.org has NO snapshot of either path (checked both the wayback availability API and a direct web.archive.org fetch: 404/no capture). I could find no republication of this specific content on any of the secondary hosts that worked well for sibling Guangxi branch rows (gigeps.com, yanshougs.com, gxtngs.com.cn all searched, no hits). Per the standing rule that every ref must pass url_verifier before citation, I cannot supply a verified route_ref for either endpoint -- the place names and coordinates above are informational/best-available, sourced only from a search-engine snippet of an inaccessible primary government document, not independently verified. A 2022-01 EIA public-comment window is also worth flagging against the sibling status_review's 'shelved' conclusion (based on a presumed 2021-03 proposal date and no progress since) -- an EIA public notice in Jan 2022 would actually be a LATER, more-advanced planning milestone than a March 2021 proposal, so 'shelved' may be premature; recommend a status re-check with working network access to sthjt.gxzf.gov.cn before finalizing that call.",
+  "blockers": "Cannot supply a url_verifier-passing ref for either endpoint: the two identified primary sources (sthjt.gxzf.gov.cn approval reply + public notice) are both geo-blocked/unreachable from this environment with no Wayback fallback, and no secondary host reproduces this project's content. Coordinates given are for the town/county seat nearest each named distribution station (Xindu, Fuchuan), not the station's own precise siting -- station-level precision would require the actual document text. Recommend a re-attempt via a China-based network/proxy, or manual browser access, to pull the primary sthjt.gxzf.gov.cn pages directly.",
+  "_group": "yulin(salvaged)"
+ },
+ "P7663": {
+  "resolution": "PARTIAL",
+  "start": null,
+  "end": null,
+  "corridor_notes": "Cannot establish a route — no independent source names a 'Teng County' (藤县) gas branch pipeline at all, so there is no corridor to describe.",
+  "route_refs": [],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "Fresh round of Chinese-language searches this session found NO independent trace of a Teng County (藤县) gas branch pipeline, consistent with the prior researcher's finding. Tried: direct project-name searches ('藤县天然气支线管道工程', '藤县分输站'), the Wuzhou Ecological Environment Bureau site (sthjj.wuzhou.gov.cn, which administers Teng County's EIA filings — searched their EIA-info column and site-restricted queries; found only unrelated Teng County environmental items, e.g. an industrial-park planning EIA and air-quality plans, none naming a gas pipeline), gxtngs.com.cn (the EIA consultancy that sourced several sibling Guangxi branch rows — no Teng County hits), yanshougs.com (sourced P7658 Binyang and P7664 Tieshan Port — no Teng County hits), and eiafans.com forum (sourced P7659 Wuzhou — no Teng County hits). ADDITIONAL CHECK (new this pass): recovered the official 广西壮族自治区发展和改革委员会 '全区2023年油气及煤炭储运项目投资计划表' (region-wide 2023 oil/gas/coal storage-transport project investment plan table), an .xlsx originally hosted at the geo-blocked fgw.gxzf.gov.cn, via a Wayback Machine snapshot (2025-04-13 capture, id_ raw form, passes url_verifier at 200). This is the Guangxi DRC's own consolidated list of ~30 named, budgeted gas/oil/coal pipeline projects province-wide for 2023, including several sibling 'Guangxi Gas Pipeline Network' branches by name (e.g. 合浦-博白-浦北, 田东-德保-靖西, 宾阳-上林, 南宁-凭祥/崇左段, 柳城-融水, 防城港东兴/东兴段, 北海铁山港, 平南, 大任-南丹, 来宾/兴宾-武宣, 桂东南环网梧州-岑溪段). It does NOT include any Teng County / 藤县 line. This is meaningful negative evidence — a project real enough to be under active provincial 2023 investment planning would very likely appear on this table the way ~15 comparable sibling branches do — though it is not conclusive proof of non-existence (a project could predate or postdate this specific table, or fall under a different generic 环网/trunk line item). Recommend treating existence as unconfirmed pending a China-resident researcher accessing fgw.gxzf.gov.cn directly, or Baird flagging this row for a discovery/existence review rather than a route-creation deliverable.",
+  "blockers": "No independent source (government, EIA, procurement, or news) names a Teng County (藤县) gas branch pipeline under any search strategy tried across two research sessions. The row's only citation (bjx.com.cn, shared boilerplate across ~12 sibling rows) is WAF-blocked and, via sibling citation metadata, appears to be a 2021 power-generation-project roundup article not evidently covering gas pipelines. The Guangxi DRC's own 2023 provincial gas/oil/coal investment-plan table (recovered via Wayback) lists ~15 comparable sibling branch projects by name and omits Teng County entirely. Cannot source start/end points, length, or any spec without fabricating — this is an existence question for a human researcher/Baird to resolve (possible discovery-workflow review or retirement), not a route-creation task that can proceed.",
+  "_group": "yulin(salvaged)"
+ }
+}

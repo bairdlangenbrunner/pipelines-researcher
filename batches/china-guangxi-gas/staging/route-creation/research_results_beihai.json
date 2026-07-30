@@ -1,0 +1,127 @@
+{
+  "P7149": {
+    "resolution": "ENDPOINTS",
+    "start": {
+      "name_zh": "中海油涠洲终端",
+      "name_en": "CNOOC Weizhou Terminal (Weizhou oilfield associated-gas processing terminal, Weizhou Island)",
+      "lon": 109.0871,
+      "lat": 21.0453,
+      "geocode_source": "Nominatim query '涠洲终端' -> OSM way 271082275 '中海油涠洲终端' (industrial landuse), 涠洲镇, 海城区, 北海市",
+      "refs": [
+        "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+        "https://m.thepaper.cn/newsDetail_forward_22665351"
+      ]
+    },
+    "end": {
+      "name_zh": "铁山港登陆点接收站（未见具体命名）",
+      "name_en": "Unnamed receiving station at the Tieshan Port landfall point (pigging/filtering/metering station)",
+      "lon": 109.4793,
+      "lat": 21.5623,
+      "geocode_source": "Both cited sources use identical phrasing '在铁山港登陆点建设一座...接收站' with no proper station name given; anchored to Nominatim query '铁山港区' -> OSM relation 3241956 administrative-boundary centroid, 北海市 (county/district level, not a station-level fix)",
+      "refs": [
+        "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+        "https://m.thepaper.cn/newsDetail_forward_22665351"
+      ]
+    },
+    "corridor_notes": "~70km subsea pipeline (CNOOC's '涠北管线'/Weibei line) between Weizhou Island and Tieshan Port, Beihai. Sources state the pipe runs directly between the Weizhou terminal and the Tieshan Port landfall receiving station with no named intermediate onshore waypoints (subsea route). One routing detail: in Jan 2023 the line crossed beneath Beihai's planned 300,000-DWT shipping channel near Weizhou Island; to avoid impacting the channel the project team used sea-to-sea trenchless horizontal directional drilling (HDD), routing the pipe 18-22m below the seabed through the mud layer beneath the planned channel. Commissioned/gas-in 2023-04-11, 13 days ahead of schedule.",
+    "route_refs": [
+      "http://www.sasac.gov.cn/n2588025/n2588124/c27673988/content.html",
+      "https://m.thepaper.cn/newsDetail_forward_22665351",
+      "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/202304/t20230428_1366175.html"
+    ],
+    "duplicate_of": null,
+    "map_or_vector": null,
+    "researcher_notes": "Builds on the pilot digest's confirmed-existence finding (medium tier per standing rule 4: sasac.gov.cn/thepaper.cn/ndrc.gov.cn are one CNOOC/state-media announcement reprinted across three hosts, not editorially independent). This pass re-verified all three URLs live (all 200) and pulled the raw article text directly (curl, not AI-summarized) to confirm the precise start/end station language: start = '涠洲终端' (Weizhou terminal, on Weizhou Island, matched to a named OSM industrial feature '中海油涠洲终端'); end = an unnamed receiving station built specifically for this project at the 'Tieshan Port landfall point' ('铁山港登陆点'), fitted with pigging-receiver/filter/metering functions. No source found (including a re-check of the SASAC/thepaper/NDRC texts and a search for the prior pass's leads) gives the receiving station a proper name, a village/township-level location, or coordinates, so the end anchor is geocoded only to the Tieshan Port District (铁山港区) centroid, not a station-level fix. No GIS/vector layer found.",
+    "blockers": "End-point precision is district-level only: no source names or precisely locates the Tieshan Port receiving station beyond 'Tieshan Port landfall point'. A human researcher with China-based network access could try the still-unreachable fgw.gxzf.gov.cn notice (t16217273.shtml) that the sheet cites for Diameter/Pressure/ProposalYear, which might carry a more specific siting description, but it has been unreachable (ConnectTimeout) across two independent research passes."
+  },
+  "P7664": {
+    "resolution": "ENDPOINTS",
+    "start": {
+      "name_zh": "中石化广西三期LNG接收站（南部环网段起点，围墙外2米）",
+      "name_en": "Sinopec Guangxi Phase-3 LNG Receiving Terminal (start of the project's south loop network segment, 2m outside its wall)",
+      "lon": 109.4793,
+      "lat": 21.5623,
+      "geocode_source": "No OSM/Overpass feature found for '中石化广西LNG接收站' or 'Sinopec'+'LNG' within a Tieshan Port District bounding box (21.27-21.68N, 109.30-109.62E) — LNG terminal is not individually mapped in OSM. Anchored to Nominatim '铁山港区' -> OSM relation 3241956 administrative-boundary centroid as a district-level fallback.",
+      "refs": [
+        "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681"
+      ]
+    },
+    "end": {
+      "name_zh": "兴港分输站",
+      "name_en": "Xinggang Distribution Station (end of the south loop network segment)",
+      "lon": 109.5376,
+      "lat": 21.5832,
+      "geocode_source": "Nominatim query '兴港' bounded to Tieshan Port District -> OSM node 5133273338 '兴港镇' (Xinggang Town), 铁山港区, 北海市 — town centroid, matches the distribution station's name; not a station-level fix.",
+      "refs": [
+        "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681"
+      ]
+    },
+    "corridor_notes": "SPECIAL NOTE: this is a branching network, not a single point-to-point line — the project's own safety-evaluation registry entry (hnocse.com) describes TWO pipe segments under one project name ('广西天然气支线管网项目铁山港天然气支线管道工程'): (1) a 3.14km 'gas-source connector line' (气源联络线) from 2m outside the wall of Guangxi Pipeline's Beihai First Station (广西管道北海首站) to this project's #1 valve chamber (1#阀室); and (2) a 25.89km 'south loop network' (南部环网管道) from 2m outside the wall of Sinopec's Guangxi Phase-3 LNG receiving station (中石化广西三期LNG接收站) through the #1 valve chamber, Tieshan Port first station (铁山港首站), and Nanzhuwan distribution station (南珠湾分输站), terminating at Xinggang distribution station (兴港分输站). Combined length ~29.0km (close to GEM's recorded 30km). Given the topology, the two anchors chosen for candidate-route purposes are the Sinopec LNG terminal (south-loop start / effective gas source for the loop) and Xinggang distribution station (loop terminus); the gas-source connector to Beihai First Station and the three intermediate stations (#1 valve chamber, Tieshan Port first station, Nanzhuwan distribution station) should be treated as required waypoints/branch points on any drawn route, not skipped as a straight line between the two anchors. Large-diameter (DN800/DN500 per pilot digest), high-pressure (10/6.3 MPa) branch trunk.",
+    "route_refs": [
+      "http://oa.hnocse.com:10012/oidosa/index/index_pjyj?id=23895&pjid=28681",
+      "https://www.yanshougs.com/content/77385.html",
+      "https://web.archive.org/web/20250424053023/https://dnr.gxzf.gov.cn/sjcx/jsydys/t18328823.shtml"
+    ],
+    "duplicate_of": null,
+    "map_or_vector": null,
+    "researcher_notes": "Re-verified hnocse.com, yanshougs.com and the dnr.gxzf.gov.cn Wayback snapshot live this pass (all 200 via url_verifier). hnocse.com is the single best source found for this row: a safety-evaluation-industry registry entry that names the project and gives the exact two-segment route description with all station names (quoted in corridor_notes). Could not geocode the Sinopec LNG terminal, Beihai First Station, #1 valve chamber, Tieshan Port first station, or Nanzhuwan distribution station individually — none appear in OSM/Overpass under these names within the Tieshan Port District bounding box, so the LNG terminal start anchor falls back to the district centroid (coarser than the confirmed town-level fix for Xinggang). No GIS/vector layer found. Per the pilot digest's own cross-check: a separately-reported 'Tieshan East Port gas branch pipeline project' (铁山东港天然气支线管道项目, Feb-2024 equity-acquisition report) that the prior pass flagged as a possible undiscovered THIRD Beihai-area pipeline appears, on this pass's reading of P7665's sourcing, to actually just BE P7665 (Donggang Industrial Park branch) under an alternate name — same operator chain (广投管网公司/天圜能源(广西)有限公司 both named in P7665's own commissioning article) — so that lead is resolved, not a new discovery candidate.",
+    "blockers": "Sinopec LNG terminal and the three named intermediate stations (#1阀室, 铁山港首站, 南珠湾分输站) could not be individually geocoded — none found in OSM/Overpass by name within the district. Diameter breakdown (800/500/400mm — third value unconfirmed) and SegmentCost discrepancy flagged by the pilot digest remain open and are outside this route-creation task's scope."
+  },
+  "P7665": {
+    "resolution": "ENDPOINTS",
+    "start": {
+      "name_zh": "国家管网白沙输气站",
+      "name_en": "PipeChina Baisha Gas Transmission Station",
+      "lon": 109.6842,
+      "lat": 21.7064,
+      "geocode_source": "Nominatim query '合浦县白沙镇' -> OSM node 5133129625 '白沙镇' (Baisha Town), 合浦县, 北海市 — town centroid, matches GEM's StartLocation 'Hepu Baisha' and the station's township exactly.",
+      "refs": [
+        "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783"
+      ]
+    },
+    "end": {
+      "name_zh": "榄根分输站",
+      "name_en": "Langgen Distribution Station (Tieshan Donggang Industrial Park)",
+      "lon": 109.6115,
+      "lat": 21.6051,
+      "geocode_source": "Nominatim query '榄根' bounded to Beihai/Hepu -> OSM way 991683301 '榄根路' (Langgen Road), 合浦县, 北海市, adjacent to OSM way 1135120005 '铁山东港区玉林海港码头' (Tieshan Donggang Yulin sea port terminal) confirming the industrial-park location; road centroid used as a proxy for the co-located station.",
+      "refs": [
+        "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783"
+      ]
+    },
+    "corridor_notes": "12.6km branch ('东港支线') from PipeChina's national-trunk Baisha gas transmission station (国家管网白沙输气站, Baisha Town, Hepu County) to Langgen distribution station (榄根分输站) inside the Tieshan Donggang Industrial Park (铁山东港产业园), on the Hepu County/Tieshan Port District boundary. Design pressure 4 MPa. Built/operated by Guangxi Beihai Guangtou Gas Co. (广西北海广投燃气有限公司) with 广投管网公司 (Guangxi Investment Group's pipeline-network subsidiary). Gas-in/pressure test completed 2024-03-29 (18:35 gas from Baisha reached Langgen; pressure test to 3.8MPa completed 2024-03-29 14:06); official commissioning with first industrial customers (新福兴, 长利 — both glass manufacturers) 2024-08-19.",
+    "route_refs": [
+      "http://www.gxbhlg.com/index.php?m=content&c=index&a=show&catid=10&id=783",
+      "http://www.gigeps.com/cms/channel/xmgg4fw/61178.htm"
+    ],
+    "duplicate_of": null,
+    "map_or_vector": null,
+    "researcher_notes": "Re-verified gxbhlg.com and gigeps.com live this pass (both 200). gxbhlg.com (the project co-developer's own news page) is a strong single-source route description naming both stations and the exact 12.6km length directly. nengyuanquan.com (the pilot digest's second corroborating source, syndicating the same story with commissioning-date detail) failed url_verifier this pass (ConnectTimeout) and the Wayback API was rate-limited (429) on repeated attempts, so it is NOT included as a ref here even though the pilot digest read it successfully — flagging as a re-check item. gigeps.com/61178 (2025-06-27 feasibility-study procurement notice for a FOLLOW-ON project in the same industrial park) corroborates the area's active buildout but does not itself name P7665's two endpoint stations. Pilot digest already checked P7665 against the roster (incl. P7664) for duplicates and found none (different route, different status, different diameter class) — reconfirmed on this pass; not a duplicate.",
+    "blockers": null
+  },
+  "P7666": {
+    "resolution": "PARTIAL",
+    "start": {
+      "name_zh": null,
+      "name_en": null,
+      "lon": null,
+      "lat": null,
+      "geocode_source": null,
+      "refs": []
+    },
+    "end": {
+      "name_zh": null,
+      "name_en": null,
+      "lon": null,
+      "lat": null,
+      "geocode_source": null,
+      "refs": []
+    },
+    "corridor_notes": "No route information exists for this row. GEM's StartLocation/EndLocation are both blank and LengthKnown is blank ('--'). The row's only citation (news.bjx.com.cn, 2021-03-26) is an Aliyun-WAF-obfuscated anti-bot page unreadable by any tool tried across two research passes (curl, WebFetch, and a fresh Wayback-snapshot attempt this pass, which was rate-limited 429 on the Wayback availability API after repeated tries by parallel sibling agents in this batch). Open web search for '北海支线'/'Beihai branch' gas pipeline turned up nothing describing a THIRD, distinct piece of Beihai-area gas infrastructure beyond the two already-tracked, well-documented sub-projects P7664 (Tieshan Port loop, still proposed) and P7665 (Donggang Industrial Park branch, now operating) — consistent with the pilot digest's own conclusion.",
+    "route_refs": [],
+    "duplicate_of": "P7664",
+    "map_or_vector": null,
+    "researcher_notes": "No new sourcing found beyond the pilot digest (WebSearch budget for this session was exhausted before this PID could be researched fresh; relying on the pilot digest's search coverage plus a re-check of the one cited URL and one more Wayback attempt, both unsuccessful). P7666's SegmentName 'Beihai Branch' (alt name '北海支线') most closely echoes P7664's segment name ('Beihai Tieshan Port loop gas pipe line') and status (both 'proposed'/unbuilt), rather than P7665 ('Donggang Industrial Park branch', already 'operating' as a concretely differentiated later sub-project) — so duplicate_of is set to P7664 as the best single candidate per the task's instruction to name one, while flagging that P7666 may equally be an undifferentiated placeholder for the WHOLE Beihai-area buildout (i.e., a precursor stub that was later split into both P7664 and P7665, rather than a clean duplicate of either one alone). Recommend Baird/CB treat this as a merge/retirement candidate against P7664+P7665 jointly, per the pilot digest's original recommendation, rather than a straightforward 1:1 duplicate.",
+    "blockers": "No coordinates possible — zero sourced location data exists for this row and its only citation is unreadable by any tool available. Cannot produce candidate route geometry. Recommend retiring/merging this row rather than continuing to chase a route for it."
+  }
+}

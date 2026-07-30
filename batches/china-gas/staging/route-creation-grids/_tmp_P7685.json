@@ -1,0 +1,25 @@
+{
+  "resolution": "PARTIAL",
+  "start": {
+    "name_zh": "彭州升平站",
+    "name_en": "Pengzhou Shengping Station",
+    "lon": 104.005,
+    "lat": 31.03,
+    "geocode_source": "Nominatim query '升平,彭州' matched '升平路' (Shengping Road), Pengzhou city -- approximate proxy only, not a confirmed station address; unverified because the source naming this station could not be fetched (see blockers)",
+    "refs": []
+  },
+  "end": {
+    "name_zh": "蒲阳配气站／上阳街",
+    "name_en": "Puyang Distribution Station, Shangyang Street, Puyang Subdistrict, Dujiangyan",
+    "lon": 103.665845,
+    "lat": 31.026554,
+    "geocode_source": "Nominatim query '上阳街,都江堰市' (Shangyang Street, Puyang Subdistrict, Dujiangyan) -- street-level match to the station's own address '都江堰市上阳街393号' per a Dujiangyan Jinen Gas Co. inspection-service inquiry notice",
+    "refs": ["https://www.jngas.cn/News_d/479.html"]
+  },
+  "corridor_notes": "GEM's own zh_segment field ('D219管道彭州升平站—都江堰蒲阳站输气管道') and StartLocation/EndLocation (Shengping/Puyang) point to a specific, real pipeline: multiple independent search hits (a Dujiangyan municipal government safety-inspection notice at djy.gov.cn dated 2022-04-08, and matching bidcenter.com.cn tender/award notices from the same month) describe a 'D219 pipeline, Pengzhou Shengping Station to Dujiangyan Puyang Station gas transmission pipeline' (D219管道彭州升平站—都江堰蒲阳站输气管道) that is exactly 36 kilometers long -- matching GEM's LengthMergedKm precisely. However, every mirror of that notice (djy.gov.cn directly, and two bidcenter.com.cn copies) returned a bot-wall (HTTP 412 on djy.gov.cn via both WebFetch and url_verifier.py; a human-verification redirect on bidcenter.com.cn) and could not be independently read or verified live. A separate, independently-verified source (entrepreneurdaily.cn, 2023-10-25, url_verifier PASS) corroborates the general corridor -- a CNPC/Pengzhou gas transmission station renovation in Oct 2023 explicitly serving both Pengzhou and Dujiangyan residential/industrial users -- but does not itself name Shengping or Puyang stations, so it is not cited as a start/end ref.",
+  "route_refs": ["http://www.entrepreneurdaily.cn/2023-10-25/6/2424989.html"],
+  "duplicate_of": null,
+  "map_or_vector": null,
+  "researcher_notes": "End point (Puyang) upgraded to ENDPOINTS-quality: jngas.cn (Dujiangyan Jinen Gas Co.) independently confirms a Puyang distribution station at a specific street address (都江堰市上阳街393号), geocoded to street level and cited with a verified ref. Start point (Shengping) remains unresolved to a station-specific address -- high confidence in the underlying pipeline's identity and length (36km exactly matches GEM's LengthMergedKm) from the djy.gov.cn/bidcenter.com.cn notices, but those are bot-walled (HTTP 412 / human-verification) and could not be independently fetched or verified, so the Shengping side is left as a road-name-level approximation with no ref. This is a liveness/bot-wall problem (HTTP 412), not a content problem -- a future pass reaching djy.gov.cn or bidcenter.com.cn (different network path, or once rate limits/JS challenges clear) would upgrade this PID fully to ENDPOINTS. Archive.org lookups were attempted but the wayback availability API was rate-limiting (HTTP 429) throughout this session. Overall resolution stays PARTIAL because the start point still lacks both a verified ref and a station-level coordinate.",
+  "blockers": "Start point (Shengping) only: all three source mirrors found (djy.gov.cn, 2x bidcenter.com.cn) are bot-walled (412 / human-verification challenge) and could not be fetched by WebFetch, curl, or url_verifier.py; archive.org snapshot lookups were rate-limited (429) throughout the session. The Shengping coordinate given is a place-name-level approximation (a road named Shengping in Pengzhou), not a confirmed station address, and has no ref. The end point (Puyang) is resolved with a verified ref and street-level coordinate -- no blocker there."
+}
