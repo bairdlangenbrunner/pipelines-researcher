@@ -439,6 +439,49 @@ Because `meta.mode="route-creation"` and `meta.scope` carry country+commodity, a
 facility gazetteer (`scripts/refresh_facility_gazetteer.py`) when the GOGET/GOGPT
 snapshots in `data/` are stale.
 
+6. **Apply (ONLY on explicit per-batch authorization from Baird — approval never
+   carries over; default remains staged-for-human-PR).** Two halves, in order,
+   established on the Egypt gas batch 2026-07-30 (merges `0c8c01f4`/`241ef5aa`):
+
+   a. **Routes repo** — gate through ITS OWN QC, branch, merge, push:
+   ```bash
+   cd ../GOIT-GGIT-pipeline-routes
+   python scripts/qc_routes.py <candidate_routes/P####.geojson …>          # REPORT first
+   git checkout -b <scope>-routes-<date>
+   python scripts/qc_routes.py <targets…> --copy --include <WARN PIDs>    # targets BEFORE flags
+   python scripts/validate_geojson.py <copied files…>                     # CI check locally
+   git add … && git commit && git checkout main && git merge --no-ff <branch> && git push origin main
+   ```
+   FAILs are never copied; WARNs need an explicit `--include` (straight-line
+   endpoints candidates always undershoot routed length — expected WARNs).
+
+   b. **Sheet route columns** — `scripts/apply_route_candidates.py` (plan phase →
+   review → `--apply`). Pull a FRESH snapshot first; the script derives column
+   letters from the header, appends (never overwrites) RouteNotes (CB stamp + " — "
+   + researcher notes) / RouteCreator `CB` (gas tab only) / Route [ref] URLs, sets
+   RouteAccuracy from the staged suggestion (current cell must be `no route`), and
+   enforces the full authorized-write protocol: FORMULA pre-check, ProjectID match,
+   double-append guard, `notes/` backup CSV (commit it), RAW cell-scoped writes via
+   `gws-gem-write`, exact readback verification.
+   ```bash
+   ./scripts/refresh_csvs.sh
+   python scripts/apply_route_candidates.py --staging batches/<scope>/staging/route-creation \
+     --commodity gas --csv data/GGIT_gas_snapshot_<date>.csv --scope-slug <scope> \
+     [--pids P8013,P8014,P8021]          # plan; then re-run with --apply
+   ```
+   Then update the country note + CLAUDE.md pending bullet, regenerate
+   `batches/INDEX.md`, and commit.
+
+7. **Partials retry (optional, later).** ROUTE_PARTIAL rows are worth ONE re-research
+   pass once the original blocker (usually web-search quota) clears: build per-PID
+   retry payloads seeding each agent with the prior findings/blockers, fan out
+   geographically-grouped subagents, then assemble resolved PIDs via
+   `build_route_candidate.py --method endpoints` and refresh the still-unresolved
+   ROUTE_PARTIAL records in place. Exemplars from the Egypt gas retry (3/18 resolved):
+   `batches/egypt-gas/staging/route-creation/{retry_payload_*,retry_results_*,assemble_retry_candidates.py}`.
+   Cross-read the results before assembling — one group's source can resolve another
+   group's PID (the P8021 World Bank ICR also named P8014's Zafarana–Kureimat line).
+
 ---
 
 ## §9 Full country pass (composite recipe)

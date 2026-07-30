@@ -165,9 +165,23 @@ systematically off (likely a segment-vs-network granularity misread, not a findi
 
 ## Review flow (Baird, after delivery)
 
-Open candidates in geojson.io / QGIS → branch on `GOIT-GGIT-pipeline-routes` → run its
-`qc_routes.py --copy` → PR → then the sheet-side `RouteAccuracy` /
-`RouteNotes` / `Route [ref]` land via a separate §5 Update batch.
+**Default (human path):** open candidates in geojson.io / QGIS → branch on
+`GOIT-GGIT-pipeline-routes` → run its `qc_routes.py --copy` → PR → then the
+sheet-side `RouteAccuracy` / `RouteNotes` / `Route [ref]` land via a separate
+§5 Update batch.
+
+**Authorized agent apply (per-batch only; the CLAUDE.md sheet-write carve-out):**
+when Baird explicitly authorizes it for a specific batch, the agent runs both
+halves itself — routes repo first (qc_routes gate REPORT → `--copy`, WARNs need
+an explicit `--include`, positional targets before flags; branch → commit →
+`merge --no-ff` → push), then the sheet columns via
+`scripts/apply_route_candidates.py` (plan phase → Baird reviews the plan +
+backup CSV → `--apply` with readback verification). Appends never overwrite:
+RouteNotes gets the CB stamp + " — " + researcher notes, RouteCreator gains
+`CB` (gas tab only — the oil tab has no RouteCreator column), Route [ref]
+gains only URLs not already present; RouteAccuracy must currently be
+`no route`. Authorization never carries to the next batch. Recipe:
+`docs/workflows.md` §8 step 6; first use Egypt gas 2026-07-30.
 
 ## Iterate
 
