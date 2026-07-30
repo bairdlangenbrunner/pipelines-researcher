@@ -48,6 +48,36 @@ METHOD_LABEL = {  # candidates.json / staged record method tag
     "sidecar": "gulfpub_sidecar", "gis": "gis_vector", "osm": "osm",
     "traced": "digitized", "endpoints": "endpoints_greatcircle",
 }
+# sheet-side RouteNotes provenance stamp per method (Baird 2026-07-30; CB = tracker initials)
+METHOD_ROUTENOTE = {
+    "sidecar": "CB: route from gulfpub", "gis": "CB: route from GIS source",
+    "osm": "CB: route from OSM", "traced": "CB: route traced from published map",
+    "endpoints": "CB: route guessed from endpoints",
+}
+
+
+def _proposed_sheet(wl: dict | None, method: str, ref_urls: list[str],
+                    note_override: str = "") -> dict:
+    """Paste-ready APPEND values for the sheet's route provenance columns:
+    current cell content + our addition — never an overwrite (Baird 2026-07-30).
+    RouteNotes gets the METHOD_ROUTENOTE stamp; RouteCreator gets 'CB';
+    Route [ref] gets every link that informed the route ('; '-joined)."""
+    wl = wl or {}
+    cur_notes = (wl.get("current_route_notes") or "").strip()
+    cur_creator = (wl.get("current_route_creator") or "").strip()
+    cur_ref = (wl.get("current_route_ref") or "").strip()
+
+    note = note_override or METHOD_ROUTENOTE[method]
+    sep = " " if cur_notes.endswith(".") else "; "
+    notes = f"{cur_notes}{sep}{note}" if cur_notes else note
+
+    creator = cur_creator if "CB" in cur_creator.split(";") or cur_creator == "CB" \
+        else (f"{cur_creator}; CB" if cur_creator else "CB")
+
+    new_urls = [u for u in dict.fromkeys(ref_urls) if u and u not in cur_ref]
+    ref = "; ".join(([cur_ref] if cur_ref else []) + new_urls)
+
+    return {"RouteCreator": creator, "RouteNotes": notes, "Route [ref]": ref}
 
 
 def _utc() -> str:
@@ -343,13 +373,20 @@ def main() -> None:
     ap.add_argument("--end-name", default="")
     ap.add_argument("--start-ref", default="", help="independent source URL for the start point")
     ap.add_argument("--end-ref", default="")
+    ap.add_argument("--route-ref", action="append", default=[],
+                    help="verified URL that informed the route choice (repeatable) — "
+                         "lands in the proposed Route [ref] append")
+    ap.add_argument("--routenote", default="",
+                    help="override the METHOD_ROUTENOTE sheet stamp (e.g. a gis-method "
+                         "split of a GulfPub trace is still 'CB: route from gulfpub')")
     ap.add_argument("--densify-km", type=float, default=25.0)
     # snapping
     ap.add_argument("--snap-start", help="lon,lat snap target for the start endpoint")
     ap.add_argument("--snap-end", help="lon,lat snap target for the end endpoint")
     ap.add_argument("--snap-max-km", type=float, default=10.0)
     # framing / provenance
-    ap.add_argument("--accuracy", choices=["high", "medium", "low"],
+    ap.add_argument("--accuracy",
+                    choices=["high", "medium", "low", "very low (straight line/schematic)"],
                     help="downgrade the suggested RouteAccuracy below the method cap "
                          "(e.g. a corridor midline from a gis vector source earns medium, "
                          "not high); never allowed to exceed METHOD_ACCURACY[method]")
@@ -362,7 +399,7 @@ def main() -> None:
     ap.add_argument("--gcps", default="", help="(traced) gcps.json used — copied into the packet")
     args = ap.parse_args()
 
-    _rank = {"low": 0, "medium": 1, "high": 2}
+    _rank = {"very low (straight line/schematic)": -1, "low": 0, "medium": 1, "high": 2}
     if args.accuracy and _rank[args.accuracy] > _rank[METHOD_ACCURACY[args.method]]:
         raise SystemExit(f"--accuracy {args.accuracy} exceeds the {args.method} "
                          f"method cap '{METHOD_ACCURACY[args.method]}'")
@@ -502,6 +539,10 @@ def main() -> None:
         "packet": packet_rel,
         "facility_anchors": (wl or {}).get("facility_anchors", []),
         "proposed_refs": [r for r in (args.start_ref, args.end_ref) if r],
+        "proposed_sheet": _proposed_sheet(
+            wl, args.method,
+            args.route_ref + [r for r in (args.start_ref, args.end_ref) if r],
+            note_override=args.routenote),
         "verifications": [], "tier": "", "researcher_notes": " ".join(notes_bits),
     }
     scope_meta = {"mode": "route-creation", "commodity": args.commodity,
@@ -513,6 +554,7 @@ def main() -> None:
                         source, georef, replacement, sig, qc, endpoints,
                         " ".join(notes_bits), args.start_ref, args.end_ref, wl, packet_rel,
                         suggested_accuracy=sugg_accuracy)
+    rec["proposed_sheet"] = cand["proposed_sheet"]
     _upsert(staging / "staged_resolutions.json", args.pid, rec, "resolutions", scope_meta)
 
     flag = "PASS" if qc["passed"] else "FAIL"

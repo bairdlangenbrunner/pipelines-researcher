@@ -724,6 +724,11 @@ def _route_candidate_columns():
         ("Corroboration tier", g("tier"), 13),
         ("Independent?", lambda r: "yes" if r.get("independent") else ("no" if r.get("proposed_refs") else ""), 11),
         ("Source URL", src("url"), 40),
+        # paste-ready APPEND values (current sheet cell + our addition — never an
+        # overwrite): RouteCreator 'CB' stamp, RouteNotes provenance, Route [ref] links
+        ("Proposed RouteCreator", lambda r: (r.get("proposed_sheet") or {}).get("RouteCreator", ""), 16),
+        ("Proposed RouteNotes", lambda r: (r.get("proposed_sheet") or {}).get("RouteNotes", ""), 44),
+        ("Proposed Route [ref]", lambda r: (r.get("proposed_sheet") or {}).get("Route [ref]", ""), 52),
         ("ResearcherNotes", g("researcher_notes"), 50),
     ]
 

@@ -84,7 +84,16 @@ provenance/audit, not a citation.
    anchor (refused beyond `--snap-max-km`), writes `candidate_routes/<PID>.geojson`,
    runs the **validation gate**, computes replacement framing + `geometry_signals` vs
    any existing GEM route, and upserts a `ROUTE_CANDIDATE` record into `candidates.json`
-   + `staged_resolutions.json`.
+   + `staged_resolutions.json`. Each candidate also stages **paste-ready APPEND values**
+   for the sheet's route provenance columns (rendered as `Proposed RouteCreator` /
+   `Proposed RouteNotes` / `Proposed Route [ref]` on the RouteCandidates tab — Baird
+   2026-07-30): `RouteCreator` gets `CB`, `RouteNotes` a per-method stamp ("CB: route
+   from gulfpub" / "CB: route guessed from endpoints", override with `--routenote`),
+   and `Route [ref]` every verified link that informed the route (`--route-ref`,
+   repeatable, plus the endpoint refs) — current cell content is always preserved,
+   never overwritten. `--accuracy` accepts the sheet's
+   `very low (straight line/schematic)` for pure two-point endpoint lines (below the
+   endpoints rung's `low` cap).
 5. **Workbook + recalc:** `build_ref_workbook.py --staging … --output …` renders the
    `<Cmdty>_RouteCandidates` tab; then `recalc.py`.
 

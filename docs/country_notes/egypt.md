@@ -188,6 +188,37 @@ Pipeline (Nitzana, Egyptian side)* covering the Egyptian section. Settle the
 P3620↔P7864 de-dup and the new row together so the corridor doesn't end up with
 overlapping rows.
 
+## Open items — §8 route creation (2026-07-30, staged NOT applied)
+
+All 55 gas rows with `RouteAccuracy = no route` covered in
+`batches/egypt-gas/staging/route-creation/`; workbook
+`…_20260730_1239_ET_egypt-gas_route-creation.xlsx`. **37 candidate geojsons**
+(15 GulfPub sidecar, 3 gis split/merge — Tarek-junction split of the WDGP-N trunk for
+P3934/P6687, four Denise traces merged for P7447 — and 19 endpoints great-circle at
+`very low (straight line/schematic)`) + **18 corridor-only ROUTE_PARTIAL rows** (an
+endpoint couldn't be publicly coordinated — no fabricated coords). Every candidate
+stages append-only `Proposed RouteCreator/RouteNotes/Route [ref]` values (CB stamps).
+
+- **5 intentional gate FAILs, each a sheet-length question, not a geometry defect:**
+  P6697 (ratio 0.685), P6687 (2.303 — Obaiyed→Tarek portion vs 41.5 km sheet), P7447
+  (0.446 — Denise system scope), **P3937/P3938 (both sheet lengths = 130 km, almost
+  certainly a garbled echo of an OGJ 130-mile CO2-EOR figure; real corridors 26.8 km
+  BED-2→BED-3 and 70 km BED→Alam El Shawish per corroborated GulfPub traces).**
+- **Sheet endpoint corrections surfaced by the research** (flag columns on the
+  workbook): P6704 start is NOT Rashid (intra-Amreya spur, WDGC→butane plant);
+  P7597 Cronos ends at Zohr infrastructure, NOT Port Said; P6035 "Veunsa" = West
+  Damietta power plant (Kafr Saad); P7572 "Qarun" is actually the offshore
+  Karawan/DEKA sealine into El Gamil (misfiled name); **P8008/P8009 "Sinia" = GASCO's
+  transliteration of Sinai** (Trans-Sinai duplication lines, mis-scoped as Upper
+  Egypt); P8002's 73 km looks like the Abu Sultan→NAC portion of the 165 km El
+  Tina–Abu Sultan–NAC trunk (double-count check).
+- **South Valley segments P6697–P6702** (`RouteType = Included in other ProjectID`,
+  parent P0477 already mapped): accepting the per-segment candidates implies a
+  RouteType decision — Baird's call, linked to the P0477-vs-segments de-dup above.
+- Six PIDs had no sourceable route at all beyond corridor prose (e.g. P8020 Cairo
+  Ring–Port Said, P8021, P8014, P7605 Wanda, P7588 Edfu tie-in end, P8003) — parked
+  as ROUTE_PARTIAL; several were blocked by web-search quota, worth one retry pass.
+
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 
 Wiki-parser spot check 5/5, route geodesic recompute matched, recalc clean.

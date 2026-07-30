@@ -19,10 +19,12 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-gulfpub-20260729` — recon inputs
 - `staging/recon-osm-20260729` — recon inputs
 - `staging/ref-sweep-operating` — rows=50 fills=119 updates=0 status-pending=0 refs(REFS_ADDED=240, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none)
+- `staging/route-creation` [route-creation] — rows=55 fills=0 updates=0 status-pending=0 refs(none) routes=55 new(none)
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260730_1239_ET_egypt-gas_route-creation.xlsx`
 - `archive/` — 7 superseded/applied file(s)
 
 ## iran-gas

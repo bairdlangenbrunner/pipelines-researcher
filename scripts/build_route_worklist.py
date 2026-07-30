@@ -172,6 +172,11 @@ def main() -> None:
             "start": start, "end": end,
             "sheet_length_km": round(sheet_km, 1) if sheet_km else None,
             "current_route_accuracy": _s(r0.get("RouteAccuracy")).lower(),
+            # current sheet values for the route provenance columns — the candidate
+            # stages APPEND-style proposed values (never overwrites what's there)
+            "current_route_notes": _s(r0.get("RouteNotes")),
+            "current_route_creator": _s(r0.get("RouteCreator")),
+            "current_route_ref": _s(r0.get("Route [ref]")),
             "existing_route": {"present": existing is not None,
                                "geodesic_km": round(geodesic_km(existing), 1)
                                if existing else None},

@@ -308,7 +308,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   (`…_20260729_0910_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`): GulfPub 52 overlaps /
   40 all-`NEAR_MISS` additions (over the >30 gate) / 3 status conflicts, and a first OSM run
   that returned 0 overlaps on both `MATCH_QUALITY` escalations → 9 `ROUTE_FOR_EXISTING` +
-  10 `DISCOVERY_CANDIDATE`. Oil not yet swept):** `docs/country_notes/egypt.md`.
+  10 `DISCOVERY_CANDIDATE`. **+ §8 route creation 2026-07-30: all 55 no-route gas rows —
+  37 candidate geojsons + 18 corridor partials staged, 5 loud length FAILs, workbook
+  `…_20260730_1239_ET_egypt-gas_route-creation.xlsx`.** Oil not yet swept):**
+  `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
 - **Nigeria (divestiture ownership sweep not started):**
