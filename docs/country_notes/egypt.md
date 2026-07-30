@@ -188,7 +188,7 @@ Pipeline (Nitzana, Egyptian side)* covering the Egyptian section. Settle the
 P3620↔P7864 de-dup and the new row together so the corridor doesn't end up with
 overlapping rows.
 
-## Open items — §8 route creation (2026-07-30, staged NOT applied)
+## Open items — §8 route creation (2026-07-30; 37 candidates APPLIED, 18 partials open)
 
 All 55 gas rows with `RouteAccuracy = no route` covered in
 `batches/egypt-gas/staging/route-creation/`; workbook
@@ -196,8 +196,18 @@ All 55 gas rows with `RouteAccuracy = no route` covered in
 (15 GulfPub sidecar, 3 gis split/merge — Tarek-junction split of the WDGP-N trunk for
 P3934/P6687, four Denise traces merged for P7447 — and 19 endpoints great-circle at
 `very low (straight line/schematic)`) + **18 corridor-only ROUTE_PARTIAL rows** (an
-endpoint couldn't be publicly coordinated — no fabricated coords). Every candidate
-stages append-only `Proposed RouteCreator/RouteNotes/Route [ref]` values (CB stamps).
+endpoint couldn't be publicly coordinated — no fabricated coords).
+
+**APPLIED 2026-07-30 (Baird-authorized):** the 37 candidates replaced their null
+placeholders in `GOIT-GGIT-pipeline-routes` (merge `0c8c01f4`, via its `qc_routes.py`:
+24 PASS / 13 length-WARN `--include`d / 0 FAIL), and the sheet's route columns were
+written for those 37 rows (111 cells, batch verified on readback; backup
+`notes/sheet-write-2026-07-30-egypt-gas-route-columns.csv`): `RouteNotes` += CB method
+stamp + the full researcher notes, `RouteCreator` += `CB`, `Route [ref]` += informing
+URLs — all appends, nothing overwritten. **Still sheet-side open:** `RouteAccuracy` /
+`RouteLocation` were NOT written (suggested accuracies are in the workbook — the 19
+endpoints rows should become `very low (straight line/schematic)`), and the 18
+ROUTE_PARTIAL rows keep `no route`.
 
 - **5 intentional gate FAILs, each a sheet-length question, not a geometry defect:**
   P6697 (ratio 0.685), P6687 (2.303 — Obaiyed→Tarek portion vs 41.5 km sheet), P7447
