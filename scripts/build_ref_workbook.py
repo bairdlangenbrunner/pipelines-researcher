@@ -337,14 +337,54 @@ def _status_styler(columns):
 
 
 def _ref_cell_text(r: dict) -> str:
-    """What to paste into the `[ref]` cell: the proposed ref(s); for a re-verified unit
-    with no proposed change, the existing (re-checked) ref."""
+    """What to paste into the `[ref]` cell: the kept once-working current URLs (stamped by
+    _annotate_kept_refs — blocked/unreachable is not dead) followed by the proposed
+    ref(s); for a re-verified unit with no proposed change, the existing (re-checked) ref."""
     refs = r.get("proposed_refs") or []
     if refs:
-        return J(refs)
+        kept = [u for u in (r.get("kept_current_refs") or []) if u not in refs]
+        return J(kept + refs)
     if r.get("class_out") == "REVERIFIED":
         return r.get("current_ref", "")
     return ""
+
+
+def _annotate_kept_refs(resolutions: list, staging: Path) -> None:
+    """A once-working existing ref is NEVER dropped from its [ref] cell just because it
+    fails from here: geo-blocks, anti-bot 403s/WAFs, and timeouts are access problems,
+    not deletions (Baird directive 2026-07-30). Only a confirmed-deleted page — HTTP
+    404/410 in the sweep worklist's existing_ref_checks — may fall out when proposed
+    refs land on the cell; a URL with no check at all is kept too (no evidence of
+    deletion). Stamps kept_current_refs on every ref-proposing record so _ref_cell_text
+    composes kept + proposed as the full new cell content. Staging dirs without a
+    worklist.json (handoff/recon) no-op: proposed refs stand alone as before."""
+    wl_path = staging / "worklist.json"
+    if not wl_path.exists():
+        return
+    try:
+        units = json.loads(wl_path.read_text()).get("units", [])
+    except (OSError, ValueError):
+        return
+    dead = {404, 410}
+    kept_by_key: dict[tuple, list] = {}
+    for u in units:
+        cur = (u.get("current_ref") or "").strip()
+        if not cur:
+            continue
+        checks = {c["url"]: c for c in (u.get("existing_ref_checks") or []) if c.get("url")}
+        urls = list(checks) or [s.strip() for s in cur.split(",") if s.strip()]
+        kept = [url for url in urls if (checks.get(url) or {}).get("status") not in dead]
+        if kept:
+            kept_by_key[(u.get("project_id"), u.get("sheet_row"), u.get("ref_col"))] = kept
+    for r in resolutions:
+        if not r.get("proposed_refs"):
+            continue
+        # a STATUS unit's refs land on the Status [ref] cluster, so it inherits that
+        # cluster's kept current refs (the record's own current_ref is empty)
+        rc = "Status [ref]" if r.get("ref_col") == STATUS_REF else r.get("ref_col")
+        kept = kept_by_key.get((r.get("project_id"), r.get("sheet_row"), rc))
+        if kept:
+            r["kept_current_refs"] = kept
 
 
 def _ref_cell_fill(r: dict):
@@ -443,8 +483,11 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
     ones), one row per in-scope segment, with current values prefilled from the snapshot.
     On each touched cluster the proposed ref(s) are overlaid on the `[ref]` cell — color-
     coded by corroboration tier (same green ≥2-independent / yellow single / red low-or-none
-    / blue re-verified key as the bucket tabs) — and any proposed value is overlaid on its
-    value cell (tier-colored too when color_values, e.g. the handoff AllFillsBackend tab).
+    / blue re-verified key as the bucket tabs) — and any PROPOSED value (a FILL unit's fill,
+    a STATUS unit's verdict-change/stale edits) is overlaid tier-colored on its value cell;
+    a non-proposed unit's values render untinted (sweep mirror) or not at all (color_values
+    paste tabs). STATUS units map their corroborating ref(s) onto the Status [ref] cluster,
+    overriding same-cluster ref-leg work (the refs must support the NEW value).
     With sheet_row_col (the sweep Backend mirror) a single leading SheetRow locator column
     (the tracker's own row number, not a backend field) rides in front so Baird can find
     each scattered row; the AllFillsBackend paste tabs pass sheet_row_col=False so EVERY
@@ -461,8 +504,21 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
             segs[sk] = {"base": r, "by_ref": {}}
             seg_order.append(sk)
         rc = r.get("ref_col")
-        if rc and rc not in (VALIDITY_REF, STATUS_REF):
-            segs[sk]["by_ref"].setdefault(rc, r)
+        if rc == STATUS_REF:
+            # proposed status change (verdict change/stale): its values overlay their
+            # backend cells; when it carries corroborating ref(s) they take over the
+            # Status [ref] cluster (they support the NEW value — a refs-leg unit on the
+            # same cluster corroborates the old one). A dormancy-inferred change with no
+            # ref stays under the synthetic key: values overlay, no [ref] cell is touched.
+            segs[sk]["by_ref"]["Status [ref]" if r.get("proposed_refs") else rc] = r
+        elif rc and rc != VALIDITY_REF:
+            # a FILL takes its cluster over a ref-leg twin recorded for the same cell —
+            # the sweep stages both, but only the FILL carries the proposed VALUE (the
+            # twin's refs are the same work product, so nothing is lost)
+            prev = segs[sk]["by_ref"].get(rc)
+            if prev is None or (r.get("class_in") == "FILL"
+                                and prev.get("class_in") != "FILL"):
+                segs[sk]["by_ref"][rc] = r
 
     # fall back to a minimal identity header if the snapshot couldn't be loaded
     header = list(backend_header) if backend_header else \
@@ -490,23 +546,33 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
         rn = ws.max_row
         for rc, r in segs[sk]["by_ref"].items():
             # overlay proposed value(s) onto their backend value cells (skip cols off-schema).
-            # In color_values mode (handoff paste tabs) a non-FILL unit is ref-only work —
-            # its values are the CURRENT sheet values, so leave the prefilled value cell
-            # untinted (only a genuinely proposed value earns a tier color).
+            # A FILL or STATUS unit's values are genuinely PROPOSED, so they earn the tier
+            # color in every mode; a non-proposed unit's values are the CURRENT sheet values
+            # — overlaid untinted on the sweep mirror for context, skipped entirely on the
+            # color_values paste tabs (ref-only work must never tint a value cell there).
+            proposed = r.get("class_in") in ("FILL", "STATUS")
             for vc, vv in (r.get("values") or {}).items():
                 ci = col_idx.get(vc)
                 if ci and str(vv).strip():
-                    if color_values and r.get("class_in") != "FILL":
+                    if color_values and not proposed:
                         continue
                     vcell = ws.cell(rn, ci, vv)
-                    if color_values:
+                    if color_values or proposed:
                         vcell.fill = _ref_cell_fill(r)
-            # overlay proposed ref text onto the [ref] cell + color by corroboration tier
+            # overlay proposed ref text onto the [ref] cell + color by corroboration tier.
+            # A unit proposing no text (UNRESOLVED) must never blank the prefilled current
+            # ref — tint the existing text red to flag needs-work; an empty cell stays
+            # uncolored (an empty tinted cell reads as a proposed blank).
             ci = ref_idx.get(rc)
             if ci:
-                cell = ws.cell(rn, ci, _ref_cell_text(r))
-                cell.fill = _ref_cell_fill(r)
-                cell.alignment = Alignment(wrap_text=False, vertical="top")
+                text = _ref_cell_text(r)
+                cell = ws.cell(rn, ci)
+                if text:
+                    cell.value = text
+                    cell.fill = _ref_cell_fill(r)
+                    cell.alignment = Alignment(wrap_text=False, vertical="top")
+                elif str(cell.value or "").strip():
+                    cell.fill = CONF_FILL["red"]
 
     if sheet_row_col:
         ws.column_dimensions["A"].width = 9
@@ -602,7 +668,8 @@ def _operators_owners_view(wb, title, resolutions):
             if not r:
                 continue
             cell = ws.cell(rn, ref_pos[rc])   # the [ref] cell
-            cell.fill = _ref_cell_fill(r)
+            if str(cell.value or "").strip():  # UNRESOLVED → empty text; never color an empty cell
+                cell.fill = _ref_cell_fill(r)
             cell.alignment = Alignment(wrap_text=False, vertical="top")
             # a FILL unit proposes a NEW value — tier-color the value cells too (value and
             # its paired [ref] travel together); never color an empty cell
@@ -1780,6 +1847,9 @@ def main() -> None:
     if esc_path.exists():
         meta = {**meta, "escalations": json.loads(esc_path.read_text())}
     resolutions = data.get("resolutions", [])
+    # BEFORE the SheetRow restamp: the worklist's locators predate any sheet re-sort,
+    # so they only match the staged records' own (pre-restamp) sheet_rows.
+    _annotate_kept_refs(resolutions, Path(args.staging))
     cmdty = (meta.get("commodity") or meta.get("scope", {}).get("tracker") or "oil")
     prefix = cmdty.capitalize()
 
@@ -1794,10 +1864,12 @@ def main() -> None:
     # tracker's complete column layout (exact order) with current values prefilled
     backend_header, snapshot_rows = _backend_snapshot(meta)
 
-    # Deep-sweep records (class_in VALIDITY / FILL) get their own dedicated tabs — they are
-    # NOT ref-pairs, so they must never reach the backend mirror (a VALIDITY record's synthetic
-    # `__VALIDITY__` ref_col would otherwise leak in as a phantom column) or the class_out
-    # bucket tabs (where they'd be buried among ordinary unresolved refs).
+    # Deep-sweep records (class_in VALIDITY / FILL / STATUS) get their own dedicated tabs and
+    # stay out of the class_out bucket tabs (where they'd be buried among ordinary unresolved
+    # refs). VALIDITY records must also never reach the backend mirror (their synthetic
+    # `__VALIDITY__` ref_col would leak in as a phantom column); corroborated FILLs and
+    # change/stale STATUS verdicts, by contrast, are deliberately re-joined into the sweep
+    # Backend mirror below so every recommended edit shows tier-colored on the paste surface.
     # Key off the synthetic ref_col sentinel too, not just class_in: an agent occasionally
     # mislabels a validity record's class_in (seen: HAS_REF) while still stamping the
     # `__VALIDITY__` ref_col, and that sentinel must never reach the backend mirror.
@@ -1940,16 +2012,33 @@ def main() -> None:
                                "blue=re-verified). Paste the colored cells only — never the computed/formula "
                                "columns. The PendingFills / Fills tabs below hold the per-fill detail; "
                                "owner/operator fills live there + on the oo backend tab, not a tracker row."))
-    elif tracker_res:
-        backend_title = f"{prefix}_Backend"
-        _backend_view(wb, backend_title, tracker_res, backend_header, snapshot_rows)
-        sheet_defs.append((backend_title,
-                           "PRIMARY — 1:1 paste-ready mirror of the GEM tracker backend: the FULL backend "
-                           "column set in exact sheet order, one row per in-scope segment, current values "
-                           "prefilled (leading SheetRow = the tracker row locator). Touched [ref] cells carry "
-                           "the proposed ref(s), colored by corroboration tier (green=≥2 independent / "
-                           "yellow=single / red=low or none / blue=re-verified); proposed values overlaid on "
-                           "their cells. Work from THIS tab; the *_Refs_* tabs below are supporting detail."))
+    elif tracker_res or fill_res or status_res:
+        # The sweep Backend mirror carries EVERY recommended change, not just ref work:
+        # corroborated fills (value + paired [ref], tier-colored) and the status-review
+        # leg's proposed changes (verdict change/stale — new Status + companion cells
+        # tier-colored, corroborating ref(s) on Status [ref]). Confirmed/unclear status
+        # verdicts and oo-tab fills stay off this tab (StatusReview / OperatorsOwners).
+        own_fills = [r for r in fill_res if r.get("class_out") == "REFS_ADDED"
+                     and r.get("tab") != "operators_owners"
+                     and r.get("ref_col") not in OO_PRIMARY]
+        status_changes = [r for r in status_res
+                          if r.get("class_out") in ("CHANGE_PROPOSED", "STALE")]
+        backend_res = tracker_res + own_fills + status_changes
+        if backend_res:
+            backend_title = f"{prefix}_Backend"
+            _backend_view(wb, backend_title, backend_res, backend_header, snapshot_rows)
+            sheet_defs.append((backend_title,
+                               "PRIMARY — 1:1 paste-ready mirror of the GEM tracker backend: the FULL backend "
+                               "column set in exact sheet order, one row per in-scope segment, current values "
+                               "prefilled (leading SheetRow = the tracker row locator). Touched [ref] cells carry "
+                               "the proposed ref(s), colored by corroboration tier (green=≥2 independent / "
+                               "yellow=single / red=low or none / blue=re-verified). Tier-COLORED value cells are "
+                               "recommended EDITS: corroborated fills plus the StatusReview change/stale verdicts "
+                               "(new Status + ShelvedCancelledType/start-year cells; a stale verdict with no ref "
+                               "is dormancy-inferred — red, ShelvedCancelledType=Presumed by design). Untinted "
+                               "values are current sheet values. A red [ref] cell keeping its existing text = "
+                               "unresolved, needs manual sourcing. Work from THIS tab; the StatusReview / *_Refs_* "
+                               "tabs below hold the per-verdict and per-ref detail."))
 
     # operators/owners paste-ready mirror (ProjectID-keyed, ref-precedes-values)
     if oo_res:

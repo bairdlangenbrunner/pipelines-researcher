@@ -156,7 +156,13 @@ call. Two families of false negative:
 **Liveness false-negatives** (page is live; don't class `DEAD_LINK`). **Six families now**, and
 the hit rate is not marginal: the Iraq ref-gap re-pass (2026-07-28) found **33 of 41 "dead" refs
 were false negatives** (an earlier Iraq sweep: 6 of 27). Treat a `DEAD_LINK` classification as a
-hypothesis you still have to test by hand:
+hypothesis you still have to test by hand. **Standing rule (Baird, 2026-07-30): a once-working
+existing ref is NEVER dropped from its `[ref]` cell because it fails from here** — geo-blocks,
+anti-bot 403s/WAFs, and timeouts are access problems, not deletions; only a confirmed-deleted
+page (HTTP 404/410) may be replaced. The workbook builder enforces this mechanically
+(`_annotate_kept_refs` in `build_ref_workbook.py` keeps every not-proven-dead current URL in
+the cell ahead of the proposed refs), so a blocked origin gets its Wayback snapshot *added*,
+never swapped in as a replacement:
 - **401 bot-walls.** Some live pages (e.g. `iraq-businessnews.com`) return HTTP 401 to the
   verifier's UA. Confirm the page manually / via a normal browser; if genuinely live, cite the
   **Wayback Machine** snapshot (`web.archive.org/web/…`) — which itself passes the verifier — and

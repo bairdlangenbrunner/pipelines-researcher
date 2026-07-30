@@ -148,7 +148,9 @@ Routing notes:
   fabricate coords.
 - Sweep deliverables lead with a `<Cmdty>_Backend` tab — a **1:1 mirror of the FULL
   tracker backend** (every column in sheet order, current values prefilled, overlays
-  tier-colored only on touched cells, leading `SheetRow` locator). The handoff packet
+  tier-colored only on touched cells — proposed refs AND every recommended edit,
+  i.e. corroborated fills + status-review change/stale verdicts — leading `SheetRow`
+  locator). The handoff packet
   is TWO files: `…-actions.xlsx` (only suggested changes + open issues; its
   `<Cmdty>_AllFillsBackend` is THE one paste surface — ALL fills AND paste-ready refs,
   carried + own, unified in that full backend layout but with NO leading `SheetRow`
@@ -202,6 +204,11 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   from the fresh header (schema drifts; don't hard-code offsets).
 - **Every URL passes `scripts/url_verifier.py` before going in the xlsx** — even
   URLs that worked in prior batches. Reject GEM URLs.
+- **Never delete a once-working ref over an access failure.** Geo-blocks, anti-bot
+  403s/WAFs, and timeouts are not deletions — only a page confirmed deleted (HTTP
+  404/410) may drop out of a `[ref]` cell. A blocked origin gets its Wayback snapshot
+  *added* alongside, never swapped in (`_annotate_kept_refs` in
+  `build_ref_workbook.py` enforces this in workbook builds).
 - **Never auto-apply a reference value.** A reconciliation finding is a *candidate*
   for Update, not an applied edit. A single Tier-2 dataset never reaches green alone.
 - **A `ResearcherNotes` cell can document a deliberate GEM divergence** — flag the

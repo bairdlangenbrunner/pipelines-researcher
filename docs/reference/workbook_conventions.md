@@ -111,8 +111,19 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   the **entire backend column set in exact sheet order** (every column, *including* computed/
   formula ones: CapacityBcm/y, LengthKnownKm, DiameterInMm, StartRegion/SubRegion, CostUSD,
   per-km costs, …), **one row per in-scope segment, with the current value prefilled in every
-  cell** from the snapshot CSV. Overlay only on *touched* cells: proposed ref(s) on the `[ref]`
-  cell (tier-colored) and any proposed value on its value cell. Prepend a single **`SheetRow`**
+  cell** from the snapshot CSV. Overlay only on *touched* cells, and carry **every recommended
+  change, not just ref work**: proposed ref(s) on the `[ref]` cell (tier-colored); corroborated
+  FILL values and the status-review leg's change/stale verdicts (new `Status` + companion cells —
+  `ShelvedCancelledType`, start years) **tier-colored on their value cells** (a stale verdict
+  with no ref is dormancy-inferred: red, `ShelvedCancelledType=Presumed`, no `[ref]` written).
+  A status change's corroborating ref(s) take over the `Status [ref]` cell (they must support
+  the NEW value); an UNRESOLVED unit never blanks the prefilled current ref — it keeps the
+  existing text, tinted red (needs-work); an untinted value cell is just the current sheet
+  value. **A once-working existing ref is never dropped when proposed refs land on a cell**
+  (Baird, 2026-07-30): geo-blocked / anti-bot 403 / timed-out URLs are access problems, not
+  deletions — `_annotate_kept_refs` keeps every current URL not confirmed deleted (HTTP
+  404/410 in the worklist's `existing_ref_checks`) ahead of the proposed refs, so a blocked
+  origin gets its Wayback snapshot *added*, never swapped in. Prepend a single **`SheetRow`**
   locator column (the tracker's row number, not a backend field) and freeze through `ProjectID`.
   - Loaded by `_backend_snapshot(meta)` (full header at CSV row index 2; data rows keyed by the
     composite **`(ProjectID, SheetRow)`**, since a multi-segment ProjectID has >1 row and

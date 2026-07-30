@@ -6,10 +6,21 @@ hand-edit. Layout: `batches/<country>-<commodity>/` holds
 `deliverables/` (current workbooks), `archive/` (superseded or
 applied). See docs/workflows.md "Batch artifacts".
 
+## china-gas
+
+- `staging/route-creation-grids` — no store — invisible to discovery
+
 ## china-guangxi-gas
 
 - `staging/deepsweep-pilot` — rows=43 fills=54 updates=0 status-pending=13 refs(REFS_ADDED=235, REVERIFIED=75, UNRESOLVED=129) routes=0 new(none)
-- `deliverables/pipelines_batch_20260729_1929_ET_china-guangxi-gas_deepsweep.xlsx`
+- `staging/route-creation` — no store — invisible to discovery
+- `deliverables/pipelines_batch_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx`
+- `archive/` — 1 superseded/applied file(s)
+
+## china-trunks-gas
+
+- `staging/recon-gulfpub-20260730` — recon inputs
+- `staging/route-creation` — no store — invisible to discovery
 
 ## egypt-gas
 
