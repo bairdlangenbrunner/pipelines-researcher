@@ -311,9 +311,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   10 `DISCOVERY_CANDIDATE`. **+ §8 route creation 2026-07-30: all 55 no-route gas rows —
   37 candidate geojsons APPLIED same day (routes-repo merge `0c8c01f4` + authorized
   sheet write of RouteNotes/RouteCreator/Route [ref] + RouteAccuracy, backups in
-  `notes/`; South Valley RouteType flipped by Baird); 18 corridor partials still open;
-  workbook
-  `…_20260730_1239_ET_egypt-gas_route-creation.xlsx`.** Oil not yet swept):**
+  `notes/`; South Valley RouteType flipped by Baird), then a same-day retry pass on
+  the 18 partials resolved + APPLIED 3 more (P8013/P8014/P8021, routes merge
+  `241ef5aa`, backup in `notes/`); 15 corridor partials still open; workbooks
+  `…_20260730_1239_ET_…route-creation.xlsx` + `…_1415_ET_…route-creation-retry.xlsx`.**
+  Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.

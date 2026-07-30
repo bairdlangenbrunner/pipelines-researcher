@@ -188,7 +188,7 @@ Pipeline (Nitzana, Egyptian side)* covering the Egyptian section. Settle the
 P3620↔P7864 de-dup and the new row together so the corridor doesn't end up with
 overlapping rows.
 
-## Open items — §8 route creation (2026-07-30; 37 candidates APPLIED, 18 partials open)
+## Open items — §8 route creation (2026-07-30; 40 candidates APPLIED, 15 partials open)
 
 All 55 gas rows with `RouteAccuracy = no route` covered in
 `batches/egypt-gas/staging/route-creation/`; workbook
@@ -227,9 +227,36 @@ the per-segment decision. (`RouteLocation` no longer exists as a sheet column.) 
 - **South Valley segments P6697–P6702** (`RouteType = Included in other ProjectID`,
   parent P0477 already mapped): accepting the per-segment candidates implies a
   RouteType decision — Baird's call, linked to the P0477-vs-segments de-dup above.
-- Six PIDs had no sourceable route at all beyond corridor prose (e.g. P8020 Cairo
-  Ring–Port Said, P8021, P8014, P7605 Wanda, P7588 Edfu tie-in end, P8003) — parked
-  as ROUTE_PARTIAL; several were blocked by web-search quota, worth one retry pass.
+**RETRY PASS same day (Baird-directed, post-quota-reset): 3 of the 18 partials
+resolved and APPLIED** — routes-repo merge `241ef5aa` (qc 2 PASS / 1 length-WARN
+`--include`d), sheet write of all four route columns on the 3 rows (12 cells,
+readback-verified; backup `notes/sheet-write-2026-07-30-egypt-gas-retry-routes.csv`);
+workbook `…_20260730_1415_ET_egypt-gas_route-creation-retry.xlsx`; results in
+`retry_results_*.json` + `assemble_retry_candidates.py` in the staging dir.
+
+- **P8013 Trans Gulf**: "Petreco Plant" = Petrobel's Petreco Oil Centre at Abu Rudeis
+  (Eni 2016 Egypt report + Egypt Oil & Gas), crossing the Gulf of Suez to Ras Bakr
+  Transmission Station — sheet `EndLocation` is blank, suggest that name.
+- **P8021 Korimat–Al Tebbin**: World Bank ICR (Loans 3103/3441-EGT) names the 95 km
+  22-inch El Tebbin (Dahsour)–Kureimat gas line, completed ~Sep 1996 — distinct from
+  the same-named 2016 electricity line.
+- **P8014 Zaafarana–Korimat**: resolved by main-session adjudication — the SAME WB ICR
+  names the 162 km Zafarana–Kureimat line (completed Nov 1995; as-designed 18-inch,
+  changed from 20) vs sheet 163 km; the Sadat City→Dahshur 75 km line is a second,
+  later Kureimat supply, not a competing identity. StartYear1 candidate: 1995. (WB PDF
+  is a 3.9MB scan — url_verifier large-PDF substring false-negative, confirmed via
+  pdftotext.)
+
+**The 15 remaining ROUTE_PARTIAL rows keep `no route`**; their staged records now
+carry the second-pass findings. Notables: P8020's corridor corroborated by the Egypt
+Oil & Gas 2017 transmission-map (Greater Cairo→El Tina→Port Said) but no named
+endpoint facilities; P8005 gained an OSM-sourced start (SUMED Pipelines Terminal
+polygon, Ain Sokhna) but "the national grid" end stays unnamed; P8003's identity
+nailed to EGAS Annual Report 2018 p.20 (24"/27 km Fayoum–Giza rehabilitation,
+governorate-level only); P7588's Kom Ombo tie-in candidate RULED OUT on distance
+(~57 km > the 37 km pipe); P8009 localized to North Sinai Governorate (2025-11-18 EIA
+consultation); Abu Madi (P8022/P8023 start) has NO citable coordinate in
+Nominatim/Overpass/GeoNames/Wikidata — checked independently in the main session.
 
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 
