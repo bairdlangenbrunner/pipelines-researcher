@@ -7,11 +7,12 @@ maintain Global Energy Monitor's open-access pipeline databases:
 - **GGIT** — Global Gas Infrastructure Tracker (gas pipelines)
 
 Deeper coverage in MENA, US, Iran, Iraq, Saudi Arabia. Researcher initials in the
-tracker: **CB**. The agent **never writes to the routes repo**, and by default
-doesn't write the live Google Sheet either — every batch produces a reviewable
-Excel deliverable + staged JSON that Baird applies manually. Direct sheet writes
-are allowed only as a **separately authorized one-off** (see the hard requirement
-below), never as a way to "apply" a batch.
+tracker: **CB**. The agent **never writes to the routes repo or the live Google
+Sheet by default** — every batch produces a reviewable Excel deliverable + staged
+JSON that Baird applies manually. Both are writable only on **explicit per-batch
+authorization** (see the hard requirement below): sheet writes as a mechanical
+pre-verified one-off, and §8 route candidates via the apply recipe in
+`workflows.md` §8 step 6 — never as a blanket way to "apply" batches.
 
 Where things live — **read on demand as the workflow dictates, not all at once**:
 
@@ -108,7 +109,7 @@ Read the relevant `docs/workflows.md` section + SOP before starting a batch.
 | **Update** (targeted fixes to named rows/questions) | "update <these pipelines>", "fix P0544's status", "resolve the recon disagreements", "apply the QC fixes" | `workflows.md` §5 + Update SOP |
 | **Handoff packet** (assembly + delivery — QC legs + ALL pending staged work for the scope, two workbooks: actions + evidence) | "handoff packet for <country>", "qc packet for <country>", "wiki alignment qc", "route integrity for <country>", "assemble everything for <country>", "should we even be tracking these" | `workflows.md` §6 + QC SOP |
 | **Annual update packet** (campaign recipe = §3 in-dev + §4 + §6) | "annual update for <country>", "country packet", "run the <campaign> packet for <country>" | `workflows.md` §7 + Annual Update SOP; roster in `campaigns/` |
-| **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
+| **Route creation** (candidate route geometry via a source ladder → staged `<PID>.geojson` for a human routes-repo PR, or the per-batch-authorized §8 step 6 apply) | "create a route for P1234", "draw routes for <country>", "route creation run", "digitize the <name> route", "apply the route candidates" | `workflows.md` §8 + Route Creation SOP (`docs/sops/route_creation.md`) |
 | **Full country pass** (composite: operating deep sweep + in-dev + cancelled review + redundancy adjudication + every recon + handoff — one run dir each) | "full pass on <country>", "sweep everything in <country>", "go all the way on <country>" | `workflows.md` §9 (chains §2/§3/§6) |
 
 Routing notes:
@@ -180,8 +181,13 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 
 ## Hard requirements (override anything below)
 
-- **Never modify the routes repo.** Batch output is a staging xlsx + staged JSON; the
-  user applies edits manually. **The live GEM Sheet is writable only on explicit
+- **Never modify the routes repo without explicit per-batch authorization.** Batch
+  output is a staging xlsx + staged JSON; by default the user applies edits manually.
+  When Baird authorizes a §8 apply for a specific batch, follow `workflows.md` §8
+  step 6 exactly: the routes repo's own `qc_routes.py` gate → branch → `merge
+  --no-ff` → push, then the sheet route columns via
+  `scripts/apply_route_candidates.py` (plan → review → `--apply`).
+  **The live GEM Sheet is writable only on explicit
   authorization** — Baird asks for the edit, or the agent asks permission and gets a
   yes, *for that specific edit*. Approval never carries to the next task. Never write
   the sheet to "apply" a batch: batches go through the deliverable, always. An
@@ -206,9 +212,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 - **Don't create duplicate entities** — `entity_lookup.py` before staging a new owner.
 - **A route is never auto-replaced.** A route-replacement candidate is flagged for a
   separate human branch+PR against `GOIT-GGIT-pipeline-routes`; §8 candidate geometry
-  (`ROUTE_CANDIDATE` `<PID>.geojson`) is staged in this repo only — never fabricate
-  coordinates, and the GOGET/GOGPT facility gazetteer anchors endpoints internally but
-  is never a `[ref]` or a corroboration source.
+  (`ROUTE_CANDIDATE` `<PID>.geojson`) stays staged in this repo until a human PR or a
+  per-batch-authorized §8 step 6 apply — never fabricate coordinates, and the
+  GOGET/GOGPT facility gazetteer anchors endpoints internally but is never a `[ref]`
+  or a corroboration source.
 - **WKT/route-format QC checks are permanently dropped** — do not rebuild them.
 - **Subagent models are chosen at dispatch time, never pinned** (global standing rule —
   user-level CLAUDE.md). Repo mechanics: the saved workflows fall back to

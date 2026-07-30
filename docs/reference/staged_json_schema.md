@@ -171,7 +171,10 @@ flag as "known — staged".
 `class_out="ROUTE_CANDIDATE"`; the §8 Route-creation workflow, `build_route_candidate.py`;
 added 2026-07-22): one per PID — drawn geometry staged as a routes-repo-valid
 `candidate_routes/<PID>.geojson`, destined for a **human branch+PR against the routes
-repo, never the sheet**. The `method` is a *field*, not a family of class_outs (one
+repo** (or the per-batch-authorized agent apply, `workflows.md` §8 step 6 —
+`suggested_route_accuracy`, the `researcher_notes`, and `proposed_refs` are exactly
+what `scripts/apply_route_candidates.py` writes to the sheet's route columns).
+The `method` is a *field*, not a family of class_outs (one
 `class_out` for all rungs). Extra fields:
 
 | field | meaning |

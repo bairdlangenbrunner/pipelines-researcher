@@ -388,7 +388,8 @@ Produces candidate route **geometry** (a routes-repo-valid `<PID>.geojson`) for 
 single PID or every weak-`RouteAccuracy` row in a country, by walking a source ladder
 (GulfPub sidecar → public GIS/OSM → agent digitization → endpoints great-circle) and
 staging it for a **human branch+PR** against `GOIT-GGIT-pipeline-routes`. The agent
-never writes the routes repo or the sheet; no coordinate is ever fabricated. Consumes
+never writes the routes repo or the sheet by default — only via the per-batch-authorized
+apply in step 6; no coordinate is ever fabricated. Consumes
 (does not duplicate) the sweep `routes` leg's corridor/endpoint suggestions. Rules,
 rung logic, GCP/RMSE thresholds, packet contents, escalation gates: Route Creation SOP
 (`docs/sops/route_creation.md`).

@@ -135,7 +135,10 @@ cap. Distinct from a sweep suggestion (corridor + endpoints prose, `ROUTE_SUGGES
   `[ref]`, never a corroboration source (standing rule 1).
 - **Replacement framing:** an existing GEM route → the candidate is flagged
   `replacement=true` (yellow fill); a `high`/`very high` GEM route disagreeing badly is a
-  conflict/escalation, never a replacement. A route is **never auto-replaced** — every
-  candidate is a human branch+PR against `GOIT-GGIT-pipeline-routes`, staged in this repo
-  only. Staged as `ROUTE_CANDIDATE` records (schema: `docs/reference/staged_json_schema.md`);
-  rendered on the `<Cmdty>_RouteCandidates` tab.
+  conflict/escalation, never a replacement. A route is **never auto-replaced** — a
+  candidate lands in `GOIT-GGIT-pipeline-routes` via a human branch+PR, or via the
+  agent only on explicit per-batch authorization (`workflows.md` §8 step 6:
+  qc_routes gate + merge, then `scripts/apply_route_candidates.py` for the sheet
+  columns); until then it stays staged in this repo. Staged as `ROUTE_CANDIDATE`
+  records (schema: `docs/reference/staged_json_schema.md`); rendered on the
+  `<Cmdty>_RouteCandidates` tab.

@@ -12,7 +12,8 @@ diffed against GEM by name, attributes, and route geometry — producing a revie
 Excel deliverable, never a live edit. Around the engine sit the research workflows
 (routed from CLAUDE.md): country sweeps, discovery, targeted updates, QC/handoff
 packets, annual-update campaigns, route creation (candidate route GeoJSON staged for a
-human PR against the routes repo), and the **full country pass** (`docs/workflows.md`
+human PR against the routes repo — or, on per-batch authorization, applied by the agent
+via `docs/workflows.md` §8 step 6), and the **full country pass** (`docs/workflows.md`
 §9) that chains them — the deepest workflow, and the one most country work looks like.
 
 ## Quick start
@@ -89,7 +90,10 @@ never hand-edit.
 - **Never cite GEM** (gem.wiki, globalenergymonitor.org) as a source unless approved.
 - **Corroborate with 2+ independent sources**; a scraped dataset is one source,
   never authoritative on its own.
-- The agent **never writes** the routes repo, and never writes the live Sheet to apply
-  a batch — every batch is a reviewable file the user applies manually. A direct sheet
-  write happens only as a separately authorized, mechanical one-off (backup first,
-  verify after); see the hard requirements in `CLAUDE.md`.
+- The agent **never writes** the routes repo or the live Sheet to apply a batch **by
+  default** — every batch is a reviewable file the user applies manually. Both systems
+  of record are writable only on **explicit per-batch authorization** that never
+  carries over: sheet writes as a mechanical, pre-verified one-off (backup first,
+  verify after), and §8 route candidates via the two-half apply recipe
+  (`docs/workflows.md` §8 step 6: routes-repo qc gate + merge, then
+  `scripts/apply_route_candidates.py`). See the hard requirements in `CLAUDE.md`.

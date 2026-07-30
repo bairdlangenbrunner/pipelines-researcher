@@ -4,8 +4,10 @@ Produce candidate route **geometry** — a routes-repo-valid `<ProjectID>.geojso
 a pipeline (single PID) or every weak-`RouteAccuracy` row in a country, by walking a
 **source ladder** and staging the result for a human branch+PR against
 `GOIT-GGIT-pipeline-routes`. The agent **never writes the routes repo or the live
-sheet**; **no coordinate is ever fabricated** — every lon/lat exits a vector source, a
-fitted georeference transform, or an independently sourced endpoint.
+sheet by default** — both happen only on explicit per-batch authorization from Baird
+(the agent-apply path in "Review flow" below + `workflows.md` §8 step 6); **no
+coordinate is ever fabricated** — every lon/lat exits a vector source, a fitted
+georeference transform, or an independently sourced endpoint.
 
 This is distinct from the Country Sweep `routes` leg, which it *consumes*: that leg
 suggests **corridor + endpoints prose** (`__ROUTE__` / `ROUTE_SUGGESTED` /
@@ -131,8 +133,10 @@ Workbook: `batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_route-cr
 
 ## Standing rules (echoed)
 
-- **Never write the routes repo or the live sheet** — candidate geometry is staged in
-  THIS repo only; the researcher opens the branch+PR.
+- **Never write the routes repo or the live sheet without per-batch authorization** —
+  candidate geometry is staged in THIS repo; by default the researcher opens the
+  branch+PR, and the agent applies only when Baird explicitly authorizes that
+  specific batch (see "Review flow" below).
 - **Never fabricate coordinates** (rule 2): lon/lat only from a vector source, a fitted
   transform, or a sourced endpoint. Traces are pixels; GCPs carry `source_ref`; never
   hand-adjust output coordinates.
