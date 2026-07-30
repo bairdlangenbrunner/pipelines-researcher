@@ -8,19 +8,22 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## china-gas
 
-- `staging/route-creation-grids` — no store — invisible to discovery
+- `staging/route-creation-grids` [route-creation] — rows=38 fills=0 updates=0 status-pending=0 refs(none) routes=38 new(none)
+- `deliverables/pipelines_batch_20260730_1706_ET_china-gas_route-creation-grids.xlsx`
 
 ## china-guangxi-gas
 
 - `staging/deepsweep-pilot` — rows=43 fills=54 updates=0 status-pending=13 refs(REFS_ADDED=235, REVERIFIED=75, UNRESOLVED=129) routes=0 new(none)
-- `staging/route-creation` — no store — invisible to discovery
+- `staging/route-creation` [route-creation] — rows=23 fills=0 updates=0 status-pending=0 refs(none) routes=23 new(none)
 - `deliverables/pipelines_batch_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx`
+- `deliverables/pipelines_batch_20260730_1700_ET_china-guangxi-gas_route-creation.xlsx`
 - `archive/` — 1 superseded/applied file(s)
 
 ## china-trunks-gas
 
 - `staging/recon-gulfpub-20260730` — recon inputs
-- `staging/route-creation` — no store — invisible to discovery
+- `staging/route-creation` [route-creation] — rows=42 fills=0 updates=0 status-pending=0 refs(none) routes=42 new(none)
+- `deliverables/pipelines_batch_20260730_1708_ET_china-trunks-gas_route-creation.xlsx`
 
 ## egypt-gas
 

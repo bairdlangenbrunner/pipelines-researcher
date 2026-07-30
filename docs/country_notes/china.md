@@ -92,6 +92,51 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 |---|---|---|---|
 | Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx` (repackaged 07-30: recommended edits now overlay `Gas_Backend`; 07-29 build archived); staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
 
+## Route creation §8 — ALL 103 no-route gas rows (2026-07-30, staged NOT applied)
+
+One pass over every `no route` China gas row (Baird 2026-07-30: include Maggie's 33
+operating rows — she doesn't make routes right now — plus P8028/P8029 and the 6
+cancelled/shelved rows; duplicate pairs get the same route drawn). All research ran
+in Chinese via parallel agents; every endpoint is a Nominatim geocode or
+official-document coordinate of a SOURCED named place; all candidates are
+`endpoints_greatcircle` at `very low (straight line/schematic)` (Egypt convention).
+**80 candidate geojsons + 23 corridor-only partials**, three batches:
+
+- **Wave 1 — Guangxi grid (23):** 18 candidates + 5 partials (P7655 start
+  uncoordinated, P7660 no verifier-passing refs, P7663 existence unconfirmed,
+  P7679 refs geo-blocked, P7680 start==end county seat).
+  `batches/china-guangxi-gas/staging/route-creation/` →
+  `…_20260730_1700_ET_china-guangxi-gas_route-creation.xlsx`.
+- **Wave 2 — other provincial grids (38):** 28 candidates + 10 partials. **Batch-dir
+  naming deviation (agreed 2026-07-30):** single cross-province dir
+  `batches/china-gas/staging/route-creation-grids/` instead of per-province dirs →
+  `…_20260730_1706_ET_china-gas_route-creation-grids.xlsx`. The three MULTI_BRANCH
+  networks (P6229/P6230/P7448, Xinjiang) are drawn as ONE schematic leg each
+  (trunk or best-sourced branch) with full topology in the routenote.
+- **Wave 3 — trunk-family rows (42):** 34 candidates + 8 partials.
+  `batches/china-trunks-gas/staging/route-creation/` →
+  `…_20260730_1708_ET_china-trunks-gas_route-creation.xlsx`. (Trunk rows are
+  Maggie's scope, run here on Baird's explicit instruction.)
+
+**Flags for human review** (all carried in the workbooks' notes columns):
+duplicates drawn-same-route per Baird's ruling — P7666→P7664, P7534→P7531
+(aggregate: family lengths sum exactly to 913.80 km); duplicate checks NOT
+auto-drawn — P4957→P6002, P4678→P5024, P6230↔P7448 west-trunk overlap,
+P7613↔P7646 shared 皖西支干线 corridor, P3894 = capacity upgrade of P0758 (reuse
+P0758's real geometry at review); NOT-defects confirmed — P5923 (point tie-in
+station, but its 20 km sheet length is likely wrong vs sourced ~0.8 km), P6586
+(0.13 km confirmed by Chongqing DRC approval); sheet-value flags — P7645
+EndProvince should be Anhui not Henan, P5052 StartLocation Yichuan not Yuheng,
+P7585 length 39.24 vs 14.18, P7432 PID mapping doubt (~55 km Jintan vs 31 km
+Liyang–Yixing), P7476 length 40.11 vs 52.35, P7689 endpoints in Hechi not Laibin,
+P7678 "cancellation" ref is actually a 2020 approval-extension, P7713 "Heibei"
+typo, P8028/P8029 embedded `\r` in PipelineName; retirement reviews — P6679/P6680/
+P6681 (cancelled Hebei lines, documented connectors ~1/~0.1 km vs GEM 8.8/3.5 km);
+row-split — P4513 (two corridors ~400 km apart).
+
+**§8 step 6 apply NOT authorized** — everything staged; workbooks are the review
+surface.
+
 ## Open items
 
 - **Guangxi pilot — DELIVERED 2026-07-29, staged not applied.** Full deep sweep +
