@@ -189,6 +189,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   step 6 exactly: the routes repo's own `qc_routes.py` gate → branch → `merge
   --no-ff` → push, then the sheet route columns via
   `scripts/apply_route_candidates.py` (plan → review → `--apply`).
+  **CARDINAL RULE (Baird 2026-07-30): the routes repo and the backend sheet must
+  stay in sync** — the two halves of a §8 apply are one unit. Never merge routes
+  into `GOIT-GGIT-pipeline-routes` without applying the matching sheet route
+  columns in the same batch (a QC-excluded PID is excluded from BOTH halves).
   **The live GEM Sheet is writable only on explicit
   authorization** — Baird asks for the edit, or the agent asks permission and gets a
   yes, *for that specific edit*. Approval never carries to the next task. Never write
@@ -349,9 +353,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   18+5, other grids 28+10 in the cross-province dir
   `batches/china-gas/staging/route-creation-grids/`, trunks 34+8); **routes-repo half
   APPLIED same day** (authorized; 79/80 merged, routes merge `3d943da2`; P3894 QC-fail
-  excluded → reuse-P0758-geometry review); **sheet-side route columns NOT
-  applied/authorized** — pending, tracked in work Asana**; oil out of scope until
-  post-cycle):** `docs/country_notes/china.md`.
+  excluded → reuse-P0758-geometry review) **+ sheet-side route columns APPLIED same
+  day** (316 cells verified, backups in `notes/`); 23 partials + P3894 + review flags
+  tracked in work Asana (gem-desk)**; oil out of scope until post-cycle):**
+  `docs/country_notes/china.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
   review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet
   `…_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`. **THREE files to work:**

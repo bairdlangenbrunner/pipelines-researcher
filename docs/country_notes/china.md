@@ -140,10 +140,13 @@ branch `routes-china-gas-no-route-batch`) through its own `qc_routes.py` gate �
 27 PASS + 52 WARN included (all length-ratio/geocode hints, expected for
 schematics); **P3894 excluded on a QC FAIL** (endpoint-country mismatch
 Russia→Russia vs DB Russia→China — consistent with the reuse-P0758-geometry
-recommendation; now effectively a 24th partial). **Sheet-side half NOT
-authorized/applied** — RouteNotes/RouteCreator/Route [ref]/RouteAccuracy still
-pending via `scripts/apply_route_candidates.py` (plan → `--apply`); tracked in
-Baird's work Asana. Workbooks remain the review surface for the flags above.
+recommendation; now effectively a 24th partial). **Sheet-side half APPLIED
+same day** (authorized after the merge — the two halves are one unit, cardinal
+rule): 316 cells (RouteAccuracy/RouteNotes/RouteCreator/Route [ref] × 79 rows)
+via `apply_route_candidates.py`, all readback-verified; backups committed in
+`notes/sheet-write-2026-07-30-china-{guangxi-gas,gas-grids,trunks-gas}-route-columns.csv`.
+Remaining work tracked in Baird's work Asana (gem-desk project). Workbooks
+remain the review surface for the flags above.
 
 ## Open items
 

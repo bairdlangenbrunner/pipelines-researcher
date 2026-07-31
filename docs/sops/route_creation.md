@@ -184,8 +184,11 @@ backup CSV → `--apply` with readback verification). Appends never overwrite:
 RouteNotes gets the CB stamp + " — " + researcher notes, RouteCreator gains
 `CB` (gas tab only — the oil tab has no RouteCreator column), Route [ref]
 gains only URLs not already present; RouteAccuracy must currently be
-`no route`. Authorization never carries to the next batch. Recipe:
-`docs/workflows.md` §8 step 6; first use Egypt gas 2026-07-30.
+`no route`. Authorization never carries to the next batch. **The two halves
+are one unit (cardinal rule, Baird 2026-07-30): the routes repo must stay in
+sync with the backend sheet — never merge routes without applying the matching
+sheet columns in the same batch; a QC-excluded PID drops out of both halves.**
+Recipe: `docs/workflows.md` §8 step 6; first use Egypt gas 2026-07-30.
 
 ## Iterate
 
