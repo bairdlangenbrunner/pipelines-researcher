@@ -99,6 +99,14 @@ provenance/audit, not a citation.
 5. **Workbook + recalc:** `build_ref_workbook.py --staging … --output …` renders the
    `<Cmdty>_RouteCandidates` tab; then `recalc.py`.
 
+**Stage FULL notes — never pre-truncate.** The `--notes` passed to
+`build_route_candidate.py` become the sheet's RouteNotes verbatim at apply time;
+routing-choice rationale and corroboration commentary must survive intact. The
+China 2026-07-30 batch truncated notes at assembly (~635 chars, mid-sentence on
+68/79 rows) and needed a follow-up 75-cell extension write
+(`notes/sheet-write-2026-07-30-china-gas-routenotes-extension.csv`) rebuilt from
+`research_results_merged.json`. Pass the complete corridor + researcher notes.
+
 ## The validation gate (`validate_route_candidate.py`)
 
 Three legs, on every candidate before delivery. `errors` ⇒ FAIL (red QC cell, listed
