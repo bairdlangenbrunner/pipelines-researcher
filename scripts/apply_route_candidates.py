@@ -10,10 +10,25 @@ writes the columns that describe those now-live routes.
 Generalizes the three one-off drivers from the Egypt gas batch (2026-07-30,
 backups `notes/sheet-write-2026-07-30-egypt-gas-*.csv`). Per row it writes:
 
+  RouteType      = 'Mapped route (at any accuracy)'  (ALWAYS — a merged geojson
+                   means the row IS mapped; RouteType, RouteAccuracy and the
+                   routes repo must never disagree. CARDINAL RULE, Baird
+                   2026-07-31 — this column is not optional and not a judgment
+                   call, it follows mechanically from the merge.)
   RouteAccuracy  = staged suggested_route_accuracy   (current must be 'no route')
   RouteNotes    += CB method stamp + " — " + researcher_notes   (append)
   RouteCreator  += "CB"                    (append; gas tab only — oil has no column)
   Route [ref]   += staged URLs not already in the cell           (append)
+
+Every planned row is checked against the routes repo first: the PID must have a
+geojson with actual coordinates under ../GOIT-GGIT-pipeline-routes. A row whose
+geometry never merged (QC-excluded, still a corridor partial) is excluded from
+BOTH halves — the script aborts rather than writing route columns for it.
+
+--backfill-route-type repairs rows applied before RouteType was part of this
+script (China gas 2026-07-30, 79 rows): it plans ONLY the RouteType cell, skips
+the 'no route' / double-append guards (those rows are already applied), and
+still requires live repo geometry.
 
 Column letters are DERIVED FROM THE FRESH CSV HEADER each run (schema drifts;
 never hard-code offsets) — CSV col index == sheet col index, CSV row index + 4
@@ -37,19 +52,74 @@ Usage:
 """
 import argparse
 import csv
+import glob
 import json
 import os
+import re
 import subprocess
 import sys
 from datetime import date
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+ROUTES_REPO = REPO.parent / "GOIT-GGIT-pipeline-routes"
 SHEET_ID = "1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek"
 TABS = {"gas": "Gas pipelines", "oil": "Oil/NGL pipelines"}
+ROUTE_DIRS = {"gas": "gas-pipelines", "oil": "liquid-pipelines"}
 VOCAB = {"high", "medium", "low", "very low (straight line/schematic)",
          "very high (within meters)"}
-COLS = ["RouteAccuracy", "RouteNotes", "RouteCreator", "Route [ref]"]
+MAPPED = "Mapped route (at any accuracy)"
+COLS = ["RouteType", "RouteAccuracy", "RouteNotes", "RouteCreator", "Route [ref]"]
+
+
+def repo_geometry(commodity: str) -> dict[str, int]:
+    """PID -> max coordinate count across its geojsons in the routes repo.
+
+    An empty placeholder geojson (0 coords) is NOT a route: RouteType must stay
+    unmapped for it. Pull the routes repo before running.
+    """
+    root = ROUTES_REPO / "data" / "individual-routes" / ROUTE_DIRS[commodity]
+    assert root.is_dir(), f"routes repo not found at {root} — clone/pull it first"
+
+    def count(path: str) -> int:
+        n = 0
+
+        def walk(g):
+            nonlocal n
+            if not g:
+                return
+            t = g.get("type")
+            if t == "FeatureCollection":
+                for ft in g.get("features") or []:
+                    walk(ft)
+            elif t == "Feature":
+                walk(g.get("geometry"))
+            elif t == "GeometryCollection":
+                for gg in g.get("geometries") or []:
+                    walk(gg)
+            else:
+                def cc(x):
+                    nonlocal n
+                    if isinstance(x, (int, float)):
+                        return
+                    if x and isinstance(x[0], (int, float)):
+                        n += 1
+                        return
+                    for y in x or []:
+                        cc(y)
+                cc(g.get("coordinates"))
+        try:
+            walk(json.load(open(path)))
+        except Exception:
+            return -1
+        return n
+
+    out: dict[str, int] = {}
+    for f in glob.glob(str(root / "**" / "*.geojson"), recursive=True):
+        m = re.search(r"(P\d{4,6})", os.path.basename(f))
+        if m:
+            out[m.group(1)] = max(out.get(m.group(1), 0), count(f))
+    return out
 
 
 def a1(idx: int) -> str:
@@ -74,14 +144,21 @@ def gws(config: str, *args: str) -> dict:
     return json.loads(out[out.index("{"):])
 
 
-def batch_get(tab: str, ranges: list[str], render: str) -> list[list[list]]:
-    params = json.dumps({"spreadsheetId": SHEET_ID,
-                         "ranges": [f"'{tab}'!{r}" for r in ranges],
-                         "valueRenderOption": render, "majorDimension": "ROWS"})
-    body = gws("gws-gem", "batchGet", "--params", params)
-    vrs = body["valueRanges"]
-    assert len(vrs) == len(ranges), f"got {len(vrs)} ranges, asked {len(ranges)}"
-    return [vr.get("values") or [[]] for vr in vrs]
+def batch_get(tab: str, ranges: list[str], render: str,
+              chunk: int = 100) -> list[list[list]]:
+    """Cell-scoped batchGet, chunked — the ranges go in the query string, so a
+    large batch (80 rows x 6 columns) overflows it and the API returns HTTP 400."""
+    out: list[list[list]] = []
+    for i in range(0, len(ranges), chunk):
+        part = ranges[i:i + chunk]
+        params = json.dumps({"spreadsheetId": SHEET_ID,
+                             "ranges": [f"'{tab}'!{r}" for r in part],
+                             "valueRenderOption": render, "majorDimension": "ROWS"})
+        body = gws("gws-gem", "batchGet", "--params", params)
+        vrs = body["valueRanges"]
+        assert len(vrs) == len(part), f"got {len(vrs)} ranges, asked {len(part)}"
+        out += [vr.get("values") or [[]] for vr in vrs]
+    return out
 
 
 def stamp_of(proposed_notes: str) -> str:
@@ -92,27 +169,44 @@ def stamp_of(proposed_notes: str) -> str:
 
 def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
     import pandas as pd
-    staged = json.loads((Path(args.staging) / "staged_resolutions.json").read_text())
-    cands = [r for r in staged["resolutions"] if r.get("class_out") == "ROUTE_CANDIDATE"]
-    if args.pids:
-        want = set(args.pids.split(","))
-        cands = [r for r in cands if r["project_id"] in want]
-        missing = want - {r["project_id"] for r in cands}
-        assert not missing, f"no ROUTE_CANDIDATE staged for: {sorted(missing)}"
-    assert cands, "nothing to apply"
-
     df = pd.read_csv(args.csv, header=2, low_memory=False)
     have_creator = "RouteCreator" in col_letter
+    geom = repo_geometry(args.commodity)
 
-    items = []
-    for r in sorted(cands, key=lambda x: x["project_id"]):
-        rows = df.index[df["ProjectID"] == r["project_id"]].tolist()
-        assert len(rows) == 1, f"{r['project_id']}: {len(rows)} rows in fresh snapshot"
-        acc = (r.get("suggested_route_accuracy") or "").strip()
-        assert acc in VOCAB, f"{r['project_id']}: bad accuracy {acc!r}"
-        items.append({"pid": r["project_id"], "sheet_row": rows[0] + 4,
-                      "proposed": r["proposed_sheet"], "acc": acc,
-                      "researcher_notes": (r.get("researcher_notes") or "").strip()})
+    if args.backfill_route_type:
+        assert args.pids, "--backfill-route-type needs an explicit --pids list"
+        items = []
+        for pid in sorted(set(args.pids.split(","))):
+            rows = df.index[df["ProjectID"] == pid].tolist()
+            assert len(rows) == 1, f"{pid}: {len(rows)} rows in fresh snapshot"
+            items.append({"pid": pid, "sheet_row": rows[0] + 4})
+    else:
+        staged = json.loads((Path(args.staging) / "staged_resolutions.json").read_text())
+        cands = [r for r in staged["resolutions"] if r.get("class_out") == "ROUTE_CANDIDATE"]
+        if args.pids:
+            want = set(args.pids.split(","))
+            cands = [r for r in cands if r["project_id"] in want]
+            missing = want - {r["project_id"] for r in cands}
+            assert not missing, f"no ROUTE_CANDIDATE staged for: {sorted(missing)}"
+        assert cands, "nothing to apply"
+
+        items = []
+        for r in sorted(cands, key=lambda x: x["project_id"]):
+            rows = df.index[df["ProjectID"] == r["project_id"]].tolist()
+            assert len(rows) == 1, f"{r['project_id']}: {len(rows)} rows in fresh snapshot"
+            acc = (r.get("suggested_route_accuracy") or "").strip()
+            assert acc in VOCAB, f"{r['project_id']}: bad accuracy {acc!r}"
+            items.append({"pid": r["project_id"], "sheet_row": rows[0] + 4,
+                          "proposed": r["proposed_sheet"], "acc": acc,
+                          "researcher_notes": (r.get("researcher_notes") or "").strip()})
+
+    # SYNC GATE: never write route columns for a PID whose geometry is not live
+    # in the routes repo (CLAUDE.md cardinal rule — the two halves are one unit).
+    unmerged = [c["pid"] for c in items if geom.get(c["pid"], -1) <= 0]
+    assert not unmerged, (
+        f"{len(unmerged)} PID(s) have no non-empty geojson in {ROUTES_REPO.name}: "
+        f"{unmerged} — merge the routes half first (or drop them from --pids); "
+        "a QC-excluded PID is excluded from BOTH halves")
 
     # the four target columns are contiguous on neither tab necessarily — read
     # each column cell-scoped, plus the ProjectID cell, all in one batchGet
@@ -135,6 +229,15 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
                 f"{c['pid']} row {c['sheet_row']}: formula cell {v!r} — aborting"
         cur = dict(zip([k for k in COLS if k in col_letter], rest))
 
+        if args.backfill_route_type:
+            # repair-only: the row's other route columns are already applied
+            if cur["RouteType"] == MAPPED:
+                continue                       # already in sync — nothing to write
+            plan.append({"pid": c["pid"], "sheet_row": c["sheet_row"],
+                         "before": {"RouteType": cur["RouteType"]},
+                         "after": {"RouteType": MAPPED}})
+            continue
+
         assert cur["RouteAccuracy"] == "no route", \
             f"{c['pid']}: RouteAccuracy is {cur['RouteAccuracy']!r}, expected 'no route' — aborting"
         assert "CB: route" not in cur["RouteNotes"], \
@@ -143,7 +246,10 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
         stamp = stamp_of(c["proposed"]["RouteNotes"])
         addition = f"{stamp} — {c['researcher_notes']}" if c["researcher_notes"] else stamp
         sep = " " if cur["RouteNotes"].endswith(".") else "; "
-        after = {"RouteAccuracy": c["acc"],
+        # RouteType is mechanical: geometry is live in the repo (gated above),
+        # therefore the row is mapped — no accuracy tier exempts it.
+        after = {"RouteType": MAPPED,
+                 "RouteAccuracy": c["acc"],
                  "RouteNotes": f"{cur['RouteNotes']}{sep}{addition}"
                                if cur["RouteNotes"] else addition}
 
@@ -188,13 +294,17 @@ def apply_plan(plan: list[dict], tab: str, col_letter: dict) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--staging", required=True)
+    ap.add_argument("--staging", required=True,
+                    help="staging dir (holds staged_resolutions.json + the plan JSON)")
     ap.add_argument("--commodity", required=True, choices=["gas", "oil"])
     ap.add_argument("--csv", required=True,
                     help="FRESH tracker snapshot (pull first; header=2)")
     ap.add_argument("--scope-slug", required=True,
                     help="e.g. egypt-gas — names the notes/ backup CSV")
     ap.add_argument("--pids", help="comma-separated subset (default: all staged ROUTE_CANDIDATEs)")
+    ap.add_argument("--backfill-route-type", action="store_true",
+                    help="repair mode: write ONLY RouteType for already-applied "
+                         "--pids whose geometry is live in the routes repo")
     ap.add_argument("--apply", action="store_true",
                     help="write the sheet (plan JSON must exist from a plan run)")
     args = ap.parse_args()
@@ -204,20 +314,23 @@ def main() -> None:
     header = pd.read_csv(args.csv, header=2, low_memory=False, nrows=0).columns.tolist()
     col_letter = {c: a1(header.index(c)) for c in COLS if c in header}
     pid_letter = a1(header.index("ProjectID"))
-    for required in ("RouteAccuracy", "RouteNotes", "Route [ref]"):
+    for required in ("RouteType", "RouteAccuracy", "RouteNotes", "Route [ref]"):
         assert required in col_letter, f"{required} not in {args.csv} header"
     if "RouteCreator" not in col_letter:
         print("note: no RouteCreator column on this tab — skipping that append")
 
-    plan_path = Path(args.staging) / "apply_route_candidates_plan.json"
+    plan_path = Path(args.staging) / (
+        "backfill_route_type_plan.json" if args.backfill_route_type
+        else "apply_route_candidates_plan.json")
     if args.apply:
         apply_plan(json.loads(plan_path.read_text()), tab, col_letter)
         return
 
     plan = build_plan(args, tab, col_letter, pid_letter)
     plan_path.write_text(json.dumps(plan, indent=1, ensure_ascii=False))
+    suffix = "route-type-backfill" if args.backfill_route_type else "route-columns"
     backup = REPO / "notes" / \
-        f"sheet-write-{date.today().isoformat()}-{args.scope_slug}-route-columns.csv"
+        f"sheet-write-{date.today().isoformat()}-{args.scope_slug}-{suffix}.csv"
     with backup.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["project_id", "sheet_row", "column", "before", "after"])
@@ -228,8 +341,13 @@ def main() -> None:
     print(f"plan: {len(plan)} rows -> {plan_path}")
     print(f"backup written (commit it): {backup}")
     for p in plan:
-        print(f"  {p['pid']} row {p['sheet_row']}: acc -> {p['after']['RouteAccuracy']!r}, "
-              f"refs {len(p['after']['Route [ref]'].split('; '))}")
+        if args.backfill_route_type:
+            print(f"  {p['pid']} row {p['sheet_row']}: RouteType "
+                  f"{p['before']['RouteType']!r} -> {MAPPED!r}")
+        else:
+            print(f"  {p['pid']} row {p['sheet_row']}: acc -> {p['after']['RouteAccuracy']!r}, "
+                  f"RouteType -> {MAPPED!r}, "
+                  f"refs {len(p['after']['Route [ref]'].split('; '))}")
     print("review the plan, then re-run with --apply (requires per-batch authorization)")
 
 

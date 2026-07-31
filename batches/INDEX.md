@@ -38,7 +38,6 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
-- `deliverables/pipelines_batch_20260730_1239_ET_egypt-gas_route-creation.xlsx`
 - `deliverables/pipelines_batch_20260730_1415_ET_egypt-gas_route-creation-retry.xlsx`
 - `archive/` — 7 superseded/applied file(s)
 
@@ -62,10 +61,12 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/redundancy` [redundancy] — rows=15 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/ref-gap-repass` [ref-gap-repass] — rows=16 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=2, REFS_ADDED=15, REVERIFIED=16, UNRESOLVED=9) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=36 fills=66 updates=0 status-pending=0 refs(DEAD_LINK=37, REFS_ADDED=54, REVERIFIED=57, UNRESOLVED=138) routes=36 new(none)
+- `staging/route-creation` [route-creation] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=34 new(none)
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260731_1525_ET_iraq-gas_route-creation.xlsx`
 - `archive/` — 11 superseded/applied file(s)
 
 ## iraq-oil

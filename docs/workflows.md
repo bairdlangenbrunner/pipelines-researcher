@@ -460,10 +460,21 @@ snapshots in `data/` are stale.
    review → `--apply`). Pull a FRESH snapshot first; the script derives column
    letters from the header, appends (never overwrites) RouteNotes (CB stamp + " — "
    + researcher notes) / RouteCreator `CB` (gas tab only) / Route [ref] URLs, sets
-   RouteAccuracy from the staged suggestion (current cell must be `no route`), and
-   enforces the full authorized-write protocol: FORMULA pre-check, ProjectID match,
-   double-append guard, `notes/` backup CSV (commit it), RAW cell-scoped writes via
-   `gws-gem-write`, exact readback verification.
+   RouteAccuracy from the staged suggestion (current cell must be `no route`),
+   **sets `RouteType = 'Mapped route (at any accuracy)'`**, and enforces the full
+   authorized-write protocol: routes-repo geometry gate, FORMULA pre-check,
+   ProjectID match, double-append guard, `notes/` backup CSV (commit it), RAW
+   cell-scoped writes via `gws-gem-write`, exact readback verification.
+
+   **THREE-WAY SYNC (cardinal, Baird 2026-07-31): `RouteType`, `RouteAccuracy` and
+   the routes repo must ALWAYS agree.** Merged geometry ⇒ `RouteType = Mapped route
+   (at any accuracy)` — "at any accuracy" is literal, `very low (straight
+   line/schematic)` still counts, and it overrides a stale `Unavailable (cannot find
+   route)`. Moving `RouteAccuracy` off `no route` without moving `RouteType` is a
+   defect, not a partial apply. The script refuses to write route columns for any
+   PID lacking a non-empty geojson in `../GOIT-GGIT-pipeline-routes` (pull it first),
+   so a QC-excluded PID stays excluded from both halves. Full table:
+   `docs/sops/route_creation.md` → "The three-way sync rule".
    ```bash
    ./scripts/refresh_csvs.sh
    python scripts/apply_route_candidates.py --staging batches/<scope>/staging/route-creation \
@@ -472,6 +483,16 @@ snapshots in `data/` are stale.
    ```
    Then update the country note + CLAUDE.md pending bullet, regenerate
    `batches/INDEX.md`, and commit.
+
+   c. **Verify the sync after every apply** (and to repair older batches):
+   ```bash
+   python scripts/audit_route_sync.py                       # whole tracker, both commodities
+   python scripts/audit_route_sync.py --country China --commodity gas
+   # repair rows applied before RouteType was written (plan → review → --apply):
+   python scripts/apply_route_candidates.py --staging <dir> --commodity gas \
+     --csv data/GGIT_gas_snapshot_<date>.csv --scope-slug <scope> \
+     --backfill-route-type --pids P####,P####
+   ```
 
 7. **Partials retry (optional, later).** ROUTE_PARTIAL rows are worth ONE re-research
    pass once the original blocker (usually web-search quota) clears: build per-PID

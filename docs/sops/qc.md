@@ -69,6 +69,18 @@ NEVER auto-replaced — fixes go via a human branch+PR against
 `GOIT-GGIT-pipeline-routes`; a staged route suggestion annotates the flag
 "known — staged" instead of re-flagging it for research.
 
+**Three-way sync check (`scripts/audit_route_sync.py`)** — a separate, standing
+audit of `RouteType` ↔ `RouteAccuracy` ↔ the routes repo (cardinal rule, CLAUDE.md;
+table in `docs/sops/route_creation.md`). Run it whole-tracker or `--country <C>`
+whenever a country's routes are touched, and **always immediately after a §8 apply**
+(`workflows.md` §8 step 6c). Four findings: **A** live geometry but `RouteType` ≠
+`Mapped route (at any accuracy)` (the 2026-07-30 defect — a merged route whose
+RouteType was never flipped), **B** live geometry but `RouteAccuracy = no route`,
+**C**/**D** the mirror cases where the sheet claims a route the repo doesn't have.
+Read-only; our own drift is repaired via
+`apply_route_candidates.py --backfill-route-type`, other researchers' rows get
+reported, not silently rewritten.
+
 ## Assembly + Leg 3 (`scripts/build_qc_staging.py`)
 
 Runs the ten mechanical checks country-scoped **plus the `Existence_support`

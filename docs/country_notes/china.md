@@ -148,6 +148,18 @@ via `apply_route_candidates.py`, all readback-verified; backups committed in
 Remaining work tracked in Baird's work Asana (gem-desk project). Workbooks
 remain the review surface for the flags above.
 
+**`RouteType` backfill — 2026-07-31 (defect + repair).** That 07-30 apply wrote
+`RouteAccuracy` but **not `RouteType`**, leaving all 79 merged rows still reading
+`Not mapped (but could be…)` (76) or `Unavailable (cannot find route)` (3) — the
+sheet denied 79 routes that were live in the routes repo. Repaired the same day
+under authorization: 79 single-cell writes to `Mapped route (at any accuracy)`,
+all readback-verified (backup
+`notes/sheet-write-2026-07-31-china-gas-route-type-backfill.csv`).
+`python scripts/audit_route_sync.py --country China --commodity gas` now returns
+only P4939 (not ours — logged in
+`notes/review-2026-07-31-route-sync-drift-other-rows.md`). The three-way sync
+rule and the tooling that enforces it: `docs/sops/route_creation.md`.
+
 ## Open items
 
 - **Guangxi pilot — DELIVERED 2026-07-29, staged not applied.** Full deep sweep +

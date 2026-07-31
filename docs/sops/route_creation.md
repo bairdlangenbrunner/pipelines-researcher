@@ -179,8 +179,35 @@ systematically off (likely a segment-vs-network granularity misread, not a findi
 
 **Default (human path):** open candidates in geojson.io / QGIS → branch on
 `GOIT-GGIT-pipeline-routes` → run its `qc_routes.py --copy` → PR → then the
-sheet-side `RouteAccuracy` / `RouteNotes` / `Route [ref]` land via a separate
-§5 Update batch.
+sheet-side `RouteType` / `RouteAccuracy` / `RouteNotes` / `Route [ref]` land via
+a separate §5 Update batch.
+
+### The three-way sync rule (cardinal — Baird 2026-07-31)
+
+**`RouteType`, `RouteAccuracy`, and the routes repo must ALWAYS agree.** They are
+one fact stated three ways, never three independent judgments:
+
+| Routes repo | `RouteType` | `RouteAccuracy` |
+|---|---|---|
+| geojson with real coordinates | `Mapped route (at any accuracy)` | the earned tier — `very high (within meters)` … `very low (straight line/schematic)` |
+| no geojson / empty placeholder | `Not mapped (but could be — route or endpoints are known)` or `Unavailable (cannot find route)` | `no route` |
+
+- **A merged route ALWAYS flips `RouteType` to `Mapped route (at any accuracy)`.**
+  "At any accuracy" is literal: `very low (straight line/schematic)` is still
+  mapped. A low tier is never a reason to leave `RouteType` unmapped, and it never
+  justifies leaving `Unavailable (cannot find route)` in place — the route was
+  found, that's why there's a geojson.
+- Setting `RouteAccuracy` away from `no route` **without** setting `RouteType` is
+  a defect, not a partial apply. The two columns move together or not at all.
+- Conversely, never set `RouteType = Mapped` for a PID whose geometry did not
+  merge (QC-excluded, still a corridor partial). Excluded from one half means
+  excluded from both.
+- `apply_route_candidates.py` enforces this: it writes `RouteType` in the same
+  batch as `RouteAccuracy`, and gates every row on a non-empty geojson actually
+  being present in `../GOIT-GGIT-pipeline-routes`.
+- Rows applied before this was enforced are repaired with
+  `--backfill-route-type --pids <list>` (writes only the `RouteType` cell, same
+  plan → review → `--apply` protocol). Applies to China gas 2026-07-30 (79 rows).
 
 **Authorized agent apply (per-batch only; the CLAUDE.md sheet-write carve-out):**
 when Baird explicitly authorizes it for a specific batch, the agent runs both
@@ -191,11 +218,13 @@ an explicit `--include`, positional targets before flags; branch → commit →
 backup CSV → `--apply` with readback verification). Appends never overwrite:
 RouteNotes gets the CB stamp + " — " + researcher notes, RouteCreator gains
 `CB` (gas tab only — the oil tab has no RouteCreator column), Route [ref]
-gains only URLs not already present; RouteAccuracy must currently be
-`no route`. Authorization never carries to the next batch. **The two halves
-are one unit (cardinal rule, Baird 2026-07-30): the routes repo must stay in
-sync with the backend sheet — never merge routes without applying the matching
-sheet columns in the same batch; a QC-excluded PID drops out of both halves.**
+gains only URLs not already present; `RouteAccuracy` must currently be
+`no route` and `RouteType` is set to `Mapped route (at any accuracy)` in the
+same write (see the three-way sync rule above). Authorization never carries to
+the next batch. **The two halves are one unit (cardinal rule, Baird 2026-07-30):
+the routes repo must stay in sync with the backend sheet — never merge routes
+without applying the matching sheet columns in the same batch; a QC-excluded PID
+drops out of both halves.**
 Recipe: `docs/workflows.md` §8 step 6; first use Egypt gas 2026-07-30.
 
 ## Iterate

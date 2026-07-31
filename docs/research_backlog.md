@@ -141,6 +141,16 @@ per cell rather than trusting either signal.
 
 ## 4. Decisions needed from Baird
 
+- **Route three-way sync drift — 26 rows, none of them ours (2026-07-31).** The new
+  standing audit `scripts/audit_route_sync.py` found `RouteType`/`RouteAccuracy`/routes-repo
+  disagreements outside our batches. Two are urgent: **P7274 Longhorn Oil (US)** claims
+  `Mapped` + `high` over an *empty* repo placeholder, and **P5970 BC Gas (Canada)** carries
+  geometry **39.8×** its sheet length (near-certainly another pipeline's trace). ~12 more are
+  mechanical `RouteType` flips; the rest split into route-correctness conflicts (incl. the
+  Algerian LPG cluster P7297–P7300, three of four failing the ratio gate) and two repo-side
+  bugs (P2041's geojson filed under gas while its row is on the oil tab — and P2041 exists on
+  BOTH tabs). Per-row proposals, nothing written:
+  `notes/review-2026-07-31-route-sync-drift-other-rows.md`.
 - **P1897–P1925 (Saudi gas, 29 rows):** the 2026-06-19 escalation memo
   (`notes/escalation-2026-06-19-saudi-gas-opec-block.md`) requested a class-level
   decision (provenance of the 2022 GIS/km-post family, disposition of synthetic rows,

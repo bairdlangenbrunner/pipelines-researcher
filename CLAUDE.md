@@ -193,6 +193,19 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   stay in sync** — the two halves of a §8 apply are one unit. Never merge routes
   into `GOIT-GGIT-pipeline-routes` without applying the matching sheet route
   columns in the same batch (a QC-excluded PID is excluded from BOTH halves).
+  **THREE-WAY SYNC (Baird 2026-07-31): `RouteType`, `RouteAccuracy`, and the routes
+  repo must ALWAYS agree** — one fact stated three ways, never three separate
+  judgments. A merged geojson ⇒ `RouteType = 'Mapped route (at any accuracy)'`,
+  every time: "at any accuracy" is literal, so `very low (straight
+  line/schematic)` is still mapped, and it overrides a stale `Unavailable (cannot
+  find route)`. Moving `RouteAccuracy` off `no route` **without** moving
+  `RouteType` is a defect, not a partial apply — never ship one without the other.
+  Conversely never set `Mapped` for a PID whose geometry didn't merge.
+  `apply_route_candidates.py` writes both columns in one batch and refuses any PID
+  without a non-empty geojson in the routes repo; verify with
+  `python scripts/audit_route_sync.py` after EVERY apply (findings A–D; A = this
+  defect). Repair old rows with `--backfill-route-type`. Full table:
+  `docs/sops/route_creation.md` → "The three-way sync rule".
   **The live GEM Sheet is writable only on explicit
   authorization** — Baird asks for the edit, or the agent asks permission and gets a
   yes, *for that specific edit*. Approval never carries to the next task. Never write
@@ -307,7 +320,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   P6824 as a diesel line misfiled in GGIT, and the ASB-provenance ruling that
   withdrew 12 of 16 of our own duplicate/existence flags. THREE retractions — P4067
   is *not* a misfiled crude line, "stale forward" on P7435/P6826 is wrong, P6007 is
-  not a phantom. + oil open items — Grand Faw third line,
+  not a phantom. **+ §8 route creation 2026-07-31: all 34 exactly-`no route` gas
+  PIDs staged, not applied — 15 candidate GeoJSONs + 19 corridor partials; internal
+  gate 14 PASS / P2231 length FAIL, routes-repo QC 13 PASS / P2233+P4068 WARN;
+  workbook `…_20260731_1525_ET_iraq-gas_route-creation.xlsx`.** + oil open items — Grand Faw third line,
   P0544, and an UNTRIAGED first OSM oil run: 175 unmatched traces, 84 of them
   discovery candidates, delivered as
   `…_20260728_1804_ET_iraq-oil_{osm,gulfpub}-reconciliation.xlsx`):**
@@ -355,7 +371,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   APPLIED same day** (authorized; 79/80 merged, routes merge `3d943da2`; P3894 QC-fail
   excluded → reuse-P0758-geometry review) **+ sheet-side route columns APPLIED same
   day** (316 cells verified, backups in `notes/`); 23 partials + P3894 + review flags
-  tracked in work Asana (gem-desk)**; oil out of scope until post-cycle):**
+  tracked in work Asana (gem-desk). **`RouteType` backfill 2026-07-31: that apply set
+  `RouteAccuracy` but not `RouteType`, so all 79 merged rows still read `Not mapped`/
+  `Unavailable` — repaired under authorization (79 cells verified, backup in `notes/`);
+  China gas now clean per `scripts/audit_route_sync.py`.**; oil out of scope until post-cycle):**
   `docs/country_notes/china.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
   review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet
