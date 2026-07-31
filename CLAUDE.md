@@ -345,10 +345,13 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `build_ref_worklist.py --province` + trunk-exclusion regex; Guangxi deep-sweep pilot
   DELIVERED 2026-07-30 staged not applied. **+ §8 route creation 2026-07-30: ALL 103
   no-route gas rows (incl. Maggie's operating rows + P8028/P8029 per Baird) — 80
-  candidate geojsons + 23 corridor partials staged NOT applied, three batches/
-  workbooks (Guangxi grid 18+5, other grids 28+10 in the cross-province dir
-  `batches/china-gas/staging/route-creation-grids/`, trunks 34+8); apply NOT
-  authorized**; oil out of scope until post-cycle):** `docs/country_notes/china.md`.
+  candidate geojsons + 23 corridor partials, three batches/workbooks (Guangxi grid
+  18+5, other grids 28+10 in the cross-province dir
+  `batches/china-gas/staging/route-creation-grids/`, trunks 34+8); **routes-repo half
+  APPLIED same day** (authorized; 79/80 merged, routes merge `3d943da2`; P3894 QC-fail
+  excluded → reuse-P0758-geometry review); **sheet-side route columns NOT
+  applied/authorized** — pending, tracked in work Asana**; oil out of scope until
+  post-cycle):** `docs/country_notes/china.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
   review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet
   `…_20260728_1235_ET_libya-gas_handoff-{actions,evidence}.xlsx`. **THREE files to work:**

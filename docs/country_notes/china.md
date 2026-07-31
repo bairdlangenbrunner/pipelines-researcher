@@ -134,8 +134,16 @@ typo, P8028/P8029 embedded `\r` in PipelineName; retirement reviews — P6679/P6
 P6681 (cancelled Hebei lines, documented connectors ~1/~0.1 km vs GEM 8.8/3.5 km);
 row-split — P4513 (two corridors ~400 km apart).
 
-**§8 step 6 apply NOT authorized** — everything staged; workbooks are the review
-surface.
+**§8 step 6 apply — routes-repo half DONE 2026-07-30** (per-batch authorized):
+79/80 candidates merged to `GOIT-GGIT-pipeline-routes` main (merge `3d943da2`,
+branch `routes-china-gas-no-route-batch`) through its own `qc_routes.py` gate —
+27 PASS + 52 WARN included (all length-ratio/geocode hints, expected for
+schematics); **P3894 excluded on a QC FAIL** (endpoint-country mismatch
+Russia→Russia vs DB Russia→China — consistent with the reuse-P0758-geometry
+recommendation; now effectively a 24th partial). **Sheet-side half NOT
+authorized/applied** — RouteNotes/RouteCreator/Route [ref]/RouteAccuracy still
+pending via `scripts/apply_route_candidates.py` (plan → `--apply`); tracked in
+Baird's work Asana. Workbooks remain the review surface for the flags above.
 
 ## Open items
 
