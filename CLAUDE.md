@@ -321,8 +321,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   withdrew 12 of 16 of our own duplicate/existence flags. THREE retractions — P4067
   is *not* a misfiled crude line, "stale forward" on P7435/P6826 is wrong, P6007 is
   not a phantom. **+ §8 route creation 2026-07-31: all 34 exactly-`no route` gas
-  PIDs staged, not applied — 15 candidate GeoJSONs + 19 corridor partials; internal
-  gate 14 PASS / P2231 length FAIL, routes-repo QC 13 PASS / P2233+P4068 WARN;
+  PIDs — the 15 candidate GeoJSONs were APPLIED 2026-08-03 (authorized; routes merge
+  `ab2e6bbd` + 75 sheet cells, RouteCreator `CB`, backup in `notes/`,
+  `audit_route_sync.py` clean), including the three routes-repo WARNs (P2233/P4068
+  length undershoot, P7434 geocoder false match on a second Mahmudiyah) and P2231
+  despite its stricter internal-gate length FAIL; 19 corridor partials still open;
   workbook `…_20260731_1525_ET_iraq-gas_route-creation.xlsx`.** + oil open items — Grand Faw third line,
   P0544, and an UNTRIAGED first OSM oil run: 175 unmatched traces, 84 of them
   discovery candidates, delivered as

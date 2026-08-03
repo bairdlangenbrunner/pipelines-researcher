@@ -221,6 +221,36 @@ ESCALATIONS row in both workbook READMEs). The structural ones:
   geometry for routeless GEM rows. They live in the standalone
   `…_1104_ET_iraq-gas_reconciliation-osm.xlsx`, **not** in the actions file.
 
+### Route creation, 2026-07-31 — all 15 candidates APPLIED 2026-08-03
+
+All 34 gas PIDs whose fresh 2026-07-31 snapshot value was exactly `no route` were
+processed through §8. The batch contains 15 candidate GeoJSONs (6 GulfPub vectors,
+9 sourced endpoint schematics) and 19 `ROUTE_PARTIAL` corridor records. Deliverable:
+`pipelines_batch_20260731_1525_ET_iraq-gas_route-creation.xlsx`; staging README:
+`batches/iraq-gas/staging/route-creation/README.md`.
+
+**Applied 2026-08-03 (authorized), both halves in one batch:** all 15 geojsons merged
+to `GOIT-GGIT-pipeline-routes` (merge `ab2e6bbd`; every target file was an empty
+0-coordinate placeholder, so no existing geometry was replaced), then the sheet route
+columns via `apply_route_candidates.py` — 75 cells over 15 rows, RouteCreator `CB`,
+backup `notes/sheet-write-2026-08-03-iraq-gas-route-columns.csv`.
+`audit_route_sync.py --country Iraq --commodity gas` is clean (A–D all 0).
+Re-run QC at apply time was 12 PASS / 3 WARN, all three included deliberately:
+P2233 (218 vs 438 km) and P4068 (42 vs 61 km) are the expected endpoint-schematic
+length undershoot, and P7434's "start 219 km from Mahmudiyah" is a **geocoder false
+match on a second Iraqi Mahmudiyah** — the trace starts at 32.99N/44.37E, the
+Baghdad-south town, and its Besmaya end lands ~1 km out. The 19 corridor partials
+remain open. Baird's same-day edits (the Iraq National Gas Pipeline consolidation on
+P1852/P4061/P4062/P4064/P4065/P4066, P4053 → `high`) touch none of the 15 rows.
+
+Pre-apply review notes: P2231 failed the stricter internal length gate (102 km trace
+vs 145 km sheet), while
+the routes-repo QC warns on P2233 (218 vs 438 km) and P4068 (42 vs 61 km). The other
+12 candidates pass both gates. The unreliable Iraq recon matches were manually
+adjudicated: Kirkuk–Baiji was assigned to P2231, the three Akkas–Anbar sections were
+mapped one-to-one to P7460/P7466/P7467, and unrelated hits were recorded as rejected
+in the affected partial notes.
+
 ### Prior gas work folded into the above
 2026-07-05 deep sweep and the 2026-07-07 ref-harvest re-pass (68 refs added, chiefly ASB2012 p.75
 / ASB2017 Table 9.9 recovered via Wayback since live opec.org PDFs 302 to the homepage). Findings
