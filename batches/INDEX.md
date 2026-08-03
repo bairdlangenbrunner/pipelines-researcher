@@ -28,6 +28,7 @@ applied). See docs/workflows.md "Batch artifacts".
 ## egypt-gas
 
 - `staging/annual` — rows=7 fills=16 updates=0 status-pending=1 refs(REFS_ADDED=44, REVERIFIED=19, UNRESOLVED=1) routes=0 new(monitor=3, new_row=4)
+- `staging/map-traces-gasco` — no store — invisible to discovery
 - `staging/qc` [assembled packet: qc] — rows=57 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260708` — recon inputs
 - `staging/recon-gulfpub-20260729` — recon inputs
