@@ -258,6 +258,29 @@ governorate-level only); P7588's Kom Ombo tie-in candidate RULED OUT on distance
 consultation); Abu Madi (P8022/P8023 start) has NO citable coordinate in
 Nominatim/Overpass/GeoNames/Wikidata — checked independently in the main session.
 
+## Open items — §8 route creation 2026-08-04 (ENTSOG pass, staged NOT applied)
+
+Baird-directed second §8 pass: replacement routes for the 35 `very low` + 3 `low`
+rows off the new ENTSOG/GIE SYSCAP 2026 vector layer (`sources/entsog/`; measured
+Egypt accuracy median 4.2 km / p90 13 km → `medium` cap), plus a fresh run at all
+30 `no route` rows. **24 candidates + 4 partials staged** in
+`batches/egypt-gas/staging/route-creation-20260804/` (its README has the full
+adjudication); workbook `…_20260804_1431_ET_egypt-gas_route-creation.xlsx`.
+
+- Replacements (11, all `--replace`): 8 ENTSOG-traced `medium` (P7567 P8019 P8024
+  P0436 P8010 P0462 P3928 P3936) + 3 GulfPub sidecar `high` (P3935 — fixes a south
+  endpoint ~400 km off; P6034; P6037). 25+ rejects keep their existing geometry;
+  P6033 HOLD (start identity), P7482 skipped (18 km subsea hop).
+- No-route rows (13): P8034 sidecar `high`; P8041 P8044 P8045 P8033 P8036 P8038
+  P8042 P8027 P8040 P8032 ENTSOG-traced `medium`; P8031 P8039 endpoints `very low`.
+- 4 documented gate FAILs staged deliberately — P3936 (1.343, corridor review) and
+  three suspected sheet-length defects: P6034 (38.5 km vs 57 km coastal geometry),
+  P8041 (55 km vs EIA chainage 33 km), P8042 (215 km vs ~162 km canal corridor).
+- Still partial: P8026 (no start), P8022/P8023 (Abu Madi governorate conflict,
+  sources ~80 km apart), **P8035 = duplicate of applied P8013** (merge/retire, don't
+  draw). P8040 name flag: `PipelineName` says "Damanhur", sheet's own
+  StartLocation + Arabic name say **Dahshour** — rename recommended.
+
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 
 Wiki-parser spot check 5/5, route geodesic recompute matched, recalc clean.

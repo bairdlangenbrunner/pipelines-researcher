@@ -351,7 +351,13 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `notes/`; South Valley RouteType flipped by Baird), then a same-day retry pass on
   the 18 partials resolved + APPLIED 3 more (P8013/P8014/P8021, routes merge
   `241ef5aa`, backup in `notes/`); 15 corridor partials still open; workbooks
-  `…_20260730_1239_ET_…route-creation.xlsx` + `…_1415_ET_…route-creation-retry.xlsx`.**
+  `…_20260730_1239_ET_…route-creation.xlsx` + `…_1415_ET_…route-creation-retry.xlsx`.
+  + §8 ENTSOG pass 2026-08-04 STAGED NOT APPLIED: 11 replacement routes for
+  very-low/low rows (8 ENTSOG-traced medium + 3 GulfPub sidecar high) + 13 no-route
+  candidates + 4 partials (P8035 = duplicate of P8013), off the new
+  `sources/entsog/` SYSCAP 2026 vector layer (Egypt accuracy median 4.2 km →
+  medium cap); 4 documented gate FAILs incl. 3 suspected sheet-length defects;
+  workbook `…_20260804_1431_ET_…route-creation.xlsx`.**
   Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
