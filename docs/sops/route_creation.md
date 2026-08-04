@@ -80,7 +80,12 @@ provenance/audit, not a citation.
    `sources/gis_endpoints.yml` + a `source_roster.md` line.
 3. **Fetch / trace** per the chosen rung: `fetch_arcgis.py` / `fetch_overpass.py` write
    to `fetched_layers/` (gitignored) with a `.meta.json` provenance sidecar; `georef.py`
-   fits the transform and reports RMSE.
+   fits the transform and reports RMSE. Map-trace layers meant to be opened in
+   QGIS must carry **flat scalar properties only** — a nested object or array
+   becomes a `QVariantMap`/`QVariantList` and the OGR GeoJSON writer then
+   refuses to write any feature traced off the layer ("Invalid variant type for
+   field …", 0 of N features written). Split per-commodity values into one
+   scalar per feature; `;`-join name lists.
 4. **Assemble:** `build_route_candidate.py --pid … --method … <inputs>` normalizes the
    geometry (merge → linemerge → strip Z → 6 dp), optionally snaps an endpoint to an
    anchor (refused beyond `--snap-max-km`), writes `candidate_routes/<PID>.geojson`,
