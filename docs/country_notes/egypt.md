@@ -260,6 +260,13 @@ Nominatim/Overpass/GeoNames/Wikidata — checked independently in the main sessi
 
 ## Open items — §8 route creation 2026-08-04 (ENTSOG pass; replacements APPLIED, no-route half staged)
 
+**Single review surface for everything route-pending (both passes):**
+`…_20260804_1712_ET_egypt-gas_route-creation-pending.xlsx` — 13 pending
+candidates + 17 partials (July + August unioned, applied records dropped,
+July P8022/P8023 superseded by the August re-research). Rebuild anytime with
+`route-creation-20260804/build_merged_pending_workbook.py`; the two staging
+dirs stay canonical.
+
 Baird-directed second §8 pass: replacement routes for the 35 `very low` + 3 `low`
 rows off the new ENTSOG/GIE SYSCAP 2026 vector layer (`sources/entsog/`; measured
 Egypt accuracy median 4.2 km / p90 13 km → `medium` cap), plus a fresh run at all
