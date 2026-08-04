@@ -11,8 +11,14 @@ traced), with ENTSOG corroboration recorded where it applies.
 **Staged only — NOT applied.** No routes-repo or sheet writes; apply needs
 explicit per-batch authorization (workflows.md §8 step 6).
 
-Deliverable: `batches/egypt-gas/deliverables/pipelines_batch_20260804_1431_ET_egypt-gas_route-creation.xlsx`
-(24 ROUTE_CANDIDATE + 4 ROUTE_PARTIAL).
+Deliverable: `batches/egypt-gas/deliverables/pipelines_batch_20260804_1656_ET_egypt-gas_route-creation.xlsx`
+(23 ROUTE_CANDIDATE + 4 ROUTE_PARTIAL; supersedes the `_1431_ET` build, archived).
+
+**2026-08-04 trim (Baird):** rows he re-graded from low → `medium` on the sheet
+drop out of replacement scope — that removed **P0436** (AGP Arish–Taba, was the
+ENTSOG-traced medium replacement; a medium ENTSOG trace can't improve a row
+already at medium). The other 10 replacement targets re-checked against the
+fresh snapshot and still very low/low, so they stand.
 
 ## Source layer
 
@@ -35,11 +41,11 @@ vs sheet length, snap distances, and corridor shape; accepted paths were
 assembled per-PID with `build_route_candidate.py` (`assemble_replacements.py`,
 `assemble_noroute.py`, `assemble_west.py`).
 
-## Results — 24 candidates
+## Results — 23 candidates
 
-**Replacements for very-low/low rows (11, all `--replace`):**
-- ENTSOG traced, `medium` (8): P7567, P8019, P8024, P0436 (AGP), P8010, P0462
-  (EMG), P3928, P3936*
+**Replacements for very-low/low rows (10, all `--replace`):**
+- ENTSOG traced, `medium` (7): P7567, P8019, P8024, P8010, P0462
+  (EMG), P3928, P3936* — P0436 (AGP) withdrawn 2026-08-04, row now `medium`
 - GulfPub sidecar, `high` (3): P3935 (fixes a south endpoint ~400 km off),
   P6034*, P6037 (GulfPub 58.9 km beat ENTSOG's 62 km path)
 

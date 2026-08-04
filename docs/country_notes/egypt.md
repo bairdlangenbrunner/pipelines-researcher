@@ -263,14 +263,17 @@ Nominatim/Overpass/GeoNames/Wikidata — checked independently in the main sessi
 Baird-directed second §8 pass: replacement routes for the 35 `very low` + 3 `low`
 rows off the new ENTSOG/GIE SYSCAP 2026 vector layer (`sources/entsog/`; measured
 Egypt accuracy median 4.2 km / p90 13 km → `medium` cap), plus a fresh run at all
-30 `no route` rows. **24 candidates + 4 partials staged** in
+30 `no route` rows. **23 candidates + 4 partials staged** in
 `batches/egypt-gas/staging/route-creation-20260804/` (its README has the full
-adjudication); workbook `…_20260804_1431_ET_egypt-gas_route-creation.xlsx`.
+adjudication); workbook `…_20260804_1656_ET_egypt-gas_route-creation.xlsx`
+(the `_1431_ET` build is superseded/archived — P0436 withdrawn same day after
+Baird re-graded its row to `medium` on the sheet).
 
-- Replacements (11, all `--replace`): 8 ENTSOG-traced `medium` (P7567 P8019 P8024
-  P0436 P8010 P0462 P3928 P3936) + 3 GulfPub sidecar `high` (P3935 — fixes a south
+- Replacements (10, all `--replace`): 7 ENTSOG-traced `medium` (P7567 P8019 P8024
+  P8010 P0462 P3928 P3936) + 3 GulfPub sidecar `high` (P3935 — fixes a south
   endpoint ~400 km off; P6034; P6037). 25+ rejects keep their existing geometry;
-  P6033 HOLD (start identity), P7482 skipped (18 km subsea hop).
+  P6033 HOLD (start identity), P7482 skipped (18 km subsea hop); P0436 withdrawn
+  (row now `medium`, a medium ENTSOG trace can't improve it).
 - No-route rows (13): P8034 sidecar `high`; P8041 P8044 P8045 P8033 P8036 P8038
   P8042 P8027 P8040 P8032 ENTSOG-traced `medium`; P8031 P8039 endpoints `very low`.
 - 4 documented gate FAILs staged deliberately — P3936 (1.343, corridor review) and
