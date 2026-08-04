@@ -8,8 +8,16 @@ flagged to Baird: ENTSOG is the *enabling new source*, not an exclusivity
 constraint — the best source-ladder rung wins per row (GulfPub sidecar > ENTSOG
 traced), with ENTSOG corroboration recorded where it applies.
 
-**Staged only — NOT applied.** No routes-repo or sheet writes; apply needs
-explicit per-batch authorization (workflows.md §8 step 6).
+**Apply state:** the **10 replacement candidates were APPLIED 2026-08-04**
+(Baird-authorized §8 step 6): routes-repo merge `752ab5d3` (QC 6 pass / 4 WARN
+included — P0462 Gaza-waters vertices, P3936 +34% & P6034 +48% = the staged
+gate FAILs, P3935 geocoder false-match on the wrong southern "Salam"), then
+sheet columns via the new `apply_route_candidates.py --replace` mode (50 cells
+written + verified; RouteCreator SET to `CB`; backup
+`notes/sheet-write-2026-08-04-egypt-gas-route-replacements.csv`;
+`audit_route_sync.py` Egypt gas clean). The **13 no-route candidates + 4
+partials remain staged, NOT applied** — that half still needs its own
+per-batch authorization.
 
 Deliverable: `batches/egypt-gas/deliverables/pipelines_batch_20260804_1656_ET_egypt-gas_route-creation.xlsx`
 (23 ROUTE_CANDIDATE + 4 ROUTE_PARTIAL; supersedes the `_1431_ET` build, archived).

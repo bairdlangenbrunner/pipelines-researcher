@@ -258,7 +258,7 @@ governorate-level only); P7588's Kom Ombo tie-in candidate RULED OUT on distance
 consultation); Abu Madi (P8022/P8023 start) has NO citable coordinate in
 Nominatim/Overpass/GeoNames/Wikidata — checked independently in the main session.
 
-## Open items — §8 route creation 2026-08-04 (ENTSOG pass, staged NOT applied)
+## Open items — §8 route creation 2026-08-04 (ENTSOG pass; replacements APPLIED, no-route half staged)
 
 Baird-directed second §8 pass: replacement routes for the 35 `very low` + 3 `low`
 rows off the new ENTSOG/GIE SYSCAP 2026 vector layer (`sources/entsog/`; measured
@@ -269,9 +269,16 @@ adjudication); workbook `…_20260804_1656_ET_egypt-gas_route-creation.xlsx`
 (the `_1431_ET` build is superseded/archived — P0436 withdrawn same day after
 Baird re-graded its row to `medium` on the sheet).
 
-- Replacements (10, all `--replace`): 7 ENTSOG-traced `medium` (P7567 P8019 P8024
-  P8010 P0462 P3928 P3936) + 3 GulfPub sidecar `high` (P3935 — fixes a south
-  endpoint ~400 km off; P6034; P6037). 25+ rejects keep their existing geometry;
+- Replacements (10) **APPLIED 2026-08-04 (authorized)**: 7 ENTSOG-traced `medium`
+  (P7567 P8019 P8024 P8010 P0462 P3928 P3936) + 3 GulfPub sidecar `high` (P3935 —
+  fixes a south endpoint ~400 km off; P6034; P6037). Routes merge `752ab5d3`
+  (QC 6 pass + 4 WARN included with documented rationale: P0462 Gaza-waters
+  vertices, P3936/P6034 length flags = the staged gate FAILs, P3935 geocoder
+  matching the same wrong southern "Salam" the old route used); sheet half via
+  `apply_route_candidates.py --replace` (NEW mode this batch — 50 cells verified,
+  RouteCreator SET to `CB`, backup
+  `notes/sheet-write-2026-08-04-egypt-gas-route-replacements.csv`);
+  `audit_route_sync.py` Egypt gas clean. 25+ rejects keep their existing geometry;
   P6033 HOLD (start identity), P7482 skipped (18 km subsea hop); P0436 withdrawn
   (row now `medium`, a medium ENTSOG trace can't improve it).
 - No-route rows (13): P8034 sidecar `high`; P8041 P8044 P8045 P8033 P8036 P8038

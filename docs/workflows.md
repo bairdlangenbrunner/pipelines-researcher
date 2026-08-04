@@ -460,7 +460,12 @@ snapshots in `data/` are stale.
    review → `--apply`). Pull a FRESH snapshot first; the script derives column
    letters from the header, appends (never overwrites) RouteNotes (CB stamp + " — "
    + researcher notes) / RouteCreator `CB` (gas tab only) / Route [ref] URLs, sets
-   RouteAccuracy from the staged suggestion (current cell must be `no route`),
+   RouteAccuracy from the staged suggestion (current cell must be `no route`;
+   **`--replace` handles replacement candidates** — rows that already have a route:
+   live RouteAccuracy must match the staged `current_route_accuracy`, the notes
+   stamp becomes `CB: route replaced (<method>)`, and RouteCreator is SET to `CB`
+   rather than appended, the prior creator surviving in the backup CSV — first used
+   Egypt gas 2026-08-04, routes merge `752ab5d3`),
    **sets `RouteType = 'Mapped route (at any accuracy)'`**, and enforces the full
    authorized-write protocol: routes-repo geometry gate, FORMULA pre-check,
    ProjectID match, double-append guard, `notes/` backup CSV (commit it), RAW

@@ -15,9 +15,14 @@ backups `notes/sheet-write-2026-07-30-egypt-gas-*.csv`). Per row it writes:
                    routes repo must never disagree. CARDINAL RULE, Baird
                    2026-07-31 — this column is not optional and not a judgment
                    call, it follows mechanically from the merge.)
-  RouteAccuracy  = staged suggested_route_accuracy   (current must be 'no route')
-  RouteNotes    += CB method stamp + " — " + researcher_notes   (append)
-  RouteCreator  += "CB"                    (append; gas tab only — oil has no column)
+  RouteAccuracy  = staged suggested_route_accuracy   (current must be 'no route';
+                   with --replace it must instead match the staged
+                   current_route_accuracy — replacement rows already have a route)
+  RouteNotes    += CB method stamp + " — " + researcher_notes   (append; --replace
+                   stamps 'CB: route replaced (<method>)')
+  RouteCreator  += "CB"                    (append; gas tab only — oil has no column;
+                   --replace SETS the cell to 'CB' — the old geometry is gone, prior
+                   creator preserved in the notes/ backup CSV)
   Route [ref]   += staged URLs not already in the cell           (append)
 
 Every planned row is checked against the routes repo first: the PID must have a
@@ -182,7 +187,8 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
             items.append({"pid": pid, "sheet_row": rows[0] + 4})
     else:
         staged = json.loads((Path(args.staging) / "staged_resolutions.json").read_text())
-        cands = [r for r in staged["resolutions"] if r.get("class_out") == "ROUTE_CANDIDATE"]
+        cands = [r for r in staged["resolutions"] if r.get("class_out") == "ROUTE_CANDIDATE"
+                 and bool(r.get("replacement")) == args.replace]
         if args.pids:
             want = set(args.pids.split(","))
             cands = [r for r in cands if r["project_id"] in want]
@@ -198,6 +204,7 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
             assert acc in VOCAB, f"{r['project_id']}: bad accuracy {acc!r}"
             items.append({"pid": r["project_id"], "sheet_row": rows[0] + 4,
                           "proposed": r["proposed_sheet"], "acc": acc,
+                          "cur_acc": (r.get("current_route_accuracy") or "").strip(),
                           "researcher_notes": (r.get("researcher_notes") or "").strip()})
 
     # SYNC GATE: never write route columns for a PID whose geometry is not live
@@ -238,12 +245,26 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
                          "after": {"RouteType": MAPPED}})
             continue
 
-        assert cur["RouteAccuracy"] == "no route", \
-            f"{c['pid']}: RouteAccuracy is {cur['RouteAccuracy']!r}, expected 'no route' — aborting"
-        assert "CB: route" not in cur["RouteNotes"], \
-            f"{c['pid']}: RouteNotes already has a CB stamp — double-append guard"
+        if args.replace:
+            # replacement mode: the row already has a route. The live accuracy
+            # must still be the one the candidate was staged against — if the
+            # sheet moved (e.g. Baird re-graded the row), the candidate is
+            # stale and must be re-adjudicated, not written.
+            assert cur["RouteAccuracy"] == c["cur_acc"], (
+                f"{c['pid']}: live RouteAccuracy {cur['RouteAccuracy']!r} != staged "
+                f"current {c['cur_acc']!r} — sheet moved since staging, aborting")
+            assert "CB: route replaced" not in cur["RouteNotes"], \
+                f"{c['pid']}: RouteNotes already has a replacement stamp — double-append guard"
+        else:
+            assert cur["RouteAccuracy"] == "no route", \
+                f"{c['pid']}: RouteAccuracy is {cur['RouteAccuracy']!r}, expected 'no route' — aborting"
+            assert "CB: route" not in cur["RouteNotes"], \
+                f"{c['pid']}: RouteNotes already has a CB stamp — double-append guard"
 
         stamp = stamp_of(c["proposed"]["RouteNotes"])
+        if args.replace:
+            # 'CB: route traced from published map' -> 'CB: route replaced (traced from published map)'
+            stamp = "CB: route replaced (" + stamp[len("CB: route"):].strip() + ")"
         addition = f"{stamp} — {c['researcher_notes']}" if c["researcher_notes"] else stamp
         sep = " " if cur["RouteNotes"].endswith(".") else "; "
         # RouteType is mechanical: geometry is live in the repo (gated above),
@@ -254,9 +275,15 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
                                if cur["RouteNotes"] else addition}
 
         if have_creator:
-            toks = [t.strip() for t in cur["RouteCreator"].split(";")]
-            after["RouteCreator"] = cur["RouteCreator"] if "CB" in toks else \
-                (f"{cur['RouteCreator']}; CB" if cur["RouteCreator"] else "CB")
+            if args.replace:
+                # the old geometry is gone entirely — the live route is now CB's
+                # work, so RouteCreator is SET, not appended (Baird 2026-08-04;
+                # the prior creator survives in the notes/ backup CSV)
+                after["RouteCreator"] = "CB"
+            else:
+                toks = [t.strip() for t in cur["RouteCreator"].split(";")]
+                after["RouteCreator"] = cur["RouteCreator"] if "CB" in toks else \
+                    (f"{cur['RouteCreator']}; CB" if cur["RouteCreator"] else "CB")
 
         staged_urls = [u for u in c["proposed"]["Route [ref]"].split("; ") if u]
         new_urls = [u for u in dict.fromkeys(staged_urls) if u not in cur["Route [ref]"]]
@@ -302,6 +329,11 @@ def main() -> None:
     ap.add_argument("--scope-slug", required=True,
                     help="e.g. egypt-gas — names the notes/ backup CSV")
     ap.add_argument("--pids", help="comma-separated subset (default: all staged ROUTE_CANDIDATEs)")
+    ap.add_argument("--replace", action="store_true",
+                    help="replacement mode: apply staged replacement=true candidates "
+                         "to rows that ALREADY have a route (live RouteAccuracy must "
+                         "match the staged current_route_accuracy; notes get a "
+                         "'CB: route replaced' stamp)")
     ap.add_argument("--backfill-route-type", action="store_true",
                     help="repair mode: write ONLY RouteType for already-applied "
                          "--pids whose geometry is live in the routes repo")
@@ -321,6 +353,7 @@ def main() -> None:
 
     plan_path = Path(args.staging) / (
         "backfill_route_type_plan.json" if args.backfill_route_type
+        else "apply_route_replacements_plan.json" if args.replace
         else "apply_route_candidates_plan.json")
     if args.apply:
         apply_plan(json.loads(plan_path.read_text()), tab, col_letter)
@@ -328,7 +361,8 @@ def main() -> None:
 
     plan = build_plan(args, tab, col_letter, pid_letter)
     plan_path.write_text(json.dumps(plan, indent=1, ensure_ascii=False))
-    suffix = "route-type-backfill" if args.backfill_route_type else "route-columns"
+    suffix = ("route-type-backfill" if args.backfill_route_type
+              else "route-replacements" if args.replace else "route-columns")
     backup = REPO / "notes" / \
         f"sheet-write-{date.today().isoformat()}-{args.scope_slug}-{suffix}.csv"
     with backup.open("w", newline="") as f:
