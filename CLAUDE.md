@@ -352,15 +352,17 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   the 18 partials resolved + APPLIED 3 more (P8013/P8014/P8021, routes merge
   `241ef5aa`, backup in `notes/`); 15 corridor partials still open; workbooks
   `…_20260730_1239_ET_…route-creation.xlsx` + `…_1415_ET_…route-creation-retry.xlsx`.
-  + §8 ENTSOG pass 2026-08-04: 10 replacement routes for very-low/low rows
-  (7 ENTSOG-traced medium + 3 GulfPub sidecar high; P0436 withdrawn same day —
-  Baird re-graded its row to medium) **APPLIED same day** (authorized; routes
-  merge `752ab5d3`, sheet via the NEW `apply_route_candidates.py --replace` mode,
-  50 cells verified, RouteCreator set to CB, backup in `notes/`, audit clean);
-  the 13 no-route candidates + 4 partials (P8035 = duplicate of P8013) remain
-  STAGED NOT APPLIED, off the new `sources/entsog/` SYSCAP 2026 vector layer
-  (Egypt accuracy median 4.2 km → medium cap); 4 documented gate FAILs incl. 3
-  suspected sheet-length defects; workbook `…_20260804_1656_ET_…route-creation.xlsx`.**
+  + §8 ENTSOG pass 2026-08-04/05 off the new `sources/entsog/` SYSCAP 2026 vector
+  layer (Egypt accuracy median 4.2 km → medium cap): **ALL 23 candidates APPLIED** —
+  10 replacements for very-low/low rows 2026-08-04 (authorized; routes merge
+  `752ab5d3`, sheet via the NEW `apply_route_candidates.py --replace` mode, 50
+  cells; P0436 withdrawn, Baird re-graded its row to medium) + the 13 no-route
+  candidates 2026-08-05 (authorized; routes merge `a2fa41c8`, 65 cells, QC 11 pass
+  / 2 WARN included). RouteCreator CB, backups in `notes/`, `audit_route_sync.py`
+  A/B/C = 0; 4 documented gate FAILs applied deliberately (3 = suspected
+  sheet-length defects). **Only 4 partials still pending** (P8026, P8022/P8023,
+  P8035 = duplicate of P8013), merged with the 13 July partials into the
+  partials-only workbook `…_20260805_1701_ET_…route-creation-pending.xlsx`.**
   Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not

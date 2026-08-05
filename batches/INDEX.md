@@ -40,9 +40,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
-- `deliverables/pipelines_batch_20260730_1415_ET_egypt-gas_route-creation-retry.xlsx`
-- `deliverables/pipelines_batch_20260804_1656_ET_egypt-gas_route-creation.xlsx`
-- `archive/` — 8 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260805_1701_ET_egypt-gas_route-creation-pending.xlsx`
+- `archive/` — 11 superseded/applied file(s)
 
 ## iran-gas
 

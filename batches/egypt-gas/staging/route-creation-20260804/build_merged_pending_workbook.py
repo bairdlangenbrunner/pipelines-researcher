@@ -3,9 +3,12 @@
 Unions the two route-creation staging dirs into one review surface, keeping only
 what is still actionable:
 
-  - ROUTE_CANDIDATE: August pass only, replacement=false (the 13 no-route
-    candidates awaiting apply). Excluded: the July 40 and the August 10
-    replacements — all applied to the routes repo + sheet already.
+  - ROUTE_CANDIDATE: August pass only, records without an `applied` stamp.
+    Excluded: the July 40, the August 10 replacements (applied 2026-08-04,
+    routes merge 752ab5d3) and the August 13 no-route candidates (applied
+    2026-08-05, routes merge a2fa41c8) — all live in the routes repo + sheet.
+    As of 2026-08-05 that leaves ZERO pending candidates, so the workbook is
+    the partials surface only.
   - ROUTE_PARTIAL: August 4 + July 15, deduped on ProjectID with the AUGUST
     record winning (P8022/P8023 were re-researched in the August pass) -> 17.
 
@@ -39,7 +42,7 @@ def main() -> None:
     jul = json.loads((JUL / "staged_resolutions.json").read_text())
 
     cands = [r for r in aug["resolutions"]
-             if r.get("class_out") == "ROUTE_CANDIDATE" and not r.get("replacement")]
+             if r.get("class_out") == "ROUTE_CANDIDATE" and not r.get("applied")]
 
     partials = {r["project_id"]: dict(r, merged_from="route-creation (2026-07-30 pass)")
                 for r in jul["resolutions"] if r.get("class_out") == "ROUTE_PARTIAL"}

@@ -8,19 +8,34 @@ flagged to Baird: ENTSOG is the *enabling new source*, not an exclusivity
 constraint — the best source-ladder rung wins per row (GulfPub sidecar > ENTSOG
 traced), with ENTSOG corroboration recorded where it applies.
 
-**Apply state:** the **10 replacement candidates were APPLIED 2026-08-04**
-(Baird-authorized §8 step 6): routes-repo merge `752ab5d3` (QC 6 pass / 4 WARN
-included — P0462 Gaza-waters vertices, P3936 +34% & P6034 +48% = the staged
-gate FAILs, P3935 geocoder false-match on the wrong southern "Salam"), then
-sheet columns via the new `apply_route_candidates.py --replace` mode (50 cells
-written + verified; RouteCreator SET to `CB`; backup
-`notes/sheet-write-2026-08-04-egypt-gas-route-replacements.csv`;
-`audit_route_sync.py` Egypt gas clean). The **13 no-route candidates + 4
-partials remain staged, NOT applied** — that half still needs its own
-per-batch authorization.
+**Apply state: ALL 23 candidates are APPLIED — nothing in this pass is pending
+except the partials.** Each applied record carries an `applied` stamp in
+`staged_resolutions.json` (date, routes merge, backup CSV).
 
-Deliverable: `batches/egypt-gas/deliverables/pipelines_batch_20260804_1656_ET_egypt-gas_route-creation.xlsx`
-(23 ROUTE_CANDIDATE + 4 ROUTE_PARTIAL; supersedes the `_1431_ET` build, archived).
+- **10 replacements, APPLIED 2026-08-04** (Baird-authorized §8 step 6):
+  routes-repo merge `752ab5d3` (QC 6 pass / 4 WARN included — P0462 Gaza-waters
+  vertices, P3936 +34% & P6034 +48% = the staged gate FAILs, P3935 geocoder
+  false-match on the wrong southern "Salam"), then sheet columns via the new
+  `apply_route_candidates.py --replace` mode (50 cells written + verified;
+  RouteCreator SET to `CB`; backup
+  `notes/sheet-write-2026-08-04-egypt-gas-route-replacements.csv`).
+- **13 no-route candidates, APPLIED 2026-08-05** (Baird-authorized): routes-repo
+  merge `a2fa41c8` (QC 11 pass / 2 WARN included — P8031 −40% is a great-circle
+  straight line, P8041 −37% is the suspect sheet length, EIA chainage 33 km
+  corroborates the 34.7 km geometry; P8042's internal-gate FAIL passed the
+  routes-repo gate at −27%), then `apply_route_candidates.py` (65 cells written +
+  verified; RouteType/RouteAccuracy/RouteNotes/RouteCreator/Route [ref]; backup
+  `notes/sheet-write-2026-08-05-egypt-gas-route-columns.csv`).
+- `audit_route_sync.py --country Egypt --commodity gas`: findings A/B/C = 0.
+  (Finding D lists P8051–P8053 — new sheet rows with blank route columns,
+  unrelated to this pass.)
+
+Only the **4 partials** (P8026, P8022, P8023, P8035) remain pending here.
+
+Deliverable (current): `batches/egypt-gas/deliverables/pipelines_batch_20260805_1701_ET_egypt-gas_route-creation-pending.xlsx`
+— now the **partials surface only** (README + `Gas_RouteSuggestions`, 17 rows;
+zero pending candidates, so `Gas_RouteCandidates` is gone). The `_1656_ET`
+(23 candidates + 4 partials) and `_1712_ET` builds are archived.
 
 **2026-08-04 trim (Baird):** rows he re-graded from low → `medium` on the sheet
 drop out of replacement scope — that removed **P0436** (AGP Arish–Taba, was the

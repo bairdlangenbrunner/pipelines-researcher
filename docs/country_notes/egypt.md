@@ -258,14 +258,16 @@ governorate-level only); P7588's Kom Ombo tie-in candidate RULED OUT on distance
 consultation); Abu Madi (P8022/P8023 start) has NO citable coordinate in
 Nominatim/Overpass/GeoNames/Wikidata — checked independently in the main session.
 
-## Open items — §8 route creation 2026-08-04 (ENTSOG pass; replacements APPLIED, no-route half staged)
+## Open items — §8 route creation 2026-08-04 (ENTSOG pass; ALL 23 candidates APPLIED, partials open)
 
 **Single review surface for everything route-pending (both passes):**
-`…_20260804_1712_ET_egypt-gas_route-creation-pending.xlsx` — 13 pending
-candidates + 17 partials (July + August unioned, applied records dropped,
-July P8022/P8023 superseded by the August re-research). Rebuild anytime with
-`route-creation-20260804/build_merged_pending_workbook.py`; the two staging
-dirs stay canonical.
+`…_20260805_1701_ET_egypt-gas_route-creation-pending.xlsx` — **partials only
+now** (README + `Gas_RouteSuggestions`, 17 rows; July + August unioned, July
+P8022/P8023 superseded by the August re-research). Zero pending candidates
+since the 2026-08-05 apply, so the workbook has no `Gas_RouteCandidates` tab.
+Rebuild anytime with `route-creation-20260804/build_merged_pending_workbook.py`
+(it now filters on each record's `applied` stamp); the two staging dirs stay
+canonical.
 
 Baird-directed second §8 pass: replacement routes for the 35 `very low` + 3 `low`
 rows off the new ENTSOG/GIE SYSCAP 2026 vector layer (`sources/entsog/`; measured
@@ -288,14 +290,23 @@ Baird re-graded its row to `medium` on the sheet).
   `audit_route_sync.py` Egypt gas clean. 25+ rejects keep their existing geometry;
   P6033 HOLD (start identity), P7482 skipped (18 km subsea hop); P0436 withdrawn
   (row now `medium`, a medium ENTSOG trace can't improve it).
-- No-route rows (13): P8034 sidecar `high`; P8041 P8044 P8045 P8033 P8036 P8038
-  P8042 P8027 P8040 P8032 ENTSOG-traced `medium`; P8031 P8039 endpoints `very low`.
-- 4 documented gate FAILs staged deliberately — P3936 (1.343, corridor review) and
+- No-route rows (13) **APPLIED 2026-08-05 (authorized)**: P8034 sidecar `high`;
+  P8041 P8044 P8045 P8033 P8036 P8038 P8042 P8027 P8040 P8032 ENTSOG-traced
+  `medium`; P8031 P8039 endpoints `very low`. Routes merge `a2fa41c8` (QC 11 pass
+  + 2 WARN included: P8031 −40% is a great-circle straight line, P8041 −37% is the
+  suspect sheet length; P8042's internal-gate FAIL passed the routes-repo gate at
+  −27%); sheet half via `apply_route_candidates.py` (65 cells verified —
+  RouteType/RouteAccuracy/RouteNotes/RouteCreator/Route [ref]; backup
+  `notes/sheet-write-2026-08-05-egypt-gas-route-columns.csv`);
+  `audit_route_sync.py` Egypt gas A/B/C = 0. Finding D flags P8051–P8053 — new
+  sheet rows with blank RouteType/RouteAccuracy, unrelated to this pass, worth a
+  look when someone next touches those rows.
+- 4 documented gate FAILs applied deliberately — P3936 (1.343, corridor review) and
   three suspected sheet-length defects: P6034 (38.5 km vs 57 km coastal geometry),
   P8041 (55 km vs EIA chainage 33 km), P8042 (215 km vs ~162 km canal corridor).
-- Still partial: P8026 (no start), P8022/P8023 (Abu Madi governorate conflict,
-  sources ~80 km apart), **P8035 = duplicate of applied P8013** (merge/retire, don't
-  draw). P8040 name flag: `PipelineName` says "Damanhur", sheet's own
+- Still partial (the only pending route work left): P8026 (no start), P8022/P8023
+  (Abu Madi governorate conflict, sources ~80 km apart), **P8035 = duplicate of
+  applied P8013** (merge/retire, don't draw). P8040 name flag: `PipelineName` says "Damanhur", sheet's own
   StartLocation + Arabic name say **Dahshour** — rename recommended.
 
 ## Open items — QC packet (2026-07-15, staged NOT applied)
