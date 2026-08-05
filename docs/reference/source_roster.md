@@ -79,6 +79,31 @@ liquid — operator-level mileage by state, commodity, decade of install).
 Upstream index: phmsa.dot.gov → Data & Statistics → "Pipeline Operators - OpIDs"
 and "Distribution, Transmission & Gathering, LNG, and Liquid Annual Data".
 
+### Wayback Machine — how to reach it, and the `/save/` trap
+
+Wayback is the standard recovery path for dead/blocked origins (the ASB PDFs and PHMSA
+above, plus any geo-blocked or WAF'd page — and remember a blocked origin gets its
+snapshot *added* alongside the original, never swapped in).
+
+- **A `[ref]` must be a snapshot URL, `web.archive.org/web/<timestamp>/<url>` — never
+  `web.archive.org/save/<url>`.** `/save/` is Save Page Now's *instruction* endpoint: it
+  triggers a fresh capture of the live origin instead of serving the archive, so it is
+  worthless as evidence and dies with the origin. 348 such cells had accumulated in the
+  backend and were repaired 2026-08-05 (`notes/wayback-save-repair-20260805/`).
+- **Use the playback endpoint, not the APIs.** The availability API
+  (`archive.org/wayback/available`) and CDX server (`web.archive.org/cdx/search/cdx`)
+  rate-limit hard — a modestly concurrent run got 429s that persisted through minutes of
+  backoff, while the playback host kept serving fine. SPN2 (programmatic `/save/`) needs
+  an API key we don't have.
+- **`https://web.archive.org/web/<ts>/<url>` redirects to the capture nearest `<ts>`, so
+  the final URL after redirects IS the verified snapshot link** — one request, no quota.
+  A partial or far-future stamp works (`/web/2026/…`, `/web/29991231235959/…`). No
+  captures at all → HTTP 404, which cleanly separates "nothing archived" from "archived".
+- **HTTP 200 is not enough** — Wayback serves failure pages at 200 ("Got an HTTP 404
+  response at crawl time", "has not archived that URL"). Screen the body for those
+  markers. And a **5xx is often a property of that one capture** (a poisoned WARC record),
+  not an outage: walk back to older captures before concluding anything.
+
 ## Tier 2 — Trade press & analytics (good leads; pair with a primary for green)
 Oil & Gas Journal (OGJ), Pipeline & Gas Journal, Pipeline Technology Journal,
 Offshore / Offshore Technology, Rigzone, MEED, Hart Energy, S&P Global Commodity

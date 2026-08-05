@@ -3,7 +3,8 @@
 contains expected substrings. ALWAYS rejects GEM surfaces — never self-cite (standing
 rule 1) — and blocklisted tertiary aggregators (theodora.com; A Barrel Full /
 abarrelfull.wikidot.com and the wider wikidot.com platform) which are never acceptable
-references. Importable:
+references, plus `web.archive.org/save/` links (Save Page Now instructions, not snapshots).
+Importable:
 `from url_verifier import verify_url, verify_many, surface_forms`.
 
     python scripts/url_verifier.py "https://example.com/x" "Pipeline Name" "2025"
@@ -123,6 +124,14 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     hit = next((h for h in BLOCKLIST_HOSTS if h in low), None)
     if hit:
         return {"ok": False, "status": None, "reason": f"{hit} — blocklisted tertiary aggregator, never an acceptable reference"}
+    # Save Page Now's INSTRUCTION endpoint, not a snapshot address: it triggers a fresh
+    # capture of the live origin instead of serving the archive, so it is never evidence.
+    # Use web.archive.org/web/<timestamp>/<url>. 348 of these had accumulated in the
+    # backend before the 2026-08-05 repair (notes/wayback-save-repair-20260805/).
+    if "web.archive.org/save/" in low:
+        return {"ok": False, "status": None,
+                "reason": "web.archive.org/save/ is the Save Page Now instruction endpoint, "
+                          "not a snapshot — cite web.archive.org/web/<timestamp>/<url>"}
     try:
         import requests
     except ImportError:

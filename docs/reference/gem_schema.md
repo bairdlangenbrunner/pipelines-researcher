@@ -49,6 +49,13 @@ tracker tabs; one tab covers both oil and gas). The tracker tabs carry the `Owne
 - So a Ref-Sweep owner/operator candidate for ProjectID *P* is pasted into `Owner [ref]` /
   `Operator [ref]` on **this** tab's *P* row — not a tracker-tab cell, not `ResearcherNotes`.
   Because it's ProjectID-keyed, the ref is per-pipeline (no entity-level de-dup).
+- **Columns A–E are FORMULAS, not data** — `PipelineNetworkContainer`, `PipelineName`,
+  `SegmentName`, `Countries`, `Wiki` are each an `iferror(xlookup(F<row>, 'Gas pipelines'!F:F,
+  …), xlookup(F<row>, 'Oil/NGL pipelines'!F:F, …))` keyed on `ProjectID` in column **F**, so
+  they mirror whatever the tracker tabs hold. A CSV pull renders them as values and hides
+  this. **Never write A–E** — fix the tracker-tab cell and the mirror follows. (Caught
+  2026-08-05 by the FORMULA pre-read gate during the Wayback `/save/` repair, which found
+  `E3392` mirroring Gas row 2437's `Wiki`.)
 
 ## Row granularity (matters for reconciliation)
 
@@ -97,6 +104,9 @@ Most data columns have a paired `X [ref]` source-URL column (`Status` / `Status
 data value, and never leave a researched data value without a `[ref]`** (orphan
 rule). Multiple URLs in one `[ref]` cell are separated by `, ` (comma + space).
 Every URL must pass `scripts/url_verifier.py` and must not be a GEM surface.
+A Wayback ref must be a **snapshot** URL (`web.archive.org/web/<ts>/<url>`), never the
+Save Page Now instruction endpoint `web.archive.org/save/<url>` — see the Wayback note in
+`docs/reference/source_roster.md`.
 
 ## Oil-sheet gotchas
 
