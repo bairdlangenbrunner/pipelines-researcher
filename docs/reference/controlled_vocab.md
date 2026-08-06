@@ -49,24 +49,27 @@ itself: a "336 million EGP" source is staged as `ProjectLevelCost = 336000000`,
 
 `high` and `very high (within meters)` are reserved for **pipe that is built, or
 whose construction can be traced from satellite imagery**. Any row whose `Status`
-is `proposed`, `shelved`, `cancelled` — or `construction` where the line is only
-partially built — caps at **`medium`**, no matter how cleanly the route was traced
-or how authoritative the shapefile was. A proposed alignment is a plan, not an
-as-built, so tracing quality can't raise it above `medium`.
+is `proposed`, `shelved`, `cancelled`, or `construction` caps at **`medium`**, no
+matter how cleanly the route was traced or how authoritative the shapefile was. A
+planned or in-progress alignment is not an as-built, so tracing quality can't raise
+it above `medium`.
 
-- **In scope of the cap:** `proposed`, `shelved`, `cancelled`, and partially-built
-  `construction` rows (the last is a per-row judgment, not a mechanical sweep).
-- **Not in scope:** `operating`, `mothballed`, `idle`, completed `construction`
-  (built pipe), and `retired` (was built — a traced route stays legitimate).
+- **In scope of the cap:** `proposed`, `shelved`, `cancelled`, `construction` — all
+  four are a mechanical sweep, no per-row judgment.
+- **Not in scope:** `operating`, `mothballed`, `idle` (built pipe), and `retired`
+  (was built — a traced route stays legitimate).
 - **Not in scope:** network-level rows with a blank or `mixed status` `Status`
   (they aggregate operating segments).
 - The cap only moves `RouteAccuracy`. It never touches `RouteType` — a downgraded
   row keeps `Mapped route (at any accuracy)`, so the three-way sync rule
   (`docs/sops/route_creation.md`) is unaffected.
-- Applied tracker-wide 2026-08-06: 268 cells (51 oil, 217 gas) moved to `medium`;
-  backup `notes/routeaccuracy-downgrade-20260806-backup.csv`. The rule is also
-  documented upstream in the GOIT/GGIT pipelines manual (RouteAccuracy bullet) and
-  in all three `Data dictionary - *` tabs of the backend sheet.
+- Applied tracker-wide 2026-08-06 in two passes: 268 cells for
+  proposed/shelved/cancelled (51 oil, 217 gas) plus 90 cells for `construction`
+  (16 oil, 74 gas) = **358 cells**. Backups
+  `notes/routeaccuracy-downgrade-20260806-backup.csv` and
+  `…-20260806-construction-backup.csv`. The rule is also documented upstream in the
+  GOIT/GGIT pipelines manual (RouteAccuracy bullet) and in all three
+  `Data dictionary - *` tabs of the backend sheet.
 - **Hydrogen is untouched**: the `Hydrogen pipelines` tab had 143 rows matching the
   same pattern as of 2026-08-06 — out of this project's scope, not swept.
 
