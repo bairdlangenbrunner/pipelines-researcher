@@ -14,7 +14,7 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 | Field | Allowed values |
 |---|---|
 | `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idle`, `mothballed`, `retired` |
-| `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)` |
+| `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)`. **Unbuilt rows cap at `medium`** — see below |
 | `PipelineType` | `transmission`, `gathering`, `distribution` |
 
 ## Title Case fields (the exceptions)
@@ -44,6 +44,31 @@ itself: a "336 million EGP" source is staged as `ProjectLevelCost = 336000000`,
   Pull a live row to confirm the current exact strings before populating.
 - `RouteLocation` — REMOVED from both tabs (2026-07-30): a repo geojson is the
   source of truth; don't stage values for it.
+
+## RouteAccuracy: the unbuilt cap (Baird 2026-08-06)
+
+`high` and `very high (within meters)` are reserved for **pipe that is built, or
+whose construction can be traced from satellite imagery**. Any row whose `Status`
+is `proposed`, `shelved`, `cancelled` — or `construction` where the line is only
+partially built — caps at **`medium`**, no matter how cleanly the route was traced
+or how authoritative the shapefile was. A proposed alignment is a plan, not an
+as-built, so tracing quality can't raise it above `medium`.
+
+- **In scope of the cap:** `proposed`, `shelved`, `cancelled`, and partially-built
+  `construction` rows (the last is a per-row judgment, not a mechanical sweep).
+- **Not in scope:** `operating`, `mothballed`, `idle`, completed `construction`
+  (built pipe), and `retired` (was built — a traced route stays legitimate).
+- **Not in scope:** network-level rows with a blank or `mixed status` `Status`
+  (they aggregate operating segments).
+- The cap only moves `RouteAccuracy`. It never touches `RouteType` — a downgraded
+  row keeps `Mapped route (at any accuracy)`, so the three-way sync rule
+  (`docs/sops/route_creation.md`) is unaffected.
+- Applied tracker-wide 2026-08-06: 268 cells (51 oil, 217 gas) moved to `medium`;
+  backup `notes/routeaccuracy-downgrade-20260806-backup.csv`. The rule is also
+  documented upstream in the GOIT/GGIT pipelines manual (RouteAccuracy bullet) and
+  in all three `Data dictionary - *` tabs of the backend sheet.
+- **Hydrogen is untouched**: the `Hydrogen pipelines` tab had 143 rows matching the
+  same pattern as of 2026-08-06 — out of this project's scope, not swept.
 
 ## Status-logic conventions (from the research workflow)
 
