@@ -68,6 +68,22 @@ not the tracker tab.
 - Several Sirte Basin routes are literally two-point lines (P1858 is a 91 km
   straight segment against a sourced 131.96 km). Those are `RouteAccuracy`
   problems, not length problems.
+- **The Fanack / PetroGas Libya gas-production map is an infographic, not a map —
+  do not try to georeference it** (attempted 2026-08-06, packet
+  `batches/libya-gas/staging/route-creation-p1855-p6457/packets/P6457/`). Affine
+  RMSE 10.4 km / LOO 16.7 km against a 5 km gate; quadratic overfits (LOO 36 km);
+  pairwise scale varies ~2× (0.38–0.73 km/px); the traced Bahr Essalam–Mellitah
+  line measures 163 km against the map's own "110km" label; and the Bahr Essalam
+  node is drawn NNW of Mellitah when the field is NNE (azimuth 022° real vs −025°
+  drawn), landing ~100 km off. Its **attribute** content is good, though: the
+  36″ gas + 10″ oil/condensate pairing and ~110 km length corroborate the
+  operator's own page (`mellitahog.ly/en/sites/sabratha-platform/`) → high tier.
+- **No offshore platform tie-backs are available from vector sources.** OSM has
+  Greenstream and the onshore lines but no Mellitah→Sabratha-platform pipe; OSM
+  seamarks cover Bouri (DP3/DP4/SPM) only, and NGA Pub. 113 (2019) lists the Bouri
+  lights but has no Sabratha entry. So rung 4 (`endpoints`) is blocked for the
+  Bahr Essalam corridor for want of a *citable* platform coordinate — GOGET has one
+  but it is internal-only and never a `[ref]`.
 - **OSM is not usable for Libya gas.** Of 545 Libyan pipeline features in OSM, 270
   are tagged `substance=oil`, 248 are untagged, 21 are water and **6 are gas** —
   four of those six being unnamed 0.0–0.1 km stubs. Absence from OSM here says
@@ -98,9 +114,11 @@ not the tracker tab.
 - **The gas tracker contains condensate lines.** Three of them, each needing a
   *different* disposition — which is why this is a class defect and not three fixes:
   - **P6705** (16in Wafa-Mellitah) → GOIT already has it as **P0606** → **delete**
-    from GGIT, do not "move" it.
+    from GGIT, do not "move" it. **DONE 2026-08-06** (row deleted from GGIT).
   - **P6713** (10in Bahr Assalam-Mellitah) → GOIT already has **P6457** → **delete**.
+    **DONE 2026-08-06** (row deleted from GGIT).
   - **P6709** (4in Bouri-Bahr Assalam) → GOIT has **no** matching row → **move**.
+    **Still open** — the row is still in GGIT as of 2026-08-06.
 - **`scm/y` / `scm/yr` capacities all compute to zero.** 8 rows tracker-wide (4
   Libya, 4 Algeria) — the ASB "(1,000 scm/yr)" multiplier was dropped at ingest, and
   `scm/yr` is not even a unit the `CapacityBcm/y` conversion recognises. Full
@@ -170,6 +188,57 @@ carried) and `…_discovery.xlsx` (its single new row is the packet's `Gas_NewRo
 Ref work across the scope: 220 REFS_ADDED / 55 re-verified / 28 unresolved. Operator
 attribution went from 0 referenced rows to referenced on every row Leg 3 touched.
 
+## Applied 2026-08-06 — §8 routes + GGIT row deletions
+
+Routes-repo merge `445b3613`; sheet backup `notes/sheet-write-2026-08-06-libya-gas-route-replacements.csv`.
+`audit_route_sync.py --country Libya --commodity gas` = **0 out-of-sync rows**.
+
+- **P6708 / P6715 duplicate resolved → P6715 kept, P6708 deleted from GGIT.** One
+  pipeline, named at two levels: "NC 41-Mellitah" is the *concession* (Area D, ex-NC41,
+  which also contains Bahr Essalam), "E Structure-Mellitah" is the *structure*. The
+  operator's own prequalification enquiry JPTPQ/018/21 lists exactly one new gas line to
+  Mellitah — 32in, 130 km, from PP E. P6708's every field traced to a single GlobalData
+  marketdata profile whose primary ref (`libyasummit.com/libya-rolls-out-downstream-gas-capture-plans/`)
+  404s with **no Wayback snapshot at all**. Keep the 130 km / 32in / construction values.
+- **P6715 route replaced and applied.** The prior geometry started within ~1 km of the
+  Mellitah O&G **Tripoli office** (an OSM POI, not the complex) and ran onshore, ending
+  ~19 km short of Mellitah — `medium` was unsupportable. Replacement is a straight-line
+  schematic PP E → Mellitah complex, 134 km vs the sheet's 130. `RouteAccuracy` →
+  `very low (straight line/schematic)`; `RouteCreator` `NA` → `CB` (5 cells).
+  - **PP E is a derived coordinate**: 33.849 N, 13.054 E, ±10 km, from georeferencing the
+    Area D location map in JPTPQ/018/21 (scale-bar fit anchored on the OSM Bouri
+    platforms; the map's *coastline* is decorative — an early fit off coastal towns
+    missed by 128 km). WHP A derives to 33.568 N, 12.439 E on the same fit.
+  - Mellitah complex = **32.854994 N, 12.2414883 E** (OSM way 310844993), not the
+    ~11.71 E / 33.005 N value used earlier in the sweep.
+- **P3987 Intisar–Sarir route replaced** (BL's own 45-pt digitized trace, replacing a
+  2-pt schematic); start snapped exactly to GOGPT `Sarir power station`
+  **26.909488 N, 22.095786 E**. Row values unchanged — `RouteCreator BL` /
+  `RouteAccuracy medium` already fit the new geometry, so **no sheet write**.
+  - **Open conflict**: the trace is 280 km against `LengthKnown` 114 km (+146%,
+    `qc_routes` WARN, included deliberately). Sarir power station → Intisar is ≥269 km
+    straight-line, so **114 km cannot be right for these endpoints** — either the length
+    is wrong or the route overshoots the actual pipe. `LengthEstimateKm` is also stale
+    at 185.11 (the old schematic).
+- **Three orphan geojsons removed** from the routes repo (`P6705`, `P6708`, `P6713` —
+  rows deleted from GGIT). P3987 was deleted and then restored the same day, so its
+  route was kept.
+- **Still open from this pass:**
+  - The **design conflict on the E-Structure line** is unresolved: the operator says a
+    dedicated 32in / 130 km sealine direct to Mellitah, offshore-technology says a 30 km
+    36in tie-in to the existing Sabratha–Mellitah line. **GOIT P6445 "NC 41–Mellitah
+    Condensate Pipeline"** (shelved, 30 km, 10in) carries the same conflict and should
+    be resolved with it. The derived PP E sits 36 km from the Sabratha platform, which
+    makes the "30 km" figure geometrically sensible for the *same* asset.
+  - **Structure A's 18in / 43 km line to Sabratha appears missing from GGIT** — a
+    discovery candidate. (Weakest check in the georeference: A→Sabratha measures 29 km
+    straight-line against the stated 43 km, a 48% detour, so A is the softer of the two
+    derived positions.)
+  - **P6715 row edits not yet applied** (non-route): add `NC 41-Mellitah Gas Pipeline`
+    to `OtherEnglishNames`, `StartYear1` 2025 → 2026, drop the "Bay of Tripoli" origin,
+    and fix `Diameter [ref]` — it is a `google.com/url?q=` redirect wrapper, not the
+    bare PDF URL.
+
 ## Open items
 - **Cluster A — the structural double-count (Baird's ruling needed).** P0483 "Libya
   Coastal Gas Pipeline" appears to aggregate its own member segments P1862 / P1863 /
@@ -181,6 +250,7 @@ attribution went from 0 referenced rows to referenced on every row Leg 3 touched
   Khoms→Mellitah coast (249 km) against a stated 25 km, and is very nearly
   P1864 (105 km) + P1865 (117 km) laid end to end.
 - **Three condensate lines** (P6705 delete / P6713 delete / P6709 move) — above.
+  P6705 and P6713 were deleted 2026-08-06; **only the P6709 move is still open**.
 - **`scm` capacity units** — 4 Libya + 4 Algeria rows — above.
 - **14 lengths carry a spurious miles→km conversion** (P1856, P1857, P1859, P1860,
   P1861, P1862, P1864, P1865, P1866, P1867, P1868, P1869, P1870, P1871) — above, and
@@ -191,6 +261,17 @@ attribution went from 0 referenced rows to referenced on every row Leg 3 touched
   - **GOIT P0606 vs P5215** — "Wafa-Mellitah Oil Pipeline" and "Wafa-Mellitah NGL
     Pipeline", both 16in on the same endpoints, adjacent rows. Possible within-GOIT
     duplicate.
+  - **GOIT P6457 route is drawn to the wrong Sabratha** (found 2026-08-06, needs a
+    replacement decision). "Sabratha-Mellitah Condensate Pipeline", `LengthKnownKm`
+    107, but the geojson is a 2-point 21.9 km line whose start (12.463719,
+    32.792894) is **2.2 km from the Roman ruins of Sabratha** and 109.9 km from the
+    Sabratha *platform* — a name collision. Length ratio 0.20, well outside
+    `[0.75, 1.33]`. The gas twin **P1855 is sound** (3 vtx, 105.5 km vs 109, ratio
+    0.97, starting offshore at 12.6906, 33.7238). Since the operator states both the
+    36″ gas line and the 10″ condensate line run platform→Mellitah, the fix is to
+    reuse P1855's corridor for P6457 — a human "reuse another PID's geometry" call
+    (cf. China P3894), staged nowhere yet. Replacement is permitted rather than an
+    escalation because the existing accuracy is `very low (straight line/schematic)`.
   - **GOIT P5237 vs P5238** — Nafoora-Zueitina, one `operating` (68 km, 24/16in) and
     one `shelved` (68.5 km, 12in), on the same endpoints. Two GulfPub records both
     landed on the shelved one.
