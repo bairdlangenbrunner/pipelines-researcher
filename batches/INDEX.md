@@ -103,6 +103,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-osm-20260728` — recon inputs
 - `staging/redundancy` [redundancy] — rows=16 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=30 fills=37 updates=0 status-pending=0 refs(REFS_ADDED=192, REVERIFIED=30, UNRESOLVED=19) routes=0 new(none)
+- `staging/route-creation` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none)
+- `staging/route-creation-p1855-p6457` — no store — invisible to discovery
 - `deliverables/pipelines_batch_20260728_1149_ET_libya-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-evidence.xlsx`
