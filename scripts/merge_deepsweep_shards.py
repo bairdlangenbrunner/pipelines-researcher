@@ -12,7 +12,7 @@ This folds them into staged_resolutions.json:
   records, applying merge-time QC
   (strip refs that did not pass verification; downgrade to UNRESOLVED; a status "change"
   with zero verified refs -> "unclear"; a "stale" shelved/cancelled inference always gets
-  ShelvedCancelledType=Presumed).
+  ShelvedCancelledType=inferred).
 - Recompute meta (verdict / concern / class / status-verdict counts); write staged_resolutions.json.
 
 Run AFTER the workflow completes and BEFORE build_ref_workbook.py.
@@ -26,7 +26,8 @@ import argparse, json, os, collections, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from merge_qc import bad_cost_units, verified_refs, iter_shards, qc_note, status_qc  # noqa: E402
+from merge_qc import (bad_cost_units, verified_refs, iter_shards, qc_note,  # noqa: E402
+                      status_qc, is_ref_only)
 
 
 def main():
@@ -53,6 +54,24 @@ def main():
                 or r.get("ref_col") in ("__VALIDITY__", "__STATUS__", "__ROUTE__"))
 
     kept = [r for r in res if not is_old_deepsweep(r)]
+
+    # Index the preserved ref records so a shard fill that proposes exactly the value
+    # already on the sheet can be folded onto its ref record (ref-only work) instead of
+    # being staged as a FILL. See merge_qc.is_ref_only — a FILL tints the value cell on
+    # the paste surface, which would tell the researcher to paste unchanged values.
+    ref_by_key = {}
+    for r in kept:
+        for row in {str(r.get("sheet_row", "")), str(r.get("oo_sheet_row") or "")} - {""}:
+            ref_by_key.setdefault((r.get("project_id"), row, r.get("ref_col", "")), r)
+    # Row-agnostic fallback: owner/operator units live on the operators/owners tab and
+    # subagents report ITS row (oo_sheet_row), which the seeded record does not carry —
+    # so the row never matches. Fall back on (ProjectID, ref_col) only when exactly one
+    # kept record has that pair, so a multi-segment row can never fold onto the wrong one.
+    _by_pid_col = collections.defaultdict(list)
+    for r in kept:
+        _by_pid_col[(r.get("project_id"), r.get("ref_col", ""))].append(r)
+    ref_by_pid_col = {k: v[0] for k, v in _by_pid_col.items() if len(v) == 1}
+    n_refonly = 0
 
     n_shards = 0
     new_validity, new_fills, new_status, new_routes, missing = [], [], [], [], []
@@ -88,6 +107,20 @@ def main():
             for col, val in bad_cost_units(f.get("values")).items():
                 print(f"  WARN {pid} {f.get('ref_col', '')}: {col}={val!r} — units must be "
                       "a bare currency code; put the magnitude in the cost number (fix the shard)")
+            # ref-only work: the agent sourced a value that is already on the sheet ->
+            # upgrade the existing ref record in place rather than staging a value change.
+            rk = (pid, str(f.get("sheet_row", d.get("sheet_row", ""))), f.get("ref_col", ""))
+            base = ref_by_key.get(rk) or ref_by_pid_col.get((pid, f.get("ref_col", "")))
+            if base is not None and is_ref_only(f.get("values"), base.get("values")):
+                base["class_out"] = "REFS_ADDED" if refs else "UNRESOLVED"
+                base["proposed_refs"] = refs
+                base["verifications"] = f.get("verifications", []) or []
+                base["tier"] = f.get("tier", "")
+                base["independent"] = f.get("independent", False)
+                base["source_language"] = f.get("source_language", "en")
+                base["researcher_notes"] = notes
+                n_refonly += 1
+                continue
             new_fills.append({**ident,
                 "sheet_row": f.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": f.get("segment_name", ""),
@@ -164,6 +197,9 @@ def main():
 
     json.dump({"meta": meta, "resolutions": merged}, open(cur_path, "w"), indent=1)
     print(f"shards merged: {n_shards} | missing PIDs: {len(missing)} {missing if missing else ''}")
+    if n_refonly:
+        print(f"ref-only folds: {n_refonly} fill(s) proposed the value already on the sheet "
+              "-> upgraded their ref record (colored [ref], untinted value)")
     print(f"kept ref records: {len(kept)} | new fills: {len(new_fills)} | new validity: {len(new_validity)}"
           + (f" | new routes: {len(new_routes)}" if new_routes else "")
           + (f" | new status reviews: {len(new_status)}" if new_status else ""))

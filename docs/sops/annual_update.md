@@ -48,7 +48,7 @@ row**. Verdict vocabulary:
 |---|---|---|
 | `confirm` | recorded Status verified, with evidence date | — |
 | `change` | evidence-based new status; `proposed_changes` = exact column→value edits (Status + matching date cols) | zero verified refs → downgraded to `unclear` (a status change is a claim; it needs sources) |
-| `stale` | no independent news; dormancy rules (proposed ≥2y → shelved, shelved ≥4y → cancelled) | `ShelvedCancelledType=Presumed` force-added; **no ref by design** (an inference has no URL — standing rule 2) |
+| `stale` | no independent news; dormancy rules (proposed ≥2y → shelved, shelved ≥4y → cancelled) | `ShelvedCancelledType=inferred` force-added; **no ref by design** (an inference has no URL — standing rule 2) |
 | `unclear` | genuinely undeterminable; notes say what was tried | — |
 
 Class-out mapping: `CONFIRMED` / `CHANGE_PROPOSED` / `STALE` / `UNRESOLVED`. The

@@ -50,7 +50,7 @@ Where things live — **read on demand as the workflow dictates, not all at once
    is to surface what *other*, independent sources exist.
 2. **Never fabricate source URLs.** If a URL can't be verified, describe the source
    precisely in `ResearcherNotes` and flag inferred/presumed. Inferred status change
-   → `ShelvedCancelledType = Presumed`, no fabricated URL.
+   → `ShelvedCancelledType = inferred`, no fabricated URL.
 3. **Don't defend wrong findings.** Baird challenges data points actively.
    Acknowledge errors, revise on evidence, regenerate outputs.
 4. **Corroborate with 2+ independent sources (near-requirement).** For any data
@@ -250,8 +250,12 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 
 ## Controlled vocabulary (locked — full table in `controlled_vocab.md`)
 
-- **lowercase:** `Status`, `RouteAccuracy`, `PipelineType`.
-- **Title Case:** `DelayType`, `ShelvedCancelledType`, `FIDStatus`, `Delayed`, `Opposition`.
+- **lowercase:** `Status`, `RouteAccuracy`, `PipelineType`, and — corrected 2026-08-07
+  against both live tabs — `DelayType`, `ShelvedCancelledType`, `Delayed`, `Opposition`.
+- **`ShelvedCancelledType` / `DelayType` are `inferred` / `confirmed`** — lowercase, and
+  the dormancy-inference word is `inferred`. `Presumed` appears in neither tracker; the
+  docs asserted it for months and `merge_qc` staged it. `Delayed` = `yes` (blank if not).
+- **Only `FIDStatus` is capitalized:** `Pre-FID`, `FID`.
 - `very high (within meters)` is a valid `RouteAccuracy`.
 - **`*CostUnits` = bare currency code** (`USD`, `EGP`, …) — never `EGP million` /
   `USD (millions)`; the magnitude goes in the cost number itself.
@@ -374,11 +378,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   (P2197 QC-fail); Ashdod-vs-Ashkelon landfall + P3620 Ashkelon-gap open):**
   `docs/country_notes/israel.md`.
 - **China (gas: province-level program agreed 2026-07-29 — agent batches run AHEAD of
-  Maggie Zheng's province queue (she has routes/wiki + the trunk systems; cycle plan in
+  MZ's province queue (they have routes/wiki + the trunk systems; cycle plan in
   gem-desk `research-cycles/ggit-2026-pipelines-update/`); scope via
   `build_ref_worklist.py --province` + trunk-exclusion regex; Guangxi deep-sweep pilot
   DELIVERED 2026-07-30 staged not applied. **+ §8 route creation 2026-07-30: ALL 103
-  no-route gas rows (incl. Maggie's operating rows + P8028/P8029 per Baird) — 80
+  no-route gas rows (incl. MZ's operating rows + P8028/P8029 per Baird) — 80
   candidate geojsons + 23 corridor partials, three batches/workbooks (Guangxi grid
   18+5, other grids 28+10 in the cross-province dir
   `batches/china-gas/staging/route-creation-grids/`, trunks 34+8); **routes-repo half

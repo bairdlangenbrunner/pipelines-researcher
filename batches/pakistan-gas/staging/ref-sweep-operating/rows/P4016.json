@@ -1,0 +1,165 @@
+{
+  "project_id": "P4016",
+  "pipeline_name": "Sindh University to FJFC Offtake Loopline",
+  "sheet_row": 2019,
+  "wiki": "https://www.gem.wiki/Sindh_University_to_FJFC_Offtake_Loopline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change needed; optionally soften EndLocation from 'Gharo' to 'Bin Qasim/FJFC area' if the row is ever revisited for endpoint precision",
+      "researcher_notes": "gem.wiki returned HTTP 403 to WebFetch (Cloudflare) so no leads could be pulled from the sheet's own citation; wiki_citations.json is empty for this row per the scope note. Went straight to open-web/primary research. FOUND: SSGC's own published transmission-network table, 'Gas Transmission Capacities Utilization as on June 30, 2018' (ssgc.com.pk/web/?page_id=5597), lists under the 'Indus Left Bank Pipeline System (A1)' a line named exactly 'Loopline (Sind University to FJFC Offtake)' at 116 km, 24-inch diameter, 60 mmscfd rated capacity -- an exact match to GEM's LengthKnown=116.00 km, Diameter=24 in, Capacity=60.00 MMcf/d. This is a primary source (SSGC is both operator and the row's Owner1) and independently confirms the pipeline is real, transmission-class (not a gathering/feeder line -- it sits in SSGC's core Indus Left Bank trunk table alongside the Nawabshah-Karachi and Kadanwari-Malir-Karachi trunks), and matches on every numeric spec. SECOND, independent origin: a Pakistan Petroleum Information Service (PPIS) 'Energy Map 2013' (reproduced at pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html; PPIS operates under the Directorate General of Petroleum Concessions, a separate origin from SSGC's own website) lists '24\"x116KM, JAMSHORO-PAKLAND LOOPLINE YEAR 2005' -- same length (116 km) and diameter (24 in), same Jamshoro origin, built 2005, under a slightly different name (Pakland vs FJFC as the downstream endpoint reference). Two independent sources agreeing on length + diameter + Jamshoro origin + transmission-grade status = high confidence on existence, length, diameter, classification. Capacity (60 mmscfd) and Owner (SSGC 100%) rest on the single SSGC source only (medium). CAVEAT: neither source names the GEM EndLocation 'Gharo' verbatim -- SSGC calls the downstream point 'FJFC Offtake' (Fauji Jordan Fertilizer Co, now Fauji Fertilizer Bin Qasim Ltd, at Bin Qasim/Port Qasim) and PPIS calls it 'Pakland' (a Sales Meter Station also in the Bin Qasim/Karachi coastal industrial belt, per separate SSGC/press mentions of RLNG injection at SMS Pakland). Gharo is a real town on that same corridor (Thatta district, between Jamshoro and the Bin Qasim coast) so this reads as a plausible GEM-assigned nearest-named-place rather than an error, but the exact endpoint facility name in GEM's EndLocation field is not independently corroborated -- flagging as a caveat, not a concern. DUPLICATE CHECK against the 63-row roster: no other row matches this 116 km / 24-in / Jamshoro-origin profile -- P4014 (Nawabshah-Karachi, 290 km/16in), P4015 (Kadanwari-Malir-Karachi, 412 km/24-20in), P4017 (HQ2-Tando Adam, 81 km/24in), P4018 (Badin, 101 km/18in), and P4020 (Bajara-Karachi Loopline, 200 km/24in) are all distinct lines independently confirmed in the same two source tables/maps under their own names -- P4016 is not a relabel or segment double-count of any of them. Fuel=Gas and Status=operating are consistent with SSGC's own current network table (utility gas transmission line, actively tabulated as of the 2018 capacity-utilization snapshot) and the 2005-build/2013-map corroboration. No existence, classification, or duplicate concern found.",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597", "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597", "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SSGC's own current transmission network table lists this loopline as an active asset; PPIS's 2013 map shows it built 2005 and still part of the national gas transmission network -- both independently consistent with an operating status."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SSGC (Sui Southern Gas Company) transmission table -- capacities given in mmscfd of natural gas; single-source but definitional (the entire table is SSGC's natural-gas transmission network)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597", "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed under SSGC's core 'Indus Left Bank Pipeline System' transmission-network table (not a field-gathering line) and shown on PPIS's national energy infrastructure map -- correctly classified as transmission, not a gathering/feeder line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "60.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "60.00",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SSGC table states 60 mmscfd rated capacity for this loopline -- exact match to GEM's 60.00 MMcf/d. Only one source states a capacity figure (PPIS map shows length/diameter/year only, no capacity), so medium tier."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "116.00", "LengthKnownUnits": "km"},
+      "primary_value": "116.00",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597", "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (SSGC's own network table and PPIS's separately-produced 2013 energy map) both give 116 km for this line -- exact match to GEM."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24", "DiameterUnits": "in"},
+      "primary_value": "24",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597", "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both SSGC's table ('24\" dia. x116 Km') and PPIS's map ('24\"x116KM') give 24-inch diameter -- exact match to GEM, agreeing with the length figure in the same breath in both sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2019,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Jamshoro", "StartState/Province": "Sindh", "StartCountryOrArea": "Pakistan", "EndLocation": "Gharo", "EndState/Province": "Sindh", "EndCountryOrArea": "Pakistan"},
+      "primary_value": "Jamshoro",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597", "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "https://pdfcoffee.com/ppis-energy-map-2013-a4-pdf-free.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources independently confirm Jamshoro (home of Sindh University) as the start point in Sindh province, Pakistan. Neither source names the exact endpoint town 'Gharo' -- SSGC calls the downstream point 'FJFC Offtake' (Fauji Jordan Fertilizer Co / Fauji Fertilizer Bin Qasim, at Bin Qasim/Port Qasim) and PPIS calls it 'Pakland' (a known SSGC meter station also in the Bin Qasim/Karachi coastal belt). Gharo is a real Thatta-district town on that same Jamshoro-to-Bin Qasim corridor, so GEM's EndLocation is a plausible nearest-named-place rather than an error, but is not literally corroborated by either source -- medium tier on the endpoint specifically, high confidence on the corridor/start point."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2975,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Southern Gas Co (SSGC)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Southern Gas Co (SSGC)",
+      "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This loopline appears in SSGC's own published transmission-network table as one of its assets, confirming SSGC as owner/operator at 100%. Single (though authoritative, primary/self-disclosed) source -- medium tier."
+    }
+  ],
+  "summary": "P4016 (Sindh University to FJFC Offtake Loopline) CONFIRMED (caveat): SSGC's own transmission-network table + an independent 2013 PPIS energy map both give an exact match on length (116 km), diameter (24 in), Jamshoro origin, and transmission classification, and SSGC's table separately confirms 60 mmscfd capacity and SSGC ownership; no existence, duplicate, or classification concern found. Only caveat: neither source literally names the GEM EndLocation 'Gharo' (they say 'FJFC Offtake'/'Pakland', both plausibly on the same Jamshoro-Bin Qasim corridor)."
+}

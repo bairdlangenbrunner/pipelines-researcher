@@ -1,0 +1,151 @@
+{
+  "project_id": "P4017",
+  "pipeline_name": "HQ2-Tando Adam Gas Pipeline",
+  "sheet_row": 2020,
+  "wiki": "https://www.gem.wiki/HQ2-Tando_Adam_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Length is corroborated by two independent official documents but they disagree with each other (81 km vs 84 km) -- confirm the exact figure against SSGC's own as-built/asset register before treating either as settled; do not silently keep GEM's 81 km on the strength of only one of the two sources.",
+      "researcher_notes": "gem.wiki returned HTTP 403 (Cloudflare) on WebFetch, and wiki_citations.json is empty for this row per the scope note, so there were no sheet-cited sources to re-check -- this was ground-up open-web research. The row's [ref] set was completely empty (all 8 units MISSING_REF), so the first question was existence: is 'HQ2-Tando Adam Gas Pipeline' a real, independently-documented SSGC line, or a GEM-only/hallucinated entity? It is real. Two independent Government of Pakistan documents name this exact segment: (1) the Ministry of Energy Petroleum Division / PPIS 'Investment Brochure' gas-transmission-network schematic map (ppisonline.com), which labels a segment '24\"x81KM HQ2-TANDO ADAM SECTION' -- diameter and length match GEM's 24 in / 81 km exactly; (2) OGRA's 'State of [the] Regulated Industry' report, Table 3.21 'SSGCL's Capacity Utilization of Transmission Network' (source cited in the report as SSGCL), which lists a row '24'' Dia.X 84 Km HQ2-TandoAdam' with Available Capacity of 85 MMCFD as of both June 30 2019 and June 30 2020 -- capacity matches GEM's 85.00 MMcf/d exactly, diameter matches (24 in), but length is stated as 84 km, not 81 km. This is a genuine cross-source disagreement (81 vs 84 km, ~3.6%), not a GEM error vs. a single correct source -- I found no third source to break the tie, so I'm flagging rather than silently keeping GEM's 81 km. Both documents also confirm classification (OGRA's table sits under section 3.3.3 'SSGCL Transmission infrastructure' / heading 'NATURAL GAS', i.e. this is unambiguously a gas transmission segment, matching GEM's PipelineType=transmission and Fuel=Gas) and ownership (OGRA table explicitly sourced '(Source: SSGCL)' i.e. Sui Southern Gas Company, matching GEM's Owner1=Sui Southern Gas Co (SSGC) 100%). Status=operating is inferred from context, not a literal statement: the OGRA table reports nonzero Available Capacity for this named segment in two consecutive fiscal years (FY19, FY20), i.e. it is treated as a live, in-service part of SSGCL's transmission network in that regulatory filing (the report separately notes segment-level utilization % 'could not be calculated due to integrated transmission network', so I did not try to force a literal utilization figure). No duplicate risk within the 63-row roster: the two OGRA-table neighbours 'Masu-HQ3' (24\"x15km, cap 40) and the 'Tando Adam to Masu' loopline (24\"x34km, cap 23) are genuinely distinct adjoining SSGC segments, and neither appears elsewhere in the roster under another name, so P4017 is not a relabel of another tracked row. Minor attribution caveat (not escalated to its own concern): GEM's StartLocation is 'Nawabshah', but the segment's actual named origin per both sources is the 'HQ2' station/node, not the town of Nawabshah itself -- on the PPIS schematic, HQ2 sits in the same corridor cluster as a '...N.Shah-...NAWABSHAH' label (alongside other HQ2-linked segments: 42\"x82km Nara-HQ2, 24\"x16km HQ2-KA, 42\"x50km Lundo HQ2-Nara), which is consistent with GEM's town-level simplification but is not a literal confirmation that HQ2 is coincident with Nawabshah town proper; EndLocation='Tando Adam' is solidly confirmed since it's literally in the segment's name in both sources.",
+      "proposed_refs": ["https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": true, "contains_value": true},
+        {"url": "https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both docs are explicitly 'NATURAL GAS' transmission-network sections; the HQ2-Tando Adam segment is listed in OGRA's gas transmission capacity table (Table 3.21) and on PPIS's gas pipeline network map."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OGRA's Table 3.21 is literally titled 'SSGCL's Capacity Utilization of Transmission Network' under section 3.3.3 'SSGCL Transmission infrastructure'; single source for the literal word 'transmission', so kept at medium tier rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "85.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "85.00",
+      "proposed_refs": ["https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OGRA Table 3.21 row '24\\'\\' Dia.X 84 Km HQ2-TandoAdam' lists Available Capacity = 85 MMCFD as of both 30 Jun 2019 and 30 Jun 2020 -- exact match to GEM's 85.00 MMcf/d. Single-source (regulator table); no second, differently-sourced document with a capacity figure was found, so tier=medium not high per the corroboration rule."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "81.00", "LengthKnownUnits": "km"},
+      "primary_value": "81.00",
+      "proposed_refs": ["https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"],
+      "verifications": [
+        {"url": "https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": true, "contains_value": false}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CONFLICT, not a clean fill: the PPIS network map states '24\"x81KM HQ2-TANDO ADAM SECTION' (matches GEM's 81 km exactly), but OGRA's Table 3.21 states '24'' Dia.X 84 Km HQ2-TandoAdam' (84 km) for the same named segment. See the paired validity entry (concern_type=spec) -- do not paste a ref onto the existing 81 km value without carrying this caveat; recommend checking SSGC's own as-built record to resolve."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24", "DiameterUnits": "in"},
+      "primary_value": "24",
+      "proposed_refs": ["https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"],
+      "verifications": [
+        {"url": "https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both the PPIS map ('24\"x81KM HQ2-Tando Adam Section') and OGRA Table 3.21 ('24\\'\\' Dia.X 84 Km HQ2-TandoAdam') agree on 24 in diameter, matching GEM exactly -- the two sources only disagree on length, not diameter."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Southern Gas Co (SSGC)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Southern Gas Co (SSGC)",
+      "proposed_refs": ["https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "OGRA's Table 3.21 (and the surrounding Tables 3.20-3.23 in section 3.3.3) is explicitly annotated '(Source: SSGCL)' and is titled 'SSGCL's Capacity Utilization of Transmission Network' -- this is a regulator (OGRA) attributing the asset to Sui Southern Gas Company Ltd, matching GEM's Owner1=100%. Single document family, so tier=medium not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2020,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Nawabshah", "StartState/Province": "Sindh", "StartCountryOrArea": "Pakistan", "EndLocation": "Tando Adam", "EndState/Province": "Sindh", "EndCountryOrArea": "Pakistan"},
+      "primary_value": "Nawabshah",
+      "proposed_refs": ["https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf"],
+      "verifications": [
+        {"url": "https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EndLocation='Tando Adam' is solid -- it's literally in the segment's name in both sources. StartLocation='Nawabshah' is a town-level simplification I could not fully pin down: the segment's actual named origin is the 'HQ2' station, which sits on the PPIS map in the same corridor cluster as a Nawabshah label alongside other HQ2-linked segments (Nara-HQ2, HQ2-KA, Lundo HQ2-Nara), but neither source states HQ2's coordinates or confirms it is coincident with Nawabshah town itself. Not flagging as wrong, but not confidently 'REFS_ADDED' either -- recommend a follow-up check of HQ2's exact location (SSGC facility list / GOGET-style gazetteer) before treating StartLocation as fully verified."
+    }
+  ],
+  "summary": "P4017 (HQ2-Tando Adam Gas Pipeline) is real and correctly classified/owned (SSGCL 24in gas transmission line, confirmed by OGRA + PPIS government docs, capacity 85 MMcf/d exact match) but flagged concern_type=spec: the two independent sources disagree on length (PPIS map 81 km matches GEM; OGRA Table 3.21 states 84 km) -- unresolved, needs a tiebreaker source."
+}

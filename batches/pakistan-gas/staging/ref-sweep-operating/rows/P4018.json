@@ -1,0 +1,216 @@
+{
+  "project_id": "P4018",
+  "pipeline_name": "Badin Gas Pipeline",
+  "sheet_row": 2021,
+  "wiki": "https://www.gem.wiki/Badin_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action required on existence/classification/duplicate/attribution. Leave StartYear1=1988 as-is but unsourced (no independent confirmation found for the exact year; not contradicted either).",
+      "researcher_notes": "gem.wiki was 403 to automated fetch (Cloudflare) and wiki_citations.json is empty for this scope, so this row had zero prior refs to re-check (all 9 ref_cols came back MISSING_REF) -- treated as a from-scratch existence check per scope notes. Every generic open-web search on 'Badin Gas Pipeline' returned an AI summary that just recites GEM's own numbers (200 MMSCFD/101 km/18 in/'Indus Left Bank Pipeline System') because gem.wiki dominates the SERP for this exact name -- I did NOT accept any of those summaries at face value and instead chased primary documents directly. FOUND TWO GENUINELY INDEPENDENT PRIMARY SOURCES that name this exact segment with matching specs: (1) SSGC's own live 'Gas Transmission Capacities Utilization' page (raw HTML table row, verified by curl+grep, not just an AI summary): '18″ dia. x100 Km Badin Pipeline Badin-Hyderabad' with available capacity 200 (MMCFD column) -- SSGC is the pipeline's owner/operator, filing this under regulatory capacity-declaration rules. (2) OGRA's (Pakistan's oil & gas regulator -- a separate government body, not SSGC and not GEM) 'State of the Regulated Petroleum Industry 2019-20' report, natural-gas transmission capacity table, SSGC section: '18'' Dia. Badin Pipeline Badin-Hyderabad' with contracted/available capacity 200/200. This is a genuinely independent second organization (regulator vs. operator) naming the identical segment with identical diameter, identical route, identical capacity. Route (Badin->Hyderabad), diameter (18in), capacity (200 MMcf/d), classification (transmission, listed under both sources' 'Transmission System' tables), fuel (natural gas, OGRA's NATURAL GAS section) and owner (SSGC -- the filer of both documents' underlying network) are all corroborated. Length: SSGC's page rounds to '100 Km' vs GEM's 101.00 km -- a ~1% rounding difference, not a material disagreement, so NOT flagged as a spec concern. Duplicate check against the 63-pipeline roster: no other row plausibly matches this route/spec -- the neighboring SSGC table row '24″dia. x84 Km HQ2-TandoAdam' (85 MMCFD) matches roster row P4017 almost exactly, which is reassuring corroboration of the roster generally but confirms P4018 (Badin-Hyderabad, 200 MMCFD, 18in) is a distinct segment, not a relabeling of P4017 or any other row. Caveat: StartYear1=1988 could not be independently confirmed or contradicted -- no source found gives a construction/commissioning year for this specific segment (WebSearch budget for this session was exhausted before I could dig further); leaving it unresolved rather than fabricating support. NOTE on verifier mechanics: the OGRA PDF FAILS url_verifier's automated content check purely because verify_url() does a raw-bytes substring match and this PDF's text streams are compressed (this is the exact 'LARGE PDFs -- the extractor does not reach the whole document' false-negative the tool's own docstring documents and instructs handling via manual pdftotext); I downloaded the PDF (both the energyupdate.com.pk mirror and, to get a stable canonical snapshot immune to that mirror's uptime, the Wayback snapshot of the original ogra.org.pk file -- same 5,473,695-byte file, confirmed identical) and ran `pdftotext -layout`, which shows the exact row quoted above verbatim on the page bearing the 'NATURAL GAS' section header. Citing the Wayback snapshot address (not the save/ instruction endpoint) per the source's own rules; direct ogra.org.pk/download/6235 403s to automated fetch. The SSGC page passed url_verifier cleanly with no manual override needed.",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources list this exact 18in Badin-Hyderabad segment with live contracted/available transmission capacity in current/recent regulatory filings -- status inferred as operating from context (an active capacity declaration), not a literal status word, per standard practice."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed under SSGC's Gas Transmission tables and OGRA's NATURAL GAS section respectively."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources list it explicitly under 'Transmission System' capacity tables (SSGC page title: 'Gas Transmission Capacities Utilization'; OGRA table: natural-gas transmission pipeline capacity)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1988"},
+      "primary_value": "1988",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found (SSGC, OGRA, OGDCL, news archives) states a construction/commissioning year for this specific segment. 1988 is plausible on general timing (Badin-I/II field development was mostly 1980s-early 1990s per Wood Mackenzie's summary of the Badin concessions) but not independently confirmed -- leaving unresolved rather than fabricating a ref. WebSearch budget for this session was exhausted before further digging could be done; worth a follow-up pass."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "200.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "200.00",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources give 200 MMCFD (available/contracted capacity) for this exact segment -- exact match to GEM's value, no unit conversion needed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "101.00", "LengthKnownUnits": "km"},
+      "primary_value": "101.00",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SSGC's page gives '100 Km' (rounded) vs GEM's 101.00 km -- a ~1% rounding difference, not a material disagreement. Only one source explicitly states a length figure for this segment (the OGRA table's Badin-Hyderabad row lacks the 'X## Km' distance notation that most of its neighboring rows carry, so it doesn't independently corroborate length specifically, only diameter/route/capacity) -- tier medium, not high, on this one field."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "18", "DiameterUnits": "in"},
+      "primary_value": "18",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources give 18 inch diameter -- exact match."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Badin", "StartState/Province": "Sindh", "StartCountryOrArea": "Pakistan", "EndLocation": "Hyderabad", "EndState/Province": "Sindh", "EndCountryOrArea": "Pakistan"},
+      "primary_value": "Badin",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources explicitly name the route as 'Badin-Hyderabad', matching Start/End locations and Sindh province exactly. Both Badin and Hyderabad are real, well-known Sindh locations."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2021,
+      "oo_sheet_row": 2977,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Southern Gas Co (SSGC)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Southern Gas Co (SSGC)",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/web/?page_id=5597",
+        "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235"
+      ],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20231004071023/https://ogra.org.pk/download/6235", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SSGC's own capacity declaration is filed by SSGC as 'the Transporter' for its own network (this exact segment); OGRA's independent regulatory report lists the segment under the SSGC transmission-network section. Both consistent with 100% SSGC ownership/operation, no other operator ever mentioned for this segment in anything found."
+    }
+  ],
+  "summary": "P4018 Badin Gas Pipeline (Badin-Hyderabad, 18in, 200 MMcf/d) is a REAL, correctly-classified SSGC transmission line, independently confirmed by SSGC's own live capacity-declaration table and Pakistan's regulator OGRA's State of the Regulated Petroleum Industry report (both name the identical segment with matching diameter/route/capacity) -- no duplicate found against the 63-row roster; verdict confirmed (caveat) with only StartYear1=1988 left unresolved (unconfirmed, not contradicted) and Length carrying medium (not high) tier since only one source states a distance figure (~100km vs GEM's 101km, immaterial rounding)."
+}

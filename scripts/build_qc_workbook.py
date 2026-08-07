@@ -29,12 +29,18 @@ FLAG_FILL = PatternFill("solid", fgColor="FFCCCC")
 ROUTE_ACCURACY = {"high", "medium", "low", "no route", "very high (within meters)",
                   "very low (straight line/schematic)", ""}
 PIPELINE_TYPE = {"transmission", "gathering", "distribution", ""}
+# Vocabulary as the LIVE tabs actually hold it, re-derived from both snapshots
+# 2026-08-07. The previous table asserted Title-Case `Presumed`/`Confirmed`/`Yes`, which
+# appears nowhere in either tracker — it flagged all 282 real ShelvedCancelledType rows
+# and all 330 DelayType rows as violations while passing our own staged values.
+# Opposition is genuinely mixed in the gas tab (yes/Yes/no/No) and uniformly lowercase in
+# oil, so both cases are accepted rather than picking a winner; see controlled_vocab.md.
 TITLE_VOCAB = {
     "FIDStatus": {"Pre-FID", "FID", ""},
-    "Opposition": {"Yes", "No", ""},
-    "Delayed": {"Yes", ""},
-    "ShelvedCancelledType": {"Presumed", "Confirmed", ""},
-    "DelayType": {"Presumed", "Confirmed", ""},
+    "Opposition": {"yes", "no", "Yes", "No", ""},
+    "Delayed": {"yes", ""},
+    "ShelvedCancelledType": {"inferred", "confirmed", ""},
+    "DelayType": {"inferred", "confirmed", ""},
 }
 ID_COLS = ["ProjectID", "PipelineName", "SegmentName", "CountriesOrAreas"]
 

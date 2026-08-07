@@ -1,0 +1,32 @@
+{
+  "project_id": "P4074",
+  "pipeline_name": "Kandhkot Gas Pipeline",
+  "sheet_row": 2075,
+  "wiki": "https://www.gem.wiki/Kandhkot_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Keep Status=operating/Fuel=Gas; note the specific pipeline geometry (Chachar endpoint, 55.23 km, 16 in) is bulk-load-sourced and not independently corroborated to the segment level.",
+      "researcher_notes": "gem.wiki returned 403 (Cloudflare) for this batch's harvest and my own WebFetch attempt also 403'd, so wiki_citations.json is empty and I could not read the sheet's own cited sources for this row -- consistent with the scope note (harvest failure, not 'no sources'). No WebSearch budget remained this session (200/200 used before I could run a query), so research relied on WebFetch against specific/guessed URLs and one Wikipedia lead chain. EXISTENCE: the Kandhkot gas field is real and independently confirmed by TWO Business Recorder articles under different bylines/dates -- Mushtaq Ghumman, 2021-12-22 ('Kandhkot field: PPL seeks govt nod to produce more gas', PPL sought approval to sell an additional 125 mmcfd from Kandhkot, describes ongoing gas sales/allocation to Genco-II/CPGCL and gas going into the national network) and Bilal Hussain, 2022-10-19 ('By using Kandhkot gas, Qadirpur plant can help Pakistan save $2bn', describes EPQL's proposal to draw 30-50 mmscfd from the Kandhkot field). Both are Business Recorder (same outlet, independently authored/dated pieces on different specific matters -- I'm treating this as medium rather than high tier since it is one publication, not two separate outlets). Wikipedia's 'Kandhkot' article (read for leads only, not cited) corroborates discovery in 1959 and production since 1987, sourced in turn to these same two Business Recorder pieces plus a PPL page that 403'd for me. None of the three sources name a 'Kandhkot Gas Pipeline', give a Chachar endpoint, or state 55.23 km / 16 in -- they confirm the FIELD's existence and that gas is actively flowing into the transmission network (supporting Status=operating and Fuel=Gas by context per the status-inference rule), but the specific segment geometry and PipelineType=transmission classification could not be corroborated beyond the GEM/bulk-load figures themselves. 'Chachar' independently confirmed only as a Sindhi tribe/place-name distributed across Kashmore/Jacobabad/Sukkur/Ghotki -- plausible as a local place near Kandhkot but not tied to a named gas facility in anything I could read. CLASSIFICATION: 55 km field-to-network distance is consistent with the 'transmission' label used on comparable-length roster rows (e.g. P4075 Pir Koh-Sui at 70.5 km, P4079 Sawan-Qadirpur at 131 km), so I did not flag this as a separate concern, but it rests on the same unverified geometry. Leaving Capacity blank -- no source gives a number and the scope notes explicitly warn against forcing weak fields.",
+      "proposed_refs": ["https://www.brecorder.com/news/40141803", "https://www.brecorder.com/news/40204004"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Route to Update: verify Owner1 against SSGC and/or PPL primary sources; the current 'Sui Northern Gas Pipelines Ltd (SNGPL)' 100% attribution looks like a mislabel and should likely be Sui Southern Gas Co (SSGC) or Pakistan Petroleum Ltd (PPL), not SNGPL.",
+      "researcher_notes": "Pulled the operators/owners snapshot (data/GEM_operators_owners_snapshot_20260807.csv) for the full 63-pipeline roster to check the owner pattern. Every other roster row whose endpoints sit inside Sindh/Balochistan proper -- P3177 Karachi-Sawan, P4014 Nawabshah-Karachi, P4015 Kadanwari-Malir-Karachi, P4016 Sindh University-FJFC, P4017 HQ2-Tando Adam, P4018 Badin, P4019 Dadu-Malir-Karachi, P4020 Bajara-Karachi, P4021 Quetta, P4022 Zarghun-Quetta, P4023 Dadu-Sui, P4024 Hassan-Sui -- is 100% Sui Southern Gas Co (SSGC), matching SSGC's well-established Sindh+Balochistan franchise (SNGPL's own franchise is Punjab/KP/Islamabad/AJK -- confirmed via Wikipedia's SNGPL and SSGC articles, read for leads/general-fact confirmation, not cited). By contrast P4074 (Kandhkot, Chachar->Kandhkot, both Sindh), P4075 (Pir Koh-Sui, Balochistan), and P4079 (Sawan-Qadirpur, Sindh) are all tagged SNGPL instead. P4075 and P4079 both terminate at/feed the Sui/Qadirpur hub that anchors SNGPL's actual Sui-Multan trunk into Punjab, so an SNGPL attribution there is at least plausible as an upstream feeder into that Punjab-bound trunk. P4074 has no such link -- Chachar and Kandhkot are both local Sindh points, not part of any Punjab-bound system, and independently the Kandhkot field's own operator is Pakistan Petroleum Ltd ('PPL KGF' handling gas-sale negotiations directly with Genco-II/CPGCL per the 2021 Business Recorder piece above), not SNGPL. This is an internal-consistency/geography argument, not an external source that states the correct owner outright, so I'm flagging it as a concern for Update to run down (SSGC and/or PPL primary sources) rather than asserting a replacement value -- no proposed_refs, to avoid overwriting one unsourced owner with another unsourced guess.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Kandhkot gas field independently confirmed real and producing (2 Business Recorder pieces, medium tier) but the specific pipeline geometry/classification remain bulk-load-only; flagged a likely Owner attribution error (SNGPL should probably be SSGC or PPL, per the roster's own SSGC-for-Sindh/Balochistan pattern) for Update to verify -- no UNRESOLVED fills (Capacity left blank, no source found)."
+}

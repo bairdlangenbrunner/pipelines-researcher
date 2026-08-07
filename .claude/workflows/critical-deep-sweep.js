@@ -44,7 +44,8 @@ determine the pipeline's CURRENT true status. Hunt for dated evidence NEWER than
   ShelvedYear). A change without a verified ref will be downgraded at merge — source it.
 - "stale"   — NO independent news found. Apply the dormancy rules: proposed with no progress
   >=2y -> shelved; shelved >=4y -> cancelled. proposed_changes MUST include
-  ShelvedCancelledType="Presumed" and the inference gets NO fabricated ref (standing rule 2);
+  ShelvedCancelledType="inferred" (lowercase — that is the live column's vocabulary, NOT
+  "Presumed") and the inference gets NO fabricated ref (standing rule 2);
   set staleness_rule to "2y->shelved" or "4y->cancelled". If dormant but under the threshold,
   use "confirm" and note the last-evidence date.
 - "unclear" — genuinely cannot tell; explain what you tried in researcher_notes.

@@ -70,19 +70,67 @@ def bad_cost_units(values):
     return bad
 
 
+def _norm_value(v):
+    """Normalize one cell for equality: numbers compare numerically (so '1814' ==
+    '1814.00' == '1,814'), everything else case- and whitespace-insensitively."""
+    s = str(v if v is not None else "").strip()
+    try:
+        return ("num", round(float(s.replace(",", "")), 6))
+    except ValueError:
+        return ("str", " ".join(s.lower().split()))
+
+
+def is_ref_only(proposed_values, current_values):
+    """True when a shard fill proposes exactly the values already on the sheet — i.e.
+    it is REF work, not a value change.
+
+    A unit whose `[ref]` is blank but whose value is present (class MISSING_REF) comes
+    back from a deep-sweep subagent as a fills[] entry: the agent researched the cell
+    and found a source for the value that is already there. Staging that as a FILL
+    would tint the value cell on the paste surface, telling the researcher to paste
+    over a cell that is not changing (the workbook legend reserves a tinted value cell
+    for a *proposed* value). Folding it onto its ref record instead yields the
+    documented ref-only rendering: colored `[ref]`, untinted value.
+
+    Requires a non-empty current value to compare against — a genuinely blank field is
+    a real fill and must stay one.
+    """
+    cur = current_values or {}
+    prop = proposed_values or {}
+    if not prop or not cur:
+        return False
+    if not any(str(v).strip() for v in cur.values()):
+        return False
+    return all(_norm_value(prop[c]) == _norm_value(cur.get(c)) for c in prop)
+
+
 def status_qc(verdict, changes, refs, notes):
     """Merge-time QC for one status_reviews[] record: a 'change' with zero verified
     refs -> 'unclear'; a 'stale' shelved/cancelled inference always gets
-    ShelvedCancelledType=Presumed (standing rule 2 — inferred, no fabricated URL).
-    Returns (verdict, changes, class_out, notes)."""
+    ShelvedCancelledType=inferred (standing rule 2 — inferred, no fabricated URL).
+    Returns (verdict, changes, class_out, notes).
+
+    NB the value is lowercase `inferred`, not `Presumed`: verified 2026-08-07 against
+    both live tabs, where ShelvedCancelledType holds only `inferred` (84 gas / 63 oil)
+    and `confirmed` (83 / 52). `Presumed` appears nowhere in either tracker."""
     verdict = (verdict or "").strip().lower()
     changes = dict(changes or {})
+    # Vocab normalization: subagents write the Title-Case `Presumed`/`Confirmed` the old
+    # docs specified; the live column holds only lowercase `inferred`/`confirmed`.
+    sct = (changes.get("ShelvedCancelledType") or "").strip().lower()
+    if sct:
+        fixed = {"presumed": "inferred", "inferred": "inferred",
+                 "confirmed": "confirmed"}.get(sct)
+        if fixed and fixed != changes["ShelvedCancelledType"]:
+            notes = qc_note(notes, f"ShelvedCancelledType {changes['ShelvedCancelledType']!r}"
+                                   f" -> {fixed!r} (live-column vocab).")
+            changes["ShelvedCancelledType"] = fixed
     if verdict == "change" and not refs:
         verdict = "unclear"
         notes = qc_note(notes, "change proposed without a verified ref -> unclear.")
     if verdict == "stale":
         if (changes.get("Status") or "").lower() in ("shelved", "cancelled") \
-                and changes.get("ShelvedCancelledType") != "Presumed":
-            changes["ShelvedCancelledType"] = "Presumed"
-            notes = qc_note(notes, "added ShelvedCancelledType=Presumed (inferred change).")
+                and (changes.get("ShelvedCancelledType") or "").lower() != "inferred":
+            changes["ShelvedCancelledType"] = "inferred"
+            notes = qc_note(notes, "set ShelvedCancelledType=inferred (dormancy-rule change).")
     return verdict, changes, STATUS_VERDICT_CLASS.get(verdict, "UNRESOLVED"), notes

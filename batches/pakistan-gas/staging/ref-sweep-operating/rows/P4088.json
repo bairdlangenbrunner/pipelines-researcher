@@ -1,0 +1,37 @@
+{
+  "project_id": "P4088",
+  "pipeline_name": "Qadirpur Gas Loopline",
+  "sheet_row": 2086,
+  "wiki": "https://www.gem.wiki/Qadirpur_Gas_Loopline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Row is confirmed as a real, physically distinct pipeline -- not a GEM-only entity and not a duplicate of P4087 or P4089. Attach the two proposed refs to Status/Fuel/PipelineType/Diameter/Location/Owner [ref] cells.",
+      "researcher_notes": "The sheet's own cited source is unusable this run: gem.wiki returns HTTP 403 to automated fetch (Cloudflare) and wiki_citations.json's harvest for this whole scope came back empty, so this row previously had zero non-GEM support to build on. Independent technical corroboration found instead: an Emerson/PSIG (Pipeline Simulation Interest Group) network-hydraulics case-study paper on SNGPL's transmission system states 'Sawan gas is transported through an 81-mile 24-inch pipeline to Qadirpur, and then independently of Qadirpur gas to Bhong compressor station (AC1X) via a 44-mile 30-inch pipeline... Qadirpur gas is transported to Bhong via a 44-mile 36-inch pipeline and is compressed at compressor station AC1XQ before injection into the main transmission system downstream of station AC1XS. Both AC1XQ and AC1XS are installed at the same location i.e. Bhong, but compressing gases from Sui and Qadirpur separately.' This confirms a real, physically distinct 36-inch pipeline running Qadirpur (Sindh) -> Bhong (Punjab) that is dedicated to Qadirpur's own field gas, separate from the 30-inch line that carries Sui/Sawan gas transiting through the Qadirpur junction (that 30-inch line matches sibling row P4087, not this one). GEM's diameter (36 in) matches this source exactly. GEM's 'Loopline' label is a reasonable characterization -- it parallels the Sui-transit corridor on the same right-of-way, which is a legitimate separate pipeline, not a double-count. Dawn ('SNGPL repairing pipeline blown up in terror attack', 2020) separately and independently confirms SNGPL operates a gas pipeline 'from Qadirpur field in Ghotki district ... via the Bhong Gas Repeater Station' feeding Punjab, corroborating route, operator (SNGPL), and operating status in the same corridor -- though the diameter that article cites (30-inch) belongs to the OTHER parallel line (P4087), not this one, so it corroborates the corridor/operator/status but not this row's diameter specifically. PipelineType=transmission and Fuel=Gas are consistent with both sources (compressor-station injection into the 'main transmission system'). Owner=SNGPL 100% matches both sources' description of SNGPL as the operator of this transmission corridor. CAVEAT (see paired 'spec' finding below): the same Emerson source's length figure (44 miles / ~70.8 km) materially disagrees with the sheet's LengthKnown (53.14 km). NOTE ON VERIFICATION: url_verifier FAILs the content-match on the Emerson PDF (returns 200, but its substring extractor cannot read text inside the PDF's compressed streams -- a documented false-negative for this class of PDF per the tool's own docstring). Content was independently confirmed by downloading the PDF and running `pdftotext -layout`, which reproduces the Qadirpur/Bhong/44-mile/36-inch text verbatim (kept locally, not committed).",
+      "proposed_refs": [
+        "https://www.emerson.com/is/content/emerson/it/final-control/documents/d352531x012.pdf",
+        "https://www.dawn.com/news/1531172/sngpl-repairing-pipeline-blown-up-in-terror-attack"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify LengthKnown. The one independent technical source found gives 44 miles (~70.81 km) for this exact segment (36-inch, Qadirpur->Bhong), materially longer than the sheet's current 53.14 km (~25% / ~17.7 km short). Also audit sibling rows P4087 (30in, 53.13 km) and P4089 (LNG Phase II, 42in, 53.14 km): all three parallel Qadirpur-Bhong lines carry an almost identical ~53.13-53.14 km figure in GEM, yet the same source gives 44 miles for both the 30-inch and 36-inch lines on this corridor -- worth checking whether the three rows' lengths were bulk-copied from one figure rather than independently measured/sourced (consistent with the scope note that most of this batch is a single 2023-07 bulk load).",
+      "researcher_notes": "Per the Emerson/PSIG SNGPL network paper (same document used for the existence/diameter finding above), the Qadirpur-to-Bhong 36-inch pipeline is stated as 44 miles long (44 x 1.60934 = ~70.81 km). GEM's LengthKnown for P4088 is 53.14 km (~33.02 miles) -- a difference of roughly 17.7 km / 25%, which exceeds any reasonable rounding/measurement tolerance and should not be silently passed. Diameter (36in) and route (Qadirpur, Sindh -> Bhong, Punjab) from this same source match the sheet exactly, which raises confidence this is the correct pipeline (not a mismatch to some other segment) and that the length figure itself is the part in disagreement. This is currently a single-source (tier=medium) flag rather than a two-source corroborated conflict: open-web search was heavily throttled this run -- the session's WebSearch tool quota was already exhausted before I started (200/200 used), and DuckDuckGo, Bing, Yandex, Mojeek, Google, and a public SearXNG instance all returned CAPTCHA/anti-bot block pages to automated WebFetch; only Brave Search was fetchable, and it began 429 rate-limiting after a handful of queries, cutting the search short. A follow-up pass with normal search access should either find a second independent length source or confirm the current 53.14 km figure is right and Emerson's 44 miles refers to a different measurement basis (e.g. as-built vs. right-of-way vs. an earlier/later expansion length).",
+      "proposed_refs": [
+        "https://www.emerson.com/is/content/emerson/it/final-control/documents/d352531x012.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P4088 (Qadirpur Gas Loopline, 36in, Qadirpur->Bhong) confirmed real and correctly classified/attributed via an independent Emerson/PSIG SNGPL network paper (matches diameter+route+operator exactly, distinct from parallel 30in P4087) plus Dawn corroborating the corridor/operator/status -- but that same Emerson source gives 44 miles (~70.8 km) for this exact segment vs. the sheet's 53.14 km, a material spec discrepancy flagged as a concern pending a second source."
+}

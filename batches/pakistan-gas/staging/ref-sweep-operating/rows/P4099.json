@@ -1,0 +1,144 @@
+{
+  "project_id": "P4099",
+  "pipeline_name": "AV29-N2 RLNG Pipeline",
+  "sheet_row": 2097,
+  "wiki": "https://www.gem.wiki/AV29-N2_RLNG_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Add the refs below to Status/Fuel/PipelineType/Length/Diameter/Location/Owner. No structural fix needed. Carry forward the single-source-for-exact-figures caveat (tier=medium, not high) if this row is revisited.",
+      "researcher_notes": "gem.wiki 403'd the harvester for this row (scope-wide Cloudflare block this run, wiki_citations.json empty) -- confirmed independently via a Wayback Machine snapshot of the same gem.wiki page (web.archive.org/web/20250814005141/.../AV29-N2_RLNG_Pipeline, read for LEADS ONLY, never cited), which shows the row's OWN existing citations are: [1] SNGPL 'Transmission System' webpage (article.jsp, retrieved by GEM 2022-08-01) for Owner/Length/Diameter, [2] PPIS/DGPC 'Pakistan Energy Infrastructure Map 2020' for Location, [3] SNGPL 'Transmission Network' map JPG dated 31-03-2022 for Location, [4] SNGPL Annual Report 2018 (duplicate support). This is NOT a case of an unsourced/GEM-only entity -- the row's own prior sourcing already pointed at real, checkable primary documents; I re-verified each one live rather than trusting the old citation blindly. EXISTENCE + SPEC: SNGPL's live 'Transmission System' page (still up at the same URL, url_verifier OK, content-confirmed) lists a numbered transmission-line table with item 19 = 'AV29 - N2 (RLNG LINE) | 24 | 68.16' -- an EXACT match to GEM's Diameter=24in and LengthKnown=68.16km, down to the second decimal. I independently re-derived the same table from SNGPL's 2018 Annual Report PDF (pdftotext -layout, page ~93: '45 / AV29 - N2 (RLNG LINE) / 24 / - / 68.16') -- same figures, four years apart, in two different SNGPL-published documents, so this is not a one-off transcription artifact. CLASSIFICATION: the line sits in SNGPL's 'Transmission System' page (as opposed to its distribution-system pages) among other RLNG trunk segments (AC4-AV15, AV15-AV20, AV20-AV21, AV21-AV22, AV22-AC6, AC6-AV29, AV29-N2, N2-Sahiwal, Sahiwal-Okara Cantt, ...) -- confirms PipelineType=transmission is correct, and 'RLNG LINE' confirms Fuel=Gas (RLNG is regasified LNG, chemically natural gas) rather than any NGL/oil misclassification. ATTRIBUTION: Owner1=SNGPL 100% is directly supported -- the line is in SNGPL's own asset inventory and this is SNGPL's own franchise territory (Punjab). LOCATION: went further than a text search and visually inspected the SNGPL 31-03-2022 'Transmission Network' map (JPG, url_verifier OK) at full resolution. It shows a clearly-labeled junction at 'Qadirpur Rawan' (Khanewal district, Punjab -- matches GEM's StartLocation 'Qadirpur Ran', a minor transliteration variant, not a different place) with a '24\"' branch running east to a node explicitly labeled 'Mian N-2 Channun' -- i.e. the map literally prints the valve code 'N-2' at Mian Channu(n), which is GEM's EndLocation. This directly confirms the AV29-N2 segment's endpoint identity (not just an internal GEM-chain inference) -- a stronger confirmation than what was available for the neighboring P4100 shard (N2-Sahiwal), which could only infer N2=Mian Channu by chain logic. The map does not print an explicit 'AV29' label at the Qadirpur Rawan junction itself (only major hub codes like AC6/AV32/AC7/AC8 are boxed on the overview map), but the geography is internally consistent: AC6 is boxed near Multan on the same map, and Qadirpur Rawan sits on the same 24\"/30\"/36\" braided corridor between Multan and Mian Channun -- exactly where the table's AC6-AV29-N2 sequence says it should be. As a second, genuinely independent (non-SNGPL) source I checked the 2020 PPIS/DGPC 'Pakistan Energy Infrastructure Map' (pepl.com.pk, Directorate General of Petroleum Concessions -- a government body, not the pipeline operator) -- its extracted text places a '24\"' diameter label immediately next to 'MIAN CHANNUN', consistent with GEM's Diameter=24in at that same node. url_verifier.py FAILed this PDF on content ('missing expected: MIAN CHANNUN / QADIRPUR') even for single, definitely-present tokens like 'QADIRPUR' -- this is the documented large-PDF/map extraction false-negative (the docstring's own example: 'a content FAIL says nothing' on a big PDF/map) -- I manually confirmed via pdftotext that both 'MIAN CHANNUN' and 'QADIRPUR' are present in the extracted text, so I'm citing it per that documented override, not blindly. DUPLICATE CHECK against the 63-row roster: 68.16 (P4099) + 77.296/77.30 (P4100, N2-Sahiwal) = 145.456 km, suspiciously close to P4105 'AV29-Sahiwal Gas Pipeline' at 145.46 km -- same AV29/Sahiwal endpoints. Checked against SNGPL's own table rather than assuming: item 19-20 (AV29-N2-Sahiwal, chained, 24in) and item 50 (AV29-Sahiwal direct, 36in) are BOTH listed as distinct real lines in the same primary source, with DIFFERENT diameters (24in vs 36in) -- i.e. a smaller-diameter two-segment line and a larger-diameter direct loopline sharing the same corridor and near-identical length by geography, not a re-segmentation/double-count of one physical pipe. This is the same pattern GEM already uses elsewhere in this roster (Sui-Multan mainline P4090 alongside Loopline I/II/III P4091/P4097/P4098) so no duplicate flag is warranted for P4099. Net: existence, classification, non-duplicate status, and exact spec figures are all corroborated by SNGPL's own current + historical primary asset records (cross-checked two ways: live webpage and 2018 annual report), plus visual/textual confirmation from an independent government map (PPIS/DGPC) for diameter and the node-to-place mapping -- tier=medium (single-operator primary source for the exact figures, per the same standard applied to the sibling P4100 shard) rather than high, since SNGPL as the asset owner reporting its own network is a 'company filing' under the confidence-tier rubric, not an independent regulator.",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341",
+        "https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL's live 'Transmission System' page lists 'AV29-N2 (RLNG LINE)' as a current active asset in its transmission network table; status is inferable from context (a line SNGPL currently reports as part of its live system) rather than requiring the literal word 'operating'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Line is designated 'RLNG LINE' in SNGPL's table -- RLNG (regasified LNG) is natural gas post-regasification, confirming Fuel=Gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed under SNGPL's 'Transmission System' page (distinct from its distribution-system pages), directly confirming this is a trunk transmission line, not a gathering/distribution feeder."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "68.16", "LengthKnownUnits": "km"},
+      "primary_value": "68.16",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL's table gives 68.16 km for the exact named segment 'AV29-N2 (RLNG LINE)' -- exact match to GEM, to two decimal places. Cross-checked against SNGPL's 2018 Annual Report (item 45 of the same table, pdftotext-confirmed), same figure, four years apart. Single-operator primary source, hence tier=medium not high (no independent third-party source states this exact figure)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24", "DiameterUnits": "in"},
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341",
+        "https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true},
+        {"url": "https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL's table gives 24-inch diameter for this exact segment, matching GEM exactly. The independent PPIS/DGPC 2020 map also labels a 24\" line immediately at the 'Mian Channun' node on this same corridor -- corroborating diameter from a source outside SNGPL, though not naming the AV29-N2 segment by code. url_verifier FAILed the PPIS PDF on the substring screen (documented large-PDF/map extraction false-negative -- even the single token 'QADIRPUR' misses); manually confirmed via pdftotext that '24\"'/'MIAN CHANNUN'/'QADIRPUR' are all present, so citing per the verifier's own documented override for this failure class."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Qadirpur Ran", "StartState/Province": "Punjab", "StartCountryOrArea": "Pakistan", "EndLocation": "Mian Channu", "EndState/Province": "Punjab", "EndCountryOrArea": "Pakistan"},
+      "primary_value": "Qadirpur Ran",
+      "proposed_refs": ["https://www.sngpl.com.pk/images/transmission/TransmissionMap042022L.jpg"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/images/transmission/TransmissionMap042022L.jpg", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Visually inspected SNGPL's 31-03-2022 'Transmission Network' map at full resolution: it labels a junction 'Qadirpur Rawan' (GEM's 'Qadirpur Ran', minor transliteration variant, same Khanewal-district Punjab location) with a 24-inch branch running to a node explicitly printed as 'Mian N-2 Channun' -- i.e. the map itself prints valve code 'N-2' at Mian Channu(n), directly confirming GEM's EndLocation and resolving what was only an internal-chain inference in the sibling P4100 shard. 'AV29' is not individually text-labeled on this overview map (only major hub codes like AC6/AV32/AC7/AC8 are boxed), but the geography is consistent: SNGPL's own table sequence (AC6-AV29-N2) and the map's boxed 'AC6' position near Multan both place Qadirpur Rawan exactly where AV29 should sit, between Multan and Mian Channun."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2097,
+      "oo_sheet_row": 3053,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Northern Gas Pipelines Ltd (SNGPL)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Northern Gas Pipelines Ltd (SNGPL)",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The line appears in SNGPL's own published inventory of its transmission network -- direct primary-source confirmation SNGPL owns/operates this asset (100%), consistent with SNGPL being the sole gas transmission/distribution utility for this part of Punjab."
+    }
+  ],
+  "summary": "P4099 (AV29-N2 RLNG Pipeline) is real and correctly classified/attributed: SNGPL's own live 'Transmission System' table AND its 2018 Annual Report both list 'AV29-N2 (RLNG LINE), 24in, 68.16km' verbatim, an exact match to GEM; a full-resolution read of SNGPL's own network map literally labels 'N-2' at Mian Channun, directly confirming the endpoint (stronger than the inference the sibling P4100 shard had to rely on), and the independent PPIS/DGPC 2020 government map corroborates the 24-inch corridor there. A suspected duplicate with P4105 (AV29-Sahiwal, 145.46km = 68.16+77.30) was checked against SNGPL's own table and ruled out -- it's a separate, larger 36in parallel line over the same corridor, not a re-segmentation. Verdict: confirmed (caveat), tier=medium (single-operator primary source for the exact figures); no UNRESOLVED items."
+}

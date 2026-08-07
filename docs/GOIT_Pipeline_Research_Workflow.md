@@ -89,7 +89,7 @@ elsewhere in the project (e.g., the GulfPub comparison):
 - **Low (red)** — a single weak/secondary source, or sources that partially
   conflict.
 - **Inferred/Presumed** — no verifiable source; flag per the URL rules above and,
-  for status changes, set `ShelvedCancelledType = Presumed` (no fabricated URL).
+  for status changes, set `ShelvedCancelledType = inferred` (lowercase; no fabricated URL).
 
 What counts as **independent** corroboration:
 - Two facts from genuinely separate origins — e.g., a company press release AND a
@@ -212,7 +212,7 @@ Before presenting the Excel file, verify:
    - If no development updates for 2 years post-proposal → Shelved
    - If no development updates for 4+ years post-proposal → Cancelled
    - If confirmed cancelled by owner/news → Cancelled with ShelvedCancelledType = "Confirmed"
-   - If presumed by GEM rule → ShelvedCancelledType = "Presumed"
+   - If inferred by GEM dormancy rule → ShelvedCancelledType = "inferred" (lowercase)
 5. **Date consistency:** If status = Operating, there should be a StartYear. If status = Cancelled, there should be a CancelledYear (or StopYear = "presumed" for 4-year rule).
 6. **ResearcherNotes:** Every row with changes should have a ResearcherNotes entry explaining what changed, why, and any caveats (e.g., "Cost is total project, not pipeline-specific" or "Length is existing system total, not new construction").
 7. **No GEM self-citation:** Confirm that no [ref] URLs point to gem.wiki or globalenergymonitor.org unless Baird explicitly approved it.
@@ -243,8 +243,8 @@ ALL values must be lowercase, exactly as follows:
 - **Status:** operating, proposed, construction, shelved, cancelled, idle, mothballed, retired
 - **RouteAccuracy:** high, medium, low, no route (note: `very high (within meters)` is also a valid value)
 - **PipelineType:** transmission, gathering, distribution
-- **DelayType:** Presumed, Confirmed (exception: these two are title case)
-- **ShelvedCancelledType:** Presumed, Confirmed (same exception — title case)
+- **DelayType:** inferred, confirmed (lowercase — corrected 2026-08-07)
+- **ShelvedCancelledType:** inferred, confirmed (lowercase — `Presumed` is not a real value)
 - **FIDStatus:** Pre-FID, FID (title case, only populated when Status = proposed)
 - **Delayed:** Yes (title case; leave blank if not delayed — do not enter No)
 - **Opposition:** Yes, No (title case)

@@ -1,0 +1,175 @@
+{
+  "project_id": "P4024",
+  "pipeline_name": "Hassan-Sui Gas Pipeline",
+  "sheet_row": 2027,
+  "wiki": "https://www.gem.wiki/Hassan-Sui_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify Length (and implicitly Diameter/RouteAccuracy) against SSGC/SNGPL network documentation. The only independent primary source found for this corridor (Business Recorder, 2004-12-25, 'SNGPL and SSGC sign agreement for gas transportation') describes SSGC providing SNGPL ~270 km (168 miles) of existing pipe ('ILBP') from Nawabshah (Sindh) to a compression station at Sui (Balochistan) to carry gas purchased from Hassan field -- and it names that corridor 'Nawabshah-Sui', not 'Hassan-Sui'. GEM's row records Length=58 km / Diameter=16in for a segment called 'Hassan-Sui'. 58 km vs 270 km is not a units/rounding artifact (ratio ~4.7x, not a clean mi/km conversion). Two readings are possible: (a) there is a genuinely distinct, short (~58 km is geographically plausible: Hassan field sits in the Shikarpur/Sukkur/Jacobabad triangle of upper Sindh, and straight-line distance from that area to Sui, Balochistan is roughly 60-90 km) dedicated field-gathering/tie-in spur from Hassan field itself to the Sui hub, separate from the 270 km Nawabshah bypass line used for onward wheeling to SNGPL's Punjab network; or (b) GEM's row is a mislabeled/garbled representation of the Nawabshah-Sui wheeling arrangement with an incorrect length carried over. I could not independently confirm scenario (a) with any source -- no SSGC network map, OGRA report, or news piece describing a dedicated 58 km/16in 'Hassan-Sui' line was found. Do NOT delete the row on this basis (the underlying commercial gas-transport arrangement from Hassan field via Sui is well corroborated -- see below), but the Length/Diameter values need a source before they should be treated as confirmed; consider whether this row should instead represent the 270 km Nawabshah-Sui segment (with RouteAccuracy corrected) or be reconciled against whatever GEM intended.",
+      "researcher_notes": "EXISTENCE: gem.wiki returned HTTP 403 to automated fetch this run (per scope note), so wiki_citations.json is empty for P4024 and there was nothing on the sheet's own cited side to start from -- went straight to open-web research per the scope note. Found the underlying deal is real and independently corroborated. Source 1 (Oil & Gas Journal, ogj.com/exploration-development/article/17254486, url_verifier OK on tokens 'Hassan'+'Sindh'): PPL and SSGC signed an informal gas purchase agreement for the Hassan field, Block 22, upper Sindh (between Shikarpur, Sukkur and Jacobabad), discovered April 1999, initial rate 'up to 15 MMcfd' (SSGC figure) / '14-20 MMcfd' (PPL figure), gas to be 'fed into the SSGC grids'; ownership PPL 45% / Petroleum Exploration Ltd 30% / Pyramid Resources Ltd 20% / GoP 5% (expandable to 25%). Source 2 (Business Recorder, brecorder.com/news/3113770, dated 2004-12-25, url_verifier OK on tokens 'Nawabshah'+'30 mmcfd'): SNGPL and SSGC signed a 15-year agreement on 2004-12-24 for SSGC to make available ~270 km of existing pipe from Nawabshah (Sindh) so SNGPL can move gas purchased under the 'Hassan X-1 (block 22) gas sales agreement' to SNGPL's compression station at Sui (Balochistan); stated transmission capacity 30 mmcfd for 'this segment i.e. Nawabshah-Sui'; transport fee ~Rs 50 million/yr paid by SNGPL to SSGC. These two sources are independent of each other and of GEM, both dated, both specific -- they establish that a real Hassan-field-to-Sui gas flow arrangement exists (tier=medium for the arrangement itself: only Brecorder names Sui explicitly, so the 'to Sui' leg has 1 strong source rather than 2). A DuckDuckGo snippet of GEM's own (403-blocked) wiki page surfaced the line 'The pipeline is contracted for reverse flow to SNGPL' -- consistent with Brecorder's account of SNGPL being the shipper -- so GEM's page is not pure fabrication, but its 58 km/16in spec figures are unsupported by anything I could find and conflict with the only quantified primary source (270 km). CLASSIFICATION: 'transmission' is directly supported by Brecorder's own language ('transmission capacity of 30 mmcfd'), so no classification concern. DUPLICATE: checked against all 63 roster rows -- none is named or sized like a 'Nawabshah-Sui' segment (P4014 Nawabshah-Karachi Gas Pipeline runs to Karachi, len=290, cap=80, a different route), so I can't name a specific PID this duplicates; flagging as spec/naming concern rather than a clean duplicate.",
+      "proposed_refs": [
+        "https://www.ogj.com/exploration-development/article/17254486/sui-southern-to-buy-gas-production-from-hassan-field",
+        "https://www.brecorder.com/news/3113770"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.brecorder.com/news/3113770"
+      ],
+      "verifications": [
+        {"url": "https://www.brecorder.com/news/3113770", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Business Recorder (2004-12-25) explicitly describes natural gas transportation/transmission capacity for this corridor ('transmission capacity of 30 mmcfd', 'gas transportation' agreement); corroborated contextually by OGJ's description of Hassan field gas production. Fuel=Gas is not in dispute here even though Length is."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.brecorder.com/news/3113770"
+      ],
+      "verifications": [
+        {"url": "https://www.brecorder.com/news/3113770", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Brecorder describes the corridor's 'transmission capacity of 30 mmcfd' directly -- source uses the literal word 'transmission' for the pipe SSGC leased to SNGPL. Single source, so tier=medium; this is a fill for the ref cell, not proof the 58km spec is right (see validity note)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "30.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "30.00",
+      "proposed_refs": [
+        "https://www.brecorder.com/news/3113770"
+      ],
+      "verifications": [
+        {"url": "https://www.brecorder.com/news/3113770", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact numeric match: Brecorder states the 2004 SNGPL-SSGC agreement 'facilitate[s] free flow of transmission capacity of 30 mmcfd' for the Nawabshah-Sui segment carrying Hassan field gas -- identical to GEM's recorded Capacity=30.00 MMcf/d. Single source (medium tier) but a highly distinctive number, not a round/generic figure, which raises confidence this is where GEM's capacity value actually came from -- reinforcing my suspicion that GEM's 'Hassan-Sui' row is derived from this Nawabshah-Sui deal (see validity note re: Length mismatch)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Hassan", "StartState/Province": "Sindh", "StartCountryOrArea": "Pakistan", "EndLocation": "Sui", "EndState/Province": "Balochistan", "EndCountryOrArea": "Pakistan"},
+      "primary_value": "Hassan",
+      "proposed_refs": [
+        "https://www.ogj.com/exploration-development/article/17254486/sui-southern-to-buy-gas-production-from-hassan-field",
+        "https://www.brecorder.com/news/3113770"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/exploration-development/article/17254486/sui-southern-to-buy-gas-production-from-hassan-field", "ok": true, "contains_value": true},
+        {"url": "https://www.brecorder.com/news/3113770", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OGJ places Hassan field in Block 22, upper Sindh (between Shikarpur, Sukkur and Jacobabad) -- confirms StartState/Province=Sindh. Brecorder confirms the destination is SNGPL's compression station 'at Sui (Balochistan)' -- confirms EndState/Province=Balochistan. Two independent sources, each confirming one end -- tier=medium (neither confirms the full corridor alone). This says nothing about whether the physical route between them is 58 km or something else."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2983,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Southern Gas Co (SSGC)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Southern Gas Co (SSGC)",
+      "proposed_refs": [
+        "https://www.brecorder.com/news/3113770"
+      ],
+      "verifications": [
+        {"url": "https://www.brecorder.com/news/3113770", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This fill is for the operators/owners tab (oo_sheet_row=2983 from worklist), not the main Oil/NGL-Gas tab. Brecorder: 'SSGC has offered SNGPL approximately 270 km ... of ILBP from Nawabshah (Sindh) for carrying gas from Hassan field' -- SSGC is explicitly the owner/operator of the transport asset used for this gas flow, supporting Owner1=SSGC 100%. Single source, tier=medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both sources found are from 2004/early-2000s and confirm the arrangement was operational at that time; no current (2020s) SSGC/SNGPL/OGRA source was found confirming this corridor is still active today, so I'm leaving Status UNRESOLVED rather than pasting a 22-year-old source against a present-tense claim. Given the Length discrepancy in the validity note, whoever verifies Status should also resolve which physical corridor (58 km spur vs 270 km Nawabshah-Sui bypass) this row actually represents."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "58.00", "LengthKnownUnits": "km"},
+      "primary_value": "58.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "UNRESOLVED / disputed -- see validity note. The only quantified source found (Brecorder) gives 270 km for the Nawabshah-Sui corridor carrying this gas, not 58 km for a 'Hassan-Sui' line. No source supporting 58 km specifically was found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2027,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "16", "DiameterUnits": "in"},
+      "primary_value": "16",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found stating a diameter for this corridor under either the 'Hassan-Sui' or 'Nawabshah-Sui' framing. Left UNRESOLVED rather than fabricated."
+    }
+  ],
+  "summary": "P4024 Hassan-Sui: underlying gas-transport arrangement (Hassan field, Block 22 Sindh -> Sui compression station, Balochistan) is real per 2 independent dated sources (OGJ; Business Recorder 2004-12-25), and Fuel/PipelineType/Capacity(30 MMcf/d exact match)/Location/Owner refs added at medium tier -- but flagged verdict=concern/spec: the only quantified primary source describes a 270 km 'Nawabshah-Sui' SSGC line, not a 58 km/16in 'Hassan-Sui' line as GEM records, so Length/Diameter are UNRESOLVED and Status left UNRESOLVED (source is 22 years old)."
+}

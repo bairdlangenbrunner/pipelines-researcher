@@ -16,7 +16,7 @@ treating it as settled. Record the tier and the corroborating sources in
 | **High** | green | 2+ **independent** sources agree, or one primary/regulatory source |
 | **Medium** | yellow | a single strong source (company filing, regulator, top-tier trade press), no contradictions |
 | **Low** | red | a single weak/secondary source, or sources partially conflict |
-| **Inferred / Presumed** | (blank + note) | no verifiable source — flag in `ResearcherNotes`; for status changes set `ShelvedCancelledType = Presumed`, no fabricated URL |
+| **Inferred / Presumed** | (blank + note) | no verifiable source — flag in `ResearcherNotes`; for status changes set `ShelvedCancelledType = inferred`, no fabricated URL |
 | **Re-verified** | blue | value unchanged from the existing GEM value but checked again this batch |
 
 **Independent** = genuinely separate origins (company PR **and** a regulator filing

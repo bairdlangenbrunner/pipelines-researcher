@@ -11,7 +11,7 @@ present, no GEM/theodora).
 Sheets (commodity-prefixed; empty omitted; README first):
   <Cmdty>_StatusReview     ANNUAL UPDATE only — one verdict per in-dev segment row: confirm /
                            change (evidence-based, with proposed Status + date cols) / stale
-                           (dormancy rule -> Presumed) / unclear. Leads the packet when present.
+                           (dormancy rule -> inferred) / unclear. Leads the packet when present.
   <Cmdty>_Backend          PRIMARY paste-ready view — a 1:1 mirror of the GEM tracker backend:
                            the FULL backend column set in exact sheet order, current values
                            prefilled, with proposed ref(s)/values overlaid on touched cells
@@ -1495,7 +1495,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        f"{len(status_rows)} — status changes for the scope (carried + this packet's "
                        "own; verdict != confirm — confirms are counts-only in the README). Verdict "
                        "yellow=change (evidence-based new status, refs verified) / red=stale "
-                       "(dormancy rule -> inferred shelved/cancelled, ShelvedCancelledType=Presumed, "
+                       "(dormancy rule -> inferred shelved/cancelled, ShelvedCancelledType=inferred, "
                        "no ref by design) or unclear. NOT auto-applied."))
     if afb_res:
         t = f"{prefix}_AllFillsBackend"
@@ -1794,6 +1794,11 @@ def _fill_readme(ws, meta, sheet_defs, handoff=False):
         ("GEM CSV", scope.get("csv", "")),
         ("Statuses", J(scope.get("statuses", "all"))),
         ("Generated", meta.get("generated", "")),
+        # Class-level escalations render here too, not just in the handoff READMEs — a
+        # §9 full pass delivers these sweep workbooks alongside the packet, and a
+        # researcher working from one of them would otherwise never see the memo.
+        ("ESCALATIONS", J([f"{e.get('title','')} — {e.get('summary','')} [{e.get('memo','')}]"
+                           for e in meta.get("escalations", [])])),
         ("", ""),
         ("Counts", J([f"{k}={v}" for k, v in counts.items()])),
         ("", ""),
@@ -1963,7 +1968,7 @@ def main() -> None:
                            "(NOT auto-applied). Verdict green=confirm (status verified, see evidence date) / "
                            "yellow=change (evidence-based new status; Proposed changes lists the exact "
                            "column=value edits, refs verified) / red=stale (dormancy rule -> inferred "
-                           "shelved/cancelled, ShelvedCancelledType=Presumed, no ref by design) or unclear."))
+                           "shelved/cancelled, ShelvedCancelledType=inferred, no ref by design) or unclear."))
 
     # HANDOFF: status changes carried from prior packets (verdict != confirm) — the
     # confirms are counts-only in the README.
@@ -2035,7 +2040,7 @@ def main() -> None:
                                "yellow=single / red=low or none / blue=re-verified). Tier-COLORED value cells are "
                                "recommended EDITS: corroborated fills plus the StatusReview change/stale verdicts "
                                "(new Status + ShelvedCancelledType/start-year cells; a stale verdict with no ref "
-                               "is dormancy-inferred — red, ShelvedCancelledType=Presumed by design). Untinted "
+                               "is dormancy-inferred — red, ShelvedCancelledType=inferred by design). Untinted "
                                "values are current sheet values. A red [ref] cell keeping its existing text = "
                                "unresolved, needs manual sourcing. Work from THIS tab; the StatusReview / *_Refs_* "
                                "tabs below hold the per-verdict and per-ref detail."))

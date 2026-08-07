@@ -349,7 +349,7 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
   status verdict, staged when the sweep runs with `build_deepsweep_args.py --status-review`
   (workflows.md §3). `verdict` ∈ `confirm` / `change` / `stale` / `unclear`; `values` carries the exact
   column→value edits (`change`: Status + matching date cols, refs required; `stale`: the
-  dormancy-rule inference, `ShelvedCancelledType=Presumed` force-added at merge, no ref by
+  dormancy-rule inference, `ShelvedCancelledType=inferred` force-added at merge, no ref by
   design). Routed to a dedicated **`<Cmdty>_StatusReview`** tab that leads the workbook.
   Verdict vocabulary + QC rules: `docs/sops/annual_update.md`; full record schema:
   `docs/reference/staged_json_schema.md`.

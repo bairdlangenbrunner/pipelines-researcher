@@ -1,0 +1,41 @@
+{
+  "project_id": "P4089",
+  "pipeline_name": "Qadirpur Gas Pipeline (LNG Phase II)",
+  "sheet_row": 2087,
+  "wiki": "https://www.gem.wiki/Qadirpur_Gas_Pipeline_(LNG_Phase_II)",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Do not rely on this row as-is. Check SNGPL/OGRA primary documents (network map, State of Industry report, annual report) for an actual third parallel pipe on the Qadirpur(Sindh)-Bhong(Punjab) corridor at 42in; if none is found, treat P4089 as a likely duplicate/fragment of P4088 (36in 'Qadirpur Gas Loopline', same 53.14km, same corridor) with a diameter data-entry error, or merge/retire it. If confirmed real, the 'LNG Phase II' label should be sourced or dropped since no independent source uses that name.",
+      "researcher_notes": "gem.wiki returned HTTP 403 for this row (Cloudflare, confirmed via WebFetch) so wiki_citations.json is empty -- there is no cited source to re-verify; all research here is new. The underlying Qadirpur(Sindh)-Bhong(Punjab) CORRIDOR is independently and repeatedly confirmed real: Dawn.com 2003 (dawn.com/news/93263, dawn.com/news/402438) describes 'the Qadirpur gas supply line...commissioned to ACI-X compression station of SNGPL near Bhong, Rahimyar Khan district' and refers to 'pipelines' (plural) carrying gas from Sui and Qadirpur fields; Dawn.com 2019 (dawn.com/news/1456632) describes a '36-inch RLNG pipeline' on this exact corridor, 'laid one year ago [~2018] to supply gas from Karachi to Islamabad', feeding Lahore/Multan/Bahawalpur/Rahim Yar Khan/DG Khan/Faisalabad, with compressor stations ACIX-Qadirpur(Bhong)/ACIX-Sui(Bhong)/AC4 Uch Sharif/AC6 Multan/AC0 Sui; Dawn.com 2020 (dawn.com/news/1531172) describes a '30-inch diameter' Qadirpur-Bhong pipeline damaged in a bomb attack near the Multan-Sukkur Motorway, from the Qadirpur field in Ghotki district to the Bhong Gas Repeater Station. So TWO distinct, independently-confirmed physical pipes exist on this corridor: a 30in line (matches P4087, 53.13km) and a 36in RLNG line built ~2018 (matches P4088, 53.14km 'Loopline'). I could find ZERO independent trace of a THIRD, 42in pipe on this corridor, and zero trace of the specific name 'Qadirpur Gas Pipeline (LNG Phase II)' anywhere except gem.wiki itself -- a targeted Brave search for that exact phrase returned only the GEM wiki page as a result. Roster comparison: P4087 (30in, 53.13km), P4088 (36in, 53.14km), P4089 (42in, 53.14km) all share the SAME StartLocation/EndLocation (Qadirpur, Sindh -> Bhong, Punjab) and near-identical length -- exactly the 'spec repeated across rows' bulk-load pattern flagged in the scope notes. One structural point in P4089's favor: P4101 ('SV1-QV1 Gas Pipeline', Sawan->Qadirpur, 130.77km, 42in) shares P4089's exact diameter and ends at Qadirpur where P4089 begins, so GEM's own data is internally self-consistent that these two rows form one continuous 42in trunk (Sawan-Qadirpur-Bhong, ~184km combined) -- consistent with a genuine phased SNGPL augmentation project, but this is internal consistency, not independent sourcing. IMPORTANT CAVEAT ON METHOD: a WebFetch summary of a SlideShare deck (slideshare.net/MarkPeterson25/sui-northern-gas-pipelines-limited-76681933) initially returned a very specific, plausible-sounding narrative ('System Augmentation Project-X, 1200 MMCFD, Sawan-Qadirpur-Bhong 42in x 203km'); I independently re-fetched the same URL with curl using the exact verifier UA and got ONLY a Cloudflare 'Client Challenge' bot-block page with zero readable content -- the detailed narrative was fabricated by the summarization step, not read from the page. I am explicitly discarding that content and flagging it so it is not reused as if verified. Search budget was severely constrained this run: WebSearch was already at 200/200 for the session before I started, and Brave (via WebFetch) 429'd after one successful query and stayed rate-limited through three retries with waits up to 120s; Bing/DuckDuckGo/Yandex/Mojeek/Google returned CAPTCHA pages or garbage/irrelevant cached results. OGRA's site (ogra.org.pk) 403'd on every path tried. So absence of evidence for the 42in line is weaker than it would be with full search access, but on everything I could verify, P4089 as a distinct entity is unconfirmed.",
+      "proposed_refs": ["https://www.dawn.com/news/1456632", "https://www.dawn.com/news/1531172/sngpl-repairing-pipeline-blown-up-in-terror-attack", "https://www.dawn.com/news/402438/gas-blast-an-act-of-sabotage-sngpl"],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3043,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Northern Gas Pipelines Ltd (SNGPL)"},
+      "primary_value": "Sui Northern Gas Pipelines Ltd (SNGPL)",
+      "proposed_refs": ["https://www.dawn.com/news/402438/gas-blast-an-act-of-sabotage-sngpl", "https://www.dawn.com/news/1531172/sngpl-repairing-pipeline-blown-up-in-terror-attack"],
+      "verifications": [
+        {"url": "https://www.dawn.com/news/402438/gas-blast-an-act-of-sabotage-sngpl", "ok": true, "contains_value": true},
+        {"url": "https://www.dawn.com/news/1531172/sngpl-repairing-pipeline-blown-up-in-terror-attack", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner cell lives on the operators/owners tab, sheet_row 3043 (main tracker row is 2087). Two independent Dawn.com articles (2003 and 2020), 17 years apart, both identify SNGPL as the owner/operator of gas pipelines on the Qadirpur(Sindh)-Bhong(Punjab) corridor -- SNGPL is virtually certain to own any 42in line on this exact corridor if one exists (SNGPL is the sole transmission licensee here). Tier set to medium rather than high because these sources confirm SNGPL ownership of the CORRIDOR/other confirmed pipes (30in and 36in) on it, not specifically of a distinct 42in 'LNG Phase II' line -- see the existence concern above. Do not treat this fill as resolving the existence question."
+    }
+  ],
+  "summary": "P4089 (Qadirpur Gas Pipeline LNG Phase II, 42in, 53.14km): EXISTENCE CONCERN -- the Qadirpur-Bhong corridor and two OTHER pipes on it (30in per P4087, a 36in RLNG line built ~2018 per P4088) are independently confirmed via 3 Dawn.com articles, but I found zero independent trace of a third 42in line or of the name 'LNG Phase II' anywhere outside gem.wiki; flagged as a possible duplicate/fragment of P4088 with a diameter error pending SNGPL/OGRA primary-document check. Staged one Owner fill (SNGPL, tier=medium, caveated) via operators/owners tab; Status/Fuel/PipelineType/Length/Diameter/Location left UNRESOLVED given the existence doubt and a search session with WebSearch already exhausted and Brave rate-limited after one query."
+}

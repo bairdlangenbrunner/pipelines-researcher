@@ -1,0 +1,17 @@
+[
+ {
+  "title": "gem.wiki returns HTTP 403 to all automated fetches (Cloudflare)",
+  "summary": "Every gem.wiki request 403s behind a Cloudflare challenge, on all five access paths tested (page, api.php, Special:Export, action=raw, apex redirect); a browser UA does not clear it. Two legs are degraded: the sweep's wiki-citation harvest returned 0 citations from 70 pages, and the packet's wiki-alignment leg wrote 70 records all UNPARSED. That emptiness means 'could not read', NOT 'sheet and wiki agree' - do not read the empty WikiUpdates surface as a clean bill of health. It is also NOT evidence any row is unsourced. Research subagents started cold from open-web search instead of the usual harvested-lead starting point.",
+  "memo": "notes/escalation-2026-08-07-gem-wiki-cloudflare-403.md"
+ },
+ {
+  "title": "Deep-sweep fills were staged as value changes when they are ref-only work (fixed)",
+  "summary": "~83% of deep-sweep fills[] output across 7 countries proposes the value ALREADY on the sheet - it is ref attachment to a MISSING_REF cell, not a value change - but the merge staged every one as class_in=FILL, which tints the value cell on the paste surface as a proposed value. Fixed in merge_qc.is_ref_only + merge_deepsweep_shards: such fills now upgrade their ref record (colored [ref], untinted value). Pakistan is built on the fix, so its AllFillsBackend tints ONLY genuine changes. The 7 already-delivered countries (Libya 82/87, Saudi ref-sweep-critical 117/141, Egypt, Iran, Iraq, China-Guangxi) still carry the old rendering; regenerating them is Baird's call - two are partially applied.",
+  "memo": "notes/escalation-2026-08-07-deepsweep-fills-are-ref-only.md"
+ },
+ {
+  "title": "ShelvedCancelledType/DelayType vocabulary was wrong in our docs and code (fixed)",
+  "summary": "Our reference docs, CLAUDE.md, the subagent contract and merge_qc all specified Title-Case 'Presumed'/'Confirmed' for ShelvedCancelledType and DelayType. The live columns hold lowercase 'inferred'/'confirmed' - 'Presumed' appears ZERO times in either tracker, and it is a different word, not a casing slip. build_qc_workbook's vocab check was inverted end to end: it would have flagged all 282 real ShelvedCancelledType rows and all 330 DelayType rows as violations while passing our own bad values. All fixed; Pakistan re-merged (P0452 -> confirmed, P3173/P3174 -> inferred). NOTE: 15 staged records in china-guangxi/iraq/egypt/iran still read 'Presumed' - if you paste a shelved/cancelled row from one of those packets, type 'inferred'.",
+  "memo": "notes/escalation-2026-08-07-shelvedcancelledtype-vocab.md"
+ }
+]

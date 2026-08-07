@@ -125,13 +125,13 @@ row. Extra fields: `current_status`, `verdict` (`confirm`/`change`/`stale`/`uncl
 |---|---|---|
 | `confirm` | `CONFIRMED` | no edit; evidence date recorded |
 | `change` | `CHANGE_PROPOSED` | write `values` (Status + date cols) + paste `proposed_refs` into `Status [ref]` |
-| `stale` | `STALE` | write `values` (includes `ShelvedCancelledType=Presumed`); **no ref by design** — it is an inference |
+| `stale` | `STALE` | write `values` (includes `ShelvedCancelledType=inferred`); **no ref by design** — it is an inference |
 | `unclear` | `UNRESOLVED` | no edit; see notes |
 
 Merge-time QC guarantees (enforced by `scripts/merge_deepsweep_shards.py`): no
 `proposed_ref` without a passing `ok && contains_value` verification; a `change` with
 zero verified refs is downgraded to `unclear`; a `stale` shelved/cancelled inference
-always carries `ShelvedCancelledType=Presumed`.
+always carries `ShelvedCancelledType=inferred`.
 
 **GOTCHA — re-running the merge is destructive when a leg was enriched after its first
 merge.** `merge_deepsweep_shards.py` regenerates every FILL/VALIDITY/STATUS/ROUTE record

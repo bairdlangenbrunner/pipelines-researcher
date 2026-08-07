@@ -115,7 +115,7 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   change, not just ref work**: proposed ref(s) on the `[ref]` cell (tier-colored); corroborated
   FILL values and the status-review leg's change/stale verdicts (new `Status` + companion cells —
   `ShelvedCancelledType`, start years) **tier-colored on their value cells** (a stale verdict
-  with no ref is dormancy-inferred: red, `ShelvedCancelledType=Presumed`, no `[ref]` written).
+  with no ref is dormancy-inferred: red, `ShelvedCancelledType=inferred`, no `[ref]` written).
   A status change's corroborating ref(s) take over the `Status [ref]` cell (they must support
   the NEW value); an UNRESOLVED unit never blanks the prefilled current ref — it keeps the
   existing text, tinted red (needs-work); an untinted value cell is just the current sheet

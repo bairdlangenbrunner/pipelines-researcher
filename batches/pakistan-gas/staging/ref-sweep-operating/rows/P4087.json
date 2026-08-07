@@ -1,0 +1,93 @@
+{
+  "project_id": "P4087",
+  "pipeline_name": "Qadirpur Gas Pipeline",
+  "sheet_row": 2085,
+  "wiki": "https://www.gem.wiki/Qadirpur_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change needed to existence/classification/length/diameter/owner/status/fuel; add SNGPL ref to Status, Fuel, PipelineType, Length, Diameter, Owner [ref] cells (proposed below)",
+      "researcher_notes": "gem.wiki fetch for this row returned an empty/failed harvest this run (Cloudflare block per scope notes) and the sheet's ref cells were already all MISSING_REF, so this is entirely fresh research, not re-verification of an existing cite. Found SNGPL's own current transmission-system province-wise breakdown page (https://www.sngpl.com.pk/web/ -> Transmission System -> Province-Wise Transmission Breakup, stated 'as of 30-06-2025'). Its Sindh-province table lists a row 'QADIRPUR LINE | 30-inch | 53.13 km' -- an EXACT match to GEM's current LengthKnown=53.13/km and Diameter=30/in for P4087. The same table also independently lists 'QADIRPUR LINE | 36-inch | 53.14 km' and 'QADIRPUR LINE (LNG PHASE-II) | 42-inch | 53.14 km' immediately adjacent -- exact matches to roster siblings P4088 and P4089 respectively. This resolves the duplicate-suspicion check raised by the near-identical naming/length: these are three genuinely distinct, SNGPL-confirmed PARALLEL lines from the same Qadirpur origin (mainline + loopline + a later LNG-Phase-II capacity addition, each a separate physical pipe at a different diameter), not a relabel/segment double-count of one pipe. The page sits under SNGPL's own 'Transmission System' navigation section (not distribution/gathering), confirming PipelineType=transmission is correct -- this is a trunk line into SNGPL's core grid, not a field gathering line. Because it is SNGPL's own current network table it also directly supports Status=operating, Fuel=Gas, and Owner1=SNGPL 100% (this is literally SNGPL's own asset on SNGPL's own current-network page). CAVEAT: this is one strong primary source (the owner/operator itself), not two independent origins -- WebSearch was exhausted session-wide (200/200 budget) and general search engines (Bing/DuckDuckGo/Ecosia/Marginalia) returned garbage/unrelated content when fetched directly, and OGRA's site 403'd, so I could not reach a second, non-SNGPL corroborating source this run despite trying. Tier is therefore medium, not high, pending a second source (an OGRA State-of-Industry report or an SNGPL/OGDCL annual report PDF would be the next things to try). Wikipedia's Sui Northern Gas Pipelines and Qadirpur gas field articles were checked and do not mention this specific line.",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "verify the Bhong/Punjab endpoint specifically (e.g. against SNGPL's Transmission Network Map image) before treating it as fully confirmed",
+      "researcher_notes": "GEM records EndLocation=Bhong / EndState/Province=Punjab, i.e. this line is recorded as crossing from Sindh into Punjab. SNGPL's province-wise breakdown, however, lists the 53.13 km/30in 'QADIRPUR LINE' entirely inside its SINDH-province table (distinct from a separate, shorter 'QADIRPUR - AC-1X LINE' listed in the PUNJAB table at 17.11/16.88/17.13 km for the 30/36/42in lines respectively). This could simply reflect SNGPL's provincial accounting convention (attributing a cross-border line to its originating province) rather than a real error, or it could mean GEM's Bhong/Punjab endpoint actually describes what SNGPL books separately as the Punjab-side 'AC-1X' continuation. I could not resolve which with the sources available this session (search engines non-functional via WebFetch, OGRA blocked). Flagging as an open, unresolved endpoint detail rather than an affirmative error -- nothing found actively contradicts Qadirpur(Sindh)->Bhong(Punjab), but nothing directly confirms the Bhong terminus either.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "Status [ref]", "value_cols": ["Status"],
+      "primary_value_col": "Status", "values": {"Status": "operating"}, "primary_value": "operating",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Listed on SNGPL's current (as-of 30-06-2025) transmission-system province breakdown -> operating."
+    },
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "Fuel [ref]", "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel", "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Part of Sui Northern GAS Pipelines Ltd's gas transmission network."
+    },
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "PipelineType [ref]", "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType", "values": {"PipelineType": "transmission"}, "primary_value": "transmission",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Listed under SNGPL's 'Transmission System' section, not distribution/gathering -- confirms trunk-line classification."
+    },
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "Length [ref]", "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown", "values": {"LengthKnown": "53.13", "LengthKnownUnits": "km"}, "primary_value": "53.13",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "SNGPL table row 'QADIRPUR LINE | 30in | 53.13 km' is an exact match to GEM's value. Single strong source -> medium tier."
+    },
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "Diameter [ref]", "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter", "values": {"Diameter": "30", "DiameterUnits": "in"}, "primary_value": "30",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Same 'QADIRPUR LINE | 30in | 53.13 km' row confirms diameter as well as length."
+    },
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "Owner [ref]", "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1", "values": {"Owner1": "Sui Northern Gas Pipelines Ltd (SNGPL)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Northern Gas Pipelines Ltd (SNGPL)",
+      "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "This is SNGPL's own asset, listed on SNGPL's own current network page -- direct confirmation of 100% SNGPL ownership."
+    },
+    {
+      "segment_name": "", "sheet_row": 2085, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Qadirpur", "StartState/Province": "Sindh", "EndLocation": "Bhong", "EndState/Province": "Punjab"},
+      "primary_value": "Qadirpur",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": true, "source_language": "en",
+      "researcher_notes": "SNGPL's table confirms a Qadirpur-origin line in its Sindh province section but does not name 'Bhong' or otherwise state the Punjab-side terminus, so the End endpoint specifically remains unconfirmed by this source. Not fabricating a ref for the endpoint; leaving unresolved rather than pairing a ref that doesn't actually support 'Bhong'."
+    }
+  ],
+  "summary": "P4087 (Qadirpur Gas Pipeline, 53.13km/30in) confirmed operating/transmission/SNGPL-owned via an exact match on SNGPL's own current (30-06-2025) province-wise transmission table, which also confirms P4088/P4089 are genuinely separate parallel lines (not duplicates of P4087); Bhong/Punjab endpoint and a second independent source remain open (search tools were degraded this session)."
+}

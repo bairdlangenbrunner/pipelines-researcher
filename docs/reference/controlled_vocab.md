@@ -17,15 +17,21 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 | `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)`. **Unbuilt rows cap at `medium`** — see below |
 | `PipelineType` | `transmission`, `gathering`, `distribution` |
 
-## Title Case fields (the exceptions)
+## The remaining vocab fields
+
+**Corrected 2026-08-07.** This table previously called these "Title Case fields" and
+gave `Presumed` / `Confirmed` / `Yes`. That was wrong on both counts — re-derived from
+the live gas and oil tabs, the columns are lowercase, and the shelved/cancelled value is
+the word **`inferred`**, not `Presumed`, which appears nowhere in either tracker.
+`FIDStatus` is the only genuinely capitalized one.
 
 | Field | Allowed values | Notes |
 |---|---|---|
-| `DelayType` | `Presumed`, `Confirmed` | |
-| `ShelvedCancelledType` | `Presumed`, `Confirmed` | `Presumed` for a GEM-rule-inferred status change (no fabricated URL); `Confirmed` when a source states it |
-| `FIDStatus` | `Pre-FID`, `FID` | only populated when `Status = proposed` |
-| `Delayed` | `Yes` | leave **blank** if not delayed — do **not** enter `No` |
-| `Opposition` | `Yes`, `No` | |
+| `DelayType` | `inferred`, `confirmed` | live counts: 114/138 gas, 37/41 oil (one stray `Assumed` in gas is a data error) |
+| `ShelvedCancelledType` | `inferred`, `confirmed` | `inferred` for a GEM-rule dormancy change (no fabricated URL); `confirmed` when a source states it. Live: 84/83 gas, 63/52 oil |
+| `FIDStatus` | `Pre-FID`, `FID` | only populated when `Status = proposed`; genuinely capitalized like this |
+| `Delayed` | `yes` | leave **blank** if not delayed — do **not** enter `no`. Live: 254 gas / 78 oil, all lowercase |
+| `Opposition` | `yes`, `no` | **the sheet is genuinely inconsistent here** — gas holds `no` 66 / `Yes` 46 / `yes` 29 / `No` 26, oil is uniformly lowercase. Write lowercase; do not mass-restyle existing cells without Baird's say-so |
 
 ## Cost units (all `*CostUnits` fields)
 
@@ -77,8 +83,8 @@ it above `medium`.
 
 - No development updates **2 years** post-proposal → `shelved`.
 - No development updates **4+ years** post-proposal → `cancelled`.
-- Confirmed cancelled by owner/news → `cancelled` + `ShelvedCancelledType = Confirmed`.
-- Inferred by the GEM dormancy rule → `ShelvedCancelledType = Presumed` (no fabricated URL).
+- Confirmed cancelled by owner/news → `cancelled` + `ShelvedCancelledType = confirmed`.
+- Inferred by the GEM dormancy rule → `ShelvedCancelledType = inferred` (no fabricated URL).
 - Date consistency: `Status = operating` ⇒ a `StartYear1` should exist;
   `Status = cancelled` ⇒ a `CancelledYear` (or `StopYear = presumed` for the 4-year rule).
 

@@ -123,7 +123,7 @@ EPSG:4326 is the standard projection.
   If not → length = 0, diameter = blank.
 - **URL verification:** Never fabricate source URLs. If a URL can't be confirmed, describe the
   source precisely or flag as inferred/presumed. Inferred status changes →
-  ShelvedCancelledType = Presumed, no fabricated URL.
+  ShelvedCancelledType = inferred, no fabricated URL.
 - **Corroboration & confidence (near-requirement):** For every material data point, TRY to find
   2+ *independent* sources that corroborate one another rather than relying on a single one.
   Confidence follows source count — 2+ independent corroborating sources → high; one source →

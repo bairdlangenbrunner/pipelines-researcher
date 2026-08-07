@@ -182,6 +182,51 @@ datasets:
       # 66/78 rows. Dataset-scoped so committed Libya/Iraq runs reproduce unchanged.
       geoarea_weight: 0.30
 
+  # --- Pakistan, gas (2026-08-07): 9 features, NONE named, 4 carry an operator
+  #     (Sui / SSGC). Unlike Iraq/Egypt the geometry axis is ALIVE here — all 70
+  #     GEM Pakistan gas rows are routed (RouteType 'Mapped route' on every row;
+  #     55 'very low', 8 'low', 7 'medium') — so no geoarea_weight override is set
+  #     and the source-level weights apply unchanged. Three features are overlapping
+  #     merges of ways 1175010500/501/502 (Sui) and will read as near-duplicates.
+  - name: gas_pk
+    scraped_date: "2026-08-07"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-pk-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Pakistan"
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    matching:
+      # Dead-axes condition, Pakistan flavour (2026-08-07): NONE of the 9 features is
+      # named, and although 100% carry geometry AND all 70 GEM rows are routed, the
+      # extract totals just 73 km with 6 features under 3 km — nominally-live geometry
+      # that is substantively uninformative (a 0.5 km stub cannot score IoU against a
+      # 200 km line). First pass: 0 overlaps, max composite 0.2212 vs a 0.45 threshold.
+      # Admin area is the genuinely live axis — GEM fills Start/EndState/Province on
+      # 68 of 70 rows and NE admin-1 has 8 Pakistan units. Dataset-scoped, so committed
+      # Libya/Iraq/Egypt runs reproduce unchanged. Threshold NOT lowered.
+      geoarea_weight: 0.30
+
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so
   # the engine default name_weight 0.30 would sink real matches. Geometry is the

@@ -1,0 +1,157 @@
+{
+  "project_id": "P4015",
+  "pipeline_name": "Kadanwari-Malir-Karachi Gas Pipeline",
+  "sheet_row": 2018,
+  "wiki": "https://www.gem.wiki/Kadanwari-Malir-Karachi_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "attach the two SSGC primary-source refs below to Status/Fuel/PipelineType/Capacity/Length/Diameter/Owner [ref] cells; keep hunting for a fully independent (non-SSGC) confirmation such as an OGRA State-of-Industry table when access to ogra.org.pk stops 403'ing",
+      "researcher_notes": "gem.wiki fetch for this row returned HTTP 403 (Cloudflare) so wiki_citations.json is empty and I could not read the sheet's own cited sources for this row -- treated as no existing sourcing, per scope notes, not as an existence flag on its own. Went straight to open-web research on SSGC (the utility that owns and operates virtually all of the Indus Left Bank/Right Bank transmission grid in Sindh). Found the pipeline named explicitly, with an internal designation, on SSGC's own official 'Gas Transmission' network page (ssgc.com.pk/urdu/?page_id=95, which despite the 'urdu' URL segment renders in English): 'Kadanwari-Malir-Karachi Pipeline', designation 'KDN Pipeline', 24-in/20-in diameter x 412 km, available capacity 180 mmscfd, listed under the Indus Left Bank Pipeline System (A1) -- an EXACT match to every current GEM spec value (Length 412 km, Diameter 24,20 in, Capacity 180 MMcf/d, PipelineType transmission, Fuel Gas, Owner1 Sui Southern Gas Co (SSGC) 100%, endpoints Kadanwari,Sindh -> Karachi,Sindh). Found the identical figures again on a second, separately-dated SSGC document, 'Gas Transmission Capacities Utilization as on June 30, 2018' (ssgc.com.pk/web/?page_id=5597): same '24-in/20-in dia. x 412 Km KDN Pipeline Kadanwari-Malir-Karachi' / 180 mmscfd line item, alongside the neighboring Indus Left Bank segments (ILBP main line Nawabshah-Karachi 290km/16in/80mmscfd = P4014; Sind Univ-FJFC loopline 116km/24in/60mmscfd = P4016) and Indus Right Bank segments (Dadu-Malir-Karachi 250km/20-18in/400mmscfd = P4019; Bajara-Karachi loopline 200km/24in/240mmscfd = P4020) -- all of which independently corroborate the ROSTER'S neighboring rows too and rule out P4015 being a mislabeled duplicate of any of them: each has a distinct designation, length, diameter and capacity in SSGC's own table, and P4015/KDN sits on the Left Bank system while P4019/P4020 sit on the Right Bank system despite the similarly-worded 'Malir-Karachi' name fragment. Per confidence_tiers.md, a single primary/regulatory source (the operating utility's own network table) qualifies for HIGH tier on its own; here that primary source appears in two separately-published SSGC documents that agree with each other and with GEM to the exact figure, which is about as strong as attribution/spec confirmation gets for a domestic Pakistani gas line -- but flagging as caveat rather than a clean pass because both documents share one origin (SSGC itself), so it is not a second INDEPENDENT (different-origin) source in the strict corroboration sense; a regulator (OGRA) report that separately names 'Kadanwari' facility SCADA monitoring turned up in search snippets but ogra.org.pk returned HTTP 403 to every fetch attempt (both WebFetch and url_verifier.py), so it could not be verified/cited. Existence: confirmed (named + specced by the pipeline's own operator). Classification: confirmed -- explicitly a transmission trunk line within the Indus Left Bank Pipeline System, not a gathering/feeder line. Duplicate: none found -- distinct designation/specs from every roster neighbor. Attribution: confirmed -- SSGC 100% owner/operator, matches. Spec: confirmed exactly (length, diameter, capacity all match to the exact figure).",
+      "proposed_refs": [
+        "https://www.ssgc.com.pk/urdu/?page_id=95",
+        "https://www.ssgc.com.pk/web/?page_id=5597"
+      ],
+      "tier": "high",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95", "https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true},
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SSGC lists the KDN Pipeline (Kadanwari-Malir-Karachi) as a current, in-service line in its own transmission network table and in a dated 2018 capacity-utilization report; both entail an operating status."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Sui Southern Gas Co's own gas transmission page lists this as a natural gas pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95", "https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true},
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Listed under SSGC's 'Gas Transmission' page and network as part of the Indus Left Bank Pipeline (transmission) System, not a gathering/distribution line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "180.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "180.00",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95", "https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true},
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both SSGC documents state 'available capacity 180 mmscfd' for the KDN Pipeline, matching GEM's 180 MMcf/d exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "412.00", "LengthKnownUnits": "km"},
+      "primary_value": "412.00",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95", "https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true},
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both SSGC documents state '412 Km' for the KDN Pipeline (Kadanwari-Malir-Karachi), matching GEM exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24, 20", "DiameterUnits": "in"},
+      "primary_value": "24, 20",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95", "https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true},
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both SSGC documents state '24-in/20-in dia.' for the KDN Pipeline, matching GEM's dual-diameter value exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2018,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Southern Gas Co (SSGC)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Southern Gas Co (SSGC)",
+      "proposed_refs": ["https://www.ssgc.com.pk/urdu/?page_id=95", "https://www.ssgc.com.pk/web/?page_id=5597"],
+      "verifications": [
+        {"url": "https://www.ssgc.com.pk/urdu/?page_id=95", "ok": true, "contains_value": true},
+        {"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This is SSGC's own pipeline, listed on its own transmission network pages -- SSGC is confirmed sole owner/operator (100%)."
+    }
+  ],
+  "summary": "P4015 confirmed real, correctly classified, correctly attributed, and spec-exact (412 km, 24/20 in, 180 MMcf/d, SSGC 100%) against SSGC's own 'KDN Pipeline' designation in two separate official network documents; no duplicate found against the 63-row roster; flagged confirmed (caveat) only because both sources share the SSGC origin and a fully independent regulator confirmation (OGRA) could not be fetched (403)."
+}

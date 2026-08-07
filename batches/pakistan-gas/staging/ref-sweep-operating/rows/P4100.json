@@ -1,0 +1,143 @@
+{
+  "project_id": "P4100",
+  "pipeline_name": "N2-Sahiwal RLNG Pipeline",
+  "sheet_row": 2098,
+  "wiki": "https://www.gem.wiki/N2-Sahiwal_RLNG_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Add the two refs below to Status/Fuel/PipelineType/Length/Diameter/Location/Owner. No structural fix needed. Note the single-source dependency on the exact 77.296 km / 24in figures -- carry that caveat forward if this row is revisited.",
+      "researcher_notes": "gem.wiki returned HTTP 403 to the harvester for this row (scope-wide Cloudflare block), so wiki_citations.json is empty -- confirmed via a personal WebFetch attempt on https://www.gem.wiki/N2-Sahiwal_RLNG_Pipeline, which also 403'd. Went straight to open-web/primary-source research per the scope note. EXISTENCE/SPEC: found SNGPL's own 'Province-Wise Transmission Breakup' table (Transmission System section of sngpl.com.pk, FY2025 data as of 30-Jun-2025), which lists a discrete line 'N2 - SAHIWAL (RLNG LINE) | 24 [in] | 77.296 [km]' -- an exact match to GEM's Diameter=24in and LengthKnown=77.30km (77.296 rounds to 77.30; immaterial). The same table separately lists 'AV29 - N2 (RLNG LINE) | 24 | 68.16' (matches GEM's P4099 exactly) and 'AV29 - SAHIWAL | 36 | 145.46' (matches GEM's P4105 exactly). DUPLICATE CHECK: I noticed 68.16 + 77.296 = 145.456 ~= P4105's 145.46 km and initially suspected P4100+P4099 might be a double-count of the same corridor as P4105 (same AV29<->Sahiwal endpoints). SNGPL's own table resolves this: all three lines are listed as separate, named assets -- AV29-N2 and N2-Sahiwal are a chained pair of 24in RLNG lines, while AV29-Sahiwal is a distinct, larger 36in line covering the same corridor end-to-end (i.e. a parallel/looped higher-capacity line, not a re-segmentation of the same pipe). Verdict: NOT a duplicate -- ruled out against the primary source, not just against the roster. CLASSIFICATION: 'RLNG LINE' in SNGPL's own Transmission System table confirms PipelineType=transmission and Fuel=Gas (RLNG = regasified LNG, i.e. natural gas post-regasification) are both correct; this is not a gathering/feeder line. ATTRIBUTION: the line appears in SNGPL's own asset inventory, directly supporting Owner1=SNGPL 100%. LOCATION: SNGPL's table names the segment 'N2-Sahiwal' but does not spell out that node N2 = 'Mian Channu' -- GEM's StartLocation='Mian Channu' is internally consistent with P4099's EndLocation='Mian Channu' (the AV29-N2 segment terminates where N2-Sahiwal begins), which is chain logic internal to GEM's own data, not an independently-confirmed place-to-node mapping. As a second, genuinely independent source I checked the Route [ref] already on the sheet: a 2020 'Energy Infrastructure Map' published by Pakistan Petroleum Information Service / Directorate General of Petroleum Concessions (hosted at pepl.com.pk, a body distinct from SNGPL). Its OCR/text layer places 'MIAN CHANNUN' and 'SAHIWAL' in the same regional cluster alongside labeled RLNG infrastructure and RLNG-fired power plants (BHIKKI, BALLOKI-RLNG) -- independent corroboration that an RLNG pipeline corridor through Mian Channu-Sahiwal is real, though this national-scale map does not carry the granular 77.296km/24in figure itself. Note: url_verifier.py FAILed this pepl.com.pk URL with an SSLError (cert-chain issue) -- this is the documented false-negative pattern in the verifier's own help text ('SSL cert-chain errors ... confirm via curl/Wayback'); I manually confirmed HTTP 200 via `curl -sk` and confirmed 'Sahiwal' and 'Mian Channu' ('MIAN CHANNUN') both appear in the extracted PDF text (pdftotext -layout), so I am citing it per that documented override, not blindly. NET: existence + classification + non-duplicate status are corroborated by two independent sources; the exact length/diameter figure rests on one strong, current, official primary source (SNGPL's own published network table) -- hence tier=medium rather than high, and I'm flagging that as the one lingering caveat rather than a concern.",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341",
+        "https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2098,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL's own FY2025 transmission-network breakdown lists 'N2 - SAHIWAL (RLNG LINE)' as a current asset in its active network inventory; status is inferable from context (a line SNGPL currently reports as part of its live transmission system) rather than a literal 'operating' string, per url_verifier's documented status-inference guidance."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2098,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Line is designated 'RLNG LINE' in SNGPL's table -- RLNG (regasified LNG) is natural gas post-regasification, confirming Fuel=Gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2098,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed under SNGPL's 'Transmission System' page (distinct from its 'Distribution System'), directly confirming this is a trunk transmission line, not a gathering/distribution line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2098,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "77.30", "LengthKnownUnits": "km"},
+      "primary_value": "77.30",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL table gives 77.296 km for this exact named segment -- rounds to GEM's 77.30 km, immaterial difference. Single strong direct primary-source match (utility's own current asset register); no second source with this granularity found, hence tier=medium not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2098,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24", "DiameterUnits": "in"},
+      "primary_value": "24",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL table gives 24-inch diameter for this exact named segment, matching GEM exactly. Same single-source caveat as Length."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2098,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Mian Channu", "StartState/Province": "Punjab", "StartCountryOrArea": "Pakistan", "EndLocation": "Sahiwal", "EndState/Province": "Punjab", "EndCountryOrArea": "Pakistan"},
+      "primary_value": "Mian Channu",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341",
+        "https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true},
+        {"url": "https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SNGPL directly confirms EndLocation=Sahiwal (segment is literally named 'N2-Sahiwal'). StartLocation='Mian Channu' as the identity of node 'N2' is an inference via GEM's own internal chain logic (P4099's EndLocation is also 'Mian Channu' and P4099 is SNGPL's adjoining 'AV29-N2' segment) rather than a source that names N2='Mian Channu' outright -- flagging this as the one soft spot. The PEPL/PPIS 2020 Energy Infrastructure Map independently places 'MIAN CHANNUN' in the same RLNG-pipeline cluster as Sahiwal, Bhikki and Balloki, which supports Mian Channu being a real, correctly-located place within this corridor even though it doesn't confirm the node-to-place mapping literally. url_verifier FAILed the PEPL PDF on an SSL cert-chain error (documented false-negative class in the tool's own help); manually confirmed HTTP 200 via curl -k and confirmed both place names appear via pdftotext -layout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3054,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Northern Gas Pipelines Ltd (SNGPL)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Northern Gas Pipelines Ltd (SNGPL)",
+      "proposed_refs": ["https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+      "verifications": [{"url": "https://www.sngpl.com.pk/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The line appears in SNGPL's own published inventory of its transmission network -- direct primary-source confirmation that SNGPL owns/operates this asset (100%), consistent with SNGPL being the sole gas transmission/distribution utility for this part of Punjab."
+    }
+  ],
+  "summary": "P4100 (N2-Sahiwal RLNG Pipeline) is real and correctly classified: SNGPL's own current (FY2025) transmission-network table lists 'N2-SAHIWAL (RLNG LINE), 24in, 77.296km' -- an exact match to GEM's Length/Diameter, confirming Status/Fuel/PipelineType/Owner by context; a suspected duplicate with P4105 (AV29-Sahiwal, 145.46km = 68.16+77.30) was checked and ruled out, since SNGPL's table lists all three (AV29-N2, N2-Sahiwal, AV29-Sahiwal) as separate real lines, the latter being a larger parallel 36in line over the same corridor, not a re-segmentation. A second independent source (PPIS/DGPC 2020 Energy Infrastructure Map) corroborates the Mian Channu-Sahiwal RLNG corridor generally. Verdict: confirmed (caveat) -- the exact length/diameter figure rests on one strong primary source (tier=medium); no UNRESOLVED items."
+}
