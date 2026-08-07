@@ -239,6 +239,30 @@ Routes-repo merge `445b3613`; sheet backup `notes/sheet-write-2026-08-06-libya-g
     and fix `Diameter [ref]` — it is a `google.com/url?q=` redirect wrapper, not the
     bare PDF URL.
 
+## Applied 2026-08-07 — "Intesar" → "Intisar" (spelling)
+The field is **Intisar**; GGIT carried the "Intesar" misspelling on 7 Libya gas rows
+(0 oil rows). Authorized write, **12 value cells across 6 rows** applied and verified —
+`PipelineName` / `StartLocation` / `EndLocation` / `RouteNotes` on P1856, P1858, P1870,
+P1873, P6714, P8043 (P1861 needed no value change; its name is already
+"Farigh-Intisar 103A"). Backup: `notes/sheet-write-2026-08-07-libya-gas-intesar-intisar.csv`.
+The operators/owners tab's 13 hits are **XLOOKUP formulas** off the gas tab — they
+auto-update and must never be written.
+
+- **The wiki half is BLOCKED, not done.** Five pages still need moving
+  (`Intesar-Brega` / `Bu-Attifel-Intesar` / `Faregh-Intesar` / `Intesar-Sahel` /
+  `Jakhira-Intesar` `_gas_pipeline` → the `Intisar` spellings, redirects left behind),
+  and **column D on all 7 rows is deliberately untouched until they land** — writing the
+  new titles first would create red links. As of 2026-08-07 gem.wiki returns **HTTP 403
+  `cf-mitigated: challenge` on every path** including `robots.txt`, from `requests`,
+  `urllib`, curl with a browser UA, and WebFetch — a site-wide Cloudflare managed
+  challenge, not a credential problem (`gem-wiki/.env` is present). `gemwiki.py` also has
+  no `move` helper; `action=move` needs adding.
+- **Non-spelling defects found in passing** (not fixed): **P1856** "Intisar-Zueitina"
+  links to `Intesar-Brega_gas_pipeline` — the wrong page, shared with P8043;
+  **P1858 and P6714** are both "Bu-Attifel-Intisar Gas Pipeline" on one wiki page and
+  look like duplicate rows; **P6714's** column D has a leading space; and the wiki title
+  says "Faregh" where the tracker says "Farigh" (P1861).
+
 ## Open items
 - **Cluster A — the structural double-count (Baird's ruling needed).** P0483 "Libya
   Coastal Gas Pipeline" appears to aggregate its own member segments P1862 / P1863 /
