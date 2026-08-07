@@ -366,7 +366,21 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   A/B/C = 0; 4 documented gate FAILs applied deliberately (3 = suspected
   sheet-length defects). **Only 4 partials still pending** (P8026, P8022/P8023,
   P8035 = duplicate of P8013), merged with the 13 July partials into the
-  partials-only workbook `…_20260805_1701_ET_…route-creation-pending.xlsx`.**
+  partials-only workbook `…_20260805_1701_ET_…route-creation-pending.xlsx`.
+  **+ §8 pass 2026-08-07 on researcher `NA`'s ten NEWEST rows (P8050–P8059, all
+  `no route`, disjoint from the 17 pending partials): 9 candidates + 1 partial
+  STAGED NOT APPLIED, workbook `…_20260807_1712_ET_…route-creation.xlsx`;
+  routes-repo QC 4 pass / 5 warn / 0 fail. Recency came from walking daily snapshots
+  for first-non-blank `PipelineName` — P8000–P8099 were pre-allocated blank on
+  07-15, so PID order is NOT a recency signal; and `NA` is in pandas' default
+  `na_values`, so read with `keep_default_na=False, na_values=[]` or her 423 gas
+  rows vanish. DO NOT APPLY P8057/P8059/P8052 — geometry contradicts their own
+  `LengthKnownKm`. Ten-row data-quality escalation →
+  `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`: 5 of 10 rows cite
+  EGAS Annual Report 2018 for facts it does not contain, six lengths conflict with
+  their own endpoints, P8058 likely belongs to the P3930 (New Administrative
+  Capital) family not P8040, P8055's "Trans Gulf … II" lineage to P8013 is false.
+  Routes to Update, not §8.**
   Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not

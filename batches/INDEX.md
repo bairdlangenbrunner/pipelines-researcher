@@ -36,11 +36,13 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/ref-sweep-operating` — rows=50 fills=119 updates=0 status-pending=0 refs(REFS_ADDED=240, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none)
 - `staging/route-creation` [route-creation] — rows=55 fills=0 updates=0 status-pending=0 refs(none) routes=55 new(none)
 - `staging/route-creation-20260804` [route-creation] — rows=27 fills=0 updates=0 status-pending=0 refs(none) routes=27 new(none)
+- `staging/route-creation-20260807` [route-creation] — rows=10 fills=0 updates=0 status-pending=0 refs(none) routes=10 new(none)
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260805_1701_ET_egypt-gas_route-creation-pending.xlsx`
+- `deliverables/pipelines_batch_20260807_1712_ET_egypt-gas_route-creation.xlsx`
 - `archive/` — 11 superseded/applied file(s)
 
 ## iran-gas
@@ -110,6 +112,17 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_libya-gas_reconciliation-gulfpub.xlsx`
 - `archive/` — 3 superseded/applied file(s)
+
+## pakistan-gas
+
+- `staging/annual` — rows=6 fills=3 updates=0 status-pending=4 refs(DEAD_LINK=9, REFS_ADDED=29, REVERIFIED=13, UNRESOLVED=9) routes=0 new(none)
+- `staging/cancelled-review` — rows=1 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=8, UNRESOLVED=2) routes=0 new(none)
+- `staging/qc` [assembled packet: handoff] — rows=70 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/recon-gulfpub-20260807` — recon inputs
+- `staging/recon-osm-20260807` — recon inputs
+- `staging/ref-sweep-operating` — rows=63 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=108, UNRESOLVED=351) routes=0 new(none)
+- `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-osm.xlsx`
 
 ## saudi-arabia-gas
 

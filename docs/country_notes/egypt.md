@@ -309,6 +309,58 @@ Baird re-graded its row to `medium` on the sheet).
   applied P8013** (merge/retire, don't draw). P8040 name flag: `PipelineName` says "Damanhur", sheet's own
   StartLocation + Arabic name say **Dahshour** — rename recommended.
 
+## Open items — §8 route creation 2026-08-07 (NA's newest rows P8050–P8059; staged NOT applied)
+
+Baird-directed: research the pipelines `NA` recently added to the backend and draw
+candidate routes where they read `no route`. Scope is the **ten newest `NA` gas rows**
+— P8050–P8059, SheetRows 4311–4322, all `no route`, none previously worked (the 17
+July/August partials in `…_20260805_1701_ET_…route-creation-pending.xlsx` are a
+disjoint set). Staging `batches/egypt-gas/staging/route-creation-20260807/`; workbook
+`…_20260807_1712_ET_egypt-gas_route-creation.xlsx`.
+
+**Recency was determined by walking the daily `data/GGIT_gas_snapshot_*.csv` files for
+the first date each row's `PipelineName` went non-blank — NOT by ProjectID.** P8000–P8099
+were pre-allocated as blank placeholder rows on 2026-07-15, so PID order says nothing
+about when a row was actually filled. Researcher code read from **col J**, never inferred.
+Gotcha worth remembering: the literal code `NA` is in pandas' default `na_values`, so a
+plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
+`keep_default_na=False, na_values=[]`.
+
+- **9 candidates + 1 `ROUTE_PARTIAL` staged.** Rung mix: 2 ENTSOG-traced `medium`
+  (P8057, P8059), 7 endpoints great-circle `very low` (P8050 P8051 P8052 P8053 P8054
+  P8056 P8058), 1 partial (P8055). Internal gate 7 PASS / 2 FAIL; the routes-repo's own
+  `qc_routes.py` gives **4 pass / 5 warn / 0 fail** — every WARN is a length flag, and in
+  each case the *sheet length* is the suspect value, not the geometry.
+- **ENTSOG was adjudicated per PID against the overlay PNGs, not accepted wholesale.**
+  Accept only where BOTH endpoint snaps fall inside ENTSOG's measured Egypt error
+  (median 4.2 km / p90 13 km): P8057 (2.9/1.4 km) and P8059 (0.0/2.0 km). Rejected for
+  P8051 (14.1 km), P8054 (14.4 km), P8056 (18.6 km) — the network path stops short of the
+  real terminus, so a chord beats it; for P8050 the path is 1.9× the sheet length and
+  swings well west; for P8058 the path fits but the *endpoint identity* is contested, so a
+  `medium` grade would overstate the evidence. North Sinai (P8052/P8053) has no ENTSOG
+  coverage at all.
+- **DO NOT APPLY P8057, P8059 or P8052 until their length question is settled** — their
+  geometry contradicts their own `LengthKnownKm`, and applying would move `RouteAccuracy`
+  off `no route` for a row with a known-bad fact.
+- **Data-quality escalation covering all ten rows:**
+  `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. Headline: **5 of 10 rows
+  cite the EGAS Annual Report 2018 for facts that report does not contain** (P8051 P8052
+  P8053 P8057 P8059, full-text searched by three independent agents); six rows have
+  lengths that conflict with their own endpoints (P8057 and P8052 impossibly so — the
+  chord exceeds the stated pipe length; P8059 overshoots 5.3×); P8057's `EndPrefecture`
+  wrongly repeats its `StartLocation`; **P8058 is probably the second line of the P3930
+  New-Administrative-Capital corridor, not a sequel to P8040** (its own Arabic name and
+  the seed press release both say so, and the geometry agrees) — adjudicate and probably
+  rename before applying; P8055's "Trans Gulf … II" name asserts a false lineage to P8013
+  (a 12″ Gulf-of-Suez oilfield line) when GASCO calls it "Duplication of the Trans-Sinai
+  pipeline". These route to **Update**, not §8.
+- P8057's cited ministry release was fetched and text-searched here: 4 hits for ازدواج,
+  zero for مسطرد/التبين — **removed** from its proposed `Route [ref]` rather than carried
+  as an unsupported citation.
+- Incidental pre-existing anomalies (not `NA`'s rows, logged in the escalation): **P3929**
+  carries 68.5 km, which is EGAS-2018's figure for the *Dahshur–El Wasta* segment (P8054's
+  line); **P6699 and P6700** both carry exactly 150.00 km.
+
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 
 Wiki-parser spot check 5/5, route geodesic recompute matched, recalc clean.

@@ -1,0 +1,97 @@
+[
+  {
+    "project_id": "P8050",
+    "resolved": true,
+    "start": {
+      "name": "Rashid (Rosetta)",
+      "lon": 30.4184280,
+      "lat": 31.4013811,
+      "coord_basis": "OSM place node 768815269 for Rashid/Rosetta town (wikidata Q243699; alt_name/int_name confirm Rosetta=Al Rashid=Rashid). No named gas facility could be found for this line's Rashid-side terminus beyond the town itself, so this is a town-level anchor (reduced accuracy) per the brief's allowance -- matches sheet StartLocation='Roseta' exactly.",
+      "evidence_url": "https://www.openstreetmap.org/node/768815269"
+    },
+    "end": {
+      "name": "Abu Hummus",
+      "lon": 30.3129485,
+      "lat": 31.1005864,
+      "coord_basis": "OSM place node 769122369 for Abu Hummus town (wikidata Q4165804/en:Abu Hummus). The World Bank RP1184 resettlement-plan document for the downstream P8051 line (Abu Hummus-Nubaria) independently describes 'the outlet of a gas collection unit at Abo Homos' as that line's origin -- i.e. the same junction this P8050 line terminates at -- but does not give the collection unit's own coordinates, so I anchored to the town center (reduced accuracy, town-level).",
+      "evidence_url": "https://www.openstreetmap.org/node/769122369"
+    },
+    "route_refs": [
+      "https://gate.ahram.org.eg/News/2343403.aspx",
+      "https://documents1.worldbank.org/curated/en/907721468038109523/pdf/RP1184v30REVIS0240201300Box377306B0.pdf"
+    ],
+    "corridor_desc": "Rashid (Rosetta) town, on the west bank of the Nile's Rosetta branch near its Mediterranean mouth, south/southwestward across Beheira governorate farmland to the Abu Hummus gas collection/junction point (which also feeds the downstream Abu Hummus-Nubaria line, P8051). No corridor detail was found for this specific segment (unlike P8051, which has a full turn-by-turn description in the WB RAP). Straight-line distance is 34.9 km vs. the sheet's stated 29.0 km (ratio 1.20x) -- plausible for a farmland feeder line with modest routing around field/canal boundaries, well under the ~1.4x concern threshold.",
+    "facts": {
+      "length_km": 29.0,
+      "diameter_in": 30,
+      "year": 2019,
+      "source": "Ahram Gate (gate.ahram.org.eg), 2019-12-30 Ministry of Petroleum year-end roundup: 'مشروع تأهيل خط رشيد / أبو حمص: من خلال تأهيل خط رشيد/ أبو حمص القائم بطول حوالي 29 كم... وتم تشغيله في فبراير 2019' -- 'Rashid/Abu Hummus line rehabilitation project: rehabilitating the EXISTING ~29 km Rashid/Abu Hummus line... brought into operation February 2019.' Confirms name, length (29 km), and that this is a pre-existing line (predates 2019), consistent with sheet's 29 km/30in and 'operating' status. NOTE: this Ahram piece explicitly attributes its figures to the Ministry of Petroleum, the same origin as the sheet's own petroleum.gov.eg refs -- so while it independently corroborates the NUMBERS, it is not a fully independent second SOURCE by the project's wire-story standard (both trace to one ministry statement); I could not find a second, genuinely independent source for the 29 km figure."
+    },
+    "flags": [],
+    "notes": "Endpoints resolved at town-level confidence (medium): both Rashid and Abu Hummus are well-identified named settlements matching the sheet's Start/End cells and the Arabic name (خط غاز رشيد-ابوحمص), but I could not pin down specific facility coordinates at either end (no named collection/metering station found for the Rashid side). Length/diameter/status are corroborated by an Ahram Gate article citing the Ministry of Petroleum, independent of the sheet's own petroleum.gov.eg ref in the sense of being a different outlet, though both ultimately trace to the same ministry statement -- so treat as medium, not high, confidence. Straight-line ratio (1.20x) is unremarkable and not flagged. Both cited URLs verified live (HTTP 200) via url_verifier.py; content was confirmed by manual read (pdftotext/HTML strip) rather than the tool's substring screen, which false-negatived on both (Arabic text not matching my English probe strings, and a large multi-topic World Bank PDF) -- documented false-negative categories per the tool's own docstring."
+  },
+  {
+    "project_id": "P8051",
+    "resolved": true,
+    "start": {
+      "name": "Abu Hummus (gas collection unit)",
+      "lon": 30.3129485,
+      "lat": 31.1005864,
+      "coord_basis": "OSM place node 769122369 for Abu Hummus town (wikidata Q4165804). World Bank RP1184 resettlement-plan document (the sheet's own Length [ref]) states this line 'starts from the outlet of a gas collection unit at Abo Homos' -- i.e. a specific facility at/near Abu Hummus, not just the town in general -- but gives no coordinates for the unit itself, so anchored to the town center (reduced accuracy).",
+      "evidence_url": "https://www.openstreetmap.org/node/769122369"
+    },
+    "end": {
+      "name": "Nubaria power station (Nubaria Combined Cycle Power Plant)",
+      "lon": 30.6667343,
+      "lat": 30.6992006,
+      "coord_basis": "OSM landuse=industrial way 218972673, named 'محطة كهرباء النوبارية المركبة' (Nubaria Combined Cycle Power Station), Beheira governorate. Matches the World Bank RAP's stated terminus 'the Nubaria power station' by name and administrative area, and is corroborated by a second, independent source (power-plant profile sites returned via web search: mindat.org 'Nubaria Power Station, Beheira Governorate, Egypt' and industryabout.com 'Nubaria III Gas Power Plant' -- both direct-fetch attempts to these two pages 403'd/DNS-failed from this environment, so I am relying on the search-result titles/snippets as the second corroboration, not full page content).",
+      "evidence_url": "https://www.openstreetmap.org/way/218972673"
+    },
+    "route_refs": [
+      "https://documents1.worldbank.org/curated/en/907721468038109523/pdf/RP1184v30REVIS0240201300Box377306B0.pdf"
+    ],
+    "corridor_desc": "Per the World Bank RP1184 resettlement-plan text (pp.4, section 'Abu Homos-Nubaria Gas Pipeline Broader Context'): starts at the Abo Homos gas collection unit outlet, extends SW ~400 m, turns SE running parallel to the ring road toward Basnatawy for 2.5 km, then extends south crossing El-Mahmoudiya Canal, the Cairo-Alexandria Railway, and the Cairo-Alexandria Road near the El-Azmaly estate; follows the eastern side of El-Khadra canal, then the Damanhour Canal eastward for 2.5 km, turns south 1 km crossing the Abdel Hamid canal and continuing along it 500 m; turns SE again following the Damanhour Canal on the east side of the Sharawa estate; crosses the road to Hosh Issa, runs parallel to the Khairy drain (west side) for ~15 km to a transformer station at El-Nagareen estate; crosses the Ferhash Canal eastward, turns south with the Abo Shousha Canal; crosses El-Hagar Canal and runs along its southern side for 11.5 km, then crosses back north before El-Haddayn estate; passes north of El-Ashraf, turns south to cross the Nubaria Canal and follows it 3 km, turns south again crossing the Alexandria-Embaba Railway, and reaches the Nubaria power station. Entire line is buried, with 8 valve rooms along the route. Straight-line endpoint distance is 55.96 km vs. the sheet's stated 65.00 km (ratio 1.16x) -- fully consistent with this documented, multiply-turning corridor.",
+    "facts": {
+      "length_km": 65.0,
+      "diameter_in": 32,
+      "year": null,
+      "source": "World Bank RP1184v30 (Abo Homos-Nubaria and Dahshour-Atfeeh Gas Pipelines resettlement policy framework): 'The planned pipeline is a 32\" diameter, 65 km long pipeline to transport natural gas from the Abo Homos collection unit to the Nubaria power station.' -- exact match to sheet's 65 km / 32in. Document is a 'REVIS' (revised) resettlement plan for a then-PLANNED line; no completion/operating date is given in the excerpted section, and I did not find a second independent source with a completion year (the sheet's own Status [ref] is the EGAS 2018 annual report, whose extracted text I full-text-searched and found no 'Abu Homos'/'Nubaria' line-item entry in the national-grid pipeline tables -- see notes)."
+    },
+    "flags": [
+      "citation-partial: the sheet's Status/Fuel/PipelineType [ref] (EGAS Annual Report 2018) was full-text-searched (pdftotext -layout, fetched via Wayback Machine since the live egyptoil-gas.com host is unreachable from this environment) for 'Abu Homos'/'Abo Homos'/'Nubaria' and no matching line-item was found in its national-grid pipeline tables (COMPLETED/UNDER CONSTRUCTION sections). This does not mean the pipeline doesn't exist -- the World Bank RAP independently and specifically documents it in detail -- but the EGAS 2018 report itself does not appear to be the actual source of the length/diameter figures for this row (those are more precisely and directly supported by the World Bank RAP, which the sheet already cites correctly as the Length [ref])."
+    ],
+    "notes": "High-confidence resolution. This is the best-documented PID in the group: the World Bank resettlement-plan PDF gives a detailed, named, turn-by-turn corridor description matching both endpoints (Abu Hummus collection unit -> Nubaria power station) and the exact stated length/diameter (65 km / 32in). The Nubaria power station identity is further corroborated by an OSM industrial-landuse tag naming it explicitly as the Nubaria Combined Cycle Power Station, plus web-search snippets from two independent power-plant databases (mindat.org, industryabout.com) confirming a 'Nubaria Power Station'/'Nubaria III Gas Power Plant' in Beheira governorate at that general location (I could not fetch either page's full content directly to pull their own coordinates -- both blocked/DNS-failed from this environment -- so this counts as secondary, not GPS-level, corroboration). Endpoint anchors are at town/facility-polygon level, not the precise pipeline tie-in point, since the RAP text does not give coordinates. Straight-line ratio (1.16x) matches the documented winding corridor well; not flagged as implausible."
+  },
+  {
+    "project_id": "P8059",
+    "resolved": true,
+    "start": {
+      "name": "Al Amreya (El Amreya, west Alexandria)",
+      "lon": 29.8015842,
+      "lat": 31.0121567,
+      "coord_basis": "OSM neighbourhood way 750048825 'مساكن العامرية' (Amreya housing/district), west Alexandria governorate. Town/district-level anchor (reduced accuracy) -- no specific named gas facility could be identified for the Ameriya-side terminus beyond the general Al Amreya industrial/residential area (which does host GASCO/EGPC facilities, e.g. Amreya refinery, butane plant, but none specifically tied to this line by any source I found).",
+      "evidence_url": "https://www.openstreetmap.org/way/750048825"
+    },
+    "end": {
+      "name": "Sidi Krir 3&4 Power Plant (InterGen/EEHC joint-venture asset -- 'Intergen P.S.')",
+      "lon": 29.6581136,
+      "lat": 31.0428256,
+      "coord_basis": "OSM landuse=industrial way 930414508, 'محطة سيدي كرير 3،4' (Sidi Krir 3&4 Power Plant), 682.5 MW, start_date=2002, operator tag EEHC. Independently corroborated by power-technology.com plant profile: 'The project was developed by Edison and InterGen... Commissioned January 2002... 682.5 MW... Location: Alexandria, Egypt' -- confirming InterGen as original developer, matching the sheet's 'Intergen P.S' end-point name and Alexandria governorate. This is the specific InterGen-linked Sidi Krir unit (there is also an adjacent, separate 'Sidi Krir 1,2' plant, way 131236227, ~0.6 km away, operated by West Delta Electricity Production Company -- NOT InterGen -- which I did not use).",
+      "evidence_url": "https://www.power-technology.com/data-insights/power-plant-profile-sidi-krir-34-power-plant-egypt/"
+    },
+    "route_refs": [],
+    "corridor_desc": "If the stated endpoints are correct, this would be a short coastal-strip run from the Al Amreya industrial/residential district west to the Sidi Krir power complex (both within a few km of the Mediterranean coast, west of Alexandria) -- straight-line distance is only 14.1 km. No corridor description, waypoint, or route-informing document was found for this line at all; I found no independent source (news, GASCO/EGAS materials, trade press) describing an 'Ameriya-Intergen' or 'Ameriya-Sidi Krir' gas supply pipeline by name, length, or diameter.",
+    "facts": {
+      "length_km": 75.0,
+      "diameter_in": 24,
+      "year": null,
+      "source": "UNVERIFIED. Sheet's Length/Diameter/Status/Fuel/PipelineType [ref] all cite the same URL (EGAS Annual Report 2018/2017-2018, egyptoil-gas.com). I fetched this document in full (via Wayback Machine, since the live host is unreachable from this environment) and full-text-searched (pdftotext -layout) for 'Sidi'/'Krir'/'Intergen'/'Ameriya'/'Amriya' -- NONE of these terms appear anywhere in the document, including its national-grid pipeline tables (COMPLETED/UNDER CONSTRUCTION sections). The cited source does not appear to support ANY of this row's facts (length, diameter, or the Ameriya/Intergen names)."
+    },
+    "flags": [
+      "length-implausible: sheet states 75.00 km, but the straight-line distance between the two most plausible named endpoints (Al Amreya district and the InterGen-linked Sidi Krir 3&4 plant) is only 14.1 km -- a ratio of 5.3x, far beyond the ~1.4x plausibility threshold used elsewhere in this batch (e.g. P8051's real, well-documented, multiply-turning 65 km corridor is only 1.16x its own straight-line distance). Egypt's Nile Delta/coastal terrain does not support 5x routing detours for a point-to-point gas supply line; this strongly suggests either a transcription/unit error in the length field, or that 'Ameriya' and/or 'Intergen P.S' as recorded do not refer to the geographic points I resolved (e.g. the true origin may be a gas field/complex much farther away, with 'Ameriya' being a mid-route valve/metering station rather than the true start -- I found no source describing any such alternative).",
+      "ref-does-not-support-value: the EGAS Annual Report 2018 cited for every fact on this row (Status/Fuel/PipelineType/Length/Diameter/Location) does not mention Sidi Krir, InterGen, or Ameriya anywhere in its text, including its national-grid pipeline tables -- confirmed by full-document full-text search, not just a substring miss on one page. Sidi Krir 3&4 (InterGen JV) was commissioned in Jan 2002, well before this report's 2017/2018 coverage period, which is consistent with it being absent from the 'completed/under construction during 2017/2018' tables, but does not explain why it would be cited as the Length/Diameter source at all.",
+      "unverified-existence: found no independent secondary source (news, GASCO/EGAS materials, trade press, power-plant profiles) describing a natural-gas supply pipeline specifically named or described as running from Ameriya to the Sidi Krir/InterGen power complex, at 75 km, 24in, or any other length/diameter. A gas supply pipeline to Sidi Krir almost certainly exists in reality (it is a large gas-fired plant that must be fed somehow), but I could not corroborate this GEM row's specific attributes against any source beyond the endpoint place-names themselves."
+    ],
+    "notes": "Investigated hard per the brief's flag. The 75 km stated length is not credible for a direct Ameriya-Sidi Krir line: straight-line is 14.1 km (verified via two independent OSM anchors plus a corroborating power-plant-profile page for the Sidi Krir end), giving a 5.3x ratio that has no realistic terrain explanation in this flat coastal stretch of Egypt (compare P8051 in this same batch, whose real, richly-documented, multiply-turning 65 km corridor is still only 1.16x straight-line). I could not find ANY independent source -- news, EGAS/GASCO materials, or the sheet's own cited EGAS 2018 report (which, on full-text search, does not mention any of Sidi Krir/InterGen/Ameriya at all) -- describing this specific pipeline's existence, length, or diameter. My best reading is that either (a) the length figure is a data-entry/transcription error (plausible alternates I cannot verify: ~7.5 km, or confusion with an unrelated ~75 km line elsewhere in the grid), or (b) one or both endpoints as recorded are wrong/incomplete (e.g. 'Ameriya' may denote a waypoint on a much longer trunk line rather than the true origin). I am reporting resolved:true because both named endpoints ARE real, identifiable, plausible places matching the sheet's Start/End cells and Arabic-adjacent naming (no Arabic name was given for this row), but the length and the ref supporting it should be treated as unreliable pending an Update-workflow source pass -- this should NOT be used to draw route geometry at 75 km without further research. Confidence tier: low on facts (length/diameter unsourced), medium on endpoint identity (named places match, but exact facility tie-in points unconfirmed)."
+  }
+]

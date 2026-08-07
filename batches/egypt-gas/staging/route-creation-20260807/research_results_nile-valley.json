@@ -1,0 +1,73 @@
+[
+  {
+    "project_id": "P8054",
+    "resolved": true,
+    "start": {
+      "name": "Dahshur (GASCO Dahshur compressor station area, Giza)",
+      "lon": 31.240815,
+      "lat": 29.751277,
+      "coord_basis": "OSM node 331876352, place=village 'دهشور' (Dahshur), Giza governorate. Corroborating context (not a coordinate source): Petroleum Magazine Nov 2025 issue (p.~56, GASCO section) refers to 'محطة ضواغط دهشور' (Dahshur compressor station) undergoing capacity expansion, confirming Dahshur is a real major GASCO grid hub, not just the archaeological site 6 km further north (Wikipedia necropolis coord 29.8064,31.2081). Used the settlement centroid as a reduced-accuracy anchor since the exact compressor-station coordinate is not independently geocodable.",
+      "evidence_url": "https://www.openstreetmap.org/node/331876352"
+    },
+    "end": {
+      "name": "El Wasta (Al Wasta town), Beni Suef governorate",
+      "lon": 31.205556,
+      "lat": 29.337778,
+      "coord_basis": "OSM node 768557743, place=town 'الواسطة' (Al Wasta). Corroborated by a second OSM record, way 816241588 'مدينه الواسطى' (Al Wasta city), center 29.336564/31.201744 — under 500 m from the node, both agree on location.",
+      "evidence_url": "https://www.openstreetmap.org/node/768557743"
+    },
+    "route_refs": [
+      "https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf",
+      "https://petro-news.com/95212"
+    ],
+    "corridor_desc": "GASCO Dahshur compressor station (Giza, west-bank Nile valley edge near Dahshur) south along the west-bank corridor to El Wasta (Al Wasta), the northernmost town of Beni Suef governorate on the Nile. Explicit purpose per petro-news.com: 'to feed Beni Suef power station and the Upper Egypt region' — i.e. this is the northern feeder leg that continues onward via the already-mapped GEM segment P3929 (El Wasta-Beni Suef Gas Pipeline, operating, 68.5 km, 36in) to reach Beni Suef. Likely follows the desert-edge road/canal alignment on the west bank rather than a straight line (see length flag below).",
+    "facts": {
+      "length_km": 65.0,
+      "diameter_in": 36,
+      "year": null,
+      "source": "petro-news.com/95212 ('39-project gas pipeline map' article, item 14: 'تدشين خط غاز دهشور – الواسطى' / inauguration of Dahshur-El Wasta gas pipeline) states diameter 36in, length 65km, cost 525 million EGP, purpose feeding Beni Suef power station — matches GEM sheet's LengthKnownKm=65.00 and Diameter=36 exactly. EGAS Annual Report 2018 (seed ref) lists the SAME named pair under construction FY2017/18 as 'Dahshur / AlWaste pipeline 68.5 km - 36in', target completion Sept 2018, estimated cost 277.5M EGP + 13.4M USD — an earlier planning-stage estimate (68.5km) vs the later/as-built figure (65km, matching GEM); diameter agrees (36in) across all three sources."
+    },
+    "flags": [
+      "length-note: straight-line Dahshur(village)-to-El Wasta(town) is ~46.1 km vs stated 65.00 km, ratio ~1.41 (at the brief's ~1.4x caution threshold). Both endpoint names, the diameter, and the length are independently corroborated by two non-GEM sources (EGAS 2018 report + petro-news.com), so this is NOT flagged as a wrong-endpoint signal — more likely explained by (a) the true GASCO compressor-station point being south/east of the village centroid I geocoded, and/or (b) a non-straight corridor following a canal/desert road. Route drafters should NOT draw a straight line between these two points; follow the west-bank road/canal alignment.",
+      "adjacent-GEM-data-quality (out of my scope, flagging for awareness): GEM's existing P3929 'El Wasta–Beni Suef Gas Pipeline' (operating) carries LengthKnownKm=68.50 — which is suspiciously an EXACT match to the EGAS-2018 estimate for the *Dahshur-ElWasta* segment (68.5km), not the report's own 'AlWaste / Beni Suef pipeline 60 km - 36in' figure. This looks like a possible length-value swap/misattribution between P8054's neighbor segments in GEM's existing data (P3929 may be carrying the wrong number). Not one of my assigned PIDs — surfacing for the QC/route team to check, not corrected here."
+    ],
+    "notes": "Searched: EGAS Annual Report 2018 (national grid pipeline table, downloaded+pdftotext'd — confirms 'Dahshur / AlWaste pipeline 68.5km-36in' under construction FY2017/18, target Sept 2018); petro-news.com/95212 '39-project' map article (raw HTML grepped directly, not just WebFetch-summarized — confirms 'دهشور – الواسطى' item 14, 36in/65km/525M EGP, purpose = feed Beni Suef power station); Petroleum Magazine Nov 2025 GASCO section (pp.53-59 pdftotext) — one incidental hit confirming 'Dahshur compressor station' capacity expansion is ongoing (context only, not a length/diameter source for this specific line). GEM CSV cross-check: confirmed P8054's chain partner P3929 (El Wasta-Beni Suef) already exists and is operating, and GEM's broader 'South Valley Gas Pipeline' family (P0477 network total + P6697-P6702 segments) also originates at 'Dahshour', consistent with Dahshur being a genuine multi-line GASCO hub, not a one-off. Confidence: length+diameter high (2 independent sources agree with the sheet, cost figure from petro-news adds credibility); endpoint coordinates medium (settlement centroids, not the literal compressor-station point). url_verifier.py: petro-news.com/95212 OK/200, both OSM URLs OK/200; the EGAS 2018 PDF URL timed out under url_verifier.py in this session (host was slow/unreachable on repeated attempts, including a 60s curl timeout) despite having been successfully fetched by a parallel process earlier in this session (cached 22MB PDF + extracted text confirm the content is genuine) — noting per hard rule 5 rather than dropping the citation, since it is the brief's own seed ref and its content was directly verified via the cached download."
+  },
+  {
+    "project_id": "P8056",
+    "resolved": true,
+    "start": {
+      "name": "Abu Qurqas town, Minya governorate",
+      "lon": 30.8377108,
+      "lat": 27.930588,
+      "coord_basis": "OSM node 768584680, place=town 'أبو قرقاص' (Abu Qurqas), Minya governorate. Settlement centroid used as a reduced-accuracy anchor; the exact GASCO metering/take-off point in Abu Qurqas was not independently geocodable.",
+      "evidence_url": "https://www.openstreetmap.org/node/768584680"
+    },
+    "end": {
+      "name": "Asyut city, Asyut governorate",
+      "lon": 31.1853836,
+      "lat": 27.1832822,
+      "coord_basis": "OSM way 94168759, place=city 'أسيوط' (Asyut), city-boundary centroid. REDUCED ACCURACY / UNCERTAIN: could not confirm which specific facility in Asyut is the true pipe terminus. Checked candidates: (1) 'West Assiut Power Plant' (محطة توليد كهرباء غرب أسيوط), OSM way 807413255, 27.1816145/30.9995690, gas-fired 1500MW CCGT, ~85km from Abu Qurqas -- but EGAS Annual Report 2018 lists a SEPARATE short spur 'West Assiout power station pipeline 1.4 km - 24in' feeding this plant, implying it is NOT the South Valley trunk terminus, just a local tap; (2) Assiut Oil Refining Co. (ASORC) and any Asyut GASCO distribution/compressor station -- neither found on OSM/Wikidata/Nominatim by name. Used the Asyut city centroid as the best-supported anchor given the pipeline (and its existing GEM sibling P6700) is literally named for the city, not a named facility within it.",
+      "evidence_url": "https://www.openstreetmap.org/way/94168759"
+    },
+    "route_refs": [
+      "https://www.petroleum.gov.eg/ar-eg/media-center/news/news-pages/Pages/mop_02052022_01.aspx",
+      "https://www.youm7.com/story/2022/5/2/%D9%88%D8%B2%D9%8A%D8%B1-%D8%A7%D9%84%D8%A8%D8%AA%D8%B1%D9%88%D9%84-%D8%AC%D8%A7%D8%B3%D9%83%D9%88-%D8%AA%D9%86%D9%81%D8%B0-3-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D8%A8%D9%807-5-%D9%85%D9%84%D9%8A%D8%A7%D8%B1-%D8%AC%D9%86%D9%8A%D9%87/5747866"
+    ],
+    "corridor_desc": "Runs the same general Nile-valley corridor as GEM's existing (operating) P6700 'Abu Qurqas-Asyut Gas pipeline' -- P8056 is explicitly this line's twin/duplication (ازدواج / 'izdiwaj', see facts.source), not a different alignment. Both are segments of the 'South Valley Gas Pipeline' trunk chain (P0477 network) running: Dahshour -> Al Kuraimat (P6697) -> Beni Suef (P6698) -> Abu Qurqas (P6699) -> Asyut (P6700/P8056) -> Girga (P6701) -> Aswan (P6702). Corridor almost certainly parallels the west-bank Nile-valley road/rail/agricultural-land alignment between Minya and Asyut governorates; no source gave waypoints finer than the two endpoint towns.",
+    "facts": {
+      "length_km": 135.0,
+      "diameter_in": null,
+      "year": null,
+      "source": "petroleum.gov.eg news article (seed ref, raw HTML directly grepped to confirm -- not just AI-summarized): '...ومشروع ازدواج خط أبوقرقاص / أسيوط بطول 135 كم' ('a project to duplicate the Abu Qurqas/Asyut line, 135km long'), listed among 'future projects' as of the 2022-05-02 article, part of a >6 billion EGP GASCO grid-efficiency investment package. Independently corroborated (same figure, same project list) by youm7.com's syndication of the same ministry announcement. No diameter given in either source."
+    },
+    "flags": [
+      "length-implausible: straight-line Abu Qurqas(town)-to-Asyut(city) is ~89.9 km vs stated 135.00 km, ratio ~1.50 -- exceeds the brief's ~1.4x caution threshold, matching the brief's own stated concern. Notably GEM's EXISTING P6700 (the first-phase 'Abu Qurqas-Asyut Gas pipeline' this row duplicates) shows an even larger overshoot: 150km stated vs the same ~90km straight line, ratio ~1.67. Both the original and the duplicate line show a similar large detour ratio, which argues against a simple wrong-endpoint error on P8056 specifically (a wrong endpoint would be unlikely to reproduce almost the same ratio as its sibling) and instead points to either (a) a genuinely circuitous west-bank corridor, or (b) a systematic issue with how this segment family's lengths are recorded in GEM. Flagging both for a human route-drafter's attention; not resolved here.",
+      "first-phase-exists:P6700 -- GEM already has 'South Valley Gas Pipeline / Abu Qurqas-Asyut Gas pipeline' (P6700, operating, 150km) under the SAME PipelineName, confirming P8056 ('...II', construction, 135km) is the announced parallel/duplicate line, not a duplicate database entry. The two should be cross-referenced (e.g. via RouteNotes) but are legitimately separate rows.",
+      "sibling-length-anomaly (out of scope, flagging for awareness): P6699 'Beni Suef-Abu Qurqas Gas pipeline' and P6700 'Abu Qurqas-Asyut Gas pipeline' both carry LengthKnownKm=150.00 exactly -- an identical value for two different named segments, which reads as a possible copy/data-entry artifact in GEM's existing data rather than coincidence. Neither is one of my assigned PIDs; surfacing for the QC team.",
+      "PipelineName-reuse (checked, not a conflict): 'South Valley Gas Pipeline' is already used by 6 other GEM rows (P0477 network total + P6697-P6702 segments) -- P8056 correctly reuses the established name/segmentation convention rather than colliding with an unrelated pipeline of the same name.",
+      "endpoint-precision: Asyut end is a city-level anchor only; true GASCO take-off/metering point not identified (see coord_basis) -- route accuracy should stay 'low' or 'very low' until a facility-level source is found."
+    ],
+    "notes": "Searched and DIRECTLY verified (raw HTML grep, not just WebFetch summary) the petroleum.gov.eg seed article and its youm7.com syndication -- both independently state 135km for the Abu Qurqas/Asyut 'duplication' project, no diameter given by either. Searched petro-news.com's 39-project gas map article (raw HTML grepped): zero mentions of Abu Qurqas or Asyut, consistent with this being a still-'future' project not yet in that inauguration-focused list. Searched Petroleum Magazine Nov 2025 GASCO section (pp.53-59, pdftotext): zero mentions of Abu Qurqas or Asyut -- did not pursue the Dec 2024 issue given time budget and that two independent outlets already corroborate the core 135km figure. GEM CSV cross-check (pandas, header=2, keep_default_na=False) confirmed: (1) P6700 is the pre-existing first-phase line this row duplicates -- exactly the 'first phase under another ProjectID' the brief asked me to check for; (2) 'South Valley Gas Pipeline' name is already in active use for 6 rows, not a conflict; (3) both P6699 and P6700 share an identical 150.00km value, a likely pre-existing GEM data artifact unrelated to my two assigned PIDs. Tried Overpass API + Nominatim + Wikidata for an Asyut-specific gas facility (refinery ASORC, GASCO station) -- none found; only found the unrelated West Assiut gas-fired power plant, which the EGAS 2018 report shows is fed by its own short 1.4km spur, not this trunk. Confidence: length medium (2 independent-ish sources, both plausibly tracing to the same ministry release, but consistent with each other and with the length-implausibility flag noted above); endpoints medium-low (town/city centroids, no facility-level confirmation); diameter unresolved (facts.diameter_in left null rather than guessed). url_verifier.py: petroleum.gov.eg OK/200, youm7.com OK/200, both OSM URLs OK/200."
+  }
+]

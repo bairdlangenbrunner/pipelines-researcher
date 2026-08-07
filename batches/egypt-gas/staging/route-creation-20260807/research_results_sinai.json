@@ -1,0 +1,113 @@
+[
+  {
+    "project_id": "P8052",
+    "resolved": true,
+    "start": {
+      "name": "El Sheikh Zuweid (الشيخ زويد / Ash Sheikh Zuwayyed) town center",
+      "lon": 34.1107742,
+      "lat": 31.2127686,
+      "coord_basis": "OSM place=town node for the real North Sinai town of Sheikh Zuweid (pop. ~60,000), which matches GEM's StartLocation 'El Sheikhh Zowayed' and the Arabic segment name خط غاز الشيخ زويد. This is a town-level anchor (acceptable per brief § rules since no separate metering-station/tie-in name was found in any source) -- not necessarily the exact pipeline take-off point; see flags.",
+      "evidence_url": "https://www.openstreetmap.org/node/768030243"
+    },
+    "end": {
+      "name": "Sinia Cement Industrial Area (El Hassana cement cluster, North Sinai)",
+      "lon": 33.7765239,
+      "lat": 30.7241954,
+      "coord_basis": "Center of an OSM landuse=industrial polygon (way 97684492, source=bing) that directly overlaps an independently-tagged OSM 'Sinai White Cement Factory' works node (id 11306179852, ~600 m away) in the El Hassana area of central North Sinai -- the cement-manufacturing cluster housing Sinai Cement Company (Vicat subsidiary) and Sinai White Portland Cement Co. Sinai Cement Company's own corporate site (sinaicement.com) independently confirms it operates 'a state-of-the-art plant in North Sinai' (no further precision given there). Matches sheet's EndPrefecture/District 'Sinia Cement Industrial Area'.",
+      "evidence_url": "https://www.openstreetmap.org/way/97684492"
+    },
+    "route_refs": [
+      "https://www.openstreetmap.org/way/97684492",
+      "https://www.openstreetmap.org/node/11306179852",
+      "https://sinaicement.com/",
+      "http://web.archive.org/web/20260730150827/https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf"
+    ],
+    "corridor_desc": "A short industrial spur running inland/south from the North Sinai coastal town of Sheikh Zuweid to the El Hassana cement-manufacturing cluster in central North Sinai -- almost certainly a tap off the larger 36in national-grid 'Trans-Sinai' trunk (see P8055 notes) that runs roughly El-Qantara--El-Arish through this same interior corridor, since a coastal town like Sheikh Zuweid would not itself be a gas source. No map or route document naming the actual corridor path (vs. a straight line) was found.",
+    "facts": {
+      "length_km": 45.0,
+      "diameter_in": 24,
+      "year": null,
+      "source": "Sheet cites EGAS Annual Report 2018 as the value source. I downloaded the full report (via Wayback Machine snapshot 20260730150827, since egyptoil-gas.com would not connect directly) and ran pdftotext -layout across the whole document: there is NO hit for 'zowayed', 'zuweid', 'cement', or 'arish' anywhere in the extracted text. The report's national-grid pipeline tables (pp. 31-37 in the OCR) list only larger trunk projects (e.g. a 'Trans-Sinai Pipeline 36\"-196 km' rehabilitation line item, a different and much larger corridor -- see P8055). I could not independently confirm the 45 km / 24in / operating-status / commissioning-year values for this specific segment beyond the sheet's own (unverifiable-in-text) citation."
+    },
+    "flags": [
+      "length-implausible: straight-line distance between the best-available endpoints (Sheikh Zuweid town center to the Sinia Cement industrial area, El Hassana) is ~62.98 km, which EXCEEDS the sheet's stated 45 km pipe length (ratio 1.40x) -- physically impossible, since a pipeline's actual route length can never be shorter than the straight-line distance between its true endpoints. Either GEM's 45 km figure is understated, or 'El Sheikhh Zowayed' denotes a specific tie-in/metering station on a trunk line that sits well south of the town itself (Sheikh Zuweid is a real, distinct coastal settlement ~63 km northeast of El Hassana) rather than the town center used here. No primary source pinning an exact tie-in point was found.",
+      "unverified-in-seed-source: the EGAS Annual Report 2018, the sheet's cited [ref] for Status/Length/Diameter/PipelineType/Location on this row, does not contain any text match for this pipeline's name, endpoints, or length when full-text searched (see facts.source) -- the citation may be miscited or refer to imagery/tables not captured by OCR/text extraction.",
+      "duplicate-pipelinename-two-pids: P8052 and P8053 share the exact PipelineName 'El Sheikhh Zowayed-Sinia Cement Gas Pipeline' but are separate ProjectIDs/segments (24in vs 16in, 45km vs 16km, different endpoints) -- functionally this looks like ONE multi-segment pipeline (Sheikh Zuweid -> Sinai Cement -> Military Cement) split across two rows. Worth a GEM data-model review: either that's intentional segment-per-PID granularity (fine) or these should be tied together as one PipelineName with two SegmentName rows under a shared network/parent construct, consistent with how GEM otherwise tracks multi-segment lines."
+    ],
+    "notes": "Searched: EGAS Annual Report 2018 full text (via Wayback, no hits for these names); OSM/Overpass for 'Sheikh Zuweid' place node (found, high confidence) and for cement works/industrial-landuse features in the 30.5-31.0N/33.5-34.2E box (found two clusters, ~8km apart, matching the two-plant story implied by P8052/P8053's two segments); web search + sinaicement.com (Sinai Cement Company's own corporate page, Cairo HQ address only, generic 'North Sinai' plant confirmation, no coordinates). I deliberately avoided a set of search-engine summaries that were themselves paraphrasing gem.wiki content (standing rule 1 -- never cite or rely on GEM as evidence) and relied only on OSM + the company's own site instead. Confidence tier: MEDIUM on the identity of both named places (2 independent non-GEM sources: OSM + sinaicement.com corroborate the existence and rough location of a North Sinai Sinai-Cement plant cluster; OSM alone for Sheikh Zuweid town, which is uncontroversial); LOW on the length/diameter/commissioning facts (single, unverifiable-in-text citation) and on whether the town center is the true pipeline terminus given the length-implausible flag above."
+  },
+  {
+    "project_id": "P8053",
+    "resolved": true,
+    "start": {
+      "name": "Sinia Cement Industrial Area (El Hassana cement cluster, North Sinai)",
+      "lon": 33.7765239,
+      "lat": 30.7241954,
+      "coord_basis": "Same anchor as P8052's end point -- center of OSM landuse=industrial way 97684492 / adjoining 'Sinai White Cement Factory' node 11306179852, the El Hassana cement cluster. Matches sheet's StartLocation 'Sinia Cement Industrial Area'.",
+      "evidence_url": "https://www.openstreetmap.org/way/97684492"
+    },
+    "end": {
+      "name": "Military Cement (El-Areesh Company for Cement / NSPO plant, Jabal Lubna, south of El-Arish)",
+      "lon": 33.8487260,
+      "lat": 30.7008117,
+      "coord_basis": "OSM man_made=works node named 'Al Arish Cement' (id 11306111943), corroborated by the plant's own owner, Egypt's National Service Projects Organization (NSPO, a branch of the Ministry of Defense -- i.e. exactly the 'Military' in 'Military Cement'): NSPO's official company page (nspo.com.eg, live fetch worked via curl but failed the automated verifier on an SSL cert-chain issue -- confirmed instead via its Wayback snapshot) states verbatim 'The factory was established in 2010 in the area of lubna mountain, southern of El-Areesh city in sinai.' This independently confirms both the identity (NSPO/military-owned cement plant) and general location (south of El-Arish, Jabal Lubna) of the OSM node.",
+      "evidence_url": "https://www.openstreetmap.org/node/11306111943"
+    },
+    "route_refs": [
+      "https://www.openstreetmap.org/node/11306111943",
+      "https://www.openstreetmap.org/way/204854726",
+      "http://web.archive.org/web/20230318224739/http://www.nspo.com.eg/nspo/cement.html",
+      "http://web.archive.org/web/20260730150827/https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf"
+    ],
+    "corridor_desc": "A short industrial-to-industrial spur (~7-8 km straight-line) linking two separate cement clusters in the same central-North-Sinai heavy-industry belt south of El-Arish: the civilian Sinai Cement Company / Sinai White Cement complex at El Hassana, and the NSPO-owned ('military') El-Areesh Company for Cement plant at Jabal Lubna, further east/southeast toward El-Arish. Both sit off the same interior road network south of the El-Qantara-El-Arish corridor; no published map of the specific pipe route (vs. straight line) was found.",
+    "facts": {
+      "length_km": 16.0,
+      "diameter_in": 16,
+      "year": null,
+      "source": "Same EGAS Annual Report 2018 citation as P8052; same negative full-text search result -- no textual hit for this segment's name, length, or endpoints in the report (see P8052 facts.source for detail). Could not independently confirm 16 km / 16in / operating status / year beyond the sheet's own citation."
+    },
+    "flags": [
+      "length-plausible-but-high: straight-line distance between the Sinia Cement industrial area (El Hassana) and Military Cement (Jabal Lubna) is ~7.4 km vs. the sheet's stated 16 km -- a ratio of ~2.17x actual-length-to-straight-line. This is NOT the physically-impossible case (unlike P8052), but it is a wide margin for a short industrial spur between two nearby sites; flagging per the brief's guidance since it exceeds the ~1.4x comparison threshold. Plausible explanations: genuine road/terrain routing detour, or (less likely) one of the two industrial-area anchors is imprecise.",
+      "unverified-in-seed-source: see P8052 -- the cited EGAS Annual Report 2018 has no full-text match for this segment.",
+      "duplicate-pipelinename-two-pids: see P8052's flag -- P8052 and P8053 are two segments of what functionally reads as one continuous multi-leg pipeline (Sheikh Zuweid -> Sinai Cement -> Military Cement), filed as two separate ProjectIDs under an identical PipelineName. Flagging for the same GEM data-model question raised on P8052."
+    ],
+    "notes": "Same search process as P8052 (see that entry for the EGAS report / OSM / cement-cluster methodology). Additionally checked NSPO's own site (nspo.com.eg/nspo/cement.html) directly, which independently corroborates the 'military cement' identification and its Jabal Lubna / south-of-El-Arish location -- this is a genuinely independent, non-GEM primary source (the plant owner's own page), giving reasonably solid confidence in the END point identity specifically. Confidence tier: MEDIUM-HIGH on the identity of 'Military Cement' = NSPO's El-Areesh Company for Cement (owner's own site + OSM agree); MEDIUM on the Sinia Cement Industrial Area start point (same basis as P8052); LOW on the 16km/16in facts themselves (unverifiable in the cited source)."
+  },
+  {
+    "project_id": "P8055",
+    "resolved": false,
+    "start": {
+      "name": null,
+      "lon": null,
+      "lat": null,
+      "coord_basis": "Not pinned -- see corridor_desc and flags. GASCO's own project listing gives no named town/station for either end.",
+      "evidence_url": null
+    },
+    "end": {
+      "name": null,
+      "lon": null,
+      "lat": null,
+      "coord_basis": "Not pinned -- see corridor_desc and flags.",
+      "evidence_url": null
+    },
+    "route_refs": [
+      "http://web.archive.org/web/20260222074837/https://www.gasco.com.eg/wp-content/uploads/2024/12/National%20Natural%20Gas%20Grid%20Expansion%20Projects.pdf?utm",
+      "http://web.archive.org/web/20260730150827/https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf",
+      "https://www.eib.org/files/pipeline/20070088_eia11_en.pdf"
+    ],
+    "corridor_desc": "The seed source (GASCO's 2024 'National Natural Gas Grid Expansion Projects' deck; the live URL 404s, recovered via a Wayback snapshot with a URL-encoded filename) names this project 'Duplication of the Trans-Sinai pipeline' -- 28 km, 36in, project location 'Sinai' (governorate field, singular), cost 631 million EGP / USD 13,000,000, status 'Under Study'. The cost figure (USD 13,000,000) matches the sheet's ProjectLevelCost exactly, confirming this is unambiguously the right GASCO line item for P8055. But GASCO names no towns or stations -- it is explicitly a DUPLICATION (a parallel/looped second pipe) of an EXISTING Trans-Sinai trunk, not a description of a new, independent corridor. That existing trunk is a 36in, ~196 km line, per EGAS's own 2018 Annual Report, which lists (under pipelines needing rehabilitation) a 'Project Rehabilitation gas supply pipeline Trans-Sinai Pipeline 36\"-196 km' with no route detail given either. A related, better-documented project -- GASCO's Abr Sinai Onshore Gas Pipeline EIA (a separate, 111 km line, El-Tina East to El-Arish, cited in the brief) -- describes its own route running parallel to 'the existed Abr Sinai old pipeline' and to 'an existed pipeline' along the El-Qantara-El-Areish desert road, crossing the El-Sheikh Gaber Canal near El-Qantara. This is circumstantial support that the broader 'Trans-Sinai' trunk corridor runs roughly El-Qantara (Suez Canal / Ismailia Governorate side) eastward to El-Arish -- but nothing in any source I could reach names which specific 28 km stretch of that ~196 km corridor GASCO is duplicating, so I have NOT picked coordinates for either end. Given the diameter/cost match is exact but the two named administrative units in GEM's own StartState/EndState ('Sinia' / 'Suez') don't line up with GASCO's single-governorate 'Sinai' location field, I would guess (without evidence) that the duplicated stretch is near the WESTERN, Suez-Canal-crossing end of the trunk (i.e. near El-Qantara) rather than the El-Arish end, since that is the only plausible reading that could produce a 'Suez'-adjacent terminus -- but this is a guess I am explicitly NOT turning into coordinates.",
+    "facts": {
+      "length_km": 28.0,
+      "diameter_in": 36,
+      "year": null,
+      "source": "GASCO 'National Natural Gas Grid Expansion Projects' deck (dated Dec 2024 per the URL path), line item 'Duplication of the Trans-Sinai pipeline': 28 km, 36in, location 'Sinai', cost 631 million EGP / USD 13,000,000, status 'Under Study'. Verified by downloading the Wayback snapshot and running pdftotext -layout myself; the automated url_verifier.py substring check FAILs on this PDF (a known false-negative class per the tool's own doc-string for PDF text-extraction edge cases) even though the URL itself resolves 200 and the text is plainly present when extracted with pdftotext -- I manually confirmed the content."
+    },
+    "flags": [
+      "name-misread: GEM's PipelineName 'Trans-Sinai Gas pipeline II' / OtherEnglishNames 'Trans Gulf Gas PipelineII' does not match GASCO's own name for this project ('Duplication of the Trans-Sinai pipeline') -- it is a parallel/looped segment of an EXISTING trunk, not a second independent 'Trans-Sinai II' line, and I found no evidence it crosses the Gulf of Suez or the Suez Canal shipping lane (the brief's own instinct that a 'Trans Gulf' name is suspicious for a 28km/36in Sinai land-side duplication project appears correct). 'Trans Gulf' does not appear in the source and looks like either a mistranslation or a researcher-invented name.",
+      "false-lineage-P8013: GEM already has P8013 'Trans Sinia Gas Pipeline I' in the sheet -- I checked its row (StartLocation 'Petreco Plant', EndPrefecture 'Ras Baker Transmissin Station', EndState 'Gulf of Suez', 75 km, 12in, operating). That is a DIFFERENT pipeline: 12in vs this project's 36in, a Gulf-of-Suez oil-field-adjacent facility-to-facility line (Petreco/Ras Baker naming reads as oilfield infrastructure) vs. GASCO's national-gas-grid trunk duplication. Naming P8055 the 'II' to P8013's 'I' asserts a lineage the sources don't support -- these look like two unrelated pipelines that happen to both have 'Trans-Sinai' or 'Sinai' in an English gloss of their name. Recommend NOT treating P8013 as a sister/predecessor line when drawing P8055's route.",
+      "endpoint-mismatch: sheet's EndState/Province is 'Suez' but GASCO's own project-location field for this exact line reads only 'Sinai' (single governorate, no Suez Canal/Gulf-of-Suez governorate given). Could not corroborate a genuine Suez-side terminus from any source reached.",
+      "unresolved-endpoints: per the brief's instruction, returning resolved:false with corridor prose rather than fabricating a start/end coordinate pair for an unnamed ~28 km stretch of a ~196 km corridor."
+    ],
+    "notes": "Searched (in order): live gasco.com.eg URL (404, as the brief warned) -> Wayback CDX search found a differently-encoded snapshot (spaces as %20, trailing '?utm', timestamp 20260222074837) which resolved and contained the exact deck; EGAS Annual Report 2018 full text (found only the older, unrelated-looking 196km trunk rehab line item, no route detail); EIB/PETROSAFE Abr Sinai Onshore Gas Pipeline EIA (the eia1 TOC-only file 403'd via WebFetch but 200'd via curl and turned out to be just a table of contents; the eia11 photo-caption appendix, fetched successfully, gave the general El-Qantara-El-Areish corridor description used above); GEM's own P8013 row (checked from the local, already-refreshed GGIT gas snapshot, NOT cited as an external source, only used internally to check GEM's own naming consistency per standing rule 1). Could not reach petro-mag.org (not attempted given the GASCO deck already gave an exact cost match) or confirm any town-level endpoint. Confidence tier: HIGH that this GASCO line item IS P8055 (exact cost match); ZERO on specific endpoints (deliberately unresolved)."
+  }
+]
