@@ -248,15 +248,19 @@ P1873, P6714, P8043 (P1861 needed no value change; its name is already
 The operators/owners tab's 13 hits are **XLOOKUP formulas** off the gas tab — they
 auto-update and must never be written.
 
-- **The wiki half is BLOCKED, not done.** Five pages still need moving
+- **Wiki half DONE the same day.** All five pages moved to the `Intisar` spelling
   (`Intesar-Brega` / `Bu-Attifel-Intesar` / `Faregh-Intesar` / `Intesar-Sahel` /
-  `Jakhira-Intesar` `_gas_pipeline` → the `Intisar` spellings, redirects left behind),
-  and **column D on all 7 rows is deliberately untouched until they land** — writing the
-  new titles first would create red links. As of 2026-08-07 gem.wiki returns **HTTP 403
-  `cf-mitigated: challenge` on every path** including `robots.txt`, from `requests`,
-  `urllib`, curl with a browser UA, and WebFetch — a site-wide Cloudflare managed
-  challenge, not a credential problem (`gem-wiki/.env` is present). `gemwiki.py` also has
-  no `move` helper; `action=move` needs adding.
+  `Jakhira-Intesar` `_gas_pipeline`), each leaving a **redirect** at the old title — the
+  account lacks `suppressredirect`/`delete`, and Baird's call was to leave them. Column D
+  then repointed on all 7 rows (7 cells, applied and verified; P6714's leading space
+  stripped). Backup: `notes/sheet-write-2026-08-07-libya-gas-intisar-wikilinks.csv`.
+  - The moves were blocked for most of the day by Cloudflare **Under Attack Mode** on the
+    gem.wiki zone (a traffic flood took the site down earlier that week). Fix was a WAF
+    bypass keyed on the User-Agent token **`baird-wiki`** — the UA string is load-bearing,
+    full writeup in `goit-ggit-data-ops/gem-wiki/README.md` → Auth. `move_page()` was
+    added to `gemwiki.py` in the same pass.
+  - **Page bodies still say "Intesar"** — a move renames only. The bolded lead sentence
+    (and possibly infobox/prose) on all five needs a separate `edit_page` pass.
 - **Non-spelling defects found in passing** (not fixed): **P1856** "Intisar-Zueitina"
   links to `Intesar-Brega_gas_pipeline` — the wrong page, shared with P8043;
   **P1858 and P6714** are both "Bu-Attifel-Intisar Gas Pipeline" on one wiki page and
