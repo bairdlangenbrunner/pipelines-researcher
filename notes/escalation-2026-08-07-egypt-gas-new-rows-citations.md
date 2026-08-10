@@ -13,18 +13,71 @@ Update fixes — nothing here was corrected on the sheet.
 
 Two standing thresholds are met:
 
-- *"A whole class of GEM values looks systematically wrong."* **Five of the ten rows**
-  (P8051, P8052, P8053, P8057, P8059) cite the **EGAS Annual Report 2018** for
-  Status / Fuel / PipelineType / Length / Diameter / Location, and full-text search of
-  that PDF finds **no line item for the pipeline in question**. Three independent
-  subagents reached this separately, each using `pdftotext -layout` over both the live
-  file and its Wayback snapshot, searching the report's own
-  "COMPLETED DURING 2017/2018" and "UNDER CONSTRUCTION" grid tables.
+- *"A whole class of GEM values looks systematically wrong."* **Seven of the ten rows**
+  cite the **EGAS Annual Report 2018** across **36 `[ref]` cells**, and for **six of those
+  seven** the report contains **no line item for the pipeline in question** — see the
+  citation map below. Three independent subagents reached this separately, each using
+  `pdftotext -layout` over both the live file and its Wayback snapshot, searching the
+  report's own "COMPLETED DURING 2017/2018" and "UNDER CONSTRUCTION" grid tables;
+  re-verified 2026-08-10 by rendering the pages and reading them visually.
 - *"A QC spot-check shows >10% of sampled cells unsupported."* Comfortably exceeded.
 
 The pattern is not that the pipelines are fake — most are plausibly real — but that
 the **citations do not support the values attached to them**, so the rows are
 effectively unsourced.
+
+## Finding 0 — citation map: exactly where EGAS 2018 is cited
+
+URL in every case:
+`https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf`
+
+SheetRows are as of the **2026-08-10** snapshot — the gas tab was re-sorted between
+08-07 and 08-10 and P8051 moved 4322 → 4313, so 08-07 locators are stale.
+
+| PID | SheetRow | Cells | Which | Supported by the report? |
+|---|---|---|---|---|
+| P8050 | 4312 | 1 | Location | **No** — no Rosetta line item (its other 5 refs are a Dec-2019 ministry page, not EGAS) |
+| P8051 | 4313 | 5 | Status, Fuel, PipelineType, Diameter, Location | **No** (`Length [ref]` is World Bank RP1184, not EGAS — hence 5, not 6) |
+| P8052 | 4314 | 6 | Status, Fuel, PipelineType, Length, Diameter, Location | **No** — no North Sinai line item at all |
+| P8053 | 4315 | 6 | " | **No** — same |
+| P8054 | 4316 | 6 | " | **YES** — see below |
+| P8057 | 4319 | 6 | " | **No** — no Mostorod / El Tebbin anywhere |
+| P8059 | 4321 | 6 | " | **No** — no Ameriya / Sidi Krir / InterGen anywhere |
+| P8055, P8056, P8058 | — | 0 | — | (do not cite it) |
+
+**P8054 is legitimately sourced and must come off the unsupported list.** Printed p.37:
+*"Dahshur / AlWaste pipeline 68.5 km - 36"*, under construction 2017/2018, target
+September 2018, cost 277.5 million L.E + 13.4 million US$. Diameter matches exactly;
+68.5 km vs the row's 65 km, which petro-news.com independently gives as 65.
+
+**Correction to an earlier search result.** The first pass reported "no Abu Hummus in
+the report"; that was a **false negative** — the token list was
+`Hummus/Homos/Hommos/Humus` and the report spells it **"Houmas"**. Printed p.37 does
+carry *"Ezdwaj Edku / Abu Houmas pipeline 30 km - 42"*. That item matches existing GEM
+row **P7567 "Idku-Abu Hummus Gas Pipeline" (30 km, 42 in)** exactly — not P8050
+(Rosetta→Abu Hummus, 29 km, 30 in) nor P8051 (Abu Hummus→Nubaria, 65 km, 32 in), so the
+unsupported verdict on those two stands. But `Ezdwaj` = ازدواج = *duplication*, and 30 km
+vs P8050's 29 km is close: **P8050 needs a duplicate-check against P7567** before it is
+treated as a distinct line.
+
+### What the report does contain
+
+The entire grid-pipeline content is 15 line items on printed pp.35 and 37 (PDF pages
+19–20), verified visually as well as by extraction — the blank-extracting PDF page 18 is
+a photographic section-title spread, not lost table rows.
+
+- *Completed 2017/2018:* New Capital/Dahshur 70 km–32" · West Assiout PS 1.4 km–24" ·
+  South Helwan 1.2 km–30" · 6 October 0.4 km–20" · Al Suez 3.5 km–16" ·
+  Algameel/Damietta 50 km–42"
+- *Under construction 2017/2018:* Dahshur/AlWaste 68.5 km–36" ·
+  Ezdwaj Edku/Abu Houmas 30 km–42" · AlWaste/Beni Suef 60 km–36" ·
+  Tina/Abu Sultan 92 km–42" (Ph1) · Abu Sultan/New Capital 73 km–42" (Ph2) ·
+  Fayoum/Giza 27 km–24" · ELSLAAM/Matrouh 90 km–10" · Trans-Sinai 196 km–36" ·
+  West of Cairo 16 km–30"
+
+The only element that could loosely justify a `Location [ref]` for an unlisted Delta line
+is the GASCO national-grid **map** on p.35 — it is not row-specific and does not carry
+length, diameter, status or type.
 
 ## Finding 1 — length conflicts with the row's own endpoints
 
@@ -82,6 +135,11 @@ to P8040. Needs human adjudication and probably a rename **before** any route is
 — the staged candidate uses the NAC reading and says so. `Diameter` is also blank on
 P8058, unlike P8040 (24, 20 in) and P3930 (32 in).
 
+**Resolved on the sheet 2026-08-10:** `PipelineName` now reads "New Administrative
+Capital–Dahshur Gas Pipeline II", i.e. the NAC reading the staged candidate assumed. The
+staged geometry is therefore consistent with the row as it now stands. `Diameter` is
+still blank.
+
 ## Finding 4 — P8055's name asserts a lineage the sources don't support
 
 GASCO's own grid-expansion deck names this project **"Duplication of the Trans-Sinai
@@ -122,7 +180,12 @@ Surfaced incidentally; out of scope for this batch, logged so they aren't lost:
 - **P3929** "El Wasta–Beni Suef Gas Pipeline" carries `LengthKnownKm = 68.50`, which is
   exactly the EGAS-2018 figure for the **Dahshur–El Wasta** segment (i.e. P8054's line).
   The same report gives Al Wasta–Beni Suef as 60 km / 36 in. This reads as a length-value
-  swap between adjacent segments.
+  swap between adjacent segments. **Confirmed first-party 2026-08-10** by reading printed
+  p.37 directly (`"AlWaste / Beni Suef pipeline 60 km - 36"`) — no longer second-hand.
+- **P7567** "Idku-Abu Hummus Gas Pipeline" (30 km, 42 in, operating, `medium`) is the row
+  the report's *"Ezdwaj Edku / Abu Houmas 30 km - 42"* item matches. Check **P8050**
+  (Rosetta→Abu Hummus, 29 km, 30 in) against it for duplication before treating P8050 as
+  a distinct line.
 - **P6699** "Beni Suef–Abu Qurqas" and **P6700** "Abu Qurqas–Asyut" both carry exactly
   `150.00` km — an identical value for two differently-named segments.
 - **P8056 vs P6700**: legitimately separate rows (P8056 is the announced twin/duplication

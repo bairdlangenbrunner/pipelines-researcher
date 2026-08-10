@@ -401,7 +401,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   EGAS Annual Report 2018 for facts it does not contain, six lengths conflict with
   their own endpoints, P8058 likely belongs to the P3930 (New Administrative
   Capital) family not P8040, P8055's "Trans Gulf … II" lineage to P8013 is false.
-  Routes to Update, not §8.**
+  Routes to Update, not §8. **Counts corrected 2026-08-10: it is 7 rows / 36 `[ref]`
+  cells citing the report, 6 of them unsupported (P8054's citation is legitimate); the
+  report spells Abu Hummus "Houmas" and does list Ezdwaj Edku/Abu Houmas 30 km-42",
+  matching existing P7567 — P8050 needs a duplicate-check against it. The gas tab was
+  also re-sorted 08-10 (P8051 4322→4313) and P8058 was renamed per the memo.**
   Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not

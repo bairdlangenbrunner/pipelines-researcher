@@ -343,9 +343,16 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   geometry contradicts their own `LengthKnownKm`, and applying would move `RouteAccuracy`
   off `no route` for a row with a known-bad fact.
 - **Data-quality escalation covering all ten rows:**
-  `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. Headline: **5 of 10 rows
-  cite the EGAS Annual Report 2018 for facts that report does not contain** (P8051 P8052
-  P8053 P8057 P8059, full-text searched by three independent agents); six rows have
+  `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. Headline (**counts
+  corrected 2026-08-10** — see the memo's Finding 0 for the cell-by-cell map): **7 rows
+  cite the EGAS Annual Report 2018 across 36 `[ref]` cells, and 6 of those 7 cite it for
+  facts the report does not contain** (P8050 P8051 P8052 P8053 P8057 P8059). The seventh,
+  **P8054, is legitimately sourced** — printed p.37 gives "Dahshur / AlWaste pipeline
+  68.5 km - 36"". Report content is 15 line items on printed pp.35/37, verified visually
+  as well as by extraction. One earlier search result was a false negative: the report
+  spells Abu Hummus **"Houmas"** and *does* list "Ezdwaj Edku / Abu Houmas 30 km - 42"" —
+  which matches existing **P7567** (30 km, 42 in), not P8050 or P8051, so their verdict
+  stands but **P8050 needs a duplicate-check against P7567**. Six rows have
   lengths that conflict with their own endpoints (P8057 and P8052 impossibly so — the
   chord exceeds the stated pipe length; P8059 overshoots 5.3×); P8057's `EndPrefecture`
   wrongly repeats its `StartLocation`; **P8058 is probably the second line of the P3930
@@ -359,7 +366,13 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   as an unsupported citation.
 - Incidental pre-existing anomalies (not `NA`'s rows, logged in the escalation): **P3929**
   carries 68.5 km, which is EGAS-2018's figure for the *Dahshur–El Wasta* segment (P8054's
-  line); **P6699 and P6700** both carry exactly 150.00 km.
+  line) — **confirmed first-party 2026-08-10**, printed p.37 gives Al Wasta/Beni Suef as
+  60 km / 36"; **P6699 and P6700** both carry exactly 150.00 km.
+- **Sheet moved 2026-08-10** — 08-07 locators are stale: the gas tab was re-sorted
+  (P8051 4322 → 4313, the ten rows now contiguous at 4312–4321) and three edits landed —
+  **P8058 renamed to "New Administrative Capital–Dahshur Gas Pipeline II"** (i.e. the
+  escalation's Finding 3 was acted on, and the staged geometry already assumed that
+  reading), P8055's name tidied, and P8051's `?utm_source=chatgpt.com` stripped.
 
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 
