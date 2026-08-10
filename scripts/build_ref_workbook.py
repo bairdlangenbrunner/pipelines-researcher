@@ -336,11 +336,39 @@ def _status_styler(columns):
     return styler
 
 
+def _merge_ref_unit(prev: dict | None, new: dict) -> dict:
+    """Two staging dirs can stage a ref for the SAME cell — a ref sweep, then a later
+    crosswalk against a better document. A `[ref]` cell holds a LIST of refs, so keep
+    BOTH: one record stays the base (its values and tier drive the overlay) and the
+    other's refs ride along in `extra_refs`, which _ref_cell_text appends. Picking one
+    and discarding the other would drop real, verified work off the paste surface.
+    A FILL wins the base slot over a ref-only twin — only the FILL carries the proposed
+    VALUE — but its refs are unioned either way."""
+    if prev is None:
+        return new
+    base, other = prev, new
+    if new.get("class_in") == "FILL" and prev.get("class_in") != "FILL":
+        base, other = new, prev
+    extra = list(base.get("extra_refs") or [])
+    have = set(base.get("proposed_refs") or []) | set(extra)
+    for u in list(other.get("proposed_refs") or []) + list(other.get("extra_refs") or []):
+        if u not in have:
+            extra.append(u)
+            have.add(u)
+    if not extra:
+        return base
+    merged = dict(base)          # never mutate — records are shared across views
+    merged["extra_refs"] = extra
+    return merged
+
+
 def _ref_cell_text(r: dict) -> str:
     """What to paste into the `[ref]` cell: the kept once-working current URLs (stamped by
     _annotate_kept_refs — blocked/unreachable is not dead) followed by the proposed
-    ref(s); for a re-verified unit with no proposed change, the existing (re-checked) ref."""
-    refs = r.get("proposed_refs") or []
+    ref(s), including any `extra_refs` merged in from a second staging dir that staged the
+    same cell; for a re-verified unit with no proposed change, the existing (re-checked) ref."""
+    refs = list(r.get("proposed_refs") or [])
+    refs += [u for u in (r.get("extra_refs") or []) if u not in refs]
     if refs:
         kept = [u for u in (r.get("kept_current_refs") or []) if u not in refs]
         return J(kept + refs)
@@ -513,12 +541,9 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
             segs[sk]["by_ref"]["Status [ref]" if r.get("proposed_refs") else rc] = r
         elif rc and rc != VALIDITY_REF:
             # a FILL takes its cluster over a ref-leg twin recorded for the same cell —
-            # the sweep stages both, but only the FILL carries the proposed VALUE (the
-            # twin's refs are the same work product, so nothing is lost)
-            prev = segs[sk]["by_ref"].get(rc)
-            if prev is None or (r.get("class_in") == "FILL"
-                                and prev.get("class_in") != "FILL"):
-                segs[sk]["by_ref"][rc] = r
+            # the sweep stages both, but only the FILL carries the proposed VALUE — while
+            # both records' refs are unioned onto the cell (see _merge_ref_unit)
+            segs[sk]["by_ref"][rc] = _merge_ref_unit(segs[sk]["by_ref"].get(rc), r)
 
     # fall back to a minimal identity header if the snapshot couldn't be loaded
     header = list(backend_header) if backend_header else \
@@ -635,7 +660,8 @@ def _operators_owners_view(wb, title, resolutions):
         if pid not in projs:
             projs[pid] = {"base": r, "by_ref": {}}
             proj_order.append(pid)
-        projs[pid]["by_ref"][r.get("ref_col")] = r
+        rc = r.get("ref_col")
+        projs[pid]["by_ref"][rc] = _merge_ref_unit(projs[pid]["by_ref"].get(rc), r)
 
     ws = wb.create_sheet(title)
     base = ["ProjectID", "PipelineName", "SegmentName"]
