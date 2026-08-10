@@ -45,13 +45,13 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## india-gas
 
-- `staging/annual` — rows=27 fills=10 updates=0 status-pending=5 refs(DEAD_LINK=27, REFS_ADDED=48, REVERIFIED=62, UNRESOLVED=85) routes=0 new(none)
+- `staging/annual` — rows=27 fills=18 updates=0 status-pending=7 refs(DEAD_LINK=27, REFS_ADDED=65, REVERIFIED=62, UNRESOLVED=68) routes=0 new(none)
 - `staging/cancelled-review` — rows=13 fills=9 updates=0 status-pending=3 refs(DEAD_LINK=9, REFS_ADDED=51, REVERIFIED=8, UNRESOLVED=41) routes=0 new(none)
 - `staging/qc` [assembled packet: handoff] — rows=75 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260810` — recon inputs
 - `staging/recon-osm-20260810` — recon inputs
 - `staging/redundancy` [redundancy] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/ref-sweep-operating` — rows=35 fills=13 updates=0 status-pending=0 refs(DEAD_LINK=2, REFS_ADDED=96, REVERIFIED=5, UNRESOLVED=195) routes=0 new(none)
+- `staging/ref-sweep-operating` — rows=35 fills=15 updates=0 status-pending=0 refs(REFS_ADDED=236, REVERIFIED=5, UNRESOLVED=57) routes=0 new(none)
 - `staging/register-crosswalk` [register-crosswalk] — rows=40 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=118) routes=0 new(none)
 - `deliverables/pipelines_batch_20260810_1645_ET_india-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260810_1645_ET_india-gas_reconciliation-osm.xlsx`

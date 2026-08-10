@@ -398,7 +398,7 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   escalation's Finding 3 was acted on, and the staged geometry already assumed that
   reading), P8055's name tidied, and P8051's `?utm_source=chatgpt.com` stripped.
 
-## Open items — §8 route creation 2026-08-10 (ALL 34 routeless gas rows; staged NOT applied)
+## §8 route creation 2026-08-10 (ALL 34 routeless gas rows; 24 candidates APPLIED, 10 partials open)
 
 Baird's instruction reset the bar: **"ideally, I want every single Egypt pipeline to have at
 least a very low resolution route."** That relaxes *precision*, not *sourcing* — at
@@ -417,6 +417,21 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
 - **Scope is exhaustive, not a selection.** Egypt has 115 gas rows; 34 are routeless (33
   `no route` + P8067 blank). **24 are now candidates, 10 stay `ROUTE_PARTIAL`** — nothing is
   silently absent, each partial carries its reason in `ResearcherNotes`.
+- **APPLIED 2026-08-10 (authorized, both halves).** Routes repo: all 24 merged, `d0d8ba77`
+  (7 of them replaced pre-existing `geometry: null` placeholders, so no real route was
+  overwritten); the 7 WARN PIDs went in via explicit `--include`. Sheet: **120 cells** across
+  the 24 rows, `RouteCreator` `CB`, backup `notes/sheet-write-2026-08-10-egypt-gas-route-columns.csv`.
+  `audit_route_sync.py` A/B/C = 0. **P0477 was applied too** — "all candidates" resolved the
+  convention question in favour of routing the parent network row (`high`, merged from its own
+  six segments); everything else is `very low (straight line/schematic)`.
+  **P8063, P8065 and P8066 carry an empty `Route [ref]` by design** — their anchors are points
+  read off GEM's own applied geometry, which standing rule 1 forbids citing, so the provenance
+  lives in `RouteNotes` instead.
+- **P8068 (El Noubareya–Qusina, 40 km, operating) is the one routeless Egypt gas row left.**
+  It was a blank pre-allocated row when this batch was scoped and `NA` filled it in the same
+  day; it has never been routed and is not part of the applied set. Egypt gas is now 116 rows,
+  115 routed. (`audit_route_sync.py` finding D = 1 is this row: blank `RouteAccuracy` rather
+  than `no route`.)
 - Internal gate 24 PASS / 0 FAIL; routes-repo `qc_routes.py` **17 pass / 7 warn / 0 fail**
   (WARNs P6704 P8020 P8052 P8053 P8056 P8057 P8059 — all length ratios, expected for
   great-circle candidates).
@@ -433,8 +448,9 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
 - **P0477 South Valley is a convention question, not research.** The 930 km parent
   network row is staged as a merge of its own six applied segment routes (P6697–P6702,
   929 km summed). 15 network rows tracker-wide already carry routes, so it is not
-  unprecedented — but whether GEM wants parent rows routed is Baird's call. Do not apply
-  without it.
+  unprecedented — whether GEM wants parent rows routed was Baird's call, and **the 08-10
+  "add all candidates" authorization made it: applied.** Reversible by deleting
+  `P0477.geojson` and clearing the four route cells.
 - **Two rows carry a length question the geometry can't settle** — P8020 (186 km chord vs
   130 km sheet, so either the length is wrong or "Cairo Ring" means a different node than
   P8017's) and P8035. Corridors are right; both apply-at-your-discretion like P8057/P8059.

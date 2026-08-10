@@ -415,17 +415,24 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   **+ §8 pass 2026-08-10, THE one open route surface for Egypt gas — Baird reset the bar
   to "every Egypt pipeline should have at least a very low resolution route", which
   relaxes PRECISION (a settlement/facility anchor pair is what `very low` means) but not
-  SOURCING. All 34 routeless rows (33 `no route` + P8067 blank) of 115: **24 candidates +
-  10 partials STAGED NOT APPLIED**, workbook `…_20260810_1800_ET_…route-creation.xlsx`,
+  SOURCING. All 34 routeless rows (33 `no route` + P8067 blank) of 115: **24 candidates
+  APPLIED same day (authorized, both halves — routes merge `d0d8ba77`, 7 of them replacing
+  pre-existing `geometry: null` placeholders; sheet 120 cells, RouteCreator CB, backup in
+  `notes/`, `audit_route_sync.py` A/B/C = 0) + 10 partials still open**, workbook
+  `…_20260810_1800_ET_…route-creation.xlsx`,
   internal gate 24/0, routes-repo QC 17 pass / 7 warn / 0 fail. It SUPERSEDES the 08-05
   pending + 08-07 workbooks and the July/08-04 staging dirs — all moved to
   `batches/egypt-gas/archive/`, so `staging/` now holds exactly one route dir. Newly
   resolved anchors did the work: Abu Madi via GeoNames (P8022/P8023/P8049), the TWO
   distinct GEM "Ameriya" nodes 10.2 km apart (P8065/P8066), the OSM El-Tina station
   (P8026/P8035). P8035 is NOT a duplicate of P8013 (July claim withdrawn) — it is the
-  Port Said UGDC line. P0477 South Valley is staged as a merge of its own six applied
-  segment routes and is a CONVENTION question for Baird, not research. Apply-at-your-
-  discretion rows (corridor right, length unresolved): P8020, P8035, P8057, P8059.
+  Port Said UGDC line. P0477 South Valley (parent network row merged from its own six
+  applied segment routes) was a CONVENTION question — "add all candidates" answered it,
+  applied at `high`. Applied despite unresolved lengths (corridors right): P8020, P8035,
+  P8057, P8059. P8063/P8065/P8066 have an empty `Route [ref]` BY DESIGN — internally
+  anchored off GEM's own geometry, which rule 1 forbids citing; provenance in RouteNotes.
+  **P8068 (El Noubareya–Qusina) is the one routeless Egypt gas row left** — a blank
+  pre-allocated row when the batch was scoped, filled by NA the same day, never routed.
   Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
   the one defect is **P7338**, real geometry but `RouteType = Unavailable`, a three-way-
   sync violation fixable with `--backfill-route-type`.**

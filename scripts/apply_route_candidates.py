@@ -256,8 +256,13 @@ def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
             assert "CB: route replaced" not in cur["RouteNotes"], \
                 f"{c['pid']}: RouteNotes already has a replacement stamp — double-append guard"
         else:
-            assert cur["RouteAccuracy"] == "no route", \
-                f"{c['pid']}: RouteAccuracy is {cur['RouteAccuracy']!r}, expected 'no route' — aborting"
+            # a blank RouteAccuracy is the same fact as 'no route' (newly added
+            # rows are often left blank) — but only accept it when RouteType
+            # agrees the row is unmapped, so a mapped row can never be clobbered
+            assert cur["RouteAccuracy"] == "no route" or (
+                cur["RouteAccuracy"] == "" and cur["RouteType"] != MAPPED), \
+                f"{c['pid']}: RouteAccuracy is {cur['RouteAccuracy']!r} / RouteType " \
+                f"{cur['RouteType']!r}, expected an unmapped row — aborting"
             assert "CB: route" not in cur["RouteNotes"], \
                 f"{c['pid']}: RouteNotes already has a CB stamp — double-append guard"
 
