@@ -339,18 +339,23 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   swings well west; for P8058 the path fits but the *endpoint identity* is contested, so a
   `medium` grade would overstate the evidence. North Sinai (P8052/P8053) has no ENTSOG
   coverage at all.
-- **DO NOT APPLY P8052, P8053, P8057, P8059** (revised 2026-08-10; P8053 added).
-  - **P8052/P8053 — our defect, not the sheet's.** The endpoint research anchored "Sinia
-    Cement" to **Sinai White Cement at El Hassana** (30.7242, 33.7765), a different company
-    ~60 km from the real line; the map puts *Sinai Cement & Ind. Area* on the El Arish
-    corridor. From Sheikh Zuweid that anchor gives 63.0 km vs the sheet+map's 45 km, while
-    El Arish + plant offset gives ~41–45 km. **The 45 km was right and the geocode was
-    wrong** — so Finding 1's "impossible length" on P8052 is withdrawn. Re-research both
-    endpoints before any apply.
-  - **P8059** — same shape as P8052/P8053: the map confirms 75 km, so our 14.1 km
-    Amreya → Sidi Krir pair is the wrong corridor. Re-research the endpoints.
-  - **P8057** — geometry still contradicts the stated `LengthKnownKm`, which is itself
-    map-sourced; applying would move `RouteAccuracy` off `no route` for an unresolved row.
+- **The do-not-apply list is RETIRED (2026-08-10, second revision).** All ten rows were
+  re-staged in the 08-10 pass below, and the blocks resolved as follows:
+  - **P8052/P8053 — clear to apply. The "wrong cement plant" finding is WITHDRAWN.** An
+    Egypt-wide OSM name sweep returns exactly two Sinai cement works and they are
+    neighbours in the **Jabal Lubna** quarry district (*Sinai White Cement* 33.7683,30.7240;
+    *Al Arish Cement* 33.8487,30.7008) — there is no cement works beside El Arish town.
+    Independently, georeferencing the GASCO sheet's own printed captions puts `Sinai` at
+    (33.821,30.759) and `Cement` at (33.824,30.705), i.e. on the OSM plants. The original
+    anchor was right; the withdrawn "El Arish + offset" arithmetic was reverse-derived from
+    the 45 km to make the ratio work. What survives is only P8052's 1.40 ratio, best read as
+    the tap being a coastal-trunk tie-in ~20 km west of Sheikh Zuweid town (the map's own
+    inland branch g07-0088 leaves the coast at 33.949,31.067 and runs 41.6 km to the plant,
+    matching its `24" - 45 k.m` label).
+  - **P8057, P8059** — apply only if a schematic placeholder ahead of the real corridor is
+    wanted; that trade is Baird's call, not a block. Both keep a live length question
+    (P8057: map-sourced 25 km vs a 40.8 km chord; P8059: map-confirmed 75 km vs a 14.1 km
+    chord, so the west-Alexandria end is the wrong facility).
 - **Data-quality escalation covering all ten rows:**
   `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. **The headline citation
   finding was WITHDRAWN 2026-08-10** — `NA` was identifying these pipelines **visually off
@@ -392,6 +397,61 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   **P8058 renamed to "New Administrative Capital–Dahshur Gas Pipeline II"** (i.e. the
   escalation's Finding 3 was acted on, and the staged geometry already assumed that
   reading), P8055's name tidied, and P8051's `?utm_source=chatgpt.com` stripped.
+
+## Open items — §8 route creation 2026-08-10 (ALL 34 routeless gas rows; staged NOT applied)
+
+Baird's instruction reset the bar: **"ideally, I want every single Egypt pipeline to have at
+least a very low resolution route."** That relaxes *precision*, not *sourcing* — at
+`very low (straight line/schematic)` a settlement- or facility-level anchor pair is exactly
+what the tier describes, so three passes' worth of rows that had been held back as
+`ROUTE_PARTIAL` for imprecision are now drawable. The sourcing rule is unchanged: every
+coordinate comes from OSM, GeoNames, a published facility record, or (flagged as such) a
+point read off GEM's own applied geometry as an internal tie-in.
+
+Staging `batches/egypt-gas/staging/route-creation-20260810/`; workbook
+`…_20260810_1800_ET_egypt-gas_route-creation.xlsx`. **This pass supersedes the 08-05
+pending workbook and the whole 08-07 pass** — both, plus the July `route-creation` and
+`route-creation-20260804` staging dirs, moved to `batches/egypt-gas/archive/`. Their pending
+remainder was entirely re-staged here, so Egypt gas now has **one** open route surface.
+
+- **Scope is exhaustive, not a selection.** Egypt has 115 gas rows; 34 are routeless (33
+  `no route` + P8067 blank). **24 are now candidates, 10 stay `ROUTE_PARTIAL`** — nothing is
+  silently absent, each partial carries its reason in `ResearcherNotes`.
+- Internal gate 24 PASS / 0 FAIL; routes-repo `qc_routes.py` **17 pass / 7 warn / 0 fail**
+  (WARNs P6704 P8020 P8052 P8053 P8056 P8057 P8059 — all length ratios, expected for
+  great-circle candidates).
+- **Anchors newly resolved this pass** (the reason the long-standing partials moved):
+  **Abu Madi = 31.3667, 31.4133** (GeoNames *Ḩaql Ghāz Abū Māḑī* gasfield, corroborated
+  within 1.3 km by unnamed OSM industrial way 690415406) unblocked P8022/P8023/P8049; the
+  **two distinct "Ameriya" nodes** GEM already uses — Amreya oil & gas plant (29.8648,
+  31.0948, end of the applied P0474) and WDGC (29.8429, 31.0094, start of P3934/P8032),
+  10.2 km apart — unblocked P8065/P8066; the **OSM El-Tina station** node (32.3075, 31.0425)
+  unblocked P8026 and P8035.
+- **P8035 correction:** the July pass had resolved it to P8013's Petreco/Ras Bakr endpoints
+  and called it a duplicate of P8013. Withdrawn — P8035 is the Port Said **UGDC–El Tina**
+  line, re-anchored to El Gamil → El-Tina station (28.7 km vs 40 km).
+- **P0477 South Valley is a convention question, not research.** The 930 km parent
+  network row is staged as a merge of its own six applied segment routes (P6697–P6702,
+  929 km summed). 15 network rows tracker-wide already carry routes, so it is not
+  unprecedented — but whether GEM wants parent rows routed is Baird's call. Do not apply
+  without it.
+- **Two rows carry a length question the geometry can't settle** — P8020 (186 km chord vs
+  130 km sheet, so either the length is wrong or "Cairo Ring" means a different node than
+  P8017's) and P8035. Corridors are right; both apply-at-your-discretion like P8057/P8059.
+- **The 10 remaining partials, with why:** P8005/P8006/P8007 (Ain Sokhna terminal spurs —
+  the terminal end is anchored, the grid-side end is unnamed in every source), P8008/P8009
+  ("Sinia Gas Pipeline 1/2" — no endpoint named anywhere; "Sinia" is the governorate),
+  P8001 (Abu Gharadig anchored, no geocodable NORPETCO facility), P8003 (EGAS 2018 names
+  the project but no endpoints; Fayoum→Giza is ~80 km against a 27 km row), P7589 (Faramid:
+  the only name-matched end is 159 km away against a 38 km row), P7605 (Wanda: nothing
+  geocodable), P8055 (Trans-Sinai II duplication: GASCO gives length/bore/cost but no
+  endpoints). Each needs a *source*, not another geocoding attempt.
+- **Egypt oil is effectively complete**: 46 rows, 45 with mapped geometry. P7326 already
+  carries a deliberate `geometry: null` placeholder in the routes repo and is correctly
+  `Unavailable`/`no route`. One defect: **P7338** (Dekhela–Wadi Al Qamar LPG) has real
+  3-point geometry in the routes repo but `RouteType = Unavailable (cannot find route)`
+  against `RouteAccuracy = low` — a three-way-sync violation needing a one-cell RouteType
+  fix, repairable with `apply_route_candidates.py --backfill-route-type --pids P7338`.
 
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 

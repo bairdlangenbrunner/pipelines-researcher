@@ -183,4 +183,14 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   must pass the verifier, cite a `web.archive.org` snapshot of the page instead (the
   archive URL verifies) and note the original in `ResearcherNotes` — never drop the
   source, never ship the unverifiable URL.
+- **P8062 null route — staged 2026-08-10, not applied.** Baird's instruction while
+  routing Egypt: "for MZ's P8062, just add a null route for that." Staged at
+  `batches/china-gas/staging/route-creation-null-20260810/candidate_routes/P8062.geojson`
+  as a single `geometry: null` feature — the routes repo's own
+  `data/example-empty-route.geojson` convention, already in production for
+  `liquid-pipelines/P7326.geojson`. **No sheet write accompanies it**: under the
+  three-way-sync rule a null placeholder is not mapped geometry, so `RouteType` stays
+  `Not mapped (but could be — route or endpoints are known)`, `RouteAccuracy` stays
+  `no route`, and `RouteCreator` stays `MZ` (we created nothing). Destination on
+  authorization is one file, `data/individual-routes/gas-pipelines/P8062.geojson`.
 - Oil (363 rows, stale) — unassigned, post-cycle decision.

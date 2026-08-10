@@ -113,38 +113,63 @@ The prose tables cover only the two fiscal years' new-build and rehabilitation p
 so a long-operating segment being absent from them says nothing about whether it exists —
 another reason the original text-search inference did not hold.
 
-## Finding 0b — OUR defect: P8052/P8053 geometry is anchored to the wrong cement plant
+## Finding 0b — WITHDRAWN 2026-08-10 (same day it was raised): the cement anchor was right
 
-The §8 endpoint research resolved "Sinia Cement Industrial Area" to the **Sinai White
-Cement** factory at **El Hassana**, central Sinai (30.7242, 33.7765; OSM way 97684492).
-That is a different company in a different place. The map puts *Sinai Cement & Ind. Area*
-on the El Arish corridor, and the arithmetic is decisive:
-
-| Anchor | Chord from Sheikh Zuweid | vs sheet + map (45 km) |
-|---|---|---|
-| El Hassana (used) | **63.0 km** | 1.40× — the "impossible length" of Finding 1 |
-| El Arish town, + plant offset south | **31.1 km → ~41–45 km** | matches |
-
-So the 45 km was never wrong; **our geocode was**. The same bad anchor is P8053's *start*,
-so both candidates inherit it.
-
-**Consequence: the staged P8052 and P8053 candidate geometries must NOT be applied.** They
-are drawn ~60 km from where the line actually runs. P8053 was not previously on the
-do-not-apply list; it is now. Both need re-research against the Sinai Cement Company plant
-near El Arish before any §8 apply.
+> **This finding is withdrawn in full.** It asserted that our §8 research had resolved
+> "Sinia Cement Industrial Area" to the wrong plant — that the real one sits on the El
+> Arish corridor while we had anchored to Sinai White Cement at El Hassana in central
+> Sinai. Two independent checks say otherwise, and both point at the anchor we already
+> used:
+>
+> 1. **OSM, Egypt-wide.** A name sweep returns exactly two Sinai cement works, and they
+>    are neighbours in the Jabal Lubna quarry district, ~50 km inland: *Sinai White
+>    Cement Factory* (33.7683, 30.7240) and *Al Arish Cement* (33.8487, 30.7008), with
+>    industrial polygon way 97684492 (33.7765, 30.7242) between them. There is no cement
+>    works at or beside El Arish town.
+> 2. **The GASCO sheet's own captions.** Georeferencing the printed place labels off the
+>    same Nov-2007 grid map (order-2 graticule fit) puts `Sinai` at (33.821, 30.759) and
+>    `Cement` at (33.824, 30.705) — within 2–5 km of the OSM plants, and ~55 km south of
+>    El Arish. The map agrees with OSM, not with this finding.
+>
+> The "El Arish town + offset south" arithmetic in the withdrawn table was reverse-derived
+> from the 45 km length to make the ratio work; it was not evidence.
+>
+> **P8053 comes off the do-not-apply list.** Its 7.4 km plant-to-plant chord against a
+> 16 km sheet length is ordinary winding for a quarry-district tie line.
+>
+> **What survives for P8052** is only the length ratio, and it is a smaller problem than
+> stated: 63.0 km from Sheikh Zuweid *town* against 45 km on both the sheet and the map.
+> The likely reading is that the take-off is a tie-in on the coastal/AGP trunk rather than
+> the town centre — the map's own inland branch (trace g07-0088) leaves the coast at
+> (33.949, 31.067) and runs 41.6 km to Sinai White Cement, which is what its `24" - 45
+> k.m` label says. So P8052's *start* wants narrowing by ~20 km along the coast; its end
+> is correct and its corridor is correct.
+>
+> Standing lesson, same as Finding 0's: check the map before ruling on a map-derived row.
 
 ## Finding 1 — length conflicts with the row's own endpoints
 
-> **Revised 2026-08-10.** Two entries below were artefacts of our own endpoint research,
-> not sheet defects. **P8052's is withdrawn outright** (Finding 0b — wrong cement plant).
-> **P8059's** is now the same kind of error: the map label reads `24" 75 km` and matches the
-> sheet exactly (the `7.5` reading is withdrawn — see Finding 0), so a 14.1 km Amreya →
-> Sidi Krir chord means **our endpoints are wrong**, not the length. A 75 km line leader-lined
-> from *Natgas* west of Alexandria runs far beyond that pair. **P8057's** 25 km is faithfully
-> transcribed off the map, so it is a disagreement between the source and the geography rather
-> than a transcription defect — it still blocks an apply. The do-not-apply list is therefore
-> **P8052, P8053, P8057, P8059** (P8053 added, for geometry not length; P8059 stays, for
-> geometry rather than length).
+> **Revised 2026-08-10 (twice — read this, not the table).** Two entries below are artefacts
+> of our own endpoint research, not sheet defects.
+>
+> - **P8052** — the ratio stands but the diagnosis in the first revision does not. Finding 0b
+>   (wrong cement plant) is withdrawn; the end anchor is right and the *start* is the loose
+>   one: the tap is a tie-in on the coastal trunk ~20 km west of Sheikh Zuweid town, which is
+>   what the map's own inland branch shows. Corridor correct, length still unreconciled.
+> - **P8053** — no length problem at all. Off the do-not-apply list.
+> - **P8059** — our endpoints are wrong, not the length. No `7.5 km` label exists anywhere on
+>   the georeferenced sheet (all 46 extracted labels checked), so 75 km stands, and a 14.1 km
+>   Amreya → Sidi Krir chord is 5.3× too short for it.
+> - **P8057** — 25 km is faithfully transcribed off the map, so this is the source disagreeing
+>   with the geography rather than a transcription defect.
+>
+> **Do-not-apply is therefore obsolete as a blanket list.** Baird's 2026-08-10 instruction is
+> that every Egypt row should carry at least a `very low (straight line/schematic)` route, and
+> at that tier a schematic line whose *corridor* is right is exactly what the tier means. All
+> four are re-staged in `route-creation-20260810` with the open question written into
+> `ResearcherNotes`; **P8052/P8053 are now clean to apply**, and **P8057/P8059 apply only if a
+> schematic placeholder ahead of the real corridor is wanted** — that is Baird's call, not a
+> block.
 
 Straight-line (great-circle) distance between the two endpoints each row names, versus
 `LengthKnownKm` on that row. A real route can never be **shorter** than its own chord,
@@ -153,7 +178,7 @@ so a ratio > 1.0 is not "a bit off" — it is impossible as stated.
 | PID | Named endpoints | Chord km | Sheet km | Ratio | Verdict |
 |---|---|---|---|---|---|
 | P8057 | Mostorod → El Tebbin | 40.8 | 25 | **1.63** | impossible as stated |
-| P8052 | Sheikh Zuweid → Sinai Cement (El Hassana) | 63.0 | 45 | **1.40** | impossible as stated |
+| P8052 | Sheikh Zuweid → Sinai Cement (Jabal Lubna) | 63.0 | 45 | **1.40** | start anchor too far east — see revision |
 | P8059 | Al Amreya → Sidi Krir 3&4 (InterGen) | 14.1 | 75 | 0.19 (**5.3× overshoot**) | **endpoints** wrong — 75 km is map-confirmed |
 | P8053 | Sinai Cement → Military Cement (Jabal Lubna) | 7.4 | 16 | 0.46 (2.17×) | high but possible |
 | P8056 | Abu Qurqas → Asyut | 89.9 | 135 | 0.67 (1.50×) | see note |
@@ -266,19 +291,27 @@ Surfaced incidentally; out of scope for this batch, logged so they aren't lost:
 `batches/egypt-gas/deliverables/pipelines_batch_20260807_1712_ET_egypt-gas_route-creation.xlsx`.
 Every candidate's notes carry its own flags in full.
 
+**Superseded 2026-08-10.** All ten rows were re-staged, with these corrections folded into
+their notes, in `batches/egypt-gas/staging/route-creation-20260810/` →
+`pipelines_batch_20260810_1800_ET_egypt-gas_route-creation.xlsx`, which covers all 34
+routeless Egypt gas rows rather than these ten. The 08-07 staging dir and workbook are in
+`batches/egypt-gas/archive/`.
+
 **Not done — deliberately:** nothing was written to the live sheet or the routes repo.
 No length, name, or citation was corrected.
 
-**Do not apply (revised 2026-08-10): P8052, P8053, P8057, P8059.**
+**Apply guidance (final, 2026-08-10)** — the earlier blanket "do not apply" list is retired,
+because Baird's floor for Egypt is now "at least a very low resolution route" and a schematic
+line with the right corridor satisfies it:
 
-- **P8052, P8053** — our geometry is anchored to the wrong cement plant (Finding 0b).
-  Re-research the endpoints; the sheet's lengths are correct.
-- **P8059** — same shape: the map confirms 75 km, so a 14.1 km candidate means our
-  endpoint pair is wrong, not the row. Re-research the corridor before staging again.
-- **P8057** — geometry contradicts the stated `LengthKnownKm`, and the 25 km is
-  map-sourced, so the conflict is unresolved on the sheet's own terms. Applying would move
-  `RouteAccuracy` off `no route` for a row with an unresolved fact, which is how a defect
-  gets laundered into a "mapped" row.
+- **P8052, P8053** — clear to apply. Finding 0b is withdrawn; the cement anchors were right.
+  P8052 keeps a note that its coastal-trunk tap sits ~20 km west of Sheikh Zuweid town.
+- **P8057, P8059** — apply only if a placeholder ahead of the real corridor is wanted. Both
+  have a live unresolved fact (P8057: 25 km vs a 40.8 km chord, both defensible; P8059: 75 km
+  map-confirmed against a 14.1 km chord, so the west-Alexandria end is wrong). Applying moves
+  `RouteAccuracy` off `no route` for a row whose length is still in question — acceptable at
+  `very low` if that trade is made knowingly, which is why it is stated here rather than
+  decided here.
+- **P8050, P8051, P8054, P8056, P8058** — unaffected by the 2026-08-10 corrections.
 
-The other five candidates (P8050, P8051, P8054, P8056, P8058) are unaffected by the
-2026-08-10 corrections.
+The **value** findings below (2–6) are untouched by any of this and still route to §5 Update.

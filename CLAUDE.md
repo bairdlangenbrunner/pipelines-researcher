@@ -385,18 +385,14 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   candidates 2026-08-05 (authorized; routes merge `a2fa41c8`, 65 cells, QC 11 pass
   / 2 WARN included). RouteCreator CB, backups in `notes/`, `audit_route_sync.py`
   A/B/C = 0; 4 documented gate FAILs applied deliberately (3 = suspected
-  sheet-length defects). **Only 4 partials still pending** (P8026, P8022/P8023,
-  P8035 = duplicate of P8013), merged with the 13 July partials into the
-  partials-only workbook `…_20260805_1701_ET_…route-creation-pending.xlsx`.
+  sheet-length defects).
   **+ §8 pass 2026-08-07 on researcher `NA`'s ten NEWEST rows (P8050–P8059, all
-  `no route`, disjoint from the 17 pending partials): 9 candidates + 1 partial
-  STAGED NOT APPLIED, workbook `…_20260807_1712_ET_…route-creation.xlsx`;
+  `no route`): 9 candidates + 1 partial, since SUPERSEDED (see the 08-10 pass below);
   routes-repo QC 4 pass / 5 warn / 0 fail. Recency came from walking daily snapshots
   for first-non-blank `PipelineName` — P8000–P8099 were pre-allocated blank on
   07-15, so PID order is NOT a recency signal; and `NA` is in pandas' default
   `na_values`, so read with `keep_default_na=False, na_values=[]` or her 423 gas
-  rows vanish. DO NOT APPLY P8057/P8059/P8052 — geometry contradicts their own
-  `LengthKnownKm`. Ten-row data-quality escalation →
+  rows vanish. Ten-row data-quality escalation →
   `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`: 5 of 10 rows cite
   EGAS Annual Report 2018 for facts it does not contain, six lengths conflict with
   their own endpoints, P8058 likely belongs to the P3930 (New Administrative
@@ -406,16 +402,33 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   full-text search was the wrong test. The map annotates segments `NN" NN km`; P8052/
   P8053/P8057/P8059 match it exactly and 6 of 7 rows match on diameter. Survivors are
   narrow: P8051's 32" conflicts with the 65 km label's 42", and P8050 needs a
-  duplicate-check vs P7567. OUR defects: P8052/P8053 geometry is anchored
-  to Sinai White Cement at El Hassana, ~60 km off — the sheet's 45 km was right and the
-  geocode was wrong; and the "P8059 = 7.5 km decimal misread" claim was RETRACTED 08-10
-  (the map raster is 200 ppi, so the 600 dpi page render upsampled ~3× and blurred an
-  inter-glyph seam into a dot — the label reads `24" 75 km`, so P8059's *endpoints* are
-  what's wrong). Never read a fine detail off an upsampled render: check
-  `pdfimages -list` for the embedded raster's native size first. DO-NOT-APPLY is
-  P8052/P8053/P8057/P8059. Gas tab re-sorted
+  duplicate-check vs P7567. OUR retracted claims, both 08-10: "P8059 = 7.5 km decimal
+  misread" (the map raster is 200 ppi, so the 600 dpi page render upsampled ~3× and
+  blurred an inter-glyph seam into a dot — the label reads `24" 75 km`, so P8059's
+  *endpoints* are what's wrong; never read a fine detail off an upsampled render —
+  check `pdfimages -list` for the native raster size first), and "P8052/P8053 are
+  anchored to the wrong cement plant" (WITHDRAWN — OSM has exactly two Sinai cement
+  works and both are in the Jabal Lubna district we already used, and the map's own
+  georeferenced `Sinai`/`Cement` captions land on them). Gas tab re-sorted
   08-10 (P8051 4322→4313); P8058 renamed per the memo. Rule of thumb: a report cited for
   a pipeline is not "unsupported" until its MAPS have been read, not just its text.**
+  **+ §8 pass 2026-08-10, THE one open route surface for Egypt gas — Baird reset the bar
+  to "every Egypt pipeline should have at least a very low resolution route", which
+  relaxes PRECISION (a settlement/facility anchor pair is what `very low` means) but not
+  SOURCING. All 34 routeless rows (33 `no route` + P8067 blank) of 115: **24 candidates +
+  10 partials STAGED NOT APPLIED**, workbook `…_20260810_1800_ET_…route-creation.xlsx`,
+  internal gate 24/0, routes-repo QC 17 pass / 7 warn / 0 fail. It SUPERSEDES the 08-05
+  pending + 08-07 workbooks and the July/08-04 staging dirs — all moved to
+  `batches/egypt-gas/archive/`, so `staging/` now holds exactly one route dir. Newly
+  resolved anchors did the work: Abu Madi via GeoNames (P8022/P8023/P8049), the TWO
+  distinct GEM "Ameriya" nodes 10.2 km apart (P8065/P8066), the OSM El-Tina station
+  (P8026/P8035). P8035 is NOT a duplicate of P8013 (July claim withdrawn) — it is the
+  Port Said UGDC line. P0477 South Valley is staged as a merge of its own six applied
+  segment routes and is a CONVENTION question for Baird, not research. Apply-at-your-
+  discretion rows (corridor right, length unresolved): P8020, P8035, P8057, P8059.
+  Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
+  the one defect is **P7338**, real geometry but `RouteType = Unavailable`, a three-way-
+  sync violation fixable with `--backfill-route-type`.**
   Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
@@ -462,7 +475,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   tracked in work Asana (gem-desk). **`RouteType` backfill 2026-07-31: that apply set
   `RouteAccuracy` but not `RouteType`, so all 79 merged rows still read `Not mapped`/
   `Unavailable` — repaired under authorization (79 cells verified, backup in `notes/`);
-  China gas now clean per `scripts/audit_route_sync.py`.**; oil out of scope until post-cycle):**
+  China gas now clean per `scripts/audit_route_sync.py`.** **+ P8062 (MZ's Dalian–Shenyang
+  Dalian Branch) staged 2026-08-10 as a `geometry: null` placeholder at Baird's request —
+  `batches/china-gas/staging/route-creation-null-20260810/`. A null route is NOT mapped
+  geometry: no sheet write goes with it, `RouteType`/`RouteAccuracy` stay as they are, and
+  `RouteCreator` stays `MZ`.**; oil out of scope until post-cycle):**
   `docs/country_notes/china.md`.
 - **Libya (gas: full pass 2026-07-28 staged not applied — ref sweep, cancelled
   review, 7 redundancy clusters, GulfPub + OSM recon, handoff packet

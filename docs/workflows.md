@@ -505,9 +505,18 @@ snapshots in `data/` are stale.
    geographically-grouped subagents, then assemble resolved PIDs via
    `build_route_candidate.py --method endpoints` and refresh the still-unresolved
    ROUTE_PARTIAL records in place. Exemplars from the Egypt gas retry (3/18 resolved):
-   `batches/egypt-gas/staging/route-creation/{retry_payload_*,retry_results_*,assemble_retry_candidates.py}`.
+   `batches/egypt-gas/archive/staging/route-creation/{retry_payload_*,retry_results_*,assemble_retry_candidates.py}`.
    Cross-read the results before assembling — one group's source can resolve another
    group's PID (the P8021 World Bank ICR also named P8014's Zafarana–Kureimat line).
+
+   **A partial is not always a research failure — sometimes it is the bar being set too
+   high.** Egypt's 18 three-pass partials cleared in one sitting on 2026-08-10 once Baird
+   said every row should carry *at least* `very low (straight line/schematic)`: at that
+   tier a settlement- or facility-level anchor pair is the point, not a shortfall. Relax
+   *precision* when the deliverable's floor allows it; never relax *sourcing*. Rows with
+   only one anchor still stay `ROUTE_PARTIAL`, with the reason in `ResearcherNotes`, so the
+   packet states its own coverage. Exemplar:
+   `batches/egypt-gas/staging/route-creation-20260810/{build_candidates.py,append_partials.py}`.
 
 ---
 

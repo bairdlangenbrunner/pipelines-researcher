@@ -9,6 +9,7 @@ applied). See docs/workflows.md "Batch artifacts".
 ## china-gas
 
 - `staging/route-creation-grids` [route-creation] — rows=38 fills=0 updates=0 status-pending=0 refs(none) routes=38 new(none)
+- `staging/route-creation-null-20260810` — no store — invisible to discovery
 - `deliverables/pipelines_batch_20260730_1706_ET_china-gas_route-creation-grids.xlsx`
 
 ## china-guangxi-gas
@@ -34,16 +35,26 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/recon-gulfpub-20260729` — recon inputs
 - `staging/recon-osm-20260729` — recon inputs
 - `staging/ref-sweep-operating` — rows=50 fills=119 updates=0 status-pending=0 refs(REFS_ADDED=240, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none)
-- `staging/route-creation` [route-creation] — rows=55 fills=0 updates=0 status-pending=0 refs(none) routes=55 new(none)
-- `staging/route-creation-20260804` [route-creation] — rows=27 fills=0 updates=0 status-pending=0 refs(none) routes=27 new(none)
-- `staging/route-creation-20260807` [route-creation] — rows=10 fills=0 updates=0 status-pending=0 refs(none) routes=10 new(none)
+- `staging/route-creation-20260810` [route-creation] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=34 new(none)
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
-- `deliverables/pipelines_batch_20260805_1701_ET_egypt-gas_route-creation-pending.xlsx`
-- `deliverables/pipelines_batch_20260807_1712_ET_egypt-gas_route-creation.xlsx`
-- `archive/` — 11 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260810_1800_ET_egypt-gas_route-creation.xlsx`
+- `archive/` — 13 superseded/applied file(s)
+
+## india-gas
+
+- `staging/annual` — rows=27 fills=10 updates=0 status-pending=5 refs(DEAD_LINK=27, REFS_ADDED=48, REVERIFIED=62, UNRESOLVED=85) routes=0 new(none)
+- `staging/cancelled-review` — rows=13 fills=9 updates=0 status-pending=3 refs(DEAD_LINK=9, REFS_ADDED=51, REVERIFIED=8, UNRESOLVED=41) routes=0 new(none)
+- `staging/qc` [assembled packet: handoff] — rows=75 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/recon-gulfpub-20260810` — recon inputs
+- `staging/recon-osm-20260810` — recon inputs
+- `staging/redundancy` [redundancy] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/ref-sweep-operating` — rows=35 fills=13 updates=0 status-pending=0 refs(DEAD_LINK=2, REFS_ADDED=96, REVERIFIED=5, UNRESOLVED=195) routes=0 new(none)
+- `staging/register-crosswalk` [register-crosswalk] — rows=40 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=118) routes=0 new(none)
+- `deliverables/pipelines_batch_20260810_1645_ET_india-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260810_1645_ET_india-gas_reconciliation-osm.xlsx`
 
 ## iran-gas
 
