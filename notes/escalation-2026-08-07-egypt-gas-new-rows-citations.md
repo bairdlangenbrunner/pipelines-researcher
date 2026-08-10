@@ -4,7 +4,7 @@
 **Scope:** GGIT gas, Egypt, ProjectIDs P8050–P8059 (SheetRows 4311–4322), researcher
 code **`NA`** — read from col J of `data/GGIT_gas_snapshot_20260807.csv`, not inferred.
 **Raised by:** the §8 route-creation pass
-(`batches/egypt-gas/staging/route-creation-20260807/`), which required endpoint research
+(`batches/egypt-gas/archive/staging/route-creation-20260807/`), which required endpoint research
 on every row and surfaced these as a side effect.
 **Routing:** these are **Update-workflow** findings (source + value fixes). §8 detects,
 Update fixes — nothing here was corrected on the sheet.
@@ -19,7 +19,8 @@ Two standing thresholds are met:
   was wrong.** See Finding 0. The citations are to the report's **GASCO national-grid map**
   (printed p.35), which the text-search approach could not see. The map carries per-segment
   `NN" NN km` annotations, and most of the cited rows transcribe theirs exactly. What
-  survives is two value defects and one duplicate-check, not a class-wide sourcing failure.
+  survives is **one** value defect (P8051's bore) and one duplicate-check (P8050 vs
+  P7567) — not a class-wide sourcing failure.
 - *"A QC spot-check shows >10% of sampled cells unsupported."* Comfortably exceeded.
 
 ~~The pattern is not that the pipelines are fake — most are plausibly real — but that the
@@ -39,7 +40,7 @@ annotations give bore and length — for `Status`, `PipelineType`, `Fuel`, `Diam
 `Length` too. Citing all six cells to it is defensible practice, not a defect.
 
 Map evidence is committed alongside this batch at
-`batches/egypt-gas/staging/route-creation-20260807/maps/` (full p.35 render plus the four
+`batches/egypt-gas/archive/staging/route-creation-20260807/maps/` (full p.35 render plus the four
 region crops the table below rests on).
 
 ### Citation map
@@ -58,21 +59,33 @@ SheetRows are as of the **2026-08-10** snapshot — the gas tab was re-sorted be
 | P8054 | 4316 | 6 | 65 km, 36" | text p.37 *Dahshur / AlWaste 68.5 km - 36"*; map `24"/20" 65 km` near Dahshour | **supported** (also in the prose table) |
 | P8050 | 4312 | 1 (`Location` only) | 29 km, 30" | `30" 27 k.m` at the Idku landfall | bore exact, 27 vs 29 km — but length/bore cite a Dec-2019 ministry page, not EGAS, so no conflict |
 | P8051 | 4313 | 5 (no `Length`) | 65 km, 32" | `42" 65km` inside the stacked Abu Homos label bundle | length exact, **bore 42 ≠ 32** — probable mis-pairing across stacked labels |
-| P8059 | 4321 | 6 | 75 km, 24" | `24" 7.5 k.m` at Sidi Krir / Intergen P.S | bore exact, **length is 7.5 km — a decimal misread as 75** |
+| P8059 | 4321 | 6 | 75 km, 24" | `24" 75 km`, leader-lined from *Natgas* at Sidi Krir / Intergen P.S | **exact — supported** (see the decimal note below) |
 | P8055, P8056, P8058 | — | 0 | — | — | do not cite it |
 
-Six of the seven carry a map label whose **diameter matches the sheet exactly**, which is
-itself strong evidence that these cells were transcribed off the map rather than invented.
+Six of the seven carry a map label whose **diameter matches the sheet exactly**, and four
+match on length too — itself strong evidence that these cells were transcribed off the map
+rather than invented.
+
+**Decimal-point note (P8059, corrected 2026-08-10).** An earlier read of this label as
+`24" 7.5 k.m` — and the consequent claim that the sheet's 75 km was a decimal misread — is
+**withdrawn**. It came from a 600 dpi render of PDF page 19, but `pdfimages -list` shows the
+map is an embedded raster of only **1811 × 2001 px at 200 ppi**, so that render upsampled
+~3× and turned the black outline seam between two adjacent digits into a dot-like blob.
+Re-cut from the native image (label at native px ≈ x 414–470, y 592–606) and compared
+against a *known* decimal elsewhere on the same map, the reading does not hold: in
+`12" 14.5km` the decimal is a **light** dot sitting in a gap about one digit-width wide,
+whereas the mark between the 7 and the 5 is a **dark**, full-height seam identical to the
+one between the 1 and the 5 of the neighbouring `24" 15km`. The label reads **75 km** and
+therefore *agrees* with the sheet. Evidence committed as `maps/z_decimal_calibration.png`
+(side-by-side) and `maps/z_sidikrir_natgas_label.png` (context).
 
 ### What actually survives
 
-1. **P8059 length** — `75` should almost certainly be `7.5` km (the map's `24" 7.5 k.m`).
-   This also explains the 5.3× endpoint overshoot in Finding 1.
-2. **P8051 diameter** — sheet 32", the 65 km map label reads 42". The Abu Homos bundle
+1. **P8051 diameter** — sheet 32", the 65 km map label reads 42". The Abu Homos bundle
    stacks six labels (`24" 45km`, `24" 45km`, `18/16" 13km`, `12" 14.5km`, `24" 15km`,
    `42" 65km`) over a shared corridor, so mis-pairing bore to length is an easy slip.
    Nearby 32" labels are `32" 200 k.m` and `32" 105 km` — neither is 65 km.
-3. **P8050 vs P7567** — the prose table's *"Ezdwaj Edku / Abu Houmas pipeline 30 km - 42"*
+2. **P8050 vs P7567** — the prose table's *"Ezdwaj Edku / Abu Houmas pipeline 30 km - 42"*
    matches existing **P7567 "Idku-Abu Hummus Gas Pipeline" (30 km, 42 in)** exactly, and on
    the map "Rosetta" is an **offshore field** whose tie-back lands at Idku, not the Delta
    town of Rashid. So P8050's Rosetta→Abu Hummus may be the same physical line as P7567
@@ -124,12 +137,14 @@ near El Arish before any §8 apply.
 
 > **Revised 2026-08-10.** Two entries below were artefacts of our own endpoint research,
 > not sheet defects. **P8052's is withdrawn outright** (Finding 0b — wrong cement plant).
-> **P8059's** is explained by the map's `24" 7.5 k.m`: the *length* is the error (7.5 read
-> as 75), not the endpoints — though its 14.1 km chord still exceeds the corrected 7.5 km,
-> so the endpoints want a second look too. **P8057's** 25 km is faithfully transcribed off
-> the map, so it is a disagreement between the source and the geography rather than a
-> transcription defect — it still blocks an apply. The do-not-apply list is therefore now
-> **P8052, P8053, P8057, P8059** (P8053 added, for geometry not length).
+> **P8059's** is now the same kind of error: the map label reads `24" 75 km` and matches the
+> sheet exactly (the `7.5` reading is withdrawn — see Finding 0), so a 14.1 km Amreya →
+> Sidi Krir chord means **our endpoints are wrong**, not the length. A 75 km line leader-lined
+> from *Natgas* west of Alexandria runs far beyond that pair. **P8057's** 25 km is faithfully
+> transcribed off the map, so it is a disagreement between the source and the geography rather
+> than a transcription defect — it still blocks an apply. The do-not-apply list is therefore
+> **P8052, P8053, P8057, P8059** (P8053 added, for geometry not length; P8059 stays, for
+> geometry rather than length).
 
 Straight-line (great-circle) distance between the two endpoints each row names, versus
 `LengthKnownKm` on that row. A real route can never be **shorter** than its own chord,
@@ -139,7 +154,7 @@ so a ratio > 1.0 is not "a bit off" — it is impossible as stated.
 |---|---|---|---|---|---|
 | P8057 | Mostorod → El Tebbin | 40.8 | 25 | **1.63** | impossible as stated |
 | P8052 | Sheikh Zuweid → Sinai Cement (El Hassana) | 63.0 | 45 | **1.40** | impossible as stated |
-| P8059 | Al Amreya → Sidi Krir 3&4 (InterGen) | 14.1 | 75 | 0.19 (**5.3× overshoot**) | length or endpoints wrong |
+| P8059 | Al Amreya → Sidi Krir 3&4 (InterGen) | 14.1 | 75 | 0.19 (**5.3× overshoot**) | **endpoints** wrong — 75 km is map-confirmed |
 | P8053 | Sinai Cement → Military Cement (Jabal Lubna) | 7.4 | 16 | 0.46 (2.17×) | high but possible |
 | P8056 | Abu Qurqas → Asyut | 89.9 | 135 | 0.67 (1.50×) | see note |
 | P8054 | Dahshur → El Wasta | 46.1 | 65 | 0.71 (1.41×) | see note |
@@ -258,7 +273,10 @@ No length, name, or citation was corrected.
 
 - **P8052, P8053** — our geometry is anchored to the wrong cement plant (Finding 0b).
   Re-research the endpoints; the sheet's lengths are correct.
-- **P8057, P8059** — geometry contradicts the stated `LengthKnownKm`. Applying would move
+- **P8059** — same shape: the map confirms 75 km, so a 14.1 km candidate means our
+  endpoint pair is wrong, not the row. Re-research the corridor before staging again.
+- **P8057** — geometry contradicts the stated `LengthKnownKm`, and the 25 km is
+  map-sourced, so the conflict is unresolved on the sheet's own terms. Applying would move
   `RouteAccuracy` off `no route` for a row with an unresolved fact, which is how a defect
   gets laundered into a "mapped" row.
 

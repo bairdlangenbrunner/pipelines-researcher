@@ -404,11 +404,16 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   Routes to Update, not §8. **The citation finding was WITHDRAWN 2026-08-10: `NA` was
   identifying these lines VISUALLY off the GASCO national-grid MAP on printed p.35, so
   full-text search was the wrong test. The map annotates segments `NN" NN km`; P8052/
-  P8053/P8057 match it exactly and 6 of 7 rows match on diameter. Survivors are narrow:
-  P8059 length is 7.5 km misread as 75, P8051's 32" conflicts with the 65 km label's 42",
-  and P8050 needs a duplicate-check vs P7567. OUR defect: P8052/P8053 geometry is anchored
+  P8053/P8057/P8059 match it exactly and 6 of 7 rows match on diameter. Survivors are
+  narrow: P8051's 32" conflicts with the 65 km label's 42", and P8050 needs a
+  duplicate-check vs P7567. OUR defects: P8052/P8053 geometry is anchored
   to Sinai White Cement at El Hassana, ~60 km off — the sheet's 45 km was right and the
-  geocode was wrong, so DO-NOT-APPLY is now P8052/P8053/P8057/P8059. Gas tab re-sorted
+  geocode was wrong; and the "P8059 = 7.5 km decimal misread" claim was RETRACTED 08-10
+  (the map raster is 200 ppi, so the 600 dpi page render upsampled ~3× and blurred an
+  inter-glyph seam into a dot — the label reads `24" 75 km`, so P8059's *endpoints* are
+  what's wrong). Never read a fine detail off an upsampled render: check
+  `pdfimages -list` for the embedded raster's native size first. DO-NOT-APPLY is
+  P8052/P8053/P8057/P8059. Gas tab re-sorted
   08-10 (P8051 4322→4313); P8058 renamed per the memo. Rule of thumb: a report cited for
   a pipeline is not "unsupported" until its MAPS have been read, not just its text.**
   Oil not yet swept):**
