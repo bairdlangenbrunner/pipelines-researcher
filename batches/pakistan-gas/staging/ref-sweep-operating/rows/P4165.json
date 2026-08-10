@@ -1,0 +1,175 @@
+{
+  "project_id": "P4165",
+  "pipeline_name": "Rawat-Murree Gas Pipeline",
+  "sheet_row": 2153,
+  "wiki": "https://www.gem.wiki/Rawat-Murree_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change needed; optionally add a ResearcherNotes line on the length rounding and the historical 2006-2008 distribution rollout lag",
+      "researcher_notes": "gem.wiki returned 403 to automated fetch this run (as flagged by the orchestrator) and wiki_citations.json is empty for this row, so I went straight to open-web/primary-source research per the scope note. EXISTENCE: strongly confirmed by SNGPL's own 2006 Annual Report (sngpl.com.pk/download/AR2006/Page56-61.pdf), which has a dedicated section 'GAS SUPPLY TO MURREE' describing this exact project: 'The construction of Rawat-Murree line...The total length of 12\" dia, Rawat-Murree transmission line is 58 Km while distribution supply mains were completed with a total length of 17 Km in first phase.' It states the line was commissioned in FY2005-06 and formally inaugurated by President Musharraf on 28 Aug 2006 -- the first gas pipeline built at that elevation (>6,000 ft) in Pakistan, crossing the Soan River. This is corroborated independently by Dawn: 'Effective plan to meet energy needs: Musharraf opens gas project' (dawn.com/news/146932) reporting the same Aug-2006 inauguration of a Rs600m Murree hills gas line, and by a later Dawn investigative piece (dawn.com/news/328997, 8 Nov 2008) 'Provision of gas to Murree rural areas still a dream', which independently confirms 'Gas supply project to Murree was inaugurated by...Pervez Musharraf in August 2006' while reporting that city consumers and rural settlements (Shawala, Sunny Bank, Kuldanna, Pindi Point, Cart Road, Jika Gali) still lacked service two years on -- i.e. the trunk transmission line was built and inaugurated on schedule, but downstream distribution build-out to end consumers in Murree town lagged for years afterward (a caveat about local distribution rollout, not about this transmission-line row's existence). Current-day operation is corroborated by a July 2026 news item (dailythedestination.com) reporting SNGPL busted an illegal 40m tap on 'SNGPL's main gas distribution line on Mall Road, Murree' at a hotel -- gas is demonstrably still flowing into Murree today, ~20 years after commissioning, matching Status=operating. CLASSIFICATION: SNGPL's own report calls it explicitly a 'transmission line' (as distinct from the 17km of 'distribution supply mains' built alongside it) -- GEM's PipelineType=transmission is correct and matches the primary source's own terminology. DUPLICATE: checked against the 63-row Pakistan-gas roster -- no other row touches Rawat or Murree; this is not a relabel/segment double-count of any other PID. ATTRIBUTION: Owner1=SNGPL(100%) is confirmed both by the AR2006 (SNGPL's own report, 'the Company' undertook and commissioned it) and independently by the 2008 Dawn piece, which names 'The Sui Northern Gas Pipeline (SNGPL)' as the utility responsible for the Murree gas project. StartLocation/EndLocation (Rawat->Murree) are literally named by both the SNGPL report and the Dawn coverage. Rawat's province field (Islamabad) is defensible though administratively fuzzy -- open-web sources describe 'Rawat Fort' as a union council of the Islamabad Capital Territory, while a separate/overlapping 'Rawat' locality is also described as being in Rawalpindi District, Punjab; Murree's province (Punjab) is unambiguous. Not flagging this as an attribution error given the genuine dual designation. SPEC: Diameter=12in exactly matches SNGPL's '12\" dia' figure -- direct match. LengthKnown=57.25km vs SNGPL's own rounded '58 Km' is a ~1.3% variance, well within normal rounding/as-built-survey tolerance -- not treated as a material spec disagreement. No independent numeric source was found giving a different (conflicting) length or diameter. Overall: this is a real, well-documented, correctly-classified SNGPL transmission line -- one of the very few genuinely notable/landmark pipelines in this bulk-loaded roster (unlike most of the other 62 rows, this one has substantial independent press coverage precisely because of its unusual high-altitude construction).",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf",
+        "https://www.dawn.com/news/146932",
+        "https://www.dawn.com/news/328997/provision-of-gas-to-murree-rural-areas-still-a-dream"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf",
+        "https://dailythedestination.com/sngpl-busts-major-gas-theft-network-in-murree/"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs on this PDF (binary text extraction limitation, a documented false-negative class); manually confirmed via curl+pdftotext -layout: page contains 'GAS SUPPLY TO MURREE...successfully commissioned...formally inaugurated by the honourable President of Pakistan on August 28, 2006', 'The total length of 12\" dia, Rawat  Murree transmission line is 58 Km'. HTTP 200, content-type application/pdf, 6 pages."},
+        {"url": "https://dailythedestination.com/sngpl-busts-major-gas-theft-network-in-murree/", "ok": true, "contains_value": true, "note": "url_verifier OK; article dated 8 Jul 2026 confirms SNGPL's active 'main gas distribution line' in Murree today, supporting continued operating status of the feeding trunk line."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status inferred from prose (commissioning/inauguration in 2006 through a documented live SNGPL gas connection at Murree in mid-2026), not a literal 'operating' token, per project convention for status refs."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf",
+        "https://www.dawn.com/news/146932"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": true, "note": "manually confirmed via pdftotext; describes 'supply of gas to Murree Hills' / natural gas throughout."},
+        {"url": "https://www.dawn.com/news/146932", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources describe this as a natural-gas supply project throughout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": true, "note": "SNGPL's own report explicitly calls it the 'Rawat  Murree transmission line', distinct from the separately-built 'distribution supply mains'."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source, but it is the owner/operator's own primary technical report using the exact term 'transmission line' -- did not find a second independent source using the specific word 'transmission' (press coverage just says 'gas line'/'gas project')."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "57.25", "LengthKnownUnits": "km"},
+      "primary_value": "57.25",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": false, "note": "PDF gives 'The total length of 12\" dia, Rawat  Murree transmission line is 58 Km' -- a rounded figure, ~1.3% off GEM's more precise 57.25 km; treated as corroborating within normal rounding tolerance, not a material disagreement."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No second independent source with a numeric length figure was found; SNGPL's own '58 Km' is close enough to GEM's 57.25 km to corroborate rather than conflict, but flagging the small variance for the record."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12", "DiameterUnits": "in"},
+      "primary_value": "12",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": true, "note": "exact match: '12\" dia, Rawat  Murree transmission line'."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source but a direct exact-match figure from the owner's own technical report; no conflicting figure found elsewhere."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Rawat", "StartState/Province": "Islamabad", "EndLocation": "Murree", "EndState/Province": "Punjab"},
+      "primary_value": "Rawat",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf",
+        "https://www.dawn.com/news/146932"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": true, "note": "names both endpoints directly ('Rawat  Murree line')."},
+        {"url": "https://www.dawn.com/news/146932", "ok": true, "contains_value": true, "note": "confirms Murree hills as the destination of the gas line inaugurated by Musharraf."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Place names corroborated by 2 independent sources. Rawat's province field (Islamabad) is administratively fuzzy -- open-web sources describe both an Islamabad-Capital-Territory 'Rawat Fort' union council and a separate/overlapping Rawalpindi-District-Punjab 'Rawat' locality; not flagging as an error given the genuine dual designation, but noting it for awareness. Murree/Punjab is unambiguous."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2153,
+      "oo_sheet_row": 3109,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sui Northern Gas Pipelines Ltd (SNGPL)", "Owner1%": "100.00%"},
+      "primary_value": "Sui Northern Gas Pipelines Ltd (SNGPL)",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf",
+        "https://www.dawn.com/news/328997/provision-of-gas-to-murree-rural-areas-still-a-dream"
+      ],
+      "verifications": [
+        {"url": "https://www.sngpl.com.pk/download/AR2006/Page56-61.pdf", "ok": true, "contains_value": true, "note": "SNGPL's own annual report -- 'the Company' (SNGPL) undertook and commissioned the line."},
+        {"url": "https://www.dawn.com/news/328997/provision-of-gas-to-murree-rural-areas-still-a-dream", "ok": true, "contains_value": true, "note": "independently names 'The Sui Northern Gas Pipeline (SNGPL)' as the utility responsible for the Murree gas project."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Tab=operators_owners, oo_sheet_row 3109. 100% SNGPL ownership confirmed by SNGPL's own report plus independent Dawn coverage naming SNGPL as the responsible utility; no other owner/operator ever mentioned in connection with this line."
+    }
+  ],
+  "summary": "P4165 Rawat-Murree Gas Pipeline confirmed real and correctly classified: SNGPL's own 2006 annual report names this exact '12in dia, Rawat-Murree transmission line' (58km, commissioned/inaugurated Aug 2006), independently corroborated by Dawn coverage from 2006, 2008, and a July 2026 gas-theft item confirming the line still feeds Murree today; 7/7 refs proposed as REFS_ADDED (tiers high/medium), no concerns, only a minor noted length-rounding variance (58 vs 57.25 km) and a historical (2006-2008) local-distribution-rollout lag that doesn't bear on this transmission-line row."
+}

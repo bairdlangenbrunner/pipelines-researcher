@@ -94,6 +94,27 @@ For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
 `SheetRow = CSV index + 4`, `[ref]` pairing, segment-vs-network granularity):
 `docs/reference/gem_schema.md`.
 
+### Fetching gem.wiki needs a specific User-Agent
+
+`harvest_wiki_citations.py` and `wiki_alignment.py` *visit* gem.wiki (never cite it —
+standing rule 1). Since 2026-08-07 the gem.wiki zone runs Cloudflare **Under Attack
+Mode**, and the only thing that gets a script through is a WAF bypass rule keyed on the
+leading **`baird-wiki`** token in the User-Agent. Any other UA gets `403` with
+`cf-mitigated: challenge` — it is not an auth problem and no credential helps.
+
+- Use `url_verifier.WIKI_UA` for gem.wiki. It is **byte-identical** to
+  `USER_AGENT` in `goit-ggit-data-ops/gem-wiki/gemwiki.py`, deliberately: both repos
+  present as one client in GEM's firewall logs. **Change one, change the other.**
+- Do **not** use `WIKI_UA` for external sites — they need the browser-ish `_UA`, and
+  the token means nothing off GEM's zone.
+- The rule is zone-wide, not scoped to `/w/api.php`, which is why fetching rendered
+  article HTML works at all.
+- GEM's infra admin asked for ~5 req/sec against gem.wiki. `_MIN_INTERVAL` (1.0s) is
+  already stricter, so the existing pauses comply — but the two repos share one
+  identity now, so don't run wiki-fetching passes in both at the same time.
+- Full writeup, including the account's actual rights: that repo's
+  `gem-wiki/README.md` → Auth.
+
 ---
 
 ## Workflow router
@@ -385,6 +406,27 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
+- **Pakistan (gas: first-ever full pass 2026-08-07, staged not applied. **THREE files to
+  work**, the packet does NOT subsume the recons (`recon_actions=0`):
+  `…_20260810_1112_ET_pakistan-gas_handoff-{actions,evidence}.xlsx` +
+  `…_20260807_1530_ET_pakistan-gas_reconciliation-{gulfpub,osm}.xlsx`. The country's
+  defining fact is **provenance**: 51 of 70 rows are ONE July-2023 bulk load off two MAP
+  files, so 362 `UNRESOLVED` ref units are the correct outcome and the 16 `existence`
+  flags track segment obscurity — never delete a row off one. **The SNGPL asset-register
+  crosswalk (2026-08-10) resolves that cohort**: SNGPL's own audited *"TRANSMISSION SYSTEM
+  As at June 30, 2018"* (Annual Report 2018, 270 sections, parse reconciles to the printed
+  grand total) accounts for **49 of the 51 rows** at two-decimal precision → all five
+  residual existence questions and all three redundancy clusters CLOSED, staged as 98
+  ref-only units with no value changes. Two items survive: **P4074** (register 52.23 km vs
+  sheet 55.23; direction unknown — don't apply blind) and **P5486** (the one unaccounted
+  row). Untouched by it: the 8 SSGC rows and all 60 `operating`-with-no-`StartYear1` rows.
+  gem.wiki 403'd through the whole 08-07 pass; **fixed and both wiki legs re-run 2026-08-10**
+  (`WIKI_UA` — the WAF needs a UA leading with the `baird-wiki` token, kept byte-identical to
+  `goit-ggit-data-ops/gem-wiki/gemwiki.py`), so the packet carries 99 real records
+  (69 SHEET_SUSPECT / 24 WIKI_UPDATE / 6 WIKI_STALE_VS_STAGED) instead of 70 UNPARSED — but
+  **68 of the 69 SHEET_SUSPECT are one question**, blank `Operator`, which is the GGIT norm
+  (filled on 1,464/6,462 rows tracker-wide) and not a Pakistan defect. Oil (4 rows) not
+  swept):** `docs/country_notes/pakistan.md`.
 - **Nigeria (divestiture ownership sweep not started):**
   `docs/country_notes/nigeria.md`.
 - **Israel (gas: INGL/TMNG-map ground-truth batch 2026-07-23 staged not applied —

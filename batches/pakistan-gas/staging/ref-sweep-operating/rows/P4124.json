@@ -1,0 +1,32 @@
+{
+  "project_id": "P4124",
+  "pipeline_name": "Sahiwal-Akhtar Abad Gas Pipeline",
+  "sheet_row": 2116,
+  "wiki": "https://www.gem.wiki/Sahiwal-Akhtar_Abad_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Flag as unconfirmed pending a named source; do not treat as verified. Seek an SNGPL system map, OGRA State of the Industry report, or HDIP Pakistan Energy Yearbook segment table that names this exact Sahiwal-Akhtar Abad line before upgrading confidence. If none surfaces, escalate as a possible GEM-only/bulk-load entity for review.",
+      "researcher_notes": "The gem.wiki page (https://www.gem.wiki/Sahiwal-Akhtar_Abad_Gas_Pipeline) returned HTTP 403 on every fetch attempt (Cloudflare), so I could not read what source GEM's own row cites; wiki_citations.json is empty for this row per the scope note (harvest failure, not evidence of an unsourced row). I then searched the open web extensively: WebSearch tool returned 'session budget exhausted' before I could run a single query, so I fell back to WebFetch against Bing, DuckDuckGo (HTML + lite), Marginalia, Ecosia, Startpage and Mojeek -- all either CAPTCHA-blocked, 403'd, or returned results with zero relevance to the query (e.g. a Bing query for 'SNGPL \"Akhtar Abad\"' returned only SNGPL bill-checker sites; a query for 'Sahiwal-Akhtar Abad gas pipeline' returned only generic Sahiwal-city/cattle-breed pages; one query for an unrelated OGRA/HDIP yearbook string even came back with Brazilian judicial-portal results, indicating the search layer itself is not reliably live for this session). I also tried SNGPL's own site directly for a network/system map page (sngpl.com.pk/web/network/, /web/about-us/company-profile/) -- both 404. I found ZERO independent source -- news (Dawn, Business Recorder), SNGPL, OGRA, HDIP, or otherwise -- that names a 'Sahiwal-Akhtar Abad Gas Pipeline' or any SNGPL transmission segment between those two points. The literal compound name is a GEM naming-convention artifact (Start-End), so its absence from search results is expected and not itself damning, but the total absence of ANY independent corroboration of the underlying physical segment is a genuine existence gap under the sweep's standing rule that a row with no findable independent confirmation is a legitimate concern -- and this scope's own note confirms every row here has a completely empty ref set and a single 2023-07-10 bulk-load timestamp shared with ~90 other Punjab/KPK rows, several of which use internal-looking segment codes (AV22, AV29, N2, SV1, QV1, 'MP 59.91') that read like they were transcribed wholesale from one unindexed technical document (plausibly an SNGPL system map, OGRA yearbook, or similar) rather than independently verified per row. One mitigating check: I confirmed via OpenStreetMap/Nominatim (informal geocoding check, NOT used as a citation -- Nominatim's usage policy prohibits scripted citation use, and I do not offer it as a proposed_ref) that 'Akhtar Abad' / 'Akhtarabad' is a real village and railway station in Tehsil Rinala Khurd, Okara District, Punjab (~30.92N, 73.68E), roughly 55-65 km by straight-line distance from Sahiwal city -- consistent with, though not proof of, the sheet's stated 66.69 km pipeline length. So the endpoint place name is real and the distance is geographically plausible for a transmission line, but I could not independently confirm the pipeline itself exists, nor its length/diameter/owner values, nor find the source GEM originally used. Net: existence unconfirmed after a thorough but ultimately blocked search effort; tier=low because the only corroboration is indirect (place-name plausibility), not a source naming the pipeline.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "duplicate",
+      "recommendation": "GIS/route check once any route geometry exists: Akhtar Abad (Okara District) sits on the same general Sahiwal-Lahore corridor as P4108 'Sahiwal-Lahore Gas Pipeline I' (142.93 km, 18in) and P4140 'Sahiwal-Lahore Gas Pipeline-II' (76.67 km, 16in), both also starting at Sahiwal. Worth confirming P4124 is a genuinely separate/parallel trunk and not an alternate name or partial double-count of either.",
+      "researcher_notes": "Checked P4124 against the full 63-row roster for relabeling/double-count risk. No exact duplicate by name. The one thing worth a caution flag: three rows all originate at Sahiwal and run roughly northeast toward the Lahore corridor -- P4124 (Sahiwal->Akhtar Abad, 66.69 km, 24in), P4140 (Sahiwal->Lahore-II, 76.67 km, 16in), and P4108 (Sahiwal->Lahore I, 142.93 km, 18in). Akhtar Abad/Okara lies geographically between Sahiwal and Lahore, so it is plausible (but unconfirmed, since I could not source any of the three independently in this pass) that these are parallel trunks of different vintages/diameters rather than one segment mislabeled three ways -- the diameters (24in vs 18in vs 16in) argue against them being the same physical pipe, which is consistent with how gas utilities commonly build successive parallel mainlines along one corridor as demand grows. Not elevating this to a duplicate verdict without route geometry, but flagging for the eventual GIS pass.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P4124 (Sahiwal-Akhtar Abad Gas Pipeline, SNGPL, 66.69 km/24in operating transmission): existence UNRESOLVED -- no independent source found after exhaustive search (gem.wiki 403-blocked, WebSearch budget exhausted, every fallback search engine blocked/irrelevant, SNGPL site 404s); only mitigating fact is that 'Akhtar Abad' is a real, geographically plausible village/railway station near Sahiwal per OSM. Flagged verdict=concern/existence, tier=low, plus a low-severity duplicate caution re: the Sahiwal-Lahore corridor (P4108/P4140) pending GIS review. No fills staged -- no verifiable source for any field."
+}

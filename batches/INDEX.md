@@ -117,12 +117,16 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/annual` — rows=6 fills=3 updates=0 status-pending=4 refs(DEAD_LINK=9, REFS_ADDED=29, REVERIFIED=13, UNRESOLVED=9) routes=0 new(none)
 - `staging/cancelled-review` — rows=1 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=8, UNRESOLVED=2) routes=0 new(none)
-- `staging/qc` [assembled packet: handoff] — rows=70 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/qc` [assembled packet: handoff] — rows=70 fills=19 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260807` — recon inputs
 - `staging/recon-osm-20260807` — recon inputs
 - `staging/ref-sweep-operating` — rows=63 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=108, UNRESOLVED=351) routes=0 new(none)
+- `staging/register-crosswalk` [register-crosswalk] — rows=51 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=98) routes=0 new(none)
 - `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260810_1112_ET_pakistan-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260810_1112_ET_pakistan-gas_handoff-evidence.xlsx`
+- `archive/` — 2 superseded/applied file(s)
 
 ## saudi-arabia-gas
 

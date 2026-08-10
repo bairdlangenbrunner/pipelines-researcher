@@ -362,6 +362,35 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
   into `__ROUTE__` records (`class_out` `ROUTE_SUGGESTED` when both endpoints are coordinated,
   else `ROUTE_PARTIAL`) and `build_ref_workbook.py` renders the `<Cmdty>_RouteSuggestions` tab.
 
+## Check for a bulk-load provenance BEFORE fanning out (Pakistan, 2026-08)
+
+Cheap first move on a new country: group the rows by `LastUpdated` + owner + `[ref]` set.
+If a large share collapses into one narrow window with the **same one or two refs**, the
+country is a **bulk load**, and if those refs are *cartographic* (a JPG/PDF network map),
+no amount of per-row research will find text naming the individual segments — 51 of
+Pakistan's 70 gas rows were one such load, and 63 per-row subagents returned 362
+`UNRESOLVED` units and 16 `existence` flags that were really tracking segment obscurity.
+
+**What actually resolves a bulk-load cohort is one document: the operator's own audited
+annual report.** SNGPL's *"TRANSMISSION SYSTEM As at June 30, 2018"* (a 270-row line-wise
+inventory in its 2018 annual report) accounted for 49 of the 51 rows on name + length +
+diameter at two-decimal precision, closing every residual existence question and all three
+redundancy flags in a single pass. So on a bulk-load country, **look for that operator's
+annual reports, licence schedules and regulator filings before dispatching per-row
+research**, and stage the result as its own `register-crosswalk` dir.
+
+Two rules when you do:
+- **Control the extraction.** Reconcile your parse against a total the document itself
+  prints (SNGPL's grand total, 4,685.92 / 4,190.05 km). A parse that doesn't reconcile is
+  a hypothesis. Two of the Pakistan matcher's own bugs — testing only the mainline column
+  on rows that carry both, and roman-numeral tokens defeating the name gate — surfaced only
+  because the totals were being checked.
+- **A better document is not a second origin.** An operator register beats that operator's
+  own map by a mile, but it has the same publisher, so it is still `medium`; `high` needs an
+  unrelated source (GulfPub tracing the same line) on top. Also expect exact **arithmetic
+  composites** where GEM aggregates and the register itemises — a granularity difference,
+  never something to "fix".
+
 ## At scale (subagent fan-out)
 A whole-country deep sweep is too large for one context. Fan out:
 0. **Choose each subagent's model at dispatch time** (global standing rule — see

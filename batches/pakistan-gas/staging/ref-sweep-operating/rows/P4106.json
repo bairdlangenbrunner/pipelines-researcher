@@ -1,0 +1,35 @@
+{
+  "project_id": "P4106",
+  "pipeline_name": "Sidhnai-Faisalabad Gas Pipeline",
+  "sheet_row": 2104,
+  "wiki": "https://www.gem.wiki/Sidhnai-Faisalabad_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Escalate for a primary, text-searchable SNGPL/OGRA/HDIP asset-register source (e.g. SNGPL segment inventory, OGRA State of the Industry transmission table, Pakistan Energy Yearbook) before treating this row as independently confirmed; do not paste a ref onto Status/Length/Diameter/Location until one is found.",
+      "researcher_notes": "wiki_citations.json has no entry for P4106 (harvest failed this run, gem.wiki 403 to automated fetch) and a direct WebFetch of the wiki page itself also returned 403, so there was nothing sheet-cited to start from -- went straight to open-web. Ran repeated searches across Bing and DuckDuckGo (WebSearch tool budget was exhausted for the session, so all search was done via WebFetch against search-engine result pages) for the exact segment name 'Sidhnai-Faisalabad', for 'Sidhnai' + SNGPL/gas, for 'Abdul Hakim' (the stated start point, Khanewal district) + SNGPL/transmission/18 inch, and for SNGPL annual-report/OGRA/HDIP tables that might list named transmission segments -- every query returned zero relevant hits (the engines fell back to unrelated boilerplate: Xfinity support pages, name-meaning sites, a movie review, DC Lottery results), including for other roster line-names tried as a control (e.g. 'Dandot-Gali Jagir-Wah', 'Rawat-Murree' also returned nothing), which suggests this whole 63-row roster's segment-level naming convention is internal to GEM's own dataset and doesn't map onto how these lines (if real) are described in public Pakistani sources -- a systemic sourcing problem for the batch, not unique to P4106. Also tried Urdu-language search (سدھنئی گیس پائپ لائن فیصل آباد), also zero relevant hits. Did find and download SNGPL's own primary source, the FY2006 annual-report system map (https://www.sngpl.com.pk/download/AR2006/MAP.pdf, live 200) and read it visually (it is a vector/image PDF with no extractable text layer -- pdftotext returns nothing -- so url_verifier.py FAILs its content check and it cannot be cited per the task rule, even though it is unquestionably a live, authentic SNGPL document). Visual inspection of that map shows a label 'River Cx. (Sidhnai)' on the transmission corridor that runs from the Kot Addu / Qadirpur Rawan / Multan area northward toward Faisalabad -- i.e. 'Sidhnai' is confirmed as a real river-crossing place-name on SNGPL's actual gas network, in the same general corridor GEM describes (Abdul Hakim/Khanewal sits just south of this crossing), and pipe-diameter callouts along that Faisalabad-bound corridor include 18in among several classes (8/10/16/18/20/24/30in) -- consistent with, but not a unique confirmation of, GEM's claimed 18in for this specific segment. That is real circumstantial support for the corridor's physical plausibility, but it does not amount to an independent, citable source that names 'Sidhnai-Faisalabad Gas Pipeline' as a distinct asset or confirms its specific 163.58 km length / 18in diameter / Abdul Hakim endpoint as opposed to some other line sharing the same crossing. No second independent source could be found at all. Per the scope rule that every operating row here came back MISSING_REF (nothing for the sheet to have leaned on) and per the existence-flag rule ('cannot find independent confirmation' -> concern), this is flagged existence, not confirmed. DUPLICATE check (against the 63-row roster): P4107 'Sidhnai-Faisalabad Gas Pipeline II' shares the same stated endpoints but a different diameter class (24/30/36in vs 18in) and different length (129.95 km vs 163.58 km) -- this matches the roster's established Line/Loopline-II pattern seen elsewhere (Sui-Multan Gas Pipeline + Loopline I/II/III; Qadirpur Gas Pipeline + Loopline), i.e. two parallel lines on one corridor, not a relabeled duplicate of the same physical pipe -- no duplicate concern. CLASSIFICATION check: an 18in, 160+ km trunk feeding a major city (Faisalabad) is consistent with 'transmission', not a gathering/feeder line -- no classification concern. Net: existence is the open question here, not duplicate/classification.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Owner=SNGPL (100%) is consistent with SNGPL's documented service territory (Punjab, KPK, Islamabad, Azad Kashmir) but neither source below names this specific pipeline -- treat as plausible-by-territory, not segment-confirmed.",
+      "researcher_notes": "Checked whether Sui Northern Gas Pipelines Ltd (SNGPL) is a plausible 100% owner for a Faisalabad-area (Punjab) transmission line. SNGPL's own site (https://www.sngpl.com.pk/) and the Wikipedia article on the company (https://en.wikipedia.org/wiki/Sui_Northern_Gas_Pipelines) both confirm SNGPL is the transmission/distribution utility for Punjab, KPK, Islamabad and Azad Kashmir (SSGC covers Sindh/Balochistan instead), which is consistent with a Punjab line being SNGPL-owned. Both are company/territory-level sources -- neither names 'Sidhnai-Faisalabad Gas Pipeline' specifically -- so this only corroborates the Owner field by territorial plausibility, not by direct attribution to this asset. Kept as caveat, not folded into the existence concern above.",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/",
+        "https://en.wikipedia.org/wiki/Sui_Northern_Gas_Pipelines"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Existence unconfirmed independently (zero web hits for the exact segment name in English or Urdu across multiple engines; SNGPL's own 2006 system map visually confirms the real 'Sidhnai' river-crossing place-name and corridor but is an image-only PDF that fails url_verifier and doesn't name this exact asset) -- flagged concern/existence; ruled out as a duplicate of P4107 (matches the roster's Line/Line-II pattern) and classification (transmission) is fine; Owner=SNGPL confirmed only by territorial plausibility (medium tier); Capacity left blank, no source found."
+}

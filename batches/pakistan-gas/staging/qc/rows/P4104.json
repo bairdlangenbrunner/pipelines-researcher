@@ -1,0 +1,62 @@
+{
+ "project_id": "P4104",
+ "pipeline_name": "Dhodak-Kot Addu Gas Pipeline",
+ "sheet_row": 2102,
+ "wiki": "https://www.gem.wiki/Dhodak-Kot_Addu_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Length [ref]",
+   "value_cols": ["LengthKnown", "LengthKnownUnits"],
+   "values": {"LengthKnown": "77.79", "LengthKnownUnits": "km"},
+   "primary_value_col": "LengthKnown",
+   "primary_value": "77.79",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"
+   ],
+   "verifications": [
+    {"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONFIRMS the sheet's existing 77.79 km, does not change it. SNGPL's own live 'Province-Wise Transmission Breakup' page, row 37, reads verbatim '|37|DHODAK - KOT ADDU|16|77.79|' -- an exact diameter+length match to this row (16in / 77.79km). This resolves the length_ratio flag: per the flag's own framing ('wrong route, wrong length, or partial segment'), this is the reverse case from P4088/P4089 -- here the drawn route (49km) UNDERSHOOTS the stated length, and this SNGPL primary source confirms the STATED length is correct, so the drawn route is the erroneous/schematic element (RouteAccuracy is already 'very low (straight line/schematic)'). Independently corroborated at a lower tier by the sweep's own prior finding (staged in ref-sweep-operating/rows/P4104.json, tier=high on existence/route but explicitly NOT on length): SNGPL's current transmission-network map draws a real bend at an intermediate 'Salsabil' compressor station between Dhodak and Kot Addu, meaning the true pipe distance is necessarily longer than the drawn straight-line route -- consistent with a real, longer, bent corridor rather than the schematic's shorter chord."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "value_cols": ["Diameter", "DiameterUnits"],
+   "values": {"Diameter": "16", "DiameterUnits": "in"},
+   "primary_value_col": "Diameter",
+   "primary_value": "16",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"
+   ],
+   "verifications": [
+    {"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "See the refutation of the mixed 12/16in diameter proposal in validity[] below. This fill CONFIRMS the sheet's existing single '16' value via the same SNGPL table row 37 used for the length confirmation."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "REFUTE the sweep's proposed change to a mixed '12, 16' Diameter (staged in ref-sweep-operating/rows/P4104.json). Keep Diameter as the single value '16'. Flagging the conflicting evidence for a human to make the final call, since the earlier finding was based on direct visual reading of SNGPL's own map and is not baseless.",
+   "researcher_notes": "The sweep's mixed-diameter proposal came from visually reading SNGPL's cartographic transmission map (TransmissionMap042022L.jpg), which labels the Dhodak-to-Salsabil leg '12in' and the Salsabil-to-Kot Addu(KAPCO) leg '16in' in blue text -- a single-source, tier=medium finding per that shard. I instead checked SNGPL's own TEXT-TABLE asset register (the same 'Province-Wise Transmission Breakup' page used for the length confirmation above), which lists every named line broken out by diameter as SEPARATE rows whenever a line genuinely has multiple diameters -- confirmed by its own convention elsewhere in the same table, e.g. rows 32/33: '|32|AV22 - KOT ADDU|16|69.65|' and '|33|AV22 - KOT ADDU|20|38.01|', i.e. the identical line name appearing twice, once per diameter, matching the sweep's cited precedent rows (P4015/P4019/P4107 pattern). 'DHODAK - KOT ADDU' appears in this table EXACTLY ONCE (row 37, confirmed by grep against the raw page text -- no second 12in row exists), at 16in/77.79km. If the pipeline genuinely had a 12in Dhodak-Salsabil leg distinct from a 16in Salsabil-Kot Addu leg, this table's own demonstrated convention (as with AV22-Kot Addu) would show it as two rows; it does not. Two readings of two different SNGPL-authored sources disagree (map vs. text register) -- I am not able to fully resolve which is right (possible explanations: the map's '12in' label may denote a short lateral/gathering tie-in at the Dhodak field itself that is not part of the trunk-line length being tabulated in the network register, or the register may simply report the line under its dominant/majority diameter for aggregate network-length accounting). Given the text register is the more authoritative source type for a length+diameter data point (an asset-length table vs. a hand-labelled map image) and is internally self-consistent (it does break out other lines' mixed diameters when they exist), I recommend keeping the single '16' value, but this is presented as a concern for Baird to decide, not a unilateral override.",
+   "proposed_refs": [
+    "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341",
+    "https://www.sngpl.com.pk/images/transmission/TransmissionMap042022L.jpg"
+   ],
+   "verifications": [
+    {"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true
+  }
+ ],
+ "summary": "P4104: LengthKnown=77.79km CONFIRMED via SNGPL's own live network-breakdown table (exact match) -- the drawn 49km route undershoots because it's a straight-line schematic missing the real Salsabil-compressor bend, not because the stated length is wrong. Diameter: REFUTE the sweep's proposed '12, 16' mixed-diameter change -- the same SNGPL text register lists 'DHODAK-KOT ADDU' as a single 16in line (and, unlike this line, DOES break out other lines' genuine multiple diameters as separate rows), conflicting with the sweep's map-based visual reading; flagged for a human decision rather than resolved unilaterally."
+}

@@ -1,0 +1,28 @@
+{
+ "project_id": "P4014",
+ "pipeline_name": "Nawabshah-Karachi Gas Pipeline",
+ "sheet_row": 2017,
+ "wiki": "https://www.gem.wiki/Nawabshah-Karachi_Gas_Pipeline",
+ "fills": [
+  { "ref_col": "LengthKnown [ref]",
+    "value_cols": ["LengthKnown"],
+    "values": {"LengthKnown": "290.0"},
+    "primary_value_col": "LengthKnown",
+    "primary_value": "290.0",
+    "class_out": "REFS_ADDED",
+    "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+    "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+    "tier": "medium", "independent": false, "source_language": "en",
+    "researcher_notes": "SSGC's own 'Gas Transmission Capacities Utilization' network table (page_id=5597, under system group A1 - Indus Left Bank Pipeline), row: '16\" dia. x 290 Km (ILBP) Pipeline Nawabshah-Karachi Terminal' -- Capacity 80 mmscfd. This exact-matches the sheet's LengthKnown (290.0), Diameter (16) AND Capacity (80.0 MMcf/d) -- re-fetched and re-read the live page myself this pass to confirm the row text verbatim (not just the url_verifier substring hit). Tier medium not high: it is a single organization (SSGC, this line's own 100% owner) rather than two independent bodies, but it is the asset owner's own current published register and matches to the km. Given the exact match, the drawn geojson route (209 km geodesic, ratio 0.72) is the more likely error -- see validity note. Note this SAME SSGC table also carries the '24\"dia. x84 Km HQ2-TandoAdam' and '12\"/18\"/20\" dia. x344 Km Quetta Pipeline Jacobabad-Quetta' rows used to resolve sibling P4017 and P4021 in this cluster."
+  }
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "No change to LengthKnown (290.0 km exact-matches SSGC's own current asset register, see fills[0]). Flag the drawn route geometry for a future route-creation/redraw pass instead: it undershoots the true line by 28% (209 km vs 290 km), the classic signature of a straight-line/schematic digitization on a winding corridor, not a length error. RouteAccuracy is already 'very low (straight line/schematic)' so no further downgrade is needed.",
+    "researcher_notes": "See fills[0] for the exact-match source (SSGC's own network table). This same table also independently corroborates two sibling rows in this cluster, P4017 (HQ2-Tando Adam) and P4021 (Quetta), and is the single most useful document found in this leg -- flagging per the protocol's instruction to surface it loudly for the whole corridor.",
+    "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+    "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+    "tier": "medium", "independent": false }
+ ]
+}

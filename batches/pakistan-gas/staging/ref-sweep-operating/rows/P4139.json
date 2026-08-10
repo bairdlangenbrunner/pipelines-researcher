@@ -1,0 +1,32 @@
+{
+  "project_id": "P4139",
+  "pipeline_name": "Shahdara-Gujranwala-Rahwali Gas Pipeline",
+  "sheet_row": 2128,
+  "wiki": "https://www.gem.wiki/Shahdara-Gujranwala-Rahwali_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "existence",
+      "recommendation": "Re-attempt independent sourcing with working search access (SNGPL annual report / system map, OGRA State of Industry report, PPIS network inventory); do not treat this pass as proof of non-existence, only as unconfirmed.",
+      "researcher_notes": "wiki_citations.json is empty for this row (harvest failure, per scope notes) and the [ref] set is completely MISSING_REF (Status, Fuel, PipelineType, Length, Diameter, Location, Owner) -- there is nothing the sheet itself cites to start from. Direct fetch of the gem.wiki page returned HTTP 403 (Cloudflare), so I could not even read it for leads. I then tried to independently source this pipeline via open web: WebSearch was unavailable (session budget exhausted at 200/200 before I could use it). I substituted direct WebFetch calls to Bing, Google, DuckDuckGo (html + lite), Mojeek, Brave, Ecosia, Yahoo, and Marginalia -- every one of these either 403'd, 429'd, returned a CAPTCHA page, or (Bing/Google) returned garbage/unrelated cached results (calculator sites, OBS Studio) with no actual results for 'Shahdara-Gujranwala-Rahwali' or 'Gujranwala-Rahwali' gas pipeline queries. Marginalia (a small independent index, not blocked) returned zero hits for the exact phrase. web.archive.org is blocked entirely in this environment (tool refuses the domain), so I could not check a cached snapshot of the gem.wiki page either. I tried direct fetches to plausible primary sources: SNGPL's own site (sngpl.com.pk) 404'd on transmission-system and sitemap paths I guessed (no site search available to find the right path); OGRA (ogra.org.pk) 403'd. Wikipedia's SNGPL article confirms SNGPL's transmission regions include 'Faisalabad, Lahore, Multan, and Wah' (Shahdara is a locality of Lahore, Gujranwala/Rahwali sit further north on that general corridor toward Wah) but does not name this specific line, and Wikipedia's Gujranwala article makes no mention of gas infrastructure at all. Net result: I found ZERO independent source, of any strength, that names this pipeline -- but this reflects near-total tooling failure this session (search engines blocked/exhausted, gem.wiki blocked, archive blocked), not a targeted finding that the line is fabricated. Mitigating context against outright hallucination: the pipeline's name and specs fit the same highly specific engineering-inventory naming pattern as the other ~60 rows in this batch (e.g. mile-post-style names like 'MP 59.91-Nandipur', 'AV22-Kot Addu', 'AV29-N2 RLNG Pipeline' elsewhere in the roster), which reads like a genuine SNGPL/PPIS pipeline-segment table rather than invented entries; the route (Shahdara/Lahore -> Gujranwala -> Rahwali) is geographically coherent and sits squarely inside SNGPL's documented transmission footprint; and the diameter (10in) and length (73.4km) are unremarkable relative to sibling rows (e.g. P4159 Gujrat-Jhelum 8in/54km, P4165 Rawat-Murree 12in/57km) rather than an implausible bulk-load artifact. On balance I am flagging existence as unconfirmed/concern per the scope's own rule ('a row you cannot independently source at all is a legitimate existence concern'), while explicitly noting the failure is largely tooling access, not a substantive finding against the row -- this should be re-tried, not treated as a probable phantom.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond re-sourcing (see existence entry). No duplicate/classification/attribution defect identified from available information.",
+      "researcher_notes": "Checked P4139 against the full 63-row roster for a duplicate/relabel. The two nearest-neighbor rows by geography are P4135/P4136 (Faisalabad-Shahdara Gas Pipeline I/II, ending at Shahdara, 119.25km/112.51km, 16in/16-24in) and P4137 (Sheikhupura-Gujranwala Gas Pipeline, 59.44km, 10in). None of these collapse cleanly onto P4139 (Shahdara-Gujranwala-Rahwali, 73.4km, 10in): P4135/6 terminate AT Shahdara rather than starting there, so they read as an upstream feeder segment rather than the same pipe; P4137 starts from a different town (Sheikhupura, ~35km from Shahdara along the same corridor) with a length (59.44km) that does not resolve as a clean sub- or super-segment of P4139's Shahdara-to-Rahwali span, so the two look like separate lines serving overlapping territory rather than one line under two names. No stronger duplicate candidate exists in the roster. Classification (PipelineType=transmission, Fuel=Gas) is internally consistent with every other row in this SNGPL-network batch and with SNGPL's role as Pakistan's northern gas transmission+distribution utility; nothing about the 10in diameter or 73.4km length is an outlier against sibling rows. Owner (SNGPL, 100%) is the expected operator for this Lahore-Gujranwala corridor per Wikipedia's SNGPL service-area description, though I could not independently corroborate the specific ownership claim for this exact segment (same tooling-access failure as the existence entry) -- treat as plausible-but-unverified rather than confirmed. No fills staged: could not verify any value (Status, Fuel, PipelineType, Length, Diameter, Location, Owner) against an independent source this session, so per the 'do not force a value' instruction nothing was added to fills.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "Existence concern: zero independent source found for P4139 (Shahdara-Gujranwala-Rahwali Gas Pipeline), but this run's search tooling (WebSearch, gem.wiki, archive.org, all major search engines) was almost entirely blocked/exhausted, so treat as unconfirmed-pending-retry rather than a probable phantom; no duplicate found against the roster, classification/owner plausible but unverified; no fills staged."
+}

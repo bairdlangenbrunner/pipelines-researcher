@@ -1,0 +1,39 @@
+{
+ "project_id": "P4021",
+ "pipeline_name": "Quetta Gas Pipeline",
+ "sheet_row": 2024,
+ "wiki": "https://www.gem.wiki/Quetta_Gas_Pipeline",
+ "fills": [
+  { "ref_col": "LengthKnown [ref]",
+    "value_cols": ["LengthKnown"],
+    "values": {"LengthKnown": "344.0"},
+    "primary_value_col": "LengthKnown",
+    "primary_value": "344.0",
+    "class_out": "REFS_ADDED",
+    "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+    "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+    "tier": "medium", "independent": false, "source_language": "en",
+    "researcher_notes": "SSGC's own network table (page_id=5597, system group A3-1 'Quetta Pipeline System (Shikarpur to Quetta)'): '12\"/18\"/20\" dia. x344 Km Quetta Pipeline Jacobabad-Quetta' -- Capacity 90 mmscfd. Exact match on all three of this row's specs: LengthKnown (344.0), Diameter ('12, 18, 20') and Capacity (90.0 MMcf/d). This settles the length_ratio flag: the true length is the sheet's own 344 km, and the drawn route (254 km geodesic, ratio 0.74) undershoots it -- a schematic straight-line artifact, not a length error."
+  },
+  { "ref_col": "StartYear1 [ref]",
+    "value_cols": ["StartYear1"],
+    "values": {},
+    "primary_value_col": "StartYear1",
+    "primary_value": "",
+    "class_out": "UNRESOLVED",
+    "proposed_refs": [],
+    "verifications": [],
+    "tier": "", "independent": false, "source_language": "en",
+    "researcher_notes": "No commissioning year found. Checked: (1) SSGC's own network table (page_id=5597) -- gives specs only, no dates. (2) SNGPL's 'Year Wise Increase in Transmission System' page (sngpl.com.pk, artids=281) -- network-wide cumulative km totals by year only, no per-line dates, and this line is SSGC-owned (not SNGPL) so it would not appear there regardless. (3) en.wikipedia.org articles for Sui Southern Gas Company and Sui Northern Gas Pipelines -- neither mentions the Quetta/Jacobabad-Quetta line at all. (4) This session's WebSearch quota is exhausted (200/200) session-wide; substituted DuckDuckGo-via-WebFetch queries this pass ('Sui Southern Quetta pipeline history', 'Quetta gas supply started year Balochistan SSGC') -- both returned zero results with a date, one surfacing only a 2022 news item about an unrelated Karachi supply-main upgrade. That is an access gap, not evidence the date is unfindable -- a proper WebSearch pass over Dawn, Business Recorder, The News, or a Balochistan-specific gas-supply history is the next step. UNRESOLVED."
+  }
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "No change to LengthKnown (344.0 km exact-matches SSGC's own current asset register, see fills[0]). Flag the drawn route geometry for a future redraw instead of touching the length. RouteAccuracy is already 'very low (straight line/schematic)' so no further downgrade is needed.",
+    "researcher_notes": "See fills[0]. This is the strongest single match found in this cluster -- all three spec columns (length, diameter, capacity) hit exactly against SSGC's own current network table.",
+    "proposed_refs": ["https://www.ssgc.com.pk/web/?page_id=5597"],
+    "verifications": [{"url": "https://www.ssgc.com.pk/web/?page_id=5597", "ok": true, "contains_value": true}],
+    "tier": "medium", "independent": false }
+ ]
+}

@@ -1,0 +1,60 @@
+{
+  "project_id": "P4104",
+  "pipeline_name": "Dhodak-Kot Addu Gas Pipeline",
+  "sheet_row": 2102,
+  "wiki": "https://www.gem.wiki/Dhodak-Kot_Addu_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No structural change needed. Consider a §8 route-creation pass: SNGPL's own map shows a real bend/waypoint at the Salsabil compressor station that the current 'very low (straight line/schematic)' geometry ignores.",
+      "researcher_notes": "gem.wiki returned HTTP 403 to every fetch (Cloudflare, per scope note) so wiki_citations.json is empty for this row -- this was a fresh open-web search, not a re-verify. EXISTENCE/CLASSIFICATION/OWNER/LOCATION all independently corroborated. Primary evidence: SNGPL's own current 'Transmission Network AS ON 31-03-2022' map (https://www.sngpl.com.pk/images/transmission/TransmissionMap042022L.jpg -- already sitting in this row's Route [ref] cell, so I fetched and visually inspected it rather than treating it as pre-verified). It shows a compressor-station symbol labelled 'Dhodak' (with a 'Known Gas Source' droplet icon, matching StartLocation=Dhodak) connected by a solid red 'Existing Pipeline' line to a second station labelled 'Salsabil', and from Salsabil a further solid red line running southeast to a station labelled 'Kot Addu (KAPCO)' -- confirming EndLocation=Kot Addu and that the pipeline is real, is drawn as part of SNGPL's *transmission* system (the map's own legend, not distribution/gathering -- supports PipelineType=transmission), and is SNGPL asset (solid line = SNGPL; the map's dashed style is reserved for 'SSGCL's Pipeline'), matching Owner1=Sui Northern Gas Pipelines Ltd (SNGPL) 100%. Secondary, weaker corroboration: a 2020 PEPL (Pakistan) energy/oil-and-gas map (https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf, Wayback copy for citation since the live cert chain fails automated verification: http://web.archive.org/web/20260731113845/https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf) independently places both 'DHODAK' and 'KOT ADDU KAPCO' on the same regional gas-infrastructure map (confirmed via pdftotext -layout, tokens present) -- this corroborates that both endpoints are real, actively-tracked gas-network entities, though its jumbled schematic text layout does not let me confirm it draws the SAME specific Dhodak-to-Kot Addu segment (it does clearly label a *different* nearby line, a '10\"x32 KM LAILPUR-KAPCO PSO PIPELINE', which is an oil-products line, not this one -- so I am not citing PEPL for the specific linkage, only for endpoint existence). No duplicate found: checked all 63 roster rows: nothing else touches Dhodak or Salsabil, and P4103 'D.G. Khan Gas Pipeline' (dia=8in) is a distinct, smaller line out of D.G. Khan town itself, not this field-to-plant line. Caveat: could not independently confirm the LengthKnown=77.79km figure (no scaled/labelled distance on the SNGPL map; RouteAccuracy is already correctly flagged 'very low/schematic' so I am not raising a fresh length concern on top of that existing flag).",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/images/transmission/TransmissionMap042022L.jpg",
+        "http://web.archive.org/web/20260731113845/https://www.pepl.com.pk/assets/images/downloads/Energy-MapA4-2020.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Change Diameter from a single '16' to a mixed value '12, 16' (in, start->end order: 12in Dhodak-Salsabil, 16in Salsabil-Kot Addu), matching the multi-diameter convention already used elsewhere in this batch (e.g. P4015, P4019, P4107).",
+      "researcher_notes": "SNGPL's own current transmission map (same source as above, visually inspected -- the map labels each segment's diameter directly in blue text) draws this line in TWO segments with DIFFERENT diameters, not one uniform 16in run as GEM currently records: '12\"' on the Dhodak-to-Salsabil leg, then '16\"' on the longer Salsabil-to-Kot Addu(KAPCO) leg. GEM's DiameterInMm=406.40 (16in) is only correct for part of the route -- the field-end segment is smaller (12in/304.8mm). This is a primary/authoritative single-source finding (the pipeline's own operator's current asset map), so I'm not claiming 2-source-high on this specific number, but the source is unambiguous and directly labelled, so I'm flagging it as a real spec discrepancy rather than a low-confidence guess.",
+      "proposed_refs": [
+        "https://www.sngpl.com.pk/images/transmission/TransmissionMap042022L.jpg"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2102,
+      "ref_col": "Location [ref]",
+      "value_cols": ["EndPrefecture/District"],
+      "primary_value_col": "EndPrefecture/District",
+      "values": {"EndPrefecture/District": "Kot Addu"},
+      "primary_value": "Kot Addu",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Kot_Addu",
+        "https://en.wikipedia.org/wiki/List_of_districts_of_Punjab,_Pakistan"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Kot_Addu", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/List_of_districts_of_Punjab,_Pakistan", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EndPrefecture/District was genuinely blank (only EndLocation=Kot Addu, EndState/Province=Punjab were populated). Kot Addu was made the capital of a newly-created 'Kot Addu District', Punjab, split off from Muzaffargarh District on 15 October 2022 (per the Punjab-districts list page). Since this GEM row's LastUpdated=2023-07-10 postdates the split, 'Kot Addu' (current district name) is the better fill than 'Muzaffargarh' (its pre-Oct-2022 parent district) -- noting this administrative-boundary change in case Baird prefers the older name for consistency with when the pipeline itself was built."
+    }
+  ],
+  "summary": "P4104 confirmed real (tier=high, 2 independent maps: SNGPL's own current transmission-network map draws Dhodak->Salsabil->Kot Addu(KAPCO) as an existing SNGPL trunk line matching Owner/PipelineType/Location; PEPL's 2020 map independently places both endpoints); one spec concern staged -- SNGPL's map shows a mixed-diameter line (12in Dhodak-Salsabil + 16in Salsabil-Kot Addu), not the single uniform 16in GEM currently records -- plus one EndPrefecture/District fill (Kot Addu). No duplicate, no existence/classification/attribution problem found."
+}

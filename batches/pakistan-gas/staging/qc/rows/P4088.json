@@ -1,0 +1,45 @@
+{
+ "project_id": "P4088",
+ "pipeline_name": "Qadirpur Gas Loopline",
+ "sheet_row": 2086,
+ "wiki": "https://www.gem.wiki/Qadirpur_Gas_Loopline",
+ "fills": [
+  {
+   "ref_col": "Length [ref]",
+   "value_cols": ["LengthKnown", "LengthKnownUnits"],
+   "values": {"LengthKnown": "53.14", "LengthKnownUnits": "km"},
+   "primary_value_col": "LengthKnown",
+   "primary_value": "53.14",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"
+   ],
+   "verifications": [
+    {"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONFIRMS the sheet's existing 53.14 km, does not change it. SNGPL's own live 'Province-Wise Transmission Breakup' page (What We Do > Transmission System) is a text table of every named transmission line by diameter with length in km. Row 16 reads verbatim '|16|QADIRPUR LINE|36|53.14|' -- diameter AND length both match this row exactly (36in / 53.14km). This is the highest-value find flagged in the protocol: a text-searchable SNGPL asset register, not a map. RECONCILES the sweep's earlier single-source concern (staged in ref-sweep-operating/rows/P4088.json) that an independent 2006 Emerson/PSIG SNGPL network paper (S.R. Lone & R.P. Spiers, 'Gas Transmission Development Strategy', https://www.emerson.com/is/content/emerson/it/final-control/documents/d352531x012.pdf -- content independently re-verified here via `pdftotext -layout` since url_verifier's substring match false-negatives on this PDF's compressed streams, a documented false-negative for this file per the prior researcher's note) gives 'Qadirpur gas is transported to Bhong via a 44-mile 36-inch pipeline' (44mi=70.81km), ~25% longer than 53.14km. The SAME SNGPL breakup table also lists a SEPARATE line item, row 40: '|40|QADIRPUR  - AC-1X LINE|36|16.88|' -- AC-1X is literally the Bhong compressor-station complex named in the Emerson paper ('Bhong compressor station (AC1X)'/'AC1XQ'). Summing the two named SNGPL segments at the same 36in diameter: 53.14 + 16.88 = 70.02 km, within 0.79 km (1.1%) of Emerson's 70.81 km. The same pattern holds for the sibling 30in line (QADIRPUR LINE 30in=53.13 + QADIRPUR-AC1X LINE 30in=17.11 = 70.24km, vs Emerson's stated '44-mile 30-inch pipeline' for that line too). This means the two sources do NOT actually disagree once granularity is accounted for: Emerson's 44 miles describes the FULL Qadirpur-to-Bhong-compressor-station corridor; GEM's P4088 row (and this SNGPL line item) covers only the first, longer named segment of that corridor, with SNGPL's separate 'AC-1X LINE' item covering the final ~17km tie-in into the compressor station. LengthKnown=53.14 is therefore well-supported for the row as GEM has scoped it. tier=high because two independent sources (current SNGPL register + 2006 Emerson paper), read at the correct granularity, triangulate to the same physical reality."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do NOT change LengthKnown to match the drawn 93km route. Per the length_ratio flag, the choice is between 'wrong route, wrong length, or partial segment' -- the evidence says wrong ROUTE. SNGPL's own current transmission register confirms 53.14km/36in for this exact named line (see fill above), and even the FULL Qadirpur-to-Bhong corridor (this segment + the downstream 'AC-1X' tie-in) only totals ~70km -- still well short of the drawn route's 93km. RouteAccuracy is already 'very low (straight line/schematic)', consistent with a schematic overshoot; no route-geometry fix is proposed here (out of scope for this leg -- coordinates are never fabricated). Separately, worth flagging for a future Discovery/route-creation pass: SNGPL's own register names a further ~17km 'QADIRPUR - AC-1X LINE' segment (36in) immediately downstream of this row, feeding the Bhong AC1X compressor station, which is not currently a distinct GEM row and is not something I am proposing to add unilaterally.",
+   "researcher_notes": "See the Length [ref] fill above for the full evidentiary chain (SNGPL Province-Wise Transmission Breakup table + Emerson/PSIG 2006 paper, reconciled via the table's own 'QADIRPUR-AC1X LINE' line item). Both independent sources agree once segment granularity is accounted for; neither supports the 93km drawn route.",
+   "proposed_refs": [
+    "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341",
+    "https://www.emerson.com/is/content/emerson/it/final-control/documents/d352531x012.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission%20System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true},
+    {"url": "https://www.emerson.com/is/content/emerson/it/final-control/documents/d352531x012.pdf", "ok": false, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true
+  }
+ ],
+ "summary": "P4088: LengthKnown=53.14km CONFIRMED via SNGPL's own live network-breakdown table (exact diameter+length match), and reconciled against the sweep's earlier Emerson/PSIG 44-mile flag -- not a real disagreement, just a different segment boundary (SNGPL's own register separately itemizes a further ~17km 'AC-1X' tie-in segment; the two sums triangulate to Emerson's 44mi/70.8km). The drawn 93km route is the erroneous element, not the stated length; no route fix proposed (out of scope, no fabricated coordinates)."
+}

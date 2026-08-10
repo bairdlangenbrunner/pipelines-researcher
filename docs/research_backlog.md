@@ -36,6 +36,7 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 | **Egypt gas: OSM + GulfPub recon untriaged** | Run 2026-07-29 to give Egypt the coverage Libya has; **both workbooks are standalone and NOT in the handoff packet**, so nothing routes them into the actions file. GulfPub (92 features): 52 overlaps, **40 additions all bucketed `NEAR_MISS`** (over the >30 escalation gate — adjudicate each against the near row before treating any as a discovery), 43 GEM-only, 3 status conflicts, 12 ambiguous clusters, 1 route-replacement candidate. First-ever Egypt OSM run (21 features / 476.6 km): **0 overlaps**, both `MATCH_QUALITY` escalations raised (0/21 named × 62/78 GEM rows routeless; top composite 0.4094 vs 0.45, threshold NOT lowered) → 9 `ROUTE_FOR_EXISTING`, 2 `FRAGMENT_OF_EXISTING`, 10 `DISCOVERY_CANDIDATE`. GulfPub rebuilt at `0941_ET` with the length-units fix (§4) — counts unchanged, `Ref Length (km)` now correct | `batches/egypt-gas/deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx` + `…_0910_ET_…-osm.xlsx`; `docs/country_notes/egypt.md` |
 | **Libya gas: OSM + GulfPub recon untriaged** | Same structural gap as Egypt's — the 2026-07-28 full pass built both recon workbooks but the handoff packet does **not** subsume them (`gulfpub_crosscompare=0`; neither recon dir appears in "Prior staged packets"), so ~100 gas rows needing a decision live only in those two files: 32 GulfPub gas overlaps / 8 additions / 18 GEM-only / 1 status conflict / 11 ambiguous, plus 5 OSM additions / 37 GEM-only. The GulfPub file also holds **untriaged `Oil_*` tabs** (72 overlaps / 17 additions / 19 GEM-only / 2 status conflicts / 24 ambiguous) from a `--commodity both` run — the only oil-facing Libya output that exists, and Libya oil has never been swept. GulfPub rebuilt `20260729_0941_ET` with the length-units fix (§4); same counts, 3 yellow→green and one re-target from a day of GEM drift | `batches/libya-gas/deliverables/pipelines_batch_20260729_0941_ET_libya-gas_reconciliation-gulfpub.xlsx` + `…_20260728_1149_ET_…-osm.xlsx`; `docs/country_notes/libya.md` |
 | **Iraq gas: OSM + GulfPub recon untriaged** | Moved OUT of the handoff packet 2026-07-29 into two standalone workbooks (Libya's shape) — the packet's `Gas_GulfPubActions`/`Gas_OSMActions` tabs are **retired**, so recon rows are now reachable ONLY here. GulfPub (`--commodity both`, 47 refs, post-fix lengths): 39 overlaps (19 gas / 20 oil), 8 additions (7 gas / 1 oil), 105 GEM-only, 13 status conflicts, 14 ambiguous; its `Oil_*` tabs are untriaged and belong to the iraq-oil scope. OSM (52 refs, gas only): 8 overlaps, 44 unmatched — **30 `ROUTE_FOR_EXISTING`** (candidate geometry for routeless rows), 10 `DISCOVERY_CANDIDATE`, 2 `FRAGMENT_OF_EXISTING`, 2 `NEAR_MISS`, 50 GEM-only, 5 status conflicts. **The OSM run carries a `MATCH_QUALITY` warning** (3.8% of refs named × 35.7% of GEM gas rows routed → 96.2% of matching rests on the province-coarse admin-area signal); GulfPub is healthy (100% named, 83% overlap rate) | `batches/iraq-gas/deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-{gulfpub,osm}.xlsx`; `docs/country_notes/iraq.md` |
+| **Pakistan gas: OSM + GulfPub recon untriaged** | First-ever Pakistan pass (2026-08-07). Both workbooks are **standalone and NOT in the handoff packet** (`recon_actions=0`), so nothing routes them into the actions file. GulfPub (94 features): **82 overlaps — the best match rate of any country swept so far**, and the reason the existence question narrowed before the SNGPL register closed it; 12 additions (under the >30 gate), 0 status conflicts, 11 near-misses. OSM: only **9 features for the whole country** — 4 overlaps, 3 `FRAGMENT_OF_EXISTING`, 1 `ROUTE_FOR_EXISTING`, 1 `NEAR_MISS`, **0 discovery candidates**. OSM coverage of Pakistan gas transmission is effectively absent — do not read the thin result as agreement | `batches/pakistan-gas/deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-{gulfpub,osm}.xlsx`; `docs/country_notes/pakistan.md` |
 | **Saudi Arabia / Iran gas: fresh standalone GulfPub recon workbooks (2026-07-29)** | Produced by the length-units re-run (§4) and **not in any packet**. Saudi (20 refs): 18 overlaps / 2 additions / 23 GEM-only / **9 status conflicts** / 1 ambiguous. Iran (43 refs): 25 overlaps / 18 additions / 25 GEM-only / 3 status conflicts / 10 ambiguous. **Both pre-fix runs date from 07-05/07-06 and predate the admin-area geo signal, per-dataset matching overrides and the 'very low' re-grade — read these as fresh runs, not deltas**, and expect their packets' `Gas_GulfPub` crosswalk tabs to be stale | `batches/{saudi-arabia-gas,iran-gas}/deliverables/pipelines_batch_20260729_0941_ET_*_reconciliation-gulfpub.xlsx` |
 | **Israel gas: Ashdod–Ashkelon onshore gap (P3620)** | routes + sheet edits APPLIED 2026-07-23 (Baird bridged the Ashdod HDD bore so P3620 meets P3657; routes-repo merge `72d29de1`; sheet RouteAccuracy→medium/RouteNotes/Route [ref] written rows 1036/1063; batch archived), but P3620 geometry is still partial — 2.1 of 4 sheet km; the Ashkelon-side ~2.4 km onshore run has no public vector yet (OSM empty, TAMA 37/A/2/7 blueprint sheets cover Ashdod only) — need the Ashkelon-side statutory sheet or an INGL/permit map to finish it. P3657 is complete | `batches/israel-gas/archive/route-creation-p3620-p3657/README.md` |
 | **Iran general open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md`; CLAUDE.md |
@@ -75,6 +76,38 @@ per cell rather than trusting either signal.
 > state, but nothing de-duplicates it: **before pasting Saudi/Egypt, check whether the cell
 > already carries the ref.**
 
+- **Pakistan gas** — **first-ever pass, 2026-08-07** (operating deep sweep 63 rows · in-dev annual
+  review 6 · cancelled review 1 · GulfPub + OSM recon · wiki alignment · route integrity · Leg-3
+  corridor research), plus the **SNGPL asset-register crosswalk added 2026-08-10**. **THREE files
+  to work:** `pipelines_batch_20260810_1112_ET_pakistan-gas_handoff-actions.xlsx` (59 open
+  decisions · 4 status changes · 254 backend paste units · 22 operators/owners units ·
+  22 wiki updates · 416 open flags) + its `-evidence` companion + the two **standalone recon
+  workbooks** at
+  `20260807_1530_ET`, which the packet does not subsume (`recon_actions=0`; see §2).
+  **The country's defining fact is provenance, not thin research:** 51 of 70 rows are one
+  July-2023 bulk load off two MAP files, so 362 ref units are legitimately `UNRESOLVED` and the
+  16 `existence` flags were tracking *segment obscurity*. **The 2026-08-10 register crosswalk
+  resolves that cohort** — SNGPL's own audited *"TRANSMISSION SYSTEM As at June 30, 2018"*
+  (Annual Report 2018, 270 sections, parse reconciles to the printed grand total) accounts for
+  **49 of the 51 rows** at two-decimal precision, closing **all five** residual existence
+  questions and **all three** redundancy clusters (the register lists both pipes of each pair at
+  *different diameters* — the ordinary mainline/loopline pattern). Staged as **98 ref-only units
+  across 49 rows** with no value changes. **Two items survive:** P4074 (register 52.23 km vs
+  sheet 55.23 — the only numeric disagreement in 49 rows; direction unknown, do not apply blind)
+  and P5486 Mardan–Swat (the one row the register does not account for at all). Not helped by it:
+  the 8 SSGC rows, and all 60 `operating`-with-no-`StartYear1` rows (the register carries no
+  dates). **Method finding worth reusing:** 63 per-row subagents could not crack this cohort;
+  one operator annual report did it in a single pass — where a country's rows trace to a bulk
+  load off an operator artifact, go looking for that operator's audited annual report first.
+  **The gem.wiki 403 blackout that ran through the whole 08-07 pass is fixed and both wiki legs
+  were re-run 2026-08-10** (`WIKI_UA`: the WAF passes a UA leading with the `baird-wiki` token —
+  same string as `goit-ggit-data-ops/gem-wiki/gemwiki.py`, keep them in sync). Alignment went
+  70 all-`UNPARSED` → **99 records** (69 `SHEET_SUSPECT` / 24 `WIKI_UPDATE` /
+  6 `WIKI_STALE_VS_STAGED`) and the harvest 0 → 63/63 pages. **68 of the 69 `SHEET_SUSPECT` are
+  one question**, blank `Operator` — the GGIT norm (1,464/6,462 filled tracker-wide), so it is
+  one bulk decision, not 68 tasks. Five escalations open. Still-open leads: the SSGC register
+  (their TPA capacity declaration is not one) and the newer 03/2023 SNGPL transmission map.
+  `docs/country_notes/pakistan.md`.
 - **Iraq gas** — **full pass re-run 2026-07-28, rebuilt 2026-07-29** (refs sweep · cancelled review ·
   redundancy clusters · GulfPub + OSM recon · wiki alignment · route integrity · ref-gap re-pass · Leg-3),
   superseding the 2026-07-05 packet and the 2026-07-07 ASB ref-harvest, both folded in.

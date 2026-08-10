@@ -1,0 +1,50 @@
+{
+ "project_id": "P4170",
+ "pipeline_name": "Wah-Nowshera Gas Pipeline I",
+ "sheet_row": 2156,
+ "wiki": "https://www.gem.wiki/Wah-Nowshera_Gas_Pipeline_I",
+ "fills": [
+  {
+   "ref_col": "StartYear1 [ref]",
+   "value_cols": ["StartYear1"],
+   "values": {},
+   "primary_value_col": "StartYear1",
+   "primary_value": "",
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Full-text searched SNGPL AnnualReport-2023 (downloaded locally, pdftotext -layout) for 'wah.*nowshera' and 'nowshera.*wah' (either order) — zero matches anywhere in the report, including its illustrated project-history timeline. Checked SNGPL's 'Year Wise Increase in Transmission System' table (sngpl.com.pk) — network-wide totals only (1994-2026), no per-segment years. OGRA (ogra.org.pk) licensing pages returned HTTP 403 to automated fetch. This session's WebSearch quota was exhausted before a broader news-archive pass on this row could be run — an access gap, not evidence the year is unfindable in principle. UNRESOLVED."
+  },
+  {
+   "ref_col": "LengthKnown [ref]",
+   "value_cols": ["LengthKnown"],
+   "values": {"LengthKnown": "75.54"},
+   "primary_value_col": "LengthKnown",
+   "primary_value": "75.54",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+   "verifications": [
+    {"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true, "note": "verified '50.41' and '25.13' both present via url_verifier.py and confirmed in raw fetched HTML at two distinct <tr> rows"}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CORRECTS the note in this shard's prior validity entry, which checked only the KHYBER PAKHTOON KHWA section of SNGPL's table. Fetching the raw HTML directly (curl, bypassing the summarizer) shows the SAME named 10in line 'WAH-NOWSHERA(1)' is listed TWICE in this table, once per province the line physically crosses: Sr#175 under PUNJAB, MainLine = 50.41 km (this is the EXACT match to the sheet's current LengthKnown — SNGPL's Punjab-side portion only), and Sr#5 under KHYBER PAKHTOON KHWA, MainLine = 25.13 km (the KP-side portion of the SAME named line, same 10in diameter). SNGPL's province-wise breakup is evidently reporting each cross-provincial line's mileage per province, not as one combined total row. Summed, the full Wah(Punjab)->Nowshera(KP) physical corridor for this 10in line is 50.41 + 25.13 = 75.54 km, which is a close match to the drawn geojson's geodesic 73 km (ratio 73/75.54 = 0.966, inside the 0.75-1.33 tolerance) — far better than the current stated 50.41 km alone (ratio 1.44). This is the exact 'segment of a longer named line' granularity pattern the brief flagged as the working hypothesis for this cluster, confirmed here by SNGPL's own primary source rather than assumed. Tier is medium, not high, because it is a single organization's figures (albeit its own current asset register, summed across two of its own rows for the identically-named line) and because I am proposing a computed sum rather than one single stated total — a human should confirm before pasting whether 75.54 should replace 50.41 outright, or whether GEM prefers to keep this row as the Punjab-only segment (in which case a companion KP-only row/SegmentName note would be the correct fix instead). Not marking UNRESOLVED because there IS a sourced, verified figure that resolves the length_ratio flag far better than the status quo; the remaining open question is which of the two correct framings (single merged row vs Punjab-only + missing KP segment) GEM wants, which is a modeling decision for a human, not a research one."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "See the corrected LengthKnown fill above (75.54 km, sourced) for the primary finding. A human should decide between (a) updating LengthKnown to 75.54 km to represent the full Wah(Punjab)-Nowshera(KP) corridor, matching the drawn route, or (b) keeping 50.41 km as a deliberate Punjab-only segment and creating/flagging a companion KP-side segment (SNGPL's own 25.13 km entry) if GEM wants that portion tracked separately. Either way, do not treat the drawn 73 km route as the error — it corroborates the SUM, not the current single-province value.",
+   "researcher_notes": "See fills[1] researcher_notes for the full raw-HTML evidence (Sr#175 PUNJAB 50.41km vs Sr#5 KHYBER PAKHTOON KHWA 25.13km, same 'WAH-NOWSHERA(1)' 10in name, verified directly in the page's HTML table rows, not just the page-level substring check).",
+   "proposed_refs": ["https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341"],
+   "verifications": [{"url": "https://www.sngpl.com.pk/web/article.jsp?pgids=461&pgname=Transmission System&secs=ss3146974axd5872&cats=ct96563iok34952&artcl=artuyh8erf285294&artids=341", "ok": true, "contains_value": true}],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

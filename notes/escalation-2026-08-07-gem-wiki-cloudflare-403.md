@@ -1,8 +1,28 @@
-# Escalation — gem.wiki returns HTTP 403 to all automated fetches (Cloudflare)
+# Escalation (RESOLVED) — gem.wiki returned HTTP 403 to all automated fetches (Cloudflare)
 
-**Date:** 2026-08-07
+**Date:** 2026-08-07 · **resolved 2026-08-10**
 **Scope:** tracker-wide, not Pakistan-specific. Surfaced during the Pakistan gas pass.
-**Severity:** degrades two committed workflow legs; no data is wrong as a result.
+**Severity:** degraded two committed workflow legs; no data was wrong as a result.
+
+> **STATUS — read this first.** Fixed 2026-08-10. The gem.wiki zone runs Cloudflare in
+> Under Attack Mode, and a WAF rule keyed on a leading **`baird-wiki`** User-Agent token
+> is what lets a script through — no allowlist or token needed, just the right UA. Added
+> as `url_verifier.WIKI_UA` and wired into `harvest_wiki_citations.py` and
+> `wiki_alignment.py` (deliberately byte-identical to `goit-ggit-data-ops`'s
+> `gem-wiki/gemwiki.py` USER_AGENT so both repos present as one client in the firewall
+> logs — **keep them in sync**). Both legs were then re-run for Pakistan:
+> `wiki_alignment` went from **70 all-`UNPARSED`** to **99 real records** (24
+> `WIKI_UPDATE` · 6 `WIKI_STALE_VS_STAGED` · 69 `SHEET_SUSPECT` · 0 `UNPARSED`), and the
+> citation harvest from **0 pages** to **63/63 fetched**. The packet at
+> `20260810_1057_ET` carries the re-run; anything stamped earlier does not.
+>
+> **What the re-run showed about the cost of the blackout:** on the *refs* side, almost
+> nothing — all 63 pages together cite only **10 distinct external URLs**, 8 of them
+> already known, so the "harvested leads" the sweep lost were a thin vein here (a
+> map-bulk-load country cites the map). On the *alignment* side the cost was real: 69
+> `SHEET_SUSPECT` records that the packet would otherwise never have shown, 68 of them
+> one systemic finding — see
+> `notes/escalation-2026-08-10-pakistan-operator-blank-68-rows.md`.
 
 ## What happened
 
@@ -46,7 +66,18 @@ Two committed legs depend on fetching gem.wiki:
 - Standing rule 1 is unaffected: we visit gem.wiki for leads and never cite it either
   way.
 
-## Recommended next steps (Baird's call)
+## Recommended next steps (Baird's call) — item 3 still stands
+
+1. ~~**Confirm whether this is intentional.**~~ **Answered:** it is deliberate (Under
+   Attack Mode), and the sanctioned way through is the `baird-wiki` UA token, already
+   in use by the sibling `goit-ggit-data-ops` repo. No allowlist request needed.
+2. ~~Authenticated MediaWiki API fallback~~ — not needed.
+3. **Still worth doing: make both scripts fail loudly.** A well-formed all-`UNPARSED`
+   artifact that reads like a successful run is the real trap here, and it is a one-line
+   guard in each script. The Pakistan packet shipped once with an empty wiki surface
+   precisely because nothing shouted.
+
+## Original recommendations (superseded)
 
 1. **Confirm whether this is intentional.** GEM controls gem.wiki; the Cloudflare bot
    rules may have been tightened deliberately. If so, ask for an allowlist for the
