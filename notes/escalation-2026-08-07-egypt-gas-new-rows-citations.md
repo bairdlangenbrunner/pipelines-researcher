@@ -13,20 +13,36 @@ Update fixes — nothing here was corrected on the sheet.
 
 Two standing thresholds are met:
 
-- *"A whole class of GEM values looks systematically wrong."* **Seven of the ten rows**
-  cite the **EGAS Annual Report 2018** across **36 `[ref]` cells**, and for **six of those
-  seven** the report contains **no line item for the pipeline in question** — see the
-  citation map below. Three independent subagents reached this separately, each using
-  `pdftotext -layout` over both the live file and its Wayback snapshot, searching the
-  report's own "COMPLETED DURING 2017/2018" and "UNDER CONSTRUCTION" grid tables;
-  re-verified 2026-08-10 by rendering the pages and reading them visually.
+- ~~*"A whole class of GEM values looks systematically wrong."* Seven of the ten rows cite
+  the **EGAS Annual Report 2018** and the report contains no line item for the pipeline in
+  question, so the rows are effectively unsourced.~~ **WITHDRAWN 2026-08-10 — this finding
+  was wrong.** See Finding 0. The citations are to the report's **GASCO national-grid map**
+  (printed p.35), which the text-search approach could not see. The map carries per-segment
+  `NN" NN km` annotations, and most of the cited rows transcribe theirs exactly. What
+  survives is two value defects and one duplicate-check, not a class-wide sourcing failure.
 - *"A QC spot-check shows >10% of sampled cells unsupported."* Comfortably exceeded.
 
-The pattern is not that the pipelines are fake — most are plausibly real — but that
-the **citations do not support the values attached to them**, so the rows are
-effectively unsourced.
+~~The pattern is not that the pipelines are fake — most are plausibly real — but that the
+citations do not support the values attached to them, so the rows are effectively
+unsourced.~~ **Withdrawn — see Finding 0.**
 
-## Finding 0 — citation map: exactly where EGAS 2018 is cited
+## Finding 0 — where EGAS 2018 is cited, and why the first read of it was wrong
+
+**Correction (2026-08-10, on Baird's steer).** The researcher was reading the report's
+**map**, not its prose tables: printed p.35 carries GASCO's *National Gas Grid* map, on
+which each segment is drawn and most are annotated `NN" NN km`. Pipelines were identified
+**visually off that map**. Every "the report does not contain this pipeline" conclusion in
+the original memo came from `pdftotext` full-text search, which cannot read a raster map —
+so it was answering the wrong question. The map is a legitimate source for `Location`,
+and — because the legend distinguishes EXISTING / UNDER CONS. / UNDER STUDY p/l and the
+annotations give bore and length — for `Status`, `PipelineType`, `Fuel`, `Diameter` and
+`Length` too. Citing all six cells to it is defensible practice, not a defect.
+
+Map evidence is committed alongside this batch at
+`batches/egypt-gas/staging/route-creation-20260807/maps/` (full p.35 render plus the four
+region crops the table below rests on).
+
+### Citation map
 
 URL in every case:
 `https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf`
@@ -34,37 +50,42 @@ URL in every case:
 SheetRows are as of the **2026-08-10** snapshot — the gas tab was re-sorted between
 08-07 and 08-10 and P8051 moved 4322 → 4313, so 08-07 locators are stale.
 
-| PID | SheetRow | Cells | Which | Supported by the report? |
-|---|---|---|---|---|
-| P8050 | 4312 | 1 | Location | **No** — no Rosetta line item (its other 5 refs are a Dec-2019 ministry page, not EGAS) |
-| P8051 | 4313 | 5 | Status, Fuel, PipelineType, Diameter, Location | **No** (`Length [ref]` is World Bank RP1184, not EGAS — hence 5, not 6) |
-| P8052 | 4314 | 6 | Status, Fuel, PipelineType, Length, Diameter, Location | **No** — no North Sinai line item at all |
-| P8053 | 4315 | 6 | " | **No** — same |
-| P8054 | 4316 | 6 | " | **YES** — see below |
-| P8057 | 4319 | 6 | " | **No** — no Mostorod / El Tebbin anywhere |
-| P8059 | 4321 | 6 | " | **No** — no Ameriya / Sidi Krir / InterGen anywhere |
-| P8055, P8056, P8058 | — | 0 | — | (do not cite it) |
+| PID | Row | Cells | Sheet | Map label (p.35) | Verdict |
+|---|---|---|---|---|---|
+| P8052 | 4314 | 6 | 45 km, 24" | `24" - 45 km`, Sinai Cement & Ind. Area | **exact — supported** |
+| P8053 | 4315 | 6 | 16 km, 16" | `16" - 16 km`, Military Cement & Ind. Area | **exact — supported** |
+| P8057 | 4319 | 6 | 25 km, 24" | `24" 25 k.m`, Mostorud→Tebbin corridor | **exact — supported** |
+| P8054 | 4316 | 6 | 65 km, 36" | text p.37 *Dahshur / AlWaste 68.5 km - 36"*; map `24"/20" 65 km` near Dahshour | **supported** (also in the prose table) |
+| P8050 | 4312 | 1 (`Location` only) | 29 km, 30" | `30" 27 k.m` at the Idku landfall | bore exact, 27 vs 29 km — but length/bore cite a Dec-2019 ministry page, not EGAS, so no conflict |
+| P8051 | 4313 | 5 (no `Length`) | 65 km, 32" | `42" 65km` inside the stacked Abu Homos label bundle | length exact, **bore 42 ≠ 32** — probable mis-pairing across stacked labels |
+| P8059 | 4321 | 6 | 75 km, 24" | `24" 7.5 k.m` at Sidi Krir / Intergen P.S | bore exact, **length is 7.5 km — a decimal misread as 75** |
+| P8055, P8056, P8058 | — | 0 | — | — | do not cite it |
 
-**P8054 is legitimately sourced and must come off the unsupported list.** Printed p.37:
-*"Dahshur / AlWaste pipeline 68.5 km - 36"*, under construction 2017/2018, target
-September 2018, cost 277.5 million L.E + 13.4 million US$. Diameter matches exactly;
-68.5 km vs the row's 65 km, which petro-news.com independently gives as 65.
+Six of the seven carry a map label whose **diameter matches the sheet exactly**, which is
+itself strong evidence that these cells were transcribed off the map rather than invented.
 
-**Correction to an earlier search result.** The first pass reported "no Abu Hummus in
-the report"; that was a **false negative** — the token list was
-`Hummus/Homos/Hommos/Humus` and the report spells it **"Houmas"**. Printed p.37 does
-carry *"Ezdwaj Edku / Abu Houmas pipeline 30 km - 42"*. That item matches existing GEM
-row **P7567 "Idku-Abu Hummus Gas Pipeline" (30 km, 42 in)** exactly — not P8050
-(Rosetta→Abu Hummus, 29 km, 30 in) nor P8051 (Abu Hummus→Nubaria, 65 km, 32 in), so the
-unsupported verdict on those two stands. But `Ezdwaj` = ازدواج = *duplication*, and 30 km
-vs P8050's 29 km is close: **P8050 needs a duplicate-check against P7567** before it is
-treated as a distinct line.
+### What actually survives
 
-### What the report does contain
+1. **P8059 length** — `75` should almost certainly be `7.5` km (the map's `24" 7.5 k.m`).
+   This also explains the 5.3× endpoint overshoot in Finding 1.
+2. **P8051 diameter** — sheet 32", the 65 km map label reads 42". The Abu Homos bundle
+   stacks six labels (`24" 45km`, `24" 45km`, `18/16" 13km`, `12" 14.5km`, `24" 15km`,
+   `42" 65km`) over a shared corridor, so mis-pairing bore to length is an easy slip.
+   Nearby 32" labels are `32" 200 k.m` and `32" 105 km` — neither is 65 km.
+3. **P8050 vs P7567** — the prose table's *"Ezdwaj Edku / Abu Houmas pipeline 30 km - 42"*
+   matches existing **P7567 "Idku-Abu Hummus Gas Pipeline" (30 km, 42 in)** exactly, and on
+   the map "Rosetta" is an **offshore field** whose tie-back lands at Idku, not the Delta
+   town of Rashid. So P8050's Rosetta→Abu Hummus may be the same physical line as P7567
+   under a field-name reading of its origin. **Duplicate-check required.**
 
-The entire grid-pipeline content is 15 line items on printed pp.35 and 37 (PDF pages
-19–20), verified visually as well as by extraction — the blank-extracting PDF page 18 is
-a photographic section-title spread, not lost table rows.
+Also corrected: an earlier search reported "no Abu Hummus in the report". That was a
+**false negative** — the token list was `Hummus/Homos/Hommos/Humus`; the report spells it
+**"Houmas"** in prose and **"Abu Homos"** on the map.
+
+### What the prose tables contain (for completeness)
+
+15 line items on printed pp.35 and 37, verified visually as well as by extraction — the
+blank-extracting PDF page 18 is a photographic section-title spread, not lost table rows.
 
 - *Completed 2017/2018:* New Capital/Dahshur 70 km–32" · West Assiout PS 1.4 km–24" ·
   South Helwan 1.2 km–30" · 6 October 0.4 km–20" · Al Suez 3.5 km–16" ·
@@ -75,11 +96,40 @@ a photographic section-title spread, not lost table rows.
   Fayoum/Giza 27 km–24" · ELSLAAM/Matrouh 90 km–10" · Trans-Sinai 196 km–36" ·
   West of Cairo 16 km–30"
 
-The only element that could loosely justify a `Location [ref]` for an unlisted Delta line
-is the GASCO national-grid **map** on p.35 — it is not row-specific and does not carry
-length, diameter, status or type.
+The prose tables cover only the two fiscal years' new-build and rehabilitation programme,
+so a long-operating segment being absent from them says nothing about whether it exists —
+another reason the original text-search inference did not hold.
+
+## Finding 0b — OUR defect: P8052/P8053 geometry is anchored to the wrong cement plant
+
+The §8 endpoint research resolved "Sinia Cement Industrial Area" to the **Sinai White
+Cement** factory at **El Hassana**, central Sinai (30.7242, 33.7765; OSM way 97684492).
+That is a different company in a different place. The map puts *Sinai Cement & Ind. Area*
+on the El Arish corridor, and the arithmetic is decisive:
+
+| Anchor | Chord from Sheikh Zuweid | vs sheet + map (45 km) |
+|---|---|---|
+| El Hassana (used) | **63.0 km** | 1.40× — the "impossible length" of Finding 1 |
+| El Arish town, + plant offset south | **31.1 km → ~41–45 km** | matches |
+
+So the 45 km was never wrong; **our geocode was**. The same bad anchor is P8053's *start*,
+so both candidates inherit it.
+
+**Consequence: the staged P8052 and P8053 candidate geometries must NOT be applied.** They
+are drawn ~60 km from where the line actually runs. P8053 was not previously on the
+do-not-apply list; it is now. Both need re-research against the Sinai Cement Company plant
+near El Arish before any §8 apply.
 
 ## Finding 1 — length conflicts with the row's own endpoints
+
+> **Revised 2026-08-10.** Two entries below were artefacts of our own endpoint research,
+> not sheet defects. **P8052's is withdrawn outright** (Finding 0b — wrong cement plant).
+> **P8059's** is explained by the map's `24" 7.5 k.m`: the *length* is the error (7.5 read
+> as 75), not the endpoints — though its 14.1 km chord still exceeds the corrected 7.5 km,
+> so the endpoints want a second look too. **P8057's** 25 km is faithfully transcribed off
+> the map, so it is a disagreement between the source and the geography rather than a
+> transcription defect — it still blocks an apply. The do-not-apply list is therefore now
+> **P8052, P8053, P8057, P8059** (P8053 added, for geometry not length).
 
 Straight-line (great-circle) distance between the two endpoints each row names, versus
 `LengthKnownKm` on that row. A real route can never be **shorter** than its own chord,
@@ -202,7 +252,15 @@ Surfaced incidentally; out of scope for this batch, logged so they aren't lost:
 Every candidate's notes carry its own flags in full.
 
 **Not done — deliberately:** nothing was written to the live sheet or the routes repo.
-No length, name, or citation was corrected. **P8057, P8059 and P8052 should not have
-their route applied until their length question is settled** — applying them would move
-`RouteAccuracy` off `no route` for rows whose geometry is known to contradict their own
-`LengthKnownKm`, which is how a defect gets laundered into a "mapped" row.
+No length, name, or citation was corrected.
+
+**Do not apply (revised 2026-08-10): P8052, P8053, P8057, P8059.**
+
+- **P8052, P8053** — our geometry is anchored to the wrong cement plant (Finding 0b).
+  Re-research the endpoints; the sheet's lengths are correct.
+- **P8057, P8059** — geometry contradicts the stated `LengthKnownKm`. Applying would move
+  `RouteAccuracy` off `no route` for a row with an unresolved fact, which is how a defect
+  gets laundered into a "mapped" row.
+
+The other five candidates (P8050, P8051, P8054, P8056, P8058) are unaffected by the
+2026-08-10 corrections.

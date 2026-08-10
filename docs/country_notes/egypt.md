@@ -339,20 +339,33 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   swings well west; for P8058 the path fits but the *endpoint identity* is contested, so a
   `medium` grade would overstate the evidence. North Sinai (P8052/P8053) has no ENTSOG
   coverage at all.
-- **DO NOT APPLY P8057, P8059 or P8052 until their length question is settled** — their
-  geometry contradicts their own `LengthKnownKm`, and applying would move `RouteAccuracy`
-  off `no route` for a row with a known-bad fact.
+- **DO NOT APPLY P8052, P8053, P8057, P8059** (revised 2026-08-10; P8053 added).
+  - **P8052/P8053 — our defect, not the sheet's.** The endpoint research anchored "Sinia
+    Cement" to **Sinai White Cement at El Hassana** (30.7242, 33.7765), a different company
+    ~60 km from the real line; the map puts *Sinai Cement & Ind. Area* on the El Arish
+    corridor. From Sheikh Zuweid that anchor gives 63.0 km vs the sheet+map's 45 km, while
+    El Arish + plant offset gives ~41–45 km. **The 45 km was right and the geocode was
+    wrong** — so Finding 1's "impossible length" on P8052 is withdrawn. Re-research both
+    endpoints before any apply.
+  - **P8057/P8059** — geometry still contradicts the stated `LengthKnownKm`; applying would
+    move `RouteAccuracy` off `no route` for a row with a known-bad fact.
 - **Data-quality escalation covering all ten rows:**
-  `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. Headline (**counts
-  corrected 2026-08-10** — see the memo's Finding 0 for the cell-by-cell map): **7 rows
-  cite the EGAS Annual Report 2018 across 36 `[ref]` cells, and 6 of those 7 cite it for
-  facts the report does not contain** (P8050 P8051 P8052 P8053 P8057 P8059). The seventh,
-  **P8054, is legitimately sourced** — printed p.37 gives "Dahshur / AlWaste pipeline
-  68.5 km - 36"". Report content is 15 line items on printed pp.35/37, verified visually
-  as well as by extraction. One earlier search result was a false negative: the report
-  spells Abu Hummus **"Houmas"** and *does* list "Ezdwaj Edku / Abu Houmas 30 km - 42"" —
-  which matches existing **P7567** (30 km, 42 in), not P8050 or P8051, so their verdict
-  stands but **P8050 needs a duplicate-check against P7567**. Six rows have
+  `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. **The headline citation
+  finding was WITHDRAWN 2026-08-10** — `NA` was identifying these pipelines **visually off
+  the GASCO national-grid map on printed p.35**, not from the report's prose tables, so the
+  original `pdftotext` full-text search was answering the wrong question. The map draws each
+  segment and annotates most `NN" NN km`; citing Status/Fuel/Type/Length/Diameter/Location
+  to it is defensible. 7 rows cite the report across 36 `[ref]` cells, and against the map
+  **P8052 (`24" - 45 km`), P8053 (`16" - 16 km`) and P8057 (`24" 25 k.m`) match exactly**;
+  P8054 is corroborated by the prose table too. Six of the seven have a map label whose
+  **diameter matches the sheet exactly**. What survives is narrow: **P8059's length is
+  almost certainly 7.5 km, not 75** (map reads `24" 7.5 k.m` — a decimal misread, and it
+  explains the 5.3× overshoot); **P8051's 32" conflicts with the 65 km label's 42"**
+  (probable mis-pairing inside the stacked six-label Abu Homos bundle); and **P8050 needs a
+  duplicate-check against P7567** — the report's "Ezdwaj Edku / Abu Houmas 30 km - 42""
+  matches P7567 exactly, and on the map "Rosetta" is an *offshore field* landing at Idku,
+  not the Delta town. Map evidence committed at
+  `batches/egypt-gas/staging/route-creation-20260807/maps/`. Six rows have
   lengths that conflict with their own endpoints (P8057 and P8052 impossibly so — the
   chord exceeds the stated pipe length; P8059 overshoots 5.3×); P8057's `EndPrefecture`
   wrongly repeats its `StartLocation`; **P8058 is probably the second line of the P3930

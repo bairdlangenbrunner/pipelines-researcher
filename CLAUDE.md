@@ -401,11 +401,16 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   EGAS Annual Report 2018 for facts it does not contain, six lengths conflict with
   their own endpoints, P8058 likely belongs to the P3930 (New Administrative
   Capital) family not P8040, P8055's "Trans Gulf … II" lineage to P8013 is false.
-  Routes to Update, not §8. **Counts corrected 2026-08-10: it is 7 rows / 36 `[ref]`
-  cells citing the report, 6 of them unsupported (P8054's citation is legitimate); the
-  report spells Abu Hummus "Houmas" and does list Ezdwaj Edku/Abu Houmas 30 km-42",
-  matching existing P7567 — P8050 needs a duplicate-check against it. The gas tab was
-  also re-sorted 08-10 (P8051 4322→4313) and P8058 was renamed per the memo.**
+  Routes to Update, not §8. **The citation finding was WITHDRAWN 2026-08-10: `NA` was
+  identifying these lines VISUALLY off the GASCO national-grid MAP on printed p.35, so
+  full-text search was the wrong test. The map annotates segments `NN" NN km`; P8052/
+  P8053/P8057 match it exactly and 6 of 7 rows match on diameter. Survivors are narrow:
+  P8059 length is 7.5 km misread as 75, P8051's 32" conflicts with the 65 km label's 42",
+  and P8050 needs a duplicate-check vs P7567. OUR defect: P8052/P8053 geometry is anchored
+  to Sinai White Cement at El Hassana, ~60 km off — the sheet's 45 km was right and the
+  geocode was wrong, so DO-NOT-APPLY is now P8052/P8053/P8057/P8059. Gas tab re-sorted
+  08-10 (P8051 4322→4313); P8058 renamed per the memo. Rule of thumb: a report cited for
+  a pipeline is not "unsupported" until its MAPS have been read, not just its text.**
   Oil not yet swept):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
