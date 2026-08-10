@@ -21,7 +21,7 @@ from pathlib import Path
 from urllib.parse import urldefrag, urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS, _MIN_INTERVAL, _UA  # noqa: E402
+from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS, WIKI_UA, _MIN_INTERVAL  # noqa: E402
 
 _DROP_HOSTS = GEM_HOSTS + BLOCKLIST_HOSTS
 
@@ -51,7 +51,9 @@ def harvest_page(url: str, timeout: int = 25) -> dict:
     except ImportError as e:
         return {"ok": False, "status": None, "reason": f"missing dep: {e.name} (pip install -r requirements.txt)", "citations": []}
     try:
-        r = requests.get(url, timeout=timeout, headers={"User-Agent": _UA})
+        # WIKI_UA, not _UA: this fetches gem.wiki, whose WAF only lets the
+        # "baird-wiki" token through. See url_verifier.WIKI_UA.
+        r = requests.get(url, timeout=timeout, headers={"User-Agent": WIKI_UA})
     except Exception as e:
         return {"ok": False, "status": None, "reason": f"request failed: {type(e).__name__}", "citations": []}
     if r.status_code != 200:

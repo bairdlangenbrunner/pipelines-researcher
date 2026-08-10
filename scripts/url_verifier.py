@@ -53,6 +53,16 @@ GEM_HOSTS = ("gem.wiki", "globalenergymonitor")
 BLOCKLIST_HOSTS = ("theodora.com", "theodora", "abarrelfull", "abarrellfull", "wikidot.com")
 _UA = "Mozilla/5.0 (compatible; pipelines-researcher/1.0)"
 
+# UA for fetching gem.wiki itself (harvest_wiki_citations.py, wiki_alignment.py) —
+# NOT for external sites, which need the browser-ish _UA above to get past their own
+# bot walls. The gem.wiki zone runs Cloudflare Under Attack Mode, and a WAF rule keyed
+# on the leading "baird-wiki" token is the only thing that gets a script through; any
+# other UA gets 403 "cf-mitigated: challenge" (verified 2026-08-10). Deliberately
+# byte-identical to goit-ggit-data-ops/gem-wiki/gemwiki.py's USER_AGENT so both repos
+# present as one client in GEM's firewall logs — keep them in sync, and see that repo's
+# gem-wiki/README.md → Auth for the full writeup.
+WIKI_UA = "baird-wiki/1.0 (baird.langenbrunner@globalenergymonitor.org)"
+
 # per-domain politeness floor for verify_many (seconds between hits to one host)
 _MIN_INTERVAL = 1.0
 # A 200 whose body is shorter than this, when we were checking for content, is treated as a

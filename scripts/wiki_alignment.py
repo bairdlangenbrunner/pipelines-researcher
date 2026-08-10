@@ -42,7 +42,7 @@ from normalize import (  # noqa: E402
     parse_length_km, parse_number, parse_owners,
 )
 from staged_store import annotate, discover_staging_dirs, load_staged_context, pending_for  # noqa: E402
-from url_verifier import _MIN_INTERVAL, _UA  # noqa: E402
+from url_verifier import WIKI_UA, _MIN_INTERVAL  # noqa: E402
 
 WIKIDIFF_REF = "__WIKIDIFF__"
 
@@ -98,7 +98,9 @@ def fetch_page(url: str, cache_dir: Path, pid: str, refetch: bool = False) -> di
         return {"ok": False, "reason": "no wiki URL", "cached": False}
     try:
         import requests
-        r = requests.get(url, timeout=25, headers={"User-Agent": _UA})
+        # WIKI_UA, not _UA: gem.wiki's WAF only lets the "baird-wiki" token
+        # through. See url_verifier.WIKI_UA.
+        r = requests.get(url, timeout=25, headers={"User-Agent": WIKI_UA})
     except Exception as e:  # noqa: BLE001
         return {"ok": False, "reason": f"request failed: {type(e).__name__}", "cached": False}
     if r.status_code != 200:
