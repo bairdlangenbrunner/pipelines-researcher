@@ -8,17 +8,17 @@ cycle**. Work happens **at the province level**, not whole-country.
 
 ## Division of labor (locked 2026-07-29)
 
-- **Maggie Zheng (MZ)** owns China (+ HK, Taiwan, Macau, Mongolia, North Korea) for
+- **MZ** owns China (+ HK, Taiwan, Macau, Mongolia, North Korea) for
   the GGIT 2026 cycle — active Jul 16–Sep 11, province by province, triage pace
-  (she's solo). Her core work: **routes + wiki sync, operating rows first**. Cycle
-  planning, her 529-row route-target list, and the "chinese researcher assignments –
+  (solo). Their core work: **routes + wiki sync, operating rows first**. Cycle
+  planning, their 529-row route-target list, and the "chinese researcher assignments –
   2026" sheet tab (keyed on `PipelineName`; 996 China-scope rows → 94 unique names)
   live in the **gem-desk repo**, `research-cycles/ggit-2026-pipelines-update/`.
-- **Agent batches run AHEAD of her province queue**, pre-staging what triage pace
+- **Agent batches run AHEAD of their province queue**, pre-staging what triage pace
   can't cover: ref sweeps, value backfill, status re-verification, document-driven
-  discovery. Routes and wiki edits stay hers. Never re-audit a province she has
+  discovery. Routes and wiki edits stay theirs. Never re-audit a province they have
   finished without being asked.
-- **National trunk systems are Maggie's own scope**, excluded from agent province
+- **National trunk systems are MZ's own scope**, excluded from agent province
   batches (see scoping idiom below).
 
 ## Backend structure (why province batching works)
@@ -31,7 +31,7 @@ cycle**. Work happens **at the province level**, not whole-country.
   bugs — P7609 "Shangdong" typo, P6902 blank — were fixed on the sheet by 2026-07-29).
   845/984 rows start and end in the same province. Chinese names on 979/984 rows.
 - Route quality is the tracker-wide weak spot: 285 `very low` + 165 `low` + 101
-  `no route` — over half. That's Maggie's lane, not the agent's.
+  `no route` — over half. That's MZ's lane, not the agent's.
 
 ## Batch scoping
 
@@ -47,7 +47,7 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
   transited provinces don't count.
 - The negative-lookahead regex keeps only provincial-grid rows — trunk rows
   terminating in the province (e.g. Guangxi has 9: Sino-Myanmar branches, three
-  WEP2 branches, 新粤浙, 渝黔桂, 川滇黔桂) drop out to Maggie's trunk scope. Drop
+  WEP2 branches, 新粤浙, 渝黔桂, 川滇黔桂) drop out to MZ's trunk scope. Drop
   the flag to see the full province picture including trunks.
 - A trunk-scope batch, if ever agent-run, would be `batches/china-trunks-gas/`
   (invert the regex). Currently not planned.
@@ -76,17 +76,17 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 
 ## Coordination gotchas
 
-- **Maggie edits the live sheet continuously** through Sep 11 — pull a fresh CSV at
+- **MZ edits the live sheet continuously** through Sep 11 — pull a fresh CSV at
   every batch start (standing rule, but load-bearing here) and expect `LastUpdated`
   drift between staging and apply.
-- Province priority she sketched (gem-desk, 2026-07-23): Guangdong (current) →
+- Province priority MZ sketched (gem-desk, 2026-07-23): Guangdong (current) →
   Guangxi → Jiangsu → Fujian; **Shandong/Hebei deliberately deferred** — Hebei has
   real double-counting risk against national trunk lines. Shanghai done.
 - Known backend name-variant near-dupes ("Hebei Gas Pipeline Network" vs
   "…pipeline…", en-dash vs hyphen in "Hebei–Nanjing"); hydrogen rows live on a
   separate backend tab and are excluded from the China gas scope.
 
-## Province ledger (agent-side; batches only, Maggie's progress lives in gem-desk)
+## Province ledger (agent-side; batches only, MZ's progress lives in gem-desk)
 
 | province | scope (grid rows) | status | batch |
 |---|---|---|---|
@@ -94,8 +94,8 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 
 ## Route creation §8 — ALL 103 no-route gas rows (2026-07-30, staged NOT applied)
 
-One pass over every `no route` China gas row (Baird 2026-07-30: include Maggie's 33
-operating rows — she doesn't make routes right now — plus P8028/P8029 and the 6
+One pass over every `no route` China gas row (Baird 2026-07-30: include MZ's 33
+operating rows — they don't make routes right now — plus P8028/P8029 and the 6
 cancelled/shelved rows; duplicate pairs get the same route drawn). All research ran
 in Chinese via parallel agents; every endpoint is a Nominatim geocode or
 official-document coordinate of a SOURCED named place; all candidates are
@@ -116,7 +116,7 @@ official-document coordinate of a SOURCED named place; all candidates are
 - **Wave 3 — trunk-family rows (42):** 34 candidates + 8 partials.
   `batches/china-trunks-gas/staging/route-creation/` →
   `…_20260730_1708_ET_china-trunks-gas_route-creation.xlsx`. (Trunk rows are
-  Maggie's scope, run here on Baird's explicit instruction.)
+  MZ's scope, run here on Baird's explicit instruction.)
 
 **Flags for human review** (all carried in the workbooks' notes columns):
 duplicates drawn-same-route per Baird's ruling — P7666→P7664, P7534→P7531
