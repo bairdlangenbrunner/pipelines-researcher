@@ -227,6 +227,83 @@ datasets:
       # Libya/Iraq/Egypt runs reproduce unchanged. Threshold NOT lowered.
       geoarea_weight: 0.30
 
+  - name: gas_in
+    scraped_date: "2026-08-10"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-in-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "India"
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    # No geoarea_weight override, deliberately: India is the healthiest OSM extract
+    # in the registry so far and the dead-axes condition does not apply. 27 of 61
+    # features are named (44%) with real GEM-matchable names (KKBMPL, HVJ Gas
+    # Pipeline, Dabhol Bengaluru), against 0 of 9 for Pakistan and 74 of 545 for
+    # Libya; the extract totals 2,721 km with features up to 465 km, so geometry is
+    # substantively informative rather than nominally present. Both the name and
+    # geometry axes are live, so the source-level weights below stand unmodified.
+
+  # --- Kazakhstan, gas (2026-08-11): 112 features / 188 ways, ALL lifecycle=operating,
+  #     8,490 km — the LARGEST OSM extract in the registry by length, with traces up to
+  #     1,441 / 1,308 / 1,069 km (the Central Asia–Center and Kazakhstan–China trunks).
+  #     Attribute-blind though: only 4 named (4%), 3 with diameter, 2 with operator, and
+  #     39 of 112 are <0.5 km stubs. 7 osm_id_key collisions (merged-way keys) — ingest
+  #     suffixes them `#2..`, so cross-scrape identity for gas_kz is unreliable.
+  - name: gas_kz
+    scraped_date: "2026-08-11"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-kz-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Kazakhstan"
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    # No geoarea_weight override, for Pakistan's reason rather than India's: the NAME
+    # axis is nearly dead here (4 of 112 named) but the GEOMETRY axis is emphatically
+    # alive on BOTH sides — 48 of 52 GEM Kazakhstan gas rows are 'Mapped route' (22
+    # high, 13 medium) and the extract's own traces are trunk-scale, not stubs. The
+    # dead-axes condition gas_iq/gas_eg/gas_pk document therefore does not hold, so the
+    # source-level weights stand and no threshold is touched.
+
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so
   # the engine default name_weight 0.30 would sink real matches. Geometry is the

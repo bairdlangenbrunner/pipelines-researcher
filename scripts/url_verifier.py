@@ -22,7 +22,11 @@ links" were false):
   * LARGE PDFs — the extractor does not reach the whole document. The OPEC ASB2012 Wayback
     PDF (7.7 MB, ~200pp) passes on "OPEC" and FAILS on "Jakhira", a token that is provably
     in it. On a big PDF, a content FAIL says nothing; download it and `pdftotext -layout`.
-  * SSL cert-chain errors (e.g. pgjonline.com) — confirm via `curl`/the www form/Wayback.
+  * SSL cert-chain errors (e.g. pgjonline.com, adilet.zan.kz) — HANDLED SINCE 2026-08-11: an
+    SSLError now triggers one automatic retry with `verify=False`, and the verdict carries
+    `insecure_tls: True` plus a note in `reason`. So these no longer reach you as failures at
+    all; an `insecure_tls` pass means the bytes are real, not that the host's identity was
+    confirmed. A remaining SSL failure means BOTH attempts died — then confirm via `curl -k`.
 
 Content false-negatives (a 200 the screen marks "value not found" that DOES support the value):
   * STATUS is inferable, not literal. Do NOT require the status token ('operating', etc.) as a
@@ -146,12 +150,45 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         import requests
     except ImportError:
         return {"ok": False, "status": None, "reason": "requests not installed (pip install -r requirements.txt)"}
+    # An incomplete/self-signed cert chain is a TRANSPORT defect on our side of the
+    # handshake, never evidence the page is gone — and a whole country's dominant source
+    # can sit behind one (adilet.zan.kz, Kazakhstan's legal-acts portal, served 51 of 105
+    # "failing" refs in the 2026-08-11 KZ gas sweep; every one was SSLError, none a 404).
+    # So retry once with chain verification off and label the pass loudly, instead of
+    # handing the sweep 51 phantom dead links to re-verify by hand. The label matters:
+    # `insecure_tls` says the bytes are real but the identity was not cryptographically
+    # confirmed, so treat the page as live and readable, not as authenticated.
+    insecure = False
     try:
         r = requests.get(url, timeout=timeout, headers={"User-Agent": _UA})
     except Exception as e:
-        return {"ok": False, "status": None, "reason": f"request failed: {type(e).__name__}"}
+        is_ssl = "SSL" in type(e).__name__ or "certificate" in str(e).lower()
+        if not is_ssl:
+            return {"ok": False, "status": None, "reason": f"request failed: {type(e).__name__}"}
+        try:
+            import urllib3
+            urllib3.disable_warnings()
+        except Exception:
+            pass
+        try:
+            r = requests.get(url, timeout=timeout, headers={"User-Agent": _UA}, verify=False)
+            insecure = True
+        except Exception as e2:
+            return {"ok": False, "status": None,
+                    "reason": f"request failed: {type(e).__name__}; retry without cert "
+                              f"verification also failed: {type(e2).__name__}"}
+    def _fin(d: dict) -> dict:
+        """Stamp the insecure-TLS retry onto whatever verdict the checks reach, so the
+        provenance travels with the result instead of vanishing into a bare ok=True."""
+        if insecure:
+            d["insecure_tls"] = True
+            d["reason"] = (d.get("reason", "") +
+                           " [cert chain unverified — retried with TLS verification off; "
+                           "page is live, identity not cryptographically confirmed]")
+        return d
+
     if r.status_code != 200:
-        return {"ok": False, "status": r.status_code, "reason": f"HTTP {r.status_code}"}
+        return _fin({"ok": False, "status": r.status_code, "reason": f"HTTP {r.status_code}"})
     # requests falls back to ISO-8859-1 (the HTTP default for text/*) whenever the server
     # omits an explicit charset in Content-Type — common on Chinese gov/news sites that DO
     # serve utf-8 but don't declare it. Left uncorrected this mangles the body into
@@ -172,22 +209,22 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     missing = [e for e in expected if e and e.lower() not in text]
     if missing:
         if stub:
-            return {"ok": False, "status": 200,
-                    "reason": f"200 but body only {len(body.strip())} chars (likely block/stub) — re-fetch full text; expected missing: {missing}"}
-        return {"ok": False, "status": 200, "reason": f"200 but missing expected: {missing}"}
+            return _fin({"ok": False, "status": 200,
+                    "reason": f"200 but body only {len(body.strip())} chars (likely block/stub) — re-fetch full text; expected missing: {missing}"})
+        return _fin({"ok": False, "status": 200, "reason": f"200 but missing expected: {missing}"})
     if any_of:
         forms = [a for a in any_of if a]
         if forms and not any(a.lower() in text for a in forms):
             tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
-            return {"ok": False, "status": 200, "reason": f"200 but data value not found (none of {forms}){tail}"}
+            return _fin({"ok": False, "status": 200, "reason": f"200 but data value not found (none of {forms}){tail}"})
     if name and not (_name_present(body, name) if fuzzy else name.lower() in text):
         tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
-        return {"ok": False, "status": 200, "reason": f"200 but name not found (fuzzy): {name!r}{tail}"}
+        return _fin({"ok": False, "status": 200, "reason": f"200 but name not found (fuzzy): {name!r}{tail}"})
     if stub and checking:
         # Matched inside a stub is not to be trusted either — surface it, don't silently pass.
-        return {"ok": True, "status": 200,
-                "reason": f"200 + content present, BUT body only {len(body.strip())} chars — verify against full text"}
-    return {"ok": True, "status": 200, "reason": "200 + expected content present" if checking else "200"}
+        return _fin({"ok": True, "status": 200,
+                "reason": f"200 + content present, BUT body only {len(body.strip())} chars — verify against full text"})
+    return _fin({"ok": True, "status": 200, "reason": "200 + expected content present" if checking else "200"})
 
 
 def surface_forms(value) -> list[str]:

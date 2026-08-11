@@ -110,7 +110,9 @@ def check_date_logic(df):
 def check_diameter(df):
     out = []
     for _, r in df.iterrows():
-        for d in N.parse_diameter_set(r.get("Diameter")):
+        # per-row DiameterUnits, not a bare inches assumption — otherwise every one of the
+        # ~1,500 mm-tagged gas rows (530 mm) reads as 530 in and trips the range check
+        for d in N.gem_diameter_set(r):
             if d < 2 or d > 60:
                 out.append({**_base(r), "Detail": f"diameter {d}in out of plausible range [2,60]"})
                 break

@@ -126,7 +126,9 @@ def gem_rows_for_country(df: pd.DataFrame, country: str):
                                     row.get("PipelineNetworkGrouping"), *other_names),
             status=str(row.get("Status") or "").strip().lower(),
             owner=str(row.get("Owner") or "").strip(),
-            diameter_set=N.parse_diameter_set(row.get("Diameter")),
+            # honours the row's own DiameterUnits — GEM tags mm vs in per row (see
+            # N.gem_diameter_set); a bare parse_diameter_set() read mm as inches
+            diameter_set=N.gem_diameter_set(row),
             length_km=_length_km(row),
             start_loc=N.normalize_name(row.get("StartLocation")),
             end_loc=N.normalize_name(row.get("EndLocation")),

@@ -127,6 +127,35 @@ def parse_diameter_set(s, units: str = "in") -> list[float]:
     return sorted(out)
 
 
+def gem_diameter_set(row) -> list[float]:
+    """GEM `Diameter` -> inches, honouring the row's OWN `DiameterUnits` column.
+
+    GEM stores diameter in whichever unit the source stated and tags the unit per row:
+    across GGIT gas 1,499 rows say `mm` and 1,669 say `in` (GOIT oil: 400 mm / 1,062 in).
+    So a bare `parse_diameter_set(row['Diameter'])` — which defaults to inches — silently
+    reads 530 mm as 530 INCHES. That was live in match.py and build_qc_workbook.py until
+    2026-08-11: it zeroed the diameter signal on ~45% of gas rows (42 of 44 Kazakhstan gas
+    rows are mm) and made check_diameter flag every mm row as out-of-range.
+
+    Do NOT use the sheet's `DiameterInMm` column instead: it is a formula that emits `--`
+    on multi-value rows ('700, 720, 820, 1000, 1020'), which is exactly the case the
+    multi-value parser exists for. When `DiameterUnits` is blank (5 gas rows), fall back on
+    magnitude — no real pipeline is 100 inches (2.54 m), so >=100 can only be millimetres.
+    """
+    raw = row.get("Diameter")
+    units = str(row.get("DiameterUnits") or "").strip().lower()
+    if units.startswith("mm"):
+        units = "mm"
+    elif units.startswith("cm"):
+        units = "cm"
+    elif units.startswith("in"):
+        units = "in"
+    else:
+        vals = parse_diameter_set(raw, "in")   # unconverted magnitudes
+        units = "mm" if vals and max(vals) >= 100 else "in"
+    return parse_diameter_set(raw, units)
+
+
 def parse_length_km(s, units: str = "km") -> float | None:
     """Attribute length -> km. Source 'length' may be miles (GulfPub oil) or km."""
     if s is None:
