@@ -1,0 +1,198 @@
+{
+  "project_id": "P0932",
+  "pipeline_name": "Kakinada-Vizag-Srikakulam Gas Pipeline",
+  "sheet_row": 492,
+  "wiki": "https://www.gem.wiki/Kakinada-Vizag-Srikakulam_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate action needed. Real, formally authorized, formally cancelled PNGRB common-carrier project -- not a phantom/GEM-only entity. Caveat only: PNGRB has since (Jan 2024) launched a brand-new suo-motu proposal for essentially the same Kakinada-Srikakulam corridor at a smaller 20 MMSCMD scale -- this is a distinct forward successor project, not P0932 under another name, so no merge/duplicate action against P0932 itself, but flag for whoever stages that successor project that its GEM article (a separate, already-existing gem.wiki page distinct from P0932's) should get its own ProjectID if it isn't already assigned one, rather than being confused with this cancelled row.",
+      "researcher_notes": "EXISTENCE: starting from the sheet's own wiki citations and verifying live: (1) PNGRB's official 'Natural Gas Pipeline Networks in India' register (pngrb.gov.in/data-bank/NGPL-for%20Website-1.11.16.pdf, Nov 2016 edition) lists this exact project under 'Pipelines Under Construction' -- row 25: 'Kakinada - Vizag - Srikakulam', entity 'Andhra Pradesh Gas Distribution Corp. Ltd.', length 391.0 km, capacity 90.000 MMSCMD, authorisation date 16.07.2014 (confirmed via pdftotext -- the URL 200s but the automated substring screen misses 'Kakinada', a known PDF-extraction false-negative per url_verifier.py's own documented caveats; I manually read the extracted text). (2) The Times of India, 2 Jul 2017 ('Piped gas project in Andhra Pradesh gains steam'), reports APGDC awarded a work order for the Kakinada-Visakhapatnam first phase, with the wider Kakinada-Srikakulam line under a live PNGRB authorisation. (3) Total Energy Informatics, 7 Aug 2015 (archived), reports APGDC -- a 50/50 JV of the Andhra Pradesh government and GAIL Gas Ltd -- had begun work on a 301-km Kakinada-Srikakulam line across East Godavari, Visakhapatnam, Vizianagaram and Srikakulam districts. (4) GAIL's own Nov 2022 press release on its Srikakulam-Angul pipeline explicitly references interconnecting at Srikakulam with 'Kakinada-Srikakulam Pipeline of Andhra Pradesh Gas Distribution Corporation (APGDC)' as a real, expected counterpart project. (5) DMS Universe, an independent commercial project-intelligence database, separately carries this project (391 km, 90 MMSCMD, APGDC). Five independent sources across 2015-2022, all agreeing this was a real, PNGRB-authorized, partially-tendered pipeline -- not fabricated. CANCELLATION: PNGRB's own public notice PN08012024.pdf (already the sheet's cited ref) states verbatim (confirmed by direct pdftotext read, since the automated screen's PDF extraction misses the relevant page): 'PNGRB vide letter dated 16.07.2014 authorized Andhra Pradesh Gas Distribution Corporation Limited for development of Kakinada-Srikakulam Natural Gas Pipeline (KSPL) ... the Board vide letter dated 01.12.2023 cancelled the authorization of the said pipeline due to various reasons.' This is a CONFIRMED cancellation (a regulator formally cancelling its own authorisation), not an inferred dormancy -- see status_reviews and the ShelvedCancelledType fix below. CLASSIFICATION: transmission is correct -- the notice itself describes the line connecting to GAIL's KG Basin Natural Gas Pipeline Network, PIL's East-West Natural Gas Pipeline, IMC's Kakinada-Vijaywada-Nellore pipeline, and GAIL's Srikakulam-Angul pipeline: an inter-network trunk line under PNGRB's NGPL common-carrier framework, not a gathering/distribution/CGD line. DUPLICATE CHECK vs roster: checked P3342 'Kakinada-Haldia Gas Pipeline' (same Kakinada origin, but continuing far past Srikakulam into West Bengal, and essentially unpopulated on the sheet -- len/dia/cap all blank). Route overlap at the Kakinada-Srikakulam segment is plausible if P3342 represents an early, vaguer conception of the same north-coastal grid before it was split into named sub-projects, but I found no source treating P3342 and P0932 as the same physical proposal, so I am not flagging a hard duplicate -- worth a cross-check when P3342 itself is audited. SUCCESSOR: gem.wiki independently carries a second, distinct page (article ID 134847, categorised 'Proposed Pipelines in India') titled 'Kakinada-Srikakulam Gas Pipeline' describing PNGRB's Jan 2024 suo-motu re-proposal at 20 MMSCMD, status 'Proposed' -- this is a genuinely new/different entity (smaller design capacity, no sponsor yet named, restarted from scratch), not P0932 relabelled, so P0932's cancellation stands as a real closure of the old authorisation rather than a name change. (Read only for context/leads -- not cited per standing rule 1.)"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix the swapped/truncated Start location fields: StartPrefecture/District is currently 'Andhra' (truncated, and a state name in the wrong field) and StartState/Province is currently 'East Godavari' (a district name in the wrong field). They should be StartPrefecture/District='East Godavari' and StartState/Province='Andhra Pradesh', matching the (correct) End columns' pattern (EndState/Province='Andhra Pradesh').",
+      "researcher_notes": "Kakinada sits in East Godavari district, Andhra Pradesh state -- confirmed explicitly by the Total Energy Informatics 2015 article ('spread over the four north coastal districts of East Godavari, Visakhapatnam, Vizianagaram and Srikakulam', all within Andhra Pradesh) and consistent with every other source read (PNGRB notice, ToI, DMS Universe, GAIL release), none of which places any part of this route outside Andhra Pradesh. The sheet's StartPrefecture/District='Andhra' / StartState/Province='East Godavari' pair has the district and state values swapped into each other's columns, with the state value additionally truncated ('Andhra' instead of 'Andhra Pradesh'). This worklist unit was already flagged 'irregular':true, which is consistent with this being a genuine data-entry defect rather than noise. Corrected values are staged in the Location fill below."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct LengthKnown from 275 km to 391 km. Correct CancelledYear from 2024 to 2023.",
+      "researcher_notes": "LENGTH: two independent sources, both giving the exact same figure, disagree with the sheet's 275 km. PNGRB's own official pipeline register (pngrb.gov.in/data-bank/NGPL-for%20Website-1.11.16.pdf, Nov 2016 -- the regulator's own authorisation record, pdftotext-confirmed row: 'Kakinada - Vizag - Srikakulam ... 391.0 90.000 16.07.2014') and DMS Universe (an independent commercial project-intelligence database, url_verifier OK on tokens '391' and '90': 'Natural Gas Pipeline from Kakinada to Srikakulam via Visakhapatnam at a length of 391 kilometers ... capacity ... 90 ... MMSCMD') both state 391 km. No source anywhere -- including the sheet's own cited wiki references -- gives 275 km; the closest independent figures are earlier press estimates of 301 km (Total Energy Informatics, 2015) and a probable 309-km figure in a 2017 ToI article (likely referring to the same whole-corridor total, garbled in that article's phrasing), both of which are closer to 391 than to 275 and plausibly reflect an earlier, less-refined route estimate before the final 391-km authorised alignment. This is a material (42%) disagreement and 275 km should not stand uncorrected. CANCELLED YEAR: the sheet's own cited ref, PN08012024.pdf, is dated 8 January 2024 and describes the cancellation in the past tense: 'the Board vide letter dated 01.12.2023 cancelled the authorization' -- the actual cancellation action is dated 1 December 2023, not 2024. 2024 is the date of the follow-up public notice announcing the re-bid process, not the cancellation itself. Recommend CancelledYear=2023, same source, corrected reading."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf",
+        "https://www.dmsuniverse.com/projects/india/apgdc-kakinada-visakhapatnam-srikakulam-natural-gas-pipeline"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.dmsuniverse.com/projects/india/apgdc-kakinada-visakhapatnam-srikakulam-natural-gas-pipeline", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PN08012024.pdf repeatedly calls it a 'Natural Gas pipeline' (pdftotext-confirmed; the automated substring screen fails on this PDF for unrelated tokens too -- see validity notes). DMS Universe independently: 'planning to construct Natural Gas Pipeline from Kakinada to Srikakulam'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf",
+        "https://www.gailonline.com/PressRelease12112022.html"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.gailonline.com/PressRelease12112022.html", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No source uses the literal word 'transmission', but PN08012024.pdf (pdftotext-confirmed) describes the line interconnecting with GAIL's KG Basin Natural Gas Pipeline Network, PIL's East-West Natural Gas Pipeline, IMC's Kakinada-Vijaywada-Nellore pipeline, and GAIL's Srikakulam-Angul pipeline; GAIL's own press release independently corroborates the Srikakulam interconnection with 'Kakinada-Srikakulam Pipeline of Andhra Pradesh Gas Distribution Corporation (APGDC)' as part of the strategic National Gas Grid. Unambiguously an inter-network trunk line, not gathering/distribution/CGD -- classification correct."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "90.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "90.00",
+      "proposed_refs": [
+        "https://www.dmsuniverse.com/projects/india/apgdc-kakinada-visakhapatnam-srikakulam-natural-gas-pipeline",
+        "https://www.pngrb.gov.in/data-bank/NGPL-for%20Website-1.11.16.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.dmsuniverse.com/projects/india/apgdc-kakinada-visakhapatnam-srikakulam-natural-gas-pipeline", "ok": true, "contains_value": true},
+        {"url": "https://www.pngrb.gov.in/data-bank/NGPL-for%20Website-1.11.16.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both independent sources give exactly 90 MMSCMD, matching GEM precisely: DMS Universe ('capacity of the project is at 90 Million Metric Standard Cubic Meter Per Day (MMSCMD)', url_verifier OK) and PNGRB's own 2016 authorisation register (row: 'Kakinada - Vizag - Srikakulam ... 391.0 90.000 ...', pdftotext-confirmed; automated screen misses 'Kakinada' on this PDF, a known extraction limitation, manually verified)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Kakinada", "StartPrefecture/District": "East Godavari", "StartState/Province": "Andhra Pradesh", "StartCountryOrArea": "India", "EndLocation": "Srikakulam", "EndState/Province": "Andhra Pradesh", "EndCountryOrArea": "India"},
+      "primary_value": "Kakinada",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf",
+        "https://web.archive.org/web/20190421122547/http://www.theenergyinfo.com/news_detail.php?news=ktXHj8g7iWs8Ttw1kJs7itI9jtwx"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf", "ok": true, "contains_value": false},
+        {"url": "https://web.archive.org/web/20190421122547/http://www.theenergyinfo.com/news_detail.php?news=ktXHj8g7iWs8Ttw1kJs7itI9jtwx", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PN08012024.pdf (pdftotext-confirmed) gives the route Kakinada-Pithapuram-Anakapalle-Vizianagaram-Srikakulam, terminating at Srikakulam. Total Energy Informatics 2015 (url_verifier OK on 'East Godavari'/'Srikakulam') independently names the four districts crossed: East Godavari, Visakhapatnam, Vizianagaram, Srikakulam, all in Andhra Pradesh. StartLocation/EndLocation/CountryOrArea were already correct; StartPrefecture/District and StartState/Province are CORRECTED here from the sheet's swapped/truncated values (see the attribution concern in validity) to East Godavari / Andhra Pradesh respectively."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "oo_sheet_row": 817,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Andhra Pradesh Gas Distribution Corp Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Andhra Pradesh Gas Distribution Corp Ltd",
+      "proposed_refs": [
+        "https://timesofindia.indiatimes.com/city/vijayawada/piped-gas-project-in-andhra-pradesh-gains-steam/articleshow/59408667.cms",
+        "https://www.gailonline.com/PressRelease12112022.html"
+      ],
+      "verifications": [
+        {"url": "https://timesofindia.indiatimes.com/city/vijayawada/piped-gas-project-in-andhra-pradesh-gains-steam/articleshow/59408667.cms", "ok": true, "contains_value": true},
+        {"url": "https://www.gailonline.com/PressRelease12112022.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ToI 2017: 'APGDC has been authorised by the Petroleum and Natural Gas Regulatory Board (PNGRB) to lay, build and operate natural gas pipeline from Kakinada to Srikakulam.' GAIL's own Nov 2022 press release independently: 'Kakinada-Srikakulam Pipeline of Andhra Pradesh Gas Distribution Corporation (APGDC)'. No co-sponsor is ever mentioned across any of the five sources read (PNGRB register, ToI, Total Energy Informatics, GAIL release, DMS Universe) -- 100% APGDC ownership confirmed. (APGDC is itself a 50/50 JV of the Andhra Pradesh government and GAIL Gas Ltd per Total Energy Informatics, but the GEM Owner column records the JV entity itself, consistent with the sheet's existing convention.)"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2018"},
+      "primary_value": "2018",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not independently pin the exact year construction began. Total Energy Informatics (Aug 2015) claims APGDC had 'already started works' on this line, but that reads as an early/administrative claim rather than physical groundbreaking. The Times of India (Jul 2017) reports the actual construction work order for the first phase (Kakinada-Visakhapatnam) was issued only in July 2017, with physical works 'expected to begin' in August 2017 and the Visakhapatnam-Srikakulam phase to follow later -- consistent with, but not literally naming, a 2018 start for later phases. No source states '2018' explicitly, so I am not fabricating a citation for it; the existing 2018 value is plausible given the 2017 work-order timeline but unconfirmed -- left as an open gap rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "275.00", "LengthKnownUnits": "km"},
+      "primary_value": "275.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cannot source 275 km -- no source found anywhere states this figure. Two independent sources (PNGRB's own 2016 authorisation register and DMS Universe) both give 391 km instead; two older press estimates (2015: 301 km; 2017 ToI: likely 309 km) are also closer to 391 than to 275. Not filling a ref for the current value; see the spec concern in validity recommending correction to 391 km."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 492,
+      "current_status": "cancelled",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {
+        "ShelvedCancelledType": "confirmed",
+        "CancelledYear": "2023"
+      },
+      "evidence_date": "2024-01",
+      "staleness_rule": "",
+      "proposed_refs": ["https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf"],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN08012024.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is a CONFIRMED cancellation, not a dormancy inference -- closing one of the 8 blank-ShelvedCancelledType rows in this cluster. The sheet's own cited ref, PN08012024.pdf, states verbatim (pdftotext-confirmed; the automated content screen misses this PDF's text for 'cancelled'/'Kakinada'/'01.12.2023' -- a documented false-negative for this extractor on this file, not a content problem, since the URL 200s and the manually-extracted text plainly contains all three): 'PNGRB vide letter dated 16.07.2014 authorized Andhra Pradesh Gas Distribution Corporation Limited for development of Kakinada-Srikakulam Natural Gas Pipeline (KSPL) ... the Board vide letter dated 01.12.2023 cancelled the authorization of the said pipeline due to various reasons.' So: (1) ShelvedCancelledType should be set to 'confirmed', not left blank -- a regulator explicitly cancelled its own authorisation, the textbook 'confirmed' case; no fabricated URL needed, the sheet's existing ref already supports it once actually read. (2) The cancellation action itself is dated 1 December 2023, not 2024 -- 2024 is only the date of this follow-up public notice (which announces a new suo-motu re-bid process for the same corridor at a smaller 20 MMSCMD scale, per PNGRB's own text and independently corroborated by a separate, distinct gem.wiki page for that successor 'Proposed' project -- read for context only, not cited). Recommend CancelledYear=2023. Searched for any newer evidence that might reopen or reverse this: none found; PNGRB's subsequent activity on this corridor (the Jan 2024 notice, and later 2024-2025 NGPL registers/MIS reports) is entirely about the NEW post-cancellation proposal, never about reviving the old APGDC authorisation, so 'cancelled' remains the correct status for this specific row (P0932) and is not stale/superseded -- it is a closed, dated, sourced fact."
+    }
+  ],
+  "summary": "P0932 (Kakinada-Vizag-Srikakulam Gas Pipeline) is real and correctly cancelled -- CONFIRMED (not inferred) via the sheet's own PN08012024.pdf, which on direct read states PNGRB cancelled APGDC's 16.07.2014 authorization by letter dated 01.12.2023; staged ShelvedCancelledType=confirmed and CancelledYear fix 2024->2023, plus concerns: Length should be 391 km not 275 km (2 independent sources agree exactly), and StartPrefecture/District & StartState/Province are swapped/truncated (should be East Godavari / Andhra Pradesh). Fuel/PipelineType/Capacity/Location/Owner refs added; ConstructionYear left UNRESOLVED (no source pins 2018 specifically)."
+}

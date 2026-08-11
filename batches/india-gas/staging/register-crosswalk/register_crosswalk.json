@@ -1,0 +1,2409 @@
+{
+  "meta": {
+    "country": "India",
+    "commodity": "gas",
+    "mode": "register-crosswalk",
+    "csv": "GGIT_gas_snapshot_20260810.csv",
+    "source": {
+      "name": "PNGRB MIS Report: NGPL \u2014 Physical Progress Report of Natural Gas Pipeline, May 2026 (line-wise authorised common-carrier register)",
+      "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+      "table": "PHYSICAL PROGRESS REPORT OF NATURAL GAS PIPELINE (NGPL)",
+      "printed_page": 2,
+      "report_month": "May 2026",
+      "coverage": "common-carrier NGPL only; dedicated and tie-in lines are in the grand totals but not itemised",
+      "control": "parsed section totals reconcile to the report's own printed totals; see reconciliation in pngrb_ngpl_mis.json",
+      "settles": [
+        "authorised/operating/under-construction length",
+        "authorised + design capacity (MMSCMD)",
+        "authorisation date",
+        "target completion",
+        "operating-vs-under-construction split"
+      ],
+      "does_not_settle": [
+        "diameter (absent from the table)",
+        "commissioning year (authorisation date is not first gas)"
+      ]
+    },
+    "n_register_rows": 37,
+    "n_gem_rows": 71,
+    "tolerances": {
+      "capacity_mmscmd": 0.06,
+      "length_km": 1.0
+    }
+  },
+  "register_rows": [
+    {
+      "section": "operational",
+      "sno": 1,
+      "register_name": "Assam Regional Network",
+      "entity": "GAIL",
+      "authorisation_date": "04.11.2009",
+      "target_completion": "-",
+      "authorised_length_km": 8.0,
+      "operating_length_km": 8.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 2.5,
+      "relation": "NOT_IN_GEM",
+      "project_ids": [],
+      "note": "GAIL's own 8 km 'Assam Regional Network'. NAMING TRAP: this is NOT GEM's P0906 'Assam Regional Gas Network' \u2014 that row is AGCL's 105 km network and matches register #17 'Assam Natural Gas Pipeline' on length, capacity and owner. Two different assets whose names nearly collide. 8 km, low priority, unverified.",
+      "gem": []
+    },
+    {
+      "section": "operational",
+      "sno": 2,
+      "register_name": "Cauvery Basin Network",
+      "entity": "GAIL",
+      "authorisation_date": "04.11.2009",
+      "target_completion": "-",
+      "authorised_length_km": 240.0,
+      "operating_length_km": 242.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 4.3,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0911"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0911",
+          "sheet_row": 473,
+          "name": "Cauvery Basin Gas Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 4.33,
+            "register_mmscmd": 4.3,
+            "delta": 0.03,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 242.55,
+            "matched_against": "operating",
+            "register_km": 242.0,
+            "delta": 0.55,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 3,
+      "register_name": "Hazira-Vijaipur-Jagdishpur -GREP -Dahej-Vijaipur HVJ/VDPL Dadri",
+      "entity": "GAIL",
+      "authorisation_date": "19.04.2010",
+      "target_completion": "-",
+      "authorised_length_km": 6169.0,
+      "operating_length_km": 6732.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 111.3,
+      "relation": "COMPOSITE_SYSTEM",
+      "project_ids": [
+        "P0925",
+        "P0919",
+        "P3298",
+        "P3297",
+        "P3299"
+      ],
+      "note": "PNGRB authorises HVJ + DVPL + GREP + VDPL as ONE asset (register snos 3+4 are a merged cell carrying one set of numbers). GEM splits it into HVJ (P0925), DVPL-I (P0919), DVPL-II (P3298), GREP-I (P3297) and GREP-II (P3299). Granularity, not error \u2014 do not propose collapsing GEM's rows. Note all five GEM rows carry the SAME Capacity (107 MMSCMD), i.e. the system total repeated, which is its own question.",
+      "gem": [
+        {
+          "project_id": "P0925",
+          "sheet_row": 485,
+          "name": "Hazira-Vijaipur-Jagdishpur (HVJ) Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 107.0,
+            "register_mmscmd": 111.3,
+            "delta": -4.3,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 2887.0,
+            "matched_against": "authorised",
+            "register_km": 6169.0,
+            "delta": -3282.0,
+            "supported": false
+          }
+        },
+        {
+          "project_id": "P0919",
+          "sheet_row": 479,
+          "name": "Dahej-Vijaipur Gas Pipeline (DVPL-I)",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 107.0,
+            "register_mmscmd": 111.3,
+            "delta": -4.3,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 770.0,
+            "matched_against": "authorised",
+            "register_km": 6169.0,
+            "delta": -5399.0,
+            "supported": false
+          }
+        },
+        {
+          "project_id": "P3298",
+          "sheet_row": 1733,
+          "name": "Dahej-Vijaipur Pipeline (DVPL-II)",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 107.0,
+            "register_mmscmd": 111.3,
+            "delta": -4.3,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 610.0,
+            "matched_against": "authorised",
+            "register_km": 6169.0,
+            "delta": -5559.0,
+            "supported": false
+          }
+        },
+        {
+          "project_id": "P3297",
+          "sheet_row": 1732,
+          "name": "Vijaipur-Dadri Gas Pipeline (GREP-I)",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 107.0,
+            "register_mmscmd": 111.3,
+            "delta": -4.3,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 505.0,
+            "matched_against": "authorised",
+            "register_km": 6169.0,
+            "delta": -5664.0,
+            "supported": false
+          }
+        },
+        {
+          "project_id": "P3299",
+          "sheet_row": 1734,
+          "name": "Vijaipur-Dadri Gas Pipeline (GREP-II)",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 107.0,
+            "register_mmscmd": 111.3,
+            "delta": -4.3,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 505.0,
+            "matched_against": "authorised",
+            "register_km": 6169.0,
+            "delta": -5664.0,
+            "supported": false
+          }
+        }
+      ],
+      "gem_length_sum_km": 5277.0,
+      "sum_vs_authorised_delta": -892.0
+    },
+    {
+      "section": "operational",
+      "sno": 4,
+      "register_name": "Dahej-Vijaipur (DVPL)-Vijaipur-Dadri (GREP) Upgd. DVPL 2 & VDPL",
+      "entity": "",
+      "authorisation_date": "14.02.2011",
+      "target_completion": "-",
+      "authorised_length_km": 6169.0,
+      "operating_length_km": 6732.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 111.3,
+      "relation": "COMPOSITE_CONT",
+      "project_ids": [],
+      "note": "Continuation of register #3's merged cell; carries no independent numbers of its own.",
+      "gem": []
+    },
+    {
+      "section": "operational",
+      "sno": 5,
+      "register_name": "Kakinada-Hyderabad-Uran-Ahmedabad (East West Pipeline)",
+      "entity": "PIL",
+      "authorisation_date": "21.06.2019",
+      "target_completion": "-",
+      "authorised_length_km": 1459.0,
+      "operating_length_km": 1485.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 85.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0920"
+      ],
+      "note": "Register entity 'PIL' = Pipeline Infrastructure Ltd, held by GEM's recorded owner India Infrastructure Trust. Consistent.",
+      "gem": [
+        {
+          "project_id": "P0920",
+          "sheet_row": 480,
+          "name": "East West Gas Pipeline (India)",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 85.0,
+            "register_mmscmd": 85.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 1375.0,
+            "matched_against": "authorised",
+            "register_km": 1459.0,
+            "delta": -84.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 6,
+      "register_name": "Dahej-Uran-Panvel-Dabhol",
+      "entity": "GAIL",
+      "authorisation_date": "10.05.2010",
+      "target_completion": "-",
+      "authorised_length_km": 920.0,
+      "operating_length_km": 943.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 22.5,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P2212"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P2212",
+          "sheet_row": 1138,
+          "name": "Dahej-Uran-Panvel-Dhabhol Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 19.9,
+            "register_mmscmd": 22.5,
+            "delta": -2.6,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 815.0,
+            "matched_against": "authorised",
+            "register_km": 920.0,
+            "delta": -105.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 7,
+      "register_name": "KG Basin Network",
+      "entity": "GAIL",
+      "authorisation_date": "12.05.2010",
+      "target_completion": "-",
+      "authorised_length_km": 878.0,
+      "operating_length_km": 867.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 16.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0933"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0933",
+          "sheet_row": 493,
+          "name": "KG Basin Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 16.0,
+            "register_mmscmd": 16.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 877.86,
+            "matched_against": "authorised",
+            "register_km": 878.0,
+            "delta": -0.14,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 8,
+      "register_name": "Gujarat Regional Network",
+      "entity": "GAIL",
+      "authorisation_date": "03.12.2010",
+      "target_completion": "-",
+      "authorised_length_km": 609.0,
+      "operating_length_km": 585.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 8.3,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0923"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0923",
+          "sheet_row": 483,
+          "name": "Gujarat Regional Gas Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 8.31,
+            "register_mmscmd": 8.3,
+            "delta": 0.01,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 608.82,
+            "matched_against": "authorised",
+            "register_km": 609.0,
+            "delta": -0.18,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 9,
+      "register_name": "Agartala Regional Network",
+      "entity": "GAIL",
+      "authorisation_date": "13.12.2010",
+      "target_completion": "-",
+      "authorised_length_km": 55.0,
+      "operating_length_km": 65.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 2.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0904"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0904",
+          "sheet_row": 468,
+          "name": "Agartala Regional Gas Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 2.0,
+            "register_mmscmd": 2.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 55.0,
+            "matched_against": "authorised",
+            "register_km": 55.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 10,
+      "register_name": "Dadri-Panipat",
+      "entity": "IOCL",
+      "authorisation_date": "05.01.2011",
+      "target_completion": "-",
+      "authorised_length_km": 132.0,
+      "operating_length_km": 143.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 20.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0917"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0917",
+          "sheet_row": 478,
+          "name": "Dadri-Panipat Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 20.0,
+            "register_mmscmd": 20.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 132.0,
+            "matched_against": "authorised",
+            "register_km": 132.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 11,
+      "register_name": "Mumbai Regional Network",
+      "entity": "GAIL",
+      "authorisation_date": "14.03.2011",
+      "target_completion": "-",
+      "authorised_length_km": 129.0,
+      "operating_length_km": 125.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 7.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0943"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0943",
+          "sheet_row": 500,
+          "name": "Mumbai Regional Natural Gas Pipeline Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 7.04,
+            "register_mmscmd": 7.0,
+            "delta": 0.04,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 128.68,
+            "matched_against": "authorised",
+            "register_km": 129.0,
+            "delta": -0.32,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 12,
+      "register_name": "Uran-Trombay",
+      "entity": "ONGC",
+      "authorisation_date": "03.05.2011",
+      "target_completion": "-",
+      "authorised_length_km": 24.0,
+      "operating_length_km": 24.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 6.0,
+      "relation": "NOT_IN_GEM",
+      "project_ids": [],
+      "note": "Uran-Trombay, ONGC, 24 km / 6.0 MMSCMD. VERIFIED RECOMMEND_ADD: PNGRB tariff order TO/2022-23/06 and ONGC's Schedule-1 filing both give 24 km / 20 in, current line commissioned 30.05.2008 replacing a 1978-79 18-inch original; APTEL Appeal 110/2020 independently names ONGC as owner-operator. Distinct from GEM's P0926 (Heera-Uran) and P0944 (Mumbai-Uran) offshore feeders \u2014 those run field-to-Uran, this runs Uran-to-Trombay.",
+      "gem": []
+    },
+    {
+      "section": "operational",
+      "sno": 13,
+      "register_name": "High Pressure Gujarat Gas Grid",
+      "entity": "GSPL",
+      "authorisation_date": "27.07.2012",
+      "target_completion": "-",
+      "authorised_length_km": 2860.0,
+      "operating_length_km": 2748.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 44.8,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0927"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0927",
+          "sheet_row": 487,
+          "name": "High Pressure Gujarat Gas Grid Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 31.0,
+            "register_mmscmd": 44.8,
+            "delta": -13.8,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 2207.0,
+            "matched_against": "operating",
+            "register_km": 2748.0,
+            "delta": -541.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 14,
+      "register_name": "Hazira-Ankleshwar",
+      "entity": "GGL",
+      "authorisation_date": "05.07.2012",
+      "target_completion": "-",
+      "authorised_length_km": 73.0,
+      "operating_length_km": 73.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 5.1,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0924"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0924",
+          "sheet_row": 484,
+          "name": "Hazira-Ankleshwar Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 5.06,
+            "register_mmscmd": 5.1,
+            "delta": -0.04,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 73.2,
+            "matched_against": "authorised",
+            "register_km": 73.0,
+            "delta": 0.2,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 15,
+      "register_name": "Low Pressure Gujarat Gas Grid",
+      "entity": "GSPL",
+      "authorisation_date": "19.03.2013",
+      "target_completion": "-",
+      "authorised_length_km": 58.0,
+      "operating_length_km": 57.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 12.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0937"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0937",
+          "sheet_row": 497,
+          "name": "Low Pressure Gujarat Gas Grid Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 12.0,
+            "register_mmscmd": 12.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 58.0,
+            "matched_against": "authorised",
+            "register_km": 58.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 16,
+      "register_name": "Shahdol-Phulpur",
+      "entity": "RGPL",
+      "authorisation_date": "11.07.2013",
+      "target_completion": "-",
+      "authorised_length_km": 312.0,
+      "operating_length_km": 304.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 3.5,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0953"
+      ],
+      "note": "Register entity 'RGPL' = Reliance Gas Pipelines Ltd, consistent with GEM's recorded owner Reliance Industries.",
+      "gem": [
+        {
+          "project_id": "P0953",
+          "sheet_row": 502,
+          "name": "Shahdol-Phulpur Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 3.5,
+            "register_mmscmd": 3.5,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 312.0,
+            "matched_against": "authorised",
+            "register_km": 312.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 17,
+      "register_name": "Assam Natural Gas Pipeline",
+      "entity": "AGCL",
+      "authorisation_date": "20.12.2013",
+      "target_completion": "-",
+      "authorised_length_km": 105.0,
+      "operating_length_km": 107.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 2.4,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0906"
+      ],
+      "note": "Register name 'Assam Natural Gas Pipeline' vs GEM 'Assam Regional Gas Network'; AGCL owner, length and capacity all agree, so this is the same asset under another name -> OtherEnglishNames candidate. See the naming trap on register #1.",
+      "gem": [
+        {
+          "project_id": "P0906",
+          "sheet_row": 470,
+          "name": "Assam Regional Gas Network",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 2.43,
+            "register_mmscmd": 2.4,
+            "delta": 0.03,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 104.73,
+            "matched_against": "authorised",
+            "register_km": 105.0,
+            "delta": -0.27,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 18,
+      "register_name": "Dukli \u2013 Maharajganj",
+      "entity": "GAIL",
+      "authorisation_date": "09.01.2014",
+      "target_completion": "-",
+      "authorised_length_km": 5.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 0.1,
+      "relation": "NOT_IN_GEM",
+      "project_ids": [],
+      "note": "Dukli-Maharajganj, GAIL, 5 km authorised with 0 km operating and 0.1 MMSCMD. Authorised but unbuilt; below any sensible tracking threshold and unverified. Recorded for completeness, not recommended for add.",
+      "gem": []
+    },
+    {
+      "section": "operational",
+      "sno": 19,
+      "register_name": "Uran-Taloja",
+      "entity": "DFPCL",
+      "authorisation_date": "21.10.2014",
+      "target_completion": "-",
+      "authorised_length_km": 42.0,
+      "operating_length_km": 42.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 0.7,
+      "relation": "NOT_IN_GEM",
+      "project_ids": [],
+      "note": "Uran-Taloja, DFPCL, 42 km / 0.7 MMSCMD. VERIFIED RECOMMEND_ADD: PNGRB authorisation letter Infra/PL/Exis/17/UTPL/DFPCL/01/14 (21.10.2014) gives 42 km, 10 in, and states the line was commissioned in 1983 \u2014 the 2014 date is a common-carrier formalisation of a pre-existing asset, not a build date. DFPCL's own investor material independently describes 'its own 43 km gas pipeline from the coastal fall point Uran to its plant located at Taloja'.",
+      "gem": []
+    },
+    {
+      "section": "operational",
+      "sno": 20,
+      "register_name": "Chainsa-Jhajjar-Hissar",
+      "entity": "GAIL",
+      "authorisation_date": "13.12.2010",
+      "target_completion": "-",
+      "authorised_length_km": 455.0,
+      "operating_length_km": 440.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 35.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0912"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0912",
+          "sheet_row": 474,
+          "name": "Chainsa-Jhajjar-Hissar Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 35.0,
+            "register_mmscmd": 35.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 455.0,
+            "matched_against": "authorised",
+            "register_km": 455.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 21,
+      "register_name": "Dadri-Bawana-Nangal",
+      "entity": "GAIL",
+      "authorisation_date": "15.02.2011",
+      "target_completion": "-",
+      "authorised_length_km": 921.0,
+      "operating_length_km": 998.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 31.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0916"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0916",
+          "sheet_row": 477,
+          "name": "Dadri-Bawana-Nangal Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 31.0,
+            "register_mmscmd": 31.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 886.0,
+            "matched_against": "authorised",
+            "register_km": 921.0,
+            "delta": -35.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "operational",
+      "sno": 22,
+      "register_name": "Mumbai-Nagpur-Jharsuguda",
+      "entity": "GAIL",
+      "authorisation_date": "15.05.2020",
+      "target_completion": "-",
+      "authorised_length_km": 1755.0,
+      "operating_length_km": 1707.0,
+      "under_construction_length_km": null,
+      "authorised_capacity_mmscmd": 16.5,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P2216"
+      ],
+      "note": "STATUS CONFLICT. The regulator files Mumbai-Nagpur-Jharsuguda under OPERATIONAL with 1,707 of 1,755 km operating; GEM still has it as construction.",
+      "gem": [
+        {
+          "project_id": "P2216",
+          "sheet_row": 1142,
+          "name": "Mumbai-Nagpur-Jharsuguda Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 16.5,
+            "register_mmscmd": 16.5,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 1755.0,
+            "matched_against": "authorised",
+            "register_km": 1755.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 1,
+      "register_name": "Mehsana -Bhatinda",
+      "entity": "GIGL",
+      "authorisation_date": "07.07.2011",
+      "target_completion": "Jun-26",
+      "authorised_length_km": 1943.0,
+      "operating_length_km": 1339.0,
+      "under_construction_length_km": 604.0,
+      "authorised_capacity_mmscmd": 83.1,
+      "relation": "PHASED_PAIR",
+      "project_ids": [
+        "P0941",
+        "P5411"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0941",
+          "sheet_row": 499,
+          "name": "Mehsana-Bhatinda Gas Pipeline",
+          "segment": "Phase I",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 80.11,
+            "register_mmscmd": 83.1,
+            "delta": -2.99,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 1177.0,
+            "matched_against": "operating",
+            "register_km": 1339.0,
+            "delta": -162.0,
+            "supported": false
+          }
+        },
+        {
+          "project_id": "P5411",
+          "sheet_row": 3005,
+          "name": "Mehsana-Bhatinda Gas Pipeline",
+          "segment": "Phase II",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 80.11,
+            "register_mmscmd": 83.1,
+            "delta": -2.99,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 763.0,
+            "matched_against": "under_construction",
+            "register_km": 604.0,
+            "delta": 159.0,
+            "supported": false
+          }
+        }
+      ],
+      "gem_length_sum_km": 1940.0,
+      "sum_vs_authorised_delta": -3.0
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 2,
+      "register_name": "Bhatinda -Gurdaspur",
+      "entity": "GIGL",
+      "authorisation_date": "07.07.2011",
+      "target_completion": "Dec-24",
+      "authorised_length_km": 261.0,
+      "operating_length_km": 101.0,
+      "under_construction_length_km": 160.0,
+      "authorised_capacity_mmscmd": 42.4,
+      "relation": "PHASED_PAIR",
+      "project_ids": [
+        "P5533",
+        "P3913"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P5533",
+          "sheet_row": 3056,
+          "name": "Bhatinda-Gurdaspur Gas Pipeline",
+          "segment": "Phase I",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 42.42,
+            "register_mmscmd": 42.4,
+            "delta": 0.02,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 102.0,
+            "matched_against": "operating",
+            "register_km": 101.0,
+            "delta": 1.0,
+            "supported": true
+          }
+        },
+        {
+          "project_id": "P3913",
+          "sheet_row": 1928,
+          "name": "Bhatinda-Gurdaspur Gas Pipeline",
+          "segment": "Phase II",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 42.42,
+            "register_mmscmd": 42.4,
+            "delta": 0.02,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 290.0,
+            "matched_against": "authorised",
+            "register_km": 261.0,
+            "delta": 29.0,
+            "supported": false
+          }
+        }
+      ],
+      "gem_length_sum_km": 392.0,
+      "sum_vs_authorised_delta": 131.0
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 3,
+      "register_name": "Mallavaram -Bhopal -Bhilwara -Vijaipur",
+      "entity": "GITL",
+      "authorisation_date": "07.07.2011",
+      "target_completion": "Mar-20",
+      "authorised_length_km": 1881.0,
+      "operating_length_km": 365.0,
+      "under_construction_length_km": 1517.0,
+      "authorised_capacity_mmscmd": 78.3,
+      "relation": "PHASED_PAIR",
+      "project_ids": [
+        "P0938",
+        "P3602"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0938",
+          "sheet_row": 498,
+          "name": "Mallavaram-Bhopal-Bhilwara-Vijaipur Gas Pipeline",
+          "segment": "Phase I",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 78.25,
+            "register_mmscmd": 78.3,
+            "delta": -0.05,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 365.0,
+            "matched_against": "operating",
+            "register_km": 365.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        },
+        {
+          "project_id": "P3602",
+          "sheet_row": 1832,
+          "name": "Mallavaram-Bhopal-Bhilwara-Vijaipur Gas Pipeline",
+          "segment": "Phase II",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 78.25,
+            "register_mmscmd": 78.3,
+            "delta": -0.05,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 1517.0,
+            "matched_against": "under_construction",
+            "register_km": 1517.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ],
+      "gem_length_sum_km": 1882.0,
+      "sum_vs_authorised_delta": 1.0
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 4,
+      "register_name": "Dabhol-Bangalore",
+      "entity": "GAIL",
+      "authorisation_date": "14.11.2011",
+      "target_completion": "Feb-13",
+      "authorised_length_km": 1414.0,
+      "operating_length_km": 1182.0,
+      "under_construction_length_km": 232.0,
+      "authorised_capacity_mmscmd": 16.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0915"
+      ],
+      "note": "GEM carries Dabhol-Bangalore as a single operating row, but the regulator still shows 232 km under construction against a Feb-2013 target \u2014 the longest-lapsed target in the register.",
+      "gem": [
+        {
+          "project_id": "P0915",
+          "sheet_row": 476,
+          "name": "Dabhol-Bangalore Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 16.0,
+            "register_mmscmd": 16.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 1386.0,
+            "matched_against": "authorised",
+            "register_km": 1414.0,
+            "delta": -28.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 5,
+      "register_name": "Kochi-Koottanad-Bangalore-Mangalore",
+      "entity": "GAIL",
+      "authorisation_date": "31.05.2012",
+      "target_completion": "Dec-25",
+      "authorised_length_km": 1104.0,
+      "operating_length_km": 675.0,
+      "under_construction_length_km": 429.0,
+      "authorised_capacity_mmscmd": 16.0,
+      "relation": "PHASED_PAIR",
+      "project_ids": [
+        "P0934",
+        "P2746"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0934",
+          "sheet_row": 494,
+          "name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+          "segment": "Phase I",
+          "status": "operating",
+          "capacity": {
+            "sheet_mmscmd": 16.0,
+            "register_mmscmd": 16.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 44.0,
+            "matched_against": "under_construction",
+            "register_km": 429.0,
+            "delta": -385.0,
+            "supported": false
+          }
+        },
+        {
+          "project_id": "P2746",
+          "sheet_row": 1405,
+          "name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+          "segment": "Phase II",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 16.0,
+            "register_mmscmd": 16.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 1060.0,
+            "matched_against": "authorised",
+            "register_km": 1104.0,
+            "delta": -44.0,
+            "supported": false
+          }
+        }
+      ],
+      "gem_length_sum_km": 1104.0,
+      "sum_vs_authorised_delta": 0.0
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 6,
+      "register_name": "Ennore-Tuticorin",
+      "entity": "IOCL",
+      "authorisation_date": "10.12.2015",
+      "target_completion": "Mar-25",
+      "authorised_length_km": 1431.0,
+      "operating_length_km": 1121.0,
+      "under_construction_length_km": 310.0,
+      "authorised_capacity_mmscmd": 84.7,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0922"
+      ],
+      "note": "Register shows 1,121 of 1,431 km operating; GEM has the whole line as construction.",
+      "gem": [
+        {
+          "project_id": "P0922",
+          "sheet_row": 482,
+          "name": "Ennore-Tuticorn-Bengalaru Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 84.67,
+            "register_mmscmd": 84.7,
+            "delta": -0.03,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 1431.0,
+            "matched_against": "authorised",
+            "register_km": 1431.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 7,
+      "register_name": "Jagdishpur-Haldia-Bokaro Dhamra-Paradip-Barauni-Guwahati",
+      "entity": "GAIL",
+      "authorisation_date": "29.01.2018",
+      "target_completion": "Dec-25",
+      "authorised_length_km": 3546.0,
+      "operating_length_km": 3289.0,
+      "under_construction_length_km": 257.0,
+      "authorised_capacity_mmscmd": 23.0,
+      "relation": "SYSTEM_WITH_SECTION",
+      "project_ids": [
+        "P0929",
+        "P0907"
+      ],
+      "note": "The authorisation name \u2014 'Jagdishpur-Haldia-Bokaro Dhamra-Paradip-Barauni-Guwahati' \u2014 already embeds Barauni-Guwahati. GEM has BOTH the system (P0929) and that section as a separate 718 km row (P0907), i.e. the same pipe counted twice.",
+      "gem": [
+        {
+          "project_id": "P0929",
+          "sheet_row": 489,
+          "name": "Jagdishpur-Haldia-Bokaro-Dhamra Natural Gas Pipeline (JHBDPL)",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 23.0,
+            "register_mmscmd": 23.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 3546.0,
+            "matched_against": "authorised",
+            "register_km": 3546.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        },
+        {
+          "project_id": "P0907",
+          "sheet_row": 471,
+          "name": "Barauni-Guwahati Gas Pipeline",
+          "segment": "",
+          "status": "operating",
+          "capacity": null,
+          "length": {
+            "sheet_km": 718.0,
+            "matched_against": "under_construction",
+            "register_km": 257.0,
+            "delta": 461.0,
+            "supported": false
+          }
+        }
+      ],
+      "gem_length_sum_km": 4264.0,
+      "sum_vs_authorised_delta": 718.0
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 8,
+      "register_name": "North-East Natural Gas Pipeline Grid",
+      "entity": "IGGL",
+      "authorisation_date": "17.11.2020",
+      "target_completion": "Mar-26",
+      "authorised_length_km": 1863.0,
+      "operating_length_km": 392.0,
+      "under_construction_length_km": 1471.0,
+      "authorised_capacity_mmscmd": 5.8,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P1309"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P1309",
+          "sheet_row": 766,
+          "name": "North East Natural Gas Pipeline Grid Project",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 4.75,
+            "register_mmscmd": 5.8,
+            "delta": -1.05,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 1656.0,
+            "matched_against": "under_construction",
+            "register_km": 1471.0,
+            "delta": 185.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "partially_commissioned",
+      "sno": 9,
+      "register_name": "Srikakulam-Angul",
+      "entity": "GAIL",
+      "authorisation_date": "23.07.2019",
+      "target_completion": "Jun-26",
+      "authorised_length_km": 690.0,
+      "operating_length_km": 470.0,
+      "under_construction_length_km": 221.0,
+      "authorised_capacity_mmscmd": 6.7,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0954"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P0954",
+          "sheet_row": 503,
+          "name": "Srikakulam-Angul Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 6.65,
+            "register_mmscmd": 6.7,
+            "delta": -0.05,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 690.0,
+            "matched_against": "authorised",
+            "register_km": 690.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "under_construction",
+      "sno": 1,
+      "register_name": "Ennore-Nellore",
+      "entity": "GTIL",
+      "authorisation_date": "02.12.2014",
+      "target_completion": "Apr-20",
+      "authorised_length_km": 220.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": 220.0,
+      "authorised_capacity_mmscmd": 36.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P0921"
+      ],
+      "note": "Register still lists Ennore-Nellore as authorised/under construction against a lapsed Apr-2020 target with 0 km built; GEM has it shelved. A live authorisation is not evidence of activity, so GEM's shelved reading is defensible \u2014 the register just never retires an authorisation until it is formally surrendered.",
+      "gem": [
+        {
+          "project_id": "P0921",
+          "sheet_row": 481,
+          "name": "Ennore-Nellore Gas Pipeline",
+          "segment": "",
+          "status": "shelved",
+          "capacity": {
+            "sheet_mmscmd": 36.0,
+            "register_mmscmd": 36.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 220.0,
+            "matched_against": "authorised",
+            "register_km": 220.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "under_construction",
+      "sno": 2,
+      "register_name": "Kakinada-Vijayawada-Nellore",
+      "entity": "IMC",
+      "authorisation_date": "19.02.2018",
+      "target_completion": "Mar-24",
+      "authorised_length_km": 667.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": 667.0,
+      "authorised_capacity_mmscmd": 18.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P1434"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P1434",
+          "sheet_row": 816,
+          "name": "Kakinada-Vijayawada-Nellore Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 18.0,
+            "register_mmscmd": 18.0,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 667.0,
+            "matched_against": "authorised",
+            "register_km": 667.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "under_construction",
+      "sno": 3,
+      "register_name": "Kanai -Chhata -Panitar",
+      "entity": "HPPL",
+      "authorisation_date": "08.07.2019",
+      "target_completion": "Mar-24",
+      "authorised_length_km": 317.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": 317.0,
+      "authorised_capacity_mmscmd": 19.2,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P6562"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P6562",
+          "sheet_row": 3526,
+          "name": "Kanai Chhata-Panitar Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 19.2,
+            "register_mmscmd": 19.2,
+            "delta": 0.0,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 317.0,
+            "matched_against": "authorised",
+            "register_km": 317.0,
+            "delta": 0.0,
+            "supported": true
+          }
+        }
+      ]
+    },
+    {
+      "section": "under_construction",
+      "sno": 4,
+      "register_name": "Hazaribagh-Ranchi",
+      "entity": "IOCL",
+      "authorisation_date": "09.02.2023",
+      "target_completion": "Feb-26",
+      "authorised_length_km": 71.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": 71.0,
+      "authorised_capacity_mmscmd": 1.0,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P5412"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P5412",
+          "sheet_row": 3006,
+          "name": "Hazaribagh-Ranchi Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 1.03,
+            "register_mmscmd": 1.0,
+            "delta": 0.03,
+            "supported": true
+          },
+          "length": {
+            "sheet_km": 65.0,
+            "matched_against": "authorised",
+            "register_km": 71.0,
+            "delta": -6.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "under_construction",
+      "sno": 5,
+      "register_name": "Gurdaspur-Jammu",
+      "entity": "GAIL",
+      "authorisation_date": "12.07.2023",
+      "target_completion": "Jul-26",
+      "authorised_length_km": 160.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": 160.0,
+      "authorised_capacity_mmscmd": 3.1,
+      "relation": "ONE_TO_ONE",
+      "project_ids": [
+        "P5413"
+      ],
+      "note": "",
+      "gem": [
+        {
+          "project_id": "P5413",
+          "sheet_row": 3007,
+          "name": "Gurdaspur-Jammu Gas Pipeline",
+          "segment": "",
+          "status": "construction",
+          "capacity": {
+            "sheet_mmscmd": 2.0,
+            "register_mmscmd": 3.1,
+            "delta": -1.1,
+            "supported": false
+          },
+          "length": {
+            "sheet_km": 175.0,
+            "matched_against": "authorised",
+            "register_km": 160.0,
+            "delta": 15.0,
+            "supported": false
+          }
+        }
+      ]
+    },
+    {
+      "section": "under_construction",
+      "sno": 6,
+      "register_name": "Kochi-Kanyakumari-Thoothukudi",
+      "entity": "IOCL",
+      "authorisation_date": "09.03.2026",
+      "target_completion": "Mar-29",
+      "authorised_length_km": 425.0,
+      "operating_length_km": 0.0,
+      "under_construction_length_km": 425.0,
+      "authorised_capacity_mmscmd": 6.8,
+      "relation": "NOT_IN_GEM",
+      "project_ids": [],
+      "note": "Kochi-Kanyakumari-Thoothukudi, IOCL, 425 km / 6.8 MMSCMD, authorised 09.03.2026, target Mar-2029. VERIFIED RECOMMEND_ADD: PNGRB ran a public consultation (Jan 2024) and a suo-motu bid round (bids opened 17 Oct 2024) that IOCL won; authorisation announced Apr 2026. Runs SOUTH from the Kochi LNG terminal via Kanyakumari to Thoothukudi, tying into IOCL's Ennore-Thoothukudi line \u2014 so it is not an extension of KKBMPL, which runs north out of Kochi. Newest authorisation in the register.",
+      "gem": []
+    }
+  ],
+  "gem_rows": [
+    {
+      "project_id": "P0904",
+      "sheet_row": 468,
+      "name": "Agartala Regional Gas Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 9,
+        "register_name": "Agartala Regional Network"
+      }
+    },
+    {
+      "project_id": "P0905",
+      "sheet_row": 469,
+      "name": "Anjar-Chotila Gas Pipeline",
+      "segment": "",
+      "status": "shelved",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'shelved' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0906",
+      "sheet_row": 470,
+      "name": "Assam Regional Gas Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 17,
+        "register_name": "Assam Natural Gas Pipeline"
+      }
+    },
+    {
+      "project_id": "P0907",
+      "sheet_row": 471,
+      "name": "Barauni-Guwahati Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "SYSTEM_WITH_SECTION",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 7,
+        "register_name": "Jagdishpur-Haldia-Bokaro Dhamra-Paradip-Barauni-Guwahati"
+      }
+    },
+    {
+      "project_id": "P0908",
+      "sheet_row": 472,
+      "name": "Bathinda-Jammu-Srinagar Gas Pipeline",
+      "segment": "",
+      "status": "proposed",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'proposed' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0911",
+      "sheet_row": 473,
+      "name": "Cauvery Basin Gas Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 2,
+        "register_name": "Cauvery Basin Network"
+      }
+    },
+    {
+      "project_id": "P0912",
+      "sheet_row": 474,
+      "name": "Chainsa-Jhajjar-Hissar Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 20,
+        "register_name": "Chainsa-Jhajjar-Hissar"
+      }
+    },
+    {
+      "project_id": "P0913",
+      "sheet_row": 475,
+      "name": "Contai-Paradip-Dattapulia Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0915",
+      "sheet_row": 476,
+      "name": "Dabhol-Bangalore Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 4,
+        "register_name": "Dabhol-Bangalore"
+      }
+    },
+    {
+      "project_id": "P0916",
+      "sheet_row": 477,
+      "name": "Dadri-Bawana-Nangal Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 21,
+        "register_name": "Dadri-Bawana-Nangal"
+      }
+    },
+    {
+      "project_id": "P0917",
+      "sheet_row": 478,
+      "name": "Dadri-Panipat Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 10,
+        "register_name": "Dadri-Panipat"
+      }
+    },
+    {
+      "project_id": "P0919",
+      "sheet_row": 479,
+      "name": "Dahej-Vijaipur Gas Pipeline (DVPL-I)",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "COMPOSITE_SYSTEM",
+      "register": {
+        "section": "operational",
+        "sno": 3,
+        "register_name": "Hazira-Vijaipur-Jagdishpur -GREP -Dahej-Vijaipur HVJ/VDPL Dadri"
+      }
+    },
+    {
+      "project_id": "P0920",
+      "sheet_row": 480,
+      "name": "East West Gas Pipeline (India)",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 5,
+        "register_name": "Kakinada-Hyderabad-Uran-Ahmedabad (East West Pipeline)"
+      }
+    },
+    {
+      "project_id": "P0921",
+      "sheet_row": 481,
+      "name": "Ennore-Nellore Gas Pipeline",
+      "segment": "",
+      "status": "shelved",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "under_construction",
+        "sno": 1,
+        "register_name": "Ennore-Nellore"
+      }
+    },
+    {
+      "project_id": "P0922",
+      "sheet_row": 482,
+      "name": "Ennore-Tuticorn-Bengalaru Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 6,
+        "register_name": "Ennore-Tuticorin"
+      }
+    },
+    {
+      "project_id": "P0923",
+      "sheet_row": 483,
+      "name": "Gujarat Regional Gas Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 8,
+        "register_name": "Gujarat Regional Network"
+      }
+    },
+    {
+      "project_id": "P0924",
+      "sheet_row": 484,
+      "name": "Hazira-Ankleshwar Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 14,
+        "register_name": "Hazira-Ankleshwar"
+      }
+    },
+    {
+      "project_id": "P0925",
+      "sheet_row": 485,
+      "name": "Hazira-Vijaipur-Jagdishpur (HVJ) Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "COMPOSITE_SYSTEM",
+      "register": {
+        "section": "operational",
+        "sno": 3,
+        "register_name": "Hazira-Vijaipur-Jagdishpur -GREP -Dahej-Vijaipur HVJ/VDPL Dadri"
+      }
+    },
+    {
+      "project_id": "P0926",
+      "sheet_row": 486,
+      "name": "Heera-Uran Trunk Line (HUT)",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "ONGC offshore trunk line (Heera field to Uran); dedicated, not common carrier.",
+      "register": null
+    },
+    {
+      "project_id": "P0927",
+      "sheet_row": 487,
+      "name": "High Pressure Gujarat Gas Grid Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 13,
+        "register_name": "High Pressure Gujarat Gas Grid"
+      }
+    },
+    {
+      "project_id": "P0929",
+      "sheet_row": 489,
+      "name": "Jagdishpur-Haldia-Bokaro-Dhamra Natural Gas Pipeline (JHBDPL)",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "SYSTEM_WITH_SECTION",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 7,
+        "register_name": "Jagdishpur-Haldia-Bokaro Dhamra-Paradip-Barauni-Guwahati"
+      }
+    },
+    {
+      "project_id": "P0930",
+      "sheet_row": 490,
+      "name": "Jaigarh-Dabhol Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "H-Energy Jaigarh terminal spur; dedicated tie-in.",
+      "register": null
+    },
+    {
+      "project_id": "P0931",
+      "sheet_row": 491,
+      "name": "Jaigarh-Mangalore Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0932",
+      "sheet_row": 492,
+      "name": "Kakinada-Vizag-Srikakulam Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0933",
+      "sheet_row": 493,
+      "name": "KG Basin Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 7,
+        "register_name": "KG Basin Network"
+      }
+    },
+    {
+      "project_id": "P0934",
+      "sheet_row": 494,
+      "name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+      "segment": "Phase I",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 5,
+        "register_name": "Kochi-Koottanad-Bangalore-Mangalore"
+      }
+    },
+    {
+      "project_id": "P0935",
+      "sheet_row": 495,
+      "name": "Kukrahati-Itinda Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0936",
+      "sheet_row": 496,
+      "name": "Langtala-Bhilwara Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0937",
+      "sheet_row": 497,
+      "name": "Low Pressure Gujarat Gas Grid Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 15,
+        "register_name": "Low Pressure Gujarat Gas Grid"
+      }
+    },
+    {
+      "project_id": "P0938",
+      "sheet_row": 498,
+      "name": "Mallavaram-Bhopal-Bhilwara-Vijaipur Gas Pipeline",
+      "segment": "Phase I",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 3,
+        "register_name": "Mallavaram -Bhopal -Bhilwara -Vijaipur"
+      }
+    },
+    {
+      "project_id": "P0941",
+      "sheet_row": 499,
+      "name": "Mehsana-Bhatinda Gas Pipeline",
+      "segment": "Phase I",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 1,
+        "register_name": "Mehsana -Bhatinda"
+      }
+    },
+    {
+      "project_id": "P0943",
+      "sheet_row": 500,
+      "name": "Mumbai Regional Natural Gas Pipeline Network",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 11,
+        "register_name": "Mumbai Regional Network"
+      }
+    },
+    {
+      "project_id": "P0944",
+      "sheet_row": 501,
+      "name": "Mumbai-Uran Trunk Line (MUT)",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "ONGC offshore trunk line (Mumbai High to Uran); dedicated, not common carrier.",
+      "register": null
+    },
+    {
+      "project_id": "P0953",
+      "sheet_row": 502,
+      "name": "Shahdol-Phulpur Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 16,
+        "register_name": "Shahdol-Phulpur"
+      }
+    },
+    {
+      "project_id": "P0954",
+      "sheet_row": 503,
+      "name": "Srikakulam-Angul Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 9,
+        "register_name": "Srikakulam-Angul"
+      }
+    },
+    {
+      "project_id": "P0955",
+      "sheet_row": 504,
+      "name": "Surat-Paradip Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P0957",
+      "sheet_row": 505,
+      "name": "Vijaipur-Auraiya-Pulphur Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_SECTION_OF_SYSTEM",
+      "reason": "Vijaipur-Auraiya-Phulpur is a GAIL branch off the HVJ trunk, and the register does not itemise branches \u2014 the whole HVJ/DVPL/GREP/VDPL system is one authorisation (snos 3+4). Absence is expected, not a finding. Worth noting it is the one row in that family with its OWN capacity figure (3.20 bcm/y rather than the 107 MMSCMD system total the five trunk rows all repeat), so it is not part of the shared-capacity defect flagged on P0925.",
+      "register": null
+    },
+    {
+      "project_id": "P1309",
+      "sheet_row": 766,
+      "name": "North East Natural Gas Pipeline Grid Project",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 8,
+        "register_name": "North-East Natural Gas Pipeline Grid"
+      }
+    },
+    {
+      "project_id": "P1434",
+      "sheet_row": 816,
+      "name": "Kakinada-Vijayawada-Nellore Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "under_construction",
+        "sno": 2,
+        "register_name": "Kakinada-Vijayawada-Nellore"
+      }
+    },
+    {
+      "project_id": "P1435",
+      "sheet_row": 817,
+      "name": "PLL-DGEN-Sugen Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "Torrent PLL-DGEN-Sugen power-plant feeder; dedicated.",
+      "register": null
+    },
+    {
+      "project_id": "P1436",
+      "sheet_row": 818,
+      "name": "Rajasthan Gas Pipeline (Focus)",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "Focus Energy Rajasthan field line; dedicated.",
+      "register": null
+    },
+    {
+      "project_id": "P2210",
+      "sheet_row": 1136,
+      "name": "Dahej-Koyali Refinery Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "IOCL Dahej-Koyali refinery feeder; dedicated.",
+      "register": null
+    },
+    {
+      "project_id": "P2211",
+      "sheet_row": 1137,
+      "name": "Dahej-OPAL Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "Dahej-OPAL petrochemical tie-in; dedicated.",
+      "register": null
+    },
+    {
+      "project_id": "P2212",
+      "sheet_row": 1138,
+      "name": "Dahej-Uran-Panvel-Dhabhol Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 6,
+        "register_name": "Dahej-Uran-Panvel-Dabhol"
+      }
+    },
+    {
+      "project_id": "P2214",
+      "sheet_row": 1140,
+      "name": "Kanai Chhata-Shrirampur Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P2215",
+      "sheet_row": 1141,
+      "name": "Langtala-Jodhpur-Pali Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P2216",
+      "sheet_row": 1142,
+      "name": "Mumbai-Nagpur-Jharsuguda Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "operational",
+        "sno": 22,
+        "register_name": "Mumbai-Nagpur-Jharsuguda"
+      }
+    },
+    {
+      "project_id": "P2746",
+      "sheet_row": 1405,
+      "name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+      "segment": "Phase II",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 5,
+        "register_name": "Kochi-Koottanad-Bangalore-Mangalore"
+      }
+    },
+    {
+      "project_id": "P2748",
+      "sheet_row": 1407,
+      "name": "Langtala-Pachpadra Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P2752",
+      "sheet_row": 1409,
+      "name": "Kondalapalli-Tirupati Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P3297",
+      "sheet_row": 1732,
+      "name": "Vijaipur-Dadri Gas Pipeline (GREP-I)",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "COMPOSITE_SYSTEM",
+      "register": {
+        "section": "operational",
+        "sno": 3,
+        "register_name": "Hazira-Vijaipur-Jagdishpur -GREP -Dahej-Vijaipur HVJ/VDPL Dadri"
+      }
+    },
+    {
+      "project_id": "P3298",
+      "sheet_row": 1733,
+      "name": "Dahej-Vijaipur Pipeline (DVPL-II)",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "COMPOSITE_SYSTEM",
+      "register": {
+        "section": "operational",
+        "sno": 3,
+        "register_name": "Hazira-Vijaipur-Jagdishpur -GREP -Dahej-Vijaipur HVJ/VDPL Dadri"
+      }
+    },
+    {
+      "project_id": "P3299",
+      "sheet_row": 1734,
+      "name": "Vijaipur-Dadri Gas Pipeline (GREP-II)",
+      "segment": "",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "COMPOSITE_SYSTEM",
+      "register": {
+        "section": "operational",
+        "sno": 3,
+        "register_name": "Hazira-Vijaipur-Jagdishpur -GREP -Dahej-Vijaipur HVJ/VDPL Dadri"
+      }
+    },
+    {
+      "project_id": "P3310",
+      "sheet_row": 1739,
+      "name": "Duliajan-Numaligarh Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "DNP Ltd Duliajan-Numaligarh refinery line; dedicated.",
+      "register": null
+    },
+    {
+      "project_id": "P3334",
+      "sheet_row": 1742,
+      "name": "Digha\u2013Contai Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P3342",
+      "sheet_row": 1750,
+      "name": "Kakinada-Haldia Gas Pipeline",
+      "segment": "",
+      "status": "cancelled",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'cancelled' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P3602",
+      "sheet_row": 1832,
+      "name": "Mallavaram-Bhopal-Bhilwara-Vijaipur Gas Pipeline",
+      "segment": "Phase II",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 3,
+        "register_name": "Mallavaram -Bhopal -Bhilwara -Vijaipur"
+      }
+    },
+    {
+      "project_id": "P3905",
+      "sheet_row": 1922,
+      "name": "Dandewala-Gamnewala-RSEB Ramgarh Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "Dandewala-Gamnewala-RSEB Ramgarh power-plant feeder; dedicated.",
+      "register": null
+    },
+    {
+      "project_id": "P3906",
+      "sheet_row": 1923,
+      "name": "Haridwar-Rishikesh-Dehradun Gas Pipeline",
+      "segment": "",
+      "status": "operating",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "Haridwar-Rishikesh-Dehradun; CGD-scale spur, not an authorised NGPL.",
+      "register": null
+    },
+    {
+      "project_id": "P3909",
+      "sheet_row": 1924,
+      "name": "Jamnagar to Dwarka Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "GSPL Jamnagar-Dwarka spur; dedicated/regional.",
+      "register": null
+    },
+    {
+      "project_id": "P3910",
+      "sheet_row": 1925,
+      "name": "Chhara to Lonhtpur Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "GSPL Chhara terminal spur; dedicated tie-in.",
+      "register": null
+    },
+    {
+      "project_id": "P3911",
+      "sheet_row": 1926,
+      "name": "Swan LNG Terminal to Hadala Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "GSPL Swan LNG (Jafrabad) terminal spur; dedicated tie-in.",
+      "register": null
+    },
+    {
+      "project_id": "P3912",
+      "sheet_row": 1927,
+      "name": "Swan LNG Terminal to Dahej LNG Terminal Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "ABSENT_DEDICATED_OR_TIE_IN",
+      "reason": "GAIL Swan LNG to Dahej link; dedicated tie-in.",
+      "register": null
+    },
+    {
+      "project_id": "P3913",
+      "sheet_row": 1928,
+      "name": "Bhatinda-Gurdaspur Gas Pipeline",
+      "segment": "Phase II",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 2,
+        "register_name": "Bhatinda -Gurdaspur"
+      }
+    },
+    {
+      "project_id": "P5411",
+      "sheet_row": 3005,
+      "name": "Mehsana-Bhatinda Gas Pipeline",
+      "segment": "Phase II",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 1,
+        "register_name": "Mehsana -Bhatinda"
+      }
+    },
+    {
+      "project_id": "P5412",
+      "sheet_row": 3006,
+      "name": "Hazaribagh-Ranchi Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "under_construction",
+        "sno": 4,
+        "register_name": "Hazaribagh-Ranchi"
+      }
+    },
+    {
+      "project_id": "P5413",
+      "sheet_row": 3007,
+      "name": "Gurdaspur-Jammu Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "under_construction",
+        "sno": 5,
+        "register_name": "Gurdaspur-Jammu"
+      }
+    },
+    {
+      "project_id": "P5533",
+      "sheet_row": 3056,
+      "name": "Bhatinda-Gurdaspur Gas Pipeline",
+      "segment": "Phase I",
+      "status": "operating",
+      "classification": "MATCHED",
+      "reason": "PHASED_PAIR",
+      "register": {
+        "section": "partially_commissioned",
+        "sno": 2,
+        "register_name": "Bhatinda -Gurdaspur"
+      }
+    },
+    {
+      "project_id": "P6538",
+      "sheet_row": 3522,
+      "name": "Kakinada-Srikakulam Gas Pipeline",
+      "segment": "",
+      "status": "proposed",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'proposed' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    },
+    {
+      "project_id": "P6562",
+      "sheet_row": 3526,
+      "name": "Kanai Chhata-Panitar Gas Pipeline",
+      "segment": "",
+      "status": "construction",
+      "classification": "MATCHED",
+      "reason": "ONE_TO_ONE",
+      "register": {
+        "section": "under_construction",
+        "sno": 3,
+        "register_name": "Kanai -Chhata -Panitar"
+      }
+    },
+    {
+      "project_id": "P6646",
+      "sheet_row": 3599,
+      "name": "Ennore Barshi Gas Pipeline",
+      "segment": "",
+      "status": "proposed",
+      "classification": "ABSENT_NOT_AUTHORISED",
+      "reason": "status 'proposed' \u2014 never authorised, or the authorisation lapsed/was surrendered; absence from a register of live authorisations is the expected outcome.",
+      "register": null
+    }
+  ]
+}

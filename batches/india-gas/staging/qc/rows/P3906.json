@@ -1,0 +1,47 @@
+{
+ "project_id": "P3906",
+ "pipeline_name": "Haridwar-Rishikesh-Dehradun Gas Pipeline",
+ "sheet_row": 1923,
+ "wiki": "https://www.gem.wiki/Haridwar-Rishikesh-Dehradun_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Capacity [ref]",
+   "value_cols": ["Capacity", "CapacityUnits"],
+   "values": {"Capacity": "1.2", "CapacityUnits": "MMSCMD"},
+   "primary_value_col": "Capacity",
+   "primary_value": "1.2",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250528221049/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250528221049/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs on the 'MMSCMD' substring test (documented large-PDF false negative); curl confirms 200 (9-page PDF); pdftotext -layout confirms 'SYSTEM CAPACITY: 1.2 MMSCMD' and 'Design Gas Flow 1.2 MMSCMD', read locally"}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The Uttarakhand Environmental Protection & Pollution Control Board's EIA Executive Summary for this exact project ('LAYING OF NATURAL GAS TRANSPORTATION PIPELINE FOR HARIDWAR-RISHIKESH-DEHRADUN PIPELINE SECTION') states on its title page 'PIPELINE LENGTH: 50 KM (approx) DIA: 8'' — SYSTEM CAPACITY: 1.2 MMSCMD' and repeats in its design-parameters table: 'Design Gas Flow ... 1.2 MMSCMD'. This is a first-party regulatory-submission document (prepared for/by the state pollution control board as part of environmental clearance) naming the project's own design capacity, independent of GEM and of the wiki figure it happens to match. Tier is `medium` rather than `high` because I found only ONE independently-verifiable document stating the capacity figure — I searched the PNGRB NGPL MIS register (this line does not appear in it; it is a CGD-scale spur per the register-crosswalk leg's classification, ABSENT_DEDICATED_OR_TIE_IN) and the available PNGRB Integrated Tariff Order for GAIL's INGPL system (which discusses HRDPL's capex but not its design capacity in MMSCMD) without finding a second source that independently states the 1.2 MMSCMD figure. Access note: the origin ueppcb.uk.gov.in currently has no resolvable A/AAAA record (DNS-level failure, confirmed via dig/host — not a confirmed 404/410 deletion), so I retrieved this via its Wayback Machine snapshot (captured 2025-05-28) rather than the live host, per the standing rule that a blocked/dead origin's snapshot is used, not treated as unavailable."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250528221049/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf",
+    "https://www.gailonline.com/pdf/InvestorsZone/AnnualReports/GAILAnnualReport202223120223Final.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250528221049/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs on 'GAIL' due to the large-PDF false negative for this same file; pdftotext -layout confirms 'PROJECT PROPONENT / GAIL (INDIA) LIMITED' on the title page and 'Gas Authority of India Limited (GAIL) is planning to lay a 50 Kms (approx.) Natural Gas Pipeline ... hereinafter referred to as Haridwar-Rishikesh-Dehradun Pipeline (HRDPL)' in the project introduction"},
+    {"url": "https://www.gailonline.com/pdf/InvestorsZone/AnnualReports/GAILAnnualReport202223120223Final.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two genuinely independent origins name GAIL as this pipeline's own operator/developer, not just a shareholder: (1) the Uttarakhand pollution board's EIA Executive Summary for the project (Wayback snapshot, see the Capacity fill on this row) names 'PROJECT PROPONENT: GAIL (INDIA) LIMITED' on its title page and identifies 'Gas Authority of India Limited (GAIL)' as the party 'planning to lay' the pipeline in its introduction — this is the project's own environmental-clearance filing, not a GAIL-authored document. (2) GAIL's own Annual Report 2022-23 (gailonline.com) states 'GAIL also completed Sultanpur-Jhajjar-Hisar and Haridwar-Rishikesh-Dehradun Pipeline' among its completed capital projects for the year, and separately lists 'Haridwar-Rishikesh-Dehradun Pipeline (50 [km])' under its own capital-works schedule. A third, weaker corroboration (not counted toward the 2-source tier, since it overlaps with (2)'s lineage) is a PNGRB Integrated Tariff Order for GAIL's INGPL system, which itemises capex Board-approved for 'Haridwar-Rishikesh-Dehradun Pipeline Project' within GAIL's own tariff filing — I did not include this document's URL in proposed_refs because I could not re-locate/re-verify its exact source URL after the fact and did not want to risk citing an unverified link; the two sources above are sufficient on their own for tier=high. This is the same GAIL operator-identity finding as P0912/P0916 elsewhere in this brief, established independently here because P3906 is not a GAIL trunk-network row and needed its own project-specific evidence (this line does not appear in the PNGRB NGPL MIS register at all — it is below the register's common-carrier threshold, classified ABSENT_DEDICATED_OR_TIE_IN by the register-crosswalk leg)."
+  }
+ ]
+}

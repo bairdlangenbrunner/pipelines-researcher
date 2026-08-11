@@ -1,0 +1,35 @@
+{
+ "project_id": "P0937",
+ "pipeline_name": "Low Pressure Gujarat Gas Grid Network",
+ "sheet_row": 497,
+ "wiki": "https://www.gem.wiki/Low_Pressure_Gujarat_Gas_Grid_Network",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Gujarat State Petronet"},
+    "primary_value_col": "Operator",
+    "primary_value": "Gujarat State Petronet",
+    "class_out": "REFS_ADDED",
+    "tab": "operators_owners",
+    "sheet_row": 822,
+    "proposed_refs": [
+      "https://www.careratings.com/upload/CompanyFiles/PR/202512141256_Gujarat_State_Petronet_Limited.pdf",
+      "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+    ],
+    "verifications": [
+      {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202512141256_Gujarat_State_Petronet_Limited.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; large-PDF url_verifier false negative — confirmed locally with pdftotext -layout: 'It owns and operates ~2,795 kms of natural gas transmission pipeline in Gujarat as on September 30, 2025' and 'GSPL Plans, designs, constructs, operates and maintains natural gas pipeline and related infrastructure'."},
+      {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; large-PDF false negative. Register Sr. No. 15, 'Low Pressure Gujarat Gas Grid', entity GSPL, authorised 19.03.2013 — already staged as the Owner [ref] fill for this row in the register-crosswalk batch; cited here only as the second independent origin for Operator."}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "ONE-QUESTION-PER-COMPANY: same operator finding as P0927, applied here — see that shard for the full two-source reasoning (CARE Ratings' independent 'owns and operates' statement + the PNGRB register naming GSPL as authorisation holder). All 5 rows in this brief share Owner1 = 'Gujarat State Petronet [100%]' (not a JV), so the company-wide answer applies directly to this row too."}
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "Do not change LengthKnownKm (58 km) — it is independently corroborated. The route geometry (RouteAccuracy = medium, drawn 158 km) is the element in error and should be reviewed/redrawn by a human; the ratio flag traces to the geojson, not the length value.",
+    "researcher_notes": "The PNGRB NGPL MIS register (May 2026 edition, Sr. No. 15) gives authorised length 58.0 km and operating length 57.0 km for 'Low Pressure Gujarat Gas Grid' / GSPL — matching the sheet's 58.00 km to the register's whole-km printing precision. This is a REGULATOR origin, independent of whatever produced the drawn route geometry, and it already anchors the staged Length [ref] fill for this row in the register-crosswalk batch (sheet_row 497, same value, unchanged). Given that independent corroboration, the 158 km geodesic length of the drawn route (ratio 2.73) is the more likely defect: either the geojson traces a longer corridor than the authorised Eklera–Hazira alignment, or it includes extraneous/looped segments. I could not find a public as-built trace to propose a replacement geometry, so I am not proposing new coordinates (standing rule: never fabricate a route) — flagging for human review of the existing geojson instead.",
+    "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+    "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; large-PDF false negative, confirmed locally via pdftotext -layout — see fill above for the same citation."}],
+    "tier": "high", "independent": true }
+ ]
+}

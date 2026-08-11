@@ -1,0 +1,80 @@
+{
+ "project_id": "P0923",
+ "pipeline_name": "Gujarat Regional Gas Network",
+ "sheet_row": 483,
+ "wiki": "https://www.gem.wiki/Gujarat_Regional_Gas_Network",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "values": {
+    "Operator": "GAIL (India) Ltd"
+   },
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+    "https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- value confirmed locally with pdftotext -layout"
+    },
+    {
+     "url": "https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- value confirmed locally with pdftotext -layout"
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION answered once and applied across the whole brief (P0904, P0911, P0923, P0933, P0943 -- GAIL's five regional/basin gas networks): GAIL (India) Ltd is not just the owner (already staged as Owner1 [ref] by the register-crosswalk leg off the same PNGRB physical-progress register, batches/india-gas/staging/register-crosswalk/staged_resolutions.json) but the OPERATING entity. Evidence is PNGRB's tariff-order machinery, which is issued specifically 'to be charged by the entities laying, building, operating or expanding a natural gas pipeline' (Section 22, PNGRB Act 2006 -- identical language recurs in every order below, so it is the statutory basis for every tariff order PNGRB issues, not boilerplate specific to one filing). A tariff order is addressed to the party that actually transports gas as a common carrier and charges shippers for it -- i.e. the operator -- not to a passive equity holder, so this is a genuinely distinct fact from ownership even though the same company (GAIL, no SPV) happens to hold both roles here. Direct evidence for Gujarat: GAIL's own PNGRB tariff filing. The INGPL tariff order (https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf, Ref No. TO/NGPL/25-26/09, dated 27-11-2025) is addressed to 'GAIL (India) Limited (\"GAIL\" or \"Entity\")' and its authorisation table lists 'Baroda Sub Network (Gujarat Regional Network)' (480.99 km) as one of GAIL's own constituent pipelines making up the Integrated Natural Gas Pipeline. The Tariff-MIS register separately lists the REST of the Gujarat Regional Network (Kadi Kalol, Motwan, Mehsana, Paliyad, Kalol-Ramol, GGCL-UPL sub-networks, 128.01 km) under Entity=GAIL too, each with its own GAIL-addressed PNGRB tariff order dated 27-09-2018. PNGRB Tariff-MIS register (https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf, 'Details of Applicable Tariff for Operational NGPL's', dated 13.01.2026) lists Entity=GAIL for all five networks in this brief. tier=medium, independent=true: PNGRB regulatory documents are a genuinely separate origin from the GAIL company reports GEM typically cites (matching the register-crosswalk leg's own independence call on the parallel Owner fill), though I'm holding at medium rather than high because both cited documents ultimately trace to the same regulator rather than two unrelated organisations -- flagged rather than overclaimed. url_verifier FAILs on both PDFs (200 but missing expected substring) -- documented large-PDF false negative per the protocol; downloaded and confirmed locally with pdftotext -layout. Never cited gem.wiki or globalenergymonitor.org."
+  },
+  {
+   "ref_col": "Start Year 1 [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "values": {},
+   "primary_value_col": "StartYear1",
+   "primary_value": null,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Date_logic flag (Status=operating, no StartYear1) -- UNRESOLVED, could not find a commissioning year specific to the Gujarat Regional Network's own sub-networks. What I checked: (1) the PNGRB authorisation date (03.12.2010, per both the physical-progress register and the Tariff-MIS register) is a REGULATORY authorisation date, not a commissioning date -- the network was already operating before PNGRB's 2008 authorisation-regulations regime existed, so this date cannot be used per the protocol's own field-vs-pipeline caution. (2) GAIL's flagship HVJ system (which the Gujarat network historically branches from) was commissioned in 1987, with GAIL adding 'branch lines and spurs... particularly since the 1990s' per general GAIL history sources, but no source found ties a specific year to the Gujarat sub-networks (Baroda, Kadi Kalol, Motwan, Mehsana, Paliyad, Kalol-Ramol, GGCL-UPL) as a group. (3) Explicitly ruled OUT one false lead: search results surfaced a 'Baroda-Ahmedabad-Kalol Gas Pipeline' commissioned 2004-05, but that is Gujarat State Petronet Ltd (GSPL) infrastructure -- a DIFFERENT company from GAIL, per Gujarat's multi-operator gas-grid structure (GAIL, GSPL, and Gujarat Gas Ltd all separately operate pipe in the state) -- so it must not be conflated with this row's GAIL-owned Baroda sub-network despite the shared place-name. Searched GAIL annual reports, CAG Gujarat performance-audit listings, and PIB releases without finding a network-specific year. Leaving StartYear1 blank rather than proposing an unverified date."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Leave LengthKnownKm (608.82 km) unchanged -- it is not just corroborated but traced to its exact origin (GAIL's own PCD-2023 regulatory filing). Route the 172 km drawn-route shortfall to a future geometry pass as a multi-sub-network coverage gap, not a value error; no replacement coordinates proposed.",
+   "researcher_notes": "Answers the length_ratio flag (drawn 172 km vs sheet 608.82 km, ratio 0.28) and is the strongest finding in this brief. The INGPL tariff order's own reconciliation table (https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf, p.17-18, responding to a GSPL comment on authorised-length changes) states VERBATIM: 'Baroda Sub Network (Gujarat Natural Gas Pipeline Network) | PCD 2023: 608.82 | PCD 2025: 480.99 | Remarks: Length of other sub networks (not part of INGPL), included in 2023' -- i.e. GAIL's own PCD-2023 filing to PNGRB gives 608.82 km as the length of the FULL Gujarat Regional Network (Baroda + the other Gujarat sub-networks combined), an EXACT match to the sheet's LengthKnownKm to two decimals. The 2025 PCD narrows the INGPL-counted figure to just the Baroda sub-network (480.99 km) because the other Gujarat sub-networks (Kadi Kalol 128.01 km per the Tariff-MIS register) are separately authorised/tariffed (confirmed: 480.99 + 128.01 = 609.00, matching the physical-progress register's 609.0 km authorised total already cited by the register-crosswalk leg). This is dispositive: GEM's 608.82 km IS the aggregate Gujarat network total as GAIL itself reported it in 2023, and the 172 km drawn route is a single sub-network trunk within a network spread across multiple non-contiguous Gujarat sub-networks (Baroda, Kadi Kalol, Motwan, Mehsana, Paliyad, Kalol-Ramol, GGCL-UPL) -- a single-line geometry cannot represent it. No value change proposed; the row needs a multi-segment route in a future §8 pass, not a length correction.",
+   "proposed_refs": [
+    "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- confirmed locally with pdftotext -layout"
+    }
+   ],
+   "tier": "high",
+   "independent": true
+  }
+ ]
+}

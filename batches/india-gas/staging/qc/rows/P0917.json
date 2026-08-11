@@ -1,0 +1,29 @@
+{
+ "project_id": "P0917",
+ "pipeline_name": "Dadri-Panipat Gas Pipeline",
+ "sheet_row": 478,
+ "wiki": "https://www.gem.wiki/Dadri-Panipat_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Indian Oil Corp"},
+   "primary_value_col": "Operator",
+   "primary_value": "Indian Oil Corp",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.iocl.com/Download/DPPL121212.pdf",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs on the 'Dadri' substring test (documented large-PDF false negative on this file); curl confirms 200; pdftotext -layout confirms the exact sentence quoted below, read locally"},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "documented large-PDF false negative on url_verifier; confirmed live 200 + content via curl/pdftotext"}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "IOCL's own PNGRB Schedule-I/II capacity-declaration filing for this exact pipeline states verbatim: 'Indian Oil Corporation Limited (IOCL) owns and operates 132 km long Dadri-Panipat Natural Gas Pipeline (DPPL).' This is a first-party document naming IOCL as both owner AND explicit operator ('owns and operates'), which is the language this brief's flag specifically asked to distinguish from a bare ownership record. Independently corroborated by the PNGRB NGPL MIS register (regulatory authorisation record, not IOCL's own document), which names IOCL as the Entity/authorisation holder for 'Dadri-Panipat' (132 km authorised, 20 MMSCMD, authorised 05.01.2011) — and DPPL is explicitly authorised 'under regulation 17(1) of the Petroleum and Natural Gas Regulatory Board (Authorizing entities to Lay, Build, Operate or Expand Natural Gas Pipelines) Regulations, 2008' per the same IOCL filing, so the authorisation itself is for the operating entity. Note: the sheet's naming convention on the paired Owner column already reads 'Indian Oil Corp' (not the wiki's 'IndianOil'); matched that spelling for consistency with the existing Owner cell on this row. Separately noticed but NOT pursued (out of scope for this Operator-only flag): the IOCL document states DPPL's currently authorised capacity as 9.5 MMSCMD (incl. 2.375 MMSCMD common-carrier), which differs from the sheet's Capacity=20.00 MMSCMD (which matches the PNGRB register's original 2011 authorised-capacity figure already staged by the register-crosswalk leg) — flagging for a future Capacity-question pass, not resolving here."
+  }
+ ]
+}

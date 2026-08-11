@@ -1,0 +1,65 @@
+{
+ "project_id": "P0916",
+ "pipeline_name": "Dadri-Bawana-Nangal Gas Pipeline",
+ "sheet_row": 477,
+ "wiki": "https://www.gem.wiki/Dadri-Bawana-Nangal_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.gailonline.com/Natural_Gas.html",
+    "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+    "https://gailebank.gail.co.in/Schedule1/11.html"
+   ],
+   "verifications": [
+    {"url": "https://www.gailonline.com/Natural_Gas.html", "ok": true, "contains_value": true, "note": "verified against 'major gas pipeline operator' and 'Dadri-Bawana-Nangal Pipeline Network' substrings"},
+    {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs on large-PDF substring test (documented false negative); curl confirms 200 application/pdf; pdftotext -layout confirms Entity=GAIL for this pipeline, read locally"},
+    {"url": "https://gailebank.gail.co.in/Schedule1/11.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This is the same operator-identity question answered on P0912 (Chainsa-Jhajjar-Hissar) in this brief: GAIL. Two genuinely independent origins agree — (1) GAIL's own corporate site (gailonline.com/Natural_Gas.html) explicitly self-describes as 'a major gas pipeline operator' and lists 'Dadri-Bawana-Nangal Pipeline Network' (997 km) in its table of GAIL's own operational natural-gas pipeline networks; (2) the PNGRB NGPL MIS register (the independent regulatory authorisation record, not GAIL's own document) names GAIL as the Entity/authorisation holder for 'Dadri-Bawana-Nangal' (Sr. No. 21, authorised 15.02.2011). PNGRB authorisations under the 2008 Regulations are specifically issued to entities that 'Lay, Build, Operate or Expand' the pipeline (the regulation's own title, confirmed independently on IOCL's Dadri-Panipat filing in this same brief) — so the authorisation holder is the operator of record, not merely a nominal owner. Corroborated a third way by GAIL's own PNGRB Schedule-I capacity-declaration filing for this specific pipeline (gailebank.gail.co.in/Schedule1/11.html), which lists GAIL (India) Limited as the submitting entity for 7 named throughput sections of the DBNPL network. Owner and Operator are treated as the same fact here deliberately, because GAIL is a direct state-owned operator of its own transmission network on this line (not an SPV/JV structure), unlike some other rows in this dataset."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Update should reconcile LengthKnownKm (currently 886 km) against the PNGRB register's figures for this pipeline — Authorised Length 921 km, Operating Length 998 km — or, if 886 km reflects a deliberate narrower scope (e.g. an earlier commissioning stage), document that reasoning in ResearcherNotes. Did not auto-fill: 886 km does not match either register figure and I could not find a source that explains what the 886 km specifically represents, so this needs a human judgment call rather than a mechanical fill.",
+   "researcher_notes": "The PNGRB NGPL MIS register gives Authorised Length = 921 km and Operating Length = 998 km for Dadri-Bawana-Nangal — and these figures are IDENTICAL across two register editions 11 months apart (30.06.2025: pngrb.gov.in/data-bank/20250630_NGPL.pdf, and 31.05.2026: pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf), i.e. stable, not a one-off filing error. Neither figure matches the sheet's current LengthKnownKm=886. GAIL's own corporate page (gailonline.com/Natural_Gas.html) separately lists the network at 997 km, but that page explicitly sources its network-length table 'As per PNGRB', so it is the same lineage as the register rather than a second independent origin — tier is set on the strength of the register's own two-edition time-stability, not a 2-source count. url_verifier FAILs on both register PDFs on substring tests (documented large-PDF false negative); content confirmed locally via pdftotext -layout on both editions, quoted in the P0912 shard in this brief.",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true, "note": "documented large-PDF false negative on url_verifier; confirmed live 200 + content via curl/pdftotext"},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "documented large-PDF false negative on url_verifier; confirmed live 200 + content via curl/pdftotext"}
+   ],
+   "tier": "medium",
+   "independent": false
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "The length_ratio flag's drawn-vs-sheet mismatch (340 km drawn vs. the sheet's stated length) is a geometry-coverage gap, not evidence the LengthKnownKm number itself is wrong in isolation — DBNPL is a multi-branch network and the current geojson evidently traces only one or two of its branches. Route creation should extend/redraw the geometry to cover the full network; the correct target length to draw to is a separate question (see the spec concern above about which register figure LengthKnownKm should track).",
+   "researcher_notes": "GAIL's own PNGRB Schedule-I capacity-declaration filing for this pipeline (gailebank.gail.co.in/Schedule1/11.html) lists SEVEN separate throughput sections fanning out from a Dadri hub: Dadri-IGL Ghaziabad TOP (16.07 MMSCMD), Dadri-Bawana TOP (15.41), Dadri-Saharanpur TOP (13.05), Dadri-IP2 Yamunanagar (12.77), Dadri-IP3 Rajpura (12.76), Dadri-Nangal (12.73), Dadri-Bhatinda TOP (11.96) — a 7-branch fan-out, not a single trunk. This is consistent with the PNGRB register's multi-state route description for the same pipeline (Punjab, Haryana, Uttar Pradesh, Uttarakhand, Delhi, Himachal Pradesh) and with the register's own footnote (30.06.2025 edition) that 'only spur lines are left in the DBNPL Pipeline' after trunk commissioning — direct regulatory-source confirmation that DBNPL has a trunk-plus-spurs structure. The drawn 340 km route plausibly covers one or two branches of the seven.",
+   "proposed_refs": [
+    "https://gailebank.gail.co.in/Schedule1/11.html",
+    "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf"
+   ],
+   "verifications": [
+    {"url": "https://gailebank.gail.co.in/Schedule1/11.html", "ok": true, "contains_value": true},
+    {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true, "note": "documented large-PDF false negative on url_verifier; confirmed live 200 + content via curl/pdftotext"}
+   ],
+   "tier": "high",
+   "independent": true
+  }
+ ]
+}

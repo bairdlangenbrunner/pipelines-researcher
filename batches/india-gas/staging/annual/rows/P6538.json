@@ -1,0 +1,66 @@
+{
+  "project_id": "P6538",
+  "pipeline_name": "Kakinada-Srikakulam Gas Pipeline",
+  "sheet_row": 3522,
+  "wiki": "https://www.gem.wiki/Kakinada-Srikakulam_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification; see the separate attribution concern below for the naming/spec issue.",
+      "researcher_notes": "EXISTENCE and CLASSIFICATION confirmed. The sheet's own cited source (PNGRB public notice PNGRB/Auth/2-NGPL(19)/2023, 08-Jan-2024, 'PN08012024.pdf') is genuine: PNGRB originally authorized Andhra Pradesh Gas Distribution Corporation (APGDC) for a Kakinada-Srikakulam Natural Gas Pipeline (KSPL) by letter dated 16.07.2014, then cancelled that authorization on 01.12.2023, and on 08.01.2024 opened a suo-motu public-consultation proposal to develop a replacement Kakinada-Srikakulam line via Pithapuram-Anakapalle-Vizianagaram, with a stated minimum capacity requirement of 20 MMSCMD, connecting at the Kakinada end to GAIL's KG Basin network / PIL's East-West pipeline / IMC's Kakinada-Vijayawada-Nellore line, and at Srikakulam to GAIL's Srikakulam-Angul pipeline. I read the PDF directly (2-page scan) and it says exactly this; pdftotext -layout on the downloaded file confirms the same text (url_verifier could not read this file at all -- see note below on a tool limitation, not a content problem). Independent corroboration: cgdindia.net ('PNGRB seeks views on Kakinada-Srikakulam Gas Pipeline', 2024-01-10, verified OK) reports the same notice; PNGRB's own EOI tracking page (NG-eoi.html, verified OK) confirms six entities (HPCL, GAIL, IOCL, IMC, PIL, AG&P) filed comments on this exact proposal. This is not a GEM-only or hallucinated entity -- it is a real, multi-year regulatory record. CLASSIFICATION as 'transmission' is correct: the line is explicitly designed to interconnect several existing/under-construction transmission trunks (KG Basin network, East-West Pipeline, Kakinada-Vijayawada-Nellore, Srikakulam-Angul), not a gathering/feeder line. Cross-check against the roster: GEM also carries P0932 'Kakinada-Vizag-Srikakulam Gas Pipeline' (status=cancelled) in the wider GGIT gas tab -- this is almost certainly GEM's row for the ORIGINAL 2014 APGDC authorization that PNGRB cancelled in Dec 2023, and P6538 is the fresh suo-motu attempt that followed. That is a legitimate lifecycle pair (cancelled predecessor + new proposed attempt), not a duplicate, and it further corroborates that the underlying project is real.",
+      "proposed_refs": [
+        "https://cgdindia.net/pngrb-seeks-views-on-kakinada-srikakulam-gas-pipeline/",
+        "https://www.pngrb.gov.in/eng-web/NG-eoi.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Verify with PNGRB/company sources whether this row's identity (name, start point, capacity) should be updated to track the 'Mallavaram-Srikakulam Natural Gas Pipeline (MSPL)' bid rather than the original Kakinada-Srikakulam suo-motu proposal. Do not fill LengthKnown from the MSPL bid figures (290 km, later revised to 330 km) while this identity question is open -- both numbers belong to a bid that was itself annulled 21-Jan-2026. Hold Capacity at 20 MMSCMD (accurately sourced to the row's own Jan-2024 notice) rather than overwriting with the MSPL bid's 10 MMSCMD, since the two documents may describe different project stages of the same effort, or genuinely different alignments -- Baird should adjudicate.",
+      "researcher_notes": "The row's name ('Kakinada-Srikakulam'), start point (Kakinada) and Capacity (20 MMSCMD) match ONLY the initial 08-Jan-2024 suo-motu consultation notice. I could not find any evidence that a competitive bid was ever actually launched under the 'Kakinada-Srikakulam' name/spec. Instead, PNGRB's EOI tracking page shows the Jan-2024 consultation closing with six stakeholder comments and no listed follow-on bid; separately, PNGRB launched Bid No. BID/NGPL/22/2024/03/MSPL on 13-Dec-2024 for a 'Mallavaram to Srikakulam Natural Gas Pipeline (MSPL)' spanning about 290 km with a MINIMUM system capacity of at least 10.0 MMSCMD (half the sheet's 20 MMSCMD) -- a different start point (Mallavaram, an inland GAIL multi-pipeline hub, not coastal Kakinada) and roughly half the capacity. Independent trade press (projxnews.com, 'Mallavaram-Srikakulam Pipeline: More Time to Bid', verified OK) corroborates the 290 km / 10 MMSCMD spec and that PNGRB extended the bid deadline to 30-May-2025, with pre-bid attendees IOCL, HPCL, Megha Engineering, PIL, GAIL and GSPL -- four of those six overlap with the six entities that commented on the earlier Kakinada-Srikakulam proposal (GAIL, IOCL, HPCL, PIL). Both processes serve the same gas-deficient Srikakulam corridor, follow directly on the 2023 cancellation of the original APGDC authorization, and no independent source describes a THIRD, separate Srikakulam-bound pipeline process. That is circumstantial, not source-confirmed, so I am flagging rather than asserting identity. CRITICAL LATEST DEVELOPMENT: PNGRB's own public notice BID/NGPL/22/2024/03/MSPL/06 (21-Jan-2026) states the pipeline's scope had grown to 'about 330 km' by the time of annulment, and that PNGRB received technical bids from IOCL, GAIL, TNPCL and Dilip Buildcon; GAIL/TNPCL/DBL were technically qualified and financial bids were opened; but PNGRB then ANNULLED the entire bidding process, citing 'uncertainties related to gas availability, associated infrastructure, and procedural limitations' and stating it will 'consider afresh the relevant variable factors including modification on proposed route of pipeline.' In other words, as of the newest evidence, whatever this project is called, its route/capacity are explicitly back under regulatory review -- so even the MSPL numbers (290/330 km, 10 MMSCMD) should not be treated as settled, and I am not proposing them as fills under the Kakinada-Srikakulam name. TOOL NOTE: url_verifier.py returned FAIL on every PNGRB PDF I checked here (PN08012024.pdf, SB-MSPL-20241212.pdf, 20260121_PN_Bid.pdf), including on single common tokens like bare 'Kakinada'. Inspecting the script, its content check runs the substring test on raw `requests` response bytes (`r.text`) with no PDF text-extraction step at all -- it only works for HTML/text pages, and silently fails (or spuriously 'passes' on coincidental byte matches) for any PDF, regardless of whether the document is real and on-topic. This matches the script's own documented false-negative categories ('a FAIL is NOT proof the source is dead... download it and pdftotext -layout'). I downloaded all three PDFs directly and confirmed via `pdftotext -layout` (poppler) AND via a direct read of the PDF that the exact expected text is present verbatim (e.g. 'Mallavaram to Srikakulam Natural Gas Pipeline spanning about 330 km', 'PNGRB has decided to hereby annul the entire bidding process'). I'm citing these three PDFs on that manual-verification basis per the script's own documented override path, and flagging the underlying tool gap (PDF citations project-wide get no real content screening from url_verifier.py) as something Baird may want to fix in the script itself.",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/eng-web/ng-bid-22.html",
+        "https://projxnews.com/Chemicals-Mining/mallavaram-srikakulam-pipeline-more-time-to-bid",
+        "https://pngrb.gov.in/pdf/ngp/bid/bid22/SB-MSPL-20241212.pdf",
+        "https://www.pngrb.gov.in/pdf/ngp/bid/bid22/20260121_PN_Bid.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3522,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-01",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/eng-web/ng-bid-22.html",
+        "https://projxnews.com/Chemicals-Mining/mallavaram-srikakulam-pipeline-more-time-to-bid",
+        "https://www.pngrb.gov.in/pdf/ngp/bid/bid22/20260121_PN_Bid.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/eng-web/ng-bid-22.html", "ok": true, "contains_value": true},
+        {"url": "https://projxnews.com/Chemicals-Mining/mallavaram-srikakulam-pipeline-more-time-to-bid", "ok": true, "contains_value": true},
+        {"url": "https://www.pngrb.gov.in/pdf/ngp/bid/bid22/20260121_PN_Bid.pdf", "ok": false, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB register crosswalk (register_crosswalk.json) independently classifies P6538 as ABSENT_NOT_AUTHORISED in the May-2026 PNGRB MIS register -- correct and expected, since this line has never reached authorisation. Status='proposed' is still the right call: not by default/no-news but because there is continuous, recent, well-dated regulatory activity confirming the project is alive and pre-construction. Timeline of evidence, newest first: 21-Jan-2026 -- PNGRB (public notice BID/NGPL/22/2024/03/MSPL/06, manually confirmed via pdftotext since url_verifier cannot read PDF bodies -- see the attribution finding in `validity` for detail) ANNULLED the entire bid process for the Srikakulam-bound pipeline (by then 'about 330 km', still Mallavaram-origin) after technical/financial bids had already been opened, citing gas-availability and route uncertainties, and says PNGRB will reconsider the route. May-2025 -- bid deadline extended to 30-May-2025 (projxnews.com, independent, verified). Dec-2024-Apr-2025 -- four corrigenda and two rounds of pre-bid clarifications on PNGRB's own bid page (ng-bid-22.html, verified), with a pre-bid conference (17-Jan-2025) attended by IOCL, HPCL, Megha Engineering, PIL, GAIL, GSPL. This is a live, actively-managed regulatory process through at least Jan-2026 -- the opposite of dormancy, so none of the staleness/dormancy rules apply (there is no 2-year gap in activity, let alone 4). Whether the currently-active process is legally 'the same' pipeline as the row's Kakinada-Srikakulam name is a separate, open ATTRIBUTION question (flagged in `validity`) -- but under EITHER reading (same project renamed, or the Kakinada-Srikakulam proposal quietly lapsed and a related-but-distinct Mallavaram-Srikakulam project is what's actually moving), the correct GEM Status for a pipeline that has not been authorised, not started construction, and is now explicitly back at the route-reconsideration stage is still 'proposed', not 'shelved' or 'cancelled' -- there is no lapsed target date or years-long silence here, just an unusually eventful pre-authorisation history. AUTHORISATION-DATE TRAP avoided: the 16.07.2014 APGDC authorisation date belongs to the CANCELLED predecessor project (now presumably GEM's P0932), not to this row -- I have not used it as a StartYear1/ConstructionYear input for P6538."
+    }
+  ],
+  "summary": "P6538 is a real, well-documented PNGRB regulatory effort (not a phantom) and 'transmission'/'Gas' classification is correct; status='proposed' is confirmed current through a Jan-2026 PNGRB notice. But the row's name (Kakinada-Srikakulam), start point (Kakinada) and Capacity (20 MMSCMD) track only the original Jan-2024 suo-motu proposal -- the regulatory process that actually reached a competitive bid for what looks like the same Srikakulam corridor (Dec-2024-Jan-2026) was named 'Mallavaram-Srikakulam Natural Gas Pipeline (MSPL)', started from Mallavaram not Kakinada, sought only 10 MMSCMD minimum capacity, grew to ~330 km, and was then ANNULLED by PNGRB on 21-Jan-2026 pending a route rethink -- flagged as an attribution concern (medium tier, circumstantial link) for Baird to adjudicate rather than a value change I'm forcing through. No blank fields filled (Length/Diameter/Owner all correctly left blank pending that identity call). UNRESOLVED: whether P6538 should be renamed/rerouted to MSPL, split into two rows, or left as-is pending PNGRB's next move; also flagged a url_verifier gap (no real PDF text extraction) affecting any future PNGRB-PDF citation, not specific to this row."
+}

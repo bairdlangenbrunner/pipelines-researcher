@@ -1,0 +1,154 @@
+{
+  "project_id": "P6562",
+  "pipeline_name": "Kanai Chhata-Panitar Gas Pipeline",
+  "sheet_row": 3526,
+  "wiki": "https://www.gem.wiki/Kanai_Chhata-Shrirampur_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the fills/status-review below.",
+      "researcher_notes": "EXISTENCE / CLASSIFICATION / SPEC: real, PNGRB-authorised project, correctly classified. PNGRB's own line-wise NGPL MIS register (Physical Progress Report of Natural Gas Pipeline, 'UNDER CONSTRUCTION COMMON CARRIER PIPELINE' section, s.no 3) carries an exact 1:1 match: 'Kanai - Chhata - Panitar', entity HPPL (Hooghly Pipelines Pvt Ltd, an H-Energy subsidiary), authorisation date 08.07.2019, authorised length 317 km, authorised/determined capacity 19.2 MMSCMD, target completion Mar-24, states WB -- matching GEM's LengthKnown=317.00 km and Capacity=19.20 MMSCMD exactly. Confirmed this row line-item, not just an aggregate total, directly via pdfplumber text extraction of the 2025-06-30 and 2025-10-31 editions (https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf, https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf) -- both print the identical row. The repo's already-reconciled 2026-05-31 extraction (batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json, verified against the report's own printed section totals) shows the same figures. NOTE: url_verifier.py FAILs the content check on all three PDF URLs ('missing expected'); this is the documented large/binary-PDF false-negative (verify_url does a raw-bytes substring match with no PDF text layer extraction at all -- it never actually reads PDF text). I manually confirmed content with pdfplumber before citing; the tool's own docstring anticipates exactly this workaround. PipelineType=transmission and Fuel=Gas are both correctly recorded (common-carrier trunk line, not a gathering/feeder line) -- PipelineType/Fuel [ref] already verify OK on the sheet's existing pngrb.gov.in/eng-web/data-bank.html anchors. INDEPENDENT, NON-PNGRB confirmation that the project physically exists and its route runs through West Bengal: FOUR separate notices from the Hooghly District Magistrate's office (govt of West Bengal, land-acquisition authority, not PNGRB and not GEM) specifically named 'Kanaichatta to Panitar' / 'Kanaichatta-Panaithor' natural gas pipeline (H-Energy) -- https://hooghly.nic.in/notice/notice-regarding-kanaichatta-to-panitar-natural-gas-pipeline-project/ (Feb-Mar 2024), https://hooghly.nic.in/notice/notification-of-land-acquisition-for-kanaichatta-panitar-natural-gas-pipeline/ (Mar-Apr 2024), and two block-level Sec 3(1) notice-distribution pages for Balagarh and Chinsura-Mogra blocks (both Hooghly district) -- all url_verifier OK. CAVEAT (see status_reviews): despite the live authorisation, PNGRB's own filings show ZERO km built (operating/hydrotested/welded/lowered all 0) against a target completion (Mar-2024) that has now lapsed by over two years -- flagged there, not here, since the pipeline's existence/classification/spec are not in doubt, only its true current status.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf",
+        "https://hooghly.nic.in/notice/notice-regarding-kanaichatta-to-panitar-natural-gas-pipeline-project/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Not a merge -- do not delete either row. P2214 ('Kanai Chhata-Shrirampur Gas Pipeline', cancelled, EndState/Province=Maharashtra, 250 km) is the PRE-2022 identity of this same authorised project, not an independent pipeline. Recommend: (1) backfill P6562.OtherEnglishNames = 'Kanai Chhata-Shrirampur Gas Pipeline' (currently blank) so the lineage is discoverable; (2) route P2214 to Update for a look -- its 'cancelled' status and Maharashtra terminus likely describe the pre-amendment routing/name rather than a genuinely separate cancelled project, and its EndState/Province='Maharashtra' looks like a place-name collision (there is a Shrirampur in Ahmednagar, Maharashtra, and a different Shrirampur in Nadia district, West Bengal -- independent sourcing puts the ORIGINAL 2019 terminus at Shrirampur, Nadia, WEST BENGAL, not Maharashtra). Out of this batch's scope to edit P2214 directly.",
+      "researcher_notes": "P6562's own Wiki field points at https://www.gem.wiki/Kanai_Chhata-Shrirampur_Gas_Pipeline -- the IDENTICAL wiki URL recorded for a wholly separate GEM ProjectID, P2214 ('Kanai Chhata-Shrirampur Gas Pipeline'), per data/GGIT_gas_snapshot_20260810.csv. Read for leads only (never cited): that wiki page's own prose states the pipeline was 'Originally the Kanai Chhata-Shrirampur Gas Pipeline, later re-named as Kanai Chhata-Panitar Gas Pipeline' and that a '2022: Route amendment approved, changing terminus from Shrirampur, Maharashtra to Panitar, West Bengal' -- i.e. gem.wiki itself documents these as ONE project's two successive identities, not two pipelines. Independent, non-GEM corroboration of the SAME lineage found via open web search (a secondary infrastructure-database description of the original PNGRB authorisation): the July 2019 authorisation was for 242 km 'from Kanai Chhata in East Medinipur, to Shrirampur in Nadia, West Bengal' at capacity 19.2 MMSCMD (unchanged since); PNGRB approved a route amendment in 2022 moving the terminus to Panitar and the length to 317 km. Every fact GEM's two rows disagree on lines up with 'same project, two dates': ProposalYear 2019 on both, Capacity 19.2 MMSCMD on both (unchanged across the amendment), only Length (250 vs 317 km) and EndLocation/EndState (Shrirampur/Maharashtra vs Panitar/West Bengal) differ -- exactly what a route amendment would change. Since P2214 already reads 'cancelled', there is no live double-count in country under-construction totals, so I am not flagging this as a data-quality emergency -- but leaving both rows unlinked risks a future researcher treating P2214 as a genuinely separate, previously-real 250 km Maharashtra-bound line that fell through, when the evidence says it is this same 317 km West Bengal project before its 2022 reroute.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3526,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2019"},
+      "primary_value": "2019",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's NGPL MIS report (line item s.no 3, under-construction section, entity HPPL) records authorisation date 08.07.2019 for this exact project (317 km / 19.2 MMSCMD / target Mar-24), matching GEM's ProposalYear=2019. Confirmed by pdfplumber text extraction of the 2025-10-31 edition (url_verifier's content check false-negatives on this PDF -- raw-bytes substring match, no PDF text layer read -- see validity notes; manually confirmed instead). Single origin (PNGRB), so tier=medium/not independent -- the authorisation date is what GEM's 2019 figure traces to, not a second confirming source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3526,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2024"},
+      "primary_value": "2024",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could NOT find support for StartYear1=2024 -- and found evidence against it. 2024 matches the PNGRB register's ORIGINAL target completion date (Mar-24), but PNGRB's own filings through 2025-10-31 (the newest edition I could directly confirm) still show 0 km operating / 0 km hydrotested / 0 km welded / 0 km lowered against the full 317 km authorised length -- i.e. the target was missed with zero measurable physical progress, not merely a late 2024 start. Per this batch's guidance (target-completion dates are a plan, not an outcome, and the register's own 'under construction' bucket is not evidence of activity), StartYear1=2024 looks like a stale copy of the original target rather than a sourced start date. Left unresolved rather than fabricating a ref; see status_reviews for the fuller dormancy finding and recommended action."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3526,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "19.20", "CapacityUnits": "MMSCMD"},
+      "primary_value": "19.20",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB register: authorised capacity 19.2 MMSCMD, determined capacity 19.2 MMSCMD, for this exact line item (s.no 3, HPPL, 08.07.2019, 317 km, WB, target Mar-24) -- confirmed by pdfplumber extraction of the 2025-10-31 edition and matched by the 2025-06-30 edition and the repo's reconciled 2026-05-31 extraction. Per this batch's country guidance, GEM's India Capacity column is already sourced from PNGRB's authorised MMSCMD figure, so this is the correct primary citation but not a second independent source -- tier=medium accordingly. Independently, open-web description of the original 2019 authorisation (pre-2022 amendment, 242 km version) also states capacity '19.2 MMSCMD including common carrier capacity of 4.8 MMSCMD' -- the number has been stable across the 2022 route amendment, some corroboration that 19.2 is not a stale pre-amendment artifact, though I could not pin down a directly citable URL for that secondary description so it is not listed as a ref here."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3526,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "317.00", "LengthKnownUnits": "km"},
+      "primary_value": "317.00",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB register: authorised length 317 km for this exact line item, confirmed by pdfplumber extraction of the 2025-10-31 edition and matched by the 2025-06-30 edition and the repo's reconciled 2026-05-31 extraction (all post-2022-amendment figures; the pre-amendment 2019 authorisation was 242 km to Shrirampur -- see the P2214 duplicate/lineage finding in validity). Single-origin (PNGRB is the origin of this post-amendment figure), tier=medium, not marked independent."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3526,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "EndPrefecture/District",
+      "values": {"EndPrefecture/District": "Hooghly"},
+      "primary_value": "Hooghly",
+      "proposed_refs": [
+        "https://hooghly.nic.in/notice/notice-regarding-kanaichatta-to-panitar-natural-gas-pipeline-project/",
+        "https://hooghly.nic.in/notice/notification-of-land-acquisition-for-kanaichatta-panitar-natural-gas-pipeline/"
+      ],
+      "verifications": [
+        {"url": "https://hooghly.nic.in/notice/notice-regarding-kanaichatta-to-panitar-natural-gas-pipeline-project/", "ok": true, "contains_value": true},
+        {"url": "https://hooghly.nic.in/notice/notification-of-land-acquisition-for-kanaichatta-panitar-natural-gas-pipeline/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EndPrefecture/District was blank. Panitar, the pipeline's terminus, sits in Hooghly district, West Bengal -- directly established by the Hooghly District Magistrate's own land-acquisition notices for THIS project ('Kanaichatta to Panitar' / 'Kanaichatta-Panaithor natural gas pipeline (H-Energy)'), plus two further block-level Sec 3(1) notices addressed to the BDOs of Balagarh and Chinsura-Mogra -- both administrative blocks within Hooghly district -- confirming the route runs through Hooghly district specifically, not just 'somewhere in West Bengal'. All four notices url_verifier OK; two cited here (the other two: https://hooghly.nic.in/notice/notice-to-the-bdo-balagarh-about-31-notice-distribution-of-kanaichatta-panaithor-natural-gas-pipeline-project-h-energy/ and https://hooghly.nic.in/notice/notice-to-the-panchayat-about-31-notice-distribution-of-kanaichatta-panaithor-natural-gas-pipeline-project-h-energy/, also url_verifier OK). tier=medium since all four notices share one origin (Hooghly District administration), even though they are separate documents about different route segments. StartPrefecture/District (Kanai Chhata) left BLANK/unresolved: secondary sources describe it as near Contai and 'in East Medinipur', consistent with Contai's own well-known district (Purba Medinipur), but I could not find a single directly-citable, verified URL stating Kanai Chhata's district explicitly, so I did not force it -- do not fabricate a ref for it."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3526,
+      "current_status": "construction",
+      "verdict": "stale",
+      "proposed_status": "shelved",
+      "proposed_changes": {"Status": "shelved", "ShelvedCancelledType": "inferred"},
+      "evidence_date": "2025-10",
+      "staleness_rule": "2y->shelved",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf",
+        "https://hooghly.nic.in/notice/notification-of-land-acquisition-for-kanaichatta-panitar-natural-gas-pipeline/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20251031-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://hooghly.nic.in/notice/notification-of-land-acquisition-for-kanaichatta-panitar-natural-gas-pipeline/", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is the trap-4 pattern this country's guidance specifically flags (Ennore-Nellore/P0921 precedent): a live PNGRB authorisation sitting in the 'under construction' register bucket is NOT itself evidence of activity, and a lapsed target with zero physical progress is evidence FOR shelved/dormant, not for construction. Checked the actual line item (not the section aggregate) across THREE dated editions: 2025-06-30, 2025-10-31 (both pdfplumber-confirmed directly by me: 'Kanai - Chhata - Panitar HPPL 08.07.2019 317 19.2 ... 0 317 0 0 0 Mar-24 WB' -- operating length 0, hydrotested 0, welded 0, lowered 0, under-construction-remaining 317 of 317, target Mar-24), and the repo's independently reconciled 2026-05-31 extraction (batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json, verified against the report's own printed totals), which shows the identical zero-progress reading. Three consecutive editions spanning at least eleven months (Jun-2025 -> Oct-2025 -> May-2026) show NO movement whatsoever on any physical-progress metric, against a target completion (Mar-2024) that is now more than two years overdue. Independent (non-PNGRB) context: the Hooghly District Magistrate's land-acquisition notices for this exact project are dated Feb-Apr 2024 -- i.e. land acquisition was still underway right around the original target date, consistent with the project having been far from completion when it was supposed to finish, and I found no notices or news newer than Apr-2024 indicating the acquisition process (let alone actual pipe-laying) progressed further. I found no independent news story explicitly declaring the project shelved, cancelled, or abandoned -- only the absence of any progress signal since. This is a 'stale' verdict under the dormancy rules, treated the same way this country's guidance treats a stalled 'under construction' register entry with a lapsed target and no physical progress (staleness_rule '2y->shelved' is the closest of the two given rules -- I'm applying the 2-year-no-progress logic to a 'construction' status that has produced literally 0 km of welded/hydrotested/lowered pipe for at least the eleven months I could directly measure, and against a target that lapsed over two years ago). NOT recommending 'cancelled' -- the authorisation is still live and PNGRB has not delisted it, which only supports 'shelved', not 'cancelled'. The existing sheet ref for Status (pngrb.gov.in/eng-web/data-bank.html#bm6 / #bm7) itself fails url_verifier's content check for 'construction' (it passes for Fuel/PipelineType) -- it is a generic/dynamic portal anchor, not a citable line item; recommend replacing it with the MIS report PDF citations above regardless of which way the Status question resolves. Flagging this for human review rather than unilaterally downgrading -- Baird should weigh in given PNGRB itself still lists it as 'under construction' on paper."
+    }
+  ],
+  "summary": "P6562 (Kanai Chhata-Panitar, HPPL/H-Energy, PNGRB-authorised 08.07.2019) exists, is correctly classified, and its 317 km / 19.2 MMSCMD match PNGRB's register exactly across three report editions (2025-06 to 2026-05) -- but shares its wiki page with cancelled row P2214 ('Kanai Chhata-Shrirampur'), which is this same project's pre-2022-amendment identity, not a separate pipeline (flagged duplicate/lineage, recommend OtherEnglishNames backfill + P2214 review); and PNGRB's own filings show ZERO physical progress across at least 11 months against a target that lapsed over 2 years ago, so Status=construction is flagged stale with a proposed change to shelved (ShelvedCancelledType=inferred) for human review. Filled Proposal/Capacity/Length refs and EndPrefecture/District=Hooghly (medium tier, PNGRB/Hooghly-govt single-origin). UNRESOLVED: StartYear1=2024 (contradicted by zero progress, no ref proposed) and StartPrefecture/District (no directly citable source found)."
+}

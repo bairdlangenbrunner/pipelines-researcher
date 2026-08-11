@@ -1,0 +1,56 @@
+{
+  "project_id": "P0904",
+  "pipeline_name": "Agartala Regional Gas Network",
+  "sheet_row": 468,
+  "wiki": "https://www.gem.wiki/Agartala_Regional_Gas_Network",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action; ref-fill Status/Fuel/PipelineType/Start/Capacity/FuelSource/Location/Owner with the PNGRB authorization letter",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/ATTRIBUTION confirmed, real pipe. The gem.wiki page's own citations (both first-party PNGRB) check out: (1) http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter2gail15dec.pdf is a genuine PNGRB 'Final Terms and Conditions for Acceptance of Central Government Authorization' letter dated 13 Dec 2010, addressed to the Chairman & Managing Director of GAIL (India) Ltd, subject 'laying, building, operating or expanding Agartala regional natural gas pipeline network as common carrier pipeline network'. It is a scanned/image-only PDF (no text layer) so url_verifier 200s but keyword-misses -- confirmed manually by rendering pages 1-2 with pdftoppm and reading them. Page 2 states: 'The capacity of Agartala regional natural gas pipeline network, length 55.4 kms, diameter ranging from 12 inches to 8 inches, is equal to 2.00 MMSCMD as indicated by GAIL' and 'As indicated by GAIL, Agartala regional network was commissioned in year 1997-1998'. This directly confirms Status=operating (it was declared a common-carrier transmission network), PipelineType=transmission, Capacity=2.00 MMSCMD, StartYear1=1997 (commissioning window 1997-1998, matches GEM's earliest year), Owner=GAIL (India) Ltd 100% (GAIL is the sole authorized entity addressed in the letter), and LengthKnown=55.00 km (rounds the letter's 55.4 km). (2) The PNGRB 'Welcome to PNGRB' data-bank landing page (https://pngrb.gov.in/eng-web/data-bank.html) is generic and does not name this pipeline on its own -- not used as a standalone confirmation, only as the portal that hosts the monthly line-wise report. INDEPENDENT CURRENT CHECK: fetched the current PNGRB monthly line-wise register (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, edition 31 May 2026) and confirmed via `pdftotext -layout` (url_verifier 200s but keyword-misses on this large multi-column PDF -- documented false-negative, confirmed locally per the scope guidance) that row 9 of the OPERATIONAL COMMON CARRIER section still lists: 'Agartala Regional Network | GAIL | 13.12.2010 | Authorised Length 55 km | Authorised/Design Capacity 2.0/2.0 MMSCMD | Natural Gas Supplied 0.7 MMSCMD | Utilisation 33% | Operating Length 65 km'. So the pipeline is still operating in 2026, still 100% GAIL, and Capacity is still exactly 2.0 MMSCMD -- all match the sheet. FuelSource=Tripura Gas Field is corroborated by independent trade-press coverage (ProjectsToday) describing the line as running 'from the Tripura gas field near Khowai, Tripura to Agartala, Tripura' -- consistent with GEM's StartState/Province=Tripura, EndLocation=Agartala. No duplicate: checked against the roster of 35; nothing else touches Tripura/the Northeast except Assam Regional Gas Network (P0906) and Barauni-Guwahati (P0907), both physically distinct systems in a different state. The 2010 letter separately notes a 4in/5.2km 'Dukli-TNGCL Maharajganj' line is NOT part of the Agartala network (GAIL was told to apply for it separately) -- that line is not in GEM's 35-row India roster, so it is not a hidden duplicate of P0904 either. CAVEAT ON SOURCING: both strong documents are PNGRB (single origin, albeit 16 years apart and two different document types -- a legal authorization order vs. an ongoing regulatory disclosure); I could not find a second, organizationally-independent source (GAIL's own site and Tripura Natural Gas Company Ltd's site both stay generic about Tripura CGD and do not name this transmission line or its specs) so tier is medium rather than high on the attribute-level items, while existence/status itself is about as solid as it gets for India (first-party regulator authorization + current regulator audit).",
+      "proposed_refs": [
+        "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter2gail15dec.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify and consider updating LengthKnown from 55.00 to 65.00 km (or add a ResearcherNotes caveat) -- the regulator's own AUTHORISED length has stood at 55 km since 2010 (matches GEM), but its OPERATIONAL length in the current 31-May-2026 filing is 65 km, an 18% increase not reflected in the sheet",
+      "researcher_notes": "SPEC check on LengthKnown. GEM has LengthKnown=55.00 km, which matches the PNGRB-AUTHORISED length exactly (55.4 km per the 2010 letter, rounded; 55 km per the current monthly report's 'Authorised Length' column). But the SAME current report (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, confirmed locally via pdftotext -layout, url_verifier false-negatives on this large PDF per the documented pattern) lists a separate 'Operating Length (KM)' column value of 65 km for Agartala Regional Network as of May 2026 -- i.e. the physical network has grown beyond its original 55/55.4 km authorization without (yet) a matching upward revision to the Authorised Length figure. This is a real, material discrepancy (roughly +18%) between GEM's tracked length and the regulator's current physical-extent figure, not a unit or transcription error. I did not overwrite LengthKnown myself since 'authorised' vs 'operational' length is a genuine methodological choice (GEM's LengthKnown has consistently tracked the authorised figure for this row since 2023), so I'm flagging it for Update to decide which figure GEM should carry going forward, rather than silently applying it.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 468,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "8, 12", "DiameterUnits": "in"},
+      "primary_value": "8, 12",
+      "proposed_refs": ["http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter2gail15dec.pdf"],
+      "verifications": [
+        {"url": "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter2gail15dec.pdf", "ok": true, "contains_value": "manual (image-only PDF, no text layer; confirmed by rendering page 2 with pdftoppm)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's 13-Dec-2010 authorization letter to GAIL, page 2, section 3: 'The capacity of Agartala regional natural gas pipeline network, length 55.4 kms, diameter ranging from 12 inches to 8 inches, is equal to 2.00 MMSCMD as indicated by GAIL.' This is the same authorization letter already cited on the gem.wiki page for other facts (never cited GEM/gem.wiki itself, only the underlying PNGRB PDF). Diameter field was blank in the sheet; filled with the low-to-high range GAIL itself submitted to the regulator. url_verifier 200s the URL but reports the expected tokens missing because the PDF is scanned/image-only with no extractable text layer -- confirmed the exact wording manually by rendering the page."
+    }
+  ],
+  "summary": "P0904 (Agartala Regional Gas Network) confirmed real, correctly classified (GAIL 100%-owned common-carrier transmission line, operating since 1997-98, 2.0 MMSCMD, no duplicate in the 35-row roster) via PNGRB's own 2010 authorization letter plus the current 31-May-2026 PNGRB monthly register -- tier medium (single-origin regulator, though two document types 16 years apart); staged a Diameter fill (8, 12 in) off the same letter, and flagged one spec concern: GEM's LengthKnown=55 km matches the stale 'authorised' figure while the current PNGRB filing shows 65 km 'operational' length, an unresolved 18% gap worth a follow-up decision."
+}

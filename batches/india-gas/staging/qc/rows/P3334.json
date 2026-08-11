@@ -1,0 +1,35 @@
+{
+ "project_id": "P3334",
+ "pipeline_name": "Digha–Contai Gas Pipeline",
+ "sheet_row": 1742,
+ "wiki": "https://www.gem.wiki/Digha%E2%80%93Contai_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "H-Energy Private Limited"},
+   "primary_value_col": "Operator",
+   "primary_value": "H-Energy Private Limited",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.business-standard.com/article/companies/h-energy-plans-rs-3-700-cr-investment-for-regasification-project-in-bengal-119010900841_1.html"
+   ],
+   "verifications": [
+    {"url": "https://www.business-standard.com/article/companies/h-energy-plans-rs-3-700-cr-investment-for-regasification-project-in-bengal-119010900841_1.html", "ok": true, "contains_value": true, "note": "url_verifier OK, 200 + content present."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "COMPANY-LEVEL FINDING applied across this brief: H-Energy Pvt Ltd is the common proponent/operator on all H-Energy rows in this brief (established once at P0935, applied here). Business Standard (09 Jan 2019) states H-Energy 'won a tender issued by the Kolkata Port Trust for commission and OPERATION of a Floating Storage and Regasification Unit (FSRU)' at Digha/Kolkata Port Trust waters -- explicit operate-language, not just an investor/owner claim. Same article, in the same paragraph, describes 'a pipeline which will transport the gas from offshore Digha to Khulna [Bangladesh border]' and separately states the FSRU 'will be connected to the Onshore Receiving Facilities at Contai through a 115 km long subsea pipeline' -- both the H-Energy attribution and the 115 km figure are this project. Could not find a second fully independent source (H-Energy's h-energy.com is dead/parked; henergy.com fails to load and its Wayback snapshot is a JS shell with no text) so tier stays medium."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm off this flag alone -- 115 km is independently corroborated (see below). Route to Route Creation / geometry review: the drawn geojson (599 km, ratio 5.21) is very likely the wrong geometry for this row, not a wrong length value. RouteAccuracy is already 'low', consistent with a shaky route.",
+   "researcher_notes": "The Business Standard article (same source cited in the Operator fill above, verified OK) independently states the FSRU-to-Contai subsea pipeline is '115 km long' -- matching LengthKnownKm=115.00 on the sheet exactly, and matching neither the drawn route's 599 km nor P0913's 705 km. This corroborates the SHEET's length value as correct and points at the drawn geometry as the error (per the brief's own note that P3334's 599 km is suspiciously close to P0913's 705 km, suggesting a mixed-up or over-long route rather than a mixed-up length figure). Not proposing new coordinates -- that is Route Creation's job, not mine, and the brief explicitly frames redundancy cluster J's entanglement as adjudicated elsewhere, not by this leg."
+  }
+ ]
+}

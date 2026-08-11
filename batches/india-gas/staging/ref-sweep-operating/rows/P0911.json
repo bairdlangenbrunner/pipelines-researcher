@@ -1,0 +1,78 @@
+{
+  "project_id": "P0911",
+  "pipeline_name": "Cauvery Basin Gas Network",
+  "sheet_row": 473,
+  "wiki": "https://www.gem.wiki/Cauvery_Basin_Gas_Network",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action — existence strongly confirmed across three independent sources spanning 22 years",
+      "researcher_notes": "EXISTENCE: strong, multi-decade, cross-source confirmation. (1) Energy News Bulletin (independent Australasian trade press, Aspermont), 29 Jun 2004: GAIL 'supplies 1.9 mmscmd of gas to 50 consumers in five zones in the Cauvery Basin. Its pipeline network there stretches for around 190 km' and reports GAIL beginning construction of a new Narimanam-Kuthalam link. Fetched directly (curl with generic Mozilla UA gets a Cloudflare challenge page, but the pipelines-researcher UA passes cleanly with a 200 and the full article body — confirmed by direct request, not just url_verifier). (2) PNGRB (regulator) provisional authorization letter to GAIL CMD, No. Infra/PL/Exis/17/Cauvery-REG/GAIL/01/09, dated 04 Nov 2009: names 'Cauvery Basin Natural Gas Pipeline Network of GAIL' explicitly, states the network 'has already been completed and commissioned between year 1991 to 2005', gives length 266.26 km (diameter 2-18 inches, design capacity 8.662 MMSCMD, common-carrier capacity 2.166 MMSCMD) across four sub-networks (Narimanam/Kuthalam, Bhuvanagiri, Ramnad, Kovilkalappal/Tirumakkottai), and lists 61 named individual segments with commissioning dates 1993-2006 in Annexe-I. This PDF is a scanned image (no text layer) so url_verifier FAILs on 'Cauvery' as a substring miss (documented scanned-PDF false negative) — I OCR'd all 4 pages with tesseract and manually confirmed the content. (3) PNGRB's current (31 May 2026) NGPL-MIS report line-item table: 'Cauvery Basin Network / GAIL / 04.11.2009 [authorisation date, matching the 2009 letter exactly] / authorised 240 km / operating 242 km / capacity 4.3 MMSCMD'. url_verifier also FAILs on this one (documented large-PDF extraction limit) but I confirmed locally with pdftotext -layout. All three sources — spanning a live trade-press report, a primary regulatory authorization document, and the regulator's own current operating register — independently agree the network is real, growing over time (190km/1.9mmscmd in 2004 -> 266km declared at authorization in 2009 -> 240/242km operating today), and centered on Narimanam/Tamil Nadu. No existence concern.",
+      "proposed_refs": [
+        "https://www.energynewsbulletin.net/archive/news/1055674/gail-begins-tamil-nadu-pipeline",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/GAIL-Cauvery-Prov.%20T&C.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action — classification and Status=operating both correct",
+      "researcher_notes": "CLASSIFICATION: correctly recorded. PNGRB's own regulation explicitly authorizes it 'as common carrier pipeline network' (2009 letter subject line) and the current 2026 NGPL-MIS report still lists it under the OPERATIONAL section with an active monthly gas-supply figure and capacity-utilization percentage (~27% util. in the latest edition) — this is a live, in-use transmission network, not a dormant or gathering-only system, so PipelineType='transmission' and Status='operating' are both correct. Like GEM's other Indian 'Regional/Basin Gas Network' rows (Assam Regional, Gujarat Regional), this entry aggregates a common-carrier network of interconnected trunk + consumer-lateral segments under one PNGRB authorization rather than a single point-to-point line — that's the right granularity choice, matching how PNGRB itself reports it as one authorized asset.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/GAIL-Cauvery-Prov.%20T&C.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action — checked against the full 35-pipeline India-gas roster, no overlap found",
+      "researcher_notes": "DUPLICATE CHECK: no other roster row plausibly represents the same physical network. P0911 is the only Cauvery-basin/Narimanam-area entry among the 35 in-scope pipelines; the closest geographic neighbors on the roster (P0934 Kochi-Koottanad-Bangalore-Mangalore in Kerala/Karnataka) are a different basin and a different GAIL system entirely. No relabel or segment double-count risk identified.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "consider adding Puducherry alongside Tamil Nadu on the state/province field(s) — the regulator's own current register lists the network as traversing both",
+      "researcher_notes": "OWNER: GAIL (India) Ltd 100% is directly confirmed — the 2009 PNGRB authorization letter is addressed to 'The Chairman & Managing Director, M/s GAIL (India) Limited' as the sole applicant/authorized entity, and the current 2026 PNGRB MIS report lists the entity column for this line as 'GAIL'. High confidence, single consistent owner across 17 years of regulatory record. LOCATION caveat: GEM records StartState/Province and EndState/Province both as Tamil Nadu, but the current PNGRB MIS report lists the states traversed for this network as 'PY & TN' (Puducherry AND Tamil Nadu) — Puducherry town/enclave sits directly among the Narimanam-area fields this network serves. This is a plausible minor gap (GEM may be under-recording Puducherry as a traversed state) but I could not independently pin down which specific segment/GCS sits in Puducherry territory from the sources at hand, so I'm flagging it as a caveat for a follow-up look rather than proposing a change now.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/GAIL-Cauvery-Prov.%20T&C.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "no change to Length/Capacity — both current; note the 2009 authorization figures reflect a broader as-built inventory at that point in time, not a conflicting current value",
+      "researcher_notes": "LENGTH: GEM's 242.55 km matches the CURRENT PNGRB register almost exactly (240 km authorised / 242 km operating, 31 May 2026 edition) — well within normal rounding. The 2009 authorization letter's total of 266.26 km is a DIFFERENT point in time and a broader as-built inventory (61 individual named segments down to single-customer laterals as short as 0.06 km, including two lines the Annexe itself marks 'ONGCL taken over P/L' i.e. since divested out of GAIL's authorized network) — a ~24 km gap between the 2009 as-built total and the current authorised/operating figure is fully explained by that divestment plus authorization-scoping, not a data error. CAPACITY: GEM's 4.33 MMSCMD matches the CURRENT PNGRB authorised capacity of 4.3 MMSCMD almost exactly. The 2009 letter's figures (8.662 MMSCMD total design capacity across all consumer laterals, 2.166 MMSCMD common-carrier-designated capacity) are again a 2009 snapshot under a different capacity-determination methodology, later superseded by PNGRB's own subsequent capacity determinations — not a conflict with the current 4.3/4.33 figure. STARTYEAR: GEM's StartYear1=1991 is directly confirmed by the 2009 letter's statement that the network 'has already been completed and commissioned between year 1991 to 2005' — 1991 is exactly the stated start of that commissioning window. DIAMETER (currently blank): the 2009 letter states an overall range of 2 to 18 inches, and Annexe-I gives a per-segment diameter for all 61 named lines (mostly 2-8 inch consumer laterals, with 12-18 inch trunk sections in the Kuthalam and Ramnad zones) — I am NOT proposing a single Diameter value because this is a sprawling multi-diameter distribution network (not a uniform trunk line), and forcing one number would misrepresent it; a genuine future improvement would be a multi-value Diameter list (GEM's convention for other Indian 'Regional Network' rows, e.g. P0906 Assam Regional's '350, 400, 500, 800') built from a clean re-transcription of the Annexe-I table, which is scanned/handwritten-annotated and only partly legible even after OCR.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/GAIL-Cauvery-Prov.%20T&C.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P0911 Cauvery Basin Gas Network: existence, classification, owner (GAIL 100%), length, capacity, and StartYear1=1991 all independently confirmed (trade press 2004 + PNGRB 2009 authorization letter + PNGRB's current 2026 register); no duplicate found on the 35-row roster; only caveats are a possible missing Puducherry state/province tag and an unfilled multi-value Diameter (network spans 2-18in, no single value would be honest)."
+}

@@ -1,0 +1,145 @@
+{
+ "project_id": "P0941",
+ "pipeline_name": "Mehsana-Bhatinda Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.careratings.com/upload/CompanyFiles/PR/202408130847_GSPL_India_Gasnet_Limited.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202408130847_GSPL_India_Gasnet_Limited.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's current line-wise register (31 May 2026 edition), Sr. No. 1, lists 'Mehsana - Bhatinda' (entity GIGL) under the heading 'PARTIALLY COMMISSIONED COMMON CARRIER PIPELINE' with 1,339 km already operating -- confirming the asset is a live, in-service pipeline, consistent with Status=operating. Independently, CARE Ratings' 30-Aug-2024 press release on GSPL India Gasnet Limited (GIGL) states the project achieved commercial operations date (COD) on 22 August 2024, and separately that 'Phase-I of the project, including 442 kms of natural gas pipeline, achieved commercial operations date (COD) in November 2018' -- a credit-rating agency's independent confirmation of operational status, tracing to a different origin than the regulator's register. url_verifier returns FAIL/200-missing-value on both PDFs -- this is the documented large-PDF false-negative pattern (scripts/url_verifier.py); confirmed manually: PNGRB register with `curl -sI` (live 200) + `pdftotext -layout` (verbatim row read, matches register-crosswalk's independent staging of the same source for this cell); CARE PDF downloaded and read with `pdftotext -layout` (text quoted above). Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's register is titled 'Physical progress report of NGPL' (Natural Gas Pipeline) and lists exclusively natural-gas authorisations, directly supporting Fuel=Gas. Independently, Gujarat State Petronet Ltd's 2019-2020 Annual Report (BSE-hosted, first-party parent-company disclosure -- an origin independent of the regulator) captions its route map of this exact corridor 'Cross Country Natural Gas Transmission Pipelines to be implemented by GIGL / GITL' and the map legend labels the segment 'MEHSANA-BHATINDA-JAMMU-SRINAGAR PIPELINE' under 'GSPL INDIA GASNET LIMITED', with body text describing 'GIGL is currently working on development of the 930 Kms stretch of its Mehsana - Bhatinda pipeline network.' url_verifier FAILs on both (documented large-PDF false-negative -- both PDFs are live 200 per `curl -sI` and were confirmed manually via `pdftotext -layout`, verbatim excerpts quoted above). Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's register authorises this line as a 'common carrier' NGPL under the regulator's transmission-tariff authorisation framework (as opposed to city-gas-distribution networks, which PNGRB regulates and lists separately) -- supporting PipelineType=transmission. Independently, GSPL's 2019-2020 Annual Report (first-party, BSE-hosted) explicitly captions this corridor's route map 'Cross Country Natural Gas Transmission Pipelines to be implemented by GIGL / GITL' -- a direct 'transmission' label from the owning company, not the regulator. Same manual-verification note as the Fuel unit above (both PDFs are large-file url_verifier false negatives, confirmed live + read via `pdftotext -layout`). Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 499,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source found that supports StartYear1=2022 as an achieved commissioning milestone for this row, and what I found argues against it being one. CARE Ratings' 30-Aug-2024 press release (pdftotext-read; large-PDF url_verifier false negative, confirmed live 200 via `curl -sI`) states the project's original scheduled COD (SCOD) was September 30, 2020; it was 'revised project SCOD up to September 30, 2022' after delays, and then 'the lenders also provided further extension of two years in the SCOD, till September 30, 2024' -- i.e. the very date closest to 2022 in this project's history is an interim SCHEDULED-completion TARGET that was itself later pushed to 2024, not an achieved milestone. The only ACTUAL COD dates CARE documents are November 2018 (its own 'Phase-I', 442 km -- a different phase-numbering scheme than GEM's 1,177 km 'Phase I' row, per the existing deep-sweep audit's open question) and 22 August 2024 (overall project COD). Neither is 2022. This confirms and extends the deep-sweep audit shard's existing flag on this same field (batches/india-gas/staging/ref-sweep-operating/rows/P0941.json), which recommended routing to Update rather than a mechanical ref-fill. Per task rules (never propose a ref for a value under active disagreement), leaving UNRESOLVED rather than citing a source that argues the year is likely wrong."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's NGPL register dated 08.06.2023 ('As on 31.03.2023'; original https://pngrb.gov.in/data-bank/NGPL-08062023.pdf, Wayback-archived snapshot cited since the live URL now serves a later edition), Sr. No. 1, 'Mehsana - Bhatinda', entity GIGL, gives authorised length 1,940 km, authorised capacity 80.11 MMSCMD, operating length 1177, under-construction 763 -- an EXACT match to GEM's recorded Capacity=80.11/CapacityUnits=MMSCMD (and to LengthKnown, see the Length unit below). This is the same regulator-register lineage cited for Status/Fuel/PipelineType above (one origin, PNGRB), so tier is capped at medium/independent=false rather than treated as a second corroboration of those units. url_verifier FAILs (large-PDF false negative, 200 confirmed live via `curl -sI`); value confirmed manually with `pdftotext -layout` (verbatim row quoted above). NOTE for awareness, not applied: the CURRENT (31 May 2026) PNGRB edition shows a revised authorised capacity of 83.1 MMSCMD for this same asset -- consistent with the deep-sweep audit's existing 'spec concern' flag that the sheet's 80.11 is accurate for its July-2023 vintage but is now stale; not changing the value here per the ref-sweep scope (value changes route to Update)."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same PNGRB register edition as the Capacity unit above ('As on 31.03.2023'): Sr. No. 1, 'Mehsana - Bhatinda', operating length column reads exactly '1177' km, an EXACT match to GEM's recorded LengthKnown=1177.00/LengthKnownUnits=km. This is very likely the vintage GEM's researcher actually used -- the row's LastUpdated (2023-07-20 per the wiki's own PNGRB citation retrieval date) sits just six weeks after this edition's 08.06.2023 publish date. Single-origin PNGRB register (same source as Status/Fuel/PipelineType/Capacity above) -- tier medium, independent=false. url_verifier large-PDF false negative (200 confirmed live via `curl -sI`); value confirmed manually with `pdftotext -layout` (verbatim row quoted in the Capacity unit's notes). Value UNCHANGED; ref-only addition. Not proposing the current (31 May 2026) register's 1,339 km operating figure or the Times of India 2021 article's differently-scoped '1,670km pipeline' total -- both describe a later/different-scope state of the project, not the recorded 1,177 km value; the deep-sweep audit's existing 'spec concern' flag on staleness already covers this."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf",
+    "https://timesofindia.indiatimes.com/city/ahmedabad/gspls-cross-country-pipeline-project-delayed/articleshow/83730998.cms"
+   ],
+   "verifications": [
+    {"url": "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf", "ok": true, "contains_value": true},
+    {"url": "https://timesofindia.indiatimes.com/city/ahmedabad/gspls-cross-country-pipeline-project-delayed/articleshow/83730998.cms", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GSPL's 2019-2020 Annual Report (BSE-hosted, first-party) carries an Annexure-XI route map explicitly plotting 'GSPL INDIA GASNET LIMITED -- MEHSANA-BHATINDA-JAMMU-SRINAGAR PIPELINE', with Mehsana placed in Gujarat and Bhatinda in Punjab on the map, matching GEM's StartLocation=Mehsana/StartState=Gujarat and EndLocation=Bhatinda/EndState=Punjab. Independently, the Times of India (22 June 2021, staff-reported news, url_verifier OK/200+content confirmed by tool) states: 'the ambitious cross-country pipeline of Gujarat State Petronet Ltd (GSPL) from Mehsana to Bhatinda... The 1,670km pipeline linking Mehsana in Gujarat to Bhatinda in Punjab... passes through Jaipur in Rajasthan.' Two independent origins (first-party annual report + independent journalism) agreeing on both endpoints and states. GSPL AR is a large-PDF url_verifier false negative (confirmed live 200 + `pdftotext -layout` manually, verbatim text quoted above); ToI passed url_verifier directly. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 499,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source found that supports SegmentCost=955,674,720 USD as a Phase-I-specific (1,177 km) figure. CARE Ratings' 30-Aug-2024 press release gives the project's revised TOTAL cost as INR 7,384 crore (INR 73.84 billion), funded via INR 5,076 crore sanctioned debt + INR 2,308 crore equity -- and at an implied INR/USD rate of ~77.3 (73,840,000,000 / 955,674,720 = 77.27) that figure is numerically close to GEM's recorded value, which is suggestive but NOT dispositive: (a) INR 7,384 crore is explicitly the cost of the WHOLE Mehsana-Bhatinda-Jammu-Srinagar corridor (GSPL's 2019-2020 AR map puts the full corridor at ~2,574 km, later descoped), not the 1,177 km 'Phase I' operating-length row this ref cell belongs to, so citing it here would misattribute a whole-project cost to one phase; (b) I have no visibility into which INR/USD rate or date GEM's original researcher used, so the closeness could be coincidence. Times of India's 2021 article separately gives an EARLIER project-cost estimate of Rs 5,500 crore -- a different total again, illustrating the figure moved over time as the project was rescoped. Flagging the INR 7,384 crore/USD 955.7M coincidence for Update to assess (is SegmentCost meant to carry the whole-corridor cost on this one row, or should it be split/reduced to a Phase-I-only share?) rather than citing an unverified attribution. Per task rules, not proposing a ref for a value I cannot confirm is correctly scoped."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 499,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf",
+    "https://www.careratings.com/upload/CompanyFiles/PR/202408130847_GSPL_India_Gasnet_Limited.pdf",
+    "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202408130847_GSPL_India_Gasnet_Limited.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Reused and independently re-verified the leads the deep-sweep audit shard already surfaced (batches/india-gas/staging/ref-sweep-operating/rows/P0941.json). GSPL's 2019-2020 Annual Report (BSE-hosted, first-party, Sl. iii of its 'Particulars of Holding, Subsidiary and Associate Companies' schedule) lists 'GSPL India Gasnet Limited... Subsidiary Company... % of shares held: 52' -- confirming Owner1=Gujarat State Petronet at 52% directly from the majority parent's own statutory filing. Independently, CARE Ratings' 30-Aug-2024 and 19-Jun-2025 press releases on GIGL (a credit-rating agency, an origin independent of both GSPL and PNGRB) both state the identical full split verbatim: 'GIGL's majority stake holder, GSPL, has 52% stake... IOCL, having 26% stake in GIGL... BPCL, having 11% stake in GIGL... HPCL, having 11% stake in GIGL' -- an exact match to GEM's Owner1-4 (Gujarat State Petronet 52%, Indian Oil Corp 26%, BPCL Group 11%, Hindustan Petroleum 11%). Two independent origins (first-party GSPL AR + third-party CARE Ratings, itself corroborated across two vintages 10 months apart with no drift) -- tier high. All three PDFs are large-file url_verifier false negatives; confirmed manually live (`curl -sI` 200) and read with `pdftotext -layout` (verbatim excerpts quoted above). Aside, not cited: offshore-technology.com's marketdata page lists ONGC among the owners, which none of the three primary/independent sources above support -- disregarded as that aggregator's own error, consistent with the deep-sweep audit's prior finding. Value UNCHANGED; ref-only addition."
+  }
+ ]
+}

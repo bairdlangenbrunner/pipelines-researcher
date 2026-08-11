@@ -1,0 +1,102 @@
+{
+ "project_id": "P0927",
+ "pipeline_name": "High Pressure Gujarat Gas Grid Network",
+ "resolutions": [
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 487,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf",
+    "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+   ],
+   "verifications": [
+    {"url": "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB Public Notice dated 01.03.2012 (regulator) identifies 'GSPL's High Pressure Gujarat Gas Grid Network' explicitly as a 'natural gas pipeline network' being authorised under PNGRB's natural-gas-pipeline regulation regime. url_verifier returned OK+content-present for this PDF (unlike the larger register PDFs, which trip the documented large-PDF false negative) -- confirmed 'natural gas pipeline network' verbatim locally with pdftotext -layout as well. Independently, a Mar-2025 Business Upturn article (non-regulator trade press, verified OK by url_verifier) describes GSPL's ongoing capex on this same named grid as 'natural gas infrastructure' and details a new pipe tying into the grid's existing pipeline. Two independent origins (regulator + trade press) agree the asset carries natural gas."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 487,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf",
+    "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+   ],
+   "verifications": [
+    {"url": "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The 2012 PNGRB public notice authorises this asset under Regulation 18(5) of the PNGRB (Authorizing Entities to Lay, Build, Operate or Expand Natural Gas Pipelines) Regulations 2008 -- PNGRB's trunk/common-carrier NGPL regime, distinct from its separate City Gas Distribution regime -- which supports 'transmission' rather than a distribution/gathering classification. Independently, the Mar-2025 Business Upturn article describes a new 274 km/30in Anjar-Palanpur line tying into the grid's existing 36-inch Mundra-Arpar trunk pipeline, i.e. a long-haul high-pressure trunk network, not a local distribution system -- consistent with 'transmission'. Two independent origins agree."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 487,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not independently confirm 2016 as a documented commissioning/first-gas year for the network. Checked the 2012 PNGRB public notice, the PNGRB register editions from 2016/2021/2024/2026, the Mar-2025 Business Upturn piece, and two rounds of web search -- no source states a start-of-operations year for the grid as a whole; the only dated regulatory milestone anywhere is the PNGRB Authorisation Date (27.07.2012), which per this sweep's own guidance is not a valid stand-in for StartYear1, and every web-search hit that asserted '2016' traced back to the GEM wiki page itself (not citable per standing rule 1). The network was built out in phases from an original 1,120 km 2009 application to 2,366 km by the 2012 notice, so a single start year for the whole grid may not be a well-defined fact. Leaving UNRESOLVED rather than proposing an unsupported ref."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 487,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf",
+    "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Fetched four PNGRB NGPL register editions and checked this row's line item in each with pdftotext -layout (url_verifier content-checks fail on all of them -- the documented large-PDF false negative -- but I confirmed the numbers locally in every case). The Jan-2016 edition gives 31.000 MMSCMD (matches) but 2,239.0 km (does not match the sheet's Length). The Jun-2021 edition (row 13, '18.01.NGPL High Pressure Gujarat Gas ... GSPL 27.07.2012 2,207.00 31.00 2,631.69 Gujarat') and the Jun-2024 edition (row 13, '2,207 31.00 2665 Gujarat') both give authorised Capacity 31.00 MMSCMD EXACTLY matching the sheet's recorded 31.00, and both hold this figure stable across ~3 years before it rises to 44.8 MMSCMD in the current May-2026 edition (a later PNGRB-approved expansion, not a correction of this value). NOTE on independence: both proposed refs are PNGRB register editions -- the same regulator origin at different dates, not two organizationally independent sources -- so tier is medium/independent=false, per this sweep's own caveat that multiple PNGRB documents can be one origin. I deliberately did NOT cite the current (May-2026) register, since it disagrees with the sheet's recorded value (44.8 MMSCMD) -- per standing instructions a disagreeing source does not support the recorded value; that conflict is already flagged as a 'spec' concern for Update by the deep-sweep audit on this row and is out of scope for a ref-sweep unit, which sources the value as recorded."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 487,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf",
+    "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same finding as the Capacity unit above (see that entry for the full source check across four register editions). The Jun-2021 PNGRB NGPL register gives authorised Length 2,207.00 km EXACTLY matching the sheet's recorded LengthKnown 2207.00 km; the Jun-2024 edition repeats 2,207 km (rounded) at the same row. The earlier Jan-2016 edition (2,239.0 km) and the current May-2026 edition (2,860 km authorised) do NOT match -- I did not cite either, since a disagreeing source can't be used to support the recorded value per standing instructions; the sheet value corresponds to the 2021-2024 vintage of the authorisation, not the 2016 or 2026 vintages. Both cited refs are PNGRB register editions (same regulator origin, different dates) -- tier medium/independent=false, not high, per this sweep's own multi-edition-same-origin caveat. url_verifier content-checks fail on both (documented large-PDF false negative); confirmed locally with pdftotext -layout."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 487,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf",
+    "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+   ],
+   "verifications": [
+    {"url": "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf", "ok": true, "contains_value": true},
+    {"url": "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The 2012 PNGRB public notice is titled around GSPL's 'Gujarat Gas Grid' network throughout, confirming the network is Gujarat-based (matches Start/EndState/Province 'Gujarat', Country 'India'); the current PNGRB register (checked in the sibling deep-sweep audit on this row) lists the pipeline's 'States Passing Through' as 'GJ' only, i.e. confined to Gujarat. Independently, the Mar-2025 Business Upturn article names specific in-state points -- the new pipe runs from Anjar, Gujarat to Palanpur in the Banaskantha district, tying into the grid's existing Mundra-Arpar pipeline (Mundra and Arpar both in Gujarat) -- corroborating from a non-regulator origin that this network sits entirely within Gujarat. It is a state-wide grid rather than a simple point-to-point line, so blank granular Start/EndLocation with state-level Gujarat is the appropriate value being sourced, not a gap."
+  }
+ ]
+}

@@ -1,0 +1,20 @@
+{
+ "project_id": "P0953",
+ "pipeline_name": "Shahdol-Phulpur Gas Pipeline",
+ "sheet_row": 502,
+ "wiki": "https://www.gem.wiki/Shahdol-Phulpur_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm — it is already independently confirmed correct (see below), so this flag resolves entirely on the route-geometry side. The drawn route (506 km geodesic) badly overshoots the confirmed 312 km, more than expected even for a schematic trace; route this to a §8 route review/redraw rather than treating it as evidence the length value is wrong.",
+   "researcher_notes": "This row carries no Operator flag in this brief (Owner is already 'Reliance Industries Ltd', and the register-crosswalk leg separately staged Owner1/Operator-adjacent context via RGPL — see that leg's fill, not duplicated here). For the length_ratio flag specifically: the register-crosswalk leg (batches/india-gas/staging/register-crosswalk/staged_resolutions.json) already staged a Length [ref] fill for this exact row using the PNGRB May-2026 register, Sr 16 'Shahdol-Phulpur' (entity RGPL, authorised 11.07.2013): authorised length 312.0 km, matching the sheet's LengthKnownKm=312.00 to the register's whole-km precision. That fill independently settles which side is correct — the sheet's 312 km, not the drawn route. I read that staged resolution rather than re-deriving it, per the brief's instruction not to re-litigate what an earlier leg already settled; this shard's job is to close out the length_ratio flag using that finding rather than propose a redundant fill. The drawn route's 506 km (versus a confirmed 312 km) is a 62% overshoot — larger than the OPAL/Sugen undershoots seen elsewhere in this brief — consistent with RouteAccuracy already being 'very low (straight line/schematic)' and possibly tracing a longer real-world road/rail corridor rather than the pipeline's actual, more direct path across Madhya Pradesh and Uttar Pradesh.",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "verification carried over from the register-crosswalk leg's own staged Length [ref] fill for this row; not re-verified independently here, only re-read for this row's length_ratio question."}
+   ],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

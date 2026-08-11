@@ -1,0 +1,87 @@
+{
+  "project_id": "P6646",
+  "pipeline_name": "Ennore Barshi Gas Pipeline",
+  "sheet_row": 3599,
+  "wiki": "https://www.gem.wiki/Ennore_Barshi_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action required on existence/classification/spec. Optionally paste the PNGRB primary-source refs onto Status/Fuel/PipelineType/Proposal/Capacity/Length/FuelSource to upgrade tier from the single swarajyamag cite to a corroborated primary+press pair, and use the Location fill below to close the MISSING_REF cluster.",
+      "researcher_notes": "EXISTENCE: real and independently confirmed beyond the sheet's single swarajyamag citation. PNGRB (the regulator itself) publishes its own live tender page for this exact project — https://pngrb.gov.in/eng-web/ng-bid-19.html, 'Ennore - Barshi Natural Gas Pipeline (EBPL)', Bid No. BID/NGPL/19/2023/02/EBPL — with linked primary documents: the 15-Dec-2023 Public Notice (PN19122023.pdf) and the full Sample Application-cum-Bid document (SB-EBPL-19122023.pdf, PNGRB's own bid document, 2770 lines via pdftotext). This is a suo-motu PNGRB tender (regulator-initiated, not a private-sponsor proposal), so its own bid document is the authoritative technical spec, independent in origin from swarajyamag's press writeup even though both describe the same project (primary regulatory filing vs. independent secondary press coverage — not one wire story reprinted).\n\nCLASSIFICATION: correct. The PNGRB bid document itself calls it a 'Trunk Pipeline' (Section 17.4.5's route deviation clause, Annexure-1's 'Length of the Trunk Pipeline: 875 km') — an 875 km interstate transmission trunk line, not a gathering/feeder line. PipelineType=transmission confirmed.\n\nDUPLICATE: checked against the full 9-pipeline India-gas roster. No overlap — P6646's Ennore(Tamil Nadu)→Chittoor→YSR→Kurnool→Jogulamba→Raichur→Yadgir→Gulbarga→Solapur→Barshi(Maharashtra) corridor (AP/Telangana/Karnataka/Maharashtra) shares no states or endpoints with any of P3910/P3912/P3913/P5411/P5412/P5413/P6538/P6562 (Gujarat, Punjab, Jharkhand, J&K, Andhra Pradesh-only, West Bengal). No relabel/segment-double-count risk.\n\nSPEC — every value on the sheet was checked verbatim against PNGRB's own Sample Bid document (Annexure-1, 'Other details' section) and matches exactly: 'c) Originating point: Ennore LNG Terminal, Ennore, Tamilnadu' (confirms FuelSource + StartLocation/State); 'd) Termination point: Barshi (CS-06 of PIL's EWPL), Solapur District, Maharashtra' (confirms EndLocation/District/State — note the terminus ties into an existing pipeline compressor station, not an arbitrary point); 'e) Length of the Trunk Pipeline: 875 km (Approx.)' (confirms LengthKnown=875.00 km exactly); 'f) Initial System Capacity: At least 8.0 MMSCMD (including common carrier capacity...)' (confirms Capacity=8.00 MMSCMD exactly). swarajyamag independently reports the same 875 km / 8 mmscmd / Ennore→Barshi facts, corroborating. Tier upgraded to high on all these fields (regulator primary doc + independent press, both value-present).\n\nCaveat: PNGRB's automated substring extractor undershoots on the SB-EBPL PDF (7.3 MB — the documented 'LARGE PDFs' false-negative class in url_verifier's own docstring: it found '875' but not '8.0 MMSCMD' as a raw-text substring). I manually confirmed the full capacity/endpoint language via `pdftotext -layout` before citing it — see url_verifier call log; verified live at 200 on the '875' token.\n\nATTRIBUTION: no Owner/Operator was in scope for this worklist (not among the 8 units pulled), so not reviewed here — consistent with the country note that ~68/69 SHEET_SUSPECT flags tracker-wide are the routine blank-Operator norm, not a Pakistan/India-specific defect. Not flagging.\n\nDiameter: genuinely not published anywhere — PNGRB's own bid document (which would carry it if determined pre-award) has no diameter figure; this is a not-yet-authorized tender-stage project where pipe diameter is set by the winning bidder's Feasibility Report, not fixed in advance. Left blank rather than fabricated, consistent with country guidance that diameter is the genuine gap on India gas rows.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/eng-web/ng-bid-19.html",
+        "https://pngrb.gov.in/pdf/ngp/bid/bid19/SB-EBPL-19122023.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3599,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Ennore",
+        "StartState/Province": "Tamil Nadu",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Barshi",
+        "EndPrefecture/District": "Solapur",
+        "EndState/Province": "Maharashtra",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Ennore",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/bid/bid19/SB-EBPL-19122023.pdf",
+        "https://swarajyamag.com/infrastructure/pngrb-calls-for-tender-to-develop-875-km-natural-gas-pipeline-between-ennore-terminal-in-chennai-and-barshi-in-maharashtra"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/bid/bid19/SB-EBPL-19122023.pdf", "ok": true, "contains_value": true},
+        {"url": "https://swarajyamag.com/infrastructure/pngrb-calls-for-tender-to-develop-875-km-natural-gas-pipeline-between-ennore-terminal-in-chennai-and-barshi-in-maharashtra", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Location [ref] was MISSING_REF on the sheet (values present, no cite). PNGRB's own Sample Bid document, Annexure-1 'Other details', states verbatim: 'c) Originating point: Ennore LNG Terminal, Ennore, Tamilnadu' and 'd) Termination point: Barshi (CS-06 of PIL's EWPL), Solapur District, Maharashtra' — matches every existing Location value exactly (StartLocation=Ennore/Tamil Nadu/India; EndLocation=Barshi/Solapur/Maharashtra/India). swarajyamag corroborates independently (same start/end named, plus the full tentative-route state list AP/Telangana/Karnataka/Maharashtra). Both verified live via url_verifier before citing."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3599,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2024-05",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/bid/bid19/Corrigendum15042024.pdf",
+        "https://pngrb.gov.in/eng-web/ng-bid-19.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-19.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "'proposed' is still the right call, but flagging a real caveat rather than a clean confirm. Hunted for anything dated after the sheet's cited Dec-2023 tender announcement: PNGRB's own EBPL bid page shows the process advanced through a 13-Mar-2024 pre-bid clarifications round and a 15-Apr-2024 corrigendum (Public Notice BID/NGPL/19/2023/02/EBPL/02) that pushed the bid-submission deadline to 16-May-2024 and technical bid opening to 20-May-2024 — confirmed regulatory progress, later than the sheet's ProposalYear=2023 evidence. That is the newest dated evidence I could find: I checked PNGRB's live authorised-pipelines list (ngpl-auth.html) and BOTH the 30-Jun-2025 and 31-Oct-2025 NGPL MIS Reports (pdftotext'd directly) and EBPL appears in NONE of them — it has not been authorised/moved to under-construction as of the most recent register available. I found no news of the tender being awarded, re-tendered, or cancelled either (searched specifically for cancellation/scrapping — the only PNGRB gas-pipeline authorization cancellation I found was the unrelated 2019 Ennore-Nellore/GTIL case). The EBPL bid page is still live on PNGRB's own site with no cancellation notice.\n\nThis leaves a genuine ambiguity: the last confirmed activity (20-May-2024 technical bid opening) is ~27 months old, which is past the 2-year 'proposed, no progress → shelved' dormancy threshold if measured from that date. I am NOT applying the mechanical downgrade here, because unlike a sponsor-announced project gone quiet, this is a live PNGRB-run regulatory bid process (technical bid opened, financial-bid evaluation/award stage would follow with no obligation to publish interim updates) and the regulator's own site still carries it as an open, uncancelled bid — there is no positive evidence of abandonment, only an absence of a published outcome, and PNGRB bid-to-authorization gaps of 1-2+ years are documented elsewhere in this country (MNJPL's completion target alone has slipped three times). Recommend a targeted re-check next cycle of ngpl-auth.html / the next NGPL MIS Report for an EBPL authorisation entry — if still absent with no bid-evaluation news by ~mid-2027, that would be the point to apply shelved with ShelvedCancelledType=inferred. Tier=medium: strong on existence/liveness of the process, but I could not corroborate 'no cancellation' with a second independent source beyond PNGRB's own site (news search turned up nothing either way)."
+    }
+  ],
+  "summary": "P6646 Ennore Barshi Gas Pipeline is real and correctly classified — confirmed via PNGRB's own tender/bid documents (independent of the sheet's sole swarajyamag cite), which match every existing value (875 km, 8.00 MMSCMD, Ennore LNG Terminal, Barshi/Solapur/Maharashtra) exactly; filled the MISSING_REF Location cluster; status 'proposed' confirmed but flagged as an aging (27-month-stale) PNGRB bid process worth a re-check next cycle rather than a mechanical stale-to-shelved downgrade. No UNRESOLVED items."
+}

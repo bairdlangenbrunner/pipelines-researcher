@@ -1,0 +1,233 @@
+{
+  "project_id": "P0915",
+  "pipeline_name": "Dabhol-Bangalore Gas Pipeline",
+  "sheet_row": 476,
+  "wiki": "https://www.gem.wiki/Dabhol-Bangalore_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No reclassification/existence/ownership action needed. Add the four refs below to Status/Fuel/PipelineType/Start/Capacity/Owner (see fills) — none of those cells currently carry a live ref.",
+      "researcher_notes": "EXISTENCE: solidly confirmed, independent of GEM. (1) citizenmatters.in, a Bengaluru investigative-journalism outlet, published a detailed 2018 piece on a real gas leak on this pipeline's Bangalore city-gas distribution network, describing the exact engineering: 'The Dabhol-Bangalore Piped Natural Gas (PNG) runs through two states of Maharashtra and Karnataka for about 1,386 km', an 18-inch steel transmission main at 19 bar reducing to 4 bar through MDP distribution pipe and 21 millibar at the burner tip -- this is physical operational evidence, not just an announcement. (2) The Economic Times (verified live, url_verifier OK) headlined 'PM dedicates GAIL India Ltd's 1,000 km Dabhol-Bangalore gas pipeline to nation', Dec 3, 2013. (3) GAIL's own press release (original gail.nic.in URL is dead -- ConnectionError -- but its Dec-2013 capture on the Wayback Machine is live and verified) confirms: 'Hon'ble Prime Minister ... dedicated to the Nation GAIL (India) Limited's 1,000 km-long natural gas pipeline from Dabhol in Maharashtra to Bangaluru in Karnataka' on Dec 3 2013, 'constructed at an investment of Rs 4,500 crores with a design capacity of 16 MMSCMD', passing through Belgaum, Dharwad, Gadag, Bellary, Devanagere, Chitradurga, Tumkur, Ramanagaram, Bengaluru Rural and Bengaluru Urban -- an exact match to GEM's route. (4) PNGRB's current (May 2026) NGPL MIS report line-wise table lists it as entity GAIL, states MH, KA & GA. Three fully independent origins (an investigative news outlet, a national business daily, and the regulator) plus GAIL's own first-party record -- existence is not in doubt. CLASSIFICATION: PipelineType=transmission and Fuel=Gas are both correct -- citizenmatters explicitly describes the 18in line as the high-pressure transmission main feeding downstream city-gas distribution, consistent with GEM's classification; no evidence of a gathering/feeder misclassification. DUPLICATE: checked against the 35-row India-gas-operating roster. P0930 (Jaigarh-Dabhol Gas Pipeline) shares the 'Dabhol' endpoint but is a distinct, much shorter (60 km) LNG-terminal feeder line commissioned 2021 (Jaigarh LNG Terminal -> Dabhol) that feeds INTO this trunk rather than duplicating it -- not the same physical pipe. No other roster row plausibly overlaps. ATTRIBUTION: Owner1=GAIL (India) Ltd 100% is unanimous across every source found -- GAIL's own release, Economic Times ('GAIL India Ltd's ... pipeline'), and PNGRB (entity=GAIL) all agree; StartYear1=2013 matches the Dec 3, 2013 dedication date in both the GAIL release and Economic Times exactly; Capacity=16.00 MMSCMD matches GAIL's own 'design capacity of 16 MMSCMD' and PNGRB's authorised+design/determined capacity of 16.0 MMSCMD exactly. See the companion spec-concern entry for a length/completion-status caveat that does NOT undermine any of the above.",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685",
+        "https://economictimes.indiatimes.com/industry/energy/oil-gas/pm-dedicates-gail-india-ltds-1000-km-dabhol-bangalore-gas-pipeline-to-nation/articleshow/26798053.cms",
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not change Status or LengthKnown blind. Before the next India-gas update, ask GAIL/PNGRB directly (or check a newer PNGRB MIS edition) whether the residual segment is actually complete, abandoned, or genuinely still pending. If it is confirmed dead/abandoned, consider splitting this row the way GEM already splits Mehsana-Bhatinda, Bhatinda-Gurdaspur, Mallavaram-Bhopal-Bhilwara-Vijaipur, and Kochi-Koottanad-Bangalore-Mangalore: an `operating` row near PNGRB's current operating length (~1,182 km) plus a `construction`/`shelved` companion row for the unbuilt remainder (~232 km), rather than one `operating` row claiming the full corridor. Flagging only -- not resolving, since no source pins down which of the three numbers (1,386 GEM/citizenmatters, 1,414 PNGRB-authorised, 1,182 PNGRB-operating) is the 'true' current built length.",
+      "researcher_notes": "PNGRB's own current line-wise register -- the May 2026 'NGPL MIS Report' (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, page 2, fetched and read locally with pdftotext -layout; url_verifier returns a false-negative HTTP 200/'value not found' on this large PDF per the known limitation, so I confirmed the numbers by hand) lists 'Dabhol-Bangalore' (entity GAIL, authorisation date 14.11.2011) under the PARTIALLY COMMISSIONED COMMON CARRIER PIPELINE section, NOT under Operational: Authorised Length 1,414 km, Authorised/Design Capacity 16.0 MMSCMD (matches GEM's Capacity exactly), Operating Length 1,182 km, Under-Construction Length 232 km, and zero lowered/welded/hydrotested length recorded against that 232 km residual, with a 'Target date of completion' of Feb-13 (i.e. February 2013) that lapsed more than thirteen years before this report -- meaning the regulator's own figures show zero measurable progress on the remaining ~232 km for over a decade, i.e. it reads as stalled/dead rather than actively under construction. This conflicts with GEM's row, which shows a SINGLE fully `operating` segment at LengthKnown=1,386 km (no companion under-construction row exists for P0915 in the wider GGIT gas CSV -- confirmed by grep against the full snapshot). 1,386 km is itself well corroborated -- citizenmatters.in (independent, 2018) states the identical figure ('for about 1,386 km'), so GEM's number is not invented -- but it doesn't equal any of PNGRB's own figures (not the 1,414 km authorised total, not the 1,182 km PNGRB currently calls 'operating'); it sits in between. A plausible explanation surfaced from the sheet's own gem.wiki citation list: Wikipedia (read for leads only, not cited) notes the pipeline's original scope 'also extends to Vasco da Gama, Goa', and one of the wiki page's OWN cited references is a Nov 2010 Outlook India piece titled 'Goa: Farmers Oppose Underground Gas Pipeline' -- i.e. a Goa spur ran into land-acquisition opposition around 2010. That Outlook URL now 410s (confirmed dead, cannot cite per the never-delete-but-can't-cite-a-404/410 rule) so this is not proposed as a citable ref, but it is consistent with PNGRB's residual 232 km being the stalled/abandoned Goa extension while the Maharashtra-Karnataka trunk (the part everyone agrees was completed and dedicated in Dec 2013) is fully operating. Net effect: existence/ownership/classification/start-year/capacity are solid (see prior validity entry); it is specifically the completeness of the authorised corridor -- and therefore whether `Status=operating` should cover 100% of a 1,386 km line or should be split -- that is unresolved.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685",
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html"
+      ],
+      "verifications": [
+        {"url": "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Dedicated/commissioned Dec 3 2013 (GAIL release, Economic Times) and still actively supplying gas as of the 2018 citizenmatters leak report on its Bangalore distribution network -- 'operating' for the built trunk is correct. See spec-concern validity entry re: whether the FULL authorised corridor (vs. a ~1,182 km operating portion) is what should be marked operating."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685",
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html"
+      ],
+      "verifications": [
+        {"url": "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources explicitly describe this as a natural-gas / piped-natural-gas (PNG) pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685"
+      ],
+      "verifications": [
+        {"url": "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "citizenmatters describes the 18in steel line at 19 bar as the trunk main that steps down (via a city-gate-style regulator to 4 bar MDP pipe) into distribution -- a transmission-tier line, not a gathering/feeder line. Single source for this specific classification signal, so tier=medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2013"},
+      "primary_value": "2013",
+      "proposed_refs": [
+        "https://economictimes.indiatimes.com/industry/energy/oil-gas/pm-dedicates-gail-india-ltds-1000-km-dabhol-bangalore-gas-pipeline-to-nation/articleshow/26798053.cms",
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html"
+      ],
+      "verifications": [
+        {"url": "https://economictimes.indiatimes.com/industry/energy/oil-gas/pm-dedicates-gail-india-ltds-1000-km-dabhol-bangalore-gas-pipeline-to-nation/articleshow/26798053.cms", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both the Economic Times headline/dateline and GAIL's own press release (via Wayback) place the PM's dedication-to-the-nation ceremony on December 3, 2013 -- two independent origins (national business daily + first-party company release) agreeing on year and exact date."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "16.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "16.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GAIL's own release states 'design capacity of 16 MMSCMD'; PNGRB's May 2026 register independently lists Authorised Capacity = Design/Determined Capacity = 16.0 MMSCMD for this line (page 2, partially-commissioned table, row 4) -- confirmed by reading the PDF locally with pdftotext (url_verifier gives its documented large-PDF false negative on this URL, flagged in the verification row). Two independent origins (GAIL first-party + the regulator) agree exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "1386.00", "LengthKnownUnits": "km"},
+      "primary_value": "1386.00",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685"
+      ],
+      "verifications": [
+        {"url": "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "citizenmatters.in states the identical figure verbatim ('for about 1,386 km'). Only one independently-citable source gives this exact number (Economic Times/GAIL round to '1,000 km' in their headline/prose instead), and PNGRB's current register gives two DIFFERENT figures for this same asset -- 1,414 km authorised, 1,182 km currently 'operating' -- neither of which matches 1,386 km either. See the companion spec-concern validity entry: this is filed as REFS_ADDED (a real, sourced value) rather than UNRESOLVED because 1,386 km does have a genuine independent citation, but the discrepancy with PNGRB is flagged, not silently passed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Dabhol", "StartState/Province": "Maharashtra", "StartCountryOrArea": "India", "EndLocation": "Bangalore", "EndState/Province": "Karnataka", "EndCountryOrArea": "India"},
+      "primary_value": "Dabhol",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685",
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html"
+      ],
+      "verifications": [
+        {"url": "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources agree: runs from Dabhol, Maharashtra to Bangalore/Bengaluru, Karnataka. GAIL's own release additionally lists the intermediate Karnataka districts traversed (Belgaum, Dharwad, Gadag, Bellary, Devanagere, Chitradurga, Tumkur, Ramanagaram, Bengaluru Rural, Bengaluru Urban), consistent with a genuine end-to-end trunk to Bangalore."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 476,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "18", "DiameterUnits": "in"},
+      "primary_value": "18",
+      "proposed_refs": [
+        "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685"
+      ],
+      "verifications": [
+        {"url": "https://citizenmatters.in/the-gas-leak-on-itpl-how-did-it-unfold-28685", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "NEW FILL (Diameter is currently blank -- one of only 10/75 India gas rows with a diameter, per the country scope note). citizenmatters.in states the main transmission line on Outer Ring Road, Bangalore is '18 inches wide' steel pipe, running at 19 bar before stepping down through a regulator to 4 bar MDP distribution pipe -- explicitly the trunk main, not a distribution lateral. Single independent source, so tier=medium and staged as a candidate fill rather than a fully corroborated value; a second source (GAIL/GSPL bid document or PNGRB technical annex) would upgrade this to high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 801,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": [
+        "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html",
+        "https://economictimes.indiatimes.com/industry/energy/oil-gas/pm-dedicates-gail-india-ltds-1000-km-dabhol-bangalore-gas-pipeline-to-nation/articleshow/26798053.cms",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/2014/http://www.gail.nic.in/final_site/pressrelease_dec3_13.html", "ok": true, "contains_value": true},
+        {"url": "https://economictimes.indiatimes.com/industry/energy/oil-gas/pm-dedicates-gail-india-ltds-1000-km-dabhol-bangalore-gas-pipeline-to-nation/articleshow/26798053.cms", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Unanimous across three independent origins: GAIL's own release ('GAIL (India) Limited's ... pipeline'), Economic Times ('GAIL India Ltd's ... pipeline'), and PNGRB's regulatory register (entity = GAIL). Staged against the operators/owners tab row (oo_sheet_row 801 from the worklist); PNGRB PDF verification flagged 'ok': false because url_verifier gives its documented large-PDF false negative on this file -- content confirmed locally with pdftotext."
+    }
+  ],
+  "summary": "P0915 (Dabhol-Bangalore Gas Pipeline): existence, ownership (GAIL 100%), classification (transmission/Gas), StartYear (2013) and Capacity (16 MMSCMD) all confirmed high-tier via citizenmatters.in, Economic Times, GAIL's own Dec-2013 press release (Wayback), and PNGRB's May-2026 register -- no duplicate (P0930 Jaigarh-Dabhol is a distinct short feeder). One spec concern staged: PNGRB's current register lists this asset as PARTIALLY COMMISSIONED (1,414 km authorised, only 1,182 km operating, 232 km stalled since a lapsed Feb-2013 target with zero progress in 13+ years -- likely the Goa spur that hit farmer opposition circa 2010), which conflicts with GEM's single fully-`operating` 1,386 km row; 1,386 km itself is independently corroborated (citizenmatters) but matches none of PNGRB's own three figures, so flagged rather than resolved. New fill staged: Diameter=18in (citizenmatters, medium tier, currently blank on the sheet). Nothing UNRESOLVED."
+}

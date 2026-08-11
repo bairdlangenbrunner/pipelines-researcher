@@ -1,0 +1,14 @@
+{
+ "project_id": "P3905",
+ "pipeline_name": "Dandewala-Gamnewala-RSEB Ramgarh Gas Pipeline",
+ "sheet_row": 1922,
+ "wiki": "https://www.gem.wiki/Dandewala-Gamnewala-RSEB_Ramgarh_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm -- 65.32 km is well supported by the regulator's own register. Route the drawn geometry to a §8 route-creation/review pass instead: the current geojson draws ~322 km, roughly 4.9x the true pipeline length, so the digitized line is following the wrong corridor (or a wrong/duplicate feature), not just under-detailed. Do not fabricate a replacement route myself, per protocol.",
+   "researcher_notes": "This answers the length_ratio flag (drawn route 322 km vs LengthKnownKm 65.32 km, ratio 4.93). The PNGRB NGPL common-carrier register (2024-06-26 edition, https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf -- url_verifier FAILs on this large PDF, documented false negative; downloaded and read with pdftotext -layout) row 28 (S.No.28, PL ID 19.28.NGPL) reads: 'Dandewala - Gamnewala-RSEB Ramgarh | GAIL | 14.12.2012 | 65.19 | 0.075/0.108 | 65.32 | Rajasthan' -- Entity=GAIL, Auth. Length=65.19 km, Authorized Capacity=0.075-0.108 MMSCMD, Operating Length=65.32 km. The sheet's LengthKnownKm (65.32) matches the register's Operating Length column exactly to two decimals, and the sheet's Capacity (0.08 MMSCMD) sits inside the register's 0.075-0.108 authorized range. This is the regulator's own physical-progress register, an origin independent of GEM, so the length VALUE is solidly corroborated -- the 322 km drawn route is the thing that is wrong, almost certainly following the wrong corridor rather than being a legitimately longer real-world path (a 4.93x ratio is far outside anything explainable by pipe bends over a genuinely-65 km line). Same authorisation batch (14.12.2012, same GAIL Rajasthan cohort) as P1436 (Langtala to Ramgarh, register row 29, resolved separately in this brief with the same register as one of its two sources) -- both rows' lengths and capacities check out precisely against the register, which is a useful cross-check on the register-crosswalk leg's general finding that PNGRB is the de facto origin of GEM's India numbers. No Operator flag was raised on this row (unlike P1436), so I have not proposed an Operator fill here -- flagging for the record only that the same register row also names GAIL as the authorised entity, consistent with the Operator=GAIL conclusion reached for the sibling row P1436, in case a future pass wants to extend that fill here too. Never cited gem.wiki or globalenergymonitor.org."
+  }
+ ]
+}

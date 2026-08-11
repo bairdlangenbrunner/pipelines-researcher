@@ -1,0 +1,59 @@
+{
+  "project_id": "P0924",
+  "pipeline_name": "Hazira-Ankleshwar Gas Pipeline",
+  "sheet_row": 484,
+  "wiki": "https://www.gem.wiki/Hazira-Ankleshwar_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Status/Fuel/PipelineType/Owner/StartYear1/Length/Capacity; the sheet's capacity is a stale-but-close snapshot of the current PNGRB authorised figure (see caveat).",
+      "researcher_notes": "EXISTENCE + CLASSIFICATION + SPEC confirmed via 2 independent origins: (1) Gujarat Gas Limited's own operator page (https://www.gujaratgas.com/our-business/hapi/), which states the 'HAPi' pipeline 'is 73.2 km long and 18 inch diameter,' 'starts at Hazira in Surat district and terminates at Ankleshwar in Bharuch district,' 'is designed, constructed, owned and operated by Gujarat Gas Limited (GGL),' and was commissioned '10th May 1999'; and (2) PNGRB (India's pipeline regulator), whose line-wise register lists 'Hazira-Ankleshwar' under entity GGL in BOTH the wiki-cited Jan-2016 edition (http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf: 'Hazira-Ankleshwar / Gujarat Gas Company Limited / 73.2 / 5.060 / 05.07.2012' -- exact match to the sheet's LengthKnown=73.20 km and Capacity=5.06 MMSCMD) and the current May-2026 edition (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, row 14: GGL, authorised+operating length 73 km, authorised/design capacity 5.1 MMSCMD, still under 'OPERATIONAL COMMON CARRIER PIPELINE'). This is a genuine common-carrier transmission asset regulated by PNGRB, confirming PipelineType=transmission and Fuel=Gas. Owner1='Gujarat Gas Co Ltd' 100% matches (current legal name Gujarat Gas Limited). StartYear1=1999 matches GGL's own commissioning statement (single first-party source -- the wiki's second citation for 1999, an Indian Express story, is fully dead with no Wayback capture found via the CDX API, so this date is medium tier on GGL alone). CAVEAT (immaterial, not a concern): the sheet's Capacity=5.06 MMSCMD is the exact 2016 PNGRB figure and is now slightly stale vs the current (May 2026) PNGRB authorised capacity of 5.1 MMSCMD (a rounding-scale change, <1% delta); a separate PNGRB Schedule-I capacity-declaration filing by GGL (https://pngrb.gov.in/pdf/schedule-1/HAPi26082020.pdf) shows current USABLE common-carrier capacity is lower still, 4.2 MMSCMD as of mid-2020 -- these are different regulatory concepts (authorised vs. declared usable) and none of the three differs enough to warrant a spec concern. NOTE ON A WIKI CITATION: the gem.wiki page also cites a Nov-2018 Incore Insightlytics story headlined 'Farmers oppose ONGC's Hazira-Ankleshwar pipeline through their fields' (Variyav village, Olpad taluka, Surat district). Checked via Wayback (https://web.archive.org/web/2019/http://www.incoreinsightlytics.com/farmers-opposes-ongcs-hazira-ankleshwar-pipeline-through-their-fields/) -- the free teaser only confirms the headline/dateline, the body is paywalled. This describes an ONGC-attributed line, not the GGL common-carrier line the sheet's Owner/StartYear/Capacity all describe, so it is very likely a SEPARATE ONGC field flowline/gathering line sharing the same corridor name, not this pipeline -- flagging for awareness only (possible future India discovery candidate), NOT as a duplicate or misattribution on P0924, since none of the current sheet values actually reflect ONGC. DUPLICATE check: cross-referenced against all 35 in-scope India roster rows -- no other pipeline shares this route/endpoints/spec; P0924 is a distinct physical pipe. Two of the three PNGRB PDF citations return a url_verifier content-check FAIL despite HTTP 200 (documented PDF-extraction false-negative -- these PDFs are FlateDecode-compressed and requests.text cannot read embedded text streams); both were manually confirmed via `pdftotext -layout` and the exact matching lines are quoted above.",
+      "proposed_refs": [
+        "https://www.gujaratgas.com/our-business/hapi/",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf",
+        "https://pngrb.gov.in/pdf/schedule-1/HAPi26082020.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix the Location cluster: move 'Surat' from StartState/Province into StartPrefecture/District and set StartState/Province='Gujarat'; move 'Bharuch' from EndState/Province into EndPrefecture/District and set EndState/Province='Gujarat'.",
+      "researcher_notes": "Pulled the live sheet (data/GGIT_gas_snapshot_20260810.csv, row ProjectID=P0924): StartState/Province='Surat', StartPrefecture/District=blank; EndState/Province='Bharuch', EndPrefecture/District=blank. Both 'Surat' and 'Bharuch' are DISTRICTS of Gujarat, not states -- confirmed by GGL's own page ('Hazira in Surat district ... Ankleshwar in Bharuch district') and by PNGRB's register, which lists 'States Passing Through' for this pipeline as 'GJ' (Gujarat) in both the 2016 and current (May 2026) editions. Checked every other India gas row in the same snapshot for the same pattern (P0904-P0927): all 18 others correctly carry an actual state name in *State/Province (Gujarat, Tripura, Assam, Bihar, Punjab, Tamil Nadu, etc.) with District left blank -- e.g. P0920's EndLocation is also 'Bharuch' but its EndState/Province is correctly 'Gujarat'. So this is a one-off field-mapping error isolated to P0924, not a country-wide defect needing a broader fix. The district values belong in the (currently blank) StartPrefecture/District and EndPrefecture/District columns instead.",
+      "proposed_refs": [
+        "https://www.gujaratgas.com/our-business/hapi/",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 484,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "18", "DiameterUnits": "in"},
+      "primary_value": "18",
+      "proposed_refs": ["https://www.gujaratgas.com/our-business/hapi/"],
+      "verifications": [
+        {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter was blank on the sheet. Gujarat Gas Limited's own HAPi page states 'It is 73.2 km long and 18 inch diameter natural gas pipeline.' No second independent source could be located for the diameter figure specifically (targeted web search turned up only this same page and re-derivatives of it, including the gem.wiki article itself, which is never cited); PNGRB's line-wise register does not carry diameter. Staged as a single first-party (operator) source, tier=medium per the corroboration rules -- best-effort fill, not force-fit to a second source."
+    }
+  ],
+  "summary": "P0924 confirmed real, correctly classified, correctly attributed to Gujarat Gas Ltd -- length/capacity/status/owner/1999 start all corroborate against Gujarat Gas's own HAPi page + 2 PNGRB regulatory editions (high tier); ONE real defect found: StartState/Province='Surat' and EndState/Province='Bharuch' hold district names instead of the actual state (Gujarat), isolated to this row (attribution concern, not seen on 18 sibling India rows); diameter (18 in) deep-filled from GGL's own page (medium, single source); no duplicate, no existence issue, no unresolved items."
+}

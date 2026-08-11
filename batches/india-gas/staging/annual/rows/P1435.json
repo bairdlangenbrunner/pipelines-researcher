@@ -1,0 +1,131 @@
+{
+  "project_id": "P1435",
+  "pipeline_name": "PLL-DGEN-Sugen Gas Pipeline",
+  "sheet_row": 817,
+  "wiki": "https://www.gem.wiki/PLL-DGEN-Sugen_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Correct Owner1 from 'Torrent Energy' to 'Torrent Power' (Torrent Power Limited); no evidence found for any entity named 'Torrent Energy' in this sector.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: confirmed and correctly classified. Two PNGRB primary regulatory records, both retrieved live and OCR-read in full (they are scanned/image-only PDFs with no text layer, so automated url_verifier substring matching FAILs on them -- this is the documented ligature/large-PDF false-negative class url_verifier.py itself calls out; I manually confirmed content via pdftoppm+tesseract per that doc's guidance): (1) PNGRB Public Notice PN13042018-1.pdf (dated 20 Mar 2018) titled 'Application of M/s Torrent power limited u/r 19(2) for dedicated Pipeline from Petronet LNG Re-gasification Terminal, Dahaj, Gujarat to Sugen Mega Power Plant, Surat, Gujarat' -- gives Length 'Approx. 90 km', Capacity (volume) '6.5 MMSCMD', Capacity (Energy) '2,54,839 MMBtu/Day', inlet pressure 60-98 Barg. (2) PNGRB Final Acceptance letter Authorization_1_20032020.pdf (Ref PNGRB/Auth/2-NGPL/(05)/2016, dated 20.03.2020), addressed to Shri Jigish Mehta, Executive Director, Torrent Power Limited, SUGEN Mega Power Project, confirming PNGRB's final acceptance of the dedicated natural gas pipeline from Petronet LNG Re-gasification Terminal, Dahej to SUGEN Power Plant under Reg. 19(2), 'point to point connectivity (PLL to SUGEN)', system capacity 'approx. 90 km ... equal to 6.5 MMSCMD ... as indicated by Torrent Power Limited' (capacity flagged as PROVISIONAL pending PNGRB's own capacity-determination process). This is a real, government-authorized dedicated (single-customer) pipeline, not a GEM-only entity -- both Length (90 km) and Capacity (6.5 MMSCMD) match the GEM row exactly. Because it is a DEDICATED pipeline (not common-carrier), it correctly does not appear in the PNGRB NGPL MIS register crosswalk (batches/india-gas/staging/register-crosswalk/register_crosswalk.json already classifies P1435 as ABSENT_DEDICATED_OR_TIE_IN, reason 'Torrent PLL-DGEN-Sugen power-plant feeder; dedicated' -- confirms this is expected, not a gap). PipelineType='transmission' is the closest fit in GEM's 3-value vocab (transmission/gathering/distribution) for a long-distance point-to-point industrial gas supply line; there is no 'dedicated/captive feeder' category, so this is a reasonable classification with a caveat noted, not an error. ATTRIBUTION FINDING: GEM's Owner1 is 'Torrent Energy' (100%), but BOTH PNGRB primary documents unambiguously name the applicant/counterparty as 'Torrent Power Limited' / 'M/s Torrent power limited', and the addressee is the Executive Director of 'Torrent Power Limited, SUGEN Mega Power Project'. Independent secondary confirmation: the general (non-GEM) English Wikipedia article on Torrent Power states Torrent Power operates the 1530 MW SUGEN gas-based plant near Surat AND the 1200 MW DGEN gas-based plant in Dahej SEZ (which is why the pipeline's own name is 'PLL-DGEN-Sugen': it runs from the Petronet LNG (PLL) Dahej terminal, past/through the co-located DGEN plant, on to the Sugen plant near Surat ~90 km away -- explains the length and both waypoint names). That Wikipedia article makes no mention of any 'Torrent Energy' entity, and I found no independent evidence anywhere (including a Bing web check) of a company called 'Torrent Energy' active in Indian power/gas. gem.wiki mirrors GEM's own 'Torrent Energy' attribution, so it is not an independent corroboration of the name. Two independent origins (PNGRB regulatory correspondence + Wikipedia/public record) converge on Torrent Power, not Torrent Energy -- recommend the value correction above. No duplicate risk: checked the full 27-pipeline India-gas roster: P2211 Dahej-OPAL (17 km, different destination/capacity) is the only other Dahej-origin line and is clearly a distinct, unrelated pipe to a petrochemical complex, not this one.",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 817,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "90.00", "LengthKnownUnits": "km"},
+      "primary_value": "90.00",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both PNGRB documents state 'Approx. 90 km' -- the 2018 application notice and the 2020 final acceptance letter, which explicitly attributes the figure to Torrent Power's own submission ('as indicated by Torrent Power Limited'). Same self-reported number republished across two regulatory documents, so tier=medium (one strong origin, not two independent measurements) despite two citable documents. url_verifier auto-check FAILs on both (scanned/image PDFs, no text layer) -- confirmed manually via pdftoppm+tesseract OCR, matching url_verifier.py's own documented false-negative guidance for non-extractable PDFs."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 817,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "6.50", "CapacityUnits": "MMSCMD"},
+      "primary_value": "6.50",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both documents give '6.5 MMSCMD'; the 2020 acceptance letter explicitly flags this as a PROVISIONAL capacity pending PNGRB's own capacity-determination process (2010 Regulations) -- worth a ResearcherNotes caveat that the figure could be revised once/if a final determination was issued (none found). Same single-origin caveat as Length; OCR-confirmed per the note above."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 817,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Dahaj LNG Terminal"},
+      "primary_value": "Dahaj LNG Terminal",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both documents name the source as the Petronet LNG (PLL) Re-gasification Terminal at Dahej/Dahaj, Gujarat, matching GEM's FuelSource value (spelling 'Dahaj' vs the more common 'Dahej' is inconsistent even within PNGRB's own paperwork -- the notice's title uses 'Dahaj', its body uses 'Dahej' -- so not a GEM-introduced error)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 817,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Dahaj", "StartState/Province": "Gujarat", "StartCountryOrArea": "India", "EndLocation": "Surat", "EndState/Province": "Gujarat", "EndCountryOrArea": "India"},
+      "primary_value": "Dahaj",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf",
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/public-notice/PN13042018-1.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_1_20032020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both documents confirm the route as Dahej/Dahaj, Gujarat (Petronet LNG regas terminal) to Sugen (SUGEN Mega Power Plant), Surat, Gujarat -- matching GEM's Start/End location fields. Note the pipeline's own name ('PLL-DGEN-Sugen') and the Torrent Power Wikipedia entry indicate the route also passes the co-located DGEN plant at Dahej SEZ as an intermediate offtake, which GEM's Location fields do not capture as a waypoint -- not an error, just an unrecorded detail (GEM's Location schema has no waypoint field)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 817,
+      "current_status": "construction",
+      "verdict": "unclear",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2021-03",
+      "staleness_rule": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is a DEDICATED pipeline, not a common-carrier line, so it is correctly absent from PNGRB's NGPL MIS register (the country's usual first-stop status source) -- confirmed by register_crosswalk.json's own 'ABSENT_DEDICATED_OR_TIE_IN' classification for P1435. The newest dated evidence I could find is the gem.wiki page's own citation #2, a PNGRB 'Under Construction Dedicated Natural Gas Pipelines' list dated 31 Mar 2021 (retrieved by GEM 2021-09-03) -- i.e. still under construction as of March 2021. The 2020 final-acceptance letter (20.03.2020) is consistent with a project just entering its construction phase around 2018-2020. I could NOT find anything newer: PNGRB's data-bank.html page (https://pngrb.gov.in/eng-web/data-bank.html, the anchor the sheet's existing Status [ref] points to) is a JS-rendered SPA shell with no static content -- both my own fetch and the existing_ref_checks in worklist.json got '200 but value not found' / a blocked directory-listing response, so it cannot be read programmatically. Torrent Power's own corporate site (torrentpower.com) is also a JS SPA that returns empty/404 to non-JS fetches, so I could not check their generation/investor pages for a commissioning announcement. This session's WebSearch tool budget was exhausted (200/200 used before I reached this row), so I could not run a broader trade-press search for a completion/commissioning date; a Bing fetch turned up nothing usable (dominated by unrelated 'torrent' file-sharing results). Given SUGEN and DGEN are long-established, large (1530 MW / 1200 MW), already-operating plants, it is plausible this dedicated LNG-regas supply line has since been completed and commissioned, but I have no independent evidence either confirming or contradicting that past March 2021, and 'construction' is not one of the statuses the annual-update dormancy rule (2y/4y for proposed/shelved) applies to. Recommend a follow-up pass with WebSearch available, or a JS-capable fetch of pngrb.gov.in/eng-web/data-bank.html and Torrent Power's annual reports, to look for a commissioning/first-gas date."
+    }
+  ],
+  "summary": "Existence, length (90 km) and capacity (6.5 MMSCMD, provisional) confirmed via 2 PNGRB primary documents (2018 application notice + 2020 final acceptance) naming Torrent Power Limited, not Torrent Energy -- Owner1 attribution flagged for correction; status stale-evidence-only (last confirmed under construction March 2021), verdict unclear due to tool/budget constraints, no UNRESOLVED fills."
+}

@@ -1,0 +1,51 @@
+{
+  "project_id": "P0934",
+  "pipeline_name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+  "sheet_row": 494,
+  "wiki": "https://www.gem.wiki/Kochi-Koottanad-Bangalore-Mangalore_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase I",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct StartYear1 to 2013 (August 2013). 2019 is the commissioning year of a different, later-built stretch of the same overall KKBM project (the ~440-444 km Kochi-Mangalore leg), not this 44 km Phase I segment.",
+      "researcher_notes": "Sheet: segment 'Phase I', LengthKnown=44.00 km, StartYear1=2019. Cross-checked against the sheet's own cited leads (wiki_citations.json) plus one open-web source. NS Energy Business project database (independent industry pipeline-project profile, cited by the wiki page itself) states explicitly: 'The Kochi-Koottanad-Bangalore-Mangalore pipeline project was split into two development phases with phase one involving a 41km-long pipeline section between Kochi and Koottanad in Kerala... The phase one section of the pipeline was successfully completed and commissioned in August 2013.' Indian Express (2021-01-11, also cited on the wiki page) independently corroborates the length: 'In the first phase, a 44-km line was laid in Kochi, linking the terminal with local industrial users, including Bharat Petroleum Corporation Limited.' Both sources describe the SAME 41-44 km first-phase segment (rounding difference only) and both place it years before 2019 (approved June 2009, commissioned Aug 2013). The 2019 date instead matches NS Energy's description of Phase II's Kochi-Mangalore sub-segment ('the 440km pipeline stretch between Kochi and Mangalore via Koottanad which was successfully completed and commissioned in June 2019') -- a different, much longer stretch that is NOT captured by this 44 km row. So the sheet has paired the correct Phase-I length with the wrong phase's commissioning year. Two independent sources agree on both the 44 km figure (confirming LengthKnown) and on 2013 as Phase I's actual completion year (contradicting StartYear1=2019) -> high tier on the length confirmation, high tier on the date correction.",
+      "proposed_refs": [
+        "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/",
+        "https://indianexpress.com/article/explained/gas-pipeline-from-kochi-to-mangaluru-hurdles-crossed-and-why-it-matters-7141149/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct EndLocation from 'Kochi' to 'Koottanad' (Palakkad district, Kerala). The sheet currently repeats the start city as the end city for this 44 km leg (flagged 'irregular' in the worklist), but the segment's own name and its sourced description both name a different terminus.",
+      "researcher_notes": "worklist.json flags this Location unit irregular=true because StartLocation and EndLocation are both 'Kochi' -- i.e. a 44 km pipeline with no distinct endpoint recorded. NS Energy Business explicitly names the Phase I terminus: 'phase one involving a 41km-long pipeline section between Kochi and Koottanad in Kerala' -- and 'Koottanad' is literally the second word of the pipeline's own name (Kochi-Koottanad-Bangalore-Mangalore), so the project's own naming convention corroborates the NS Energy statement rather than conflicting with it. Indian Express does not name the far end explicitly (it describes Phase I in terms of local industrial offtake -- BPCL etc. -- within Kochi), which is compatible with a Kochi-to-Koottanad trunk that taps industrial users near the Kochi end; it is not independent corroboration of 'Koottanad' as the endpoint, so I am calling this medium tier (one explicit named-endpoint source, corroborated by the pipeline's own name, not by a second independent narrative source).",
+      "proposed_refs": [
+        "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Status, Fuel, PipelineType, Owner1, or Capacity. Note the operating/under-construction split for context (see notes) but do not alter it from this shard, since the shortfall sits on the companion row P0934+P2746 pair, not on the fields owned by P0934's 'Phase I' scope.",
+      "researcher_notes": "EXISTENCE: real, well-documented, currently-operating GAIL asset -- extensive independent press coverage across a decade (Mint 2012 regulatory approval, Economic Times 2016 extension / 2020 completion, The Hindu 2017 and The News Minute 2017 on right-of-way protests, Indian Express 2021, NS Energy project database), none of it GEM-derived. Not a hallucination. CLASSIFICATION: PipelineType=transmission is correct -- PNGRB's own May-2026 line-wise register (data-bank/20260531-NGPL-MIS-Report.pdf, printed p.2, 'PARTIALLY COMMISSIONED COMMON CARRIER PIPELINE' table, row 5) lists 'Kochi-Koottanad-Bangalore-Mangalore' as a common-carrier (transmission-class) authorized pipeline, entity GAIL, authorisation date 31.05.2012, authorised length 1,104 km, authorised/design capacity 16.0 MMSCMD -- exactly matching the Capacity value on BOTH of GEM's split rows for this project (P0934=16.00 and, per the fresh GGIT gas CSV, P2746 'construction' also =16.00). This is the known GEM convention (documented for this country: India CapacityBcm/y is derived from PNGRB's authorised, project-level MMSCMD and is duplicated across split operating/construction rows), not an error -- so Capacity=16.00 stands even though NS Energy separately gives Phase I's own narrower design throughput as 6 Mcm/d; I am not recommending a change. DUPLICATE check against the 35-row operating roster: no match -- none of the other 34 pipelines describe this route. There IS a companion row for the same project, P2746 ('construction', 1060 km, Koottanad->Mangalore, StartYear1=2022), and 44+1060=1104 km ties out exactly to PNGRB's current authorised total -- this is the documented granularity pattern (one authorised asset split into an operating row + a construction row), not a duplicate. CAVEAT for the record (not actioned here, outside P0934's 'Phase I' scope): PNGRB's CURRENT report shows the system-wide OPERATING length at 675 km and under-construction at 429 km (of 1,104 km authorised), whereas GEM's split is booked as 44 km operating / 1,060 km construction. The gap (roughly 630 km) most plausibly reflects the ~440-444 km Kochi-Mangalore leg that NS Energy/Indian Express both say was commissioned/opened in June 2019/Jan 2021 and is therefore now operating, but which GEM has not captured as its own operating row -- it appears to still be counted inside P2746's 1,060 km 'construction' figure. That is a P2746-side question (which row this shard does not own) and a possible new-segment/discovery question, not a P0934 defect, since P0934 is specifically scoped and named 'Phase I' (the original 41-44 km Kochi-Koottanad stretch) and its own length/capacity check out. Flagging for Update/Discovery follow-up on P2746 rather than changing anything here. ATTRIBUTION: Owner1=GAIL (India) Ltd 100% confirmed independently by NS Energy ('Gas Authority of India Limited (GAIL)') and by PNGRB's entity column ('GAIL') -- two independent origins, high tier. FUEL: Gas, trivially correct (LNG-fed natural gas transmission pipeline). PNGRB PDF note: url_verifier returns a false negative on the PNGRB PDF (200 + 'value not found') on this and every India PNGRB citation -- documented large-PDF limitation; I fetched it directly and confirmed the KKBM row locally with `pdftotext -layout` (row 5 of the partially-commissioned table, matches quoted figures above) before citing it.",
+      "proposed_refs": [
+        "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P0934 (Kochi-Koottanad-Bangalore-Mangalore, Phase I, 44 km) is a real, well-corroborated operating GAIL asset, correctly split from companion row P2746 (not a duplicate) and correctly classified/owned/fueled -- but StartYear1=2019 is wrong (should be 2013; 2019 belongs to a different, later-built leg of the same project) and EndLocation wrongly repeats 'Kochi' instead of the sourced terminus 'Koottanad'; both are staged as concerns, no fills added (no genuinely-blank fields could be safely sourced)."
+}

@@ -1,0 +1,35 @@
+{
+ "project_id": "P3299",
+ "pipeline_name": "Vijaipur-Dadri Gas Pipeline (GREP-II)",
+ "sheet_row": 1734,
+ "wiki": "https://www.gem.wiki/Vijaipur-Dadri_Gas_Pipeline_(GREP-II)",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": ["https://www.gailonline.com/Natural_Gas.html"],
+   "verifications": [{"url": "https://www.gailonline.com/Natural_Gas.html", "ok": true, "contains_value": true}],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Same system-level answer as P0925 (see that shard for full sourcing detail), applied here per the brief's instruction to answer Operator once for the whole GAIL HVJ/DVPL/GREP system and carry it across all five rows. GAIL's own website's 'Operational Natural Gas Pipelines of GAIL' table (current, as on 30 Jun 2026) separately lists 'DVPL - GREP Upgradation 1311 km' -- the DVPL-II/GREP-II phase-2 corridor this row belongs to -- as one of GAIL's own operational network assets, and the page's body text states GAIL is 'a major gas pipeline operator'. Corroborated independently for this specific segment by GlobalData/offshore-technology.com ('Vijaipur-Dadri II gas pipeline, India', published 2022-08-02): 'Vijaipur-Dadri II is a 505km-long onshore pipeline project operated by GAIL (India)' -- a commercial infrastructure database with no reference to GEM or gem.wiki found on the page (checked the raw HTML). Two independent sources naming the same operator for this specific line -> tier high for this row specifically (better support than the system-level-only sourcing on the other four rows)."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Keep LengthKnownKm = 505 (do not change it) -- it is independently corroborated by a source unconnected to GAIL's own map. Flag the drawn route geometry for human review: at 1012 km it is almost exactly double the corroborated length, which is more consistent with the geojson tracing both the GREP-I and GREP-II corridors together (or an out-and-back) than with a genuinely wrong length value.",
+   "researcher_notes": "GlobalData/offshore-technology.com ('Vijaipur-Dadri II gas pipeline, India', published 2022-08-02, url_verifier OK, substring '505' confirmed): 'Vijaipur-Dadri II is a 505km-long onshore pipeline project operated by GAIL (India). The onshore, gas pipeline with a maximum diameter of 48 inches, starts at Madhya Pradesh (India) and ends in Uttar Pradesh (India).' This matches the sheet's LengthKnownKm (505) exactly and also matches Diameter (48.00) exactly, and states GREP-II runs Madhya Pradesh -> Uttar Pradesh, consistent with the sheet's Start/EndState. This is a commercial market-data source (GlobalData), independent of GEM/gem.wiki (checked the raw page HTML for any GEM reference -- none found). Because the length is well corroborated, the flagged length_ratio (measured 1012 km drawn vs 505 km sheet, ratio 2.00) is much more likely a route-geometry defect than a length error. GREP-II is consistently described (by GAIL's own map and by GlobalData) as running PARALLEL to GREP-I over the same Vijaipur-Dadri corridor, so a real-world length near double the corroborated 505 km would be an unusual routing choice for a stated parallel line -- the likelier explanation is that the drawn geojson traces more than just the GREP-II corridor (e.g. both GREP lines, or an out-and-back). Per protocol, no new coordinates are proposed -- this is a routing-integrity flag for a human, not a value change.",
+   "proposed_refs": ["https://www.offshore-technology.com/marketdata/vijaipur-dadri-ii-gas-pipeline-india/"],
+   "verifications": [{"url": "https://www.offshore-technology.com/marketdata/vijaipur-dadri-ii-gas-pipeline-india/", "ok": true, "contains_value": true}],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}

@@ -1,0 +1,261 @@
+{
+  "project_id": "P0913",
+  "pipeline_name": "Contai-Paradip-Dattapulia Gas Pipeline",
+  "sheet_row": 475,
+  "wiki": "https://www.gem.wiki/Contai-Paradip-Dattapulia_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "No change to Status/ShelvedCancelledType/CancelledYear/Fuel/PipelineType — all confirmed correct. But flag for the West Bengal redundancy-cluster review: PNGRB's own tender bundled this project as ONE bid covering TWO branches off the Contai hub — Contai-Dattapulia (the Bangladesh-facing leg GEM's Start/EndLocation captures) AND Contai-Jajpur-Dhamra-Cuttack-Paradip (the Odisha-facing leg, named in the pipeline title but absent from GEM's Location fields). Worth a human check of whether P3334 (Digha-Contai) is the short feeder segment into this hub.",
+      "researcher_notes": "STARTING POINT (gem.wiki's own cited refs, verified live): (1) PNGRB EOI PDF http://www.pngrb.gov.in/pdf/eoi/ng/eoi12/EOI-NG_HEnergy-1.pdf resolves 200 but is a SCANNED image PDF with no text layer — url_verifier FAILs on substring match (documented false-negative class in the script's own docstring). I OCR'd it manually (tesseract, page 1): it is H-Energy Private Limited's cover letter, Ref HEPL/2015/PNGRB/EOI/01, dated 5 March 2015, addressed to PNGRB's Secretary, 'Submission of Expression of Interest (EOI) for laying, building and operating Contai (West Bengal) - Paradip (Odisha) - Dattapulia (West Bengal) Natural Gas Pipeline.' This independently confirms the project genuinely existed as a real EOI, not a GEM-only entity — but since the automated check can't confirm it, I am NOT citing this PDF as a proposed_ref (kept out per the strict verify-before-cite rule); it only informs my confidence, and the two refs below carry the citation. NOTE: the same PDF also bundles (pages 4-6) an entirely separate, later (Jan 2018) H-Energy EOI for the Kukrahati-Itinda pipeline (matches roster P0935 exactly: 125 km, Kukrahati to Itinda) — a PNGRB filing quirk (two unrelated EOIs concatenated under one URL), not a GEM data issue, but worth knowing if anyone opens this URL expecting only Contai-Paradip-Dattapulia content. (2) Hindu BusinessLine 2017-03-28 (verified OK, text-readable, independent press) confirms explicitly: 'Last year, the company [H-Energy] proposed a Contai-Paradip and Contai-Duttaphulia pipeline project, which was spiked by the downstream regulator, Petroleum and Natural Gas Regulatory Board, citing viability concerns. The issue is now pending before a dispute settlement tribunal. The Contai-Duttaphulia leg is aimed at supplying power plants in Bangladesh.' This independently corroborates both EXISTENCE and a PNGRB-driven rejection/cancellation event dated to 'last year' (i.e. 2016 relative to the March 2017 publish date), matching GEM's CancelledYear=2016. (3) I went BEYOND the cited refs to PNGRB's own live tender portal, https://pngrb.gov.in/eng-web/ng-bid-9.html (verified OK, government primary source, independent of GEM), which lists: 'Tender Title: NGPL Bid for Contai (Purba Medinipur district, West Bengal) - Dattapulia (Nadia district, West Bengal) - Jajpur (Jajpur district, Odisha) - Dhamra (Bhadrak district, Odisha) - Cuttack (Cuttack district, Odisha) - Paradip (Jagatsinghpur district, Odisha); Tender Reference Number: EOI/NGPL/BID/9/2015-2; Date: 26.10.2015; Tender Type: (Cancelled)' — PNGRB's OWN site literally labels this tender 'Cancelled.' Combined with Hindu BusinessLine, this gives 2 independent, verified, working sources (a government regulator's own record + independent press) that AGREE the project was cancelled, supporting ShelvedCancelledType=confirmed (already correctly set on the sheet) at tier=high. I also pulled the two linked PDFs off that tender page: the original 26.10.2015 public notice (text-readable, confirms the same route/date) and a 17.02.2016 addendum (scanned, OCR'd: a bid-deadline extension to 23.03.2016, no cancellation reason given — process detail only, not cited). CAVEAT (why 'confirmed (caveat)' not a clean pass): the tender's own route order (Contai -> Dattapulia -> Jajpur -> Dhamra -> Cuttack -> Paradip) is geographically a BRANCHED network, not a single line — Dattapulia lies north toward the Bangladesh border while Paradip lies well south in Odisha; these cannot be one continuous corridor. This matches the Hindu BusinessLine framing of 'a Contai-Paradip AND Contai-Duttaphulia pipeline project' as two separate legs off one hub. GEM's row captures only the Dattapulia-facing leg in Start/EndLocation (Contai/Dattapulia); the Paradip-facing leg (Jajpur-Dhamra-Cuttack-Paradip), despite being in the pipeline's own name, isn't reflected anywhere in the Location fields. This doesn't make the row wrong (it's cancelled either way, and LengthKnown=705km may represent the combined/whichever branch PNGRB scoped in its single EOI/tender), but it's a genuine structural nuance a redundancy/cluster pass on the West Bengal group (P0913, P3334 Digha-Contai, P0935 Kukrahati-Itinda, P2214 Kanai Chhata-Shrirampur) should have in view — I did not find strong enough evidence to call any of these an outright duplicate of P0913, so I am not raising a duplicate flag myself.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/eng-web/ng-bid-9.html",
+        "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Leave Capacity (5.26 bcm/y), SegmentCost ($333,858,720 USD), StartYear1 (2019) and Owner1 (Western Concessions Private Ltd) unresolved rather than treating them as sourced — no independent source located that states or corroborates any of these four values for this specific project.",
+      "researcher_notes": "Checked the two gem.wiki-cited refs (PNGRB EOI PDF, Hindu BusinessLine), the PNGRB tender portal and its linked notices/addendum, a marketresearch.com/Timetric project-profile page (blocked by a Cloudflare bot-check, 403 — could not read), an ipgprojects.com project-database page (loads but the actual project data is paywalled/behind a login; only boilerplate + the bare project name string 'Contai-Paradip-Dattapulia Greenfield Pipeline Project (HEPL)' is visible, no figures), and telegraphindia.com's 'Hurdle to Bengal gas project' (403 blocked live, no Wayback snapshot exists for that URL either — dead end). None of the accessible sources state a capacity figure, a cost figure, a target start year specific to this pipeline, or the owner entity name 'Western Concessions Private Ltd.' The owner name is at least PLAUSIBLE — H-Energy names its project-specific affiliates '<Place> Concessions Private Limited' (its Kukrahati-Itinda EOI names 'Bengal Concessions Private Limited' as the affiliate for that project), so 'Western Concessions Private Ltd' fits the house naming pattern — but plausibility from a naming convention is not corroboration, and web search was unavailable for further attempts (session search budget exhausted) plus DuckDuckGo instances repeatedly bot-walled direct queries. Not treating any of these four as verified; recommend a follow-up pass if/when search access is available.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "cancelled"},
+      "primary_value": "cancelled",
+      "proposed_refs": [
+        "https://pngrb.gov.in/eng-web/ng-bid-9.html",
+        "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true},
+        {"url": "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's own tender listing labels 'Tender Type: (Cancelled)' for this exact project; Hindu BusinessLine independently reports PNGRB 'spiked' the tender citing viability concerns, with the matter then before a dispute tribunal. Two independent, verified sources agreeing cancelled."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Cancelled [ref]",
+      "value_cols": ["CancelledYear"],
+      "primary_value_col": "CancelledYear",
+      "values": {"CancelledYear": "2016"},
+      "primary_value": "2016",
+      "proposed_refs": [
+        "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece",
+        "https://pngrb.gov.in/eng-web/ng-bid-9.html"
+      ],
+      "verifications": [
+        {"url": "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Hindu BusinessLine (published 2017-03-28) says the tender was spiked 'last year', i.e. 2016, matching the sheet's CancelledYear=2016; PNGRB's own tender page confirms the underlying fact of cancellation (dated notice 26.10.2015, addendum 17.02.2016) though it doesn't itself stamp an exact cancellation date. Year not pinned to a specific month by either source — treat 2016 as year-level confidence only."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://pngrb.gov.in/eng-web/ng-bid-9.html",
+        "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true},
+        {"url": "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's tender page is explicitly a 'Natural Gas Pipeline' / 'NGPL' bid; Hindu BusinessLine repeatedly describes it as a gas pipeline carrying RLNG. Both independent, both confirm."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://pngrb.gov.in/eng-web/ng-bid-9.html"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The tender was run under PNGRB's Regulation 5(5)/5(6) authorization regime for common-carrier natural gas TRANSMISSION pipelines (the EOI cover letter cites the same 2008 authorizing regulations) — that regime governs cross-state trunk transmission lines, not city-gas-distribution networks, so 'transmission' is the correct classification. Single formally-verified source (government regulator); calling tier medium rather than high since I did not find a second source stating the classification word itself, only the regulatory-regime context."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Contai", "StartState/Province": "West Bengal", "StartCountryOrArea": "India", "EndLocation": "Dattapulia", "EndState/Province": "West Bengal", "EndCountryOrArea": "India"},
+      "primary_value": "Contai",
+      "proposed_refs": ["https://pngrb.gov.in/eng-web/ng-bid-9.html"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's tender title explicitly names 'Contai (Purba Medinipur district, West Bengal)' and 'Dattapulia (Nadia district, West Bengal)', matching GEM's StartLocation/EndLocation/State exactly. See the validity caveat above: the same tender title also names Jajpur/Dhamra/Cuttack/Paradip (all Odisha) as further points on the corridor, none of which appear in GEM's Location fields — likely because this was actually a branched (Y-shaped) proposal and GEM's single Start/End model only captured the Bangladesh-facing leg. Tier medium: one formally-verified source, though it is a strong primary (the regulator's own tender record)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2015"},
+      "primary_value": "2015",
+      "proposed_refs": ["https://pngrb.gov.in/eng-web/ng-bid-9.html"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "DEEP-FILL of a genuinely blank field (ProposalYear was empty on the sheet). PNGRB's tender page dates the public notice/bid invitation for this project to 26.10.2015 (Tender Reference EOI/NGPL/BID/9/2015-2); the underlying H-Energy EOI that triggered the tender is dated 5 March 2015 per the (unverifiable-by-substring, OCR-read) EOI cover letter. 2015 is well-supported as the proposal year. Flagging one ambiguity: Hindu BusinessLine's 2017 article says the company 'proposed' the project 'last year' (i.e. would read as 2016), which is looser journalistic phrasing rather than a precise proposal date — going with the dated primary regulatory record (2015) over that phrasing."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "5.26", "CapacityUnits": "bcm/y"},
+      "primary_value": "5.26",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found (of those checked — see the spec-concern validity entry) states a capacity figure for this project. Not confirming 5.26 bcm/y; leaving unresolved rather than fabricating support."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "705.00", "LengthKnownUnits": "km"},
+      "primary_value": "705.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "705 km could not be independently corroborated from a source I could actually read — a search-engine summary referenced a 705 km figure attributed to a marketresearch.com/Timetric project profile, but that page 403s behind a Cloudflare challenge and could not be verified or cited (and the summary text itself is not a citable URL). None of the PNGRB documents I could read state a total length. Leaving unresolved rather than citing an inaccessible/unverifiable page."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "333858720.00", "SegmentCostUnits": "USD"},
+      "primary_value": "333858720.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found states a cost figure for this project. The only cost figure in the Hindu BusinessLine article (₹12,940 crore / ~$1.9bn) is for a different, larger GAIL pipeline mentioned in the same article for context, not this H-Energy project — do not mistake that number for this row's SegmentCost. Leaving unresolved."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2019"},
+      "primary_value": "2019",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found ties a 2019 target commissioning date to this specific pipeline (2019 is documented elsewhere as H-Energy's Haldia FSRU's own target commissioning quarter, a related but distinct project — not evidence for this pipeline's StartYear1). Leaving unresolved rather than assuming the FSRU date carries over."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "oo_sheet_row": 800,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Western Concessions Private Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Western Concessions Private Ltd",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "'Western Concessions Private Ltd' fits H-Energy's naming convention for project-specific affiliates (its Kukrahati-Itinda EOI names 'Bengal Concessions Private Limited' as that project's affiliate vehicle) but I could not independently confirm this specific entity name — search engines bot-walled repeated queries and the session's web-search budget was exhausted. Leaving unresolved rather than treating the naming-pattern plausibility as confirmation."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 475,
+      "current_status": "cancelled",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2017-03",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/eng-web/ng-bid-9.html",
+        "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/eng-web/ng-bid-9.html", "ok": true, "contains_value": true},
+        {"url": "https://www.thehindubusinessline.com/news/national/henergy-seeks-extension-of-gas-pipeline-to-contai/article9604968.ece", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is a genuinely CONFIRMED cancellation, not an inferred/dormancy one — ShelvedCancelledType=confirmed is already correctly set on the sheet and needs no change. Evidence: (1) PNGRB's own live tender portal (pngrb.gov.in/eng-web/ng-bid-9.html) lists 'Tender Type: (Cancelled)' for the exact tender (Contai-Dattapulia-Jajpur-Dhamra-Cuttack-Paradip, Ref EOI/NGPL/BID/9/2015-2, noticed 26.10.2015) covering this project. (2) Hindu BusinessLine, 2017-03-28, independently reports the tender was 'spiked by the downstream regulator...citing viability concerns' the prior year (2016), with the dispute then pending before a tribunal. No newer evidence found (searched for a tribunal outcome, an APTEL ruling, or any 2018+ update reviving the project; found none — H-Energy's subsequent PNGRB activity in this corridor is a DIFFERENT, later-approved project, Kanai Chhata-Shrirampur (2019, roster P2214), routed toward Maharashtra rather than Bangladesh/Odisha, so it is not a revival of this specific route). Nothing suggests this project quietly went ahead under a different name in this exact corridor. Status=cancelled stands confirmed."
+    }
+  ],
+  "summary": "P0913 Contai-Paradip-Dattapulia: existence and cancellation both CONFIRMED independently — PNGRB's own tender portal labels the exact tender '(Cancelled)' and Hindu BusinessLine (2017) corroborates PNGRB spiked it on viability grounds in 2016, matching CancelledYear=2016/ShelvedCancelledType=confirmed as-is; added refs for Status/CancelledYear/Fuel/PipelineType/Location plus a new ProposalYear=2015 fill; Capacity, SegmentCost, LengthKnown(705km), StartYear1(2019) and Owner1 could not be independently corroborated and are left UNRESOLVED; flagged a route-structure caveat (this was actually a branched Contai-Dattapulia + Contai-Paradip network, not one line) for the West Bengal cluster review."
+}

@@ -1,0 +1,130 @@
+{
+  "project_id": "P5412",
+  "pipeline_name": "Hazaribagh-Ranchi Gas Pipeline",
+  "sheet_row": 3006,
+  "wiki": "https://www.gem.wiki/Hazaribagh-Ranchi_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate/attribution problem. See the separate spec flag below for the one real caveat (stale length/capacity).",
+      "researcher_notes": "EXISTENCE: confirmed via a coherent, independently-fetched PNGRB regulatory paper trail spanning 2021-2026, not a GEM-only entity. (1) PNGRB Public Notice PNGRB/Auth/2-NGPL(09)/2021, 13.12.2021: an Expression of Interest from Prabha Energy Private Limited (PEPL) 'to lay, build, operate or expand Natural Gas pipeline from GGS-2, North Karanpura block, Hazaribagh to SV-3 of Urja-Ganga Natural Gas pipeline at Ranchi' -- names both endpoints and the purpose (tying a CBM gathering station into GAIL's Urja Ganga trunk). (2) PNGRB's competitive-bid document BID/NGPL/17/2022/01/HRPL, March 2022, 'Hazaribagh-Ranchi Natural Gas Pipeline (HRPL)', spanning 'about 68 km' with 'initial system capacity of at least 1.00 MMSCMD'. (3) PNGRB's live NGPL MIS register (checked at two editions, 30-Jun-2025 and 31-May-2026) both carry a Hazaribagh-Ranchi / IOCL / 09.02.2023 row with non-zero, INCREASING physical progress between editions (0 km welded -> 11 km welded, 0 km lowered -> 6 km lowered, of 65-71 km authorised) -- i.e. genuine ongoing pipe-laying, not a dormant paper authorization (contrast the country note's live-authorization trap: a static, unchanging 0-km entry would NOT be evidence of activity, but a growing welded/lowered figure is). All four documents are independently fetched pngrb.gov.in publications naming the same two endpoints; none is GEM-derived. CLASSIFICATION: correctly recorded as gas transmission -- this is a short common-carrier lateral (CBM gathering station to an existing trunk sectionalizing valve) rather than a long-haul trunk, but PNGRB regulates and authorises it under the identical common-carrier Natural Gas Pipeline framework as the larger lines in this roster (e.g. Kanai Chhata-Panitar, Gurdaspur-Jammu), and GEM's PipelineType='transmission' is used consistently across all PNGRB-authorised common-carrier lines in this dataset regardless of scale, so this is not a misclassification. DUPLICATE: checked against all 8 other roster rows (Chhara-Lonhtpur, Swan LNG-Dahej LNG, Bhatinda-Gurdaspur, Mehsana-Bhatinda, Gurdaspur-Jammu, Kakinada-Srikakulam, Kanai Chhata-Panitar, Ennore Barshi) -- none shares an endpoint, corridor, or authorisation with Hazaribagh-Ranchi; no relabel/double-count risk. ATTRIBUTION: Owner1=Indian Oil Corp (100%) matches PNGRB's register Entity field ('IOCL') at both editions checked; independently corroborated in kind (not in the specific 100%-pipeline-ownership fact) by trade press describing IOCL as a 20% partner (alongside ONGC 55%, Prabha Energy 25%) in the connected North Karanpura CBM block and as a joint counterparty on a 2024 CBM gas-supply order with Prabha Energy -- consistent with IOCL, the largest consortium member, being the entity PNGRB ultimately authorised to build/operate the tie-in pipeline. StartLocation/EndLocation (Hazaribagh/Ranchi, both Jharkhand) match the notice's GGS-2/SV-3 endpoints at city-level granularity.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/PN13122021.pdf",
+        "https://pngrb.gov.in/pdf/ngp/bid/bid17/SBID15032022.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update LengthKnown 65.00->71.00 km and Capacity 1.03->1.00 MMSCMD, sourced to the current PNGRB register; leave CapacityUnits/LengthKnownUnits unchanged (already MMSCMD/km).",
+      "researcher_notes": "The sheet's current LengthKnown=65.00 km / Capacity=1.03 MMSCMD is NOT wrong for its vintage -- it matches PNGRB's own 30-Jun-2025 NGPL MIS register exactly ('Hazaribagh-Ranchi IOCL 09.02.2023 65 1.03 ... Feb-26 JH'), which is consistent with the roster's LastUpdated=2025-07-17. But PNGRB's current 31-May-2026 register has since revised the SAME authorisation (same entity, same authorisation date 09.02.2023, same target Feb-26) to 71 km authorised / 1.0 MMSCMD authorised capacity -- a material ~9% length increase and a small capacity revision, most likely a route/design finalisation during construction rather than a data error. Per the country guidance, PNGRB is the de facto origin of this figure on Indian gas rows, so this is a single-publisher (regulator) revision, not two independent organisations disagreeing -- but it is the current authoritative figure and the sheet's is now one full register edition stale. The March-2022 bid document's preliminary 'about 68 km' sits between the two, consistent with a lengthening design between tender (2022) and final authorisation build-out (2023-2026).",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3006,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "71.00", "LengthKnownUnits": "km"},
+      "primary_value": "71.00",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's 31-May-2026 NGPL MIS register row: 'Hazaribagh-Ranchi IOCL 09.02.2023 71 1.0 1.0 - - 0 71 6 11 0 Feb-26 JH' -- authorised length 71 km. This SUPERSEDES the sheet's current 65.00 km, which matches the prior (30-Jun-2025) edition -- see the spec concern above. PNGRB is the de facto origin of this figure, so medium tier (single-publisher, current-edition authoritative) rather than independently cross-checked. Automated url_verifier FAILs on this large multi-column register PDF (documented false-negative pattern in url_verifier.py's own docstring: 'the extractor does not reach the whole document'); manually confirmed live (HTTP 200, 15 pages) and content-matched via pdfplumber -- the exact row text quoted above was extracted from page 3 of the live PDF."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3006,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "1.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "1.00",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same PNGRB 31-May-2026 register row as the Length fill: authorised AND determined capacity both 1.0 MMSCMD, revised down slightly from the sheet's current 1.03 (which matched the 30-Jun-2025 edition). Also matches the March-2022 bid document's floor spec ('initial system capacity of at least 1.00 MMSCMD'). Medium tier for the same single-origin (PNGRB) reason as the Length fill; manually content-verified the same way (automated screen false-negatives on this PDF)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4207,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Indian Oil Corp", "Owner1%": "100.00%"},
+      "primary_value": "Indian Oil Corp",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's register lists Entity='IOCL' for this authorisation (sole entity, no split shown -- consistent with the sheet's 100%). Corroborating context only, not a second hard source for the 100%-pipeline-ownership fact specifically: trade press (MarketScreener, 04-Apr-2024) reports IOCL and Prabha Energy Private Limited jointly winning a CBM gas-supply order from the same North Karanpura block that this pipeline evacuates, and a separate consortium breakdown (ONGC 55% / Prabha Energy 25% / IOCL 20%) for the CBM block itself -- i.e. IOCL is a genuine, independently-reported party to this project, not a phantom owner, even though the specific pipeline-entity fact traces to PNGRB alone. Medium tier for that reason. Automated url_verifier screen FAILs on this large PDF (documented pattern); manually content-verified via pdfplumber."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3006,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1"],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Lead only, not staged as a confident sourced value. The sheet's StartYear1=2026 matches PNGRB's 'target completion' field (Feb-26), which is the only dated figure PNGRB's register carries for this line -- but per the country guidance a target-completion date is a plan, not an outcome, and this specific target has already effectively been missed: the 31-May-2026 register (three months past the Feb-26 target) still shows 0 km operating and only 11 of 71 km welded (~15%). I did not find any independent (non-PNGRB) source giving a start/commissioning date, and I would rather leave this un-re-sourced than paper over a target that the regulator's own newest data shows is slipping. Flagging for a human: StartYear1=2026 is at real risk of needing to move to 2027+ once a later register edition or trade press confirms slippage -- worth re-checking against the next MIS edition rather than trusting Feb-26 as-is."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3006,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status=construction is still correct. PNGRB's 31-May-2026 register (the newest edition) lists Hazaribagh-Ranchi under the UNDER CONSTRUCTION section, 0 km operating, 71 km under construction. Critically, this is not a static/dormant authorisation: welded length rose from 0 km (30-Jun-2025 edition) to 11 km, and lowered length from 0 to 6 km, between the two editions I checked -- genuine incremental pipe-laying activity, the opposite of the country note's 'live authorisation with 0 km built for years' dormancy trap (Ennore-Nellore). Progress is real but slow (~15% of authorised length welded) and the register's own Feb-26 target-completion date has already passed as of this May-2026 edition, so a slip past 2026 is plausible -- flagged as an open StartYear1 lead above rather than a status change, since 'construction, running behind an internal target' is not one of the dormancy triggers (those apply to proposed/shelved rows going quiet, not to a line with rising build metrics). No independent non-PNGRB dated evidence found (IOCL's own projects-under-implementation page did not resolve/redirect during this pass; cspm.gov.in did not resolve)."
+    }
+  ],
+  "summary": "P5412 Hazaribagh-Ranchi: real, well-documented PNGRB-authorised IOCL common-carrier lateral (CBM tie-in to Urja Ganga), correctly classified, no duplicate -- construction status confirmed with rising build progress through May-2026; one spec concern staged (LengthKnown 65.00->71.00 km, Capacity 1.03->1.00 MMSCMD, both PNGRB-current vs the sheet's stale prior-edition figures) plus Owner ref added; StartYear1=2026 left UNRESOLVED as a target-completion date already at risk of slipping."
+}

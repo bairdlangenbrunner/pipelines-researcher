@@ -1,0 +1,35 @@
+{
+ "project_id": "P0919",
+ "pipeline_name": "Dahej-Vijaipur Gas Pipeline (DVPL-I)",
+ "sheet_row": 479,
+ "wiki": "https://www.gem.wiki/Dahej-Vijaipur_Gas_Pipeline_(DVPL-I)",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": ["https://www.gailonline.com/Natural_Gas.html"],
+   "verifications": [{"url": "https://www.gailonline.com/Natural_Gas.html", "ok": true, "contains_value": true}],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Same system-level answer as P0925 (see that shard for full sourcing detail), applied here per the brief's instruction to answer Operator once for the whole GAIL HVJ/DVPL/GREP system and carry it across all five rows. GAIL's own website's 'Operational Natural Gas Pipelines of GAIL' table (current, as on 30 Jun 2026) lists 'HVJ-GREP DVPL 5433 km' -- the combined corridor DVPL-I belongs to -- as one of GAIL's own operational network assets, and the page's body text states GAIL is 'a major gas pipeline operator'. Tier medium (one strong first-party source). Value was blank; ref-only + value fill, no orphan."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No fix needed. Keep LengthKnownKm = 770 (corroborated) and RouteAccuracy = 'very low (straight line/schematic)' (already correctly set on this row) -- the length_ratio flag is explained by the row's own already-documented low route accuracy, not a data defect.",
+   "researcher_notes": "GAIL's own 'Sustainability Glimpses 2022' network map (gailebank.gail.co.in/Gailonline%20Files/Sustainability/Glimpses/GAILSustainabilityGlimpses2022.pdf) labels this line 'DVPL Ph-I -- 770 Km', an EXACT match to the sheet's LengthKnownKm. url_verifier FAILs on this URL (documented large-PDF false negative); confirmed HTTP 200 via curl and read the text locally with pdftotext -layout ('DVPL Ph-I / 770 Km', line 55-57 of the extraction, isolated from other map labels). Given the length is corroborated by a source independent of GEM, the flagged length_ratio (measured 560 km drawn vs 770 km sheet, ratio 0.73, just under the 0.75 tolerance) does not indicate a wrong length. This row's RouteAccuracy is already 'very low (straight line/schematic)' -- i.e. the sheet itself already flags the drawn geometry as a simplified/schematic trace, which is fully consistent with a geodesic-length shortfall of this size. No action beyond noting the flag is resolved.",
+   "proposed_refs": ["https://gailebank.gail.co.in/Gailonline%20Files/Sustainability/Glimpses/GAILSustainabilityGlimpses2022.pdf"],
+   "verifications": [{"url": "https://gailebank.gail.co.in/Gailonline%20Files/Sustainability/Glimpses/GAILSustainabilityGlimpses2022.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs (large-PDF false negative); HTTP 200 confirmed, value confirmed locally via pdftotext -layout"}],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}

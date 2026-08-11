@@ -1,0 +1,246 @@
+{
+  "project_id": "P3905",
+  "pipeline_name": "Dandewala-Gamnewala-RSEB Ramgarh Gas Pipeline",
+  "sheet_row": 1922,
+  "wiki": "https://www.gem.wiki/Dandewala-Gamnewala-RSEB_Ramgarh_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Status/Fuel/PipelineType/Owner/Diameter/Length; add the two independent refs below to those ref cells.",
+      "researcher_notes": "EXISTENCE, ROUTE, OPERATOR, CLASSIFICATION and DIAMETER confirmed via 2 independent, non-GEM origins that neither cites the other: (1) Oil India Limited's own 2017 Global EOI tender (OIL/RP/GLO/EOI/008/2017, 'Rajasthan Project, Jodhpur' -- OIL is a separate PSU from GAIL, so this is a disinterested third party) states verbatim: 'Gas is supplied to power plant at Ramgarh through a 12\" Dia. X 67 KM Natural Gas pipeline (which is owned and operated by GAIL) from Dandewala to Ramgarh with Gamnewala being the intermediate station' -- i.e. the exact three-place-name route in the pipeline's own title, 12-inch diameter (matches sheet exactly), GAIL as owner/operator (matches sheet), and the destination customer is RRVUNL's thermal plant at Ramgarh (RRVUNL = successor to the old Rajasthan State Electricity Board, RSEB -- explains the 'RSEB Ramgarh' naming). This document is not reachable at its live OIL URL (404, tender long closed) but the exact same PDF is preserved at the Wayback snapshot cited below (HTTP 200, confirmed by direct curl + pdftotext -layout; url_verifier's automated content screen returns a false 'value not found' on it because it is a large binary PDF url_verifier's own text extractor can't reach -- a documented false-negative class per its own docstring, same as the PNGRB PDFs elsewhere in this sweep). (2) Global Energy Observatory (globalenergyobservatory.org/geoid/40885), an independent open pipeline database unrelated to GEM, carries a matching record 'Dandewala-Gamnewala-Ramgarh Gas Pipeline India' / segment 'GAIL Gamnewala-RSEB Ramgarh', TYPE=Gas_Pipelines, CATEGORY=Transmission (confirms PipelineType=transmission), operated by 'Gas Authority of India Limited (GAIL)' (confirms Owner1), Status of Pipeline = 'Operating Fully' (confirms Status=operating), and Diameter_of_this_Pipeline_(cm) = 30.48 -- exactly 12 inches, an exact independent match to the sheet's Diameter=12in with zero rounding needed. CAVEAT (immaterial): GEO's segment-level length for the Gamnewala-Ramgarh leg alone is 32.08 km; combined with an implied ~33-35 km Dandewala-Gamnewala leg this is consistent with both OIL's rounded 'X 67 KM' full-route figure and the sheet's more precise LengthKnown=65.32 km (a <3% spread, most likely rounding/survey-vintage noise, not a defect). DUPLICATE check: cross-referenced against all 35 in-scope India roster rows -- no other pipeline shares this route, these endpoints, or this owner/customer pairing (P1436 'Rajasthan Gas Pipeline (Focus)' is a different developer/route in the same state); P3905 is a distinct, real, physical asset, not a duplicate or GEM-only entity.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf",
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify Capacity. The sheet's 0.08 MMSCMD looks too low by roughly an order of magnitude vs. the one primary document that actually states gas volumes moving through this pipeline; do not add a ref to the existing 0.08 figure without checking current GAIL/RRVUNL contract volumes first.",
+      "researcher_notes": "This pipeline is NOT itemized in PNGRB's line-wise common-carrier register (checked the current 2026-05-31 NGPL-MIS-Report.pdf -- no 'Dandewala'/'Gamnewala'/'Ramgarh' row), which is expected per the sweep's own India guidance: it is a dedicated single-customer supply line (GAIL processing-plant-to-power-plant), not a common-carrier asset, so it falls inside PNGRB's totals but is never broken out. That means gem.wiki's own citation for Capacity/Length/Status/StartYear -- footnote 3, 'Welcome to PNGRB . pngrb.gov.in . Retrieved 2023-07-24' -- is a bare homepage link that does not and cannot name this specific pipeline; it is exactly the kind of generic/aggregate citation the sweep brief flags as suspect. Against that, the one document that DOES discuss real gas volumes on this exact 12in x 67km Dandewala-Gamnewala-Ramgarh pipeline is Oil India's 2017 EOI: 'OIL is supplying gas to [RRVUNL] at Ramgarh through...GAIL's pipeline and the committed quantity is 0.7 MMSCMD. However, on an average, approximately 0.50 to 0.55 MMSCMD only is being lifted by the customer.' Both the committed capacity (0.7 MMSCMD) and the typical actual offtake (0.50-0.55 MMSCMD) are 6-9x the sheet's Capacity=0.08 MMSCMD (and also well above gem.wiki's own stated 0.075). I cannot pin down a single 'correct' current MMSCMD figure from this alone (this is a 2017 snapshot, and current usable/contracted capacity may have moved since), so I am not proposing a replacement number -- but 0.08 does not match any volume this document associates with this pipeline, and I could not find any independent source that supports 0.08 or 0.075. Flagging for Update to re-derive Capacity from a current GAIL asset filing or PNGRB Schedule-I capacity declaration rather than trusting the current value.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify StartYear1=2012. It is unsourced even on GEM's own wiki page (no citation number is attached to the 'Start Year: 2012' line) and is contradicted by an independent record that already shows the pipeline fully built and operating two years earlier.",
+      "researcher_notes": "Global Energy Observatory's record for this pipeline (globalenergyobservatory.org/geoid/40885) carries an edit timestamp of 'Last Edited by rajangupta on 2010-08-15' and, as of that edit, already lists real specifics -- exact start/end coordinates for both the Dandewala-Gamnewala and Gamnewala-Ramgarh legs, a 30.48 cm (12in) diameter, and Status of Pipeline = 'Operating Fully' (not 'Under Construction' or any planning-stage option). An independent, dated, non-GEM record describing this exact pipeline as already fully operating with real engineering detail in mid-2010 is inconsistent with GEM's StartYear1=2012. This does not by itself establish the TRUE commissioning year (GEO's edit date is not necessarily the commissioning date either), so I am not proposing a replacement year -- but 2012 should not be treated as reliable without a source, and this is a caveat worth checking against GAIL's own asset records or an actual PNGRB/GAIL authorisation filing.",
+      "proposed_refs": [
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix the spelling: EndPrefecture/District currently reads 'Ramgahr' (letters transposed) and should read 'Ramgarh'; also populate the currently-blank EndLocation as 'Ramgarh'.",
+      "researcher_notes": "Every independent source spells the destination 'Ramgarh' -- Oil India's 2017 EOI uses 'Ramgarh' throughout (8+ occurrences), Global Energy Observatory's segment name is 'GAIL Gamnewala-RSEB Ramgarh', and even GEM's own wiki page TITLE is '...RSEB_Ramgarh_Gas_Pipeline'. The worklist's Location cluster for this row carries EndPrefecture/District='Ramgahr' -- a simple letter-transposition typo -- with EndLocation left blank rather than duplicating 'Ramgarh' there. This looks like an isolated data-entry slip on this one row (the wiki's own 'Location' prose section also says 'Ramgahr' once, suggesting the typo may have propagated from a single upstream edit), not a country-wide pattern.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf",
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf",
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://globalenergyobservatory.org/geoid/40885", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OIL's 2017 EOI describes present-tense, ongoing gas supply through this GAIL pipeline ('OIL is supplying gas...'); GEO's record explicitly selects Status of Pipeline='Operating Fully'. url_verifier's automated content check FAILs on the OIL Wayback PDF (large-binary-PDF false negative, documented in url_verifier's own docstring) but the HTTP 200 and content were both confirmed manually via curl + pdftotext -layout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf",
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://globalenergyobservatory.org/geoid/40885", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OIL's EOI is entirely about natural gas volumes moving through this pipeline; GEO's TYPE field for the record is 'Gas_Pipelines'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://globalenergyobservatory.org/geoid/40885",
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf"
+      ],
+      "verifications": [
+        {"url": "https://globalenergyobservatory.org/geoid/40885", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GEO explicitly classes the record 'CATEGORY Transmission'. Independently, OIL's EOI describes a 12in high-pressure custody-transfer trunk line (28 kg/cm2 down to 18 kg/cm2 over ~67 km from a gas processing plant to a delivery point) -- a transmission-grade dedicated line, not a gathering/distribution line, consistent with the sheet's classification."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "65.32", "LengthKnownUnits": "km"},
+      "primary_value": "65.32",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OIL's EOI states the full Dandewala-to-Ramgarh line is '12\" Dia. X 67 KM' -- a rounded figure close to (within ~3% of) the sheet's more precise 65.32 km; GEO's Gamnewala-Ramgarh sub-segment alone is 32.08 km, consistent in scale with a two-leg ~65-67 km total. Single primary source for the exact total, hence tier=medium rather than high, but no source contradicts 65.32 materially."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12", "DiameterUnits": "in"},
+      "primary_value": "12",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf",
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://globalenergyobservatory.org/geoid/40885", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact independent match from both sources: OIL's EOI states '12\" Dia.'; GEO's Diameter_of_this_Pipeline_(cm) field = 30.48, which is exactly 12 inches (no rounding needed)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "oo_sheet_row": 2877,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf",
+        "https://globalenergyobservatory.org/geoid/40885"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20190129120749/http://oil-india.com/pdf/tenders/EOI/Doc_GLO_008_2017.pdf", "ok": true, "contains_value": true},
+        {"url": "https://globalenergyobservatory.org/geoid/40885", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tab": "operators_owners",
+      "kind": "owner",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OIL's EOI: pipeline 'owned and operated by GAIL'. GEO: 'operated by Gas Authority of India Limited (GAIL)'. No third-party co-ownership is mentioned anywhere, consistent with 100% GAIL."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "0.08", "CapacityUnits": "MMSCMD"},
+      "primary_value": "0.08",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See the Capacity spec concern in validity[] above -- the one primary source with real gas volumes on this pipeline (OIL's 2017 EOI: 0.7 MMSCMD committed, 0.50-0.55 MMSCMD typically lifted) contradicts the sheet's 0.08 MMSCMD by 6-9x, and gem.wiki's own citation for its 0.075 figure is a non-specific PNGRB homepage link with no line-item behind it (this pipeline is a dedicated line, absent from PNGRB's itemized register). Not proposing a ref to the existing 0.08 value since I believe it is wrong; leaving UNRESOLVED for Update to re-derive rather than adding a supporting ref to a doubtful number."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2012"},
+      "primary_value": "2012",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See the StartYear1 spec concern in validity[] above -- GEO independently shows this pipeline already fully built and operating as of a 2010-08-15 edit, two years before the sheet's claimed 2012 start. gem.wiki itself attaches no citation to '2012'. Not proposing a replacement year without a source that actually states one; leaving UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1922,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Dandewala", "StartState/Province": "Rajasthan", "StartCountryOrArea": "India", "EndPrefecture/District": "Ramgahr", "EndState/Province": "Rajasthan", "EndCountryOrArea": "India"},
+      "primary_value": "Dandewala",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See the attribution concern in validity[] above -- EndPrefecture/District='Ramgahr' is a transposition typo for 'Ramgarh' and EndLocation is blank where it should read 'Ramgarh'. Route and states (Dandewala, Rajasthan -> Ramgarh, Rajasthan) are otherwise well-supported by both independent sources, but I am not pairing a ref to a cell that contains a misspelled value; recommend the spelling fix first, then re-add refs for this cluster."
+    }
+  ],
+  "summary": "P3905 is a real, correctly-classified, GAIL-owned dedicated transmission pipeline (Dandewala->Gamnewala->Ramgarh, Rajasthan) confirmed via Oil India's 2017 EOI tender + Global Energy Observatory, both independent of GEM; Status/Fuel/PipelineType/Diameter/Owner/Length refs added (REFS_ADDED), but Capacity=0.08 MMSCMD looks ~6-9x too low against the one primary source with real gas volumes, StartYear1=2012 is contradicted by an independent 2010 operating record, and EndPrefecture/District has a 'Ramgahr'/'Ramgarh' spelling typo -- all three flagged as concerns, not filled."
+}

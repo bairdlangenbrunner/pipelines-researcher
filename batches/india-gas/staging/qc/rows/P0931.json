@@ -1,0 +1,38 @@
+{
+ "project_id": "P0931",
+ "pipeline_name": "Jaigarh-Mangalore Gas Pipeline",
+ "sheet_row": 491,
+ "wiki": "https://www.gem.wiki/Jaigarh-Mangalore_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "H-Energy Private Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "H-Energy Private Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/pdf/orders/Order_JMPL_08.06.2022.pdf",
+    "https://www.aptel.gov.in/sites/default/files/Jud2023/A311of22_100523.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/pdf/orders/Order_JMPL_08.06.2022.pdf", "ok": false, "contains_value": true, "note": "url_verifier FAILs (200 but the substring check can't see inside a large PDF) — documented false negative. Downloaded and read locally with pdftotext -layout: opens 'In the matter of H-Energy Private Limited for Jaigarh - Mangalore Natural Gas Pipeline... the Board vide letter dated 28.06.2016, granted authorization to HEPL... for laying, building, operating or expanding Jaigarh-Mangalore Natural Gas Pipeline'."},
+    {"url": "https://www.aptel.gov.in/sites/default/files/Jud2023/A311of22_100523.pdf", "ok": false, "contains_value": true, "note": "url_verifier reports an SSL error, but `curl -sI` on this exact URL returns HTTP 200 — per the protocol's rule, an SSL/TLS-only failure with a live curl response is LIVE, not dead. Downloaded and read locally with pdftotext -layout: 109-page APTEL judgment, 'In the matter of: H-ENERGY PRIVATE LIMITED... Appellant(s) v. PETROLEUM AND NATURAL GAS REGULATORY BOARD... Respondent(s)', dismissing H-Energy Private Limited's appeal against PNGRB's termination of its JMPL authorization."}
+   ],
+   "tier": "high", "independent": false, "source_language": "en",
+   "researcher_notes": "REJECTING the wiki's candidate value here, not confirming it — this is exactly the Owner-vs-operator, SPV-is-not-the-parent trap the brief warns about, and it should NOT be applied as the wiki originally suggested. The wiki names 'H-Energy Gateway Pvt. Ltd.' as operator, but the PNGRB authorization order (07.06.2022, docket PNGRB/Monitoring/2/NGPL-JMPL/(1)/2016) and the subsequent APTEL appellate judgment (Appeal No. 311 of 2022, 10.05.2023, which upheld the order) both name the authorization HOLDER — the only entity PNGRB regulations recognize as entitled to 'lay, build, operate or expand' the pipeline — as 'H-Energy Private Limited' (HEPL), registered at the same Hiranandani Park, Powai address as the wiki's candidate. 'H-Energy Gateway Private Limited' is a DIFFERENT, legally distinct H-Energy-group company: per the GST council record cited on P0930, H-Energy Gateway Pvt Ltd is the FORMER name of Western Concessions Private Limited (WCPL), the entity separately authorized for the Jaigarh-Dabhol tie-in pipeline and the Jaigarh LNG Terminal itself — not JMPL. The wiki appears to have conflated the two same-group entities. I'm treating the regulator order and the tribunal judgment as ONE origin for confidence-tier purposes (both restate the same underlying PNGRB authorization record and HEPL's own submissions to it, per the standing caution against over-crediting shared lineage as two independent sources) even though tier reads high on document count. Value ADDED (cell was blank), but the substantive finding is a CORRECTION to the wiki's lead, not a confirmation of it."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No change to LengthKnownKm=635 — it is the pipeline's own authorized/reported length, confirmed by the regulator's own order text and cross-checked against HEPL's section-by-section breakdown. Flag the drawn route (1092 km, ratio 1.72) for a redraw/QA pass instead.",
+   "researcher_notes": "The PNGRB order dated 07.06.2022 states directly: 'the overall cost of the 635 km pipeline project has gone up from Rs 2389 crore to Rs 7865 crore' — an explicit, regulator-stated 635 km figure matching the sheet exactly. The same order also records HEPL's 2021 section-by-section revised schedule: SV-1 to Hathkhamba (36 km) + Hathkhamba to Banda (176 km) + Banda to North Goa (85 km) + North Goa to Karwar (73 km) + Karwar to Udupi (210 km) + Udupi to Mangalore (53 km) = 633 km, within 2 km of the project total — an internally consistent breakdown, not just a round headline number. I'm treating the 635 km figure and the segment breakdown as ONE origin (both are HEPL's own submissions as recorded by the regulator, not two independent measurements), so tier medium rather than high, per the standing caution on shared lineage. Status=cancelled on the sheet is independently well-supported by the same two documents used for the Operator fill above (PNGRB terminated the authorization 04.07.2022; APTEL upheld the termination 10.05.2023) — not itself a flagged question on this row, so noted here only for context, not proposed as a separate fill. The drawn route at 1092 km is 72% over a regulator-stated and internally-consistent 635 km corridor — closer to a geometry defect (duplicated leg, wrong waypoint order, or an out-and-back loop) than to the sheet being wrong; not proposing a coordinate fix myself.",
+   "proposed_refs": ["https://pngrb.gov.in/pdf/orders/Order_JMPL_08.06.2022.pdf"],
+   "verifications": [{"url": "https://pngrb.gov.in/pdf/orders/Order_JMPL_08.06.2022.pdf", "ok": false, "contains_value": true, "note": "Large-PDF url_verifier false negative; confirmed locally, see Operator fill note."}],
+   "tier": "medium", "independent": false, "source_language": "en"
+  }
+ ]
+}

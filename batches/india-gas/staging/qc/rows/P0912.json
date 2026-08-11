@@ -1,0 +1,26 @@
+{
+ "project_id": "P0912",
+ "pipeline_name": "Chainsa-Jhajjar-Hissar Gas Pipeline",
+ "sheet_row": 474,
+ "wiki": "https://www.gem.wiki/Chainsa-Jhajjar-Hissar_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No change to LengthKnownKm (455 km) — it exactly matches the PNGRB regulator's own Authorised Length figure for this pipeline, confirmed identically in two register editions 11 months apart. The length_ratio flag is a geometry-coverage gap, not a data error: CJHPL is a 4-branch network fanning out from a Chainsa hub, and the drawn route (185 km) evidently traces only one branch. Route creation should extend/redraw the geometry to cover all four branches rather than anything being changed here.",
+   "researcher_notes": "PNGRB's NGPL MIS register (authorised common-carrier gas pipeline register) lists 'Chainsa-Jhajjar-Hissar', Entity=GAIL, Authorised Length=455 km, Authorised Capacity=35 MMSCMD, Operating Length=440 km — identical in both the 30.06.2025 edition (pngrb.gov.in/data-bank/20250630_NGPL.pdf) and the 31.05.2026 edition (pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf). The 455 km authorised figure is an EXACT match to the sheet's LengthKnownKm. The June-2025 edition carries an explicit footnote on this row: 'as per report submitted by GAIL, Trunk line of Chainsa-Jhajjar-Hissar (CJHPL) ... pipeline have been commissioned. However, commissioning letter for CJHPL is still awaited' — direct regulatory-source language distinguishing a 'trunk line' within the network, i.e. confirming CJHPL is not a single point-to-point line. This is corroborated independently by GAIL's own PNGRB Schedule-I capacity-declaration filing for this pipeline (gailebank.gail.co.in/Schedule1/4.html), which lists FOUR separate sections radiating from a Chainsa hub with individually declared throughput: Chainsa-Sakatpur (10.09 MMSCMD), Chainsa-Manesar (10.07), Chainsa-Hisar (2.27), Chainsa-Neemrana (7.21) — a fan-out network, not one trunk. GAIL's own corporate site (gailonline.com/Natural_Gas.html) separately lists 'Chhainsa-Jhajjar-Hissar Pipeline Network (CJPL)' at 440 km in its table of GAIL's operational gas-pipeline networks, matching the register's operating length almost exactly. url_verifier FAILs on both PNGRB register PDFs on a 'GAIL' substring test — this is the documented false-negative pattern for large PDFs (confirmed both URLs return live 200 application/pdf via curl -I; content confirmed locally via pdftotext -layout, quoted above verbatim). Given the exact match on the authorised figure plus the independent Schedule-I filing corroborating the fan-out structure, this is a route-coverage explanation, not a length correction — filed as validity rather than a fill because no cell needs to change.",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+    "https://gailebank.gail.co.in/Schedule1/4.html",
+    "https://www.gailonline.com/Natural_Gas.html"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true, "note": "url_verifier substring test FAILs (documented large-PDF false negative); curl confirms 200 application/pdf; pdftotext -layout confirms 'Chainsa-Jhajjar-Hissar ... GAIL ... 455 ... 35 ... 440' and the trunk-line footnote, read locally"},
+    {"url": "https://gailebank.gail.co.in/Schedule1/4.html", "ok": true, "contains_value": true},
+    {"url": "https://www.gailonline.com/Natural_Gas.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true
+  }
+ ]
+}

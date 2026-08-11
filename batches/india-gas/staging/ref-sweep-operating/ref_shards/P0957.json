@@ -1,0 +1,45 @@
+{
+  "project_id": "P0957",
+  "pipeline_name": "Vijaipur-Auraiya-Pulphur Gas Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Delay [ref]",
+      "sheet_row": 505,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://indianinfrastructure.com/2018/09/20/interview-with-b-c-tripathi/",
+        "https://indiainvestmentgrid.gov.in/opportunities/nip-project/701229"
+      ],
+      "verifications": [
+        {"url": "https://indianinfrastructure.com/2018/09/20/interview-with-b-c-tripathi/", "ok": true, "contains_value": true},
+        {"url": "https://indiainvestmentgrid.gov.in/opportunities/nip-project/701229", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Supports DelayType='confirmed' via an explicit target-vs-actual comparison, not mere dormancy inference. GAIL's own CMD, in a September 2018 interview (Indian Infrastructure), states: 'Vijaipur-Auraiya-Phulpur pipeline: In order to debottleneck the upstream network of the JHBDPL project, a parallel pipeline from Vijaipur to Auraiya and up to Phulpur (672 km) is under execution in phases' and gives an explicit target: 'Phase 1 from Auraiya to Phulpur is expected to be completed by December 2018.' Independently, India Investment Grid (Government of India investment tracker) records the project's actual 'Project Completion Date'/COD as 2022-03-26 — a >3-year slip past the company's own stated Phase-1 target, with the Lok Sabha 2022-07-21 reply (already cited elsewhere on this row) confirming full operation only by mid-2022. Two independent origins (a GAIL executive statement and a Government of India tracker) jointly document a stated target that the confirmed actual completion date badly missed, which is a documented/confirmed schedule slip rather than an inference from years of silence — consistent with the sheet's DelayType='confirmed' (Delayed itself is currently blank in the live sheet; not part of this unit's recorded value per the brief, so not addressed here). No source uses the literal word 'delayed' for this specific spurline, hence tier=medium rather than high. Reused/verified the deep-sweep audit's own leads (rows/P0957.json) rather than re-searching from scratch; both URLs re-verified live via url_verifier.py."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 505,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not find any independent source stating the sheet's exact recorded LengthKnown=667.00 km. Every source found gives a different figure: The Hindu Business Line and Governance Now (both reporting the same GAIL company statement) give 665 km (350 km Vijaipur-Auraiya order + 315 km Auraiya-Phulpur contract); offshore-technology.com AND GAIL's own CMD in a September 2018 interview (Indian Infrastructure — 'a parallel pipeline from Vijaipur to Auraiya and up to Phulpur (672 km) is under execution in phases') independently agree on 672 km. Directly WebFetched offshore-technology.com to confirm the literal figure ('The 672km-long, upcoming Vijaipur-Auraiya-Phulpur project will be operated by GAIL (India)') — it is 672, not 667; a web-search AI summary had misreported this page as saying 667 km, which is incorrect and was not used. This pipeline is a dedicated GAIL feeder/spurline, not itemised by name in PNGRB's NGPL-MIS common-carrier register (checked `batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json` directly — no 'Vijaipur-Auraiya-Phulpur' or 'Phulpur' line matching this route; it is folded into the JHBDPL 'gas supplied' totals rather than itemised), so the usual PNGRB cross-check is unavailable. Per the brief's rule against citing a source for a different value, this is left UNRESOLVED rather than citing 665 km or 672 km sources against GEM's 667 km: the true figure sits inside a 665-672 km band across two independent origins, a <1.1% spread plausibly reflecting planned-vs-as-built differences over the project's multi-year phased construction (2016-2022), but no source supports the exact recorded 667.00 km value. This matches the prior deep-sweep audit's own finding (rows/P0957.json), which flagged the same two refs at contains_value=false for this reason; not re-proposing them here since neither literally supports 667."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 505,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "NOT filled, because the recorded value itself is wrong: live sheet StartState/Province='Gujarat' (verified directly against data/GGIT_gas_snapshot_20260810.csv, row ProjectID=P0957) is incorrect — Vijaipur (the start point, in Guna district) is in Madhya Pradesh, not Gujarat. This was already identified as an attribution concern in the prior deep-sweep audit (rows/P0957.json validity[]), confirmed by four independent origins: The Hindu Business Line and Governance Now (both quoting/paraphrasing GAIL's own company statement, '...from Vijaipur in Madhya Pradesh to Auraiya in Uttar Pradesh'), India Investment Grid (Government of India tracker, listing districts traversed as Guna, Ashoknagar, Shivpuri, Datia, Madhya Pradesh before Jhansi, Jalaun, Auraiya, Uttar Pradesh), and offshore-technology.com ('will start in Madhya Pradesh'). No source anywhere gives a Gujarat endpoint or routing for this pipeline; Gujarat appears to be a data-entry confusion with GAIL's other Vijaipur-anchored corridor (DVPL, Dahej-Vijaipur, P0919/P3298) whose OTHER endpoint Dahej is genuinely in Gujarat. Per the brief's instruction, a value change routes to Update, not to this ref-sweep — pairing a verified citation with the current (wrong) 'Gujarat' value would create a false-confidence citation, so this unit is staged UNRESOLVED rather than REFS_ADDED. EndLocation/EndState (Phulpur, Uttar Pradesh) is correct and not in question. Once Update corrects StartState/Province to 'Madhya Pradesh', the three sources above (already verified live in the deep-sweep audit) are ready to cite as Location [ref]."
+    }
+  ]
+}

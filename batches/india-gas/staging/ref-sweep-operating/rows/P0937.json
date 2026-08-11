@@ -1,0 +1,332 @@
+{
+  "project_id": "P0937",
+  "pipeline_name": "Low Pressure Gujarat Gas Grid Network",
+  "sheet_row": 497,
+  "wiki": "https://www.gem.wiki/Low_Pressure_Gujarat_Gas_Grid_Network",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "None -- existence, classification and non-duplicate status are solidly confirmed.",
+      "researcher_notes": "EXISTENCE: real, and unusually well documented. Four PNGRB (regulator) documents across 13 years all name this exact pipeline: (1) PNGRB's Grant of Authorization letter to GSPL dated 19.03.2013 (Regulation 18(1) -- the category for formalizing an ALREADY-EXISTING pipeline, not a new build) for '57.6 KM GSPL's Low Pressure Gujarat Gas Grid'; (2) PNGRB tariff order TO/09/2013 (27.06.2013) setting the initial unit tariff for 'Low Pressure Gujarat Gas Grid' / GSPL; (3) PNGRB's 'Operating Natural Gas Pipelines in India' list (15.01.2016), row 18: 'Low Pressure Gujarat Gas Grid network | Gujarat State Petronet Limited | 57.6 km | 12.000 MMSCMD | Authorized 19.03.2013'; (4) PNGRB's MIS Report for NGPL, month of MAY 2026 (current as of this sweep), row 15 under 'OPERATIONAL COMMON CARRIER PIPELINE': 'Low Pressure Gujarat Gas Grid | GSPL | 19.03.2013 | 58 km authorised | 12.0 MMSCMD | 5.4 MMSCMD supplied | 45% utilisation | 57 km operating | GJ'. A fifth, non-regulator document -- GSPL's own PNGRB Access Code Schedule-I filing (29.05.2018) -- independently corroborates from the operator side: it names 'GSPL's Low Pressure Gujarat Gas Grid' with real entry points (Shell, CAIRN) and exit points (NTPC Kawas, KRIBHCO, GSEC Utran, GGCL, Essar Power/Steel, GSEG, GSPC Gas CNG), i.e. gas actually flowing through named customers as of 2018. This is the rare case of an India gas row backed by primary regulatory paperwork rather than a press citation. url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer). Same caveat applies to (1),(2),(3),(5); the 2026 MIS report (4) is additionally a large multi-page PDF, same false-negative family. CLASSIFICATION: 'transmission' is correct, not misclassified. GSPL is India's dedicated gas TRANSMISSION utility (distinct from GSPC Gas / Gujarat Gas Company, which are the city-gas DISTRIBUTION entities also active in Gujarat and separately owned in GEM, e.g. P0924). 'Low Pressure' in the name describes the pipeline's operating pressure class relative to GSPL's sibling 'High Pressure Gujarat Gas Grid' (P0927), not a distribution network -- it is authorized, tariffed and reported by PNGRB under the same NGPL common-carrier regime as every transmission trunk line in the register, not under India's separate City Gas Distribution licensing track. DUPLICATE CHECK vs the 35-pipeline roster: NOT a duplicate of P0927 (High Pressure Gujarat Gas Grid Network). PNGRB's own MIS report lists them as two distinct, separately-authorized assets with very different scale (item 13, High Pressure: 2,860 km authorised / 44.8 MMSCMD vs item 15, Low Pressure: 58 km / 12.0 MMSCMD) and different authorization dates (27.07.2012 vs 19.03.2013). Genuinely two separate regulatory pipelines under one owner, not a relabel or segment double-count.",
+      "proposed_refs": [
+        "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf",
+        "https://pngrb.gov.in/pdf/orders/order28june2013.pdf",
+        "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.pngrb.gov.in/pdf/public-notice/gsp1209.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Verify/correct StartLocation: 'Eklera' does not belong to this pipeline. Per PNGRB's own 2013 authorization (Schedule D + Annex-1 section table), the Low Pressure Grid's route is Hazira-Mora, Mora-Utran, Cairn-Mora, PMT Connectivity to Mora, Mora-KRIBHCO and a spur to NTPC Kawas -- all in the Hazira/Mora/Utran cluster near Surat, not Eklera. 'Atakpardi-Eklera' is instead a named SECTION of the sibling High Pressure Gujarat Gas Grid (P0927) per GSPL's own PNGRB Schedule-I filing (gsp1209.pdf, p.2: 'Atakpardi-Eklera Section (HP network 2011-12): 43 mmscmd'). Recommend StartLocation -> Hazira (or the Hazira/Mora corridor) for P0937, and separately checking whether P0927 (currently blank on Location in the roster) is the row that should carry the Eklera/Atakpardi endpoint -- not staged here since P0927 is out of this pipeline's scope.",
+      "researcher_notes": "GEM's current Location fields for P0937: StartLocation='Eklera', EndLocation='Hazira' (both StartState/EndState='Gujarat'). None of the primary sources that name this exact pipeline mention 'Eklera' at all. The PNGRB 2013 Grant of Authorization (Schedule D) lists the authorized route as three named trunk pipelines -- '(a) Hazira-Mora-Utran, (b) Cairn-Mora, (c) PMT Connectivity to Mora' -- and Annex-1's section-wise table itemizes six sections, all anchored at Hazira/Mora/Utran/Kawas: Hazira-Mora (36in), Mora-Utran (12in), Cairn-Mora (24in), PMT Connectivity (30in), Mora-KRIBHCO (12in), Spur-line to NTPC Kawas (12in), total 57.6 km. GSPL's own 2018 Schedule-I Access Code filing for this same pipeline lists entry points Shell and CAIRN and exit points NTPC Kawas / KRIBHCO / GSEC Utran / GGCL / Essar / GSEG / GSPC Gas CNG -- again all Hazira/Utran/Mora-area, no Eklera. By contrast, GSPL's OTHER filing in the same gsp1209.pdf packet (pages 1-6, for the sibling High Pressure Gujarat Gas Grid, P0927) names an 'Atakpardi-Eklera Section' explicitly. The gem.wiki article's own prose ('The pipeline runs from Eklera through Attakpardi, the Cairn Oil and Gas facility in Hazira, to Uttran and Mora village') appears to have conflated the two GSPL networks -- it cites the same Grant-of-Authorization letter and a Gujarat Infrastructure Development Board (GIDB) page for that claim, but the authorization letter itself (verified above) does not say Eklera, and the GIDB page could not be independently confirmed to say so either: gidb.org has moved to gidb.gujarat.gov.in (301 redirect, both www.gidb.org and the new domain currently unreachable/TLS-timeout from here), and an archived 2021 Wayback snapshot of the original gas-pipeline-infrastructure page is a generic GSPL network overview (1,550 km operating / 350 km under construction) with no section-level detail and no mention of Eklera or Low Pressure specifically. Net: this reads as a genuine GEM location error, most plausibly copied across from the High Pressure sibling row, not a sourced fact about P0937. Not fixed here (see fills, marked UNRESOLVED) -- routing to Update per SOP since this is a value-correction judgment, not a ref-add.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's May-2026 MIS report lists this pipeline under 'OPERATIONAL COMMON CARRIER PIPELINE' with 5.4 MMSCMD of gas actually supplied that month at 45% capacity utilisation -- current, active operation, not just a historical authorization. The 2016 operating-pipelines list independently confirms the same status a decade earlier. url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed throughout as a 'natural gas pipeline' regulated under PNGRB's NGPL framework; every cited document is natural-gas specific. url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/orders/order28june2013.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/pdf/orders/order28june2013.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Regulated as a common-carrier NGPL transmission pipeline under the PNGRB (Determination of Natural Gas Pipeline Tariff) Regulations, 2008 -- see reasoning in the classification validity note (owned/operated by GSPL, India's gas transmission utility, distinct from Gujarat's city-gas distribution entities). url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2000"
+      },
+      "primary_value": "2000",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/orders/order28june2013.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/pdf/orders/order28june2013.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB tariff order TO/09/2013 (27.06.2013), para 1.3: 'The Low Pressure Gujarat Gas Grid of GSPL is a pipeline which was commissioned on 23.11.2000...'. Para 2.5(i) additionally dates construction start to 23.11.1999 (25-year economic life 'starting from 23.11.1999...and ending on 22.11.2024'). This is a single document, so tier=medium per the 2+ independent rule, but it is the regulator's own order stating an exact date, not an inferred/derived figure -- and it directly confirms GEM's existing StartYear1=2000 is correct rather than an authorization-date mixup (this is precisely the authorization-vs-commissioning trap flagged for this country: the 2013 date is the PNGRB paperwork date, 2000 is the true commissioning date, and GEM already has the right one on file). url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "12.00",
+        "CapacityUnits": "MMSCMD"
+      },
+      "primary_value": "12.00",
+      "proposed_refs": [
+        "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match, two dates 13 years apart: the 2013 Schedule-D authorization sets 'maximum achievable system capacity...equal to 12 Million standard cubic meter per day (MMSCMD)' (plus 3.0 MMSCMD 'extra capacity' for third-party open access); the May-2026 MIS report lists both authorised capacity and design/determined capacity as 12.0 MMSCMD, unchanged. The PNGRB-2016 operating list also shows 12.000 MMSCMD (third agreeing document). No sign of the stale-authorised-capacity trap flagged for this country -- current and historical figures agree. url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "58.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "58.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/pdf/orders/order28june2013.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://pngrb.gov.in/pdf/orders/order28june2013.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB documents give a tight, non-material range that brackets GEM's 58.00 km: 57.6 km (2013 authorization Annex-1 section total; 2016 operating list), 58 km authorised / 57 km operating (May-2026 MIS report), and 58.40 km (GSPL's own tariff-model length per the 2013 tariff order, para 2.5(ii): 'The total length of the pipeline considered by GSPL in their tariff proposal for the Low Pressure Network is 58.40 KMs'). Spread is 57-58.4 km (<1.5%), i.e. rounding/measurement-basis noise across documents, not a material disagreement -- GEM's 58.00 km sits inside the range and is confirmed, not changed. url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Eklera"
+      },
+      "primary_value": "Eklera",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "NOT filled -- see the paired 'attribution' concern in validity[]. 'Eklera' does not appear in any source describing this pipeline; it appears instead in GSPL's High Pressure Gujarat Gas Grid (P0927) documentation. Adding a ref here would misrepresent those sources as supporting a value they contradict. EndLocation='Hazira' and both StartState/EndState='Gujarat' are consistent with the sources and not disputed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "oo_sheet_row": 822,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Gujarat State Petronet",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Gujarat State Petronet",
+      "proposed_refs": [
+        "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf",
+        "https://www.pngrb.gov.in/pdf/public-notice/gsp1209.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.pngrb.gov.in/pdf/public-notice/gsp1209.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed from both the regulator's side (PNGRB's 2013 authorization is granted TO 'M/s Gujarat State Petronet Limited (GSPL)') and the operator's own side (GSPL's 2018 Schedule-I filing, signed by GSPL's Executive Director-Gas Business, names 'Gujarat State Petronet Limited' as entity for 'GSPL's Low Pressure Gujarat Gas Grid'). No indication of any other owner/JV partner in any document -- 100% GSPL is consistent throughout. url_verifier FAILs the content check on this URL (HTTP 200 confirmed live, but the tool does not extract PDF text at all -- it screens r.text against the raw response body, which for a PDF is undecoded binary/garbage; this is a systematic false negative for every PDF, not evidence against this one, and matches the documented 'LARGE PDF' / scanned-image false-negative classes in url_verifier's own docstring). Verified locally instead: downloaded and read with `pdftotext -layout` (text-layer PDFs) or `pdftoppm` + `tesseract` OCR (scanned image PDFs -- this document has no text layer)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 497,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "12, 24, 30, 36"
+      },
+      "primary_value": "12, 24, 30, 36",
+      "proposed_refs": [
+        "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "http://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/letter19march.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter is currently blank on this row (the flagged gap for this country). PNGRB's 2013 Grant of Authorization, Annex-1 ('SECTION WISE DETAILS OF GSPL'S LOW PRESSURE GUJARAT GAS GRID PIPELINE NETWORK'), gives line specification per section (API 5L Grade B or X, pipe grade partly illegible in the scan): Hazira-Mora 36in, Mora-Utran 12in, Cairn-Mora 24in, PMT Connectivity 30in, Mora-KRIBHCO 12in, Spur-line to NTPC Kawas 12in; total length 57.6 km, matching the network total elsewhere. Reported as the network's four distinct diameters (12, 24, 30, 36 in), matching the sheet's existing multi-value convention for other GSPL/GAIL grid networks (e.g. P0906 '350, 400, 500, 800'). Single-source (this Annex table is the only document found that breaks the network into sections with diameters), so tier=medium; the annex table itself is a scanned image with no text layer -- transcribed by OCR (tesseract) after rotating the scanned page 180deg to correct a mirrored/upside-down table; OCR on the numeric length/capacity columns in that same table was too garbled to trust (columns visibly misaligned), so those per-section figures are NOT staged -- only the diameter-by-section reading and the printed 'TOTAL LENGTH- 57.6' footer, both legible and internally consistent with the letter's other stated total (57.6 km)."
+    }
+  ],
+  "summary": "P0937 (Low Pressure Gujarat Gas Grid Network, GSPL): existence/status/capacity/length/owner/start-year all confirmed high-tier against 4 PNGRB regulatory documents (2013 authorization, 2013 tariff order, 2016 operating list, May-2026 MIS report) + GSPL's own 2018 filing; correctly classified transmission, not a duplicate of sibling P0927. Diameter filled (12/24/30/36 in, medium tier, single source). ATTRIBUTION CONCERN: StartLocation 'Eklera' is unsupported and appears to belong to P0927 instead -- flagged, not auto-corrected; Location [ref] left UNRESOLVED."
+}

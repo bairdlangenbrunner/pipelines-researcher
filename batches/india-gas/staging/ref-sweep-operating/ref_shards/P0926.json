@@ -1,0 +1,114 @@
+{
+  "project_id": "P0926",
+  "pipeline_name": "Heera-Uran Trunk Line (HUT)",
+  "resolutions": [
+    {
+      "ref_col": "Fuel [ref]",
+      "sheet_row": 486,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cannot support Fuel=Gas -- new evidence conflicts with it. PPAC's own 'Ready Reckoner' (compiled/hosted by the Centre for High Technology, Ministry of Petroleum & Natural Gas, at https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf; url_verifier FAILs on it -- documented large-PDF false negative, confirmed locally with `pdftotext -layout`) lists 'Heera - Uran - Trunk (HUT) 24'' pipeline' in Table 5.2 'Existing major crude oil pipelines in India' (81 km, 11.5 MMT capacity, 3.0 MMT throughput, data as of 30.09.2023) -- HUT does NOT appear anywhere in the SAME document's Table 5.1 'Natural Gas Pipelines in the Country (operational)'. This is a government classification of HUT as a crude-oil pipeline, not a gas pipeline. It reinforces (with harder evidence) the deep-sweep audit's prior classification concern on this row (CAG Report 21/2016 treats HUT exclusively as part of ONGC's offshore crude custody-transfer chain, paired with MUT; GEM's own live ResearcherNotes already flags 'Mainly a crude oil pileine but designed to transport oil and gas'). Against that: Offshore Magazine (2007, https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak, url_verifier OK) calls it 'the Heera-Uran Gas pipeline' when reporting a leak curtailing gas to Uran consumers -- but at a scale (~0.5 MMcf/d, ~5 mmcm/y) three orders of magnitude below the sheet's 5.84 bcm/y claim, consistent with a small associated/off-gas stream riding a much larger crude line rather than HUT being a dedicated gas transmission line. Per standing rule (don't propose refs for a disagreeing value), not citing Fuel=Gas as supported; routes to Update per the existing classification flag."
+    },
+    {
+      "ref_col": "PipelineType [ref]",
+      "sheet_row": 486,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf",
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak",
+        "https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak", "ok": true, "contains_value": true},
+        {"url": "https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "'transmission' (long-distance trunk conveyance, not gathering/distribution) is supported independent of the Fuel-classification question above -- three independent sources agree on the pipeline's function as an offshore-platform-to-onshore-terminal trunk line: CAG Report 21/2016 describes it feeding a closed subsea trunk system delivering to the Uran plant inlet (own-download pdftotext confirms 'Heera Uran Trunk line (HUT)' / 'closed subsea pipeline system'); Offshore Magazine (2007) describes gas being delivered 'to consumers from the Uran processing plant' via this pipeline; PPAC/CHT's Table 5.2 (own download, pdftotext-confirmed) lists it as an 81 km 'Offshore' trunk line under 'Type of Pipeline', the same table category as other named ONGC trunk lines (MUT, BUT). CAG and CHT/PPAC both FAIL url_verifier's substring check (large-PDF extraction limit, documented) but content was confirmed locally with `pdftotext -layout` on both downloads."
+    },
+    {
+      "ref_col": "Start [ref]",
+      "sheet_row": 486,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No independently verifiable source found for StartYear1=1990. The prior deep-sweep audit's only lead was the sheet's own cited ISOPE 1991 conference paper ('Design, Construction And Commissioning Of Heera-Uran Trunkline Project', Jayachandran & Shiv Anand) at onepetro.org -- I re-attempted the fetch (both direct curl-style and via WebFetch) and it still returns Cloudflare 403 on every route, same as the prior pass; a yumpu.com mirror of the ISOPE-91 proceedings TOC corroborates the paper's existence/1990-91 date but has no extractable body text and fails url_verifier. Web search also surfaced an unfetchable slideplayer.com presentation snippet claiming HUT was 'completed in 1996' with pipe sizes '26\"/24\" and length 85 km x 2' -- slideplayer.com does not resolve via DNS from this environment (confirmed with curl/nslookup, not a tool-specific block), so this cannot be verified or cited, and a coursework slide deck would not meet the sourcing bar regardless. No PPAC/CHT, CAG, ONGC, or news source found that states a commissioning/completion year for HUT specifically. UNRESOLVED."
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 486,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No independent source found for Capacity=5.84 bcm/y on a gas basis. PPAC's Ready Reckoner (Table 5.2, hosted at cht.gov.in) gives HUT an OIL capacity of 11.5 MMT (million tonnes) and 3.0 MMT throughput -- a different commodity and unit system entirely, so it cannot be used to support a gas volumetric capacity figure; it instead reinforces the Fuel-classification conflict noted on the Fuel [ref] unit rather than resolving this one. PNGRB's line-wise NGPL register (checked per the country brief's standard first stop) does not itemise HUT at all -- consistent with it being a dedicated ONGC line outside PNGRB's common-carrier register, and confirmed by its absence from the register-crosswalk's staged_resolutions.json for this PID. UNRESOLVED."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 486,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PPAC's Ready Reckoner (Table 5.2 'Existing major crude oil pipelines in India', data as of 30.09.2023, hosted at cht.gov.in -- Centre for High Technology, Ministry of Petroleum & Natural Gas) gives 'Heera - Uran - Trunk (HUT) 24'' pipeline' a length of 81 km, essentially matching the sheet's recorded 80.00 km (within ~1.2%, ordinary survey/rounding variance for an offshore pipeline route). url_verifier FAILs on this URL (documented large-PDF false negative on cht.gov.in/PPAC PDFs, same pattern as the CAG report) -- confirmed the 'Heera - Uran - Trunk (HUT) 24'' pipeline ... 81' row locally with `pdftotext -layout` on the downloaded file. Single-source; only one government table with an exact figure was located (the ISOPE 1991 paper that could otherwise corroborate remains Cloudflare-blocked, see Start [ref]), so tier is medium rather than high despite the source being independent of and more authoritative than GEM's original citation."
+    },
+    {
+      "ref_col": "Diameter [ref]",
+      "sheet_row": 486,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cannot support Diameter=26 in -- the one authoritative source located disagrees. PPAC's Ready Reckoner (Table 5.2, cht.gov.in, data as of 30.09.2023; pdftotext-confirmed locally, url_verifier false-negatives on the PDF as above) states the pipeline size explicitly in its own name: 'Heera - Uran - Trunk (HUT) 24'' pipeline' -- 24 inches, not 26. A web-search snippet (unfetchable slideplayer.com presentation, DNS does not resolve from this environment) suggested a twin-line system sized '26\"/24\"' at '85 km x 2', which would be consistent with GEM's 26 in and PPAC's 24 in both being correct for two different parallel lines under one HUT name -- but this could not be verified against any fetchable, citable source. Per standing rule (don't propose refs for a disagreeing value), not citing 24 in as support for the recorded 26 in; flagging the conflict for Update to adjudicate (possibly via the twin-line theory, which would need a real source)."
+    },
+    {
+      "ref_col": "FuelSource [ref]",
+      "sheet_row": 486,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cannot support FuelSource='Mumbai High Gas Field' -- three independent lines of evidence now say this is misattributed and should be the Heera field instead, reinforcing the prior deep-sweep audit's attribution flag: (1) the pipeline's own name ('Heera-Uran'), (2) CAG Report 21/2016, which discusses HUT exclusively in ONGC's Neelam-Heera offshore Asset context (own-download pdftotext confirms the CAG text groups Mumbai High and Neelam-Heera as separate Assets, with HUT paired with the Heera side), and (3) PPAC's Ready Reckoner (Table 5.2, cht.gov.in), which lists 'Heera - Uran - Trunk (HUT)' as a SEPARATE line item from 'Mumbai High - Uran - Trunk (MUT)' in the same table -- i.e. the government's own register treats Heera and Mumbai High as distinct origin fields feeding distinct pipelines. Offshore Magazine (2007) is explicit: 'a leak on the Heera-Uran Gas pipeline in the Heera field'. Mumbai High is served by the separate MUT/BUT family (P0944 in this roster; P5191/P5192 in GOIT). Per standing rule, not citing support for the recorded value; routes to Update alongside the classification concern already on this row (correct value is most likely 'Heera Gas Field' / 'Heera-Neelam Field')."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 486,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf",
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak",
+        "https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak", "ok": true, "contains_value": true},
+        {"url": "https://cht.gov.in/sites/default/files/Pipeline%20Network.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Supports the recorded values StartState/Province='Offshore India', StartCountryOrArea='India', EndLocation='Uran', EndState/Province='Maharashtra', EndCountryOrArea='India' (StartLocation itself is blank on the sheet, so not addressed here -- see the FuelSource unit for the field-origin question). CAG Report 21/2016 (own-download pdftotext-confirmed) describes crude/gas from ONGC's offshore Western Offshore fields being 'despatched to Uran' via HUT/MUT to the Uran plant/terminal (Uran being in Raigad district, Maharashtra, India). Offshore Magazine (2007, url_verifier OK) reports the leak 'in the Heera field' (offshore India) curtailing gas delivery 'to consumers from the Uran processing plant'. PPAC's Ready Reckoner (Table 5.2, cht.gov.in, pdftotext-confirmed) lists HUT under 'Offshore' type running to the same Uran-terminal ONGC trunk-line group as MUT/BUT. All three consistent and independent; CAG and CHT/PPAC fail url_verifier's substring check on their PDFs (documented large-PDF false negative) but were confirmed locally."
+    }
+  ]
+}

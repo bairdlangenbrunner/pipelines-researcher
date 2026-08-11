@@ -1,0 +1,27 @@
+{
+ "project_id": "P0911",
+ "pipeline_name": "Cauvery Basin Gas Network",
+ "sheet_row": 473,
+ "wiki": "https://www.gem.wiki/Cauvery_Basin_Gas_Network",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Leave LengthKnownKm (242.55 km) unchanged -- it is corroborated, not in error. Route the 72 km drawn-route shortfall to a future geometry pass: the network has TWO non-contiguous sub-networks (NKM and RMD) and a single drawn trunk cannot represent both without a multi-segment route; no replacement coordinates proposed here.",
+   "researcher_notes": "Answers the length_ratio flag (drawn 72 km vs sheet 242.55 km, ratio 0.30). Standalone PNGRB tariff order for this exact network -- Tariff Order Ref No. TO/2022-23/03, dated 28/07/2022 (https://www.pngrb.gov.in/pdf/orders/NKMRMD_TO_29072022.pdf) -- states: 'Name of Entity: GAIL (India) Limited (\"GAIL\")', 'Name of Pipeline: Cauvery Basin Natural Gas Pipeline Network (CBPL)', 'Sub-Networks: 1) Narimanam and Kuthalam Sub-Network (\"NKM\") 2) Ramnad Sub-Network (\"RMD\")'. The PNGRB Tariff-MIS register (https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf) gives NKM = 230.67 km and RMD = 9.62 km, summing to 240.29 km -- within rounding of the sheet's 242.55 km (and the physical-progress register's operating length of 242.0 km, already cited by the register-crosswalk leg's Length [ref] fill for this PID). This is dispositive that the sheet's length is the TWO-sub-network total, not a single trunk: the drawn 72 km geojson traces only one of the two physically separate corridors (NKM and RMD serve different fields/areas within Tamil Nadu/Puducherry), so the ratio undershoot is a coverage gap in the geometry, not a wrong LengthKnownKm. No value change proposed. Company-wide operator note (not separately flagged on this row, so no fill staged here): the same Cauvery tariff order names GAIL as Entity under the PNGRB Act §22 framework covering entities 'laying, building, operating or expanding' the pipeline -- the same operator determination made for P0904/P0923/P0943 in this brief applies to this network too.",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/pdf/orders/NKMRMD_TO_29072022.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.pngrb.gov.in/pdf/orders/NKMRMD_TO_29072022.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- confirmed locally with pdftotext -layout"
+    }
+   ],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}

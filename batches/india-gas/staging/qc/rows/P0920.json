@@ -1,0 +1,31 @@
+{
+ "project_id": "P0920",
+ "pipeline_name": "East West Gas Pipeline (India)",
+ "sheet_row": 480,
+ "wiki": "https://www.gem.wiki/East_West_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Pipeline Infrastructure Limited"},
+   "primary_value_col": "Operator",
+   "primary_value": "Pipeline Infrastructure Limited",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.pipelineinfra.com/about-pil/",
+    "https://www.offshore-technology.com/marketdata/east-west-gas-pipeline-india/",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.pipelineinfra.com/about-pil/", "ok": true, "contains_value": true, "note": "url_verifier.py itself raised an SSLError on this host, but plain curl (both -sI and a full GET) returned HTTP 200 with valid content, so per protocol this is treated as LIVE despite the verifier's TLS false negative. Page text: 'Pipeline Infrastructure Limited owns and operates a 48 inch diameter pipeline from Kakinada (AP) in the East to Bharuch (Gujarat) in the West with an overall Pipeline Network of 1485 km, including spur and dedicated pipeline.'"},
+    {"url": "https://www.offshore-technology.com/marketdata/east-west-gas-pipeline-india/", "ok": true, "contains_value": true, "note": "verified via url_verifier.py (OK); page states 'East-West is a 1,375km-long onshore pipeline project operated by Pipeline Infrastructure' and 'started operations in 2009 and is owned by Pipeline Infrastructure.'"},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "same PNGRB MIS register (May-2026 edition) already used by the register-crosswalk leg for this row's Status/Capacity/Owner fills; operational section Sr 5 'Kakinada-Hyderabad-Uran-Ahmedabad (East West Pipeline)' names the authorised entity as 'PIL', i.e. Pipeline Infrastructure Ltd, distinct from the sheet's parent-level Owner 'India Infrastructure Trust'."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION for this brief: per the brief's explicit instruction, named the OPERATING SPV rather than the parent. The sheet's Owner is 'India Infrastructure Trust [100.%]' (the Brookfield-sponsored infrastructure trust that owns the pipeline at the top of the corporate stack), but three independent sources agree the entity that actually RUNS the pipeline is its subsidiary, Pipeline Infrastructure Limited (PIL): (1) PIL's own site, pipelineinfra.com, states directly 'Pipeline Infrastructure Limited owns and operates' the line (its overall-network figure of 1485 km also matches the PNGRB register's operating_length_km=1485.0 for this authorisation, cross-checking the source as accurate); (2) offshore-technology.com (GlobalData, independent of PIL/pipelineinfra.com) separately states it is 'operated by Pipeline Infrastructure'; (3) the PNGRB register, already staged by the register-crosswalk leg for this row's Status/Capacity/Owner fills (see batches/india-gas/staging/register-crosswalk/staged_resolutions.json), names the authorisation holder as 'PIL' specifically, not 'India Infrastructure Trust' — the crosswalk's own note observed 'the regulator authorises the pipeline-owning subsidiary, GEM's convention records the ultimate parent' and suggested adding 'Pipeline Infrastructure Ltd' to OtherEnglishNames/notes so the register row is findable from the GEM row; this Operator fill is that same fact applied to the separate Operator column. Never cited gem.wiki or globalenergymonitor.org. Value UNCHANGED (Operator was blank); ref-only addition."
+  }
+ ]
+}

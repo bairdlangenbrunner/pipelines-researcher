@@ -1,0 +1,37 @@
+{
+ "project_id": "P0915",
+ "pipeline_name": "Dabhol-Bangalore Gas Pipeline",
+ "sheet_row": 476,
+ "wiki": "https://www.gem.wiki/Dabhol-Bangalore_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/marketdata/dabhol-bengaluru-gas-pipeline-india/",
+    "https://en.wikipedia.org/wiki/Dabhol%E2%80%93Bangalore_Natural_Gas_Pipeline"
+   ],
+   "verifications": [
+    {"url": "https://www.offshore-technology.com/marketdata/dabhol-bengaluru-gas-pipeline-india/", "ok": true, "contains_value": true},
+    {"url": "https://en.wikipedia.org/wiki/Dabhol%E2%80%93Bangalore_Natural_Gas_Pipeline", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION answered once and applied across the whole brief (P0915, P0934, P2746): GAIL builds, owns and directly OPERATES its own west-coast trunk lines rather than through an SPV. offshore-technology.com (GlobalData market-data page): 'Dabhol–Bengaluru is a 1,130km-long onshore pipeline project operated by GAIL (India)... The Dabhol–Bengaluru project started operations in 2013.' Second, independent origin: en.wikipedia.org's infobox names the operator as 'Gas Authority of India Limited' (GAIL); its four footnotes (Jagranjosh, Economic Times, a GAIL press release, Infrastructure Today) are none of them GEM/gem.wiki, so this is a genuinely separate origin from the GlobalData page, not a repeat of it. Owner1 (GAIL (India) Ltd [100%]) was already staged with a PNGRB-register ref by the register-crosswalk leg (batches/india-gas/staging/register-crosswalk/staged_resolutions.json) — that fill establishes GAIL as AUTHORISATION HOLDER/owner. This fill is the separate operator fact: GAIL both owns and runs the pipe itself, per two sources independent of each other and of GEM. Never cited gem.wiki or globalenergymonitor.org."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm (1,386 km is well supported). Route the drawn geometry to a §8 route-creation/review pass: the current route is sparse (its main line is only 8 vertices over ~762 km of Konkan-coast/Western Ghats terrain) and geodesically totals only ~912 km against the pipeline's true extent, which is why it undershoots. Also worth a look: feature 0 / line 0 in the current P0915.geojson is a degenerate 3-point line where all three points are identical (zero length, near 74.892E/12.862N) — likely stray digitizing artifact for a human to clean up when the route is redrawn.",
+   "researcher_notes": "This answers the length_ratio flag (drawn route 911 km vs LengthKnownKm 1,386 km, ratio 0.66). The VALUE is well corroborated, not the geometry. en.wikipedia.org's infobox independently states the SAME figure, '1,386 km (861 mi)', for this pipeline (verified https://en.wikipedia.org/wiki/Dabhol%E2%80%93Bangalore_Natural_Gas_Pipeline, not sourced from GEM — its four footnotes are Jagranjosh/Economic Times/a GAIL press release/Infrastructure Today). The PNGRB register (already staged in the register-crosswalk leg) carries this authorisation at 1,414 km authorised, and its progression across editions (1,148 km commissioned per the 2025-06-30 edition → 1,182 km operating / 232 km under construction per the 2026-05-31 edition) shows 1,386 km sits between the register's currently-operating and fully-authorised figures — consistent with GEM having recorded the pipeline's announced/design total at its Dec-2013 commissioning (which is also what Wikipedia's four contemporaneous 2013 news citations describe) rather than the currently-still-partial operating extent. That reading matches the register-crosswalk's own VALIDITY flag on this row (concern_type classification, severity flag: 'GEM carries Dabhol-Bangalore as fully operating at 1,386 km, but the register still shows 232 km under construction... worth establishing whether the last 232 km was ever built or quietly dropped') — I am not re-litigating that value question, only confirming it from an independent angle. What IS new here: the drawn ROUTE is not a value problem but a geometry-completeness problem. Measured directly from data/individual-routes/gas-pipelines/P0915.geojson (haversine over each vertex pair): the main line runs Dabhol (73.158E,17.587N) toward Bangalore latitude in only 8 vertices, 761.8 km; a second line piece near the Konkan coast adds 130.3 km; a small Bangalore-approach piece adds 20.7 km; total ~912.8 km, matching the flagged 911 km. Eight vertices over ~760 km of hilly coastal terrain is a schematic-level trace (consistent with the route undershooting the true pipe length through the Western Ghats), even though RouteAccuracy is currently marked 'high' — that tag looks optimistic given the sparse vertex count, and is worth a look alongside the geometry redraw. I am not proposing new coordinates myself, per protocol."
+  }
+ ]
+}

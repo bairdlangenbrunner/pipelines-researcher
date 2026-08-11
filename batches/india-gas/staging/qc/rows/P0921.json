@@ -1,0 +1,27 @@
+{
+ "project_id": "P0921",
+ "pipeline_name": "Ennore-Nellore Gas Pipeline",
+ "sheet_row": 481,
+ "wiki": "https://www.gem.wiki/Ennore-Nellore_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Gas Transmission India Private Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "Gas Transmission India Private Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; register entity=GTIL, authorised 220.0 km / 36.0 MMSCMD, confirmed locally via the repo's parse -- url_verifier FAILs, documented large-PDF false negative."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same company-level basis as P0922: this row already carries the OWNER value 'Gas Transmission India Private Ltd [100.%]', already cited by the register-crosswalk leg (Owner [ref], sheet_row 806) off the same register record. I extended that to Operator specifically using the register's own regulatory-structure argument -- PNGRB authorizes ONE entity under the 'Authorizing Entities to Lay, Build, OPERATE or Expand' Regulations, 2008, and the register's line-906 footnote ('Entity not authorized... for laying, building, operating or expanding') confirms its Entity column denotes the operate-authorized party. Register: under-construction Sr. No. 1 'Ennore-Nellore', entity GTIL, authorised 220.0 km / 36.0 MMSCMD, 0 km operating -- matches LengthKnownKm=220/Capacity=36 on the sheet exactly. UNABLE TO FIND A SECOND INDEPENDENT SOURCE: gem.wiki's own citation for this row (visible only for lead purposes, never cited) points at an APTEL (Appellate Tribunal for Electricity) 2024 judgment naming GTIL in a PNGRB authorization dispute. I tried to independently relocate and verify that judgment three separate ways -- the exact URL gem.wiki cites (SSLError via url_verifier, 404 via curl with escaped/unescaped ampersands, 404 via Python requests with verify=False), and a fetch of aptel.gov.in's judgments listing page to find a current link (failed with 'unable to verify the first certificate', an SSL cert issue on APTEL's own site, not a content problem) -- and could not recover it. Given that, this stays a single-source (medium) fill on the register + the regulatory-structure inference rather than a corroborated (high) one. A human with browser access to aptel.gov.in could likely resolve this to high; flagging that as the one thing worth a follow-up rather than continuing to burn search budget on a broken link. Not re-litigating Status=shelved -- the register-crosswalk leg already has a 'confirmed (caveat)' validity finding on that (deliberate divergence, documented)."
+  }
+ ]
+}

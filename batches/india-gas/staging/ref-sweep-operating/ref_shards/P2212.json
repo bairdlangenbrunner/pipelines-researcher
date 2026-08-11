@@ -1,0 +1,140 @@
+{
+ "project_id": "P2212",
+ "pipeline_name": "Dahej-Uran-Panvel-Dhabhol Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "http://globalenergyobservatory.org/geoid/40882"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier auto-check reports 'missing expected: Dahej' (documented large-PDF false negative) -- confirmed locally with pdftotext -layout: row 6 'Dahej-Uran-Panvel-Dabhol', Entity GAIL, listed under the section header 'OPERATIONAL COMMON CARRIER PIPELINE', with real May-2026 throughput (26.8 MMSCMD, 119% capacity utilisation) -- an operating line, not a paper project."},
+    {"url": "http://globalenergyobservatory.org/geoid/40882", "ok": true, "contains_value": true, "note": "url_verifier OK; 'Status of Pipeline' field = 'Operating Fully' (selected option)."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent origins agree the line is in service: (1) PNGRB's current MIS register (regulator) files 'Dahej-Uran-Panvel-Dabhol' / GAIL under 'OPERATIONAL COMMON CARRIER PIPELINE' with real monthly gas supplied (26.8 MMSCMD, May 2026) -- confirmed locally via pdftotext -layout since url_verifier false-negatives on this large PDF. (2) Global Energy Observatory (crowd-sourced, independent of PNGRB) records 'Status of Pipeline' = 'Operating Fully' for 'GAIL Dahej-Uran-Panvel Trunk'. Both support the recorded value 'operating' with no disagreement."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF (documented) -- confirmed locally with pdftotext -layout: the register itself is titled 'PHYSICAL PROGRESS REPORT OF NATURAL GAS PIPELINE (NGPL)' and lists this pipeline within it."},
+    {"url": "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/", "ok": true, "contains_value": true, "note": "url_verifier OK; article text: 'GAIL (India) Limited is planning to augment the capacity of its existing Dahej-Uran-Dabhol-Panvel natural gas pipeline...'"}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources explicitly describe this as a natural-gas pipeline: PNGRB's own register (a Natural Gas Pipeline authorisation, not a CGD/oil register) and the CGDIndia trade article, which names it a 'natural gas pipeline' directly. Supports Fuel = Gas."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "http://globalenergyobservatory.org/geoid/40882"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF (documented) -- confirmed locally: authorised as a common-carrier NGPL (transmission-tier trunk register), the same regulatory class PNGRB uses for GEM's other India trunk/regional-network rows -- distinct from PNGRB's separate City Gas Distribution (CGD) register."},
+    {"url": "http://globalenergyobservatory.org/geoid/40882", "ok": true, "contains_value": true, "note": "url_verifier OK; 'Type of Pipeline' field = 'Trunk' for the GAIL Dahej-Uran-Panvel segment."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB authorises this line as a common-carrier trunk (Natural Gas Pipeline / NGPL register, the transmission-grade regime distinct from PNGRB's City Gas Distribution register), and GEO independently classifies the segment's 'Type of Pipeline' as 'Trunk'. Both describe a trunk/transmission line, not a local distribution network -- supports PipelineType = transmission (prose/classification equivalence, not a literal-word match, per the ref-support convention for descriptive units)."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://globalenergyobservatory.org/geoid/40882",
+    "https://www.business-standard.com/article/companies/gail-sets-march-31-date-to-complet-dahej-uran-107010901133_1.html"
+   ],
+   "verifications": [
+    {"url": "http://globalenergyobservatory.org/geoid/40882", "ok": true, "contains_value": true, "note": "url_verifier OK; 'Date Commissioned' field = 2007-07-14 for the GAIL Dahej-Uran-Panvel Trunk segment."},
+    {"url": "https://www.business-standard.com/article/companies/gail-sets-march-31-date-to-complet-dahej-uran-107010901133_1.html", "ok": true, "contains_value": true, "note": "url_verifier OK (a browser UA was needed; a bare WebFetch call to this URL 403'd, but curl and url_verifier both return 200 -- live). Dated 2007-01-09: 'The Gas Authority of India Limited (GAIL) will be completing the Dahej-Uran pipeline by March 31, 2007 assured V C Tripathi executive director (project) to chief minister Vilasrao Deshmukh.'"}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GEO gives an exact commissioned date of 2007-07-14 for the main GAIL Dahej-Uran-Panvel trunk segment. Business Standard, reporting contemporaneously in January 2007, independently corroborates a 2007 in-service date: GAIL told Maharashtra's chief minister it would complete the Dahej-Uran pipeline by 31 March 2007. Note the nuance: BS is a target-completion statement (not a retrospective 'commissioned in 2007' claim), slightly earlier in the year than GEO's actual July 2007 date -- consistent with the usual slip between an announced target and actual commissioning, both still landing in calendar year 2007. Supports StartYear1 = 2007. (Did not use PNGRB's 10.05.2010 authorisation date for this -- per the country brief, an authorisation date is not a commissioning year.)"
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf",
+    "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF (documented) -- confirmed locally with pdftotext -layout: row 6, PL Unique ID 17.05.NGPL, 'Dahej-Uran-Panvel-Dhabhol', GAIL, Auth. Capacity (MMSCMD) = 19.90 (verbatim match)."},
+    {"url": "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/", "ok": true, "contains_value": true, "note": "url_verifier OK; article text: 'GAIL is planning to augment the capacity of the Dahej-Uran-Dabhol-Panvel natural gas pipeline from 19.9 million standard cubic meters per day (mscmd) to 22.5 mscmd', approval dated 28 March 2025."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's own June-2023 register edition is a letter-for-letter match to the sheet's 19.90 MMSCMD. The CGDIndia trade article (independent outlet, reporting a March-2025 PNGRB augmentation approval) independently confirms 19.9 mscmd as the pipeline's capacity BEFORE that augmentation -- i.e. an independent, differently-dated confirmation of the same figure the sheet carries. IMPORTANT: do NOT cite the CURRENT (May-2026) PNGRB register edition here -- it already reflects the augmented 22.5 MMSCMD and would support a DIFFERENT value, not the recorded 19.90. This is a stale-vs-superseded-authorisation situation (regulator raised the ceiling after the sheet's figure was current), already flagged separately as a spec concern in the register-crosswalk staging (batches/india-gas/staging/register-crosswalk/staged_resolutions.json) recommending the value move to 22.5 MMSCMD -- that recommendation routes to Update, not to this ref-only unit, whose job is only to support the value AS RECORDED."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF (documented) -- confirmed locally with pdftotext -layout: row 6, 'Dahej-Uran-Panvel-Dhabhol', GAIL, Auth. Length (KM) = 815.00 (verbatim match)."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's June-2023 register edition is a letter-for-letter match to the sheet's LengthKnown = 815.00 km (Authorised Length column). This is the single origin I could confirm the exact figure against -- the current (May-2026) PNGRB edition instead shows Authorised Length 920 km and a stable Operating Length of ~943 km (943.09 in 2023, 943 in 2026), i.e. the regulator's own numbers moved after the sheet's figure was current; a web search for an independent restatement of '815 km' specifically (vs. GAIL/media reports, which tend to quote the as-built 928/943 km or a different sub-segment split such as 510+418 km) turned up nothing before this session's web-search budget was exhausted. Per instructions, not citing sources that disagree with the recorded value (920/943 km) as if they supported it -- flagging for the record that 815 km reads as the pipeline's REGULATORY-AUTHORISED length as of 2023, not its current as-built length, consistent with the spec concern already staged in the register-crosswalk and deep-sweep audit shards recommending a value update to 943 km (routes to Update, not here)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/",
+    "http://globalenergyobservatory.org/geoid/40882"
+   ],
+   "verifications": [
+    {"url": "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/", "ok": true, "contains_value": true, "note": "url_verifier OK; article text: '...natural gas pipeline starting from Dahej in Gujarat to Dabhol in Maharashtra.'"},
+    {"url": "http://globalenergyobservatory.org/geoid/40882", "ok": true, "contains_value": true, "note": "url_verifier OK; page title/segment names include 'Dahej-Uran-Panvel-Dhabol Gas Pipeline' and a distinct 'GAIL Dhabol-Panvel Trunk' segment, confirming the network reaches Dhabol/Dabhol as well as Dahej at the other end; segment start/end lat-lon fields populated."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CGDIndia states the route explicitly and in the sheet's own direction: 'starting from Dahej in Gujarat to Dabhol in Maharashtra' -- directly supports StartLocation=Dahej/Gujarat and EndLocation=Dabhol/Maharashtra. GEO independently corroborates via its multi-segment map (main Dahej-Uran-Panvel trunk plus a separately named 'GAIL Dhabol-Panvel Trunk' segment, both explicitly labelled '(Dahej-Uran-Panvel-Dhabol Gas Pipeline)'), with populated start/end coordinates. The PNGRB June-2023 register also lists states traversed as 'Gujarat, Maharashtra' for this row, consistent with both (not cited separately here since the two above already clear the independent-pair bar)."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1138,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://globalenergyobservatory.org/geoid/40882",
+    "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/"
+   ],
+   "verifications": [
+    {"url": "http://globalenergyobservatory.org/geoid/40882", "ok": true, "contains_value": true, "note": "url_verifier OK; 'Owner 1' field = 'Gas Authority of India Limited (GAIL)'."},
+    {"url": "https://cgdindia.net/pngrb-approves-capacity-augmentation-of-dahej-uran-dabhol-panvel-natural-gas-pipeline/", "ok": true, "contains_value": true, "note": "url_verifier OK; article text: 'GAIL (India) Limited is planning to augment the capacity of its existing Dahej-Uran-Dabhol-Panvel natural gas pipeline...' -- names GAIL as the owning/operating entity."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GEO's ownership field records 'Gas Authority of India Limited (GAIL)' as Owner 1 (GAIL's full legal/former name -- matches Owner1 = 'GAIL (India) Ltd'). CGDIndia independently identifies GAIL as the operating/owning entity for this exact pipeline in a 2025 regulatory-approval story. PNGRB's own register (both June-2023 and current editions) also lists Entity = GAIL for this row, a third confirming origin, though not needed to clear the independent-pair bar. Supports Owner1 = GAIL (India) Ltd, 100%."
+  }
+ ]
+}

@@ -1,0 +1,187 @@
+{
+  "project_id": "P0916",
+  "pipeline_name": "Dadri-Bawana-Nangal Gas Pipeline",
+  "sheet_row": 477,
+  "wiki": "https://www.gem.wiki/Dadri-Bawana-Nangal_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on existence/classification/ownership; refs staged below",
+      "researcher_notes": "EXISTENCE: strongly confirmed, independent of GEM. The pipeline is line-itemed by name in India's regulator PNGRB's own line-wise register, both the Jan-2016 edition (http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf, row 10: 'Dadri-Bawana-Nangal, GAIL (India) Limited, 886.0 km, 31.000 MMSCMD, authorised 15.02.2011') and the current May-2026 edition (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, row 21 under 'OPERATIONAL COMMON CARRIER PIPELINE': 'Dadri-Bawana-Nangal, GAIL, 15.02.2011, authorised 921 km, 31.0 MMSCMD, operating length 998 km, states PB/HR/UP/UK/DL/HP'). Independently, Oil & Gas Journal reported PM Manmohan Singh dedicating the '2,200 km Dahej-Vijaipur-Dadri-Bawana-Nangal-Bhatinda natural gas pipeline' on 2012-03-27 (ogj.com), and the Times of India (2012-03-21, days earlier) described GAIL moving LNG-sourced gas 'through the Dahej-Vijaipur-Dadri-Bawana-Nangal-Bhatinda pipeline to Punjab' with a proposal to extend to Lahore. Both news sources name this exact segment as part of the combined trunk system. url_verifier gives a false-negative content-FAIL on BOTH PNGRB PDFs (200 but 'GAIL'/'Dadri' reported not found) even though the 2016 PDF is only ~92KB -- this is the documented PDF-extraction limitation (see url_verifier.py header notes on large/oddly-encoded PDFs), not a content problem: `pdftotext -layout` on both files shows the exact row verbatim. Confirmed locally and cited per the scope guidance's explicit carve-out for this failure mode.\n\nCLASSIFICATION: correct. PNGRB lists it under 'OPERATIONAL COMMON CARRIER PIPELINE' (a cross-state trunk/transmission category, not gathering or city-gas distribution), consistent with GEM's PipelineType=transmission and the OGJ/ToI descriptions of a long interstate trunk line moving imported LNG-regasified gas from Gujarat through UP/Haryana/Punjab. Fuel=Gas is trivially correct (natural gas pipeline throughout).\n\nDUPLICATE: none found. Checked against the 35-pipeline India-gas roster -- no other row plausibly describes this same physical corridor (Dadri, UP -> Yamunanagar, Haryana -> Nangal, Punjab). It is NOT part of the separately-tracked HVJ/GREP/DVPL combined system that PNGRB reports as one line item (rows 3-4 of the current MIS report) -- Dadri-Bawana-Nangal has its OWN distinct PNGRB line item, own authorisation date (15.02.2011), and is not folded into that combined total. P0917 (Dadri-Panipat) and P0941 (Mehsana-Bhatinda) are confirmed-distinct neighboring segments of the wider network, not this pipeline under another name.\n\nATTRIBUTION: Owner/operator GAIL (India) Ltd, 100% is confirmed directly by both PNGRB editions ('Entity: GAIL') and independently by OGJ ('GAIL (India) Ltd.'s ... pipeline') and ToI ('GAIL plans to...'). StartLocation Dadri (Uttar Pradesh) and EndLocation Nangal (Punjab) are confirmed by the gem.wiki route description (which cites GAIL's own project map, not usable as our citation) and independently corroborated by PNGRB's current states-transited list ('PB, HR, UP, UK, DL & HP') and by OGJ/ToI both naming the pipeline as terminating toward Punjab. Note: PNGRB's current states list is broader than GEM's two-point Start/End (it now also lists Uttarakhand, Delhi and Himachal Pradesh as transited) -- this is consistent with GEM's schema only tracking endpoints, not a defect, but is worth knowing if a route/geometry pass is ever run on this PID (the corridor is not a simple straight UP-Haryana-Punjab line).\n\nSPEC -- CAPACITY: 31.00 MMSCMD is confirmed to 2 decimal places by PNGRB in BOTH the 2016 and 2026 editions ('31.000' / '31.0' MMSCMD, both as Authorised Capacity and Design/Determined Capacity). Per the standing rule, two vintages of the same regulator's report count as ONE origin, not two independent sources, so I rate this medium tier pending a second independent source (a GAIL annual report/investor deck would be ideal; the wiki's own second citation, an IPLOCA GAIL presentation PDF, is now 404 dead and unusable). No unit-conversion concern here -- GEM's CapacityUnits is already MMSCMD, so the Bcm/y-derivation formula in the scope guidance does not apply to this row.\n\nSPEC -- LENGTH, MATERIAL CONCERN: GEM's LengthKnown=886.00 km matches the regulator's OLD (Jan-2016) authorised length exactly, but the CURRENT (May-2026) PNGRB MIS report shows this same line item has grown to Authorised Length 921 km and Operating Length 998 km -- both materially higher than the sheet's 886 km (+4% and +12.6% respectively). This is a genuine staleness finding, not a units or transcription error: the pipeline's states-transited list also grew between the two editions (from the implied UP/Haryana/Punjab corridor to also include Uttarakhand, Delhi and Himachal Pradesh), consistent with a real network extension since the original ~2011-2016 baseline that GEM's row has never been updated to reflect. I am NOT proposing a fill for this field per the standing rule against auto-applying a value change -- flagging as a spec concern for Update to resolve. Recommendation: update LengthKnown to the current PNGRB figure; GEM's LengthKnown convention (actual built/known length) is closer to the Operating Length column (998 km) than the Authorised Length column (921 km), but a human should pick deliberately since PNGRB itself reports Operating > Authorised for this line (unusual but stated as-is in the report) -- cite https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf (row 21) once a second independent source for the updated figure is found, or stage as medium/low tier off PNGRB alone.\n\nStartYear1=2012 is corroborated by 2 independent, differently-owned sources: OGJ's report of the formal dedication ceremony (2012-03-27) and the contemporaneous Times of India report (2012-03-21) describing the same combined pipeline as already in near-final/operational use days before that ceremony. Neither source is GEM-derived and neither traces to the other. High tier.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update LengthKnown off the current PNGRB MIS report -- 921 km authorised or 998 km operating (regulator's 2026-05-31 edition), not the stale 886 km carried since at least the 2016 PNGRB baseline; find a second independent source before applying, or stage medium/low off PNGRB alone. Route to Update, not auto-applied.",
+      "researcher_notes": "Full reasoning above under 'SPEC -- LENGTH'. Sheet's 886.00 km reproduces the regulator's 2016 authorised-length figure exactly but is 4-13% below the SAME regulator's current (2026-05-31) figures for the same named line item (Authorised 921 km / Operating 998 km), which also shows the pipeline now transiting Uttarakhand, Delhi and Himachal Pradesh in addition to the original UP/Haryana/Punjab corridor -- consistent with a real physical extension the sheet has never picked up. Capacity (31.00 MMSCMD) is unaffected -- it matches both PNGRB vintages exactly.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current (2026-05-31) MIS report lists this line under 'OPERATIONAL COMMON CARRIER PIPELINE' (row 21, still operating through the current reporting month); OGJ independently reported its formal 2012-03-27 dedication and has been operating continuously since. PNGRB PDF content-FAILs url_verifier for the documented large/oddly-encoded-PDF reason (confirmed manually via pdftotext -layout); OGJ URL passes verifier outright."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources explicitly describe this as a natural gas pipeline (PNGRB's whole register is titled 'NATURAL GAS PIPELINE...'; OGJ headline: 'GAIL natural gas pipeline')."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB explicitly categorizes this line under 'OPERATIONAL COMMON CARRIER PIPELINE' -- India's cross-state trunk/transmission tier, distinct from gathering or city-gas distribution networks -- and states it transits six states (PB/HR/UP/UK/DL/HP), consistent with a transmission trunk rather than a local feeder. Only one clear origin (PNGRB) explicitly classifies it; OGJ/ToI describe the long-haul route but don't use the word 'transmission', so rated medium rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2012"},
+      "primary_value": "2012",
+      "proposed_refs": [
+        "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html",
+        "https://timesofindia.indiatimes.com/business/india-business/india-offers-to-supply-natural-gas-to-pakistan/articleshow/12356281.cms"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html", "ok": true, "contains_value": true},
+        {"url": "https://timesofindia.indiatimes.com/business/india-business/india-offers-to-supply-natural-gas-to-pakistan/articleshow/12356281.cms", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "OGJ reports PM Manmohan Singh's formal dedication of the combined Dahej-Vijaipur-Dadri-Bawana-Nangal-Bhatinda pipeline on 2012-03-27 -- a commissioning event, not merely a regulatory authorisation date (PNGRB's 15.02.2011 'Authorisation Date' is NOT used here per the scope guidance's caution against dating StartYear1 off authorisation). The Times of India, 2012-03-21 (days before the dedication), independently describes the same combined line as already carrying/about-to-carry gas. Two independent newsrooms, same week, same conclusion."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "31.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "31.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "31.0 MMSCMD confirmed to 1dp as BOTH Authorised Capacity and Design/Determined Capacity in the current (2026-05-31) PNGRB report, matching the older 2016 edition's 31.000 exactly too -- but both are the same regulator origin, so rated medium (single-origin, though authoritative and internally consistent across a decade). GAIL's own IPLOCA capacity presentation (the wiki's second citation) is now 404; no second independent origin found. url_verifier content-FAILs on this PDF for the documented extraction-limitation reason (confirmed manually via pdftotext)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Dadri", "StartState/Province": "Uttar Pradesh", "StartCountryOrArea": "India", "EndLocation": "Nangal", "EndState/Province": "Punjab", "EndCountryOrArea": "India"},
+      "primary_value": "Dadri",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current report lists states-transited as 'PB, HR, UP, UK, DL & HP' -- consistent with a UP-origin, Punjab-terminus corridor. OGJ/ToI both name the combined pipeline as running from Dahej (Gujarat) through to Punjab (Bhatinda/Nangal area, near the Pakistan border per ToI). Caveat noted in validity: PNGRB's current transit-state list is broader than GEM's two-endpoint model (now also Uttarakhand, Delhi, Himachal Pradesh) -- worth knowing for any future route/geometry work on this PID, though not a defect in the Start/End values themselves."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 477,
+      "oo_sheet_row": 802,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.ogj.com/articles/2012/03/india-dedicates-2200-km-gail-natural-gas-pipeline.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB lists 'Entity: GAIL' as sole developer/owner in both editions; OGJ ('GAIL (India) Ltd.'s ... pipeline') and ToI ('GAIL plans to...') independently confirm sole GAIL ownership, consistent with 100%. No co-owner mentioned anywhere.",
+      "tab": "operators_owners"
+    }
+  ],
+  "summary": "P0916 confirmed real and correctly classified (GAIL 100%-owned transmission trunk, PNGRB common-carrier register + independent OGJ/ToI 2012 dedication coverage, no duplicate in roster); Status/Fuel/PipelineType/Start/Capacity/Owner/Location refs staged. One spec concern: LengthKnown=886 km is stale against the regulator's current 921 km (authorised) / 998 km (operating) figure for the same line item -- routed to Update, not applied."
+}

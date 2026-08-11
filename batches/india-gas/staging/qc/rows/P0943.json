@@ -1,0 +1,80 @@
+{
+ "project_id": "P0943",
+ "pipeline_name": "Mumbai Regional Natural Gas Pipeline Network",
+ "sheet_row": 500,
+ "wiki": "https://www.gem.wiki/Mumbai_Regional_Natural_Gas_Pipeline_Network",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "values": {
+    "Operator": "GAIL (India) Ltd"
+   },
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+    "https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- value confirmed locally with pdftotext -layout"
+    },
+    {
+     "url": "https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- value confirmed locally with pdftotext -layout"
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION answered once and applied across the whole brief (P0904, P0911, P0923, P0933, P0943 -- GAIL's five regional/basin gas networks): GAIL (India) Ltd is not just the owner (already staged as Owner1 [ref] by the register-crosswalk leg off the same PNGRB physical-progress register, batches/india-gas/staging/register-crosswalk/staged_resolutions.json) but the OPERATING entity. Evidence is PNGRB's tariff-order machinery, which is issued specifically 'to be charged by the entities laying, building, operating or expanding a natural gas pipeline' (Section 22, PNGRB Act 2006 -- identical language recurs in every order below, so it is the statutory basis for every tariff order PNGRB issues, not boilerplate specific to one filing). A tariff order is addressed to the party that actually transports gas as a common carrier and charges shippers for it -- i.e. the operator -- not to a passive equity holder, so this is a genuinely distinct fact from ownership even though the same company (GAIL, no SPV) happens to hold both roles here. Direct evidence for Mumbai: the INGPL tariff order (https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf) lists both 'Uran Thal Usar Sub Network (Mumbai Regional Network)' (115.43 km) and 'Trombay Sub Network (Mumbai Regional Network)' (13.25 km) as constituent pipelines of GAIL's own Integrated Natural Gas Pipeline, Entity 'GAIL (India) Limited (\"GAIL\" or \"Entity\")'; the Tariff-MIS register's row 'g) 17.13.NGPL Mumbai Regional Network | GAIL | 14.03.2011 | 129 | ... | 125 ... Maharashtra' repeats the same identity. PNGRB Tariff-MIS register (https://pngrb.gov.in/data-bank/20260113-NGPL-Tariff-MIS.pdf, 'Details of Applicable Tariff for Operational NGPL's', dated 13.01.2026) lists Entity=GAIL for all five networks in this brief. tier=medium, independent=true: PNGRB regulatory documents are a genuinely separate origin from the GAIL company reports GEM typically cites (matching the register-crosswalk leg's own independence call on the parallel Owner fill), though I'm holding at medium rather than high because both cited documents ultimately trace to the same regulator rather than two unrelated organisations -- flagged rather than overclaimed. url_verifier FAILs on both PDFs (200 but missing expected substring) -- documented large-PDF false negative per the protocol; downloaded and confirmed locally with pdftotext -layout. Never cited gem.wiki or globalenergymonitor.org."
+  },
+  {
+   "ref_col": "Start Year 1 [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "values": {},
+   "primary_value_col": "StartYear1",
+   "primary_value": null,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Date_logic flag (Status=operating, no StartYear1) -- UNRESOLVED, with one specific lead flagged for a human rather than staged as a value. The INGPL tariff order (https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf, §9.2.2.2, discussing future O&M capex) states: 'The UTU and Trombay sub-networks of GAIL's Mumbai Regional NGPL were transferred from ONGC to GAIL in 1992 and presently, the pipelines are 30 years old.' This is a specific, sourced year, but I am NOT proposing StartYear1=1992: the sentence describes an operatorship/asset TRANSFER from ONGC to GAIL, not necessarily the pipeline's original construction -- both sub-networks are gas-evacuation lines connected to ONGC's own offshore Bombay High/Uran facilities, infrastructure ONGC could plausibly have built and run for some years before handing it to GAIL. PNGRB's authorisation date (14.03.2011) is even less usable, being a regulatory-regime date well after either the transfer or likely original construction. Flagging 1992 as a strong lead for a human to verify against GAIL/ONGC corporate history before staging it as StartYear1."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Leave LengthKnownKm (128.68 km) unchanged -- it is not just corroborated but traced to its exact origin (sum of the network's two named sub-networks). Route the 50 km drawn-route shortfall to a future geometry pass as a partial-trace coverage gap (only one of two non-contiguous sub-networks drawn); no replacement coordinates proposed.",
+   "researcher_notes": "Answers the length_ratio flag (drawn 50 km vs sheet 128.68 km, ratio 0.39). The INGPL tariff order's authorisation table (https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf) gives 'Uran Thal Usar Sub Network (Mumbai Regional Network)' = 115.43 km and 'Trombay Sub Network (Mumbai Regional Network)' = 13.25 km; 115.43 + 13.25 = 128.68 km EXACTLY, to two decimals, matching the sheet's LengthKnownKm. This is dispositive that the sheet value is the two-sub-network network total (not a single trunk), so the 50 km drawn route (which traces only one of the two physically separate sub-networks) undershoots by design. No value change proposed; the row needs a multi-segment route in a future §8 pass.",
+   "proposed_refs": [
+    "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "HTTP 200; large-PDF url_verifier substring false negative -- confirmed locally with pdftotext -layout"
+    }
+   ],
+   "tier": "high",
+   "independent": true
+  }
+ ]
+}

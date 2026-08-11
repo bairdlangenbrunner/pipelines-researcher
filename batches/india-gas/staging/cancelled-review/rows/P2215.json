@@ -1,0 +1,162 @@
+{
+  "project_id": "P2215",
+  "pipeline_name": "Langtala-Jodhpur-Pali Gas Pipeline",
+  "sheet_row": 1141,
+  "wiki": "https://www.gem.wiki/Langtala-Jodhpur-Pali_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence/classification/duplicate all check out; no action needed beyond the separate attribution and spec flags below and the ShelvedCancelledType fill in status_reviews.",
+      "researcher_notes": "EXISTENCE: real PNGRB bid tender, not a GEM-only entity. Genesis is well documented: on 6 Nov 2019 PNGRB cancelled GAIL (India) Ltd's sole bid for the Langtala-Jodhpur-Bhilwara pipeline (the P0936 family) citing an excessively high tariff, and that SAME DAY launched a new bid for an altered route -- Langtala via Jodhpur to Pali -- confirmed independently by The Economic Times ('GAIL, regulator at odds over Rs 1.5K crore pipeline', 20 Nov 2019, verified: contains 'Langtala', 'Jodhpur', 'Pali', 'GAIL'). PNGRB's own Sample Bid Document for THIS pipeline (BID/NGPL/15/2019/02/LJPPL, Nov 2019, p.36) spells out the project precisely: 'Originating point: Focus Energy's Gas fields in RJ-ON/06 Block at Langtala, District Jaisalmer. Termination point: Near Pali (Rajasthan) to connect GIGL's under construction MBPL [Mehsana-Bhatinda Pipeline]. Length of the Trunk Pipeline: 440 km (Approx.). Initial System Capacity: At least 5.0 MMSCMD.' PNGRB's Annual Report 2019-20 (p.39, sec 3.3 'Natural Gas Pipeline under tendering') repeats identical figures with a bid-submission deadline of 29.12.2020. Both PDFs fail url_verifier's automated content check (a known false negative documented in url_verifier.py's own docstring and docs/reference/source_roster.md -- requests.text cannot decode compressed PDF streams); content was confirmed manually via PyPDF2/pdftotext extraction, quoted above. STATUS TRAIL: checked PNGRB Annual Report 2020-21 (AR2020-21_14.02.2022.pdf) directly via pdftotext -- 'Langtala-Jodhpur-Pali'/'LJPPL' does NOT appear anywhere in that report (only the unrelated 'Langtala-Pachpadra' and 'Langtala to Ramgarh' pipelines are mentioned), i.e. it silently dropped out of PNGRB's own tendering table between the FY2019-20 and FY2020-21 reports. Attempted the same check on Annual Report 2021-22 but that PDF (104MB, 244pp) is scanned images with NO extractable text layer (PyPDF2 returns 0 characters on every sampled page) -- genuinely unable to confirm or deny its presence there; flagging the gap rather than assuming absence. No PNGRB authorization letter, award notice, or Letter-of-Intent specific to Bid No. BID/NGPL/15/2019/02/LJPPL was found anywhere. Caught one false lead: PNGRB's own bid-15 webpage (pngrb.gov.in/eng-web/ng-bid-15.html) carries a 'Letter of Intent (LOI) to successful bidders, Updated Dated: 28.01.2022' tile that looks like it could apply -- but its href resolves to '../pdf/cgd/bid11/PressRelease28012022.pdf', which is boilerplate for the UNRELATED 11th City Gas Distribution bidding round shared on the same page template. Verified by inspecting the raw href, not just the tile text. This also corrects a misleading web-search AI summary that conflated the two and claimed an LOI was issued for this pipeline. DUPLICATE CHECK against the roster: not the same project as P0936 'Langtala-Bhilwara' (its cancelled predecessor bid, to a different terminus) nor P2748 'Langtala-Pachpadra' (a separate EoI process led by GSPL India Gasnet Ltd per AR2019-20 sec 3.4, different sponsor and terminus). All three are genuinely distinct Langtala-origin proposals, not one project digitized three times. CLASSIFICATION: PipelineType=transmission and Fuel=Gas both check out -- a 440 km common-carrier trunk bid spanning three districts (Jaisalmer to Jodhpur to Pali) under PNGRB's competitive-bid regulations; no reclassification warranted. Note the existing Status [ref] (the Nov-2019 Sample Bid Document) cannot actually support 'cancelled' -- it is the tender-LAUNCH document, dated before any lapse could have occurred, which is presumably why url_verifier already flagged it (existing_ref_checks: 'data value not found'). See status_reviews for the honest ShelvedCancelledType call.",
+      "proposed_refs": [
+        "https://economictimes.indiatimes.com/industry/energy/oil-gas/gail-regulator-at-odds-over-rs-1-5k-crore-pipeline/articleshow/72134936.cms?from=mdr",
+        "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf",
+        "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Verify or blank Owner1 = 'GAIL (India) Ltd' (100%) -- no source found names an awarded bidder/owner for this specific project.",
+      "researcher_notes": "The sheet's Owner1 = GAIL (India) Ltd 100%, currently MISSING_REF (current_ref empty). The only citation the gem.wiki page carries for Owner/Operator/Parent Company is the generic Sample Bid Document footnote (cite_note ':0-1', the same footnote reused for Operator/Owner/Parent/Capacity/Length/Status) -- but I searched all 61 pages of that PDF via PyPDF2 and the string 'GAIL' appears ZERO times. It is a boilerplate PNGRB tender template naming no company at all; it cannot be the source of a GAIL attribution. GAIL WAS named the sole bidder for the earlier, cancelled Langtala-Jodhpur-BHILWARA bid (Economic Times, Nov 2019) -- but that is a different route/project (P0936), and the Nov 2019 ET article about THIS pipeline (the Jodhpur-Pali altered route) never states GAIL bid on or won it; it only reports that PNGRB launched the new tender the same day it rejected GAIL's Bhilwara bid, seemingly BECAUSE of the dispute with GAIL. Since no PNGRB award/authorization/LOI specific to Bid BID/NGPL/15/2019/02/LJPPL was found (see the existence note), there is no independent record the tender was ever awarded to anyone, GAIL included. The Owner1=GAIL value on this row looks like an incorrect carryover, plausibly from the Bhilwara predecessor's own infobox. Recommend downgrading confidence or blanking Owner1/Owner1% pending an actual awarded-bidder record.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct CapacityUnits from 'MMcf/d' to 'MMSCMD' (Capacity numeral 5.00 is already right -- only the unit label is wrong, a ~35x mismatch: 1 MMSCMD is approx. 35.3 MMcf/d).",
+      "researcher_notes": "Both PNGRB primary documents for this project state the capacity in MMSCMD, not MMcf/d: the Sample Bid Document p.36 ('Initial System Capacity: At least 5.0 MMSCMD') and PNGRB Annual Report 2019-20 p.39 ('Capacity: 5.0 MMSCMD'), both confirmed via manual pdftotext/PyPDF2 extraction (url_verifier's automated content check false-negatives on both PDFs -- documented limitation, requests.text cannot decode compressed PDF streams). The sheet currently records Capacity=5.00 with CapacityUnits='MMcf/d'. Cross-checked against the rest of the India gas cohort (data/GGIT_gas.csv, 2026-07-23 snapshot, 73 India rows): 59 rows use CapacityUnits=MMSCMD (the PNGRB-native unit, per docs/reference/source_roster.md's own note that GEM's India Capacity already tracks PNGRB's MMSCMD figures at 2 decimals), 8 use bcm/y, 5 are blank, and exactly ONE row uses 'MMcf/d' -- this one, P2215. This is an isolated data-entry mislabel on this row, not a country-wide unit convention, and it is material: at face value 'MMcf/d' understates the pipeline's intended throughput by roughly 35x versus the actual MMSCMD figure PNGRB specified.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf",
+        "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1141,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "5.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "5.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf",
+        "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both PNGRB documents state '5.0 MMSCMD' (Sample Bid p.36 'Initial System Capacity: At least 5.0 MMSCMD'; AR2019-20 p.39 'Capacity: 5.0 MMSCMD') -- so the numeral 5.00 is confirmed, but CapacityUnits is corrected from the sheet's current (isolated, mislabeled) 'MMcf/d' to 'MMSCMD'; see the paired spec-concern validity entry. url_verifier automated content-check false-negatives on both PDFs; confirmed manually via pdftotext/PyPDF2. Both sources are PNGRB-origin (not fully independent of each other for citation-count purposes, per source_roster.md's India caveat) -- tier held at medium rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1141,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "440.00", "LengthKnownUnits": "km"},
+      "primary_value": "440.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf",
+        "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Sample Bid p.4/p.36 and AR2019-20 p.39 both state 'Length of the Trunk Pipeline: 440 km (Approx.)' / 'Length: 440 km'. Sheet value already matches exactly. Both sources are PNGRB-origin so tier held at medium (see source_roster.md caveat), not fully independent of each other."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1141,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Langtala",
+        "StartPrefecture/District": "Jaisalmer",
+        "StartState/Province": "Rajasthan",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Pali",
+        "EndPrefecture/District": "Pali",
+        "EndState/Province": "Rajasthan",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Langtala",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf",
+        "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf",
+        "https://en.wikipedia.org/wiki/Pali_district"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/bid/bid15/Sample-Bid-06.11.2019.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.pngrb.gov.in/pdf/annualreports/eng2019-2020.pdf", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Pali_district", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sample Bid p.36: 'Originating point: Focus Energy's Gas fields in RJ-ON/06 Block at Langtala, District Jaisalmer. Termination point: Near Pali (Rajasthan) to connect GIGL's under construction MBPL.' AR2019-20 p.39 confirms the same route (Langtala, Dist Jaisalmer -> Jodhpur, Dist Jodhpur -> Pali). Deep-filled the two blank district fields: StartPrefecture/District=Jaisalmer (PNGRB-sourced, both docs) and EndPrefecture/District=Pali (Pali city is the eponymous headquarters of Pali district, Rajasthan -- confirmed via Wikipedia, an independent source outside the PNGRB lineage, giving this fill a genuinely independent second leg)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1141,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not find any source naming GAIL (or anyone else) as the awarded bidder/owner of this specific pipeline -- see the paired attribution-concern validity entry. Leaving unresolved rather than fabricating a ref; recommend the value itself be re-examined, not just sourced."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 1141,
+      "current_status": "cancelled",
+      "verdict": "stale",
+      "proposed_status": "cancelled",
+      "proposed_changes": {"ShelvedCancelledType": "inferred"},
+      "evidence_date": "2022-02",
+      "staleness_rule": "4y->cancelled",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No confirmed cancellation notice exists for THIS bid (BID/NGPL/15/2019/02/LJPPL), unlike its Bhilwara-route predecessor which PNGRB explicitly cancelled and ET reported (Nov 2019). What is confirmed: the tender's own bid-submission deadline was 29.12.2020 (PNGRB AR2019-20 p.39); the project is present, with full spec, in the FY2019-20 annual report and is ABSENT (verified via direct pdftotext text search, not just a wiki claim) from the FY2020-21 annual report (AR2020-21_14.02.2022.pdf, published 14.02.2022) -- a dated disappearance window, not an explicit cancellation event. The FY2021-22 annual report could not be checked (scanned-image PDF, no text layer). No PNGRB authorization/award/LOI specific to this bid was ever found (the one 'LOI' lead on PNGRB's own bid-15 page turned out to be misattributed boilerplate for an unrelated CGD bidding round -- see the existence validity note). Per the absence-proves-nothing rule, silence from PNGRB's tendering table is real (dated) evidence of dormancy, not of an explicit cancellation, so ShelvedCancelledType is filed as inferred, not confirmed, with no fabricated ref. Under the dormancy rule, a tender dormant since Dec 2020 (~5.7 years as of Aug 2026) is well past the 4-year shelved->cancelled threshold, so the recorded Status=cancelled is the correct terminal state -- this pass only closes the vocabulary gap. Also flagging for awareness: the current Status [ref] cited on the sheet is the Nov-2019 tender-launch document, which predates any lapse and cannot itself support 'cancelled' (consistent with url_verifier's existing_ref_checks already failing content-match on it)."
+    }
+  ],
+  "summary": "P2215 (Langtala-Jodhpur-Pali): real PNGRB tender launched 6 Nov 2019 as the altered-route replacement for the cancelled Langtala-Jodhpur-Bhilwara bid (P0936), never awarded and absent from PNGRB's tendering table by FY2020-21 with no confirmed cancellation notice -- staged ShelvedCancelledType=inferred, a CapacityUnits fix (MMcf/d -> MMSCMD, a 35x mislabel unique to this row among 73 India gas rows), an Owner=GAIL attribution concern (unsupported by any source found, likely misattributed from its Bhilwara predecessor), refs + two district fills for Length/Capacity/Location, and confirmed not a duplicate of P0936 or P2748."
+}

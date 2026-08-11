@@ -1,0 +1,265 @@
+{
+  "project_id": "P0920",
+  "pipeline_name": "East West Gas Pipeline (India)",
+  "sheet_row": 480,
+  "wiki": "https://www.gem.wiki/East_West_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no structural change; ref-fill Status/Fuel/PipelineType/Capacity/Diameter/FuelSource/Location/Owner with the sources below; not a duplicate of any other row in the 35-row roster",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE/ATTRIBUTION all confirmed via multiple independent, GEM-independent origins -- this is one of the best-documented pipelines in the roster. (1) Wikipedia's 'East West Gas Pipeline (India)' article (verified) gives an infobox + prose account: Kakinada (AP) to Bharuch (Gujarat), 48in/1,219.2mm diameter, owner India Infrastructure Trust, current gas source KG-D6 block in the Krishna Godavari Basin, common-carrier authorized. (2) PNGRB's current (31-May-2026) monthly NGPL register (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf; large multi-column PDF, url_verifier false-negatives per the documented pattern -- confirmed locally with `pdftotext -layout`) lists row 5 of the OPERATIONAL COMMON CARRIER table: 'Kakinada-Hyderabad-Uran-Ahmedabad (East West Pipeline)', entity PIL, authorised 21.06.2019, authorised length 1,459 km, authorised+design capacity 85.0 MMSCMD, gas supplied 39.4 MMSCMD (46% utilisation), operating length 1,485 km, states AP/GJ/MH/TS/KA -- independently confirms the pipeline is real, currently operating, common-carrier (=transmission), Gas, and traverses Andhra Pradesh through to Gujarat. (3) The pipeline's operator, Pipeline Infrastructure Limited (PIL), has its own corporate site (pipelineinfra.com) which I read directly and manually confirmed states '...owns and operates a 48 inch diameter pipeline from Kakinada (AP) in the East to Bharuch (Gujarat) in the West with an overall Pipeline Network of 1485 km, including spur and dedicated pipeline' and 'an initial evacuation capacity of approximately 85 MMSCMD' -- exact agreement with GEM's Diameter (48in) and Capacity (85.00 MMSCMD). NOTE: pipelineinfra.com could not be machine-verified by url_verifier -- Python's requests/urllib3 rejects the server's TLS config with 'SSL: UNSAFE_LEGACY_RENEGOTIATION_DISABLED', while `curl` (and presumably any browser) connects fine with 'SSL certificate verify ok' -- this is the documented 'SSL cert-chain errors... confirm via curl' false-negative class in url_verifier.py's own docstring. I could not obtain a passing Wayback snapshot either (archive.org's availability API returned HTTP 429 rate-limit on every retry during this session). Because it never returned an OK from the verifier I have NOT included pipelineinfra.com URLs in any proposed_refs list, but the manual reading is recorded here for a human to re-attempt verification later (e.g. from a different network, or once the Wayback rate-limit clears) -- do not delete this as an unverifiable ref, it is a live, reachable, on-topic corporate source, just one the verifier tool itself cannot currently reach. (4) Gulf Interstate Engineering (the EPCM contractor), via a Wayback-archived case-study page (verified OK), independently corroborates: RIL project, '48-inch diameter natural gas pipeline', 'almost 1,400 kilometers', 'Constructed from 2006 through 2008'. (5) Livemint (verified OK, Sep 2019) independently corroborates OWNERSHIP: 'Brookfield's India Infrastructure Trust, an InvIT, bought RIL's loss-making entity East-West Pipeline for Rs 13,000 crore [in March 2019]. The InvIT took 100% stake in Pipeline Infrastructure Pvt. Ltd that owns and operates the East-West Pipeline' -- matches GEM's Owner1=India Infrastructure Trust 100% exactly, and reconciles with PNGRB's regulatory entity name 'PIL' (the operating subsidiary the Trust wholly owns). CLASSIFICATION: unambiguously a large-diameter (48in), long-haul (>1000km), common-carrier natural-gas trunk line -- correctly 'transmission', not a gathering/feeder/process line. DUPLICATE: checked against the full 35-row India roster -- no other row shares this route (Kakinada AP -> Bharuch GJ); not a relabel or segment double-count of any sibling. Two caveats are broken out as separate concern entries below (LengthKnown and StartYear1) rather than buried here.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project",
+        "https://www.livemint.com/industry/energy/brookfield-temasek-eye-gail-s-gas-pipeline-assets-1567965429726.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "flag for Update: decide whether LengthKnown=1375 should stay as the original trunk-only figure or be updated to the current total-network figure; do not silently keep 1375 without noting which reading it is",
+      "researcher_notes": "LENGTH is genuinely ambiguous across sources, and the two readings differ by ~8-10%, which is material. GEM/current sheet: LengthKnown=1375.00 km. Sources supporting ~1375-1400 (an ORIGINAL-TRUNK reading, at commissioning): Wikipedia's own body text states 'EWPL is a...pipeline across the entire trunk length of around 1375 km' (exact match to GEM, though Wikipedia's own infobox on the SAME page instead gives 1,386 km -- the two disagree with each other by 11 km, evidently different vintages of Wikipedia's own editing); Gulf Interstate Engineering's contractor case study (verified) rounds to 'almost 1,400 kilometers'. Sources supporting ~1459-1485 (a CURRENT-TOTAL-NETWORK reading, including spurs/dedicated lines added since commissioning): PNGRB's 31-May-2026 register gives authorised length 1,459 km and operating length 1,485 km for this exact pipeline (row 5, OPERATIONAL COMMON CARRIER table; confirmed via pdftotext, url_verifier false-negative as documented above); the operator PIL's own corporate site (manually confirmed, not machine-verifiable per the SSL note above) explicitly says 'an overall Pipeline Network of 1485 km, INCLUDING SPUR AND DEDICATED PIPELINE' -- i.e. PIL itself frames 1485 as the full network with branches, distinct from the core 48in trunk. This is consistent with the country-scope guidance's point that PNGRB/operator figures can legitimately exceed an originally-recorded trunk length as a network is built out with spurs over 15+ years of operation (commissioned 2008-2009; PNGRB authorisation itself is dated 21.06.2019, i.e. re-authorised/expanded well after initial commissioning). I am NOT proposing a replacement number since the current GEM value (1375) IS explicitly supported as a valid 'trunk length' reading by Wikipedia's own prose, and correcting to 1485 would be substituting a different SCOPE (total network incl. spurs) for what GEM appears to be recording (the mainline trunk) -- exactly the kind of granularity call the guidance says needs a human decision, not a mechanical overwrite. Flagging as a concern rather than a silent pass so Update makes that call explicitly and, if the total-network reading is preferred, updates LengthKnown with a source note explaining the scope change.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "flag for Update: StartYear1=2008 vs the operator's own 'commissioning in 2009' -- confirm which convention GEM intends (construction-complete vs first-gas/commercial-commissioning) before treating 2008 as settled",
+      "researcher_notes": "START YEAR disagreement between sources that both look reasonably authoritative. Sources for 2008 (construction completed): Wikipedia's infobox states 'Commissioned 2008' (citing a now-dead gie.com link) and 'Construction started 2006'; independently, Gulf Interstate Engineering's own Wayback-archived case study (verified OK) -- Gulf was RIL's EPCM contractor on this project, i.e. a first-party engineering account, not a tertiary aggregator -- states 'Constructed from 2006 through 2008'. That is two GEM-independent sources agreeing construction finished in 2008, which is what GEM's StartYear1=2008 currently reflects. However, the CURRENT operator's own corporate website (pipelineinfra.com/operations/, read directly, not machine-verifiable per the SSL false-negative noted in the existence finding above) states plainly: 'Since the commissioning in 2009, PIL has been evacuating Natural Gas from upstream facilities of RIL, ONGC and GSPC on the East Coast...' -- i.e. the entity that actually operates the asset today dates its OWN commissioning to 2009, not 2008. A plausible reconciliation (not confirmed, offered as a lead for Update): RIL's KG-D6 field -- this pipeline's original and named gas source (FuelSource=Krishna Godavari Basin) -- began first gas production in April 2009, so construction/mechanical completion in 2008 and first commercial gas flow ('commissioning' in the operational sense PIL's site uses) in 2009 are both plausible and not mutually exclusive; I could not find a single source that states both dates together to confirm this reconciliation explicitly, so I am not proposing a StartYear2 addition without better evidence. Given a live, current first-party statement from the asset's own operator conflicts with GEM's existing value and its (dead-link-sourced) Wikipedia citation, this is a genuine, material disagreement on a date field and should not be silently passed.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project"
+      ],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": "manual (large-PDF url_verifier false-negative; confirmed via pdftotext -layout, row 5 of OPERATIONAL COMMON CARRIER PIPELINE table)"},
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's May-2026 register lists this exact pipeline in the OPERATIONAL (not partially-commissioned or under-construction) table, with a non-zero current gas-supplied figure (39.4 MMSCMD, 46% utilisation) -- direct confirmation it is actively flowing gas today. Wikipedia's present-tense description (supplies gas to RIL's petrochemical complex, delivers gas to customers) corroborates by context."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources explicitly describe it as a natural gas pipeline; trivially correct and consistent with the PNGRB natural-gas-pipeline register."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": "manual; PNGRB classifies it as a common-carrier NGPL, i.e. transmission, not gathering/distribution"},
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": "inferred from context (48in, 1375-1400km cross-country trunk, 'authorized as a common carrier pipeline'), not a literal 'transmission' label"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "'Transmission' is inferred, not a literal label used by either source -- both are consistent with a large-diameter, cross-country, common-carrier trunk line, which is the definition of transmission as opposed to gathering/process/feeder. Tier medium because the label itself is inferred rather than stated verbatim."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2008"},
+      "primary_value": "2008",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See the StartYear1 concern entry in validity[] above -- construction-completion sources (Wikipedia, Gulf Interstate Engineering contractor case study) say 2008, but the current operator PIL's own site says 'commissioning in 2009'. Given the live conflict I am not proposing either source as a settling ref for the existing 2008 value; leaving UNRESOLVED for Update to adjudicate rather than picking a side."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "85.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "85.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": "manual (large-PDF url_verifier false-negative; confirmed via pdftotext -layout: 'Authorised Capacity (MMSCMD)' = 85.0 AND 'Design/Determined Capacity (MMSCMD)' = 85.0, exact match)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB (the regulator) gives 85.0 MMSCMD for both authorised and design/determined capacity -- exact match to GEM's 85.00. The operator PIL's own site independently states 'an initial evacuation capacity of approximately 85 MMSCMD' (manually confirmed, not machine-verifiable -- see the SSL note in the existence finding), which would make this tier=high with two independent origins, but since only the PNGRB PDF actually passed a verifier check (via the documented manual-override route) I am keeping proposed_refs to that one and marking tier=medium/independent=false on the strict standard; the PIL corroboration is recorded here for context."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "1375.00", "LengthKnownUnits": "km"},
+      "primary_value": "1375.00",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Wikipedia's body text literally says 'trunk length of around 1375 km' -- an exact match, but see the LENGTH concern entry in validity[] above: this is a TRUNK-ONLY reading and the same page's own infobox (1,386 km), PNGRB (1,459/1,485 km), and PIL's own site (1,485 km incl. spurs) all give higher figures for the CURRENT total network. Filing this as REFS_ADDED because the existing 1375 value is genuinely supported under a defensible (trunk-length) reading, not because the length question is fully settled -- flagged as a concern above for a human decision on scope."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "48", "DiameterUnits": "in"},
+      "primary_value": "48",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true},
+        {"url": "http://web.archive.org/web/20131110102733/http://www.gie.com/experence/benchmark-projects/east-west-gas-pipeline-project", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Wikipedia gives 1,219.2 mm (48 in) exactly; Gulf Interstate Engineering's independent contractor case study gives '48-inch diameter natural gas pipeline' -- two independent origins in exact agreement, both machine-verified OK. (PIL's own site also says 48in, manually confirmed, a third convergent but not machine-verifiable source.)"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Krishna Godavari Basin"},
+      "primary_value": "Krishna Godavari Basin",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Wikipedia states: 'The current gas source for EWPL is KG-D6 gas block located in Krishna Godavari Basin...' -- exact match. Only one source names the basin explicitly by name (Gulf Interstate Engineering and PIL's site reference the source only loosely, e.g. 'a large offshore gas field... off the northeast coast of India' / 'upstream facilities of RIL, ONGC and GSPC on the East Coast'), so tier medium pending a second source that names Krishna Godavari Basin specifically."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Kakinada", "StartState/Province": "Andhra Pradesh", "StartCountryOrArea": "India", "EndLocation": "Bharuch", "EndState/Province": "Gujarat", "EndCountryOrArea": "India"},
+      "primary_value": "Kakinada",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": "manual (states traversed AP,GJ,MH,TS,KA -- consistent with an Andhra Pradesh-to-Gujarat route)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Wikipedia's infobox states 'From Kakinada, Andhra Pradesh... To Bharuch, Gujarat' verbatim, matching GEM exactly. PNGRB's register independently lists the states traversed as AP, GJ, MH, TS & KA, consistent with an Andhra-Pradesh-origin, Gujarat-terminus route passing through the intervening states. PIL's own site (manually confirmed, not machine-verifiable) also says 'from Kakinada (AP) in the East to Bharuch (Gujarat) in the West' verbatim."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 480,
+      "oo_sheet_row": 805,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "India Infrastructure Trust", "Owner1%": "100.00%"},
+      "primary_value": "India Infrastructure Trust",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)",
+        "https://www.livemint.com/industry/energy/brookfield-temasek-eye-gail-s-gas-pipeline-assets-1567965429726.html"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/East_West_Gas_Pipeline_(India)", "ok": true, "contains_value": true},
+        {"url": "https://www.livemint.com/industry/energy/brookfield-temasek-eye-gail-s-gas-pipeline-assets-1567965429726.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner/operators tab, oo_sheet_row 805 (main Gas tab sheet_row 480). Wikipedia: 'Owner India Infrastructure Trust... It is a wholly owned subsidiary of India Infrastructure Trust, which is owned by Brookfield Asset Management.' Livemint (Sep 2019, independent financial-press reporting on the underlying M&A deal): 'Brookfield's India Infrastructure Trust, an InvIT, bought RIL's loss-making entity East-West Pipeline for Rs 13,000 crore [in March 2019]. The InvIT took 100% stake in Pipeline Infrastructure Pvt. Ltd that owns and operates the East-West Pipeline.' Two independent-origin sources agree exactly on Owner1=India Infrastructure Trust at 100%; also reconciles PNGRB's regulatory entity name 'PIL' as the wholly-owned operating subsidiary."
+    }
+  ],
+  "summary": "P0920 (East West Gas Pipeline / EWPL) confirmed real, correctly classified as transmission, and not a duplicate of any other India roster row; existence/ownership/diameter/capacity/location all corroborated by 2+ independent GEM-independent sources (Wikipedia, PNGRB's current register, the EPCM contractor's own case study, and Livemint's reporting on the Brookfield/RIL sale) -- staged 9 ref-add fills. Two genuine spec CONCERNS flagged for Update: LengthKnown=1375 matches Wikipedia's 'trunk length' framing but the current operator/PNGRB report a larger 1,459-1,485 km total network including spurs (scope decision needed); and StartYear1=2008 (construction-completion sources) conflicts with the operator's own site stating 'commissioning in 2009' (UNRESOLVED, no ref proposed). PNGRB PDF and PIL's own corporate site both required manual confirmation (documented url_verifier false-negative classes: large PDF, and a server-side legacy-TLS-renegotiation SSL error) -- noted throughout; PIL URLs excluded from proposed_refs since they never returned a verifier OK."
+}

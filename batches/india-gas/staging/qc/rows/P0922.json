@@ -1,0 +1,37 @@
+{
+ "project_id": "P0922",
+ "pipeline_name": "Ennore-Tuticorn-Bengalaru Gas Pipeline",
+ "sheet_row": 482,
+ "wiki": "https://www.gem.wiki/Ennore-Tuticorn-Bengalaru_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Indian Oil Corp"},
+   "primary_value_col": "Operator",
+   "primary_value": "Indian Oil Corp",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.livemint.com/companies/news/ennore-lng-terminal-to-help-indian-oil-fast-track-city-gas-project-1552045375818.html"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; register entity=IOCL confirmed locally via the repo's parse (url_verifier FAILs, documented large-PDF false negative)."},
+    {"url": "https://www.livemint.com/companies/news/ennore-lng-terminal-to-help-indian-oil-fast-track-city-gas-project-1552045375818.html", "ok": true, "contains_value": true, "note": "url_verifier OK on this one -- 200 + content present. Body text present in the fetched HTML despite an earlier attempt showing WebFetch cannot reach livemint.com directly: 'In order to supply natural gas to various consumers, IOC is laying a 1,244-km pipeline for evacuation of gas from the Ennore terminal. The pipeline from the terminal will go up to Madurai, Trichy and Tuticorin in Tamil Nadu and branch out to Bengaluru via Hosur.'"}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This row already has an OWNER value ('Indian Oil Corp [100.%]') and the register-crosswalk leg already staged a citation for it (Owner [ref], sheet_row 807 on operators_owners, same register source) -- but Owner and Operator are separate columns and separate facts per the brief's own instruction, so I did not just copy that fill; I corroborated operate specifically. Basis: (1) PNGRB's NGPL MIS register authorizes exactly ONE entity per pipeline under the 'Authorizing Entities to Lay, Build, OPERATE or Expand Natural Gas Pipelines Regulations, 2008' -- the register's own footnote (May 2026 edition, line 906) reads 'Entity not authorized by the Central Government for laying, building, operating or expanding natural gas pipeline before the appointed day', confirming the register's 'Entity' column denotes the party authorized to operate, not merely a financial owner. Register: partially-commissioned Sr. No. 6 'Ennore-Tuticorin', entity IOCL, authorised 1431.0 km / 84.7 MMSCMD, operating 1121.0 km. (2) LiveMint (independent origin, a 2019 news report on the Ennore LNG terminal commissioning, not tracing to the register) states IOC itself 'is laying' the pipeline -- active-construction/operate language directly from press coverage of the company's own project, not merely restating an authorized figure. Two genuinely separate origins (regulator's authorization register vs. independent press reporting on the operating company's own activity) naming the same entity -> tier=high."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No change to LengthKnownKm=1431 -- it is the correct full authorized length, independently confirmed by the register. Route to Route Creation / geometry review: the 1044 km drawn route (ratio 0.73) most likely reflects only the currently-operating portion of the corridor, not an error in the length figure.",
+   "researcher_notes": "Register (PNGRB NGPL MIS Report, 20260531, partially-commissioned Sr. No. 6) shows this authorization as 1431.0 km total, of which 1121.0 km is already operating and 310.0 km still under construction, target completion Mar-25 (lapsed). LengthKnownKm=1431 on the sheet matches the full authorized total exactly, so the sheet value is correct. The drawn route's 1044 km sits between the operating-only figure (1121 km) and a much shorter partial digitization -- close enough to the operating segment that a plausible explanation is the geojson traces only the completed/operating trunk rather than the full authorized corridor through to Bengaluru via Hosur, but I can't confirm that precisely without inspecting the route file itself, which is Route Creation's job, not mine. Separately, the register-crosswalk leg already flagged (as its own validity finding, sheet_row 482, concern_type=classification) that GEM carries this whole line as Status=construction even though 1,121 of 1,431 km is already operating per the register, recommending a status/phase-split review -- I am not duplicating that finding, just noting it's the more likely explanation for the length_ratio gap than a bad length value."
+  }
+ ]
+}

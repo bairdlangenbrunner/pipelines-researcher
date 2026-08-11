@@ -1,0 +1,156 @@
+{
+  "project_id": "P3906",
+  "pipeline_name": "Haridwar-Rishikesh-Dehradun Gas Pipeline",
+  "sheet_row": 1923,
+  "wiki": "https://www.gem.wiki/Haridwar-Rishikesh-Dehradun_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action beyond the ref-fills below; consider adding a ResearcherNotes line that IIG's exact status label is 'Completion Certificate/COD' (June 2023), not the literal word 'operating'",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE/ATTRIBUTION all confirmed with THREE independent, mutually-corroborating first-party sources -- this is one of the more solidly-documented rows in the batch, not a GEM-only entity. (1) gem.wiki's own cited India Investment Grid (IIG, Govt of India) project page (https://indiainvestmentgrid.gov.in/opportunities/nip-project/701231, url_verifier OK on Haridwar/Dehradun/Rishikesh) fetched and read in full: project 'Haridwar-Rishikesh-Dehradun Pipeline Project', promoter type Central PSU, status 'Completion Certificate/COD', start date 10-Aug-2018, completion date 30-Jun-2023, cost USD 20.12 million. The row's existing_ref_check flagged this URL as 'value not found (operating)' because it checks for the literal string -- IIG's actual status label is 'Completion Certificate/COD', which is semantically operating (COD = commercial operation date) and directly supports StartYear1=2023 (matches exactly) and Status=operating. This is a false-negative on wording, not a broken/unsupported ref. (2) gem.wiki's own second cited source, the Uttarakhand Environment Protection & Pollution Control Board (UEPPCB, state govt) EIA Executive Summary, is genuinely independent of IIG (different govt body, different document type -- a 2021 pre-construction environmental filing vs a 2024 investment-tracking status page). The LIVE URL (https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf) currently fails DNS resolution from this environment and, per the Wayback CDX index, the same URL path was overwritten with an unrelated Bageshwar soapstone-mining EIA by Dec-2023 (a live-URL content-drift trap, not evidence the pipeline doc never existed) -- so I pulled the correct pre-overwrite snapshot from the Wayback Machine (digest JUTYM6EUMO5JOWEZK6DAJTMOG5XRMIOG, consistent across 2022-03, 2022-06 x2 and 2025-05 crawls, i.e. genuinely the long-lived pipeline document): https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf. url_verifier passed once cleanly on Haridwar+Dehradun then timed out on repeat large-PDF fetches (network flakiness, not a content problem); read in full locally with pdftotext -layout. It is titled 'EXECUTIVE SUMMARY FOR LAYING OF NATURAL GAS TRANSPORTATION PIPELINE FOR HARIDWAR-RISHIKESH-DEHRADUN PIPELINE SECTION', proponent 'GAIL (India) Limited', prepared by Mantec Consultants (Feb 2021): 8'' NB pipeline, 50 km (approx), Design Gas Flow 1.2 MMSCMD, Dispatch Station at Jwalapur (Haridwar district, tapped off GAIL's existing Saharanpur-Haridwar Pipeline), Receipt Station in Dehradun district, with SV-02 at Ch24+625 explicitly noted as a 'Tap OFF for Rishikesh' -- i.e. Rishikesh is served via a mid-route tap, not an endpoint, which is fully consistent with the sheet's Haridwar/Dehradun endpoint fields and the compound pipeline name. Design pressure 98 barg, PIG launcher/receiver at both ends, 3 sectionalizing-valve stations -- classic transmission-trunk engineering, confirming PipelineType=transmission is correct (this is not a CGD distribution network; Haridwar Natural Gas Pvt Ltd's separate CGD steel/MDPE network, checked at https://hngpl.in/pipeline-network/, is a distinct downstream system fed from the different, shorter Saharanpur-Haridwar Pipeline -- no overlap/duplicate risk). (3) A third, independent regulator document -- PNGRB's own Integrated Natural Gas Pipeline tariff order dated 22-Mar-2023 (https://pngrb.gov.in/pdf/orders/INGPL_TO_22032023.pdf; url_verifier FAILs 'missing expected' on this large multi-column PDF, the same documented false-negative pattern flagged for the NGPL MIS report in the scope guidance -- confirmed locally via pdftotext -layout) explicitly discusses 'Haridwar-Rishikesh-Dehradun Pipeline Project'/'HRDPL' by name multiple times as a GAIL capex line item under PNGRB review (Rs 14.36 Cr FY2022-23 + Rs 44.45 Cr FY2023-24 future PE capex, Board-approved), i.e. the pipeline regulator itself, independently of GAIL's own EIA filing, confirms the project's existence, name and GAIL ownership as of March 2023 -- consistent with the IIG completion date of Jun-2023. DUPLICATE check: searched the full live GGIT gas snapshot for Haridwar/Rishikesh/Dehradun/Saharanpur -- P3906 is the only row that matches; no hidden duplicate or relabel. As expected per the scope guidance, this dedicated GAIL tap-off line does NOT appear itemized in the current PNGRB monthly line-wise NGPL-MIS report (20260531 edition, checked) -- consistent with it being a dedicated/tie-in line outside the common-carrier itemization, not an existence red flag. CAVEAT: Diameter and Capacity were genuinely blank in the sheet despite being stated plainly in the EIA doc -- filled below (single-source, tier medium, since only the EIA doc gives these two specific numbers).",
+      "proposed_refs": [
+        "https://indiainvestmentgrid.gov.in/opportunities/nip-project/701231",
+        "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf",
+        "https://pngrb.gov.in/pdf/orders/INGPL_TO_22032023.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1923,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): 'Product to be handled: Natural Gas'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GAIL/UEPPCB EIA executive summary Table 1, item 2, 'Product to be handled: Natural Gas'. Value unchanged (Gas), ref added."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1923,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): 98 barg design pressure, PIG launcher/receiver, 3 SV stations, tap-off from an existing GAIL trunk line"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA doc's engineering spec table describes a high-pressure (98 barg), pigged, sectionalized trunk line tapping off GAIL's existing Saharanpur-Haridwar Pipeline -- transmission-grade design, not a CGD distribution network (that downstream system is HNGPL's separate steel/MDPE network per https://hngpl.in/pipeline-network/, not cited as it wasn't independently url_verified as a ref-quality source). Value unchanged (transmission), ref added."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1923,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "50.00", "LengthKnownUnits": "km"},
+      "primary_value": "50.00",
+      "proposed_refs": ["https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): cover page 'PIPELINE LENGTH: 50 KM (approx)' and Table 1 'Total Length of Pipeline: 50 Km (approx.)'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Matches the sheet's 50.00 km exactly. Only the EIA doc states an explicit length figure (IIG and the PNGRB tariff order don't give km); single-source so tier medium, not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1923,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Haridwar", "StartState/Province": "Uttarakhand", "StartCountryOrArea": "India", "EndPrefecture/District": "Dehradun", "EndState/Province": "Uttarakhand", "EndCountryOrArea": "India"},
+      "primary_value": "Haridwar",
+      "proposed_refs": ["https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): 'Dispatch Station (DT) at Jwalapur, in the Haridwar District ... Receipt Station (RT) in the Dehradun District'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Dispatch terminal at Jwalapur (a town within/adjoining Haridwar district -- consistent with StartLocation=Haridwar) and receipt terminal in Dehradun district. EndLocation left blank deliberately (the EIA doc only names the district, not a specific end-point locality within Dehradun) -- not force-filled. Values unchanged, ref added."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1923,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits", "DiameterInMm"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "8", "DiameterUnits": "in", "DiameterInMm": "203.20"},
+      "primary_value": "8",
+      "proposed_refs": ["https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): cover page 'DIA: 8’’', Table 1 'Nominal Diameter: 8” NB', body text '8” NB Natural Gas Pipeline'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Diameter field was genuinely blank in the sheet (one of only 10/75 India gas rows with a diameter, per the scope guidance -- now 11). GAIL's own EIA doc states the mainline is 8-inch NB (nominal bore) throughout, matching the DiameterUnits='in' convention used elsewhere in the India rows (e.g. P0920, P0926, P0944). Single-source (only the EIA doc gives a diameter figure), so tier medium rather than high -- did not find a second independent numeric confirmation despite searching PNGRB's tariff order and trade press."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1923,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "1.20", "CapacityUnits": "MMSCMD"},
+      "primary_value": "1.20",
+      "proposed_refs": ["https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): cover page 'SYSTEM CAPACITY: 1.2 MMSCMD', Table 1 'Design Gas Flow: 1.2 MMSCMD'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Capacity field was genuinely blank in the sheet. GAIL's EIA doc states design gas flow / system capacity of 1.2 MMSCMD, in the same units (MMSCMD) used by every other India gas row. Did not attempt a CapacityBcm/y derivation myself (1.2 x 365 / 1000 = 0.438) since that's a computed/formula column per the standing rule against pasting over formulas -- leaving that to the sheet's own formula. Single-source (only the EIA doc gives a capacity figure), tier medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2878,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": [
+        "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf",
+        "https://pngrb.gov.in/pdf/orders/INGPL_TO_22032023.pdf"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220302210841/https://ueppcb.uk.gov.in/files/EXECUTIVE_SUMMARY_2.pdf", "ok": true, "contains_value": "manual (pdftotext -layout): 'PROJECT PROPONENT: GAIL (INDIA) LIMITED'"},
+        {"url": "https://pngrb.gov.in/pdf/orders/INGPL_TO_22032023.pdf", "ok": false, "contains_value": "manual (pdftotext -layout, url_verifier false-negatives on this large multi-column PDF): 'entity provided its Board approval for Capex towards Haridwar-Rishikesh-Dehradun Pipeline Project' -- 'entity' = GAIL throughout this tariff order"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "On the operators/owners tab (oo_sheet_row 2878), not ResearcherNotes, per project convention. Two independent government-facing documents both name GAIL as sole developer/owner: GAIL's own EIA filing lists GAIL (India) Limited as sole Project Proponent; PNGRB's independent 2023 tariff order separately tracks GAIL's capex claims for the named 'Haridwar-Rishikesh-Dehradun Pipeline Project'/HRDPL. Tier high (2 independent sources, values unchanged, ref added)."
+    }
+  ],
+  "summary": "P3906 confirmed real and correctly classified (GAIL 100%-owned transmission trunk, tapping the Saharanpur-Haridwar Pipeline at Jwalapur and running to Dehradun with a Rishikesh tap-off, no duplicate in GGIT) via three independent govt-side sources (IIG, Uttarakhand pollution board EIA, PNGRB tariff order); staged 7 ref-fills (Fuel/PipelineType/Length/Location/Owner at existing values, plus NEW sourced Diameter=8in and Capacity=1.2 MMSCMD, both previously blank). Nothing UNRESOLVED."
+}

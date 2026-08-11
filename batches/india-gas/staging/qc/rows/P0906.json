@@ -1,0 +1,30 @@
+{
+ "project_id": "P0906",
+ "pipeline_name": "Assam Regional Gas Network",
+ "sheet_row": 470,
+ "wiki": "https://www.gem.wiki/Assam_Regional_Gas_Network",
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do NOT change LengthKnownKm=104.73 — it is correct. Flag the drawn route geometry for review instead: at 202 km it runs almost exactly double AGCL's corroborated corridor length, which is the signature of a duplicated/looped/out-and-back trace or an extra branch wrongly folded into the same route file, not an understated sheet value.",
+   "researcher_notes": "The length_ratio flag reads as 'sheet value probably wrong,' but the opposite is established here: LengthKnownKm=104.73 km is independently corroborated twice over — once by the PNGRB register crosswalk already staged for this row (batches/india-gas/staging/register-crosswalk/staged_resolutions.json: PNGRB's 31-May-2026 NGPL MIS Report, operational section, Sr. No. 17 'Assam Natural Gas Pipeline'/AGCL, 105.0 km authorised / 107.0 km operating — matches to whole-km rounding), and again by a separate prior ref-sweep pass on this exact row (batches/india-gas/staging/ref-sweep-operating/rows/P0906.json), which additionally cross-checked AGCL's own company-profile pages (indiamart.com, mysarkarinaukri.com, Assam govt industries dept) describing a ~104-107 km trunk between Golaghat and Tinsukia districts. I did not re-derive any of this — both prior legs already settled it and I am not re-litigating. Given the length value itself is solid from two independent origins (regulator + company/govt sources), a drawn route measuring 202 km — essentially 2x the corroborated corridor — is almost certainly a geometry defect (e.g. the trace doubles back, or a second unrelated segment got merged into the same route file), not evidence that 104.73 km is wrong. Recommending this route to a geometry re-check rather than proposing any coordinate fix myself, per the standing rule against fabricating route geometry.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "classification",
+   "recommendation": "No sheet edit needed. The Diameter_OutOfRange flag is a mechanical false positive in the QC checker itself (scripts/build_qc_workbook.py::check_diameter), not a data defect — recommend the checker be fixed to read DiameterUnits before applying its [2,60] plausibility range, rather than assuming inches unconditionally.",
+   "researcher_notes": "Pulled the live sheet directly (data/GGIT_gas_snapshot_20260810.csv, header=2): P0906's Diameter='350, 400, 500, 800' and DiameterUnits='mm' — the units column is already correctly set to millimetres, not inches. Reading scripts/build_qc_workbook.py's check_diameter(), it calls N.parse_diameter_set(r['Diameter']) and flags any parsed value outside [2,60], then unconditionally labels the flag detail '{d}in' — it never reads or converts against DiameterUnits, so a perfectly valid 350 mm entry (=13.8in, well inside [2,60]in) gets misreported as '350.0in out of range'. 350 mm is also independently plausible for this system: a prior ref-sweep pass on this same row (batches/india-gas/staging/ref-sweep-operating/rows/P0906.json) found AGCL's company-wide steel-pipe diameter range is documented at 50-800 mm (indiamart.com), which brackets all four of the sheet's recorded values (350/400/500/800mm) even though that pass could not pin the exact four figures to this precise 104.73 km segment (its original citing PDF, assamgas.org/pdf/pipeline.pdf, is now dead — a separate, already-flagged UNRESOLVED sourcing gap, distinct from THIS flag about range-plausibility). This validity entry addresses only the mechanical Diameter_OutOfRange question: the recorded mm values are plausible and the flag is a units-mislabeling bug in the checker, not a sheet problem. Not re-opening the separate Diameter [ref]-sourcing question, which is already tracked elsewhere as UNRESOLVED.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  }
+ ]
+}

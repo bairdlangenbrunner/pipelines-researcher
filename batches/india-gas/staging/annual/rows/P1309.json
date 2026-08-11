@@ -1,0 +1,197 @@
+{
+  "project_id": "P1309",
+  "pipeline_name": "North East Natural Gas Pipeline Grid Project",
+  "sheet_row": 766,
+  "wiki": "https://www.gem.wiki/North_East_Natural_Gas_Pipeline_Grid_Project",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No corrective action on existence/classification/ownership/duplicate axes. Apply the staged fills (Proposal/Start/Length/SegmentCost/Owner refs).",
+      "researcher_notes": "EXISTENCE: real, independently confirmed. Union Cabinet approved a 60% Viability Gap Funding capital grant to Indradhanush Gas Grid Ltd (IGGL) for a 1,656 km / Rs 9,265 crore North East Natural Gas Pipeline Grid on 08-Jan-2020 (PIB press release, verified). IGGL (JV of GAIL/IOCL/ONGC/OIL/NRL, incorporated 10-Aug-2018 per its own site) has since reported physical progress: 81.70% of works complete as of June 2024 (Sentinel Assam, dated), the 396 km Guwahati-Numaligarh section commissioned July 2025 (CGDIndia), and Phase I (~553 km across Assam/Arunachal Pradesh/Nagaland) inaugurated 13-Mar-2026 (SMART Utilities). This is corroborated from the regulator's side too: the repo's PNGRB register crosswalk (register_crosswalk.json) already adjudicates P1309 MATCHED ONE_TO_ONE against register sno 8 'North-East Natural Gas Pipeline Grid' (entity IGGL, section=partially_commissioned) in the May-2026 NGPL MIS report -- independent confirmation this is not a GEM-only or hallucinated entity. CLASSIFICATION: Fuel=Gas and PipelineType=transmission are correct for an interstate common-carrier trunk grid; this is not a gathering/process line. DUPLICATE: checked against the full 27-row India-gas roster -- no other row names this corridor or the IGGL entity. It is NOT the JHBDPL/Barauni-Guwahati family (P0929/P0907), which is a separate GAIL corridor feeding the grid from the west, not this project. Unlike the Mallavaram (P0938 operating + P3602 construction) phased-split pattern, GEM carries this whole grid as ONE row; that is a defensible modeling choice given the register itself keeps it as one partially-commissioned authorisation (not two authorisations), but flagging for awareness: ~392-553 km is already commissioned/inaugurated against ~1,300-1,470 km still under construction, so a future operating+construction split could be considered if the register ever separates it -- not applying that here, just noting it for Sweep/Update judgment. STATUS: PNGRB's May-2026 register shows this authorisation still in its 'partially_commissioned' section (392 km operating / 1,471 km under construction against an authorised length of 1,863 km), with 0.0 MMSCMD gas actually supplied and 0% capacity utilisation despite the Mar-2026 Phase I inauguration -- i.e. the inaugurated section is hydrotested/mechanically complete but not yet flowing commercial gas. This all supports the sheet's existing Status=construction (see status_reviews)."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Route to Update: PNGRB's current (May-2026) register carries a LARGER authorised scope than the sheet's originally-sanctioned figures -- authorised_length_km=1,863 vs sheet LengthKnown=1656, and authorised_capacity_mmscmd=5.8 vs sheet Capacity=4.75. Do not blind-apply either register figure; research whether this is a formal scope revision/extension (plausible -- Sentinel Assam June-2024 already flags a planned capacity boost toward 7+ MMSCMD once the Duliajan source connects) before changing LengthKnown/Capacity.",
+      "researcher_notes": "The sheet's LengthKnown=1656 km and Capacity=4.75 MMSCMD are exactly the ORIGINAL 2020 Cabinet-approved figures and are independently corroborated (see fills: 2 independent sources for length; 1 strong independent source for capacity). But the repo's own PNGRB register crosswalk (which MATCHED this row ONE_TO_ONE against register sno 8) carries the CURRENT (May-2026) authorised figures as 1,863 km length and 5.8 MMSCMD authorised+design capacity -- both materially higher than the sheet (+207 km / +11%, +1.05 MMSCMD / +22%). Per the country guidance, PNGRB is the de facto origin for Capacity, so a disagreement here is more likely a stale earlier-vintage figure than a unit error, and the Sentinel Assam article (dated to works as of March 2024) explicitly frames 4.75 MMSCMD as the CURRENT capacity with an already-announced plan to raise it further once new gas sources (Duliajan) connect -- consistent with a step-up to 5.8 having since been formally authorised. This is a genuine, material, dated discrepancy -- not a smoothing-over. Verified PNGRB source for the current register figures: https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf (url_verifier confirmed live and returned the exact matching row figures 1863/1471/392, though 'MMSCMD'/'5.8' did not isolate cleanly as a standalone token because of PDF table-column bleeding -- the repo's own controlled parse in pngrb_ngpl_mis.json, which reconciles to the report's own printed totals, is the basis for the 5.8 figure). Not staging a fill to overwrite either value pending a research judgment on whether/when the scope was formally revised.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Route to Update: expand EndLocation / add EndState/Province to reflect all 8 target states, or at minimum flag the current 3-city list as partial/representative in ResearcherNotes.",
+      "researcher_notes": "Every independent source (PIB 2020, IGGL's own site, trade press) states the grid serves EIGHT north-eastern states: Arunachal Pradesh, Assam, Manipur, Meghalaya, Mizoram, Nagaland, Sikkim and Tripura. The sheet's Location cluster (already auto-flagged 'irregular':true by the worklist tool) lists StartLocation=Guwahati/Assam and EndLocation='Itanagar, Agartala, Imphal' (capitals of Arunachal Pradesh, Tripura, Manipur) with no EndState/Province value at all -- Meghalaya, Mizoram, Nagaland and Sikkim (whose capital, Gangtok, has its own documented groundbreaking event per newsonair.gov.in) are entirely absent from the location fields. This under-represents the grid's actual footprint; not fabricating additional endpoint coordinates here, just flagging the gap for a targeted location fill.",
+      "proposed_refs": [
+        "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2018"},
+      "primary_value": "2018",
+      "proposed_refs": ["https://iggl.co.in/"],
+      "verifications": [
+        {"url": "https://iggl.co.in/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IGGL (the JV that implements this project) was incorporated on 10-Aug-2018 per its own official site -- matches the sheet's existing ProposalYear=2018 (project entity stood up that year). Single source, but a strong primary one (the implementing company's own about-page), hence tier=medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2026"},
+      "primary_value": "2026",
+      "proposed_refs": [
+        "https://cgdindia.net/iggl-to-commission-the-north-east-natural-gas-pipeline-grid-project-by-march-2026/",
+        "https://smartutilities.net.in/2026/03/30/phase-i-of-the-north-east-gas-grid-inaugurated/"
+      ],
+      "verifications": [
+        {"url": "https://cgdindia.net/iggl-to-commission-the-north-east-natural-gas-pipeline-grid-project-by-march-2026/", "ok": true, "contains_value": true},
+        {"url": "https://smartutilities.net.in/2026/03/30/phase-i-of-the-north-east-gas-grid-inaugurated/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent trade outlets confirm 2026 as the year the first real commissioning milestone landed: CGDIndia reports IGGL was targeting commissioning by 31-Mar-2026, and SMART Utilities reports Phase I (~553 km, Assam/Arunachal Pradesh/Nagaland) was actually inaugurated 13-Mar-2026 -- confirms StartYear1=2026 as the year first-phase operations began, matching the sheet's existing value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "1656.00", "LengthKnownUnits": "km"},
+      "primary_value": "1656.00",
+      "proposed_refs": [
+        "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2",
+        "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed"
+      ],
+      "verifications": [
+        {"url": "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2", "ok": true, "contains_value": true},
+        {"url": "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "1,656 km confirmed by two independent sources: the original 2020 PIB Cabinet-approval press release and a June-2024 Sentinel Assam progress report. Note the parallel spec concern above -- PNGRB's current register carries a larger authorised length (1,863 km) that may supersede this originally-sanctioned figure; not overwriting pending that research."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "92650000000.00", "SegmentCostUnits": "INR"},
+      "primary_value": "92650000000.00",
+      "proposed_refs": [
+        "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2",
+        "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed"
+      ],
+      "verifications": [
+        {"url": "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2", "ok": true, "contains_value": true},
+        {"url": "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Rs 9,265 crore (= INR 92,650,000,000) is the estimated project cost including interest during construction, confirmed by both the 2020 PIB Cabinet-approval release and the June-2024 Sentinel Assam article, which separately reports Rs 5,361.41 crore spent-to-date against this same Rs 9,265 crore total. Matches the sheet exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "oo_sheet_row": 1141,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Indradhanush Gas Grid Ltd (IGGL)", "Owner1%": "100.00%"},
+      "primary_value": "Indradhanush Gas Grid Ltd (IGGL)",
+      "proposed_refs": [
+        "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2",
+        "https://iggl.co.in/"
+      ],
+      "verifications": [
+        {"url": "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2", "ok": true, "contains_value": true},
+        {"url": "https://iggl.co.in/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Indradhanush Gas Grid Ltd (IGGL) is confirmed by both PIB (Cabinet approval names IGGL as the implementing/owning SPV) and IGGL's own official site as the entity that builds and owns the North East Natural Gas Pipeline Grid. IGGL itself is a JV of GAIL/IOCL/ONGC/OIL/NRL, but that JV structure sits at IGGL's shareholder level, not the pipeline's -- IGGL is the correct 100% pipeline owner/operator of record, matching the sheet."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed", "ok": true, "contains_value": true}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sentinel Assam (June-2024) confirms the sheet's existing 4.75 MMSCMD as the then-current capacity, but PNGRB's May-2026 register now carries a higher authorised+design capacity of 5.8 MMSCMD for this same authorisation (see the spec concern in validity[]). Not staging a ref for the existing 4.75 as a clean confirmation, and not proposing 5.8 as a replacement, because the two numbers likely represent different points on a genuine capacity-augmentation timeline rather than a simple error -- leaving UNRESOLVED for Update to research which figure is current."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 766,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://smartutilities.net.in/2026/03/30/phase-i-of-the-north-east-gas-grid-inaugurated/",
+        "https://cgdindia.net/iggl-to-commission-the-north-east-natural-gas-pipeline-grid-project-by-march-2026/",
+        "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://smartutilities.net.in/2026/03/30/phase-i-of-the-north-east-gas-grid-inaugurated/", "ok": true, "contains_value": true},
+        {"url": "https://cgdindia.net/iggl-to-commission-the-north-east-natural-gas-pipeline-grid-project-by-march-2026/", "ok": true, "contains_value": true},
+        {"url": "https://www.sentinelassam.com/topheadlines/assam-81-of-works-of-north-east-gas-grid-completed", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Searched PNGRB's own May-2026 NGPL MIS register plus trade press for anything newer/contradicting the sheet's Status=construction. The register itself (this repo's already-adjudicated ONE_TO_ONE match, sno 8) still carries this authorisation in its 'partially_commissioned' section as of May-2026: 392 km operating / 1,471 km under construction out of 1,863 km authorised, with 0.0 MMSCMD gas actually supplied and 0% capacity utilisation. That register position is corroborated, not contradicted, by the newest press: the 396 km Guwahati-Numaligarh section was commissioned July 2025 (CGDIndia) and Phase I (~553 km) was ceremonially inaugurated 13-Mar-2026 (SMART Utilities) -- real, dated progress, but well short of full commissioning, and the 0% capacity-utilisation figure suggests the inaugurated section had not yet started flowing commercial gas as of the May-2026 cutoff. This is NOT the dormancy pattern (trap #4): there is a live, recent, moving target-completion date (Mar-26, essentially just passed) and continuing physical construction reported (81.7% complete June 2024, rising toward the March 2026 milestones), not a stalled authorisation with a lapsed target and 0 km built. CONFIRM construction is still the correct status; the project has NOT reached full operational status as a whole (only a phased-commissioned segment)."
+    }
+  ],
+  "summary": "P1309 confirmed real and correctly classified (independent PIB/press/PNGRB-register corroboration, IGGL ownership confirmed, no duplicate in the 27-row roster); staged 5 REFS_ADDED fills (Proposal/Start/Length/SegmentCost/Owner) plus 2 spec/attribution concerns -- PNGRB's current register shows a larger authorised length (1,863 km) and capacity (5.8 MMSCMD) than the sheet's originally-sanctioned 1,656 km/4.75 MMSCMD (likely scope growth, not an error, but not applied), and EndLocation only names 3 of the 8 served states. Status CONFIRMED as construction (May-2026 register: 392 km operating/1,471 km under construction, 0% capacity utilisation despite the Mar-2026 Phase I inauguration). Capacity [ref] left UNRESOLVED given the 4.75-vs-5.8 conflict."
+}

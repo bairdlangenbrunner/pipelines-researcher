@@ -1,0 +1,131 @@
+{
+  "project_id": "P2746",
+  "pipeline_name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+  "sheet_row": 1405,
+  "wiki": "https://www.gem.wiki/Kochi-Koottanad-Bangalore-Mangalore_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate action needed. Leave the Phase I (P0934) / Phase II (P2746) split as-is — it is a legitimate phased authorisation, not a double-count.",
+      "researcher_notes": "EXISTENCE: real, active GAIL project, independently confirmed by GAIL's own current pipeline-network page (gailonline.com/Natural_Gas.html, lists 'Kochi-Koottanad-Bengaluru-Mangaluru Pipeline Phase-II' among its ongoing NGG projects, Rs 5,909 crore, states Kerala/Tamil Nadu/Karnataka) and by NS Energy Business's project profile (Kochi-Koottanad, Kochi-Mangalore, Koottanad-Bangalore and Bangalore-Krishnagiri construction phases described in detail) plus the PNGRB regulator's own line-wise MIS register (Sr. No. 5, partially-commissioned section, authorisation date 31.05.2012, entity GAIL). Not GEM-only. CLASSIFICATION: correctly a gas transmission trunk (Fuel=Gas, PipelineType=transmission match the register). DUPLICATE: checked against the full 27-row India in-dev roster — no other row describes this corridor. It IS one half of a legitimate phased pair with P0934 ('Phase I', operating, 44 km, Kochi-Kochi), which the repo's own register_crosswalk.json already adjudicates as classification='MATCHED', reason='PHASED_PAIR' against PNGRB register Sr. No. 5 — consistent with the country brief's Mallavaram-Bhopal-Bhilwara-Vijaipur reference case (P0938+P3602), not a double-count. GEM's own total across the pair (44 + 1060 = 1104 km) matches PNGRB's authorised_length_km of 1104.0 for this authorisation exactly, which is good corroboration of the TOTAL design length even though (see the spec concern below) the split between the two rows is now stale.",
+      "proposed_refs": [
+        "https://gailonline.com/Natural_Gas.html",
+        "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Route to Update, not a mechanical fix here: (1) reconcile GAIL's own stated Phase-II total length (902 km, gailonline.com) against the sheet's LengthKnown=1060.00 before touching that cell — do not just average or pick one; (2) re-derive the operating/under-construction split for this authorisation and consider re-splitting Phase II into a further phase pair (an 'operating' row for the now-commissioned mileage + a 'construction' row for the true remainder), mirroring the Phase I/Phase II precedent already used on this same pipeline; (3) flag P0934 (Phase I) separately — its 44 km/operating figure is also stale on the same evidence and is out of this shard's scope (different PID).",
+      "researcher_notes": "P2746's LengthKnown=1060.00 km is recorded with Status='construction' for the FULL 1060 km, i.e. the sheet currently implies 0% of Phase II is built. Two independent, dated sources contradict that: (a) GAIL's own current pipeline-network page (gailonline.com/Natural_Gas.html) lists 'Kochi-Koottanad-Bengaluru-Mangaluru Pipeline Phase-II': Total Length 902 km, Commissioned as on Nov'25 = 608 km, Under Construction as on Nov'25 = 294 km (608+294=902, internally consistent) -- i.e. ~67% of Phase II was already operating 8 months before this deep sweep, and Phase II's own stated TOTAL (902 km) does not match the sheet's 1060 km (a ~158 km gap). (b) The repo's PNGRB MIS Report crosswalk (May 2026 edition, batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json, Sr. No. 5, section='partially_commissioned') gives, for the WHOLE KKBM authorisation: authorised_length_km=1104.0 (exactly GEM's Phase I 44 + Phase II 1060), operating_length_km=675.0, under_construction_length_km=429.0. Since GEM's own Phase I (P0934) accounts for only 44 of that 675 km operating, the arithmetic implies roughly 675-44=631 km of what the sheet books as Phase II is ALSO now operating, leaving only about 1060-631=429 km still under construction -- which lands almost exactly on PNGRB's own printed under_construction_length_km of 429.0. That is not a coincidence: it is strong (if indirect) corroboration that the true state of 'Phase II' as of May 2026 is roughly 60% operating / 40% under construction, not 100% under construction as the sheet has it since 2025-07-16. GAIL's separate 'existing operational network' table on the same page ('Kochi-Koottanad-Bengaluru-Mangaluru Pipeline Network (KKBMPL)', 646 km, 'as per PNGRB as on 30th Jun 2026') is a THIRD figure in the same range (44 << 646), reinforcing that GEM's Phase I/Phase II split has not kept pace with actual commissioning, though the exact 902-vs-1060 total-length gap remains unresolved and should not be papered over with an unsourced number. Not adding a Length [ref] citation for the current 1060 km value given this live disagreement (standing rule: material disagreement -> concern, not a silent pass); leaving LengthKnown [ref] UNRESOLVED.",
+      "proposed_refs": [
+        "https://gailonline.com/Natural_Gas.html",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Verify EndLocation/EndState against a route map before touching them; do not silently reassign to Bengaluru/Tamil Nadu off this note alone.",
+      "researcher_notes": "Lower-confidence secondary flag on StartLocation/EndLocation. Wiki-cited press (NS Energy) describes the pipeline's build-out as: Kochi-Koottanad (41 km, commissioned Aug 2013), then a 'Kochi-Mangalore segment (440 km)' commissioned June 2019/Nov 2020 (per the Economic Times headline 'Finally GAIL completes Kochi-Mangalore pipeline', Nov 16 2020, cited on the wiki page but not independently re-verified here), with the REMAINING construction described as 'Koottanad-Bangalore' (625 km) and a 'Bangalore-Krishnagiri' section in Tamil Nadu. If the coastal Kochi-Mangalore run was already finished by 2019-2020, it is not obvious that the still-incomplete corridor recorded as P2746 ('Phase II', StartLocation=Koottanad, EndLocation=Mangalore, EndState=Karnataka) should terminate at Mangalore at all -- the residual construction as described in the press runs inland toward Bengaluru/Krishnagiri, not up the coast. I could not fully resolve this (no route map was consulted, and PNGRB's register lists the whole authorisation's transited states as 'KL,TN,KA & PY' -- Puducherry included -- without a segment-level breakdown), so this is flagged for a route/map check rather than asserted as wrong.",
+      "proposed_refs": [
+        "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/"
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1405,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "16.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "16.00",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; documented url_verifier large-PDF false negative (confirmed via the repo's controlled pngrb_ngpl_mis.json extraction, which reconciles to the report's own printed totals) -- reusing the register-crosswalk resolution already staged for this exact cell"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB MIS Report May 2026, partially-commissioned section, Sr. No. 5 'Kochi-Koottanad-Bangalore-Mangalore': authorised/determined capacity 16.0 MMSCMD, matching the sheet's Capacity=16.00 MMSCMD exactly. This is the origin GEM's India Capacity column already tracks (not a second independent source for THIS value), consistent with how the register-crosswalk resolution for this same cell is staged -- ref-only, value unchanged."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1405,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; documented url_verifier large-PDF false negative (confirmed via the repo's controlled pngrb_ngpl_mis.json extraction) -- reusing the register-crosswalk resolution already staged for this exact cell"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB register's authorisation-holder field for this Sr. No. 5 entry is 'GAIL', matching Owner1='GAIL (India) Ltd'. Owner [ref] is empty on all 75 India gas rows, so unlike Capacity, PNGRB's entity column is a genuinely independent origin for ownership. Additionally confirmed generically by GAIL's own site (gailonline.com/Natural_Gas.html), which lists this project as its own. Value unchanged; ref-only addition."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1405,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "construction"},
+      "primary_value": "construction",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; documented url_verifier large-PDF false negative -- the current sheet ref (pngrb.gov.in/eng-web/data-bank.html#bm6) is a landing page that returns 200 but does not itself contain the word 'construction' (existing_ref_checks in worklist.json flags this); adding the specific PNGRB register PDF alongside it as a stronger, checkable citation rather than deleting the landing-page ref (standing rule: never drop a once-working ref over an access/verification shortfall)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The register files this authorisation under 'partially commissioned', which is consistent with the sheet's Status='construction' at the whole-authorisation level (part of it is genuinely still being built) -- see the spec concern above for why the RECORDED LENGTH behind that status is stale. Value unchanged; ref added/upgraded, not replacing the existing ref."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1405,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-06",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://gailonline.com/Natural_Gas.html",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://gailonline.com/Natural_Gas.html", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": false, "contains_value": true, "note": "documented url_verifier large-PDF false negative; confirmed via the repo's controlled JSON extraction"}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Categorical Status='construction' is still right as of the newest dated evidence: GAIL's own current site (gailonline.com/Natural_Gas.html) still lists 'Kochi-Koottanad-Bengaluru-Mangaluru Pipeline Phase-II' among ONGOING NGG projects with 294 km 'Under Construction as on Nov'25' (out of 902 km total), and PNGRB's May-2026 MIS register still files the whole authorisation under 'partially_commissioned' (429.0 km under_construction_length_km) rather than 'operational'. Neither the 2y-proposed-dormancy nor the 4y-shelved-dormancy rule applies -- this is not dormant, it is actively progressing (GAIL's own 'existing operational network' figure for this pipeline moved from an implied ~600ish km (Nov'25) toward 646 km 'as per PNGRB as on 30th Jun 2026' on the same page, i.e. new kilometres came online in the last several months). PNGRB's target completion for this authorisation is 'Dec-25', which is now lapsed without full completion (per the trap-3 pattern noted for other Indian trunks like MNJPL) -- so a slip is real, but I have no independent evidence of a NEW target date to propose, so I am not fabricating one. The material issue is not the categorical Status value but the fact that GEM books the ENTIRE 1060 km of this row as still under construction when independent, current sources put roughly 600-675 km of that mileage as already commissioned/operating; that length/split problem is filed as a 'spec' concern in validity[], not as a Status change here, because GEM's own schema already carries the completed portion on a separate row (P0934, Phase I) and the fix is a re-split, not a value flip on this row."
+    }
+  ],
+  "summary": "P2746 (Kochi-Koottanad-Bangalore-Mangalore, Phase II) is real, correctly classified, and not a duplicate -- confirmed against GAIL's own site, NS Energy, and the PNGRB register, and its Phase I/Phase II pairing with P0934 matches the register's single 'partially commissioned' authorisation (a legitimate phased split, not a double-count). But the recorded LengthKnown=1060.00 km 'construction' materially misstates current reality: GAIL's own page (Nov 2025) shows only 294 of Phase II's 902 km still under construction (608 km already commissioned), and PNGRB's May-2026 register arithmetic independently implies ~429 km still under construction out of the pair's combined 1104 km -- both agreeing the true state is roughly 60% operating / 40% remaining, not 100% under construction; Phase II's own total length is also disputed (902 km per GAIL vs the sheet's 1060 km), so no Length ref was added and this is escalated to Update rather than mechanically overwritten. Status='construction' itself is confirmed (still evidenced as of mid-2026); added/upgraded PNGRB refs for Capacity, Owner, and Status."
+}

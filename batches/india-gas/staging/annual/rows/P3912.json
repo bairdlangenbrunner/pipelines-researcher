@@ -1,0 +1,175 @@
+{
+  "project_id": "P3912",
+  "pipeline_name": "Swan LNG Terminal to Dahej LNG Terminal Gas Pipeline",
+  "sheet_row": 1927,
+  "wiki": "https://www.gem.wiki/Swan_LNG_Terminal_to_Dahej_LNG_Terminal_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/attribution/duplicate axes; refs added for Length/Capacity/Location/Owner and a new sourced Diameter fill (see fills).",
+      "researcher_notes": "EXISTENCE: real, independently confirmed. Ignored the wiki page's own generic aggregate citation ('Natural Gas Pipelines Network in India - As on 31st March, 2022', a whole-network summary that does not name this pipeline) and went straight to its second cited lead, GAIL's own regulatory filing (https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf, Ref. GAIL/ND/RA/Tie-In-SLPL/2021/419386, dated 10 Aug 2021 -- a scanned PDF, read via tesseract OCR since pdftotext returns no text layer). Subject line: 'Proposal to lay a Tie-In Connectivity between GAIL's Integrated HVJ Natural Gas Pipeline at Dahej and Swan RLNG Terminal, Jafrabad, Gujarat' -- exact match to GEM's endpoints/name. Independently, PNGRB's own 'Natural Gas Pipeline Networks in India' data-bank register (a different, itemised report series from the 'NGPL MIS Report' the register-crosswalk uses -- that one explicitly excludes tie-in lines from its line items, which is why P3912 shows ABSENT_DEDICATED_OR_TIE_IN in register_crosswalk.json; the itemised tie-in table lives in the plain data-bank NGPL PDF instead) lists the same pipeline by name in both its June-2025 and Dec-2025 editions: 'Swan LNG Private Limited's RLNG Terminal at Jafrabad to GAIL's terminal at Dahej connecting to its integrated HVJ' -- Entity GAIL, authorised 31.12.2021, 170 km / 7 MMSCMD, target completion Dec 2024, Gujarat. Two independently-dated, independently-authored documents (GAIL's 2021 correspondence and PNGRB's 2025/2026 register) agree on name, entity, length and capacity -- existence and attribution are solid. CLASSIFICATION: correct. This is explicitly characterised by GAIL itself as a 'Tie-in connectivity' pipeline under PNGRB's NGPL Authorization Regulations, feeding regasified LNG from the Swan RLNG terminal into GAIL's Integrated HVJ transmission trunk -- transmission is the right PipelineType, not a gathering/feeder line. Fuel=Gas and PipelineType=transmission already carry live refs that resolve (existing_ref_checks ok=true); left untouched. DUPLICATE CHECK against the 9-row roster: NOT a duplicate. P3910 (Chhara-Londhpur) is a physically distinct project -- a DIFFERENT company's tie-in (GSPL/HSEPL) from a DIFFERENT LNG terminal (Chhara, authorised Sept 2019 per GAIL's own letter: 'GSPL has been authorized in September 2019 for laying the Tie-In Connectivity pipeline from its Chhara LNG Terminal to Londhpur'). More interesting: the same GAIL letter and the PNGRB register both surface a THIRD, closely-related-but-genuinely-separate authorization not in GEM's roster at all -- 'Swan LNG Private Limited's RLNG Terminal at Jafrabad to Hadala falling on Gana-Hadala section of GSPL's HPGGG', entity GSPL, 198 km, 18 MMSCMD, also authorised 31.12.2021 -- a competing tie-in from the SAME Swan LNG terminal to a DIFFERENT destination/operator. GAIL's own filing explains why both exist: GSPL contested GAIL's proposal on first-right-of-refusal grounds, and GAIL's response notes 'In the past, two concurrent tie-in lines have also been authorized by PNGRB' -- this is a deliberate dual-evacuation-route design, not a double-count. P3912 (GAIL/Dahej/170km) and the untracked Swan-Hadala/GSPL/198km line are two separate authorized pipelines serving the same terminal; no merge action for P3912. CAVEAT (spec/status): PNGRB's register still shows the Dec-2024 target completion UNCHANGED across both the June-2025 and Dec-2025 editions (i.e. ~12-20 months past target with no revised date published and no operating-length figure given for this pipeline specifically -- this itemised tie-in table has no progress column at all, unlike the fuller common-carrier tables). Per the scope's Trap #1/#3, a target-completion date is a plan, not a confirmed outcome, and GEM's current StartYear1=2024 (currently unsourced, MISSING_REF) traces to exactly that target field. Independent evidence (DeshGujarat, 25 Feb 2026) puts the associated Swan LNG/Jafrabad FSRU terminal itself at 92.3% physical completion as of 31 Dec 2025 with a Sept-2026 deadline -- i.e. the whole project (terminal + tie-in) is credibly still mid-construction, not abandoned, but 2024 as an actual commissioning year looks stale/optimistic rather than confirmed. Recommend leaving StartYear1 unsourced (not filling it with a knowingly-stale ref) and revisiting once the terminal itself nears its Sept-2026 target -- see status_reviews for the full reasoning; Status=construction itself is well supported and not disturbed.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "170.00", "LengthKnownUnits": "km"},
+      "primary_value": "170.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf", "ok": true, "contains_value": true, "note": "HTTP 200 (verifier OK on numeric token '170'); scanned PDF, no text layer -- read via local tesseract OCR: 'GAIL's proposed Tie-in line entails 170 kms' (p.3)."},
+        {"url": "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; automated substring screen misses 'Jafrabad'/'Dahej' (documented large-PDF extractor false negative -- 19pp, 902KB). Confirmed locally with pdftotext -layout: item 'Swan LNG Private Limited's RLNG Terminal at Jafrabad to GAIL's terminal at Dahej connecting to its integrated HVJ', Entity GAIL, 170 km authorised length, target Dec 2024. Same figure repeated unchanged in the 30-Jun-2025 edition (20250630_NGPL.pdf)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independently-dated, independently-authored documents (GAIL's 2021 filing; PNGRB's own 2025/2026 register, persisting unchanged across two editions) agree exactly on 170 km."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "7.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "7.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf", "ok": true, "contains_value": true, "note": "OCR (p.3): 'There will be huge loss of revenue on account of diverting nearly 7 MMSCMD' [to GAIL's proposed line]."},
+        {"url": "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf", "ok": true, "contains_value": true, "note": "Same large-PDF screen false negative as the length fill above; confirmed locally: authorised capacity 7 MMSCMD against the Jafrabad-Dahej item, unchanged from the Jun-2025 edition."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GEM's India Capacity column is generally sourced from PNGRB's authorised MMSCMD figure (per scope guidance, PNGRB is the de facto origin for this axis) -- here that figure also independently matches GAIL's own 2021 filing, so treated as corroborated rather than single-source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "30", "DiameterUnits": "in"},
+      "primary_value": "30",
+      "proposed_refs": ["https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf", "ok": true, "contains_value": true, "note": "OCR (p.4), GAIL's response to a stakeholder request for diameter info: 'Dia. Of the current proposal: 30\" (Already communicated to PNGRB on 12.07.2021).'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter is the genuine gap on this row (roster shows dia=? on all 9 India rows) and this is a real find, but it is single-sourced -- PNGRB's register format has no diameter column (does_not_settle per the crosswalk meta) and no second corroborating document surfaced on open-web search. Tier medium, not high, until a second source (e.g. an EPC/tender document) turns up."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Jafrabad", "StartState/Province": "Gujarat", "StartCountryOrArea": "India", "EndPrefecture/District": "Dahej", "EndState/Province": "Gujarat", "EndCountryOrArea": "India"},
+      "primary_value": "Jafrabad",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf", "ok": true, "contains_value": true, "note": "OCR: 'Tie-In Connectivity between GAIL's Integrated HVJ Natural Gas Pipeline at Dahej and Swan RLNG Terminal, Jafrabad, Gujarat.'"},
+        {"url": "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf", "ok": true, "contains_value": true, "note": "Same large-PDF false negative; confirmed locally -- register item text names Jafrabad as origin and GAIL's Dahej terminal as destination, Gujarat as passing state."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both endpoints and the state match exactly across GAIL's filing and PNGRB's register."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "oo_sheet_row": 2882,
+      "tab": "operators_owners",
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "GAIL (India) Ltd", "Owner1%": "100.00%"},
+      "primary_value": "GAIL (India) Ltd",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL10082021_R.pdf", "ok": true, "contains_value": true, "note": "GAIL (India) Limited is the letterhead entity and the party proposing/authorized to build the tie-in; no other owner named or implied."},
+        {"url": "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf", "ok": true, "contains_value": true, "note": "Register 'Entity' column = GAIL for this item, unchanged across editions; no co-owner listed."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sole authorized entity in both sources; 100% GAIL matches GEM's existing value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2024"},
+      "primary_value": "2024",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Deliberately left unresolved rather than sourced. StartYear1=2024 traces exactly to PNGRB's 'target completion: Dec 2024' field for this authorization -- a plan, not a confirmed commissioning date (Trap #1/#3). That target is unrevised across the June-2025 and Dec-2025 register editions despite having lapsed, and the itemised tie-in table carries no operating-length/progress column to check against. The associated Swan LNG/Jafrabad FSRU terminal -- the whole reason this tie-in exists -- was independently reported at 92.3% physical completion as of 31 Dec 2025 with a Sept-2026 target (DeshGujarat, 25 Feb 2026), i.e. credibly still mid-construction as of the most recent evidence, not abandoned, but also not yet commissioned. Filling StartYear1 with a ref that only documents the ORIGINAL target would misrepresent it as confirmed; recommend revisiting once the terminal nears its Sept-2026 milestone or independent news of the tie-in's own commissioning surfaces."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 1927,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-02",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf",
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+        "https://deshgujarat.com/2026/02/25/jafrabad-lng-fsru-project-92-3-complete-deadline-sept-2026-gujarat-govt/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://deshgujarat.com/2026/02/25/jafrabad-lng-fsru-project-92-3-complete-deadline-sept-2026-gujarat-govt/", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status=construction remains the best-supported characterisation, but flagged with a real caveat rather than a clean pass. The authorization itself is still live and unsurrendered: PNGRB's 'Natural Gas Pipeline Networks in India' data-bank register lists this exact pipeline (Swan LNG's RLNG Terminal at Jafrabad -> GAIL's Dahej terminal / Integrated HVJ, Entity GAIL, 170 km, 7 MMSCMD) in BOTH its 30-June-2025 and 31-Dec-2025 editions -- if it had been cancelled or the authorization surrendered it would drop out, per the same logic used for Ennore-Nellore (P0921) elsewhere in this country. However the published target completion (Dec 2024) is unchanged and un-extended across both editions, i.e. ~12-20 months past target with no formally revised date and no operating-length/progress figure available for this pipeline specifically (this itemised tie-in table has no progress column at all, unlike the fuller common-carrier MIS tables the register-crosswalk uses). Two things keep this at 'confirm' rather than 'stale': (1) PNGRB deliberately keeps live authorizations listed regardless of built progress (documented country trap), so continued listing alone is weak evidence either way; but (2) independent trade/local press (DeshGujarat, 25 Feb 2026) puts the associated Swan LNG/Jafrabad FSRU terminal -- the pipeline's sole reason for being -- at 92.3% physical completion as of 31 Dec 2025 against a Sept-2026 deadline, i.e. credible ACTIVE late-stage construction on the overall project as of the most recent evidence found, not the kind of multi-year silence the dormancy rule targets. Searched specifically for an EPC award, pipe-laying news or GAIL investor-presentation progress figure for the tie-in itself and found none -- that is a real information gap, not a stale-project signal, and is why this is 'confirm' with a caveat rather than a clean high-confidence pass. Recommend a follow-up check nearer the terminal's Sept-2026 target for explicit tie-in commissioning news. Do NOT treat GEM's current StartYear1=2024 as confirmed -- see fills note on the Start [ref] cluster (left UNRESOLVED, not filled)."
+    }
+  ],
+  "summary": "P3912 confirmed real (GAIL's own 2021 PNGRB filing + PNGRB's 2025/2026 register both name it), correctly classified as a GAIL-owned transmission tie-in, and not a duplicate of P3910 or of the separate untracked GSPL Swan-to-Hadala tie-in; added high-tier refs for Length (170 km) and Capacity (7 MMSCMD) and Location/Owner, plus a new medium-tier Diameter fill (30 in, single-sourced). Status=construction confirmed (evidence through 2026-02) but with a caveat: StartYear1=2024 is PNGRB's lapsed target-completion date, not a confirmed commissioning year, and left UNRESOLVED rather than sourced."
+}

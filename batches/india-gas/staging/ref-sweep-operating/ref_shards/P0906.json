@@ -1,0 +1,55 @@
+{
+ "project_id": "P0906",
+ "pipeline_name": "Assam Regional Gas Network",
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 470,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf", "ok": true, "contains_value": true},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's 21-Feb-2024 NGPL register (entry #17, '17.17.NGPL', 'Assam Regional Network', AGCL, authorised 20.12.2013) prints authorised length 104.73 km / authorised capacity 2.428 MMSCMD / operating length 106.71 km — an EXACT match to GEM's recorded 104.73 km and a match to 2.43 MMSCMD at 2-decimal rounding (2.428→2.43). This is almost certainly the edition GEM's sheet/wiki value traces to. PNGRB's later 31-May-2026 edition (entry #17, renamed 'Assam Natural Gas Pipeline') shows the same entity updated to a rounder 105 km / 2.4 MMSCMD authorised, 107 km operating — consistent drift as the authorisation was re-measured/re-rounded over editions, not a disagreement. Both url_verifier runs FAIL on content ('missing expected: 104.73' / '2.428') — this is the documented large-PDF false-negative (per url_verifier.py's own docstring and the India brief's PNGRB caveat); downloaded both PDFs directly and confirmed the exact rows with `pdftotext -layout` (2024 edition line 110: '17     17.17.NGPL     Assam Regional Network            AGCL          20.12.2013        104.73        2.428            106.71'; 2026 edition line 97 shows the rounded successor entry). Both PNGRB editions share one origin (the regulator) so this is NOT 2-independent-source corroboration — tier medium, independent=false — but the Feb-2024 edition is the strongest single-source match available: exact figure, not just consistent-with. No independent (non-PNGRB) capacity figure for this exact segment was found; AGCL's own site (assamgas.org) has since migrated to a React SPA that serves the index shell for legacy PDF paths (confirmed via curl — HTTP 200 but no PDF content), so its Citizens' Charter PDF is dead. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 470,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf", "ok": true, "contains_value": true},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same PNGRB entity as the Capacity unit above (entry #17, 'Assam Regional Network'/'Assam Natural Gas Pipeline', AGCL, authorised 20.12.2013). The 21-Feb-2024 edition prints authorised length 104.73 km — an EXACT match to GEM's recorded LengthKnown. The later 31-May-2026 edition shows the entity's authorised length rounded to 105 km (107 km operating, i.e. the line was extended past its authorisation) — consistent drift across editions, not a disagreement with the sheet. Both url_verifier runs FAIL on content ('missing expected: 104.73') — documented large-PDF false-negative; confirmed locally with `pdftotext -layout` on both downloaded PDFs (2024 edition line 110, 2026 edition line 97, quoted verbatim in the Capacity unit's notes). Both editions share one PNGRB origin, so tier medium / independent=false despite two documents — the Feb-2024 edition is simply the stronger exact-precision match. No independent (non-PNGRB) length figure for this exact segment was found; AGCL's own site's legacy PDFs are dead (SPA migration, confirmed via curl). Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 470,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20180902103224id_/http://assamgas.org/pdf/pipeline.pdf"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20180902103224id_/http://assamgas.org/pdf/pipeline.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The row's ORIGINAL citing source (gem.wiki: 'MAP FOR THE GEOGRAPHICAL AREA OF UPPER ASSAM CITY GAS DISTRIBUTION NETWORK', assamgas.org/pdf/pipeline.pdf) is dead at its live URL — assamgas.org migrated to a React SPA that serves the index-page shell (HTTP 200, text/html, no PDF) for every legacy PDF path, confirmed via curl. Recovered via a Wayback Machine snapshot (captured 2018-09-02, i.e. within the wiki citation's 'accessed August 2018' window) at the archived URL above: HTTP 200, genuine application/pdf (2.4 MB, matches the live original's byte size per the archive's x-archive-orig-content-length header). url_verifier FAILs on content ('missing expected: 800mm, 350mm') — this is the documented large-PDF false-negative pattern (url_verifier.py's own docstring: 'the extractor does not reach the whole document'); downloaded the snapshot directly and ran `pdftotext -layout` locally, which reaches the map's legend at the very end of the document (line ~656–668 of 670): the pipe-diameter legend lists, among others, '350mm Pipe Line', '400mm Pipe Line', '500mm Pipe Line' and '800mm Pipe Line' as categories drawn on the map — all four of GEM's recorded diameters are present verbatim. The legend also lists smaller distribution-lateral diameters (150mm, 200mm, 300mm) that are NOT in GEM's recorded set, consistent with GEM's row covering only the larger trunk/transmission portion of AGCL's network rather than the full CGD distribution grid the map depicts — not a contradiction, just a narrower GEM value than the map's full range. This is a map-level legend rather than a statement tied explicitly to the named 104.73 km 'Assam Regional Gas Network'/'Assam Natural Gas Pipeline' segment, so single-source medium tier rather than high — but it IS the recovered original wiki source, independent of the PNGRB register used for Capacity/Length above (independent=true, different origin: AGCL's own network map vs. the regulator's authorisation register). No second source giving this exact four-value diameter list was found; AGCL's Citizens' Charter PDF and about-us pages are likewise dead (SPA shell). Value UNCHANGED; ref-only addition."
+  }
+ ]
+}

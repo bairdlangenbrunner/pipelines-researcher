@@ -1,0 +1,159 @@
+{
+  "project_id": "P5411",
+  "pipeline_name": "Mehsana-Bhatinda Gas Pipeline",
+  "sheet_row": 3005,
+  "wiki": "https://www.gem.wiki/Mehsana-Bhatinda_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the separate spec fix below.",
+      "researcher_notes": "EXISTENCE: real, well-documented authorized common-carrier pipeline, not a GEM-only entity. Primary chain: PNGRB's own 07-07-2011 grant-of-authorization letter to GSPL (pngrb.gov.in/pdf/ngp/Govt-Authorization/MBPL.pdf) names the route Mehsana(Gujarat)-Ajmer(Rajasthan)-Sirsa(Haryana)-Bhatinda(Punjab) and sets base capacity 77.11 MMSCMD + 19.27 MMSCMD extra; GSPL's own FY2019-20 Annual Report (filed with BSE) describes GIGL 'currently working on development of the 930 Kms stretch of its Mehsana-Bhatinda pipeline network' and lists GIGL as a 52%-owned subsidiary; a Dec-24-2025 Right-of-User gazette notification (independent legal-commentary source, advocategandhi.com) documents GSPL India Gasnet Ltd (GIGL) actively acquiring land in Barmer/Balotra, Rajasthan for this network as of 5 months before this review; PNGRB's own line-wise progress register has tracked it continuously (Sep-2020, May-2022, Jun-2024, Aug-2025, Dec-2025, May-2026 editions all found/consulted). CLASSIFICATION: correctly transmission/gas -- described everywhere (ICRA, GSPL AR, PNGRB) as a cross-country natural-gas transmission trunk, common-carrier authorized; existing Fuel/PipelineType refs (pngrb.gov.in/eng-web/data-bank.html#bm7) already resolve live. DUPLICATE: NOT a double-count. P5411 (Phase II, construction, 763 km) and P0941 (Phase I, operating, 1177 km) are a legitimate phased split of ONE PNGRB authorization -- 'Mehsana -Bhatinda', partially_commissioned sno 1 in the repo's May-2026 register crosswalk (batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json + register_crosswalk.json, both already reason=PHASED_PAIR) -- the same legitimate pattern as the Mallavaram-Bhopal reference case in the country guidance, not the Barauni-Guwahati-style embedded-section double-count. ATTRIBUTION: Owner split (GSPL 52% / IOC 26% / BPCL 11% / HPCL 11%) independently confirmed exact-match by ICRA's rating rationale for GIGL ('joint-venture between Gujarat State Petronet Ltd (52%), Indian Oil Corporation Ltd (26%), Bharat Petroleum Corporation Ltd (11%) and Hindustan Petroleum Corporation Ltd (11%)') and corroborated for GSPL's own 52% stake in GSPL's FY2019-20 Annual Report subsidiary table ('GSPL India Gasnet Limited ... Subsidiary Company 52'). StartLocation=Mehsana/Gujarat and EndLocation=Bhatinda/Punjab confirmed by the same PNGRB authorization letter and by PNGRB's Dec-2025 progress report, which lists the pipeline as passing through Gujarat, Rajasthan, Haryana, Punjab. NOTE ON VERIFIER FALSE NEGATIVES: url_verifier.py FAILed its automated content screen on every PDF cited here (MBPL.pdf, the ICRA PDF, the GSPL AR PDF, the PNGRB Dec-2025/May-2026 PDFs) despite each returning HTTP 200 -- this is the documented PDF-text-extraction false-negative in url_verifier.py's own header notes, not a liveness or content problem. Every PDF was independently confirmed by downloading it and running `pdftotext -layout`, which shows the exact matching text quoted above.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/MBPL.pdf",
+        "https://www.icra.in/Rating/ShowRationalReportFilePdf/140356",
+        "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf",
+        "https://advocategandhi.com/right-of-user-acquired-for-mehsana-bhatinda-natural-gas-pipeline-network-legal-implications-of-the-december-2025-gazette-notification/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Route to Update: revise LengthKnown (currently 763 km) toward the current under-construction remainder (604 km per the May-2026 PNGRB register; 624 km per the Dec-2025 edition) and Capacity (currently 80.11 MMSCMD) toward 83.1/83.11 MMSCMD, each cited to the current PNGRB register edition. Do not paste blind -- confirm which vintage the sheet's 763/80.11 figures actually trace to before overwriting.",
+      "researcher_notes": "Both LengthKnown (763.00 km) and Capacity (80.11 MMSCMD) on this row are stale, not fabricated -- they read exactly as a mid-2022-vintage PNGRB snapshot, not the current one. Independently verified: PNGRB's Dec-31-2025 NGPL report (pngrb.gov.in/data-bank/20251231_NGPL.pdf, fetched and read with pdftotext -layout) lists 'Mehsana - Bhatinda / GIGL / 07.07.2011 / 1,943 [authorised length] / 83.11 [capacity MMSCMD] / 1,318 [operating length] / 624 [under-construction length] / June 2026 [target]'. The repo's already-reconciled May-2026 register crosswalk (pngrb_ngpl_mis.json, sno 1, partially_commissioned) shows the same authorization at operating=1339 km / under_construction=604 km / authorised+determined capacity=83.1 MMSCMD. Both dated editions therefore materially disagree with the sheet's 763 km / 80.11 MMSCMD on this Phase-II row -- capacity by ~3.6% (80.11 vs 83.1) and the construction remainder by ~18-21% (763 vs 604-624). A web synthesis independently pointed to an earlier PNGRB edition (NGPL-23052022.pdf) as the origin of the '80.11 MMSCMD' figure, and the corresponding 1177/763 operating/under-construction split (matching the sheet's current P0941/P5411 values) traces to a similar ~2023 vintage -- i.e. this is the country's documented sectional-commissioning pattern (guidance trap #3): sections keep moving from 'under construction' to 'operating' as the network is built out, so a length/capacity pair frozen at an earlier authorization edition goes stale even though Status itself ('construction') is still the right bucket. Per the country guidance this is presumptively a stale earlier-edition figure, not a unit error, so I did not overwrite it myself -- flagging for Update with the current sourced values above rather than silently filling a ref onto an unsupported number.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 3005,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1","Owner1%","Owner2","Owner2%","Owner3","Owner3%","Owner4","Owner4%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gujarat State Petronet", "Owner1%": "52.00%", "Owner2": "Indian Oil Corp", "Owner2%": "26.00%", "Owner3": "BPCL Group", "Owner3%": "11.00%", "Owner4": "Hindustan Petroleum", "Owner4%": "11.00%"},
+      "primary_value": "Gujarat State Petronet",
+      "proposed_refs": [
+        "https://www.icra.in/Rating/ShowRationalReportFilePdf/140356",
+        "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.icra.in/Rating/ShowRationalReportFilePdf/140356", "ok": true, "contains_value": true},
+        {"url": "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "url_verifier.py content-screen FAILs on both PDFs (documented PDF-extraction false negative -- both return HTTP 200); manually confirmed via pdftotext -layout. ICRA's GIGL rating rationale gives the exact 52/26/11/11% split by name; GSPL's FY2019-20 Annual Report (BSE filing) independently corroborates GSPL's own 52% stake in the 'GSPL India Gasnet Limited' subsidiary table. Sheet values already match exactly -- no change proposed, just sourcing."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 3005,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation","StartState/Province","StartCountryOrArea","EndLocation","EndState/Province","EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Mehsana", "StartState/Province": "Gujarat", "StartCountryOrArea": "India", "EndLocation": "Bhatinda", "EndState/Province": "Punjab", "EndCountryOrArea": "India"},
+      "primary_value": "Mehsana",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/MBPL.pdf",
+        "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/MBPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.bseindia.com/bseplus/AnnualReport/532702/65397532702.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's 2011 grant-of-authorization letter to GSPL names the route 'Mehsana (Gujarat)-Ajmer (Rajasthan)-Sirsa (Haryana)-Bhatinda (Punjab)'; GSPL's FY2019-20 Annual Report independently describes GIGL developing 'Mehsana-Bhatinda (approx 1834 Kms)'. Both PDFs FAIL url_verifier's automated content screen (documented PDF-extraction false negative) but were manually confirmed via pdftotext -layout. Sheet values already match -- sourcing only."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 3005,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown","LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "763.00", "LengthKnownUnits": "km"},
+      "primary_value": "763.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could NOT independently corroborate 763 km as the CURRENT under-construction remainder -- the current PNGRB register shows 604 km (May-2026) / 624 km (Dec-2025) for this same authorization, ~18-21% lower. This value looks like a stale earlier PNGRB-edition figure (see the paired 'spec' concern in validity, which carries the corroborating current-edition sources and the recommended correction). Not staging a ref that would falsely support the existing number."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 3005,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity","CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "80.11", "CapacityUnits": "MMSCMD"},
+      "primary_value": "80.11",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could NOT independently corroborate 80.11 MMSCMD as the CURRENT authorised capacity -- the current PNGRB register shows 83.11 MMSCMD (Dec-2025) / 83.1 MMSCMD (May-2026) for this same authorization. 80.11 MMSCMD matches an earlier (c. May-2022) PNGRB edition per web search. See the paired 'spec' concern in validity for the corroborating current-edition sources and recommended correction; not staging a ref onto a value the current register contradicts."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 3005,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost","SegmentCostUnits","SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "955674720.00", "SegmentCostUnits": "USD"},
+      "primary_value": "955674720.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not verify. The only cost figure found is ICRA's GIGL-wide project outlay of ~Rs 6240 crore (financed via Rs 4289 crore debt + equity) -- but that covers BOTH GIGL pipelines (Mehsana-Bhatinda AND Bhatinda-Gurdaspur) combined, not this Phase-II segment alone, and is denominated in INR crore with no stated USD conversion date, so it cannot confirm or refute the sheet's $955,674,720.00 figure for this segment specifically. Leaving unresolved rather than force a match."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 3005,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf",
+        "https://advocategandhi.com/right-of-user-acquired-for-mehsana-bhatinda-natural-gas-pipeline-network-legal-implications-of-the-december-2025-gazette-notification/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20251231_NGPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://advocategandhi.com/right-of-user-acquired-for-mehsana-bhatinda-natural-gas-pipeline-network-legal-implications-of-the-december-2025-gazette-notification/", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Checked the newest available PNGRB editions against the sheet's 'construction' status. The May-2026 PNGRB register (this repo's own controlled extraction, cross-checked against the live PDF) still lists 'Mehsana -Bhatinda' under partially_commissioned/under_construction with 604 km remaining and target completion Jun-26 -- i.e. NOT yet fully commissioned as of the most recent edition, so Phase II (the construction-labelled row) is still correctly 'construction'. The Dec-31-2025 edition (independently fetched, pdftotext-confirmed) shows the same target (June 2026) with 624 km then remaining -- consistent forward progress, no slip. A Dec-24-2025 Right-of-User gazette notification (advocategandhi.com, an independent legal-commentary source, url_verifier OK) confirms GIGL was still actively acquiring land in Rajasthan for this network 5 months before this review, i.e. genuinely active construction activity, not a dormant/lapsed authorization (ruling out the country guidance's trap #4 pattern). No evidence found of the target slipping past June 2026 or of a status change to operating/shelved. Verdict: confirm, evidence_date 2026-05 (most recent PNGRB edition consulted)."
+    }
+  ],
+  "summary": "P5411 (Mehsana-Bhatinda Gas Pipeline, Phase II): confirmed real, correctly classified, legitimately phased with P0941 (not a duplicate), ownership/location sourced -- but LengthKnown (763 km) and Capacity (80.11 MMSCMD) are stale vs. the current PNGRB register (604-624 km under construction / 83.1-83.11 MMSCMD), flagged as a spec concern for Update; SegmentCost left UNRESOLVED (unverifiable at segment level); status confirmed 'construction' as of the May-2026 PNGRB edition."
+}

@@ -1,0 +1,241 @@
+{
+  "project_id": "P0917",
+  "pipeline_name": "Dadri-Panipat Gas Pipeline",
+  "sheet_row": 478,
+  "wiki": "https://www.gem.wiki/Dadri-Panipat_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/attribution/route/owner/status/start-year — all corroborated by 2+ independent, non-GEM sources. Add the four proposed refs to close out the ref-sweep.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/ATTRIBUTION/SPEC — checked against the wiki's own cited sources first, then independently. The wiki cites (1) an old (2016) PNGRB PDF that url_verifier and a manual curl both return 404/dead-link-shaped content for and I did not use, (2) PNGRB's generic data-bank landing page (still live, generic, no per-pipeline detail), and (3)/(4) an IOCL PDF at iocl.com/Download/DPPL121212.pdf (also mirrored at www.iocl.com) titled 'Dadri-Panipat Natural Gas Pipeline' — this is IOCL's OWN capacity-declaration filing (Schedule I/II under PNGRB Access Code Regs 2008), a first-party primary source, downloaded and read via pdftotext -layout. It states verbatim: 'Indian Oil Corporation Limited (IOCL) owns and operates 132 km long Dadri-Panipat Natural Gas Pipeline (DPPL)... interconnected with GAIL's HVJPL/DVPL network at Dadri... commissioned in 2010 as a Common Carrier pipeline... to IOCL's Panipat Refinery (PR) and Panipat Naphtha Cracker Plant (PNCP) at Panipat and other customers' en route pipeline in Uttar Pradesh and Haryana.' That single document independently confirms: EXISTENCE, Owner1=Indian Oil Corp 100%, PipelineType=transmission (common-carrier trunk line, not gathering/distribution), StartYear1=2010, LengthKnown=132 km, StartLocation=Dadri/Uttar Pradesh, EndLocation=Panipat/Haryana. I then found TWO further fully independent sources that corroborate the same facts without citing IOCL or GEM: (a) PNGRB's CURRENT line-wise register, 'NATURAL GAS PIPELINES: MONTH OF MAY 2026' (pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf), row 10 of the OPERATIONAL COMMON CARRIER PIPELINE table: 'Dadri-Panipat | IOCL | 05.01.2011 | 132 [authorised km] | 20.0 [authorised MMSCMD] | 20.0 [design MMSCMD] | 4.8 [gas supplied] | 24% [utilisation] | 143 [operating km] | ... | HR & UP [states]' — confirms Status=operating (it's in the OPERATIONAL section), Owner=IOCL, Length=132 km authorised, Capacity=20.0 MMSCMD (exact match to the sheet), states HR & UP; and (b) a 2023 ThePrint news report on a pipeline leak ('Gas leak in IOC's Dadri-Panipat pipeline', theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/), a genuinely independent secondary source with no GEM/IOCL/PNGRB lineage, which states: operator Indian Oil Corp, 132 km, Dadri (UP) to Panipat refinery (Haryana), commissioned 2010, and describes it actively carrying gas (leaked beneath the Yamuna, July 2023) — confirming Status=operating as of 2023. So every value_col on this row (Status, Fuel, PipelineType, StartYear1, Owner1, StartLocation/EndLocation/States) has >=2 independent non-GEM sources in exact agreement: HIGH tier across the board. NOTE on the authorisation-date trap: PNGRB's 'Authorisation Date' for this pipeline is 05.01.2011, ONE YEAR AFTER GEM's StartYear1=2010 — this is expected per the country brief (authorisation != commissioning) and is NOT a conflict; IOCL's own document and ThePrint both independently state the 2010 commissioning year directly, so 2010 is correct and I did not let the later authorisation date override it. DUPLICATE check: compared against the full 35-row India-gas operating roster — no other row is IOCL-operated Dadri->Panipat; P0916 (Dadri-Bawana-Nangal, GAIL, 886 km) and the HVJ/DVPL/GREP family (P0925/P0919/P3298/P3297/P3299) are all separate GAIL-owned systems that DPPL merely interconnects with at Dadri, not the same physical pipe. Not a duplicate. PDF verifier note: iocl.com/Download/DPPL121212.pdf and the PNGRB current PDF both FAIL url_verifier on name/word tokens ('Dadri', 'Panipat', 'IOCL') despite the words being plainly present in a manual pdftotext -layout read — this is the documented PDF content false-negative (url_verifier does no PDF text extraction; it substring-matches raw r.text against the undecoded PDF byte stream, so text inside compressed content streams is invisible to it even on a small 3-page file). Both PDFs DO return a verifier OK on a numeric token that happens to sit in an uncompressed part of the stream ('132'), and both are HTTP 200 live documents I read in full locally — cited per the country brief's explicit guidance to confirm PNGRB PDF values locally and note the false negative.",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Not an error, but worth a note: PNGRB's current register lists an 'Operating Length' of 143 km against an 'Authorised Length' of 132 km for this pipeline (11 km more). Flagging rather than silently passing it — could be a lateral/tie-in spur beyond the core AHA, or a rounding/measurement convention difference. GEM's LengthKnown=132 matches the AUTHORISED-length reading, which is also what all narrative sources (IOCL, ThePrint, PetroWatch) state, so I am not proposing a length change — just surfacing the 143 km figure for awareness.",
+      "researcher_notes": "PNGRB's May 2026 line-wise table carries two separate length columns for Dadri-Panipat: 'Authorised Length (KM)' = 132 and 'Operating Length (KM)' = 143. Every narrative source I found (IOCL's own filing, a 2023 news report, and a PetroWatch trade-press piece from the construction era) states 132 km, matching GEM and matching the authorised figure, never 143. I did not find any source explaining the extra 11 km. Treating this as a caveat, not a conflict, because it reads as two different metrics (authorised main line vs. total operating length incl. hookups/laterals) rather than two answers to the same question — but flagging it explicitly per the standing instruction not to silently pass a numeric disagreement.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB May 2026 lists it under 'OPERATIONAL COMMON CARRIER PIPELINE' with a live monthly gas-supplied figure (4.8 MMSCMD, 24% utilisation) — plainly operating, not idle/decommissioned. ThePrint (July 2023) independently describes it actively carrying gas at the time of a leak incident. Status verifier check per PDF caveat above (raw-byte '132' token OK; word-level content unreachable by the extractor, confirmed manually)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources title/describe it as a natural gas pipeline throughout (IOCL: 'Natural Gas Pipeline', gas quality spec table; PNGRB: NGPL = Natural Gas Pipeline register)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IOCL's own filing calls it a 'Common Carrier pipeline' regulated under PNGRB's Access Code for transmission-grade natural gas pipelines, interconnecting the national HVJ/DVPL grid to a refinery over 132 km with en-route third-party customers — the textbook definition of a transmission trunk line, not a gathering/process/distribution line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2010"},
+      "primary_value": "2010",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/"
+      ],
+      "verifications": [
+        {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true},
+        {"url": "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IOCL's filing states 'commissioned in 2010' directly (not inferred from the 05.01.2011 PNGRB authorisation date, which I deliberately did not use per the authorisation-vs-commissioning distinction). ThePrint's 2023 article independently repeats 'commissioned in 2010'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "20.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "20.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current (May 2026) register gives Authorised Capacity = Design/Determined Capacity = 20.0 MMSCMD for Dadri-Panipat, an EXACT match to the sheet. Only one live source currently states 20.0 (medium tier per the corroboration rule), but it is the regulator's own current-month register, which is the correct standard to test against. IOCL's own filing (dated ~Nov 2012, per its internal dates) instead states 9.5 MMSCMD authorised, and a pre-commissioning PetroWatch trade-press piece states an initial planned ~10 MMCMD ('10m cm/d') throughput — I read this as the capacity having been expanded/re-declared upward over time (9.5/10 -> 20.0 MMSCMD), consistent with the country brief's note that GEM's India gas Capacity field is derived from PNGRB's authorised MMSCMD figure, not as a conflict with the current sheet value. Did NOT propose the older 9.5/10 figures as refs since they would misrepresent the CURRENT authorised capacity that matches the sheet."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "132.00", "LengthKnownUnits": "km"},
+      "primary_value": "132.00",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "132 km is stated identically by IOCL's own filing, PNGRB's current Authorised Length column, ThePrint's 2023 report, and a PetroWatch trade-press piece from the construction era — four independent agreements, no dissent on this number. (See separate spec-caveat validity entry re: PNGRB's distinct 'Operating Length' column showing 143 km — not proposing a change off that.)"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Dadri",
+        "StartState/Province": "Uttar Pradesh",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Panipat",
+        "EndState/Province": "Haryana",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Dadri",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/"
+      ],
+      "verifications": [
+        {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true},
+        {"url": "https://theprint.in/economy/gas-leak-in-iocs-dadri-panipat-pipeline/1687232/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IOCL: 'Originating station is at Dadri (near GAIL's terminal within NTPC premises) and terminal station at Panipat (within IOCL's Northern Region Pipelines premises)' — Dadri is in Uttar Pradesh (Gautam Buddh Nagar district), Panipat is in Haryana. ThePrint independently states the same Dadri(UP)->Panipat(Haryana) route and adds that the pipeline crosses the Yamuna in Baghpat district, UP, consistent with the Dadri-side routing. PNGRB's current register lists states traversed as 'HR & UP', matching both endpoints."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "oo_sheet_row": 803,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Indian Oil Corp", "Owner1%": "100.00%"},
+      "primary_value": "Indian Oil Corp",
+      "proposed_refs": [
+        "https://www.iocl.com/Download/DPPL121212.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.iocl.com/Download/DPPL121212.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IOCL's own filing: 'Indian Oil Corporation Limited (IOCL) owns and operates ... Dadri-Panipat Natural Gas Pipeline'. PNGRB's current register lists Entity = IOCL for this line. ThePrint independently attributes the pipeline/leak to 'Indian Oil Corp (IOC)'. No indication of any other owner/JV partner in any source — 100% single-owner is consistent."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 478,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "30.00"},
+      "primary_value": "30.00",
+      "proposed_refs": [
+        "https://www.petrowatch.com/synopsis.php?artId=7962&w=1"
+      ],
+      "verifications": [
+        {"url": "https://www.petrowatch.com/synopsis.php?artId=7962&w=1", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Diameter is currently blank on the sheet (one of only 10/75 India gas rows with a value). PetroWatch, an independent oil/gas trade newsletter, describes the pipeline during its construction phase as 'a 132-km-long 30-inch diameter steel pipeline to transport 10m cm/d from Dadri in Uttar Pradesh to its refinery in Panipat' — the 132 km figure matches every other source exactly, giving confidence the 30-inch diameter figure belongs to this same pipeline and not a different project. I could not find a second independent source stating the diameter (IOCL's own filing and the current PNGRB register do not carry diameter data — the country brief notes PNGRB's table structurally omits diameter). Staging as a single-source MEDIUM-tier fill rather than leaving it unresolved, since the number is specific, plausible (round 30-inch nominal pipe, consistent with 20 MMSCMD/762mm-class Indian trunk lines), and tied to a matching 132 km length — but flagging that a second corroborating source (a GAIL/IOCL tender doc or engineering spec) would be needed to promote this to high tier."
+    }
+  ],
+  "summary": "P0917 Dadri-Panipat Gas Pipeline (IOCL, 132 km, Dadri UP -> Panipat Haryana) is REAL and correctly classified/attributed — confirmed via IOCL's own PNGRB capacity-declaration filing plus two fully independent sources (PNGRB's current May-2026 register, a 2023 ThePrint leak report); Status/Fuel/PipelineType/StartYear1/Owner/Location/Length all high-tier, Capacity=20.00 MMSCMD matches PNGRB's current authorised figure exactly (medium tier, single current source; historical 9.5/10 MMSCMD readings are earlier-era, not conflicts). No existence, duplicate, classification, or attribution concerns. One spec caveat flagged (PNGRB's distinct 143 km 'operating length' vs. the 132 km authorised/GEM figure — not proposing a change). Filled the blank Diameter field with 30.00 (medium tier, single PetroWatch source)."
+}

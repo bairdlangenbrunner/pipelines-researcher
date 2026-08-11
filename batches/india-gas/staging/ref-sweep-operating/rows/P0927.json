@@ -1,0 +1,204 @@
+{
+  "project_id": "P0927",
+  "pipeline_name": "High Pressure Gujarat Gas Grid Network",
+  "sheet_row": 487,
+  "wiki": "https://www.gem.wiki/High_Pressure_Gujarat_Gas_Grid_Network",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action required on existence/classification/ownership/location; re-verify StartYear1 if time allows.",
+      "researcher_notes": "EXISTENCE: real, well-documented, independently confirmed across a decade+ of regulator publications, not a GEM-only entity. PNGRB (Petroleum and Natural Gas Regulatory Board) Public Notice dated 01.03.2012 (http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf) names 'GSPL's High Pressure Gujarat Gas Grid Network' explicitly, tracing an application by Gujarat State Petronet Limited from an original 1120.08 km network (2009 notice) to an identified 2366.43 KM network, diameter 6\"-30\", system capacity 30.46 MMSCMD, design pressure 98 bar. PNGRB's own line-wise register 'Operating Natural Gas Pipelines in India' (15.01.2016, http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf) lists it as item 17, Gujarat State Petronet Limited, 2239.0 km, 31.000 MMSCMD, authorised 27.07.2012. The CURRENT PNGRB monthly register (May 2026, https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, printed p.2 'PHYSICAL PROGRESS REPORT OF NATURAL GAS PIPELINE', OPERATIONAL COMMON CARRIER section, row 13) still lists it as an actively operating asset: Entity GSPL, authorisation date 27.07.2012, authorised length 2,860 km, operating length 2,748 km, natural gas supplied 29.0 MMSCMD in May 2026 at 80% capacity utilisation. Independently, a March 2025 trade-press item (Business Upturn, verified OK by url_verifier, https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/) confirms GSPL is actively expanding this same named grid (new Anjar-Palanpur line, 274 km, 30in, connecting to the existing 36in Mundra-Arpar pipeline of the grid) to raise its capacity to 44.76 MMSCMD -- an independent, non-regulator confirmation that this is a live, currently-operating, currently-growing asset, not a phantom or a stale GEM-only entry. NOTE: url_verifier returned '200 but missing expected' on all three pngrb.gov.in PDFs (documented large/odd-encoding-PDF false negative per the tool's own docstring); I downloaded each and confirmed the quoted text locally with `pdftotext -layout`. CLASSIFICATION: correct. PNGRB authorises this under its natural-gas trunk/common-carrier pipeline regime (the NGPL register), not under the separate City Gas Distribution regime, so 'transmission' (as opposed to a distribution/CGD network) is the right PipelineType; Fuel='Gas' matches (it is explicitly a natural-gas MMSCMD asset in every source). DUPLICATE CHECK vs the 35-pipeline India roster: no duplicate found. The only similarly-named row, P0937 'Low Pressure Gujarat Gas Grid Network', is a SEPARATE PNGRB-authorised asset, not the same pipe under another name -- PNGRB itself lists it as a distinct line item (row 15 in the current report vs row 13 for the High Pressure grid) with its own authorisation date (19.03.2013 vs 27.07.2012), its own length (58 km authorised / 57 km operating vs 2,860/2,748 km) and its own capacity (12.0 MMSCMD vs 44.8 MMSCMD). GEM's split matches the regulator's own split; no merge recommended. ATTRIBUTION: Owner 'Gujarat State Petronet [100.%]' matches every source -- GSPL is the sole named entity in the 2012 notice, the 2016 register, and the current 2026 register, and the 2025 press piece is entirely about GSPL's own capex on this asset. StartState/EndState 'Gujarat' matches the state code 'GJ' in the current PNGRB register. CAVEAT -- StartYear1=2016 is soft: none of the PNGRB documents state a commissioning/first-gas year for this network as a whole; the only dated milestone is the PNGRB 'Authorisation Date' of 27.07.2012 (which per the sweep's own guidance is not a valid stand-in for a start year), and the 2016 date in the sheet may simply reflect the publication date of the 'Operating Natural Gas Pipelines in India, Jan. 15, 2016' source the wiki cites for Length/Capacity rather than an actual documented first-gas date. Since the network was already listed as fully authorised and (implicitly, given it appears in the 2016 'Operating' register) supplying gas well before that date -- and the underlying application dates to 2009 -- I could not independently confirm 2016 as the true start year and am not proposing a replacement; flagging for a future targeted look rather than staging an unsupported change.",
+      "proposed_refs": [
+        "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf",
+        "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not paste GEM's current Length/Capacity refs as-is -- both look stale (~2016-vintage authorisation) against the current PNGRB register. Route to Update: candidate replacement is LengthKnown ~2,860 km authorised (or 2,748 km operating -- GEM's own convention on sister rows P0916/P0917 matches 'authorised', not 'operating', so 2,860 is the more likely fit) and Capacity ~36.0 MMSCMD design/determined (currently-realized capacity, matching the 29.0 MMSCMD/80%-utilisation actually being supplied) rising to an authorised ceiling of 44.8 MMSCMD once the under-construction Anjar-Palanpur expansion is complete. Do not silently overwrite -- this needs a human Update decision on which PNGRB column (authorised vs operating; authorised-capacity vs design/determined-capacity) GEM intends to track.",
+      "researcher_notes": "GEM's Capacity (31.00 MMSCMD) matches EXACTLY the 'Authorised Capacity' figure printed in PNGRB's Jan-2016 register (31.000 MMSCMD, entry dated 27.07.2012) -- not a coincidence; the same exact-match pattern holds on a sister India gas row researched the same week (P0916 Dadri-Bawana-Nangal: sheet 886.0 km / 31.0 MMSCMD = the 2016 register's figures to the decimal, vs the current register's 921 km authorised / 998 km operating). That means the sheet's Length (2,207.00 km, close to but not exactly the 2016 register's 2,239.0 km -- an unexplained ~32 km/1.4% shortfall even against its own apparent vintage) and Capacity (31.00 MMSCMD) both reflect an authorisation snapshot from roughly a decade ago, not the pipeline as it stands today. The CURRENT PNGRB register (May 2026, row 13, p.2) shows this same network at Authorised Length 2,860 km / Operating Length 2,748 km -- a ~620 km / ~28% network-length increase since the 2016 vintage -- and Authorised Capacity 44.8 MMSCMD / Design-Determined Capacity 36.0 MMSCMD, both well above the sheet's 31.00. This is independently corroborated, not just a PNGRB-internal revision: the March 2025 Business Upturn piece (verified live, distinct origin from PNGRB) reports GSPL's PNGRB-approved capex to raise 'the overall capacity of GSPL's High-Pressure Gujarat Gas Grid to 44.76 MMSCMD' via a new 274 km/30in Anjar-Palanpur line tying into the grid's existing 36in Mundra-Arpar pipeline -- which lines up almost exactly with the register's 44.8 MMSCMD Authorised Capacity line, and explains why 'Design/Determined' (36.0, the currently-realized capacity) is still below 'Authorised' (44.8, the approved ceiling once that expansion is finished, per the article a ~3-year build from its March 2025 approval). This also matches the currently-supplied 29.0 MMSCMD / 80% utilisation figure sitting comfortably under the 36.0 design capacity but nowhere near the sheet's stale 31.00. I am NOT proposing a specific replacement Length/Capacity ref pair myself (per standing rule 3, url_verifier flags both large pngrb.gov.in PDFs as content false-negatives even though I hand-confirmed the numbers with pdftotext, and per the sweep's own India guidance a Length/Capacity disagreement here is very likely a stale-authorisation story rather than a unit error) -- this is a value disagreement for Update to resolve with a human call on which PNGRB column GEM intends to track, not an auto-apply.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Current (May 2026) PNGRB register lists this exact pipeline under 'OPERATIONAL COMMON CARRIER PIPELINE' actively supplying 29.0 MMSCMD (80% utilisation); url_verifier content-check false-negatives on this PDF (documented large-PDF limitation) -- confirmed locally via pdftotext. Independently, the Mar-2025 Business Upturn article treats it as an existing operating grid being expanded, not a proposed/under-construction system."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Every source (PNGRB natural-gas pipeline register, MMSCMD units throughout, Business Upturn's 'natural gas' framing) is unambiguously natural gas -- not NGL, not oil. Content-check false-negative on the PDF is the documented large-PDF issue; confirmed locally."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB authorises this asset under its trunk/common-carrier Natural Gas Pipeline (NGPL) regulatory regime -- Regulation 18(5) is cited explicitly in the 2012 public notice -- as distinct from PNGRB's separate City Gas Distribution (CGD) regime. That confirms 'transmission' rather than a distribution/gathering classification. Both PDFs content-checked false on url_verifier (documented false-negative); confirmed locally with pdftotext."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2016"},
+      "primary_value": "2016",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not independently confirm 2016 as a true first-gas/commissioning year. No PNGRB document states a start year for the network as a whole; the only dated milestone across all sources is the PNGRB Authorisation Date (27.07.2012), which the sweep guidance itself says is not a valid stand-in for StartYear1. 2016 may simply be the publication date of the wiki's cited 'Operating Natural Gas Pipelines in India, Jan. 15, 2016' source rather than a documented commissioning date -- flagging rather than proposing an unsupported replacement."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "31.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "31.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Not sourcing a ref for this value -- see the paired 'spec' concern in validity[]. 31.00 MMSCMD matches an ~2016-vintage PNGRB authorisation exactly; the current (May 2026) PNGRB register shows 44.8 MMSCMD authorised / 36.0 MMSCMD design-determined, corroborated independently by a Mar-2025 press report of a PNGRB-approved expansion to 44.76 MMSCMD. Citing a ref here would paper over a value I believe is stale; routed to Update instead."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "2207.00", "LengthKnownUnits": "km"},
+      "primary_value": "2207.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Not sourcing a ref for this value -- see the paired 'spec' concern in validity[]. 2,207.00 km is close to but does not exactly match even the ~2016-vintage PNGRB figure (2,239.0 km); the current (May 2026) PNGRB register shows 2,860 km authorised / 2,748 km operating -- a ~620 km/28% increase since the sheet's apparent vintage, driven by since-authorised expansions (e.g. the 274 km Anjar-Palanpur line approved Mar 2025). Routed to Update rather than citing a ref for a value I believe understates the current network."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "Gujarat", "StartCountryOrArea": "India", "EndState/Province": "Gujarat", "EndCountryOrArea": "India"},
+      "primary_value": "Gujarat",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current register lists the pipeline's 'States Passing Through' as 'GJ' (Gujarat) only, matching the sheet's Start/End state of Gujarat, India. It is a network confined to Gujarat, not a point-to-point line, so a blank granular StartLocation/EndLocation is appropriate and consistent with how the roster records other Gujarat-network rows (e.g. P0923, P0937)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 812,
+      "tab": "operators_owners",
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gujarat State Petronet", "Owner1%": "100.00%"},
+      "primary_value": "Gujarat State Petronet",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.businessupturn.com/business/corporates/gujarat-state-petronet-receives-pngrb-approval-for-capacity-expansion-of-gujarat-gas-grid/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Gujarat State Petronet Limited (GSPL) is the sole named entity in every source across a decade: the 2012 PNGRB public notice, the 2016 PNGRB register, the current 2026 PNGRB register, and the independent 2025 trade press (entirely about GSPL's own capex on this asset). No basis to question 100% GSPL ownership."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 487,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "6-30", "DiameterUnits": "in"},
+      "primary_value": "6-30",
+      "proposed_refs": ["http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf"],
+      "verifications": [{"url": "http://www.pngrb.gov.in/pdf/ngp/Notices/PN2march.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter was genuinely blank. PNGRB's 2012 public notice states explicitly for this named pipeline: 'Name of Pipeline: GSPL's High Pressure Gujarat Gas Grid Network ... Diameter of Pipeline: 6\"-30\"'. Single-source (medium tier) -- could not find a second independent document giving the same range. CAVEAT: the network has grown since 2012; the Mar-2025 Business Upturn piece describes a new 30in branch (Anjar-Palanpur) tying into an existing 36in trunk (Mundra-Arpar) within this same grid, so the network's current diameter range likely extends up to 36in. I am NOT proposing '6-36' myself, since no single source states that combined range -- flagging for a future targeted diameter pass rather than inferring a merged range across two documents describing different points in time. url_verifier content-check false-negative on the PDF is documented/expected; confirmed locally with pdftotext ('Diameter of Pipeline: 6\"-30\"' appears verbatim on the fetched PDF)."
+    }
+  ],
+  "summary": "P0927 (High Pressure Gujarat Gas Grid Network) is real, correctly classified, correctly owned/located, and not a duplicate of P0937 -- confirmed via PNGRB's own decade-spanning registers plus independent 2025 trade press -- but its Length (2,207 km) and Capacity (31.00 MMSCMD) are stale by roughly a decade against the current PNGRB register (2,860 km authorised/2,748 km operating; 44.8 MMSCMD authorised/36.0 MMSCMD design-determined), flagged as a spec concern for Update; filled a previously-blank Diameter (6-30in, medium tier, single source) and refs for Status/Fuel/PipelineType/Location/Owner; StartYear1=2016 flagged as an unverified caveat."
+}

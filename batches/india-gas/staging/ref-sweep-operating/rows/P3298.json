@@ -1,0 +1,57 @@
+{
+  "project_id": "P3298",
+  "pipeline_name": "Dahej-Vijaipur Pipeline (DVPL-II)",
+  "sheet_row": 1733,
+  "wiki": "https://www.gem.wiki/Dahej-Vijaipur_Pipeline_(DVPL-II)",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action required on existence/classification/attribution; stage the two proposed refs (Status/Fuel/PipelineType/Start/Length/Diameter/Location/Owner all share the same underlying support).",
+      "researcher_notes": "P3298 = Dahej-Vijaipur Pipeline (DVPL-II), 48in x 610km, GAIL-owned, Dahej(Gujarat)->Vijaipur(Madhya Pradesh). EXISTENCE: real, confirmed by two independent origins. (1) GAIL's own 27-Nov-2018 letter to the regulator ('Final Tariff Determination of HVJ-GREP-DVPL and DVPL/GREP Upgradation Natural Gas Pipeline Network of GAIL (India) Limited', hosted at pngrb.gov.in as an official public-notice filing) explicitly names the '48\"x610 Km Dahej-Vijaipur pipeline (DVPL-II)' as Phase-II of the DVPL/GREP Upgradation project, laid in the same right-of-way as the earlier 42in DVPL-I line, with new compressors at Kailaras (M.P.) and Chhainsa (Haryana) that completed the line in August 2013. (2) offshore-technology.com's independent market-data profile ('Dahej-Vijaipur Phase II gas pipeline, India') separately states: 610km length, max diameter 48in, starts Gujarat / ends Madhya Pradesh, operator GAIL. The two origins (a company regulatory filing vs. a commercial trade-press database) are independent of GEM and of each other and agree on length, diameter, route and operator -> tier=high. This is also the sheet's own cited leg (the gem.wiki page's reference list points at this same PNGRB tariff filing and at PNGRB's data-bank page), so the sheet's own citation checks out on re-verification. CLASSIFICATION: correctly transmission (large-diameter, long-haul gas trunk line feeding CGDs/industry downstream of the HVJ-GREP-DVPL network); Fuel=Gas -- no dispute. DUPLICATE CHECK vs the 35-pipeline India-gas roster: P3298 is NOT a duplicate/relabel of P0919 (DVPL-I). GAIL's letter itself distinguishes DVPL-I (42in x 612km, built 2004, same ROW) from DVPL-II (48in x 610km, built as the 2010-2013 Upgradation Phase-II) -- two physically distinct, parallel pipes in a shared corridor, matching the orchestrator's guidance that GEM's HVJ/GREP/DVPL family is a real granularity split, not a double-count. Cross-check flag for a DIFFERENT row, out of scope here: GAIL's letter states DVPL-I is 612km, not the 770km recorded on P0919's sheet row -- worth checking on P0919's own audit. ATTRIBUTION: Owner GAIL (India) Ltd 100%, and endpoints Dahej(Gujarat)->Vijaipur(Madhya Pradesh), both confirmed by the same GAIL letter and by PNGRB's current 31-May-2026 NGPL MIS monthly report (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf), which lists the combined 'Hazira-Vijaipur-Jagdishpur-GREP-Dahej-Vijaipur HVJ/VDPL Dadri' + 'Dahej-Vijaipur(DVPL)-Vijaipur-Dadri(GREP) Upgd. DVPL2 & VDPL' system under Entity=GAIL, traversing UP/MP/RJ/GJ/HR/DL/UK. STARTYEAR: 2013 confirmed (see paired StartMonth1=August fill below). VERIFIER NOTE: the GAIL/PNGRB tariff-letter PDF is a SCANNED IMAGE with no text layer (confirmed: pdftotext returns 0 lines) -- url_verifier correctly 200s but reports 'value not found' because it cannot OCR; I verified the content manually via pdftoppm + tesseract OCR and it reads exactly as quoted above. This is the same documented large/complex-PDF false-negative class flagged in url_verifier.py's own docstring and in the India country-scope note for the PNGRB monthly PDF (which I also confirmed manually via `pdftotext -layout`, which DOES carry a real text layer and shows 'Dahej-Vijaipur' on the combined-system row).",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAILLetter27.11.2018.pdf",
+        "https://www.offshore-technology.com/marketdata/dahej-vijaipur-phase-ii-gas-pipeline-india/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Annotate in ResearcherNotes that Capacity=107.00 MMSCMD is the shared INTEGRATED-NETWORK total (HVJ+GREP-I+DVPL-I+GREP-II+DVPL-II combined), not DVPL-II's own individual throughput. Do not change the value or collapse the rows -- this is the expected granularity artifact the orchestrator's scope note anticipated.",
+      "researcher_notes": "GEM's Capacity=107.00 MMSCMD on P3298 is NOT DVPL-II's own individual capacity -- it is the combined capacity of the entire post-Upgradation 'Integrated HVJ' system, and the identical 107.0 value is stamped on all five constituent GEM rows (P0925 HVJ, P0919 DVPL-I, P3297 GREP-I, P3298 DVPL-II, P3299 GREP-II per the roster). Confirmed by two independent sources that both distinguish the segment-level figure from the system-level figure: (1) GAIL's 2018 tariff letter's own schematic explicitly labels the '2013-ONWARDS / INTEGRATED NETWORK / CAPACITY / 107' line as the combined post-Upgradation network total; its per-phase table instead gives DVPL-II's own INCREMENTAL contribution as +43 MMSCMD (Phase-II, vs Phase-I/GREP-II's +11 MMSCMD), summing with the pre-Upgradation 53.4/54 MMSCMD base rather than standing alone as 107. (2) PNGRB's current 31-May-2026 NGPL MIS report lists 'Hazira-Vijaipur-Jagdishpur-GREP-Dahej-Vijaipur HVJ/VDPL Dadri' plus the DVPL2/VDPL Upgradation as ONE combined line item under a single Entity=GAIL row: 6,169km authorised / 6,732km operating / 111.3 MMSCMD authorised capacity -- never broken out by GEM's five separate ProjectIDs. This matches the orchestrator's scope note precisely: GEM's India CapacityBcm/y is derived from the regulator's SYSTEM-level MMSCMD figure, so all five split rows inherit the same system total rather than a per-segment number. Per guidance I am NOT proposing to collapse GEM's rows or change the value -- flagging the caveat only. By contrast, Length (610km) and Diameter (48in) ARE genuinely DVPL-II-specific figures in both sources (distinct from DVPL-I's 612km/42in and GREP-II's 505km/48in) and are independently confirmed as this segment's own data, unlike Capacity.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GAILLetter27.11.2018.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1733,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartMonth1"],
+      "primary_value_col": "StartMonth1",
+      "values": {"StartMonth1": "August"},
+      "primary_value": "August",
+      "proposed_refs": ["https://pngrb.gov.in/pdf/public-notice/GAILLetter27.11.2018.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAILLetter27.11.2018.pdf", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "GAIL's own 2018 letter to PNGRB states 'with the commissioning of compressors in Kailaras and Chhainsa in August, 2013, the Phase-II of the HVJ Upgradation Project was completed' -- Phase-II is DVPL-II. Only this single source gives the MONTH (others corroborate year=2013 only), so tier=medium (one strong primary source, not yet independently double-sourced on the month specifically). url_verifier's automated check returns 'ok: false / value not found' because this PDF is a scanned image with no text layer (pdftotext extracts 0 lines); I confirmed the quoted text manually via pdftoppm + tesseract OCR at 200dpi, legible and unambiguous."
+    }
+  ],
+  "summary": "P3298 (DVPL-II) is real, correctly classified/attributed, and its 610km/48in/2013/GAIL/Dahej-MP figures are independently confirmed (GAIL's 2018 PNGRB tariff letter + offshore-technology.com); flagged one spec caveat (Capacity=107 MMSCMD is the shared 5-row integrated-network total, not DVPL-II's own throughput) and filled StartMonth1=August (medium tier, single source)."
+}

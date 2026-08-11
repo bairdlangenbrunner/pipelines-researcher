@@ -1,0 +1,30 @@
+{
+ "project_id": "P1435",
+ "pipeline_name": "PLL-DGEN-Sugen Gas Pipeline",
+ "sheet_row": 817,
+ "wiki": "https://www.gem.wiki/PLL-DGEN-Sugen_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm — the PNGRB register independently confirms the sheet's 90.00 km is the correct authorised length for this pipeline. The drawn route measuring 60 km geodesic is the side that is wrong: it undershoots the confirmed length by a third, consistent with RouteAccuracy already being 'very low (straight line/schematic)'. Route this to a §8 route redraw/extension pass rather than touching the length value.",
+   "researcher_notes": "PNGRB NGPL MIS register (Aug-2024 edition; url_verifier FAILs on this large PDF, a documented false negative — confirmed locally with pdftotext -layout). 'Under Construction Dedicated Natural Gas Pipelines' table, Sr 19.40.NGPL: 'PLL Re-gasification Terminal, Dahej to SUGEN Power Plant' — Entity TPL (Torrent Power Ltd), authorised 20.03.2020, 90.00 km, 6.50 MMSCMD, target date NA, Gujarat. This is an exact match to the sheet's LengthKnownKm (90.00) and Capacity (6.50 MMSCMD), and TPL corroborates the sheet's Owner ('Torrent Energy [100.%]' — same corporate family, Torrent Power Ltd being the operating company). No Operator flag was raised for this row so no fill is proposed; noted for context only.",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/NGPL-20240820.pdf"],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/NGPL-20240820.pdf", "ok": true, "contains_value": false, "note": "HTTP 200 but url_verifier substring check misses on this large PDF (documented false negative); confirmed locally with pdftotext -layout, see researcher_notes."}
+   ],
+   "tier": "medium",
+   "independent": true
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "classification",
+   "recommendation": "Not actioned here (out of scope for the length_ratio flag this row was assigned) — flagging for a human to check during a future discovery/redundancy pass, not proposing a fix. Confirm whether GEM's single 'PLL-DGEN-Sugen' row is meant to represent only the 90 km Dahej-to-Sugen line, or whether it is meant to also cover the separate 13 km Dahej-to-DGEN spur; if the latter, the two authorisations should probably be two GEM rows (or the DGEN spur added as a new discovery candidate).",
+   "researcher_notes": "The same Aug-2024 PNGRB register that confirms the 90 km Sugen line (Sr 19.40.NGPL, see above) ALSO carries a separate, already-operational authorisation in its 'Operational Dedicated Natural Gas Pipelines' table: Sr 19.04.NGPL, 'PLL Dahej Terminal to DGEN Power Plant, Dahej SEZ' — Entity TPL, authorised 27.08.2012, 13.00 km, 8.00 MMSCMD, operating length 13.00 km. GEM's PipelineName ('PLL-DGEN-Sugen') names both DGEN and Sugen, but the register treats these as TWO SEPARATE, differently-sized, differently-dated authorisations (13 km operational since 2012 vs 90 km still under construction as of the register's data), not one combined line. The sheet's single row, with LengthKnownKm=90.00 matching only the Sugen authorisation, appears to represent the Sugen line alone despite its name — the 13 km DGEN spur may be a genuinely missing row rather than folded into this one. This is an existence/classification question, not a length_ratio fix, so I am flagging it rather than acting on it.",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/NGPL-20240820.pdf"],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}

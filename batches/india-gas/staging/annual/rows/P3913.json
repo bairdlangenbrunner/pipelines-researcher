@@ -1,0 +1,147 @@
+{
+  "project_id": "P3913",
+  "pipeline_name": "Bhatinda-Gurdaspur Gas Pipeline",
+  "sheet_row": 1928,
+  "wiki": "https://www.gem.wiki/Bhatinda_-_Gurdaspur_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to existence/classification/duplicate status. Note the caveat in status review re: prolonged construction delay.",
+      "researcher_notes": "EXISTENCE: real, independently confirmed. PNGRB's authorised common-carrier NGPL register lists 'Bhatinda - Gurdaspur' (entity GIGL, authorisation 07.07.2011) in BOTH the May-2026 edition (pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf) and the June-2025 edition (pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf) as a 'partially commissioned' line: 261 km authorised total, ~101-102 km operating, ~159-160 km under construction, target completion Dec-24. Independently corroborated by CARE Ratings' June-2025 credit rating note on GSPL India Gasnet Limited (GIGL), which describes the same GIGL-built Mehsana-Bhatinda-Gurdaspur corridor and explicitly names both 'Bhatinda' and 'Gurdaspur' as points on GIGL's authorised route (project scope 'revised to 1,929 kms (from Mehsana in Gujarat to Bhatinda and Gurdaspur in Punjab)'). Business Standard (2023) and other press independently discuss GIGL's Bhatinda-Gurdaspur authorisation as the predecessor context for the separately re-bid Gurdaspur-Jammu line. Not a hallucination/GEM-only entity. CLASSIFICATION: correct. PNGRB categorises this as a common-carrier (transmission) NGPL; the sheet's Fuel=Gas and PipelineType=transmission are both already backed by a working ref (pngrb.gov.in/eng-web/data-bank.html#bm7, verified 200 in worklist.json existing_ref_checks) and match the regulatory classification -- no change needed. DUPLICATE: this is a legitimate PHASED_PAIR, not a double-count. P3913 (Phase II, construction, 'this row') is the under-construction complement to P5533 (Phase I, operating, sheet_row 3056, ~102 km -- matches the register's 101-102 km operating figure almost exactly), exactly the Mallavaram-Bhopal-Bhilwara-Vijaipur pattern the sweep guidance calls out as legitimate phasing (P5533 is outside this batch's 9-row scope but confirmed present on the live sheet via the register-crosswalk adjudication in batches/india-gas/staging/register-crosswalk/register_crosswalk.json). Not a duplicate of any of the 9 roster rows either -- P5411 (Mehsana-Bhatinda) and P5413 (Gurdaspur-Jammu) are the adjacent, separately-authorised legs of the same larger GIGL/GAIL corridor, not the same physical pipe as P3913. CAVEAT carried into status review: construction on this specific segment is badly stalled (target Dec-24 has lapsed by ~17 months as of the May-2026 register; only 19 of 160 km welded). See status_reviews.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "LengthKnown=290.00 km is unsupported and very likely wrong. Correct toward ~160 km (PNGRB's under-construction figure for this specific phase) -- or, at minimum, flag that 290 km alone exceeds the ENTIRE authorised Bhatinda-Gurdaspur line (261 km, both phases combined). Route to Update for a research judgment call on the exact corrected figure.",
+      "researcher_notes": "GEM records LengthKnown=290.00 km for this Phase-II/construction segment, with NO existing ref (class MISSING_REF). I checked this against PNGRB's own authorised-pipeline register in two separately dated editions: May-2026 (pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf) shows 'Bhatinda - Gurdaspur / GIGL / 07.07.2011 / authorised 261 km / capacity 42.4 MMSCMD / operating 101 km / under construction 160 km / target Dec-24 / PB'; June-2025 (pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf) shows the same line at 261 km authorised / 42.42 MMSCMD / 102 km operating / 159 km under construction / target Dec-24. Both editions agree the ENTIRE Bhatinda-Gurdaspur authorisation -- Phase I (operating) + Phase II (construction) combined -- is 261 km. GEM's own sum across the phased pair is 102 (P5533) + 290 (P3913) = 392 km, 131 km (50%) more than the whole authorised line. Taken alone, Phase II's 290 km already exceeds the FULL 261 km authorised total by 29 km, which is not physically coherent for a sub-phase of that total. Matched against the specific 'under construction' column that Phase II should represent, the register says ~159-160 km, so the sheet figure is off by ~130 km (~81% too long). I could not find any independent, non-PNGRB source giving a specific km figure for the Bhatinda-Gurdaspur segment alone that supports 290 km; the closest corroboration (a web aggregation) also reproduces the PNGRB 261/102 figures, not 290. I did NOT add a ref to the existing 290 km value since it is not supported -- adding a citation that contradicts the value would create a mismatched [ref]/value pair. Note the two PNGRB editions are the same publisher (not fully 'independent' by the strict 2-org standard, though drawn from separately filed monthly submissions 11 months apart) -- tier accordingly set to medium, not high, despite the strong internal consistency.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Owner1 is recorded as 'Gujarat State Petronet' at 100%. The entity PNGRB actually authorised and that operates this specific pipeline is 'GSPL India Gasnet Limited' (GIGL) -- a separate JV company in which GSPL holds only 52% (IOCL 26%, BPCL 11%, HPCL 11%). Recommend correcting Owner1 to 'GSPL India Gasnet Limited', with GSPL/IOCL/BPCL/HPCL recorded as its shareholders if the schema supports multi-owner attribution at that level, or at minimum swapping GSPL(100%) for GIGL(100%) as the direct pipeline-operating entity.",
+      "researcher_notes": "Both PNGRB register editions list the authorised entity for 'Bhatinda - Gurdaspur' as 'GIGL', not 'GSPL' (pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf and the June-2025 edition). CARE Ratings' June-2025 credit note on GSPL India Gasnet Limited (careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf) confirms GIGL is a distinct, separately incorporated JV company: 'GIGL was incorporated in October 2011 as a subsidiary of GSPL. In April 2012, a JV agreement was executed between GSPL, IOCL, BPCL, and HPCL. Share of JV partners in GIGL is GSPL (52%), IOCL (26%), BPCL (11%), and HPCL (11%). GIGL was given authorisation for developing natural gas pipeline for transmission of natural gas from Mehsana in Gujarat to Bhatinda in Punjab and Srinagar in Jammu and Kashmir...' The pipeline's tariff, construction, and PNGRB filings are all in GIGL's name, not GSPL's directly -- GSPL is a 52% shareholder in the operating company, not the sole/100% direct owner of the asset. Two independent sources (the regulator's own register + an independent credit-rating agency) agree GIGL, not bare 'GSPL', is the correct owner-of-record.",
+      "proposed_refs": [
+        "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1928,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "42.42", "CapacityUnits": "MMSCMD"},
+      "primary_value": "42.42",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20250630-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "42.42 MMSCMD matches PNGRB's authorised capacity figure for 'Bhatinda - Gurdaspur' exactly in the June-2025 edition ('261 42.42 0.10 0.22 102 159...') and to 0.02 MMSCMD in the May-2026 edition ('261 42.4 42.4 0.1 0.3 101 160...'). url_verifier.py flags both PDFs as content-FAIL (large-PDF false negative documented in the tool's own docstring); manually confirmed via `pdftotext -layout` -- both liveness-OK at 200. Single-origin (PNGRB across two editions) so tier=medium, not high."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1928,
+      "ref_col": "Delay [ref]",
+      "value_cols": ["Delayed", "DelayType"],
+      "primary_value_col": "Delayed",
+      "values": {"Delayed": "yes", "DelayType": "confirmed"},
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's own register shows the target completion date for this line as Dec-24, which had lapsed by ~17 months as of the May-2026 edition, with only 19 of 160 under-construction km welded (12%) and 11 km hydrotested. Independently, CARE Ratings (June 2025) states of GIGL's remaining pending trunk work: 'there is no movement in work related to 130 Km Bhatinda to Jalandhar trunk pipeline due to RoW issues and this has been notified to Petroleum and Natural Gas Regulatory Board (PNGRB) by GIGL.' Two independent origins (regulator + credit-rating agency) both document an active, confirmed delay -- 'Delayed=yes / DelayType=confirmed' is correct and can now be sourced rather than left as an unref'd assertion."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1928,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Bhatinda",
+        "StartState/Province": "Punjab",
+        "StartCountryOrArea": "India",
+        "EndPrefecture/District": "Gurdaspur",
+        "EndState/Province": "Punjab",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Bhatinda",
+      "proposed_refs": [
+        "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CARE Ratings names GIGL's authorised corridor explicitly as running 'from Mehsana in Gujarat to Bhatinda and Gurdaspur in Punjab' (both endpoints, both in Punjab). PNGRB's register lists the pipeline as 'Bhatinda - Gurdaspur', passing through state 'PB' (Punjab) only, for both editions checked. Two independent sources agree on both endpoints and the state -- Bhatinda start, Gurdaspur end, Punjab throughout, India."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1928,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202506130628_GSPL_India_Gasnet_Limited.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's most recent register (May 2026) still lists Bhatinda-Gurdaspur under the 'partially commissioned' section with 160 km of this specific phase still 'under construction' (not shelved/cancelled), matching GEM's recorded Status=construction for this Phase-II row. Progress is real but slow: welded length moved from 14 km (June-2025 edition) to 19 km (May-2026 edition) -- a small but nonzero increase over ~11 months, which rules out the 'zero-progress dormancy' pattern (cf. Ennore-Nellore, P0921) that would justify overriding to shelved. CARE Ratings (June 2025) independently corroborates that the line is a live, actively-tracked GIGL obligation notified to PNGRB, stalled on right-of-way rather than abandoned ('no movement in work related to 130 Km Bhatinda to Jalandhar trunk pipeline due to RoW issues... notified to... PNGRB by GIGL'). I also found a Prime Minister's inauguration event for the broader 'Mehsana-Bhatinda-Gurdaspur' corridor dated 2 October 2023 (tubepipeindia.com), but per the country's sectional-commissioning trap this appears to be a ceremonial/partial-completion event (likely marking the Phase-I operating segment or an earlier construction milestone) -- it is NOT independent evidence of full completion, since BOTH the June-2025 and May-2026 PNGRB editions, dated well after that inauguration, still show this Phase-II length as under construction with a lapsed Dec-24 target. Do not treat the 2023 inauguration as a status-changing event without much more specific corroboration of exactly what was inaugurated; the regulator's own contemporaneous filings contradict full completion. Net: status is correctly 'construction'; the important caveat is that the Dec-24 target has now lapsed by ~17 months with only ~12% of the remaining length welded, i.e. a materially delayed, RoW-constrained project rather than a healthy one -- captured via the Delay [ref] fill above, not a status change."
+    }
+  ],
+  "summary": "P3913 (Bhatinda-Gurdaspur, Phase II) exists and is correctly classified as gas transmission construction, is a legitimate phased pair with P5533 (not a duplicate) -- but LengthKnown=290 km is unsupported and likely overstated by ~130 km against PNGRB's under-construction figure (~160 km, medium tier), and Owner1='Gujarat State Petronet' should likely be the actual authorised JV entity 'GSPL India Gasnet Limited' (GIGL, high tier); status confirmed as construction (high tier, evidence 2026-05) with a documented, sourced construction delay (Dec-24 target lapsed, RoW-stalled) now added via the Delay fill; StartYear1=2023 remains UNRESOLVED (no independent source found)."
+}

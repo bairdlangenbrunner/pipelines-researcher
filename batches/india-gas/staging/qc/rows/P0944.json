@@ -1,0 +1,36 @@
+{
+ "project_id": "P0944",
+ "pipeline_name": "Mumbai-Uran Trunk Line (MUT)",
+ "sheet_row": 501,
+ "wiki": "https://www.gem.wiki/Mumbai-Uran_Trunk_Line_(MUT)",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Oil and Natural Gas Corp Ltd (ONGC)"},
+   "primary_value_col": "Operator",
+   "primary_value": "Oil and Natural Gas Corp Ltd (ONGC)",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf",
+    "https://pdfcoffee.com/a-visit-to-uran-plant-of-ongc-pdf-free.html"
+   ],
+   "verifications": [
+    {"url": "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf", "ok": false, "contains_value": true, "note": "url_verifier FAILs on this URL (200 but substring check can't see inside a large scanned PDF) — a documented false negative per the research protocol. Downloaded and read locally with pdftotext -layout: confirmed live, 2837 lines of extracted text, MUT/HUT discussed throughout as ONGC assets."},
+    {"url": "https://pdfcoffee.com/a-visit-to-uran-plant-of-ongc-pdf-free.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "ONE QUESTION PER COMPANY, applied across this brief: MUT and HUT (P0926) are both ONGC's own 100%-owned offshore-to-Uran trunk lines, and this operator finding is established once here and carried to P0926 (which has no Operator flag) and noted again on the Jaigarh pair (P0930/P0931), where the answer is a DIFFERENT company. Evidence for ONGC as operator of MUT: (1) CAG Report No. 21 of 2016 (Comptroller & Auditor General of India, an independent statutory auditor, not ONGC or GEM) is an entire performance audit of ONGC's own crude-oil measurement and reporting practices ON the MUT and HUT pipelines specifically — it repeatedly refers to 'the Company' (ONGC) operating both lines, quotes ONGC 'Management' replies (dated January 2016) explaining pipeline behaviour, and names 'Mumbai High and Neelam Heera Assets' (ONGC's own internal asset units) as the parties who confirmed no reported leakages during the audit period — this is a government auditor examining ONGC's own operation of the line, about as direct as evidence gets. (2) An ONGC-authored internal presentation ('A Visit to Uran Plant of ONGC', hosted at pdfcoffee.com) independently states 'The 30\" MUT oil pipeline from Mumbai High... [is] principal feed stock to plant' in the context of describing ONGC's own Uran processing operations. Owner on the sheet is already 'Oil and Natural Gas Corp Ltd [100.%]' with no third-party JV or SPV structure anywhere in the record (unlike the Jaigarh pair, where Owner and Operator diverge from a similarly-named but legally distinct entity) — for a 100%-owned captive field-to-plant line with no PNGRB common-carrier authorization (it does not appear in the PNGRB NGPL common-carrier/tie-in register, consistent with being ONGC's own dedicated pipeline, exempt from third-party access), Owner and Operator coinciding is the expected, unsurprising case, and both sources above confirm it directly rather than by inference alone. Value ADDED (cell was blank); tier high given one source is an independent statutory audit."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm=204 — keep it. Flag the drawn route (146 km, ratio 0.71) as an accuracy limitation of its 'very low (straight line/schematic)' RouteAccuracy rather than a value error.",
+   "researcher_notes": "RouteAccuracy for this row is already recorded as 'very low (straight line/schematic)'. A straight-line schematic trace between two endpoints is expected to UNDERSHOOT the true pipeline length, because it cuts every seabed contour and routing detour a real subsea line follows — exactly the direction and rough magnitude of this discrepancy (146 km drawn vs 204 km real, ratio 0.71). CAG Report No. 21 of 2016 (cag.gov.in; url_verifier FAILs on this large PDF per the documented false negative, confirmed locally with pdftotext -layout) quotes ONGC management describing transit through 'the pipeline' as having 'large volume (200 KM pipeline)' when discussing crude-oil residence time and emulsion break-up during offshore-to-Uran transport — a ~200 km figure that is consistent with (though not a precise independent confirmation of) the sheet's 204 km value for MUT specifically, since the report elsewhere treats MUT (30\", ex-Mumbai High) as the longer of the two trunks against HUT (24\", ex-Heera/satellite platform, 80 km on the sheet). I'm not treating this as a full independent corroboration of 204 km exactly (the CAG quote doesn't name MUT by name at that point, and could in principle describe HUT or both jointly) — but it does support the general order of magnitude and rules against 146 km being the more accurate number. No coordinate fix proposed (standing rule); recommending a route-geometry review instead of a length change.",
+   "proposed_refs": [], "verifications": [], "tier": "medium", "independent": false, "source_language": "en"
+  }
+ ]
+}

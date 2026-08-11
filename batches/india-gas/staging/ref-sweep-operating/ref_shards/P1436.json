@@ -1,0 +1,32 @@
+{
+ "project_id": "P1436",
+ "pipeline_name": "Rajasthan Gas Pipeline (Focus)",
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 818,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/NGPL-08062023.pdf"],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/NGPL-08062023.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's own 'Natural Gas Pipelines Network in India - As on March, 2023' MIS report (item 19.29.NGPL, p.6 of the itemized dedicated/tie-in-pipeline table) lists: 'Langtala to Ramgarh | GAIL | 14.12.2012 | 86.21 [Authorized Length km] | 0.12 [Authorized Capacity MMSCMD] | 88.00 [Operating Length km] | Rajasthan'. This exactly supports the sheet's Capacity=0.12 MMSCMD. url_verifier returned FAIL (200 but 'Langtala' not found) on this 1.2MB PDF -- confirmed a known verifier false-negative on large PDFs by fetching with curl and reading with pdftotext -layout locally; the row is present verbatim (grep -n on the extracted text). This is almost certainly the ORIGINAL source of GEM's own value: gem.wiki's own citation list for this page (read for leads only, not cited here) points to a PNGRB 'data-bank.html#ngpl-018' page retrieved 2023-07-21, i.e. the same PNGRB monthly-report family around that date. Single-source (medium tier, not independent): despite an extensive search (fresh web search for 'Langtala Ramgarh 0.12 MMSCMD PNGRB', the seed_citations' eye-on-investment.com link -- now DNS-dead and Wayback rate-limited -- and the environmentclearance.nic.in filing -- currently 503), I found no second, differently-sourced document giving 0.12 MMSCMD specifically; PNGRB republishes this identical row across many monthly editions, which is one origin repeated, not independent corroboration. NOTE for Update (do not resolve here per per-unit scope): this PNGRB 'Authorized Capacity' figure (0.12 MMSCMD) is a REGULATORY AUTHORIZATION ceiling, distinct from the commercial GSPA off-take volume (~0.95 MMSCMD) that the deep-sweep audit shard (rows/P1436.json) found independently corroborated by Indus Gas's own site and NS Energy Business -- these may be two genuinely different quantities (authorized vs. contracted), not necessarily a data error; both are now on record for Update to reconcile."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 818,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/NGPL-08062023.pdf"],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/NGPL-08062023.pdf", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same PNGRB 'Natural Gas Pipelines Network in India - As on March, 2023' MIS report row (19.29.NGPL, 'Langtala to Ramgarh', GAIL, authorized 14.12.2012) lists Operating Length = 88.00 km, exactly matching the sheet's LengthKnown=88.00 km (Authorized Length on the same row is a slightly different figure, 86.21 km -- the sheet value maps to the Operating-Length column, not Authorized-Length). Same false-negative/verification note as the Capacity unit above (verified locally via pdftotext -layout after url_verifier's large-PDF false negative). Single-source (medium tier, not independent) for the reasons given in the Capacity unit's notes -- searched fresh and found no second, differently-sourced document giving 88.00 km specifically; PNGRB republishing the same row across monthly editions is one origin, not two. NOTE for Update (not resolved here): the deep-sweep audit shard independently found three company/press sources (Indus Gas's own site, two NS Energy Business articles) consistently describing the pipeline as '90 km' -- a ~2.3% gap from this PNGRB Operating Length of 88.00 km, small enough to plausibly be rounding/measurement-basis variation (e.g. as-built vs. as-authorized) rather than a real conflict, but flagging both for Update's attention rather than adjudicating here."
+  }
+ ]
+}

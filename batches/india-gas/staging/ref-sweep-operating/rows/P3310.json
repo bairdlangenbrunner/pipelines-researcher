@@ -1,0 +1,245 @@
+{
+  "project_id": "P3310",
+  "pipeline_name": "Duliajan-Numaligarh Gas Pipeline",
+  "sheet_row": 1739,
+  "wiki": "https://www.gem.wiki/Duliajan-Numaligarh_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change needed; row is a real, correctly-classified operating dedicated pipeline. Diameter remains a legitimate blank (see caveat).",
+      "researcher_notes": "EXISTENCE: confirmed independently. DNP Limited (DNPL) is a live, active Government-of-Assam JV company (CIN U51410AS2007SGC008410, GSTIN 18AACCD8810C1ZY) that files audited annual reports through FY2024-25 (https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf), and the pipeline is separately itemised as an authorised, operational asset in PNGRB's regulator-published 'Operational Dedicated Natural Gas Pipelines' table (current June-2025 edition, https://pngrb.gov.in/data-bank/20250630_NGPL.pdf, printed page listing row '19.01.NGPL Duliajan to Numaligarh, Entity: DNPL, Auth. Date 26.03.2009, Authorised Length 194.00 km, Authorised Capacity 1.20 MMSCMD, Operating Length 192.00 km, Assam'). url_verifier gives a false-negative HTTP 200 on this PDF (documented large-PDF limitation for this country); confirmed locally with `pdftotext -layout` at line 169. Two genuinely independent origins (the JV company itself, and India's oil/gas regulator) agree the pipeline exists and is operating -> tier=high. CLASSIFICATION: PipelineType=transmission is reasonable -- this is a ~190 km bulk gas-transport trunk line from OIL's Duliajan gas source area to NRL's refinery at Numaligarh, not a gathering/feeder or distribution line; neither source uses the literal word 'transmission' but both describe exactly that function. DUPLICATE: checked against the full 35-pipeline India-gas roster supplied for this sweep -- no other row names Duliajan or Numaligarh; this is not a relabel/segment double-count of any other GEM pipeline. SPEC/LENGTH CAVEAT: GEM's LengthKnown=194.00 km matches PNGRB's 'Authorised Length' column exactly; DNPL's own site (https://www.dnpl.co.in/profile) separately states 'Pipeline Length: 192 km', which matches PNGRB's 'Operating Length' column exactly. These are not a conflict -- they are two different, both-correct readings (as-authorised vs as-built/operating), off by only 1%. Recommend keeping GEM's 194.00 (the authorised figure) as-is; a ResearcherNotes line noting the 192 km operating figure would be a nice-to-have but is not a correctness issue. DIAMETER (still blank): a third-party market database summary (offshore-technology.com, sourced from GlobalData, https://www.offshore-technology.com/marketdata/duliajan-numaligarh-gas-pipeline-india/) claims 'maximum diameter of 16 inches', but the SAME page also states the pipeline is 250 km long and lists 'Engineers India' among the owners -- both demonstrably wrong per the two independent primary sources above (194/192 km; AGCL/NRL/OIL ownership, see the paired attribution finding). Given that internal error, I am not staging the 16-inch figure as a diameter fill off this single, evidently unreliable source -- flagging it as an unconfirmed lead only, per the instruction to leave weak fields blank rather than force a number.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+        "https://www.dnpl.co.in/profile",
+        "https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct Owner on the operators/owners tab (oo_sheet_row 2495) from 'DNP Ltd 100%' to the actual JV equity holders: Owner1 = Assam Gas Company Limited (AGCL) 51%, Owner2 = Numaligarh Refinery Limited (NRL) 26%, Owner3 = Oil India Limited (OIL) 23%. Leave Operator = 'DNP Ltd' unchanged -- that is correct, DNPL is genuinely the operating entity.",
+      "researcher_notes": "The sheet lists Owner1 = 'DNP Ltd' 100%, which is the same value as Operator -- but DNP Limited does not own itself; it is a joint-venture SPV whose shares are held by three parent companies. DNPL's own audited FY2024-25 annual report gives an explicit 'Shareholding Pattern as on 31-03-2025' table: Assam Gas Company Limited 51%, Numaligarh Refinery Limited 26%, Oil India Limited 23% (page with the shareholding table, https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf -- verified locally via pdftotext, the exact figures also appear on the company's public profile page https://www.dnpl.co.in/profile, both giving identical 51/26/23 splits). I am treating this as tier=medium rather than high: both documents originate from DNPL itself (one is its public marketing/profile page, the other its statutory audited annual report), so while they are two distinct document types with two different dates, they are not two independently-operated organisations corroborating each other the way PNGRB + DNPL do elsewhere in this row -- I could not find a fully third-party (non-DNPL) source stating the ownership percentages, and note that a market-database page (offshore-technology.com/GlobalData) names a different, apparently wrong fourth party ('Engineers India') as an owner, which I am discounting given that same page's other factual errors (see paired existence finding). Recommend the correction above; not auto-applying per standing rules.",
+      "proposed_refs": [
+        "https://www.dnpl.co.in/profile",
+        "https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+        "https://www.dnpl.co.in/profile"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB lists the pipeline under 'Operational Dedicated Natural Gas Pipelines' (current, June 2025 edition -- verified locally, url_verifier false-negatives on this large PDF); DNPL's own site describes the pipeline as an active, ongoing operation (annual report also confirms ongoing commercial operation since 2011, still filing FY2024-25 results). Two independent origins."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+        "https://www.dnpl.co.in/profile"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both PNGRB's natural gas pipeline register and DNPL's own description ('transportation of natural gas from Duliajan to Numaligarh Refinery Limited') confirm the commodity is natural gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.dnpl.co.in/profile",
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Neither source uses the literal word 'transmission', but both describe a ~190-200 km bulk gas-transport trunk line moving gas in bulk from a source area (Duliajan) to a single large industrial offtaker (Numaligarh refinery) -- functionally a transmission trunk line, not gathering/feeder or distribution. Tier held to medium because the classification is inferential rather than a verbatim label."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2011"},
+      "primary_value": "2011",
+      "proposed_refs": [
+        "https://www.dnpl.co.in/profile",
+        "https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": true},
+        {"url": "https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "DNPL's profile page states construction 'completed February 28, 2011'; its FY2024-25 annual report (CSR annexure) independently states 'The Company started its commercial operation from 1st April, 2011'. StartYear1=2011 is corroborated by both. Held to tier=medium/independent=false because both documents are DNPL's own first-party publications (no fully external/third-party source found for the exact year; PNGRB's listed 'Auth. Date' of 26.03.2009 is an authorisation date, not a commissioning date, per this sweep's standing guidance, so it neither confirms nor contradicts 2011). Note: profile page implies Feb 2011 completion vs annual report's April 2011 commercial-operation start -- consistent with a short commissioning/trial-run gap; StartMonth1 is left unproposed given the ambiguity between the two dates."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "1.20", "CapacityUnits": "MMSCMD"},
+      "primary_value": "1.20",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current (June 2025) dedicated-pipeline register gives Authorised Capacity = 1.20 MMSCMD for this exact line -- matches the sheet exactly. url_verifier false-negatives on this large PDF (documented country-level limitation); confirmed locally via pdftotext at line 169: 'Duliajan to Numaligarh DNPL 26.03.2009 194.00 1.20 192.00 Assam'. Single-source (regulator only; DNPL's own materials do not state a capacity figure) so held to tier=medium despite the source being authoritative."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "194.00", "LengthKnownUnits": "km"},
+      "primary_value": "194.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf",
+        "https://www.dnpl.co.in/profile"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's register gives 'Authorised Length' = 194.00 km, matching the sheet exactly (verified locally, url_verifier false-negatives on this large PDF). DNPL's own profile page separately gives 'Pipeline Length: 192 km', which matches PNGRB's own separate 'Operating Length' column of 192.00 km -- i.e. two independent origins (regulator + company) agree on both readings once you separate as-authorised from as-built. Recommend keeping 194.00 (authorised) as the sheet value; the 192 km operating figure is a documented, sourced nuance worth a ResearcherNotes mention but not a correction."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Duliajan",
+        "StartState/Province": "Assam",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Numaligarh",
+        "EndState/Province": "Assam",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Duliajan",
+      "proposed_refs": [
+        "https://www.dnpl.co.in/profile",
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both DNPL's own materials and PNGRB's register confirm Duliajan-to-Numaligarh routing entirely within Assam, India. DNPL's profile page additionally states the route passes through five Assam districts (not itemised there), consistent with an intra-Assam trunk line; district-level fields left unproposed as no source itemises them."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "oo_sheet_row": 2495,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "DNP Ltd"},
+      "primary_value": "DNP Ltd",
+      "proposed_refs": [
+        "https://www.dnpl.co.in/",
+        "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.dnpl.co.in/", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20250630_NGPL.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "DNPL's homepage states 'DNP Limited operates a natural gas transportation pipeline from Duliajan to Numaligarh'; PNGRB's register lists 'Entity: DNPL' for this exact line. Two independent origins confirm DNP Ltd (DNP Limited) as operator -- this value is correct and distinct from the Owner question below."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1739,
+      "oo_sheet_row": 2495,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "DNP Ltd", "Owner1%": "100.00%"},
+      "primary_value": "DNP Ltd",
+      "proposed_refs": [
+        "https://www.dnpl.co.in/profile",
+        "https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.dnpl.co.in/profile", "ok": true, "contains_value": false},
+        {"url": "https://www.dnpl.co.in/assets/uploads/financial/annual-report-17669887791597877144.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "NOT adding a ref to confirm the current value -- both sources found contradict 'DNP Ltd 100%' as Owner. DNPL's own profile page and its FY2024-25 audited annual report (Shareholding Pattern as on 31-03-2025) both give: Assam Gas Company Limited (AGCL) 51%, Numaligarh Refinery Limited (NRL) 26%, Oil India Limited (OIL) 23%. DNP Ltd is the operating SPV, not its own owner. See the paired attribution concern in the validity array for the recommended correction; left UNRESOLVED here rather than staging a ref against a value I believe is wrong, per the no-auto-apply / no-orphan-ref rules."
+    }
+  ],
+  "summary": "P3310 (Duliajan-Numaligarh Gas Pipeline) is a real, correctly-classified operating pipeline -- existence and status confirmed independently via PNGRB's current dedicated-pipeline register and DNPL's own audited filings, which also confirm Length (194.00 km authorised / 192 km operating, both cited), Capacity (1.20 MMSCMD), StartYear1=2011, Fuel, Location, and Operator; no duplicate against the 35-pipeline roster. One genuine attribution concern: Owner is recorded as 'DNP Ltd 100%' but DNPL's own audited annual report gives the actual JV shareholders as AGCL 51% / NRL 26% / OIL 23% -- recommend correcting on the operators/owners tab. Diameter stays UNRESOLVED/blank: the only lead (a GlobalData/offshore-technology.com summary claiming 16 inch) also contains a demonstrably wrong length and owner, so it was not staged."
+}

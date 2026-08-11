@@ -1,0 +1,108 @@
+{
+  "project_id": "P0926",
+  "pipeline_name": "Heera-Uran Trunk Line (HUT)",
+  "sheet_row": 486,
+  "wiki": "https://www.gem.wiki/Heera-Uran_Trunk_Line_(HUT)",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Route to Update: confirm whether P0926 should carry a mixed/oil-primary commodity tag (or a companion GOIT entry) rather than a stand-alone Fuel=Gas GGIT row with a 5.84 bcm/y gas capacity. No matching 'Heera'-named entity exists anywhere in GOIT to absorb the oil share (unlike its sibling MUT, whose oil flow is already tracked separately as GOIT P5191 'Mumbai High - Uran Trunk Oil Pipeline'), so today P0926 is the ONLY GEM row tracking this physical pipe at all -- reclassifying/splitting it needs a human call, not a mechanical fix.",
+      "researcher_notes": "EXISTENCE is not in doubt -- confirmed via 3 independent origins: (1) India's Comptroller & Auditor General (CAG), Report No. 21 of 2016 'Union Commercial Compliance ... ONGC' (https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf -- a 3.5MB PDF; url_verifier returns 200-but-'missing expected' on it, the documented large-PDF false negative, so I downloaded it and ran `pdftotext -layout` locally: 'HUT' is glossed in its abbreviations table as 'Heera Uran Trunk line', and the report describes it by name repeatedly, e.g. 'Crude oil from the offshore platform is despatched to Uran through two pipelines, Mumbai-Uran Trunk line (MUT) and Heera Uran Trunk line (HUT)' and reports a measured 3.09% MUT/HUT metering discrepancy for the Aug-2014-to-Aug-2015 period, i.e. both lines were flowing and being audited in that window); (2) Offshore Magazine, 'ONGC reports Heera-Uran pipeline leak' (2007-12-10, https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak, url_verifier OK) -- 'ONGC has reported a leak on the Heera-Uran Gas pipeline in the Heera field ... This will lead to temporary curtailment of about 0.5 MMcf/d of gas to consumers from the Uran processing plant'; (3) the sheet's own cited ISOPE 1991 conference paper 'Design, Construction And Commissioning Of Heera-Uran Trunkline Project' (Jayachandran & Shiv Anand) -- I could not fetch onepetro.org directly (Cloudflare 403 on every route, including the resolved article URL, so it fails url_verifier and is NOT cited here), but its title/authorship/1991 date is independently indexed in a digitized ISOPE-91 proceedings TOC mirrored on yumpu.com (page 335, Vol. II) -- that mirror itself also fails url_verifier (paginated document viewer, no extractable body text), so it is not cited either, but it corroborates the paper is real and dated 1990/91, consistent with the sheet's StartYear1.\n\nCLASSIFICATION is the real problem. GEM's OWN live ResearcherNotes cell on this exact row already says: 'Mainly a crude oil pileine but designed to \"transport oil and gas\"' -- citing that same onepetro paper -- yet Fuel is still set to 'Gas' and the row carries a gas-only Capacity of 5.84 bcm/y. This is a standing, self-flagged, never-resolved divergence (the standing-rules 'ResearcherNotes documents a deliberate GEM divergence -- verify, don't overwrite' case), and my independent CAG read corroborates the prior researcher's flag rather than resolving it either way: the CAG report treats HUT EXCLUSIVELY as a crude-oil trunk line -- part of ONGC's offshore-to-Uran crude custody-transfer/measurement chain, structurally identical to and paired with MUT (P0944 in this same roster, also gas-tagged, also missing a GOIT twin except MUT's twin DOES exist as P5191) -- with only the 'off-gas' (dissolved gas liberated from the partially-stabilised crude and separated at Uran plant) counted toward gas production after the fact. The 2007 Offshore Magazine leak report, in contrast, calls it a 'Gas pipeline' -- but the scale it describes (a leak curtailing just 0.5 MMcf/d, i.e. roughly 5 mmcm/y) is three orders of magnitude below the sheet's claimed 5.84 bcm/y (~565 MMcf/d) nameplate capacity, which is far more consistent with 'gas' here meaning a small entrained/associated-gas stream riding along a much larger crude pipeline than with HUT being a dedicated 565-MMcf/d gas transmission line. I checked GOIT (data/GOIT_oil_ngl_snapshot_20260810.csv) for a 'Heera' entry that could be the oil-tracker home for this pipe's dominant commodity -- none exists (only P5191 'Mumbai High - Uran Trunk Oil Pipeline' and retired P5192 'Bombay-Uran Trunk Oil Pipeline', both MUT-side, not HUT). So P0926 is not a duplicate of anything in GOIT or in this GGIT roster (checked all 35 rows -- no other pipeline shares HUT's endpoints/spec), it is simply the SOLE GEM record for a pipe that is, by the regulator-grade CAG source and by GEM's own prior note, majority crude oil. Recommend Update decide: reclassify/split, or explicitly document as a deliberate multi-commodity exception with a corrected capacity basis.",
+      "proposed_refs": [
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf",
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct FuelSource from 'Mumbai High Gas Field' to 'Heera Gas Field' (or 'Heera-Neelam Field') -- the pipeline's own namesake origin field, not Mumbai High.",
+      "researcher_notes": "The sheet's FuelSource = 'Mumbai High Gas Field', but the pipeline is literally named for the HEERA field, and both independent sources place its origin there, not at Mumbai High: the CAG report groups ONGC's Western Offshore into distinct Assets -- 'Mumbai High', 'Neelam Heera', and 'Bassein & Satellite' -- and discusses HUT only in the Neelam-Heera context (paired with MUT, which serves Mumbai High); Offshore Magazine's 2007 leak report is explicit -- 'a leak on the Heera-Uran Gas pipeline in the Heera field'. Mumbai High is served by the separate MUT/'Mumbai High - Uran' family of lines (P0944 in this roster; P5191/P5192 in GOIT), not by HUT. This looks like a copy/mix-up between the two parallel Uran-bound trunk lines' source fields.",
+      "proposed_refs": [
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf",
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 486,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak",
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak", "ok": true, "contains_value": true},
+        {"url": "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Offshore Magazine (2007) reports ONGC repairing a leak and expecting the line 'fully operational within a week', implying active operation immediately before/after; CAG (2016 audit, covering Aug-2014-Aug-2015 metering data) shows the line still actively flowing and being measured for custody-transfer nine years later. CAG's content-match fails url_verifier's substring check due to the documented large-PDF extraction limit; confirmed locally with `pdftotext -layout`."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 486,
+      "oo_sheet_row": 811,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Oil and Natural Gas Corp Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Oil and Natural Gas Corp Ltd",
+      "proposed_refs": [
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf",
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak"
+      ],
+      "verifications": [
+        {"url": "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tab": "operators_owners",
+      "kind": "owner",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources describe HUT as ONGC's own asset with no co-owner/JV mentioned anywhere -- the CAG audit is specifically a compliance review of ONGC's own crude-oil measurement practices on MUT/HUT, and Offshore Magazine's report is 'ONGC has reported a leak on the Heera-Uran ... pipeline'. Consistent with 100% single ownership."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 486,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Heera"},
+      "primary_value": "Heera",
+      "proposed_refs": [
+        "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak",
+        "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak", "ok": true, "contains_value": true},
+        {"url": "https://cag.gov.in/webroot/uploads/download_audit_report/2016/Union_Commercial_Compliance_Report_21_2016_full_report.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartLocation was genuinely blank (only the broader StartState/Province='Offshore India' was filled). Both sources place the pipeline's offshore origin at the Heera field/platform specifically -- also see the paired attribution finding on FuelSource, which is currently misattributed to Mumbai High rather than Heera."
+    }
+  ],
+  "summary": "P0926 (HUT) exists and is operating (existence confirmed, 3 independent sources) but is very likely MISCLASSIFIED: India's CAG government audit (2016) describes it exclusively as a crude-oil trunk line paired with MUT, and GEM's own prior ResearcherNotes on this row already flags it as 'mainly a crude oil pileine' -- yet Fuel=Gas / Capacity=5.84 bcm/y stand unresolved, and no GOIT twin exists to carry the oil side (unlike sibling MUT, which has GOIT P5191); also caught FuelSource wrongly attributed to 'Mumbai High Gas Field' instead of the pipeline's own namesake Heera field (attribution fix staged, high tier). Filled Status/Owner/StartLocation refs (high tier, CAG + Offshore Magazine, independent). Length/Diameter/Capacity/StartYear1 remain UNRESOLVED -- the sheet's only lead for those (a 1991 ISOPE conference paper) is Cloudflare-blocked (403) and not independently re-locatable with verifiable content in this pass."
+}

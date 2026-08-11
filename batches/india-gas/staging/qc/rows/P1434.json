@@ -1,0 +1,23 @@
+{
+ "project_id": "P1434",
+ "pipeline_name": "Kakinada-Vijayawada-Nellore Gas Pipeline",
+ "sheet_row": 816,
+ "wiki": "https://www.gem.wiki/Kakinada-Vijayawada-Nellore_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No change to LengthKnownKm=667 -- it is independently confirmed correct. Route to Route Creation / geometry review to reconcile the drawn route (461 km, ratio 0.69) against the full 667 km authorized alignment; do not shrink the length to match the drawn geometry.",
+   "researcher_notes": "Not re-deriving the Operator/Owner/Status/Length/Capacity findings already staged by the register-crosswalk leg for this PID (batches/india-gas/staging/register-crosswalk/staged_resolutions.json already has Length/Capacity/Status refs + an Owner [ref] fill of 'IMC Ltd' at sheet_row 1200 on the operators_owners tab, all citing the same register) -- only addressing the length_ratio flag that's in my brief. Independently re-pulled the register record myself (PNGRB NGPL MIS Report, 20260531 edition, under-construction section, Sr. No. 2: 'Kakinada-Vijayawada-Nellore', entity IMC, authorised_length_km=667.0, authorised_capacity_mmscmd=18.0, operating_length_km=0.0, under_construction_length_km=667.0 -- i.e. the ENTIRE 667 km is authorized and under construction, none of it phased or split into tranches). This matches LengthKnownKm=667.00 and Capacity=18.00 on the sheet exactly, so the sheet's length value is correct and this is not a 'phased row' artifact (the register shows one undivided 667 km authorization, not a multi-phase project). The drawn route's 461 km shortfall (ratio 0.69) is therefore most plausibly an incomplete/partial digitization of the corridor rather than a length error -- recommend a route-geometry review, no length change. (Separately, and outside my flagged scope so not filed as a finding: the register lists this authorization's states as 'AP' only, i.e. wholly within Andhra Pradesh, while the sheet's EndState/Province reads 'Tamil Nadu' for the Nellore endpoint -- an independent press source, Indian Infrastructure (indianinfrastructure.com/2018/04/09), also describes the route as 'Kakinada in Andhra Pradesh to Nellore in Tamil Nadu', repeating the same Tamil Nadu framing, so this may be a real ambiguity/convention rather than a clean GEM error; flagging for awareness only, not proposing a fix since EndState/Province was not one of my assigned questions.)",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; values confirmed locally via the repo's own register parse (scripts/parse_pngrb_ngpl_mis.py output, batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json) -- url_verifier FAILs on this large PDF, documented false negative, already noted by the crosswalk leg for the same source."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ]
+}

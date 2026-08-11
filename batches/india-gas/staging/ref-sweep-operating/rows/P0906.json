@@ -1,0 +1,190 @@
+{
+  "project_id": "P0906",
+  "pipeline_name": "Assam Regional Gas Network",
+  "sheet_row": 470,
+  "wiki": "https://www.gem.wiki/Assam_Regional_Gas_Network",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Add 'Assam Natural Gas Pipeline' to OtherEnglishNames -- that is PNGRB's current official title for this exact AGCL asset (105 km authorised, 107 km operating, 2.4 MMSCMD, entry #17 of the Operational Common Carrier table). PNGRB ALSO lists a completely separate, unrelated 8 km 'Assam Regional Network' owned by GAIL (authorised 04.11.2009, capacity 2.5 MMSCMD, entry #1, currently supplying 0.0 MMSCMD) -- GEM's title for P0906 collides with that GAIL entity's name, which is a real duplicate-flagging trap for future researchers (it tripped me on first pass). The two are not the same pipe: different owner, different length (8 km vs ~105 km), different diameter profile. No action needed beyond the alias -- do not merge/rename P0906 to match either PNGRB label, since GEM's title is an established identifier.",
+      "researcher_notes": "EXISTENCE: confirmed independently of GEM. Assam Gas Company Ltd (AGCL), 100% Assam-government owned, is a real, currently operating gas transporter headquartered in Duliajan, Dibrugarh district -- corroborated by (1) PNGRB's own May-2026 line-wise NGPL register, which lists 'Assam Natural Gas Pipeline / AGCL' under both the OPERATIONAL COMMON CARRIER PIPELINE table (authorised 20.12.2013, 105 km authorised, 107 km operating, 2.4 MMSCMD authorised+design capacity, 1.5 MMSCMD supplied, 60.4% utilisation) and the Regulation-17 detail table (same entity, sector breakdown: 0.75 power, 0.09 fertiliser, 0.59 petrochem/refineries, 0.03 iron&steel MMSCMD); and (2) three independent company-profile/government sources (indiamart.com, mysarkarinaukri.com, and the Assam state government's Industries & Commerce department page) that all describe AGCL as an active gas transporter with a c. 900-1,000 km steel pipeline network across upper-Assam districts including both Golaghat and Tinsukia -- matching GEM's recorded StartPrefecture/District (Golaghat) and EndPrefecture/District (Tinsukia) exactly. CLASSIFICATION: transmission is correct -- this is the PNGRB-declared common-carrier (Section-42/Regulation-17) trunk portion of AGCL's system, not a CGD distribution network. DUPLICATE CHECK vs the 35-pipeline India-gas roster and vs the wider PNGRB register: NOT a duplicate of any roster row. It superficially resembles GAIL's other GEM-tracked 'Regional Gas Network' rows (P0904 Agartala, P0923 Gujarat, P0943 Mumbai, P0911 Cauvery) which all trace to GAIL-owned PNGRB 'Regional Network' entities -- but P0906's owner (Assam Gas Co Ltd, not GAIL) and its length/capacity (104.73 km / 2.43 MMSCMD) match PNGRB's separate AGCL-owned 'Assam Natural Gas Pipeline' entity (105 km / 2.4 MMSCMD), not PNGRB's GAIL-owned 8 km 'Assam Regional Network' entity -- see attribution recommendation above. ATTRIBUTION: Owner1 = Assam Gas Co Ltd 100% is correct and independently confirmed (AGCL is explicitly the listed PNGRB entity, and all three company-profile sources identify AGCL as sole operator). Fuel=Gas trivially correct. SPEC: LengthKnown 104.73 km vs PNGRB's current 105 km authorised (107 km operating) -- a sub-1% variance consistent with reading an earlier/more-precise PNGRB edition (wiki cites 'Retrieved 2023-07-12'); not a material error. Capacity 2.43 vs PNGRB's current 2.4 MMSCMD authorised/design capacity -- same story, immaterial (1.25%) variance, most likely stale-edition drift per the orchestrator's documented MMSCMD-formula pattern, not a unit or entity error. StartYear1=1967 is independently confirmed by three sources as AGCL's actual first gas-transportation year (first delivery to Namrup Thermal Power Station) -- correctly NOT sourced from the 2013 PNGRB authorisation date, which per the India playbook would have been a dating error. Diameter (350, 400, 500, 800 mm) sits inside AGCL's company-wide stated steel-pipe diameter range (50-800 mm per indiamart) but I could NOT independently verify that these four specific values apply to this exact 104.73 km declared segment -- the original citing source (assamgas.org/pdf/pipeline.pdf, an upper-Assam CGD network map) is now dead (the site migrated to a React SPA that serves the index shell for every path, including old PDF URLs -- confirmed via curl, HTTP 200 but no PDF, no 'Assam' or diameter text). Left as an unverified-but-plausible caveat rather than a hard spec concern. NOTE ON PNGRB PDF CITATION: url_verifier.py returns 'FAIL ... missing expected: Assam' on the PNGRB PDF -- this is the documented large-PDF false negative (per orchestrator brief); I downloaded it directly and ran pdftotext -layout locally, confirming the exact rows quoted above verbatim.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.indiamart.com/assam-gasco-ltd/aboutus.html",
+        "https://www.mysarkarinaukri.com/en/agcl/",
+        "https://industries.assam.gov.in/frontimpotentdata/pipe-gas-connection-under-assam-gas-company-ltd"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's May-2026 NGPL register lists 'Assam Natural Gas Pipeline / AGCL' (105 km authorised / 107 km operating, 60.4% capacity utilisation) in the OPERATIONAL COMMON CARRIER PIPELINE table -- confirms currently operating. url_verifier gives a false-negative on this large PDF (documented issue); confirmed the match locally via pdftotext -layout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed as a Natural Gas Pipeline (NGPL) in PNGRB's register; trivially correct."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB authorises this as a Section-42/Regulation-17 common-carrier natural gas transmission pipeline, distinct from AGCL's much larger CGD-style distribution network (900-1,000 km of steel + PE pipe) that reaches individual customers -- transmission classification is correct for the declared 105 km asset."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1967"},
+      "primary_value": "1967",
+      "proposed_refs": ["https://www.indiamart.com/assam-gasco-ltd/aboutus.html", "https://www.mysarkarinaukri.com/en/agcl/"],
+      "verifications": [
+        {"url": "https://www.indiamart.com/assam-gasco-ltd/aboutus.html", "ok": true, "contains_value": true},
+        {"url": "https://www.mysarkarinaukri.com/en/agcl/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent company-profile sources both state AGCL 'started in the year 1967 with supply of natural gas to Namrup Thermal Power Station' -- matches StartYear1 exactly. This is the actual first-gas year, not the 2013 PNGRB authorisation date (which would be the wrong field to source it from)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "2.43", "CapacityUnits": "MMSCMD"},
+      "primary_value": "2.43",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current edition shows 2.4 MMSCMD authorised/design capacity for this exact entity (AGCL, 105 km) -- a 0.03 MMSCMD (1.25%) variance from GEM's 2.43, consistent with the sheet having been sourced from an earlier PNGRB edition (wiki cites 'Retrieved 2023-07-12') rather than a unit or entity error. Single-source spec match -> medium tier; flagging the small variance rather than silently passing it, per corroboration rules."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "104.73", "LengthKnownUnits": "km"},
+      "primary_value": "104.73",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's current edition shows 105 km authorised length (107 km operating length -- the line has been extended slightly past its authorised length) for this entity. GEM's 104.73 km is a sub-1% variance from the rounded 105 km figure, consistent with an earlier/more-precise PNGRB edition rather than an error. Single-source match -> medium tier."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "350, 400, 500, 800", "DiameterUnits": "mm"},
+      "primary_value": "350, 400, 500, 800",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not independently verify these four specific diameter values for this exact 104.73 km segment. AGCL's company-wide steel-pipe diameter range is reported as 50-800 mm (indiamart.com) which is CONSISTENT with but does not confirm this precise set. The original citing source on gem.wiki (assamgas.org/pdf/pipeline.pdf, an upper-Assam CGD network map) is now dead: the site migrated to a React SPA that returns the index-page shell (HTTP 200, no PDF content, no 'Assam' or diameter text) for every legacy path I tried, including the Citizens' Charter PDFs. Leaving unref'd rather than pairing a weak/inexact source -- do not delete the existing value, it is plausible and within the confirmed range."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartPrefecture/District": "Golaghat",
+        "StartState/Province": "Assam",
+        "StartCountryOrArea": "India",
+        "EndPrefecture/District": "Tinsukia",
+        "EndState/Province": "Assam",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Golaghat",
+      "proposed_refs": ["https://www.indiamart.com/assam-gasco-ltd/aboutus.html", "https://www.mysarkarinaukri.com/en/agcl/"],
+      "verifications": [
+        {"url": "https://www.indiamart.com/assam-gasco-ltd/aboutus.html", "ok": true, "contains_value": true},
+        {"url": "https://www.mysarkarinaukri.com/en/agcl/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent company-profile sources both list Golaghat and Tinsukia among the districts AGCL's pipeline network serves/passes through in upper Assam, corroborating GEM's recorded start (Golaghat) and end (Tinsukia) districts. Neither source states a definitive directional start/end point, but both confirm the two named districts sit on AGCL's single corridor alongside Jorhat/Sivasagar/Dibrugarh."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 470,
+      "oo_sheet_row": 795,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Assam Gas Co Ltd", "Owner1%": "100.00%"},
+      "primary_value": "Assam Gas Co Ltd",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "https://www.indiamart.com/assam-gasco-ltd/aboutus.html"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://www.indiamart.com/assam-gasco-ltd/aboutus.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tab": "operators_owners",
+      "kind": "owner",
+      "independent": true,
+      "tier": "high",
+      "source_language": "en",
+      "researcher_notes": "PNGRB's register lists 'AGCL' as the sole entity for this exact pipeline; indiamart.com independently confirms Assam Gas Company Ltd as the operating company. 100% ownership is consistent with AGCL being a wholly Assam-government-owned corporation with no reported joint ownership of this asset."
+    }
+  ],
+  "summary": "P0906 (Assam Regional Gas Network / AGCL) is real and correctly classified as an operating transmission pipeline; length/capacity/start-year/owner/location all independently corroborated (PNGRB register + 3 company/govt sources), with only minor caveats: length/capacity show <1.5% variance vs the current PNGRB edition (stale-edition drift, not error), Diameter is plausible but unverifiable at this precision (source PDF now dead), and the GEM title collides in name only (not substance) with a separate, unrelated 8 km GAIL-owned 'Assam Regional Network' also in PNGRB's register -- recommend an OtherEnglishNames alias to head off future false duplicate flags."
+}

@@ -1,0 +1,128 @@
+{
+ "project_id": "P0925",
+ "pipeline_name": "Hazira-Vijaipur-Jagdishpur (HVJ) Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 485,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.gailonline.com/Natural_Gas.html"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "url_verifier 200 but content-check FAIL on this large multi-column PDF (documented false-negative pattern). Confirmed locally: downloaded with a browser UA (default curl UA gets a 406 bot-wall page, not the PDF) and ran pdftotext -layout. Sr. No. 3, 'OPERATIONAL COMMON CARRIER PIPELINE' section (p.6 printed): 'Hazira-Vijaipur-Jagdishpur -GREP- Dahej-Vijaipur HVJ/VDPL Dadri', entity GAIL, authorised 6,169 km / operating 6,732 km, states UP,MP,RJ,GJ,HR,DL&UK. The row sits under the 'OPERATIONAL' heading, i.e. currently operating."},
+    {"url": "https://www.gailonline.com/Natural_Gas.html", "ok": true, "contains_value": true, "note": "verifier OK; page lists 'HVJ-GREP DVPL' among GAIL's current natural-gas pipeline network, 5,433 km, 'As per PNGRB As on 30th Jun 2026' -- GAIL's own live corporate site describing the asset as an active, currently-operated network component."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent origins confirm operating status as of 2026: (1) PNGRB's own monthly line-wise register lists this exact authorisation ('Hazira-Vijaipur-Jagdishpur-GREP-Dahej-Vijaipur HVJ/VDPL Dadri', GAIL) under its 'OPERATIONAL COMMON CARRIER PIPELINE' heading, distinct from the report's separate under-construction section; (2) GAIL's own live network page lists the same asset as a current component of its natural-gas pipeline system per PNGRB data as of June 2026. Value unchanged (operating); ref-only addition."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 485,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://en.wikipedia.org/wiki/HVJ_Gas_Pipeline"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "Large-PDF false negative, confirmed locally per note above. The register itself is titled 'PHYSICAL PROGRESS REPORT OF NATURAL GAS PIPELINE (NGPL)' and lists this asset in it -- i.e. India's gas-pipeline regulator classes it as a natural-gas pipeline."},
+    {"url": "https://en.wikipedia.org/wiki/HVJ_Gas_Pipeline", "ok": true, "contains_value": true, "note": "Fetched and parsed directly: infobox field 'type' = 'Gas Pipeline'; page categories include 'Natural gas pipelines in India'."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources agree the asset is a natural-gas pipeline: PNGRB's own NGPL (Natural Gas Pipeline) register carries this exact authorisation, and Wikipedia's infobox/categories independently classify it as 'Gas Pipeline' / 'Natural gas pipelines in India'. Value unchanged (Gas); ref-only addition."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 485,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://en.wikipedia.org/wiki/HVJ_Gas_Pipeline"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "Large-PDF false negative, confirmed locally. Listed as a multistate 'COMMON CARRIER' natural-gas pipeline authorised under PNGRB's NGPL regime -- India's regulatory category for long-haul gas transmission grids, distinct from the separately regulated City/Local Gas Distribution networks -- authorised length 6,169 km spanning 7 states (UP,MP,RJ,GJ,HR,DL,UK)."},
+    {"url": "https://en.wikipedia.org/wiki/HVJ_Gas_Pipeline", "ok": true, "contains_value": true, "note": "Infobox describes it as an 'India multistate gas pipeline' running Gujarat -> Madhya Pradesh -> Uttar Pradesh with 4 compressor stations -- a long-haul trunk/transmission profile, not a local distribution network."}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PipelineType=transmission is inferable rather than a literal quoted word in either source (neither uses 'transmission' verbatim), so staged as medium tier. Both independently describe a multistate, cross-country, compressor-stationed gas trunk line regulated under PNGRB's NGPL common-carrier regime -- the regulatory and physical profile of a transmission line, as opposed to a city/local distribution network. Value unchanged (transmission); ref-only addition."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 485,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "DISAGREEMENT, not a missing ref -- do not stage. Sheet StartYear1=1997. Every independent source found says 1987 (some 1987-88, reflecting India's fiscal year): GAIL's own 27.11.2018 PNGRB tariff letter (OCR-confirmed this session via pdftoppm+tesseract on the scanned original, Annexure-A para 1.1: 'commissioned in 1987-88'); GAIL's own 2021-22 Sustainability Report Glimpses (pdftotext-confirmed this session, timeline places 'Hazira-Vijaipur-Jagdishpur (HVJ) commissioned' at '1987'); Wikipedia's infobox ('Construction started'=1986, 'Commissioned'=1987; category 'Energy infrastructure completed in 1987'); and offshore-technology.com ('Commissioning Year: 1987'). The likely explanation (also surfaced in this row's prior deep-sweep audit): 1997 is when the separately-tracked GREP expansion (GEM's own P3297, Vijaipur-Dadri) was commissioned, per the same GAIL tariff letter para 1.2 -- HVJ's own StartYear1 appears to have been set to its expansion's year rather than its own. This is a value-correction candidate for Update, not a ref-fill; leaving UNRESOLVED per the standing rule against proposing refs for a different value than recorded."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 485,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "Large-PDF false negative, confirmed locally with pdftotext -layout. The report's SEPARATE 'NGPL UNDER REGULATION 17 (MMSCMD)' table (p.6 printed, distinct from the 'Physical Progress Report' table used for Status/Owner above) lists row 2: 'GAIL / Integrated HVJ / Authorised 6,169 km / Operational 6,732 km / Design/Determined Capacity 107.0 MMSCMD' -- an exact match to the sheet's 107.00 MMSCMD."}
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "The recorded value 107.00 MMSCMD is directly and exactly matched by one specific table in the current PNGRB register ('NGPL under Regulation 17', Design/Determined Capacity column). Staged as a genuine value match, but flagged low/single-source rather than higher for two reasons carried over from this row's prior deep-sweep and the register-crosswalk's own VALIDITY findings on this PID: (1) a DIFFERENT table in the SAME May-2026 report (the 'Physical Progress Report' main table, same GAIL/Integrated HVJ line) instead shows Authorised+Design Capacity = 111.3 MMSCMD -- an internal inconsistency between the two PNGRB tables that this ref-fill does not resolve; (2) per India scope guidance, GEM's capacity figures likely derive from PNGRB in the first place, so this is not a second, independently-measured corroboration, just the regulator's own figure re-confirmed from its own current publication. Also note (already flagged for Update, not repeated as an open action here): '107.0' is the COMBINED 'Integrated HVJ' system capacity (HVJ+GREP+DVPL-I+DVPL-II), not this segment's own historical capacity increment, and the identical number is repeated on four sibling rows (P0919, P3297, P3298, P3299). Value unchanged; ref-only addition with caveats recorded."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 485,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://gailebank.gail.co.in/Gailonline%20Files/Sustainability/Glimpses/GAILSustainabilityGlimpses2022.pdf",
+    "https://www.offshore-technology.com/marketdata/hazira-vijaypur-jagdishpur-gas-pipeline-india/"
+   ],
+   "verifications": [
+    {"url": "https://gailebank.gail.co.in/Gailonline%20Files/Sustainability/Glimpses/GAILSustainabilityGlimpses2022.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAIL on this 6.2MB PDF; the site also 406s a plain curl request behind an app-firewall (apptrana WAF) that requires a browser-like User-Agent. Re-fetched this session with a Chrome UA (genuine PDF, 6,480,555 bytes) and confirmed with pdftotext -layout: its India network map explicitly labels 'HVJ Pipeline / 2887 Km', distinct from the adjacent 'DVPL Ph-I 770 Km' / 'DVPL Ph-II 610 Km' labels on the same map."},
+    {"url": "https://www.offshore-technology.com/marketdata/hazira-vijaypur-jagdishpur-gas-pipeline-india/", "ok": true, "contains_value": true, "note": "verifier OK, contains '2,887'."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "LengthKnown=2887.00 km is independently confirmed by two origins that are not each other's source: GAIL's own 2021-22 Sustainability Report map graphic, and offshore-technology.com's GlobalData-sourced marketdata entry ('Length: 2,887 km'). Caveat for the record, not acted on: Wikipedia's infobox instead gives 3,474.00 km for the same pipeline -- a third, disagreeing figure, not cited here since it does not support the recorded value; likely reflects a different genealogy boundary (Wikipedia's infobox categories list only Gujarat/MP/Rajasthan/UP/Haryana/NCT as states, suggesting it may fold in more of the HVJ-GREP-DVPL family than the 2887 km figure does). Value unchanged; ref-only addition."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 485,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PARTIAL DISAGREEMENT within this bundled unit -- do not stage as-is. StartLocation=Hazira / StartState=Gujarat / StartCountry=India and EndLocation=Jagdishpur / EndCountry=India are all well supported (Wikipedia infobox: start=Hazira, Gujarat; finish=Jagdishpur (Industrial Area), Uttar Pradesh; PNGRB register: states traversed UP,MP,RJ,GJ,HR,DL,UK). But the recorded EndState/Province='Madhya Pradesh' is contradicted by three independent sources, which instead place Jagdishpur in Uttar Pradesh and Madhya Pradesh only as the location of Vijaipur, a mid-route compressor-station waypoint reflected in the pipeline's own name -- not its terminus: (1) Wikipedia's infobox verbatim ('through'=Vijaipur, Madhya Pradesh; 'finish'=Jagdishpur (Industrial Area), Uttar Pradesh), fetched and parsed directly this session; (2) testbook.com ('Hazira, Gujarat -> Vijaipur, Madhya Pradesh -> Jagdishpur, Uttar Pradesh'); (3) offshore-technology.com ('...ends in Uttar Pradesh (India)'). This is a value-correction candidate for Update (fix EndState/Province to Uttar Pradesh; EndLocation itself needs no change), not a ref-fill for the recorded value -- leaving the whole unit UNRESOLVED per the standing rule against proposing refs for a different value than recorded."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 485,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://en.wikipedia.org/wiki/HVJ_Gas_Pipeline"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "Large-PDF false negative, confirmed locally with pdftotext -layout. Both tables (Physical Progress Report, and NGPL under Regulation 17) list the entity for this authorisation as 'GAIL'."},
+    {"url": "https://en.wikipedia.org/wiki/HVJ_Gas_Pipeline", "ok": true, "contains_value": true, "note": "Infobox verbatim: 'owner' = 'Gas Authority of India Limited' (GAIL), 'operator' = same."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Owner1=GAIL (India) Ltd, 100% is corroborated by two independent origins naming GAIL as sole owner/authorisation-holder: PNGRB's own regulatory register (the authorising body's own entity field) and Wikipedia's infobox (owner/operator both 'Gas Authority of India Limited', GAIL's full former name). `Owner [ref]` is empty on all India gas rows per this sweep's scope note, and the regulator's entity column is a genuinely independent origin for ownership (as opposed to Capacity, where GEM's own number likely traces to PNGRB directly). Value unchanged; ref-only addition."
+  }
+ ]
+}

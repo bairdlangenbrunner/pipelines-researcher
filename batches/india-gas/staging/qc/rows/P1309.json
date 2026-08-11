@@ -1,0 +1,22 @@
+{
+ "project_id": "P1309",
+ "pipeline_name": "North East Natural Gas Pipeline Grid Project",
+ "sheet_row": 766,
+ "wiki": "https://www.gem.wiki/North_East_Natural_Gas_Pipeline_Grid_Project",
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do NOT change LengthKnownKm=1656 off the length_ratio flag alone. This is a network/aggregate row (pattern explicitly called out in the brief's source ladder): the drawn route (1084 km) is very likely a real geometry gap — missing spurs — not evidence the length is wrong. Route this to route-geometry review (add the missing state spurs) rather than a length edit.",
+   "researcher_notes": "Building on, not re-deriving, two prior legs already staged for this exact row: (1) the annual-update leg (batches/india-gas/staging/annual/rows/P1309.json) independently corroborated LengthKnownKm=1656 km with TWO sources (PIB's Jan-2020 Cabinet-approval press release and a June-2024 Sentinel Assam progress report) — this is the original sanctioned network total, high tier, not a fabricated or stale figure. That same leg also flagged (validity, concern_type=attribution) that the sheet's EndLocation only names 3 of the project's 8 served north-eastern states (Itanagar/Arunachal Pradesh, Agartala/Tripura, Imphal/Manipur — missing Meghalaya, Mizoram, Nagaland, Sikkim). (2) The PNGRB register crosswalk (batches/india-gas/staging/register-crosswalk/staged_resolutions.json) independently confirms via the regulator's own May-2026 register that this ONE authorisation now totals 1,863 km authorised, of which only 392 km is operating and 1,471 km is still under construction — i.e. this is explicitly a multi-hundred-km, multi-state grid built in pieces, not a single point-to-point line. Put together: a project that PIB/press describe as a 1,656-1,863 km network reaching 8 states, but whose sheet Location fields name only 3 of those states, is exactly the 'network/aggregate row with a total network length while the geojson draws only a trunk' pattern the brief warns about — the 1084 km drawn route almost certainly represents the Guwahati-anchored trunk plus some but not all of the 8 state spurs (Phase I alone, per the annual leg, covers ~553 km across just 3 states), not the full authorised network. I did not attempt to verify which specific spurs are present/absent in the geojson (out of scope for this leg) — flagging for a route-geometry pass to add the missing branches, consistent with the register's own 1,863 km authorised figure and the register-crosswalk's already-open recommendation to reconcile the operating/under-construction split. Separately (already flagged by the register crosswalk, not re-litigated here): LengthKnownKm/Capacity may also need a scope-revision update toward the register's current 1,863 km/5.8 MMSCMD figures — that is a distinct question from this length_ratio flag and is routed to Update there, not resolved here.",
+   "proposed_refs": [
+    "https://www.pib.gov.in/Pressreleaseshare.aspx?PRID=1598709&reg=3&lang=2",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en"
+  }
+ ]
+}

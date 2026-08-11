@@ -1,0 +1,154 @@
+{
+  "project_id": "P1434",
+  "pipeline_name": "Kakinada-Vijayawada-Nellore Gas Pipeline",
+  "sheet_row": 816,
+  "wiki": "https://www.gem.wiki/Kakinada-Vijayawada-Nellore_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate problem. See the separate attribution and spec concerns below, and the status_reviews entry (construction -> shelved).",
+      "researcher_notes": "EXISTENCE: confirmed, not a phantom. This authorization is independently documented across three primary-source artifacts spanning 2015-2026: (1) PNGRB's own Aug-2015 pre-bid application map, Map No. BID/NGPL/08/2015/1/KVNPL (https://www.pngrb.gov.in/pdf/ngp/bid/bid8/Map-KRVGOKN.pdf) -- a route map titled 'KAKINADA VIJAYAWADA NELLORE NATURAL GAS PIPELINE', part of the application-cum-bid document BID/NGPL/08/2015/1/KVNPL; (2) the Apr-9-2018 Indian Infrastructure trade-press report of the actual PNGRB authorization to IMC Limited (https://indianinfrastructure.com/2018/04/09/imc-limited-gets-pngrb-approval-for-natural-gas-pipeline-from-kakinada-in-andhra-pradesh-to-nellore-in-tamil-nadu/); (3) PNGRB's own live NGPL MIS progress register, both the archived 25-Jun-2021 edition (https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf, row '5.10.NGPL Kakinada-Vijayawada-Nellore IMC 19.02.2018 667 18.00 Feb, 2021 Andhra Pradesh') and the current 31-May-2026 edition (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, under-construction row 2: 'Kakinada-Vijayawada-Nellore IMC 19.02.2018 667 18.0 18.0 - - 0 667 0 0 0 Mar-24 AP'). All agree on authorizing entity (IMC Limited/IMC), authorization date (19.02.2018), and route corridor. CLASSIFICATION: correct as gas transmission common-carrier pipeline -- Fuel=Gas and PipelineType=transmission both match PNGRB's own regulatory classification (an 'NGPL' common-carrier authorization) in every document above. DUPLICATE: checked against all 26 other roster rows. No overlap -- P6538 (Kakinada-Srikakulam) runs north from Kakinada on a wholly different corridor/status/entity (proposed, cap=20 MMSCMD, no PNGRB entity match in the register) and is not the same line. P0921 (Ennore-Nellore)'s own shard independently confirms the same conclusion from the other direction: it is a separate GTIL-authorized Tamil-Nadu-to-Andhra-Pradesh line that merely happens to also terminate near Nellore. No relabel/double-count found for P1434."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix EndState/Province from 'Tamil Nadu' to 'Andhra Pradesh'. Fix the swapped Start fields: StartPrefecture/District currently reads 'Andhra' (a truncated STATE name) and should read 'East Godavari' (the district Kakinada sits in); StartState/Province currently reads 'East Godavari' (a DISTRICT name) and should read 'Andhra Pradesh'.",
+      "researcher_notes": "Nellore (official name since 2008: Sri Potti Sriramulu Nellore district) is in Andhra Pradesh, not Tamil Nadu -- and the entire pipeline corridor lies inside Andhra Pradesh. Two mutually-independent PNGRB primary documents confirm this directly: (1) the Aug-2015 bid-application route map shows the KVN pipeline running Kakinada -> Rajahmundry -> Vijayawada -> Guntur -> Ongole -> Nellore, entirely within Andhra Pradesh (with Telangana only appearing as an inset/neighboring-state reference, never crossed by the route), split into a 'Kakinada-Vijayawada Section 170 KM' and a 'Vijayawada-Nellore Section 355 KM'; (2) the PNGRB NGPL MIS register lists 'passing_through_states' / 'States from which pipeline passes' as 'AP' / 'Andhra Pradesh' only, in both the June-2021 edition and the current May-2026 edition. The ONLY source that says Tamil Nadu is the Apr-2018 Indian Infrastructure article -- and it gets this wrong in its own headline AND its own lead sentence ('IMC Limited has received permission from the PNGRB to lay a natural gas pipeline from Kakinada in Andhra Pradesh to Nellore in Tamil Nadu'), even though the SAME article's next sentence names the intermediate towns as 'Rajahmundry, Vijayawada, Guntur and Ongole' -- all unambiguously in Andhra Pradesh, contradicting its own Tamil Nadu claim. GEM's EndState/Province='Tamil Nadu' looks like it was copied from this single erroneous press report rather than any PNGRB primary source. Separately and independently of the Tamil Nadu error, the Start* columns are internally swapped on the sheet: StartPrefecture/District='Andhra' is a truncated STATE name (should be a district), and StartState/Province='East Godavari' is actually the DISTRICT Kakinada is in (East Godavari district, Andhra Pradesh) -- the two values need to trade places and the state name needs to be completed to 'Andhra Pradesh'.",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/ngp/bid/bid8/Map-KRVGOKN.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Flag for Update to check the actual PNGRB authorization order/certificate (19.02.2018) if precision matters -- do not silently pick a number. The sheet's 667 km is faithful to the current register but conflicts by ~22-27% with two documents from the bid/authorization stage.",
+      "researcher_notes": "GEM's LengthKnown=667.00 km matches the PNGRB NGPL MIS register exactly in both the archived 25-Jun-2021 edition and the current 31-May-2026 edition (both read '...Kakinada-Vijayawada-Nellore...667...18.0...AP'), so the sheet faithfully carries the regulator's post-authorization register figure -- but that figure conflicts with two documents that predate or are contemporaneous with the actual Feb-2018 authorization. PNGRB's own Aug-2015 pre-bid application map states the route as 'Kakinada-Vijayawada Section 170 KM (Approx)' + 'Vijayawada-Nellore Section 355 KM (Approx)' = 525 km total (map's own printed 'Section Lengths (Approx)' table). Independently, the Apr-2018 Indian Infrastructure article reporting the actual PNGRB approval states 'The 522 km long pipeline...'. A ~142-145 km (22-27%) gap between the pre-authorization/at-authorization figures (522-525 km, from two independent artifacts) and the post-authorization register figure (667 km, consistent across two register editions five years apart) is large for ordinary route micro-adjustment. Two explanations are plausible -- a genuine route realignment/lengthening between the 2015 bid stage and the eventual 2018 authorization, or a transcription error in the register that has simply been carried forward unchanged since at least 2021 -- and I could not locate the underlying PNGRB authorization order/certificate to settle it. Capacity (18 MMSCMD) is NOT in dispute -- all three documents (bid map's implicit design basis is not stated, but both the 2018 press report and both register editions) agree on 18 MMSCMD."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 816,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Kakinada", "StartPrefecture/District": "East Godavari", "StartState/Province": "Andhra Pradesh", "StartCountryOrArea": "India", "EndLocation": "Nellore", "EndState/Province": "Andhra Pradesh", "EndCountryOrArea": "India"},
+      "primary_value": "Kakinada",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/ngp/bid/bid8/Map-KRVGOKN.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://indianinfrastructure.com/2018/04/09/imc-limited-gets-pngrb-approval-for-natural-gas-pipeline-from-kakinada-in-andhra-pradesh-to-nellore-in-tamil-nadu/"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/ngp/bid/bid8/Map-KRVGOKN.pdf", "ok": true, "contains_value": true},
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://indianinfrastructure.com/2018/04/09/imc-limited-gets-pngrb-approval-for-natural-gas-pipeline-from-kakinada-in-andhra-pradesh-to-nellore-in-tamil-nadu/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is a CORRECTION, not a blank-fill -- see the attribution concern in validity above for the full reasoning. Proposed values replace the sheet's current (wrong) EndState/Province='Tamil Nadu' and swapped Start district/state fields. Route confirmed by the PNGRB bid map (visual: entirely within Andhra Pradesh, no Tamil Nadu crossing) and the PNGRB MIS register ('AP' only) -- the Indian Infrastructure article is cited here only for the intermediate-town list (Rajahmundry/Vijayawada/Guntur/Ongole, all AP) that corroborates the AP-only route despite that same article's own erroneous Tamil Nadu claim; do not read it as supporting Tamil Nadu."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 816,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "18.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "18.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://indianinfrastructure.com/2018/04/09/imc-limited-gets-pngrb-approval-for-natural-gas-pipeline-from-kakinada-in-andhra-pradesh-to-nellore-in-tamil-nadu/"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://indianinfrastructure.com/2018/04/09/imc-limited-gets-pngrb-approval-for-natural-gas-pipeline-from-kakinada-in-andhra-pradesh-to-nellore-in-tamil-nadu/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "18 MMSCMD matches exactly across the PNGRB register (authorised + determined capacity, both 18.0) and the independent Apr-2018 Indian Infrastructure press report of the authorization ('capacity of 18 million standard cubic metres per day (mmscmd)'). Two genuinely independent origins (regulator + independent trade press), unlike Length/spec below."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 816,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "667.00", "LengthKnownUnits": "km"},
+      "primary_value": "667.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "667 km matches PNGRB's own register exactly in both the 2021 and 2026 editions, so the sheet's figure is faithful to its regulatory source -- but both editions are the SAME institution across time, not independent origins, and there is a real unresolved conflict with two other documents (the 2015 bid map's 525 km and the 2018 press report's 522 km) -- see the spec concern in validity above. Downgraded to medium/not-independent for that reason; do not treat this as fully settled."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 816,
+      "ref_col": "Delay [ref]",
+      "value_cols": ["Delayed", "DelayType"],
+      "primary_value_col": "Delayed",
+      "values": {"Delayed": "yes", "DelayType": "inferred"},
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The target completion date has already slipped once from the register's own numbers: 'Feb, 2021' in the June-2021 edition (itself already lapsed by the report's own June-2021 publication date) to 'Mar-24' in the current May-2026 edition -- which has ALSO now lapsed by over two years, with zero recorded progress on every metric (operating/hydrotested/lowered/welded length all = 0 out of 667 km authorised). 'inferred' (not 'confirmed') is the right DelayType since no company/regulator statement explicitly declares a delay -- this is inferred from two lapsed targets and zero construction activity across two register editions. Single-institution source (PNGRB across time), hence medium tier / independent=false."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 816,
+      "current_status": "construction",
+      "verdict": "change",
+      "proposed_status": "shelved",
+      "proposed_changes": {"Status": "shelved", "ShelvedCancelledType": "inferred"},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20210828131716/https://www.pngrb.gov.in/data-bank/NGPL-25062021.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This matches the exact Trap-#4 pattern the country guidance describes for P0921 Ennore-Nellore: a live PNGRB authorization sitting in the 'under construction' section with 0 km built and a lapsed target is good evidence FOR shelved/dormant, not evidence of active construction. Here the case is arguably stronger than a single lapsed target: PNGRB's own register shows the completion target has ALREADY slipped once (Feb-2021 in the June-2021 edition -> Mar-2024 in the current May-2026 edition) and even the revised Mar-2024 target is now more than two years overdue as of the report date. Every single progress metric in the current register row reads zero: operating_length_km=0, hydrotested_length_km=0, lowered_length_km=0, welded_length_km=0, out of 667 km authorised -- i.e. not partial progress, but literally no recorded physical construction activity across at least the five years spanned by the two register editions I could compare (2021, 2026), despite an authorization now over 8 years old (19-Feb-2018). Unlike P0921, I found no formal PNGRB cancellation order for this line (nothing like the AR2019-20 cancellation-notice language) -- this is a dormancy inference from the register's own progress columns and slipped target, not a documented cancellation, hence 'shelved'+ShelvedCancelledType='inferred' rather than 'cancelled'+'confirmed'. I did not fabricate a ShelvedYear -- the exact point at which the project went dormant (vs. merely slow) isn't pinned down by the evidence I have; leave that field for Update to set only if a firmer basis turns up. CAVEAT: my session's web-search budget was exhausted before I could run a fresh open-web search for any 2023-2026 trade-press coverage of this specific pipeline (construction updates, IMC statements, financial-closure news) that might independently corroborate or contradict the register's zero-progress picture -- the PNGRB register itself is the only evidence base for this call, and while it is the single most authoritative source available for exactly this question (it IS the regulator's own physical-progress audit), it is one institution, not corroborated by a second independent origin the way the P0921 cancellation was. Flagging tier=medium/independent=false for that reason; recommend a follow-up open-web pass on 'IMC Kakinada Vijayawada Nellore pipeline' before this status change is applied."
+    }
+  ],
+  "summary": "P1434 is real and correctly classified (confirmed across PNGRB's 2015 bid map, the 2018 IMC authorization, and the 2021/2026 PNGRB registers) with no duplicate, but has two attribution errors (EndState/Province should read Andhra Pradesh not Tamil Nadu, and the Start district/state fields are swapped), an unresolved spec conflict (register's 667 km vs. the 2015 bid map/2018 press report's 522-525 km), and should likely move Status from construction to shelved (ShelvedCancelledType=inferred) given zero recorded construction progress and a twice-lapsed completion target in PNGRB's own register through May-2026 -- though that status call rests on PNGRB alone and would benefit from independent trade-press corroboration."
+}

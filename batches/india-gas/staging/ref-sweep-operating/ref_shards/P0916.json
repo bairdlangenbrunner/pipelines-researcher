@@ -1,0 +1,51 @@
+{
+ "project_id": "P0916",
+ "pipeline_name": "Dadri-Bawana-Nangal Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 477,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false, "note": "HTTP 200; url_verifier content-checks FAIL (documented large-PDF false negative). Confirmed locally with pdftotext -layout: row 21 'Dadri-Bawana-Nangal / GAIL / 15.02.2011 / 921 / 31.0 / ... / 998 / ... PB,HR,UP,UK,DL&HP' falls between the section header 'OPERATIONAL COMMON CARRIER PIPELINE' (line 69) and the next section header 'PARTIALLY COMMISSIONED COMMON CARRIER PIPELINE' (line 107)."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's line-wise NGPL register (May-2026 edition) files this pipeline under 'OPERATIONAL COMMON CARRIER PIPELINE' -- India's cross-state trunk/transmission category, distinct from gathering or city-gas-distribution networks -- and lists it transiting six states (PB/HR/UP/UK/DL/HP), consistent with a long-haul transmission trunk rather than a local feeder. Matches the deep-sweep audit shard's own finding for this row. Only one clear origin (the regulator) explicitly classifies it as common-carrier/transmission; OGJ/ToI describe the long-haul route in prose but don't use the regulatory term, so rated medium (single origin) rather than high. No independent second source found that uses the classification term itself."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 477,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false, "note": "HTTP 200; url_verifier content-checks FAIL (documented large-PDF false negative). Confirmed locally with pdftotext -layout: row 21 shows Authorised Capacity 31.0 and Design/Determined Capacity 31.0 MMSCMD."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's line-wise NGPL register (May-2026 edition), row 21, confirms Capacity = 31.0 MMSCMD to the sheet's precision -- matches the recorded value exactly. This is the SAME citation already staged for this row by the PNGRB register crosswalk (`batches/india-gas/staging/register-crosswalk/staged_resolutions.json`), reused here rather than re-derived, per the scope guidance that GEM's India Capacity column is already de facto sourced from PNGRB across ~20 matched rows. Single-origin (regulator only) -- GAIL's own IPLOCA capacity presentation, the wiki's second citation, is now 404 dead (verified) and no other independent source states this exact MMSCMD figure, so tier stays medium. A second, older PNGRB vintage (Jan-2016 edition) also states 31.000 MMSCMD for this same line, but per the scope guidance two vintages of the same regulator's report count as one origin, not two, so it does not raise the tier."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 477,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf"
+   ],
+   "verifications": [
+    {"url": "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf", "ok": true, "contains_value": false, "note": "HTTP 200; url_verifier content-checks FAIL (documented large-PDF false negative -- also flagged as this exact PDF in the deep-sweep audit shard for this PID). Confirmed locally with pdftotext -layout: row 10 reads 'Dadri-Bawana-Nangal | GAIL (India) Limited | 886.0 | 31.000 | 15.02.2011' -- exact match to the sheet's recorded LengthKnown=886.00 km."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's Jan-2016 line-wise NGPL register lists this pipeline's length as 886.0 km, an exact match to the sheet's recorded 886.00 km. Single-origin (regulator only), so medium tier -- no second, independently-owned source giving this precise segment length was found (OGJ/ToI both cover this line only as part of the larger 2,200 km Dahej-Vijaipur-...-Bhatinda combined system and don't state the 886 km segment figure). IMPORTANT CAVEAT carried over from the deep-sweep audit shard for this row: PNGRB's CURRENT (May-2026) edition shows this same named line item has grown to Authorised Length 921 km / Operating Length 998 km (also now transiting Uttarakhand, Delhi and Himachal Pradesh in addition to the original UP/Haryana/Punjab corridor) -- i.e. the recorded 886 km is confirmed as the pipeline's OLD (pre-extension) length, not necessarily its current one. Per the standing rule against proposing a ref for a different value, I am citing the 2016 edition (which matches the recorded 886 km exactly) rather than the 2026 edition (which disagrees, at 921/998 km) -- the staleness question itself is already flagged for Update in the deep-sweep audit shard and is not resolved here."
+  }
+ ]
+}

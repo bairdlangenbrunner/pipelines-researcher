@@ -1,0 +1,30 @@
+{
+ "project_id": "P5412",
+ "pipeline_name": "Hazaribagh-Ranchi Gas Pipeline",
+ "sheet_row": 3006,
+ "wiki": "https://www.gem.wiki/Hazaribagh-Ranchi_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Indian Oil Corp (IOCL)"},
+   "primary_value_col": "Operator",
+   "primary_value": "Indian Oil Corp (IOCL)",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "oo_sheet_row": 4207,
+   "proposed_refs": [
+    "https://pngrb.gov.in/pdf/ngp/bid/bid17/SBID15032022.pdf",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/pdf/ngp/bid/bid17/SBID15032022.pdf", "ok": true, "contains_value": true},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": false, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This is the sole Operator flag in my brief (no other row shares this company/question, so there is nothing to cross-apply). Checked the register-crosswalk (batches/india-gas/staging/register-crosswalk/staged_resolutions.json) and the annual-update leg (batches/india-gas/staging/annual/rows/P5412.json) first, per the protocol — both already stage an OWNER [ref] fill naming Indian Oil Corp (IOCL) as the sole 100% authorisation holder (PNGRB's 31-May-2026 NGPL MIS register, entity 'IOCL', authorised 09.02.2023), but per the protocol Owner and Operator are different facts and neither prior leg staged an Operator fill — that gap is what this flag is actually asking about, and the gem.wiki infobox that raised it ('Indian Oil Corporation Limited') is read for a lead only, never cited. To establish OPERATION specifically rather than just ownership, I fetched PNGRB's own competitive-bid document for this exact pipeline (Bid No. BID/NGPL/17/2022/01/HRPL, 'Hazaribagh-Ranchi Natural Gas Pipeline (HRPL)', downloaded and read with pdftotext -layout since url_verifier's automated substring check false-negatives on this large multi-page PDF — documented pattern per the brief). Its Job Requirement section states verbatim: 'The successful entity for this work shall be required to lay, build, operate or expand the natural gas pipeline...' (Sec 17.3.1), issued under 'PNGRB (Authorizing Entities to Lay, Build, Operate or Expand Natural Gas Pipelines) Regulations, 2008' — i.e. under PNGRB's own regulatory framework, the SAME authorisation that makes an entity the pipeline's 'authorised entity'/owner of record ALSO makes it the entity legally obligated to operate it; PNGRB does not license ownership and operation separately for common-carrier gas pipelines. Combined with the register's independent identification of IOCL as the winning authorised entity for this specific line (09.02.2023 authorisation date, matched to whole-km precision on length/capacity by two separate prior legs), this establishes IOCL as Operator, not just Owner. Manually confirmed both URLs live (HTTP 200) via curl; the bid document's text was independently extracted with pdftotext and contains 'Hazaribagh-Ranchi Natural Gas Pipeline (HRPL)' verbatim (2 occurrences) plus the 'lay, build, operate' language quoted above. tier=medium because this is a regulatory-inference chain (authorisation regime + register entity) rather than a document that names IOCL and the word 'operate' in the same sentence -- flagging that distinction rather than claiming high confidence I don't have. Value written as 'Indian Oil Corp (IOCL)' to match the sheet's existing Owner1 spelling convention (Owner1='Indian Oil Corp') seen on both the gas tab and operators/owners tab."
+  }
+ ]
+}

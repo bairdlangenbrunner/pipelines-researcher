@@ -1,0 +1,162 @@
+{
+  "project_id": "P2211",
+  "pipeline_name": "Dahej-OPAL Gas Pipeline",
+  "sheet_row": 1137,
+  "wiki": "https://www.gem.wiki/Dahej-OPAL_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No value changes. Replace the current Status/Fuel/PipelineType [ref] (data-bank.html#bm6, #bm7 anchors) with the two direct, content-verified PNGRB documents below -- the anchor citation is a moving target on PNGRB's own site and does not reliably support the row.",
+      "researcher_notes": "EXISTENCE, ROUTE and CLASSIFICATION: real, PNGRB-authorized dedicated (non-common-carrier) natural gas pipeline -- confirmed against a genuine government primary document, not merely the sheet's own cited-but-unread source. The sheet's current Status [ref] points to https://pngrb.gov.in/eng-web/data-bank.html#bm7 and #bm6; url_verifier correctly flagged this as not containing 'construction' (existing_ref_checks in the worklist), and I traced why: PNGRB's data-bank page loads its link table from a JS/JSON file whose scrollID-to-document mapping gets RENUMBERED over time (confirmed via Wayback CDX + the live json-data-bank.js). Historically (the wiki's 2021/2023 retrieval dates) these anchors pointed to now-superseded documents; TODAY, by coincidence of the site's ID reuse, #bm7 happens to resolve to the current 'Natural Gas Pipelines Network in India - March 2026' PDF (topically right) while #bm6 resolves to the March-2026 Petroleum & Petroleum PRODUCTS Pipelines bulletin (wrong commodity entirely) -- so even the 'working' half of the citation is right only by accident and will drift again at the next PNGRB site update. This is a genuine citation-integrity defect, not a value error. Went to the actual underlying primary documents instead: (1) PNGRB's own 'Final acceptance for dedicated natural gas pipeline from Petronet LNG Re-gasification Terminal, Dahej to OPAL's Petrochemical Plant, Dahej' letter, Ref PNGRB/Auth/2-NGPL/(02)/2017, dated 20.03.2020 (https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf -- this is the exact document gem.wiki's own footnote 1 cites, just never actually read/OCR'd before). It is a scanned image PDF with no text layer, so url_verifier structurally FAILs any content check on it (a known, documented false-negative class -- 'LARGE PDFs'/scanned-PDF caveat in the tool's own docstring); I downloaded it and ran tesseract OCR on all 3 pages and read it in full. It is addressed by name to Shri Manoj Srivastava, President, ONGC Petro additions Limited, and finally accepts, under PNGRB Regulation 19(2), 'the natural gas pipeline from Petronet LNG Re-gasification Terminal, Dahej to OPAL's Petrochemical Plant at Dahej as dedicated pipeline', with the terms: 'approx. 17 km. length, 12 inch diameter dedicated natural gas pipeline ... capacity ... equal to 3.32 MMSCMD* as indicated by ONGC Petro additions Limited' (*capacity noted as provisional pending final PNGRB capacity determination). (2) Independently, six years later, PNGRB's own current periodic bulletin 'Natural Gas Pipeline Networks in India - March 2026' (https://pngrb.gov.in/data-bank/20260331_NGPL.pdf, PL Unique ID 19.42.NGPL) lists 'PLL to OPaL, Dahej', authorized entity OPaL, authorization date 20.03.2020, Length 17.0 km, Capacity 3.32 MMSCMD, State Gujarat -- exact agreement on route, length and capacity with the 2020 letter from a separately-compiled, dated, current government publication (not a copy-paste of the letter -- it is PNGRB's live registry extract). Both documents independently confirm the DEDICATED (non-common-carrier) classification, which is exactly why this line is correctly absent from the common-carrier NGPL MIS register per register_crosswalk.json ('ABSENT_DEDICATED_OR_TIE_IN ... Dahej-OPAL petrochemical tie-in; dedicated') -- that adjudication is upheld, not a defect. Caveat on independence: both corroborating documents originate from the same regulator (PNGRB), just as two separately-dated, separately-compiled publications six years apart (a one-off transactional acceptance letter vs. a routinely-updated public registry extract) rather than one story reprinted -- flagging this nuance for the reviewer rather than silently claiming two fully unrelated origins. ATTRIBUTION: Owner1='ONGC Petro Additions Ltd' 100% is confirmed by both documents (the 2020 letter is addressed to and accepted by OPAL; the 2026 register lists OPaL as the authorized entity for 19.42.NGPL) -- no co-owner or contradiction found anywhere. StartLocation=EndLocation='Dahej' (Gujarat, India) is not an error despite looking like a null route -- the 2020 letter literally describes the route as 'from Petronet LNG Re-gasification Terminal, Dahej to OPAL's Petrochemical Plant at Dahej', i.e. two distinct facilities that both happen to sit within the Dahej industrial/SEZ area; a more precise Start/EndLocation (Petronet LNG Terminal vs. OPAL Complex) would be an improvement but the current value is not wrong. DUPLICATE: checked against the full 27-pipeline India-gas roster and against the wider Dahej-area cluster specifically. P2210 (Dahej-Koyali Refinery Gas Pipeline) is a different dedicated line to a different endpoint (IOCL's Koyali refinery, ~106 km per PNGRB PL Unique ID 19.41.NGPL, immediately adjacent in the same register table) and a different owner (IOCL, not OPAL) -- not a duplicate. P3912 (Swan LNG Terminal to Dahej LNG Terminal Gas Pipeline, 170 km) shares the word 'Dahej' but is an entirely different, much longer route from the Swan LNG terminal at Jafrabad TO the Dahej LNG terminal (the opposite leg of P2211's own starting point) -- not a duplicate. No other roster row plausibly overlaps. Fuel=Gas and PipelineType=transmission are reasonable as recorded: every source describes this unambiguously as a natural gas pipeline, and a 12in/17km dedicated point-to-point industrial connector is consistent with GEM's transmission classification (no gathering/process-line characteristics found).",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf",
+        "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1137,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "3.32", "CapacityUnits": "MMSCMD"},
+      "primary_value": "3.32",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf",
+        "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf", "ok": false, "contains_value": true, "note": "url_verifier false-negatives -- scanned image PDF, no text layer. OCR'd (tesseract) all 3 pages: page 2 states capacity 'equal to 3.32 MMSCMD* as indicated by ONGC Petro additions Limited' (*provisional pending PNGRB's own capacity-determination process)."},
+        {"url": "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf", "ok": false, "contains_value": true, "note": "url_verifier false-negatives on this PDF (multi-column table, raw-text substring check misses it). Manually extracted with pdftotext -layout: row '3  19.42.NGPL  PLL to OPaL, Dahej  OPaL  20.03.2020  17.0  3.32  NA  Gujarat' confirms Capacity=3.32 MMSCMD."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same value from PNGRB's original 2020 acceptance letter and its independently-compiled March-2026 registry extract, six years apart -- both cited given the same-regulator caveat noted in validity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1137,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "17.00", "LengthKnownUnits": "km"},
+      "primary_value": "17.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf",
+        "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf", "ok": false, "contains_value": true, "note": "OCR'd -- page 2 states 'approx. 17 km. length ... dedicated natural gas pipeline from Petronet LNG Re-gasification Terminal, Dahej to OPAL's Petrochemical Plant at Dahej'."},
+        {"url": "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf", "ok": false, "contains_value": true, "note": "pdftotext -layout row for 19.42.NGPL gives Length=17.0 km."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same two-document corroboration as Capacity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1137,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12.00", "DiameterUnits": "in"},
+      "primary_value": "12.00",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf", "ok": false, "contains_value": true, "note": "OCR'd -- page 2 states '12\" diameter dedicated natural gas pipeline'."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is the real gap flagged by the country guidance (most India gas rows lack a sourced diameter). Only the 2020 acceptance letter states diameter -- the March-2026 PNGRB registry bulletin's table has no diameter column -- so this is a single-source fill, tier medium, despite the source being an unimpeachable primary regulatory document."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1137,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Dahej",
+        "StartState/Province": "Gujarat",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Dahej",
+        "EndState/Province": "Gujarat",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Dahej",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf",
+        "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf", "ok": false, "contains_value": true, "note": "OCR'd -- route explicitly given as 'Petronet LNG Re-gasification Terminal, Dahej to OPAL's Petrochemical Plant at Dahej in Gujarat'."},
+        {"url": "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf", "ok": false, "contains_value": true, "note": "pdftotext -layout row gives 'PLL to OPaL, Dahej' / State: Gujarat."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Start and End both legitimately 'Dahej' -- two distinct facilities (Petronet LNG terminal vs. OPAL plant) within the same industrial area, confirmed by both sources; irregular=true in the worklist is expected for a same-city intra-industrial connector, not a data error."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1652,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "ONGC Petro Additions Ltd", "Owner1%": "100.00%"},
+      "primary_value": "ONGC Petro Additions Ltd",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf",
+        "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/ngp/Govt-Authorization/Authorization_3_20032020.pdf", "ok": false, "contains_value": true, "note": "OCR'd -- letter addressed to 'Shri Manoj Srivastava, President, ONGC Petro additions Limited' and grants final acceptance to that entity; no co-applicant or joint owner named."},
+        {"url": "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf", "ok": false, "contains_value": true, "note": "pdftotext -layout: authorized entity for PL Unique ID 19.42.NGPL is 'OPaL' (ONGC Petro addition Limited, per the report's own abbreviation key)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This ref belongs on the Pipeline operators/owners tab, keyed at oo_sheet_row=1652 per the worklist (used as sheet_row here). Sole-ownership by OPAL confirmed by both PNGRB documents; no source suggests GAIL/GSPC (OPAL's own parent JV partners) hold any direct interest in this specific dedicated spur."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 1137,
+      "current_status": "construction",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-03",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260331_NGPL.pdf", "ok": false, "contains_value": true, "note": "url_verifier false-negatives (multi-column table). Manually confirmed via pdftotext -layout."}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is FRESHER evidence than the roster's own updated=2025-07-16 stamp. PNGRB's March-2026 'Natural Gas Pipeline Networks in India' bulletin (dated/uploaded 17/06/2026, i.e. ~2 months ago as of this review) carries two separate, cross-checking tables for dedicated pipelines: an OPERATIONAL DEDICATED table (39 rows, PL Unique IDs 19.xx/21.xx, each with an 'Operating Length (KM)' column) and a separate, un-headed-but-clearly-distinct 3-row table (IDs 19.30, 19.40, 19.42) whose column set is Authorized Length/Capacity/'Target date of Completion' with NO operating-length column -- i.e. authorized-but-not-yet-operational. P2211's own PL Unique ID 19.42.NGPL ('PLL to OPaL, Dahej') is ABSENT from the 39-row operational-dedicated list (which does include its Dahej neighbor, 19.41.NGPL PLL's Dahej-Koyali Pipeline/DKPL = P2210, shown fully operational at 106.0 of 106.00 km) and instead sits in the small not-yet-operational table with Target Completion = 'NA' (no defined date) alongside 19.30.NGPL (INOLE-Pashamylaram) and 19.40.NGPL (PLL Dahej to TPL Sugen Power Plant). Cross-check: the report's own front-page summary states 'Under Construction & Partially Commissioned ... Dedicated: 122 km' nationally; the three rows in this not-yet-operational table sum to exactly 14.6+90.0+17.0 = 121.6 km, matching that national total almost to the decimal -- strong internal confirmation that these three lines, including P2211, are precisely PNGRB's own 'still under construction' dedicated-pipeline population as of March 2026. This directly and currently confirms GEM's Status='construction' is still correct; there is no operational-length reported for this line anywhere in PNGRB's own live registry, six years after authorization. Noted but NOT actioned as a status concern (construction/proposed-only dormancy rules don't map cleanly onto an already-'construction' row, and PNGRB itself still carries an open, undated authorization rather than treating it as lapsed): Target Completion is listed as 'NA' with no defined date, and the authorization dates to 2020 -- i.e. this dedicated line has had no PNGRB-tracked completion target for at least six years. Also note OPAL's own petrochemical plant at Dahej was commissioned in Feb-2017 (Times of India, 2017-02-03, independent contemporaneous press -- URL not stably resolvable through Google News' redirect wrapper so not cited as a proposed_ref, but the fact is well-established and consistent with the plant needing SOME fuel-gas supply well before this dedicated line's 2020 authorization); this raises the plausible possibility that the plant sources fuel gas by an interim/alternate arrangement while this specific dedicated PNGRB-authorized line remains incomplete, rather than the plant being unable to operate -- but this is inference, not evidence bearing on the LINE's own status, so it is not used to override the direct, current, primary-source confirmation above."
+    }
+  ],
+  "summary": "P2211 (Dahej-OPAL): existence, dedicated classification, route, owner (OPAL 100%) and all four spec fields (17 km / 12in / 3.32 MMSCMD / Dahej-Dahej) independently confirmed via OCR of PNGRB's 2020 acceptance letter plus PNGRB's own current March-2026 registry extract (PL Unique ID 19.42.NGPL) -- both agree exactly, six years apart. No duplicate against the roster (P2210 and P3912 are different Dahej-area lines). Existing Status/Fuel/PipelineType [ref] cites PNGRB anchor IDs (#bm6/#bm7) that the site has silently renumbered over time -- a real citation-integrity defect, fixed with direct dated URLs; no value was wrong. Status='construction' CONFIRMED by the freshest possible evidence: PNGRB's own March-2026 bulletin still lists this line in its not-yet-operational dedicated-pipeline table (absent from the operational list, Target Completion='NA'), consistent with the report's own national under-construction-dedicated total. Deep-filled Capacity/Length/Diameter/Location/Owner refs (Diameter is single-source, medium tier -- the genuine gap this country flags)."
+}

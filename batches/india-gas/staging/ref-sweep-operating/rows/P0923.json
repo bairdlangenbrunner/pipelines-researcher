@@ -1,0 +1,128 @@
+{
+  "project_id": "P0923",
+  "pipeline_name": "Gujarat Regional Gas Network",
+  "sheet_row": 483,
+  "wiki": "https://www.gem.wiki/Gujarat_Regional_Gas_Network",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate action needed. Fill StartState/Province and EndState/Province = Gujarat (see fills) -- currently blank while every comparable GEM 'Regional Network'/'Grid' row (P0904, P0906, P0911, P0927, P0937, P0943) carries a state value.",
+      "researcher_notes": "EXISTENCE: confirmed independently of GEM, from two distinct organizational origins per the country brief's own convention (PNGRB counts as independent of GAIL). (1) PNGRB's regulator register: the current May-2026 line-wise NGPL MIS report (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf) lists, under OPERATIONAL COMMON CARRIER PIPELINE, entry #8 'Gujarat Regional Network', Entity GAIL, Authorisation Date 03.12.2010, Authorised Length 609 km, Authorised+Design Capacity 8.3 MMSCMD, Monthly Gas Supplied (May 2026) 3.0 MMSCMD, Capacity Utilisation 35%, Operating Length 585 km, states passing through 'GJ' (Gujarat) -- confirmed via pdftotext -layout since url_verifier's substring screen false-negatives on this PDF (see PDF note below). The archival 15-Jan-2016 PNGRB register (http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf, also downloaded + pdftotext'd directly) independently lists the SAME asset a decade earlier as entry #6 'Gujarat regional network (+RLNG+RIL)', 'GAIL (India) Limited', 608.8 km, 8.310 MMSCMD, authorised 03.12.2010 -- matching GEM's LengthKnown=608.82 km and Capacity=8.31 MMSCMD to two decimal places (closer than the current edition's rounded 609/8.3), and matching the authorisation date exactly. (2) A genuinely separate origin: GAIL's own PNGRB-filed engineering document, 'REPORT FOR CAPACITY ASSESSMENT [OF THE] INTEGRATED/INTERCONNECTED PIPELINE NETWORK' (https://pngrb.gov.in/pdf/public-notice/GAIL_Report_Annx_19042024.pdf, prepared by GAIL/EIL, not compiled by PNGRB staff) repeatedly names and describes the 'Gujarat Regional Pipeline'/'Gujarat Regional NGPL Network' as one of the constituent regional systems of GAIL's wider Integrated Network (its South Gujarat / Baroda sub-network specifically), confirming this is a real, GAIL-operated, named asset -- not a GEM-only or hallucinated entity. Combined, this is >=2 independent origins for existence -> high tier. CLASSIFICATION: 'transmission' is correct. PNGRB authorises this as a Section-42/Regulation-17 common-carrier NATURAL GAS pipeline (distinct from PNGRB's separately-licensed City Gas Distribution networks run by different entities in the same state, e.g. Adani/local CGDs) -- i.e. a trunk/transmission grid feeding industrial and CGD off-takers, matching the classification convention used consistently across every other GEM 'Regional Network'/'Grid' row in this roster (P0904, P0906, P0911, P0927, P0937, P0943), all of which are also PNGRB common-carrier NGPL entities. DUPLICATE CHECK vs the 35-row India-gas roster: NOT a duplicate. PNGRB lists 'Gujarat Regional Network' (GAIL, 609 km, entry #8), 'High Pressure Gujarat Gas Grid' (GSPL, 2,860 km, entry #13) and 'Low Pressure Gujarat Gas Grid' (GSPL, 58 km, entry #15) as three SEPARATE authorised entities with different owners and non-overlapping lengths -- matching GEM's three separate rows P0923/P0927/P0937 exactly. No collapse recommended. ATTRIBUTION: Owner1='GAIL (India) Ltd' 100% is correct -- both PNGRB editions list Entity=GAIL for this exact asset, and GAIL's own capacity-assessment filing self-identifies this network as part of its own integrated system. Fuel=Gas is trivially correct. STATUS: 'operating' is correct -- the asset sits in PNGRB's 'OPERATIONAL COMMON CARRIER PIPELINE' table with a non-zero current operating length (585 km) and non-zero monthly gas supplied (3.0 MMSCMD, May 2026), i.e. actively flowing gas today, not merely authorised-but-idle. SPEC: LengthKnown 608.82 km and Capacity 8.31 MMSCMD match the 2016 PNGRB edition almost exactly (608.8 km / 8.310 MMSCMD) and the current 2026 edition after rounding (609 km / 8.3 MMSCMD) -- consistent with the country brief's documented CapacityBcm derivation pattern and with the sheet having been populated from an early-2020s PNGRB pull (wiki cites 'Retrieved 2023-07-13') that in this case happens to still match the current authorised figures (unlike some other rows in this roster where the authorised capacity has since changed). Note the LengthKnown figure GEM carries is the PNGRB AUTHORISED length (609 km), not the current PNGRB OPERATING length (585 km) -- both are legitimate PNGRB fields but they now differ by 24 km/~4%; flagging for awareness, not proposing a change, since 'authorised length' is the more stable, commonly-used figure across this roster's other rows. Only the length/capacity NUMBERS specifically trace to one origin type (PNGRB, at two vintages) rather than two -- GAIL's capacity-assessment filing confirms the network's identity/existence but does not restate its aggregate length or capacity, so treat the exact-decimal match as medium-tier corroboration even though existence/status/owner/classification clear high tier. PDF VERIFIER NOTE: url_verifier.py FAILs the content-substring check on all three PNGRB/GAIL PDFs cited here ('200 but missing expected') -- this is the documented large-PDF false negative for this project (PNGRB reports are large-format tables the extractor doesn't fully index). All three were downloaded directly and read with `pdftotext -layout`, and every quoted figure above was confirmed verbatim in the resulting text.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf",
+        "https://pngrb.gov.in/pdf/public-notice/GAIL_Report_Annx_19042024.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 483,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's May-2026 register lists 'Gujarat Regional Network' (GAIL, 609 km authorised, 585 km operating) in the OPERATIONAL COMMON CARRIER PIPELINE table with 3.0 MMSCMD gas supplied in the reporting month -- confirms currently operating, not merely authorised. url_verifier false-negatives on this large PDF (documented issue); confirmed locally via pdftotext -layout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 483,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+      "verifications": [{"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed as a Natural Gas Pipeline (NGPL) in PNGRB's register; trivially correct."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 483,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "https://pngrb.gov.in/pdf/public-notice/GAIL_Report_Annx_19042024.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL_Report_Annx_19042024.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB authorises this as a Section-42/Regulation-17 common-carrier natural gas transmission pipeline (distinct from separately-licensed CGD distribution networks in Gujarat); GAIL's own capacity-assessment filing treats it as a constituent regional transmission system of its wider Integrated Network. Both PDFs false-negative on url_verifier's substring screen (large-PDF issue); confirmed locally via pdftotext -layout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 483,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "8.31", "CapacityUnits": "MMSCMD"},
+      "primary_value": "8.31",
+      "proposed_refs": ["http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf"],
+      "verifications": [{"url": "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's 15-Jan-2016 register shows 8.310 MMSCMD authorised/design capacity for this exact entity -- matches GEM's 8.31 to two decimal places. The current (May-2026) edition still shows the same 8.3 MMSCMD (unchanged in a decade), so no drift. Single origin (PNGRB, at two vintages) for the precise number -> medium tier per the corroboration rule; existence/attribution for the asset itself clear high tier via the separate GAIL filing (see validity)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 483,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "608.82", "LengthKnownUnits": "km"},
+      "primary_value": "608.82",
+      "proposed_refs": ["http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf"],
+      "verifications": [{"url": "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's 15-Jan-2016 register shows 608.8 km authorised length for this exact entity -- matches GEM's 608.82 km to within rounding. The current (May-2026) edition rounds it to 609 km authorised (585 km OPERATING length -- 24 km/~4% below authorised, i.e. some authorised route is not yet built/commissioned per the latest filing; not a reason to change GEM's authorised-length convention, but noted for awareness). Single origin (PNGRB) for the precise number -> medium tier."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 483,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartState/Province", "EndState/Province"],
+      "primary_value_col": "StartState/Province",
+      "values": {"StartState/Province": "Gujarat", "EndState/Province": "Gujarat"},
+      "primary_value": "Gujarat",
+      "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "https://pngrb.gov.in/pdf/public-notice/GAIL_Report_Annx_19042024.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": false},
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GAIL_Report_Annx_19042024.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartState/Province and EndState/Province are currently blank on the sheet, unlike every comparable roster row (P0904 Tripura, P0906 Assam, P0911 Tamil Nadu, P0927/P0937 Gujarat, P0943 Maharashtra all carry a state value). PNGRB's current register states 'GJ' (Gujarat) as the sole state the network passes through, and GAIL's own capacity-assessment filing discusses this network's sub-components (North Gujarat, Baroda/South Gujarat) entirely within Gujarat. This is a regional grid, not a simple point-to-point line, so I am filling State/Province only (consistent with the sibling Gujarat grid rows P0927/P0937, which also leave StartLocation/EndLocation blank) rather than inventing specific start/end towns GEM does not already record. Not proposing StartLocation/EndLocation values -- GAIL's search-result summaries mention Ahmedabad/Bharuch/Vadodara(Undera) as service points but I could not independently verify which (if any) constitutes a formal 'start' vs 'end' for this multi-hub network without over-claiming precision the sources don't support."
+    }
+  ],
+  "summary": "P0923 (Gujarat Regional Gas Network / GAIL) is real and correctly classified: existence and identity confirmed via PNGRB's register (2016 + current 2026 editions, matching length/capacity to 2 decimal places) plus a separate GAIL-authored PNGRB capacity-assessment filing; not a duplicate of the two other GAIL/GSPL Gujarat grid rows (P0927, P0937), which PNGRB lists as three distinct authorised assets. Only gap found: StartState/Province and EndState/Province are blank versus every comparable roster row -- staged as a high-tier fill (Gujarat/Gujarat). No existence, duplicate, classification, or material spec concerns."
+}

@@ -1,0 +1,93 @@
+{
+  "project_id": "P0938",
+  "pipeline_name": "Mallavaram-Bhopal-Bhilwara-Vijaipur Gas Pipeline",
+  "sheet_row": 498,
+  "wiki": "https://www.gem.wiki/Mallavaram-Bhopal-Bhilwara-Vijaipur_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action; corroborates Status=operating, Fuel=Gas, PipelineType=transmission, Delayed=yes/inferred, LengthKnown=365 km, and StartLocation/EndLocation via independent regulator + credit-agency + trade-press sourcing",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/STATUS/LOCATION/LENGTH/DELAY confirmed real and correctly recorded, with two independent origins agreeing on every point below. (1) PNGRB (regulator) current monthly line-wise register, edition 31-May-2026, https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf -- confirmed via `curl` + `pdftotext -layout` (url_verifier 200s the URL but false-negatives on token match, the documented large-multi-column-PDF limitation; content confirmed locally). Under 'PARTIALLY COMMISSIONED COMMON CARRIER PIPELINE', row 3, entity GITL, authorised 07.07.2011: Authorised Length 1,881 km, Authorised/Design Capacity 78.3 MMSCMD, gas supplied 2.2 MMSCMD, capacity utilisation 3%, OPERATING length 365 km, UNDER-CONSTRUCTION length 1,517 km, target completion Mar-20 (already passed by 9+ years -- corroborates Delayed=yes for the balance of the project), states AP/TG/MH/MP/RJ/GJ. The 365 km operating figure is an EXACT match to GEM's Phase I LengthKnown. (2) CARE Ratings (credit rating agency), two separate press releases 13-Sep-2023 and 08-Dec-2025 (https://www.careratings.com/upload/CompanyFiles/PR/202309130946_GSPL_India_Transco_Limited.pdf, .../202512141252_GSPL_India_Transco_Limited.pdf -- both confirmed via `curl`+`pdftotext`; url_verifier 200s but false-negatives on token match, same large-PDF pattern) state verbatim: 'GITL has commissioned Phase-I of the Mallavaram (Andhra Pradesh) - Bhopal (Madhya Pradesh) - Bhilwara (Rajasthan) - Vijaipur (Madhya Pradesh) (MBBVPL) pipeline project on October 14, 2019, which includes laying an 18-inch pipeline of 364.42 km (including ~29 km of spur lines) from the East West Pipeline's (EWPL) interconnection point at Kunchanapalli in Andhra Pradesh to RFCL's plant at Ramagundam in Telangana'. This independently confirms StartLocation=Kunchanapalli/Andhra Pradesh and EndLocation=Ramagundam/Telangana exactly, and pins LengthKnown at 364.42 km (GEM's 365.00 is a fair rounding, not material). Offshore Technology's project-database page (https://www.offshore-technology.com/marketdata/mallavaram-bhopal-bhilwara-vijaipur-phase-ii-gas-pipeline-india/) independently states 'the associated Phase I segment measures 365 km in length' -- a third, differently-sourced agreement on length. Oil & Gas Journal's 2012 contract-award article (https://www.ogj.com/articles/2012/08/gspl-india-lets-engineering-contract-for-2000km-natural-gas-pipeline.html) independently corroborates the broader project narrative (GITL as developer, D6/KG-basin-to-Bhilwara route, four states) from a still-earlier, wholly separate origin. PipelineType=transmission is correct: PNGRB regulates and lists this as a 'common carrier natural gas pipeline' (i.e. open-access transmission infrastructure), and CARE's own industry classification for GITL is 'Gas transmission/marketing'. Fuel=Gas is trivially correct (natural gas transmission throughout). No duplicate: checked against the 35-row roster -- the only other India rows touching this corridor are none; GEM's own Phase II (under-construction, not in this operating-only worklist) is a GRANULARITY split of the same PNGRB-authorised 1,881 km asset (365 km commissioned = this row, 1,517 km still under construction = the separate construction-status row), not a duplicate, consistent with the Mehsana-Bhatinda/Bhatinda-Gurdaspur/Kochi-Koottanad pattern already documented for India. Overall tier=high (PNGRB + CARE + Offshore Technology + OGJ are four organizationally distinct origins agreeing on the core facts), independent=true.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202512141252_GSPL_India_Transco_Limited.pdf",
+        "https://www.offshore-technology.com/marketdata/mallavaram-bhopal-bhilwara-vijaipur-phase-ii-gas-pipeline-india/",
+        "https://www.ogj.com/articles/2012/08/gspl-india-lets-engineering-contract-for-2000km-natural-gas-pipeline.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct StartYear1 from 2021 to 2019 (commissioned 14 October 2019 per GITL's own regulatory/credit disclosures) -- 2021 appears to conflate the pipeline's own commissioning with RFCL's (the sole offtaker's) unrelated urea-plant COD in March 2021",
+      "researcher_notes": "GEM's StartYear1=2021 does not match either independent source I could find. CARE Ratings' two press releases (13-Sep-2023 and 08-Dec-2025, both confirmed via pdftotext, verifier false-negative documented above) state unambiguously: 'GITL commissioned phase-I of the MBBVPL on October 14, 2019.' The wiki's own cited source (PNGRB's 'Partially Commissioned Common Carrier Natural Gas Pipelines', 31 March 2021 edition) only documents that the pipeline WAS ALREADY commissioned as of that March-2021 snapshot -- it is a status-as-of date, not a commissioning date, and 2021 is also exactly when CARE separately notes 'RFCL commissioned its urea project in March 2021' (a different asset -- the customer's fertiliser plant, not GITL's pipeline). The most likely explanation is that GEM's StartYear1 was set from the March-2021 PNGRB snapshot (or from RFCL's own March-2021 COD) rather than from GITL's actual commissioning date, which is a full 17 months earlier. I could not find a second, organizationally distinct source giving the specific Oct-2019 date (CARE's two reports share one analyst house, so I'm treating them as one origin for tier purposes), so tier=medium rather than high, though I'm confident in the direction of the correction given CARE repeats the identical date across two independently-commissioned annual credit reviews three years apart, each presumably re-verified against GITL's own filings.",
+      "proposed_refs": [
+        "https://www.careratings.com/upload/CompanyFiles/PR/202512141252_GSPL_India_Transco_Limited.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202309130946_GSPL_India_Transco_Limited.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "flag/verify Capacity=78.25 MMSCMD for this 'Phase I' row -- independent sourcing indicates the ACTUAL design capacity of the 365 km built/operating Phase I stretch is only ~4.5-5 MMSCMD (of which ~2.02 MMSCMD is contracted to RFCL); 78.25 (rounds to PNGRB's 78.3) is the AUTHORISED/system-wide design capacity for the FULL 1,881 km project once entirely built (Phase I + the still-under-construction 1,517 km Phase II), not the capacity of the segment this row actually describes",
+      "researcher_notes": "This is the most material finding on the row. GEM's Capacity=78.25 MMSCMD for the 'Phase I' segment matches PNGRB's regulator table almost exactly (78.3 MMSCMD, 1dp rounding) -- but that PNGRB figure is explicitly the 'Authorised/Design Capacity' for the ENTIRE GITL entity/project (Authorised Length column = 1,881 km, i.e. the whole corridor, not the 365 km operating stretch). Two independently-sourced, organizationally distinct citations establish the actual built Phase-I capacity is far smaller: (a) CARE Ratings, in both its 2023 and 2025 press releases (same house, but each an independently re-verified annual credit review): 'The design capacity of phase-I is ~4.50 mmscmd [2025]/around 5 mmscmd [2023], of which ~2.02 mmscmd is supplied to RFCL under a GTA'. (b) Business Standard, a mainstream Indian business daily, reporting contemporaneously in July 2016 on the signing of the actual RFCL Gas Transportation Agreement (https://www.business-standard.com/article/companies/gitl-signs-transportation-agreement-with-ramagundam-fertilizers-for-20-years-116071500658_1.html, verified OK): 'Under the agreement, GITL will supply 2 mmscmd of natural gas from Mallavaram of Andhra Pradesh to RFCL's plant at Ramagundam' -- an independent, decade-old, pre-CARE confirmation that the actual contracted/designed throughput for this exact stretch is single-digit MMSCMD, not 78. The mechanism is also independently explained: CARE's disclosures (and a related PNGRB/GITL diameter dispute, corroborated in a November-2019 APTEL appellate tribunal judgment I located via indiankanoon.org/aptel.gov.in but could NOT cite -- both mirrors failed url_verifier, one on a gov.in SSL certificate-chain error and one on a 403, so I am not proposing them as refs, only reporting what I read) state GITL built the 364.42 km Phase-I stretch at 18-inch diameter instead of the originally-contracted 42-inch, specifically 'leading to reduced capacity with respect to the authorised capacity' -- i.e. the smaller pipe physically cannot carry anywhere near the 78 MMSCMD full-system design figure. I am NOT proposing a replacement Capacity value myself (per the no-forced-numbers guidance and because 4.5 vs ~5 vs the CARE 2.02-contracted figure are three different granularities of the same underlying fact) -- this is a genuine value disagreement for Update to resolve, most likely by changing Capacity to ~4.5-5 MMSCMD for this Phase-I-scoped row (or by adding a ResearcherNotes caveat if GEM deliberately intends this field to describe the ultimate system capacity rather than this segment's actual capacity). tier=high: CARE and Business Standard are two organizationally independent origins, seven years apart, agreeing on the same order-of-magnitude, non-78 figure.",
+      "proposed_refs": [
+        "https://www.careratings.com/upload/CompanyFiles/PR/202512141252_GSPL_India_Transco_Limited.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202309130946_GSPL_India_Transco_Limited.pdf",
+        "https://www.business-standard.com/article/companies/gitl-signs-transportation-agreement-with-ramagundam-fertilizers-for-20-years-116071500658_1.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "correct Owner1 -- 'Gujarat State Petronet' at 100% does not match either the operating-entity convention (gem.wiki's own infobox lists 'GSPL India Transco Limited (GITL)' as Owner) or the underlying JV structure; if the field is meant to show ultimate shareholders, the correct split is GSPL 52% / IOCL 26% / BPCL 11% / HPCL 11%, not 100% Gujarat State Petronet",
+      "researcher_notes": "The Owner tab lists Owner1='Gujarat State Petronet' at 100%. Two problems, both independently sourced: (1) 'Gujarat State Petronet Limited' (GSPL) and 'GSPL India Transco Limited' (GITL) are two distinct, separately rated legal entities -- GSPL is a listed gas-transmission company (CARE AA+), and GITL is a special-purpose JV vehicle it co-founded specifically to build MBBVPL. Gem.wiki's own infobox (read for leads, not cited) lists Owner/Operator/Parent company as 'GSPL India Transco Limited (GITL)', not 'Gujarat State Petronet' directly. (2) Even treating GSPL as the intended ultimate parent, CARE Ratings' 2023 and 2025 press releases state the actual JV shareholding is 'GSPL (52%), IOCL (26%), BPCL (11%) and HPCL (11%)' -- GSPL holds a majority, not 100%. Business Standard's independent 2016 article (https://www.business-standard.com/article/companies/gitl-signs-transportation-agreement-with-ramagundam-fertilizers-for-20-years-116071500658_1.html, verified OK) corroborates the corporate-family relationship from a wholly separate, decade-earlier origin: 'GSPL India Transco Ltd (GITL), a subsidiary of Gujarat State Petronet Ltd (GSPL)' -- consistent with a majority (52%) stake, and inconsistent with a simple 100%-owned entity being renamed/conflated with its parent. tier=high: CARE (for the precise percentages) and Business Standard (for the distinct-entity/subsidiary relationship, independently and earlier) are organizationally separate origins agreeing GITL is not simply '100% Gujarat State Petronet'.",
+      "proposed_refs": [
+        "https://www.careratings.com/upload/CompanyFiles/PR/202512141252_GSPL_India_Transco_Limited.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202309130946_GSPL_India_Transco_Limited.pdf",
+        "https://www.business-standard.com/article/companies/gitl-signs-transportation-agreement-with-ramagundam-fertilizers-for-20-years-116071500658_1.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 498,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "18", "DiameterUnits": "in"},
+      "primary_value": "18",
+      "proposed_refs": [
+        "https://www.careratings.com/upload/CompanyFiles/PR/202512141252_GSPL_India_Transco_Limited.pdf",
+        "https://www.careratings.com/upload/CompanyFiles/PR/202309130946_GSPL_India_Transco_Limited.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202512141252_GSPL_India_Transco_Limited.pdf", "ok": true, "contains_value": "manual (large multi-column PDF, url_verifier false-negatives on token match; confirmed by curl + pdftotext -layout: 'unilaterally reducing the pipeline diameter to 18-inch...in place of the contracted 42-inch pipeline')"},
+        {"url": "https://www.careratings.com/upload/CompanyFiles/PR/202309130946_GSPL_India_Transco_Limited.pdf", "ok": true, "contains_value": "manual (same pattern, confirmed by curl + pdftotext -layout: 'laying an 18-inch pipeline of 364.42 km')"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter was blank in the sheet. CARE Ratings' 2023 and 2025 press releases both state the built Phase-I stretch was laid at 18-inch diameter (reduced, without PNGRB's prior approval, from the originally contracted 42-inch design -- itself the subject of an ongoing PNGRB/GITL regulatory dispute). tier=medium because both citations are the same rating-agency house; I located a fully independent corroborating source -- a November-2019 APTEL (Appellate Tribunal for Electricity, which hears PNGRB appeals) judgment in GITL v. PNGRB stating 'a dedicated pipeline of 29.5 Kms of 18\" diameter' and 'the 18\" diameter line is accordingly laid' -- but could not cite it: the gov.in original (aptel.gov.in) fails url_verifier on an SSL certificate-chain error, and the indiankanoon.org mirror 403s. Not proposed as a ref; reported here only to explain the medium-not-low confidence."
+    }
+  ],
+  "summary": "P0938 Phase I (Mallavaram-Bhopal-Bhilwara-Vijaipur, operating) is REAL and correctly classified/located/dated-for-length (PNGRB + CARE Ratings + Offshore Technology + OGJ agree on 365/364.42 km, Kunchanapalli->Ramagundam, transmission, no duplicate) -- but TWO concerns and one date concern staged: StartYear1=2021 should likely be 2019 (CARE: commissioned 14-Oct-2019, not RFCL's own March-2021 plant COD), Capacity=78.25 MMSCMD is the full 1,881-km SYSTEM design capacity, not this 365-km segment's actual ~4.5-5 MMSCMD capacity (CARE + Business Standard, high tier), and Owner1='Gujarat State Petronet' 100% misstates the JV (should be GITL as owner, or GSPL 52%/IOCL 26%/BPCL 11%/HPCL 11% if listing ultimate shareholders); staged a sourced Diameter=18in fill. No UNRESOLVED items."
+}

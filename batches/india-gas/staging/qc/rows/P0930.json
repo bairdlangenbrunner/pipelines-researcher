@@ -1,0 +1,38 @@
+{
+ "project_id": "P0930",
+ "pipeline_name": "Jaigarh-Dabhol Gas Pipeline",
+ "sheet_row": 490,
+ "wiki": "https://www.gem.wiki/Jaigarh-Dabhol_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Western Concessions Private Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "Western Concessions Private Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf",
+    "https://gstcouncil.gov.in/western-concessions-private-limited-formerly-known-h-energy-gateway-private-limited"
+   ],
+   "verifications": [
+    {"url": "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf", "ok": false, "contains_value": true, "note": "url_verifier FAILs (200 but the substring check can't see inside a large PDF) — documented false negative. Downloaded and read locally with pdftotext -layout: row 1 of the 'Full Operational Tie-in connectivity' table (PL Unique ID 21.01.NGPL) reads 'Jaigarh - Dabhol | WCPL | 18.05.2015 | 60.00 | 29.00 | 60.00 | Maharashtra'."},
+    {"url": "https://gstcouncil.gov.in/western-concessions-private-limited-formerly-known-h-energy-gateway-private-limited", "ok": true, "contains_value": true}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "This is the second half of the ONE-QUESTION-PER-COMPANY pass across this brief: MUT/HUT (ONGC) is one company-level answer (see P0944), and the two Jaigarh rows are a second, DIFFERENT company. For P0930 specifically: PNGRB's own current natural-gas-pipeline register (pngrb.gov.in data-bank, 'Full Operational Tie-in connectivity' table, authorized under Regulation 21(1)) lists the entity for the Jaigarh-Dabhol pipeline as 'WCPL' with authorisation date 18.05.2015, authorised length 60.00 km, capacity 29.00 MMSCMD and operating length 60.00 km — WCPL expands to Western Concessions Private Limited per the sheet's existing Owner value. Independently, a Maharashtra GST Appellate Authority for Advance Ruling record (gstcouncil.gov.in) names the taxpayer as 'Western Concessions Private Limited (formerly known as H-Energy Gateway Private Limited)' and describes its business as ITC on construction of a 'Tie-in pipeline, for delivery of re-gasified LNG from FSRU to the National Grid' — matching this pipeline's function exactly (Jaigarh LNG Terminal to the Dabhol/GAIL grid tie-in) and confirming WCPL's LEGAL predecessor name for anyone cross-checking older documents. Sheet Owner is already 'Western Concessions Private Ltd [100.%]' with no separate operating company anywhere in the record, so Operator = Owner here is the well-evidenced answer — unlike P0931 below, where a similarly-named but LEGALLY DISTINCT H-Energy group entity holds the authorization instead. Value ADDED (cell was blank); tier high (PNGRB regulator register + independent GST tribunal filing, both government sources, neither citing GEM)."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No change to LengthKnownKm=60 — it is independently confirmed by the regulator. Flag the drawn route (34 km, ratio 0.56) as an incomplete/partial trace for a redraw pass; it very likely omits the FSRU-to-shore or a routing segment of the full 60 km corridor.",
+   "researcher_notes": "PNGRB's own register (see the Operator fill above for the exact row) gives BOTH the authorised length AND the operating length as 60.00 km, to two-decimal precision, for the Jaigarh-Dabhol tie-in pipeline — this is the regulator's own audited figure, not a company self-report, and it matches the sheet's LengthKnownKm=60 exactly. The drawn route's 34 km is therefore the side that needs correction, not the sheet value; recommending the geometry be reviewed for a missing or truncated segment (e.g. an FSRU mooring/subsea tie-in leg not captured in the trace) rather than proposing coordinates myself.",
+   "proposed_refs": ["https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf"],
+   "verifications": [{"url": "https://www.pngrb.gov.in/data-bank/NGPL-20240626.pdf", "ok": false, "contains_value": true, "note": "Large-PDF url_verifier false negative; confirmed locally, see Operator fill note."}],
+   "tier": "high", "independent": true, "source_language": "en"
+  }
+ ]
+}

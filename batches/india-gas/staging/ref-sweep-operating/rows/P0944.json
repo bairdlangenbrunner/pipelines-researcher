@@ -1,0 +1,387 @@
+{
+  "project_id": "P0944",
+  "pipeline_name": "Mumbai-Uran Trunk Line (MUT)",
+  "sheet_row": 501,
+  "wiki": "https://www.gem.wiki/Mumbai-Uran_Trunk_Line_(MUT)",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No correction needed. Stage the proposed refs (Business Standard + Projects Today + CHT PDF) onto the currently-unreferenced Status/Fuel/PipelineType/Start/Capacity/Length/Diameter/FuelSource/Location/Owner cells.",
+      "researcher_notes": "EXISTENCE / CLASSIFICATION / SPEC all confirmed by 3 independent origins that between them corroborate every populated field: two press accounts already cited by the sheet's own gem.wiki page (Business Standard 2003, Projects Today 2005) plus a government register I located independently (CHT/MoPNG 'Gas Pipeline Network in India 2020-21'), which supplies an exact match on Diameter (28 in), Length (204.00 km) and Capacity (12.247 MMSCMD = 4.470 bcm/y, matching the sheet's 4.47 to 2dp) for the specific '28\" MUT gas line' row under ONGC. Business Standard independently corroborates the 28-inch gas diameter and ONGC ownership and names the Uran endpoint; both press sources place commissioning in 2005, matching StartYear1. FuelSource='Mumbai High Gas Field' and the offshore/Uran, Maharashtra location are corroborated by Business Standard's 'Mumbai High North oilfield to Uran' / 'Bombay High offshore installations with Uran shore terminal' language. CAVEATS, not defects: (1) the CHT PDF content match fails url_verifier's substring screen (documented large-PDF extraction-limit false negative) -- confirmed locally with pdftotext; (2) the Projects Today URL fails url_verifier with an SSLError (documented cert-chain false-negative class) -- confirmed live via curl, but its article body is JS-rendered and unreadable outside a browser, so it only corroborates the headline/date, not the spec numbers; (3) the sheet's own wiki-cited cht.gov.in PDF link is now a dead path (404) -- I recovered a live, current URL for the same CHT series via cht.gov.in/pipelines-network and used that instead. Cross-checked against the roster for duplicate/classification risk, especially against its sibling P0926 Heera-Uran Trunk Line (HUT): a fellow reviewer flagged P0926 as misclassified (CAG audit shows HUT is fundamentally an oil line carrying only incidental off-gas, yet GEM tracks it as a stand-alone Fuel=Gas row with no GOIT oil twin). MUT does NOT have that problem: the CHT register explicitly authorises MUT as TWO separate, independently-specified pipes sharing one corridor -- a 30-inch oil line (204 km, 15.634 MMTPA) and a 28-inch GAS line (204 km, 12.247 MMSCMD) -- and the gas line's own spec (28in / 204km / 12.247 MMSCMD=4.47 bcm/y) is exactly what P0944 carries. The oil counterpart is tracked separately in GOIT (per the peer's note, as P5191 'Mumbai High - Uran Trunk Oil Pipeline'), so P0944 in GGIT is correctly scoped to the gas-only pipe, not a mixed-commodity mis-tag. Also checked against P0943 (Mumbai Regional Natural Gas Pipeline Network, Uran-based distribution grid) and P2212 (Dahej-Uran-Panvel-Dhabhol/GAIL's DUPL) -- both are separate, differently-owned, differently-routed systems, not the same physical pipe as ONGC's MUT. No duplicate.",
+      "proposed_refs": [
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+        "https://www.projectstoday.com/News/Mumbai-High-Trunk-pipeline-commissioned",
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        },
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status inferred from context per url_verifier convention: CHT's 2020-21 register lists MUT's gas line with live nonzero length/capacity/throughput both fiscal years shown; Business Standard confirms the line was in active use in 2003 (before being replaced by the current system in 2005), and Projects Today's 2005 'commissioned' headline confirms the current line came online. Consistent with 'operating'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        },
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CHT explicitly sections this exact line under 'GAS PIPELINES (Offshore)'; Business Standard explicitly describes the tender as covering a '...28 inch gas pipeline system...' distinct from the parallel 30-inch oil line. Two independent sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CHT's own name for the asset is '28\" MUT (Mumbai Uran Trunk) gas line', tracked in the national trunk/transmission register moving gas in bulk from the offshore Mumbai High field to the Uran onshore terminal -- a transmission trunk line, not a gathering/distribution line, consistent with how this roster classifies its siblings (HUT, BPA-Hazira, BPB-Hazira all carry the same PipelineType). Single-document support for the specific classification word, hence medium rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2005"
+      },
+      "primary_value": "2005",
+      "proposed_refs": [
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+        "https://www.projectstoday.com/News/Mumbai-High-Trunk-pipeline-commissioned"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.projectstoday.com/News/Mumbai-High-Trunk-pipeline-commissioned",
+          "ok": false,
+          "contains_value": false
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Business Standard (Dec 2003): ONGC targeted a 'completion schedule in May 2005'. Projects Today's headline/date (Jun 9, 2005): 'Mumbai High Trunk Pipeline Commissioned'. Two independent press sources bracketing the same 2005 commissioning, matching StartYear1. Projects Today fails url_verifier on an SSLError (confirmed live via curl per the documented false-negative class); its body is JS-rendered so only the headline/date could be read."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "4.47",
+        "CapacityUnits": "bcm/y"
+      },
+      "primary_value": "4.47",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CHT: '28\" MUT gas line' capacity 12.247 MMSCMD (both FY columns) = 12.247 x 365 / 1000 = 4.470 bcm/y, an exact match to the sheet's 4.47 (2dp). Confirmed locally with pdftotext (url_verifier's large-PDF false negative). Single source for the precise figure -- no second independent document gives the MMSCMD/bcm number -- so medium, not high, despite the exact match; existence/plausibility of the value is further supported by the pipeline's known diameter and role."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "204.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "204.00",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CHT: '28\" MUT gas line' length 204.00 km in both FY2019-20 and FY2020-21 columns -- exact match to the sheet. Confirmed locally with pdftotext (url_verifier's large-PDF false negative). Single source for the precise figure, hence medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "28.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "28.00",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        },
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CHT lists the line as '28\" MUT gas line'; Business Standard's tender description separately names a '28 inch gas pipeline system'. Two independent sources agreeing exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Mumbai High Gas Field"
+      },
+      "primary_value": "Mumbai High Gas Field",
+      "proposed_refs": [
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Business Standard: the pipeline 'linked Mumbai High North oilfield to Uran' and the replacement tender connects 'various Bombay High offshore installations with Uran shore terminal' -- Mumbai High / Bombay High is the same field (associated gas + oil), consistent with the sheet's FuelSource. Single explicit naming source, hence medium; CHT's ONGC-offshore section is consistent with but does not independently re-name the source field for this specific line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Offshore India",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Uran",
+        "EndState/Province": "Maharashtra",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Offshore India",
+      "proposed_refs": [
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Business Standard: the line runs from offshore 'Bombay High offshore installations' to the 'Uran shore terminal'. CHT's own name for the line, 'MUT (Mumbai Uran Trunk)', and its listing under 'GAS PIPELINES (Offshore)' under ONGC corroborate the offshore-India-to-Uran, Maharashtra routing. Two independent sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 501,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Oil and Natural Gas Corp Ltd",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Oil and Natural Gas Corp Ltd",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+        "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf",
+          "ok": true,
+          "contains_value": false
+        },
+        {
+          "url": "https://www.business-standard.com/article/companies/ongc-to-replace-aging-mumbai-uran-pipeline-103122001041_1.html",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CHT lists the line under owner heading '1 ONGC'; Business Standard identifies ONGC as the party deciding to replace/own the pipeline throughout. Two independent sources confirm 100% ONGC ownership, no other owner named anywhere.",
+      "oo_sheet_row": 827
+    }
+  ],
+  "summary": "P0944 (MUT) confirmed real, correctly classified, and fully corroborated on spec (28in/204km/4.47bcm/y exact match to a government CHT register) plus 2 press sources; no existence/duplicate/classification concern, unlike sibling HUT P0926; 10 refs staged (9 pipeline fields + owner), no UNRESOLVED."
+}

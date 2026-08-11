@@ -1,0 +1,130 @@
+{
+  "project_id": "P3911",
+  "pipeline_name": "Swan LNG Terminal to Hadala Gas Pipeline",
+  "sheet_row": 1926,
+  "wiki": "https://www.gem.wiki/Swan_LNG_Terminal_to_Hadala_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence, classification, Fuel, duplicate-status, or the 198 km / 18 MMSCMD spec values. See the separate attribution flag below on the endpoint-location cluster, and the fills below for Diameter/Length/Capacity refs.",
+      "researcher_notes": "EXISTENCE: chased the sheet's own wiki-cited lead first. gem.wiki cites (1) PNGRB's generic 'Natural Gas Pipelines Network in India — As on 31 March 2022' network report (a JS-rendered anchor page I could not text-extract; 10 backlinks on the wiki page, i.e. a broad aggregate citation, not on its own proof this specific line exists) and (2) https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf. That second URL resolves (HTTP 200, verified 348,809-byte 5-page PDF) but is a scanned image with no text layer, so url_verifier false-negatives on any token (confirmed: FAIL '200 but missing expected'). I downloaded it and OCR'd all 5 pages with tesseract (pdftoppm -r 300 + tesseract), and it is a genuine, on-point, first-party filing: Gujarat State Petronet Ltd (GSPL), letter GSPL/COMM/2021 dated 3 July 2021 to the PNGRB Secretary, 'Approval for Tie in Connectivity from SWAN LNG Terminal Expansion facility at Jafrabad to Hadala, Dist Surendranagar on existing High Pressure Gujarat Gas Grid of GSPL, u/r 21 of PNGRB Authorisation Regulations.' Annexure-I states verbatim: 'GSPL proposes to lay 30\" X 198 kms pipeline from Jafrabad (SLPL expansion facility), Dist Amreli to Hadala (Receiving Terminal Hadala), Dist Surendranagar, Gujarat' and 'Capacity of the proposed 30\" Tie in Connectivity Pipeline will be about 18 MMSCMD.' This is the actual project proponent's own regulatory filing, not GEM-derived and not a generic aggregate citation — it names this exact pipeline, route, length, capacity and diameter. Only one fully independent, on-point source was reachable this pass (WebSearch budget was exhausted mid-task; gspcgroup.com's general GSPL page, Wikipedia, Google/Bing/DuckDuckGo fetches and swanenergy/swanlng domain guesses returned nothing usable), so tier is medium rather than high — flagging for a follow-up pass to find a second independent corroborator (GSPL/Swan Energy annual reports, PPAC, trade press) rather than treating this as fully closed. DUPLICATE: checked against the full 27-pipeline roster and the country's own GulfPub recon crosswalk. The crosswalk flags a NEAR_MISS between P3911 and a GulfPub record 'GSPL Grid (Gana – Hadala)' (gulfpub:gas:89158, operating since 2010, 223.5 km, 30\", also GSPL) purely because both terminate at Hadala — but the GSPL filing itself explains why these are different, non-duplicate pipes: 'Hadala is connected through two Pipelines to Gana – Gana Hadala Pipeline (Diameter 30\") and Anand Rajkot Pipeline (diameter 24\"). Gana is on the main trunk line of GSPL HP grid.' P3911 is a NEW proposed tie-in spur from Jafrabad into that same Hadala junction, not the pre-existing Gana-Hadala line GulfPub is describing — GulfPub is independently corroborating that Hadala is a real multi-pipeline junction on GSPL's grid (and that 30\" is the standard diameter in this corridor), not describing P3911 itself. Also checked P3912 (Swan LNG Terminal to Dahej LNG Terminal Gas Pipeline) — same origin terminal (Jafrabad/Swan LNG) but a different destination (Dahej vs Hadala) and different length/capacity (170 km/7.0 vs 198 km/18.0); the GSPL filing itself frames this Hadala tie-in as being 'in addition to' the existing Phase-I tie-in connectivity, consistent with Swan LNG having multiple, genuinely separate grid connections rather than P3911/P3912 being the same pipe under two names. No duplicate. CLASSIFICATION: PipelineType=transmission and Fuel=Gas are both correct — this is a 30\", 198 km tie-in carrying RLNG from an LNG import terminal into a state transmission grid, not a gathering/process line. Confirmed the register-crosswalk's existing 'ABSENT_DEDICATED_OR_TIE_IN' classification is the right read of why this line has no separate entry in the current PNGRB NGPL MIS register (batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json, May-2026 edition — no 'Swan'/'Hadala'/'Jafrabad' hit): PNGRB authorises 'tie-in connectivity' under a distinct regulation (21) from the common-carrier pipeline network itself, and per the GSPL filing this tie-in gets folded into GSPL's existing 'High Pressure Gujarat Gas Grid' authorisation (register sno 13, entity GSPL) rather than listed as its own line item. That is a structural feature of how PNGRB tracks tie-ins, not evidence the pipeline is missing or unauthorised. ATTRIBUTION (owner): Owner1=Gujarat State Petronet 100% is directly confirmed — GSPL is the letter's author and the party proposing to build/own this exact tie-in under its right of first refusal (its HP grid being nearest to the gas source). STATUS: could not push this further — see the status_reviews entry below."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix the endpoint-location field mapping: move 'Hadala' from EndPrefecture/District into EndLocation (it is currently sitting in the wrong column and EndLocation is blank), and fill StartPrefecture/District=Amreli and EndPrefecture/District=Surendranagar (tehsil Limbadi). See fills below for the proposed corrected values with the same source.",
+      "researcher_notes": "The worklist's own 'irregular: true' flag on the Location cluster is right to flag something off. Current sheet values: StartLocation=Jafrabad (correct), StartPrefecture/District=blank, EndLocation=blank, EndPrefecture/District=Hadala (this is the *terminus name*, not a district), EndState/Province=Gujarat. Per the GSPL PNGRB filing (public-notice/GSPL09072021.pdf, OCR'd, see existence note above): the route runs 'from Jafrabad (SLPL expansion facility), Dist Amreli to Hadala (Receiving Terminal Hadala), Dist Surendranagar' and elsewhere 'Hadala, Tehsil Limbadi, Dist Surendranagar.' So EndLocation should read 'Hadala' and EndPrefecture/District should read 'Surendranagar' (or 'Limbadi'), not the reverse. This is a minor field-mapping defect, not a doubt about the underlying facts (which the source confirms), so it doesn't change existence/classification.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1926,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "198.00", "LengthKnownUnits": "km"},
+      "primary_value": "198.00",
+      "proposed_refs": ["https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GSPL's own PNGRB filing (3 Jul 2021), OCR'd manually because it is a scanned PDF with no text layer (url_verifier false-negatives on it): 'GSPL proposes to lay 30\" X 198 kms pipeline from Jafrabad ... to Hadala' and 'GSPL's proposal of development of 198 kms of Tie in connectivity.' Matches the sheet's existing 198.00 km exactly; this cell was previously MISSING_REF."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1926,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "18.00", "CapacityUnits": "MMSCMD"},
+      "primary_value": "18.00",
+      "proposed_refs": ["https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same GSPL filing: 'Capacity of the proposed 30\" Tie in Connectivity Pipeline will be about 18 MMSCMD.' Matches the sheet's existing 18.00 MMSCMD exactly; this cell was previously MISSING_REF."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1926,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "30.00", "DiameterUnits": "in"},
+      "primary_value": "30.00",
+      "proposed_refs": ["https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Diameter is currently genuinely blank on the sheet with no [ref] unit tracked in this worklist. Same GSPL filing repeatedly states the pipe is '30\" X 198 kms' / 'proposed 30\" Tie in Connectivity Pipeline' — corroborated indirectly by the country's own GulfPub recon crosswalk, which independently records the adjacent, pre-existing Gana-Hadala pipe at Hadala's other end also as 30\" diameter (gulfpub:gas:89158), consistent with 30\" being the standing diameter class on this corridor of GSPL's HP grid."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1926,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Jafrabad",
+        "StartPrefecture/District": "Amreli",
+        "StartState/Province": "Gujarat",
+        "StartCountryOrArea": "India",
+        "EndLocation": "Hadala",
+        "EndPrefecture/District": "Surendranagar",
+        "EndState/Province": "Gujarat",
+        "EndCountryOrArea": "India"
+      },
+      "primary_value": "Jafrabad",
+      "proposed_refs": ["https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf"],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/pdf/public-notice/GSPL09072021.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Corrects the field-mapping defect flagged in validity above: 'Hadala' was sitting in EndPrefecture/District with EndLocation blank. Source: GSPL filing gives 'Jafrabad (SLPL expansion facility), Dist Amreli to Hadala (Receiving Terminal Hadala), Dist Surendranagar' and 'Hadala, Tehsil Limbadi, Dist Surendranagar.' Used the district (Surendranagar) rather than the finer tehsil (Limbadi) to match the granularity of the sheet's other rows."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 1926,
+      "current_status": "construction",
+      "verdict": "unclear",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2021-07",
+      "staleness_rule": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The newest dated, tool-reachable evidence I could confirm is GSPL's own 3-July-2021 PNGRB filing, which at that point was still a *proposal* awaiting approval ('Detailed engineering and route survey activity and tendering activities shall be commenced after approval from Hon'ble Board'; 'Project Schedule will be 36 months from the date of receipt of all Statutory approvals'). gem.wiki's own prose (read for leads only, never cited) adds an unsourced claim that 'the proposal to build the pipeline was approved by PNGRB in December 2021' — if true, 36 months out lands ~Dec 2024, roughly consistent with the sheet's StartYear1=2024, but I have no independently verifiable document stating the approval date or any construction-progress milestone after mid-2021. The regulator's own PNGRB NGPL MIS register (May-2026 edition, batches/india-gas/staging/register-crosswalk/pngrb_ngpl_mis.json) does not carry this line as a separate item at all — expected and already explained (tie-in connectivity is folded into GSPL's parent HP Gujarat Gas Grid authorisation, register sno 13), but it also means the register's usual 'moved from under-construction to operational between two editions' signal is structurally unavailable for this specific pipe, so I can't use the country's primary status-dating method here. I could not extend the search further this pass: the WebSearch tool reported its per-session budget exhausted partway through this pipeline (0 results returned on two queries), and direct WebFetch guesses at GSPL's investor-relations page (404), Swan Energy's corporate site (wrong company / blank), and Wikipedia (unrelated US 'Swan Energy' NASCAR team) turned up nothing usable; Google/Bing/DuckDuckGo fetches were blocked or non-functional for a plain fetch tool. Recommend a follow-up pass with a fresh search budget specifically for: GSPL/Swan Energy annual reports or investor decks 2023-2026, PPAC throughput data, and Indian trade press (Business Standard, Hindu BusinessLine) on Swan LNG Terminal Phase-II (10 MMTPA expansion) commissioning, which would also settle whether this tie-in has actually been built or is still pending/stalled."
+    }
+  ],
+  "summary": "P3911 (Swan LNG Terminal to Hadala) is a real, non-duplicate, correctly classified transmission tie-in — confirmed via GSPL's own OCR'd 2021 PNGRB filing, which exactly matches length (198 km), capacity (18 MMSCMD) and adds a previously-unsourced diameter (30 in); one attribution defect found and fixed (Hadala was mis-filed in EndPrefecture/District instead of EndLocation); current status could not be pushed past mid-2021 evidence this pass (WebSearch budget exhausted), so status_reviews verdict is unclear rather than confirmed."
+}

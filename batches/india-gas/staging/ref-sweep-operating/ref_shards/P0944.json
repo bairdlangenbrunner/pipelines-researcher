@@ -1,0 +1,51 @@
+{
+  "project_id": "P0944",
+  "pipeline_name": "Mumbai-Uran Trunk Line (MUT)",
+  "resolutions": [
+    {
+      "ref_col": "PipelineType [ref]",
+      "sheet_row": 501,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Reused/re-verified the lead already found by this row's deep-sweep audit (batches/india-gas/staging/ref-sweep-operating/rows/P0944.json). Source is the CHT (Cell for Hydrocarbon Transportation, MoPNG)/'Gas Pipeline Network in India 2020-21' register (starts at the document's 'GAS PIPELINE NETWORK IN INDIA 2020-2021' header, p.251 of the extracted text), section 'GAS PIPELINES (Offshore)' -> '1 ONGC' -> line '28\" MUT gas line'. This is a national register of trunk/transmission-scale gas pipelines (not gathering or distribution lines) authorised and operated across state boundaries, so the line's inclusion here supports PipelineType=transmission; the document does not use the literal word 'transmission', hence medium not high. url_verifier FAILs on this URL (200 but missing expected token 'MUT') -- confirmed this is the documented large-PDF extraction-limit false negative: I fetched the PDF directly (curl -sI = live 200 OK, Last-Modified 2023-09-14) and ran pdftotext -layout locally, which shows the exact row '28\" MUT (Mumbai Uran Trunk) gas line' under ONGC in the offshore gas section. Single-document support for the specific classification word -> medium tier."
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 501,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same CHT register, same row: '28\" MUT gas line' capacity = 12.247 MMSCMD in both the 31.03.2020 and 31.03.2021 columns. 12.247 MMSCMD x 365 / 1000 = 4.470 bcm/y, an exact match to the sheet's recorded 4.47 (2dp). Confirmed locally with pdftotext -layout (url_verifier's documented large-PDF false negative -- FAIL on missing 'MUT' token despite a live 200 response; verified live via curl -sI). Single document gives this precise MMSCMD/bcm figure -- no independent second source located with the exact number -- hence medium tier, though the value's plausibility is reinforced by the matching Diameter/PipelineType corroboration already staged on this row from Business Standard."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 501,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cht.gov.in//sites/default/files/UpdatedPipelineNetwork.pdf", "ok": true, "contains_value": false}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same CHT register, same row: '28\" MUT gas line' length = 204.00 km in both the 31.03.2020 and 31.03.2021 columns -- an exact match to the sheet's recorded 204.00 km. Confirmed locally with pdftotext -layout (url_verifier's documented large-PDF false negative -- FAIL on missing 'MUT' token despite a live 200 response; verified live via curl -sI). Single document for the precise figure -> medium tier."
+    }
+  ]
+}

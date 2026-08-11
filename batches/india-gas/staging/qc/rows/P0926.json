@@ -1,0 +1,42 @@
+{
+ "project_id": "P0926",
+ "pipeline_name": "Heera-Uran Trunk Line (HUT)",
+ "sheet_row": 486,
+ "wiki": "https://www.gem.wiki/Heera-Uran_Trunk_Line_(HUT)",
+ "fills": [
+  {
+   "ref_col": "FuelSource [ref]",
+   "value_cols": ["FuelSource"],
+   "values": {"FuelSource": "Heera Field"},
+   "primary_value_col": "FuelSource",
+   "primary_value": "Heera Field",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak",
+    "https://pdfcoffee.com/a-visit-to-uran-plant-of-ongc-pdf-free.html"
+   ],
+   "verifications": [
+    {"url": "https://www.offshore-mag.com/pipelines/article/16797928/ongc-reports-heera-uran-pipeline-leak", "ok": true, "contains_value": true},
+    {"url": "https://pdfcoffee.com/a-visit-to-uran-plant-of-ongc-pdf-free.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium", "independent": true, "source_language": "en",
+   "researcher_notes": "The source_ladder flagged this as an open item from the redundancy-cluster leg: sheet FuelSource='Mumbai High Gas Field', but the line is named for and fed from HEERA, not Mumbai High. Two independent sources confirm the correction. (1) Offshore magazine (trade press, independent of ONGC), reporting a pipeline incident: 'ONGC has reported a leak on the Heera-Uran Gas pipeline in the Heera field' — verbatim, ties this specific pipeline to the Heera field by name. (2) An ONGC internal 'A Visit to Uran Plant' presentation (hosted on pdfcoffee.com, a document-sharing reproduction, so treated as company-origin rather than fully independent trade press) states 'The 30\" MUT oil pipeline from Mumbai High and 24\" HUT oil pipeline from satellite offshore platform are the principal feed stock to plant' — explicitly separating MUT (Mumbai High source) from HUT (satellite-platform source, i.e. Heera and nearby satellite fields, not Mumbai High). Both sources independently contradict the sheet's current 'Mumbai High Gas Field' value for THIS row. I did not find an independent source giving HUT's feed field as anything other than Heera/satellite-platform, so recommending the straightforward correction rather than leaving it open. Value CHANGED (was 'Mumbai High Gas Field'); tier medium because one of the two sources is a document-hosting reproduction of unclear chain of custody, not a tier-1 outlet or a .gov source — a human should sanity-check the pdfcoffee document if a stricter tier is wanted, but the offshore-mag.com citation alone already supports the correction on its own terms."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm=80 without a directly-cited HUT-specific km figure — none was found. Instead flag the drawn route geometry (166 km, ratio 2.08) for a redraw/QA pass: it is the outlier of this brief's four rows in both direction and structure.",
+   "researcher_notes": "I could not find an independent source citing an exact length in km for HUT specifically (unlike the other three rows in this brief, where a regulator figure was available). CAG Report No. 21 of 2016 (Comptroller & Auditor General, Union Commercial Compliance Report No. 21 of 2016, 'Crude Oil Production Measurement and Reporting System' — cag.gov.in) quotes ONGC management describing 'MUT and HUT pipelines... over the 200 kms long pipeline' and, separately, 'the pipeline' as having 'large volume (200 KM pipeline)' when discussing residence time and emulsion break-up — but the wording is ambiguous as to which of the two lines (or whether both jointly) it describes, and elsewhere the report consistently treats MUT (30\", from Mumbai High) as the larger/longer of the pair and HUT (24\", from the closer Heera/satellite platform) as the shorter one (per the ONGC Uran Plant presentation on pdfcoffee.com cited in the FuelSource fill above). Geographically, Heera field sits roughly 110 km SW of Mumbai — closer to Uran than Mumbai High (~160 km NW) — so a priori HUT should be the SHORTER of the two trunks, consistent with the sheet's 80 km (vs MUT's 204 km) but inconsistent with the drawn route's 166 km, which is closer in magnitude to MUT's own drawn 146 km. RouteAccuracy on this row is already 'very low (straight line/schematic)': a schematic straight-line trace normally UNDERSHOOTS true pipeline length (it cuts corners a real seabed route would not), so a 2.08x OVERSHOOT is the wrong-direction artifact for that accuracy tier — it reads more like a mis-anchored endpoint or a route drawn via the wrong platform than a legitimately long line. I am not proposing a coordinate fix (standing rule against fabricating route geometry); recommending a geometry QA pass instead. Tier not assigned (no citable value either way) — this is reasoning from context, not a corroborated figure, so treat as UNRESOLVED-with-analysis rather than a confirmed finding.",
+   "proposed_refs": [], "verifications": [], "tier": "low", "independent": false, "source_language": "en"
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "existence",
+   "recommendation": "Human decision needed, not a gas-tracker fix: confirm whether HUT's crude-oil share is tracked anywhere in GOIT (GEM's oil/NGL tracker), or whether a GOIT counterpart row should be created to mirror how MUT's oil share is tracked as GOIT P5191. This QC leg (GGIT gas) cannot resolve a GOIT-side gap on its own.",
+   "researcher_notes": "Carrying forward the open item named in this brief's source_ladder, not re-deriving it: HUT, like MUT, is a multiphase line carrying crude oil, gas and water from an ONGC offshore platform to Uran (CAG Report No. 21 of 2016 treats both as crude-oil trunk lines subject to custody-transfer measurement, with gas separated out only at the Uran plant). MUT's oil share is captured on the oil/NGL side as GOIT P5191, giving the Uran system two linked GEM entries (P0944 gas + P5191 oil) for one physical pipeline. HUT (P0926) has no such GOIT counterpart that I could find, so its oil share appears untracked anywhere in GEM. This is a structural completeness question about GOIT coverage, not a value I can fill on the gas tab — flagging for a human/triage decision rather than proposing an edit.",
+   "proposed_refs": [], "verifications": [], "tier": "", "independent": false, "source_language": "en"
+  }
+ ]
+}

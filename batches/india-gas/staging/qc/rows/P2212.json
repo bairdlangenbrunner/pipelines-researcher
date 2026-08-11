@@ -1,0 +1,41 @@
+{
+ "project_id": "P2212",
+ "pipeline_name": "Dahej-Uran-Panvel-Dhabhol Gas Pipeline",
+ "sheet_row": 1138,
+ "wiki": "https://www.gem.wiki/Dahej-Uran-Panvel-Dhabhol_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.offshore-technology.com/marketdata/dahej-uran-gas-pipeline-india/",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.offshore-technology.com/marketdata/dahej-uran-gas-pipeline-india/", "ok": true, "contains_value": true, "note": "verified via url_verifier.py (OK); page states 'owned and operated by Gas Authority of India Limited (GAIL)'."},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "same PNGRB MIS register (May-2026 edition) already used by the register-crosswalk leg for this row's Status/Owner fills; operational section Sr 6 'Dahej-Uran-Panvel-Dabhol' names the authorised entity as GAIL directly (no SPV), corroborating GAIL as the operator, not just the owner."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION for this brief, shared with P3912 below: GAIL (India) Ltd runs its own trunk pipelines directly (no SPV), unlike PIL/P0920 or RGPL/P0953. offshore-technology.com (GlobalData market-data page, independent of PNGRB): 'The Dahej-Uran project started operations in 2007 and is owned by GAIL (India)...owned and operated by Gas Authority of India Limited (GAIL).' Second, independent origin: the PNGRB register (regulator), already staged by the register-crosswalk leg for this row's Status and Owner1 fills (see batches/india-gas/staging/register-crosswalk/staged_resolutions.json) — its authorised entity is 'GAIL' directly, with no intervening SPV, so the same register fact that established ownership also establishes operation here (unlike the P0920/PIL and P0953/RGPL cases, there is no authorisation-holder/parent split to reconcile). Never cited gem.wiki or globalenergymonitor.org. Value UNCHANGED (Operator was blank); ref-only addition."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do NOT change LengthKnownKm from this finding alone. The register-crosswalk leg already flagged this row's Capacity (19.9 vs the May-2026 register's 22.5 MMSCMD) as a likely stale-authorisation issue and recommended re-reading the current register before acting. This shard adds the matching length signal: the same May-2026 register entry (Sr 6) gives authorised length 920.0 km and operating length 943.0 km, both well above the sheet's 815.00 km, in the same direction as the capacity gap. The drawn route (549 km geodesic, RouteAccuracy already 'low') undershoots even the sheet's 815 km, so it does not resolve which number is right — it is consistent with either a partial/schematic trace of the correct ~920 km line or of an understated 815 km line. Route this alongside the existing Capacity concern as ONE re-verification against the current PNGRB register/GAIL's own disclosures, not as two separate fixes.",
+   "researcher_notes": "Read directly from batches/india-gas/staging/register-crosswalk/staged_resolutions.json (no new fetch needed for this figure): the May-2026 PNGRB register's Sr 6 'Dahej-Uran-Panvel-Dabhol' (entity GAIL) carries authorised_length_km=920.0 and operating_length_km=943.0 alongside the authorised_capacity_mmscmd=22.5 that the crosswalk already flagged as a mismatch against the sheet's 19.9 MMSCMD. The sheet's LengthKnownKm=815.00 is 11-13% below both register figures — proportionally similar to the ~13% Capacity gap already flagged — which supports the crosswalk's working theory that the sheet is carrying an earlier, since-superseded authorisation figure rather than a unit or measurement error. I am not proposing a specific replacement length myself: unlike the Operator fill above, where the register cleanly settles the question, here two candidate numbers (815 sheet vs 920/943 register) both need a human decision about which vintage of authorisation the sheet should track, per the protocol's rule against auto-applying reference values to value disagreements.",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"],
+   "verifications": [],
+   "tier": "medium",
+   "independent": false
+  }
+ ]
+}

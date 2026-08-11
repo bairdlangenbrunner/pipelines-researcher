@@ -1,0 +1,51 @@
+{
+ "project_id": "P0955",
+ "pipeline_name": "Surat-Paradip Gas Pipeline",
+ "sheet_row": 504,
+ "wiki": "https://www.gem.wiki/Surat-Paradip_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.pngrb.gov.in/pdf/orders/SPEAKINGORDER13032018.pdf",
+    "https://web.archive.org/web/2018/https://www.business-standard.com/article/companies/gail-s-1-724-km-surat-paradip-natural-gas-pipeline-project-terminated-118031401127_1.html"
+   ],
+   "verifications": [
+    {"url": "https://www.pngrb.gov.in/pdf/orders/SPEAKINGORDER13032018.pdf", "ok": true, "contains_value": true, "note": "url_verifier FAILs (image-only scan of a 7-page PNGRB order, no text layer -- documented protocol exception). Downloaded and rendered to PNG with pdftoppm, read visually."},
+    {"url": "https://web.archive.org/web/2018/https://www.business-standard.com/article/companies/gail-s-1-724-km-surat-paradip-natural-gas-pipeline-project-terminated-118031401127_1.html", "ok": true, "contains_value": true, "note": "Live URL 403s (Akamai bot-block); Wayback snapshot verifies OK and contains the '1,724-km' figure."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Sheet Owner is already 'GAIL (India) Ltd [100.%]'; wiki candidate value ('Gas Authority of India Limited (GAIL)') matches. Primary regulatory source: PNGRB's own order, 'Petroleum and Natural Gas Regulatory Board, New Delhi -- In the matter of GAIL (India) Limited for Surat-Paradip Natural Gas Pipeline (SPPL) -- Order dated 13.03.2018' -- para 1: 'PNGRB, vide letter Ref: Infra/PL/BID/SPPL/01/2012 dated 25th April, 2012 granted authorization to GAIL (India) Limited for Laying, Building, Operating or Expanding Natural Gas Pipeline along the route of Surat (Gujarat)-Paradip (Orissa).' This is the regulator's own record of GAIL as the sole authorised entity, i.e. both owner and (would-be) operator. Independent second source, Business Standard (2018-03-14, via Wayback since the live page 403s to bots): 'GAIL's 1,724-km Surat-Paradip natural gas pipeline project terminated... Regulator says ground progress was nil even after six years.' Tier=high: regulator order + independent press, agreeing on the entity. GAIL never began construction (per the PNGRB order, 'nil' ground progress), so as with the other cancelled rows in this brief, 'Operator' records who was authorised/would have run the line. Never cited gem.wiki or globalenergymonitor.org."
+  },
+  {
+   "ref_col": "LengthKnownKm [ref]",
+   "value_cols": ["LengthKnownKm"],
+   "values": {"LengthKnownKm": "1724"},
+   "primary_value_col": "LengthKnownKm",
+   "primary_value": "1724",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/2018/https://www.business-standard.com/article/companies/gail-s-1-724-km-surat-paradip-natural-gas-pipeline-project-terminated-118031401127_1.html",
+    "https://www.worldpipelines.com/project-news/15032018/coast-to-coast-gas-pipeline-in-india-has-been-terminated/",
+    "https://www.ogj.com/general-interest/economics-markets/article/17232685/grid-development-key-to-indias-natural-gas-market-growth"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/2018/https://www.business-standard.com/article/companies/gail-s-1-724-km-surat-paradip-natural-gas-pipeline-project-terminated-118031401127_1.html", "ok": true, "contains_value": true},
+    {"url": "https://www.worldpipelines.com/project-news/15032018/coast-to-coast-gas-pipeline-in-india-has-been-terminated/", "ok": true, "contains_value": true},
+    {"url": "https://www.ogj.com/general-interest/economics-markets/article/17232685/grid-development-key-to-indias-natural-gas-market-growth", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Answers the length_ratio flag (drawn route 1,461 km vs sheet LengthKnownKm 2,112 km, ratio 0.69). THREE separately-bylined outlets, reporting independently on the March 2018 PNGRB termination, all give the same length -- Business Standard (2018-03-14, via Wayback: 'GAIL's 1,724-km Surat-Paradip natural gas pipeline project terminated... The proposed 1,724-kilometre project would have seen an investment of Rs 60 billion... to start from Mora in Gujarat and would terminate at Indian Oil Corporation's Paradip refinery'); World Pipelines (2018-03-15: 'Length: 1724 km to connect the western and eastern coasts... The Petroleum and Natural Gas Regulatory Board revoked the license on March 13, 2018'); Oil & Gas Journal ('The 74.81-MMscfd Surat-Paradip pipeline was expected to facilitate growth... cancelled by India's Petroleum and Natural Gas Regulatory Board (PNGRB) in March 2018'). All three agree on 1,724 km, none of them are the same wire story republished (three different publishers/bylines, three slightly different angles -- financial, trade-technical, market), and none trace to GEM. This also RECONCILES the flagged geometry: 1,461 km (measured/geodesic) against a TRUE length of 1,724 km gives a ratio of 0.85, comfortably inside the allowed 0.75-1.33 band, whereas against the sheet's current 2,112 km the ratio is 0.69 (outside it) -- so the drawn route was flagging a real length error, not a route error. Capacity is UNCHANGED and independently confirmed correct: OGJ's and World Pipelines' figure of 74.81 MMSCMD converts to 74.81 x 365 / 1000 = 27.31 bcm/y, matching the sheet's existing Capacity=27.30 bcm/y to within rounding, so this is a length-only correction. The PNGRB order (SPEAKINGORDER13032018.pdf, cited on the Operator fill above) independently confirms the route (Surat, Gujarat to Paradip, Orissa), the authorisation date (25 April 2012) and the cancellation, but the order's visible pages (rendered to PNG and read; it is a 7-page image-only scan) do not themselves print a length figure, so it corroborates the surrounding facts rather than the length value itself. RECOMMEND: change LengthKnownKm from 2112.00 to 1724.00; leave Capacity/CapacityUnits unchanged. Never cited gem.wiki or globalenergymonitor.org."
+  }
+ ]
+}

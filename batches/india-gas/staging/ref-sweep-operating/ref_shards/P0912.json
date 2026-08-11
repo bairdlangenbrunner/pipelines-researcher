@@ -1,0 +1,178 @@
+{
+  "project_id": "P0912",
+  "pipeline_name": "Chainsa-Jhajjar-Hissar Gas Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (200 but 'missing expected: Chainsa') -- documented large/compressed-PDF false negative. Downloaded and ran pdftotext -layout; line 101: 'Chainsa-Jhajjar-Hissar GAIL 13.12.2010 455 35.0 13.2 1.8 14 440 ... HR, RJ & DL', filed under the OPERATIONAL section, not Partially Commissioned or Under Construction."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Adopted from the register-crosswalk (staged_resolutions.json, already resolved for this PID) and re-verified independently: PNGRB's current line-wise register (NGPL MIS Report, month of May 2026, printed p.2, S.No.20) lists this pipeline under the OPERATIONAL COMMON CARRIER section. PNGRB is India's pipeline regulator, a primary source, high tier on its own per confidence_tiers.md. Corroborated by a second, independent (non-regulatory) source: Indian Infrastructure, 2024-07-30 (url_verifier OK on 'Chainsa-Jhajjar-Hissar' + '48 per cent'), which names 'Chainsa-Jhajjar-Hissar natural gas pipeline (CJHPL) ... operating at 48 per cent capacity utilisation' as of Dec 2023 -- confirms operating status from a source with no connection to PNGRB or GEM."
+    },
+    {
+      "ref_col": "Fuel [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://indianinfrastructure.com/2024/07/30/growing-coverage-strategies-for-building-a-unified-gas-grid/"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (200 but 'missing expected') -- documented large-PDF false negative. Confirmed locally via pdftotext -layout: the report's own title is 'PNGRB MIS REPORT: NGPL -- NATURAL GAS PIPELINES: MONTH OF MAY 2026', and the Chainsa row (S.No.20, line 101) sits inside it -- this register covers natural-gas pipelines only, under the Petroleum and Natural Gas Regulatory Board's gas-pipeline authorisation regime."
+        },
+        {
+          "url": "https://indianinfrastructure.com/2024/07/30/growing-coverage-strategies-for-building-a-unified-gas-grid/",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier OK, 200 + expected content present ('Chainsa-Jhajjar-Hissar', '48 per cent'). Fetched HTML and confirmed the exact passage: '...Chainsa-Jhajjar-Hissar natural gas pipeline (CJHPL) ... operating at 48 per cent capacity utilisation.'"
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's register is titled and scoped to natural-gas pipelines only (Fuel=Gas by definition of the register it appears in). Indian Infrastructure independently calls it a 'natural gas pipeline' by name -- second, non-regulatory, non-GEM source. Both support Fuel=Gas."
+    },
+    {
+      "ref_col": "PipelineType [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (large-PDF false negative). Confirmed locally: pipeline is authorised under PNGRB's central-govt authorisation regime for common-carrier natural gas PIPELINES (cross-country trunk lines), the same regulatory track that covers HVJ-GREP-DVPL, Dahej-Uran-Panvel-Dhabol and Dabhol-Bangalore -- PNGRB's separate CGD (city gas distribution) regime is a different track entirely, so inclusion here is itself evidence of transmission (not distribution/gathering) classification."
+        },
+        {
+          "url": "https://pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf",
+          "ok": false,
+          "contains_value": true,
+          "note": "url_verifier not run separately (same large-PDF class as the register); downloaded directly and confirmed via pdftotext -layout. Document title: 'Tariff Review of Integrated Natural Gas Pipeline (INGPL) of GAIL (India) Limited for determining Unit Natural Gas Pipeline tariff under the ... (Determination of Natural Gas Pipeline Tariff) Regulations, 2008.' Its opening pipeline-list table (line 14) shows 'Chhainsa-Jhajjar-Hissar 455' as one of the seven named trunk systems making up GAIL's 13,929.99 km INGPL transmission network, alongside HVJ-GREP-DVPL and JHBDPL -- undisputed transmission trunk lines. The whole 85-page order is a natural-gas TRANSMISSION tariff determination (repeated references to GAIL's 'natural gas transmission business/segment', e.g. lines 722, 730, 1084-1105)."
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both sources are PNGRB (regulator), so not independent of each other -- medium tier, single strong origin family. No source states the word 'transmission' against this specific pipeline's name, but the regulatory categorization is unambiguous: PNGRB authorises and tariffs CJHPL under its Natural Gas Pipeline Tariff Regulations as part of GAIL's Integrated Natural Gas Pipeline transmission network, the same regime and grouping as HVJ-GREP-DVPL/JHBDPL. This matches the deep-sweep audit shard's independent conclusion that PipelineType=transmission is correct (common-carrier trunk network, not gathering/process line)."
+    },
+    {
+      "ref_col": "Start [ref]",
+      "sheet_row": 474,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "VALUE DISAGREEMENT, not a missing-source gap -- do not stage a ref for StartYear1=2023. PNGRB's Nov-2025 INGPL tariff order (pngrb.gov.in/pdf/orders/20251127_TariffOrder.pdf, confirmed via pdftotext -layout after url_verifier's large-PDF false negative) lists 'Chainsa-Jhajjar-Hissar' with 'Date of Commissioning: 27-03-2010' in its economic-life table (line 338), used there to set the pipeline's tariff amortisation start -- 13 years before GEM's StartYear1=2023. The order's volume tables also show it already carrying gas in FY2022-23 (1.78 MMSCMD, line 2933) and FY2023-24 (2.03 MMSCMD, line 3134), i.e. flowing well before 2023. Its authorisation-history line (line 95) shows five separate authorisation actions for this pipeline -- 13.12.2010 (original), then resizing/extension actions on 12.06.2019, 29.09.2020, 17.12.2021, 20.06.2022 and 23.11.2022 -- so a 2022/2023-ish date could plausibly mark a LATEST EXTENSION reaching full 455 km rather than initial commissioning, which would reconcile with GEM's 2023 under a different definition of 'start'; the deep-sweep audit shard independently found the same open question (2016 PNGRB report: only 265/455 km built; May 2026 report: 440/455 km, no residual length flagged Under Construction). But no source states outright '2023' as a start/commission year for this pipeline, and the only source that gives a discrete commissioning date (27-03-2010) conflicts with the sheet by over a decade. Per standing rules, this is a value conflict routed to Update, not a ref to add here -- leaving StartYear1 unresolved and flagging the conflict rather than silently citing a source that disagrees with the recorded value."
+    },
+    {
+      "ref_col": "Capacity [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (large-PDF false negative); confirmed locally via pdftotext -layout, line 101: authorised capacity 35.0 MMSCMD."
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Adopted unchanged from register-crosswalk staged_resolutions.json (already resolved for this PID, sheet's Capacity=35.00 MMSCMD matches the register's authorised capacity to printed precision). Not marked independent there because GEM's India capacity column appears to derive from PNGRB's authorised figure directly (~20 matched rows agree to two decimals) -- see that resolution's fuller note. Re-verified the PDF locally as part of this sweep; no change."
+    },
+    {
+      "ref_col": "Length [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (large-PDF false negative); confirmed locally via pdftotext -layout, line 101: authorised length 455 km."
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Adopted unchanged from register-crosswalk staged_resolutions.json (already resolved for this PID). Sheet's LengthKnown=455.00 km matches the register's authorised length exactly. Also corroborated by a second, decade-earlier PNGRB edition (NGPL-Operating-15012016.pdf, S.No.8 'Chhainsa-Jhajjar-Hissar', Length 455.0 km, same authorisation date 13.12.2010 -- confirmed locally via pdftotext, line 15) and by the Nov-2025 INGPL tariff order (455 km, lines 14 and 798) -- all PNGRB-family, so still medium/not independent, but three separate document editions agreeing to the km on a figure that hasn't drifted across a decade."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.grihaindia.org/sites/default/files/sites/default/files/pdf/case-studies/GAIL-Chainsa.pdf",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.grihaindia.org/sites/default/files/sites/default/files/pdf/case-studies/GAIL-Chainsa.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (200 but 'missing expected: Faridabad') -- same large-PDF class false negative. Downloaded and ran pdftotext -layout; line 2: 'Location : Chhainsa, Faridabad, Haryana' -- a GRIHA India (green-building certifier) case study on the GAIL compressor station at the pipeline's start point, independent of both PNGRB and GEM."
+        },
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "Same PDF as Status/Capacity/Length above; its 'States Passing Through' column reads 'HR, RJ & DL' for this pipeline."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GRIHA India's case study on the GAIL compressor station independently places the pipeline's Chainsa/Chhainsa start point at Faridabad, Haryana -- confirms StartLocation=Chainsa / StartState=Haryana (Hissar is likewise an established Haryana town, confirming EndState=Haryana). Caveat carried from the deep-sweep audit shard: PNGRB's register additionally lists the route as transiting Rajasthan and Delhi between its two Haryana endpoints ('HR, RJ & DL') -- this is a routing detail (the corridor dips through RJ/DL between Faridabad and Hissar, geographically plausible near the Bhiwadi-Neemrana belt), not evidence the recorded endpoints are wrong; GEM's schema has no transit-states field to capture it. No value change proposed."
+    },
+    {
+      "ref_col": "Owner [ref]",
+      "sheet_row": 474,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier FAILs (large-PDF false negative); confirmed locally via pdftotext -layout, line 101: Entity 'GAIL'."
+        }
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Adopted unchanged from register-crosswalk staged_resolutions.json (already resolved for this PID; stages onto the operators/owners tab, sheet_row 799 there, not the tracker row 474). Register's authorisation-holder Entity 'GAIL' matches Owner1='GAIL (India) Ltd' 100%. Marked independent there because Owner [ref] is empty on all 75 India gas rows, so PNGRB's Entity column is a genuinely independent origin for ownership (unlike Capacity, where PNGRB is GEM's likely direct source). Also corroborated by the INGPL tariff order, which is filed by and repeatedly names 'GAIL (India) Limited' as the entity operating the Chhainsa-Jhajjar-Hissar segment of its integrated network."
+    }
+  ]
+}

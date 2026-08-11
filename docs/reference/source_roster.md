@@ -32,7 +32,85 @@ link to original sources — use those.
 | US — Alaska | Alaska DNR State Pipeline Coordinator |
 | US — data | EIA petroleum/natural-gas |
 | Iran | Shana (MOP outlet) `shana.ir` |
+| India — gas | PNGRB `pngrb.gov.in` — monthly **NGPL MIS report** (see note below) |
+| Pakistan — gas | OGRA `ogra.org.pk`; and SNGPL's own audited asset register (see the Pakistan country note) |
+| Kazakhstan — legal/orders | `adilet.zan.kz` (official legal database) — see the Kazakhstan note below |
+| Kazakhstan — gas operator | QazaqGaz `qazaqgaz.kz`; Intergas Central Asia `intergas.kz`; KazMunayGas `kmg.kz` + `ar<YYYY>.kmg.kz` |
 | (others) | search `"<country>" "energy regulator" OR "petroleum regulator"`; add findings here |
+
+**Kazakhstan — there is NO public line-wise gas-pipeline register** (surveyed 2026-08-11).
+Three things to know before spending time on it:
+- **`adilet.zan.kz` serves an incomplete TLS chain.** `url_verifier` retries with verification
+  off and returns `insecure_tls: True` — that verdict means the page IS live. Never class it
+  `DEAD_LINK` or drop an adilet ref over it.
+- **The tracker's dominant Kazakh gas ref is Order of the Minister of Energy №350** (29.09.2023,
+  "General Gasification Scheme of Kazakhstan 2023–2030", `adilet.zan.kz/rus/docs/G23JVM00350`) —
+  about half of all Kazakhstan gas `[ref]` cells. It is **prose planning with no line-wise
+  register**; its 12 tables are gas-processing plants, forecasts and consumption segments, and
+  the `#z250` anchor most cells use lands in the **appendices, where 5–7 are графические схемы
+  (MAPS)**. So a full-text miss is not evidence the ref fails — judge it against the graphics
+  too (the Egypt/GASCO lesson). Prose facts it does carry: ¶95 Sarybulak–Zimunay 92.5 km;
+  ¶44 Kazakhstan–China A/B/C "до 1300 км" / "до 55 млрд м³/год"; ¶165 Beineu-Bozoy-Shymkent
+  commissioned 2013 at 10 bcm/y; ¶36/91/93 Saryarka Phase I ">1,000 km", 25 mcm/d by 2030;
+  ¶94 Kartaly–Rudny expansion feeding the new Aktobe–Kostanay MGP; ¶47 2022 transit 71.8 bcm.
+- **Best line-wise source: the KazMunayGas Annual Report** "Gas Transportation and Marketing"
+  section, table `Company | Trunk gas pipeline | Length, km | Capacity, bln m³/y`, at
+  `ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf`
+  (also `ar2020`/`ar2019` under `…strategic-report_operating_gas-transportation.pdf`). It itemises
+  **only the 8 major systems** — roughly half the network by length; ~17 named Intergas lines are
+  never itemised anywhere. **Vintage warning:** AR2019/2020 differ materially from AR2021 (Central
+  Asia–Centre 5,306 → 4,149.2 km; Bukhara–Ural 2,382 → 1,567.8; BGR-TBA+Gazli–Shymkent 2,462 →
+  1,903.4; Soyuz+Orenburg–Novopskov 1,147 → 805) — a scope redefinition, not a correction, and
+  **two vintages of one publisher are ONE origin**. Say which vintage a citation used.
+- **Confirmed non-registers, don't re-hunt:** QazaqGaz "IGO 2024" (name-only list of 25 Intergas
+  lines + citable *aggregates* — ICA 21,316 km incl. 7,007 km third-party, diameters 57–1,420 mm,
+  203.5 bcm/y; AGP 3,915.5 km; BSGP 1,449.50 km); the KASE/KZTG 2023 prospectus; Government
+  Postanovleniye 463/2025 and 488/2022 (forward-looking project tables); Order 182-Н/Қ (content is
+  a single embedded JPEG map per `pdfimages -list`); Law Z1200000020; stat.gov.kz (aggregates).
+  Genuinely deleted (HTTP 404): `gurk.kz`, `kazazot.kz`.
+
+**PNGRB monthly NGPL MIS report — India's authorised-pipeline register.** URL pattern
+`https://pngrb.gov.in/data-bank/<YYYYMMDD>-NGPL-MIS-Report.pdf` (month-end stamped;
+`20260531` is the May-2026 edition). The "Physical Progress Report of Natural Gas
+Pipeline" page carries a **line-wise register of every authorised common-carrier gas
+pipeline** in three sections — operational, partially commissioned, under construction —
+each row giving authorised / operating / under-construction length, authorised and design
+capacity in MMSCMD, authorisation date, target completion and states traversed. Parse it
+with `scripts/parse_pngrb_ngpl_mis.py`, which extracts on the PDF's own ruling lines and
+**refuses to emit unless the parsed sections reconcile to the report's printed TOTALs**.
+- **It settles** length, capacity, authorisation date, and the operating-vs-under-construction
+  split. **It does not settle diameter** (no such column) and its *authorisation date is
+  NOT a commissioning year* — the two can be a decade apart.
+- **Independence caveat:** GEM's India `Capacity` already matches PNGRB authorised MMSCMD
+  at two decimals wherever the two agree, so PNGRB is the de facto *origin* of that
+  column. Citing it is the correct primary citation but does **not** by itself make two
+  independent sources.
+- **Scope:** common-carrier only. Dedicated and tie-in lines sit inside the grand totals
+  but are not itemised, so absence from the line-wise table is not evidence against a row.
+- `url_verifier` reports a content FAIL on this PDF (large-PDF false negative); confirm
+  values locally with `pdftotext -layout` and say so in the ref note.
+- **The register is a TIME SERIES, and diffing two editions dates a rename or re-scope.**
+  Older editions live at a different, un-dated pattern — `.../data-bank/NGPL-<DDMMYYYY>.pdf`
+  and `.../data-bank/NGPL-<YYYYMMDD>.pdf` both occur (`NGPL-25062021.pdf`,
+  `NGPL-20240626.pdf`). Because the **authorisation number, sponsor and authorisation date
+  stay fixed across editions while the project NAME changes**, two editions either side of
+  an amendment prove that two differently-named GEM rows are one authorisation. That is how
+  the Kanai Chhata duplicate was settled: row `5.11.NGPL`, sponsor HPPL, auth `08.07.2019`,
+  317 km / 19.20 MMSCMD is "Kanai Chhata – Shrirampur" in the 2021 edition and "Kanai –
+  Chhata – Panitar" in the 2024 one. Prefer this over name similarity — it is dispositive.
+- **Per-project PNGRB letters and bid maps carry facts the register omits**, under
+  `/pdf/ngp/...`: grant/amendment letters (`.../Govt-Authorization/<NAME>-<DDMMYYYY>.pdf`),
+  bidding route maps (`.../bid/bid<N>/Map-<CODE>-Bidding.pdf`, which have a text layer
+  giving both endpoints and intermediate towns) and ERDMP certification audits
+  (`.../pdf/ngp-audit-report/<YYYYMMDD>_<NAME>.pdf`, valve-station chainage = evidence of
+  real operating pipe). Amendment letters are often **image-only scans with no text layer**,
+  so `url_verifier`'s substring check cannot see their contents — render to PNG and read it
+  rather than concluding the document does not support the value.
+
+Where a country's rows trace to a bulk load off an operator or regulator artifact, look
+for that body's own audited register before dispatching per-row research — it is usually
+cheaper and better than anything per-row search will find (Pakistan/SNGPL 2026-08-10,
+India/PNGRB 2026-08-10).
 
 Oil and Gas Watch (`oilandgaswatch.org`) — digitized routes + permit tracking,
 useful as a primary-adjacent lead.

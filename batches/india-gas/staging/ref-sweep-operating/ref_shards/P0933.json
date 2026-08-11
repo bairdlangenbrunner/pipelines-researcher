@@ -1,0 +1,115 @@
+{
+  "project_id": "P0933",
+  "pipeline_name": "KG Basin Gas Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.business-standard.com/article/news-cm/gail-india-surges-after-pngrb-raises-tariff-for-kg-basin-pipeline-116031700540_1.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier gives a documented false-negative on this large PDF (multi-word tokens). Confirmed locally with pdftotext -layout: printed p.2, OPERATIONAL COMMON CARRIER PIPELINE table, Sr. No. 7 reads 'KG Basin Network  GAIL  12.05.2010  878  16.0  19.4  2.5  13  867  -  -  -  -  -  AP' -- listed under Operational with 867 km actually flowing gas, zero under-construction length."},
+        {"url": "https://www.business-standard.com/article/news-cm/gail-india-surges-after-pngrb-raises-tariff-for-kg-basin-pipeline-116031700540_1.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's May-2026 NGPL MIS Report (regulator's own monthly line-wise register) lists 'KG Basin Network / GAIL' in the OPERATIONAL COMMON CARRIER PIPELINE table with 867 of 878 authorised km actually operating and zero under-construction length -- a live regulator dataset, not a historical claim. Independently, Business Standard's Mar-2016 report of PNGRB raising the tariff on 'the company's [GAIL's] K.G. Basin natural gas pipeline network' is unrelated financial-market coverage of a real, in-service, actively-regulated asset. Two independent origins agreeing on operating status -> tier high."
+    },
+    {
+      "ref_col": "Fuel [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF. Confirmed locally with pdftotext -layout: the row is listed in a document titled 'Physical Progress Report of Natural Gas Pipeline (NGPL)', and the network is fed by named ONGC/GAIL natural-gas tie-in lines elsewhere in the same PDF."}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The source document is PNGRB's Natural Gas Pipeline register by definition -- every line in it, including this one, is a natural-gas pipeline. Single origin for this trivial fact -> tier medium."
+    },
+    {
+      "ref_col": "PipelineType [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/kg14may.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/kg14may.pdf", "ok": true, "contains_value": true, "note": "HTTP 200 (confirmed via curl -sI). This is a scanned/image PDF with no extractable text layer -- pdftotext returns nothing -- so I ran pdftoppm + tesseract OCR on all 4 pages independently. OCR text (page 1): 'No. Infra/PL/Exis/17/KG-REG/GAIL/01/10 Dated: 12 May, 2010 ... Natural Gas Pipeline Network as common carrier pipeline network under regulation 17(1) of the Petroleum and Natural Gas Regulatory Board ... submitted by GAIL under regulation 17(1)'."}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's original 2010 authorisation letter (OCR'd; image-only PDF, no text layer) explicitly authorises this network as a 'common carrier pipeline network' under Regulation 17(1) of the PNGRB (Authorizing Entities...) Regulations 2008 -- common-carrier transmission-class infrastructure, distinct from CGD distribution. Single source -> tier medium."
+    },
+    {
+      "ref_col": "Start [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/kg14may.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/pdf/ngp/Govt-Authorization/kg14may.pdf", "ok": true, "contains_value": true, "note": "HTTP 200 (curl -sI). OCR'd (pdftoppm + tesseract, no text layer). Page 1 verbatim: 'already been completed and commissioned between year 1991 to 2005'. Page 4's per-segment annexure independently lists individual sections dated '1991 (ONGCL TAKENOVER)' within the same network."}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's 2010 authorisation order is a primary regulatory finding of fact (based on GAIL's submitted commissioning proof) stating the network 'has already been completed and commissioned between year 1991 to 2005' -- directly supports StartYear1=1991 as the start of that commissioning range; the per-segment annexure in the same document corroborates 1991 for specific sections. NOT sourced from the 12.05.2010 authorisation date, which would be the wrong field to date it from (built well before PNGRB existed, authorised retroactively). Single document -> tier medium."
+    },
+    {
+      "ref_col": "FuelSource [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF. Confirmed locally with pdftotext -layout: the tie-in-connectivity table lists 'ONGC's Madnam field to GAIL's KG Basin Network', 'ONGC's S1-VA fields ex-Odalarevu to GAIL's KG Basin Network', and 'ONGC's Bantumilli gas source field to GAIL's KG Basin Network'."}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's tie-in-connectivity table (Feb-2024 register) names several ONGC Krishna-Godavari-basin fields (Madnam, Odalarevu/S1-VA, Bantumilli) feeding gas into GAIL's KG Basin Network, confirming the network draws from Krishna-Godavari basin production. Caveat: the network is also known in older PNGRB editions as 'K.G. Basin network (+RLNG+RIL)', i.e. it also carries regasified LNG and Reliance/KG-D6 gas, so 'Krishna Godavari Field' captures the dominant/geographically-defining source rather than an exclusive single field. Single origin -> tier medium."
+    },
+    {
+      "ref_col": "Location [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pngrb.gov.in/data-bank/NGPL-21022024.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF. Confirmed locally with pdftotext -layout: row 7 'KG Basin Network / GAIL / 12.05.2010 / 877.86 / 16.00 / 864.90' is annotated with states traversed 'Andhra Pradesh, Puducherry'."}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB's Feb-2024 register lists this network's states-traversed as Andhra Pradesh (and also Puducherry, a gap not currently captured in the sheet's EndState/Province -- flagging for a future Update, not changing here) -- supports StartCountryOrArea/EndCountryOrArea=India and EndState/Province=Andhra Pradesh. This is a multi-segment local network (East/West Godavari and Krishna districts per the 2010 authorisation annexure), not a simple point-to-point line, so no single Start/End district value is proposed. Single origin -> tier medium."
+    },
+    {
+      "ref_col": "Owner [ref]",
+      "sheet_row": 493,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://www.business-standard.com/article/news-cm/gail-india-surges-after-pngrb-raises-tariff-for-kg-basin-pipeline-116031700540_1.html"
+      ],
+      "verifications": [
+        {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false-negative on this large PDF. Confirmed locally with pdftotext -layout: Sr. No. 7 lists entity 'GAIL' as the sole authorised owner/operator of 'KG Basin Network'."},
+        {"url": "https://www.business-standard.com/article/news-cm/gail-india-surges-after-pngrb-raises-tariff-for-kg-basin-pipeline-116031700540_1.html", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PNGRB lists GAIL as the sole authorised entity for this network. Business Standard, in unrelated 2016 financial-market coverage of a PNGRB tariff order, independently identifies it as 'the company's [GAIL's] K.G. Basin natural gas pipeline network'. Two independent origins agreeing on 100% GAIL (India) Ltd ownership -> tier high. `Owner [ref]` lives on the operators/owners tab (row 818), not on the main gas tab row 493."
+    }
+  ]
+}

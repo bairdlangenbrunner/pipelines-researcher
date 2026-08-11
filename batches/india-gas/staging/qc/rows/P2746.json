@@ -1,0 +1,37 @@
+{
+ "project_id": "P2746",
+ "pipeline_name": "Kochi-Koottanad-Bangalore-Mangalore Gas Pipeline",
+ "sheet_row": 1405,
+ "wiki": "https://www.gem.wiki/Kochi-Koottanad-Bangalore-Mangalore_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "GAIL (India) Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "GAIL (India) Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/",
+    "https://psuwatch.com/newsupdates/gail-extends-completion-timeline-of-kochikoottanadbengalurumangaluru-pipeline-to-sep-2026"
+   ],
+   "verifications": [
+    {"url": "https://www.nsenergybusiness.com/projects/kochi-koottanad-bangalore-mangalore-pipeline-project/", "ok": true, "contains_value": true},
+    {"url": "https://psuwatch.com/newsupdates/gail-extends-completion-timeline-of-kochikoottanadbengalurumangaluru-pipeline-to-sep-2026", "ok": true, "contains_value": true}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION answered once and applied across the whole brief (P0915, P0934, P2746): GAIL owns and directly operates its own west-coast trunk lines rather than through an SPV. Same operator determination and same two sources as P0934 (this is the sibling phase of the same authorisation/pipeline): nsenergybusiness.com — 'The 1,104km pipeline is being developed and will be operated by India's state-owned Gas Authority of India Limited (GAIL)'; psuwatch.com (April 2026, independent publisher, more current) — 'The pipeline is operated by GAIL (India) Limited, a state-run company.' Owner1 (GAIL (India) Ltd [100%]) was already staged with a PNGRB-register ref by the register-crosswalk leg (batches/india-gas/staging/register-crosswalk/staged_resolutions.json), which establishes GAIL as AUTHORISATION HOLDER/owner; this fill is the separate operator fact. Never cited gem.wiki or globalenergymonitor.org."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "classification",
+   "recommendation": "Do not change LengthKnownKm on either row from this finding alone — the register-crosswalk leg already has an open escalation on the P0934/P2746 operating/construction VALUE split and that should be resolved as one decision. What this shard adds is a SEPARATE, geometry-level problem: the drawn routes for P0934 and P2746 are not split at the same point as the phase values are. Route this to a §8 route-creation/review pass together with the value-split escalation: move the Koottanad–Mangaluru branch geometry (currently drawn under P0934) onto/into P2746, and extend P2746's Koottanad–Bengaluru trace toward its real ~625–901 km extent. Do not fabricate coordinates.",
+   "researcher_notes": "This answers the length_ratio flag (drawn route 383 km vs LengthKnownKm 1,060 km, ratio 0.36) and mirrors P0934's finding, which should be read together with this one (same phase pair, same underlying geometry-assignment problem). Measured directly from data/individual-routes/gas-pipelines/P2746.geojson (haversine over each vertex pair): the file holds ONE line, 384.0 km, running 77.043E/12.784N (Bengaluru direction) down to 76.004E/10.839N (Koottanad area) — geographically the Koottanad–Bengaluru branch, not the Koottanad–Mangaluru one. Two independent sources place the true Koottanad–Bengaluru extent well above 384 km: nsenergybusiness.com reports 'the 625km pipeline segment between Koottanad and Bangalore' (still under construction as of that article), and psuwatch.com's April-2026 update gives the KKBMPL Phase-II authorised length as 901 km with 'Construction... in progress in approximately 322 km in Tamil Nadu' still outstanding on that branch as of the article date — so P2746's drawn 384 km is a genuine partial trace of ONLY the Bengaluru branch, undershooting its own eventual extent, and does not include the Koottanad–Mangaluru branch (~440-450 km, independently reported as already commissioned by 2019/2026) at all — that geometry sits instead under P0934, which is labelled Phase I / Kochi-only. That misassignment is why the two rows' length ratios point in opposite directions (P0934 overshoots by carrying extra geometry; P2746 undershoots by missing a whole branch) even though the two rows' LengthKnownKm VALUES already sum correctly to the register's 1,104 km authorisation (44 + 1,060 = 1,104 — noted independently by the register-crosswalk leg). I am not proposing replacement coordinates myself, per protocol; this is a route-geometry finding for the human §8 pass."
+  }
+ ]
+}

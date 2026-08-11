@@ -1,0 +1,57 @@
+{
+  "project_id": "P2212",
+  "pipeline_name": "Dahej-Uran-Panvel-Dhabhol Gas Pipeline",
+  "sheet_row": 1138,
+  "wiki": "https://www.gem.wiki/Dahej-Uran-Panvel-Dhabhol_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/attribution; see separate spec concern for Length/Capacity",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/ATTRIBUTION confirmed via 2 independent origins. (1) PNGRB (India's gas-pipeline regulator) 'PHYSICAL PROGRESS REPORT OF NATURAL GAS PIPELINE' -- current edition (https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, fetched 200, pdftotext -layout confirmed locally, url_verifier gives a documented false negative on this large PDF) lists row 6 'Dahej-Uran-Panvel-Dabhol', Entity=GAIL, Authorisation Date 10.05.2010, as a live 'OPERATIONAL COMMON CARRIER PIPELINE' with monthly gas actually flowing (26.8 MMSCMD supplied in May 2026, 108-119% capacity utilisation) -- this is not a paper/planned entity, it is moving real gas today. (2) Global Energy Observatory (globalenergyobservatory.org/geoid/40882, independent crowd-sourced database, url_verifier OK) independently records 'Dahej-Uran-Panvel Gas Pipeline India' / 'GAIL Dahej-Uran-Panvel Trunk', Operator = Gas Authority of India Limited (GAIL), Status = Operating Fully, commissioned 2007-07-14 -- this matches GEM's StartYear1=2007 exactly and independently corroborates the GAIL ownership already on the Owner/Owners tab. GEO's map layer also shows this as a multi-segment network (main trunk + Panvel-MSEB-Uran spur + Hazimalangwadi-RCF Trombay spur + Kargaon-Pune spur + Dhabol-Panvel trunk), consistent with GEM carrying it as one grouped PipelineName/ProjectID rather than splitting by segment ('irregular' Location flag in the worklist is explained by this). PipelineType=transmission is correct: PNGRB authorises it as a common-carrier trunk system under Reg. 5/17/18, the same regime as GEM's other 'Regional Network'/trunk rows in this country. DUPLICATE check against the full 35-row India-gas roster: no overlap. P2212 (Dahej->Uran->Panvel->Dabhol, southbound down the Konkan coast) is a physically distinct corridor from P2210 Dahej-Koyali Refinery Gas Pipeline (Dahej->Gujarat interior, 106 km) and from the northbound Dahej-Vijaipur family (P0919 DVPL-I, P3298 DVPL-II, which run Dahej->Madhya Pradesh) -- different endpoints, different directions, not a relabel/segment double-count of any roster row. Two of the three citations the sheet's own gem.wiki page carries have rotted: infraline.com's cited page (http://www.infraline.com/infralinekb/detail-search/1/18394/3/Dahej-Uran-Panvel-Pipeline) now resolves to an unrelated Vietnamese streaming-TV site (domain squatted/repurposed, not usable, not cited here), and the PNGRB data-bank landing page (pngrb.gov.in/eng-web/data-bank.html) is a generic link list with no pipeline-specific text -- I went to the actual dated PNGRB PDF reports instead, which do carry the pipeline by name. Minor cosmetic note only: GEM's own PipelineName spells the town 'Dhabhol' while GEM's own EndLocation field spells it 'Dabhol' (the standard spelling, matching the well-known Dabhol/Ratnagiri LNG terminal town in Maharashtra); PNGRB itself flips between 'Dhabhol' (2023 edition) and 'Dabhol' (2026 edition), so this is not a GEM-specific error, just noting the inconsistency -- not raising a concern over it. OtherEnglishNames='DPPL' also lines up with a real GAIL project-company convention for this line (Dahej Panvel Pipeline) though I have no verifiable URL for that entity name so I am not citing it as a source.",
+      "proposed_refs": [
+        "http://globalenergyobservatory.org/geoid/40882",
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update LengthKnown 815.0 -> 943 km (as-built/operating length, stable since 2023) and Capacity 19.90 -> 22.5 MMSCMD (current authorised/design capacity); route to Update, not auto-applied here.",
+      "researcher_notes": "Sheet's exact values (LengthKnown=815.00 km, Capacity=19.90 MMSCMD) are NOT wrong per se -- they are a verbatim, letter-for-letter match to PNGRB's own June-2023 edition ('Fully Operational Common Carrier Natural Gas Pipelines... As on 31.03.2023', archived at https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf, fetched 200, pdftotext -layout confirmed locally -- url_verifier false-negatives on this large PDF, same documented behaviour as the current edition): row 6, PL Unique ID 17.05.NGPL, 'Dahej-Uran-Panvel-Dhabhol', GAIL, Auth. Date 10.05.2010, Auth. Length (KM) 815.00, Auth. Capacity (MMSCMD) 19.90, Operating Length (KM) 943.09. So this confirms GEM's numbers came straight off that report and were correct as of the 2023 update -- but the regulator has since revised the authorisation. The CURRENT PNGRB edition (May 2026, https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf, fetched 200, confirmed locally, same false-negative caveat) shows the same pipeline (row 6, 'Dahej-Uran-Panvel-Dabhol', GAIL, same original 10.05.2010 authorisation date) now carrying: Authorised Length 920 km, Authorised Capacity 22.5 MMSCMD, Design/Determined Capacity 22.5 MMSCMD, Operating Length 943 km, current monthly gas supplied 26.8 MMSCMD (119% capacity utilisation in May 2026, 108.4% on the Apr-May 2026 average per the Reg.17 breakout table). Two things follow: (1) CAPACITY is genuinely stale -- the regulator raised the authorised/design capacity from 19.90 to 22.5 MMSCMD, and real throughput (26.8 MMSCMD) already exceeds even that new figure, so this is real demand growth, not a units or transcription issue; per the country-scope guidance this is the expected 'stale authorised capacity, not a unit error' pattern. (2) LENGTH is the more interesting finding: the pipeline's actual as-built/OPERATING length has been ~943 km continuously across BOTH the 2023 edition (943.09 km) and the 2026 edition (943 km) -- i.e. the physical pipe has not grown in three years. What changed is only the paperwork: the regulator's 'Authorised Length' column moved from 815 km (2023) to 920 km (2026), catching up toward -- but still short of -- the as-built 943 km. GEM's LengthKnown field is documented as a 'Physical' attribute (docs/reference/gem_schema.md), i.e. it should track the built pipe, not a regulatory authorisation ceiling; on that basis 815 km understates the real pipeline by ~128 km (15.7%), and even updating to the current Authorised Length (920) would still be 23 km short of the stable, twice-confirmed Operating Length (943). Recommend LengthKnown -> 943 km, not 920 km, precisely because 943 is the figure that has been independently stable across two dated regulatory editions and matches the schema's 'physical/built' intent, while 'Authorised Length' is an administrative ceiling that visibly lags the as-built network. Tier=medium: both length/capacity readings trace to one origin (PNGRB), so this does not clear the 2-independent-source bar for a value CHANGE (only for existence, which is separately confirmed above) -- I did not have search budget left this session to chase a second corroborating source (e.g. a GAIL annual report or investor deck) for the updated 943 km / 22.5 MMSCMD figures; that is the natural next step before applying. Routing to Update, not applying here.",
+      "proposed_refs": [
+        "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+        "https://web.archive.org/web/20250523020537/https://pngrb.gov.in/data-bank/NGPL-08062023.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1138,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "http://globalenergyobservatory.org/geoid/40882", "ok": true, "contains_value": false}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter is genuinely blank on the sheet (DiameterInMm also '--'). Only one lead found: Global Energy Observatory (geoid/40882) records 'Diameter of this Pipeline (cm)' = 76.2 cm (30 in) for the 'GAIL Dahej-Uran-Panvel Trunk' segment specifically (its 399 km / 12 MMSCMD sub-record, commissioned 2007-07-14) -- but this is a single, crowd-sourced, 2010-vintage entry, and it only describes the main trunk portion, not the full multi-segment Dahej->Uran->Panvel->Dabhol network (which per the same GEO map includes at least 3 additional named spurs of unknown/unrecorded diameter, plus a Dhabol-Panvel trunk that may be a different bore). Per instructions not to force a number on a weak/single-source field, leaving Diameter blank rather than staging 76.2 cm/30in as if it represented the whole line. Flagging as a lead for a future pass: GAIL/PNGRB bid or tender documents for the original 2010 authorisation would be the right place to pin down segment-by-segment diameters."
+    }
+  ],
+  "summary": "P2212 (Dahej-Uran-Panvel-Dhabhol Gas Pipeline, GAIL) confirmed real and correctly classified/attributed via PNGRB (regulator) + GEO (independent), no duplicate against the 35-row roster; but Length (815 km) and Capacity (19.90 MMSCMD) are stale -- verbatim match to PNGRB's June-2023 edition, superseded by the current May-2026 edition (Authorised 920 km/22.5 MMSCMD, Operating Length 943 km stable since 2023) -- staged as a spec concern recommending 943 km / 22.5 MMSCMD, medium tier pending a second independent source. Diameter fill UNRESOLVED (only a weak single-segment GEO figure, not staged)."
+}

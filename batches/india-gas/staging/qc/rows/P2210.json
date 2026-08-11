@@ -1,0 +1,31 @@
+{
+ "project_id": "P2210",
+ "pipeline_name": "Dahej-Koyali Refinery Gas Pipeline",
+ "sheet_row": 1136,
+ "wiki": "https://www.gem.wiki/Dahej-Koyali_Refinery_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Indian Oil Corp"},
+   "primary_value_col": "Operator",
+   "primary_value": "Indian Oil Corp",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/NGPL-20240820.pdf",
+    "https://ipgprojects.com/view-project/22316",
+    "https://www.nsenergybusiness.com/projects/iocl-gujarat-refinery/"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/NGPL-20240820.pdf", "ok": true, "contains_value": false, "note": "HTTP 200 but url_verifier substring check misses on this large PDF (documented false negative). Downloaded and read with pdftotext -layout: 'Operational Dedicated Natural Gas Pipelines' table, Sr 19.41.NGPL: 'PLL's Dahej - Koyali Refinery Natural Gas Pipeline (DKPL)' — Entity IOCL, authorised 20.03.2020, 106.00 km, 5.23 MMSCMD, operating length 106.0 km, Gujarat — an exact match to the sheet's LengthKnownKm and Capacity."},
+    {"url": "https://ipgprojects.com/view-project/22316", "ok": true, "contains_value": true, "note": "verified via url_verifier.py (OK, 200 + expected content present); page states 'Indian Oil Corporation Limited operates and owns the facility' for the 106 km Dahej-Koyali pipeline, PLL Terminal to Koyali refinery."},
+    {"url": "https://www.nsenergybusiness.com/projects/iocl-gujarat-refinery/", "ok": true, "contains_value": true, "note": "verified via url_verifier.py (OK); project page titled around IOCL's Gujarat Refinery states '106km-long Dahej-Koyali pipeline...to supply LNG...to the Gujarat refinery', corroborating length/context though it does not use the word 'operate' itself."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION for this brief (see also P2211/OPaL, P2212+P3912/GAIL, P0920/PIL, each answered once below). P2210 is a captive refinery feeder line — IOCL owns it AND is directly authorised to run it, no intervening SPV, so Owner (sheet: 'Indian Oil Corp [100.%]') and Operator are the same entity here. Primary, independent-of-GEM confirmation is the PNGRB NGPL MIS register (Aug-2024 edition; url_verifier FAILs on the large PDF, a documented false negative — confirmed locally with pdftotext -layout): the 'Operational Dedicated Natural Gas Pipelines' table names the authorised entity as 'IOCL' with authorised length 106.00 km / capacity 5.23 MMSCMD / operating length 106.0 km, matching the sheet's LengthKnownKm and Capacity exactly. NOTE: this authorisation-holder table does not itself use the word 'operator', so per the protocol's caveat about the register I am pairing it with two secondary sources that DO speak to operation: ipgprojects.com's project profile states explicitly 'Indian Oil Corporation Limited operates and owns the facility' (PMC contractor named separately as Jaihind Project Limited, i.e. a construction contractor, not the operator); nsenergybusiness.com (NS Energy/GlobalData, a different publisher) corroborates the same pipeline/length/context under an article about IOCL's own Gujarat Refinery. Indiainvestmentgrid.gov.in (checked, not cited as a proposed_ref since its operator language was only 'Central PSU' rather than naming IOCL directly) additionally corroborates project name, locations (Vadodara/Bharuch, i.e. Koyali) and a COD window of Aug 2017-Feb 2022, consistent with sheet StartYear1=2022. Direct fetch of iocl.com/gas-pipelines itself was attempted and blocked (HTTP 307 via a Sucuri WAF/bot-protection redirect loop, confirmed with both curl and url_verifier.py; Wayback Machine was also unreachable from this environment) — not used as a citation since it could not be independently verified, though a search-engine cache of that same page showed consistent text (106 km, commissioned March 2022, 5.23 MMSCMD). Never cited gem.wiki or globalenergymonitor.org. Value UNCHANGED (Operator was blank); ref-only addition, tier high on 2 independent non-GEM sources with the value present plus the regulator's authorisation-holder record."
+  }
+ ]
+}

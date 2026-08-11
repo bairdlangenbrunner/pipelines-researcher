@@ -1,0 +1,140 @@
+{
+ "project_id": "P0924",
+ "pipeline_name": "Hazira-Ankleshwar Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.gujaratgas.com/our-business/hapi/"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier FAILs on token match (documented large-PDF false negative — FlateDecode text streams). Confirmed locally with pdftotext -layout: Sr. No. 14 'Hazira-Ankleshwar / GGL / 05.07.2012 / 73 / 5.1 / 5.1 / 0.6 / 12 / 73 / ... / GJ' sits under the printed section header 'OPERATIONAL COMMON CARRIER PIPELINE'."},
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. Live text: 'HAPi pipeline is designed, constructed, owned and operated by Gujarat Gas Limited (GGL) ... GGL commissioned HAPi pipeline on 10th May 1999' — present-tense 'operated' plus a 1999 commissioning date with no decommissioning mention corroborates ongoing operation."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent origins: PNGRB's May-2026 line-wise register lists the pipeline under its 'OPERATIONAL COMMON CARRIER PIPELINE' section (regulator classification), and GGL's own HAPi operator page describes the line as currently 'operated by' GGL since its 1999 commissioning (first-party operator statement). Register-crosswalk already staged the PNGRB half of this citation (batches/india-gas/staging/register-crosswalk/staged_resolutions.json); this resolution adds the GGL operator page as a second, independent origin, upgrading medium to high. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.gujaratgas.com/our-business/hapi/",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. 'It is 73.2 km long and 18 inch diameter natural gas pipeline.'"},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally: report title is 'PHYSICAL PROGRESS REPORT OF NATURAL GAS PIPELINE (NGPL)', row 14 = Hazira-Ankleshwar."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GGL's own operator page explicitly calls it a 'natural gas pipeline'; PNGRB's regulatory register classifies it under the Natural Gas Pipeline (NGPL) registry. Two independent origins (operator + regulator) agree. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.gujaratgas.com/our-business/hapi/"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally: listed under 'OPERATIONAL COMMON CARRIER PIPELINE', i.e. a trunk/bulk-supply line regulated separately from city-gas-distribution (CGD) networks."},
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. GGL built HAPi in 1997-99 'to connect Surat and Ankleshwar for the planned gas distribution network in and around these areas' — i.e. HAPi is the bulk trunk line feeding local distribution, not the distribution network itself."}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Neither source uses the literal word 'transmission' (that is GEM's own controlled-vocab term), so this is a standard-equivalence inference rather than a verbatim match: PNGRB's common-carrier NGPL classification plus GGL's own description of HAPi as the bulk line built to FEED a local distribution network (not the distribution network itself) supports PipelineType=transmission over gathering/distribution. Marked medium (not high) specifically because the classification is inferred rather than literally stated in either source, even though two independent institutions corroborate the underlying facts. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.gujaratgas.com/our-business/hapi/",
+    "https://www.pngrb.gov.in/pdf/public-notice/PCDCOM09072021.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. 'GGL commissioned HAPi pipeline on 10th May 1999.'"},
+    {"url": "https://www.pngrb.gov.in/pdf/public-notice/PCDCOM09072021.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally with pdftotext -layout: PNGRB Public Consultation Document (PNGRB/COM/2-NGPL Tariff (1)/2009 (P-238), dated 09.07.2021) cover sheet for the HAPi tariff review reads 'Entity: Gujarat Gas Limited (\"GGL\") ... Pipeline: Hazira-Ankleshwar Natural Gas Pipeline (\"HAPi\") ... Capacity: 5.06 MMSCMD ... Length: 73.2 kms ... Commissioned on: 10.05.1999 ... Economic life: 30 years i.e. up to 30.04.2029'; the tariff-period start date used throughout the order is also '10.05.1999'."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "StartYear1=1999 confirmed to the exact day (10.05.1999) by both GGL's own HAPi page and a PNGRB formal tariff-review Public Consultation Document that reproduces the pipeline's regulatory cover-sheet data (entity, capacity, length, commissioning date, economic life) — a different PNGRB document/process from the line-wise MIS register, giving a genuinely separate regulatory data point rather than a re-print of the same register row. The seed citation for this date (Indian Express, http://expressindia.indianexpress.com/fe/daily/19990622/fma22039p.html) is dead (301 redirect loop to the current indianexpress.com with no matching article) and has NO Wayback Machine capture (CDX API query returned zero snapshots) — consistent with the prior deep-sweep audit's finding; not proposed. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally: row 14 authorised/design capacity = 5.1 MMSCMD."}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Reusing the register-crosswalk's already-staged resolution (same URL, same finding) rather than redoing the work. The sheet's Capacity=5.06 MMSCMD matches the 2016 PNGRB edition's 5.060 MMSCMD to the printed decimal and the current (May-2026) edition's rounded 5.1 MMSCMD; a PNGRB tariff Public Consultation Document (PCDCOM09072021.pdf) for this specific pipeline also states 'Capacity 5.06 MMSCMD (including Common Carrier Capacity 1.265 MMSCMD)', an exact match. All of these are PNGRB-lineage documents (register + tariff order), not a second independent institutional origin — no company report or press source states a numeric capacity figure independently (GGL's own HAPi page only links to a capacity-declaration form without embedding the number) — so tier stays medium/independent=false per the India-wide caveat that GEM's capacity column appears to derive from PNGRB. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.gujaratgas.com/our-business/hapi/",
+    "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. 'It is 73.2 km long and 18 inch diameter natural gas pipeline.'"},
+    {"url": "http://www.pngrb.gov.in/data-bank/NGPL-Operating-15012016.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally with pdftotext -layout: row 19 'Hazira-Ankleshwar / Gujarat Gas Company Limited / 73.2 / 5.060 / 05.07.2012' — exact match to sheet LengthKnown=73.20."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GGL's own operator page states 73.2 km explicitly, and PNGRB's 2016 line-wise register lists the same figure (73.2) to the same decimal precision; the current May-2026 PNGRB edition rounds to 73 km, consistent within printing precision. GGL (company) and PNGRB (regulator) are genuinely independent origins for this figure, upgrading register-crosswalk's already-staged medium/PNGRB-only citation to high by adding the GGL operator page. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.gujaratgas.com/our-business/hapi/",
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. 'It starts at Hazira in Surat district and terminates at Ankleshwar in Bharuch district.'"},
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally: register entry name itself is 'Hazira-Ankleshwar' with 'States Passing Through' = 'GJ' (Gujarat)."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "GGL's own page states the exact recorded values verbatim: StartLocation='Hazira' in 'Surat district', EndLocation='Ankleshwar' in 'Bharuch district'. PNGRB's register independently corroborates the two endpoint place names (the pipeline is officially designated 'Hazira-Ankleshwar' in the regulator's own table) and the state (GJ=Gujarat, matching StartCountryOrArea/EndCountryOrArea=India at the country level and the state the sheet's two district-named cells actually belong to). NOTE (not mine to fix, flagged separately by the prior deep-sweep audit): the sheet holds 'Surat'/'Bharuch' in the StartState/Province and EndState/Province columns, but both sources agree these are DISTRICTS of Gujarat, not states — this is a column-mapping/attribution concern already raised in batches/india-gas/staging/ref-sweep-operating/rows/P0924.json (recommends moving them to StartPrefecture/District and EndPrefecture/District with State/Province='Gujarat'). Per this task's scope, I am only sourcing the recorded value STRINGS ('Hazira', 'Surat', 'Ankleshwar', 'Bharuch'), which both sources support exactly as written, not adjudicating which column they belong in. Value UNCHANGED; ref-only addition."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 484,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf",
+    "https://www.gujaratgas.com/our-business/hapi/"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/20260531-NGPL-MIS-Report.pdf", "ok": true, "contains_value": true, "note": "HTTP 200; url_verifier false negative (large PDF). Confirmed locally: entity column = 'GGL' for the Hazira-Ankleshwar row."},
+    {"url": "https://www.gujaratgas.com/our-business/hapi/", "ok": true, "contains_value": true, "note": "url_verifier OK. 'HAPi pipeline is designed, constructed, owned and operated by Gujarat Gas Limited (GGL) (formerly known as Gujarat Gas Company Limited).'"}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PNGRB's regulator register names the authorisation holder as 'GGL', and GGL's own operator page states in full that the pipeline is 'owned and operated by Gujarat Gas Limited (GGL) (formerly known as Gujarat Gas Company Limited)' — matching the sheet's Owner1='Gujarat Gas Co Ltd' 100% (an earlier legal-name variant, GGL's own page confirms the name history). Two independent origins (regulator + company). This unit's brief carries sheet_row=484 (the main pipeline row), but per project convention Owner/Operator refs actually live on the separate ProjectID-keyed 'Pipeline operators/owners' backend tab — register-crosswalk staged the same finding there at sheet_row=809 on the operators_owners tab (batches/india-gas/staging/register-crosswalk/staged_resolutions.json); this resolution adds the GGL operator page as a second independent source, upgrading medium to high. Value UNCHANGED; ref-only addition."
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "project_id": "P2211",
+ "pipeline_name": "Dahej-OPAL Gas Pipeline",
+ "sheet_row": 1137,
+ "wiki": "https://www.gem.wiki/Dahej-OPAL_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "ONGC Petro Additions Ltd"},
+   "primary_value_col": "Operator",
+   "primary_value": "ONGC Petro Additions Ltd",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://pngrb.gov.in/data-bank/NGPL-20240820.pdf"
+   ],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/NGPL-20240820.pdf", "ok": true, "contains_value": false, "note": "HTTP 200 but url_verifier substring check misses on this large PDF (documented false negative). Downloaded and read with pdftotext -layout: 'Under Construction Dedicated Natural Gas Pipelines' table, Sr 19.42.NGPL: 'PLL to OPaL, Dahej' — Entity OPaL, authorised 20.03.2020, 17.00 km, 3.32 MMSCMD, Gujarat — exact match to the sheet's LengthKnownKm (17.00) and Capacity (3.32)."}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "ONE COMPANY QUESTION for this brief (see P2210/IOCL, P2212+P3912/GAIL, P0920/PIL). Like P2210, this is a captive petrochemical-complex feeder line with no SPV: the sheet's Owner is already 'ONGC Petro Additions Ltd [100.%]', and the PNGRB register's authorised entity for this exact authorisation is 'OPaL' (ONGC Petro Additions Ltd), so owner and operator are the same company. Only one strong, independent, non-GEM source found (PNGRB NGPL MIS register, Aug-2024 edition, url_verifier FAILs on this large PDF, a documented false negative — confirmed locally with pdftotext -layout, see verification note) so tier is medium per protocol's '1 strong = medium' rule, not high. A second search pass for independent trade-press coverage of this specific spur (distinct from the register's own numbers) did not surface one; not pursued further given the web-search budget for this session was exhausted mid-brief. Never cited gem.wiki or globalenergymonitor.org. Value UNCHANGED (Operator was blank); ref-only addition."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm — the PNGRB register (see fill above) independently confirms the sheet's 17.00 km is the correct AUTHORISED length for this exact pipeline (Sr 19.42.NGPL, entity OPaL, capacity 3.32 MMSCMD also matches exactly). The drawn route measuring 10 km geodesic is the side that is wrong: it undershoots the confirmed length by roughly 40%, consistent with RouteAccuracy already being 'very low (straight line/schematic)'. Route this to a §8 route redraw/extension pass rather than touching the length value.",
+   "researcher_notes": "Same PNGRB register entry used for the Operator fill above (Sr 19.42.NGPL) also settles the length_ratio question: authorised length 17.00 km and authorised capacity 3.32 MMSCMD both match the sheet's LengthKnownKm and Capacity to the register's printed precision. Since this is a short (17 km), straight-line-drawn spur between two facilities within the Dahej industrial complex, an undershooting 10 km schematic trace is unsurprising and does not itself indicate the length value is wrong.",
+   "proposed_refs": ["https://pngrb.gov.in/data-bank/NGPL-20240820.pdf"],
+   "verifications": [
+    {"url": "https://pngrb.gov.in/data-bank/NGPL-20240820.pdf", "ok": true, "contains_value": false, "note": "same false-negative/local-verification note as the Operator fill above."}
+   ],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}
