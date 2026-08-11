@@ -157,6 +157,17 @@ ambiguous between "GEM is missing all of this" and "every signal was blank". It 
 `MATCH_QUALITY` escalation when both the name and geometry axes are mostly dead, or when a
 run of ≥5 records returns zero overlaps. **Never read a null run as a discovery set.**
 
+**A `best_guess` PID is only a location claim when a locational axis was alive.** With an
+unnamed reference (`s_name` 0), a **routeless** guessed row (`g_untested`) and no province
+score (`s_geoarea` 0), the sole live signal is *length* — so the "nearest" row is whichever
+one is a similar number of kilometres, anywhere in the country. Kazakhstan OSM 2026-08-11
+put 18 unnamed traces spread from lon 51 to lon 78 all "nearest" to routeless P5776
+(17.8 km), some 1,500 km from its corridor. Since 2026-08-11 `disposition()` detects that
+case and prints "read {PID} as arithmetic, not geography" instead of "Nearest was {PID}";
+four older OSM runs still carry the misleading phrasing — see `docs/research_backlog.md` §2.
+This is an OSM-only failure mode (GulfPub features are named), and the fix is reporting only:
+no threshold, weight or match result changed.
+
 ### 5. Build the workbook
 `scripts/build_recon_workbook.py` → the per-commodity `Oil_`/`Gas_` sheets +
 `Routes_WKT` + README (sheet defs + counts). `scripts/recalc.py` to confirm no

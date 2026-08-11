@@ -244,15 +244,33 @@ def disposition(best: dict, w: dict, ref_has_geometry: bool) -> tuple:
                 f"(geoarea {sig['s_geoarea']:.2f}) — candidate GEOMETRY for that row. Verify, "
                 f"then route via a human routes-repo PR; never auto-replace.{near}")
 
+    # "Nearest" is a LOCATIONAL claim, so only make it when a locational axis was alive.
+    # With an unnamed reference (s_name 0), a routeless GEM row (g_untested) and no
+    # province score (s_geoarea 0), the only signal left is LENGTH — so the "nearest"
+    # row is whichever one happens to be a similar number of kilometres, anywhere in the
+    # country. Kazakhstan OSM 2026-08-11: 18 unnamed traces spread from lon 51 to lon 78
+    # all came back "nearest" to routeless P5776 (17.8 km) on length alone, several of
+    # them 1,500 km from its corridor. Printing that as "Nearest was P5776" reads as a
+    # geographic hint and sends triage to the wrong end of the country.
+    blind = (not (sig.get("s_name") or 0)
+             and sig.get("g_untested")
+             and not (sig.get("s_geoarea") or 0))
+    if blind:
+        nearest = (f" No nearest row is offered: the reference is unnamed, {pids} has no "
+                   f"drawn route and no province match got through, so LENGTH was the only "
+                   f"live signal — read {pids} as arithmetic, not geography.{near}")
+    else:
+        nearest = f" Nearest was {pids}{near}."
+
     if gap <= w["near_miss_delta"]:
         return ("NEAR_MISS",
-                f"nearest GEM row is {pids}{near}. Adjudicate by hand — a false Addition "
-                f"hides a real one.")
+                f"the scorer came close without saying why.{nearest} Adjudicate by hand — "
+                f"a false Addition hides a real one.")
 
     return ("DISCOVERY_CANDIDATE",
             "no GEM row is a plausible match — treat as real pipe GEM may not track, after "
             "checking for an existing row under another name (→ OtherEnglishNames)."
-            f" Nearest was {pids}{near}.")
+            + nearest)
 
 
 class _Diagnostics:
