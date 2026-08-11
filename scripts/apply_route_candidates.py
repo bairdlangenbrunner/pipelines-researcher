@@ -370,9 +370,13 @@ def main() -> None:
               else "route-replacements" if args.replace else "route-columns")
     backup = REPO / "notes" / \
         f"sheet-write-{date.today().isoformat()}-{args.scope_slug}-{suffix}.csv"
-    with backup.open("w", newline="") as f:
+    # APPEND, never truncate: a second plan for the same scope on the same day
+    # (a follow-up row, a re-plan) must not erase the first write's before-state
+    fresh = not backup.exists()
+    with backup.open("a", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["project_id", "sheet_row", "column", "before", "after"])
+        if fresh:
+            w.writerow(["project_id", "sheet_row", "column", "before", "after"])
         for p in plan:
             for col in p["after"]:
                 w.writerow([p["pid"], p["sheet_row"], col,

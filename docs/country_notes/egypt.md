@@ -427,11 +427,20 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
   **P8063, P8065 and P8066 carry an empty `Route [ref]` by design** — their anchors are points
   read off GEM's own applied geometry, which standing rule 1 forbids citing, so the provenance
   lives in `RouteNotes` instead.
-- **P8068 (El Noubareya–Qusina, 40 km, operating) is the one routeless Egypt gas row left.**
-  It was a blank pre-allocated row when this batch was scoped and `NA` filled it in the same
-  day; it has never been routed and is not part of the applied set. Egypt gas is now 116 rows,
-  115 routed. (`audit_route_sync.py` finding D = 1 is this row: blank `RouteAccuracy` rather
-  than `no route`.)
+- **Two rows `NA` added after this batch was scoped were routed and APPLIED 2026-08-11**
+  (`batches/egypt-gas/staging/route-creation-20260811/`, both `very low`, both QC PASS,
+  5 sheet cells each, `RouteCreator` `CB`, backup `notes/sheet-write-2026-08-11-…csv`):
+  **P8068** El Noubareya–Qusina (routes merge `1a2c64b5`; the Nubaria CCPP anchor reused from
+  P8051 → OSM Quwaysna town node, 47.9 km chord vs 40 km; the GASCO 2007 map carries **no**
+  24″/40 km label within 35 km of this corridor, so it rests on the two named endpoints alone)
+  and **P8069** Bader3–Ameriya (routes merge `950df475`; OSM *Bed-3 Camp* node in Abu Gharadig,
+  corroborated 0.4 km away by the separate OSM *Badr El Din* junction node → WDGC, read as the
+  processing destination for Western Desert field gas, 223 km chord vs 253 km).
+  **Both arrived with a blank `RouteAccuracy`, and blank means `no route`** — a new row whose
+  cell hasn't been filled in yet is routed and applied like any other (Baird 2026-08-11,
+  `route_conventions.md`), not held back.
+- **Egypt gas now stands at 117 rows: 107 routed, 10 unrouted — and the 10 are exactly the
+  partials listed below.** `audit_route_sync.py` A/B/C/D all 0.
 - Internal gate 24 PASS / 0 FAIL; routes-repo `qc_routes.py` **17 pass / 7 warn / 0 fail**
   (WARNs P6704 P8020 P8052 P8053 P8056 P8057 P8059 — all length ratios, expected for
   great-circle candidates).

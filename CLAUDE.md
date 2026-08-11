@@ -431,9 +431,14 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   applied at `high`. Applied despite unresolved lengths (corridors right): P8020, P8035,
   P8057, P8059. P8063/P8065/P8066 have an empty `Route [ref]` BY DESIGN — internally
   anchored off GEM's own geometry, which rule 1 forbids citing; provenance in RouteNotes.
-  **P8068 (El Noubareya–Qusina) is the one routeless Egypt gas row left** — a blank
-  pre-allocated row when the batch was scoped, filled by NA the same day, never routed.
-  Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
+  **+ two rows NA added after that batch was scoped, both routed and APPLIED 2026-08-11**
+  (`staging/route-creation-20260811/`, both `very low`, QC PASS, 5 cells each): **P8068**
+  El Noubareya–Qusina (merge `1a2c64b5`) and **P8069** Bader3–Ameriya (merge `950df475`).
+  Both arrived with a **blank `RouteAccuracy`, which MEANS `no route`** — a new row whose cell
+  is not filled in yet gets routed and applied like any other (Baird 2026-08-11); encoded in
+  `apply_route_candidates` (blank passes the guard unless `RouteType` is already `Mapped`) and
+  in `audit_route_sync` B/D. **Egypt gas is now 117 rows: 107 routed, 10 unrouted, and the 10
+  are exactly the known partials.** Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
   the one defect is **P7338**, real geometry but `RouteType = Unavailable`, a three-way-
   sync violation fixable with `--backfill-route-type`.**
   Oil not yet swept):**
@@ -461,6 +466,29 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   **68 of the 69 SHEET_SUSPECT are one question**, blank `Operator`, which is the GGIT norm
   (filled on 1,464/6,462 rows tracker-wide) and not a Pakistan defect. Oil (4 rows) not
   swept):** `docs/country_notes/pakistan.md`.
+- **India (gas: first-ever full pass 2026-08-10, staged not applied. **FOUR files to work**,
+  the packet does NOT subsume the recons (`recon_actions=0`), all stamped `20260810_1851_ET`:
+  `…_india-gas_handoff-{actions,evidence}.xlsx` + `…_india-gas_reconciliation-{gulfpub,osm}.xlsx`.
+  **India is the INVERSE of Pakistan** — its rows are actively maintained, coherent and real;
+  what they lack is **citations** (~9% of ref cells, 149/1,650), concentrated on *operating*
+  rows (34 of 35 carry no PNGRB ref) while in-dev rows are well cited (27/28). **So an
+  `UNRESOLVED` is a WEAK result here, not the correct outcome** — a second ref-gap pass moved
+  the operating leg 116 → **251** `REFS_ADDED`. Do NOT carry Pakistan's heuristics across.
+  The unlock is the **PNGRB NGPL MIS register** (`scripts/parse_pngrb_ngpl_mis.py` +
+  `crosswalk_pngrb_india.py`), which accounts for all 71 India-only rows and beats SNGPL's on
+  three axes (regulator not operator; carries dates; splits operating vs under-construction) —
+  but it is **common-carrier only** and is the de facto **ORIGIN** of GEM's capacity column
+  (equal at two decimals on ~20 rows), so PNGRB + a company restatement is ONE origin.
+  **India's duplicates are REGULATORY, not bibliographic:** authorisation number / sponsor /
+  date holding constant across register editions while the NAME changes is dispositive — it
+  confirmed one cluster and REFUTED 5 of 11. Twelve escalations, led by P0907 being a section
+  of P0929 (~718 km double count), 107.00 MMSCMD stamped on five HVJ rows, GulfPub crossing
+  BOTH gates (84 additions / 30% conflicts), and `Operator` blank on 74/75 — **a genuine gap,
+  not the tracker norm** (18.2% of GGIT gas rows carry one; the `Operator [ref]` column is what
+  reads ~1%). The thin OSM overlap (1 of 75) is **granularity, not a matcher defect** — health
+  line clean, no `MATCH_QUALITY` warning, India is the healthiest OSM extract in the registry
+  (44% named); do NOT add a `geoarea_weight` override. Oil (26 rows) not swept):**
+  `docs/country_notes/india.md`.
 - **Nigeria (divestiture ownership sweep not started):**
   `docs/country_notes/nigeria.md`.
 - **Israel (gas: INGL/TMNG-map ground-truth batch 2026-07-23 staged not applied —

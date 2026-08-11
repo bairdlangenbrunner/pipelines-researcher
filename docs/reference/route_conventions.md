@@ -61,6 +61,13 @@ curl -sL "https://raw.githubusercontent.com/GlobalEnergyMonitor/GOIT-GGIT-pipeli
 - `no route` — none available, or a capacity expansion with no new pipe.
 - `very high (within meters)` — survey-grade.
 
+**A blank `RouteAccuracy` means `no route`** (Baird 2026-08-11) — on a newly added row the
+cell simply hasn't been filled in yet. So a blank-accuracy row is **eligible for §8 route
+creation and gets applied like any other**; never hold one back or escalate it as an
+anomaly. Encoded in `apply_route_candidates.build_plan` (blank passes the pre-write guard,
+but only when `RouteType` is not `Mapped …` — a mapped row with a blank tier is a real
+defect and must still abort) and in `audit_route_sync` findings B and D.
+
 **`very low (straight line/schematic)` is the newest value and the largest weak bucket** —
 GEM re-graded ~1,428 rows into it (911 gas + 517 oil), mostly from `low`, between the two
 2026-07-28 pulls. Any weak-accuracy selector must include it: it was missing from
