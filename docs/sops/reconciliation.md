@@ -55,6 +55,32 @@ Reference records match against GEM rows of the **same commodity sheet**:
   `PipelineName`/`SegmentName`/`OtherEnglishNames`/`PipelineNetworkGrouping`),
   endpoints (best-orientation fuzzy + geocoded distance), diameter (multi-value
   **set subset/Jaccard**, never equality), length ratio (prefer geodesic).
+  **GEM diameters are per-row unit-tagged** — read them ONLY through
+  `normalize.gem_diameter_set(row)`, which honours the row's own `DiameterUnits`
+  (GGIT gas: 1,499 rows `mm` / 1,669 `in`; GOIT oil: 400 / 1,062). A bare
+  `parse_diameter_set(row['Diameter'])` defaults to inches and reads 530 mm as
+  530 inches. **That defect was live in `match.py` and `build_qc_workbook.py`
+  until 2026-08-11**, so the diameter signal was dead on ~45% of gas rows (42 of
+  44 Kazakhstan gas rows are `mm`) and `Diameter_OutOfRange` flagged every
+  mm-tagged row — 1,497 false findings where 1 was real. **Blast radius:** any
+  recon run or QC workbook built before 2026-08-11 scored diameter on the `in`
+  rows only; re-read its diameter findings, and where a decision turned on a
+  weak composite score, re-run `reconcile.py` (Kazakhstan's GulfPub re-run went
+  0 → 2 green overlaps, status conflicts 7 → 4, discovery candidates 3 → 1).
+  Do **not** substitute the sheet's `DiameterInMm` column: it is a formula that
+  emits `--` on exactly the multi-value rows the parser exists for.
+  A second, independent defect in the same parser was fixed the same day: a comma
+  is BOTH GEM's multi-value delimiter (`700, 720, 820`) and prose's thousands
+  separator, so **source text `1,020 mm` parsed as `[1, 20]` → `[0.04, 0.79]` in**,
+  and a value restated in two units (`820 mm / 32.28 inches`) read the restatement
+  as a second mm value (1.27 in). `parse_diameter_set` now collapses the
+  unambiguous thousands case only and lets a token's OWN unit beat the caller's
+  default. **Blast radius is source/prose strings, not the trackers** — verified 0
+  of 4,327 gas and 0 of 2,096 oil rows change — so what it corrupted is
+  wiki-alignment and reference-side diameter comparisons: the worst Kazakhstan case
+  (P2291/P2292) actually AGREED with the sheet and was reported `SHEET_SUSPECT`.
+  Re-run `wiki_alignment.py` for any country whose packet predates 2026-08-11
+  before trusting its Diameter records.
   Boilerplate tokens (`gas`, `oil`, `pipeline`, `line`, `system`, … —
   `match.GENERIC_NAME_TOKENS`) are **stripped before name scoring**: `token_set_ratio`
   scores on the token intersection, so two unrelated names sharing only that

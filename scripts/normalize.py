@@ -106,21 +106,50 @@ def map_status(raw: str | None, status_map: dict | None) -> str | None:
     return raw_s.lower() if raw_s.lower() in GEM_STATUSES else None
 
 
+# A comma is BOTH the multi-value delimiter GEM uses ('700, 720, 820') and the
+# thousands separator prose uses ('1,020 mm') — so splitting naively turned wiki text
+# '1,020 mm' into [1, 20] -> [0.04, 0.79] inches. Collapse only the unambiguous
+# thousands case: 1-2 digits, comma, exactly 3 digits, no space and no 4th digit.
+# '530,720' keeps its comma (leading group is 3 digits) and '8, 600' keeps it (space).
+# The lookbehind excludes a preceding '.' as well as a digit, or the real multi-value
+# row '323.9,168.3' would have its '9,168' collapsed into one bogus 323.9168.
+_THOUSANDS = re.compile(r"(?<![\d.])(\d{1,2}),(\d{3})(?!\d)")
+# A token may carry its OWN unit, which beats the caller's default: multi-segment wiki
+# strings mix them ('1,020 mm; 700, 1015 mm') and restate one value in two units
+# ('820 mm / 32.28 inches', which read as a second mm value = 1.27 in).
+# No leading \b on mm/cm: sources write it flush against the number ('1200mm'). Inches
+# DOES need one, or the 'in' in 'line'/'min' would match.
+_TOK_MM = re.compile(r"(?:mm|millimet\w*|мм)\b", re.I)
+_TOK_CM = re.compile(r"(?:cm|centimet\w*|см)\b", re.I)
+_TOK_IN = re.compile(r"\b(?:in|ins|inch\w*|дюйм\w*)\b|[\"”″]", re.I)
+
+
 def parse_diameter_set(s, units: str = "in") -> list[float]:
     """Parse GEM/source multi-value diameters ('46, 48', '40/42/48', '56,10,16')
-    into a sorted set of inches. Converts mm/cm to inches if needed."""
+    into a sorted set of inches. Converts mm/cm to inches if needed.
+
+    `units` is the DEFAULT for tokens that don't state a unit; a token that names its
+    own unit ('820 mm / 32.28 inches') is converted on its own terms. Thousands
+    separators are collapsed first — see `_THOUSANDS`."""
     if s is None:
         return []
     out: set[float] = set()
-    for tok in re.split(r"[,/;]+", str(s)):
+    for tok in re.split(r"[,/;]+", _THOUSANDS.sub(r"\1\2", str(s))):
         tok = tok.strip()
         m = re.search(r"-?\d+(?:\.\d+)?", tok)
         if not m:
             continue
         v = float(m.group())
-        if units == "mm":
+        u = units
+        if _TOK_MM.search(tok):
+            u = "mm"
+        elif _TOK_CM.search(tok):
+            u = "cm"
+        elif _TOK_IN.search(tok):
+            u = "in"
+        if u == "mm":
             v /= 25.4
-        elif units == "cm":
+        elif u == "cm":
             v /= 2.54
         if v > 0:
             out.add(round(v, 2))

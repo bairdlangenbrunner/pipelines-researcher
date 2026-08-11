@@ -171,10 +171,17 @@ never swapped in as a replacement:
   contiguous Arabic in ligature-encoded PDFs, so a live official document (e.g. a SCOP report at
   `opc-storage.oil.gov.iq`) gets marked `DEAD_LINK` falsely. Verify with `pdftotext` before
   discarding; if the value is present, keep the ref and record the language.
-- **SSL cert-chain errors.** Some live hosts serve an incomplete/misconfigured certificate chain and
-  the verifier raises `SSLError` (seen: `pgjonline.com`, `eeer.org` bare host). Confirm the page is
-  live + contains the value via `curl` (or use the `https://www.…` form / a Wayback snapshot, which
-  verify cleanly), then keep the ref and note the cert issue in `ResearcherNotes`.
+- **SSL cert-chain errors — now handled automatically (2026-08-11).** Some live hosts serve an
+  incomplete/misconfigured certificate chain (seen: `pgjonline.com`, `eeer.org` bare host, and
+  **`adilet.zan.kz`**, the official Kazakh legal database). `verify_url` used to return a bare
+  `request failed: SSLError`, which read as a dead link; it now **retries once with TLS
+  verification off** and stamps the verdict with `insecure_tls: True` plus a reason note. So an
+  `insecure_tls` verdict means **the page IS live** — never class it `DEAD_LINK`, and never drop
+  the ref over it; note the cert issue in `ResearcherNotes` (identity unconfirmed, content read).
+  **Blast radius:** every ref check run before 2026-08-11 misclassified these hosts. In Kazakhstan
+  gas it was **51 of 105** ref cells (45 `SSLError` + 5 `ConnectionError` + 1 `ReadTimeout`, and
+  **zero** 404s) — the operating leg went 55 → 63 all-live once fixed. Any earlier country whose
+  worklist shows `SSLError` link-rot flags is suspect; re-run the worklist rather than trusting it.
 - **Large PDFs.** A token FAIL on a big PDF (OPEC ASB editions, ministry annual reports) is **not
   evidence the source lacks the value** — the verifier may never have read far enough into the
   document. Extract with `pdftotext` and search the table yourself before ruling.

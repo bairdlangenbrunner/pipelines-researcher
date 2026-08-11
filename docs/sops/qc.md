@@ -22,7 +22,7 @@ scopes (token/review budget). Diameter and similar out-of-range checks are
 | `Geo_consistency` | start/end country fields vs `CountriesOrAreas`; cross-border sanity |
 | `Name_uniqueness` | duplicate `PipelineName`/`SegmentName` within a grouping |
 | `Date_logic` | year ordering (ProposalYear ≤ ConstructionYear ≤ StartYear1) |
-| `Diameter_OutOfRange` | parsed diameter set values outside plausible bounds (flag) |
+| `Diameter_OutOfRange` | parsed diameter set values outside plausible bounds (flag) — read via `normalize.gem_diameter_set(row)`, which honours the row's own `DiameterUnits`; before the 2026-08-11 fix this check assumed inches and flagged all ~1,500 mm-tagged gas rows (1,497 false findings, 1 real), so **discard the `Diameter_OutOfRange` sheet of any QC workbook built earlier** |
 | `BroadSweep_Misc` | orphan `[ref]` (filled ref / blank value or vice-versa), missing required fields |
 
 **Permanently dropped:** the route/WKT-format sheet (old Sheet 10) — do not rebuild.

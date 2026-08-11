@@ -124,11 +124,15 @@ def audit(commodity: str, args) -> int:
     live = df["repo_coords"] > 0
     exempt = df["RouteType"].isin(EXEMPT)
 
+    # a blank RouteAccuracy is the same fact as 'no route' — on a new row the
+    # cell just hasn't been filled in yet (Baird 2026-08-11)
+    unrouted = df["RouteAccuracy"].fillna("").astype(str).str.strip().isin({NO_ROUTE, ""})
+
     checks = {
         "A  live geometry, RouteType not 'Mapped'": df[live & ~exempt & (df["RouteType"] != MAPPED)],
-        "B  live geometry, RouteAccuracy 'no route'": df[live & ~exempt & (df["RouteAccuracy"] == NO_ROUTE)],
+        "B  live geometry, RouteAccuracy 'no route'/blank": df[live & ~exempt & unrouted],
         "C  no live geometry, RouteType 'Mapped'": df[~live & (df["RouteType"] == MAPPED)],
-        "D  no live geometry, RouteAccuracy not 'no route'": df[~live & ~exempt & (df["RouteAccuracy"] != NO_ROUTE)],
+        "D  no live geometry, RouteAccuracy is a real tier": df[~live & ~exempt & ~unrouted],
     }
 
     cols = ["ProjectID", "SheetRow", "PipelineName", country_col,
