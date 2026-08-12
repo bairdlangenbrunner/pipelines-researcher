@@ -4,9 +4,16 @@ Batch: archive every spreadsheet (`.xls`/`.xlsx`) URL cited in a `[ref]` column 
 repoint the cells at the backups. Scope came from a fresh 2026-08-12 pull of all three
 tabs: **12 unique spreadsheet URLs across 131 cells / 56 rows**.
 
-**Outcome: 130 of 131 cells repointed and verified.** Nothing was dropped on an access
-failure (standing rule: only a confirmed 404/410 may leave a `[ref]` cell). What remains
-is **one** held cell, `'Pipeline operators/owners'!U923` (P1050) — see §2.
+Then widened, once the spreadsheet class was closed, to **every** document extension —
+which surfaced two `.ppt` decks (18 cells) and one `.zip` (2 cells) that the `.xls`/`.xlsx`
+net had missed. See §5.
+
+**Outcome: 148 of 149 `[ref]` cells repointed and verified** — 130/131 spreadsheet + 18/18
+`.ppt`. Nothing was dropped on an access failure (standing rule: only a confirmed 404/410
+may leave a `[ref]` cell). What remains open: **one** held cell,
+`'Pipeline operators/owners'!U923` (P1050) — see §2; the **2 `.zip` cells** pending a
+licensing decision, and **6 `ResearcherNotes` cells** pending a separate authorization —
+both in §5.
 
 Applied writes, all `--mode replace`:
 - `notes/backup-20260812_0915_ET-archive-ref-xlsx-replace.csv` — 84 cells, Wayback
@@ -17,6 +24,8 @@ Applied writes, all `--mode replace`:
   2024 edition (see §2, resolved except U923).
 - `notes/backup-20260812_1022_ET-orenburg-ref-repoint-replace.csv` — 29 cells, Gazprom
   Orenburg `lch-god-2.xls` → the archived 2021 edition `lch-god.xls` (see §1, resolved).
+- `notes/backup-20260812_1248_ET-ppt-ref-repoint-replace.csv` — 18 cells, the two `.ppt`
+  decks the `.xls`/`.xlsx` filter missed (see §5).
 
 Repointing to a Wayback URL is not a loss of provenance — `web.archive.org/web/<ts>/<original-url>`
 carries the original URL verbatim inside it. An **item** URL does not, so those uploads
@@ -236,6 +245,61 @@ account password.
 Related: the two CNPC disclosure editions (Dec-2019 vs Jan-2020) differ in exactly 3
 cells, all design capacity revised **downward**; P4522–P4524 cite the Dec-2019 edition
 and none of the three changed cells affects them.
+
+---
+
+## 5. The extension filter was too narrow — 18 `.ppt` cells captured and repointed, 2 `.zip` held
+
+Re-scanning the three fresh tabs for *any* document extension (not just `.xls`/`.xlsx`)
+closed the spreadsheet class — **126 cells, 126 archived, 1 unarchived**, and that one is
+U923, held on purpose per §2 — but surfaced a residue the original net missed: three
+document URLs, all live, all returning real documents, and **none of the three had ever
+been captured anywhere**.
+
+| document | cells | outcome |
+|---|---|---|
+| `www.mediamiry.ru/upload/iblock/ff0/8apwaaoz9sx0zugy2j5yh1snqqu86lsc.ppt` | 15 `[ref]` (P6086, P6087, P6098, P6099, P6100, P6103) | captured `20260812163227`, 13,701,632 b — **repointed** |
+| `unstats.un.org/unsD/energy/meetings/cis2011/ac.240-p2_fuel.ppt` | 3 `[ref]` (P6937) | captured `20260812163236`, 1,327,104 b — **repointed** |
+| `apps.land.gov.il/IturTabotData/download/jerus/1053432.zip` | 2 `[ref]` (P3620, P3657) | SPN `523` ×4 — **not captured; held**, see below |
+
+The mediamiry deck is why the wider scan was worth running rather than filing: a **Russian
+host carrying 15 cells**, including every sourced field on P6103 (type, start, capacity,
+length, diameter, route). That is the §1 failure mode exactly — had it gone dark first we
+would have lost it. It is now preserved regardless of the cell state.
+
+**Repointed 2026-08-12 on Baird's authorization: 18 of 18 `[ref]` cells, `--mode replace`.**
+Both snapshot URLs embed the identical origin, so unlike §1 there is **no provenance
+caveat** — nothing is dropped by substituting. Write gates all passed: FORMULA read found
+no formula cells, all 18 live cells byte-matched the 2026-08-12 snapshot, `RAW` +
+cell-scoped ranges, re-read verified 18/18, and a fresh pull confirms **0 bare-origin
+occurrences in any `[ref]` cell** across all three tabs. Both captures were re-fetched
+through the `id_` modifier immediately before writing and are **md5-identical to the live
+bytes** (`8e7fe97a…` / `c39e6629…`), and both replacement URLs passed `url_verifier.py`.
+
+Cells written — Oil/NGL (15): `PipelineType [ref]` on P6086/P6087/P6098/P6099/P6100/P6103,
+`Capacity [ref]` on P6098/P6099/P6100/P6103, `Length [ref]` on P6100/P6103, plus
+`Start`/`Diameter`/`Route [ref]` on P6103. Gas (3): `Start`+`Length`+`Location [ref]` on
+P6937.
+
+### Six `ResearcherNotes` cells still cite the bare mediamiry URL — held, not missed
+
+The mediamiry URL also appears in `ResearcherNotes` on all six oil rows (`V244`, `V246`,
+`V261`, `V263`, `V1848`, `V1983`) — NF's own prose citing the deck for the fuel and
+capacity statements, e.g. *"Fuel - unstable gas condensate <url>"*. Those are the **only**
+bare-origin occurrences left anywhere in the tracker. The repoint there would be the same
+mechanical substring swap and would not change a word of the note, but it falls outside the
+18 `[ref]` cells authorized, so it awaits a separate yes. A `[ref]`-only scan will never see
+these — check `ResearcherNotes` too when scoping the next archiving tranche.
+
+### The `.zip` needs a decision before it can be archived
+
+`apps.land.gov.il/…/jerus/1053432.zip` hits the same 52x wall as CNPC/gsprom (§3–4), so the
+only route is an **IA item upload of bytes we hold**. Unlike a tender list, this is a 9 MB
+scan of an Israeli government survey map with `.jgw` georeferencing world files — uploading
+it under our account republishes someone's cartography, so it is a licensing question, not
+a mechanical fallback, and **no upload has been made**. Worth knowing: it is the
+georeferenced map behind **P3620**, already an open Israel item (the Ashkelon onshore gap),
+so it is evidence we may want to work from and not merely preserve. Bytes are not in-repo.
 
 ---
 
