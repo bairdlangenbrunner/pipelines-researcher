@@ -1,0 +1,50 @@
+{
+ "project_id": "P3300",
+ "pipeline_name": "Saryarka Gas Pipeline",
+ "sheet_row": 1735,
+ "wiki": "https://www.gem.wiki/Saryarka_Gas_Pipeline",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "Intergas Central Asia JSC"},
+    "primary_value_col": "Operator",
+    "primary_value": "Intergas Central Asia JSC",
+    "class_out": "REFS_ADDED",
+    "tab": "operators_owners",
+    "proposed_refs": [
+      "https://www.kmg.kz/ru/press-center/press-releases/712/",
+      "https://intergas.kz/ru/obwaya-informaciya/"
+    ],
+    "verifications": [
+      {"url": "https://www.kmg.kz/ru/press-center/press-releases/712/", "ok": true, "contains_value": true},
+      {"url": "https://intergas.kz/ru/obwaya-informaciya/", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "ru",
+    "researcher_notes": "One question answered once for the whole Saryarka system and applied to all four phase rows in this brief (P3300/P3307/P3308/P3309): who operates the KAZAKH section. KMG's own 2019-10-09 press release on Phase I's completion states the pipeline 'после ввода в эксплуатацию... передадут в аренду АО «Интергаз Центральная Азия»' (will be leased to JSC Intergas Central Asia upon commissioning) — an owner-side statement of the operating arrangement. Independently, Intergas Central Asia's own corporate site lists «МГ «Сарыарка»» under its Kyzylorda UMG (Управление магистральных газопроводов) branch network, i.e. Intergas states it operates this line itself. Two independent origins (KMG corporate vs. Intergas corporate) agree. Owner stays AstanaGaz KMG JSC (unchanged, matches KMG's own statement that ownership is retained while operation is leased out) — this fill is Operator only."
+  },
+  { "ref_col": "Diameter [ref]",
+    "value_cols": ["Diameter"],
+    "values": {"Diameter": "820"},
+    "primary_value_col": "Diameter",
+    "primary_value": "820",
+    "class_out": "REFS_ADDED",
+    "proposed_refs": [
+      "https://informburo.kz/stati/gazifikaciya-astany-sroki-kredity-deficit-gaza-i-vysokiy-tarif.html",
+      "https://tengrinews.kz/kazakhstan_news/gazoprovod-saryiarka-dovedut-do-stolitsyi-v-oktyabre-377307/"
+    ],
+    "verifications": [
+      {"url": "https://informburo.kz/stati/gazifikaciya-astany-sroki-kredity-deficit-gaza-i-vysokiy-tarif.html", "ok": true, "contains_value": true},
+      {"url": "https://tengrinews.kz/kazakhstan_news/gazoprovod-saryiarka-dovedut-do-stolitsyi-v-oktyabre-377307/", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "ru",
+    "researcher_notes": "The sheet's own value (820) is already correct — this is a ref-add, not a value change. informburo.kz: 'Ветвь протяжённостью 1 081 км и диаметром 820 мм'. tengrinews.kz independently: 'газопровода диаметром 820 миллиметров'. Two independent Kazakhstani outlets agree on Phase I's own diameter, distinct from Phase II's 630 mm and Phase III's 426 mm — see validity note on why the wiki_alignment flag comparing against the wiki's unioned '630 mm; 820 mm' set is not itself evidence of a defect."
+  }
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "No change. The wiki_alignment flag is a multi-segment wiki-union artifact, not a row defect — leave Diameter at 820 (now sourced independently, see fills[]).",
+    "researcher_notes": "gem.wiki's Saryarka_Gas_Pipeline infobox covers the WHOLE four-phase system and unions each phase's own diameter into one 'Diameter' field ('630 mm; 820 mm / 32.28 inches'), so any single-phase row will read as a partial match against that union. Per-phase, independently-sourced diameters actually DIFFER by design — 820 mm for Phase I (this row), 630 mm for Phase II, 426 mm for Phase III — matching the brief's note that later phases are documented at smaller diameters. This row's own value (820) is correct as-is; do not carry the wiki's full set onto it."
+  }
+ ]
+}

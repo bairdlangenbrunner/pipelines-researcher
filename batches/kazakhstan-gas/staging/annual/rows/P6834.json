@@ -1,0 +1,130 @@
+{
+  "project_id": "P6834",
+  "pipeline_name": "Aktobe-Kostanay Gas Pipeline",
+  "sheet_row": 3705,
+  "wiki": "https://www.gem.wiki/Aktobe-Kostanay_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Real project, correctly classified, no duplicate; add the two missing/broken operators_owners refs (done below as fills). Keep watching for an actual construction start.",
+      "researcher_notes": "EXISTENCE: strongly confirmed, well beyond GEM/wiki. Found and read the actual filed TEO (feasibility-study) engineering document on the state public-hearings portal -- ecoportal.kz/Public/PubHearings/LoadFile/156397, contract No. 929228/2023/1, revision dated 08.04.2024, titled 'TEO Stroitel'stvo KS-14 i MG KS-14-Kostanay' (a primary technical/permitting document, not press coverage) -- downloaded and read with pdftotext -layout (a 1.6MB PDF; the automated url_verifier substring screen FAILs on every token tried against it, a documented false negative for PDFs this tool can't parse -- confirmed live/200 with no expected-token check, then manually verified content). This document plus a chain of independent Kazakh news outlets from 2023 to 2025 (kapital.kz 2023-11-14, arna-news.kz 2024-08-08, kt.kz 2024-05-03, top-news.kz 2024-07-29, bes.media 2024-12-23, inform.kz 2025-07-11, rus.baq.kz 2025-03-06, lsm.kz 2025-08-01) all describe the same real, currently-in-design project: a new trunk gas pipeline from compressor station KS-14 (on the Bukhara-Ural line, Aktobe region) to Kostanay, a QazaqGaz + Qatari UCC Holding joint undertaking. This is not a GEM-only or wiki-only entity.\n\nCLASSIFICATION: correctly a transmission trunk line, not a gathering/feeder line -- the TEO document itself calls it 'Магистральный трубопровод' (main/trunk pipeline) and kt.kz's ref independently uses the same framing. Matches PipelineType=transmission.\n\nDUPLICATE: checked against the full 11-row KZ-gas roster. No other row touches Aktobe-region-to-Kostanay or names KS-14/Bukhara-Ural laterals in this corridor -- P5696 (Bukhara-Ural, CS14-Aktobe III lateral) is a physically distinct, much shorter (165km) lateral feeding Aktobe city itself, not Kostanay, and is not part of this line's route. No duplicate found.\n\nATTRIBUTION: StartLocation/EndLocation Aktobe->Kostanay is the common journalistic shorthand used by every source found (including the sheet's own current refs); the technically precise origin is compressor station KS-14 on the Bukhara-Ural trunk line in Aktobe region, not Aktobe city itself -- a simplification, not an error, and consistent with how GEM records comparable lines. Owner1=QazaqGaz/Owner2=UCC Holding and Operator=Intergas Central Asia are addressed in the fills below (the existing operators_owners refs were broken/missing).\n\nSPEC (length, diameter): LengthKnown=630.00km is confirmed at HIGH tier -- independently stated at exactly 630 km by the TEO document ('L=630 км'), arna-news.kz, ng.kz, lsm.kz, and rus.baq.kz (kapital.kz's 2023 pre-TEO estimate of 'over 600 km' is consistent). Diameter=1020mm is confirmed by the TEO document ('Диаметр трубопровода – 1020 мм' / 'Дн 1020', repeated at multiple points including the pipe-weight tables) -- this is the ONLY source found stating diameter specifically (no news article gives it), so MEDIUM tier (single strong primary technical source, not two independent origins), but it is a strong, internally consistent, contract-numbered engineering document, not a weak citation.",
+      "proposed_refs": [
+        "https://kapital.kz/economic/120747/proyektirovaniye-gazoprovoda-aktobe-kostanay-zavershat-v-i-kvartale-2024-goda.html",
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/156397",
+        "https://rus.baq.kz/razvitie-aktyubinskoy-oblasti-novye-proekty-i-ambitsioznye-tseli_300008742/",
+        "https://lsm.kz/oblasti-ozhidayut-deficit-gaza-kak-hotyat-reshit-vopros"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not treat Capacity=4.10 bcm/y, SegmentCost=500bn KZT, or StartYear1=2028 as settled -- each conflicts with at least one other independently-sourced figure for this same project. Route to Update for a deeper look at the government's own procurement/budget filings before touching the cells.",
+      "researcher_notes": "CAPACITY conflict: GEM carries Capacity=4.10 bcm/y, sourced (per the sheet) to arna-news.kz, where the Kostanay-oblast akim is quoted giving exactly that figure ('4,1 млрд куб. м' / 'four times the region's current ~1-1.5 bcm/y consumption') -- this is a real, correctly-transcribed quote, independently echoed by ng.kz (2024-07-26) with the same '4x current consumption' framing. BUT the primary TEO engineering document (ecoportal.kz 156397) describes a THREE-STAGE build with different design throughputs at each stage: Stage 1 ('1 ПК', from Q3 2025) up to 2.5 bcm/y direct-feed with no compressor cezh; Stage 2 ('2 ПК', from Q3 2025) up to 5.0 bcm/y toward Kostanay (and up to a separate 15 bcm/y figure for the parallel Bukhara-Ural augmentation, a different flow direction); Stage 3 ('3 ПК', from Q2 2029) up to 10.0 bcm/y toward Kostanay region. None of 2.5/5.0/10.0 is 4.1. My read: 4.1 bcm/y is most likely the akim's own rounded regional-DEMAND framing (region's need is ~4x current draw), not the pipe's technical design throughput at any one of the three build stages -- but this is inference, not confirmation, and I could not find any source that independently derives or restates 4.1 bcm/y from the TEO's own stage figures. This is a material, unresolved disagreement between the current ref's own value and the underlying engineering document -- flagging rather than silently passing it (rule 5 spec).\n\nCOST conflict: GEM carries SegmentCost=500,000,000,000 KZT (2025), sourced to inform.kz (2025-07-11), which I confirmed DOES say '500 млрд тенге' in prose (the automated substring screen fails on digit-string forms vs. the prose 'billion' wording -- a documented content false-negative, not evidence against the ref). However lsm.kz, published just three weeks later (2025-08-01), gives 844 billion tenge for the SAME project. A third data point, QazaqGaz's own 2024 Integrated Annual Report (igo_qazaqgaz_2024.pdf), lists a 'ТЭО на строительство новой КС-14 ... и нового МГ КС-14-Костанай' line item at 489.2 billion tenge for realization years 2023-2026 (this may be the TEO/design-phase cost specifically, not full construction capex). A fourth, ng.kz (2024-07-26), quotes 'over $1 billion USD' (roughly 470-500bn KZT at 2024 rates, consistent with the 489-500bn cluster). So three sources dated Nov2023-Jul2025 cluster around 470-500bn KZT, and one dated Aug2025 jumps to 844bn -- a ~69% increase in three weeks that I cannot explain (inflation/scope growth is plausible for a multi-year megaproject, but I have no confirming second source for 844bn, and I cannot rule out a reporting error at lsm.kz). Flagging as unresolved rather than proposing either number as a fix.\n\nTIMING conflict (StartYear1): the sheet's current ref for StartYear1=2028 is adilet.zan.kz/rus/docs/P2500000463, the government's 'Complex Plan for gas-industry development 2025-2029' (Postanovleniye No. 463, 21 June 2025). I could reach and read the decree's own resolution text (live, cert-chain issue only, per the orchestrator's standing note) but NOT the attached plan document itself (the /download endpoint 404s from this environment), so I could not directly re-verify the number 2028 against the source. Two independent regional-press sources instead point to 2027: rus.baq.kz (2025-03-06) states plainly 'in 2027 completion of construction of the new trunk gas pipeline KS-14-Kostanay is expected'; lsm.kz (2025-08-01) frames 2026-2027 as the construction-execution window (implying an in-service date at or shortly after 2027). Neither of these is the government plan itself, so I am not proposing a change to StartYear1, but 2027 (2 independent regional-press sources) vs. 2028 (1 government planning document, unverified by me directly) is a genuine, material disagreement Baird/Update should resolve by pulling the actual plan attachment text.",
+      "proposed_refs": [
+        "https://lsm.kz/oblasti-ozhidayut-deficit-gaza-kak-hotyat-reshit-vopros",
+        "https://qazaqgaz.kz/storage/app/media/korporativnye-dokumenty/ru/igo_qazaqgaz_2024.pdf",
+        "https://rus.baq.kz/razvitie-aktyubinskoy-oblasti-novye-proekty-i-ambitsioznye-tseli_300008742/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3705,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Интергаз Орталық Азия, Интергаз Центральная Азия"},
+      "primary_value": "Интергаз Орталық Азия, Интергаз Центральная Азия",
+      "proposed_refs": [
+        "https://kapital.kz/economic/120747/proyektirovaniye-gazoprovoda-aktobe-kostanay-zavershat-v-i-kvartale-2024-goda.html"
+      ],
+      "verifications": [
+        {"url": "https://kapital.kz/economic/120747/proyektirovaniye-gazoprovoda-aktobe-kostanay-zavershat-v-i-kvartale-2024-goda.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Operator cell was carried with no ref (MISSING_REF). kapital.kz (2023-11-14) names AO 'Intergaz Tsentral'naya Aziya' as the entity developing this project's TEO -- 'AO Intergaz Tsentral'naya Aziya nachala razrabotku TEO stroitel'stva magistral'nogo gazoprovoda Aktobe-Kostanay'. Intergas is QazaqGaz's dedicated trunk-transport subsidiary, so the TEO-developer role plausibly extends to eventual operator, but I found no source that states 'operator' in so many words for the finished pipeline (it doesn't exist yet), so single-source/medium tier, not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3705,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner2"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "QazaqGaz", "Owner2": "UCC Holding"},
+      "primary_value": "QazaqGaz",
+      "proposed_refs": [
+        "https://www.ng.kz/modules/news/article.php?storyid=53021",
+        "https://www.kt.kz/rus/ekonomika/stroitelstvo_gazopererabatyvayuschih_zavodov_v_rk_usloviya_1377964033.html"
+      ],
+      "verifications": [
+        {"url": "https://www.ng.kz/modules/news/article.php?storyid=53021", "ok": true, "contains_value": true},
+        {"url": "https://www.kt.kz/rus/ekonomika/stroitelstvo_gazopererabatyvayuschih_zavodov_v_rk_usloviya_1377964033.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "The existing Owner [ref] cell held a malformed/broken URL ('https:///rus/ekonomika/...' -- missing its hostname entirely, InvalidURL on fetch); the value itself (QazaqGaz / UCC Holding) is correct but was unsupported. Two independent sources now confirm: ng.kz (2024-07-26) states the project is a joint undertaking of 'KazakhGas' (QazaqGaz) and Qatari investor Power International Holding via subsidiary UCC Holding; kt.kz (2024-05-03, already the sheet's own PipelineType ref, so re-read for this purpose) independently states 'QazaqGaz i UCC Holding v tselom prishli k konsensusu po vsem chetyrem vazhneishim proektam', naming this exact pipeline ('magistral'nyi gazoprovod KS-14 - Kostanai - Aktobe') as one of the four. High tier."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3705,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2026"},
+      "primary_value": "2026",
+      "proposed_refs": [
+        "https://lsm.kz/oblasti-ozhidayut-deficit-gaza-kak-hotyat-reshit-vopros",
+        "https://bes.media/news/stroitelstvo-gazoprovoda-aktobe-kostanay-perenesli-na-2025-god/"
+      ],
+      "verifications": [
+        {"url": "https://lsm.kz/oblasti-ozhidayut-deficit-gaza-kak-hotyat-reshit-vopros", "ok": true, "contains_value": true},
+        {"url": "https://bes.media/news/stroitelstvo-gazoprovoda-aktobe-kostanay-perenesli-na-2025-god/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "VALUE CORRECTION, not just a ref swap: the recorded ConstructionYear=2024 is stale/wrong -- construction never began that year, and every dated source since confirms it. Chain: qazaqgaz's own TEO (ecoportal.kz 156397, contract rev. 08.04.2024) originally targeted Stage-1/2 construction 'with Q3 2025'; bes.media (2024-12-23) reports that end-2024 start slipped to (ideally) mid-2025 pending finished design docs; inform.kz (2025-07-11) shows the project STILL at the design-complete/route-approved/land-acquisition stage, construction not yet begun; lsm.kz (2025-08-01) explicitly frames 2025 as the year of competitive procedures for project development/contractor selection, with '2026-2027 годы' as the construction-execution phase. This is a repeated pattern of slippage (end-2024 -> mid-2025 -> 2026-2027), and the most recent evidence I could find (Aug 2025) has construction still not started with 2026 as the earliest plausible start. I propose ConstructionYear=2026 as the best current estimate, medium tier (based on convergent-but-imprecise regional reporting, not a single authoritative government schedule), and flag that this may need another look before the 2026 annual cycle closes given how often this date has already moved. No newer (2026) evidence of an actual construction start was found despite searching."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3705,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-08",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.inform.kz/ru/v-kostanayskoy-oblasti-utverdili-trassu-magistralnogo-gazoprovoda-0be3dd",
+        "https://lsm.kz/oblasti-ozhidayut-deficit-gaza-kak-hotyat-reshit-vopros"
+      ],
+      "verifications": [
+        {"url": "https://www.inform.kz/ru/v-kostanayskoy-oblasti-utverdili-trassu-magistralnogo-gazoprovoda-0be3dd", "ok": true, "contains_value": true},
+        {"url": "https://lsm.kz/oblasti-ozhidayut-deficit-gaza-kak-hotyat-reshit-vopros", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Status=proposed is still correct as of the newest evidence found: inform.kz (2025-07-11) reports design documentation complete and passed state expert review, pipeline route approved, and land-acquisition agreements reached with landowners -- but says nothing about physical construction beginning. lsm.kz (2025-08-01), three weeks later, independently frames 2025 as still the year of competitive procurement/contractor selection with '2026-2027' as the construction-execution window -- i.e., ground had not been broken as of Aug 2025 either. Searched (ru) specifically for any 2026 news of an actual construction start (WebSearch: 'Актобе-Костанай газопровод 2026 строительство началось', 'КС-14 Костанай газопровод тендер подрядчик 2026') and found nothing indicating construction has begun; the newest hit (newscentralasia.net, 2025-10-30) covers the parallel Qatar-QazaqGaz megaproject partnership generally but does not report ground having been broken on this specific line. Given Delayed='yes'/DelayType='confirmed' is already on the sheet and matches this history exactly, and there is no evidence of either cancellation or of construction starting, 'proposed' remains the right Status; do not move it to 'construction' without a dated source explicitly reporting groundbreaking. ConstructionYear itself is stale and separately corrected in fills (2024 -> 2026 proposed)."
+    }
+  ],
+  "summary": "P6834 (Aktobe-Kostanay / KS-14-Kostanay Gas Pipeline) is real (confirmed via the actual filed TEO engineering document, not just press coverage), correctly classified as transmission, and not a duplicate of any other KZ-gas roster row; Length=630km and PipelineType are high-tier confirmed, Diameter=1020mm medium-tier (single strong primary source). Status=proposed confirmed as of Aug 2025 (construction still not begun). CONCERNS staged: Capacity=4.1 bcm/y conflicts with the TEO's own staged 2.5/5.0/10.0 bcm/y design throughputs; SegmentCost=500bn KZT (Jul 2025) conflicts with an Aug 2025 source citing 844bn KZT for the same project; StartYear1=2028 (govt plan, unverifiable directly) conflicts with two regional-press sources naming 2027. ConstructionYear=2024 is confirmed STALE and corrected to a proposed 2026 (medium tier) given repeated documented slippage. Operator and Owner refs added/fixed (medium/high tier). UNRESOLVED: the true current cost figure (500bn vs 844bn) and the true target capacity metric (4.1 vs the TEO's staged figures) -- routed to Update, not resolved here."
+}

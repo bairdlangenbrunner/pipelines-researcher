@@ -1,0 +1,38 @@
+{
+  "project_id": "P5777",
+  "pipeline_name": "Zhanaozen-Zhetybay-Aktau Gas Pipeline",
+  "sheet_row": 3268,
+  "wiki": "https://www.gem.wiki/Zhanaozen-Zhetybay-Aktau_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "III Zhanaozen-Zhetybay",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change; add the three proposed refs to Status/Fuel/PipelineType/Start/Length/SegmentCost/Operator/Location cells",
+      "researcher_notes": "EXISTENCE and core specs independently confirmed, not GEM-only. Kazakhstan Today (kt.kz), Dec 24 2008, reports KazTransGaz Aimak commissioning a 'reserve string' ('резервная нитка') of the trunk gas pipeline Uzen-Aktau on the Zhetybay-Uzen section: length ~60 km (GEM 60.70 km), cost >$30M financed by a KazTransGaz-Development-Bank loan (GEM SegmentCost = exactly 30,000,000 USD), commissioned Dec 2008 (GEM StartYear1 = 2008 exact match), operator KazTransGaz Aimak (GEM Operator match). This is the EXACT segment (Zhetybay<->Uzen, Mangistau oblast) GEM records as P5777 ('III Zhanaozen-Zhetybay', Uzen->Zhetybay). A second, independent technical paper (Osmanov/Klimov et al., 'Neft i Gaz' journal 2019, neft-gas.kz) separately confirms operator 'AO KTG-Aimak' for the whole 'Zhanaozen-Aktau' system. A third source, Intergas Central Asia's own 2023 Annual Report (see capacity note below), independently confirms the pipeline's existence and current operating status via a 2023 capital-repair project description. CLASSIFICATION (transmission trunk gas line) is correct per all three sources, which uniformly call it a 'магистральный газопровод' (trunk/main gas pipeline), not a gathering or feeder line. FUEL=Gas is obviously correct (no dispute in any source). ATTRIBUTION: StartLocation=Uzen/EndLocation=Zhetybay, both Mangistau, match the kt.kz article's 'участок Жетыбай-Узень'. FuelSource=Uzen (associated gas from the Uzen oilfield feeding this Mangistau grid) is contextually plausible given Zhanaozen/Uzen is the region's dominant field, but I found no source naming FuelSource explicitly, so this field is unconfirmed rather than wrong -- leaving it as-is, not flagging attribution concern. STRUCTURAL CHECK (per orchestrator brief): P3948 (149.1 km, segment 'I') = P5776 (17.8, 'II Kaz GPP-KS-Zhanaozen') + P5777 (60.7, 'III Zhanaozen-Zhetybay') + P5783 (70.8, 'III Zhetybay-Aktau') = 149.3, i.e. P3948 reads as the network/parent aggregate of these three constituent segment rows, not a separate physical duplicate -- this looks like GEM's documented segment-vs-network granularity convention (gem_schema.md), not a double-count defect. Flagging for the country-level rollup check (does the total-length calc exclude P3948 as a network row?) rather than as a P5777-specific concern. Recommend Update/QC verify P3948's own row-level flag, not P5777.",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/ekonomika/v_mangistauskoj_oblasti_kaztransgaz_ajmak_vvel_v_ekspluataciju_rezervnuju_nitku_gazoprovoda_zhetibaj_uzenj_stoimostjju_bolee_30_mln_1153472391.html",
+        "http://neft-gas.kz/f/zhd_osmanov_pv_klimov.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "III Zhanaozen-Zhetybay",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "no change to Capacity, but add ResearcherNotes caveat that 4.54 bcm/y is a shared SYSTEM-level (all '3 strings') post-2023-repair figure, not a P5777-only allocation",
+      "researcher_notes": "CAPACITY caveat, resolves the orchestrator's flagged 4.54-vs-3.6 puzzle. Intergas Central Asia's own 2023 Annual Report (PDF, intergas.kz, verified by direct pdftotext read -- Cyrillic substring check false-negatives on url_verifier per its documented content-false-negative class) states explicitly: 'Проведенный капитальный ремонт на 3-х нитках магистральных газопроводов [Жанаозен-Жетыбай-Актау] позволило увеличить максимально разрешенное давление с 2,7 до 5,4 МПа и пропускную способность МГ с 2,68 млрд.м3/год до 4,54 млрд.м3/год' -- i.e. a 2023 capital repair across the pipeline's 3 parallel strings raised the WHOLE trunk line's throughput from 2.68 to exactly 4.54 bcm/y. This is a precise, current, primary-source match for GEM's Capacity=4.54 on P5777 -- and it explains why P5776 and P5783 (the other two constituent-segment rows of the same trunk) carry the identical 4.54 figure: it is the shared, post-repair system capacity of the corridor, not three independently-verified per-segment numbers. The OLDER figure of 3.6 bcm/y that appears in the kt.kz 2008 article (stated then as a future design target for the reserve string) and in the 2019 Osmanov/Klimov paper (whole-system figure, pre-dating the 2023 repair) is superseded by the 2023 upgrade and should NOT be read as contradicting 4.54 -- it is an earlier vintage of the same system, analogous to the KMG AR2019/2021 vintage-shrink pattern already documented for other Kazakh trunk lines. This also RESOLVES the orchestrator's P5784-vs-P5783 duplicate suspicion from the other side: P5784 is 'Zhetybay-Kuryk Branch Gas Pipeline' per its own segment_name (confirmed via a 2020 Samruk-Kazyna procurement technical spec, zakup.sk.kz, for exactly this branch: Du530mm, 70km, Zhetybay->Kuryk, tapping the existing 'Zhanaozen-Zhetybay-Aktau' trunk at Du720/530mm near Zhetybay -- an EXACT match to GEM's P5784 length 70.0km and diameter 530mm) -- it is a genuinely distinct physical branch line, outside the '3 strings' capital-repair scope, which is exactly why it still carries the old 3.6 bcm/y figure while P5776/P5777/P5783 (the trunk itself) carry the new 4.54. Not a duplicate, not a shadow -- two different pipes with two different vintages of capacity data, both internally consistent with their own sourcing.",
+      "proposed_refs": [
+        "https://intergas.kz/upload/file.php?file=d8uwec4lky88goo8gks4.pdf",
+        "https://zakup.sk.kz/eprocfilestorage/open-api/files/download/c5b83ef8-c15d-4b38-83fb-5fac3e296426-2020-mdb"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [],
+  "summary": "P5777 confirmed real and correctly classified -- 3 independent Russian-language sources (kt.kz 2008 news, Osmanov/Klimov 2019 journal paper, Intergas's own 2023 AR) match its exact segment, length (~60 vs 60.70km), cost ($30M exact), StartYear (2008 exact) and operator; Capacity=4.54 is confirmed as the shared post-2023-repair system figure for the trunk's '3 strings' (Intergas AR 2023, exact 2.68->4.54 match), which also resolves the P5784 3.6-bcm 'shadow' as a genuinely separate Zhetybay-Kuryk branch (confirmed via its own 2020 procurement spec), not a duplicate of P5783. No UNRESOLVED items; flagged P3948's segment-vs-network aggregation for a country-level (not P5777-specific) rollup check."
+}

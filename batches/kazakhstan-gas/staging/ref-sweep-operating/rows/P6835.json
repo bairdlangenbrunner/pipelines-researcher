@@ -1,0 +1,60 @@
+{
+  "project_id": "P6835",
+  "pipeline_name": "Tengiz-Kulsary Gas Pipeline",
+  "sheet_row": 3706,
+  "wiki": "https://www.gem.wiki/Tengiz-Kulsary_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change — existence, classification and duplicate status all clear",
+      "researcher_notes": "EXISTENCE: real, independently confirmed. (1) https://www.zhylyoigas.kz/upload/iblock/7dc/7dcb03c674d4e9b9700d85eb49ce1c59.pdf — TOO Zhylyoigas's own Q3-2019 'reserve/free capacity' filing states in its opening paragraph: 'Товарный газ поступает по подземному магистральному газопроводу Кульсары - Тенгиз диаметром 1200 мм на ГРС в количестве 5-ед...' ('Commercial gas arrives via the underground trunk gas pipeline Kulsary-Tengiz, diameter 1200 mm, to 5 GDS units...'). Zhylyoigas is the real gas-distribution utility for Zhylyoi district, Atyrau region (self-description on https://www.zhylyoigas.kz/ru/company/? verified live: 'газоснабжающая компания, эксплуатирующая магистральные и распределительные газопроводы... на территории Жылыойского района Атырауской области'), i.e. exactly the GEM end-point (Kulsary). This is a primary operator/downstream-customer document, not a GEM-derived tertiary source. (2) GulfPub PE World Map (Tier 2, scraped 2025-12-11) independently carries the SAME pipe under the SAME name 'Tengiz - Kulsary' (two OIDs, 1273 and 5640 — near-duplicate GulfPub entries for the one physical line, a GulfPub-internal issue, not a GEM duplicate), operator/owner QazaqGaz, status Operating, geodesic Tengiz-field-to-Kulsary distance ~102 km (consistent with a 126-130 km pipe route). Two independent origins agree the line exists, runs Tengiz oil field -> Kulsary, and is operated/owned by the QazaqGaz group (Intergas Central Asia / Zhylyoigas being its ATyrau-region operating arms) -> EXISTENCE = high confidence. CLASSIFICATION: the Zhylyoigas filing itself calls it 'подземный магистральный газопровод' (underground TRUNK gas pipeline) — matches GEM's PipelineType=transmission; it feeds a downstream distribution network (5 GDS/ГРС units, 476.71 km of local mains) rather than being a gathering/process line itself, so 'transmission' (trunk, feeding local distribution) is correct, not a feeder/gathering line. DUPLICATE: checked against the 39-row Kazakhstan-gas roster — no other row is named 'Tengiz-Kulsary' or shares its Tengiz-field-to-Kulsary endpoints; not one of the flagged redundancy clusters (P3948/P5784, P1124/P2299/P2300, P2291/P5770/P5771, P2289/P5695, P5927/P5928, P0739/P5810, P1476/P3999, P6830/P6831, P3964/P5901) — none of those involve P6835. Distinct, non-duplicate row.",
+      "proposed_refs": [
+        "https://www.zhylyoigas.kz/upload/iblock/7dc/7dcb03c674d4e9b9700d85eb49ce1c59.pdf",
+        "https://www.zhylyoigas.kz/ru/company/?"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "no sheet change — but record the cross-source conflicts rather than silently pass them. GEM's Diameter (1200 mm) and Capacity (0.83 bcm/y) are both corroborated by the primary Zhylyoigas filing; GulfPub disagrees on both and its own capacity field is flagged unreliable by GulfPub itself.",
+      "researcher_notes": "DIAMETER: GEM=1200 mm. The Zhylyoigas primary filing states the diameter explicitly and unambiguously as '1200 мм' — exact match (this is a scanned/image-only PDF per `pdfimages -list` [2496x3510, 300 ppi native, single JPEG, not upsampled], so url_verifier's text-substring check FAILs on '0.83'/'Тенгиз' as expected for an image PDF — content confirmed by direct visual read of the page, not text extraction; same false-negative pattern documented in url_verifier's docstring). GulfPub's two matched OIDs (1273, 5640) both give diameter='28.0' (28 in = 711 mm) — a large, material disagreement with GEM. I side with GEM/the primary source here: it is the actual downstream operator describing the exact line that feeds its own stations, whereas GulfPub's per-row source_url (https://qazaqgaz.kz/en/obshchaya-informaciya, verified live) turns out to be a generic QazaqGaz 'about us' page with no mention of 'Tengiz' at all — i.e. a boilerplate URL attached to many GulfPub rows, not a pipeline-specific citation, so GulfPub's number here carries little weight. CAPACITY: GEM=0.83 bcm/y. Not literally stated in the Zhylyoigas filing, but derivable from it: the filing's own table gives combined design ('проектная мощность') throughput for the 5 GDS units fed by this trunk line = 50,000+20,000+10,000+5,000+10,000 = 95,000 m3/h, and the filing separately states 'общей пропускной способностью 95 000 м3/ч' for the same trunk-to-GDS handoff. Annualized: 95,000 m3/h x 8,760 h/yr = 832,200,000 m3/yr = 0.8322 bcm/yr -- matches GEM's 0.83 almost exactly (rounds identically). This is a strong but SINGLE-SOURCE, DERIVED (not literally-stated) corroboration, and it measures the downstream distribution hand-off capacity, not necessarily the trunk pipe's own transport capacity, so treat as a caveat rather than an exact independent match. GulfPub's capacity field for this row (800 MMcf/d = ~8.27 bcm/y, ~10x GEM's value) materially conflicts, but GulfPub's own 'capacity_raw' field for both OIDs literally reads 'Not specified' — i.e. the 800.0 numeric is GulfPub's own estimate/default, not a reported figure (confirmed: capacity values are NOT a shared constant across the country's GulfPub rows, so this isn't the known Capacity_mmcfd=300 placeholder, but the explicit 'Not specified' raw-text flag means it is not independent evidence and should not be read as a real conflict). LENGTH: GEM=126.00 km; GulfPub gives 130.357 km on both matched OIDs (~3.4% longer) and geodesic Tengiz-field-to-Kulsary is ~102 km, consistent with a non-straight ~126-130 km routed pipe. No primary source found that states an exact trunk length (the Zhylyoigas filing only gives the LOCAL distribution-network total, 476.71 km, of which just 1.936 km is coded 'магистральные газопроводы' -- that 1.936 km is Zhylyoigas's own short trunk TIE-IN segment near its GDS units, not the ~126 km cross-country Tengiz-to-Kulsary run, which is evidently owned/operated further upstream (QazaqGaz/Intergas) and outside Zhylyoigas's own asset register). Net: length sits within Tier-2-only tolerance (single source, ~3%), acceptable but not independently pinned down by a primary source.",
+      "proposed_refs": [
+        "https://www.zhylyoigas.kz/upload/iblock/7dc/7dcb03c674d4e9b9700d85eb49ce1c59.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 5410,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Интергаз Орталық Азия, Интергаз Центральная Азия"},
+      "primary_value": "Интергаз Орталық Азия, Интергаз Центральная Азия",
+      "proposed_refs": [
+        "https://www.zhylyoigas.kz/upload/iblock/7dc/7dcb03c674d4e9b9700d85eb49ce1c59.pdf",
+        "https://intergas.kz/en/about-the-company/"
+      ],
+      "verifications": [
+        {"url": "https://www.zhylyoigas.kz/upload/iblock/7dc/7dcb03c674d4e9b9700d85eb49ce1c59.pdf", "ok": true, "contains_value": false},
+        {"url": "https://intergas.kz/en/about-the-company/", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "On the operators/owners tab, sheet_row 5410 (P6835). Was MISSING_REF (current_ref blank). Two supporting, independent sources, neither a literal-string match for the Cyrillic/Kazakh Operator string so both are content-inferred rather than a substring hit: (1) the Zhylyoigas trunk-line filing itself names 'АО ИЦА' (JSC Intergas Central Asia) as the owner of 1 of the 6 GDS units fed directly by THIS trunk pipeline ('на ГРС в количестве - 1 единицы принадлежащих сторонним организациям АО ИЦА') -- a specific, on-point tie between ICA and this exact asset, not a generic mention; (2) Intergas Central Asia's own English 'About the Company' page (intergas.kz, verified live, 200) confirms ICA is 'the National Operator on the Main Gas Pipelines Transmission' across Kazakhstan and lists an 'Atyrau Branch' -- the region containing both Tengiz field and Kulsary. Neither source names 'Tengiz-Kulsary' by name on the operator side, so tier=medium rather than high; recommend keeping the current value (unchanged) but adding these two refs so the cell is no longer bare."
+    }
+  ],
+  "summary": "P6835 (Tengiz-Kulsary Gas Pipeline) is real and correctly classified as a transmission trunk feeding Zhylyoigas's Kulsary-area distribution network -- confirmed via the utility's own primary filing plus independent GulfPub corroboration, no duplicate in the 39-row roster. Diameter (1200mm) and Capacity (0.83 bcm/y, via an exact annualized-throughput calc) both check out against the primary source despite GulfPub disagreeing on both (28in / ~8.27 bcm/y) -- GulfPub's per-row capacity is flagged 'Not specified' internally and its cited URL is generic boilerplate, so I side with GEM. Length (126km) has only loose (~3%) Tier-2 corroboration; StartYear1 stayed blank (no verifiable source found, left unfilled rather than guessed). Filled the previously-bare Operator [ref] with two medium-tier refs. UNRESOLVED: exact trunk length has no primary-source confirmation; StartYear1 still blank."
+}

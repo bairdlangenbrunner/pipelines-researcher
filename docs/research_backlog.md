@@ -81,6 +81,36 @@ per cell rather than trusting either signal.
 > state, but nothing de-duplicates it: **before pasting Saudi/Egypt, check whether the cell
 > already carries the ref.**
 
+- **Kazakhstan gas** — **first-ever pass, 2026-08-11** (§9 full pass: operating deep sweep 39 rows ·
+  in-dev annual review 11 · cancelled/mothballed review 2 · redundancy adjudication 11 clusters /
+  28 rows · GulfPub + OSM recon · wiki alignment · route integrity · Leg-3 system-brief research).
+  **THREE files to work:** `pipelines_batch_20260812_1255_ET_kazakhstan-gas_handoff-actions.xlsx`
+  (119 open decisions · 3 status changes · 266 backend paste units · 64 operators/owners units ·
+  31 wiki updates · 180 open flags) + its `-evidence` companion + the two **standalone recon
+  workbooks** at `20260811_1001_ET` (GulfPub) and `20260811_1043_ET` (OSM), which the packet does
+  not subsume (`recon_actions=0`; see §2). **The country's defining fact is that its network is
+  multi-string trunks and there is NO public line-wise register** — the best line-wise source, the
+  KMG Annual Report's gas-transportation table, itemises only the 8 major *systems*, i.e. exactly
+  the system-level aggregates that are the defect. So in at least six systems one system figure is
+  restated on every string (CAC 60.20 bcm/y on three rows, with P2292's 5.00 as the control that
+  proves it; BTBA 1,585 km on both; Bukhara–Ural 21.00 bcm/y; ZhZhA 4.54 bcm/y on four), and an
+  honest `UNRESOLVED` on a per-string spec is often the **correct** outcome — unlike India. Two
+  method rules came out of it, both the hard way. **(1) Identical drawn geometry is not evidence of
+  duplication here** (six systems share one corridor geojson across their strings), and cluster A
+  is the cautionary tale: it had the aggregate-vs-segment signature (P3948's trace = P5777 +
+  P5783 exactly) *and* the sheet's lengths agreed to 0.20 km, and the double count was still
+  **REFUTED** — two independent official sources name P3948 as its own 720 mm / 149.1 km trunk
+  parallel to a separately-named 529/530 mm one, and segment traces cut from a parent produce the
+  union identity for free. Our fold recommendation is withdrawn; **only sourcing decides
+  duplication in this country.** **(2) `adilet.zan.kz` serves an incomplete TLS chain**, which our
+  verifier reported as a bare `SSLError` — it hit 51 of 105 ref cells with **zero real 404s**
+  before the fix. `insecure_tls: True` means the page IS LIVE, and adilet's `#z250` anchors land in
+  Appendices 5–7, which are графические схемы (**maps**), so a full-text miss is not evidence a ref
+  fails. Five escalations open (`batches/kazakhstan-gas/staging/qc/escalations.json`), incl.
+  P7819's three-way route-sync violation and both recon gates (GulfPub's 14.8% status conflicts
+  collapse to two segment-vs-network artifacts; OSM's 110 additions are 55 explicit
+  `FRAGMENT_OF_EXISTING` + 55 mostly-stub candidates — **do not add a `geoarea_weight` override**,
+  the health line is clean). Oil (41 GOIT rows) not swept. `docs/country_notes/kazakhstan.md`.
 - **India gas** — **first-ever pass, 2026-08-10** (§9 full pass: operating deep sweep 35 rows ·
   in-dev annual review 27 · cancelled review 13 · redundancy adjudication 11 clusters / 34 rows ·
   GulfPub + OSM recon · wiki alignment · route integrity · ref-gap re-pass · Leg-3), plus a

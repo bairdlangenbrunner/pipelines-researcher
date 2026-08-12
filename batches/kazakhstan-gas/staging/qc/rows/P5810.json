@@ -1,0 +1,76 @@
+{
+ "project_id": "P5810",
+ "pipeline_name": "Bukhara-Tashkent-Bishkek-Almaty Gas Pipeline",
+ "sheet_row": 3296,
+ "wiki": "https://www.gem.wiki/Bukhara-Tashkent-Bishkek-Almaty_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan"},
+   "primary_value_col": "Operator",
+   "primary_value": "Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://intergas.kz/en/about-the-company/",
+    "https://ru.sputnik.kg/20170829/zapushchen-gazoprovod-ot-tashkenta-do-almaty-cherez-kyrgyzstan-1034934692.html"
+   ],
+   "verifications": [
+    {"url": "https://intergas.kz/en/about-the-company/", "ok": true, "contains_value": true},
+    {"url": "https://ru.sputnik.kg/20170829/zapushchen-gazoprovod-ot-tashkenta-do-almaty-cherez-kyrgyzstan-1034934692.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Same company-level judgement as P0739 (one system, decided once, applied to both rows) -- see P0739.json for the full reasoning. Operator [ref] was blank on this row too (orphan value; Operator itself already read the 3-entity value). Kept the value as-is (a genuinely transnational corridor, not a wiki-union artifact) and sourced the Kazakh-section component (Intergas Central Asia, via intergas.kz/en/about-the-company/, which names 'Bukhara Gas Bearing Region - Tashkent - Bishkek - Almaty MGP' under its Shymkent/Taraz/Almaty branches) plus secondary corroboration for the Kyrgyz section (Gazprom Kyrgyzstan press service, quoted in two 2017 Sputnik Kyrgyzstan articles about this exact pipeline). Uztransgas (Uzbek section) not independently re-verified with a pipeline-specific citation this session -- gem.wiki's own ref (utg.uz/ru/about/history/) is now 404."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "value_cols": ["Diameter"],
+   "values": {"Diameter": "720, 1015"},
+   "primary_value_col": "Diameter",
+   "primary_value": "720, 1015",
+   "class_out": "REFS_ADDED",
+   "tab": null,
+   "proposed_refs": ["https://web.archive.org/web/20240113161453/https://library.tou.edu.kz/fulltext/bibl/b794.pdf"],
+   "verifications": [
+    {"url": "https://library.tou.edu.kz/fulltext/bibl/b794.pdf", "ok": false, "contains_value": false, "note": "origin now HTTP 404 -- confirmed dead, not merely blocked (checked with url_verifier.py and a direct curl, both 404)"},
+    {"url": "https://web.archive.org/web/20240113161453/https://library.tou.edu.kz/fulltext/bibl/b794.pdf", "ok": true, "contains_value": "not checkable by substring (binary PDF); confirmed locally", "note": "downloaded and read with pdftotext -layout -- Table 2 ('Основные газопроводы Казахстана') lists 'БГР-ТБА (Бухарский газоносный район-Ташкент-Бишкек-Алматы)' at commissioning years '1971, 1999' with diameter '720,1015' -- an EXACT match to this row's Diameter value AND to StartYear1=1999 on this row (and 1971 on P0739)"}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The existing Diameter [ref] (library.tou.edu.kz/fulltext/bibl/b794.pdf, a Pavlodar State University journal article, 'Вестник ПГУ' ISSN 1811-1858) is now a confirmed 404 at the origin -- per standing rule 3 (never delete a once-working ref over an access failure; a confirmed-dead origin still gets its Wayback snapshot rather than silent removal), I located and verified a live Wayback capture (2024-01-13) of the exact same PDF and confirmed by direct local read (pdftotext -layout, not just the substring verifier, which cannot see inside PDF binaries -- documented false-negative case per protocol) that it supports this row's diameter value precisely: Table 2 gives БГР-ТБА diameter as '720,1015' mm, matching P5810 token-for-token. The same table also cross-checks StartYear1 exactly (1971 for line I / 1999 for line II) and independently states the combined 'двухниточный' (two-line) system is 1,585 km / 12 bcm/y -- i.e. this source itself describes 1,585 km and 12 bcm/y as SYSTEM totals for both lines together, consistent with the already-staged cluster-E finding in notes/escalation-2026-08-11-kazakhstan-system-level-values-on-strings.md (not re-litigated here; flagging only as corroboration, no length/capacity fill proposed since length_ratio is out of scope for this brief). Recommend: replace the dead library.tou.edu.kz URL with the Wayback snapshot URL above (same document, same content, still live)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "value_cols": ["EndCountryOrArea"],
+   "values": {"EndCountryOrArea": "Kazakhstan"},
+   "primary_value_col": "EndCountryOrArea",
+   "primary_value": "Kazakhstan",
+   "class_out": "REFS_ADDED",
+   "tab": null,
+   "proposed_refs": [
+    "https://ru.sputnik.kg/20170829/zapushchen-gazoprovod-ot-tashkenta-do-almaty-cherez-kyrgyzstan-1034934692.html",
+    "https://ru.sputnik.kg/20170403/gazoprovod-tashkent-bishkek-almaty-zavershen-vtoroj-ehtap-stroitelstva-1032695387.html"
+   ],
+   "verifications": [
+    {"url": "https://ru.sputnik.kg/20170829/zapushchen-gazoprovod-ot-tashkenta-do-almaty-cherez-kyrgyzstan-1034934692.html", "ok": true, "contains_value": true},
+    {"url": "https://ru.sputnik.kg/20170403/gazoprovod-tashkent-bishkek-almaty-zavershen-vtoroj-ehtap-stroitelstva-1032695387.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "route_integrity flag: the drawn route's last endpoint measures in Kazakhstan (42.253, 70.032), which matches neither StartCountryOrArea (Uzbekistan) nor EndCountryOrArea (Kyrgyzstan) as currently entered. This is NOT a partial-route case (per the flag-type guidance to check that possibility first) -- it is a plain data-entry error: this row's own EndLocation field already reads 'Almaty', which is unambiguously in Kazakhstan, not Kyrgyzstan, so EndCountryOrArea is internally inconsistent with EndLocation on the SAME row. Independently (never citing gem.wiki or the sheet itself): a 2017-08-29 Sputnik Kyrgyzstan article on the pipeline's restoration explicitly names both 'I и II очередей' (phases/lines I and II) of 'Бухарский газоносный район - Ташкент - Бишкек - Алматы' as supplying gas to 'Алматинскую и Талды-Курганскую области Казахстана' (Almaty and Taldykorgan REGIONS OF KAZAKHSTAN) -- i.e. line II (this row, StartYear1=1999) terminates in Kazakhstan, transiting Kyrgyzstan en route, exactly like P0739. A second Sputnik Kyrgyzstan article (2017-04-03, on completing the pipeline's 'вторая очередь' / second phase) is headlined 'Газопровод Ташкент-Бишкек-Алматы' -- again naming Almaty as the terminus for the second-phase line. Both trace to Gazprom Kyrgyzstan's press service (treat as one origin), so I also lean on the fully independent Pavlodar State University academic source used for the Diameter fill above, which describes the corridor crossing Kyrgyzstan 'between Shymkent and Almaty' -- a second, unrelated origin, giving 2 independent confirmations overall. Recommend: change EndCountryOrArea from 'Kyrgyzstan' to 'Kazakhstan' on this row, matching P0739 and matching this row's own EndLocation. Per protocol, no new coordinates are proposed -- the drawn route (shared corridor with P0739, per the escalation memo) is left as-is; only the mislabeled country field is corrected."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "attribution",
+   "recommendation": "Same as P0739: keep Owner and Parent as multi-entity values -- this is a transnational corridor, not a wiki-union artifact. Decided once for the system, applied to both rows.",
+   "researcher_notes": "See P0739.json for the full reasoning (Pavlodar State University source + Sputnik Kyrgyzstan coverage independently confirm the route genuinely crosses Uzbekistan-Kyrgyzstan-Kazakhstan). Owner [ref] on this row already cites https://intergas.kz/ru/obwaya-informaciya/ (verified live) -- no fill needed. Parent has no dedicated [ref] column on either tab (same schema limitation as P0739)."
+  }
+ ]
+}

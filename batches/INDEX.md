@@ -37,6 +37,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/ref-sweep-operating` — rows=50 fills=119 updates=0 status-pending=0 refs(REFS_ADDED=240, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none)
 - `staging/route-creation-20260810` [route-creation] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=34 new(none)
 - `staging/route-creation-20260811` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none)
+- `staging/route-creation-20260811-p7589` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none)
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
@@ -113,15 +114,18 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## kazakhstan-gas
 
-- `staging/annual` — no store — invisible to discovery
+- `staging/annual` — rows=11 fills=5 updates=0 status-pending=3 refs(DEAD_LINK=36, REFS_ADDED=19, REVERIFIED=65, UNRESOLVED=11) routes=0 new(none)
 - `staging/cancelled-review` — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=12, UNRESOLVED=6) routes=0 new(none)
-- `staging/qc` — no store — invisible to discovery
+- `staging/qc` [assembled packet: handoff] — rows=48 fills=38 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260811` — recon inputs
 - `staging/recon-osm-20260811` — recon inputs
 - `staging/redundancy` [redundancy] — rows=28 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/ref-sweep-operating` — no store — invisible to discovery
+- `staging/ref-sweep-operating` — rows=39 fills=4 updates=0 status-pending=0 refs(DEAD_LINK=39, REFS_ADDED=177, REVERIFIED=62, UNRESOLVED=148) routes=0 new(none)
 - `deliverables/pipelines_batch_20260811_1001_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx`
-- `deliverables/pipelines_batch_20260811_1001_ET_kazakhstan-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260811_1043_ET_kazakhstan-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260812_1255_ET_kazakhstan-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260812_1255_ET_kazakhstan-gas_handoff-evidence.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## libya-gas
 
@@ -139,6 +143,12 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0941_ET_libya-gas_reconciliation-gulfpub.xlsx`
 - `archive/` — 3 superseded/applied file(s)
+
+## malaysia-gas
+
+- `staging/recon-gulfpub-20260812` — recon inputs
+- `staging/recon-malaysian-gas-map-20260812` — recon inputs
+- `staging/recon-osm-20260812` — recon inputs
 
 ## pakistan-gas
 

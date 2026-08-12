@@ -503,6 +503,31 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   line clean, no `MATCH_QUALITY` warning, India is the healthiest OSM extract in the registry
   (44% named); do NOT add a `geoarea_weight` override. Oil (26 rows) not swept):**
   `docs/country_notes/india.md`.
+- **Kazakhstan (gas: first-ever full pass 2026-08-11, staged not applied. **THREE files to work**,
+  the packet does NOT subsume the recons (`recon_actions=0`):
+  `…_20260812_1255_ET_kazakhstan-gas_handoff-{actions,evidence}.xlsx` (rebuilt from the 08-11
+  `1145_ET` pair after the cluster-A reversal below — don't work the old one) +
+  `…_20260811_1001_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx` +
+  `…_20260811_1043_ET_…reconciliation-osm.xlsx`. The country is **multi-string trunk systems with
+  NO public line-wise register** — the best line-wise source (KMG's AR gas-transportation table)
+  itemises only the 8 major *systems*, i.e. exactly the aggregates that are the defect, so in six
+  systems one system figure is restated on every string and an honest `UNRESOLVED` on a per-string
+  spec is often the CORRECT outcome (the inverse of India). **Cluster A is the country's method
+  lesson:** it had the aggregate-vs-segment signature (P3948's trace = P5777 + P5783 exactly) AND
+  the sheet's lengths agreed to 0.20 km, and the double count was still **REFUTED** — two
+  independent official sources name P3948 as its own 720 mm / 149.1 km trunk parallel to a
+  separately-named 529/530 mm one, and segment traces cut from a parent produce the union identity
+  for free. Our fold recommendation is WITHDRAWN, as are the "mislabelled numerals" and
+  "529-is-a-typo" findings; **only sourcing decides duplication here.** Two verifier rules:
+  `adilet.zan.kz` serves an incomplete TLS chain, so `insecure_tls: True` means the page IS LIVE
+  (our defect hit 51 of 105 ref cells with zero real 404s), and its `#z250` anchors land in
+  Appendices 5–7, which are MAPS — a full-text miss is not evidence a ref fails. Both recon gates
+  crossed and both empty in fact (GulfPub's 14.8% conflicts = two segment-vs-network artifacts;
+  OSM's 110 additions = 55 explicit `FRAGMENT_OF_EXISTING` + 55 mostly-stub candidates, health
+  line clean — do NOT add a `geoarea_weight` override). Open: P7819's three-way route-sync
+  violation, P5776 the one operating row at `no route`, cluster F (P5927/P5928 byte-identical),
+  P3945's `Osh` province, the CA–China 1,833 km question. Oil (41 rows) not swept):**
+  `docs/country_notes/kazakhstan.md`.
 - **Nigeria (divestiture ownership sweep not started):**
   `docs/country_notes/nigeria.md`.
 - **Israel (gas: INGL/TMNG-map ground-truth batch 2026-07-23 staged not applied —

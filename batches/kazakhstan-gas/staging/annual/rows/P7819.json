@@ -1,0 +1,81 @@
+{
+  "project_id": "P7819",
+  "pipeline_name": "Karachaganak-Uralsk Gas Pipeline",
+  "sheet_row": 4206,
+  "wiki": "https://www.gem.wiki/Karachaganak-Uralsk_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No data change. Keep as proposed/Pre-FID; re-check once the adjacent Karachaganak GPZ (its only reason to exist) has a public construction schedule.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all confirmed via 2 independent KZ government sources with different origins (a legal/policy order vs. a technical project registry) that both name this exact project: (1) adilet.zan.kz/rus/docs/P2500000463 - the Government's 'Complex plan for gas industry development 2025-2029' (Order approved 21 June 2025), line item #24: 'Стрoительство лупинга МГ Карачаганак-Уральск для транспортировки газа с планируемого ГПЗ на месторождении Карачаганак' (Construction of the looping of the Karachaganak-Uralsk trunk gas pipeline, to transport gas from the planned GPP at the Karachaganak field), responsible parties QazaqGaz + JSC Intergas Central Asia, deadline '2028 год' (matches StartYear1=2028), financing volume '85,4 млрд тенге' (matches SegmentCost=85,400,000,000 KZT). (2) epsd.kz/Modules/Banks/Projects/View/1193216 - the state 'Unified portal of complex expertise of projects' (Ministry of Industry and Construction), registration No. 007633, expert opinion No. 04-0386/24 dated 05.12.2024, object name 'ТЕО «Строительство Лупинга/2 нитки МГ «Карачаганак-Уральск в Западно-Казахстанской области»' (feasibility study for construction of the looping/2nd line of the Karachaganak-Uralsk trunk gas pipeline in West Kazakhstan region), customer = Uralsk branch of JSC Intergas Central Asia (a 100% QazaqGaz subsidiary - confirmed via qsamruk.kz portfolio listing), location = 3 named districts of West Kazakhstan region (Baiterek, Burlinsky, Terektinsky) - matches StartState/Province=EndState/Province='West Kazakhstan'. Crucially this second source gives 'Мощность: 144,700', 'Единица измерения мощности: км' - i.e. LENGTH = 144.700 km, an EXACT match to LengthKnown=144.70/LengthKnownUnits=km. url_verifier's automated substring check on this URL had returned a content-not-found FAIL because it searched for '144.70'/'144.7' while the page renders the value as '144,700' (Russian comma-decimal, 3 decimals) - a false negative, not evidence the source lacks the value; manually confirmed by fetching and reading the page. A THIRD source, neftegaz.ru (Russian trade press, 8 March 2025), independently reports the SAME project by name with the same cost figure ('Для строительства лупинга ... Карачаганак - Уральск ... потребуется 85,4 млрд тенге (173 млн долл. США)') but this traces to the same government plan as source (1), so per the 2+-independent-origins rule it does NOT count as a second independent source for the cost figure specifically - see the SegmentCost concern below. DUPLICATE CHECK: this is emphatically NOT the same physical pipe as operating row P3947 'Karachaganak-Uralsk Gas Pipeline I' (152.00 km) - both the government plan and the epsd registry explicitly label this project a 'лупинг/2 нитки' (looping/2nd line), i.e. a second, parallel pipe built alongside the existing operating line to add capacity, not a re-description of it. No duplicate. SEPARATE FINDING for recon adjudication: the 2026-08-11 GulfPub crosswalk (staging/recon-gulfpub-20260811/match_diff.json) matches P7819 at only 'yellow' confidence (composite 0.51) to GulfPub oid 1254 'Aktobe - Karachaganak' (operating since 2022, 362.1 km, Aktobe->Karachaganak, cited to qazaqgaz.kz/en/obshchaya-informaciya) and flags a status_conflict (GulfPub 'operating' vs GEM 'proposed'). This match looks spurious to me: the endpoints (Aktobe vs. Uralsk/Oral) and lengths (362.1 km vs. 144.7 km) don't correspond to the same corridor, and I fetched GulfPub's own cited source page (qazaqgaz.kz/en/obshchaya-informaciya, a generic company-overview page) and it does not mention Karachaganak or an Aktobe-Karachaganak pipeline anywhere - the citation does not actually name the record it's attached to, which by the sweep's own existence-flag standard should count against GulfPub's record, not against P7819. Recommend the recon adjudicator reject this match rather than acting on the status_conflict; do NOT flip P7819 to operating off it.",
+      "proposed_refs": [
+        "https://adilet.zan.kz/rus/docs/P2500000463",
+        "https://epsd.kz/Modules/Banks/Projects/View/1193216"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not touch SegmentCost (85,400,000,000 KZT is correctly sourced) - but flag CostUSD/CostEuro (and CostUSDPerKm/CostEuroPerKm) for whoever maintains the tracker's currency-conversion reference table; these look computed off a badly stale FX rate. Downgrade SegmentCost's tier note to medium (single origin).",
+      "researcher_notes": "SegmentCost=85,400,000,000 KZT / KZT / 2025 is genuinely well-sourced textually ('85,4 млрд тенге' in both adilet.zan.kz's Complex Plan and neftegaz.ru's 8-Mar-2025 writeup), but (a) both citations trace to the same underlying government plan document, so per the independent-origins rule this is really ONE origin restated by a second outlet, not two independent sources - tier should read medium, not high, for this specific figure; and (b) the sheet's own COMPUTED CostUSD=580,952,380.95 implies an FX rate of 85,400,000,000 / 580,952,380.95 = ~146.98 KZT per USD. That is not a plausible 2025 rate (actual KZT/USD in 2025 ran roughly 480-525) - it resembles a pre-2015-devaluation-era peg. neftegaz.ru's own reporters converted the same 85.4bn KZT to '173 млн долл. США' ($173M), implying ~493.6 KZT/USD, consistent with reality. So the sheet's CostUSD (and the CostEuro/CostUSDPerKm/CostEuroPerKm fields chained off it) look wrong by a factor of roughly 3.3x. Per the hard rule against overwriting computed/formula columns, I have not touched these cells myself - flagging for the FX-reference-table owner to check, since this could be a systemic (not just P7819-specific) defect worth a wider audit.",
+      "proposed_refs": [
+        "https://adilet.zan.kz/rus/docs/P2500000463",
+        "https://neftegaz.ru/news/transport-and-storage/882840-kazakhstan-zapuskaet-masshtabnyy-plan-razvitiya-gazovykh-khranilishch-i-infrastruktury/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify StartYear1=2028 once QazaqGaz/Hyundai Engineering publish an actual construction schedule for the Karachaganak GPZ; this pipeline's in-service date is entirely downstream of that project's timeline, and 2028 is looking optimistic.",
+      "researcher_notes": "StartYear1=2028 is sourced ONLY from adilet.zan.kz's June-2025 Complex Plan (single origin - no second source ties '2028' to THIS pipeline specifically). And the plan's own stated rationale for this pipeline - moving gas from a 'planned GPZ [gas processing plant] at Karachaganak' - is itself in serious flux: independent Kazakh/Russian/international press through mid-2026 documents that the adjacent GPZ project (whose gas this looping line exists to carry) went through real turmoil AFTER the plan was published: uralskweek.kz (15 Jan 2025, regional paper) reported the Energy Ministry had no basis to confirm the akim's earlier claim the GPZ would be built 'by 2028,' with KPO shareholders (Shell/Eni-led) and the government still disputing project cost; Reuters via themoscowtimes.com (23 Mar 2026) reported Kazakhstan formally terminated KPO/Shell/Eni's role in building the GPZ over cost-overrun and FID-failure allegations and sued the KPO international partners over a $3.5bn cost-deduction dispute; kursiv.media (9 Jun 2026) reported QazaqGaz took over as GPZ construction operator (per the Energy Ministry, April 2026) and Hyundai Engineering was then awarded the ~$6bn EPC contract for the GPZ (capacity 5 bcm/y), with sources telling Bloomberg (May 2025) the original 2028 GPZ completion target had been floated for a push to 2030 (a slip Kazakhstan says it disputed). None of this is proof the PIPELINE'S 2028 date has formally moved - no fresher official document revises line item #24 of the Complex Plan that I could find - but given the wholesale operator change, litigation, and re-tender the pipeline's dependency went through in the year after the plan was adopted, an unchanged 2028 for this pipeline looks fragile and due for a fresh check rather than a routine confirm.",
+      "proposed_refs": [
+        "https://www.uralskweek.kz/2025/01/15/v-blizhajshie-pyat-let-gazopererabatyvayushhij-zavod-na-karachaganake-ne-postroyat/",
+        "https://ru.themoscowtimes.com/2026/03/23/kazakhstan-otkazalsya-ot-uchastiya-operatora-karachaganaka-v-stroitelstve-gpz-na-mestorozhdenii-a190573",
+        "https://kz.kursiv.media/2026-06-09/zhnb-hyundai-engineering-poluchila-kontrakt-na-stroitelstvo-gpz-na-karachaganake-za-6-mlrd/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [],
+  "status_reviews": [
+    {
+      "segment_name": "II",
+      "sheet_row": 4206,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-06",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://ru.themoscowtimes.com/2026/03/23/kazakhstan-otkazalsya-ot-uchastiya-operatora-karachaganaka-v-stroitelstve-gpz-na-mestorozhdenii-a190573",
+        "https://kz.kursiv.media/2026-06-09/zhnb-hyundai-engineering-poluchila-kontrakt-na-stroitelstvo-gpz-na-karachaganake-za-6-mlrd/"
+      ],
+      "verifications": [
+        {"url": "https://adilet.zan.kz/rus/docs/P2500000463", "ok": true, "contains_value": true},
+        {"url": "https://epsd.kz/Modules/Banks/Projects/View/1193216", "ok": true, "contains_value": true},
+        {"url": "https://neftegaz.ru/news/transport-and-storage/882840-kazakhstan-zapuskaet-masshtabnyy-plan-razvitiya-gazovykh-khranilishch-i-infrastruktury/", "ok": true, "contains_value": true},
+        {"url": "https://www.uralskweek.kz/2025/01/15/v-blizhajshie-pyat-let-gazopererabatyvayushhij-zavod-na-karachaganake-ne-postroyat/", "ok": true, "contains_value": true},
+        {"url": "https://ru.themoscowtimes.com/2026/03/23/kazakhstan-otkazalsya-ot-uchastiya-operatora-karachaganaka-v-stroitelstve-gpz-na-mestorozhdenii-a190573", "ok": true, "contains_value": true},
+        {"url": "https://kz.kursiv.media/2026-06-09/zhnb-hyundai-engineering-poluchila-kontrakt-na-stroitelstvo-gpz-na-karachaganake-za-6-mlrd/", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Status='proposed' remains correct - this is not a stale row. There is no dormancy problem here (the 2y-proposed/4y-shelved rules don't fire): the wider Karachaganak gas-development program this pipeline depends on has been in continuous, heavily-reported motion right up to the present. Newest independent evidence found: kz.kursiv.media, 9 June 2026, reporting Hyundai Engineering was awarded the ~$6bn EPC contract to build the Karachaganak GPZ (capacity 5 bcm/y), after Kazakhstan (per Reuters/themoscowtimes.com, 23 Mar 2026) formally ousted KPO/Shell/Eni from that role over cost and FID disputes and put QazaqGaz in as construction operator (Apr 2026 per the Energy Ministry). None of this constitutes an FID for the looping pipeline itself (still correctly Pre-FID), nor does it change the pipeline's own recorded Status. It does mean the pipeline's downstream dependency (see the separate StartYear1 spec-concern flagged in 'validity') has had its own schedule thrown into real uncertainty since the sheet's 2025-10-11 LastUpdated, so I'm confirming Status but NOT confirming the StartYear1=2028 date at the same confidence."
+    }
+  ],
+  "summary": "P7819 is real and correctly classified - two independent KZ government sources (a 2025 legal/policy order + a Dec-2024 state technical-expertise registry entry) name this exact 'Karachaganak-Uralsk looping/2nd line' project and its length (144.70 km, confirmed exactly on epsd.kz despite a comma-decimal false-negative in the automated check); it is a genuine capacity addition alongside operating P3947 (segment I), not a duplicate. Two spec concerns raised: (1) CostUSD/CostEuro look computed off a stale ~147 KZT/USD rate (~3.3x too low a rate vs. the real 2025 rate implied by neftegaz.ru's own $173M conversion of the same 85.4bn-KZT figure) - flag for the FX-table owner, don't overwrite the formula cells; (2) StartYear1=2028 is single-sourced and looks fragile given the adjacent Karachaganak GPZ project's 2025-2026 operator termination/litigation/re-tender saga (Hyundai awarded the GPZ EPC contract June 2026) - Status='proposed' is confirmed (not stale, program is very much alive), but StartYear1 should be re-checked once a real construction schedule surfaces. Also flagged for the recon adjudicator: the 2026-08-11 GulfPub crosswalk's 'yellow'-confidence status_conflict match to oid 1254 'Aktobe-Karachaganak' (operating) looks like a false match - different endpoints/length, and GulfPub's own cited source doesn't name that pipeline at all - recommend rejecting it rather than acting on it."
+}

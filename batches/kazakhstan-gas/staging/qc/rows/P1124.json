@@ -1,0 +1,62 @@
+{
+ "project_id": "P1124",
+ "pipeline_name": "Central Asia–China Gas Pipeline",
+ "sheet_row": 649,
+ "wiki": "https://www.gem.wiki/Central_Asia%E2%80%93China_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Turkmengaz, Uztransgaz, Asia Gas Pipeline LLP"},
+   "primary_value_col": "Operator",
+   "primary_value": "Turkmengaz, Uztransgaz, Asia Gas Pipeline LLP",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://adilet.zan.kz/rus/docs/G23JVM00350",
+    "https://www.cdu.ru/tek_russia/articles/3/1150/",
+    "https://qsamruk.kz/company/agp"
+   ],
+   "verifications": [
+    {"url": "https://adilet.zan.kz/rus/docs/G23JVM00350", "ok": true, "contains_value": true, "note": "insecure_tls retry; page is live (adilet gotcha #1)"},
+    {"url": "https://www.cdu.ru/tek_russia/articles/3/1150/", "ok": true, "contains_value": true},
+    {"url": "https://qsamruk.kz/company/agp", "ok": true, "contains_value": true}
+   ],
+   "tier": "high", "independent": true, "source_language": "ru",
+   "researcher_notes": "ONE QUESTION PER COMPANY, decided once and applied identically to all three rows in this brief (P1124/P2299/P2300): who operates the KAZAKH section of Central Asia-China Lines A/B/C. Answer: ТОО «Азиатский газопровод» / Asia Gas Pipeline LLP (AGP). Three independent sources agree: (1) Order of the Minister of Energy №350 (29.09.2023) §44 states verbatim 'Оператором магистральной системы выступает совместное казахстанско-китайское предприятие \"Товарищество с ограниченной ответственностью 'Азиатский газопровод'\"' for the two-line system (A,B) 'с последующим вводом в эксплуатацию нитки С' — i.e. AGP is named operator for all three strings, not just A/B. (2) cdu.ru (Russia's Fuel & Energy Complex Central Dispatch info agency) independently states 'Оператором газопровода является ТОО «Азиатский газопровод»' for the three-line, 55 bcm/y Kazakh section. (3) qsamruk.kz (Samruk-Kazyna's own portfolio-company page for AGP) confirms AGP is a 50/50 JV — АО НК QazaqGaz (KZ) + Trans-Asia Gas Pipeline Company Limited, a CNPC subsidiary (CN) — created 2008-02-15 under the KZ-China intergovernmental agreement specifically to build/finance/operate the Kazakh Section. china.aiddata.org (sourced from China Development Bank loan records) corroborates the same JV split and explicitly labels the financed asset 'Kazakh Section of Lines A and B' / 'Kazakh Section of Line C', confirming AGP's remit is the Kazakh section specifically, not the whole transnational corridor. Turkmengaz and Uztransgaz are retained in the value as the Turkmen- and Uzbek-section operators (consistent across every source found, incl. the wiki and CNPC's own public description of the JV chain); they were not re-verified independently this session — only the Kazakh-section entity was the open question. P1124's Operator cell was blank; this fill is a net-new addition, not a correction.",
+   "system_level_note": "P2299 and P2300 currently carry 'Turkmengaz, Uztransgaz, Intergas Central Asia' — Intergas Central Asia JSC is a distinct KazTransGas subsidiary that operates the OLDER Soviet-era trunk systems (Central Asia-Center, Bukhara-Urals, Okarem-Beyneu) via its regional UMG branches (intergas.kz), and does not appear as operator of the Kazakhstan-China corridor in any primary source found. See P2299/P2300 shards for that correction, decided identically here."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Owner: retain the multi-entity union (CNPC-side + Turkmengaz + Uztransgaz + QazaqGaz) — it is genuine shared ownership across the corridor's national sections, not a per-row duplication artifact, and applies identically to Lines A, B and the built portion of C per Order №350 §44 (which names AGP operator for all three strings as one system). But the Chinese-side entity name is unsettled: P1124 reads 'China National Petroleum Corp' while P2299/P2300 read 'PipeChina' — these are NOT the same current entity and I could not verify which is correct. Per aiddata.org / qsamruk.kz, AGP's Chinese-side 50% shareholder is 'Trans-Asia Gas Pipeline Company Limited', a CNPC subsidiary as of 2007-2015; a 2015 transaction sold 50% of Trans-Asia's equity to CNIC Corp Ltd (Hong Kong, China Reform Holdings), and Trans-Asia was reportedly merged into 'Sino-Pipeline International Company Limited' by 2017 (per a WebSearch summary I could not independently verify against a primary corporate filing this session). 'PipeChina' (National Oil and Gas Pipe Network Group Co Ltd, est. 2019) consolidated CNPC/Sinopec/CNOOC's DOMESTIC Chinese trunk pipelines and LNG/storage assets — no source I found shows it absorbed CNPC's overseas midstream JVs like AGP, so 'PipeChina' on P2299/P2300 looks more likely to be an error than 'China National Petroleum Corp' on P1124, but a human should verify the current instrument-holder before editing — I am not proposing a fill without a citable primary source for it. Recommend: pick one Chinese-side name and apply it uniformly across all three rows.",
+   "researcher_notes": "See fills[0].researcher_notes for the operator sourcing. Owner sourcing for the CNPC-side entity per china.aiddata.org/projects/54489/: 'JSC KazTransGas and Trans-Asia Gas Pipeline Company Limited — a wholly owned subsidiary of China National Petroleum Corporation (CNPC) — created a special purpose vehicle called Asia Gas Pipeline LLP (AGP)... KazTransGas and CNPC each hold a 50% equity stake in AGP.' No independent source located this session confirms 'PipeChina' as AGP's current Chinese shareholder.",
+   "proposed_refs": ["https://china.aiddata.org/projects/54489/"],
+   "verifications": [{"url": "https://china.aiddata.org/projects/54489/", "ok": true, "contains_value": true}],
+   "tier": "medium", "independent": true
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Parent: the wiki's union additionally lists 'Tajiktransgaz' and 'Trans-Tajik Gas Pipeline Company Ltd' as parents of this system — those belong to the Tajik branch (Line D, under construction via Kyrgyzstan/Tajikistan; per en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline, 'A fourth pipeline (Line D)... to connect Galkynysh to western China via Kyrgyzstan and Tajikistan'), which is a physically separate line from A/B/C and not part of this brief's three rows. Do NOT add Trans-Tajik/Tajiktransgaz to P1124/P2299/P2300's Parent — the wiki's system-wide union is over-broad here. Otherwise the sheet's existing government/SWF/shareholder breakdown for Parent is plausible as a genuinely shared ownership chain across all three strings (same JV, same governments) and I found no independent primary source this session detailed enough to revise individual percentages, so no fill is proposed — recommend leaving Parent as-is pending a human's own corporate-registry pass if the CNPC-side entity naming above is revised.",
+   "researcher_notes": "en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline (verified live, distinct from the banned gem.wiki) is explicit that Line D is a separate under-construction line via Kyrgyzstan/Tajikistan, which is why Trans-Tajik/Tajiktransgaz do not belong on Lines A/B/C's Parent.",
+   "proposed_refs": ["https://en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline"],
+   "verifications": [{"url": "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline", "ok": true, "contains_value": true}],
+   "tier": "medium", "independent": false
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No length edit. LengthKnownKm=1833.00 on all three rows is the Turkmen(Uzbek border)-to-Khorgos transit length shared by Lines A/B/C — not a per-line sum and not a Kazakhstan-only figure — confirmed here with sources (this brief's source_ladder flagged it as needing a source, not an inference; now sourced).",
+   "researcher_notes": "en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline: 'The length of Lines A, B, and C is about 1,833 kilometres (1,139 mi), of which 188 kilometres (117 mi) in Turkmenistan and 530 kilometres (330 mi) in Uzbekistan' — i.e. the figure is measured from the Turkmenistan-Uzbekistan border (not a Turkmen gas field) to the China border. This matches thepeoplesmap.net (Griffith Asia Institute's China-infrastructure database, independent of GEM/wiki): 'The 1,837-kilometre-long pipelines then connect to China's Second West-East Gas Pipeline' at Horgos — same figure within rounding, same endpoint. It also matches the sheet's OWN StartLocation/EndLocation on these rows ('Getaim' → 'Horgos'): Getaim (Gedaim) is the Turkmenistan-Uzbekistan border crossing on the Amu Darya, so the sheet's chosen endpoints already encode this reading — internal consistency, not just external corroboration. Order №350 §44 separately gives 'до 1300 км' for the Kazakh portion alone (a subset, consistent with 1833 minus ~718 km of Turkmen+Uzbek territory, though the order's figure is a rounded ceiling so I would not treat 1833−718=1115 as an exact reconciliation). Tier medium: two independent non-primary sources agree closely (1833 vs 1837) and are corroborated by the sheet's own endpoint naming, but no single primary source states the full 1833 km breakdown by country in one place.",
+   "proposed_refs": ["https://en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline", "https://thepeoplesmap.net/project/central-asia-china-gas-pipeline-line-a-line-b-and-line-c/"],
+   "verifications": [
+    {"url": "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline", "ok": true, "contains_value": true},
+    {"url": "https://thepeoplesmap.net/project/central-asia-china-gas-pipeline-line-a-line-b-and-line-c/", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium", "independent": true
+  }
+ ]
+}

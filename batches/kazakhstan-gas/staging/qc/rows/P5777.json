@@ -1,0 +1,68 @@
+{
+ "project_id": "P5777",
+ "pipeline_name": "Zhanaozen-Zhetybay-Aktau Gas Pipeline",
+ "sheet_row": 3268,
+ "wiki": "https://www.gem.wiki/Zhanaozen-Zhetybay-Aktau_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "530",
+    "DiameterUnits": "mm"
+   },
+   "primary_value_col": "Diameter",
+   "primary_value": "530",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://ecoportal.kz/Public/PubHearings/LoadFile/182922",
+    "https://www.inaktau.kz/news/3812798/kakie-proekty-po-gazosnabzeniu-realizuutsa-v-mangistau"
+   ],
+   "verifications": [
+    {
+     "url": "https://ecoportal.kz/Public/PubHearings/LoadFile/182922",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.inaktau.kz/news/3812798/kakie-proekty-po-gazosnabzeniu-realizuutsa-v-mangistau",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "SYSTEM-LEVEL JUDGEMENT (applies to all six rows in this brief, decided once): the wiki's diameter 'union' (529 mm; 530 mm; 720 mm) is the SET of diameters used by three separately-named physical lines on this corridor, not a value any single row should adopt wholesale. Two independent official sources -- the Mangistau regional development plan (adilet.zan.kz/rus/docs/P2100000784, item 116, quoted below) and Intergas Central Asia's own environmental-permit filing for its UMG Aktau branch (ecoportal.kz public-hearings portal, \"Kratkoe netekhnicheskoe rezyume\" for MG \"Zhanaozen-Aktau\" 2025-2030) -- both independently break the corridor into separately-diametered named lines: MG \"Zhanaozen-Zhetybai-Aktau\" Du 720 mm, MG \"KazGPZ-KS-Zhanaozen\" Du 720 mm, and MG \"Zhanaozen-Zhetybai-Aktau\" Du 529/530 mm (itself split along its length: 530 mm on the Zhanaozen-Zhetybai stretch, 529 mm on the Zhetybai-Aktau stretch, per ecoportal's segment table). Each GEM row that already carries a single value from that set is carrying ITS OWN line's diameter, not a naive copy of the wiki's union -- verified per-row below. Applying the full 3-value union to any one row would be the error, not the fix. THIS ROW (P5777, SegmentName 'III Zhanaozen-Zhetybay', 60.70 km): ecoportal's PDF (verified live 200; substring false-negative on binary PDF content, confirmed locally via pdftotext -layout) states verbatim: ‘Магистральный газопровод высокого давления Ду 530 мм «Жанаозен-Жетыбай» протяженностью 60,7 км’ -- diameter and length both match the sheet exactly, and this is the ONLY source found that splits the 529/530 mm pairing by segment rather than stating it as one figure for the whole 'Zhanaozen-Zhetybai-Aktau' 529/530mm line (adilet item 116 and Intergas's own 08.02.2023 news article -- https://intergas.kz/ru/news/4/991, checked directly by curl -- both state diameters for the OTHER two lines in the trio explicitly but do not give a length or diameter figure at all for the whole system's text; the intergas.kz article in particular does NOT contain '529' or '720' anywhere in its actual body text despite an earlier WebFetch summary suggesting otherwise -- that summary was a fetch-tool hallucination, verified false by direct curl + regex; do not cite intergas.kz/ru/news/4/991 for diameter). InAktau.kz (verified live via url_verifier with 'insecure' render; raw HTML embeds the article body as escaped JSON, confirmed by direct extraction) independently states the corridor carries 'КазГПЗ-КС-Жанаозен – 720 мм' and separately 'Жанаозен-Жетыбай-Актау - 529/530 мм' -- corroborating the SAME three-way split as adilet, but (like adilet) without disambiguating which of 529/530 belongs to which sub-stretch. Because only ecoportal resolves the segment-level split, tier is medium (one segment-precise primary source + one corridor-level independent corroboration of the diameter class), not high."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No value change. This row correctly keeps its OWN diameter (530 mm); do not replace with the wiki's 3-value union -- decided once for the whole brief (see P3948's shard for the full statement).",
+   "researcher_notes": "See the fill above for sourcing and the tier reasoning.",
+   "proposed_refs": [
+    "https://ecoportal.kz/Public/PubHearings/LoadFile/182922",
+    "https://www.inaktau.kz/news/3812798/kakie-proekty-po-gazosnabzeniu-realizuutsa-v-mangistau"
+   ],
+   "verifications": [
+    {
+     "url": "https://ecoportal.kz/Public/PubHearings/LoadFile/182922",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.inaktau.kz/news/3812798/kakie-proekty-po-gazosnabzeniu-realizuutsa-v-mangistau",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+ "project_id": "P5770",
+ "pipeline_name": "Central Asia–Center Gas Pipeline",
+ "sheet_row": 3262,
+ "wiki": "https://www.gem.wiki/Central_Asia%E2%80%93Center_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "values": {
+    "Operator": "Intergas Central Asia"
+   },
+   "primary_value_col": "Operator",
+   "primary_value": "Intergas Central Asia",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "oo_sheet_row": 4527,
+   "proposed_refs": [
+    "https://intergas.kz/ru/obwaya-informaciya/",
+    "https://nangs.org/news/midstream/pipelines/magistralnomu-gazoprovodu-srednyaya-aziya-tsentr-50-let",
+    "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://intergas.kz/ru/obwaya-informaciya/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://nangs.org/news/midstream/pipelines/magistralnomu-gazoprovodu-srednyaya-aziya-tsentr-50-let",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+     "ok": false,
+     "contains_value": null,
+     "note": "url_verifier FAIL is a documented false negative: page returns 200 but the naive substring scan cannot see inside this PDF. Downloaded and confirmed locally with pdftotext -layout -- p.32 carries the exact 'Intergaz Central Asia ... controls ... Central Asia-Centre pipeline' quote (see researcher_notes)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "ONE QUESTION PER COMPANY, answered once for the whole Central Asia-Center system and applied across all 4 rows in this brief (P2291/P2292/P5770/P5771), per the brief's instruction. Established: AO Intergas Central Asia -- a subsidiary of AO KazTransGas/QazaqGaz -- operates the KAZAKH section of the Central Asia-Center system (the brief's transit-corridor guidance: name the entity operating the Kazakh section specifically, not Gazprom/Turkmengaz/Uztransgaz who hold the non-Kazakh sections). Two genuinely independent origins plus one supporting wire report: (1) Intergas Central Asia's own official corporate page (intergas.kz/ru/obwaya-informaciya/) lists the trunk systems its regional Управления магистральных газопроводов (UMG branches -- Atyrau, Aktau, Uralsk) maintain, including verbatim 'МГ «Средняя Азия - Центр» с лупингами'; (2) AO KazTransGas's 50th-anniversary press release on the pipeline (syndicated at nangs.org, same corporate family as (1) so counted as one origin with it) states verbatim 'АО «Интергаз Центральная Азия», входящая в состав АО «КазТрансГаз»' operates the Kazakh section via 7 branch management offices; (3) a GENUINELY THIRD-PARTY, non-Kazakhstani source -- Shamil Yenikeyeff, 'Kazakhstan's Gas: Export Markets and Export Routes' (Oxford Institute for Energy Studies, working paper NG25, 2008), p.32: 'Under the current arrangements with the Kazakh government, Intergaz Central Asia manages the gas trunk pipelines in the Republic and is responsible for transportation, storage and sales of natural gas... Intergaz Central Asia controls the following gas pipelines: - Central Asia-Centre pipeline (for gas volumes from Turkmenistan and Uzbekistan)...' -- confirms the same fact from outside Kazakhstan's own corporate/press ecosystem, so (1)/(2) and (3) count as 2 independent origins overall -> tier=high. Also consistent with an August 2025 Interfax wire (interfax.com/newsroom/top-stories/113443, genuinely independent news source) reporting QazaqGaz completing repair work on a stretch of the CAC pipeline. url_verifier.py: intergas.kz and nangs.org both OK (200, expected substring present). The OIES PDF FAILs the naive substring check (200 reachable, but url_verifier's text scan can't see inside this PDF) -- downloaded it locally and confirmed the quote with pdftotext -layout (documented false-negative case per protocol #3); same for the Interfax URL, which verified OK directly. Never cited gem.wiki, which names the same 4 operators (Turkmengaz/Intergas Central Asia/Gazprom/Uztransgaz) without specifying which one operates the Kazakh section -- this research narrows that down and sources it independently. Value formatted 'Intergas Central Asia' with no legal-form suffix, matching this tracker's existing convention for the same entity elsewhere on the Kazakh gas roster (e.g. P2289 Bukhara-Ural, P3273 Beineu-Bozoy-Shymkent, P3964 Almaty-Taldykorgan)."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not 'fix' LengthKnownKm to the drawn route's 2222km. Leave 3700 as-is; exact figure remains UNRESOLVED -- no public line-wise register states it directly.",
+   "researcher_notes": "LENGTH_RATIO: same shape as P2292 (CAC-3), and consistent with the brief's framing -- P5770 has no StartLocation/EndLocation on the sheet (both blank) so the partial-route match cannot be pinned to a named waypoint the way P2292 pinned to Beyneu, but the same logic applies. CAC-4 is the EASTERN branch (Dauletabad, Turkmenistan -> Shatlyk -> Khiva -> Kungrad, Uzbekistan -> Kazakhstan -> Alexandrov Gai, Russia, per en.wikipedia/ru.wikipedia 'Газопровод Центральная Азия - Центр'), a routing that detours through Uzbekistan and is geographically LONGER than CAC-3's more direct Caspian-coastal western branch -- consistent with CAC-4's sheet length (3700km) exceeding CAC-3's (2600km) by roughly the same margin the drawn routes differ (2222 vs 1569km). Yenikeyeff/OIES 2008 Table 10 (p.33, read locally via pdftotext -layout) gives CAC-4's Kazakhstan-portion length as 821km (1973-1975 build) plus a further 514km looping (1975-1984) -- i.e. meaningful additional Kazakh/Uzbek mileage beyond whatever the 2222km drawn route already covers, in the same direction and rough order of magnitude as the 1478km gap (3700-2222). This is a reasoned inference (tier=low), not a confirmed match -- no source states 3700km for CAC-4 directly. UNRESOLVED on the exact figure; recommend treating 3700km as CAC-4's own full transnational length on a partially-drawn route, not a system-wide aggregate (the 5-string CAC system totals 4,149-5,306km per KMG, well above 3700 alone) and not an error to 'fix' to the route.",
+   "proposed_refs": [
+    "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+    "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93Center_gas_pipeline_system"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+     "ok": false,
+     "contains_value": null,
+     "note": "PDF text-extraction false negative; confirmed locally, see researcher_notes."
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93Center_gas_pipeline_system",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "low",
+   "independent": false
+  }
+ ]
+}

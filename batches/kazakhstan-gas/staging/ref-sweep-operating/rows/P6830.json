@@ -1,0 +1,88 @@
+{
+  "project_id": "P6830",
+  "pipeline_name": "Almaty-Bayserke-Talgar Gas Pipeline",
+  "sheet_row": 3701,
+  "wiki": "https://www.gem.wiki/Almaty-Bayserke-Talgar_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/duplicate. See the attribution fill below (Operator ref added) and the spec note about a verifier false-negative.",
+      "researcher_notes": "EXISTENCE: CONFIRMED, independent of GEM. This row is Line I ('первая нитка') of the Almaty-Bayserke-Talgar trunk gas pipeline, launched 28 October 2014 per the sheet's own existing ref, Tengrinews (verified live, 200 OK), which quotes the regional Akimat at the inauguration: pipeline 'has started working,' length 64.4 km, construction 'began in 2010,' cost '$428 million,' capacity '2.4 billion cubic meter per year,' built to serve 60 settlements / ~380,000 people. Independently corroborated as a real, currently-operating trunk system by: (1) Pipeline Technology Journal (2024), which describes 'the construction of a second gas pipeline between Almaty and Talgar, widely known as the Almaty-Baiserke-Talgar gas pipeline' -- language that presupposes a first/existing line, i.e. this row; (2) QazaqGaz's own Integrated Annual Report 2024 (igo_qazaqgaz_2024.pdf) -- the automated url_verifier FAILs on this PDF for Cyrillic tokens ('Интергаз'/'Байсерке'/'Талгар') even though the text is genuinely present (a known PDF-extraction limitation per the sweep's own guidance, not a dead/wrong source); I downloaded and read it directly with `pdftotext -layout` and confirmed the report lists 'МГ «Алматы – Байсерке – Талгар»' among Intergas Central Asia's ten trunk-pipeline production-management assets (p.1253 of the extracted text), and separately covers the SECOND line's Dec-2024 in-service milestone (p.1282/6794) -- i.e. the report itself treats the two lines as distinct, confirming both are real and this row is not a phantom or a re-record of the other.\n\nCLASSIFICATION: CONFIRMED as transmission. The Russian designation 'магистральный газопровод' (МГ) = trunk/transmission-grade pipeline, and this line sits in Intergas Central Asia's trunk (transmission) portfolio -- the national trunk operator, not a local gas-distribution utility -- despite ultimately feeding many small settlements; local distribution networks branch off this trunk line, they are not this line. Fuel=Gas is trivially correct.\n\nDUPLICATE (orchestrator's structural lead re: P6831, RESOLVED -- NOT a duplicate): P6830 and P6831 are two genuinely separate, physically distinct parallel pipelines under one corridor name, built a decade apart. P6830 (this row, SegmentName 'I'): built 2010-2014, 64.4 km, cap 2.4 bcm/y, diameter not stated in any source found -- confirmed above. P6831 ('Line II'): built October 2023-December 2024 (in-service 19.12.2024 per QazaqGaz IGO 2024 p.1282; intergas.kz's own May-2024 construction update at https://intergas.kz/ru/news/4/1040 gives the SAME 62.4 km / 530 mm and reports work running ahead of schedule), capacity stated in the IGO report as 1,000,000 nm3/hr = ~8.76 bcm/y (matches GEM's 8.8 for P6831 within rounding), cost 31.8 bn tenge -- an entirely separate, later capital project explicitly built to supply gas conversion of Almaty's thermal power plants (a presidential directive). Pipeline Technology Journal frames it as 'a second gas pipeline' i.e. an ADDITION alongside the first, never a replacement or a re-record of it. No merge recommended; both rows are legitimate and already correctly distinguished by SegmentName ('I' here).",
+      "proposed_refs": [
+        "https://en.tengrinews.kz/industry_infrastructure/almaty-baiserke-talgar-gas-pipeline-launched-in-almaty-257001/",
+        "https://www.pipeline-journal.net/news/kazakhstans-qazaqgaz-completes-major-gas-pipeline-projects"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "No value change. Optional: note in ResearcherNotes that the automated ref-check flags on Status/SegmentCost are false negatives (prose vs. literal-string matching), so a future pass doesn't re-flag them as unsupported.",
+      "researcher_notes": "Length (64.40 km), Capacity (2.40 bcm/y), ConstructionYear (2010), StartYear1/Month1 (2014-10), and SegmentCost ($428,000,000 USD) are ALL verbatim stated in the sheet's current ref (Tengrinews, live/200): '64.4 km,' construction 'began in 2010,' launched '28 October 2014,' '$428 million,' '2.4 billion cubic meter per year.' I manually fetched and read the article to confirm this. NOTE: worklist.json's existing_ref_checks flags the Status cell ('data value not found (none of [\"operating\"])') and the SegmentCost cell ('none of [\"428000000\", ... ]') as misses -- these are FALSE NEGATIVES of the automated substring checker (it looks for the exact digit string '428000000' where the source writes '$428 million' in prose, and the literal word 'operating' where the source instead says the pipeline 'has started working'/'launched'). This is the known prose/unit-equivalence gap, not an actual sourcing defect -- no value or ref change needed. Single-source (Tengrinews) tier=medium for these five spec fields specifically -- I could not locate a second, fully independent NUMERIC source for Line I's own length/capacity/cost (as opposed to Line II's, which are separately and independently multi-sourced -- see the duplicate discussion above, a different physical pipe).",
+      "proposed_refs": [
+        "https://en.tengrinews.kz/industry_infrastructure/almaty-baiserke-talgar-gas-pipeline-launched-in-almaty-257001/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Owner [ref] is fine as-is. Operator [ref] was MISSING_REF -- filled below (see fills[]); tier medium since both new sources trace to one corporate family (QazaqGaz/Intergas), not independent origins.",
+      "researcher_notes": "Owner1=QazaqGaz/100% is directionally CONFIRMED: QazaqGaz's own 2024 Integrated Annual Report states Intergas Central Asia (the entity that operates this line) is a '100% дочерняя организация QazaqGaz' (100%-owned subsidiary of QazaqGaz), consistent with the current Owner1/Owner1% values. The existing Owner [ref] (https://intergas.kz/en/about-the-Co/) is live (200) and consistent, if generic (it does not name this specific pipeline). Operator (АО «Интергаз Центральная Азия») had NO ref at all (class=MISSING_REF in worklist.json) -- see fills[] for the added ref.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "I",
+      "sheet_row": 3701,
+      "oo_sheet_row": 5405,
+      "tab": "operators_owners",
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "АО «Интергаз Центральная Азия»"
+      },
+      "primary_value": "АО «Интергаз Центральная Азия»",
+      "proposed_refs": [
+        "https://intergas.kz/ru/news/4/1040",
+        "https://qazaqgaz.kz/storage/app/media/korporativnye-dokumenty/ru/igo_qazaqgaz_2024.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://intergas.kz/ru/news/4/1040",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://qazaqgaz.kz/storage/app/media/korporativnye-dokumenty/ru/igo_qazaqgaz_2024.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "url_verifier's automated PDF text-match FAILs on Cyrillic tokens for this file (a known extraction limitation); manually confirmed the text is genuinely present via `pdftotext -layout` + grep for 'Байсерке', 'Талгар', and 'Интергаз' (p.1253/1282 of the extracted text)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "intergas.kz's own May-2024 construction update (https://intergas.kz/ru/news/4/1040) covers '2-я нитка МГ «Алматы-Байсерке-Талгар»' as one of its own trunk-pipeline assets under construction. QazaqGaz's Integrated Annual Report 2024 independently (well, same corporate family) lists 'МГ «Алматы – Байсерке – Талгар»' among the ten trunk gas pipelines operated by its 100%-owned subsidiary АО «Интергаз Центральная Азия» (p.1253 of the pdftotext extraction, under the header 'Основные характеристики АО «Интергаз Центральная Азия» в 2024 году'). Both sources trace to the same corporate group (Intergas is QazaqGaz's subsidiary, so this is not two independent origins), hence tier=medium rather than high, but this is standard, solid primary-source attribution -- the operator's own asset registers naming its own asset."
+    }
+  ],
+  "summary": "P6830 (Almaty-Bayserke-Talgar Line I, operating, 64.4 km, 2.4 bcm/y): existence/classification confirmed independent of GEM; the orchestrator's P6830-vs-P6831 duplicate lead is RESOLVED as NOT a duplicate (two genuinely distinct parallel lines, Line I 2010-2014 vs Line II 2023-2024, both independently corroborated with matching specs); all spec fields confirmed against the sheet's own Tengrinews ref (two flagged 'unsupported' cells were verifier false negatives, prose vs. literal-string matching); Operator [ref] was MISSING_REF and is now filled (medium tier, same-corporate-family sources). No UNRESOLVED items."
+}

@@ -1,0 +1,188 @@
+{
+  "project_id": "P3965",
+  "pipeline_name": "Akshabulak-Kyzylorda Gas Pipeline",
+  "sheet_row": 1973,
+  "wiki": "https://www.gem.wiki/Akshabulak-Kyzylorda_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Status/Fuel/PipelineType/existence. Add the corroborating refs staged in fills[] (Start, Length, FuelSource, Location, Operator, Owner all currently unreferenced).",
+      "researcher_notes": "EXISTENCE: strongly confirmed, independent of GEM/wiki. The pipeline is real, operating, and well documented: (1) Intergas Central Asia's own asset list (intergas.kz/ru/obwaya-informaciya, current ref for Status) lists 'МГ «Акшабулак-Кызылорда»' under its UMG (gas-transport branch) 'Кызылорда' -- i.e. it is on the company's current operating roster (this is why url_verifier's literal 'operating' substring check false-negatived: the page is in Russian and never uses the English word, but the listing itself confirms operating status by context, per url_verifier's documented STATUS-is-inferable rule). (2) Intergas.kz's own retrospective news article (intergas.kz/ru/news/5/443, current ref for Fuel/PipelineType) narrates construction and 2004 gas start-up of this exact 123-km trunk line to Kyzylorda -- read in full, it clearly names this pipeline (not a generic citation) and calls it 'магистральный газопровод' (trunk/main pipeline), which supports PipelineType=transmission and Fuel=Gas. (3) KazMunayGas's own audited annual-report gas-transportation table lists 'Akshabulak-Kyzylorda' as one of Intergas Central Asia's operating trunk pipelines in THREE consecutive vintages (AR2019, AR2020, AR2021 PDFs, all HTTP 200) with a consistent Length=123 km across all three (unlike the other 6 Intergas lines, which shrank ~20-35% between the 2020 and 2021 vintages -- this one line's length figure did NOT move, so it is not touched by that scope-redefinition artifact). (4) Kyzylorda Region's own government investment portal (kyzylorda.invest.gov.kz/ru/about/infrastructure) independently states length=123 km and describes the pipeline's purpose (associated-gas supply from South Turgay basin fields to Kyzylorda city) in terms consistent with GEM's start/end and FuelSource. (5) A Kyzylorda regional newspaper retrospective (kzvesti.kz, 2025-01-11) independently narrates the 2004 government directive (ЗАО «КазТрансГаз», May 2004) to build the line and explicitly names Akshabulak field as the associated-gas source and Intergas Central Asia's Kyzylorda UMG branch as operator -- though this ONE source gives length as '124 km' rather than 123 (a single-word narrative variance against 3+ concordant sources at 123; not treated as a material spec conflict). (6) GulfPub (Tier 2, one source) shows a clean geometry+attribute overlap for P3965 (name 1.00, endpoints 1.00, length score 0.923 at 122.31 km) -- consistent, corroborating but not independently decisive alone. CLASSIFICATION: correct as recorded -- a ~123 km trunk/transmission line from a producing gas field to a regional capital's city-gas system, explicitly called 'магистральный' (trunk) by its own operator, is transmission, not a gathering/feeder line. DUPLICATE: checked against the full 39-row Kazakhstan-gas roster -- no other row shares this name, these endpoints, or this route; not part of any flagged redundancy cluster. Not a duplicate. CAVEAT: OSM's Kazakhstan-gas extract has no matching trace for this pipeline (gem_only in the OSM recon diff) -- no geometry corroboration available from that source, and RouteAccuracy is already recorded as 'very low (straight line/schematic)', which is out of scope for this validity pass. Diameter (325 mm) could not be independently corroborated from any citable web source found this pass -- GulfPub's raw diameter field ('12.0', presumably inches) is roughly consistent with 325 mm (NPS 12 nominal OD = 323.9 mm) but GulfPub alone is Tier 2 and its own composite diff scored the diameter sub-signal 0.0 (likely a raw-unit mismatch in the automated matcher, not a real disagreement) -- left UNRESOLVED rather than fabricating a stronger claim.",
+      "proposed_refs": [
+        "https://intergas.kz/ru/obwaya-informaciya/",
+        "https://intergas.kz/ru/news/5/443",
+        "https://ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf",
+        "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update Capacity from 0.23 to ~0.42 bcm/y (pending Update-leg authorization; not auto-applied). Two independent sources both give ~420-421 million m3/year (0.42 bcm/y), materially higher (+~83%) than GEM's current 0.23 bcm/y.",
+      "researcher_notes": "SPEC CHECK on Capacity=0.23 bcm/y: this does NOT hold up against independent corroboration, while Length=123 km is well confirmed. Two genuinely independent sources agree with each other and disagree with GEM's capacity value: (1) KazMunayGas's own gas-transportation table gives capacity 0.42 bln m3/year in AR2021, and 0.4 bln m3/year in both AR2019 and AR2020 (all three PDFs verified 200 OK; content-substring screen false-negatived on 'Akshabulak' for the AR2021 PDF specifically -- a known false-negative pattern on large, graphic/column-heavy PDFs per url_verifier's own docstring -- so I downloaded and read it directly with `pdftotext -layout`, which shows the row 'Akshabulak-Kyzylorda 123 0.42' verbatim in the trunk-pipeline table; AR2019/AR2020 show the same row-pair '123 / 0.4'). This is ONE publisher across three vintages -- one origin. (2) Kyzylorda Region's own government investment portal (kyzylorda.invest.gov.kz/ru/about/infrastructure, independently verified) states in prose: 'Общая протяженность трассы газопровода составляет 123 км, пропускная способность 420,0 млн. куб. м газа в год' (total pipeline length 123 km, throughput capacity 420.0 million m3 of gas per year) -- a genuinely separate origin (regional government, not KMG/QazaqGaz corporate) landing on the same ~420-421 million m3/y figure. Both sources agree with each other (420-421 vs 420 vs 400, all ~0.4-0.42 bcm/y) and both disagree with GEM's 0.23 bcm/y by a wide, non-rounding margin. GulfPub's capacity field for this row is explicitly 'Not specified' in its raw data (a placeholder, not a real scraped value) and is NOT used as corroboration either way. This is a genuine spec discrepancy, not a units or vintage artifact (all vintages of the KMG table agree with each other on this specific line, unlike the other 6 Intergas lines which show a real ~20-35% cross-vintage shift) -- flagging for Update, not auto-applying.",
+      "proposed_refs": [
+        "https://ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf",
+        "https://ar2020.kmg.kz/pdf/ar/en/strategic-report_operating_gas-transportation.pdf",
+        "https://ar2019.kmg.kz/pdf/ar/en/strategic-report_operating_gas-transportation.pdf",
+        "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1973,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2004"},
+      "primary_value": "2004",
+      "proposed_refs": [
+        "https://intergas.kz/ru/news/5/443",
+        "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/",
+        "https://kzvesti.kz/newspaper-articles/put-k-razvitiju-i-procvetaniju-135731/"
+      ],
+      "verifications": [
+        {"url": "https://intergas.kz/ru/news/5/443", "ok": true, "contains_value": true},
+        {"url": "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/", "ok": true, "contains_value": true},
+        {"url": "https://kzvesti.kz/newspaper-articles/put-k-razvitiju-i-procvetaniju-135731/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "StartYear1=2004 confirmed by three independent Russian-language sources: Intergas's own retrospective (gas reached Kyzylorda residents in November 2004), Kyzylorda region's government investment portal ('Газификация области началась в 2004 году со строительства... Акшабулак-Кызылорда'), and a regional newspaper retrospective (May 2004 government directive to KazTransGas to begin construction; first winter-2004 gasification of Kyzylorda tied to Independence Day)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1973,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "123.00", "LengthKnownUnits": "km"},
+      "primary_value": "123.00",
+      "proposed_refs": [
+        "https://ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf",
+        "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/",
+        "https://intergas.kz/ru/news/5/443"
+      ],
+      "verifications": [
+        {"url": "https://ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf", "ok": true, "contains_value": true},
+        {"url": "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/", "ok": true, "contains_value": true},
+        {"url": "https://intergas.kz/ru/news/5/443", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "123 km confirmed by KMG's own gas-transportation table (all 3 vintages, one publisher), Kyzylorda's government investment portal ('составляет 123 км', independent origin), and Intergas's own retrospective news article. GulfPub (Tier 2) independently lands within 1% (122.31 km, route IoU low but attribute match strong). One weaker outlier: a regional newspaper retrospective gives 124 km -- not treated as a material conflict given the 3+ concordant sources at 123. AR2021 PDF's 'Akshabulak' token false-negatived on url_verifier's content screen (large graphic-column PDF, documented false-negative pattern); confirmed manually with `pdftotext -layout`, row reads 'Akshabulak-Kyzylorda 123 0.42' verbatim."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1973,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Akshabulak Gas Field"},
+      "primary_value": "Akshabulak Gas Field",
+      "proposed_refs": [
+        "https://kzvesti.kz/newspaper-articles/put-k-razvitiju-i-procvetaniju-135731/",
+        "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/"
+      ],
+      "verifications": [
+        {"url": "https://kzvesti.kz/newspaper-articles/put-k-razvitiju-i-procvetaniju-135731/", "ok": true, "contains_value": true},
+        {"url": "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "kzvesti.kz explicitly names 'месторождение Акшабулак' as the source of the associated gas transported by this pipeline to Kyzylorda. Kyzylorda's government portal is less specific ('месторождений Южно-Тургайской впадины' -- South Turgay basin fields, plural), consistent with but not naming Akshabulak alone, so kept at medium tier rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1973,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Akshabulak",
+        "StartState/Province": "Kyzylorda Region",
+        "StartCountryOrArea": "Kazakhstan",
+        "EndLocation": "Kyzylorda",
+        "EndState/Province": "Kyzylorda Region",
+        "EndCountryOrArea": "Kazakhstan"
+      },
+      "primary_value": "Akshabulak",
+      "proposed_refs": [
+        "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/",
+        "https://intergas.kz/ru/news/5/443"
+      ],
+      "verifications": [
+        {"url": "https://kyzylorda.invest.gov.kz/ru/about/infrastructure/", "ok": true, "contains_value": true},
+        {"url": "https://intergas.kz/ru/news/5/443", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both endpoints and Kyzylorda Region attribution confirmed by Kyzylorda's own regional government portal (which treats the pipeline as an in-region asset feeding the oblast capital from South Turgay basin fields) and Intergas's retrospective, both independent of GEM/wiki."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1973,
+      "oo_sheet_row": 2929,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "АО «Интергаз Центральная Азия»"},
+      "primary_value": "АО «Интергаз Центральная Азия»",
+      "proposed_refs": [
+        "https://intergas.kz/ru/obwaya-informaciya/",
+        "https://kzvesti.kz/newspaper-articles/put-k-razvitiju-i-procvetaniju-135731/"
+      ],
+      "verifications": [
+        {"url": "https://intergas.kz/ru/obwaya-informaciya/", "ok": true, "contains_value": true},
+        {"url": "https://kzvesti.kz/newspaper-articles/put-k-razvitiju-i-procvetaniju-135731/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Intergas Central Asia's own asset list places 'МГ «Акшабулак-Кызылорда»' under its Kyzylorda UMG (gas-transport branch). Independently, kzvesti.kz explicitly states the pipeline is operated via 'филиал управления магистральных газопроводов (УМГ) «Кызылорда» АО «Интергаз Центральная Азия»'. tab=operators_owners."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1973,
+      "oo_sheet_row": 2929,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "QazaqGaz", "Owner1%": "100.00%"},
+      "primary_value": "QazaqGaz",
+      "proposed_refs": [
+        "https://qazaqgaz.kz/en/obshchaya-informaciya",
+        "https://ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf"
+      ],
+      "verifications": [
+        {"url": "https://qazaqgaz.kz/en/obshchaya-informaciya", "ok": true, "contains_value": true},
+        {"url": "https://ar2021.kmg.kz/pdf/ar/en/strategic-report_operating-review_gas-transportation-and-marketing.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "QazaqGaz's own current corporate-structure page lists 'Intergas Central Asia JSC' under 'Trunk transportation' in its group of companies -- i.e. ICA is a QazaqGaz subsidiary today. AR2021 (pre-Nov-2021 spinoff of the gas arm from KMG to Samruk-Kazyna/QazaqGaz) independently states 'JSC Intergas Central Asia (ICA) is the national gas pipeline operator and a wholly-owned subsidiary of KTG [KazTransGas]' with 'Interest: KTG: 100%'. The two sources describe the same 100%-state-owned chain across the Nov-2021 corporate reorganization (KTG/KMG group -> QazaqGaz/Samruk-Kazyna group); GEM's Owner1=QazaqGaz 100% reflects the current (post-reorg) parent correctly. GulfPub's owner field for this row ('QazaqGaz') cites the same qazaqgaz.kz page, so it is not counted as a second independent source."
+    }
+  ],
+  "summary": "P3965 confirmed real, correctly classified, no duplicate -- but Capacity=0.23 bcm/y is a material spec error: two independent sources (KMG annual reports x3 vintages + Kyzylorda government investment portal) agree on ~0.42 bcm/y (420-421 million m3/y), ~83% higher than GEM's value. Staged refs for Start/Length/FuelSource/Location/Operator/Owner (all previously unreferenced); Diameter left UNRESOLVED (no independently citable source found)."
+}

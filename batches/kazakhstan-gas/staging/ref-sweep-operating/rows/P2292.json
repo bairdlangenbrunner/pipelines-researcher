@@ -1,0 +1,267 @@
+{
+  "project_id": "P2292",
+  "pipeline_name": "Central Asia–Center Gas Pipeline",
+  "sheet_row": 1192,
+  "wiki": "https://www.gem.wiki/Central_Asia%E2%80%93Center_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "CAC-3",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix StartCountryOrArea to 'Kazakhstan' (contradicts its own StartState/Province='Mangystau' and StartLocation='Beyneu', which are unambiguously in Kazakhstan, not Turkmenistan). Separately verify EndLocation/EndState−Province: no independent source found names 'Gubkin'/'Belgorod Oblast' in connection with this pipeline — the documented CAC entry point into Russia is Alexandrov Gay / Petrovsk, Saratov Oblast, feeding onward toward Moscow Oblast or the North Caucasus system.",
+      "researcher_notes": "The row is internally self-contradictory: StartState/Province='Mangystau' is a real Kazakhstan region, yet StartCountryOrArea='Turkmenistan'. Beyneu (the stated StartLocation) is a town in Mangystau Region, Kazakhstan — confirmed by two independent, non-GEM sources describing this exact pipeline (karakalpak-karakalpakstan.blogspot.com 2017 post 'Central Asia–Center gas pipeline system': western branch 'runs north...via Uzen in Kazakhstan to the Beyneu compressor station, where it meets the eastern branch'; ru.wikipedia.org 'Gazopipeline Central Asia-Center' article: western branch 'begins at Okarem near the Turkmen-Iran border...terminates at the Beyneu compressor station in Kazakhstan'). Both independent sources describe CAC-3 (the western branch) as ENDING at Beyneu, where it merges into the shared/eastern-branch corridor — neither mentions any continuation onward to a place called 'Gubkin' or to 'Belgorod Oblast'. I separately searched for the documented Russia-side terminus of the CAC system: both the karakalpak blog ('To Alexandrov Gay, Border of Kazakhstan/Russian Federation... From there two lines run northwest to Moscow, and two others proceed...to the North Caucasus-Moscow transmission system') and ru.wikipedia's article on Alexandrov Gay ('the settlement's largest industrial enterprise is a compressor station of the \"Central Asia-Center\" gas pipeline, Europe's largest') independently corroborate Alexandrov Gay / Petrovsk (Saratov Oblast) as the real KZ/Russia handover point for this system, continuing toward Moscow Oblast (which is consistent with sibling row P2291's EndState/Province='Moscow Oblast'). Belgorod Oblast is geographically far off that corridor (near the Ukraine border, well southwest of Saratov Oblast) and appears in none of the independent sources reviewed. This strongly suggests EndLocation='Gubkin'/EndState-Province='Belogorodsk Oblast' on this row is either a GEM-only construct (traceable only to gem.wiki, which per standing rule cannot be cited and should not be treated as corroboration) or a genuine locational error — possibly confusion with an unrelated regional gas-distribution line near Gubkin (a real Belgorod Oblast town with its own industrial gas infrastructure, unconnected to the Central Asian gas fields). Flagging rather than silently correcting, since I could not positively identify what the correct endpoint should be from independent sources alone.",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html",
+        "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80",
+        "https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2_%D0%93%D0%B0%D0%B9"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en/ru"
+    },
+    {
+      "segment_name": "CAC-3",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Treat LengthKnown=2600km and Capacity=5.00 bcm/y for this specific 'Beyneu-to-Russia' leg as unresolved pending a primary Gazprom/Intergas source with per-string figures. Separately, reconcile the drawn route geometry with the stated length — the merged geojson for P2292 measures only ~1,565 km (haversine sum of vertices), a ~40% shortfall against the claimed 2,600 km, yet RouteAccuracy is currently marked 'high'. That combination (large length/geometry gap + 'high' accuracy claim) should not stand as-is; either the route is a partial digitization or the length figure needs re-derivation.",
+      "researcher_notes": "I could not find any independent (non-GEM) source stating a specific length or capacity for a 'Beyneu-to-Russia' CAC-3 sub-segment. The only place these exact figures (2,600 km / 5 bcm/y) appear is gem.wiki's own page, which frames 2,600 km as 'total length excluding the Okarem-Beyneu segment' of a 3,600 km CAC-3 — internally consistent with sibling row P2492 ('Okarem-Beyneu Gas Pipeline', 999 km; 999+2600≈3600) but not corroborated by any source outside GEM's own wiki compilation, which per standing rule cannot be cited as support. The karakalpak blog gives a *different*, seemingly inconsistent system-wide total ('Length 2,000 km' for the whole CAC system), which does not corroborate the 3,600/2,600 split either, so I am not using it for this field. Independently measuring the actual routed geometry in GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P2292.geojson (single LineString, summed via haversine) gives ~1,565.4 km — far short of the claimed 2,600 km LengthKnown, and inconsistent with a 'high' RouteAccuracy rating. Given the endpoint doubt raised in the attribution finding above (real endpoint may not be Gubkin/Belgorod at all), the length figure for whatever the *true* Beyneu-to-Russia corridor is could differ substantially from either number.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "CAC-3",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Adjudicate P2292 against P2291 (2,662 km, ?→Moscow Oblast), P5770 (3,700 km, ?→?), and P5771 (length blank) — all also labeled 'Central Asia–Center Gas Pipeline' with a Beyneu-area-to-Russia routing and a uniform 60.2 bcm/y capacity stamped across the three of them (a separate, already-flagged defect for those rows). Confirm P2292 represents mileage distinct from those rows rather than double-counting the same shared Beyneu→Russia corridor under a different string label.",
+      "researcher_notes": "Independent sources (karakalpak blog, ru.wikipedia) describe CAC-3 as the WESTERN branch, which physically ends at Beyneu by merging into the shared/eastern-branch corridor (CAC-1/2/4/5) there — it is not described anywhere as retaining a separately identifiable 'CAC-3' identity for another 2,600 km beyond Beyneu into Russia. If that's accurate, the Beyneu→Russia mileage this row claims (2,600 km) may substantially overlap with the corridor already represented by the family's eastern-branch rows (P2291/P5770/P5771), which per the sources plausibly correspond to CAC-1/2/4/5 continuing from the Beyneu merge point onward to Alexandrov Gay and then toward Moscow Oblast / North Caucasus. I am not asserting outright duplication (I lack a direct route-geometry or capacity match to any one specific sibling row), but the physical-corridor-sharing implied by the independent sources means P2292 as currently specified (a standalone 2,600 km 'CAC-3' leg reaching a never-independently-corroborated Gubkin/Belgorod endpoint) warrants human adjudication rather than being taken at face value.",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html"
+      ],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "CAC-3",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on the fields below — refs proposed in the fills[] section.",
+      "researcher_notes": "The underlying pipeline is real and correctly classified. EXISTENCE: the 'Central Asia–Center' system (incl. its western branch, CAC-3, running Okarem/Turkmenistan → Beyneu/Kazakhstan) is confirmed by multiple independent, non-GEM sources: karakalpak-karakalpakstan.blogspot.com (2017), ru.wikipedia.org's dedicated article, nangs.org (2017 Turkmenistan-gas-export news piece describing the historical Gazprom-monopolized СAC system), and Intergas Central Asia's own 2023 Annual Report (large PDF, verified 200/real via direct download + pdftotext, though the url_verifier substring check FAILs on it — a documented large-PDF extraction limitation, not a dead-link signal; the report explicitly lists 'МГ «Средняя Азия-Центр»' among the trunk pipelines Intergas actively operated as of 1 January 2024, across three separate UMG branches: Atyrau, Aktau, Uralsk). CLASSIFICATION: correctly a gas transmission trunk line (magistral'nyy gazoprovod) — not a gathering/process line. Fields independently corroborated: ConstructionYear=1972 and StartYear1=1975 ('constructed in 1972–1975' — karakalpak blog and ru.wikipedia, both independently); Diameter=1220mm for the Hazar–Beyneu portion of the western branch ('1,220 millimeters diameter pipeline between Hazar and Beyneu' — both sources, near-verbatim agreement); FuelSource='Gas fields of Okarem and Balkanabad' ('supplied by gas from fields scattered along the Caspian coast between Okarem and Balkanabat' — karakalpak blog). CAVEAT: this independent corroboration covers the western-branch/Okarem–Beyneu corridor and the system's general identity/history — it does NOT corroborate this row's specific claim of a further 2,600 km 'CAC-3' leg from Beyneu to 'Gubkin, Belgorod Oblast, Russia' (see the attribution/spec/duplicate concerns filed separately above). P2492 ('Okarem-Beyneu Gas Pipeline', 999 km) is NOT a duplicate of this row — it is the complementary, already-well-corroborated western-branch leg (Okarem→Beyneu) that this row's own compiled length figure (2,600 km) is defined against ('excluding the Okarem-Beyneu segment').",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html",
+        "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80",
+        "https://nangs.org/news/midstream/pipelines/turkmenistan-rasschityvaet-na-eksportnye-vozmozhnosti-gazoprovoda-srednyaya-aziya-tsentr",
+        "https://intergas.kz/upload/file.php?file=d8uwec4lky88goo8gks4.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en/ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://intergas.kz/upload/file.php?file=d8uwec4lky88goo8gks4.pdf"],
+      "verifications": [{"url": "https://intergas.kz/upload/file.php?file=d8uwec4lky88goo8gks4.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Intergas Central Asia's 2023 Annual Report (dated March 2024, downloaded and confirmed as a real 5.3MB PDF containing 'Средняя Азия-Центр' six times via pdftotext) lists 'МГ «Средняя Азия-Центр»' among the trunk gas pipelines the company actively operates as of 1 January 2024, across its Atyrau, Aktau and Uralsk UMG branches. url_verifier FAILs the substring check on this URL purely because of the documented large-PDF text-extraction limitation (confirmed independently: the same PDF downloaded via curl and read with pdftotext -layout does contain the token) — the URL itself returns a real 200 with the actual document, not a dead/blocked page."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html"],
+      "verifications": [{"url": "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source explicitly types the whole CAC system, including the CAC-3 western branch, as 'natural gas'."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://intergas.kz/upload/file.php?file=d8uwec4lky88goo8gks4.pdf"],
+      "verifications": [{"url": "https://intergas.kz/upload/file.php?file=d8uwec4lky88goo8gks4.pdf", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Intergas 2023 Annual Report lists 'МГ Средняя Азия-Центр' among its 'магистральных газопроводов' (trunk/transmission gas pipelines), confirming transmission classification (as opposed to gathering/distribution). Same large-PDF url_verifier caveat as the Status fill above."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "1972"},
+      "primary_value": "1972",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html",
+        "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80"
+      ],
+      "verifications": [
+        {"url": "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html", "ok": true, "contains_value": true},
+        {"url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en/ru",
+      "researcher_notes": "Both independent sources state the western branch/CAC-3 was 'constructed/built in 1972-1975'."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1975"},
+      "primary_value": "1975",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html",
+        "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80"
+      ],
+      "verifications": [
+        {"url": "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html", "ok": true, "contains_value": true},
+        {"url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en/ru",
+      "researcher_notes": "1975 is the completion year of the 1972-1975 construction window per both independent sources."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "5.00", "CapacityUnits": "bcm/y"},
+      "primary_value": "5.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No independent (non-GEM) source found states a capacity figure for this specific Beyneu-to-Russia leg. See spec concern in validity[] — leaving unresolved rather than fabricating a ref."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "2600.00", "LengthKnownUnits": "km"},
+      "primary_value": "2600.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No independent source corroborates 2,600 km for this leg, and it materially disagrees with the drawn route geometry (~1,565 km, haversine-measured). See spec concern in validity[]."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "1220", "DiameterUnits": "mm"},
+      "primary_value": "1220",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html",
+        "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80"
+      ],
+      "verifications": [
+        {"url": "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html", "ok": true, "contains_value": true},
+        {"url": "https://ru.wikipedia.org/wiki/%D0%93%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4_%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D0%B0%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F_%D0%90%D0%B7%D0%B8%D1%8F_%E2%80%94_%D0%A6%D0%B5%D0%BD%D1%82%D1%80", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en/ru",
+      "researcher_notes": "Both sources give '1,220 mm' specifically for the Hazar–Beyneu portion of the western branch, not explicitly for a Beyneu-Russia continuation; tier kept at medium rather than high because of that scope caveat, and because the two sources may ultimately share a common upstream (English-language) origin rather than being fully independent derivations."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Gas fields of Okarem and Balkanabad"},
+      "primary_value": "Gas fields of Okarem and Balkanabad",
+      "proposed_refs": ["https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html"],
+      "verifications": [{"url": "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "'It is supplied by gas from fields scattered along the Caspian coast between Okarem and Balkanabat' — matches GEM's value closely. Only one clear independent source found naming both fields together; kept at medium, not high."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Beyneu", "StartState/Province": "Mangystau", "StartCountryOrArea": "Turkmenistan", "EndLocation": "Gubkin", "EndState/Province": "Belogorodsk Oblast", "EndCountryOrArea": "Russia"},
+      "primary_value": "Beyneu",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Not staging a ref here — this is the location the attribution concern in validity[] is about (StartCountryOrArea contradicts StartState/Province; EndLocation/EndState-Province unsupported by any independent source found). Fix the values first, then source the corrected location."
+    },
+    {
+      "segment_name": "CAC-3",
+      "sheet_row": 1192,
+      "oo_sheet_row": 1727,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gazprom PJSC", "Owner1%": "100.00%"},
+      "primary_value": "Gazprom PJSC",
+      "proposed_refs": [
+        "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html",
+        "https://nangs.org/news/midstream/pipelines/turkmenistan-rasschityvaet-na-eksportnye-vozmozhnosti-gazoprovoda-srednyaya-aziya-tsentr"
+      ],
+      "verifications": [
+        {"url": "https://karakalpak-karakalpakstan.blogspot.com/2017/03/central-asiacenter-gas-pipeline-system.html", "ok": true, "contains_value": true},
+        {"url": "https://nangs.org/news/midstream/pipelines/turkmenistan-rasschityvaet-na-eksportnye-vozmozhnosti-gazoprovoda-srednyaya-aziya-tsentr", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en/ru",
+      "researcher_notes": "Karakalpak blog: 'the pipeline system is controlled by Gazprom'. Nangs.org (2017): the CAC pipeline was 'монополизированного ОАО «Газпром»' (monopolized by JSC Gazprom). Both describe Gazprom control of the CAC system as a whole rather than a segment-specific 100% ownership figure, so kept at medium rather than high."
+    }
+  ],
+  "summary": "P2292 (CAC-3, 'Beyneu→Gubkin, Belgorod Oblast, Russia', 2600km): underlying CAC-3/Central Asia-Center pipeline confirmed real and correctly classified (2 concern-free, 1 concern=none), but flagged THREE concerns — attribution (StartCountryOrArea='Turkmenistan' contradicts its own Mangystau/Beyneu start, and no independent source names 'Gubkin'/Belgorod Oblast as an endpoint; documented CAC route into Russia runs via Alexandrov Gay/Saratov Oblast instead), spec (2600km length neither independently corroborated nor consistent with the drawn route's ~1565km, despite RouteAccuracy='high'; capacity 5.0bcm/y also unresolved), and duplicate (possible corridor overlap with P2291/P5770/P5771 pending human adjudication). 9 REFS_ADDED fills (Status, Fuel, PipelineType, Construction, Start, Diameter, FuelSource, Owner); 3 UNRESOLVED (Capacity, Length, Location)."
+}

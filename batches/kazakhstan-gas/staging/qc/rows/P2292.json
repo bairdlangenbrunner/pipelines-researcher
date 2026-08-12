@@ -1,0 +1,113 @@
+{
+ "project_id": "P2292",
+ "pipeline_name": "Central Asia–Center Gas Pipeline",
+ "sheet_row": 1192,
+ "wiki": "https://www.gem.wiki/Central_Asia%E2%80%93Center_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "values": {
+    "Operator": "Intergas Central Asia"
+   },
+   "primary_value_col": "Operator",
+   "primary_value": "Intergas Central Asia",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "oo_sheet_row": 1727,
+   "proposed_refs": [
+    "https://intergas.kz/ru/obwaya-informaciya/",
+    "https://nangs.org/news/midstream/pipelines/magistralnomu-gazoprovodu-srednyaya-aziya-tsentr-50-let",
+    "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://intergas.kz/ru/obwaya-informaciya/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://nangs.org/news/midstream/pipelines/magistralnomu-gazoprovodu-srednyaya-aziya-tsentr-50-let",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+     "ok": false,
+     "contains_value": null,
+     "note": "url_verifier FAIL is a documented false negative: page returns 200 but the naive substring scan cannot see inside this PDF. Downloaded and confirmed locally with pdftotext -layout -- p.32 carries the exact 'Intergaz Central Asia ... controls ... Central Asia-Centre pipeline' quote (see researcher_notes)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "ONE QUESTION PER COMPANY, answered once for the whole Central Asia-Center system and applied across all 4 rows in this brief (P2291/P2292/P5770/P5771), per the brief's instruction. Established: AO Intergas Central Asia -- a subsidiary of AO KazTransGas/QazaqGaz -- operates the KAZAKH section of the Central Asia-Center system (the brief's transit-corridor guidance: name the entity operating the Kazakh section specifically, not Gazprom/Turkmengaz/Uztransgaz who hold the non-Kazakh sections). Two genuinely independent origins plus one supporting wire report: (1) Intergas Central Asia's own official corporate page (intergas.kz/ru/obwaya-informaciya/) lists the trunk systems its regional Управления магистральных газопроводов (UMG branches -- Atyrau, Aktau, Uralsk) maintain, including verbatim 'МГ «Средняя Азия - Центр» с лупингами'; (2) AO KazTransGas's 50th-anniversary press release on the pipeline (syndicated at nangs.org, same corporate family as (1) so counted as one origin with it) states verbatim 'АО «Интергаз Центральная Азия», входящая в состав АО «КазТрансГаз»' operates the Kazakh section via 7 branch management offices; (3) a GENUINELY THIRD-PARTY, non-Kazakhstani source -- Shamil Yenikeyeff, 'Kazakhstan's Gas: Export Markets and Export Routes' (Oxford Institute for Energy Studies, working paper NG25, 2008), p.32: 'Under the current arrangements with the Kazakh government, Intergaz Central Asia manages the gas trunk pipelines in the Republic and is responsible for transportation, storage and sales of natural gas... Intergaz Central Asia controls the following gas pipelines: - Central Asia-Centre pipeline (for gas volumes from Turkmenistan and Uzbekistan)...' -- confirms the same fact from outside Kazakhstan's own corporate/press ecosystem, so (1)/(2) and (3) count as 2 independent origins overall -> tier=high. Also consistent with an August 2025 Interfax wire (interfax.com/newsroom/top-stories/113443, genuinely independent news source) reporting QazaqGaz completing repair work on a stretch of the CAC pipeline. url_verifier.py: intergas.kz and nangs.org both OK (200, expected substring present). The OIES PDF FAILs the naive substring check (200 reachable, but url_verifier's text scan can't see inside this PDF) -- downloaded it locally and confirmed the quote with pdftotext -layout (documented false-negative case per protocol #3); same for the Interfax URL, which verified OK directly. Never cited gem.wiki, which names the same 4 operators (Turkmengaz/Intergas Central Asia/Gazprom/Uztransgaz) without specifying which one operates the Kazakh section -- this research narrows that down and sources it independently. Value formatted 'Intergas Central Asia' with no legal-form suffix, matching this tracker's existing convention for the same entity elsewhere on the Kazakh gas roster (e.g. P2289 Bukhara-Ural, P3273 Beineu-Bozoy-Shymkent, P3964 Almaty-Taldykorgan)."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No fill needed -- keep Diameter='1220' as-is. It is CAC-3's own value for the Khazar-Beyneu stretch, corroborated (with a caveat on independence -- see notes).",
+   "researcher_notes": "MULTI-SEGMENT WIKI UNION JUDGEMENT (Diameter): as with P2291, the wiki unions all CAC diameters to 1015/1220/1420mm; P2291's/P2292's sheet value is a single 1220mm scalar, structurally the row's own value already, not the union. Two lines of corroboration for CAC-3 specifically, but they trace to ONE origin, not two -- I am flagging this explicitly rather than over-claiming independence: (a) Yenikeyeff/OIES 2008 Table 10 (p.33; PDF, read locally via pdftotext -layout) gives 'CAC-3  1974  ...  Diameter (mm) 1200  Length (km) 754  ...'; (b) en.wikipedia.org and ru.wikipedia.org (Газопровод Центральная Азия - Центр) both state 'South of Hazar the western system has diameter 710mm, and between Hazar and Beyneu 1220mm' -- but that Wikipedia claim's own footnote [5] cites the SAME Yenikeyeff/OIES 2008 paper as its source, so (a) and (b) are one origin cited twice, not two independent ones. tier=medium, independent=false. The 1220mm figure specifically covers the Hazar(Turkmenistan)-to-Beyneu(Kazakhstan) stretch, which is consistent with (not a contradiction of) this row's own Kazakh-portion drawn route. Decision: the row should carry its OWN value (which it already does), not the wiki's system-wide set -- no change needed.",
+   "proposed_refs": [
+    "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+    "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93Center_gas_pipeline_system"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+     "ok": false,
+     "contains_value": null,
+     "note": "PDF text-extraction false negative; confirmed locally, see researcher_notes."
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93Center_gas_pipeline_system",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No coordinate change. The drawn route is a correctly-drawn PARTIAL route (Beyneu, Kazakhstan -> Gubkin, Russia), not a mis-drawn endpoint. Consider a ResearcherNotes line saying so, so a future QC pass doesn't re-flag it.",
+   "researcher_notes": "ENDPOINT_COUNTRY: the route's first vertex (45.314, 55.250) sits ~0.3-4km from Beyneu, Mangystau (real-world Beyneu ≈ 45.317N, 55.200E) -- i.e. it matches this row's OWN StartLocation field ('Beyneu') almost exactly. This is not a drawing error: en.wikipedia /ru.wikipedia (Газопровод Центральная Азия - Центр) both describe CAC-3 (the western branch) as running 'from Okarem, near the Turkmenistan-Iran border, ... through Zhanaozen in Kazakhstan to Beyneu compressor station, where it meets the eastern branch' -- i.e. Beyneu is a real waypoint/junction on this line, not its true international origin. So the drawn geometry covers only the Beyneu(Kazakhstan)->Gubkin(Russia) leg of a pipeline whose StartCountryOrArea='Turkmenistan'/EndCountryOrArea='Russia' describe the pipeline's overall transnational endpoints (true gas origin at Okarem, ultimate Russian destination), not the drawn segment's own endpoints. Verdict: correctly-drawn partial route, not a data defect -- do not propose new coordinates, per protocol.",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93Center_gas_pipeline_system"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93Center_gas_pipeline_system",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not 'fix' LengthKnownKm to the drawn route's 1569km. Leave 2600 as-is; optionally add a ResearcherNotes line stating what it likely counts, per the note below. Exact figure remains UNRESOLVED -- no public line-wise register states it directly.",
+   "researcher_notes": "LENGTH_RATIO: same read as the endpoint flag above, and the two are not independent questions -- both follow from the route being a PARTIAL draw (Beyneu->Gubkin only, 1569km measured) of a string whose StartCountryOrArea/EndCountryOrArea describe the full Turkmenistan-to-Russia transit. 2600km is too small to be the 5-string CAC system aggregate (KMG AR2019/2020: 5,306km; AR2021: 4,149.2km, across all of CAC-1..5) and too large to be the drawn Beyneu-Gubkin leg alone (1569km) -- it sits in between, which is consistent with being CAC-3's OWN full transnational length (Okarem, Turkmenistan -> Beyneu, Kazakhstan -> Gubkin, Russia). Supporting arithmetic, not proof: Yenikeyeff/OIES 2008 Table 10 (p.33) gives CAC-3's KAZAKHSTAN-portion length (the pre-Beyneu stretch, built 1974) as 754km, a stretch the drawn route does NOT cover (the route starts AT Beyneu); 2600 - 1569(drawn) = 1031km unaccounted-for, the right order of magnitude for a Turkmenistan+pre-Beyneu-Kazakhstan stretch of ~754km-plus-Turkmen-mileage. This is a reasoned inference from segment-level data (tier=low; I could not find a source stating 2600km for CAC-3 directly), not a confirmed match -- UNRESOLVED on the exact figure, but the 'own full-transnational-length on a Kazakh-portion route' explanation should replace the 'system aggregate copied onto a string' hypothesis in the brief.",
+   "proposed_refs": [
+    "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.oxfordenergy.org/wpcms/wp-content/uploads/2010/11/NG25-KazakhstansgasExportMarketsandExportRoutes-ShamilYenikeyeff-2008.pdf",
+     "ok": false,
+     "contains_value": null,
+     "note": "PDF text-extraction false negative; confirmed locally, see researcher_notes."
+    }
+   ],
+   "tier": "low",
+   "independent": false
+  }
+ ]
+}

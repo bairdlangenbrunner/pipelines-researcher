@@ -1,0 +1,267 @@
+{
+  "project_id": "P0791",
+  "pipeline_name": "Orenburg-Novopskov Gas Pipeline",
+  "sheet_row": 403,
+  "wiki": "https://www.gem.wiki/Orenburg_Novopskov_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence/classification/duplicate axes.",
+      "researcher_notes": "EXISTENCE: strongly confirmed by FIVE independent, verified, non-GEM sources naming this exact line: (1) Kazakhstan Today (kt.kz, 2015-02-02), quoting a KazTransGas press release on a pipe-rupture/fire at km 288, which names the operator as 'UMG Uralsk, AO Intergaz Tsentralnaya Aziya (a subsidiary of AO KazTransGaz)'; (2) Neftegas.info (2023-04-20), reporting Gazprom Transgaz Yekaterinburg's completion of >95km of pipe repairs on 'MG Orenburg-Novopskov'; (3) CDU TEK (cdu.ru, Russian federal fuel-energy dispatch office, article referencing 2021 KMG data), which lists 'Orenburg-Novopskov' among the named trunk lines carrying Russian gas through Kazakhstan; (4) Intergas Central Asia's own official 'General Information' page (intergas.kz), which lists MG 'Orenburg-Novopskov' as one of the trunk pipelines operated by its Uralsk UMG branch; (5) Kapital.kz (2021-02-23), quoting Russia's Energy Ministry on a Feb-2021 pressure-drop/supply interruption on 'MG Orenburg-Novopskov (OOO Gazpromtransgaz Yekaterinburg)' that briefly halted transit to Kazakhstan via GIS Alekseyevka. CLASSIFICATION: transmission/trunk (магистральный газопровод) is correct -- every source above describes it in exactly those terms. GEM's own CountriesOrAreas field already correctly reads 'Ukraine, Kazakhstan, Russia' (NumberOfCountries=3), i.e. GEM does NOT mis-tag this as a purely-Kazakhstan pipeline -- it is modeled (correctly) as one multi-country system, consistent with how the CAC family (P2291/P5770/P5771) is handled. DUPLICATE: not a duplicate of P0761 (Soyuz) -- Intergas Central Asia's own Q2-2021 internal capacity register (see spec finding below) lists 'Союз' (1400mm, 423km KZ) and 'Оренбург-Новопсков' (1200/1220mm, 382km KZ) as two SEPARATE numbered rows under the same Uralsk UMG branch, and GEM's own P0761 (2750km, 1420mm, ends Uzhgorod) vs P0791 (1230km, 1220mm, ends Novopskov) already have non-overlapping length/diameter/endpoint. Also checked the wider 'Novopskov hub' family already in the GEM sheet (P0789 Urengoy-Novopskov, P0790 Petrovsk-Novopskov, P1471 Novopskov-Aksai-Mozdok, P1483 Novopskov-Shebelinka) -- Novopskov is evidently a major compressor/convergence node where several distinct Soviet-era trunk lines terminate; P0791 (Orenburg origin) is cleanly distinct from its Urengoy- and Petrovsk-origin siblings, not a relabeled duplicate of any of them. PipelineNetworkGrouping check (per task instructions, comparing to P0761's wrong 'Brotherhood pipeline system' tag): P0791's PipelineNetworkGrouping and PipelineNetworkGroupingAlt are both BLANK in the live sheet -- it does NOT carry P0761's defect (there is nothing wrong to fix here, and I found no source giving an authoritative network-grouping label to force a fill).",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://neftegas.info/news/article/20711",
+        "https://intergas.kz/ru/obwaya-informaciya/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "classification",
+      "recommendation": "No sheet edit needed -- GEM's country tagging and length are already whole-system and internally consistent. Optionally add a ResearcherNotes line stating explicitly that LengthKnown=1230km is the FULL Russia-Kazakhstan-Russia-Ukraine system length, not the Kazakh-only 382km segment, to pre-empt a future researcher 'correcting' it to 382.",
+      "researcher_notes": "Per the task's specific instruction to establish what portion (if any) is in Kazakhstan and whether the 1,230km length is Kazakh-scoped or whole-system: it is WHOLE-SYSTEM, not Kazakh-scoped, and this is well supported. The Kazakh section ALONE is officially 382 km -- stated verbatim by KazTransGas's own press release, independently reported by Kazakhstan Today (kt.kz, 2015): 'Казахстанский участок газопровода Оренбург - Новопсков был введен в эксплуатацию в 1975 году. Протяженность МГ Оренбург - Новопсков - 382 километра, диаметр - 1220 миллиметров, проектное давление - до 5,4 МПа.' This 382km figure is independently cross-validated by Intergas Central Asia's own Q2-2021 internal capacity register (a primary operator document, row 7: 'Оренбург-Новопсков, 1200mm, 382km') and by summing the same register's Soyuz (423km) + Orenburg-Novopskov (382km) = 805km, which is an EXACT match to KMG's Annual Report 2021 combined figure for 'Soyuz, Orenburg-Novopskov' (805km/40.4 bcm/y) -- strong internal consistency across the KMG/Intergas corporate family (note: KMG and Intergas are affiliated, parent-subsidiary, so this pairing is one corporate origin, not two independent ones, but the arithmetic cross-check is still meaningful). Given the Kazakh segment is only 382km, GEM's LengthKnown=1230.00km must represent the WHOLE international line (Orenburg, Russia -> transiting Kazakhstan near Uralsk -> back into Russia -> Novopskov, Luhansk Oblast, Ukraine). This is corroborated two ways: (a) Ukrainian Wikipedia's dedicated article on this pipeline (tertiary, but detailed and internally coherent) states total length 1,356km 'per Gazprom data', diameter 1220mm, commissioned 1975, with 382km specifically 'passing through the territory of Kazakhstan' -- consistent in every particular except the whole-system total, which is ~10% higher than GEM's 1230km (I could not independently verify the 1356km figure against a primary Gazprom document, so I am not proposing it as a correction, only noting the gap); (b) far more compellingly, I pulled the pipeline's OWN routes-repo GeoJSON (data/individual-routes/gas-pipelines/P0791.geojson, a 62-point LineString) and computed its great-circle length: ~1,219km, essentially identical to GEM's own LengthEstimateKm=1222.71 and within 1% of LengthKnown=1230.00. The drawn route starts at Orenburg's coordinates (55.11E, 51.78N), threads through the Uralsk, Kazakhstan area (~51.1-51.5E, 51.3N, exactly where the 382km Kazakh segment sits) for roughly 4 of its 62 vertices, then re-enters Russia and ends EXACTLY at Novopskov's coordinates (39.15E, 49.52N). This is strong, self-consistent evidence that GEM's declared 1230km is a genuine whole-system measurement, not an accidental Kazakh-only or mis-scoped value -- and that the route geometry (which actually crosses into Kazakhstan) supports the multi-country CountriesOrAreas tag. Net: no correction recommended; flagging as a documented caveat only, since neither GEM nor I can pin the whole-system total to an external primary source at two-decimal precision (1230 vs the unconfirmed 1356 Wikipedia/Gazprom figure).",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Consider clearing/updating the stale RouteNotes text (documentation debt, not a live geometry defect).",
+      "researcher_notes": "ROUTE NOTES ARE STALE. The live sheet's RouteNotes field (authored by researcher NF, 2023-08-25) reads: 'The route on the Tracker Map needs to be updated: it should end in Novopskov, it is also missing a segment in Kazakhstan.' I checked the actual current routes-repo geometry (goit-ggit-pipeline-routes/data/individual-routes/gas-pipelines/P0791.geojson) directly: it is a 62-point LineString that (a) DOES end precisely at Novopskov's coordinates (39.14875E, 49.52207N) and (b) DOES pass through the Uralsk, Kazakhstan area (a run of ~4 vertices around 51.1-51.5E, 51.3N, matching the 382km Kazakh segment's known location). So the specific defects NF flagged in 2023 appear to have already been fixed in the routes repo since then, and RouteType='Mapped route (at any accuracy)' / RouteAccuracy='high' are consistent with what I see -- this is not a live three-way-sync violation. No route work needed; just flagging that the RouteNotes text is now misleading/outdated documentation and could be cleared by whoever next touches this row's route.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.cdu.ru/tek_russia/articles/3/1150/",
+        "https://neftegas.info/news/article/20711"
+      ],
+      "verifications": [
+        {"url": "https://www.cdu.ru/tek_russia/articles/3/1150/", "ok": true, "contains_value": true},
+        {"url": "https://neftegas.info/news/article/20711", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "CDU TEK (Russian federal dispatch agency) lists Orenburg-Novopskov among Kazakhstan's currently-used international transit lines (article context: 2021 KMG transit data, published 2023); Neftegas.info (2023-04-20) describes an active repair program on the line with gas supply to consumers maintained throughout -- both describe present-tense, ongoing operation. Status is inferable from context per the usual convention."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.cdu.ru/tek_russia/articles/3/1150/"],
+      "verifications": [
+        {"url": "https://www.cdu.ru/tek_russia/articles/3/1150/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "CDU TEK explicitly describes the line as carrying 'российский природный газ' (Russian natural gas). Trivial/uncontested fact, single source sufficient."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://intergas.kz/ru/obwaya-informaciya/"
+      ],
+      "verifications": [
+        {"url": "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html", "ok": true, "contains_value": true},
+        {"url": "https://intergas.kz/ru/obwaya-informaciya/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both sources (and Neftegas.info) describe it as a 'магистральный газопровод' (trunk/main gas pipeline) -- consistent with 'transmission', not gathering/feeder."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1975"},
+      "primary_value": "1975",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2"
+      ],
+      "verifications": [
+        {"url": "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html", "ok": true, "contains_value": true},
+        {"url": "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Exact match, two independent sources. Kazakhstan Today quotes KazTransGas's own press release verbatim: 'Казахстанский участок газопровода Оренбург - Новопсков был введен в эксплуатацию в 1975 году' (the Kazakh section was commissioned in 1975). Ukrainian Wikipedia's dedicated article independently states commissioning year 1975 for the same line (citing Gazprom). Note this is explicitly the KAZAKH section's commissioning year in the KazTransGas source; I found no source suggesting the Russian/Ukrainian legs opened in a materially different year, so treating StartYear1=1975 as applying to the whole system is reasonable."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "14.60", "CapacityUnits": "bcm/y"},
+      "primary_value": "14.60",
+      "proposed_refs": ["https://www.cdu.ru/tek_russia/articles/3/1150/"],
+      "verifications": [
+        {"url": "https://www.cdu.ru/tek_russia/articles/3/1150/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "CDU TEK (Russian federal fuel-energy dispatch office) states, per-line (not a system aggregate): 'Оренбург - Новопсков (российский природный газ; 14,6 млрд куб. м в год)' -- an EXACT match to GEM's 14.60 bcm/y. Kept at tier=medium rather than high because I have only one source stating this exact per-line figure explicitly; however it cross-validates well against Intergas Central Asia's own Q2-2021 internal capacity register, which gives a COMBINED Soyuz+Orenburg-Novopskov actual-capacity figure of 40,820 million m3/year (40.82 bcm/y) -- and the same cdu.ru source separately states Soyuz alone = 25.2 bcm/y, so 25.2+14.6=39.8 bcm/y, closely matching the Intergas combined total (design vs actual-utilization variance is expected). This is the same 'system total vs per-line' pattern flagged on the CAC family (P2291 etc.), but here it resolves IN GEM'S FAVOR -- 14.6 is a genuine per-line figure, not a system total misapplied to a single string."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "1230.00", "LengthKnownUnits": "km"},
+      "primary_value": "1230.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Do not fill with an external ref -- no source I found states 1,230km for the whole system exactly (nearest is Ukrainian Wikipedia's 1,356km 'per Gazprom data', an unconfirmed tertiary claim, ~10% higher). However this is NOT a real concern: see the paired classification validity entry -- GEM's own routes-repo GeoJSON for this PID computes to ~1,219km by great-circle segments, matching GEM's own LengthEstimateKm=1222.71 almost exactly, and the drawn route genuinely threads through Kazakhstan (Uralsk area) before ending at Novopskov's coordinates. That internal geometry cross-check is stronger evidence for 1230 than any external source I could verify, so I'm leaving this UNRESOLVED (no ref to pair) rather than force either the 382km Kazakh-only figure (wrong scope) or the unconfirmed 1356km Wikipedia figure onto this cell."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "1220", "DiameterUnits": "mm"},
+      "primary_value": "1220",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2"
+      ],
+      "verifications": [
+        {"url": "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html", "ok": true, "contains_value": true},
+        {"url": "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Exact match, two independent sources (KazTransGas press release via kt.kz: 'диаметр - 1220 миллиметров'; Ukrainian Wikipedia independently: 1,220mm). Footnote: Intergas Central Asia's own Q2-2021 internal capacity-register PDF rounds this to '1200' in its table (row 7, alongside 382km) -- a minor internal inconsistency in Intergas's own bookkeeping, not treated as overriding the two more precise, exact-match sources above."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Orenburg gas field"},
+      "primary_value": "Orenburg gas field",
+      "proposed_refs": [
+        "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2"
+      ],
+      "verifications": [
+        {"url": "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Ukrainian Wikipedia states the pipeline originates at the Orenburg Gas Processing Plant ('Оренбурзький газопереробний завод'), which processes gas from the Orenburg gas condensate field -- consistent with FuelSource='Orenburg gas field', though the article names the plant rather than the upstream field by that exact phrase (verifier's automated substring check on the exact phrase 'Orenburg gas field' correctly returns false; I read the page and the underlying fact is supported). Single tertiary source, kept at tier=medium as an uncontested, unsurprising fact (the pipeline's own name states 'Orenburg' as its origin) rather than a contested data point needing two independent sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Orenburg",
+        "StartState/Province": "Orenburg",
+        "StartCountryOrArea": "Russia",
+        "EndLocation": "Novopskov",
+        "EndState/Province": "Luhansk",
+        "EndCountryOrArea": "Ukraine"
+      },
+      "primary_value": "Orenburg",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2"
+      ],
+      "verifications": [
+        {"url": "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html", "ok": true, "contains_value": true},
+        {"url": "https://uk.wikipedia.org/wiki/%D0%9E%D1%80%D0%B5%D0%BD%D0%B1%D1%83%D1%80%D0%B3_%E2%80%94_%D0%9D%D0%BE%D0%B2%D0%BE%D0%BF%D1%81%D0%BA%D0%BE%D0%B2", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both endpoints well supported. StartLocation=Orenburg, Russia: confirmed by every source in this pass (the line's own name, kt.kz, Neftegas.info, cdu.ru, uk.wikipedia). EndLocation=Novopskov, Luhansk, Ukraine: explicit in Ukrainian Wikipedia's route description (terminates in northern Luhansk Oblast at Novopskov) and consistent with the routes-repo geometry's endpoint coordinates (39.15E, 49.52N, which is Novopskov). Also cross-checked against the sibling 'Novopskov hub' rows already in the GEM sheet (P0789 Urengoy-Novopskov, P0790 Petrovsk-Novopskov, P1471 Novopskov-Aksai-Mozdok, P1483 Novopskov-Shebelinka), which independently corroborate Novopskov as a real, major multi-line convergence point."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 403,
+      "oo_sheet_row": 705,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%",
+        "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%",
+        "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gazprom PJSC", "Owner2": "QazaqGaz"},
+      "primary_value": "Gazprom PJSC",
+      "proposed_refs": [
+        "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html",
+        "https://neftegas.info/news/article/20711"
+      ],
+      "verifications": [
+        {"url": "https://www.kt.kz/rus/incidents/pozhar_na_gazoprovode_v_zapadnom_kazahstane_likvidirovan_1153599020.html", "ok": true, "contains_value": true},
+        {"url": "https://neftegas.info/news/article/20711", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Two-owner split is well supported, one source per operator/segment: kt.kz confirms the Kazakh section is run by AO Intergaz Tsentralnaya Aziya, a subsidiary of AO KazTransGaz (i.e. the QazaqGaz/Samruk-Kazyna chain GEM already lists as Owner2/Parent) -- 100% consistent with Owner2='QazaqGaz'. Neftegas.info (and separately Kapital.kz) confirm the Russian section is run by OOO Gazprom Transgaz Yekaterinburg, a Gazprom PJSC subsidiary -- consistent with Owner1='Gazprom PJSC'. Neither source states an exact ownership PERCENTAGE split, so I'm not proposing one; GEM's existing 'Parent... [unknown %]' is appropriately conservative and I'm not recommending a change there, only supplying refs for the two named owners themselves."
+    }
+  ],
+  "summary": "P0791 (Orenburg-Novopskov, a real, well-documented Soviet-era trunk gas line): existence, classification (transmission trunk), and non-duplicate status vs Soyuz/CAC/the wider Novopskov-hub family all CONFIRMED by 5+ independent sources. Central classification finding: GEM's 1,230km LengthKnown is the WHOLE international system (Russia-Kazakhstan-Russia-Ukraine), NOT the 382km Kazakh-only segment (KazTransGas's own official figure, via kt.kz) -- cross-validated by the pipeline's own routes-repo geometry, which computes to ~1,219-1,223km and genuinely threads through Kazakhstan (Uralsk) before ending exactly at Novopskov. No correction needed; flagged as a documented caveat. StartYear1=1975 and Diameter=1220mm both confirmed as EXACT matches via the same KazTransGas press release (independently reported by kt.kz) plus Ukrainian Wikipedia. Capacity=14.60 bcm/y confirmed as an exact per-line match via CDU TEK (Russian federal dispatch office), cross-validated against Intergas's own combined Soyuz+Orenburg-Novopskov register total. PipelineNetworkGrouping is blank (does NOT carry P0761/Soyuz's wrong 'Brotherhood' tag). RouteNotes (NF, 2023) claiming the map is missing a Kazakhstan segment appears STALE -- the live geojson already correctly includes it. Status/Fuel/PipelineType/Start/Capacity/Diameter/FuelSource/Location/Owner filled with verified refs (tier medium-high); Length left UNRESOLVED (no external source states the whole-system total precisely, though internal route-geometry cross-check strongly supports GEM's existing value)."
+}

@@ -1,0 +1,58 @@
+{
+ "project_id": "P5927",
+ "pipeline_name": "Bukhara-Ural Gas Pipeline",
+ "sheet_row": 3390,
+ "wiki": "https://www.gem.wiki/Bukhara-Ural_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Intergas Central Asia"},
+   "primary_value_col": "Operator",
+   "primary_value": "Intergas Central Asia",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "oo_sheet_row": 4655,
+   "proposed_refs": [
+    "https://intergas.kz/ru/about-company/",
+    "https://intergas.kz/en/about-the-company/"
+   ],
+   "verifications": [
+    {"url": "https://intergas.kz/ru/about-company/", "ok": true, "contains_value": true},
+    {"url": "https://intergas.kz/en/about-the-company/", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium", "independent": false, "source_language": "ru",
+   "researcher_notes": "Same COMPANY-level answer as the other four rows in this brief: intergas.kz lists 'Bukhara - Ural MGP' under its Aktobe operating branch, which covers this lateral (P5927 = CS 14-Aktobe I, entirely within Kazakhstan). A prior leg (ref-sweep-operating, this same PID) already staged a fill for the OO tab's Owner cell citing the same intergas.kz page; this fill is for the separate Operator cell, which was still blank."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "No fill needed for Diameter -- own value already correct, independently confirmed.",
+   "researcher_notes": "MULTI-SEGMENT WIKI UNION JUDGEMENT (Diameter): P5927 already carries only its own value ('530'), independently confirmed by a prior leg (ref-sweep-operating, this PID) against two primary Kazakh documents ('Dн 530 мм' explicit in both). Decision: own value, already correct -- no change."
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "attribution",
+   "recommendation": "No fill needed for Owner/Parent -- both already correctly carry this string's own Kazakh-domestic value.",
+   "researcher_notes": "MULTI-SEGMENT WIKI UNION JUDGEMENT (Owner/Parent): P5927 runs entirely within Kazakhstan, so the wiki's multi-country union does not apply. Owner1='QazaqGaz'[100%] / Parent='Samruk-Kazyna SWF JSC'[100%] is this string's own correct value, already sourced by a prior leg via intergas.kz. Decision: own value, already correct."
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "existence",
+   "recommendation": "UNRESOLVED -- do not fill StartYear1. Leave Date_logic open; the only evidence found is a 30-year construction WINDOW for the whole Aktobe-area supply network, not a year for this specific lateral or thread.",
+   "researcher_notes": "Searched (ru) specifically for a commissioning/construction year for the CS14-Aktobe I/II laterals (as distinct from the well-dated 1963/1966 Bukhara-Ural MAINLINE strings, which is a different pair of pipes off the same corridor). The only dated evidence found: kapital.kz (2023-07-21, on the third-lateral groundbreaking) states 'Существующие подводящие газопроводы были построены еще в 60-80-х годах прошлого века' (the existing supply gas pipelines were built back in the 1960s-80s of the last century) -- a ~30-year window covering the WHOLE Aktobe-area supply network, not a year (or even a decade) specific to this lateral or to distinguishing thread I from thread II. No other source read (gov.kz 2022 filing, ecoportal.kz 2020 EIA, aktobetimes.kz, gazeta.uz, diapazon.kz) gives a construction year for either existing thread. Per protocol ('if a field date is all you can find, say so and mark it low, or leave UNRESOLVED'), leaving this unfilled rather than proposing a decade-wide range as a StartYear1 value.",
+   "proposed_refs": [], "verifications": [], "tier": "low", "independent": false
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "duplicate",
+   "recommendation": "Not mine to close (cluster F, redundancy leg's call) -- but flag a DATA-QUALITY correction for whoever adjudicates it: the 'each thread independently 158.573 km' claim in the ref-sweep-operating leg's own P5927.json shard appears to misread a gas-volume table as a length table. Re-check before relying on it.",
+   "researcher_notes": "The brief asks that anything distinguishing P5927 from P5928 be flagged as this packet's most valuable possible result. I found no new distinguishing fact (no separate year, diameter, or capacity for thread I vs thread II) -- but while chasing a commissioning year I re-downloaded and re-read (pdftotext -layout) the ecoportal.kz EIA PDF (project 113/2020-12-03-ОПЗ) that a prior leg's P5927.json cites for the claim that '1 нитка' and '2 нитка' of the CS14-Aktobe branch are each independently surveyed at 158,573 km. That number does NOT come from a length table: it sits under a table headed 'Объем стравленного газа, тыс.м3 / Остаток газа в газопроводе, тыс.м3 / Остаточное избыточное давление ... / Фактическое время истечения газа' (volume of gas blown down, thousand m3 -- a gas-release/blowdown-safety calculation, not a pipe-length table), and the 158,573 figure recurs identically across multiple different km-chainage segments (26-86km, 86-110km) for both '1 нитка' and '2 нитка' -- consistent with a per-segment gas-volume figure, not a cumulative length. This does not overturn anything already staged (P5928.json, the same ref-sweep-operating leg, independently and correctly read the SAME document's earlier length-bearing text as describing the two threads running parallel only from km26 to km~134-136, with a final single ~22km leg to GRS-1 -- i.e. that shard's own reading is the one consistent with what I re-verified). The two shards from the same leg disagree with each other on this point; P5928's reading is the one that holds up. Not filing this as a fill (nothing to fill on THIS row from it) -- flagging as a validity note so the cluster-F adjudicator does not treat '158.573km per thread, independently surveyed' as confirmed fact when re-weighing the length question.",
+   "proposed_refs": ["https://ecoportal.kz/Public/PubHearings/LoadFile/28485"],
+   "verifications": [{"url": "https://ecoportal.kz/Public/PubHearings/LoadFile/28485", "ok": true, "contains_value": true}],
+   "tier": "medium", "independent": false, "source_language": "ru"
+  }
+ ]
+}

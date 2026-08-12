@@ -1,0 +1,54 @@
+{
+ "project_id": "P0739",
+ "pipeline_name": "Bukhara-Tashkent-Bishkek-Almaty Gas Pipeline",
+ "sheet_row": 360,
+ "wiki": "https://www.gem.wiki/Bukhara-Tashkent-Bishkek-Almaty_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan"},
+   "primary_value_col": "Operator",
+   "primary_value": "Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://intergas.kz/en/about-the-company/",
+    "https://ru.sputnik.kg/20170829/zapushchen-gazoprovod-ot-tashkenta-do-almaty-cherez-kyrgyzstan-1034934692.html"
+   ],
+   "verifications": [
+    {"url": "https://intergas.kz/en/about-the-company/", "ok": true, "contains_value": true},
+    {"url": "https://ru.sputnik.kg/20170829/zapushchen-gazoprovod-ot-tashkenta-do-almaty-cherez-kyrgyzstan-1034934692.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This is a company-level answer applied to BOTH P0739 and P5810 (same system, same current Operator value) -- decided once, applied to each shard. Operator [ref] was blank on the operators/owners tab for both rows (orphan value: Operator already read 'Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan' with no citation). This is a genuinely transnational corridor (Uzbekistan-Kyrgyzstan-Kazakhstan, confirmed independently below), so a 3-entity value is NOT the wiki-union artifact seen on wholly-domestic Kazakh systems (see notes/escalation-2026-08-11-kazakhstan-system-level-values-on-strings.md) -- it plausibly reflects one operator per national section, and I kept the sheet's existing value rather than narrowing it to the Kazakh section alone. Strongest, most specific finding: intergas.kz/en/about-the-company/ lists 'Bukhara Gas Bearing Region - Tashkent - Bishkek - Almaty MGP' explicitly under the Shymkent Branch, Taraz Branch, AND Almaty Branch of Intergas Central Asia JSC (verified live text, curl dump quoted: 'Shymkent Branch: Bukhara Gas Bearing Region - Tashkent - Bishkek - Almaty MGP ; Gazlee - Shymkent MGP ; Kazakhstan-China MGP ...') -- this is a direct, pipeline-named, primary-source confirmation that Intergas Central Asia operates the KAZAKH section, per the protocol's specific instruction to dig for the Kazakh-section entity rather than accept a system-wide list at face value. Supporting but weaker: two 2017 Sputnik Kyrgyzstan articles quote 'press-sluzhba OsOO Gazprom Kyrgyzstan' discussing this exact pipeline's Kyrgyz-section construction/reconstruction, corroborating Gazprom Kyrgyzstan's operational role there (both articles trace to the same press office, so treat as one origin, not full independent corroboration). Could NOT independently re-verify Uztransgas (Uzbek section) this session with a pipeline-specific citation: gem.wiki's own ref for this (utg.uz/ru/about/history/) now 404s and the utg.uz site has been restructured (utg.uz/ru/about/leadership/ also 404s); a general search confirms Uztransgas JSC is Uzbekistan's national trunk-gas-pipeline operator (13,200 km) and that its history traces to the Gazli field development -- Gazli is this pipeline's own FuelSource field on the sheet -- but that is company-identity corroboration, not a line-specific statement. Recommend: keep the current Operator value (do not narrow to Kazakh-only), tier=medium reflecting that 1 of 3 entities has a strong direct citation and the other two have secondary/company-identity support only."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "value_cols": ["Diameter"],
+   "values": {"Diameter": "700, 720, 820, 1000, 1020"},
+   "primary_value_col": "Diameter",
+   "primary_value": "700, 720, 820, 1000, 1020",
+   "class_out": "REFS_ADDED",
+   "tab": null,
+   "proposed_refs": ["https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana"],
+   "verifications": [
+    {"url": "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana", "ok": true, "contains_value": true}
+   ],
+   "tier": "low",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Diameter [ref] was blank (orphan value) on P0739; the value itself is NOT the wiki's 6-value union -- it is already a line-specific 5-value set, distinct from P5810's 2-value set, so the 'multi-segment wiki union' flag is a false read here (both rows already carry differentiated diameters, not a copied union). I could independently corroborate only ONE of the five tokens: uzreport.news (Epsilon Development Company article on Uzbek gas-infrastructure overhaul) documents 'Ø1020x12 mm' pipe on the Mubarek-Zirabulak section, explicitly on БГР-ТБА threads I, II and III (the Uzbek portion of this system) -- matches the 1020mm token. The other four tokens (700, 720, 820, 1000mm) remain UNSOURCED this session; I could not find an independent, line-specific breakdown for them (the Pavlodar State University academic source below gives only '720, 1015mm' for the system table, which does not match this row's set either -- see validity note). Proposing this ref as partial support only -- a human should decide whether partial (1-of-5-token) support is enough to clear the orphan-value flag, or whether the other four tokens should stay UNRESOLVED pending a per-token source."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "attribution",
+   "recommendation": "Keep Owner, Operator and Parent as multi-entity (3-6 entity) values on both P0739 and P5810 -- do not collapse to a Kazakh-only value. This judgement is decided ONCE for the system and applies to both rows.",
+   "researcher_notes": "Unlike the wholly-domestic Kazakh systems flagged in notes/escalation-2026-08-11-kazakhstan-system-level-values-on-strings.md (Central Asia-Center, Bukhara-Ural, etc., where a system-wide multi-entity value stamped on every string IS the defect), BGR-TBA/BTBA is a genuinely transnational pipeline -- confirmed independently (not via gem.wiki) via two sources: (1) a Pavlodar State University academic paper ('Вестник ПГУ' ISSN 1811-1858, via archived library.tou.edu.kz/fulltext/bibl/b794.pdf) states explicitly the corridor crosses Kyrgyzstan between Shymkent and Almaty, feeding Bishkek en route ('на отрезке между Шымкентом и Алматы, трубопровод пересекает территорию Кыргызстана, питая его столицу Бишкек'); (2) two 2017 Sputnik Kyrgyzstan articles describe the launch of the restored pipeline's 'I и II очередей' (phases I and II) explicitly supplying 'Алматинскую и Талды-Курганскую области Казахстана' (Almaty and Taldykorgan regions of Kazakhstan). So a row that itself spans Uzbekistan-Kyrgyzstan-Kazakhstan plausibly and correctly carries one operator/owner per national section rather than one Kazakh-only entity. Owner [ref] on both rows already cites https://intergas.kz/ru/obwaya-informaciya/ (verified live) supporting the current 3-entity Owner value -- no fill needed there. Parent has NO dedicated [ref] column on either the gas tab or the operators/owners tab (checked both CSVs; Parent is a derived display, not a sourced cell), so its 6-entity value (incl. 'natural person(s) [unknown %]' and 'small shareholder(s) [unknown %]') cannot be given a ref at all -- flagging this as an inherent schema limitation, not something for me to fix. Independently spot-checked one Parent component: kase.kz/en/issuers/KZTG/ (Kazakhstan Stock Exchange issuer page, verified live) corroborates Samruk-Kazyna SWF JSC's role in the QazaqGaz/KazTransGaz ownership chain. Net: the current Owner/Parent values look defensible as-is; only the orphan Operator [ref] needed action (see fills)."
+  }
+ ]
+}

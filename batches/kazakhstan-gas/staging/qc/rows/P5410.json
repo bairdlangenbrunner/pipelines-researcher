@@ -1,0 +1,43 @@
+{
+ "project_id": "P5410",
+ "pipeline_name": "Russia-Kazakhstan-China Gas Pipeline",
+ "sheet_row": 3004,
+ "wiki": "https://www.gem.wiki/Russia-Kazakhstan-China_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": ["Operator"],
+   "values": {"Operator": "Gazprom (Russia); QazaqGaz (Kazakhstan)"},
+   "primary_value_col": "Operator",
+   "primary_value": "Gazprom (Russia); QazaqGaz (Kazakhstan)",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://neftegaz.ru/news/transport-and-storage/771244-rossiya-kazakhstan-kitay-qazaqgaz-i-gazprom-prorabatyvayut-predteo-po-proektu-mezhdunarodnogo-gazopr/",
+    "https://www.interfax.ru/business/1035408"
+   ],
+   "verifications": [
+    {"url": "https://neftegaz.ru/news/transport-and-storage/771244-rossiya-kazakhstan-kitay-qazaqgaz-i-gazprom-prorabatyvayut-predteo-po-proektu-mezhdunarodnogo-gazopr/", "ok": true, "contains_value": true},
+    {"url": "https://www.interfax.ru/business/1035408", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Important caveat, spelled out because this is a PROPOSED, pre-FID concept: 'Operator' here reflects the two lead project-development entities, not a finalized operating structure. neftegaz.ru (771244, verified live) reports 'QazaqGaz и Газпром прорабатывают предТЭО по проекту международного газопровода' (QazaqGaz and Gazprom are jointly developing the pre-feasibility study). Interfax (1035408, verified live, fetched 2026-08) separately names 'Gazprom - Russian operator' with 'Kazakhstan's government' as counterparty, and quotes Energy Minister Erlan Akenzhenov as of July 2025: 'There are no documents that formally secure the project yet. But discussions are underway' -- i.e. no binding operating agreement exists. Both sources are independent (different outlets, different 2024/2025 news events, neither traces to the other or to GEM). Recommend a human confirm this is an acceptable fill for a proposed-stage row given the explicit 'no binding documents yet' caveat -- if the convention is to leave Operator blank until FID for proposed pipelines, this fill should be withdrawn rather than applied."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not change LengthKnownKm off the 1000 km figure without also resolving the scope question below -- flag for a human to decide whether the row should track the RU-KZ segment (1000 km, sourced) or an eventual full RU-KZ-China corridor (currently unsourced beyond the drawn geometry).",
+   "researcher_notes": "1000 km IS sourced, but for a narrower scope than the row's own StartLocation/EndLocation (Barnaul, Russia -> Khorgos, China) imply. neftegaz.ru (766922, verified live) reports on the Gazprom-Kazakhstan roadmap and gives TWO route options under study: 'Барнаул - Рубцовск - Семей - Усть-Каменогорск с ответвлением в г. Павлодар с ориентировочной протяженностью 1000 км' (Barnaul-Rubtsovsk-Semey-Ust-Kamenogorsk with a Pavlodar branch, approx. 1000 km) and a second northern option via Ishim-Petropavlovsk-Kokshetau-Astana (~644 km) that the sheet does not appear to reflect. Both quoted lengths are explicitly 'ориентировочная' (indicative/approximate) for an unbuilt project. Critically, the 1000 km figure covers only Barnaul (Russia) to Ust-Kamenogorsk (Kazakhstan) -- it does NOT extend to the sheet's stated China endpoint (Khorgos/Alashankou). The drawn route's measured 1712 km is therefore not simply 'wrong' -- it plausibly reflects an attempt to draw the FULL Russia-to-China corridor (consistent with the row's own Start/EndCountryOrArea), which no source I found actually states a total length for. So: 1000 km is a sourced but partial-scope figure; 1712 km is an unsourced full-scope estimate. Neither should be presented as simply correct or simply wrong without saying what it counts."
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Treat the drawn route as a legitimate PARTIAL/indicative route for an unbuilt transit concept, not a data error. Do not propose new coordinates.",
+   "researcher_notes": "The flagged last endpoint (49.901, 82.662) sits almost exactly on Ust-Kamenogorsk/Oskemen, East Kazakhstan (city center ~49.95N, 82.61E) -- and Ust-Kamenogorsk is precisely the named terminus of the Barnaul-Rubtsovsk-Semey-Ust-Kamenogorsk route option described in neftegaz.ru 766922 above (with a branch to Pavlodar, matching the row's own PipelineNetworkGrouping in Chinese: 俄罗斯-哈萨克斯坦-中国输气管道). kz.kursiv.media (2024-05-04, verified live) independently corroborates that the studied routing explicitly transits Kazakhstan via 'Barnaul through Rybcovsk to Semey, with branches to Pavlodar and Ust-Kamenogorsk, then continuing to Alashankou and Khorgas' -- i.e. two independent Russian/Kazakh outlets agree this proposed pipeline genuinely crosses Kazakh territory before reaching China, which is exactly the scenario the protocol says can produce a correctly-drawn partial route. Given the project has no finalized route (per the Interfax quote above, 'no documents formally secure the project yet'), a route that stops at a real, named, sourced waypoint (Ust-Kamenogorsk) rather than the ultimate but undetermined China crossing point reads as an honest indicative drawing, not an endpoint error. RouteAccuracy is already 'medium' on this row, consistent with that reading."
+  }
+ ]
+}

@@ -1,0 +1,154 @@
+{
+  "project_id": "P5928",
+  "pipeline_name": "Bukhara-Ural Gas Pipeline",
+  "sheet_row": 3391,
+  "wiki": "https://www.gem.wiki/Bukhara-Ural_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Keep the row (it is real, correctly classified, and NOT a duplicate of P5927) but re-derive LengthKnown for each of the two parallel threads (P5927='I', P5928='II') instead of stamping both with the full 158 km corridor total; and mark Capacity as a derived/inferred half-split rather than an independently sourced per-thread figure.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all check out. Independent, non-GEM sources confirm this is a real, currently-operating trunk gas branch pipeline ('газопровод-отвод') running off the Bukhara-Ural mainline (tie-in ~1385-1387 km of MG) to Aktobe city, built as TWO parallel physical strings ('1-я нитка' / '2-я нитка') commissioned in 1963 and 1966 (gazeta.uz), currently overloaded at ~170% of design capacity, with a THIRD thread under construction 2023-2025 (aktobetimes.kz) -- which matches GEM's own P5696 'CS 14-Aktobe III' (construction) elsewhere in the roster. So P5927(I)/P5928(II)/P5696(III) is a coherent, non-duplicative modeling of three distinct physical pipe strings on one corridor, consistent with how this dataset already splits other multi-thread systems (e.g. P2289/P5695 for Bukhara-Ural's own two mainline strings to different destinations). Not a duplicate.\n\nSPEC CONCERN (why 'concern' not just a caveat): I pulled the two documents this row's OWN [ref] cells already cite (both large scanned PDFs where the automated url_verifier extractor does not reach the full text -- known caveat, see url_verifier.py docstring -- so I downloaded each with curl -sk and ran `pdftotext -layout` myself): (1) the Length ref, www.gov.kz/.../original.12986644.pdf (an Intergaz Central Asia environmental-emissions filing for UMG 'Aktobe'), and (2) a wiki-cited PSD/explanatory-note PDF for the NEW third thread (ecoportal.kz/Public/PubHearings/LoadFile/28485, doc no. 113/2020-12-03-ОПЗ). Doc (1) states explicitly, twice: 'точка врезки газопровод – отвод к г. Актобе, протяженностью около 158 км до ГРС-1 г. Актобе' and later 'газопровод-отвод... до г.Актобе ... грс-1 актобе 157,2 км'. But it describes this as ONE branch ('D-500мм'), i.e. a CORRIDOR/route length from the mainline tie-in to GRS-1 Aktobe, not per-parallel-thread. Doc (2)'s own detailed valve-section (gas-blowdown) tables show the two threads running side-by-side only from km 26 to km ~134-136 of that corridor (e.g. 'yчасток между 110 и 134 км: 1 нитка' vs '...110 и 128 км: 2 нитка' -- the two strings actually diverge in length in that stretch), after which a further ~22 km single leg ('газопровод отвод ГРС-1 г. Актобе (D-530мм, L-22км) на 138 км') carries the route on to GRS-1 (136+22=158, matching the corridor total exactly). Nothing in either primary document states that BOTH threads independently run the full 158 km -- the parallel-thread section looks closer to ~134-136 km, and the final ~22 km leg to GRS-1 is described only once (singular), raising the possibility it is not doubled. Two other independent signals point the same direction: GulfPub's crosswalk gives 'Krasnooktyabrskaya - Aktobe' as 135.19 km (vs GEM's 158 on both rows), and GEM's OWN drawn-route length estimate for this PID is ~138.79 km (per the orchestrator's structural brief) -- both ~12-15% below the cited 158.00. P5927 and P5928 are also BYTE-IDENTICAL on Length, Diameter, Capacity and cite the identical two refs, which is consistent with the corridor figure having been copy-pasted onto both thread rows without adjusting for each thread's own extent -- not proof of an error, but not confirmed as each thread's independent length either. CAPACITY (1.96 bcm/y each, identical on both rows) has no source that splits it per-thread: the PSD's own Table 3.1.6.3 ('Пропускная способность... 1,2 и 3 нитки') gives only the COMBINED throughput of threads 1+2 at Dn530mm across pressure scenarios (265,492-443,392 nm3/h depending on inlet pressure, i.e. roughly 2.3-3.9 bcm/y combined) -- broadly consistent with 1.96x2=3.92 at the upper end, but no document states 1.96 as each individual thread's own capacity; it reads as a derived half-split. DIAMETER=530mm IS well corroborated: both primary docs state 'Dн 530 мм' for the existing two threads (the '500mm' figure in doc (1) is the pipe's internal bore for a 530mm-OD/~15mm-wall pipe, not a contradiction). LOCATION (Khromtau District -> Aktobe, Aktobe Region both ends) is well corroborated: KS-14 sits in Khromtau district per doc (1); the corridor runs through Khromtau and Algin districts to Aktobe city per doc (2). OWNER=QazaqGaz 100% is corroborated: intergas.kz's own about-company page states Intergas Central Asia JSC (the operating entity named throughout both primary docs) 'is part of National Company QazaqGaz JSC'.",
+      "proposed_refs": [
+        "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf",
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/28485"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "sheet_row": 3391,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html",
+        "https://www.gazeta.uz/ru/2023/02/27/gas-union/"
+      ],
+      "verifications": [
+        {"url": "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html", "ok": true, "contains_value": true},
+        {"url": "https://www.gazeta.uz/ru/2023/02/27/gas-union/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both independent Russian-language outlets describe the existing 1st/2nd threads (commissioned 1963/1966 per gazeta.uz) as currently in service and overloaded at ~170% of capacity (aktobetimes.kz, July 2023) -- i.e. operating, which is why a third thread is being built alongside them."
+    },
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "sheet_row": 3391,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html"
+      ],
+      "verifications": [
+        {"url": "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Described throughout as a natural-gas branch pipeline ('газопровод-отвод') off the Bukhara-Ural gas mainline; definitional, not disputed anywhere."
+    },
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "sheet_row": 3391,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Cited source repeatedly calls this a 'magistral'nyi gazoprovod-otvod' (trunk/transmission gas branch pipeline) under Kazakhstan's Law 'O magistral'nom truboprovode'. Manually confirmed via pdftotext -layout (url_verifier's automated content check does not reach the relevant page of this large scanned PDF -- documented extractor limitation, see url_verifier.py docstring); 'transmission' classification is correct, single-source only so tier is medium rather than high."
+    },
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "sheet_row": 3391,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "530", "DiameterUnits": "mm"},
+      "primary_value": "530",
+      "proposed_refs": [
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/28485",
+        "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf"
+      ],
+      "verifications": [
+        {"url": "https://ecoportal.kz/Public/PubHearings/LoadFile/28485", "ok": true, "contains_value": true},
+        {"url": "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both primary documents state 'Dn 530 mm' (outer/nominal diameter) for the existing 2 threads of the KS-14-Aktobe branch. The second doc's mention of a 500mm figure for the same branch is the internal bore of a 530mm-OD pipe with ~15mm wall, not a contradiction."
+    },
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "sheet_row": 3391,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartPrefecture/District": "Khromtau District", "StartState/Province": "Aktobe Region", "StartCountryOrArea": "Kazakhstan", "EndLocation": "Aktobe", "EndState/Province": "Aktobe Region", "EndCountryOrArea": "Kazakhstan"},
+      "primary_value": "Khromtau District",
+      "proposed_refs": [
+        "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf",
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/28485"
+      ],
+      "verifications": [
+        {"url": "https://www.gov.kz/uploads/2022/6/9/2ce0801bf38c0d4951f99efda61eb793_original.12986644.pdf", "ok": true, "contains_value": true},
+        {"url": "https://ecoportal.kz/Public/PubHearings/LoadFile/28485", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "CS-14 (the tie-in compressor station on the Bukhara-Ural mainline) sits in Khromtau district per doc 1; the branch route to Aktobe crosses Khromtau then Algin district before reaching Aktobe city per doc 2 -- matches GEM's Start=Khromtau District/Aktobe Region, End=Aktobe/Aktobe Region exactly. Automated url_verifier content-check misses the relevant pages of both large scanned PDFs (documented extractor limitation); manually confirmed via pdftotext -layout on curl-downloaded copies of each."
+    },
+    {
+      "segment_name": "CS 14-Aktobe II",
+      "sheet_row": 3391,
+      "oo_sheet_row": 4656,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "QazaqGaz", "Owner1%": "100.00%"},
+      "primary_value": "QazaqGaz",
+      "proposed_refs": [
+        "https://intergas.kz/ru/about-company/",
+        "https://kase.kz/en/issuers/KZTG/"
+      ],
+      "verifications": [
+        {"url": "https://intergas.kz/ru/about-company/", "ok": true, "contains_value": true},
+        {"url": "https://kase.kz/en/issuers/KZTG/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Intergas Central Asia JSC -- the operating entity named throughout both primary technical documents for this branch -- states on its own site that it 'is part of National Company QazaqGaz JSC' (100% state ownership structure corroborated separately by KASE's listing page for QazaqGaz/KZTG)."
+    }
+  ],
+  "summary": "P5928 (Bukhara-Ural / CS14-Aktobe thread II) is real, correctly classified, and not a duplicate of P5927 -- they are the two genuine 1963/1966 parallel strings of the KS-14-Aktobe branch (a third, P5696, is under construction) -- but Length=158.00km and Capacity=1.96 bcm/y, byte-identical on both thread rows, look like the shared CORRIDOR total (tie-in to GRS-1 Aktobe) and a derived half-split rather than each thread's own independently sourced figures (GulfPub 135.19km and GEM's own route estimate ~138.79km both run ~12-15% below 158); staged as concern_type=spec + 6 ref-only fills (Status/Fuel/PipelineType/Diameter/Location/Owner), all url_verifier-passed except two large scanned PDFs manually confirmed via pdftotext -layout per the documented extractor-limitation caveat. No UNRESOLVED fields."
+}

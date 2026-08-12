@@ -1,0 +1,121 @@
+{
+  "project_id": "P0739",
+  "pipeline_name": "Bukhara-Tashkent-Bishkek-Almaty Gas Pipeline",
+  "sheet_row": 360,
+  "wiki": "https://www.gem.wiki/Bukhara-Tashkent-Bishkek-Almaty_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification; see separate spec/duplicate/attribution entries below for value-level issues.",
+      "researcher_notes": "EXISTENCE + CLASSIFICATION: CONFIRMED, independent of GEM. The real operator name is БГР-ТБА (Бухарский газоносный район 2013 – ташкент-бишкек-алматы), which is why the pipeline doesn't surface directly by the GEM English name on a naive site search. Confirmed as an operating trunk gas pipeline via Intergas Central Asia's own official site (https://intergas.kz/ru/obwaya-informaciya/), which lists 'МГ «Бухарский Газоносный Район – Ташкент-Бишкек-Алматы»' under three of its own regional management directorates (УМГ Шымкент, УМГ Тараз, УМГ Алматы) among its actively operated trunk systems -- this is a genuine, direct, first-party operator confirmation, not a generic mention. Independently confirmed by FIVE separate Russian/Kyrgyz news outlets covering 2016-2017 construction/commissioning milestones on this exact pipeline: vesti.kg (2017-04-05), ru.sputnik.kg (2017-04-03 and 2017-08-29), kaktus.media (2017-12-26), and neftegaz.ru (2017-08-29, trade press) -- all describing works on 'магистральный газопровод «Бухарский газоносный район – Ташкент – Бишкек – Алматы»'. Also independently corroborated by an academic dissertation (Djakhangir Sagdullaev, 'Energy Policy, Economic Cooperation, and Sustainable Development in Central Asia: the case of Uzbekistan', Justus-Liebig-Universitat Giessen, 2005 -- verified directly by downloading the archived PDF and running pdftotext; it explicitly discusses the 'Soviet-time Tashkent-Bishkek-Almaty gas pipeline ... which runs through northern Kyrgyzstan to Southern Kazakhstan') and by Russian Wikipedia's standalone article on the pipeline (tertiary, but independent of GEM). OSM also carries two small unnamed gas-pipe fragments (0.45 km and 0.226 km) that fall 75% and 100% inside GEM's drawn route for P0739 -- geometry-only corroboration of location, not length/capacity. Classification (transmission gas trunk pipeline, Fuel=Gas) matches every source: Intergas Central Asia's own site labels it 'МГ' (магистральный газопровод = trunk/transmission gas pipeline), consistent with GEM's PipelineType=transmission. Route (Bukhara, Uzbekistan -> ... -> Almaty, Kazakhstan, transiting Kyrgyzstan twice) is confirmed verbatim by vesti.kg: 'Магистраль берет начало в Бухаре ... дважды оказывается в Кыргызстане и снова направляет голубое топливо в РК – до Алматы.' Location fields (StartLocation=Bukhara/Uzbekistan, EndLocation=Almaty/Kazakhstan) are CONFIRMED, high tier.",
+      "proposed_refs": [
+        "https://intergas.kz/ru/obwaya-informaciya/",
+        "https://vesti.kg/zxc/item/45507-magistralnyiy-gazoprovod-tashkent-%E2%80%93-bishkek-%E2%80%93-almatyi-zapustyat-letom-2017-goda.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "I",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Swap Capacity/Length [ref] off the sheet's current dead-weight ref (intergas.kz general-info page -- its automated 'contains value' pass for Capacity was a FALSE POSITIVE, see below) onto vesti.kg, which genuinely states both numbers verbatim. Add a ResearcherNotes line documenting the older 22-bcm figure as a real, unresolved conflicting claim -- do not silently pick a winner.",
+      "researcher_notes": "SPEC -- Length and Capacity. Length=1585.00 km and Capacity=12.00 bcm/y are EXACTLY, verbatim confirmed by an independent, live, verified source: vesti.kg (2017-04-05) states 'Общая протяженность газопровода «Бухарский газоносный район - Ташкент - Бишкек - Алматы» составляет 1 тыс. 585 км, его проектная пропускная способность - 12 млрд кубометров в год' (total length 1,585 km, design throughput capacity 12 bn m3/yr) -- a direct, exact match on both numbers. This is a BETTER ref than the sheet's current one: I fetched the sheet's current Capacity/Length ref (https://intergas.kz/ru/obwaya-informaciya/) directly and confirmed by grep that it contains NO capacity or length figure for this pipeline at all -- the automated existing_ref_checks 'Capacity: 200 + expected content present' is a FALSE POSITIVE: every '12' on that page is CSS boilerplate (font-size:12.0pt, margin-bottom:12.0pt) or an unrelated station name (КС-12), never a capacity number. Recommend replacing this ref with vesti.kg. HOWEVER -- a genuine, independent, directly-verified academic source gives a MATERIALLY DIFFERENT capacity: Djakhangir Sagdullaev's 2005 Giessen dissertation (PDF confirmed live via its web.archive.org snapshot, text-extracted with pdftotext) states verbatim (p.121): 'Gas is mainly supplied through the Soviet-time Tashkent-Bishkek-Almaty gas pipeline (capacity almost 22 bln.m3) which runs through northern Kyrgyzstan to Southern Kazakhstan, and Gazli-Shimkent pipeline (13 bln.m3)'. Russian Wikipedia's infobox also states 'Мощность 22 млрд кубометров газа' but its own footnote traces that figure to the SAME Sagdullaev paper -- so it is not a second independent source, just a mirror. So there are two independent, verifiable claims that disagree by ~83% (12 vs. 22 bcm/y) for the same physical pipeline. Most likely explanation: Sagdullaev (2005) is citing the ORIGINAL SOVIET-ERA NAMEPLATE/design capacity from the ~1970s-1990s trade-data context of his dissertation (Table 4.2, 1996-2001 export volumes), while vesti.kg (2017) is citing the pipeline's CURRENT design capacity as of the 2016-2017 modernization/press event -- i.e. two different vintages of the same corridor's design capacity, not necessarily a data error on either side. GEM's current value (12.00) matches the MORE RECENT, exactly-worded source, so I am not recommending a value change, but this is a documented, unresolved conflict per the >10%-disagreement escalation threshold and should be logged, not silently passed. Diameter=700,720,820,1000,1020mm (MISSING_REF, no ref currently) -- I could not find a single source giving this full 5-value list. Partial, independent corroboration exists for two of the five values from two different contexts: ru.wikipedia states the pipeline's diameter as '1020 миллиметров (40 дюймов)' (one value only, no full list), and vesti.kg separately states the NEW 2016-2017 Kyrgyz-section pipe being laid is '720 мм' (also one value, describing a specific construction phase, not necessarily Line I as a whole). Neither source supports the full multi-value list, so I am leaving Diameter [ref] UNRESOLVED rather than fabricate a match -- see fills.",
+      "proposed_refs": [
+        "https://vesti.kg/zxc/item/45507-magistralnyiy-gazoprovod-tashkent-%E2%80%93-bishkek-%E2%80%93-almatyi-zapustyat-letom-2017-goda.html"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "I",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "ConstructionYear [ref] and StartYear1 [ref] both cite a dead link (library.tou.edu.kz/fulltext/bibl/b794.pdf -- confirmed genuine HTTP 404 by direct curl, not a TLS artifact). Re-source both; ConstructionYear=1961 has no corroboration anywhere I found and is likely wrong (should probably be ~1967 per two independent secondary mirrors of the same academic source) -- flag for a human to hand-check the underlying book (Google Books preview did not render extractable text for automated verification).",
+      "researcher_notes": "Verified https://library.tou.edu.kz/fulltext/bibl/b794.pdf directly with curl -sk: genuine HTTP 404 (1.3KB HTML error page), not a TLS-chain false negative -- this ref is truly dead for ConstructionYear, StartYear1, and FuelSource. StartYear1=1971: I found two independent secondary sources that both attribute the pipeline's construction timeline to the same underlying academic book -- Martha Brill Olcott (2006), 'The Transport of Turkmen Gas: Existing Alternatives', in Natural Gas and Geopolitics: From 1970 to 2040 (Cambridge University Press), p.222 -- via gem.wiki's own citation list AND, independently, via Russian Wikipedia's identical footnote (same author/title/page/ISBN). Both mirrors report: 'construction started in 1967. In 1968 [it] reached Tashkent, in 1970 Bishkek (then Frunze), and in 1971 Almaty.' I attempted to directly verify the underlying Google Books page (https://books.google.com/books?id=4eYAUWFZz8gC&pg=RA3-PA222, confirmed live/200) but its preview renders via JS/canvas and did not yield extractable OCR text for an automated content check, so I cannot personally confirm the exact wording -- flagging for manual spot-check rather than citing it unverified. Separately, vesti.kg (2017) states the pipeline then in service 'построили более 40 лет назад' (built more than 40 years before 2017, i.e. 1977 or earlier) -- loosely consistent with 1971 but not a precise confirmation. Net: StartYear1=1971 is MEDIUM-tier supported (matches a real, identifiable academic citation echoed by two independent wiki mirrors + a loose corroboration), but its CURRENT sheet citation is dead and should be swapped. ConstructionYear=1961: I found NO source, in this whole research pass, that states 1961. Every independent lead on the pipeline's origin (Olcott 2006 via both wiki mirrors, vesti.kg's '>40 years' framing) points to construction STARTING in 1967, not 1961. Recommend treating 1961 as likely incorrect pending a human check of Olcott (2006) p.222 directly (e.g. via a library or a logged-in Google Books session) -- do not swap to 1967 without that direct confirmation since I could not read the page myself. FuelSource=Gazli: plausible on general industry knowledge (Gazli is historically the dominant Uzbek gas field feeding this corridor and the parallel Bukhara-Ural system, and gem.wiki's own Background section separately links this pipeline to the 'Gazli-Kagan Gas Pipeline' and 'Gazli Gas Field' as associated infrastructure) but I found no live, independently verifiable source stating this explicitly for BGR-TBA specifically -- leaving unresolved rather than force a citation.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "I",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Not a defect on P0739 itself, but flag for the P5810 ('Line II') row: its Length=1585.00 km (identical to P0739's) and StartYear1=1999 both look wrong based on independently-verified 2017 press coverage. Route to Update for P5810, not a change on P0739.",
+      "researcher_notes": "The orchestrator flagged that P0739 ('Line I', cap 12.0) and P5810 ('Line II', cap 3.9) both carry an IDENTICAL Length of 1585.00 km. I ran this down with a directly-verified, independent source (neftegaz.ru, 2017-08-29, trade press, verified live) describing the actual 2016-2017 Kyrgyz-section works: '...ввод в эксплуатацию построенного киргизского участка 2-й очереди магистрального газопровода... Бухарский газоносный район - Ташкент - Бишкек - Алматы, начинающегося от казахско-киргизской границы до компрессорной станции (КС) Сокулук... С учетом завершения реконструкции участка 1-й очереди, пропускная способность МГП через замерный узел Чуй на территории Киргизской Республики увеличена почти в 2 раза - до 3,9 млрд м3/год газа.' This says two important things: (1) the '2nd stage' (2-я очередь = plausibly GEM's 'Line II'/P5810) is a NEW branch confined to the Kyrgyz border-to-Sokuluk segment only (per vesti.kg's km-post description, roughly km 1001-1113 of the corridor, i.e. ~112 km) -- NOT a second full 1,585 km parallel pipeline running Bukhara-to-Almaty. So P5810's Length=1585.00 (copied identically from the corridor total) looks like a genuine error; it should be a short Kyrgyz-segment length, not the whole corridor. (2) '3.9 bcm/y' (P5810's Capacity value, exact match) is explicitly the POST-UPGRADE THROUGHPUT CAPACITY measured AT THE CHUY METERING STATION after reconstructing the '1st stage' (existing/old) section -- i.e. a corridor-segment throughput figure tied to a specific measuring point, not an independent pipeline's own nameplate design capacity. Treating it as 'Line II's own capacity' on a row that also claims the FULL corridor length is an internally inconsistent combination. (3) P5810's StartYear1=1999 directly conflicts with this well-documented timeline: the Kyrgyz 2nd-stage branch was under construction from October 2016 (per vesti.kg) and formally commissioned 2017-08-29 (per neftegaz.ru AND ru.sputnik.kg, independently). Nothing in any source I found points to 1999. This is not a defect in P0739's own values (P0739/Line I's 1585 km + 12 bcm/y are the corridor-wide originals, correctly attributed -- see the spec entry above), but the shared-length pattern the orchestrator flagged traces to what looks like a real error on the SIBLING row, P5810, not on P0739. Recommending it be routed to Update as its own item rather than touched here.",
+      "proposed_refs": [
+        "https://neftegaz.ru/news/gazoraspredelenie/207563-gazprom-v-kirgizii-zapustil-v-ekspluatatsiyu-ryad-vazhnykh-obektov-byl-tam-i-a-miller/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "I",
+      "sheet_row": 360,
+      "oo_sheet_row": 661,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan"
+      },
+      "primary_value": "Uztransgas; Intergas Central Asia; Gazprom Kyrgyzstan",
+      "proposed_refs": [
+        "https://intergas.kz/ru/obwaya-informaciya/",
+        "https://neftegaz.ru/news/gazoraspredelenie/207563-gazprom-v-kirgizii-zapustil-v-ekspluatatsiyu-ryad-vazhnykh-obektov-byl-tam-i-a-miller/"
+      ],
+      "verifications": [
+        {
+          "url": "https://intergas.kz/ru/obwaya-informaciya/",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://neftegaz.ru/news/gazoraspredelenie/207563-gazprom-v-kirgizii-zapustil-v-ekspluatatsiyu-ryad-vazhnykh-obektov-byl-tam-i-a-miller/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Intergas Central Asia's own site directly confirms it as the Kazakhstan-segment operator (lists 'МГ «Бухарский Газоносный Район – Ташкент-Бишкек-Алматы»' among its operated trunk systems). neftegaz.ru (2017, trade press) confirms Gazprom Kyrgyzstan as the builder/operator of the Kyrgyz section (repeatedly names Gazprom Kyrgyzstan's officials, Bishkekgaz as its branch, and the works it performed on this exact pipeline). Uztransgas's specific role on THIS pipeline is only weakly corroborated -- ru.wikipedia's operator section names it for the Uzbek segment, and utg.uz confirms the company exists (https://utg.uz/ru/ verified live), but I found no live source directly and explicitly tying Uztransgas's operatorship to this pipeline by name; not adding utg.uz as a proposed_ref for that reason, hence tier=medium rather than high. Note: ru.wikipedia's operator list actually names 'Кырказгаз' (a Kaztransgas-Kyrgyzgaz JV) rather than 'Gazprom Kyrgyzstan' for the Kyrgyz section, but this is almost certainly a stale pre-2014 mirror -- Gazprom acquired Kyrgyzgaz's assets in 2014 (well-documented, ~$1 nominal deal) and has operated as 'Gazprom Kyrgyzstan' since; the 2017 press sources (contemporaneous, this pipeline specifically) consistently use 'Газпром Кыргызстан', which is what I'm recommending citing."
+    },
+    {
+      "segment_name": "I",
+      "sheet_row": 360,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "700, 720, 820, 1000, 1020",
+        "DiameterUnits": "mm"
+      },
+      "primary_value": "700, 720, 820, 1000, 1020",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Could not find a single source giving this full 5-value diameter list. Only partial, single-value corroboration in two different contexts: ru.wikipedia states '1020 миллиметров (40 дюймов)' as THE diameter (no multi-value list); vesti.kg (2017) separately states the diameter of pipe being laid for the NEW Kyrgyz 2016-2017 branch is '720 мм'. Neither confirms the full list nor clearly maps to Line I specifically (the 720mm figure describes 'Line II'-adjacent construction). Leaving unresolved rather than force a match -- consistent with a genuinely old, multi-decade, multi-segment line having several historical pipe diameters, but I have no single ref that states so."
+    }
+  ],
+  "summary": "P0739 (BGR-TBA 'Line I') is a real, well-documented, correctly-classified pipeline (confirmed via Intergas Central Asia's own systems list + 5 independent Russian/Kyrgyz press sources + an academic dissertation); Length=1585km/Capacity=12bcm are exactly matched by an independent 2017 source (vesti.kg) though the sheet's current Capacity ref is a false-positive match and an independent academic source gives a conflicting 22bcm figure for an earlier vintage (flagged, not resolved); ConstructionYear=1961 and StartYear1's citation are dead links -- 1961 is unsupported and likely wrong (should probably be ~1967 pending manual check), 1971 is medium-tier re-supportable; sibling row P5810 ('Line II') looks like the real defect behind the shared-1585km pattern (its length and 1999 start year both conflict with a directly-verified 2016-2017 Kyrgyz-branch commissioning timeline) -- routed to Update, not changed here; Operator ref added (medium tier); Diameter ref left UNRESOLVED."
+}

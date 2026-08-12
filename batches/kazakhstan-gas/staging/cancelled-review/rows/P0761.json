@@ -1,0 +1,310 @@
+{
+  "project_id": "P0761",
+  "pipeline_name": "Soyuz Gas Pipeline",
+  "sheet_row": 379,
+  "wiki": "https://www.gem.wiki/Soyuz_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence/route. Real, well-documented Soviet-era export trunk line (Orenburg RU -> Uralsk KZ -> Aleksandrov Gai RU -> Sokhranovka/Novopskov -> Kremenchug/Dolyna UA -> Uzhgorod), built 1975-79, in service from 1980. It genuinely has a Kazakh section (~300 km, via Uralsk) -- this is not a GEM-only or phantom entity.",
+      "researcher_notes": "Checked whether this pipeline physically exists and actually transits Kazakhstan (the sheet's own gem.wiki citation list is almost entirely Russian/Ukrainian-language secondary sources, none of them GEM-derived, which is itself a healthy sign). Independently confirmed via ru.wikipedia.org, neftegaz.ru (Russian technical library, 2014), fb.ru, and a 2021 Sputnik news report on a pipeline-rupture-driven transit halt: all four describe the same route Orenburg (Orenburg Oblast, Russia) -> Uralsk (West Kazakhstan) -> Aleksandrov Gai (Russia) -> Ukraine border -> Uzhgorod, built by USSR + Comecon countries 1975-79, commissioned 1980. The 2021 Sputnik piece additionally corroborates it as a live, physically real, operating asset as of Feb 2021 (an actual pipeline rupture near Mukhranova, Orenburg Oblast, forced an emergency halt of transit to Kazakhstan). No duplicate concern versus the only other in-scope row (P0740, Caspian Coastal Gas Pipeline) -- that is an unrelated, never-built, cancelled Russia-Kazakhstan-Turkmenistan littoral project, not the same physical pipe.",
+      "proposed_refs": [
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)",
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/",
+        "https://tj.sputniknews.ru/20210223/russia-tranzit-gaz-kazakhstan-1032875341.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Correct `PipelineNetworkGrouping` off 'Brotherhood pipeline system' -- Soyuz is NOT part of Brotherhood. Recommend blanking it or replacing with an accurate label (e.g. 'Soyuz / Orenburg-Uzhgorod system'); do not leave it reading Brotherhood.",
+      "researcher_notes": "The live GEM CSV (data/GGIT_gas.csv) has PipelineNetworkGrouping = 'Brotherhood pipeline system' for P0761. This is wrong. 'Brotherhood' (Bratstvo) is the standard English name for the Urengoy-Pomary-Uzhhorod pipeline (also called West-Siberian/Trans-Siberian pipeline) -- a SEPARATE ~4,500 km system originating at the Urengoy field in Siberia, not at Orenburg. en.wikipedia's Urengoy-Pomary-Uzhhorod article confirms it is 'also known as the Bratstvo pipeline, Brotherhood pipeline' and that it 'runs alongside' the Soyuz pipeline as a distinct, parallel system. neftegaz.ru's own Soyuz writeup independently corroborates the separateness: it says Soyuz 'connects with' ('соединяется с') the Urengoy-Pomary-Uzhhorod and Progress trunk lines at the city of Bar -- language that only makes sense if they are different pipelines meeting at a junction, not one system. Two independent sources agree Brotherhood != Soyuz. This looks like a genuine grouping/classification error on the GEM side, worth fixing via Update.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Urengoy%E2%80%93Pomary%E2%80%93Uzhhorod_pipeline",
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify Capacity. Sheet holds 25.20 bcm/y; four independent, mutually-agreeing sources (a Russian technical encyclopedia, two Russian general-interest outlets, and English Wikipedia's Ukraine-transmission article) all give ~26 / 26.1 bcm/y -- a consistent ~3-4% gap from the sheet figure. Not large enough to force a change blind (could be a design-vs-nameplate-vs-metering distinction in GEM's original source), but it is a real, corroborated disagreement and should not be silently passed -- flagging for Update to trace GEM's original Capacity citation.",
+      "researcher_notes": "neftegaz.ru: 'Пропускная мощность составляет 26 млрд м3/год.' ru.wikipedia.org infobox: '26 млрд м3 в год.' fb.ru: '26 млрд кубометров в год.' en.wikipedia 'Natural gas transmission system of Ukraine': capacity '26.1 billion cubic metres (920 billion cubic feet) per year.' All four independently land on 26-26.1, none on 25.2. Length (2750 km total, with an explicit 300 km Kazakhstan / 1568 km Ukraine / ~882 km Russia breakdown per ru.wikipedia, cross-checked against en.wikipedia's independently-stated 1,567 km Ukrainian-section figure) and Diameter (1420 mm) both check out against the sheet -- so this is specifically a Capacity discrepancy, not a wholesale re-derivation of the sheet's specs. This also resolves the scope note's suspicion about Length: 2,750 km IS the correct total multinational system length (confirmed against the sourced country breakdown), not an error -- KMG's much smaller 805-1,147 km 'Soyuz + Orenburg-Novopskov' figure is KMG's own Kazakhstan-only mileage across those two DIFFERENT pipelines combined (intergas.kz's own asset list shows 'Soyuz MGP' and 'Orenburg-Novopskov MGP' as two separate lines under its Uralsk Branch), not a correction to GEM's whole-system Length value.",
+      "proposed_refs": [
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/",
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)",
+        "https://fb.ru/article/143345/gazoprovod-cherez-ukrainu-v-evropu---shema-i-marshrut",
+        "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "mothballed"},
+      "primary_value": "mothballed",
+      "proposed_refs": [
+        "https://ria.ru/20220510/ukraina-1787781884.html",
+        "https://www.vedomosti.ru/business/news/2022/05/10/921466-ukraina-ostanovit-tranzit-gaza-cherez-sohranovku",
+        "https://rg.ru/2025/01/01/tranzit-gaza-cherez-ukrainu-ostanovlen-chto-dalshe.html",
+        "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine"
+      ],
+      "verifications": [
+        {"url": "https://ria.ru/20220510/ukraina-1787781884.html", "ok": true, "contains_value": true},
+        {"url": "https://www.vedomosti.ru/business/news/2022/05/10/921466-ukraina-ostanovit-tranzit-gaza-cherez-sohranovku", "ok": true, "contains_value": true},
+        {"url": "https://rg.ru/2025/01/01/tranzit-gaza-cherez-ukrainu-ostanovlen-chto-dalshe.html", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "See status_reviews entry for the full chain of evidence supporting 'mothballed': Ukraine's operator halted receiving gas at the Sokhranivka connection point (Soyuz's own Ukraine entry point, per en.wikipedia) on 2022-05-11 (RIA Novosti, Vedomosti); en.wikipedia's Ukraine-transmission-system article states only the Sudzha route (a different pipeline) carried Russian gas in 2023, i.e. Soyuz-via-Sokhranovka was not transiting; and the whole Russia-Ukraine transit contract expired at end of 2024, confirmed stopped 2025-01-01 (Rossiyskaya Gazeta)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/"],
+      "verifications": [{"url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "It is a natural gas trunk line (\"газопровод\") transporting gas from the Orenburg field; unambiguous."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/",
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)"
+      ],
+      "verifications": [
+        {"url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/", "ok": true, "contains_value": true},
+        {"url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both sources call it a 'магистральный газопровод' (main/trunk gas pipeline) -- a long-haul international export trunk line, correctly classified as transmission, not gathering/distribution."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1980"},
+      "primary_value": "1980",
+      "proposed_refs": [
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/",
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)"
+      ],
+      "verifications": [
+        {"url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/", "ok": true, "contains_value": true},
+        {"url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "neftegaz.ru: 'Газопровод принят в эксплуатацию в 1980 г.' ru.wikipedia infobox gives the precise commissioning date, November 11, 1980. Both independently agree on 1980."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "25.20", "CapacityUnits": "bcm/y"},
+      "primary_value": "25.20",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Every independent source found (neftegaz.ru, ru.wikipedia.org, fb.ru, en.wikipedia's Natural gas transmission system of Ukraine) states ~26 / 26.1 bcm/y, not 25.20 -- so I cannot add a ref that actually confirms the sheet's specific 25.20 figure without misrepresenting the sourcing. Flagged as a spec concern in validity[] instead; leaving Capacity [ref] unresolved rather than citing a source that disagrees with the value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "2750.00", "LengthKnownUnits": "km"},
+      "primary_value": "2750.00",
+      "proposed_refs": [
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)",
+        "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine"
+      ],
+      "verifications": [
+        {"url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "ru.wikipedia gives total 2,750 km with an explicit country breakdown: 300 km Kazakhstan + 1,568 km Ukraine + the remainder (~882 km) Russia. en.wikipedia's separate Ukraine-transmission-system article independently states the Ukrainian section is 1,567 km -- consistent with ru.wikipedia's 1,568 km, from a different editorial project/language edition. Tier set to medium rather than high because both confirming sources are wiki-family (different projects, but overlapping methodology/sourcing norms); no fully independent third-party technical source with the country-level breakdown was found in the time available. This total also resolves the scope note's open question: 2,750 km is correct for the WHOLE Orenburg-Uzhgorod system as GEM records it, not a mixup with the Kazakh section alone -- see the spec concern in validity[] for the KMG-figure reconciliation."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "1420.00", "DiameterUnits": "mm"},
+      "primary_value": "1420.00",
+      "proposed_refs": ["https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)"],
+      "verifications": [{"url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "ru.wikipedia states 1,420 mm. Only one directly-citable source gave the exact diameter figure in the time available (a Yandex-indexed second encyclopedia, ru.ruwiki.ru, independently surfaced the identical 1,420 mm / 26 bcm/y / 2,750 km / 300 km Kazakhstan figures via search, but the site itself returned HTTP 401 on direct fetch, so it could not be verified/cited). 1,420 mm is also the standard pipe size used across essentially all Soviet-era export trunk lines of this generation (Brotherhood, Progress, Soyuz alike), which is corroborating context but not an independent citation. Tier medium, not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Orenburg gas field"},
+      "primary_value": "Orenburg gas field",
+      "proposed_refs": [
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/",
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)"
+      ],
+      "verifications": [
+        {"url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/", "ok": true, "contains_value": true},
+        {"url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "neftegaz.ru: 'транспортируется газ от Оренбургского месторождения' (gas from the Orenburg field is transported [westward]). Correct as the pipeline's own documented upstream source; the separate Karachaganak (Kazakhstan) field gas that is processed at the same Orenburg gas plant travels via a different dedicated line (the Karachaganak-Orenburg Transportation System, per karachaganakfield.com.kz), not via Soyuz itself, so it is not a second FuelSource for this specific pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Orenburg", "StartState/Province": "Orenburg", "StartCountryOrArea": "Russia", "EndLocation": "Uzhgorod", "EndCountryOrArea": "Ukraine"},
+      "primary_value": "Orenburg",
+      "proposed_refs": [
+        "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)",
+        "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/",
+        "https://fb.ru/article/143345/gazoprovod-cherez-ukrainu-v-evropu---shema-i-marshrut"
+      ],
+      "verifications": [
+        {"url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%8E%D0%B7_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4)", "ok": true, "contains_value": true},
+        {"url": "https://neftegaz.ru/tech-library/transportirovka-i-khranenie/142203-soyuz-gazoprovod/", "ok": true, "contains_value": true},
+        {"url": "https://fb.ru/article/143345/gazoprovod-cherez-ukrainu-v-evropu---shema-i-marshrut", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "All three sources independently confirm the route runs from Orenburg (Orenburg Oblast, Russia) via Uralsk (West Kazakhstan) and Aleksandrov Gai (Russia) into Ukraine, terminating at Uzhgorod (Zakarpattia Oblast, Ukraine). Start/end endpoints on the sheet are correct."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "oo_sheet_row": 680,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Gas Transmission System Operator of Ukraine; Gazprom; Intergas Central Asia"},
+      "primary_value": "Gas Transmission System Operator of Ukraine; Gazprom; Intergas Central Asia",
+      "proposed_refs": [
+        "https://intergas.kz/en/general-information/",
+        "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine"
+      ],
+      "verifications": [
+        {"url": "https://intergas.kz/en/general-information/", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "intergas.kz's own company page lists 'Soyuz MGP' as a system it operates under its Uralsk Branch, confirming Intergas Central Asia (KazTransGas subsidiary) as operator of the Kazakh section. en.wikipedia's Ukraine-transmission-system article confirms the Ukrainian section is run by the Gas Transmission System Operator of Ukraine (GTSOU/TSOUA -- tsoua.com's own 'Key Facts' page 403'd on fetch and could not be independently verified, so relying on the Wikipedia article for that leg). Gazprom as operator of the Russian section is well known but I could not find a dedicated, independently-verifiable citation for that specific leg in the time available -- tier held to medium rather than high on that basis."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "oo_sheet_row": 680,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gas Transmission System Operator of Ukraine", "Owner1%": "100.00%", "Owner2": "Gazprom PJSC", "Owner3": "QazaqGaz"},
+      "primary_value": "Gas Transmission System Operator of Ukraine",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Country-segmented ownership (GTSOU/Gazprom/QazaqGaz) is directionally consistent with the confirmed operator split, but I found no source giving explicit per-country ownership percentages for Soyuz specifically -- leaving unresolved rather than citing operator sources as if they proved ownership shares. Note QazaqGaz (formerly KazTransGas, Intergas Central Asia's parent) as Owner3 is consistent with the Operator finding above."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 379,
+      "current_status": "mothballed",
+      "verdict": "confirm",
+      "proposed_status": "mothballed",
+      "proposed_changes": {"ShelvedCancelledType": "confirmed", "StopYear": "2022"},
+      "evidence_date": "2025-01",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://ria.ru/20220510/ukraina-1787781884.html",
+        "https://www.vedomosti.ru/business/news/2022/05/10/921466-ukraina-ostanovit-tranzit-gaza-cherez-sohranovku",
+        "https://rg.ru/2025/01/01/tranzit-gaza-cherez-ukrainu-ostanovlen-chto-dalshe.html",
+        "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine"
+      ],
+      "verifications": [
+        {"url": "https://ria.ru/20220510/ukraina-1787781884.html", "ok": true, "contains_value": true},
+        {"url": "https://www.vedomosti.ru/business/news/2022/05/10/921466-ukraina-ostanovit-tranzit-gaza-cherez-sohranovku", "ok": true, "contains_value": true},
+        {"url": "https://rg.ru/2025/01/01/tranzit-gaza-cherez-ukrainu-ostanovlen-chto-dalshe.html", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Natural_gas_transmission_system_of_Ukraine", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Mothballed is still the right call, and it is now BETTER evidenced than before, not worse. Chain of dated evidence: (1) 2022-05-11 -- Ukraine's transmission operator (GTSOU) declared force majeure and stopped receiving gas at the Sokhranivka connection point / Novopskov compressor station in Russian-occupied Luhansk territory (RIA Novosti, Vedomosti, both 2022-05-10/11) -- Sokhranivka is Soyuz's own, specific Ukraine entry point, confirmed by en.wikipedia's Natural gas transmission system of Ukraine article ('enters Ukraine east of Novopskov through the Sokhranovka gas metering station'). (2) That same en.wikipedia article states that in 2023 only the Sudzha connection point (used by a different pipeline) was carrying Russian transit gas -- i.e. Soyuz-via-Sokhranovka carried none. (3) The whole Russia-Ukraine gas transit contract (covering all remaining routes, including any residual Soyuz capacity) expired at end of 2024 and transit fully stopped 2025-01-01 (Rossiyskaya Gazeta, 2025-01-01). So the pipeline's defining international-transit function has been non-operational continuously since 2022 and completely dead since Jan 2025 -- 'mothballed' (built, idle, theoretically resumable) fits better than 'operating', 'idle' (GEM's more informal/ambiguous variant), or 'retired' (nothing suggests permanent decommissioning/dismantlement). I could not find any source describing the physical state of the ~300 km Kazakh section specifically (e.g. whether it is used for any purely domestic or reverse-direction Kazakhstan gas movement independent of the Russia-Ukraine transit function) -- that remains an open, unresolved sub-question, noted here rather than papered over. Proposing ShelvedCancelledType='confirmed' (not 'inferred') because the 2022-05-11 halt is a specific, dated, sourced event, not merely GEM's no-progress dormancy rule; StopYear=2022 marks that first confirmed cessation of Soyuz's transit function. Flagging for the merge step that 'StopYear' vs 'ShelvedYear' as the correct column for a mothballed (as opposed to shelved/cancelled) built pipeline is not spelled out in the schema docs I have access to -- pick the column whose semantics matches 'year a built pipe stopped operating', currently believed to be StopYear."
+    }
+  ],
+  "summary": "P0761 Soyuz Gas Pipeline: existence/route/PipelineType/StartYear/Diameter/Length all confirmed via independent RU+EN sources (and this resolves the scope note's length-vs-KMG puzzle -- 2,750 km is correctly the whole multinational system, KMG's smaller figure is a different, Kazakhstan-only, two-pipeline accounting). Two real findings staged: (1) classification concern -- PipelineNetworkGrouping='Brotherhood pipeline system' is wrong, Brotherhood is a separate parallel Urengoy-origin line; (2) spec concern -- Capacity 25.20 vs four independent sources all at ~26/26.1 bcm/y. Status='mothballed' reconfirmed (now better evidenced, via the 2022 Sokhranivka transit halt and the Jan-2025 full stop of Russia-Ukraine gas transit) and proposed to complete its bookkeeping with ShelvedCancelledType='confirmed'/StopYear=2022. Capacity[ref] and Owner[ref] left UNRESOLVED rather than force a mismatched or unsupported citation."
+}

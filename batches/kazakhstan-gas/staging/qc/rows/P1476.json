@@ -1,0 +1,40 @@
+{
+ "project_id": "P1476",
+ "pipeline_name": "Makat–North Caucasus Pipeline",
+ "sheet_row": 840,
+ "wiki": "https://www.gem.wiki/Makat%E2%80%93North_Caucasus_Pipeline",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "АО «Интергаз Центральная Азия»"},
+    "primary_value_col": "Operator",
+    "primary_value": "АО «Интергаз Центральная Азия»",
+    "class_out": "REFS_ADDED",
+    "tab": "operators_owners",
+    "proposed_refs": [
+     "https://intergas.kz/ru/obwaya-informaciya/",
+     "https://www.inform.kz/ru/qazaqgaz-zapustil-vtoruyu-nitku-gazoprovoda-makat-severnyy-kavkaz_a4073189",
+     "https://kase.kz/files/emitters/KZTG/kztgp_2023_rus.pdf"
+    ],
+    "verifications": [
+     {"url": "https://intergas.kz/ru/obwaya-informaciya/", "ok": true, "contains_value": true},
+     {"url": "https://www.inform.kz/ru/qazaqgaz-zapustil-vtoruyu-nitku-gazoprovoda-makat-severnyy-kavkaz_a4073189", "ok": true, "contains_value": true},
+     {"url": "https://kase.kz/files/emitters/KZTG/kztgp_2023_rus.pdf", "ok": true, "contains_value": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "ru",
+    "researcher_notes": "One question per company, answered once for the whole Makat–North Caucasus system (P1476 trunk + P3999 loop) and applied to both rows, per the brief's instruction — stated explicitly here and on P3999. Operator on the sheet is on the operators_owners tab and was blank; the brief asks specifically for the KAZAKH-section operator, not a system-wide blend (Gazprom Transgaz Makhachkala operates the Russian side per gem.wiki, not cited). Kazakh section = АО «Интергаз Центральная Азия» (Intergas Central Asia JSC), via its Atyrau branch (УМГ «Атырау»). Sources, three independent origins: (1) Intergas's own corporate 'General information' page states the branch-to-pipeline assignment directly — 'УМГ «Атырау»: МГ «Макат-Северный Кавказ», Лупинг «Макат-Северный Кавказ», МГ «Средняя Азия - Центр» с лупингами' — i.e. UMG Atyrau operates both the trunk and its loop. (2) inform.kz (2023-05-30, an independent Kazakh news wire, not QazaqGaz/Intergas-published), reporting the loop's launch: 'АО «Интергаз Центральная Азия» осуществило строительство Лупинга МГ «Макат-Северный Кавказ»' (Intergas Central Asia built the loop), commissioned 2023-05-30 at 13.147 bcm/y design capacity, QazaqGaz + the Atyrau akimat launching it. (3) QazaqGaz's KASE-filed Integrated Annual Report 2023 (kztgp_2023_rus.pdf) lists both 'МГ «Макат – Северный Кавказ»' and 'МГ «Лупинг Макат – Северный Кавказ»' under the heading 'АО «Интергаз Центральная Азия» осуществляет эксплуатацию следующих магистральных газопроводов' (p.21–22 of the PDF; url_verifier's substring check false-negatives on this large PDF — confirmed locally with `pdftotext -layout`, a documented case per the protocol). This also happens to be the same document the country note calls the 'QazaqGaz Integrated Annual Report' 2024 vintage lists lines by name only — this is the 2023 vintage, same shape. Did not propose an Owner or Parent fill for this row — see validity[]."
+  }
+ ],
+ "validity": [
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "spec",
+    "recommendation": "No change needed — Diameter is already correctly split per string; leave both P1476 and P3999 as they are.",
+    "researcher_notes": "The wiki_alignment flag's 'union' (1020, 1200, 1400, 1420 mm) is simply P1476's own three values (1200, 1400, 1420 mm) plus P3999's own single value (1020 mm) combined across the multi-segment wiki page, not a per-row omission. P1476's route is the original 1988 trunk (944 km, built over decades, plausibly using more than one pipe diameter); P3999 is the single-diameter 2023 loop. No independent source found that assigns 1020 mm to P1476 itself, so the sheet's existing 1200/1400/1420 split is correct as-is.",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false },
+  { "verdict": "confirmed (caveat)",
+    "concern_type": "attribution",
+    "recommendation": "No change needed for P1476's Owner/Parent (Gazprom PJSC [100%]) — leave as-is. See P3999's shard for a related concern about the LOOP's Gazprom co-ownership, which does not apply to this row.",
+    "researcher_notes": "The wiki_alignment flag's Owner/Parent union ('gazprom; qazaqgaz' / 'government of russia; samruk kazyna swf jsc') combines P1476's own value (Gazprom PJSC) with P3999's (Gazprom PJSC; QazaqGaz), not a per-row defect. P1476 is the original Soviet-era trunk continuing into Russia; a Gazprom-only owner of record is plausible for that asset and no source found contradicts it (operator and owner are different facts here — Intergas Central Asia operates the Kazakh section per the Operator fill above, which does not itself establish Kazakh ownership of P1476's pipe).",
+    "proposed_refs": [], "verifications": [], "tier": "", "independent": false }
+ ]
+}

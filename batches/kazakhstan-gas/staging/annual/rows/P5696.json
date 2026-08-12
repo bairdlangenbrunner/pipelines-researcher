@@ -1,0 +1,130 @@
+{
+  "project_id": "P5696",
+  "pipeline_name": "Bukhara-Ural Gas Pipeline",
+  "sheet_row": 3199,
+  "wiki": "https://www.gem.wiki/Bukhara-Ural_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "CS 14-Aktobe III",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Real, correctly classified project; swap the dead gurk.kz ref for two verified independent replacements (akimat press wire + the EIA design PDF) on ConstructionYear/Month, LengthKnown and Capacity, and add a ref to the currently-unsourced Owner cell. No existence, classification, duplicate, or material-spec problems found.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real and correctly classified. This is the segment name itself confirming identity: gem.wiki's own citation ecoportal.kz/Public/PubHearings/LoadFile/28485 (the project's EIA 'Poyasnitel'naya zapiska', dated 2020-12-12, a primary government permitting/design document, 3.6MB PDF -- pdftotext -layout was needed, the raw text-search screen is a known false negative on PDFs this size, matching url_verifier.py's own documented 'LARGE PDFs' caveat) literally titles the project 'Variant stroitel'stva 3-nitki gazoprovoda-otvoda \"KS-14 - gorod Aktobe\"' -- i.e. the THIRD LATERAL/BRANCH off compressor station 14 of the Bukhara-Ural trunk line, feeding Aktobe city -- an exact match for segment_name 'CS 14-Aktobe III'. It documents Variant-1 (720mm/4.6MPa) was the option actually SELECTED ('vybor Varianta-1... soglasovan s Zakazchikom'), with linear-part length 165.038 km and annual capacity 2.4 bcm/y at that pressure -- exact matches to GEM's LengthKnown=165.00km, Diameter=720mm, PressureUnits/Pressure=4.60MPa and Capacity=2.40 bcm/y. Intergas.kz/ru/about-company/ independently confirms MG 'Bukhara-Ural' is operated by Intergas Central Asia's UMG Aktobe department, and that Intergas Central Asia is itself part of ('vkhodit v sostav') NC QazaqGaz JSC -- corroborating both the parent-pipeline attribution and Owner1=QazaqGaz. SPEC: independently confirmed via TWO distinct origins that agree -- (1) the 2020 ecoportal.kz EIA/design PDF above, and (2) the akimat Aktobe press-service wire issued at the 2023-07-21 groundbreaking ceremony in Khromtau district (this ONE press release was independently republished, with identical figures, by aktobetimes.kz, kapital.kz and khabar.kz -- counted as ONE origin per the same-wire-story rule, not three): length 165 km, annual capacity 2.4 bcm/y, cost ~43 bn KZT, ceremony held in Khromtau district (matches StartPrefecture/District). An earlier gazeta.uz piece (2023-02-27, quoting the akim at a distinct February briefing) gave a preliminary 162km/~43bn-tenge estimate -- a normal pre-construction-vs-at-groundbreaking refinement, not a material conflict with the 165km figure GEM carries. SegmentCost=43,400,000,000 KZT (2024) is consistent with this trajectory: ~43bn (Feb 2023 estimate) -> ~43bn (July 2023 groundbreaking) -> 43.1bn (diapazon.kz, 2024-09-07, PSD/contractor TOO 'Otau-Story', planned SMR finish Nov 2024, throughput 526,500 m3/h) -> 43.4bn (2024, GEM's figure) -- steady upward refinement across three dated, independent readings, not an error. DUPLICATE: checked against the full 11-pipeline KZ-gas roster -- no other row names Bukhara-Ural, KS-14, or an Aktobe-area lateral; no duplicate. CAVEAT (why not a clean pass): the current_ref on ConstructionYear/ConstructionMonth, StartYear1, Capacity and LengthKnown is gurk.kz/news/stroitelstvo-gazoprovoda-buhara-ural-idet-intensivno, which is CONFIRMED DEAD (HTTP 404, on the orchestrator's confirmed-genuine-deletion list, re-verified live in this pass) -- a legitimate drop per the once-working-ref rule, not just an access failure. Filed as fills-style ref replacements below (see validity proposed_refs) rather than value changes, since none of the underlying values are wrong.",
+      "proposed_refs": [
+        "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html",
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/28485",
+        "https://intergas.kz/ru/about-company/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "CS 14-Aktobe III",
+      "sheet_row": 3199,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "QazaqGaz", "Owner1%": "100.00%"},
+      "primary_value": "QazaqGaz",
+      "proposed_refs": ["https://intergas.kz/ru/about-company/"],
+      "verifications": [
+        {"url": "https://intergas.kz/ru/about-company/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Owner1=QazaqGaz was carried with no ref. intergas.kz's own about-company page states AO 'Intergaz Tsentral'naya Aziya' -- the operator explicitly listed for MG 'Bukhara-Ural' under its UMG Aktobe department elsewhere on the same page -- 'vkhodit v sostav AO Natsional'naya kompaniya QazaqGaz' (is part of / a subsidiary of NC QazaqGaz JSC). Single strong corporate-structure source; medium tier, no second independent source found confirming the specific Intergas->QazaqGaz chain (KASE's QazaqGaz issuer page doesn't itemize subsidiaries)."
+    },
+    {
+      "segment_name": "CS 14-Aktobe III",
+      "sheet_row": 3199,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2023", "ConstructionMonth": "7"},
+      "primary_value": "2023",
+      "proposed_refs": [
+        "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html"
+      ],
+      "verifications": [
+        {"url": "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Replacement for the dead gurk.kz ref (confirmed HTTP 404). aktobetimes.kz, dated 2023-07-21, reports the groundbreaking ceremony for the third Bukhara-Ural lateral held that day in Khromtau district -- matches ConstructionYear=2023/ConstructionMonth=7 exactly. This is the akimat press-service wire (also carried verbatim by kapital.kz and khabar.kz -- one origin); single-origin so medium tier, but a strong, precisely dated, on-the-ground primary account."
+    },
+    {
+      "segment_name": "CS 14-Aktobe III",
+      "sheet_row": 3199,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "165.00", "LengthKnownUnits": "km"},
+      "primary_value": "165.00",
+      "proposed_refs": [
+        "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html",
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/28485"
+      ],
+      "verifications": [
+        {"url": "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html", "ok": true, "contains_value": true},
+        {"url": "https://ecoportal.kz/Public/PubHearings/LoadFile/28485", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Replacement for the dead gurk.kz ref. TWO independent origins agree: the akimat 2023-07-21 wire states the third lateral's total length as 165 km; the 2020 EIA design PDF (ecoportal.kz), a distinct engineering/permitting document, gives the linear-part length as 165.038 km ('protyazhennost'yu 165,038 km' -- text confirmed via pdftotext -layout on the downloaded PDF; the automated substring screen misses it, a documented large-PDF false negative). Both round to GEM's 165.00 km."
+    },
+    {
+      "segment_name": "CS 14-Aktobe III",
+      "sheet_row": 3199,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "2.40", "CapacityUnits": "bcm/y"},
+      "primary_value": "2.40",
+      "proposed_refs": [
+        "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html",
+        "https://ecoportal.kz/Public/PubHearings/LoadFile/28485"
+      ],
+      "verifications": [
+        {"url": "https://aktobetimes.kz/novosti/10015-v-aktjubinskoj-oblasti-nachato-stroitelstvo-tretej-nitki-gazoprovoda-buhara-ural.html", "ok": true, "contains_value": true},
+        {"url": "https://ecoportal.kz/Public/PubHearings/LoadFile/28485", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Replacement for the dead gurk.kz ref. Same two independent origins as Length agree on capacity: akimat 2023-07-21 wire states 'godovaya moshchnost' - 2,4 mlrd kubometrov' (2.4 bn m3/year); the 2020 EIA PDF states the chosen Variant-1 (720mm/4.6MPa) design capacity as '2,4 mlrd. m3/god' -- exact match to GEM's Capacity=2.40 bcm/y."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "CS 14-Aktobe III",
+      "sheet_row": 3199,
+      "current_status": "construction",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {"Status": "operating"},
+      "evidence_date": "2025-07",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://inbusiness.kz/ru/last/vlasti-do-konca-goda-obeshayut-obespechit-gazom-97-aktyubincev"
+      ],
+      "verifications": [
+        {"url": "https://inbusiness.kz/ru/last/vlasti-do-konca-goda-obeshayut-obespechit-gazom-97-aktyubincev", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "StartYear1=2025 is already on the sheet (now past), so the 'construction' Status is due for review. The sheet's OWN current_ref for Status (inbusiness.kz, dated 2025-07-15, already cited but apparently not read closely -- the automated screen only checked for the literal English word 'construction' and failed, which is expected on a Russian page and is not evidence either way) is itself the newest dated evidence: a regional-akimat briefing (deputy head of the Aktobe oblast energy/utilities department, Nurshashkan Izbasarova) states plainly 'Okoncheny stroitel'no-montazhnye raboty po odnomu iz krupnykh proektov - Stroitel'stvo tret'ei nitki-otvoda ot magistral'nogo gazoprovoda \"Bukhara-Ural\" v gorode Aktobe' -- 'Construction-and-installation works have been COMPLETED for ... the third lateral off the Bukhara-Ural trunk pipeline in Aktobe city' -- naming this exact project. This caps a documented timeline: groundbreaking 2023-07-21 (17-month schedule, contractor promising early 2024 finish) -> diapazon.kz 2024-09-07: SMR finish targeted for November 2024 -> kz.kursiv.media 2024-12-13 (akim Askhat Shakharov): project 'at the completion stage' ('na stadii zaversheniya') -> inbusiness.kz 2025-07-15: SMR complete. No source found using the literal phrase 'introduced into operation' ('vveden/vvedena v ekspluatatsiyu'), so this is inferential (construction-complete strongly implies in-service for a domestic city-gate lateral, consistent with the sheet's own StartYear1=2025), hence tier=medium rather than high and verdict='change' rather than a fully certain reclassification. No StartYear1 change needed -- 2025 already matches. Searched (ru) for a more explicit commissioning statement and for any 2026 follow-up (gasification-percentage updates, akimat briefings) via WebSearch; none found disputing completion or suggesting further delay."
+    }
+  ],
+  "summary": "P5696 (Bukhara-Ural / CS 14-Aktobe III lateral) is real, correctly classified, not a duplicate: confirmed high-tier via two independent origins (2020 EIA design PDF + 2023-07 akimat press wire) on length/diameter/pressure/capacity; dead gurk.kz ref replaced on 4 fields, Owner ref added (medium); Status is stale -- the sheet's own July 2025 source says construction/installation work is complete, so proposed change construction->operating (medium, since no explicit 'entered service' wording found). No UNRESOLVED items."
+}
