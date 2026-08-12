@@ -4,10 +4,9 @@ Batch: archive every spreadsheet (`.xls`/`.xlsx`) URL cited in a `[ref]` column 
 repoint the cells at the backups. Scope came from a fresh 2026-08-12 pull of all three
 tabs: **12 unique spreadsheet URLs across 131 cells / 56 rows**.
 
-**Outcome: 101 cells repointed and verified; 30 cells left untouched.** Nothing was
-dropped on an access failure (standing rule: only a confirmed 404/410 may leave a `[ref]`
-cell). What remains is the 29-cell Gazprom Orenburg block plus **one** held cell,
-`'Pipeline operators/owners'!U923` (P1050) — see §2.
+**Outcome: 130 of 131 cells repointed and verified.** Nothing was dropped on an access
+failure (standing rule: only a confirmed 404/410 may leave a `[ref]` cell). What remains
+is **one** held cell, `'Pipeline operators/owners'!U923` (P1050) — see §2.
 
 Applied writes, all `--mode replace`:
 - `notes/backup-20260812_0915_ET-archive-ref-xlsx-replace.csv` — 84 cells, Wayback
@@ -16,6 +15,8 @@ Applied writes, all `--mode replace`:
   items (2 files; see §3–4 below, resolved).
 - `notes/backup-20260812_0938_ET-archive-ref-xlsx-replace.csv` — 12 cells, JOGMEC 2022 →
   2024 edition (see §2, resolved except U923).
+- `notes/backup-20260812_1022_ET-orenburg-ref-repoint-replace.csv` — 29 cells, Gazprom
+  Orenburg `lch-god-2.xls` → the archived 2021 edition `lch-god.xls` (see §1, resolved).
 
 Repointing to a Wayback URL is not a loss of provenance — `web.archive.org/web/<ts>/<original-url>`
 carries the original URL verbatim inside it. An **item** URL does not, so those uploads
@@ -23,42 +24,87 @@ carry the origin in the item's own `source`/`originalurl` metadata instead.
 
 | source | cells | rows | why it failed |
 |---|---|---|---|
-| Gazprom Orenburg | 29 | 7 | origin geo-blocks non-RU IPs; never captured |
+| ~~Gazprom Orenburg~~ | 29 | 7 | origin geo-blocks non-RU IPs; never captured — **RESOLVED** via the archived earlier edition of the same file |
 | ~~JOGMEC Japan 2022~~ | 13 | 9 | soft-404 — **RESOLVED** 12/13 via the 2024 edition; U923 held |
 | ~~CNPC Dec-2019 disclosure~~ | 3 | 3 | SPN `520` — **RESOLVED** via IA item upload |
 | ~~gsprom.ru tenders~~ | 2 | 2 | SPN `520` — **RESOLVED** via IA item upload |
 
 ---
 
-## 1. Gazprom Orenburg — geo-blocked, never captured (29 cells, 7 rows)
+## 1. Gazprom Orenburg — geo-blocked, RESOLVED via an earlier edition (29 cells, 7 rows)
 
-`https://orenburg-dobycha.gazprom.ru/d/textpage/14/20/lch-god-2.xls`
+Cited origin, unreachable: `https://orenburg-dobycha.gazprom.ru/d/textpage/14/20/lch-god-2.xls`
 
-- **Live status: unreachable from here.** DNS resolves (CNAME `constructor.gazprom.ru`
-  → 109.234.11.121) but TCP connect times out at 40 s, repeatedly. This is a
-  network-level block on non-Russian IPs, not a deletion — the document may well be
-  perfectly alive for a Russian client.
-- **Wayback: never captured.** Exact-URL CDX returns `[]`. The host has captures going
-  back to 2014, so the domain is not excluded from the archive — this particular file
-  simply was never crawled.
-- **Save Page Now cannot help**: IA's crawler has to reach the origin, and the origin is
-  what's blocking. We also never hold the bytes, so an IA-item upload is not available
-  either.
+**Repointed 2026-08-12 on Baird's instruction to:**
+`https://web.archive.org/web/20220506054715/https://orenburg-dobycha.gazprom.ru/d/textpage/14/20/lch-god.xls`
 
-**Cells affected** — Oil/NGL tab: `Fuel`, `Status`, `Start`, `Length`, `Route [ref]`
-across P6110, P6111, P6114, P6115, P6116, P6117, P6118; operators/owners tab
-`Owner [ref]` × 2 (U4830, U4831). 21 of the 29 cells hold this URL alongside other refs,
-so those rows retain independent sourcing; the 8 single-ref cells do not.
+### Why the origin is unreachable (unchanged, and permanent for us)
 
-**Recommendation:** leave all 29 cells as they are. Two ways forward, both needing a
-decision:
-1. Have someone on a Russian-routed connection (or a VPN exit) fetch the file once and
-   submit it to Wayback — then this becomes a normal repoint.
-2. Treat the Orenburg values as single-sourced-and-unverifiable and re-source them from
-   the corroborating refs already in the multi-ref cells (`sudact.ru` arbitration doc,
-   the `orenburg-dobycha.gazprom.ru/press/news/...` items, `kniga-khronika-ogkhk.pdf`).
+- DNS resolves (CNAME `constructor.gazprom.ru` → 109.234.11.121) but ICMP, TCP/80 and
+  TCP/443 all time out. **The whole Gazprom estate geo-blocks non-RU IPs** — `gazprom.ru`,
+  `gazprom.com` and `gazprom-neft.ru` behave identically, while `transneft.ru` (200) and
+  `novatek.ru` (301) answer fine, so this is Gazprom's AS39045 (`GAZTELECOM-MOSCOW`, LLC
+  "Gazprom telecom"), not a Russia-wide block. No AAAA record, so no IPv6 route around it.
+- **`lch-god-2.xls` was never captured, anywhere.** Wayback exact-URL CDX `[]`; not in
+  Common Crawl; Memento aggregator is dead (DNS). Save Page Now returns **520** — IA's
+  crawler is blocked by the same wall. Also checked and ruled out: four public fetch
+  proxies (`r.jina.ai` 422, allorigins 500, codetabs **522** = origin unreachable,
+  corsproxy 403); every RU-exit proxy proxyscrape lists (55 across http/socks4/socks5 —
+  **none were even alive**); and Yandex's server-side fetchers, which egress from inside
+  Russia but now require signed requests (`docviewer` 400, `translated.turbopages.org` 403).
+  Nothing short of a Russian-routed connection we control will reach it.
 
-Do **not** delete the URL on the strength of a timeout.
+### The fix: the same document, one edition earlier, and it IS archived
+
+Wayback has the sibling file **without** the `-2` — `lch-god.xls`, captured 2022-05-06,
+65,024 b, `application/vnd.ms-excel`, workbook authored 2021-10-11, table dated
+**01.01.2021**. Title: *"Технические характеристики газопроводов, газопроводов-отводов…"*;
+columns `Наименование ЛЧ` / `Протяженность [км]` / `Год ввода в эксплуатацию` /
+`Разрешенный срок эксплуатации` / `Экспертиза ПБ`, ~80 linear sections.
+
+The `-2` suffix is the CMS's collision rename on re-upload, so the two are **editions of
+one document**, not different documents. That is not an assumption — it was verified
+value-by-value before writing, exactly as the JOGMEC repoint in §2 was:
+
+| PID | GEM `StartYear1` / `LengthKnown` | 2021-edition row | year | km |
+|---|---|---|---|---|
+| P6110 | 1971 / 214.60 | Продуктопровод ФУМ Оренбург-Салават 1н. | 1971 | 214.6 |
+| P6114 | 1974 / 214.60 | Конденсатопровод Оренбург-Салават 2 н. | 1974 | 214.6 |
+| P6115 | 1980 / 406.80 | Конденсатопровод Оренбург-Салават-Уфа 3 н. | 1980 | 406.8 |
+| P6116 | 2010 / 408.00 | Конденсатопровод Оренбург-Салават-Уфа 4 н. | 1988-**2010** | 408 |
+| P6111 | 1982 / 434.60 | Этанопровод Оренбург-Казань | 1982 | 434.6 |
+| P6117 | 1986 / 272.18 | Продуктопровод **ШФЛУ** Оренбург-Шкапово | 1986 | 272.18 |
+| P6118 | 1987 / 85.60 | Продуктопровод Шкапово-Туймазы | 1987 | 85.6 |
+
+**7/7 on start year and 7/7 on length, matching at two decimals** (272.18, 214.60,
+406.80) — GEM's Orenburg values were sourced from this very table. The other cited fields
+carry too: `ШФЛУ` (широкая фракция лёгких углеводородов) = NGL, supporting the two
+`Fuel [ref]` cells; being listed with a permitted service life and a live Rostechnadzor
+`Экспертиза ПБ` certificate supports `Status = operating` on all seven; and the line names
+carry the endpoint pairs the `Route [ref]` cells cite. **No cell needed holding** — unlike
+JOGMEC's U923, nothing here contradicts GEM.
+
+Note P6117/P6118 are the two halves of `Orenburg-Shkapovo-Tuymazy` and the file lists them
+as two separate sections (272.18 + 85.6), which is why the GEM split into segments matches
+the source exactly rather than approximately.
+
+### Provenance caveat — the one way this differs from the other 101 cells
+
+Everywhere else in this batch, the Wayback URL embeds the *identical* origin, so a
+`--mode replace` loses nothing. Here the inserted URL embeds `lch-god.xls`, not
+`lch-god-2.xls`, so replacing does drop the record that these cells once cited the `-2`
+edition. Baird chose replace over add-alongside (2026-08-12); this note is where that
+substitution is recorded, and the before/after of all 29 cells is in
+`notes/backup-20260812_1022_ET-orenburg-ref-repoint-replace.csv`. Nothing was deleted on
+the strength of a timeout — the cells gained a working citation to the same document.
+
+**Cells written** — Oil/NGL tab (27): `Status`+`Start`+`Length [ref]` on P6110, P6114,
+P6111; those three plus `Route [ref]` on P6115, P6116; those four plus `Fuel [ref]` on
+P6117, P6118. Operators/owners tab (2): `Owner [ref]` U4830 (P6117), U4831 (P6118).
+Write gates all passed: `valueRenderOption=FORMULA` read found no formula cells, all 29
+live cells byte-matched the 2026-08-12 snapshot before writing, `RAW` + cell-scoped
+ranges, re-read verified 29/29, and a fresh pull confirms **0 residual `lch-god-2`
+occurrences** across all three tabs.
 
 ---
 
