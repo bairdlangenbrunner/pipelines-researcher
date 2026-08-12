@@ -4,16 +4,18 @@ Batch: archive every spreadsheet (`.xls`/`.xlsx`) URL cited in a `[ref]` column 
 repoint the cells at the backups. Scope came from a fresh 2026-08-12 pull of all three
 tabs: **12 unique spreadsheet URLs across 131 cells / 56 rows**.
 
-**Outcome: 89 cells repointed and verified; 42 cells left untouched** across the two
-sources below. Neither is a case where a `[ref]` may be dropped (standing rule: only a
-confirmed 404/410 may leave a `[ref]` cell; an access failure never can). Both are
-escalated here rather than edited.
+**Outcome: 101 cells repointed and verified; 30 cells left untouched.** Nothing was
+dropped on an access failure (standing rule: only a confirmed 404/410 may leave a `[ref]`
+cell). What remains is the 29-cell Gazprom Orenburg block plus **one** held cell,
+`'Pipeline operators/owners'!U923` (P1050) — see §2.
 
-Applied writes, both `--mode replace`:
+Applied writes, all `--mode replace`:
 - `notes/backup-20260812_0915_ET-archive-ref-xlsx-replace.csv` — 84 cells, Wayback
   snapshots (9 files).
 - `notes/backup-20260812_0925_ET-archive-ref-xlsx-replace.csv` — 5 cells, archive.org
-  items (2 files; see §3–4 below, now resolved).
+  items (2 files; see §3–4 below, resolved).
+- `notes/backup-20260812_0938_ET-archive-ref-xlsx-replace.csv` — 12 cells, JOGMEC 2022 →
+  2024 edition (see §2, resolved except U923).
 
 Repointing to a Wayback URL is not a loss of provenance — `web.archive.org/web/<ts>/<original-url>`
 carries the original URL verbatim inside it. An **item** URL does not, so those uploads
@@ -22,7 +24,7 @@ carry the origin in the item's own `source`/`originalurl` metadata instead.
 | source | cells | rows | why it failed |
 |---|---|---|---|
 | Gazprom Orenburg | 29 | 7 | origin geo-blocks non-RU IPs; never captured |
-| JOGMEC Japan 2022 | 13 | 9 | soft-404, document gone; never captured |
+| ~~JOGMEC Japan 2022~~ | 13 | 9 | soft-404 — **RESOLVED** 12/13 via the 2024 edition; U923 held |
 | ~~CNPC Dec-2019 disclosure~~ | 3 | 3 | SPN `520` — **RESOLVED** via IA item upload |
 | ~~gsprom.ru tenders~~ | 2 | 2 | SPN `520` — **RESOLVED** via IA item upload |
 
@@ -87,17 +89,56 @@ Starting year of operation / Diameter (mm) / Distance (km). Snapshot taken this 
 That is a like-for-like successor carrying exactly the fields these 13 cells cite it for
 (`Status`, `Location`, `Route`, `Owner [ref]`).
 
-**Recommendation — this is an Update decision, not a mechanical repoint.** The cited
-edition is the **2022** file; the successor holds **2024** data. Swapping them silently
-would re-source existing values to a document that may state something different. So:
-- route the 13 cells to Update (§5) for a value-by-value re-check against the 2024
-  edition, then repoint;
-- do not fold this into the mechanical archive batch.
+**Repointed to the 2024 edition on Baird's instruction (2026-08-12), after verifying the
+new edition value-by-value rather than swapping it blind.** The cited edition was 2022 and
+the successor is 2024, so a silent swap could have re-sourced values to a document that
+says something different. It was checked instead: all nine pipelines are present in the
+2024 file, and **all nine start years match GEM's `StartYear1` exactly**.
 
-**Cells affected** — Gas tab `Status [ref]` × 9 (P1025, P1034, P1044, P1050, P1054,
-P1060, P1063, P4272, P6838), plus `Location [ref]` and `Route [ref]` on P6838;
-operators/owners tab `Owner [ref]` × 2 (P1050, P6838). Every one is a **single-ref
-cell**, so all 13 are currently sourced solely to a dead document.
+The status check needed care: the file has **no operating/planned section break** — its
+header note says *"Projects under construction or planning are included"*, so the only
+discriminator is `Starting year of operation`. Future years do appear interleaved (e.g.
+Toho Gas Handa–Anjo 2026, Ichinomiya–Bisai 2025). All nine of ours are past years
+(1996–2017), so `Status = operating` is supported in every case.
+
+| PID | 2024 row | file company | project | year | dist (km) | GEM len |
+|---|---|---|---|---|---|---|
+| P1025 | 31 | JAPEX | Northern Koriyama Line | 2015 | 12 | 12 |
+| P1034 | 27 | JAPEX | Higashi Niigata-Sendai Line | 1996 | 261.9 | 261 |
+| P1044 | 103 | Shizuoka Gas | No. 2 Suruga Trunk Line | 2004 | 28 | 28 |
+| P1050 | 32 | **ENEOS** / Tohoku Electric Power | Shiroishi-Koriyama Line | 2007 | 96 | 96 |
+| P1054 | 30 | JAPEX | Soma-Iwanuma Line | 2017 | 39.7 | 40 |
+| P1060 | 57 | Tohoku Natural Gas | Yamagata Line | 2006 | 30 | 30 |
+| P1063 | 72 | Tokyo Gas | Yokohama-Shonan Line | 2002 | 9 | 5 |
+| P4272 | 7 | JAPEX | Yufutsu-Sapporo Line | 1996 | 78.7 | 72 |
+| P6838 | 96 | TEPCO | Chiba Line | 1996 | 51 | 50 |
+
+**12 of 13 cells repointed** to the archived 2024 edition
+(`https://web.archive.org/web/20260812130924/https://journal.jogmec.go.jp/content/300516944.xlsx`):
+Gas tab `Status [ref]` × 9 (P1025, P1034, P1044, P1050, P1054, P1060, P1063, P4272,
+P6838), `Location [ref]` + `Route [ref]` on P6838 (the file's Futtsu LNG Terminal → Chiba
+Thermal Power Station matches GEM's endpoints exactly), and operators/owners `Owner [ref]`
+for P6838 (file company TEPCO = GEM `TEPCO [100.%]`).
+
+### The one held cell: P1050 `Owner [ref]` — a possible real ownership change
+
+`'Pipeline operators/owners'!U923` was **not** repointed. The 2024 edition credits the
+Shiroishi-Koriyama Line to **"ENEOS / Tohoku Electric Power"**; GEM's `Owner` reads
+**`JAPEX [50.%]; Tohoku Electric Power [50.%]`**. Tohoku Electric agrees, JAPEX vs ENEOS
+does not. Repointing would attach a citation naming ENEOS to a value naming JAPEX —
+manufacturing apparent support for a value the document contradicts, which is worse than
+leaving a dead ref in place. Its `Status [ref]` was repointed normally (2007 / 96 km /
+400 mm all agree).
+
+**Route to Update (§5): did ENEOS take over JAPEX's 50% stake?** The 2022 edition is gone,
+so we cannot diff the two editions to see whether this is a JOGMEC correction or a genuine
+transfer. Needs an independent source either way; do not apply the ENEOS name off this
+document alone. This is a **finding**, not merely a blocker — if it is a real transfer, GEM
+has a stale owner on P1050.
+
+**Length deltas noted, not applied** (out of scope for a ref repoint, and single-source):
+P1063 5 → 9 km is the largest, then P4272 72 → 78.7. P1034, P1054, P6838 differ by <1 km
+(rounding). P1063's diameter also reads `250-600` against GEM's `600`.
 
 ---
 
