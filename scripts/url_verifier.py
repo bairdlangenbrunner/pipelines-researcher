@@ -74,6 +74,63 @@ _MIN_INTERVAL = 1.0
 # Flagged so the agent re-fetches the FULL text rather than banking a false "value not found".
 _MIN_BODY_CHARS = 1500
 
+# Markup that is never citable prose. Stripped before any content match, because a
+# numeric value collides with coordinate/hash digit-runs inside it. Ukraine gas
+# 2026-08-12: `verify_url("https://energybase.ru/pipeline/stavropol-moskva", "1262")`
+# returned "200 + expected content present" against a 13,560-char geo-block
+# interstitial — the only "1262" on the page was inside the SVG path coordinate
+# `589.126229`, part of the block page's decorative graphic. The body cleared
+# _MIN_BODY_CHARS, so the stub heuristic never fired. `<script>` is deliberately NOT
+# stripped: real values do live in JSON-LD blocks.
+_NOISE_MARKUP_RE = re.compile(r"<(svg|style|template)\b.*?</\1\s*>", re.S | re.I)
+
+# A 200 that is really an access-denied / bot-challenge / geo-block interstitial. Checked
+# regardless of body length — a block page padded with inline graphics is not short.
+# NOT a deletion: standing rule is that a blocked origin gets its Wayback snapshot ADDED
+# alongside, never a ref deleted, so the reason says so explicitly.
+_BLOCK_PHRASES = (
+    "доступ ограничен", "использование vpn", "вы робот", "проверка браузера",
+    "checking your browser", "attention required", "access denied", "access to this page",
+    "verify you are human", "are you a human", "enable javascript and cookies",
+    "request blocked", "unusual traffic", "cf-error-details", "ddos protection",
+    "your access to this site has been limited", "why have i been blocked",
+)
+
+
+def _match_surface(body: str) -> str:
+    """The lowercased text a content check is allowed to match against.
+
+    Not the raw HTML — see _NOISE_MARKUP_RE. Returns lowercase because every caller
+    compares lowercased needles.
+    """
+    return _NOISE_MARKUP_RE.sub(" ", body or "").lower()
+
+
+def _blocked_as(text: str) -> str | None:
+    """The block-page phrase this body matches, if any."""
+    for p in _BLOCK_PHRASES:
+        if p in text:
+            return p
+    return None
+
+
+def _contains(text: str, needle: str) -> bool:
+    """Substring test, except that a PURELY NUMERIC needle must match as a whole number.
+
+    A bare `"1262" in text` also matches inside `589.126229`, `41262`, a build hash or a
+    timestamp — the false-positive family that let a geo-block page verify clean. Digits
+    are the shape most refs are checked on (lengths, diameters, capacities, years), so
+    they get boundaries; alphabetic needles keep plain substring semantics, since a
+    genuine phrase match rarely collides and word boundaries would break
+    partial-word/inflected matches (Russian/Ukrainian case endings especially).
+    """
+    n = (needle or "").lower()
+    if not n:
+        return True
+    if re.fullmatch(r"[\d][\d,.\s]*", n):
+        return re.search(rf"(?<![\d.,]){re.escape(n)}(?![\d.,])", text) is not None
+    return n in text
+
 
 def _fold(s: str) -> str:
     """Lowercase, strip diacritics, collapse non-alphanumerics to single spaces — so
@@ -198,7 +255,9 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     if (r.encoding or "").lower() in ("iso-8859-1", "ascii") and r.apparent_encoding:
         r.encoding = r.apparent_encoding
     body = r.text or ""
-    text = body.lower()
+    # Match against prose, not markup — and with whole-number semantics for numeric
+    # needles. See _match_surface / _contains.
+    text = _match_surface(body)
     # A content check against a suspiciously short body is not a trustworthy negative — it is
     # almost always a block page / cookie wall / archive interstitial / truncated fetch, NOT
     # the real article (this is the eurasianet-stub failure). Flag it so the agent re-fetches
@@ -206,7 +265,16 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # "value not found". Only matters when we are actually checking for content.
     stub = len(body.strip()) < _MIN_BODY_CHARS
     checking = bool(expected or any_of or name)
-    missing = [e for e in expected if e and e.lower() not in text]
+    # A block/challenge interstitial is a 200 that proves nothing, at any body length. It
+    # is NOT evidence the page is gone, so never let this read as a deletion.
+    blocked = _blocked_as(text)
+    if blocked and checking:
+        return _fin({"ok": False, "status": 200, "blocked": True,
+                     "reason": f"200 but this is an access-block/challenge interstitial "
+                               f"(matched {blocked!r}), not the page — anything 'found' on it is "
+                               f"a false positive. NOT a deletion: keep the ref and ADD a Wayback "
+                               f"snapshot alongside; only a confirmed 404/410 may drop a ref."})
+    missing = [e for e in expected if e and not _contains(text, e)]
     if missing:
         if stub:
             return _fin({"ok": False, "status": 200,
@@ -214,10 +282,11 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         return _fin({"ok": False, "status": 200, "reason": f"200 but missing expected: {missing}"})
     if any_of:
         forms = [a for a in any_of if a]
-        if forms and not any(a.lower() in text for a in forms):
+        if forms and not any(_contains(text, a) for a in forms):
             tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
             return _fin({"ok": False, "status": 200, "reason": f"200 but data value not found (none of {forms}){tail}"})
-    if name and not (_name_present(body, name) if fuzzy else name.lower() in text):
+    # `text`, not `body` — a name must appear in prose too, not in an svg/style block.
+    if name and not (_name_present(text, name) if fuzzy else _contains(text, name)):
         tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
         return _fin({"ok": False, "status": 200, "reason": f"200 but name not found (fuzzy): {name!r}{tail}"})
     if stub and checking:

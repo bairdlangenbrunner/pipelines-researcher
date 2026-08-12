@@ -15,6 +15,21 @@ engine is country-agnostic (Phase E validation target).
   kurdistan24. Cross-border lines (Iran/Turkey/Jordan/Syria) need non-English search.
 
 ## Reconciliation notes
+
+> **Both GulfPub recons RE-RUN 2026-08-12 — work
+> `pipelines_batch_20260812_1359_ET_iraq-gas_reconciliation-gulfpub.xlsx` (`--commodity
+> both`) and `…_20260812_1359_ET_iraq-oil_reconciliation-gulfpub.xlsx`; the `20260729_1104`
+> and `20260728_1804` workbooks and their staging dirs are in `archive/`.** The
+> reference-side country filter compared GulfPub's country string with `==`, dropping every
+> multi-country record (Iraq gas 26 → 29 refs, **oil 21 → 27, +29%**). Engine defect, fixed
+> same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> **Retraction: 7 of the oil run's 65 `gem_only` findings and 1 of the gas run's were
+> artifacts.** New totals — gas/both: **49 overlaps / 7 additions / 95 gem_only / 15 status
+> conflicts** (was 39 / 8 / 105 / 13); oil: **26 / 1 / 58 / 10** (was 20 / 1 / 65 / 8). Note
+> both runs gained status conflicts, i.e. findings absent from the shipped workbooks. The
+> counts quoted in the tables below are the superseded ones. OSM is unaffected.
+
 - Oil: use `gulfpub.SDE.Oil_Pipelines_Global.geojson` filtered to Iraq for the
   country-agnostic validation run.
 - Gas: the fuller Dec-2025 SDE gas scrape (`SDE.NG_Pipelines_Global.geojson`, incl. 31

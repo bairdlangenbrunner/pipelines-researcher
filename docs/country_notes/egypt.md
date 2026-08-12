@@ -128,6 +128,19 @@ Concerns by type: **attribution 37, spec 31, existence 4, duplicate 4.**
 
 ### Reconciliation (§2, 2026-07-29 — TWO standalone workbooks, NOT in the handoff)
 
+> **GulfPub half RE-RUN 2026-08-12 — work
+> `pipelines_batch_20260812_1359_ET_egypt-gas_reconciliation-gulfpub.xlsx`; the `0941_ET`
+> workbook and its staging dir are in `archive/`.** The reference-side country filter
+> compared GulfPub's country string with `==`, dropping every multi-country record
+> (Egypt gas 92 → 95 refs). Engine defect, fixed same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> **Retraction: 4 of the 43 `gem_only` "no reference counterpart" findings were artifacts.**
+> The re-run also picks up matcher fixes landed since 07-29, so it moves further than the
+> filter alone: **72 overlaps / 23 additions / 69 gem_only / 5 status conflicts** (was 52 /
+> 40 / 43 / 3). Additions fell below the >30 gate; the GEM tab has also grown 78 → 117 rows
+> since 07-29, which is why `gem_only` rises. **Read it as a fresh run, not a delta.**
+> The OSM half is unaffected (ISO-scoped extract, single-country by construction).
+
 Run to give Egypt the same recon coverage Libya has. Both are **separate review surfaces**:
 nothing here is folded into `…_handoff-actions.xlsx`, and nothing is staged as an edit.
 Deliverables: `pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`

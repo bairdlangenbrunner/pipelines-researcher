@@ -14,6 +14,18 @@ corroboration.
   (watch for the same wire being republished — not independent).
 
 ## Reconciliation notes
+
+> **GulfPub gas RE-RUN 2026-08-12 — work
+> `pipelines_batch_20260812_1359_ET_iran-gas_reconciliation-gulfpub.xlsx`; the `0941_ET`
+> workbook and its staging dir are in `archive/`.** The reference-side country filter
+> compared GulfPub's country string with `==`, dropping every multi-country record
+> (Iran gas 43 → 49 refs, oil 40 → 42). Engine defect, fixed same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> **Retraction: 4 of the 25 `gem_only` "no reference counterpart" findings were artifacts,**
+> and the filter alone accounts for +5 overlaps. New totals: **34 overlaps / 15 additions /
+> 19 gem_only / 4 status conflicts** (was 25 / 18 / 25 / 3). The 07-29 paragraph below is
+> superseded on its counts; its *reasoning* about the 07-05 run still holds.
+
 - **Fresh standalone GulfPub gas recon, 2026-07-29:**
   `…_20260729_0941_ET_iran-gas_reconciliation-gulfpub.xlsx` (43 refs → 25 overlaps,
   18 additions, 25 GEM-only, 3 status conflicts, 10 ambiguous; NEAR_MISS 14 /

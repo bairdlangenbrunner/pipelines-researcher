@@ -176,7 +176,18 @@ totals. **Keep all rows.** Staged as `confirmed (caveat)` in
   entries. **P5486** (Mardan–Swat) is the one row the register does not account for —
   now an existence question rather than a duplicate one (see Open items).
 
-## Reconciliation results (2026-08-07)
+## Reconciliation results (2026-08-07; GulfPub re-run 2026-08-12)
+
+> **GulfPub RE-RUN 2026-08-12 — work
+> `pipelines_batch_20260812_1359_ET_pakistan-gas_reconciliation-gulfpub.xlsx`; the
+> `20260807_1530` workbook and its staging dir are in `archive/`.** The reference-side
+> country filter compared GulfPub's country string with `==`, dropping every multi-country
+> record (Pakistan gas 94 → 96 refs). Engine defect, fixed same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> Small for Pakistan — 1 falsified `gem_only` — but **the "0 status conflicts" claim below
+> is retracted: there are now 2**, both new findings. New totals: **84 overlaps / 12
+> additions / 26 gem_only / 2 status conflicts** (was 82 / 12 / 27 / 0). OSM is unaffected.
+
 - **GulfPub**: 94 reference records, **82 overlaps** — much the best match rate of any
   country swept so far, and the reason the existence question narrowed to five rows.
   12 additions (under the >30 escalation gate), 0 status conflicts, 11 near-misses.

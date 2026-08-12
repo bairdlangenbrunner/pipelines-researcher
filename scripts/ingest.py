@@ -81,7 +81,8 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--source", required=True)
     ap.add_argument("--commodity", default="both", choices=["oil", "ngl", "gas", "hydrogen", "both"])
-    ap.add_argument("--country", help="optional: keep only this country (normalized match)")
+    ap.add_argument("--country", help="optional: keep records that name this country "
+                                      "(normalized; multi-country records count)")
     ap.add_argument("--out", required=True, help="output dir (created if needed)")
     ap.add_argument("--limit", type=int, help="cap records per dataset (debugging)")
     args = ap.parse_args()
@@ -115,7 +116,9 @@ def main() -> None:
             rec = adapter.to_canonical(raw, dataset)
             if rec is None:
                 continue
-            if want_country and rec.country != want_country:
+            # Multi-country records ('Russian Federation / Ukraine') are the cross-border
+            # trunks a scoped run most needs — see N.country_matches' docstring.
+            if want_country and not N.country_matches(rec.country, want_country):
                 continue
             base = rec.ref_id
             seen[base] = seen.get(base, 0) + 1

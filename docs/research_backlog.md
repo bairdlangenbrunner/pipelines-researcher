@@ -22,6 +22,31 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 
 ## 2. Research legs started but not finished
 
+> **READ FIRST — every GulfPub recon in this section was RE-RUN 2026-08-12, so the
+> workbook filenames and counts in the rows below are superseded.** The reference-side
+> country filter compared a GulfPub record's country string with `==`, silently dropping
+> every **multi-country** record — i.e. precisely the cross-border transit trunks. Ten
+> scopes lost matched records; the falsified bucket is `gem_only`, every entry of which
+> claims "no reference counterpart exists" (Kazakhstan gas 15 false, Ukraine 9, Iraq oil 7,
+> Kazakhstan oil 5, Egypt 4, Iran gas 4, China 4, Libya 2, Saudi oil 2, Iraq gas 1,
+> Pakistan 1, Iran oil 1; India and Saudi gas 0). New status conflicts also appear that
+> were absent from the shipped workbooks — **Pakistan's "0 status conflicts" is now 2**.
+> Full A/B table, per-scope deltas and the re-run ledger:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+>
+> Current GulfPub workbooks, all stamped `20260812_1359_ET` except where noted — superseded
+> staging dirs and workbooks retired by move to each batch's `archive/`:
+> `{egypt-gas, iran-gas, iraq-gas, iraq-oil, libya-gas, pakistan-gas, saudi-arabia-gas,
+> india-gas}/deliverables/pipelines_batch_20260812_1359_ET_<scope>_reconciliation-gulfpub.xlsx`,
+> plus kazakhstan-gas at `20260812_1344_ET`. **No workbook** for `saudi-arabia-oil` or
+> `china-trunks-gas` — neither ever had one; their staging is now current. `malaysia-gas`
+> was left alone (another session is mid-pass on it; its recon was already on fixed code).
+> Because a re-run also picks up every matcher fix landed since each run was stamped, two
+> scopes moved much further than this defect explains — **China** (87 → 118 overlaps,
+> `gem_only` 925 → 532, on a stable 986 → 988-row GEM pool) and **Saudi oil** (38 → 55,
+> `gem_only` 87 → 42, off the repo's oldest run). OSM and ENTSOG are unaffected throughout:
+> each dataset is an ISO-scoped extract carrying a per-dataset `country_const`.
+
 | Thread | State | Source |
 |---|---|---|
 | **Egypt oil (GOIT)** | never swept | `docs/country_notes/egypt.md` |
@@ -47,6 +72,7 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 | **Iran general open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md`; CLAUDE.md |
 | **Re-run link checks for every country swept before 2026-08-11 (engine defect, ours)** | `url_verifier.verify_url` returned a bare `request failed: SSLError` for hosts serving an incomplete TLS chain, which reads as a dead link. It now retries once with verification off and stamps `insecure_tls: True` — that verdict means **the page IS live**. In Kazakhstan gas the defect hit **51 of 105 ref cells with ZERO real 404s** (45 SSLError + 5 ConnectionError + 1 ReadTimeout; the operating leg went 55 → 63 all-live once fixed), because half the country's refs are `adilet.zan.kz`. So any earlier country whose worklist shows `SSLError` link-rot flags has **false DEAD_LINK findings staged**, and the only fix is to re-run the worklist — the flags cannot be re-read. Known affected hosts so far: `adilet.zan.kz`, `pgjonline.com`, `eeer.org`. Two sibling defects fixed the same day (diameter units per row; thousands separator vs multi-value comma) have their own blast radii recorded in `docs/sops/reconciliation.md` — the QC `Diameter_OutOfRange` sheet of **any** workbook built before 2026-08-11 should be discarded (1,497 false findings, 1 real) | `docs/sops/sweep.md` §Verifier false-negatives; `docs/sops/{reconciliation,qc}.md`; commits `37ab566`, `7613c39` |
 | **OSM recon: read `best_guess` as arithmetic, not geography, in four pre-2026-08-11 runs (reporting defect, ours)** | `reconcile.py disposition()` printed "Nearest was P####" on every `DISCOVERY_CANDIDATE`/`NEAR_MISS`. When the reference is unnamed (`s_name` 0), the guessed GEM row has **no drawn route** (`g_untested`) and no province score got through (`s_geoarea` 0), the only live axis is **length** — so "nearest" was whichever row happened to be a similar number of kilometres, anywhere in the country. Kazakhstan OSM had 18 unnamed traces spread lon 51→78 all "nearest" to routeless P5776 (17.8 km), several 1,500 km from its corridor. **Fixed 2026-08-11**: the note now names the dead axes and says to read the PID as arithmetic. Kazakhstan was re-run + its workbook rebuilt. **NOT re-run** (their GEM snapshots are older, so a re-run would silently move matches and break the packets' `SheetRow` locators): `iraq-oil/recon-osm-20260728` **82 of 184**, `egypt-gas/recon-osm-20260729` 10/21, `india-gas/recon-osm-20260810` 8/61, `iraq-gas/recon-osm-20260729` 2/46 — in those workbooks ignore the `Nearest`/`best_guess` PID on any addition whose reference is unnamed and whose guessed row has no route. GulfPub runs are unaffected (0 blind in all 12) | `scripts/reconcile.py` `disposition()`; `batches/kazakhstan-gas/deliverables/…_20260811_1043_ET_…reconciliation-osm.xlsx` |
+| **Re-verify refs in pending staged batches against the block-page false positive (engine defect, ours)** | `url_verifier.verify_url` matched expected content against **raw HTML** and matched a numeric needle as a **bare substring**, while block-page detection only fired below 1,500 chars. So an IP/geo-block interstitial that returns HTTP 200 could be certified as verified — reproduced on `energybase.ru`, where the only occurrence of the expected `1262` was inside the SVG path coordinate `589.126229`. **Fixed 2026-08-12**: svg/style/template stripped before matching (script kept — real values live in JSON-LD), whole-number semantics for numeric needles, and length-independent block-phrase detection in Russian and English. The verdict is worded to prevent the wrong reaction — a block is **NOT a deletion**, so keep the ref and ADD a Wayback snapshot; only a confirmed 404/410 may drop one. **Not yet done:** re-verify the refs in *pending, not-yet-applied* staged batches — the bounded set that would actually ship wrong. Start with the countries whose sources skew to geo-blocking hosts (Russian trade press: Ukraine, Kazakhstan, Russia, Central Asia). Found by a subagent that distrusted a green verdict and reported the tool rather than the ref | `notes/escalation-2026-08-12-url-verifier-false-positive-on-block-pages.md`; `scripts/url_verifier.py` |
 | **LNG carrier quarterly reconciliation** | "designed and partially executed" vs SFOC data; referenced `instructions.md` methodology is **not in this repo** — orphaned | `docs/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
 
 ## 3. Staged, awaiting Baird's manual application (research complete)

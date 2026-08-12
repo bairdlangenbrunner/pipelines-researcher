@@ -399,8 +399,12 @@ def main() -> None:
 
     want_country = N.normalize_country(args.country)
     fam = None if args.commodity == "both" else _FAMILY.get(args.commodity, {args.commodity})
+    # N.country_matches, not equality: multi-country reference records ('Russian
+    # Federation / Ukraine') are exactly the cross-border trunks a scoped run most
+    # needs. See its docstring — this filter dropped them silently until 2026-08-12.
     ref = [r for r in records
-           if r["country"] == want_country and (fam is None or r["commodity"] in fam)]
+           if N.country_matches(r["country"], want_country)
+           and (fam is None or r["commodity"] in fam)]
     if not ref:
         sys.exit(f"no reference records for country='{args.country}' commodity='{args.commodity}'")
 

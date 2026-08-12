@@ -225,9 +225,20 @@ Two recorded but **not** recommended (too small / unverified): the GAIL 8 km "As
 Network" (register #1 — see the naming trap) and Dukli–Maharajganj (GAIL, 5 km authorised,
 **0 km operating**).
 
-## Reconciliation results (2026-08-10)
+## Reconciliation results (2026-08-10; GulfPub re-run 2026-08-12)
 
 Both **standalone** — the handoff packet does **not** subsume them.
+
+> **GulfPub RE-RUN 2026-08-12 — work
+> `pipelines_batch_20260812_1359_ET_india-gas_reconciliation-gulfpub.xlsx`; the
+> `20260810_1851` workbook and its staging dir are in `archive/`.** The reference-side
+> country filter compared GulfPub's country string with `==`, dropping every multi-country
+> record. Engine defect, fixed same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> **India is the least affected country in the tracker — 158 → 159 refs, and *no* `gem_only`
+> finding was falsified.** New totals: **75 overlaps / 84 additions / 40 gem_only / 24 status
+> conflicts** (was 74 / 84 / 40 / 22). Both escalation gates stay crossed and every
+> conclusion below stands; conflicts are now 24 on 75 matched rows (32%). OSM is unaffected.
 
 - **GulfPub** (158 India gas records): 74 overlaps, **84 additions**, 40 GEM-only,
   **22 status conflicts**, 22 ambiguous. Health line clean — 100% refs named, 100% with

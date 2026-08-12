@@ -317,6 +317,18 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    country's block differs (GulfPub gas: Canada is km, everything else miles); fixed and
    re-run 2026-07-29 (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`). Any gas
    recon workbook stamped before `20260729_0941_ET` has `Ref Length (km)` ~38% short.
+   **A country scope is a JOIN, not an equality test — the reference side got this wrong
+   until 2026-08-12.** `ingest.py`, `reconcile.py` and `adapter_base.py` each compared a
+   scraped record's country string with `==`, so every **multi-country** record was silently
+   dropped — i.e. exactly the cross-border transit trunks, which in a transit country are
+   the majority of what GEM tracks (Ukraine gas 111 → 158 refs, Kazakhstan 32 → 63). The GEM
+   side never had the bug. Fixed onto one shared `normalize.country_matches()`; **never
+   write a bare `==` against a country string.** ALL committed GulfPub recons were re-run
+   2026-08-12 and their predecessors archived — the falsified bucket is `gem_only`
+   ("no reference counterpart exists"). Ledger + per-scope A/B:
+   `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+   Corollary: **a thin recon is a claim about the pipeline until the input count is
+   checked** — `MATCH_QUALITY` covers a dead matcher, never records that never arrived.
    **OSM is a second registered source and runs by default in the `deep`
    preset**; unmatched reference records are bucketed by `disposition`
    (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
@@ -507,8 +519,10 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   the packet does NOT subsume the recons (`recon_actions=0`):
   `…_20260812_1255_ET_kazakhstan-gas_handoff-{actions,evidence}.xlsx` (rebuilt from the 08-11
   `1145_ET` pair after the cluster-A reversal below — don't work the old one) +
-  `…_20260811_1001_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx` +
-  `…_20260811_1043_ET_…reconciliation-osm.xlsx`. The country is **multi-string trunk systems with
+  `…_20260812_1344_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx` (**RE-RUN — the `20260811_1001`
+  workbook is archived; the multi-country filter defect had hidden HALF this country's
+  reference records, 32 of 63, and 15 of the 31 `gem_only` "no reference counterpart"
+  findings were artifacts**) + `…_20260811_1043_ET_…reconciliation-osm.xlsx` (unaffected). The country is **multi-string trunk systems with
   NO public line-wise register** — the best line-wise source (KMG's AR gas-transportation table)
   itemises only the 8 major *systems*, i.e. exactly the aggregates that are the defect, so in six
   systems one system figure is restated on every string and an honest `UNRESOLVED` on a per-string

@@ -149,17 +149,37 @@ route file is **legitimate** under the shared-right-of-way convention above. Wha
 not confer is a length or an accuracy grade of its own — `LengthMergedKm = 137.85` is the
 corridor's length and `RouteAccuracy = medium` describes the drawing P3948 got.
 
-## Reconciliation results (2026-08-11, both standalone)
+## Reconciliation results (GulfPub re-run 2026-08-12; OSM 2026-08-11; both standalone)
 
 Both recon workbooks are **separate review surfaces**; the packet's `recon_actions` is 0.
 
-- **GulfPub** — 27 overlaps (84.4% overlap rate), 5 additions, 4 status conflicts. The >10%
-  status-conflict gate is **crossed on paper (14.8%) and empty in fact**: the four collapse to
-  two rows, P7819 (Karachaganak–Uralsk thread II) and P6712 (Beineu–Bozoy–Shymkent III
-  expansion), both in-development *increments* on corridors GulfPub maps as operating lines —
-  the segment-vs-network artifact, not a disagreement. Do not flip either status on it.
-  Additions are below the 30-row gate: 1 `DISCOVERY_CANDIDATE` (Kairan–Zapadno Kashagan
-  55.6 km) and 4 `NEAR_MISS`.
+- **GulfPub — RE-RUN 2026-08-12; the 08-11 workbook is SUPERSEDED and archived.** The
+  reference-side country filter compared GulfPub's country string with `==`, so every
+  **multi-country** record was silently dropped: Kazakhstan gas ingested **32 records where it
+  should have ingested 63 (+97%)**, and the missing half was precisely the cross-border transit
+  trunks — the records with the best chance of matching. Engine defect, fixed the same day:
+  `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+  Work from `pipelines_batch_20260812_1344_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx`.
+
+  **RETRACTION — 15 of the 31 `gem_only` "no reference counterpart" findings were artifacts.**
+  Corrected run: **52 overlaps, 11 additions, 16 gem_only, 7 status conflicts** (was 27 / 5 /
+  31 / 4). Ten GEM rows newly match a reference record: **P0739, P0761, P0791, P1124, P1476,
+  P2289, P2299, P3955, P3956, P6830**. Four new green (≥0.75) overlaps —
+  P5901 Taldykorgan–Usharal (0.877), P0791 Orenburg–Novopskov (0.849),
+  P3964 Almaty–Taldykorgan (0.810), P0761 SOYUZ (0.770) — the last two carrying the
+  multi-country string `Russian Federation / Kazakhstan / Ukraine` that the old filter threw
+  away. Additions rose 5 → 11, still under the 30-row gate.
+
+  The **status-conflict reading survives the re-run intact**: 7 conflicts, but they collapse to
+  three GEM rows. P6712 (Beineu–Bozoy–Shymkent III expansion, 4 refs) and P7819
+  (Karachaganak–Orenburg / Aktobe–Karachaganak, 2 refs) are still in-development *increments*
+  on corridors GulfPub maps as operating lines — the segment-vs-network artifact, not a
+  disagreement. **Do not flip either status on it.** The one genuinely new conflict is
+  **P0761 SOYUZ, GEM `mothballed` vs GulfPub `operating`, and GEM is right**: the Ukraine gas
+  pass researched the same line independently and confirmed zero flow through its Sokhranivka
+  entry point continuously since May 2022, with the whole Russia–Ukraine transit agreement
+  expiring unrenewed at 07:00 on 2025-01-01. GulfPub's `operating` is stale. Resolve in GEM's
+  favour and cite the Ukraine-side evidence, not the reference.
 - **OSM** — 112 traces, 2 overlaps, 110 additions. The gate is crossed, but read the health
   line first: 3.6% named, 100% with geometry, 95.1% of GEM rows routed, **`escalations` empty**
   (no `MATCH_QUALITY` warning). The cause is granularity plus an unnamed extract: **55

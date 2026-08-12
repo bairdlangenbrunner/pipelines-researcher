@@ -67,6 +67,32 @@ def split_countries(s: str | None) -> list[str]:
     return [normalize_country(p) for p in parts if p and p.strip()]
 
 
+def country_matches(rec_country: str | None, want: str) -> bool:
+    """Does a record whose country field may name SEVERAL countries belong to `want`?
+
+    Use this for every country-scope filter on the REFERENCE side. A scraped
+    source routinely writes cross-border trunks as one multi-country string —
+    GulfPub has 'Russian Federation / Ukraine', 'Ukraine / Moldova',
+    'Russian Federation / Kazakhstan / Ukraine'. `ingest.py` and `reconcile.py`
+    both used to test plain equality against one normalized string, so every such
+    record was silently dropped and a country-scoped run saw only the segments
+    lying wholly inside one border. That discarded 47 of 158 GulfPub gas features
+    for Ukraine and 31 of 63 for Kazakhstan — precisely the transit trunks, which
+    are the majority of GEM's rows in both countries (defect found 2026-08-12).
+
+    The GEM side has always done this correctly via `split_countries`; the
+    reference side was the asymmetry. Whole-string equality is tried FIRST because
+    four `_COUNTRY_ALIASES` keys contain a comma ('congo, the democratic republic
+    of the', 'korea, republic of', …) and splitting before the alias lookup would
+    shred them.
+    """
+    if not rec_country:
+        return False
+    if rec_country == want:
+        return True
+    return want in split_countries(rec_country)
+
+
 _NAME_STOP = {
     "pipeline", "pipelines", "line", "lines", "system", "systems", "project",
     "the", "of", "and", "oil", "gas", "crude", "ngl", "natural", "co", "company",

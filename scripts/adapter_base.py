@@ -216,8 +216,16 @@ class AdapterBase:
         # units.length_units_by_country overrides the dataset default; keys are matched
         # on the NORMALIZED country, so a manifest may write any alias.
         length_units = units.get("length_units", "km")
+        _rec_countries = {country, *N.split_countries(country)}
         for _ck, _cu in (units.get("length_units_by_country") or {}).items():
-            if N.normalize_country(_ck) == country:
+            # Membership, not equality — a cross-border record ('Canada / United States')
+            # is multi-country and an equality test would silently hand it the dataset
+            # default. Same defect class as the old ingest.py country filter. Today this
+            # fires on nothing (0 of GulfPub's 361 multi-country records name Canada), so
+            # it is a consistency fix, not a value change: if it ever DOES fire on a
+            # multi-country record, verify which block that row was tabulated in rather
+            # than trusting the first matching key.
+            if N.normalize_country(_ck) in _rec_countries:
                 length_units = _cu
                 break
         start_loc = (val("start_loc") or "").strip()

@@ -69,10 +69,21 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 - **Sources:** provincial 发改委/能源局 plans and approvals, NDRC/NEA, PipeChina
   (国家管网), CNPC/Sinopec disclosures, trade press 北极星 (`bjx.com.cn`) and cnlng.
   Standing rules apply (no GEM, no fabricated URLs, ≥2 independent).
-- **Recon sources are weak here:** GulfPub has only ~108 China gas features
+- **Recon sources are weak here:** GulfPub carries **120** China gas features
   (trunks only — useless against the provincial grids; useful if the trunk scope
   ever runs). OSM would need per-province Overpass pulls, coverage unverified.
   Discovery signal comes from **document sweeps, not scraped geodata**.
+  - The count was **108** until 2026-08-12, when the reference-side country filter was found
+    comparing GulfPub's country string with `==` and dropping every multi-country record —
+    for China, the cross-border import trunks. Fixed same day:
+    `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+  - `batches/china-trunks-gas/staging/recon-gulfpub-20260812/` is the re-run (the 07-30 dir
+    is archived). **No workbook** — this batch never had a GulfPub deliverable, so there is
+    no review surface to refresh. It moved hard: **118 overlaps / 2 additions / 532 gem_only
+    / 18 status conflicts** (was 87 / 21 / 925 / 21). Only 4 of the falsified `gem_only`
+    entries are down to this filter; the rest is **other matcher fixes landed since 07-30**,
+    confirmed by the GEM pool being stable (986 → 988 China gas rows). If the trunk scope is
+    ever worked, build off this dir, not the 07-30 numbers.
 
 ## Coordination gotchas
 

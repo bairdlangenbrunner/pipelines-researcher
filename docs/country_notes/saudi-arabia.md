@@ -20,6 +20,22 @@ golden reference the engine generalizes).
 - MEED — Gulf project tracking and tenders.
 
 ## Reconciliation notes
+
+> **Both GulfPub scopes RE-RUN 2026-08-12** after the reference-side country filter was
+> found comparing GulfPub's country string with `==`, dropping every multi-country record
+> (Saudi gas 20 → 21 refs, oil 36 → 40). Engine defect, fixed same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> - **Gas** — work `pipelines_batch_20260812_1359_ET_saudi-arabia-gas_reconciliation-gulfpub.xlsx`
+>   (`20260729_0941` archived). Saudi gas is the **one scope in the tracker whose findings
+>   did not change**: 18 overlaps / 23 gem_only / 9 status conflicts all hold, with a single
+>   extra addition (2 → 3). Nothing below is retracted.
+> - **Oil** (`saudi-arabia-oil`, `--commodity both`, the oldest run in the repo at 06-03) —
+>   staging re-run, **no workbook**: this batch never had a GulfPub deliverable. It moved a
+>   long way, but mostly on *other* matcher fixes landed since June, not this filter:
+>   **55 overlaps / 6 additions / 42 gem_only / 13 status conflicts** (was 38 / 3 / 87 / 5).
+>   **45 of its 87 `gem_only` findings no longer hold** — treat any oil-side conclusion drawn
+>   from the 06-03 run as unverified until a workbook is built.
+
 - GulfPub covers Saudi crude well; gas coverage thinner (GulfPub historically
   tracks mostly crude). Known matched anchors for validation: P0637 (AB-4), P1972
   (Abqaiq Plants–Qatif Junction), P3966 (East–West Gas), P6734 (MGS III / MGS-3).

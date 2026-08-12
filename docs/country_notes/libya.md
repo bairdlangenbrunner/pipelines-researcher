@@ -92,6 +92,19 @@ not the tracker tab.
   never the agent's.)
 
 ## Reconciliation notes
+
+> **GulfPub RE-RUN 2026-08-12 — work
+> `pipelines_batch_20260812_1359_ET_libya-gas_reconciliation-gulfpub.xlsx` (`--commodity
+> both`); the `20260729_0941` workbook and its staging dir are in `archive/`.** The
+> reference-side country filter compared GulfPub's country string with `==`, dropping every
+> multi-country record (Libya gas 40 → 43 refs; the `both` run now ingests 132, not 129).
+> Engine defect, fixed same day:
+> `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+> **Retraction: 2 of the 37 `gem_only` findings were artifacts,** and there is now **1
+> status conflict where the shipped run had 0.** New totals: **112 overlaps / 20 additions /
+> 27 gem_only / 3 status conflicts** (was 104 / 25 / 37 / 3). Still under the >30 additions
+> gate. OSM is unaffected.
+
 - **GulfPub** covers Libya well: 129 records at `--commodity both` (89 oil, 40 gas),
   all with geometry → 104 overlaps, 25 additions, 3 status conflicts. Under the >30
   escalation trigger. Staged: `batches/libya-gas/staging/recon-gulfpub-20260728/`.
