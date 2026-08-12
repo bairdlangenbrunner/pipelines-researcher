@@ -79,8 +79,15 @@ anonymous link access, so reach for the `gws` CLI (`gws-gem`, read-only, the def
 Google Drive MCP tools first, never a public export URL, and never treat auth as a fallback.
 The anonymous CSV export died 2026-07-29 (401 on every tab; the sheet lives in shared drive
 `0AFOra93TfZAeUk9PVA`) and has been removed from the script — don't re-add it. `refresh_csvs.sh`
-reads each tab through Sheets `values.get` in `scripts/_sheets_pull.py`, reproducing the
-export's byte-shape (verified against the 07-28 snapshots: identical headers and row counts).
+is now a thin wrapper around the shared pull engine in **`../gem-db-ops`** (as of 2026-08-11):
+it calls `gem-db-ops/goit/pull.py --with-owners` and `gem-db-ops/ggit/pull.py`, which read each
+tab through Sheets `values.get` in `gem-db-ops/gem_sheets.py`, reproducing the export's
+byte-shape (verified identical on the Oil/NGL tab against the 2026-08-11 snapshot; headers and
+row counts identical on all three tabs). The local reader `scripts/_sheets_pull.py` is **gone** —
+don't re-create it; fix `gem-db-ops` instead so every consumer repo gets the fix. Override the
+sibling path with `GEM_DB_OPS_REPO` if the checkout isn't beside this repo. Each pull also drops
+a gitignored `<snapshot>.colmap.json` (re-derive with `python3 ../gem-db-ops/gem_colmap.py <csv>
+--tracker goit|ggit`).
 If it fails on auth, ask Baird to run `gws-gem auth login` (needs a browser) — don't try it
 headlessly. Writes still require per-edit authorization and `gws-gem-write` (see Hard
 requirements). Tabs: Oil/NGL (107 cols, GID 456134080), Gas (131 cols, GID 1020144097),
@@ -438,7 +445,14 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   is not filled in yet gets routed and applied like any other (Baird 2026-08-11); encoded in
   `apply_route_candidates` (blank passes the guard unless `RouteType` is already `Mapped`) and
   in `audit_route_sync` B/D. **Egypt gas is now 117 rows: 107 routed, 10 unrouted, and the 10
-  are exactly the known partials.** Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
+  are exactly the known partials.** **+ one of those partials, P7589 (Faramid), RESOLVED
+  2026-08-11 and STAGED NOT APPLIED** (`staging/route-creation-20260811-p7589/`, QC PASS,
+  36.9 km vs 38.0, `low`): Faramid is a development lease (code 94, East Obaiyed) on the EUG
+  concession map with five wellpads on imagery, and the "159 km false match" that blocked it
+  is withdrawn — **"Badr El Din Company" is BAPETCO the OPERATOR, not the BED field**, so the
+  end anchor is the Obaiyed gas plant 35 km west; geometry follows the existing Obaiyed export
+  ROW (OSM way/545729460). Applying it makes Egypt gas 108 routed / 9 unrouted.
+  Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
   the one defect is **P7338**, real geometry but `RouteType = Unavailable`, a three-way-
   sync violation fixable with `--backfill-route-type`.**
   Oil not yet swept):**
@@ -548,6 +562,23 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   authenticated read only (Sheets `values.get`, or Drive MCP `read_file_content` for its
   pipe-delimited markdown); anonymous CSV export → 401.
 - **Preferred sources** + the reference-dataset registry: `docs/reference/source_roster.md`.
+- **Archiving a `[ref]` document (Internet Archive).** Two different routes, and the
+  distinction matters: a **Wayback capture** (`web.archive.org/web/<ts>/<url>`) is IA's
+  crawler fetching the origin, scriptable anonymously; an **item**
+  (`archive.org/details/<id>`) is *our* bytes uploaded under our account, which works when
+  the crawler is blocked. Save Page Now only captures in **path** form
+  `https://web.archive.org/save/<url>` (302 → snapshot); the `?url=`/POST form returns the
+  interstitial with HTTP 200 and captures nothing — never treat that 200 as success, it
+  manufactures fake backup links. **Always verify a capture** by re-fetching it through the
+  `id_` raw modifier and checking the bytes are the expected type *and* the byte count
+  matches live. On an SPN `520` (IA can't reach the origin though we can), fall back to an
+  item upload: `internetarchive` 5.11.0 + `ia` CLI are installed, S3 keys in
+  `~/.config/internetarchive/ia.ini` (mode 600, outside the repo — never commit). Item
+  identifier = the **original filename stem**, per existing practice (279
+  `archive.org/details` refs in the tracker), and set `source`/`originalurl` metadata since
+  an item URL — unlike a Wayback URL — does not embed the origin. Verify by matching IA's
+  stored md5 to the local file. Worked example + the unarchivable cases:
+  `notes/escalation-2026-08-12-unarchivable-xlsx-refs.md`.
 - **Python/GIS:** `requirements.txt`; QGIS, GeoPandas, shapely, fiona; EPSG:4326.
 
 ---

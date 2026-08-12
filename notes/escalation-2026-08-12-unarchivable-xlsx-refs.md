@@ -1,24 +1,30 @@
-# Escalation — four spreadsheet `[ref]` sources cannot be archived (2026-08-12)
+# Escalation — two spreadsheet `[ref]` sources cannot be archived (2026-08-12)
 
 Batch: archive every spreadsheet (`.xls`/`.xlsx`) URL cited in a `[ref]` column and
 repoint the cells at the backups. Scope came from a fresh 2026-08-12 pull of all three
 tabs: **12 unique spreadsheet URLs across 131 cells / 56 rows**.
 
-**Outcome: 84 cells repointed and verified; 47 cells left untouched** across the four
-sources below. None of the four is a case where a `[ref]` may be dropped (standing rule:
-only a confirmed 404/410 may leave a `[ref]` cell; an access failure never can). All four
-are escalated here rather than edited.
+**Outcome: 89 cells repointed and verified; 42 cells left untouched** across the two
+sources below. Neither is a case where a `[ref]` may be dropped (standing rule: only a
+confirmed 404/410 may leave a `[ref]` cell; an access failure never can). Both are
+escalated here rather than edited.
 
-Applied write: `notes/backup-20260812_0915_ET-archive-ref-xlsx-replace.csv` (84 cells,
-before/after, `--mode replace`). Repointing to a Wayback URL is not a loss of provenance —
-`web.archive.org/web/<ts>/<original-url>` carries the original URL verbatim inside it.
+Applied writes, both `--mode replace`:
+- `notes/backup-20260812_0915_ET-archive-ref-xlsx-replace.csv` — 84 cells, Wayback
+  snapshots (9 files).
+- `notes/backup-20260812_0925_ET-archive-ref-xlsx-replace.csv` — 5 cells, archive.org
+  items (2 files; see §3–4 below, now resolved).
+
+Repointing to a Wayback URL is not a loss of provenance — `web.archive.org/web/<ts>/<original-url>`
+carries the original URL verbatim inside it. An **item** URL does not, so those uploads
+carry the origin in the item's own `source`/`originalurl` metadata instead.
 
 | source | cells | rows | why it failed |
 |---|---|---|---|
 | Gazprom Orenburg | 29 | 7 | origin geo-blocks non-RU IPs; never captured |
 | JOGMEC Japan 2022 | 13 | 9 | soft-404, document gone; never captured |
-| CNPC Dec-2019 disclosure | 3 | 3 | SPN `520` — IA crawler cannot fetch the origin |
-| gsprom.ru tenders | 2 | 2 | SPN `520` — IA crawler cannot fetch the origin |
+| ~~CNPC Dec-2019 disclosure~~ | 3 | 3 | SPN `520` — **RESOLVED** via IA item upload |
+| ~~gsprom.ru tenders~~ | 2 | 2 | SPN `520` — **RESOLVED** via IA item upload |
 
 ---
 
@@ -95,7 +101,7 @@ cell**, so all 13 are currently sourced solely to a dead document.
 
 ---
 
-## 3 & 4. CNPC Dec-2019 and gsprom.ru — SPN `520`, but we hold the bytes
+## 3 & 4. CNPC Dec-2019 and gsprom.ru — SPN `520`, RESOLVED by IA item upload
 
 | | |
 |---|---|
@@ -112,21 +118,33 @@ cell**, so all 13 are currently sourced solely to a dead document.
   on the same host was captured 2024-11-18, so `cnpc.com.cn` is archivable in principle.
   This specific fetch just keeps failing.
 
-**Recommendation — IA *item* upload, which is the method that already worked once.** The
-Jan-2020 CNPC file was archived by uploading the bytes to an archive.org item rather than
-asking the Wayback crawler to fetch it; that path bypasses the `520` entirely because it
-never touches the origin. Both files are preserved in-repo for exactly this purpose:
+**Resolved the same day by IA *item* upload** — the method that already worked for the
+Jan-2020 CNPC file. Uploading the bytes we hold bypasses the `520` entirely because it
+never touches the origin. Both files are preserved in-repo as the upload source:
 
 - `notes/unarchivable-2026-08-12/cnpc_201912_d3e4c46a1d424959a3c2e8218bb27a40.xls`
 - `notes/unarchivable-2026-08-12/gsprom_tenders_2025-05.xlsx`
 
-This needs an archive.org account — the `ia` CLI is not installed on this machine and no
-IA credentials exist here, so the upload has to be done by hand. Once the item URLs
-exist, the 5 cells are a trivial repoint.
+| origin | item ref | cells |
+|---|---|---|
+| CNPC Dec-2019 | `https://archive.org/details/d3e4c46a1d424959a3c2e8218bb27a40` | I2429/I2430/I2431 (P4522–P4524) |
+| gsprom.ru | `https://archive.org/details/gsprom_tenders_2025-05` | I1245 (P2425), I2109 (P4111) |
 
-**Cells affected** — Gas tab `Status [ref]`: CNPC on I2429/I2430/I2431 (P4522, P4523,
-P4524, single-ref cells); gsprom on I1245 (P2425) and I2109 (P4111), both of which hold
-2 other refs alongside.
+Identifier convention follows existing tracker practice (279 `archive.org/details` refs
+already cited): the identifier is the **original filename stem**. Both uploads were
+verified by re-reading the item metadata and confirming IA's stored md5 matches the local
+bytes — an HTTP 200 on the upload is not by itself proof the file registered.
+
+The CNPC cells were single-ref, so they now cite the item alone; the two gsprom cells kept
+their other refs (substring edit inside a multi-ref cell).
+
+**Tooling now in place** (was absent when this batch started): `internetarchive` 5.11.0
+installed, `ia` CLI at `~/miniconda3/bin/ia`, S3 keys in `~/.config/internetarchive/ia.ini`
+(mode 600, outside the repo — never commit it). Account:
+`baird.langenbrunner@globalenergymonitor.org` (`@baird92487`), the same one that owns the
+Jan-2020 item. So a future SPN `520` is a solved problem: download the bytes, upload as an
+item, repoint. Keys are revocable at `archive.org/account/s3.php` without touching the
+account password.
 
 Related: the two CNPC disclosure editions (Dec-2019 vs Jan-2020) differ in exactly 3
 cells, all design capacity revised **downward**; P4522–P4524 cite the Dec-2019 edition
