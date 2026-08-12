@@ -146,9 +146,17 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## malaysia-gas
 
+- `staging/deep-sweep-20260812` — rows=5 fills=2 updates=0 status-pending=0 refs(DEAD_LINK=3, REFS_ADDED=9, REVERIFIED=7, UNRESOLVED=19) routes=0 new(none)
+- `staging/qc` [assembled packet: handoff] — rows=5 fills=3 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-malaysian-gas-map-20260812` — recon inputs
 - `staging/recon-osm-20260812` — recon inputs
+- `deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-malaysian-gas-map.xlsx`
+- `deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260812_1344_ET_malaysia-gas_deepsweep.xlsx`
+- `deliverables/pipelines_batch_20260812_1344_ET_malaysia-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260812_1344_ET_malaysia-gas_handoff-evidence.xlsx`
 
 ## pakistan-gas
 

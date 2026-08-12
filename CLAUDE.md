@@ -528,6 +528,33 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   violation, P5776 the one operating row at `no route`, cluster F (P5927/P5928 byte-identical),
   P3945's `Osh` province, the CA–China 1,833 km question. Oil (41 rows) not swept):**
   `docs/country_notes/kazakhstan.md`.
+- **Malaysia (gas: first-ever full pass 2026-08-12, staged not applied. **FIVE files to work** —
+  the packet does NOT subsume the recons (`recon_actions=0`) and with THREE sources the recon
+  surface is the larger half: `…_20260812_1344_ET_malaysia-gas_handoff-{actions,evidence}.xlsx`
+  + `…_20260812_1343_ET_malaysia-gas_reconciliation-{gulfpub,osm,malaysian-gas-map}.xlsx`
+  (+ the `…_1344_ET_…deepsweep.xlsx` per-leg workbook, carried into actions). **The batch's
+  headline is a SCOPE RULING, not a data defect**: GEM tracks **5** Malaysian gas rows (vs
+  Indonesia 50 / Australia 151 / Thailand 34) while three independent sources describe ~150, and
+  all three crossed the >30-additions gate (GulfPub 51/41 disc., Malaysian Gas Map 67/65, OSM
+  29/8). The cross-tracker argument is the sharp one — **GOIT already carries 5 Malaysian OIL
+  rows (P7908–P7912, IM, Feb 2026) on the same offshore corridors GulfPub proposes on the gas
+  side**, so excluding the gas feeders tracks half of one physical bundle. Nothing is staged as
+  Discovery pending that ruling; if the answer is "out of scope", write the inclusion rule into
+  the country note. **The registry's first digitized document** (`sources/malaysian_gas_map/`,
+  MGA 2022 vector wall map) debuted here — labels provably unreliable, so it corroborates
+  CORRIDORS only. Two of the three runs are `MATCH_QUALITY` null runs (0 overlaps), and
+  **OSM is NOT independent here** — P1065/P1066 cite `openinframap.org`, an OSM render, so the
+  92% containment is the null run's diagnosis and carries zero corroborative weight (rule: read
+  `Route [ref]` before crediting a geometry source). Open: P1066 status (GulfPub splits the
+  512 km line and calls 386.2 km of it closed, summing to 498.9 km — GEM says wholly
+  `operating`, no `Status [ref]`, last touched 2023), **P7105** (the one row no source
+  corroborates; its 70 km is unspannable by its own endpoints — P1065's route ends at the Johor
+  Bahru Causeway, 5.8 km from Attap Valley ORF — so it is an existence/duplicate question, NOT a
+  length fix), P1066's `Operator` (the batch's only value change, medium, and **PGB is an
+  equally defensible reading**), and P1067's route (redraw via Sandakan; 662 km is right).
+  P1065's 0.46 length ratio is network-vs-mainline granularity, closed with no change. A blank
+  `Operator` here IS the tracker norm (22.53% filled overall / 18.44% gas) — do not import
+  India's reading. Oil (5 rows) not swept):** `docs/country_notes/malaysia.md`.
 - **Nigeria (divestiture ownership sweep not started):**
   `docs/country_notes/nigeria.md`.
 - **Israel (gas: INGL/TMNG-map ground-truth batch 2026-07-23 staged not applied —

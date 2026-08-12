@@ -1,0 +1,42 @@
+{
+  "project_id": "P1067",
+  "pipeline_name": "Trans Sabah Gas Pipeline",
+  "sheet_row": 603,
+  "wiki": "https://www.gem.wiki/Trans-Sabah_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to LengthKnownKm (662) — it is the officially reported project length and is now backed by three independent verified refs. This is a route-drawing problem, not a spec problem: the drawn geometry is a single 380 km LineString running roughly straight Kimanis (6.128N, 116.147E) to Tawau (4.405N, 117.919E), but every independent description of the project routes it via Sandakan (and Lahad Datu) on the east coast, not point-to-point. A GulfPub PE World Map scrape of the same project (Tier-2, not citable, but useful for shape) splits it into two segments — Kimanis to Sandakan (270.37 km / 267.08 km geodesic) and Sandakan to Tawau (391.07 km / 216.41 km geodesic) — summing to 661.4 km, matching the sheet's 662 km almost exactly and confirming the corridor bends north to Sandakan before continuing south to Tawau. Recommend a routes-repo follow-up: redraw P1067 as a two-leg corridor via Sandakan (RouteAccuracy can stay 'low' — this is still a schematic corridor, not a precision alignment) rather than replacing the direct line; update RouteNotes from 'not found' to note the Sandakan waypoint. No sheet cell changes beyond adding the LengthKnown ref below.",
+      "researcher_notes": "Three independent sources all state the TSGP as a 662 km pipeline running from Kimanis Gas Terminal (west coast) to Sandakan and Tawau (east coast), consistent with the sheet's LengthKnownKm=662: (1) Sinar Project / Politikus procurement tracker (Malaysian civil-society open-data project, independent of any wire story) — 'building a 662km gas pipeline from the Kimanis Gas Terminal on Sabah's west coast to Sandakan and Tawau on Sabah's east coast'; (2) AidData (William & Mary research lab, China Eximbank loan-tracking project record) — 'The TSGP involves the construction of a 662 km gas pipeline from Kimanis Gas Terminal facilities to gas turbine power generation plants in Sandakan, Lahad Datu and Tawau'; (3) Malaysiakini (Malaysian news outlet) — 'The TSGP project involved building a 662km gas pipeline from Kimanis Gas Terminal to Sandakan and Tawau'. All three name Sandakan as an explicit waypoint (AidData adds Lahad Datu), which is materially north of a direct Kimanis-Tawau line — this is why the true route is longer than the ~380 km great-circle-ish distance GEM's drawn LineString spans. Could NOT find a source giving an explicit two-segment km breakdown in independent citable press/NGO/research coverage; the 270/391 km segment split comes only from the GulfPub PE World Map scrape already staged in this batch's recon-gulfpub-20260812/match_diff.json (overlaps[2] and overlaps[3], oid 101411 and 101412 — Tier-2, not usable as a [ref], but its geometry corroborates the Sandakan-detour shape and its segment lengths sum to 661.4 km, within rounding of the sheet's 662). Daily Express Malaysia's dedicated 'Issues concerning the Trans Sabah Gas Pipeline Project' piece (a natural primary source, discussed the PAC/1MDB-era cost detail) returned HTTP 403 and could not be read or verified — noted as unverifiable, not cited. Did not find a Suria Strategic Energy Resources corporate statement with a length figure (would bear on the separately-flagged Owner1/CPPB-vs-Suria question, not restated here per instructions). Conclusion: 662 km is correct; the route geometry is under-drawn, not the length value."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 603,
+      "ref_col": "LengthKnown [ref]",
+      "value_cols": ["LengthKnown"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "662.00"},
+      "primary_value": "662.00",
+      "proposed_refs": [
+        "https://politikus.sinarproject.org/procurement/trans-sabah-gas-pipeline-tsgp",
+        "https://china.aiddata.org/projects/62285",
+        "https://www.malaysiakini.com/news/436328"
+      ],
+      "verifications": [
+        {"url": "https://politikus.sinarproject.org/procurement/trans-sabah-gas-pipeline-tsgp", "ok": true, "contains_value": true, "note": "url_verifier OK, 200 + expected content present ('662', name match); Sinar Project/Politikus procurement tracker: 'building a 662km gas pipeline from the Kimanis Gas Terminal on Sabah's west coast to Sandakan and Tawau on Sabah's east coast'"},
+        {"url": "https://china.aiddata.org/projects/62285", "ok": true, "contains_value": true, "note": "url_verifier OK, 200 + expected content present ('662', name match); AidData China Eximbank loan record: 'The TSGP involves the construction of a 662 km gas pipeline from Kimanis Gas Terminal facilities to gas turbine power generation plants in Sandakan, Lahad Datu and Tawau'"},
+        {"url": "https://www.malaysiakini.com/news/436328", "ok": true, "contains_value": true, "note": "url_verifier OK, 200 + expected content present ('662', name match); Malaysiakini: 'The TSGP project involved building a 662km gas pipeline from Kimanis Gas Terminal to Sandakan and Tawau'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Three mutually independent sources (Malaysian civil-society procurement tracker, an academic China-development-finance database, and a Malaysian news outlet) each separately state 662 km end to end for TSGP Kimanis-Sandakan-Tawau. This is ref-only work: the sheet's existing LengthKnownKm value (662) is unchanged, only the missing citation is added."
+    }
+  ],
+  "summary": "The length_ratio flag is resolved as a route-drawing gap, not a bad value: LengthKnownKm=662 is the officially and consistently reported TSGP length, now corroborated to high confidence by three independent sources (Sinar Project/Politikus, AidData, Malaysiakini). The 380 km GEM route understates the true corridor because every independent source routes the pipeline via Sandakan (and Lahad Datu) up the east coast before continuing to Tawau, not as a direct Kimanis-Tawau line — a GulfPub scrape's own two-segment geometry (270.4 km + 391.1 km = 661.4 km) corroborates that exact shape. Recommendation: leave LengthKnownKm as is, add the three verified refs, and route the geometry fix (redraw via Sandakan) to the routes-repo follow-up track rather than a sheet-value change."
+}

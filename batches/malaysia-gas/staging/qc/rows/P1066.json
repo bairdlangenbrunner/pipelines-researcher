@@ -1,0 +1,55 @@
+{
+ "project_id": "P1066",
+ "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+ "sheet_row": 602,
+ "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "attribution",
+   "recommendation": "On the operators/owners tab (ProjectID P1066), set Operator = 'PETRONAS Carigali Sdn Bhd' and Operator [ref] to the two verified sources below. Note in the same row's Notes/Links (or ResearcherNotes on the gas tab) that PETRONAS Gas Berhad (PGB) — the separately listed transmission subsidiary (Bursa: PETGAS/6033) — also has documented ties to SSGP via a 2017 20-year O&M agreement with PETRONAS Carigali; the exact day-to-day operator-of-record split between PGB (O&M contractor) and PCSB (asset owner/decommissioning executor) is not fully resolved by public sources, so keep 'PETRONAS Carigali Sdn Bhd' as the value with that caveat rather than naming PGB. Do NOT write 'Petronas' alone (that duplicates the Owner cell, which already correctly holds 100% Petronas parent ownership) and do not cite gem.wiki.",
+   "researcher_notes": "Owner vs operator: the sheet's Owner1 = 'Petronas' 100% (already correct — offshore-technology.com, chemanalyst.com, Bernama previously confirmed this per the deep-sweep leg). Operator is a distinct question. Two independent sources tie PETRONAS CARIGALI SDN BHD (PCSB) — the upstream E&P subsidiary, not PGB the listed transmission subsidiary — to SSGP's operations: (1) PETRONAS Gas Berhad's own corporate 'Our Journey' timeline (petronas.com/pgb/about-us/our-journey) records, as a 2017 milestone, 'Execution of a 20-year Operation and Maintenance (O&M) Agreement with PETRONAS Carigali Sdn Bhd for operation and maintenance of the Sabah-Sarawak Gas Pipeline (SSGP)' — verbatim quote confirmed by direct fetch; (2) Pipeline Technology Journal (independent trade press, published 2025-10-21, 'Sarawak Eyes Repurposing Sabah-Sarawak Gas Pipeline for Energy Transition') reports that 'PETRONAS Carigali Sdn Bhd (PCSB) presented updates on the SSGP assets within Sarawak' and that the newly formed Sabah and Sarawak Gas Pipeline Decommissioning Coordination Committee (SDCC) will ensure 'PCSB executes the decommissioning and handover of assets.' Both sources are independent of each other (Petronas' own corporate site vs. an unaffiliated trade journal) and of gem.wiki. Neither source uses the bare word 'operator', so tier is MEDIUM rather than high — the exact contractual direction of the 2017 O&M agreement (whether PGB performs O&M services for asset-owner PCSB, or vice versa) is not disambiguated, and the 2025 source specifically describes PCSB's role in the CURRENT decommissioning period (2025-2027), not necessarily the full 2014-2024 operating history. Wikipedia's infobox lists only 'Petronas' with no subsidiary named, so it does not count as independent corroboration for a specific entity. Tracker-wide check: the GGIT gas tab itself (data/GGIT_gas_snapshot_20260812.csv, header row 2) has NO 'Operator' column at all — Operator lives solely on the separate ProjectID-keyed operators/owners tab (data/GEM_operators_owners_snapshot_20260812.csv, header row 1). On that tab, Operator is populated on 1,455 of 6,459 rows overall (22.53%) and 798 of 4,327 gas-fuel rows (18.44%) — confirming a blank Operator is the tracker norm, not a Malaysia-specific gap, consistent with the ~18% figure already noted for India's row. So this is a genuine, correctable data gap worth filling, but not evidence of a Malaysia-specific defect. COMPETING READING, STATED EXPLICITLY SO THE REVIEWER SEES BOTH: the 2017 milestone appears on PETRONAS GAS BERHAD's OWN 'Our Journey' timeline, as one of PGB's own milestones. The natural reading of a company listing 'Execution of a 20-year O&M Agreement with PCSB for operation and maintenance of the SSGP' among its achievements is that PGB WON the O&M contract and PCSB is the asset-owning counterparty — i.e. the operator-of-record would be PGB, the opposite of the value proposed here. The 2025 trade-press item does not settle it either: it puts PCSB in the decommissioning-executor role, which is an asset-owner function as much as an operator one. Neither source says 'operator'. Treat this fill as ONE of two defensible answers; the third defensible answer is to leave Operator blank, which is what 81.6% of GGIT gas rows do."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 602,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "PETRONAS Carigali Sdn Bhd"
+   },
+   "primary_value": "PETRONAS Carigali Sdn Bhd",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.petronas.com/pgb/about-us/our-journey",
+    "https://www.pipeline-journal.net/news/sarawak-eyes-repurposing-sabah-sarawak-gas-pipeline-energy-transition"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.petronas.com/pgb/about-us/our-journey",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier.py OK, 200 + expected content present. Verbatim 2017 milestone: 'Execution of a 20-year Operation and Maintenance (O&M) Agreement with PETRONAS Carigali Sdn Bhd for operation and maintenance of the Sabah-Sarawak Gas Pipeline (SSGP).' Petronas' own corporate record, independent of gem.wiki."
+    },
+    {
+     "url": "https://www.pipeline-journal.net/news/sarawak-eyes-repurposing-sabah-sarawak-gas-pipeline-energy-transition",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier.py OK, 200 + expected content present. Independent trade journal, published 2025-10-21: 'PETRONAS Carigali Sdn Bhd (PCSB) presented updates on the SSGP assets within Sarawak'; PCSB tasked with executing decommissioning/handover under the new SDCC."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Fill proposes PETRONAS Carigali Sdn Bhd (PCSB) as Operator, distinct from Owner1='Petronas' (100%, parent, already correct) and from PETRONAS Gas Berhad (PGB, the listed downstream transmission subsidiary named in the 2017 O&M agreement as PCSB's counterparty). Tier=medium: two independent sources corroborate PCSB's operational/asset-management tie to SSGP, but neither states 'operator' verbatim and the clearer of the two describes the current 2025-2027 decommissioning period specifically — flagged per instructions that a decommissioning line's operator attribution may be period-specific. If a researcher wants a stricter bar, leaving Operator blank (tracker norm, ~18-22% fill rate) is also defensible; this fill is offered as the best-supported non-GEM answer, not a certainty. COMPETING READING, STATED EXPLICITLY SO THE REVIEWER SEES BOTH: the 2017 milestone appears on PETRONAS GAS BERHAD's OWN 'Our Journey' timeline, as one of PGB's own milestones. The natural reading of a company listing 'Execution of a 20-year O&M Agreement with PCSB for operation and maintenance of the SSGP' among its achievements is that PGB WON the O&M contract and PCSB is the asset-owning counterparty — i.e. the operator-of-record would be PGB, the opposite of the value proposed here. The 2025 trade-press item does not settle it either: it puts PCSB in the decommissioning-executor role, which is an asset-owner function as much as an operator one. Neither source says 'operator'. Treat this fill as ONE of two defensible answers; the third defensible answer is to leave Operator blank, which is what 81.6% of GGIT gas rows do."
+  }
+ ],
+ "summary": "Owner and operator are genuinely different questions for SSGP: Owner1 (Petronas, 100%) is already correct and independently confirmed by the prior deep-sweep leg. For Operator, two independent, non-GEM sources — PETRONAS Gas Berhad's own corporate history page and an October 2025 Pipeline Technology Journal article on the SSGP decommissioning handover — both tie PETRONAS Carigali Sdn Bhd (PCSB), not PGB, to SSGP's operations and asset management, so a medium-tier fill of Operator = 'PETRONAS Carigali Sdn Bhd' is proposed on the operators/owners tab. The blank Operator cell is not a Malaysia-specific defect: the field is populated on only 22.5% of all rows and 18.4% of gas rows tracker-wide on the operators/owners tab (the GGIT gas tab itself carries no Operator column at all), so this fill closes a real gap rather than correcting an anomaly."
+}

@@ -1,0 +1,1234 @@
+{
+ "meta": {
+  "mode": "handoff_actions",
+  "country": "Malaysia",
+  "commodity": "gas",
+  "csv": "GGIT_gas_snapshot_20260812.csv",
+  "staged_dirs": [
+   "malaysia-gas/deep-sweep-20260812"
+  ],
+  "counts": {
+   "concerns_by_type": {
+    "duplicate": 1,
+    "attribution": 5,
+    "spec": 4
+   },
+   "status_verdicts": {},
+   "status_changes": 0,
+   "fills": 2,
+   "ref_work_by_class": {
+    "UNRESOLVED": 19,
+    "REFS_ADDED": 9,
+    "DEAD_LINK": 3
+   },
+   "ref_reverified": 7,
+   "routes": 0,
+   "new_rows_by_class": {},
+   "out_of_scope_dropped": 0
+  }
+ },
+ "concerns": [
+  {
+   "concern_type": "duplicate",
+   "verdict": "concern",
+   "sheet_row": 3780,
+   "pipeline_name": "Malaysia Singapore Gas Pipeline",
+   "segment_name": "",
+   "recommendation": "Check route geometry: verify whether P7105's traced 70 km route overlaps physically with P1065 (Peninsular Gas Utilization Pipeline, Kertih->Perlis, 2623 km aggregate network). If it does, exclude the overlap from one of the two length totals rather than double-counting the same pipe under two ProjectIDs.",
+   "researcher_notes": "APERC's 'Natural Gas Pipeline Development in Southeast Asia' (2000), Table 11 ('Gas pipeline infrastructure in Peninsular Malaysia'), lists PGU-II as: 'i) 714 km natural gas mainline system from: Telok Kalong to Segamat; Segamat to Kapar, Port Klang (west); Segamat to Pasir Gudang & Singapore (south)...Pipelines completed in 1991/92.' In other words, the original engineering project that first delivered Malaysian gas to Singapore was not a standalone international pipeline -- it was the southern branch of PGU-II's domestic 714 km mainline, extended across the border. P1065 in this roster ('Peninsular Gas Utilization Pipeline', Kertih->Perlis, len=2623 km) is GEM's aggregate row for that same domestic PGU network (PGU I/II/III + loops), and P7105 (70 km, same 1991/92 vintage, same PETRONAS ownership, same physical corridor toward the Johor-Singapore boundary) is very plausibly the tail end of that same mainline being counted a second time under a separate ProjectID. This is a segment-vs-network double-count risk, not a certainty -- I do not have route/geometry data for either PID in this shard to confirm overlap directly, so I'm flagging for a geometry check rather than asserting the fold outright. Wikipedia's 'Peninsula Gas Utilisation' article independently corroborates the same picture ('Phase II of the PGU project, completed in 1992, extended the pipeline to the western and southern parts of Peninsular Malaysia as well as Singapore'), for context only (not used as a citable ref).",
+   "proposed_refs": [
+    "https://www.petronas.com/pgb/about-us/our-journey"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P7105",
+   "also_flagged": []
+  },
+  {
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "recommendation": "Correct Owner1 from 'Petronas' 100% to 'Petronas Gas Berhad' (PGB) — the entity PETRONAS's own site names as the actual owner/operator of the PGU pipeline system — and verify PGB's exact current shareholding structure before assigning any parent-level percentage; PGB is a separately incorporated, Bursa Malaysia-listed company that has NOT been wholly owned by parent PETRONAS since its 1995 IPO, so 100% is very unlikely to be correct for either the parent or PGB depending on which entity the field is meant to record.",
+   "researcher_notes": "The sheet records Owner1='Petronas' at 100%. PETRONAS's own official gas-transportation page states the PGU system 'is owned and operated by Petronas Gas Berhad' — a distinct, separately incorporated subsidiary (PGB, Bursa Malaysia ticker PETGAS), not the ultimate parent group 'Petronas' (Petroliam Nasional Berhad) directly. Independently, English Wikipedia's Petronas article confirms PGB has been a publicly listed company since its 1995 IPO on the Kuala Lumpur Stock Exchange, i.e. NOT a wholly-owned subsidiary of the parent — general market/investor-relations reporting found during this check consistently describes PETRONAS's stake in PGB as roughly half (~51%), with the remainder publicly traded, though I could not pin an exact current percentage to a single fully-verifiable citable page (a PGB Bursa filing PDF returned an ambiguous/likely-boilerplate '100%' holding-company statement that conflicts with PGB's known public-listing status, so I am not citing that figure). Two independent sources agree the asset-owning/operating entity is PGB, not the parent, and that PGB is not wholly parent-owned — that much is a solid attribution finding; the exact percentage split needs a follow-up look at a current PGB annual report/Bursa shareholding disclosure before writing a number to the sheet.",
+   "proposed_refs": [
+    "https://www.petronas.com/pgb/our-business/gas-transportation",
+    "https://en.wikipedia.org/wiki/Petronas"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P1065",
+   "also_flagged": [
+    "wiki_alignment:Operator",
+    "wiki_alignment:Owner",
+    "wiki_alignment:Parent"
+   ]
+  },
+  {
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "recommendation": "Correct Owner1 on the operators/owners tab: replace 'China Petroleum Pipeline Bureau (CPPB)' 100% with 'Suria Strategic Energy Resources Sdn Bhd (SSER)' 100% (a Ministry of Finance-owned SPV, incorporated 2016-05-19 specifically to develop the TSGP + Multi-Product Pipeline). CPPB is the EPC contractor, not the owner -- if GEM's schema wants to record CPPB at all it belongs in ResearcherNotes as 'EPC contractor', not in an Owner slot.",
+   "researcher_notes": "The sheet's Owner1 = 'China Petroleum Pipeline Bureau (CPPB)' 100% conflates the CONTRACTOR with the OWNER. Two independent outlets are explicit and use the term 'owner-cum-developer' for the other party: theedgemalaysia.com (2016-era article, reprint of a government statement) states 'the owner-cum-developer of the TSGP is Suria Strategic Energy Resources Sdn Bhd (SSER), a company wholly owned by Malaysia's Ministry of Finance' and separately identifies CPPB as 'the engineering, procurement, construction and commissioning contractor.' thestar.com.my (2018-06-05, reporting the Pakatan Harapan government's post-election scandal disclosure) corroborates: 'SSER is [a] wholly-owned subsidiary of MoF that was set up on May 19, 2016 with the specific intent to undertake the [MPP] and the [TSGP] projects' and that the RM9.41bil contract for both projects 'were awarded to China Petroleum Pipeline Bureau (CPPB) on Nov 1, 2016' -- i.e. CPPB is the awarded contractor, SSER is the government-owned project company that awarded the contract and holds the financing (China Exim Bank loan + sukuk, both government-guaranteed). This is a materially different fact from what's on the sheet: CPPB never owned the pipeline or the SPV; it was paid to build it (and per multiple sources was paid 88% of contract value for only 13% of the physical work before the 2018 halt). Two independent sources, high tier.",
+   "proposed_refs": [
+    "https://theedgemalaysia.com/article/rm45b-trans-sabah-gas-pipeline-be-funded-loan-china-guaranteed-malaysia",
+    "https://www.thestar.com.my/business/business-news/2018/06/05/mof-reveals-rm9-4bil-gas-pipeline-scandal/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P1067",
+   "also_flagged": [
+    "wiki_alignment:Operator",
+    "wiki_alignment:Parent"
+   ]
+  },
+  {
+   "concern_type": "attribution",
+   "verdict": "confirmed (caveat)",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "recommendation": "Consider narrowing FuelSource: per the operator's own facilities description, Block B-17 gas feeds a physically SEPARATE line (the 55km/42in + 3km/24in 'A18-B17 Pipeline' to the JDA border/PTT system), not this 267km/34in line to Chana, which the operator describes as originating solely at the Block A-18 platform. Also worth a note that StartCountryOrArea='Malaysia' is a simplification -- the origin platform sits in the jointly-administered Thailand-Malaysia Joint Development Area, not exclusively Malaysian waters.",
+   "researcher_notes": "GEM's FuelSource reads 'offshore block A-18 and block B-17 gas reserves, Malaysia's joint development area.' The operator's own facilities page (ttm-jda.com/content/service) draws a clear distinction between TWO separate offshore pipelines: (1) the 'Offshore Pipeline' -- 267 km, 34-inch, beginning at the Block A18 central processing platform, delivering to the landing point in Chana, Songkhla -- this is the line GEM tracks as P1068 (length/diameter/endpoint match exactly); and (2) the 'A18-B17 Pipeline' -- a 55 km/42-inch line from A18 plus a 3 km/24-inch line from B17, delivering to the JDA border / PTT Gas Pipeline System in Thailand -- a physically different, shorter pipeline not matching P1068's specs at all. So B17 gas, per the operator's own description, reaches Thailand via the separate A18-B17 line, not via this 267 km line. It's plausible gas from both platforms is commingled upstream at the A18 platform before entering the 267 km line (not confirmed either way in the sources read), so this is flagged as a caveat/note for a future researcher to run down rather than a hard error -- not escalated to a full 'concern' verdict given the core existence/length/diameter/capacity/ownership data for this row is independently confirmed and correct. StartLocation/StartCountryOrArea also worth a light touch: the platform is in the JDA, an area jointly administered by Malaysia and Thailand under a 1979 memorandum / production-sharing arrangement, not solely Malaysian territory -- 'Malaysia' is a defensible convention (matches the Malaysian JV partner side, PETRONAS/Trans Thai-Malaysia (Malaysia) Sdn Bhd) but not literally precise.",
+   "proposed_refs": [
+    "https://www.ttm-jda.com/content/service/?lang=eng"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P1068",
+   "also_flagged": [
+    "wiki_alignment:Operator",
+    "wiki_alignment:Parent"
+   ]
+  },
+  {
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "sheet_row": 3780,
+   "pipeline_name": "Malaysia Singapore Gas Pipeline",
+   "segment_name": "",
+   "recommendation": "Replace the Owner [ref] URL -- the current citation is about an unrelated hypothetical hydrogen pipeline, not this gas pipeline. Petronas.com/pgb/about-us/our-journey is a better fit (PGB's own corporate history documents the Senoko gas delivery this row describes) but note PETRONAS Gas Berhad is a majority-owned, publicly listed subsidiary (Bursa Malaysia: PETGAS/6033), not a wholly-owned Petronas asset, so '100%' at the Owner1 level is an industry-standard simplification, not literally precise.",
+   "researcher_notes": "The current Owner [ref] (https://renewablesnow.com/news/gentari-city-energy-to-study-malaysia-singapore-hydrogen-pipeline-837558/) is about Gentari (a PETRONAS clean-energy subsidiary) and City Energy studying the FEASIBILITY of a brand-new, not-yet-built HYDROGEN pipeline between Malaysia and Singapore -- a completely different, hypothetical future project. It passed url_verifier's token check only because 'Petronas' and 'hydrogen' both literally appear in that unrelated article's title; it does not actually support 'Owner1=Petronas' for THIS 1991/92-vintage natural-gas pipeline at all. The underlying ownership claim (Petronas Gas Berhad, a PETRONAS group company, built and operates the PGU network including the Senoko/Singapore export line) is independently supportable via PETRONAS Gas Berhad's own corporate-history page, which documents 'First salesgas delivery to Senoko Power Station in Singapore via submarine pipeline' as one of PGB's own milestones -- but that page does not give a precise ownership percentage, and PGB itself has minority public shareholders (EPF, KWAP, and free float) alongside PETRONAS' controlling stake, so 'Petronas 100%' is a simplification worth flagging even though I am not proposing to change the value itself.",
+   "proposed_refs": [
+    "https://www.petronas.com/pgb/about-us/our-journey"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P7105",
+   "also_flagged": [
+    "wiki_alignment:Operator",
+    "wiki_alignment:Parent"
+   ]
+  },
+  {
+   "concern_type": "attribution",
+   "verdict": "concern",
+   "sheet_row": 3780,
+   "pipeline_name": "Malaysia Singapore Gas Pipeline",
+   "segment_name": "",
+   "recommendation": "Verify and likely correct StartLocation -- 'Attap Valley' is very likely a Singapore place name mistakenly duplicated onto the Malaysian side. Research the actual Malaysian landing/compressor-station name (APERC's routing description points toward the Pasir Gudang / Johor Bahru area) before changing the cell.",
+   "researcher_notes": "GEM's own values list StartLocation='Attap Valley', StartState/Province='Johor', StartCountryOrArea='Malaysia' for the Malaysian side, and EndLocation='Attap Valley Onshore Receiving Facility', EndCountryOrArea='Singapore' for the Singapore side -- i.e. the identical place name 'Attap Valley' is used for BOTH ends. Independent search confirms 'Attap Valley' (Attap Valley Road) is a real, specific place in Sembawang, Singapore -- site of a former WWII-era Naval Base ammunition depot, now the location of the 'Attap Valley Onshore Receiving Facility' referenced in Singapore Energy Market Authority filings (e.g. the EMA's 2007 Keppel Gas Section 38 consultation, which describes 'the onshore gas pipeline network...between the boundary fence of the Attap Valley Onshore Receiving Facility to the offtake point at the Keppel Plant'). I found no evidence 'Attap Valley' is also a place name in Johor, Malaysia -- it appears only ever as a Singapore location in independent sources. This strongly suggests the Malaysian StartLocation field is a copy/duplication error rather than a verified place name, though I could not independently confirm what the correct Malaysian-side landing point name should be (APERC's 1991/92 PGU-II routing describes the branch as running 'Segamat to Pasir Gudang & Singapore', which points toward the Pasir Gudang / Johor Bahru area, but that is a corridor description, not a confirmed compressor-station or landing-point name). Recommend Update-leg research to pin down the correct Malaysian toponym before touching the cell.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P7105",
+   "also_flagged": [
+    "wiki_alignment:Operator",
+    "wiki_alignment:Parent"
+   ]
+  },
+  {
+   "concern_type": "spec",
+   "verdict": "concern",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "recommendation": "Verify/correct StartYear1=1993 — no independent source names 1993 as a PGU milestone. Consider either correcting StartYear1 to 1984 (Phase I, first gas at Kertih) and using StartYear2/StartYear3 to record the 1992 Singapore-export extension and the ~1996-1998 Perlis extension (which is what actually brings the route to the full Kertih->Perlis/Kangar extent and 2,623 km length recorded on this row), or documenting in ResearcherNotes which specific 1993 milestone the sheet intends.",
+   "researcher_notes": "StartYear1=1993 does not match any documented PGU milestone in the two independent sources that give a construction timeline. Wikipedia (independent secondary source): Phase I completed 1984 (Kertih GPP + 32 km pipeline), Phase II completed 1992 (extension west/south to Singapore), Phase III completed 1998 (Meru→Perlis extension, i.e. the segment that reaches this row's own EndLocation). Oil & Gas Journal (independent trade press, contemporaneous ~1996 reporting on Stage III): Stage III Sector 1 (Meru→Lumut, 184 km + Segari lateral) completed Q1 1996; Sectors 2&3 (Lumut→Pauh, 264 km + Prai/Teknologi Tenaga Perlis laterals) followed. Neither source places any phase completion in 1993 — the closest documented dates bracketing it are 1992 (Phase II) and 1996-1998 (Phase III/Stage III). Since this row's own recorded length (2,623 km) and endpoints (Kertih→Perlis) only exist once Phase III/Stage III is complete, a single StartYear1=1993 understates when the full route described on this row was actually finished, and doesn't correspond to any single phase's completion either. This is a genuine, if modest, spec mismatch worth a research follow-up rather than a silent pass.",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Peninsula_Gas_Utilisation",
+    "https://www.ogj.com/home/article/17242639/malaysia39s-peninsular-gas-system-gets-another-segment"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P1065",
+   "also_flagged": []
+  },
+  {
+   "concern_type": "spec",
+   "verdict": "concern",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "recommendation": "Clarify CancelledYear: either update it to 2025 (the year of the current, still-standing cancellation that the live Status=cancelled reflects) or add a ResearcherNotes line documenting both cancellation events (2018 and 2025) plus the intervening 2021 revival, so a reader doesn't mistake 2018 for a static, uninterrupted cancellation history.",
+   "researcher_notes": "CancelledYear=2018 is technically true of the FIRST cancellation (announced Aug/confirmed Sep 2018 per The Star 2018-07-28 and Transparency International Malaysia) but the project did not stay cancelled: it was revived in Feb 2021 under the Perikatan Nasional government (freemalaysiatoday.com 2021-10-23, 'Controversy as RM4bil Sabah gas pipeline project revived') and only reached its current (as of Aug 2026) cancelled state after being scrapped a second time in Feb 2025 (freemalaysiatoday.com 2025-02-19 + nst.com.my 2025-02-20, both explicit and independent). Since the sheet's live Status value is 'cancelled' -- describing the CURRENT state -- and that current state dates from the Feb 2025 decision, not the reversed 2018 one, CancelledYear=2018 is arguably the wrong anchor year for the status it's paired with, or at minimum is incomplete/misleading without a note about the 2021 revival. This is a genuine material question for Update to resolve, not a rubber-stamp; I did not overwrite the value myself.",
+   "proposed_refs": [
+    "https://www.freemalaysiatoday.com/category/nation/2025/02/19/controversial-rm4bil-sabah-gas-pipeline-project-scrapped-again",
+    "https://www.nst.com.my/news/nation/2025/02/1177604/sabahs-rm4-billion-gas-pipeline-project-scrapped-again-federal",
+    "https://www.freemalaysiatoday.com/category/nation/2021/10/23/controversy-as-sabah-gas-pipeline-project-revived/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P1067",
+   "also_flagged": []
+  },
+  {
+   "concern_type": "spec",
+   "verdict": "confirmed (caveat)",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "recommendation": "No change -- GEM's Length/Diameter/Capacity/StartYear1 all match the operator's own published specs exactly; keep as is.",
+   "researcher_notes": "SPEC check against >=2 independent sources for the specific segment GEM tracks (start blank/offshore -> end Chana, Songkhla): the operator's own facilities page (ttm-jda.com/content/service) states verbatim: 'Offshore Pipeline Services ... approximately 267 km. 34-inch pipeline begin[ning] at the central processing platform of Block A18 ... to deliver PETRONAS and PTT JDA Gas to the landing point in Chana, Songkhla' -- an EXACT match to GEM's LengthKnown=267 km, Diameter=34 in, and EndLocation=Chana/Songkhla/Thailand. offshore-technology.com (industry trade press, independent second source) corroborates the 34-inch diameter and a design capacity of '1,020mmscfd' for this same offshore section -- matching GEM's Capacity=1020.00 MMcf/d exactly, though it labels the segment length as '277km' rather than 267 km (a ~3.7% variance from the operator's own figure, likely rounding/route-curvature difference in the secondary source; not treated as material since the primary/operator source matches GEM to the km). StartYear1=2007 is corroborated independently by Wikipedia and offshore-technology.com (both: construction started mid-2003, pipeline/GSP completed and operational 2006-2007). Wikipedia separately cites a wider 34-to-42-inch diameter range for the TTM system overall -- that range spans multiple physically distinct segments (the 267km/34in offshore line GEM tracks here, plus a separate 55km/42in + 3km/24in 'A18-B17 Pipeline', a 89km/36in sales-gas line, and an 8in LPG line), so it is not a conflict with GEM's single 34in value for this specific segment.",
+   "proposed_refs": [
+    "https://www.ttm-jda.com/content/service/?lang=eng",
+    "https://www.offshore-technology.com/projects/thaimalaysia/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P1068",
+   "also_flagged": [
+    "wiki_alignment:Capacity",
+    "wiki_alignment:Diameter",
+    "wiki_alignment:LengthKnownKm"
+   ]
+  },
+  {
+   "concern_type": "spec",
+   "verdict": "concern",
+   "sheet_row": 3780,
+   "pipeline_name": "Malaysia Singapore Gas Pipeline",
+   "segment_name": "",
+   "recommendation": "Update StartYear1 from 1991 to 1992 -- two independent sources, one of them the pipeline owner's own corporate record, both say 1992; the sheet's current cited source (southeastasiainfra.com) is the lone outlier at 1991.",
+   "researcher_notes": "GEM has StartYear1=1991, sourced to the sheet's own cited southeastasiainfra.com ('commissioned in 1991'). Two independent sources materially disagree and both say 1992: (1) PETRONAS Gas Berhad's own corporate-history timeline (petronas.com/pgb/about-us/our-journey) lists '1992: First salesgas delivery to Senoko Power Station in Singapore via submarine pipeline' -- this is the pipeline owner's own primary record of first gas flow; (2) APERC's 'Natural Gas Pipeline Development in Southeast Asia' (2000) independently states 'The first trans-border gas pipeline in Southeast Asia was completed in 1992...' and, separately in the same report, 'since the completion of the second phase of the Peninsular Gas Utilisation (PGU II) pipeline project in 1992, Malaysia has been exporting 1.55 BCM per year of natural gas through pipeline to Singapore' -- and its own Table 11 lists PGU-II's Segamat-Pasir Gudang-Singapore branch as 'completed in 1991/92' with GPPs 'completed in 1992/93', i.e. even the source that hedges still centers on 1992 as the operative in-service year for the Singapore export capability. Per standing rule 4 (2+ independent sources in agreement = high tier), 1992 is the better-supported value; 1991 (single secondary source) should be treated as the outlier, not GEM's current value. NOTE on verification: url_verifier's substring check FAILs on the APERC PDF ('200 but missing expected') even for trivial tokens like 'APEC' that are certainly in the document -- this matches the tool's own documented large/complex-PDF extraction limitation (see url_verifier.py header comments). I confirmed the URL is live (HEAD request: 200, application/pdf, 579KB) and manually extracted its text with `pdftotext -layout`, which shows the exact quoted passages above verbatim, including 'completed in 1992' and Table 11's PGU-II routing. Citing it on that manual confirmation per the tool's documented exception process, not on the automated PASS.",
+   "proposed_refs": [
+    "https://www.petronas.com/pgb/about-us/our-journey",
+    "https://aperc.or.jp/file/2010/9/26/Natural_Gas_Infrastructure_Development_Southeast_Asia_2000.pdf"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_dir": "malaysia-gas/deep-sweep-20260812",
+   "project_id": "P7105",
+   "also_flagged": []
+  }
+ ],
+ "status_changes": [],
+ "fills": [
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Diameter [ref]",
+   "class_in": "FILL",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "Diameter",
+   "primary_value": "36",
+   "values": {
+    "Diameter": "36",
+    "DiameterUnits": "in"
+   },
+   "proposed_refs": [
+    "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+    "https://www.offshore-technology.com/projects/sabah-sarawak/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/sabah-sarawak/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Diameter/DiameterUnits/Diameter [ref] are genuinely blank on the live sheet (verified against the 2026-08-12 CSV snapshot). Both independent sources give 36 inches for the SSGP mainline. Deep-filled as a new value, not a correction.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "class_in": "FILL",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "StartLocation",
+   "primary_value": "Block A-18 platform, Malaysia-Thailand Joint Development Area",
+   "values": {
+    "StartLocation": "Block A-18 platform, Malaysia-Thailand Joint Development Area"
+   },
+   "proposed_refs": [
+    "https://www.ttm-jda.com/content/service/?lang=eng",
+    "https://www.offshore-technology.com/projects/thaimalaysia/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ttm-jda.com/content/service/?lang=eng",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/thaimalaysia/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "StartLocation/StartPrefecture-District/StartState-Province were all blank. Both the operator (ttm-jda.com) and offshore-technology.com independently and consistently describe this line's origin as the central processing platform on Block A-18 in the JDA -- an offshore facility with no onshore prefecture/district/province, so those two sub-fields are left blank rather than forced to a value. StartCountryOrArea was already populated as 'Malaysia' (see attribution caveat above re: JDA jurisdiction) and left unchanged since it is a defensible existing value, not a blank field.",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  }
+ ],
+ "ref_work": [
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Status",
+   "primary_value": "operating",
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Fuel",
+   "primary_value": "Gas",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Start [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "StartYear1",
+   "primary_value": "1993",
+   "values": {
+    "StartYear1": "1993"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Capacity",
+   "primary_value": "3500.00",
+   "values": {
+    "Capacity": "3500.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "LengthKnown",
+   "primary_value": "2623.00",
+   "values": {
+    "LengthKnown": "2623.00",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "FuelSource [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "FuelSource",
+   "primary_value": "Terengganu Gas Field",
+   "values": {
+    "FuelSource": "Terengganu Gas Field"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "StartLocation",
+   "primary_value": "Kertih",
+   "values": {
+    "StartLocation": "Kertih",
+    "StartState/Province": "Terengganu",
+    "StartCountryOrArea": "Malaysia",
+    "EndLocation": "Kangar",
+    "EndState/Province": "Perlis",
+    "EndCountryOrArea": "Malaysia"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "Status",
+   "primary_value": "operating",
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [
+    "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+    "https://www.bernama.com/en/news.php?id=2387712"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.bernama.com/en/news.php?id=2387712",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both 2025 sources report SSGP as currently operating (partially) while Petronas' phased decommissioning (targeted for completion by 2027) proceeds; see validity notes above for the full caveat.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "Fuel",
+   "primary_value": "Gas",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+    "https://www.offshore-technology.com/projects/sabah-sarawak/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/sabah-sarawak/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both sources describe SSGP as a natural gas pipeline carrying gas from Sabah offshore fields to the Bintulu LNG complex.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Start [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "StartYear1",
+   "primary_value": "2014",
+   "values": {
+    "StartYear1": "2014"
+   },
+   "proposed_refs": [
+    "https://www.bernama.com/en/news.php?id=2387712",
+    "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.bernama.com/en/news.php?id=2387712",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Bernama states SSGP 'has been operational since early 2014'; chemanalyst.com independently confirms 2014 completion/start-up. offshore-technology.com's 2008 order-year/2011 target reflects the original (delayed) construction schedule, not a conflicting completion year.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "Capacity",
+   "primary_value": "7.70",
+   "values": {
+    "Capacity": "7.70",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [
+    "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "chemanalyst.com states designed capacity of 750 MMcf/d, which converts to ~7.75 bcm/y (750 x 365 x 0.0283168), matching GEM's 7.70 bcm/y within rounding. Only one source gives an explicit number, so tier=medium/independent=false -- staged as a corroborating ref, not a second independent confirmation. A second explicit numeric source (e.g. the paywalled Wood Mackenzie 'MLNG Sabah Sarawak Pipeline' report cited on gem.wiki) would upgrade this to high.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "LengthKnown",
+   "primary_value": "512.00",
+   "values": {
+    "LengthKnown": "512.00",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [
+    "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+    "https://www.offshore-technology.com/projects/sabah-sarawak/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chemanalyst.com/NewsAndDeals/NewsDetails/petronas-to-decommission-1-5-billion-sabah-sarawak-gas-pipeline-by-2027-34211",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.offshore-technology.com/projects/sabah-sarawak/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both independent sources state 512 km/512-kilometre verbatim, matching GEM's LengthKnown exactly.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "StartLocation",
+   "primary_value": "Kimanis",
+   "values": {
+    "StartLocation": "Kimanis",
+    "StartState/Province": "Sabah",
+    "StartCountryOrArea": "Malaysia",
+    "EndLocation": "Bintulu",
+    "EndState/Province": "Sarawak",
+    "EndCountryOrArea": "Malaysia"
+   },
+   "proposed_refs": [
+    "https://www.offshore-technology.com/projects/sabah-sarawak/",
+    "https://en.wikipedia.org/wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-technology.com/projects/sabah-sarawak/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both sources name Kimanis, Sabah as the start and Bintulu, Sarawak (Petronas LNG Complex) as the end -- matches GEM exactly.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1067",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "class_in": "HAS_REF",
+   "class_out": "DEAD_LINK",
+   "current_ref": "https://www.dailyexpress.com.my/news/228108/clarify-status-of-gas-pipeline-project-warisan/, https://www.nst.com.my/news/nation/2025/02/1177604/sabahs-rm4-billion-gas-pipeline-project-scrapped-again-federal",
+   "primary_value_col": "Status",
+   "primary_value": "cancelled",
+   "values": {
+    "Status": "cancelled"
+   },
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.dailyexpress.com.my/news/228108/clarify-status-of-gas-pipeline-project-warisan/",
+     "ok": false,
+     "contains_value": false
+    },
+    {
+     "url": "https://www.nst.com.my/news/nation/2025/02/1177604/sabahs-rm4-billion-gas-pipeline-project-scrapped-again-federal",
+     "ok": false,
+     "contains_value": false
+    }
+   ],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans-Sabah_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1067",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Cancelled [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "CancelledYear",
+   "primary_value": "2018",
+   "values": {
+    "CancelledYear": "2018"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans-Sabah_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1067",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "LengthKnown",
+   "primary_value": "662.00",
+   "values": {
+    "LengthKnown": "662.00",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [
+    "https://www.freemalaysiatoday.com/category/nation/2025/02/19/controversial-rm4bil-sabah-gas-pipeline-project-scrapped-again",
+    "https://www.freemalaysiatoday.com/category/nation/2021/10/23/controversy-as-sabah-gas-pipeline-project-revived/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.freemalaysiatoday.com/category/nation/2025/02/19/controversial-rm4bil-sabah-gas-pipeline-project-scrapped-again",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.freemalaysiatoday.com/category/nation/2021/10/23/controversy-as-sabah-gas-pipeline-project-revived/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both freemalaysiatoday.com articles (2025-02-19 and 2021-10-23, independent bylines/dates) state the pipeline 'was designed to run 662 kilometers from the Sabah oil and gas terminal at Kimanis on the western coast to the eastern districts of Sandakan and Tawau' -- exact match to the sheet's LengthKnown=662.00 km. High-tier, two independent sources agreeing on the exact figure.",
+   "wiki": "https://www.gem.wiki/Trans-Sabah_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1067",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "StartLocation",
+   "primary_value": "Kimanis",
+   "values": {
+    "StartLocation": "Kimanis",
+    "StartState/Province": "Sabah",
+    "StartCountryOrArea": "Malaysia",
+    "EndLocation": "Tawau",
+    "EndState/Province": "Sabah",
+    "EndCountryOrArea": "Malaysia"
+   },
+   "proposed_refs": [
+    "https://www.freemalaysiatoday.com/category/nation/2025/02/19/controversial-rm4bil-sabah-gas-pipeline-project-scrapped-again",
+    "https://www.freemalaysiatoday.com/category/nation/2021/10/23/controversy-as-sabah-gas-pipeline-project-revived/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.freemalaysiatoday.com/category/nation/2025/02/19/controversial-rm4bil-sabah-gas-pipeline-project-scrapped-again",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.freemalaysiatoday.com/category/nation/2021/10/23/controversy-as-sabah-gas-pipeline-project-revived/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both sources place the start at 'the Sabah oil and gas terminal at Kimanis on the western coast' (Sabah, Malaysia) -- matches StartLocation exactly. CAVEAT on the end point: both sources describe the pipeline as extending to 'the eastern districts of Sandakan and Tawau' (plural) -- the sheet only records EndLocation=Tawau. Tawau is corroborated, but Sandakan is an additional served/via location neither source subordinates to Tawau, so the single-endpoint EndLocation may be incomplete for a 662 km trunk line touching two east-coast districts. Flagging for Update to consider whether Sandakan belongs as a via-point/second segment rather than silently dropped; not changing the value myself.",
+   "wiki": "https://www.gem.wiki/Trans-Sabah_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Status",
+   "primary_value": "operating",
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Fuel [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Fuel",
+   "primary_value": "Gas",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Start [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "StartYear1",
+   "primary_value": "2007",
+   "values": {
+    "StartYear1": "2007"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Capacity [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Capacity",
+   "primary_value": "1020.00",
+   "values": {
+    "Capacity": "1020.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Length [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "LengthKnown",
+   "primary_value": "267.00",
+   "values": {
+    "LengthKnown": "267.00",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Diameter [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Diameter",
+   "primary_value": "34",
+   "values": {
+    "Diameter": "34",
+    "DiameterUnits": "in"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "FuelSource [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "FuelSource",
+   "primary_value": "offshore block A-18 and block B-17 gas reserves, Malaysia's joint development area",
+   "values": {
+    "FuelSource": "offshore block A-18 and block B-17 gas reserves, Malaysia's joint development area"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "StartLocation",
+   "primary_value": "Malaysia",
+   "values": {
+    "StartCountryOrArea": "Malaysia",
+    "EndLocation": "Chana",
+    "EndState/Province": "Songkhla",
+    "EndCountryOrArea": "Thailand"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P7105",
+   "sheet_row": 3780,
+   "pipeline_name": "Malaysia Singapore Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Status [ref]",
+   "class_in": "HAS_REF",
+   "class_out": "DEAD_LINK",
+   "current_ref": "https://southeastasiainfra.com/pipeline-infrastructure/",
+   "primary_value_col": "Status",
+   "primary_value": "operating",
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://southeastasiainfra.com/pipeline-infrastructure/",
+     "ok": false,
+     "contains_value": false
+    }
+   ],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Malaysia_Singapore_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P7105",
+   "sheet_row": 3780,
+   "pipeline_name": "Malaysia Singapore Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Location [ref]",
+   "class_in": "HAS_REF",
+   "class_out": "DEAD_LINK",
+   "current_ref": "https://www.gassupply.com.sg/what-we-do/useful-info/pipeline-network-map/",
+   "primary_value_col": "StartLocation",
+   "primary_value": "Attap Valley",
+   "values": {
+    "StartLocation": "Attap Valley",
+    "StartState/Province": "Johor",
+    "StartCountryOrArea": "Malaysia",
+    "EndLocation": "Attap Valley Onshore Receiving Facility",
+    "EndCountryOrArea": "Singapore"
+   },
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.gassupply.com.sg/what-we-do/useful-info/pipeline-network-map/",
+     "ok": false,
+     "contains_value": false
+    }
+   ],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Malaysia_Singapore_Gas_Pipeline",
+   "tab": "",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1065",
+   "sheet_row": 601,
+   "pipeline_name": "Peninsular Gas Utilization Pipeline",
+   "segment_name": "",
+   "ref_col": "Owner [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Owner1",
+   "primary_value": "Petronas",
+   "values": {
+    "Owner1": "Petronas",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Peninsular_Gas_Utilization_Project",
+   "tab": "operators_owners",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1066",
+   "sheet_row": 602,
+   "pipeline_name": "Sabah-Sarawak Gas Pipeline (SSGP)",
+   "segment_name": "",
+   "ref_col": "Owner [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "REFS_ADDED",
+   "current_ref": "",
+   "primary_value_col": "Owner1",
+   "primary_value": "Petronas",
+   "values": {
+    "Owner1": "Petronas",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [
+    "https://www.offshore-technology.com/projects/sabah-sarawak/",
+    "https://www.bernama.com/en/news.php?id=2387712"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-technology.com/projects/sabah-sarawak/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.bernama.com/en/news.php?id=2387712",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both independent sources confirm Petronas as sole owner/operator; no other owner ever mentioned in any source consulted.",
+   "wiki": "https://www.gem.wiki/Sabah%E2%80%93Sarawak_Gas_Pipeline",
+   "tab": "operators_owners",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1067",
+   "sheet_row": 603,
+   "pipeline_name": "Trans Sabah Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "Owner [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Owner1",
+   "primary_value": "China Petroleum Pipeline Bureau (CPPB)",
+   "values": {
+    "Owner1": "China Petroleum Pipeline Bureau (CPPB)",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans-Sabah_Gas_Pipeline",
+   "tab": "operators_owners",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  },
+  {
+   "project_id": "P1068",
+   "sheet_row": 604,
+   "pipeline_name": "Trans Thailand–Malaysia Gas Pipeline (TTM)",
+   "segment_name": "",
+   "ref_col": "Owner [ref]",
+   "class_in": "MISSING_REF",
+   "class_out": "UNRESOLVED",
+   "current_ref": "",
+   "primary_value_col": "Owner1",
+   "primary_value": "Trans Thai-Malaysia (Thailand) Ltd",
+   "values": {
+    "Owner1": "Trans Thai-Malaysia (Thailand) Ltd",
+    "Owner1%": "50.00%",
+    "Owner2": "Trans Thai-Malaysia (Malaysia) Sdn Bhd",
+    "Owner2%": "50.00%"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "",
+   "wiki": "https://www.gem.wiki/Trans_Thailand%E2%80%93Malaysia_Gas_Pipeline",
+   "tab": "operators_owners",
+   "source_dir": "malaysia-gas/deep-sweep-20260812"
+  }
+ ],
+ "routes": [],
+ "new_rows": []
+}

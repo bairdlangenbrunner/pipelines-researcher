@@ -1,0 +1,89 @@
+# Malaysian Gas Map (2022 ed.) — a vector-PDF digitization, not a scrape.
+# Reconciled against GEM via:  python scripts/reconcile.py --source malaysian_gas_map ...
+# Pure-declarative: no adapter.py. READ NOTES.md FIRST — this source is geometry-only
+# on purpose, because its per-feature LABELS are demonstrably wrong.
+#
+# The ingest input is derived, not as-delivered: run
+#   python sources/malaysian_gas_map/prepare.py
+# to rebuild data/mgm-pipelines.geojson (+ data/mgm-fields.geojson) from the tracked
+# extraction/ deliverable. data/ is gitignored; extraction/ is the archival copy.
+#
+# Malaysia-only by construction — a single-country map. Adding another country here is
+# meaningless; a second Malaysian map edition would be a new datasets[] entry.
+
+source: malaysian_gas_map
+display_name: "Malaysian Gas Map (Malaysian Gas Association, 2022 ed.)"
+source_tier: 3                 # see NOTES.md: the MAP is industry-grade, the DIGITIZATION
+                               # carries ~2-10 km georeferencing error and machine-inferred,
+                               # provably-wrong per-feature labels. Tier 3, like OSM.
+default_crs: "EPSG:4326"
+
+provenance:
+  origin_url: "https://malaysiangas.com (Malaysian Gas Map, 2022 edition, published by the
+    Malaysian Gas Association / Maps & Globe Specialist Sdn Bhd; single-page vector PDF,
+    2880x2016 pt)"
+  scraped_date: "2026-08-11"   # date the PDF was downloaded + digitized
+  oid_field: shape_id          # stamped by prepare.py; matches the workbook's Shape ID
+  oid_stability: stable        # stable WITHIN this extraction. A re-digitization renumbers
+                               # from scratch, so cross-extraction identity does not survive.
+
+datasets:
+  # --- Gas pipelines, 67 LineStrings, 5,273 km, ZERO stubs (shortest 4.3 km).
+  #     Coverage is the map's red-stroked network: the offshore gathering/trunk system off
+  #     Terengganu, Sarawak and Sabah plus the two named cross-border/cross-state trunks.
+  #     The onshore Peninsular Gas Utilisation (PGU) backbone is drawn in a different
+  #     colour on the source map and is NOT in this extraction — so a GEM PGU row reading
+  #     as unmatched here is a coverage gap, never evidence against the row.
+  - name: gas
+    scraped_date: "2026-08-11"
+    commodity_default: gas
+    format: geojson
+    path: data/mgm-pipelines.geojson
+    geometry: feature
+    column_map:
+      country_const: "Malaysia"
+      description: description
+      # DELIBERATELY UNMAPPED — do not "fix" these by pointing them at a column:
+      #   name    — the extraction's feature_class/candidate_name are nearest-label
+      #             artifacts (37 features carry the literal string "Sabah-Sarawak Gas
+      #             Pipeline (SSGP)" and total ~2,400 km against a real 512 km line).
+      #             Mapping them would make one GEM row a magnet for the whole inset.
+      #             Both strings survive verbatim in `description` and in _raw.
+      #   status  — the map does not state a per-segment status. A blank status is honest
+      #             and means this source raises no Status_Conflicts, by design.
+      #   diameter_raw / length_raw / operator / owners / start_year — the map carries
+      #             none of them. length is therefore geodesic-from-geometry only.
+    units:
+      # No attribute length column exists, so there is no declared unit to disprove:
+      # every length this source contributes is geodesic_km computed from the trace.
+      # The usual `geodesic_km / length_km ~ 1.0` proof is N/A here, not skipped.
+      diameter_units: in
+      length_units: km
+      length_commodity_quirk: false
+    dedup_keys: [shape_id]
+    ignore_garbage_fields: []
+
+matching:
+  # Same shape as OSM's block and for the same reason: the NAME axis is dead by
+  # construction (see above) and GEOMETRY is the only substantive signal this source
+  # has — but unlike a typical OSM extract the geometry here is excellent: 67 traces,
+  # 5,273 km, no sub-3-km stubs, digitized from a published industry map.
+  name_weight: 0.05
+  endpoint_weight: 0.15
+  diameter_weight: 0.0
+  length_weight: 0.05
+  geometry_weight: 0.75
+  green_threshold: 0.75
+  yellow_threshold: 0.45
+  # 12 km, well above the 2 km onshore-survey default and above OSM's 10 km. This is
+  # not slack for a hand-drawn trace — it is the digitization's OWN documented error
+  # budget: the peninsular inset was fit from 11 control points at mean residual 6.7 km
+  # / max 9.9 km (Borneo: 1.9 / 4.0 km). A 10 km buffer would score a perfectly
+  # digitized peninsular line as a non-match against a correct GEM route. Malaysia has
+  # 5 GEM gas rows, so the false-positive cost of a wide buffer is a handful of
+  # adjudications; the false-negative cost is a missed corroboration.
+  buffer_km_for_overlap: 12.0
+  # No geoarea_weight override. The dead-axes condition (unnamed reference x routeless
+  # GEM rows) does not hold: 4 of Malaysia's 5 GEM gas rows are routed, two of them
+  # 'very high (within meters)', and every reference trace is trunk- or
+  # gathering-scale rather than a stub. Geometry is genuinely live on both sides.

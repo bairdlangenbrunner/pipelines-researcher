@@ -5,8 +5,10 @@ Checks each in-scope row's GeoJSON route (local mirror of
 GOIT-GGIT-pipeline-routes, fetch_route.sh fallback) against the row's OWN sheet
 attributes — catching routes drawn wrong by past researchers:
 
-  length_ratio      geodesic length vs LengthKnownKm/LengthMergedKm,
-                    flag ratio outside [0.75, 1.33]
+  length_ratio      geodesic length vs LengthKnownKm/LengthMergedKm, flagged outside
+                    a band conditioned on RouteAccuracy (_RATIO_BANDS) — a schematic
+                    route is shorter than its pipe by construction, so one flat band
+                    reports the accuracy tier rather than a defect
   countries         countries the line makes landfall in (Natural Earth 1:50m
                     admin-0, >= 2 km inside a polygon to ignore border-clip
                     noise) vs CountriesOrAreas + start/end countries.
@@ -54,9 +56,26 @@ from route_compare import load_gem_route  # noqa: E402
 ROUTEQC_REF = "__ROUTEQC__"
 BOUNDARIES = paths.repo_root() / "data" / "boundaries" / "ne_50m_admin_0_countries.shp"
 
-LENGTH_RATIO_LO, LENGTH_RATIO_HI = 0.75, 1.33
+LENGTH_RATIO_LO, LENGTH_RATIO_HI = 0.75, 1.33   # fallback: accuracy unknown/blank
 MIN_LANDFALL_KM = 2.0          # ignore <2 km border-clip slivers (1:50m polygons)
 _MEDIUM_PLUS = {"medium", "high", "very high (within meters)"}
+
+# The length-ratio band is conditioned on RouteAccuracy, because a schematic route is
+# SHORTER than its pipe by construction — a straight line between two endpoints cannot
+# reproduce a corridor's bends, so a low ratio there is the drawing convention, not an
+# error. A flat [0.75, 1.33] band fired on 12% of `very high` rows but 48% of
+# `very low` rows (measured 2026-08-12 over 5,569 routed GGIT+GOIT rows with local
+# geometry) — i.e. on low-accuracy rows it was reporting the tier, not a defect, while
+# telling the researcher "wrong route, wrong length value, or a partial segment drawn".
+# Each band below is that tier's own p10/p90, rounded, so every tier flags its ~20%
+# tails and the check means the same thing at every accuracy.
+_RATIO_BANDS = {
+    "very high (within meters)":         (0.85, 1.20),
+    "high":                              (0.72, 1.40),
+    "medium":                            (0.68, 1.40),
+    "low":                               (0.60, 1.40),
+    "very low (straight line/schematic)": (0.50, 1.65),
+}
 
 
 def _s(v) -> str:
@@ -188,13 +207,15 @@ def check_row(row: dict, commodity: str, boundaries, ctx) -> tuple[list[dict], b
             break
     if sheet_km and measured_km:
         ratio = measured_km / sheet_km
-        if not (LENGTH_RATIO_LO <= ratio <= LENGTH_RATIO_HI):
+        lo, hi = _RATIO_BANDS.get(acc, (LENGTH_RATIO_LO, LENGTH_RATIO_HI))
+        tier = f"'{acc}'" if acc in _RATIO_BANDS else "unknown-accuracy"
+        if not (lo <= ratio <= hi):
             recs.append(_record(
                 row, "length_ratio",
                 f"geodesic {measured_km:.0f} km (ratio {ratio:.2f})",
                 f"{used_col} = {sheet_km:g} km",
                 f"drawn route is {measured_km:.0f} km but the sheet says {sheet_km:g} km "
-                f"(ratio {ratio:.2f}, allowed {LENGTH_RATIO_LO}–{LENGTH_RATIO_HI}) — "
+                f"(ratio {ratio:.2f}, outside the {lo}–{hi} band for a {tier} route) — "
                 f"wrong route, wrong length value, or a partial segment drawn",
                 staged_note=note))
 

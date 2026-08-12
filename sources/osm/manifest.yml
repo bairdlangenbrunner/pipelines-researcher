@@ -304,6 +304,47 @@ datasets:
     # dead-axes condition gas_iq/gas_eg/gas_pk document therefore does not hold, so the
     # source-level weights stand and no threshold is touched.
 
+  # --- Malaysia, gas (2026-08-12): 29 features / 61 ways, ALL lifecycle=operating,
+  #     1,644 km. Attribute-blind — ZERO named, no diameters, 2 with operator
+  #     (Petronas Gas Berhad) — but geometrically substantive: traces of 441 / 270 /
+  #     216 / 199 / 169 / 85 / 74 km, and only 5 stubs under 0.5 km.
+  - name: gas_my
+    scraped_date: "2026-08-12"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-my-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Malaysia"
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    # No geoarea_weight override — Kazakhstan's reasoning, in miniature. The NAME axis
+    # is fully dead (0 of 29 named), but GEOMETRY is live on both sides: 4 of Malaysia's
+    # 5 GEM gas rows are routed, two at 'very high (within meters)', and the extract's
+    # traces are trunk-scale (441/270/216 km) rather than the sub-3-km fragments that
+    # made gas_pk's geometry nominally-present-but-uninformative. Note also that Malaysia
+    # is reconciled against a THIRD source (malaysian_gas_map, 67 traces / 5,273 km)
+    # whose geometry is independent of OSM's — an admin-area fallback here would blur the
+    # one axis on which the two can disagree. Thresholds untouched.
+
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so
   # the engine default name_weight 0.30 would sink real matches. Geometry is the

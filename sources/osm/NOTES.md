@@ -20,6 +20,10 @@ python scripts/fetch_overpass.py --iso LY --substance gas --include-lifecycle \
 | `gas_iq` (Iraq) | `osm-iq-gas.geojson` | 52 | 2026-07-28 |
 | `oil_iq` (Iraq) | `osm-iq-oil.geojson` | 246 | 2026-07-28 |
 | `gas_eg` (Egypt) | `osm-eg-gas.geojson` | 21 | 2026-07-29 |
+| `gas_pk` (Pakistan) | `osm-pk-gas.geojson` | 9 | 2026-08-07 |
+| `gas_in` (India) | `osm-in-gas.geojson` | 61 | 2026-08-10 |
+| `gas_kz` (Kazakhstan) | `osm-kz-gas.geojson` | 112 | 2026-08-11 |
+| `gas_my` (Malaysia) | `osm-my-gas.geojson` | 29 | 2026-08-12 |
 | (reference) all Libya | `osm-ly-all.geojson` | 545 | 2026-07-28 |
 
 Adding a country = one fetch + one `datasets:` entry. No code.

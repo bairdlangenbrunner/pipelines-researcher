@@ -1,0 +1,65 @@
+{
+  "project_id": "P7105",
+  "pipeline_name": "Malaysia Singapore Gas Pipeline",
+  "sheet_row": 3780,
+  "wiki": "https://www.gem.wiki/Malaysia_Singapore_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence/classification; see separate entries below for the year, owner-ref, location, and duplicate-risk concerns.",
+      "researcher_notes": "EXISTENCE and CLASSIFICATION confirmed independently of the sheet's own cited source. The sheet's existing Status/Length/Start ref (southeastasiainfra.com/pipeline-infrastructure) states verbatim: 'Malaysia also exports gas to Singapore through a 70 km long pipeline, which was commissioned in 1991' -- this is a real, named, historically documented piece of infrastructure, not a GEM-only entity. Independently corroborated (not derived from GEM, not the sheet's own source): (1) PETRONAS Gas Berhad's own corporate history page (petronas.com/pgb/about-us/our-journey) lists 'First salesgas delivery to Senoko Power Station in Singapore via submarine pipeline' as a milestone; (2) APERC (Asia Pacific Energy Research Centre), 'Natural Gas Pipeline Development in Southeast Asia' (2000), states 'The first trans-border gas pipeline in Southeast Asia was completed in 1992 when Peninsular Malaysia's domestic pipeline network was extended...to Singapore' and separately 'since the completion of...PGU II...in 1992, Malaysia has been exporting 1.55 BCM per year of natural gas through pipeline to Singapore.' Classification: Fuel=Gas and PipelineType=transmission are both correct -- this is an operating cross-border natural-gas transmission line, not a gathering/feeder line, and the 'Status [ref]' url_verifier flag ('200 but data value not found') is a wording artifact (source says 'commissioned', not the literal word 'operating') rather than a real existence problem; no evidence anywhere of decommissioning. CAVEAT on Length: the 70 km figure currently rests on exactly ONE explicit numeric source (southeastasiainfra.com, a secondary trade blog); per standing rule 4 that is medium tier at best, not high. APERC's phrasing that the domestic network was 'extended by a few kilometres to Singapore' is ambiguous (could describe only the incremental new build beyond an already-existing Malaysian trunk) rather than a clean contradiction, so I am not overriding the value, but a second independent numeric source for 70 km was not found -- flag for continued verification, do not treat as settled fact.",
+      "proposed_refs": ["https://www.petronas.com/pgb/about-us/our-journey"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Check route geometry: verify whether P7105's traced 70 km route overlaps physically with P1065 (Peninsular Gas Utilization Pipeline, Kertih->Perlis, 2623 km aggregate network). If it does, exclude the overlap from one of the two length totals rather than double-counting the same pipe under two ProjectIDs.",
+      "researcher_notes": "APERC's 'Natural Gas Pipeline Development in Southeast Asia' (2000), Table 11 ('Gas pipeline infrastructure in Peninsular Malaysia'), lists PGU-II as: 'i) 714 km natural gas mainline system from: Telok Kalong to Segamat; Segamat to Kapar, Port Klang (west); Segamat to Pasir Gudang & Singapore (south)...Pipelines completed in 1991/92.' In other words, the original engineering project that first delivered Malaysian gas to Singapore was not a standalone international pipeline -- it was the southern branch of PGU-II's domestic 714 km mainline, extended across the border. P1065 in this roster ('Peninsular Gas Utilization Pipeline', Kertih->Perlis, len=2623 km) is GEM's aggregate row for that same domestic PGU network (PGU I/II/III + loops), and P7105 (70 km, same 1991/92 vintage, same PETRONAS ownership, same physical corridor toward the Johor-Singapore boundary) is very plausibly the tail end of that same mainline being counted a second time under a separate ProjectID. This is a segment-vs-network double-count risk, not a certainty -- I do not have route/geometry data for either PID in this shard to confirm overlap directly, so I'm flagging for a geometry check rather than asserting the fold outright. Wikipedia's 'Peninsula Gas Utilisation' article independently corroborates the same picture ('Phase II of the PGU project, completed in 1992, extended the pipeline to the western and southern parts of Peninsular Malaysia as well as Singapore'), for context only (not used as a citable ref).",
+      "proposed_refs": ["https://www.petronas.com/pgb/about-us/our-journey"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Replace the Owner [ref] URL -- the current citation is about an unrelated hypothetical hydrogen pipeline, not this gas pipeline. Petronas.com/pgb/about-us/our-journey is a better fit (PGB's own corporate history documents the Senoko gas delivery this row describes) but note PETRONAS Gas Berhad is a majority-owned, publicly listed subsidiary (Bursa Malaysia: PETGAS/6033), not a wholly-owned Petronas asset, so '100%' at the Owner1 level is an industry-standard simplification, not literally precise.",
+      "researcher_notes": "The current Owner [ref] (https://renewablesnow.com/news/gentari-city-energy-to-study-malaysia-singapore-hydrogen-pipeline-837558/) is about Gentari (a PETRONAS clean-energy subsidiary) and City Energy studying the FEASIBILITY of a brand-new, not-yet-built HYDROGEN pipeline between Malaysia and Singapore -- a completely different, hypothetical future project. It passed url_verifier's token check only because 'Petronas' and 'hydrogen' both literally appear in that unrelated article's title; it does not actually support 'Owner1=Petronas' for THIS 1991/92-vintage natural-gas pipeline at all. The underlying ownership claim (Petronas Gas Berhad, a PETRONAS group company, built and operates the PGU network including the Senoko/Singapore export line) is independently supportable via PETRONAS Gas Berhad's own corporate-history page, which documents 'First salesgas delivery to Senoko Power Station in Singapore via submarine pipeline' as one of PGB's own milestones -- but that page does not give a precise ownership percentage, and PGB itself has minority public shareholders (EPF, KWAP, and free float) alongside PETRONAS' controlling stake, so 'Petronas 100%' is a simplification worth flagging even though I am not proposing to change the value itself.",
+      "proposed_refs": ["https://www.petronas.com/pgb/about-us/our-journey"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Verify and likely correct StartLocation -- 'Attap Valley' is very likely a Singapore place name mistakenly duplicated onto the Malaysian side. Research the actual Malaysian landing/compressor-station name (APERC's routing description points toward the Pasir Gudang / Johor Bahru area) before changing the cell.",
+      "researcher_notes": "GEM's own values list StartLocation='Attap Valley', StartState/Province='Johor', StartCountryOrArea='Malaysia' for the Malaysian side, and EndLocation='Attap Valley Onshore Receiving Facility', EndCountryOrArea='Singapore' for the Singapore side -- i.e. the identical place name 'Attap Valley' is used for BOTH ends. Independent search confirms 'Attap Valley' (Attap Valley Road) is a real, specific place in Sembawang, Singapore -- site of a former WWII-era Naval Base ammunition depot, now the location of the 'Attap Valley Onshore Receiving Facility' referenced in Singapore Energy Market Authority filings (e.g. the EMA's 2007 Keppel Gas Section 38 consultation, which describes 'the onshore gas pipeline network...between the boundary fence of the Attap Valley Onshore Receiving Facility to the offtake point at the Keppel Plant'). I found no evidence 'Attap Valley' is also a place name in Johor, Malaysia -- it appears only ever as a Singapore location in independent sources. This strongly suggests the Malaysian StartLocation field is a copy/duplication error rather than a verified place name, though I could not independently confirm what the correct Malaysian-side landing point name should be (APERC's 1991/92 PGU-II routing describes the branch as running 'Segamat to Pasir Gudang & Singapore', which points toward the Pasir Gudang / Johor Bahru area, but that is a corridor description, not a confirmed compressor-station or landing-point name). Recommend Update-leg research to pin down the correct Malaysian toponym before touching the cell.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update StartYear1 from 1991 to 1992 -- two independent sources, one of them the pipeline owner's own corporate record, both say 1992; the sheet's current cited source (southeastasiainfra.com) is the lone outlier at 1991.",
+      "researcher_notes": "GEM has StartYear1=1991, sourced to the sheet's own cited southeastasiainfra.com ('commissioned in 1991'). Two independent sources materially disagree and both say 1992: (1) PETRONAS Gas Berhad's own corporate-history timeline (petronas.com/pgb/about-us/our-journey) lists '1992: First salesgas delivery to Senoko Power Station in Singapore via submarine pipeline' -- this is the pipeline owner's own primary record of first gas flow; (2) APERC's 'Natural Gas Pipeline Development in Southeast Asia' (2000) independently states 'The first trans-border gas pipeline in Southeast Asia was completed in 1992...' and, separately in the same report, 'since the completion of the second phase of the Peninsular Gas Utilisation (PGU II) pipeline project in 1992, Malaysia has been exporting 1.55 BCM per year of natural gas through pipeline to Singapore' -- and its own Table 11 lists PGU-II's Segamat-Pasir Gudang-Singapore branch as 'completed in 1991/92' with GPPs 'completed in 1992/93', i.e. even the source that hedges still centers on 1992 as the operative in-service year for the Singapore export capability. Per standing rule 4 (2+ independent sources in agreement = high tier), 1992 is the better-supported value; 1991 (single secondary source) should be treated as the outlier, not GEM's current value. NOTE on verification: url_verifier's substring check FAILs on the APERC PDF ('200 but missing expected') even for trivial tokens like 'APEC' that are certainly in the document -- this matches the tool's own documented large/complex-PDF extraction limitation (see url_verifier.py header comments). I confirmed the URL is live (HEAD request: 200, application/pdf, 579KB) and manually extracted its text with `pdftotext -layout`, which shows the exact quoted passages above verbatim, including 'completed in 1992' and Table 11's PGU-II routing. Citing it on that manual confirmation per the tool's documented exception process, not on the automated PASS.",
+      "proposed_refs": ["https://www.petronas.com/pgb/about-us/our-journey", "https://aperc.or.jp/file/2010/9/26/Natural_Gas_Infrastructure_Development_Southeast_Asia_2000.pdf"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P7105 is a real, well-documented pipeline (confirmed independently of GEM/the sheet's own source), but four concerns: StartYear1 should likely be 1992 not 1991 (2 independent sources, incl. the owner's own corporate record); the Owner [ref] cites an unrelated hydrogen-pipeline feasibility study, not this pipeline; StartLocation 'Attap Valley, Johor, Malaysia' looks like a Singapore place name wrongly duplicated onto the Malaysia side; and there is a real double-count risk against P1065 (Peninsular Gas Utilization Pipeline) since APERC documents the original 1991/92 Singapore export capability as literally the southern branch of PGU-II's domestic mainline, not a separately built international line."
+}

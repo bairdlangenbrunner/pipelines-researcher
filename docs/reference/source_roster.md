@@ -206,6 +206,7 @@ Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
 |---|---|---|---|---|---|
 | **GulfPub** (PE World Map) | 2 | oil, gas | global | yes (WKT/GeoJSON) | `sources/gulfpub/manifest.yml` |
 | **OpenStreetMap** (Overpass) | 3 | oil, gas | per-country pulls (Libya gas today) | yes (ODbL) | `sources/osm/manifest.yml` |
+| **Malaysian Gas Map** (MGA, 2022 ed.) | 3 | gas | Malaysia only | yes (digitized) | `sources/malaysian_gas_map/manifest.yml` |
 
 To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-URL
 `report_citation` (name + scrape date), never by a GEM URL.
@@ -224,6 +225,20 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
   `buffer_km_for_overlap` (10 km vs GulfPub's 2 km). Coverage is wildly uneven — the
   Libya gas pull is 6 features, effectively Greenstream only. Tier 3: a lead or a
   second voice, never corroboration on its own. Full quirks: `sources/osm/NOTES.md`.
+- **Malaysian Gas Map is the registry's first *digitized document*** rather than a scrape
+  or an API pull — a vector PDF wall map (Malaysian Gas Association, 2022 ed.,
+  `malaysiangas.com`) traced into 67 pipeline LineStrings + 616 field polygons.
+  Registered 2026-08-12. Three things make it unlike the other two, all in
+  `sources/malaysian_gas_map/NOTES.md`: (1) its per-segment **labels are provably
+  wrong** — 37 of 67 read "Sabah–Sarawak Gas Pipeline (SSGP)", i.e. every feature in
+  the Borneo inset — so the manifest maps **no `name` and no `status`** and it is
+  matched as unnamed geometry; (2) `buffer_km_for_overlap` is **12 km**, which is the
+  georeferencing residual (11 GCPs, mean 6.7 km on the peninsular inset), not matcher
+  slack; (3) it carries **no attribute length**, so the standing `geodesic ÷ declared`
+  unit proof is N/A rather than unrun. Ingest input is re-derived by
+  `sources/malaysian_gas_map/prepare.py`; the as-delivered artifacts are tracked in
+  `extraction/`. Note GEM's P1065/P1066 already cite this same publication in
+  `Route [ref]`, so it is **not fully independent** of those two rows' geometry.
 - **The master dataset-registry sheet is NOT public** — a `curl` CSV export hits an HTML login
   wall, and that is now the norm rather than the exception (anonymous access to work documents
   is being withdrawn deliberately). Read it authenticated: `gws-gem sheets spreadsheets values
