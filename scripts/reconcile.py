@@ -304,7 +304,10 @@ class _Diagnostics:
 
     def note_ref(self, r: dict, best: dict) -> None:
         self.refs += 1
-        if (r.get("name") or "").strip():
+        # name_norm, not name: a record whose name normalizes away (a script the
+        # normalizer drops) is unnamed AS FAR AS THE MATCHER IS CONCERNED, and the
+        # health line has to report the matcher's view or it cannot detect a blind axis.
+        if (r.get("name_norm") or "").strip():
             self.named += 1
         if r.get("has_geometry"):
             self.with_geom += 1

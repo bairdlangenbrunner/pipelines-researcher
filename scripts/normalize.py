@@ -50,6 +50,49 @@ def fold_diacritics(s: str) -> str:
     return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
 
 
+# Cyrillic -> Latin. normalize_name() strips everything outside [a-z0-9], so
+# without this a Cyrillic-only name ("Союз", "Кременчук - Ананьїв - Богородчани")
+# normalizes to the EMPTY STRING and the record is silently unnamed to the matcher
+# — not mismatched, invisible. That is how the Ukraine OSM extract scored 0.1%
+# overlap while reporting 9.2% of records "named".
+# Merged Ukrainian / Russian / Kazakh table, BGN/PCGN-flavoured. It does not have to
+# agree with any one romanization standard: both sides go through it and the name
+# axis is fuzzy (token_set_ratio), so soyuz/soiuz and bogorodchani/bohorodchany
+# still score high. `г` is the one letter worth branching on — it is `h` in
+# Ukrainian (Bohorodchany) and `g` in Russian (Gazprom).
+_CYRILLIC_RE = re.compile(r"[Ѐ-ԯ]")
+_UKRAINIAN_MARKERS = re.compile(r"[іїєґ]")
+
+_TRANSLIT = {
+    "а": "a", "б": "b", "в": "v", "д": "d", "е": "e", "ё": "e", "є": "ie",
+    "ж": "zh", "з": "z", "і": "i", "ї": "i", "й": "i", "к": "k", "л": "l",
+    "м": "m", "н": "n", "о": "o", "п": "p", "р": "r", "с": "s", "т": "t",
+    "у": "u", "ф": "f", "х": "kh", "ц": "ts", "ч": "ch", "ш": "sh",
+    "щ": "shch", "ъ": "", "ы": "y", "ь": "", "э": "e", "ю": "yu", "я": "ya",
+    "ґ": "g",
+    # Kazakh / Central Asian extras
+    "ә": "a", "ғ": "g", "қ": "k", "ң": "ng", "ө": "o", "ұ": "u", "ү": "u",
+    "һ": "h", "ы": "y", "і": "i",
+}
+
+
+def translit_cyrillic(s: str) -> str:
+    """Romanize Cyrillic so it survives normalize_name()'s ASCII filter."""
+    if not _CYRILLIC_RE.search(s):
+        return s
+    low = s.lower()
+    uk = bool(_UKRAINIAN_MARKERS.search(low))
+    out = []
+    for ch in low:
+        if ch == "г":
+            out.append("h" if uk else "g")
+        elif ch == "и":
+            out.append("y" if uk else "i")
+        else:
+            out.append(_TRANSLIT.get(ch, ch))
+    return "".join(out)
+
+
 def normalize_country(s: str | None) -> str:
     """Canonical lowercase country for blocking. Idempotent."""
     if not s:
@@ -105,7 +148,7 @@ def normalize_name(s: str | None, *, drop_stopwords: bool = False) -> str:
     rapidfuzz token_set_ratio handles word order; stopword removal is optional."""
     if not s:
         return ""
-    t = fold_diacritics(str(s)).lower()
+    t = fold_diacritics(translit_cyrillic(str(s))).lower()
     t = re.sub(r"[^a-z0-9]+", " ", t)
     toks = [w for w in t.split() if w]
     if drop_stopwords:

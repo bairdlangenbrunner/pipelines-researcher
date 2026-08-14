@@ -14,8 +14,15 @@ Staged, not applied. Counts regenerate via
   twin) — 119 open decisions, 3 status changes, 266 backend paste units, 64 operators/owners
   units, 31 wiki updates, 180 open flags; evidence side 67 confirmed audits, 47 fill-detail
   and 448 ref-detail rows.
-- `pipelines_batch_20260811_1001_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx`
-- `pipelines_batch_20260811_1043_ET_kazakhstan-gas_reconciliation-osm.xlsx`
+- `pipelines_batch_20260812_1344_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx` — the **re-run**
+  after the multi-country reference filter was fixed (below); the `20260811_1001_ET` build is
+  archived, do not work it.
+- `pipelines_batch_20260814_0120_ET_kazakhstan-gas_reconciliation-osm.xlsx` — the **re-run** after
+  the Cyrillic name defect was fixed (`notes/escalation-2026-08-14-cyrillic-names-invisible-to-matcher.md`);
+  the `20260811_1043_ET` build is archived. **No finding changed** — overlaps 2 / additions 110 /
+  gem_only 50 are identical; two records got a corrected "closest GEM" guess (the
+  Shagyrly-Shomyshty compressor trace now points at Shagyrly-Shomyshty–Beineu, not Central
+  Asia–Center). Nothing in this note is retracted on its account.
 
 The 08-11 `1145_ET` handoff pair was replaced by the 08-12 `1255_ET` build after cluster A
 was reversed (below) — do not work from it.

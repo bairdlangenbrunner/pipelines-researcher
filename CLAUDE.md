@@ -329,6 +329,19 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
    Corollary: **a thin recon is a claim about the pipeline until the input count is
    checked** — `MATCH_QUALITY` covers a dead matcher, never records that never arrived.
+   **A non-Latin reference name was INVISIBLE to the name axis until 2026-08-14.**
+   `normalize_name()`'s `[^a-z0-9]` filter reduced a Cyrillic-only name to the empty string,
+   and `reconcile`'s health line counted the RAW name — so Ukraine OSM reported "9.2% of refs
+   named" on a run where the matcher saw none, and `MATCH_QUALITY` stayed silent through a
+   0.1% overlap rate. Fixed via `normalize.translit_cyrillic()` + a transliterated-boilerplate
+   stoplist in `match.GENERIC_NAME_TOKENS`; the health line now counts `name_norm`. Rule:
+   **a diagnostic must report the MATCHER's view of the data, never the data's own.** Only
+   Ukraine + Kazakhstan OSM carried Cyrillic (GEM's own columns are 100% Latin); both re-run
+   2026-08-14 and **no bucket count moved in either** — the gain is corrected "closest GEM"
+   attribution (49 records in Ukraine, 2 in Kazakhstan), because the OSM manifest weights
+   `name` at only 0.10 against geometry 0.45. That is the correct reading, NOT a reason to
+   retune weights. Ledger + A/B:
+   `notes/escalation-2026-08-14-cyrillic-names-invisible-to-matcher.md`.
    **OSM is a second registered source and runs by default in the `deep`
    preset**; unmatched reference records are bucketed by `disposition`
    (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
@@ -522,7 +535,9 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `…_20260812_1344_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx` (**RE-RUN — the `20260811_1001`
   workbook is archived; the multi-country filter defect had hidden HALF this country's
   reference records, 32 of 63, and 15 of the 31 `gem_only` "no reference counterpart"
-  findings were artifacts**) + `…_20260811_1043_ET_…reconciliation-osm.xlsx` (unaffected). The country is **multi-string trunk systems with
+  findings were artifacts**) + `…_20260814_0120_ET_…reconciliation-osm.xlsx` (**RE-RUN after the
+  Cyrillic name defect, `20260811_1043` archived — but NO finding moved**: 2/110/50 identical, two
+  corrected "closest GEM" guesses only). The country is **multi-string trunk systems with
   NO public line-wise register** — the best line-wise source (KMG's AR gas-transportation table)
   itemises only the 8 major *systems*, i.e. exactly the aggregates that are the defect, so in six
   systems one system figure is restated on every string and an honest `UNRESOLVED` on a per-string

@@ -207,6 +207,13 @@ GENERIC_NAME_TOKENS = {
     "trunk", "transmission", "transport", "export", "import", "interconnector",
     "gas", "oil", "natural", "crude", "ngl", "lpg", "lng", "condensate",
     "petroleum", "products", "product", "refined", "liquids",
+    # Transliterated Cyrillic boilerplate (normalize.translit_cyrillic output).
+    # OSM's Ukrainian/Russian names lead with these: "Магістральний газопровід
+    # СОЮЗ" -> "mahistralnyi hazoprovid soyuz", where only the last token identifies.
+    "hazoprovid", "gazoprovod", "hazoprovody", "gazoprovid", "truboprovid",
+    "truboprovod", "nafthoprovid", "nefteprovod", "mahistralnyi", "mahistralnyy",
+    "magistralnyi", "magistralnyy", "magistralnaya", "mahistralna", "mh", "mg",
+    "hazova", "gazovyi", "gazovy", "nytka", "nitka", "vidhaluzhennia", "otvod",
 }
 
 
