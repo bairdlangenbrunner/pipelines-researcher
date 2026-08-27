@@ -453,7 +453,9 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
   cell hasn't been filled in yet is routed and applied like any other (Baird 2026-08-11,
   `route_conventions.md`), not held back.
 - **Egypt gas now stands at 117 rows: 107 routed, 10 unrouted — and the 10 are exactly the
-  partials listed below.** `audit_route_sync.py` A/B/C/D all 0.
+  partials listed below.** `audit_route_sync.py` A/B/C/D all 0. (One of the 10, **P7589**,
+  was resolved 2026-08-11 and is staged not applied — see below; applying it takes Egypt gas
+  to 108 routed / 9 unrouted.)
 - Internal gate 24 PASS / 0 FAIL; routes-repo `qc_routes.py` **17 pass / 7 warn / 0 fail**
   (WARNs P6704 P8020 P8052 P8053 P8056 P8057 P8059 — all length ratios, expected for
   great-circle candidates).
@@ -476,20 +478,80 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
 - **Two rows carry a length question the geometry can't settle** — P8020 (186 km chord vs
   130 km sheet, so either the length is wrong or "Cairo Ring" means a different node than
   P8017's) and P8035. Corridors are right; both apply-at-your-discretion like P8057/P8059.
-- **The 10 remaining partials, with why:** P8005/P8006/P8007 (Ain Sokhna terminal spurs —
+- **The 9 remaining partials, with why:** P8005/P8006/P8007 (Ain Sokhna terminal spurs —
   the terminal end is anchored, the grid-side end is unnamed in every source), P8008/P8009
   ("Sinia Gas Pipeline 1/2" — no endpoint named anywhere; "Sinia" is the governorate),
   P8001 (Abu Gharadig anchored, no geocodable NORPETCO facility), P8003 (EGAS 2018 names
-  the project but no endpoints; Fayoum→Giza is ~80 km against a 27 km row), P7589 (Faramid:
-  the only name-matched end is 159 km away against a 38 km row), P7605 (Wanda: nothing
-  geocodable), P8055 (Trans-Sinai II duplication: GASCO gives length/bore/cost but no
-  endpoints). Each needs a *source*, not another geocoding attempt.
+  the project but no endpoints; Fayoum→Giza is ~80 km against a 27 km row), P7605 (Wanda:
+  nothing geocodable), P8055 (Trans-Sinai II duplication: GASCO gives length/bore/cost but
+  no endpoints). Each needs a *source*, not another geocoding attempt.
+- **P7589 (Faramid) came OFF the partials list 2026-08-11** — staged as a candidate in
+  `staging/route-creation-20260811-p7589/`, routes-repo QC **PASS**, 36.9 km vs 38.0 km
+  (−3%), not yet applied. Both ends moved:
+  - **Start.** Faramid is a named *development lease* (map code 94) inside the **East
+    Obaiyed** concession on the EGPC/EGAS/GANOPE concession map (`eug.petroleum.gov.eg`),
+    bbox 26.9497–27.0666 E / 30.9999–31.0997 N (~50 km²), five graded wellpads inside the
+    traced polygon on imagery. The old start guess (30.9659, 26.8891, "30 km NW of
+    Meleiha") is ~13 km off and falls **outside** the lease — superseded.
+  - **End.** The "159 km away" rejection is **withdrawn**. Egypt Oil & Gas has Agiba
+    "extending another line from the Faramid field to **Badr El Din Company** to process
+    24 mcf/d" — and "Badr El Din Company" is **BAPETCO**, the operator (post-Cheiron, per
+    SPE/JPT + Capricorn), not the BED *field*. The processing point is the **BAPETCO
+    Obaiyed gas plant** (31.0996, 26.6142), 35 km west. Sheet capacity 25.00 MMcf/d matches
+    the "24 mcf/d" in the same sentence. **Lesson: a name-match to a field can be a match to
+    the operating company** — check what the name denotes before rejecting on distance.
+  - **Geometry** follows the existing Obaiyed export right-of-way (OSM way/545729460), a
+    multi-lane graded corridor visible continuously in imagery and passing 1.07 km from the
+    pads. The straight-line alternative is 35.2 km and never deviates >2.4 km, so
+    `low (within kilometers)` holds either way. No Faramid-specific trench is
+    distinguishable from the trunk, and OSM carries no Faramid line — shared ROW is
+    inferred from co-location, not observed.
 - **Egypt oil is effectively complete**: 46 rows, 45 with mapped geometry. P7326 already
   carries a deliberate `geometry: null` placeholder in the routes repo and is correctly
   `Unavailable`/`no route`. One defect: **P7338** (Dekhela–Wadi Al Qamar LPG) has real
   3-point geometry in the routes repo but `RouteType = Unavailable (cannot find route)`
   against `RouteAccuracy = low` — a three-way-sync violation needing a one-cell RouteType
   fix, repairable with `apply_route_candidates.py --backfill-route-type --pids P7338`.
+
+## ProjectID recycling — P8017 / P8020 → P8084 (APPLIED 2026-08-27)
+
+**A cleared row's ProjectID can be reused for another country's pipeline, and the routes
+repo goes on serving the old geometry under it.** `NA`'s two Egypt rows P8017
+(*Suez-Cairo Ring*, 150 km, 90 MMcf/d) and P8020 (*Cairo Ring–Port Said*, 130 km,
+230.30 MMcf/d) were wiped from the gas tab on 2026-08-14 19:26 UTC (backend revision
+`345949`) with **no entry on the `Removed oil/NGL/gas pipelines` tab**, and both PIDs were
+then reused by `AL` for Iraq *Baiji-Mosul Gas Pipeline* segments (2026-08-24). The wipe was a
+range clear of `C:CF`, so `ProjectID` and the route block `DC:DG` survived — which is exactly
+why the two rows kept reading `Mapped route`/`high` while `P8017.geojson` and `P8020.geojson`
+still held Nile-Delta coordinates for Iraqi pipe.
+
+Resolved 2026-08-27 (authorized; both halves in one batch):
+
+- **P8017 restored as `P8084`** — the next free pre-allocated PID (SheetRow 4344). 26
+  hand-entered cells recovered verbatim from revision `345873` and re-entered;
+  `Researcher`/`LastUpdated` preserved as `NA`/2026-07-28, restore provenance in
+  `ResearcherNotes`. Geometry moved with the row: `P8017.geojson` → `P8084.geojson`
+  (routes merge `1ccf6cfa`, `qc_routes.py` PASS, 136 km vs 150 km, Egypt→Egypt).
+- **The two Iraq rows reset to `Not mapped (but could be …)`/`no route`**, with
+  null-geometry placeholders in the routes repo. **`AL` has not uploaded replacement
+  geojsons** — a freshly re-synced `drive-uploads/` mirror holds one file in her folder (`P2232`),
+  and nothing on any branch touches these PIDs — so both rows stay routeless pending her
+  files. `RouteCreator = AL` and her `Route [ref]` are deliberately left in place as
+  provenance for the routes she intends to deliver.
+- **P8020's Egypt row was NOT restored** (not in scope). Its 27 recovered cells sit in
+  `notes/recovered-2026-08-27-p8017-p8020-cleared-row-values.md` — **Drive keeps revisions
+  ~14 days, so that file is the only copy after roughly 2026-08-28.**
+- GulfPub `gulfpub:gas:424` (*Suez - Dahshour Pipeline*) matched the old P8017 at route
+  IoU 1.0, so with P8084 carrying the same geometry the §2 overlap is preserved — the
+  "424 re-buckets as an unmatched addition" consequence noted in the 08-26 triage memo
+  no longer applies.
+- Sheet backup: `notes/backup-2026-08-27-p8084-restore-p8017-p8020-route-reset.csv` (32
+  cells, before/after). `audit_route_sync.py` lists none of the three PIDs.
+
+**This class of defect is invisible to `audit_route_sync.py`** — its four findings are all
+per-row consistency checks, so a row with geometry and `Mapped`/`high` reads as in sync no
+matter which continent the geometry is on. A **finding E** (geometry centroid outside the
+row's own `CountriesOrAreas`) would catch it; still an open call in the 08-26 triage memo.
 
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 
