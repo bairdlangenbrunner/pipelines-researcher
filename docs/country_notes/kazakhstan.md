@@ -51,7 +51,9 @@ register of Kazakh trunk gas pipelines** (surveyed 2026-08-11 — full writeup i
 "Gas Transportation and Marketing" table, itemises only the **8 major systems** — i.e. it
 publishes exactly the system-level aggregates that are the problem. So several rows will
 legitimately end as `ResearcherNotes` explanations rather than value changes: the per-string
-number does not exist publicly to be filled in.
+number does not exist publicly to be filled in. This is **the inverse of India**, where a
+blank ref usually means nobody looked and an `UNRESOLVED` is a weak result — here it is often
+the correct outcome.
 
 ## Gotchas
 

@@ -360,7 +360,8 @@ still needs its own independent public `[ref]`.
 **Wikipedia is not gem.wiki**: rule 1 forbids self-citation, not encyclopedias. The
 prior roster line ("never cite directly") is withdrawn — it was never enforced by
 `url_verifier` and had left ~36 live Wikipedia `[ref]` cells in the tracker in a
-permanent grey zone. Treat it as any other secondary source:
+permanent grey zone (mentions by scope, 2026-08-27: Ukraine 141 / Iran 72 / Libya 47 /
+Kazakhstan 40 / Saudi gas 38 / Egypt 26 / India 19 / Pakistan 16). Treat it as any other secondary source:
 
 - **Tier it as one secondary source**, so it is medium alone and reaches green only
   paired with an independent second source. Two language editions of the same article

@@ -373,7 +373,9 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   `notes/escalation-2026-08-07-egypt-gas-new-rows-citations.md`. **The headline citation
   finding was WITHDRAWN 2026-08-10** — `NA` was identifying these pipelines **visually off
   the GASCO national-grid map on printed p.35**, not from the report's prose tables, so the
-  original `pdftotext` full-text search was answering the wrong question. The map draws each
+  original `pdftotext` full-text search was answering the wrong question. **Rule of thumb:
+  a report cited for a pipeline is not "unsupported" until its MAPS have been read, not just
+  its text.** The map draws each
   segment and annotates most `NN" NN km`; citing Status/Fuel/Type/Length/Diameter/Location
   to it is defensible. 7 rows cite the report across 36 `[ref]` cells, and against the map
   **P8052 (`24" - 45 km`), P8053 (`16" - 16 km`), P8057 (`24" 25 k.m`) and P8059
@@ -389,7 +391,9 @@ plain `read_csv` silently blanks all 423 of `NA`'s gas rows — use
   `z_decimal_calibration.png`, which is why the earlier "P8059 = 7.5 km decimal misread"
   claim was retracted: the map raster is only 200 ppi, the 600 dpi page render upsampled
   ~3×, and at native scale the mark between the 7 and the 5 is a dark inter-glyph seam, not
-  the light baseline dot a real decimal makes (cf. `12" 14.5km` on the same map). Six rows
+  the light baseline dot a real decimal makes (cf. `12" 14.5km` on the same map). **Never
+  read a fine detail off an upsampled render — check `pdfimages -list` for the native raster
+  size first.** Six rows
   have lengths that conflict with their own endpoints (P8057 and P8052 impossibly so — the
   chord exceeds the stated pipe length; P8059 overshoots 5.3×); P8057's `EndPrefecture`
   wrongly repeats its `StartLocation`; **P8058 is probably the second line of the P3930
@@ -451,7 +455,9 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
   processing destination for Western Desert field gas, 223 km chord vs 253 km).
   **Both arrived with a blank `RouteAccuracy`, and blank means `no route`** — a new row whose
   cell hasn't been filled in yet is routed and applied like any other (Baird 2026-08-11,
-  `route_conventions.md`), not held back.
+  `route_conventions.md`), not held back. The ruling is **encoded in the tooling**, not just
+  written down: `apply_route_candidates.py` lets a blank pass its guard (unless `RouteType`
+  already reads `Mapped`), and `audit_route_sync.py` findings B/D read blank as `no route`.
 - **Egypt gas now stands at 117 rows: 107 routed, 10 unrouted — and the 10 are exactly the
   partials listed below.** `audit_route_sync.py` A/B/C/D all 0. (One of the 10, **P7589**,
   was resolved 2026-08-11 and is staged not applied — see below; applying it takes Egypt gas
@@ -630,7 +636,7 @@ below.) Staging: `batches/egypt-gas/staging/deepsweep-20260827`,
 `batches/egypt-{gas,oil}/staging/route-creation-20260827`,
 `batches/egypt-{gas,oil}/staging/recon-{gulfpub,osm}-20260827`.
 
-**Scope, and why gas is 40 rows and not 127.** The 88 gas rows carrying staged,
+**Scope, and why gas is 40 of 127 rows and not all of them.** The 88 gas rows carrying staged,
 unapplied research from the July/August batches are **excluded from the research
 legs** via `--exclude-pids` — re-researching a row with a pending staged record
 stages a contradictory record against the same sheet cells, and whichever
@@ -644,7 +650,7 @@ sweep this tracker has ever had in Egypt.
 | ref records | 266 | 444 |
 | REFS_ADDED / REVERIFIED / UNRESOLVED | 46 / 202 / 18 | 172 / 201 / 71 |
 | fills | 9 | 14 |
-| validity records | 80 | 110 |
+| validity records | 80 | 111 |
 
 ### The pass's headline is a citation-FORM defect, not a research gap
 
@@ -739,7 +745,8 @@ P7979's 97,000 bpd, which the source leaves as "-".
   an aside inside P0530's *duplicate* record ("not this row's defect") while
   P5121's own record asserted *"StartYear all corroborate"*. Two agents, two
   rows, contradictory conclusions, neither seeing the other. P5121's record has
-  been revised to carve `StartYear1` out of that claim.
+  been revised to carve `StartYear1` out of that claim, and the oil workbook was
+  rebuilt at `1343_ET` to carry it — validity 110 → 111, every ref class unchanged.
 
 ### The harvested pool is a worklist, not a lookup table — 32 citations never opened
 

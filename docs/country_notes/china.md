@@ -164,7 +164,7 @@ remain the review surface for the flags above.
 `RouteAccuracy` but **not `RouteType`**, leaving all 79 merged rows still reading
 `Not mapped (but could be…)` (76) or `Unavailable (cannot find route)` (3) — the
 sheet denied 79 routes that were live in the routes repo. Repaired the same day
-under authorization: 79 single-cell writes to `Mapped route (at any accuracy)`,
+under authorization: 79 cells written to `Mapped route (at any accuracy)`,
 all readback-verified (backup
 `notes/sheet-write-2026-07-31-china-gas-route-type-backfill.csv`).
 `python scripts/audit_route_sync.py --country China --commodity gas` now returns
@@ -210,7 +210,11 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   / 2 `DEAD_LINK`**, tiers 82 high / 175 medium / 14 low, **49 distinct verified hosts**;
   status verdicts 6 stale / 4 unclear / 1 change / 1 confirm (16 records staged, 12 kept —
   a row has ONE status, so `split_shards` keeps the last shard's verdict). Gates B/D/E/F clean, A=1 (P5888 on
-  `sohu.com` alone). Delivery note:
+  `sohu.com` alone); **gate C's 33 flags are concentration, not a defect** — each is a `high`
+  whose second origin is one of six documents that carry 145 units between them (the qianzhan
+  DRC-plan rehost 50, `mee.gov.cn` 36, `quannan.gov.cn` 24, `static.sse.com.cn` 22, the
+  en.wikipedia WEP article 18, `trqi.sinopec.com` / `huaon.com` 16 each), so read them when
+  deciding whether "two sources" is really two. Delivery note:
   `notes/delivery-2026-09-02-china-jiangxi-gas-deepsweep-v2.md`.
   **The province's defining fact is still a 3.7% citation base** (v1 measured
   `MISSING_REF` 156 / `HAS_REF` 6) — calibrate this like India, not Pakistan: a blank here

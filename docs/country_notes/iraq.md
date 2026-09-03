@@ -53,7 +53,8 @@ engine is country-agnostic (Phase E validation target).
 
 **Gas recon moved OUT of the packet into two standalone workbooks, 2026-07-29 (Libya's
 shape) — FOUR files to work, not two.** The 07-28 packet's `Gas_GulfPubActions` /
-`Gas_OSMActions` / `Gas_GulfPub` / `Gas_OSM` tabs are retired and their crosswalks archived
+`Gas_OSMActions` / `Gas_GulfPub` / `Gas_OSM` tabs are retired (`recon_actions=0`) and their
+crosswalks archived
 to `batches/iraq-gas/archive/qc-recon-crosswalks-20260728-superseded-by-standalone/`: the
 GulfPub tab was built from the pre-fix run in which the gas `Length` unit was miles read as
 km, so every `Ref Length (km)` cell in it is ~38% short (display only — matching scores on

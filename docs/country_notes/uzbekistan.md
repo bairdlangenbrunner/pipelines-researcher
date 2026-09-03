@@ -89,8 +89,9 @@ stopped at the first sufficient source and never came back for the rest of the p
 and nothing reported the shortfall, so an `UNRESOLVED` reads as *no source exists* when for some
 cells it means *a candidate was never opened*. 83 of the 88 sit on rows still reporting
 `UNRESOLVED`, but 72 of those are on the two parent-trunk pages (49 Central Asia–China, 23 BTBA),
-where declining is right per the rule above. **Rule: a ref leg must report how many harvested
-citations it opened; an unopened citation on a row with an owed cell is an open item.**
+where declining is right per the rule above — so only **~11 are real untested yield**. **Rule: a ref
+leg must report how many harvested citations it opened; an unopened citation on a row with an owed
+cell is an open item.**
 
 All 90 full URLs were then screened: **55 live / 35 failed, and only 12 of the failures are
 confirmed 404/410** (the other 23 are 401/403/412/429/521 and timeouts — access failures, never
@@ -251,8 +252,10 @@ Cause: the key was built from *which source ways touch this part*, so disconnect
 group all got the same key. `ingest.py` had been papering over it with order-dependent `#2`/`#3`
 suffixes, which cannot support cross-scrape identity. Fixed in `fetch_overpass.py`
 (`_disambiguate_keys`, geometry-derived discriminator), touching **only** keys that actually
-collide; Uzbekistan re-fetched the same day — 124 features, geometry set identical, 113 of 124 keys
-unchanged. No committed run in any country is owed a re-run. Writeup: `sources/osm/NOTES.md`.
+collide; Uzbekistan re-fetched the same day (it had no committed run to move) — 124 features,
+geometry set identical, 113 of 124 keys unchanged, warning gone. Every other extract keeps its
+current keys until it is next re-fetched, and no committed run in any country is owed a re-run.
+Registry-wide counts and the fix itself live in `sources/osm/NOTES.md`.
 
 ### Open engine item: `name:en` is fetched and discarded
 
@@ -275,15 +278,10 @@ are among the 13 excluded from the research legs. Fixing it would move the commi
 3. Whether to add the recoverable Wayback snapshots to the sheet — a sheet write, so it needs
    explicit per-batch authorization. Note the caveat above: their existence is proven, their content
    is unread from this session, and 5 staged units rest on a capture alone.
-4. **Wikipedia policy — SETTLED 2026-08-27, the roster line was relaxed.** Baird's ruling:
-   gem.wiki is never a source, **Wikipedia is fine**. The old `source_roster.md` ban is withdrawn
-   (that section now carries the citable-with-conditions rules: one secondary source, language
-   editions are not independent of each other, and an article footnoting GEM cannot corroborate).
-   `url_verifier.BLOCKLIST_HOSTS` was already not blocking it, so no code change was needed and the
-   ~36 live Wikipedia `[ref]` cells across the tracker (Ukraine 141 / Iran 72 / Libya 47 /
-   Kazakhstan 40 / Saudi gas 38 / Egypt 26 / India 19 / Pakistan 16 mentions) are legitimate rather
-   than latent violations. Consequence for this batch: the one Wikipedia citation the harvest
-   declined on principle is eligible, and any future pass may cite Wikipedia directly.
+4. **Wikipedia policy — SETTLED 2026-08-27** (Baird): gem.wiki is never a source, **Wikipedia is
+   citable**. The rules and the tracker-wide consequences live in `docs/reference/source_roster.md`
+   → "Wikipedia — citable"; no code change was needed. For this batch: the one Wikipedia citation the
+   harvest declined on principle is eligible, and any future pass may cite Wikipedia directly.
 5. Re-run in a fresh session once the WebSearch budget resets: **P2698's operator**, **P6936's
    `StartYear1`** + the Afghan-transit question, and a retry of the `utg.uz` capture
    `20260314231446`.

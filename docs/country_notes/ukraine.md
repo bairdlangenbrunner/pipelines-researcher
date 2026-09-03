@@ -67,7 +67,7 @@ archived capture is standing practice, and it matters most in exactly this kind 
 **The trap: the table's name cells carry `rowspan`s.** Several lines sit under one system
 heading whose sub-names are listed inside that single cell, mapping *in order* onto the data
 rows beneath. Read a row without checking its grouping and you attribute another line's spec
-to yours. That is what produced P0777's 1,112.00 km — 522 km is Шебелинка–Диканька–Київ and
+to yours. That is what produced P0777's 1,112 km — 522 km is Шебелинка–Диканька–Київ and
 590 km is Київ–Захід України, two **different** lines in one block, summed. The same structure
 puts Ставрополь–Москва, Краснодарський край–Серпухов and Новопсков–Аксай–Моздок under one
 "Північний Кавказ–Центр" heading with a single countries cell reading «Россия» — an aggregate

@@ -89,7 +89,8 @@ MMSCMD **at two decimals** on ~20 rows (P0917 20.00, P0912 35.00, P0933 16.00, P
 85.00, P0921 36.00, P0929 23.00, …). PNGRB is therefore already the de facto **origin** of
 that column. Citing it is the correct *primary* citation but is **not** an independent
 second source for a value GEM took from it — do not let a PNGRB ref alone carry a row to
-high tier on capacity.
+high tier on capacity. A company report that merely restates the PNGRB figure doesn't
+change this: PNGRB + a company restatement of PNGRB's number is still **one** origin, not two.
 
 ## Gotchas
 
@@ -125,6 +126,11 @@ high tier on capacity.
 - **OSM ref_id collisions:** 5 features collide on `provenance.oid_field` (merged-way keys),
   suffixed `#2..` at ingest. Cross-scrape identity for India OSM is unreliable until that
   field is fixed.
+- **India's redundancy questions are regulatory, not bibliographic.** The register
+  crosswalk adjudicates the 11 redundancy clusters by whether authorisation number /
+  sponsor / date hold constant across register editions while only the NAME changes —
+  that's dispositive, and it confirmed one cluster (P0938/P3602, finding 5 above) and
+  refuted 5 of the 11. Name-similarity alone gets this backwards (see the Assam trap).
 
 ## Regulators / official data
 
