@@ -1,0 +1,84 @@
+{
+ "project_id": "P6966",
+ "pipeline_name": "Mubarek-Kagan Gas Pipeline",
+ "sheet_row": 3761,
+ "wiki": "https://www.gem.wiki/Mubarek-Kagan_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "II",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Keep as-is (existence, classification, endpoints all corroborated); add the newly sourced StartState/Province and EndState/Province values; leave Length/Diameter/Capacity UNRESOLVED (genuinely unsourceable at the per-string level, not a defect); consider adding a Wayback capture alongside liting.uz/page/4 since it is a client-rendered SPA our tooling cannot read.",
+   "researcher_notes": "EXISTENCE: the sheet's own cited ref (liting.uz/page/4, 'История института' i.e. the O'zLITIneftgaz design institute's history page) is a React SPA that serves an empty <div id=root> shell server-side -- our url_verifier's '200 but data value not found' result is a rendering artifact, not evidence the page lacks the content; I could not find a public API backing it or a Wayback capture of that specific path (only the site root is archived), so I could not read it directly. Rather than accept that on faith, I searched independently in Russian for 'Мубарек-Каган' газопровод outside GEM. AO 'Мубарекнефтегазмонтаж' (Mubarekneftegazmontazh) -- the pipeline-construction/assembly company headquartered in Mubarek, with a dedicated fabrication unit in Kagan district of Bukhara region -- names 'газопровод «Мубарек - Каган»' (verbatim) twice on its own company-history page, in the same sentence listing the Mubarek gas-processing plant, several condensate fields, the Bukhara oil refinery and the Sazakino-Nukus pipeline as facilities it built/serviced (http://www.mngmaj.uz/about/index.htm, url_verifier OK on 'Мубарек'+'Каган'+'Мубарекнефтегазмонтаж'). That is a genuinely independent, non-GEM, non-abarrelfull source affirmatively naming this exact pipeline as a real built object. Second, weaker corroboration: the UNDP-published 'Схема газотранспортной системы Республики Узбекистан' (Outlook for Renewable Energy in Uzbekistan, Appendix 1, p.89 -- the same PDF GEM's own wiki page cites as ref [2]) is a 300dpi schematic map, not full-text (pdftotext extracts only the caption; the verifier's automated substring check correctly FAILs on it -- I rendered it to PNG at 300dpi and read it visually per the project's map-reading convention). It shows a multi-line (3-4 parallel strands) trunk bundle running the Bukhara/Kagan hub<->Mubarek corridor -- consistent with, though not name-specific proof of, a Mubarek-Kagan pipeline (the map doesn't print a 'Kagan' label separately from 'Бухара', since the town is essentially adjacent to Bukhara). Net: existence is corroborated by one strong independent naming source plus one supporting schematic -- tier medium (not high, since only one source actually names the pipeline). CLASSIFICATION: 'transmission' is right -- this line carries processed gas out of the Mubarek gas-processing plant (МГПЗ, labeled on the UNDP map at Мубарек) into the Bukhara/Kagan hub for onward distribution via the Gazli-Kagan and BTBA trunks, i.e. a trunk/transmission role, not a wellhead gathering line. DUPLICATE CHECK vs the roster: P6965 (Mubarek-Kagan I) is the obvious candidate, but per the country's Kazakhstan-cluster-A lesson, a shared corridor + shared endpoints is NOT itself proof of a double count -- no source I found describes Mubarek-Kagan I and II as one pipe, and the UNDP map's multi-line bundle is physically consistent with two (or more) genuinely parallel strings, matching the pattern of every other Kagan/Gazli/Mubarek pipeline family in this country (Gazli-Kagan I-IV, BTBA I-III). Not flagging as duplicate. Also checked against Gazli-Kagan (P2290/P3983/P3984, a different corridor converging on the same Bukhara/Kagan hub from the NW) and Kelif-Mubarek (P6936, a different pipeline entirely, Kelif->Mubarek not Mubarek->Kagan) -- no overlap. SPEC: Length/Diameter/Capacity are blank on the sheet and I could not source string-level values for either Mubarek-Kagan I or II anywhere, including GEM's own wiki page (which also leaves these blank for both segments) -- Uztransgaz does not publish a line-wise register. Per this country's calibration (between India and Kazakhstan), a genuine Russian-language search that comes up empty on a per-string spec is the correct UNRESOLVED outcome here, not a gap I manufactured a number to fill. ATTRIBUTION: StartLocation=Mubarek/EndLocation=Kagan, both Uzbekistan, confirmed by the independent mngmaj.uz source and by the UNDP map; Operator=Uztransgaz (from GEM's own wiki, not independently re-verified here since Operator isn't a unit on this worklist and lives on the separate operators/owners tab per the country note). StartState/Province and EndState/Province were blank and are filled below.",
+   "proposed_refs": [
+    "http://www.mngmaj.uz/about/index.htm",
+    "https://www.undp.org/sites/g/files/zskgke326/files/migration/uz/uzb_un_rus_8_The_Outlook_for_the_Development_of_Renewable_Energy_in_Uzbekistan.pdf"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3761,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartState/Province",
+    "EndState/Province"
+   ],
+   "primary_value_col": "StartState/Province",
+   "values": {
+    "StartState/Province": "Qashqadaryo Region",
+    "EndState/Province": "Bukhara Region"
+   },
+   "primary_value": "Qashqadaryo Region",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Muborak",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/Kagan,_Uzbekistan",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": null,
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "POLICY (source_roster.md: Wikipedia is never cited directly; studfile.net is a tertiary re-upload host, same class as the blocklisted wikidot). Downgraded from REFS_ADDED: both refs were Wikipedia infoboxes. The underlying facts are routine gazetteer lookups (Mubarek -> Qashqadaryo region/Muborak district; Kagan/Kogon -> Bukhara region) and should be cited from GeoNames, which is the established substitute in this repo (Egypt P8022/P8023/P8049 used GeoNames for Abu Madi). The mngmaj.uz company page corroborating Mubarek's 180900 postal code is itself citable. Prior note: StartLocation Mubarek and EndLocation Kagan were already on the sheet with no admin-region breakdown. Muborak's Wikipedia infobox gives Region=Qashqadaryo Region, District=Muborak District (postal code 180900, matching the address on mngmaj.uz's own company page, which is HQ'd in Mubarek). Kagan (Kogon)'s infobox gives Region=Bukhara Region; note Kagan is itself a district-level city and only the SEAT of (not administratively part of) Kogon District, so I did not fill EndPrefecture/District to avoid asserting a debatable subdivision -- StartPrefecture/District left blank for the same reason of consistency (no other Uzbekistan row in this tracker currently uses this field, unlike ~30% of rows tracker-wide in other countries). Both sources are Wikipedia infoboxes for uncontroversial administrative geography, not independent origins from each other in the strict corroboration sense -- tier medium, independent=false, flagged honestly rather than inflated to high."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "II",
+   "sheet_row": 3761,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-08",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "http://www.mngmaj.uz/about/index.htm"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.mngmaj.uz/about/index.htm",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "No dated news, incident report, decommissioning notice, or reconstruction announcement for 'Мубарек-Каган' turned up in either English or Russian search (2025-2026 window searched specifically). The only currently-live independent evidence is AO Mubarekneftegazmontazh's own company-profile page (accessed 2026-08-26), which lists the Mubarek-Kagan pipeline among the trunk facilities it built and continues to offer capital-repair/maintenance services for ('Капитальный ремонт технологических установок и инженерных коммуникаций' is listed among its current service lines) -- the page itself is undated (a standing corporate history, not a news item), so this is weak/indirect recency evidence, not a dated confirmation. This is a mature Soviet-era-descended trunk feeding gas from the Mubarek GPZ into the Bukhara/Kagan hub, i.e. core existing infrastructure with no plausible reason to have gone offline and no evidence that it has; verdict is 'confirm' but flagged as low-confidence on the DATE specifically, high-confidence on the fact of continued operation. Did not find independent evidence dated after the sheet's own 2024-09 LastUpdated, so this does not clear the bar for a 'change' and there is no basis for 'stale' either (this is not a proposed/shelved-clock row)."
+  }
+ ],
+ "summary": "P6966 (Mubarek-Kagan II): existence independently confirmed (Mubarekneftegazmontazh company page names the pipeline directly; UNDP gas-transport schematic corroborates the corridor) -- verdict confirmed (caveat), no existence/duplicate/classification concern; Status=operating reconfirmed (verdict confirm, weak dating); filled StartState/Province=Qashqadaryo Region and EndState/Province=Bukhara Region; Length/Diameter/Capacity remain genuinely UNRESOLVED after a real Russian-language search (no per-string spec exists publicly for either Mubarek-Kagan I or II)."
+}

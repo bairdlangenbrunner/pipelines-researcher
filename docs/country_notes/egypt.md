@@ -513,6 +513,67 @@ remainder was entirely re-staged here, so Egypt gas now has **one** open route s
   against `RouteAccuracy = low` — a three-way-sync violation needing a one-cell RouteType
   fix, repairable with `apply_route_candidates.py --backfill-route-type --pids P7338`.
 
+## §8 route creation 2026-08-27 — gas (5 candidates) + oil (first-ever); staged NOT applied
+
+Second half of the 2026-08-27 request ("for any missing pipelines without explicit routes,
+create suggested routes"). Two run dirs, `batches/egypt-{gas,oil}/staging/route-creation-20260827/`;
+workbooks `pipelines_batch_20260827_1113_ET_egypt-gas_route-creation.xlsx` and
+`…_20260827_1108_ET_egypt-oil_route-creation.xlsx`. **Nothing is applied — neither half is authorized.**
+
+- **Scope is exhaustive, not a selection:** every routeless row in both trackers — 21 gas
+  (20 staged; the 21st resolved before staging) and the single routeless oil row, P7326.
+- **Gas: 5 `ROUTE_CANDIDATE`** — P8072 (Kima Aswan Industrial, 4.2 km), P8074 (Abu Sultan–El
+  Shabab, 37.5), P8075 (Western Desert Gas Complex–Ameriya, 10.4), P8076 (Damietta–Abu Madi,
+  43.2), P8077 (Meadia–Damanhur, 38.6). **15 `ROUTE_PARTIAL`.** Oil: P7326 partial, 0 candidates.
+- **The partials are the substance of this pass, not its failures.** Each carries a documented
+  finding rather than a bare "not found", and several settle questions older passes left open:
+  - **P8080** — settles that "P.S." in these row names means **POWER STATION**, not pressure
+    station, off an exact government wording match. That reading applies to the whole `P.S.`
+    family (P8071 and others).
+  - **P8005** — settles the Ain Sokhna **landfall** question four prior passes left open, from
+    the Ministry's own magazine (`petro-mag.org`).
+  - **P8070 Meleiha** — a point-to-point model **does not fit**: the sheet's start and end
+    coordinates are identical (27.1108/30.7753). Not a geocoding miss; the row needs a
+    different geometry model.
+  - **P8003 Fayoum-Giza** — no pipeline of that name exists in any source; the row's **identity**
+    is in question, which is an Update item, not a routing one.
+  - **P8073** vs **P8072** — anchoring returned the same two places for both (Kima settlement,
+    Aswan city), so P8073 raises a duplicate question against the row we *did* route.
+  - **P8008 / P8009 / P8055** — the Trans-Sinai cluster, written up separately (below).
+- **A retraction inside this pass.** It recorded P8055's sole source (a GASCO PDF, cited by 8
+  cells) as a "CONFIRMED HTTP 404 … a genuine deletion". **Withdrawn — the document is live**;
+  the filed URL hyphenates what are really spaces. The staged P8055 record has been corrected in
+  place. See `notes/escalation-2026-08-27-egypt-gas-trans-sinai-cluster-and-p3931.md`.
+
+## Trans-Sinai cluster + the recovered GASCO register (2026-08-27)
+
+Full writeup: `notes/escalation-2026-08-27-egypt-gas-trans-sinai-cluster-and-p3931.md`. Headlines:
+
+- **GASCO's own Dec-2024 project register is live and machine-readable** — length, diameter,
+  governorate, cost in **both EGP and USD**, status and completion date per project. Registered in
+  `docs/reference/source_roster.md`. **8 `[ref]` cells cite a 404 spelling of its URL**
+  (P8055 ×7 + P6685 `ProjectLevelCost [ref]`); the repair is a URL correction, pre-verified,
+  **not authorized, not made**.
+- **P8055 is very likely a duplicate of P8009.** The register lists **exactly one** Trans-Sinai
+  duplication (28 km, 36", 631 M EGP / 13 M USD) and P8055 reproduces it to the cell, its
+  `ProjectLevelCost` of 13,000,000 USD included. If folded, **P8009's `construction` should
+  survive P8055's `proposed`** — P8055 faithfully reports a Dec-2024 "Under Study", but the
+  Ministry grid document and an Apr-2026 Akhbar El-Yom land-acquisition report both put the
+  duplication under construction since. **P8008 does not fold** (15.5 km, gas flowed Jun 2024).
+- **P8013 vs P8044: checked, NOT duplicates** — recorded so it is not re-opened. Identical
+  75.00 km lengths, but P8044 is North Sinai and P8013 is the Gulf of Suez, ~250 km apart, at
+  36" vs 12". Two caveats on P8013, both ours: its route is our own `very low` straight-line
+  guess, and its `Status [ref]` is a site-search URL rejected by this batch's non-citation
+  screen, so its `operating` is now unsourced.
+- **P6685's length disagrees with its own source** — 20.00 km on the sheet vs 25 km in the
+  register whose USD cost the row already reproduces exactly.
+- **P8006 + P8007 sum 1 km short** of the register's single 17 km Sonker line, which it carries
+  with no phase split.
+- **P3931 has a URL sitting in its `FuelSource` value cell (BQ1941)** while `FuelSource [ref]`
+  and `Status [ref]` are both empty — and it is the Ministry grid PDF, which does support the
+  row's `operating`. Routes to Update, not a mechanical write: blanking the value cell without
+  answering "what is P3931's FuelSource" loses the only content there.
+
 ## ProjectID recycling — P8017 / P8020 → P8084 (APPLIED 2026-08-27)
 
 **A cleared row's ProjectID can be reused for another country's pipeline, and the routes
@@ -552,6 +613,252 @@ Resolved 2026-08-27 (authorized; both halves in one batch):
 per-row consistency checks, so a row with geometry and `Mapped`/`high` reads as in sync no
 matter which continent the geometry is on. A **finding E** (geometry centroid outside the
 row's own `CountriesOrAreas`) would catch it; still an open call in the 08-26 triage memo.
+
+## Deep sweep + research pass 2026-08-27 — gas (40 rows) + oil (ALL 46, first-ever); staged NOT applied
+
+**SEVEN files to work** — the deep sweeps do NOT subsume the recons:
+
+- `…_20260827_1326_ET_egypt-gas_deepsweep.xlsx` (7 tabs)
+- `…_20260827_1343_ET_egypt-oil_deepsweep.xlsx` (8 tabs)
+- `…_20260827_1326_ET_egypt-gas_route-creation.xlsx` (3 tabs)
+- `…_20260827_1108_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`
+- `…_20260827_1108_ET_egypt-oil_reconciliation-{gulfpub,osm}.xlsx`
+
+(+ `…_1108_ET_egypt-oil_route-creation.xlsx`, one row, P7326 not drawn — see
+below.) Staging: `batches/egypt-gas/staging/deepsweep-20260827`,
+`batches/egypt-oil/staging/ref-sweep-all`,
+`batches/egypt-{gas,oil}/staging/route-creation-20260827`,
+`batches/egypt-{gas,oil}/staging/recon-{gulfpub,osm}-20260827`.
+
+**Scope, and why gas is 40 rows and not 127.** The 88 gas rows carrying staged,
+unapplied research from the July/August batches are **excluded from the research
+legs** via `--exclude-pids` — re-researching a row with a pending staged record
+stages a contradictory record against the same sheet cells, and whichever
+workbook is pasted last wins silently. The exclusion is **research-legs-only**;
+it never applies to a recon leg. Oil had no such constraint: all 46 rows, first
+sweep this tracker has ever had in Egypt.
+
+| | gas | oil |
+|---|---:|---:|
+| rows in scope | 40 | 46 |
+| ref records | 266 | 444 |
+| REFS_ADDED / REVERIFIED / UNRESOLVED | 46 / 202 / 18 | 172 / 201 / 71 |
+| fills | 9 | 14 |
+| validity records | 80 | 110 |
+
+### The pass's headline is a citation-FORM defect, not a research gap
+
+106 `[ref]` cells on 20 Egypt rows cite an `egyptoil-gas.com` **navigation
+surface** — a site search-results page (65 gas cells / 14 rows) or page 7 of a
+paginated category index (41 oil cells / 6 rows). Both are mutable; neither is a
+document. The article they were meant to point at is live, verifier-clean, and
+supports the values: **Egypt Oil & Gas Newspaper, Sept 2020, Issue 165, "Gulf of
+Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad"**, whose two tables give
+from/to/km/inches/capacity for 7 crude and 7 gas lines. The correct form is
+already in use on the same tab (69 gas cells / 21 rows cite proper
+`/reports/<slug>` URLs), and on **P8013 both forms sit on one row**. Recovering
+it produced 26 oil + 15 gas ref upgrades and 14 fills. Full writeup, incl. the
+`gap_worklist` corroboration: `notes/escalation-2026-08-27-egypt-eog-navigation-surface-citations.md`.
+
+### Read this before trusting any `existence` verdict in these workbooks
+
+In **seven** places an agent asked for exactly the document another agent in the
+same run was already reading, and **two of those produced recommendations to
+destroy real rows**:
+
+- **P8084** — *"drop/relabel the row as an unverified/GEM-only entry."* The
+  source lists `Suez-Cairo Ring, Suez → Cairo Ring, 150 km, 10 in`; the 150 km
+  matches the sheet exactly and the 10 in fills a cell the sheet leaves blank.
+- **P8018** — *"downgrade to inferred/unsourced… or retire the row"*, or fold it
+  into P8002's El-Tina/Abu Sultan family. The source lists `Suez-Port Said,
+  Suez → Port Said, 160 km, 16 in` — name, both endpoints and diameter all exact.
+
+Both are **WITHDRAWN** in staging (original text preserved under `SUPERSEDED
+WITHIN THIS BATCH`). Neither agent was careless — both ran thorough searches;
+both tested the wrong document (the EGAS Annual Report 2018, which genuinely
+does not describe these lines). **Findings do not propagate across a fan-out.**
+Rule going forward: no `existence` concern ships without first grepping the run's
+other shards for the row's name and endpoints.
+
+Existence concerns that **survive** and are real: **P8010** (Gamasa-Edku — its
+sole citation is a magazine table-of-contents page naming no such line; also
+flagged against P6035), **P8042** (UGDC-Suez — no source names it, all three of
+its citations fail on inspection).
+
+### One document, four rows, and the sheet is longer every time
+
+| row | sheet | EOG | Δ | identity corroborated by |
+|---|---:|---:|---:|---|
+| P7341 Ras Shukeir–Asyut (oil) | 340 km | 280 km | −60 | diameter "20,22" exact |
+| P8016 Ras Shukheir–Suez | 256 km | 245 km | −11 | dia 16 **and** cap 160 exact |
+| P8018 Suez–Port Said | 165 km | 160 km | −5 | name + both endpoints + dia 16 |
+| P3659 Port Said–Arish *(out of scope)* | 235 km | 185 km | −50 | dia "36, 42" ↔ "36/42" |
+
+A consistent direction across four independent rows reads as a **measurement
+convention** difference (point-to-point trunk vs spurs/as-built), not four
+mistakes. **No length was changed.** P7341's 340 km is independently backed by a
+live Youm7 article of 2019-05-26, so that row is a genuine two-source conflict.
+Settle this once for the family, not row by row. Also open: SUMED system capacity
+2,400,000 bbl/d in the source vs GEM's two segments summing 2,500,000; and
+P7979's 97,000 bpd, which the source leaves as "-".
+
+### Other findings worth reading first
+
+- **P8013 is called "Trans Gulf Gas"**, never "Trans Sinai", by its own best
+  source — which also matches it exactly on length, diameter, capacity and
+  StartLocation. Staged as an **`OtherEnglishNames` alias, not a rename**:
+  "Trans Sinai Gas Pipeline I" is a segment-numbered family name shared with
+  sibling rows, so renaming this row alone would break the family. Its
+  `EndPrefecture/District` also carries two typos — *"Ras Baker Transmissin
+  Station"* → "Ras Bakr Transmission Station".
+- **Nine pre-existing orphan `[ref]` cells** on P7975–P7979 (Start/EndLocation
+  refs stapled to blank value cells) are closed properly — re-staged as value+ref
+  **fills**, not perpetuated.
+- **The report's ownership sentence does NOT cover the table.** *"The SUMED has
+  the biggest length…, operated by the Petroleum Pipeline Company (PPC)"* — the
+  participial attaches to **SUMED alone**. No `Operator`/`Owner [ref]` was staged
+  from it. It reads at a glance like a blanket attribution for all eight lines
+  and would be wrong.
+- **Rule 1 is clean:** 0 of the `[ref]` cells on all 173 Egypt rows across both
+  tabs contain a GEM surface. Checked, not assumed.
+- **P0530 vs P5121 is NOT a duplicate** — SUMED is two parallel 42-inch / 320 km
+  lines modelled via `segment_name`, and `ar.wikipedia`'s body independently
+  confirms that model (*"خطي أنابيب متوازيين طول كل منهما 320 كم وقطره 42 بوصة"*).
+  **Cite that article's prose, never its infobox — the infobox says 30″ against
+  its own body's 42″.**
+- **P5121's `StartYear1` is now staged as a `concern/spec` on P5121 itself.**
+  The sheet's 1977 is the SUMED *system*'s commissioning year: both sources
+  behind it (en.wikipedia's infobox "Commissioned 1977", ar.wikipedia's category
+  *"اكتملت في 1977"*) date the system, so neither can corroborate a segment-row
+  cell. sumed.org's own history separates them — Pipeline 1 January 1977 (first
+  tanker, the *Esthel*, at Sidi Kerir), Pipeline 2 / the doubling to 80 Mt/y
+  October 1978 — and **P5121 is Pipeline 2**. Flagged, not applied: confirm the
+  per-line date at sumed.org before touching the cell.
+  **This is another instance of the cross-leg blindness escalated for this
+  batch**, caught in QC rather than by an agent: the finding already existed as
+  an aside inside P0530's *duplicate* record ("not this row's defect") while
+  P5121's own record asserted *"StartYear all corroborate"*. Two agents, two
+  rows, contradictory conclusions, neither seeing the other. P5121's record has
+  been revised to carve `StartYear1` out of that claim.
+
+### The harvested pool is a worklist, not a lookup table — 32 citations never opened
+
+Per the Uzbekistan rule, a ref leg reports how many harvested citations it
+actually opened. Measured across both dirs:
+
+| Tracker | wiki pages | unique citations | opened | never opened |
+|---|---:|---:|---:|---:|
+| Gas | 2 | 10 | 6 | 4 |
+| Oil | 46 | 80 | 48 | 32 |
+
+**That raw count over-reports, and by a knowable amount:** 4 of the 36 are also
+the row's own `current_ref`, so the leg read them through ref *verification*
+rather than through the harvest path. P7326's `dostor.org/4487576` is one — read
+here to check, and it confirms what the leg already concluded from a better
+source. **32 are genuinely untouched.** When measuring harvest coverage,
+subtract the citations that are already cited on the row; counting the harvest
+path alone credits the leg with less reading than it did.
+
+All 32 screened through `url_verifier`, so the residue is a measured reading
+list rather than a silent pass:
+
+| Outcome | n | What it means |
+|---|---:|---|
+| live 200 | **11** | the real reading list |
+| confirmed 404 | 7 | true deletions |
+| 403 / 401 / 502 | 8 | access failures — **not** deletions (never drop a ref over one) |
+| timeout / DNS / redirect loop | 4 | network condition, no evidence about the source |
+| rejected as a navigation surface | 2 | see below |
+
+Three things in that residue are worth acting on:
+
+- **Two of the harvested "citations" are index pages, not documents** — a
+  `google.com/search?q=…` results URL and `petrojet.com.eg/view/company/page/6`.
+  Same defect class as the EOG navigation-surface escalation, arriving by a
+  different route: the harvester takes whatever a wiki page footnotes, and wiki
+  pages footnote search surfaces. Screen harvested URLs for index-ness, not just
+  reachability.
+- **`http://bit.ly/2oFzXCm` verifies live** (P0530/P5121). A shortener is never
+  a citable ref — resolve it to its target and cite that, or drop it.
+- **`wepco-eg.com` restructured**: `/operations-services/badr-1/`,
+  `/operations-services/elhamra-terminal/` and `/wepco/vision-mission/` are all
+  genuine 404s while `/wepco/` lives. Those three are the only harvested sources
+  in this pass confirmed *gone* rather than merely unreachable
+  (P3689/P3691/P3693).
+
+Where the live 11 sit: **five are SUMED** (P0530/P5121 — the cluster carrying
+the one open `StartYear1` question), and the rest are single pages on P8002,
+P3689, P3693 ×2, P5125 and P3701. None sits on a row whose staged verdict turns
+on it.
+
+### Recon (§2, four runs) — one gate crossed for real, one manufactured
+
+**No additions gate crossed anywhere** (gas GulfPub 15, gas OSM 20, oil GulfPub
+28, oil OSM 27 — all under >30).
+
+**Oil GulfPub reads 23 status conflicts on 40 overlaps = 57.5%, and that number
+is an artifact. Do not act on it.** Twenty-one of the 23 are a single GEM row,
+**P7326**, matched against 21 unrelated GulfPub records — "Belayim Marine - Ras
+Bakr", "Ras el Ush - Shoab Ali" and the like, which are 11–33 km **Gulf of Suez
+offshore** lines, while P7326 is the **El Minya–El-Tibeen–Asyut products line in
+the Nile Valley**. They are not the same pipe. The matcher joined them because
+P7326 is blind on every axis that would have separated them: `RouteAccuracy =
+no route`, `StartLocation` and `EndLocation` both **blank**, leaving only
+diameter (12") and length (20 km) — so every 12-inch Gulf-of-Suez line of the
+right rough length scores "diameter ✓; length 0.5–0.8" with name ~0.3–0.4 and
+lands at `yellow`/`segment`/`comparable`. All 21 are `yellow`, never `green`;
+the workbook is honest, but the Status_Conflicts tab counts each as a conflict.
+
+  Real oil conflicts after removing that cluster: **two** — **P7315**
+  Agroud–Ain Sokhna (`construction` → GulfPub `operating`) and **P3689** Badr El
+  Din–El Hamra (`operating` → GulfPub `proposed`). On a distinct-PID basis
+  that is 2 of 10, still over the gate, but as two row-level verification
+  questions rather than a class defect.
+
+  This is the Uzbekistan lesson again in a new shape: **a crossed gate is a claim
+  until you read what crossed it.** And note the general hazard — a GEM row with
+  no route AND no endpoints is a *false-match attractor* for any attribute-axis
+  source. No weight was retuned (per the standing rule this is not a
+  `geoarea_weight` case; the fix is to give P7326 endpoints).
+
+**Gas GulfPub: 6 conflicts on 44 distinct matched PIDs = 13.6%** — over the gate
+and worth reading individually, not systematic: P8031 ×2 (`operating` vs
+`proposed`, El King / Al Bahig–Abu Sir Ameriya laterals), P8076
+(Damietta–Abu Madi vs "Tulip - Abu Monkar" — check this is even the same line),
+P7597 (Cronos–Port Said `proposed` vs `operating`), the P8065/P8066/P8075
+cluster (Abu Sir–Ameriya), and P8070 Meleiha (`construction` vs `operating`).
+
+**Both OSM runs are healthy and thin, correctly.** Gas: 21 reference records,
+0% named but **100% with geometry** against a GEM pool 83% routed — so the
+geometry axis is alive, no `MATCH_QUALITY` warning, and the single overlap is a
+**true result**: OSM simply has very little Egyptian gas pipe. Oil: 32 records,
+15.6% named, GEM pool 98% routed, 5 overlaps. Dispositions — gas 8 `NEAR_MISS` /
+5 `FRAGMENT_OF_EXISTING` / 7 `DISCOVERY_CANDIDATE`; oil 3 / 24. **`ROUTE_FOR_EXISTING`
+is 0 in both**, i.e. OSM offers no candidate geometry for any routeless Egypt row
+— which is why the route leg below had to build from anchors rather than traces.
+
+### Routes (the second half of the ask)
+
+21 routeless gas rows (11 blank `RouteAccuracy` + 10 `no route`; **blank means no
+route**, per the 2026-08-11 ruling) → **5 candidates + 15 partials**, all 5 PASS
+`validate_route_candidate.py` (format + integrity + collision). The 21st, **P7589
+(Faramid)**, was deliberately not re-drawn — its candidate is already staged from
+2026-08-11 and re-drawing would stage a competing candidate for the same PID. The
+52 Egypt gas rows at `very low (straight line/schematic)` already have geometry
+and are out of scope for "pipelines without explicit routes".
+
+Oil has exactly one routeless row, **P7326**, and it is **NOT DRAWN**: only one
+endpoint is resolvable, and the other could only be inferred from GEM's own
+geometry, which rule 1 forbids citing.
+
+### Authorization-gated — NOT written
+
+The 106 navigation-surface URL corrections (mechanical: one verified string for
+one verified string), plus the items still outstanding from earlier in the pass —
+P7338 (Oil/NGL **CV1210**), P5596 (Gas **F3114**), P3931's misplaced URL
+(**BQ1941**), and the 8 GASCO URL corrections (P8055 ×7 + P6685).
+
+---
 
 ## Open items — QC packet (2026-07-15, staged NOT applied)
 

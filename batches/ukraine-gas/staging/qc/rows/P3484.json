@@ -1,0 +1,34 @@
+{
+ "project_id": "P3484",
+ "pipeline_name": "Ivatsevichy-Kobryn-Dolyna Gas Pipeline",
+ "sheet_row": 1781,
+ "wiki": "https://www.gem.wiki/Ivatsevichy-Kobryn-Dolyna_Gas_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Length [ref]",
+   "value_cols": ["LengthKnown", "LengthKnownUnits"],
+   "values": {"LengthKnown": "357.70", "LengthKnownUnits": "km"},
+   "primary_value_col": "LengthKnown",
+   "primary_value": "357.70",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250615033715/https://utg.ua/utg/about-company/history/xronologya-storichnogo-rozvitku.html"
+   ],
+   "verifications": [
+    {"url": "https://web.archive.org/web/20250615033715/https://utg.ua/utg/about-company/history/xronologya-storichnogo-rozvitku.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "uk",
+   "researcher_notes": "This is the corridor's own leg-4 redundancy evidence (cluster G, already staged in batches/ukraine-gas/staging/redundancy/clusters/G.json — I re-verified rather than re-derived it; do not re-adjudicate the duplicate question, which was already REFUTED there). GEM's current 292.00 km (identical on both P3484 and P5938) has no supporting source: the ISANS 2023 PDF GEM cites for this cell was independently downloaded and full-text-extracted (pdftotext) in the redundancy pass and contains diameter (1220mm, correct) and the whole-corridor ~30 bcm/y capacity total, but NO length figure at all for this pipeline — the ref does not support the value it is attached to (url_verifier also FAILs the substring check on it, a documented PDF-extraction false negative, not evidence for the value). Ukrtransgaz's own official construction chronology (utg.ua's 'Хронологія історичного розвитку', reached via Wayback because the live site 403s per gotcha 1; re-verified here with the '357,7' substring) gives this string ('Івацевичі-Долина (I нитка)') its own dated, per-string entry: commissioned 1976 at 357.7 km, diameter 1220mm — the year matches this row's StartYear1 (1976) exactly, and the diameter matches GEM's 1220.00 exactly; only the length differs from GEM's current value. This is the operator's own primary corporate history, so I am proposing it replace the unsourced 292.00 rather than leaving the cell pointed at a ref that doesn't say what it's cited for. Tier is medium, not high: this is one strong primary source, not two independent sources agreeing on 357.7 km specifically (cdu.ru independently confirms the two-string STRUCTURE ('Ивацевичи - Долина (2х1220 мм)') but gives no per-string length, so it corroborates the duplicate-refutation, not this specific figure). Supporting arithmetic: the drawn 15-vertex geodesic trace measures 480.29 km end-to-end Ivatsevichy(Belarus)-Dolyna(Ukraine) (same trace shared by both rows -- expected for parallel strings on one right-of-way, per the redundancy leg's finding, not evidence of duplication). Against the CURRENT 292.00 km that ratio is 1.64, which is what tripped the length_ratio flag; against the PROPOSED 357.70 km the ratio becomes 1.34 -- back inside the 0.72-1.4 band for a 'high'-accuracy schematic route. That is corroborating (not decisive) evidence the correction is a real improvement, since it resolves the geometric inconsistency at the same time as the sourcing gap. One caveat I am flagging rather than resolving: it is NOT established what territorial extent either number measures. A back-of-envelope hypothesis in the pre-fetched evidence (redundancy leg) noted 480.29 km minus ~188 km of Belarusian territory lands close to the current 292 km, which would make 292 a plausible Ukraine-only figure and 357.7/366.7 the full cross-border string length -- but no source in either pass actually states this, so I am not presenting it as settled. I am recommending the sourced UTG figure over an unsourced, byte-identical-on-both-rows placeholder, while flagging the territorial-scope question for Update to note rather than treating as closed."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern (informational only)",
+   "concern_type": "spec",
+   "recommendation": "No action needed -- this closes the brief's optional open question about a possible THIRD string without staging Discovery, per the brief's instruction not to chase it further. Do not read this as evidence GEM is missing a pipeline.",
+   "researcher_notes": "The brief flagged an apparent conflict: this pass's own pre-fetched evidence (batches/ukraine-gas/staging/redundancy/ivatsevichy_evidence.md) cites uk.wikipedia's 'Братство (система газопроводів)' article describing a THREE-string system built 1975-1983 named 'Торжок-Івацевичі-Долина', while redundancy cluster G sourced a TWO-string 'Івацевичі-Долина' system (P3484/P5938). These are not actually in conflict once the corridor is split at Ivatsevichi. Russia's federal dispatch body cdu.ru (already cited in cluster G, re-checked here) names them as two DIFFERENT, separately-dimensioned segments of one narrative route: 'Торжок - Минск - Ивацевичи (3х1220 мм)' -- a three-line trunk feeding INTO Ivatsevichi -- and, separately, 'Ивацевичи - Долина (2х1220 мм)' -- the two-line continuation from Ivatsevichi to Dolyna that P3484/P5938 track. The uk.wikipedia 'three-string' description is describing the upstream Torzhok-Ivatsevichi leg (outside GEM's Ivatsevichi-Kobryn-Dolyna rows entirely, and outside this brief's scope), not this corridor. No missing third string on THIS segment is implied; the two counts (3 and 2) belong to two different legs of a longer combined route that the popular/wiki naming bundles under one umbrella term. Flagging only for the record, as the brief asked, not staging Discovery."
+  }
+ ]
+}

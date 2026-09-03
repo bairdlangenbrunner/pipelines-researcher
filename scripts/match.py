@@ -214,6 +214,17 @@ GENERIC_NAME_TOKENS = {
     "truboprovod", "nafthoprovid", "nefteprovod", "mahistralnyi", "mahistralnyy",
     "magistralnyi", "magistralnyy", "magistralnaya", "mahistralna", "mh", "mg",
     "hazova", "gazovyi", "gazovy", "nytka", "nitka", "vidhaluzhennia", "otvod",
+    # Misspelt in the source, not by us: OSM way 418346623 (Uzbekistan) reads
+    # "Газопровот ..." (final т for д). The stoplist's job is to drop words that
+    # identify nothing, and a typo'd generic identifies nothing either — left in, it
+    # scores as a distinguishing token and dilutes the two that actually distinguish.
+    # Safe to add: the string occurs in no other registered dataset, so no committed
+    # run moves. Add further variants only on the same evidence.
+    "gazoprovot",
+    # Uzbek/Russian facility boilerplate. "УППГ" (uppg) = установка предварительной
+    # подготовки газа, a gas pre-treatment unit — it prefixes BOTH endpoints of the
+    # same OSM name, so it is pure noise on the name axis.
+    "uppg",
 }
 
 

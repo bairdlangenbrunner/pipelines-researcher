@@ -1,0 +1,66 @@
+{
+  "project_id": "P4051",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 2049,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "East-West Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change. Stage the two proposed refs onto Status [ref], Fuel [ref], Construction [ref], and Start [ref] -- existence, operating status, 2019 construction/in-service year all independently confirmed.",
+      "researcher_notes": "EXISTENCE / STATUS / DATES -- strongly confirmed by TWO independent, non-GEM origins. (1) Texas Energy Report, 'Partial Construction On East-West Pipeline Expansion Granted' (Aug. 16, 2018; read via its Wayback capture since the live page now sits behind a login wall) reports FERC gave notice to proceed on the East-West Project, a 275 MMcf/d Florida Gas Transmission (FGT) lateral from receipt points in Louisiana to delivery points on FGT's Texas Gulf Coast system, cost ~$69 million, citing Natural Gas Intelligence and FERC as its own primary sources. (2) EIA's own 'Natural Gas Pipeline Projects' register (the U.S. government's independent tracking table, https://www.eia.gov/naturalgas/data.php -> pipelines file) carries a line-item row for 'East-West Project' / 'Florida Gas Trans Co', FERC docket CP17-8: the Jan-2019 edition shows it 'Under Construction' ('Phase 1 completed... remains under construction' per Genscape flow data), and the Jan-2020 and Jul-2021 editions (Historical Projects tab) show it moved to 'Completed', Completed Date 2019-01-22, Year In Service 2019 -- exactly matching GEM's ConstructionYear/StartYear1=2019 and Status=operating. These two sources are genuinely independent of each other (a Houston trade paper citing NGI/FERC vs. EIA's own federally-compiled register) and neither traces to GEM. Fuel=Gas is trivial (FGT is an interstate natural-gas transmission system; not in dispute). Of the 9 citations harvested from this row's wiki page I opened/screened: the Texas Energy Report link (confirmed live via Wayback, used above), the EIA data.php index page (live, 200, generic layer-info page -- not project-specific so not relied on for the finding), and attempted oilandgaswatch.org/pipeline/6491 (JS single-page app, returned only an empty shell via direct fetch -- could not extract data, not relied on). Not opened: the FracTracker map article and the PGJ 'Planned Projects' PDF (time-boxed; the two sources above already gave >=2-independent high-tier confirmation on every point they covered). The bit.ly citation resolves to abarrelfull -- BANNED (standing rule 5) -- not opened/used.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190524132607/https://texasenergyreport.com/blog/2018/08/15/13574/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "East-West Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "No change to Length/Capacity/SegmentCost -- both independently corroborated to GEM's exact figures. Diameter (12 in) could not be independently corroborated or disputed in the sources checked; stage the same two refs on Length/Capacity/SegmentCost only, and leave Diameter [ref] open for a future FERC-docket pull (CP17-8 certificate order) rather than treating the current value as either confirmed or wrong.",
+      "researcher_notes": "SPEC check, >=2 independent sources: LengthKnown=24.70 mi matches EIA's register EXACTLY (Miles=24.7 for the 'East-West Project' row, both the Jan-2019 'under construction' entry and the Jan-2020/Jul-2021 'Completed' entry). Capacity=275.00 MMcf/d matches EIA's 'Additional Capacity (MMcf/d)'=275 EXACTLY, and independently matches Texas Energy Report's own figure ('a portion of the 275 MMcf/d ... project'). SegmentCost=$69,000,000 is corroborated by TWO independent figures that round to the same number: Texas Energy Report states 'about $69 million', and EIA's register carries Cost (millions)=68.9 -- a <0.2% variance, clearly the same underlying FERC-filed cost estimate reported to one more significant figure by EIA. This is a strong, convergent three-way match (GEM / TER / EIA) on length, capacity, and cost. Diameter=12 in is NOT corroborated either way: EIA's Pipeline Diameter field is blank for this specific row (the register only populates diameter inconsistently across rows), and I could not reach a document that states the East-West lateral's pipe diameter (FERC's own eLibrary docket search is not fetchable from this environment, and the FGT system-map PDF linked from the wiki page redirects to a generic Energy Transfer asset-portal login, not a route-specific spec sheet). Given a 12-inch line moving 275 MMcf/d over 24.7 miles is plausible but on the small side for that throughput (FGT's other laterals of similar length run 20-36 in for comparable or smaller volumes per the EIA register), this is flagged as an open caveat, not a disagreement -- no evidence either supports or contradicts 12 in.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190524132607/https://texasenergyreport.com/blog/2018/08/15/13574/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "East-West Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Swap the Start/End coding: change StartState/Province to Louisiana (with StartLocation set to the specific LA receipt point, once identified) and EndState/Province to Texas (Matagorda County may well be the correct Texas delivery-side location, but should be re-verified as an END point, not treated as confirmed as-is). Do not apply automatically -- flag for Update to pin down the exact Louisiana receipt-point name before editing.",
+      "researcher_notes": "GEM currently codes this segment as StartPrefecture/District=Matagorda County, StartState/Province=Texas -> EndState/Province=Louisiana. TWO independent sources put the flow, and the state coding, the other way around. (1) Texas Energy Report states explicitly: 'Florida Gas wants to build and operate the pipeline from proposed two receipt points and one existing receipt point in LOUISIANA to two delivery points on FGT's system along the TEXAS Gulf Coast' -- i.e. gas enters in Louisiana and is delivered into Texas, the opposite direction of GEM's Start(TX)->End(LA) coding. (2) EIA's own register uses the same Start/End convention GEM does ('Beg_State' / 'End_State') and lists this exact row as Beg_State='LA', End_State='TX' -- again the reverse of GEM. Two independent sources agreeing with each other, and disagreeing with GEM, on which end is the origin, is a real attribution defect, not a rounding/labeling nuance -- worth a concern flag even though it doesn't touch existence. It's plausible 'Matagorda County' is nonetheless the correct TEXAS-side (delivery) location name and just needs its Start/End role flipped, rather than being wrong itself, but I could not confirm the county from either source (neither TER nor EIA names counties), so I'm not proposing a replacement value -- only flagging the direction defect for a researcher with FERC-docket access (or the FGT system map) to resolve precisely.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190524132607/https://texasenergyreport.com/blog/2018/08/15/13574/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "East-West Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change. Stage the proposed ref on the Owner [ref] cell.",
+      "researcher_notes": "Owner1='Florida Gas Transmission Co LLC' 100% confirmed as the correct legal operating entity: FGT's own regulatory tariff/informational-postings site (pipelines.energytransfer.com, an Energy Transfer iPost portal) names the entity 'Florida Gas Transmission Company, LLC' verbatim. Texas Energy Report independently corroborates the corporate structure ('FGT is a division of Citrus Corporation, itself a JV holding company co-owned by Energy Transfer Partners and Kinder Morgan through subsidiaries'), consistent with GEM's convention of recording the direct operating entity (FGT itself, 100%) rather than its upstream JV parents (Citrus/ETP/KMI), which is standard practice elsewhere in this tracker and not a defect.",
+      "proposed_refs": [
+        "https://pipelines.energytransfer.com/ipost/main/index?asset=FGT",
+        "https://web.archive.org/web/20190524132607/https://texasenergyreport.com/blog/2018/08/15/13574/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P4051 (FGT East-West Project) CONFIRMED real, correctly classified, no duplicate against the 45-row roster -- Length (24.7 mi), Capacity (275 MMcf/d), SegmentCost (~$69M), Status/ConstructionYear/StartYear1 (2019), and Owner all independently verified via EIA's own pipeline-projects register + Texas Energy Report (citing NGI/FERC docket CP17-8), a strong 3-way GEM/EIA/TER match. ONE concern staged: StartState/EndState (TX->LA) appear REVERSED versus two independent sources that both put the flow LA->TX -- flagged attribution, not auto-corrected pending the exact LA receipt-point name. Diameter (12 in) is an open caveat, neither confirmed nor disputed by any source found. No UNRESOLVED fills (no blank value fields on this row)."
+}

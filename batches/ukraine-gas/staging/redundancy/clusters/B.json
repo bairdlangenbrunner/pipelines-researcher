@@ -1,0 +1,115 @@
+{
+  "cluster_id": "B",
+  "title": "Izmail corridor (P0784/P0786/P0787) — three distinct pipelines; P0784 is a Frankenstein row needing rewrite, not deletion",
+  "verdict": "PARTIAL_OVERLAP",
+  "rows": [
+    {
+      "project_id": "P0784",
+      "concern_type": "spec",
+      "severity": "escalate",
+      "recommendation": "Do NOT delete. ШДКРІ (Shebelinka-Dnipropetrovsk-Kryvyi Rih-Izmail) is a real, independently-confirmed pipeline distinct from both P0786 (ATI) and P0787 (RI) — it needs a REWRITE, not removal. (1) Drop the fabricated 'Rozdilna' waypoint from the name — no source anywhere calls this line by that compound name; Rozdilna is P0787's own line, not a waypoint on this one. (2) Replace Capacity 24.00 bcm/y: this traces, confirmed verbatim by fetching GEM's own cited academic source directly, to a table row aggregating THREE physical threads (ATI + ШДКРІ's two threads) into one combined CIS-border-crossing throughput figure — it is not this line's own capacity, and using it here double-counts capacity that P0786 (ATI) already carries on its own row. Research a standalone figure before pasting one of the two candidates found (Moldovatransgaz's own per-thread reading of 7.3 bcm/y at 820mm for the line's Moldovan-transiting portion, vs. the Ukrainian-wiki-sourced combined ШДКРІ+RI figure of up to 15.8 bcm/y — note this second figure is ШДКРІ+RI TOGETHER, not ШДКРІ alone, so it is not a clean substitute either). (3) Treat Length 164.00 km as unconfirmed for the full Shebelinka-to-Izmail route: GEM's own cited source (ngpedia.ru) attaches 164 km to a sub-designation 'Shebelinka-Krivoy Rog-Izmail II' of uncertain scope (one thread? one segment?), and independently, the merged route geometry draws a 759.1 km schematic lower bound for this corridor (route_geometry_findings.md finding B) — 164 km cannot be the whole line's length. (4) Diameter 1200mm has the most solid direct sourcing of the four fields — a live, reachable ProZorro capital-repair tender for this exact pipeline gives DN1200 at km 108.5-111 near its Shebelinka-area origin — but the same trunk tapers to ~800-820mm by the time it reaches the Balkan-bound outlet near Izmail (per Moldovatransgaz's 820mm reading of the transiting tail and the Ukrainian wiki's 'two threads of 800mm' at 1975 commissioning); note the tapering diameter in ResearcherNotes rather than treating either figure as simply wrong.",
+      "notes": "GEM's own outbound citations for this exact wiki page (read under standing rule 4 — for outbound cites only, never cited here as a source) trace each of P0784's four data fields to a DIFFERENT, unrelated origin — the signature of a Frankenstein row, not a duplicate: Capacity 24 -> cyberleninka.ru (Gainutdinova); Length 164km -> ngpedia.ru; Diameter 1200mm -> a ProZorro tender; Name -> an apparent fusion of ШДКРІ's real corridor with 'Rozdilna', a waypoint that belongs to a different line (P0787). I fetched the cyberleninka article directly and confirmed the exact table row verbatim: «Ананьев - Тирасполь - Измаил, Шебелинка - Измаил (три нитки) | 24 | Румыния, Болгария, Греция, Турция, Македония» under Table 1, 'Пропускная способность экспортных газопроводов в пунктах пересечения западной границы стран СНГ' (capacity of export pipelines at CIS western-border crossing points) — an aggregate across three physical threads, not P0784's own line. I independently fetched Ukrainian Wikipedia's dedicated Shebelinka-Izmail corridor article and confirmed verbatim: 'трубопровід Роздільна — Ізмаїл діаметром 820 мм, постачання по якому розпочали у жовтні 1973 року' (Rozdilna-Izmail, 820mm, deliveries from October 1973) and, on ШДКРІ, 'Введений у дію у 1975 році, він мав дві нитки діаметром 800 мм. Разом газопроводи ШДКРІ та Роздільна — Ізмаїл могли забезпечувати постачання на Балкани в обсягах до 15,8 млрд м3 на рік' (commissioned 1975, two 800mm threads; TOGETHER with Rozdilna-Izmail, up to 15.8 bcm/y combined — note this figure is the two lines COMBINED, not ШДКРІ alone). The same article lists five real component systems of this corridor: Shebelinka-Dnipropetrovsk, ШДО, ШДО-2, Rozdilna-Izmail, and ШДКРІ. Two ProZorro tenders (one GEM's own citation, one independently surfaced by search, both confirmed reachable at HTTP 200 via direct curl) corroborate a DN1200 capital-repair scope on this pipeline's Shebelinka-area segment (km 108.5-111) — the page bodies are client-rendered JS and unreadable directly, so this is reachability-confirmed, not full-text-confirmed; documented as an access limitation, not treated as fabricated. ngpedia.ru (source of the 164 km figure) was unreachable both live (TLS cert mismatch) and via Wayback (503) — recorded as unreachable, not as a deletion signal. Independently of all the above, Tiraspoltransgaz's own blog (ttg-pmr.livejournal.com) documents ШДКРІ undergoing a joint magnetic-tomography diagnostic inspection with Russian specialists as its OWN separate maintenance program, distinct from Rozdilna-Izmail's separately-documented 2012-13 repair work — independent operational confirmation that these are two really-separate assets despite sharing an 820mm/7.3bcm spec pair (the Soviet parallel-strings pattern the brief warned about). Independent route geometry (route_geometry_findings.md, finding B) also corroborates that 164km cannot be right: the merged 5-vertex schematic for this row spans 759.1 km end to end, a 4.6x gap even as a lower bound."
+    },
+    {
+      "project_id": "P0786",
+      "concern_type": "spec",
+      "severity": "flag",
+      "recommendation": "Not a duplicate of P0784 or P0787 — keep the row, Anan'iv-Tiraspol-Izmail (ATI) is real and correctly named. But flag StartYear1 for correction/verification: GEM has 1968; Ukrainian Wikipedia's dedicated ATI article (8 references) instead dates commissioning to 1986, with a further capacity expansion completed by ~2001 that raised the line to its stated 20 bcm/y max. No source found in this pass supports 1968 for this line specifically. Independently, Tiraspoltransgaz's own corporate history page places ATI's pipeline + associated turbine-driven compressor-station construction (Tiraspol/Orlovka/Ananyev/Tarutino) in its 1983 entry, with earlier entries (1965-71) describing only the region's pre-existing gas-distribution infrastructure and a 1975 ELECTRIC (not turbine) compressor station — consistent with a mid-1980s completion, not 1968. Also flag Capacity 23.70 bcm/y against the sourced ~20 bcm/y post-expansion maximum (Moldovatransgaz gives 20 bcm/y directly) — close but not identical, worth a dedicated Update check; Diameter 1200mm (sheet) vs 1220mm (Moldovatransgaz) is immaterial rounding.",
+      "notes": "Moldovatransgaz's own asset register (item 4 of 8) names «Ананьев - Тирасполь - Измаил (АТИ)» as its own separate line: 62.91 km (Moldovan portion), 1220mm, 20 bcm/y. Ukrainian Wikipedia's dedicated ATI article independently gives 1200mm diameter, 1986 commissioning, and a post-expansion max of 20 bcm/y ('її завершення дозволило збільшити максимальну пропускну здатність газопроводу на 4 млрд м3 у рік, завдяки чому вона досягла 20 млрд м3'). Existence and the ATI name/acronym are further corroborated, independently of both wiki sources, by direct coverage of the 1 April 2009 Transnistria pipeline explosion: Kommersant (Tiraspol-area location, pipe age >30yr, blast-crater detail) and realitatea.net, which names the line explicitly as 'Ananiev-Tiraspol-Izmail (ATI) magistrale' with a 127.5km damaged section repaired by 9 April 2009; RT's coverage of the same event calls it 'Ananiev-Odessa-Izmail', a name variant for the same event/line. Four independent sources (Moldovatransgaz, Ukrainian wiki, Tiraspoltransgaz's own corporate history, and 2009-explosion press coverage) converge on this being its own distinct, separately-named, separately-dated trunk — refuting any duplicate reading against P0784 or P0787."
+    },
+    {
+      "project_id": "P0787",
+      "concern_type": "spec",
+      "severity": "flag",
+      "recommendation": "Not a duplicate of P0784 or P0786 — keep the row. Diameter (820mm) and Capacity (7.30 bcm/y) both match Moldovatransgaz's own per-line asset figures for «Раздельная - Измаил (РИ)» exactly; no change needed there. Do flag/verify StartYear1: GEM has 1975, identical to ШДКРІ's own commissioning year (suspicious echoing, possibly copied across rows) — Ukrainian Wikipedia's corridor article instead dates Rozdilna-Izmail deliveries to October 1973, two years earlier and sourced separately from ШДКРІ's 1975. Recommend a targeted Update check against a primary Ukrtransgaz/TSOU construction chronology (source-ladder item 2) to settle this rather than rely on secondary wiki sourcing alone.",
+      "notes": "Moldovatransgaz's asset register (item 2 of 8) gives «Раздельная - Измаил (РИ)»: 92.24 km (Moldovan portion), 820mm, 7.3 bcm/y — diameter and capacity match GEM's P0787 exactly; GEM's 230km full length is not contradicted since Moldovatransgaz's figure is explicitly the Moldovan-territory portion only, and route_geometry_findings.md's 193.3km drawn schematic is an unremarkable lower bound. Ukrainian Wikipedia independently dates Rozdilna-Izmail deliveries from October 1973, DISTINCT from ШДКРІ's 1975 commissioning two years later — exactly the kind of independently-sourced, separately-dated-commissioning evidence the briefing's Kazakh precedent treats as dispositive against a duplicate reading, despite RI and ШДКРІ sharing an identical 820mm/7.3bcm/y spec pair. Tiraspoltransgaz's own blog independently corroborates RI undergoing its own separate 2012-13 repair/maintenance program, distinct from ШДКРІ's separately-documented joint diagnostic inspection — confirming these are two really-separate, independently-operated assets (the Soviet parallel-strings pattern), not the same pipe recorded twice under P0787 and P0784."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://moldovatransgaz.md/ru/content/magistralnye-gazoprovody-dlya-peredachi-prirodnogo-gaza-po-territorii-respubliki-moldova",
+      "what": "Moldovatransgaz's own trunk-line asset register (8 lines, Moldovan-territory portions): gives per-line length/diameter/capacity for Раздельная-Измаил (92.24km/820mm/7.3bcm), ШДКРИ (91.817km/820mm/7.3bcm), and Ananyev-Tiraspol-Izmail (62.91km/1220mm/20bcm) as three SEPARATE numbered line items. Fetched successfully via curl (HTTP 200) by the main loop on 2026-08-14 and saved verbatim in moldovatransgaz_trunks.md. My own re-verification attempt on 2026-08-15 hit the origin's own broken 301 redirect (Location header resolves to a malformed host 'mtg.mdru', missing a slash — confirmed via direct curl to be a current server-side misconfiguration/migration, not a takedown) and IA Save-Page-Now returned 523 (origin unreachable from IA's crawler) — consistent with the same live-site issue, not evidence against the already-captured verbatim content.",
+      "tier": "1 (operator's own asset register)",
+      "verified": true
+    },
+    {
+      "url": "https://uk.wikipedia.org/wiki/%D0%A8%D0%B5%D0%B1%D0%B5%D0%BB%D0%B8%D0%BD%D0%BA%D0%B0_%E2%80%94_%D0%86%D0%B7%D0%BC%D0%B0%D1%97%D0%BB_(%D0%B3%D0%B0%D0%B7%D0%BE%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%BD%D0%B8%D0%B9_%D0%BA%D0%BE%D1%80%D0%B8%D0%B4%D0%BE%D1%80)",
+      "what": "Ukrainian Wikipedia's Shebelinka-Izmail gas-corridor article: lists five distinct component systems (Shebelinka-Dnipropetrovsk; ШДО; ШДО-2; Rozdilna-Izmail, Oct 1973; ШДКРІ, 1975, two 800mm threads, up to 15.8bcm/y combined with Rozdilna-Izmail). Fetched and quotes confirmed verbatim by this agent.",
+      "tier": "2 (sourced wiki secondary)",
+      "verified": true
+    },
+    {
+      "url": "https://uk.wikipedia.org/wiki/%D0%90%D0%BD%D0%B0%D0%BD%D1%8C%D1%97%D0%B2_%E2%80%94_%D0%A2%D0%B8%D1%80%D0%B0%D1%81%D0%BF%D0%BE%D0%BB%D1%8C_%E2%80%94_%D0%86%D0%B7%D0%BC%D0%B0%D1%97%D0%BB_(%D0%B3%D0%B0%D0%B7%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D1%96%D0%B4)",
+      "what": "Ukrainian Wikipedia's dedicated Ananiiv-Tyraspol-Izmail article: 1200mm diameter, commissioned 1986, capacity raised to 20bcm/y max after a post-2001 expansion (8 references cited on the page).",
+      "tier": "2 (sourced wiki secondary)",
+      "verified": true
+    },
+    {
+      "url": "https://cyberleninka.ru/article/n/formirovanie-potentsiala-regionalnogo-rynka-i-arkticheskaya-sistema-transportirovki-prirodnogo-gaza",
+      "what": "The Gainutdinova (2012) academic article GEM's own P0784 wiki page cites for the 24bcm/y capacity figure. Confirmed verbatim by this agent: 'Ананьев - Тирасполь - Измаил, Шебелинка - Измаил (три нитки) | 24' under a table of combined export-pipeline capacity at CIS western-border crossing points — an aggregate of three threads, not one line's own throughput.",
+      "tier": "3 (single academic source — the load-bearing evidence is one table row)",
+      "verified": true
+    },
+    {
+      "url": "https://prozorro.gov.ua/tender/UA-2021-01-19-001818-b",
+      "what": "A ProZorro capital-repair tender for 'Капітальний ремонт газопроводу Шебелинка - Дніпропетровськ - Кривий Ріг - Ізмаїл DN 1200 на ділянці Шебелинка - Краснопілля, км 108.5-111' — corroborates DN1200 for this pipeline near its Shebelinka end. Reachability confirmed HTTP 200 by this agent via direct curl; page is a client-rendered JS SPA, so exact tender text is known via search-engine snippet only, not a directly-readable body — documented access limitation.",
+      "tier": "1 (Ukrainian public procurement register) — reachability confirmed, full text not independently read",
+      "verified": true
+    },
+    {
+      "url": "https://prozorro.gov.ua/tender/UA-2020-06-02-000297-c",
+      "what": "The specific ProZorro tender GEM's own P0784 wiki page cites for the 1200mm diameter figure. Reachability confirmed HTTP 200 by this agent via direct curl; same JS-SPA access limitation as above.",
+      "tier": "1 (Ukrainian public procurement register) — reachability confirmed, full text not independently read",
+      "verified": true
+    },
+    {
+      "url": "https://ttg-pmr.livejournal.com/category/%D1%8D%D0%BD%D0%B5%D1%80%D0%B3%D0%B5%D1%82%D0%B8%D0%BA%D0%B0/",
+      "what": "Tiraspoltransgaz's own blog: documents Rozdilna-Izmail undergoing 2012-13 repair/maintenance work and ШДКРІ undergoing a SEPARATE joint magnetic-tomography diagnostic inspection with Russian specialists — independent operational confirmation these are two really-separate assets despite identical 820mm/7.3bcm specs (Soviet parallel-strings pattern).",
+      "tier": "1-2 (operator's own blog)",
+      "verified": true
+    },
+    {
+      "url": "https://www.ttgpmr.com/company/history/",
+      "what": "Tiraspoltransgaz corporate history page: places ATI pipeline + turbine compressor-station construction (Tiraspol/Orlovka/Ananyev/Tarutino) in its 1983 entry; earlier entries (1965 Kishinev directorate est., 1971 Kishinev/Tiraspol/Bendery GDS built, 1975 first ELECTRIC compressor station) describe different, earlier infrastructure — corroborates a mid-1980s completion for ATI, not GEM's 1968.",
+      "tier": "1 (operator's own corporate history)",
+      "verified": true
+    },
+    {
+      "url": "https://www.kommersant.ru/doc/1147986",
+      "what": "Kommersant coverage of the 1 April 2009 Ananiev-Tiraspol-Izmail pipeline explosion near Tiraspol (Kitskany/Kirkaesty), pipe age >30yr — confirms ATI's existence and approximate age independently of Moldovatransgaz/wiki sourcing.",
+      "tier": "2 (national press)",
+      "verified": true
+    },
+    {
+      "url": "https://www.realitatea.net/stiri/ultimele-stiri/tranzitul-de-gaz-prin-conducta-transnistreana-care-a-explodat-recent-a-fost-reluat_5dcc91a0406af85273c9f367",
+      "what": "Romanian coverage of the same 2009 event, explicitly naming 'Ananiev-Tiraspol-Izmail (ATI)' with a 127.5km damaged-section figure and 9 April 2009 repair-completion date.",
+      "tier": "2 (national press, independent of Kommersant)",
+      "verified": true
+    },
+    {
+      "url": "https://www.rt.com/news/exploded-pipeline-will-not-affect-gazprom-s-customers/",
+      "what": "RT coverage of the same 2009 explosion, naming the line 'Ananiev-Odessa-Izmail' (a name variant) and reporting a 40% drop in gas flow to Turkey.",
+      "tier": "2 (wire/state press)",
+      "verified": true
+    },
+    {
+      "url": "https://www.ngpedia.ru/id601950p2.html",
+      "what": "Source GEM's own P0784 wiki page cites for the 164km length figure ('Shebelinka-Krivoy Rog-Izmail II'). Could NOT be verified directly: live fetch failed on a TLS certificate/hostname mismatch, and Wayback returned 503 with a timed-out CDX lookup. Recorded as unreachable, not treated as evidence for or against 164km.",
+      "tier": "unreachable — not independently verified",
+      "verified": false
+    },
+    {
+      "url": "https://smart-lab.ru/blog/1191370.php",
+      "what": "2025 commentary on the Orlovka compressor station, quoting verbatim that it historically carried gas via 'Kremenchug-Ananyev and its continuation Ananyev-Izmail' AND SEPARATELY via 'МГП Шебелинка-Днепропетровск-Кривой Рог-Измаил' — additional independent corroboration of ШДКРІ as its own named system.",
+      "tier": "4 (contemporary commentary, directly fetched/quoted, independent origin)",
+      "verified": true
+    }
+  ],
+  "summary": "P0784, P0786 and P0787 are three physically distinct pipelines in the Izmail transit corridor, not one line triple-counted — the redundancy hypothesis is REFUTED as a whole-row duplicate/deletion question. Moldovatransgaz's own trunk-line asset register (the pivot source) lists Rozdilna-Izmail (RI) and Shebelinka-Dnipropetrovsk-Kryvyi Rih-Izmail (ШДКРІ) as two separate numbered line items with two different Moldovan-portion lengths (92.24km vs 91.817km) despite an identical diameter/capacity pair (820mm/7.3bcm/y) — the documented Soviet-era parallel-strings pattern, confirmed independently by Tiraspoltransgaz's own blog showing the two lines under separate, unrelated maintenance programs. Ananiiv-Tyraspol-Izmail (ATI) is listed separately again with its own spec (1220mm/20bcm/y, 62.91km), and its existence/naming is independently corroborated four ways: Moldovatransgaz, Ukrainian Wikipedia's dedicated ATI article (1986 commissioning, 8 references), Tiraspoltransgaz's own corporate history (construction 'at a rapid pace' in 1983), and three independent press accounts of the 1 April 2009 Transnistria pipeline explosion on this exact line.\n\nHowever, P0784 as GEM currently records it IS a genuine data-quality problem — just not a duplicate-count one. Reading GEM's own outbound citations for the P0784 wiki page (permitted under standing rule 4: read gem.wiki for its outbound cites, never cite gem.wiki itself) shows each of its four fields traces to a DIFFERENT, unrelated source — a Frankenstein row. The name fuses ШДКРІ's real corridor with 'Rozdilna', a waypoint belonging to a different line (no source calls this line by that compound name). The capacity (24bcm/y) traces — confirmed verbatim by fetching the cited academic article directly — to a table titled 'capacity of export pipelines at CIS western-border crossing points' that explicitly aggregates THREE physical threads (ATI plus ШДКРІ's two threads) into one figure, not P0784's own throughput; using it here silently double-counts capacity P0786 (ATI) already carries on its own row. The length (164km) traces to an unreachable encyclopedia page describing an ambiguous sub-designation, and independently, merged route geometry draws a 759.1km schematic lower bound for this corridor — 164km cannot be the full line's length regardless of that source's fate. The diameter (1200mm) is the one field with solid, independently-corroborated sourcing (a live, reachable ProZorro capital-repair tender for this exact pipeline's Shebelinka-area segment), though the same trunk plausibly tapers to ~800-820mm by its Balkan-bound outlet.\n\nThe recommendation is REWRITE, not delete: ШДКРІ is real and deserves a correctly-specified row (drop 'Rozdilna' from the name; replace the borrowed aggregate capacity with a properly-researched standalone figure — neither of the two candidates found is a clean substitute; flag length as unconfirmed pending further research; keep the diameter with a tapering note). P0786 and P0787 need smaller fixes: P0786's StartYear1 (GEM: 1968) conflicts with two converging independent sources dating commissioning to 1986 (Ukrainian wiki + Tiraspoltransgaz's own corporate history), and P0787's StartYear1 (GEM: 1975, suspiciously identical to ШДКРІ's own year) conflicts with the corridor wiki's October 1973 date specifically for Rozdilna-Izmail — both worth a targeted Update pass against a primary Ukrtransgaz/TSOU chronology, neither an existence or duplicate question. Verdict is PARTIAL_OVERLAP rather than a clean REFUTED because the capacity VALUE on P0784, unlike the row itself, genuinely does double-count throughput already recorded on P0786.",
+  "open_questions": [
+    "What is ШДКРІ's correct standalone (non-aggregate) capacity figure for a rewritten P0784 — Moldovatransgaz's per-line reading of 7.3bcm/y (one thread, transiting portion) or some other figure? The wiki's 15.8bcm/y is ШДКРІ+RI combined, not a clean substitute either.",
+    "What does the 164km figure attached to 'Shebelinka-Krivoy Rog-Izmail II' actually measure (one thread, one construction-stage segment, or something else)? ngpedia.ru was unreachable both live and via Wayback; needs a fresh access attempt or an alternate source quoting the same figure with more context.",
+    "Is there a primary Ukrtransgaz/TSOU construction chronology (source-ladder item 2) that can settle P0786's 1968-vs-1986 and P0787's 1975-vs-1973 start-year discrepancies with one authoritative document, rather than the secondary wiki/corporate-history sourcing used here?",
+    "Does GEM need a genuinely NEW row for ШДКРІ if P0784 is renamed/rewritten to represent it, or does the existing P0784 ProjectID simply get corrected in place — an Update-workflow implementation question, not a redundancy-adjudication one."
+  ]
+}

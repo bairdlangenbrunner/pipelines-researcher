@@ -21,6 +21,7 @@ via `docs/workflows.md` §8 step 6), and the **full country pass** (`docs/workfl
 ```bash
 pip install -r requirements.txt              # deps (pandas, geopandas, rapidfuzz, …)
 ./scripts/refresh_csvs.sh                     # dated GOIT + GGIT + operators/owners snapshots → data/
+                                              # (thin wrapper around ../gem-db-ops — the pull engine)
 python3 -c "import pandas as pd; print(pd.read_csv('data/GOIT_oil_ngl_snapshot_<date>.csv', header=2, low_memory=False).shape)"
 
 # Reconcile a registered dataset against GEM (the engine):

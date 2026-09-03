@@ -1,0 +1,195 @@
+{
+  "project_id": "P0793",
+  "pipeline_name": "Stavropol-Moscow Gas Pipeline",
+  "sheet_row": 404,
+  "wiki": "https://www.gem.wiki/Stavropol_Moscow_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/attribution/duplicate axes; see the separate spec-caveat entry below for Length/StopYear sourcing.",
+      "researcher_notes": "EXISTENCE: real, well-documented Soviet-era Gazprom trunk main. Independently confirmed by (1) Interfax (25 Jun 2019, 'Газпром ликвидирует газопровод...') reporting Gazprom transgaz Moskva's decommissioning of the line, (2) eprussia.ru's Gazprom transgaz Moskva company history page, (3) Russian Wikipedia's 'Трубопроводный транспорт России' construction-history list, and (4) a Komsomolskaya Pravda (regions.kp.ru) corporate-history timeline. All four independently name 'Ставрополь — Москва' with the same 1956 (Line I) / 1958 (Line II) construction dates -- this is not a GEM-only entity. The sheet's own wiki page cites a 3rd source, energybase.ru, as its dominant citation (7 backlinks) but that page is IP/geo-blocked for us ('Доступ ограничен') -- see the spec-caveat entry for a url_verifier false-positive this caused. CLASSIFICATION: correctly a gas transmission trunk main (one of the USSR's principal mains supplying Moscow), not a gathering/feeder line -- Fuel=Gas is correct. DUPLICATE: checked against the 6-pipeline roster (Soyuz, Ostrogozhsk-Shebelinka, Taganrog-Mariupol-Berdyansk, the two interconnectors) -- none is the same physical pipe. Also checked the full GGIT gas sheet for other 'Stavropol' name-matches: only P2370 'Pochinki-Izobilnoe-North Stavropol Underground Gas Storage Pipeline' (built 1998, Pochinkovsky District->Spornyy, operating, 937km) -- a wholly different, unrelated UGS-feeder pipeline, not a duplicate. ATTRIBUTION: StartLocation=Stavropol/Russia, EndLocation=Moscow/Russia and Owner1=Gazprom PJSC 100% are all correct and independently corroborated (Interfax + eprussia.ru both describe Gazprom's Moscow subsidiary as the entity managing/owning it). Checked the country-specific 'Gazprom doesn't own Ukrainian sections' flag: not applicable here because this project's own StartCountryOrArea/EndCountryOrArea are both Russia (Gazprom 100% ownership of a wholly-domestic-Russian trunk is exactly right, no split needed). Also checked why this Russia-domestic pipe sits in the Ukraine-gas batch scope at all: GEM's own CountriesOrAreas field on this row already reads 'Ukraine, Russia' (NumberOfCountries=2) -- consistent with English Wikipedia's 'Natural gas transmission system of Ukraine' article, which describes the Stavropol-Moscow pipeline as part of the historic 'North-South Russian domestic corridor' that physically transited Luhansk Oblast (entering/exiting via the Prokhorivka and Serebryanka gas metering stations) before Russia built bypass lines (Sokhranivka-Oktyabrskaya, Petrovsk-Frolovo-Izobilnoye) that took this corridor out of use. So the Ukraine tagging is deliberate and correct, not an attribution error -- it just isn't documented anywhere on the row itself (no ResearcherNotes mention of the Luhansk transit segment). Minor suggestion: a ResearcherNotes line noting the historic Luhansk-Oblast transit would make the CountriesOrAreas value self-explanatory to the next researcher.",
+      "proposed_refs": [
+        "https://www.interfax.ru/business/666512",
+        "https://www.eprussia.ru/com/company/1117.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-source Length and StopYear away from energybase.ru (currently inaccessible to us); consider revising LengthKnown from 1262 km toward the independently-corroborated 1254 km (Line I) if a researcher can access energybase.ru directly to settle which figure it actually states. Flag scripts/url_verifier.py to the team: it returned a false OK on this exact URL.",
+      "researcher_notes": "TOOLING DEFECT FOUND: `python scripts/url_verifier.py \"https://energybase.ru/pipeline/stavropol-moskva\" \"1262\"` returns OK/200-with-expected-content-present, but the live page is actually an IP/geo-block interstitial ('Доступ ограничен... использование VPN или прокси...') -- confirmed by fetching it two different ways (direct curl and WebFetch), both showing only the block notice, no pipeline content whatsoever. The '1262' substring the verifier matched is embedded in an SVG path coordinate ('...2.786119,587.789048 460.919462,558.568563...') inside the block page's decorative graphic, not real page text. This is a NEW false-positive family for url_verifier (digit-substring collision inside inline SVG markup on a blocked page) not yet covered in its docstring's known false-negative list. It means the sheet's own dominant cited source for this row (7 of its 3 citations' backlinks) cannot actually be verified by us right now, and any OTHER researcher who ran the same check on this URL would have been given a false green light. Did NOT cite energybase.ru as a result, despite the nominal pass. LENGTH: sheet has LengthKnown=1262 km. Independent, verified, real-content sources give 1254 km specifically for Line I with 720mm diameter (Komsomolskaya Pravda regions.kp.ru/kursk/gazprom-2021/, a corporate-history timeline, verified by direct raw-text extraction after WebFetch's AI summary of the same page initially hallucinated the wrong associated year off a CSS pixel-position coincidence -- corrected by re-checking raw HTML), and a broader open web search corroborates a ~1200-1300 km range across multiple secondary mentions (1300 km per znanierussia.ru's gas-industry encyclopedia entry; 'more than 1200 km' generically). No independent source we could access states exactly 1262 km. The gap (1262 vs. 1254, ~0.6%) is small but the sheet's number sits outside every figure we could independently verify, and its only apparent source is the inaccessible energybase.ru page above. STOPYEAR: sheet has StopYear=2007. No independent source found states this specific year. What we DID confirm: Interfax (25 Jun 2019) reports both the Stavropol-Moscow and Saratov-Moscow mains as 'недействующими' (non-operational) with active physical liquidation of a 165km segment of Line II and a partial 22m liquidation of Line I (section 559.6-725km), contractor selection underway, completion targeted for December 2020 -- this corroborates 'retired' as the correct Status but gives no year for when it actually STOPPED carrying gas. 2007 is plausible (a pipe can sit idle for years before formal physical dismantlement begins) but is currently an unsourced number on the sheet; recommend leaving as-is (nothing found to contradict it) but sourcing it properly once a working alternative to energybase.ru is found, or by a researcher who can access energybase.ru from an unblocked network/IP.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "retired"},
+      "primary_value": "retired",
+      "proposed_refs": ["https://www.interfax.ru/business/666512"],
+      "verifications": [
+        {"url": "https://www.interfax.ru/business/666512", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Interfax, 25 Jun 2019: 'Обе магистрали являются недействующими' (both mainlines are non-operational) plus active decommissioning/contractor selection for physical liquidation of segments of both lines. Direct, explicit, unambiguous confirmation of 'retired' from a single strong independent source. English Wikipedia's Ukraine-GTS article separately notes the Ukraine-transiting corridor is 'not in use' after Russia built bypass lines -- directionally consistent, genuinely a separate origin, but it speaks to the transit corridor/route rather than explicitly to this pipe's own operational status, so I am not stacking it to reach 'high' -- graded medium (one dominant strong source, one weaker/indirect supporting one)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eprussia.ru/com/company/1117.htm",
+        "https://www.interfax.ru/business/666512"
+      ],
+      "verifications": [
+        {"url": "https://www.eprussia.ru/com/company/1117.htm", "ok": true, "contains_value": true},
+        {"url": "https://www.interfax.ru/business/666512", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both sources describe it throughout as a 'магистральный газопровод' (trunk gas pipeline) -- uncontested, two independent origins."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "ref_col": "Stop [ref]",
+      "value_cols": ["StopYear"],
+      "primary_value_col": "StopYear",
+      "values": {"StopYear": "2007"},
+      "primary_value": "2007",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Could not independently confirm the specific year 2007. The sheet's likely source (energybase.ru) is inaccessible to us (see spec-caveat validity entry -- also a url_verifier false-positive). Best independent evidence (Interfax, 2019) confirms the line is non-operational and being decommissioned but names no stop year. Leaving unresolved rather than fabricating a ref; the value itself is plausible and unchallenged, just unsourced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "1262.00", "LengthKnownUnits": "km"},
+      "primary_value": "1262.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Could not find an independent source stating exactly 1262 km -- see the spec-caveat validity entry, which lays out the corroborated alternative (1254 km, kp.ru) and flags that the sheet's likely source (energybase.ru) is inaccessible plus caused a url_verifier false-positive. Not citing a source I can't confirm actually says 1262; not proposing a value change through this fill channel per the no-auto-apply rule -- the 1254 km finding is routed as a recommendation in validity instead."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartCountryOrArea", "EndLocation", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Stavropol", "StartCountryOrArea": "Russia", "EndLocation": "Moscow", "EndCountryOrArea": "Russia"},
+      "primary_value": "Stavropol",
+      "proposed_refs": [
+        "https://regions.kp.ru/kursk/gazprom-2021/",
+        "https://www.eprussia.ru/com/company/1117.htm"
+      ],
+      "verifications": [
+        {"url": "https://regions.kp.ru/kursk/gazprom-2021/", "ok": true, "contains_value": true},
+        {"url": "https://www.eprussia.ru/com/company/1117.htm", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Both endpoints are literally in the pipeline's own name in both independent sources ('газопровод Ставрополь — Москва'), and both describe it as a wholly Russian-domestic main. No mention of a different start/end city in any source consulted."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 706,
+      "tab": "operators_owners",
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gazprom PJSC", "Owner1%": "100.00%"},
+      "primary_value": "Gazprom PJSC",
+      "proposed_refs": [
+        "https://www.interfax.ru/business/666512",
+        "https://www.eprussia.ru/com/company/1117.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.interfax.ru/business/666512", "ok": true, "contains_value": true},
+        {"url": "https://www.eprussia.ru/com/company/1117.htm", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Interfax names 'Газпром трансгаз Москва' (a wholly Gazprom-owned subsidiary) as the entity managing the pipeline's decommissioning; eprussia.ru's company profile independently confirms the same subsidiary's ownership/operating history back to the pipeline's 1956 commissioning. This is a wholly Russian-domestic Soviet-legacy trunk main -- Gazprom PJSC 100% is correct and does NOT trigger the country's 'Gazprom doesn't own Ukrainian sections' flag (no Ukrainian section is claimed by the row's own Start/EndCountryOrArea)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "720", "DiameterUnits": "mm"},
+      "primary_value": "720",
+      "proposed_refs": [
+        "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D1%83%D0%B1%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B9_%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8",
+        "https://regions.kp.ru/kursk/gazprom-2021/"
+      ],
+      "verifications": [
+        {"url": "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D1%83%D0%B1%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B9_%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8", "ok": true, "contains_value": true},
+        {"url": "https://regions.kp.ru/kursk/gazprom-2021/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Diameter was blank; deep-filled. Two independent sources: ru.wikipedia's pipeline-transport-history list ('трубы диаметром 720 мм') and regions.kp.ru's Gazprom transgaz Moskva corporate timeline, which explicitly ties the 720mm figure to this pipeline as the FIRST use of 720mm pipe for Soviet trunk gas construction ('Впервые в стране... труба диаметром 720 мм'). Storing as 720/mm (the metric figure sources actually state), not converting to inches -- per the country note on machine round-trips producing false-precision imperial values (e.g. P1773's 27.60in = 700mm), a metric-origin figure should stay in the unit sources give it."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 404,
+      "current_status": "retired",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2019-06",
+      "staleness_rule": "",
+      "proposed_refs": ["https://www.interfax.ru/business/666512"],
+      "verifications": [
+        {"url": "https://www.interfax.ru/business/666512", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "Searched Russian-language sources for any 2020-2026 news on this pipeline (liquidation completion, reactivation, war-related repurposing given its historic Luhansk Oblast transit) -- found nothing newer than the 25 Jun 2019 Interfax report (also reprinted in substance by neftegaz.ru the same period), which itself targeted December 2020 as the completion date for physically dismantling a 165km segment of Line II plus a partial 22m of Line I. No evidence surfaced of the line resuming operation, and nothing plausible would resume it -- it is a 1956/1958-built trunk explicitly described as already non-operational and mid-liquidation as of 2019, with no public reporting of gas flow, capacity use, or maintenance since. This is a genuine (if slightly dated) confirming finding, not an absence-of-news 'stale' case -- classifying as confirm rather than stale because I found affirmative dated evidence of the current status, not silence. Note the sheet's own citable source for this row is degraded (energybase.ru inaccessible, see validity notes), so this Interfax finding is currently the best available anchor for Status and should be applied via the Status [ref] fill above."
+    }
+  ],
+  "summary": "P0793 Stavropol-Moscow Gas Pipeline: real, correctly-classified, correctly-attributed 1956/58 Gazprom trunk main -- confirmed (caveat); retired status independently confirmed (Interfax 2019); but Length=1262km and StopYear=2007 are unsourced (energybase.ru, the wiki's dominant citation, is IP-blocked and gave url_verifier a false-positive OK via an SVG-path digit collision) -- flagged spec concern, recommend 1254km per kp.ru as the better-sourced figure."
+}

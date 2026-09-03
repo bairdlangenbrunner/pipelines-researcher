@@ -1,0 +1,264 @@
+{
+  "project_id": "P1487",
+  "pipeline_name": "Poland-Ukraine Interconnector Gas Pipeline",
+  "sheet_row": 846,
+  "wiki": "https://www.gem.wiki/Poland-Ukraine_Interconnector_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on existence/classification/duplicate/attribution — see the separate spec concern for Length/Diameter/SegmentCost",
+      "researcher_notes": "EXISTENCE: this is a real, officially-documented cross-border planning project, not a GEM-only/phantom entity. It carries a formal ENTSOG PCI/PMI project code (PRJ-G-028 / PECI code GAS_14) and was submitted to TWO ENTSOG Ten-Year Network Development Plan cycles as two linked project fiches: TRA-A-621 'Poland - Ukraine Gas Interconnection (PL section)' (update date 2019-09-20) and TRA-A-561 'Poland-Ukraine Interconnector (Ukrainian section)' (update date 2020-06-15), both filed under promoter GAZ-SYSTEM S.A. (Poland) / LLC Gas TSO of Ukraine with 100%-shareholder Ukrtransgaz (Ukraine) — verified directly against the downloaded ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf (pdftotext -layout; url_verifier's own docstring flags large PDFs as a known content-check false-negative — 'a content FAIL says nothing... download and pdftotext -layout' — which is exactly what happened here: the file passes liveness (200) but the substring screen misses text that pdftotext confirms is present verbatim, e.g. the full project descriptions, schedule tables and sponsor blocks quoted below). Independently, the Energy Community's own PLIMA Infrastructure Transparency Platform page for 'Gas_14 / Gas interconnection Poland - Ukraine' (live URL 403s to bots; cited via its Wayback capture, which passes url_verifier) gives a long, detailed project history: a Dec 2014 GAZ-SYSTEM/Ukrtransgaz cooperation agreement, a completed 2015 feasibility study, EIA obtained Feb 2017, a 2018 non-binding market/open-season screening that found 3.9 bcm/y of PL->UA and 1.6 bcm/y of UA->PL interest, and a stated exact Ukrainian-section length of 98.8 km through five Lviv Oblast districts. A third source, the US Energy Association / Eastern Europe Natural Gas Partnership 'Catalogue of Potential Eastern European Natural Gas Investment Projects in Support of the Three Seas Initiative' (May 2021), profiles the identical project under the same TYNDP codes (TRA-A-561/TRA-A-621) and PECI code GAS_14. Three independent, non-GEM, non-wiki sources describing the same coded project by name and route is well beyond the existence bar.\n\nCLASSIFICATION: TYNDP labels the project type 'Pipeline including CS' (a large transmission pipeline plus compressor-station extension at Strachocina) — this is squarely a transmission trunk/interconnector, not a gathering/feeder/process line. Fuel=Gas and PipelineType=transmission are both correct.\n\nDUPLICATE: checked against the 6-pipeline in-scope roster (P0761 Soyuz, P0788 Ostrogozhsk-Shebelinka, P0793 Stavropol-Moscow, P1457 Taganrog-Mariupol-Berdyansk, P1487 this row, P1773 Romania-Ukraine). P1773 is the only other cross-border interconnector on the roster and is a geographically distinct corridor (Khotyn/Bukovina, Ukraine's SW border with Romania) with no shared endpoints or route overlap with Hermanowice/Drozdovychi/Bilche-Volytsya (Ukraine's western border with Poland, ~400km further north). No duplicate found.\n\nATTRIBUTION (endpoints + ownership): StartLocation=Hermanowice(Poland)/EndLocation='Bliche Volytsia UGS'(Ukraine) match all three independent sources' routing: TYNDP names 'Hermanowice gas node' (PL) and 'Bliche Volytsia UGS'/'UGSF Bilche-Volytske' (UA) verbatim; the Energy Community page gives the same two named endpoints (with the intermediate Ukrainian town Drozdovychi/Strachocina as the actual pipe-section boundary, which GEM's schema has no field for and is not a defect). Ownership: Owner1=Ukrtransgaz/Owner2=Gaz-System matches TYNDP's sponsor table exactly (Ukrtransgaz 100% Sponsor for the Ukrainian-section entry; GAZ-SYSTEM S.A. 100% Sponsor+Operator for the Polish-section entry) and the Energy Community page's 'Project promoter company' fields (GAZ-SYSTEM S.A. / Joint Stock Company Ukrtransgaz, 100% state / 100% Naftogaz-of-Ukraine shareholding). This is a genuinely cross-border project with a real Polish co-owner, so it does not trip the country guidance's 'Gazprom on Ukrainian soil' pattern — there is no Gazprom involvement at all here, on either side. One nuance for the ownership-refs pass: per the country-wide 2020 TSO unbundling, TYNDP's Ukrainian-section entry already lists the *operating* Promoter as 'LLC Gas TSO of Ukraine' even while Ukrtransgaz remains the 100% Sponsor/shareholder of record — i.e. Ukrtransgaz as Owner1 is still correct (shareholder), but a future Operator[ref] pass should record 'Gas TSO of Ukraine (TSOU)' as the operator, not Ukrtransgaz, consistent with the country's standing post-2020 rule. Not proposing that change here (no Operator field is in scope on this worklist), just flagging it.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html",
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct LengthKnown (likely ~100-101 km, not 110 km) and Diameter (likely '1000' only, not '700, 1000'); leave SegmentCost UNRESOLVED rather than keep an unconfirmed 365,000,000 EUR figure",
+      "researcher_notes": "LENGTH: two independent primary planning sources agree closely with each other and disagree with the sheet. ENTSOG TYNDP 2020 Annex A gives Polish section = 'the exact length - 1,5km' (table shows 2 km rounded) plus Ukrainian section 'Drozdovychi - Bilche Volytsya' = 99 km -> total ~100.3-101 km. The Energy Community PLIMA page independently states 'The total length of the gas pipeline is 98.8 km' for the Ukrainian section specifically. These two sources -- one a technical ENTSOG database entry, one a narrative TSO-sourced project history -- triangulate on a total of roughly 100-101 km, not GEM's 110 km (a ~9-11% overstatement).\n\nDIAMETER: the same two sources both give DN1000 (mm) for BOTH sections (Polish 'Hermanowice Node - PL/UA border pipeline... 1,000mm' and Ukrainian 'Drozdovychi - Bilche Volytsya... 1,000mm'). GEM's second diameter value, 700mm, traces to only one source in the whole citation set: the USEA/EE-NGP Three Seas catalogue (May 2021), which lists 'Poland: Length 99km, Diameter 1,000mm' and 'Ukraine: Length 72km, Diameter 700mm, Start point Bilche Volytsya, End point Hermanowice' (pdftotext -layout confirmed verbatim; url_verifier content-screen fails on this file too for the same documented large-PDF reason). But that catalogue's own 'Ukraine' row (72km/700mm) describes the identical Bilche-Volytsya-to-Hermanowice segment that BOTH other independent sources put at 98.8-99km/1000mm -- i.e. the catalogue's figures for this one project look like a transcription/country-mislabelling error (it even puts a 99km value under 'Poland' that matches the true UKRAINIAN section length from the other two sources), not a genuine second pipe diameter. I could not find any source describing an actual DN700 segment of this specific interconnector. Recommend treating '700' as spurious and the diameter as DN1000 throughout, pending a fourth source if one turns up.\n\nSEGMENTCOST: GEM records 365,000,000 EUR with no ref. The sheet's own cited 24tv.ua source (Ukrtransgaz CEO statement, Jan 2020) puts the Ukrainian-territory construction cost at approximately $245 million (and separately quotes the CEO asking 'sense in building... for $200 million'), which is roughly 220-230M EUR at contemporary exchange rates -- a ~35-40% gap from the sheet's 365M EUR, for a cost that in any case only covers the Ukrainian side. Both ENTSOG TYNDP and the Three Seas catalogue record CAPEX as 'n/a' for this project. No source corroborates 365,000,000 EUR; recommend leaving SegmentCost's ref UNRESOLVED rather than pairing a fabricated/unverified citation with it.\n\nBy contrast, StartYear1=2022 (TYNDP: 'Commissioning 2022' both sections; Ukrinform 2017 headline: Poland 'expects... to be put into operation by at most October 2022'), FIDStatus=Pre-FID (TYNDP labels the project 'Non-FID' throughout; Energy Community page: 'FID about this project was not taken'), and Capacity=8.00 bcm/y (24tv.ua's CEO quote frames the project as '5-8 billion cubic meters yearly'; the Energy Community page's Ukraine-side border capacity of 215 GWh/d is consistent with the upper end of that range) are all corroborated and staged as fills below -- this concern is scoped to Length/Diameter/SegmentCost only.",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf",
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html",
+        "https://usea.org/sites/default/files/EE-NGP%20Catalog%20of%20Potential%20Eastern%20European%20Natural%20Gas%20Investment%20Projects%20in%20Support%20of%20the%20Three%20Seas%20Initiative.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Energy Community's PLIMA page titles it 'Gas_14 / Gas interconnection Poland - Ukraine' throughout; uncontested."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ENTSOG TYNDP 2020 Annex A classifies the project 'Pipeline including CS' -- a large interstate transmission trunk plus compressor-station extension, not a gathering/feeder line. url_verifier's raw content screen misses the text on this large PDF (documented false-negative in the tool's own docstring); manually confirmed present via `pdftotext -layout`, quoted verbatim in the validity notes above. Liveness (200) is real; only the substring screen is a known false negative here."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2022"},
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.ukrinform.net/rubric-economy/2327735-poland-expects-interconnector-pipeline-with-ukraine-to-be-put-into-operation-by-at-most-october-2022.html",
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.ukrinform.net/rubric-economy/2327735-poland-expects-interconnector-pipeline-with-ukraine-to-be-put-into-operation-by-at-most-october-2022.html", "ok": true, "contains_value": true},
+        {"url": "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf", "ok": false, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Ukrinform's own headline states Poland 'expects... to be put into operation by at most October 2022'; TYNDP 2020's schedule table independently lists Commissioning=2022 for both the Polish and Ukrainian sections. Two independent sources naming the same target year (a planned/target date recorded as-of before the project's later cancellation, which is normal GEM practice for a cancelled row)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "8.00", "CapacityUnits": "bcm/y"},
+      "primary_value": "8.00",
+      "proposed_refs": [
+        "https://24tv.ua/economy/ru/ukraina_peredumala_stroit_novyj_gazoprovod_v_polshu_n1264582",
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html"
+      ],
+      "verifications": [
+        {"url": "https://24tv.ua/economy/ru/ukraina_peredumala_stroit_novyj_gazoprovod_v_polshu_n1264582", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "24tv.ua quotes Ukrtransgaz's CEO framing the project's design capacity as '5-8 billion cubic meters yearly' (Jan 2020) -- GEM's 8.00 bcm/y sits at the top of that quoted range. The Energy Community page independently gives the Ukraine-side border capacity as 215 GWh/d, which converts (at ENTSOG's standard ~11.1 kWh/Sm3 GCV) to roughly 7 bcm/y -- same order of magnitude, corroborating without exactly matching. Tier medium rather than high because neither source states '8 bcm/y' as a single clean figure -- one gives a range whose top end is 8, the other requires a unit conversion."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "110.00", "LengthKnownUnits": "km"},
+      "primary_value": "110.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not staging a ref for the current 110km value -- see the spec concern above. Two independent sources (ENTSOG TYNDP 2020; Energy Community PLIMA page) instead put the total at roughly 100-101 km (Polish 1.5-2km + Ukrainian 98.8-99km). Recommend Length be corrected before a ref is added, rather than citing a source that would actually contradict the sheet value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "700, 1000", "DiameterUnits": "mm"},
+      "primary_value": "700, 1000",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not staging a ref for the current '700, 1000' value -- see the spec concern above. Both ENTSOG TYNDP and the Energy Community page independently give DN1000 for both pipe sections; the sole source for a 700mm figure (the Three Seas EE-NGP catalogue) appears to mislabel/transpose this exact project's country data and contradicts the other two sources on the very same Ukrainian segment. Recommend Diameter be corrected to '1000' only before a ref is added."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Hermanowice", "StartCountryOrArea": "Poland", "EndLocation": "Bliche Volytsia UGS", "EndCountryOrArea": "Ukraine"},
+      "primary_value": "Hermanowice",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf",
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html"
+      ],
+      "verifications": [
+        {"url": "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf", "ok": false, "contains_value": true},
+        {"url": "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources name the same two endpoints verbatim: 'Hermanowice gas node' (Poland) and 'Bliche Volytsia UGS'/'Bilche Volytsya, Ukraine' (Ukraine). TYNDP PDF content-screen is a documented large-PDF false negative (manually confirmed via pdftotext -layout); liveness (200) is real."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "365000000.00", "SegmentCostUnits": "EUR"},
+      "primary_value": "365000000.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found that states 365,000,000 EUR. The sheet's own cited 24tv.ua source gives ~$245 million (Ukrainian-territory construction only) per the Ukrtransgaz CEO's Jan 2020 statement, a ~35-40% gap; ENTSOG TYNDP and the Three Seas catalogue both record CAPEX as 'n/a'. Leaving unresolved rather than pairing an unconfirmed figure with a ref that doesn't actually support it -- see the spec concern above."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "ref_col": "FID [ref]",
+      "value_cols": ["FIDStatus", "FIDYear"],
+      "primary_value_col": "FIDStatus",
+      "values": {"FIDStatus": "Pre-FID"},
+      "primary_value": "Pre-FID",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf",
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html"
+      ],
+      "verifications": [
+        {"url": "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf", "ok": false, "contains_value": true},
+        {"url": "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "TYNDP labels both project fiches 'Non-FID' throughout (and explicitly explains construction is 'postponed until the FID is taken'); the Energy Community page states plainly 'FID about this project was not taken.' Consistent with Pre-FID, and consistent with the project subsequently being cancelled without ever reaching FID."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "oo_sheet_row": 1234,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Ukrtransgaz", "Owner2": "Gaz-System"},
+      "primary_value": "Ukrtransgaz",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf",
+        "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html"
+      ],
+      "verifications": [
+        {"url": "https://www.entsog.eu/sites/default/files/2020-11/ENTSOG_TYNDP_2020_Annex_A_Projects_Details.pdf", "ok": false, "contains_value": true},
+        {"url": "https://web.archive.org/web/20240415195905/https://www.energy-community.org/regionalinitiatives/infrastructure/PLIMA/Gas14.html", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "tab": "operators_owners",
+      "researcher_notes": "TYNDP's sponsor tables list 'Ukrtransgaz 100%' as Sponsor for the Ukrainian-section fiche and 'GAZ-SYSTEM S.A. 100%' as Sponsor+Operator for the Polish-section fiche; the Energy Community page's 'Project promoter company' fields independently name the same two entities (GAZ-SYSTEM S.A. / Joint Stock Company Ukrtransgaz). No Gazprom involvement on either side -- correctly reflects the binational structure rather than the 'Gazprom on Ukrainian soil' error pattern the country guidance warns about. Note for a future operator-refs pass: TYNDP already lists the Ukrainian-section *Promoter/Operator* as 'LLC Gas TSO of Ukraine' even though Ukrtransgaz remains 100% Sponsor/shareholder -- Owner1=Ukrtransgaz is still correct as shareholder-of-record, but Operator should be TSOU per the country's post-2020 unbundling rule, not Ukrtransgaz; not staged here since no Operator field is on this worklist."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 846,
+      "current_status": "cancelled",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2022-06",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://24tv.ua/economy/ru/ukraina_peredumala_stroit_novyj_gazoprovod_v_polshu_n1264582",
+        "https://www.entsog.eu/sites/default/files/2023-04/ENTSOG_TYNDP_2022_A0_FULL_TRA-UGS-LNG_1021.pdf"
+      ],
+      "verifications": [
+        {"url": "https://24tv.ua/economy/ru/ukraina_peredumala_stroit_novyj_gazoprovod_v_polshu_n1264582", "ok": true, "contains_value": true},
+        {"url": "https://www.entsog.eu/sites/default/files/2023-04/ENTSOG_TYNDP_2022_A0_FULL_TRA-UGS-LNG_1021.pdf", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "The sheet's own cited source (24tv.ua, Jan 2020, Russian-language) already carries the cancellation signal: Ukrtransgaz's CEO explicitly questions the sense of building 'another gas pipeline with capacity of 5-8 billion cubic meters yearly, if current available ones stand unused,' citing the two existing PL-UA connections (Drozdovychi, Hermanowice) as sufficient. I looked for anything dated NEWER that would indicate the project was revived, and found the opposite: this project (ENTSOG codes TRA-A-561/TRA-A-621, PRJ-G-028/GAS_14) had its own two-fiche profile in TYNDP 2018 and TYNDP 2020, but is ABSENT from ENTSOG's TYNDP 2022 Annex A project-details compendium -- I downloaded the full ~11.6MB PDF directly and grep'd the extracted text for every spelling of the project's names/codes (Poland-Ukraine, Hermanowice, Drozdovychi, Bilche/Bliche, PRJ-G-028, GAS_14, TRA-A-561, TRA-A-621): none of the project-fiche text is present (a single incidental 'Hermanowice' token turns up only inside an unrelated map-index blob, not a project profile). Since promoters must actively resubmit a project each TYNDP cycle, its disappearance from the 2022 cycle -- two years after the promoter's own CEO publicly called it unnecessary -- is independent, structural confirmation that Ukrtransgaz did not carry the project forward, consistent with 'cancelled' rather than merely 'shelved'/still-pending. I also checked whether recent 2023-2025 Poland-Ukraine gas news (a 2023-03 GTSOU/Gaz-System cooperation memorandum on 'improving the pipeline interconnection'; reported 2023 and 2025 capacity increases at the existing Hermanowice/Drozdovychi virtual interconnection point, e.g. Interfax 2023-06-19 describing the existing connection's daily capacity being fully booked, and a 2025-04-03 Reuters headline about Poland upgrading 'a gas link to Ukraine to boost transit capacity') describes THIS specific 98.8km new-build pipeline being resurrected -- it does not: every 2023-2025 item I found is about incremental capacity/metering-station upgrades to the EXISTING interconnection, not construction of the separately-coded Drozdovychi-Bilche-Volytsya line. No evidence of an FID, construction start, or formal project revival was found anywhere. Status=cancelled is well supported; evidence_date reflects the TYNDP 2022 collection cutoff (project-submission window closed 2022-06, per ENTSOG's own TYNDP2022 documentation) as the latest dated confirmation that the project was not carried forward, on top of the 2020-01 cancellation statement already on the sheet."
+    }
+  ],
+  "summary": "P1487 (Poland-Ukraine Interconnector, ENTSOG PRJ-G-028/GAS_14) is real, correctly classified, not a duplicate of any roster pipeline, and correctly attributed (Ukrtransgaz/Gaz-System, no Gazprom); Status=cancelled is reconfirmed (the project has been absent from ENTSOG's TYNDP since 2022, two years after Ukrtransgaz's own CEO called it unnecessary, and no 2023-2025 news describes reviving this specific 98.8km line rather than the separate existing interconnection). Fuel/PipelineType/StartYear1/Capacity/Location/FIDStatus/Owner refs added (REFS_ADDED); flagged a material spec concern on LengthKnown (likely ~100-101km not 110km) and Diameter (likely DN1000 only, the '700mm' figure traces to an apparently mislabelled catalogue entry) and left SegmentCost's 365M EUR figure UNRESOLVED (no source corroborates it, and the sheet's own cited source implies a lower figure)."
+}

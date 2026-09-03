@@ -1,0 +1,45 @@
+{
+  "project_id": "P2577",
+  "pipeline_name": "El Paso Gas Pipeline",
+  "sheet_row": 1334,
+  "wiki": "https://www.gem.wiki/El_Paso_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Northern Delaware Basin Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Apply the two EIA sources across all nine owed ref cells (Status, Fuel, Start, Capacity, Length, Diameter, Location, SegmentCost [ref]; and the Owner tab's Owner [ref]); add the paired StartMonth1 fill below.",
+      "researcher_notes": "EXISTENCE + SPEC: real, well-documented project, independently confirmed against GEM on every logged spec. EIA 'Today in Energy' (id=44856) states verbatim: 'Northern Delaware Basin Expansion : Completed in February 2020, this 14-mile, 0.32 Bcf/d expansion of the El Paso Natural Gas Transmission System (EPNG) increased takeaway capacity out of the Delaware Basin' -- matches GEM's LengthKnown=14.40mi, Capacity=320.00 MMcf/d (0.32 Bcf/d), StartYear1=2020, and Texas/Texas start-end. Independently, EIA's own 'Natural Gas Pipeline Projects' tracking table (a separate EIA data product, compiled from FERC prior-notice/blanket-certificate filings -- checked the Jul2019, Oct2019 and Jan2020 snapshot .xlsx files) carries a dedicated line item: Project='Northern Delaware Basin Expansion Project', Company='El Paso Natural Gas', Type='Expansion', States=TX/TX/TX, Cost($MM)=33, Length(mi)=14.4, Capacity(MMcf/d)=320, Diameter(in)=24, Interstate, Regulator=FERC, Docket=CP19-28, Comment='Expand takeaway capacity from Delaware Basin'. This EXACTLY matches GEM's Diameter=24.00in and SegmentCost=33,000,000 USD in addition to length/capacity, and gives the FERC docket (CP19-28) as a further paper trail. Status moved Applied(Jul-19) -> Construction(Oct-19, Jan-20), consistent with the Feb-2020 completion the other article reports. CAVEAT ON TIER: both of these are EIA-origin documents (one agency, two products), not two independently-sourced organizations, so I am rating the core spec confirmation MEDIUM rather than high per the project's 'FERC + applicant filing = one origin' independence standard applied by analogy. I tried to find a second, non-EIA origin: SEC EDGAR full-text search for both '\"Northern Delaware Basin Expansion\"' and '\"CP19-28\"' returned zero hits (KMI's 10-Ks are not granular enough to name a $33M blanket-certificate lateral); the Federal Register full-text API also returned zero hits for 'CP19-28' -- expected, since a Natural Gas Act blanket-certificate prior-notice filing (as opposed to a full Section 7 certificate application) does not require Federal Register publication (the same pattern held for EPNG's separate, contemporaneous 'Carlsbad South Project', read directly off its own weekly-environmental-report PDF, which also proceeded via prior notice with no FR notice); FERC's own eLibrary docket search is a JS single-page app that neither curl nor WebFetch could query in this session (this session's WebSearch quota was also exhausted before I started, so I could not fall back to a general search engine either -- Bing and DuckDuckGo both served bot-challenge pages to curl). CLASSIFICATION: correctly an interstate, FERC-jurisdictional gas TRANSMISSION expansion (per the EIA table's own 'Interstate'/'FERC' columns), not a gathering/feeder line -- Fuel=Gas is correct. DUPLICATE CHECK against the 45-row TX-operating roster: P0184 'El Paso Gas Pipeline' (len=10,140mi) is the whole-system EPNG trunk row (Kinder Morgan's own site describes EPNG as 'a 10,140-mile pipeline system'), and P2577 is correctly a separate, named EXPANSION SEGMENT of that trunk -- same convention as its siblings on this roster (P2499 Agua Blanca, P3242, P4051, P3296, all EPNG/Florida-Gas-Transmission-family expansion segments carried as their own rows). Checked P2499 'Agua Blanca Pipeline' (Carlsbad->Texas, 23mi/24in/400 MMcf/d) specifically since it shares the 24in diameter -- different origin (a Carlsbad, NM lateral vs. this Delaware-Basin-wide takeaway expansion), different length and capacity, and EIA's own Pipeline Projects table lists Agua Blanca and Northern Delaware Basin Expansion as two distinct line items -- not a duplicate. ATTRIBUTION: Owner1=Kinder Morgan 100% confirmed at the system level by two independent sources -- Kinder Morgan's own site (kindermorgan.com/business/gas_pipelines/west/EPNG_MP/, current live page) lists 'El Paso Natural Gas' as one of its operated pipeline systems, and independently, Natural Gas Intel's 2021 trade-press article on an unrelated EPNG segment incident treats El Paso Natural Gas Pipeline as a Kinder Morgan asset -- consistent with EPNG's own FERC filings being made by 'El Paso Natural Gas Company, L.L.C.', KM's wholly owned subsidiary (seen directly on the letterhead of the Carlsbad South Project weekly environmental report I pulled while chasing this project's own docket). HARVEST COVERAGE: the wiki page harvested 13 unique citations; I opened/read 8 of them directly (both EIA URLs above via a fresh fetch, not the wiki's own cached copy; the KM EPNG_MP page; the EPNG weekly-environmental-report PDF and its Wayback duplicate -- both turned out to document a DIFFERENT EPNG project, the 'Carlsbad South Project', not this one; the Natural Gas Intel article -- verified live via url_verifier despite a 403 to a plain curl UA; the Pipeline & Gas Journal 'Planned Projects in Development' Oct-2018 PDF -- which names yet another distinct EPNG project, 'South Mainline Project' [17mi, 321 MMcf/d, AZ/NM/TX], useful only as negative evidence that Northern Delaware Basin Expansion is not a relabeling of that one either; and the Reuters URL, which 401'd to url_verifier -- an access failure, not a deletion, so it stays an unopened lead rather than a struck citation). Left unopened as clearly off-topic for this specific 2019-2020 segment: the bit.ly Wikipedia shortlink (a link-shortener is never citable regardless of content per project convention), the FERC 'Three Digit Pipeline Code List' PDF (a customer-code index, not project-specific), and the two pstrust.org items (a year-2000 Carlsbad, NM rupture/NTSB report -- a different decade and a different kind of event entirely from this capacity expansion).",
+      "proposed_refs": [
+        "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx",
+        "http://www.kindermorgan.com/business/gas_pipelines/west/EPNG_MP/",
+        "https://www.naturalgasintel.com/el-paso-natural-gas-pipeline-segment-shut-monday-after-deadly-blast/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Northern Delaware Basin Expansion Project",
+      "sheet_row": 1334,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartMonth1"],
+      "primary_value_col": "StartMonth1",
+      "values": {"StartMonth1": "2"},
+      "primary_value": "2",
+      "proposed_refs": ["https://www.eia.gov/todayinenergy/detail.php?id=44856"],
+      "verifications": [
+        {"url": "https://www.eia.gov/todayinenergy/detail.php?id=44856", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2020 is already populated but StartMonth1 is blank. EIA 'Today in Energy' states the expansion was 'Completed in February 2020', so StartMonth1=2 (numeric-month convention confirmed against other populated StartMonth1 cells in the live GGIT gas tab). Single EIA origin (same source as the main spec confirmation above), so tier stays medium; EIA's Pipeline Projects dataset corroborates the year and a Construction-as-of-Jan-2020 status but does not itself carry month-level precision."
+    }
+  ],
+  "summary": "P2577 (Northern Delaware Basin Expansion Project, El Paso Gas Pipeline / EPNG, Kinder Morgan): verdict confirmed (caveat), concern_type none -- real, correctly classified, not a duplicate of any of the 44 sibling TX rows; length/diameter/capacity/cost all match EIA's own Pipeline Projects dataset (FERC docket CP19-28) exactly, tier medium because both confirming EIA documents share one agency origin and no second-origin source could be located (SEC EDGAR + Federal Register full-text searches both empty, FERC eLibrary's docket search is JS-only). One fill staged: StartMonth1=2 (Feb 2020), REFS_ADDED. No UNRESOLVED items."
+}

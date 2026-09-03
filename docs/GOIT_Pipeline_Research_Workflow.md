@@ -246,8 +246,8 @@ ALL values must be lowercase, exactly as follows:
 - **DelayType:** inferred, confirmed (lowercase — corrected 2026-08-07)
 - **ShelvedCancelledType:** inferred, confirmed (lowercase — `Presumed` is not a real value)
 - **FIDStatus:** Pre-FID, FID (title case, only populated when Status = proposed)
-- **Delayed:** Yes (title case; leave blank if not delayed — do not enter No)
-- **Opposition:** Yes, No (title case)
+- **Delayed:** yes (lowercase — corrected 2026-08-07 against the live tabs; leave blank if not delayed — do not enter no)
+- **Opposition:** yes, no (lowercase — corrected 2026-08-07)
 - **RouteType:** match the exact dropdown strings from the sheet (e.g., Not mapped (but could be — route or endpoints are known), Mapped route (at any accuracy), Unavailable (cannot find route))
 
 **General rule:** When in doubt about any controlled-vocabulary field, pull a real row from the GOIT database and match the exact casing and spelling before populating. Never assume Title Case or ALL CAPS for dropdown fields.

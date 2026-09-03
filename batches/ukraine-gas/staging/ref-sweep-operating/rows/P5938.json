@@ -1,0 +1,115 @@
+{
+  "project_id": "P5938",
+  "pipeline_name": "Ivatsevichy-Kobryn-Dolyna Gas Pipeline",
+  "sheet_row": 3401,
+  "wiki": "https://www.gem.wiki/Ivatsevichy-Kobryn-Dolyna_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the refs staged below; existence, thread-pairing (vs P3484), classification and ownership split all corroborate.",
+      "researcher_notes": "EXISTENCE + DUPLICATE: The sheet's own cited Belarusian source (btg.by, unreachable live -> verified via a Wayback capture) states, on Gazprom Transgaz Belarus's own 'Activities' page: 'двухниточный магистральный газотрубопровод «Ивацевичи — Долина» диаметром 1220 мм' ('two-thread trunk gas pipeline \"Ivatsevichi-Dolina\", diameter 1220mm'). Independently, eegas.com (East European Gas Analysis, a specialist tracker not affiliated with GEM) lists 'Ivatsevichi-Kobrin-Dolina, 2 x 1220 mm (48-in)' among Belarus's trunk pipelines. A third source, an iSANS (Belarusian analytical NGO) 2023 report (isans.org PDF; automated url_verifier could not confirm the Cyrillic token inside this large PDF -- a documented tool limitation for big PDFs per the script's own header notes -- so I extracted it manually with pdftotext and confirmed p.~24: 'украина и беларусь связаны двухниточным магистральным газотрубопроводом «ивацевичи — долина» диаметром 1220 мм (около 30 млрд куб. м. в год)') also confirms the two-thread structure and 1220mm diameter and gives a total system throughput of ~30 bcm/y. So this is real infrastructure, confirmed by 3 sources independent of GEM, and the pairing with P3484 is NOT a duplicate: all three sources explicitly describe it as a twin-thread ('двухниточный') pipeline, matching GEM's own roster note that P3484/P5938 = Thread I (1976) / Thread II (1981). CLASSIFICATION: correctly a cross-border transmission trunk carrying gas (not a gathering/feeder line) -- consistent across all three sources, which list it among Belarus's international transit trunks. ATTRIBUTION (ownership): the sheet's Owner1=Gazprom PJSC / Owner2=Gas Transmission System Operator of Ukraine split is the CORRECT reading for a cross-border row per this project's standing Ukraine guidance (Belarusian-side asset -> Gazprom-linked entity; Ukrainian-side asset -> the Ukrainian state GTS operator) -- this passes, it is not a 'Gazprom owns the Ukrainian section' error. CAVEAT: the existing Status/Fuel/PipelineType/Owner [ref] cells all cite live btg.by URLs that ConnectTimeout from this environment; per standing rule this is not grounds to drop them, but Update should add the Wayback capture (https://web.archive.org/web/2023/http://www.btg.by/about/activities/, verified 200 + content present) alongside the live URL rather than replacing it.",
+      "proposed_refs": [
+        "http://www.eegas.com/belarus1.htm",
+        "https://web.archive.org/web/2023/http://www.btg.by/about/activities/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en/ru"
+    },
+    {
+      "segment_name": "II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-derive per-thread Capacity and LengthKnown for both P3484 and P5938 -- do not leave the combined two-thread total stamped identically on each thread's own row. Route to Update.",
+      "researcher_notes": "Both Capacity (29.00 bcm/y) and LengthKnown (292.00 km) are recorded IDENTICALLY on P5938 (this row, Thread II) and on P3484 (Thread I) -- i.e. the exact same numbers appear twice, once per thread. That is only correct if 29 bcm/y and 292 km are each thread's OWN individual spec. The evidence says they are not: (1) GEM's own gem.wiki infobox for this pipeline (read for leads only, never cited) labels Capacity explicitly as '29 bcm/y (total for the pipeline)' for BOTH Thread I and Thread II, i.e. the wiki editors themselves flagged 29 as the COMBINED two-thread figure, not a per-thread one -- yet the sheet stamps that combined total onto each thread's row, which would double-count system capacity to 58 bcm/y. (2) The independent iSANS 2023 report states the combined Ivatsevichi-Dolina two-thread system moves 'about 30 billion m3 per year' (около 30 млрд куб. м. в год), matching the sheet's 29 bcm/y as a SYSTEM total, not a per-thread figure -- corroborating (1) from a source independent of GEM. Neither btg.by nor eegas.com gives a bcm/y figure for this specific line, so I could not find a source that actually supports 29 bcm/y as each thread's own capacity; the only sourced capacity figure I can find (~30 bcm/y) describes the pair together. The same pattern shows up on Length: gem.wiki's own infobox gives each thread as '146 km each', and 146 x 2 = 292 -- exactly the figure stamped on BOTH rows. Belarusian TSO reporting conventions commonly total parallel threads into a single 'single-thread-equivalent' figure (btg.by's own activities page does this at the country level: 'общая протяженность газопроводов ... в однониточном исчислении' = 'total pipeline length ... in single-thread-equivalent terms'), which is a very plausible origin for a 292 = 146+146 mix-up landing on each individual thread row -- the same aggregate-vs-segment error class already documented for Kazakhstan. Separately, as a rough sanity check (not itself a citation): great-circle distance from Ivatsevichi, Belarus (~52.71N 25.34E) to Dolyna, Ukraine (~48.97N 23.98E) is roughly 425-430 km, which is hard to reconcile with EITHER 146 km or 292 km for a single continuous asset spanning that distance -- worth a routing/endpoint sanity check alongside the capacity/length fix, though I could not independently confirm the true route length and am not proposing a specific corrected number. I have not filled Capacity or Length with the current values' refs, since the sources I found do not actually support 29 bcm/y / 292 km as per-thread figures -- filling them would misrepresent what the sources say.",
+      "proposed_refs": [
+        "http://www.eegas.com/belarus1.htm"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en/ru"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "II",
+      "sheet_row": 3401,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartCountryOrArea", "EndLocation", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Ivatsevichy", "StartCountryOrArea": "Belarus", "EndLocation": "Dolyna", "EndCountryOrArea": "Ukraine"},
+      "primary_value": "Ivatsevichy",
+      "proposed_refs": [
+        "http://www.eegas.com/belarus1.htm",
+        "https://web.archive.org/web/2023/http://www.btg.by/about/activities/"
+      ],
+      "verifications": [
+        {"url": "http://www.eegas.com/belarus1.htm", "ok": true, "contains_value": true},
+        {"url": "https://web.archive.org/web/2023/http://www.btg.by/about/activities/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en/ru",
+      "researcher_notes": "Both sources explicitly name the pipeline as connecting Ivatsevichi (Belarus) and Dolina (Ukraine): eegas.com lists 'Ivatsevichi-Kobrin-Dolina, 2 x 1220 mm'; the archived btg.by activities page lists 'двухниточный магистральный газотрубопровод «Ивацевичи — Долина»' among the pipelines carrying Russian transit gas onward into Ukraine. Two independent origins agreeing on both endpoints -> high."
+    },
+    {
+      "segment_name": "II",
+      "sheet_row": 3401,
+      "oo_sheet_row": 4666,
+      "tab": "operators_owners",
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Gazprom Transgaz Belarus JSC"},
+      "primary_value": "Gazprom Transgaz Belarus JSC",
+      "proposed_refs": [
+        "https://web.archive.org/web/2023/http://www.btg.by/about/activities/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/2023/http://www.btg.by/about/activities/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "The btg.by (Gazprom Transgaz Belarus, i.e. the operating company itself) 'Activities' page names the Ivatsevichi-Dolina two-thread pipeline as one of the transit trunks it operates. Live URL ConnectTimeouts from this environment; a Wayback capture (2023) verifies 200 + the exact pipeline name present. Only one strong (primary/operator-side) source names the operator specifically for this line, so tier=medium rather than high -- I did not find a second, separate source naming the operator. Recommend adding this Wayback URL alongside the existing (currently unreachable) live btg.by [ref] cites per standing rule, not replacing them."
+    },
+    {
+      "segment_name": "II",
+      "sheet_row": 3401,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1981"},
+      "primary_value": "1981",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Could not independently confirm 1981 as Thread II's start year. gem.wiki's own infobox differentiates Thread I=1976 / Thread II=1981 (read for leads only, not citable), but its footnotes for that claim are a 2001 Finmarket article and the 2023 iSANS report, neither of which I could confirm actually states a construction year for this specific thread. A Belarusian gasification-history search surfaced a near-miss: mogilev.gas.by's museum timeline dates the SECOND thread of 'Kobrin-Brest' (a different, nearby pipeline) to 1976 -- not Ivatsevichi-Kobryn-Dolyna. Leaving unresolved rather than fabricating support for a number I could not verify."
+    },
+    {
+      "segment_name": "II",
+      "sheet_row": 3401,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Urengoy gas field"},
+      "primary_value": "Urengoy gas field",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Plausible (Torzhok-Minsk-Ivatsevichi, which physically feeds this line at Ivatsevichi, does carry West Siberian/Urengoy-origin gas), but I found no source that names Urengoy specifically as the gas source for the Ivatsevichi-Dolina leg itself. Note this corridor's much older Soviet-era predecessor (Dashava-Ivatsevichi-Minsk, per ru.wikipedia's Belarus GTS article) historically ran the OPPOSITE direction, carrying western-Ukrainian (Dashava-area) gas north into Belarus -- so the modern flow direction/source is not something I would assume without a source. Leaving unresolved.",
+      "note_do_not_apply": true
+    }
+  ],
+  "summary": "P5938 (Ivatsevichy-Kobryn-Dolyna II) is real, correctly classified, and correctly NOT a duplicate of P3484 (Thread I) -- 3 sources independent of GEM (eegas.com, iSANS, and Gazprom Transgaz Belarus's own btg.by, all verified) confirm a genuine twin-thread 1220mm trunk. Ownership split (Gazprom PJSC / Ukraine TSO) is correct per project guidance. NEW spec concern: Capacity (29 bcm/y) and Length (292 km) both appear to be the COMBINED two-thread total mistakenly stamped identically onto EACH thread's own row (P3484 and P5938 both carry the same 29/292) -- GEM's own wiki source explicitly labels 29 bcm/y 'total for the pipeline', and iSANS independently gives ~30 bcm/y as the system total, not per-thread; 146km x 2 threads = 292 matches the wiki's own per-thread length of 146km each. Routed to Update. Location and Operator [ref] cells filled (high/medium, both verified); Start and FuelSource [ref] left UNRESOLVED for lack of independent support."
+}

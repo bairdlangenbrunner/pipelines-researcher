@@ -16,6 +16,12 @@ It records ONLY what the worklist already knows — the existing `[ref]` and its
   (proposed_refs = the live URLs, so the backend mirror shows them; colored blue)
 - HAS_REF, one or more dead / value-missing links   -> class_out DEAD_LINK
   (proposed_refs empty — the deep-sweep Fills tab carries any replacement)
+  Each such record also carries `link_live`: True when every cited URL actually
+  LOADED and only the value-substring screen missed, False when a URL failed to
+  load at all. The distinction is the standing rule — only a page confirmed
+  deleted (404/410) may drop out of a `[ref]` cell, so a `link_live` DEAD_LINK is
+  "re-read this page", never "this ref is gone", and the workbook must not paint
+  it as a dead link.
 - MISSING_REF                                        -> class_out UNRESOLVED
 - owner/operator units (kind owner/operator)         -> tab="operators_owners"
 
@@ -50,7 +56,14 @@ def _verifications(unit):
     out = []
     for c in unit.get("existing_ref_checks") or []:
         ok = bool(c.get("ok"))
-        out.append({"url": c.get("url", ""), "ok": ok, "contains_value": ok})
+        v = {"url": c.get("url", ""), "ok": ok, "contains_value": ok,
+             # Carry the HTTP status through. `link_live` below is computed off it, and
+             # projecting it away silently made that flag always False — so the workbook's
+             # amber-vs-red distinction never fired (found 2026-08-27, Egypt).
+             "status": c.get("status")}
+        if c.get("non_citation"):
+            v["non_citation"] = True
+        out.append(v)
     return out
 
 
@@ -71,8 +84,17 @@ def main():
     units = wl.get("units", [])
 
     resolutions = []
+    n_fills_owed = 0
     for u in units:
         cls_in = u.get("class", "")
+        if cls_in == "MISSING_VALUE":
+            # An owed FILL (blank value cell, --owe-fills). It has no baseline record: the
+            # fills lane is populated by the deep-sweep merge from shard fills[], and an
+            # owed-but-unresearched blank must not be seeded as a FILL with no value (the
+            # workbook would render an empty tinted cell). Count it so the delivery note can
+            # report fills owed vs fills staged.
+            n_fills_owed += 1
+            continue
         checks = _verifications(u)
         if cls_in == "MISSING_REF":
             class_out, proposed = "UNRESOLVED", []
@@ -83,6 +105,14 @@ def main():
                 proposed = [v["url"] for v in checks if v["ok"]]
             else:
                 class_out, proposed = "DEAD_LINK", []
+        # Did every cited URL actually load? A 200 that merely failed the value
+        # substring screen is not a dead link (standing rule: only 404/410 is).
+        link_live = bool(checks) and all(
+            v.get("status") == 200 or v.get("ok") for v in checks)
+        # A live navigation page is not a usable ref at all — amber would say
+        # "re-read this page", which is wrong advice when the URL is a site search.
+        if any(v.get("non_citation") for v in checks):
+            link_live = False
         rec = {
             "project_id": u.get("project_id", ""),
             "sheet_row": u.get("sheet_row", ""),
@@ -98,6 +128,7 @@ def main():
             "class_out": class_out,
             "proposed_refs": proposed,
             "verifications": checks,
+            "link_live": link_live if cls_in == "HAS_REF" else False,
             "tier": "",
             "independent": False,
             "source_language": "en",
@@ -119,6 +150,8 @@ def main():
     json.dump({"meta": meta, "resolutions": resolutions}, open(cur, "w"), indent=1)
     print(f"seeded {cur}: {len(resolutions)} ref records")
     print(f"  class_in:  {meta['class_in_counts']}")
+    if n_fills_owed:
+        print(f"  fills owed (MISSING_VALUE, not seeded — arrive via merge_deepsweep_shards fills[]): {n_fills_owed}")
     print(f"  class_out: {meta['class_out_counts']}")
 
 

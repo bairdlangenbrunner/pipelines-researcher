@@ -1,8 +1,8 @@
 """Central path resolution — so nothing hard-codes /Users/baird/... .
 
 Repo layout is fixed relative to this file (scripts/paths.py). Sibling repos
-(the GEM route mirror, the scrape repo) default to siblings of this repo and can be
-overridden by env vars (see .env.example).
+(the GEM route mirror, the scrape repo, the gem-db-ops pull engine) default to
+siblings of this repo and can be overridden by env vars (see .env.example).
 """
 from __future__ import annotations
 
@@ -40,6 +40,14 @@ def routes_repo() -> Path:
 def scraping_repo() -> Path:
     """Local GOIT-GGIT-scraping repo (GulfPub PE World Map, etc.)."""
     return _sibling("GOIT-GGIT-scraping", "GEM_SCRAPING_REPO")
+
+
+def db_ops_repo() -> Path:
+    """Local gem-db-ops repo — the pull engine (single source of truth for every
+    read of GEM data: the read-only Postgres backend and the pipelines Sheet).
+    `scripts/refresh_csvs.sh` and `refresh_facility_gazetteer.py` go through it;
+    this repo keeps no pull/connection/column-map code of its own."""
+    return _sibling("gem-db-ops", "GEM_DB_OPS_REPO")
 
 
 def sources_dir() -> Path:

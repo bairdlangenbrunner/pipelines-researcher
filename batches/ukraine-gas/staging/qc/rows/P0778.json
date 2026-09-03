@@ -1,0 +1,85 @@
+{
+ "project_id": "P0778",
+ "pipeline_name": "Komarno-Drozdovychi Gas Pipeline",
+ "sheet_row": 393,
+ "wiki": "https://www.gem.wiki/Komarno_Drozdovychi_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "values": {
+    "Operator": "Gas Transmission System Operator of Ukraine LLC (GTSOU)"
+   },
+   "primary_value_col": "Operator",
+   "primary_value": "Gas Transmission System Operator of Ukraine LLC (GTSOU)",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.entsog.eu/members",
+    "https://web.archive.org/web/20200603124804/https://tsoua.com/en/about-us/key-facts/",
+    "https://uk.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80_%D0%93%D0%A2%D0%A1_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.entsog.eu/members",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://web.archive.org/web/20200603124804/https://tsoua.com/en/about-us/key-facts/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://uk.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%82%D0%BE%D1%80_%D0%93%D0%A2%D0%A1_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B8",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Sheet Operator blank. Wholly-Ukrainian export line from the Komarno compressor station to the Drozdovychi metering station on the Polish border — squarely GTSOU's system, and Owner already reads 'Gas Transmission System Operator of Ukraine [100.%]', so the operator cell is simply unfilled rather than contested. Independence: counted as two independent origins — ENTSOG's own membership register and Ukrtransgaz/TSOUA's own archived key-facts page. uk.wikipedia is carried as a reading aid for the Ukrainian-language corporate history and is NOT counted toward independence (tertiary encyclopaedia). Same ref triple used across this brief's rows, per the Leg-3 instruction to settle the operator question once per company."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Re-anchor BOTH route endpoints and leave LengthKnownKm at 80.00. All three flags on this row (length_ratio 5.80, Poland/Slovakia landfall, Hungary endpoint) collapse into ONE route defect — they are not three findings.",
+   "researcher_notes": "The geojson is a 2-vertex straight line and BOTH endpoints are geocoder false matches. Start resolves to KOMÁRNO, SLOVAKIA (18.1316, 47.7624) instead of Komarno, Lviv Oblast (23.6970, 49.6261) — which is why the trace crosses Hungary and lands where it does. End resolves to DROZDOVYCHI in Horodok Hromada, Lviv Raion (23.6442, 49.8092) instead of the BORDER Drozdovychi in Dobromyl Hromada, Sambir Raion (22.8712, 49.6969), which East European Gas Analysis names as the export metering station. Correcting both anchors gives a true Komarno→border-Drozdovychi span of about 60 km straight-line, against the sheet's 80.00 km — a ratio near 1.33, INSIDE the band. So the sheet's length is VINDICATED and the 464 km drawn figure is an artefact. All endpoints reverse-geocoded through Nominatim; this supersedes an earlier reading in this pass that placed the end vertex 'near Komarno', which was wrong.",
+   "proposed_refs": [
+    "https://eegas.com/ukr_090115e.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://eegas.com/ukr_090115e.htm",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Reconcile the capacity and the row granularity against EEGA before citing either: EEGA gives 5 bcm/yr over TWO lines at Drozdovychi where GEM carries 8.00 bcm/y on one row.",
+   "researcher_notes": "East European Gas Analysis, Table 1 'Export and Import Gas Pipelines of Ukraine', lists the Drozdovychi crossing at 5 bcm/yr across 2 lines. GEM's single row carries 8.00 bcm/y with no Capacity [ref] (one of only two capacity refs in the whole 47-row scope). Not staged as a value change — EEGA is a single source, its table is undated as to the capacity vintage, and an export-capacity figure and a design-capacity figure can legitimately differ. Staged as the question a researcher must settle, with the segment-vs-network granularity noted: if the crossing is two lines, GEM may be describing the pair on one row.",
+   "proposed_refs": [
+    "https://eegas.com/ukr_090115e.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://eegas.com/ukr_090115e.htm",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true
+  }
+ ]
+}

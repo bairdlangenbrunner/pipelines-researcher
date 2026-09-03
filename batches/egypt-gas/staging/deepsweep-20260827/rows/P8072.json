@@ -1,0 +1,54 @@
+{
+  "project_id": "P8072",
+  "pipeline_name": "Kima Aswan Industrial Gas Pipeline",
+  "sheet_row": 4332,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action -- existence and general location well supported",
+      "researcher_notes": "EXISTENCE test applied: independent-source search plus a visual read of the sheet's own cited map (rule: a report cited for a pipeline is not unsupported until its MAPS are read, not just its text -- full-text pdftotext search of the EGAS Annual Report 2018/2019 PDF finds zero occurrences of 'Kima' anywhere in the 36-page extracted text, so a text-only search would wrongly flag this row; the actual support is visual). Two independent, non-GEM sources corroborate: (1) IPIC (an Egyptian pipeline EPC/fabrication contractor), whose own project-reference table at https://ipic-eg.com/projects/ lists, verbatim, under a '2016' year heading: 'GASCO | KIMA Aswan Fertalizers Gas P/L | 16\" | 12.7/14.3 [mm wall] | X-60 | 4,000 [m]' -- i.e. GASCO (Egypt's national gas transmission company) as client, a dedicated 16-inch, 4,000 m (4.00 km) gas pipeline to the KIMA Aswan fertilizer plant, completed 2016. (2) KIMA's own official corporate site (kimaegypt.com, ProjectDetails.aspx?id=10) independently describes 'Project KIMA 2', a rehabilitation of the plant 'to work with natural gas technology' requiring '1,200,000 m3/day at 25 bar pressure' -- confirming from the END-USER side, with no reference to GEM/GASCO/IPIC, that KIMA underwent a real natural-gas conversion needing a dedicated high-pressure gas supply. (3) Visual corroboration from the GASCO national-grid map itself (EGAS Annual Report 2018/2019, printed page 35 = PDF page index 19 of the egyptoil-gas.com-hosted copy; rendered at 400 dpi and cropped for legibility): the map shows a distinct 'KIMA' industrial-complex icon (fertilizer-plant symbol) as its own node, fed by a short spur off the Kom Ombo-Aswan trunk near the 'Aswan' city node -- topologically consistent with StartLocation=Kima / State=Aswan. That map segment carries no printed diameter/length label of its own (see the spec entry below), so it corroborates LOCATION/EXISTENCE only, not the numeric values. Tier: high for existence (2 independent origins: an EPC contractor's project record and the end-user company's own site, neither derivable from the other or from GEM). Fuel=Gas and Status=operating both follow from the same IPIC entry (a 'Gas P/L' built for GASCO, completed 2016, with no evidence of decommissioning and an operating fertilizer plant still needing its gas feed as of 2026 per egyptoil-gas.com's current KIMA coverage, e.g. recent 'blue ammonia' production reporting). CLASSIFICATION: PipelineType=transmission is a reasonable fit given the tracker's only three options (transmission/gathering/distribution) -- this is a dedicated, GASCO-built, high-pressure industrial supply lateral off the national transmission grid, not a wellhead gathering line or a public distribution main, so I am not flagging it as a classification error despite its short length.",
+      "proposed_refs": ["https://ipic-eg.com/projects/", "https://www.kimaegypt.com/ProjectDetails.aspx?id=10"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change; worth a second numeric source if one surfaces later",
+      "researcher_notes": "SPEC check on Length (4.00 km) and Diameter (16 in): both trace to a single strong source -- IPIC's own project table (raw HTML confirmed via curl, not just the AI-summarized fetch): '...GASCO KIMA Aswan Fertalizers Gas P/L 16\" 12.7/14.3 X-60 4,000...' under the '2016' year block, where the 4,000 is meters (=4.00 km) per that table's own 'Qty. (m)' column header. This is a precise, internally-consistent, plausible EPC-contractor record (an actual builder's reference list, not a news aggregation), and it matches the sheet's values exactly. However it is only ONE source -- I could not find a second, independent source stating the same 16-inch / 4 km figures (searched enppi.com -- 404 -- and egyptoil-gas.com's own site search, which returned no pipeline-infrastructure articles on Kima at all; this session's WebSearch tool quota was also exhausted (200/200) partway through this task, limiting further open-web search). IMPORTANTLY, I initially misread the sheet's own cited map (EGAS AR2018/2019 p.35) as showing a conflicting '8\"-12 km' spec for this same corridor -- on a closer, higher-resolution re-crop this is WRONG: the '8\"-12 km' label belongs to a separate branch to 'West Aswan / Egypt Gas' (a distribution-company facility), not to KIMA. The KIMA-bound spur on the map is a short, unlabeled segment off the 'Aswan' node, so the map neither confirms nor contradicts the 16 in / 4 km figures -- there is no live spec conflict here, only a single-source situation. Tier: medium (one strong, precise, plausible primary-ish source; not the required 2-independent for high).",
+      "proposed_refs": ["https://ipic-eg.com/projects/"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no merge; optionally note the corridor relationship in ResearcherNotes on both rows",
+      "researcher_notes": "DUPLICATE watchlist question (P8072 'Kima Aswan Industrial', 4 km/16in, vs P8073 'Aswan-Kima', 20 km/24in): resolved NOT a duplicate. The GASCO national-grid map (EGAS AR2018/2019 p.35) shows these as two sequential, physically distinct segments of one delivery corridor rather than one line entered twice: a 24-inch, 20 km trunk spur running from the Kom Ombo mainline down to the 'Aswan' node (matches P8073's diameter+length essentially exactly), followed by a separate, shorter, smaller-diameter final lateral from that Aswan-area tie-in into the KIMA plant itself (16 in, 4 km per IPIC -- matches P8072). Per the batch's own duplicate heuristic, a same-corridor pair with DIFFERENT diameters (24in vs 16in) and different lengths (20km vs 4km) reads as two real, sequential segments, not a double-count of one physical pipe. The two rows' inverted naming ('Kima Aswan' vs 'Aswan-Kima' for what are actually two different, sequential pipes) is a plausible source of future confusion but not itself a data error requiring a merge.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Update: review Start/End location fields -- EndLocation is blank and EndPrefecture/District duplicates StartLocation ('Kima') instead of naming the Aswan-side tie-in point",
+      "researcher_notes": "The Location cluster (flagged 'irregular': true by the worklist builder itself) has StartLocation='Kima', but EndLocation is missing entirely while EndPrefecture/District is also 'Kima' -- i.e. both ends of the record point at the same place, and no field actually names the Aswan-side endpoint the pipeline name and roster route ('Kima->Aswan') imply. This looks like a genuine data-entry gap rather than a sourcing problem: the GASCO map shows gas physically arriving FROM the Kom Ombo/Aswan trunk TO the KIMA plant (i.e. Aswan-side is the upstream/supply end, KIMA is the downstream/destination end), which is also the opposite direction from what StartLocation=Kima would suggest if Start is meant to be the upstream end. I am not proposing a specific Start/End rewrite (no authoritative source states GEM's intended field convention for this row), but flagging it for Update to reconcile the End* fields and confirm the intended flow direction -- this is a real anomaly, not a sourcing failure, so it doesn't affect the existence/spec verdicts above.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P8072 existence/classification/spec all confirmed (caveat) -- 2 independent sources (IPIC contractor project table + KIMA's own corporate site) plus visual GASCO-map corroboration support a real 16in/4km 2016-built GASCO lateral into the KIMA fertilizer plant; not a duplicate of P8073 (different corridor segment, different diameter/length). One open attribution concern: Start/EndLocation fields are internally inconsistent (both read 'Kima', no named Aswan-side endpoint) -- routed to Update. No UNRESOLVED items; no fills needed (no blank value fields owed for this row)."
+}

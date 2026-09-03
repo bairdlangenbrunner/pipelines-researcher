@@ -24,7 +24,27 @@ python scripts/fetch_overpass.py --iso LY --substance gas --include-lifecycle \
 | `gas_in` (India) | `osm-in-gas.geojson` | 61 | 2026-08-10 |
 | `gas_kz` (Kazakhstan) | `osm-kz-gas.geojson` | 112 | 2026-08-11 |
 | `gas_my` (Malaysia) | `osm-my-gas.geojson` | 29 | 2026-08-12 |
+| `gas_ua` (Ukraine) | `osm-ua-gas.geojson` | 1004 | 2026-08-12 |
+| `gas_uz` (Uzbekistan) | `osm-uz-gas.geojson` | 124 | 2026-08-26 |
 | (reference) all Libya | `osm-ly-all.geojson` | 545 | 2026-07-28 |
+
+Ukraine is the extract to keep in mind when reading any other one: 1,004 features is not
+1,004 leads. 741 are stubs under 0.5 km and the commonest `operator` values are local gas
+distribution utilities, so most of the file is the low-pressure network GGIT does not
+track. Feature count is not coverage — trace length and operator are.
+
+Because of that, `fetch_overpass.py` now also carries the **`pressure`** tag through as
+`osm_pressure` (2026-08-16), alongside the `usage` tag it already extracted — together they
+are the direct signal for transmission-vs-distribution, which is what decides whether an
+unmatched trace is a Discovery lead or simply out of GGIT's scope. Neither tag *filters* the
+fetch: both are sparse in OSM, and a missing tag must never drop real pipe. **The extracts
+above were fetched before that change and do not carry `osm_pressure`** — it appears only in
+files fetched from 2026-08-16 on. Re-fetching an existing country to pick it up is safe but
+moves the extract under the recon runs already committed against it, so re-run those too.
+`gas_uz` (2026-08-26) is the first extract fetched after the change — and it carries **no
+`osm_pressure` at all**, because the key is emitted only where OSM has the tag and no Uzbek
+feature does. `usage=transmission` on 7 of 124 features is the only transmission signal there.
+So the tag being carried through is not the same as the tag being available.
 
 Adding a country = one fetch + one `datasets:` entry. No code.
 
@@ -54,6 +74,69 @@ Adding a country = one fetch + one `datasets:` entry. No code.
   identical containment and IoU. `ingest.py` now suffixes duplicates `#2..` and warns; the
   warning also means **cross-scrape identity is unreliable** for that dataset until the
   manifest's `provenance.oid_field` names something actually unique.
+
+## `osm_id_key` was NOT unique — FIXED 2026-08-26
+
+`provenance.oid_field: osm_id_key` is what makes cross-scrape identity possible, and it was
+broken. `_stitch()` sets the key from `contributing`, i.e. *which source ways share a vertex
+with this part* — so when one way group merges into several **disconnected** parts that each
+touch the same set of ways, every part got an **identical key**.
+
+Measured across the 10 registered extracts: **62 features collided**, worst by distance in
+Uzbekistan (6 features / 865.8 km) and Kazakhstan (7 / 711.7 km); Malaysia and Pakistan had
+none. The Uzbekistan case is the clearest — one key covered three disjoint pieces of 618.01,
+144.95 and 25.49 km.
+
+**No committed finding is falsified.** `ingest.py` already caught it and suffixed `#2`/`#3`, so
+no geometry was ever lost or merged. What was broken is **identity**: that suffix is
+assignment-order dependent, so a re-scrape could hand `#2` to a different piece and a diff
+against an earlier run could not tell you it was the same feature.
+
+`_disambiguate_keys()` now appends a **geometry-derived** discriminator —
+`blake2s(coords rounded to 6dp, digest_size=3)` → `…#0823b3`. Stable across re-fetches
+(identical geometry ⇒ identical id), and it changes when the shape changes, which is what an
+identity key should do.
+
+**It touches ONLY keys that actually collide.** A key that was already unique is emitted
+byte-identical, in every extract — verified against all 10: duplicates 62 → 0, no
+previously-unique key altered, and the two collision-free extracts unchanged byte-for-byte. So
+**re-fetching a country moves nothing except ids that are unstable garbage today**, and no
+re-run is owed on any committed recon. Uzbekistan was re-fetched immediately (it had no
+committed run to move): 124 features, geometry set identical, 113 of 124 keys unchanged, 11
+suffixed, and the ingest collision warning is gone.
+
+`osm-ly-all.geojson` predates the field entirely and has no `osm_id_key` — it is the
+reference-only Libya pull, not a registered dataset, and the disambiguation skips it.
+
+## `name:en` is fetched and then discarded — OPEN, measured 2026-08-26
+
+`fetch_overpass.py` carries OSM's `name:en` through as **`osm_name_en`**, but no manifest maps
+it and nothing downstream reads it, so **the matcher never sees it.** The canonical record has
+an `aliases` field for exactly this (`sources/_schema/canonical_record.md` line 21) and it is
+**declared but dead**: `adapter_base.py` defines `aliases` on the dataclass, never populates it
+from `column_map`, and `match.py` scores `ref["name_norm"]` alone.
+
+Measured across every extract we hold: **4 features carry a `name:en` the matcher cannot use,
+and in all 4 the primary `name` is non-Latin** — so `name:en` is not a nicety, it is the only
+name signal those features have.
+
+| dataset | feature | `name` | `name:en` |
+|---|---|---|---|
+| `gas_kz` | `w291491982_294602571` | `месторождение Шагырлы-Шомышты - компрессорна…` | `Shagyrly Shomyshty Gas Field - Beyneau` |
+| `gas_uz` | `w292481601_579695357` | `Средняя Азия - Центр` | `Central Asia-Center` |
+| `oil_iq` | `w20171711` | `خط أنابيب كركوك-جيهان` | `Iraq-Turkey oil pipeline` |
+
+The Iraq row is the one that proves the point: `normalize.translit_cyrillic()` does nothing for
+Arabic, so `name:en` is the *only* route by which that feature is ever nameable. The 2026-08-14
+Cyrillic fix closed the Cyrillic half of this problem and left this half open.
+
+**Not fixed, deliberately.** It is three small changes — populate `aliases` from `column_map` in
+`adapter_base.py`, score `max(name_norm, *aliases)` in `match.py`, add `aliases: osm_name_en` to
+the OSM manifests — but the third touches the **shared** scorer and would move the committed
+`gas_kz` and `oil_iq` runs for a gain of 4 features. Per the 08-14 precedent the likely gain is
+corrected "closest GEM" attribution rather than moved buckets. Baird's call, not the agent's.
+**It does not block Uzbekistan:** its one affected feature is the CAC trunk, whose GEM rows are
+among the 13 excluded from that pass's research legs.
 
 ## Matching config (why it differs from the engine defaults)
 
@@ -182,3 +265,63 @@ run's real value, and a human routes-repo PR, never an auto-replacement), **2
 `FRAGMENT_OF_EXISTING`**, **10 `DISCOVERY_CANDIDATE`** (each still needs matching to an
 existing row under another name before it is treated as a miss). Do not read the 0 overlaps
 as "GEM is missing all 21".
+
+## `_collect_lines()` fed relation-member ways to the stitch TWICE — Egypt oil, 2026-08-27
+
+**The second identity defect in `fetch_overpass.py` in two days, and a different one.**
+Yesterday's (`osm_id_key` non-unique, below/above per file order) was a *keying* bug —
+distinct geometry colliding on one key. This one is a *duplication* bug: the same geometry
+emitted twice as two features.
+
+**Symptom.** The first `--substance oil --iso EG` pull returned **39 features but only 36
+unique `osm_id_key`** — on a brand-new fetch, i.e. *after* `_disambiguate_keys()` was in
+place. The discriminator is derived from geometry, so two features with byte-identical
+geometry hash identically and no suffix can separate them. The collision was the symptom;
+the duplication was the disease.
+
+**Cause.** Overpass returns a way that is both independently tagged and a member of a route
+relation **twice** — once as a `way` element, once inside the relation's `members`.
+`_collect_lines()` appended both, so `linemerge` received the same coordinate string twice
+and emitted the shared part twice. Egypt oil's SUMED route relation sits over ways that also
+carry their own `man_made=pipeline` tags, which is why it showed up here first.
+
+**Fix.** `_collect_lines()` now indexes ways by OSM way id as it collects them, and a
+relation member whose `ref` is already in that index is **not** re-added; instead the
+relation's tags fill any key the way lacks (`setdefault`), so a name carried only on the
+relation still survives. Separately, `_stitch()` no longer takes the *first* contributing
+way's tags as the merged part's sample — it prefers a contributing way that actually carries
+a `name`, because a merged part spans several ways and only some are named.
+
+**A/B, verified.** `39 feats / 872.6 km` → `32 feats / 544.5 km`, with the **vertex set
+identical: 0 lost, 0 gained**. Nothing but 328 km of double-counted mileage left. Unique
+keys went 36/39 → **32/32**.
+
+**Named features dropped 12 → 5, and that is the fix working, not a regression.** The
+duplicate inputs were fragmenting the SUMED corridor into more, shorter parts, several of
+which independently carried a name. With the duplication gone the parts merge into five
+longer strings (`sumed 1`, `sumed 7`, `sumed 8.1/8.2/8.3`) — fewer named *features*, the
+same named *pipe*. No name string was lost from the extract.
+
+**Blast radius: Egypt oil only.** All 12 registered extracts were checked for exact-duplicate
+features (identical geometry) at the time of the fix; only `oil_eg` had any (3 features /
+83.3 km), and it had no committed recon run, so **no committed finding is falsified and no
+re-run is owed**. As with yesterday's fix, every other extract keeps its current features and
+keys until it is next re-fetched. A duplicated reference record would be a phantom
+counterpart in every recon that reads the extract, so the dedup belongs here, at the source,
+not in `ingest.py`.
+
+## Coverage reality check — Egypt oil, 2026-08-27
+
+**32 features / 40 ways, 544.5 km, all `lifecycle=operating` + `substance=oil`.** Attributes
+are thin but not empty: **5 named** (all SUMED strings), 5 with a diameter, 7 with an
+operator — better than Egypt gas's 0/0/0.
+
+**No `geoarea_weight` override, deliberately — Pakistan's reasoning, not Egypt gas's.** The
+geometry axis is *alive* on the GEM side here: **45 of 46 GEM Egypt oil rows are routed** (23
+`medium`, 7 `low`, 6 `high`, 6 `very low`, 3 `very high`; only P7326 is `no route`), so the
+dead-both-axes condition that justifies the admin-area fallback on `gas_eg`/`gas_iq`/`oil_iq`
+does not hold. The temptation is real and must be resisted: `StartCountryOrArea` and
+`EndCountryOrArea` are filled on all 46 rows and only 2 rows have both state/province cells
+blank, so the geoarea axis would score *freely* — and that is exactly the failure mode
+measured on Uzbekistan, where a weighted geoarea manufactured overlaps from stubs that were
+merely in the right province.

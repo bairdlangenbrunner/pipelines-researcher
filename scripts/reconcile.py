@@ -288,6 +288,11 @@ class _Diagnostics:
     # implausible rather than merely small.
     MIN_REFS_FOR_NULL_GATE = 5
     BLIND_FRACTION = 0.50
+    # One GEM row winning this many reference records, and this share of the pool,
+    # is reported as an artifact rather than a result. Both gates must trip, so a
+    # tiny pool cannot raise it on 2 of 3.
+    MIN_ABSORBED = 5
+    ABSORB_FRACTION = 0.25
 
     def __init__(self, manifest: dict, source: str):
         self.source = source
@@ -297,6 +302,10 @@ class _Diagnostics:
         self.composites: list = []
         self.geoarea_scored = 0
         self.boundaries_error = ""
+        # Which GEM row won each reference record, and on what evidence. A single row
+        # taking a large share of the pool is the one-row analogue of MATCH_QUALITY:
+        # the run looks healthy in aggregate while most of it rests on one bad anchor.
+        self.best_gem: dict = {}
 
     def note_gem(self, tracker: str, n_pool: int, n_with_geom: int) -> None:
         self.gem[tracker] = {"rows": n_pool, "with_route": n_with_geom,
@@ -314,6 +323,18 @@ class _Diagnostics:
         self.composites.append(best["comp"])
         if best["sig"].get("s_geoarea") is not None:
             self.geoarea_scored += 1
+        g = best.get("gem")
+        key = ",".join(getattr(g, "project_ids", None) or
+                       ([getattr(g, "project_id", None)] if getattr(g, "project_id", None) else [])) or "?"
+        e = self.best_gem.setdefault(key, {"n": 0, "name": getattr(g, "pipeline_name", ""),
+                                           "blind": 0})
+        e["n"] += 1
+        # "Blind" = the winner had NO location evidence at all: the geometry test could
+        # not be run (routeless GEM row) and the endpoint axis was absent too. Diameter
+        # and a length ratio are then carrying the match, and both are coarse enough for
+        # unrelated lines to share.
+        if best["sig"].get("g_untested") and best["sig"].get("s_endpoints") is None:
+            e["blind"] += 1
 
     def build(self, overlaps: list, buckets: dict) -> dict:
         comps = sorted(self.composites)
@@ -335,12 +356,35 @@ class _Diagnostics:
             "dispositions": {k: len(v) for k, v in buckets.items()},
             "escalations": [],
         }
+        top = max(self.best_gem.items(), key=lambda kv: kv[1]["n"], default=None)
+        if top:
+            d["top_gem_absorber"] = {"project_ids": top[0], "name": top[1]["name"],
+                                     "refs_won": top[1]["n"],
+                                     "pct_of_reference_pool": _pct(top[1]["n"], self.refs),
+                                     "won_with_no_location_evidence": top[1]["blind"]}
         if self.boundaries_error:
             d["escalations"].append({
                 "code": "GEOAREA_UNAVAILABLE", "detail": self.boundaries_error,
                 "action": "geoarea_weight is set for this dataset but the admin-1 boundaries "
                           "could not be loaded — the signal silently contributed nothing. "
                           "Fix the data/boundaries install and re-run before using this diff."})
+
+        if top and top[1]["n"] >= self.MIN_ABSORBED and \
+                _pct(top[1]["n"], self.refs) >= self.ABSORB_FRACTION * 100:
+            blind = top[1]["blind"]
+            d["escalations"].append({
+                "code": "MATCH_CONCENTRATION", "detail":
+                    f"one GEM row ({top[0]} — {top[1]['name']!r}) is the best match for "
+                    f"{top[1]['n']} of {self.refs} reference records "
+                    f"({_pct(top[1]['n'], self.refs)}%)"
+                    + (f", and {blind} of those wins had NO location evidence at all "
+                       f"(routeless GEM row, no endpoint signal — diameter and a length "
+                       f"ratio carried the match)." if blind else "."),
+                "action": "Read the conflict and overlap counts for this run EXCLUDING that "
+                          "row before treating either as a rate. One row absorbing the pool "
+                          "is a matcher artifact, not a finding: route it (§8) or fill its "
+                          "endpoints, then re-run. Do NOT lower a threshold or retune "
+                          "weights — that moves every committed run for this source."})
 
         name_blind = _pct(self.named, self.refs) < self.BLIND_FRACTION * 100
         route_blind = _pct(routed, rows) < self.BLIND_FRACTION * 100

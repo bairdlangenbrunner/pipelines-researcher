@@ -1,0 +1,72 @@
+{
+  "project_id": "P8080",
+  "pipeline_name": "West Cairo P.S. Gas Pipeline",
+  "sheet_row": 4340,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/core specs.",
+      "researcher_notes": "EXISTENCE + CLASSIFICATION + CORE SPECS all confirmed against three independent sources that each explicitly name this specific project (not a generic aggregate mention): (1) presidency.eg, under 'Presidential Inaugurations and National Projects' (افتتاحات رئاسية ومشروعات قومية), titled 'إنشاء خط تغذية محطة كهرباء غرب القاهرة' (Establishing a feed line for West Cairo Power Station), dated June 2020: 'يهدف المشروع بإنشاء خط بطول ١٦ كم وقطر ٣٠ بوصة لتغذية محطة كهرباء غرب القاهرة بالغاز، بتكلفة ٤٠٣ مليون جنيه' (16 km, 30-inch, gas, EGP 403 million) — an official government inauguration record, i.e. this line was actually built and put into service, not merely proposed. (2) almalnews.com/Al-Mal newspaper, 29 Dec 2020, reporting GASCO's (جاسكو, the Egyptian Natural Gas Co.) fiscal-2019 activity: 'the company [GASCO] recently completed (أنهت الشركة مؤخرا) implementation of a package of projects to strengthen the national natural gas network,' and lists 'خط تغذية محطة كهرباء غرب القاهرة' (West Cairo power station feed line) by name among the completed set. (3) EGAS Annual Report 2018 (English, FY2017/2018), page with header 'NATIONAL GAS GRID PIPELINES UNDER CONSTRUCTION DURING 2017/2018' (confirmed by direct pdftotext extraction, not the naive substring scan — this is a 22MB/36-page PDF and the verifier's own docstring warns a large-PDF content FAIL 'says nothing'): 'West of Cairo power gas supply pipeline 16 km – 30\"+ Filtration & Metering & Reduction station / Target end date: August 2019 / Estimated Cost: 221 million L.E.' — i.e. as of the FY2017/2018 report (published Jan 2019) this exact line (same 16 km / 30\" spec) was still under construction with a target completion of Aug 2019. Together the three sources triangulate a coherent lifecycle: under construction (report as of mid-2018, target Aug 2019) → actually completed/inaugurated ~June 2020 (presidency.eg, ~10 months late) → confirmed operating and reported as part of a completed package as of Dec 2020 (almalnews). This corroborates GEM's Status=operating, Fuel=Gas, Length=16.00 km, Diameter=30 in at HIGH tier (2+ independent sources agreeing on each). PipelineType=transmission is reasonable: EGAS groups it under 'NATIONAL GAS GRID' pipelines (the trunk/transmission network, distinct from the report's separate 'NATURAL GAS LOCAL DISTRIBUTION AND CONNECTION' section), it is large-diameter (30\") for its full length, and it terminates at its own dedicated Filtration & Metering & Reduction station — the same pattern as this scope's other confirmed power-station feed transmission lines (e.g. P8033, P8038, P8074). NUMERAL-SCRIPT GOTCHA: the presidency.eg existing_ref_checks in the worklist show 'data value not found' for '30' — that is a false negative, not a real gap: the Arabic source writes the numbers in Eastern Arabic-Indic digits (١٦ km, ٣٠ inch, ٤٠٣ million) which do not substring-match ASCII '16'/'30'/'403'. Manually decoded, the digits match GEM's values exactly. NO DUPLICATE found — checked the full current GGIT gas snapshot for any other row with 'Cairo' + 'West'/'Gharb' in the name; P8080 is the only hit. It also does not overlap with any of the scope's named watchlist pairs (Trans-Sinai, Kima/Aswan, Ameriya nodes, Atsa/Old Fayoum, Gamasa-Edku/Damietta-Idku, Kuraimat/Zaafarana) — unrelated corridor and unrelated power station.",
+      "proposed_refs": [
+        "https://www.presidency.eg/ar/%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-%D8%AE%D8%B7-%D8%AA%D8%BA%D8%B0%D9%8A%D8%A9-%D9%85%D8%AD%D8%B7%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1-%D8%BA%D8%B1%D8%A8-%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9/",
+        "https://almalnews.com/909231/%D8%AC%D8%A7%D8%B3%D9%83%D9%88-%D8%AD%D8%B2%D9%85%D8%A9-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D9%84%D8%B2%D9%8A%D8%A7%D8%AF%D8%A9-%D9%82%D8%AF%D8%B1%D8%A7%D8%AA-%D8%A7%D9%84%D8%B4%D8%A8%D9%83%D8%A9-%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9/",
+        "https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Move '2020' from StartMonth1 to StartYear1; set StartMonth1='6' (June) per presidency.eg. As staged, StartYear1 is blank and StartYear1Earliest reads '--' instead of 2020, which is wrong.",
+      "researcher_notes": "Pulled the live sheet row directly (GGIT_gas_snapshot_20260827.csv, row index 4336 / SheetRow 4340) to check field placement, not just the worklist's flattened 'values' dict. Confirmed: StartYear1 is BLANK and StartMonth1 holds the string '2020' — a year value sitting in the month field. Because StartYear1 is empty, the sheet's own StartYearEarliest formula column evaluates to '--' (unknown), even though the project's start year IS known and well sourced. presidency.eg's own dateline is explicit — 'بترول وغاز طبيعي يونيو ٢٠٢٠' (Petroleum & natural gas, June 2020) — verified live (tokens 'يونيو' + 'غرب القاهرة' both present). This is a mechanical data-entry/placement defect, not a wrong value in substance (the '2020' itself is correct), but it silently breaks a computed column and should be corrected, not just re-validated.",
+      "proposed_refs": [
+        "https://www.presidency.eg/ar/%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-%D8%AE%D8%B7-%D8%AA%D8%BA%D8%B0%D9%8A%D8%A9-%D9%85%D8%AD%D8%B7%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1-%D8%BA%D8%B1%D8%A8-%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Keep ProjectLevelCost = 403,000,000 EGP (it is the completion-stage government figure); optionally note the earlier construction-phase estimate in ResearcherNotes rather than treating it as a conflict.",
+      "researcher_notes": "GEM's ProjectLevelCost (403,000,000 EGP) matches presidency.eg's inauguration-announcement figure exactly ('بتكلفة ٤٠٣ مليون جنيه' = cost of 403 million pounds), but the worklist's existing_ref_check flags 'data value not found' for that same page because presidency.eg writes the figure in Eastern Arabic-Indic digits (same numeral-script false negative as diameter/length above) — confirmed by manual read, not a real mismatch. Separately, and this IS a real (benign) discrepancy worth recording: the EGAS Annual Report 2018 priced the SAME line (matching 16 km / 30\" spec, listed as still under construction, target end Aug 2019) at only 'Estimated Cost: 221 million L.E.' — an early/pre-completion budget estimate, roughly half GEM's final figure. Read together with the ~10-month schedule slip (Aug 2019 target vs. actual June 2020 completion), a construction-period cost overrun from a 221M estimate to a 403M final figure is unremarkable for an Egyptian infrastructure project of this era and does NOT contradict GEM's sourced value — it's estimate-vs-actual at two different project stages, not two sources disagreeing about the same fact. Tier is medium rather than high because only one source (presidency.eg) gives the matching FINAL figure; EGAS's number is a different quantity (an estimate), not independent corroboration of 403M.",
+      "proposed_refs": [
+        "https://www.presidency.eg/ar/%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-%D8%AE%D8%B7-%D8%AA%D8%BA%D8%B0%D9%8A%D8%A9-%D9%85%D8%AD%D8%B7%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1-%D8%BA%D8%B1%D8%A8-%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 4340,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2020", "StartMonth1": "6"},
+      "primary_value": "2020",
+      "proposed_refs": [
+        "https://www.presidency.eg/ar/%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-%D8%AE%D8%B7-%D8%AA%D8%BA%D8%B0%D9%8A%D8%A9-%D9%85%D8%AD%D8%B7%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1-%D8%BA%D8%B1%D8%A8-%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9/"
+      ],
+      "verifications": [
+        {"url": "https://www.presidency.eg/ar/%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%B1%D9%8A%D8%B9-%D8%A7%D9%84%D9%82%D9%88%D9%85%D9%8A%D8%A9/%D8%A5%D9%86%D8%B4%D8%A7%D8%A1-%D8%AE%D8%B7-%D8%AA%D8%BA%D8%B0%D9%8A%D8%A9-%D9%85%D8%AD%D8%B7%D8%A9-%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A1-%D8%BA%D8%B1%D8%A8-%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "StartYear1 is currently blank on the live sheet (the '2020' the worklist surfaces actually lives in StartMonth1). presidency.eg's dateline reads 'بترول وغاز طبيعي يونيو ٢٠٢٠' (June 2020), verified live (tokens 'يونيو' + 'غرب القاهرة' present together). Proposing StartYear1='2020' and StartMonth1='6' as a placement correction, not a new fact — the almalnews source (Dec 2020) independently corroborates the YEAR (project already complete/'recently completed' by Dec 2020) but not the specific month, hence tier=medium/independent=false rather than high."
+    }
+  ],
+  "summary": "P8080 confirmed real and correctly classified (transmission gas feed line to West Cairo Power Station) at high tier via 3 independent sources showing a coherent under-construction(2018-19)→completed(June 2020) timeline, with Status/Fuel/Length/Diameter all matching; flagged one mechanical spec defect (StartYear1 blank, '2020' misplaced in StartMonth1, breaking the StartYearEarliest formula — fill staged) and one benign cost caveat (403M EGP final vs 221M L.E. pre-construction estimate, not a real conflict). No duplicate found. No UNRESOLVED items."
+}

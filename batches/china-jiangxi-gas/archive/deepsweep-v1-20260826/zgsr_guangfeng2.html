@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>NWAF页面</title>
+    <style type="text/css">
+        .main {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            margin-left: -250px;
+            margin-top: -180px;
+            font-family: 微软雅黑;
+        }
+
+        .main ul li {
+            list-style-type: none;
+            margin: 0px;
+        }
+
+        .main ul li p {
+            font-size: 14px;
+            color: #333333;
+        }
+
+        .errorCode {
+            font-weight: bold;
+            font-size: 27px;
+            color: black;
+        }
+
+        .subTitle {
+            padding-left: 5px;
+            font-size: 23px;
+            color: #333333;
+        }
+
+        .connectUs {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <ul style="float:left;width:472px;">
+            <li style="line-height: 32px;"><img border=0 src="https://cdn.damddos.com/common/logo.png" /></li>
+            <li>
+                <p><span class="errorCode">405</span><span class="subTitle">- Method Not Allowed</span><br> <br>事件ID :<span id="wafId">17877560112030000002167022390</span>&emsp; 访问域名 : <span id='wafHost'></span><br>
+</p>
+<p style='line-height: 28px;'>
+    该网站已接入<span
+        style='font-size: 14px;color: #006cb8;'><strong>中国电信&bull;网站安全防护服务</strong></span>，由于您使用的请求方法存在潜在安全风险，被网站安全防护拦截。如果您有任何疑问或者认为这是一个误报，请您通过以下方式进行反馈：
+</p>
+<p>
+    <span style='font-size: 14px;color: #006cb8;'><strong id='alter_submit'>在线提交（30分钟后请您刷新页面重试）：</strong></span>
+</p>
+</li>
+<li style='margin-top:20px; text-align: center; font-size: 14px;'>
+    <input id='mobile' type='text' placeholder='请输入您的联系方式' required=''
+        style='border-color: #fff; background: #f6f6f6; padding-left: 5px;  border: 1px solid #ddd; border-radius: 5; height: 2.0rem; width: 99%;  margin: 0 0 20px 0; box-shadow: none; box-sizing: border-box; transition: all .3s; padding: 5px; '>
+    <input id='content' type='text' placeholder='请输入您的申诉内容' required=''
+        style='border-color: #fff; background: #f6f6f6; padding-left: 5px;  border: 1px solid #ddd; border-radius: 5; height: 5.0rem; width: 99%;  margin: 0 0 20px 0; box-shadow: none; box-sizing: border-box; transition: all .3s; padding: 5px; '>
+    <button
+        style='width: 99%; height: 32px; margin: auto; text-align: center; color: white; border: 0px; background-color: #4e6ef2; border-radius: 5px; '
+        onclick='onSend()'>问题反馈</button>
+    <hr style='margin-top:60px;'>
+    <center>chn-bj-dx/2.0.0</center>
+</li>
+</ul>
+</div>
+</body>
+
+</html>
+<script src='https://code.jquery.com/jquery-3.5.1.min.js'></script>
+<script type='text/javascript'>
+    function checkMobile() {
+        var mobile = $('#mobile').val();
+        var mobileReg = /^1(3|4|5|6|7|8|9)\d{9}$/;
+        return mobileReg.test(mobile);
+    }
+    var wafHost = window.location.host;
+    if ('' == wafHost) {
+        wafHost = ' ';
+    }
+    $('#wafHost').text(wafHost);
+    function onSend() {
+        var mobile = $('#mobile').val();
+        if (!checkMobile(mobile)) {
+            alert('为便于快速与您取得联系，问题反馈前请先输入您的联系方式！');
+            return;
+        }
+        var reqObj = {
+            'wafId': $('#wafId').text(),
+            'wafHost': wafHost,
+            'mobile': mobile,
+            'content': $('#content').val(),
+            'type': 'sales_force_prod_group'
+        };
+        $.ajax({
+            type: 'post',
+            url: 'https://waf-daq.damddos.com/daq-api/waf/order/collect/',
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify(reqObj),
+            dataType: 'json',
+            crossDomain: true,
+            success: function (result) {
+                $('#alter_submit').text('工程师在快马加鞭处置中，请您于30分钟后刷新').append($('<br>')).append(document.createTextNode('如有其它问题工程师会第一时间联系您！'));
+                alert('工程师在快马加鞭处置中，请您于30分钟后刷新，如有其它问题工程师会第一时间联系您！');
+            },
+            error: function (result) {
+                alert('网络开小差，请您重试或依照页面提示拨打紧急处理电话进行处理');
+            }
+        });
+    }
+</script>

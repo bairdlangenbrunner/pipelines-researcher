@@ -92,8 +92,12 @@ _BUCKETS = {
                    "sources; yellow = single source (still needs a 2nd)."),
     "REVERIFIED": ("Refs_Reverified", "existing [ref] re-checked: all links live AND still contain "
                    "the value, ≥2 independent. Blue = verified, no action needed."),
-    "DEAD_LINK": ("Refs_DeadLinks", "existing [ref] has a dead / value-missing link (red). Proposed "
-                  "ref(s) = a verified replacement to swap in."),
+    "DEAD_LINK": ("Refs_DeadLinks", "existing [ref] needs attention. RED current ref = a link that "
+                  "did not load (only a confirmed 404/410 may be dropped). AMBER = every link LOADED "
+                  "and only the value screen missed \u2014 re-read the page before touching the cell; "
+                  "prose and unit variants ('6 BCM annually' vs '6.00') read as misses, and STATUS is "
+                  "inferred from prose, never matched verbatim. Proposed ref(s) = a verified "
+                  "replacement to swap in."),
     "UNRESOLVED": ("Refs_Unresolved", "could not reach 2 working, independent, value-containing links "
                    "(red). Manual review — no fabricated URLs (standing rule 2)."),
 }
@@ -152,7 +156,12 @@ def _make_styler(columns, bucket: str):
             return
         ws.cell(rn, tier_c).fill = CONF_FILL.get(_tier_color(r), PatternFill())
         if bucket == "DEAD_LINK":
-            ws.cell(rn, cur_ref_c).fill = CONF_FILL["red"]
+            # Red means GONE. A record whose URLs all returned 200 and merely failed the
+            # value-substring screen is "re-read this page", not a deletion — painting it
+            # red told researchers a live page was dead (standing rule: only a confirmed
+            # 404/410 may drop out of a [ref] cell). Amber those instead.
+            ws.cell(rn, cur_ref_c).fill = (
+                CONF_FILL["yellow"] if r.get("link_live") else CONF_FILL["red"])
         elif bucket == "UNRESOLVED":
             ws.cell(rn, tier_c).fill = CONF_FILL["red"]
     return styler

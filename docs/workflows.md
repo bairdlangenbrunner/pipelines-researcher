@@ -117,7 +117,7 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 | Leg | What it stages |
 |---|---|
 | `refs` | fill blank `[ref]`s + re-verify filled ones to the ≥2-independent target (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK`/`UNRESOLVED`; incl. operators/owners-tab units) |
-| `fills` | research blank *value* fields, paired verified ref required (`class_in="FILL"`) |
+| `fills` | research blank *value* fields — the worklist's `MISSING_VALUE` units (`--owe-fills`), each owed a sourced `FILL` or an `UNRESOLVED` with a note; paired verified ref required (`class_in="FILL"`) |
 | `validity` | skeptical existence / duplicate / classification / attribution / spec check (`__VALIDITY__`, read-and-flag) |
 | `status-review` | per-segment-row status verdict confirm/change/stale/unclear (`__STATUS__`) |
 | `routes` | corridor + sourced-endpoint route suggestions for weak `RouteAccuracy` (`__ROUTE__`; candidates for a human routes-repo PR) |
@@ -144,7 +144,12 @@ that fall through both the operating sweep and the `in-dev` status filter.
 ```bash
 STG=batches/<scope>/staging/<run>      # e.g. batches/egypt-gas/staging/ref-sweep-operating, batches/egypt-gas/staging/annual
 python scripts/build_ref_worklist.py --tracker gas --country "<Country>" \
-  [--status proposed,construction,shelved] --verify-existing --out $STG/worklist.json
+  [--status proposed,construction,shelved] \
+  [--exclude-pids @batches/<scope>/carried_from_<other-country>.txt] \
+  [--owe-fills]                      # deep preset: blanks become owed MISSING_VALUE units
+  --verify-existing --out $STG/worklist.json
+# … research → merge → then, before building the workbook:
+python scripts/sweep_gates.py --staging $STG/   # gates A–K; quote the counts in the delivery note
 python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json \
   --out $STG/wiki_citations.json
 ```
@@ -154,6 +159,22 @@ and emits `Operator [ref]`/`Owner [ref]` units; `--verify-existing` HTTP-checks
 existing refs deterministically (no agent tokens). Route/geometry `[ref]` cells are
 **out of scope** (dropped by `discover_ref_pairs`). Start research from the
 harvested gem.wiki outbound citations — visit gem.wiki, **never cite it**.
+
+**Transit countries share ROWS, so the second scope swept must exclude the first's.**
+A trunk crossing Uzbekistan and Kazakhstan is ONE row that both `--country` scopes
+select — Uzbekistan gas overlaps Kazakhstan gas on **13 of its 31 rows** (the CAC,
+CA–China, Bukhara–Ural and BTBA strings). Re-researching them stages a second record
+against the same sheet cell, and whichever workbook is pasted last wins silently.
+`--exclude-pids` takes a comma list or `@<file>` (one PID per line, `#` comments);
+**derive the file from the other country's `staging/*/staged_resolutions.json`, never
+by hand**, keep it at `batches/<scope>/carried_from_<other>.txt` as the batch's record
+of what it is not accountable for, and note the carried rows in the country note. The
+run prints an `EXCLUDED …` line — never let rows drop silently.
+
+**The exclusion applies to the research legs ONLY (steps 1–4, 7 of §9), never to the
+recon leg.** `reconcile.py` needs the FULL in-country GEM roster on the GEM side or the
+excluded rows' reference counterparts re-bucket as `DISCOVERY_CANDIDATE` — manufacturing
+phantom additions out of trunks GEM already tracks. Leave `--country` alone there.
 
 ### refs-only preset (inline research loop)
 
@@ -169,8 +190,10 @@ python scripts/build_deepsweep_args.py --staging $STG/ [--status-review]  # JSON
 #   --status-review = the in-dev preset (subagents also stage per-row __STATUS__ verdicts)
 #   → Workflow({ name: 'critical-deep-sweep', args: <the JSON> })
 #     one skeptical subagent per PID writes $STG/rows/<PID>.json
-# in-dev preset only (no separate refs research pass) — seed the ref baseline the
-# merge preserves onto (HAS_REF/MISSING_REF + link-rot flags from the worklist):
+# REQUIRED FOR BOTH PRESETS — seed the ref baseline the merge preserves onto
+# (HAS_REF/MISSING_REF + link-rot flags from the worklist). merge_deepsweep_shards.py
+# exits with "no staged_resolutions.json or .prior.json" if you skip it, because it
+# folds shard output ONTO an existing baseline rather than creating one:
 python scripts/seed_resolutions_from_worklist.py --staging $STG/
 python scripts/merge_deepsweep_shards.py --staging $STG/
 ```
@@ -183,9 +206,15 @@ in the SAME workbook):
 python scripts/build_refsweep_briefs.py --staging $STG/   # → ref_shards/_briefs/<PID>.json
 #   → one research subagent per brief writes ref_shards/<PID>.json
 python scripts/merge_ref_shards.py --staging $STG/        # fold onto staged_resolutions.prior.json
-python scripts/harvest_sentinel_findings.py --staging $STG/  # REQUIRED if that printed a WARN
 python scripts/merge_deepsweep_shards.py --staging $STG/  # re-fold validity/fills/status
+python scripts/harvest_sentinel_findings.py --staging $STG/  # LAST — see below
 ```
+
+**The harvester runs LAST, and the order is not cosmetic.**
+`merge_deepsweep_shards.py` re-folds by purge-and-rebuild: its `is_old_deepsweep()`
+drops every record whose `ref_col` is `__VALIDITY__`/`__STATUS__`/`__ROUTE__`, which is
+exactly what the harvester writes. So harvesting first and merging second **silently
+zeroes the sentinels back out** — verified empirically on Jiangxi (2 → 0, no warning).
 
 `merge_ref_shards.py` matches shards by `(project_id, ref_col, sheet_row)`, so any
 `__VALIDITY__`/`__REDUNDANCY__` sentinel a research subagent wrote has no baseline record

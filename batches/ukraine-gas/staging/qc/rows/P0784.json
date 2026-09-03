@@ -1,0 +1,77 @@
+{
+ "project_id": "P0784",
+ "pipeline_name": "Shebelinka-Dnipropetrovsk–Kryvyi Rih–Rozdilna-Izmail Gas Pipeline",
+ "sheet_row": 397,
+ "wiki": "https://www.gem.wiki/Shebelinka_Dnipropetrovsk_Kryvyi_Rih_Rozdilna_Izmail_Pipeline",
+ "fills": [
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "values": {
+    "Operator": "Gas TSO of Ukraine LLC"
+   },
+   "primary_value_col": "Operator",
+   "primary_value": "Gas TSO of Ukraine LLC",
+   "class_out": "REFS_ADDED",
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://www.entsog.eu/members",
+    "https://uk.wikipedia.org/wiki/Оператор_ГТС_України",
+    "https://web.archive.org/web/20200603124804/https://tsoua.com/en/about-us/key-facts/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.entsog.eu/members",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://uk.wikipedia.org/wiki/Оператор_ГТС_України",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://web.archive.org/web/20200603124804/https://tsoua.com/en/about-us/key-facts/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "This is the company-level 'who operates GTSOU-controlled trunk pipe' question already answered identically across this brief's sibling shards (P0780, P1452-1463, P1483, P1489 all fill 'Gas TSO of Ukraine LLC' off the same two sources), not a per-row re-derivation — applying the same answer here since the Shebelinka-Izmail corridor is wholly within government-controlled Ukraine (no occupied-territory or Russian-side section on this route; the only foreign landfall is the Moldovan Palanca strip discussed under the countries flag below, which is a transit crossing, not a change of operator). ENTSOG's members list (verified 200, lists Ukraine's TSO) and the Ukrainian Wikipedia article on Оператор ГТС України (verified 200) both independently confirm GTSOU as the entity that took over Ukraine's gas transmission trunk network from Ukrtransgaz/Naftogaz on 1 January 2020 under the unbundling required by the Energy Community Treaty. Did not use utg.ua or tsoua.com direct (403 per gotcha 1) since the ENTSOG + uk.wikipedia pairing already clears the high-tier bar without needing the Wayback workaround. [Leg-3 review 2026-08-15] Independence check: the pair originally cited here was ENTSOG's member list plus a Ukrainian-language Wikipedia article, and a tertiary encyclopaedia is not a second independent ORIGIN under the project's tier rules. Added GTSOU's own 'Key facts' page (Wayback 2020-06-03, live origin 403s behind the operator WAF), which states the legal name 'Gas TSO of Ukraine LLC' outright. The high tier therefore rests on ENTSOG (third-party European TSO association) + the operator's own primary statement; the Wikipedia link is retained as a reading aid and is NOT counted toward independence."
+  }
+ ],
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "classification",
+   "recommendation": "Add Moldova to CountriesOrAreas as a transit country (leave StartCountryOrArea/EndCountryOrArea as Ukraine/Ukraine — the pipeline both originates and terminates in Ukraine). Do not treat the Moldovan landfall as a routing error.",
+   "researcher_notes": "The route_integrity flag reports 31.8 km of the drawn geometry landing in Moldova between Rozdilna and Izmail, with CountriesOrAreas currently listing only Ukraine. This is very unlikely to be a Natural Earth boundary artifact: the direct land corridor between Odesa oblast and the Budjak/Izmail area genuinely crosses a narrow Moldovan panhandle near Palanca — the same geographic quirk documented on English Wikipedia's Palanca, Moldova article (verified 200), which describes Palanca as 'one of the most sensitive areas of Moldova-Ukraine relations' and notes a short stretch of the M15 highway between Maiaky and Udobne physically running through Moldovan territory for exactly this reason (a 2012 agreement made a 7.7 km road strip there Ukrainian extraterritorial land to avoid routing Ukrainian traffic through Moldovan customs). A Soviet-era gas trunk (built when Ukraine and Moldova were both Union republics with no international border to route around) connecting Rozdilna to Izmail would plausibly follow this same direct corridor, and 31.8 km is a reasonable pipeline-route figure for that panhandle crossing (wider than the current 7.7 km bypass-road strip, which only covers the narrowest point, not the whole corridor). The gem.wiki lead (read for context only, not cited) independently describes this pipeline as facilitating 'transit to Balkan countries', consistent with a corridor that does not stay purely inside Ukrainian territory. I could not find a source naming the gas pipeline itself crossing at Palanca (utg.ua and tsoua.com corporate history pages that might document this are behind the WAF and I did not chase the Wayback copies for this specific point, given the geographic case is already strong); recommend a human confirm via the routes-repo geometry review whether the drawn crossing point matches Palanca specifically before editing CountriesOrAreas.",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Palanca,_Moldova"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Palanca,_Moldova",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false
+  },
+  {
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Do not replace 164.00 km with the 759.1 km drawn span (already refuted by cluster B — not restating that). Treat 164 km as the plausible own-length of ONE of the three constituent pipelines cluster B identified (РІ/ШДКРІ/АТІ), not the full Shebelinka-to-Izmail corridor the row is named for; defer the exact reassignment to cluster B's row-split recommendation.",
+   "researcher_notes": "Per the source ladder, cluster B already ruled this a FRANKENSTEIN ROW (three distinct Moldovatransgaz-listed assets folded into one GEM row) and already explained the 24.00 bcm/y capacity and the length/geometry mismatch as tracing to unrelated origins — not re-litigating that. What this shard adds is a read on 'what does 164 km count': the PipelineName spans five cities from Shebelinka (Kharkiv oblast) to Izmail, a corridor whose great-circle distance is roughly 700+ km by my own rough coordinate estimate (Shebelinka ~49.15N/36.55E to Izmail ~45.35N/28.83E), which is in the same range as the 759.1 km drawn schematic — i.e. the geometry was very plausibly drawn for the FULL named corridor, not a 164 km sub-span. 164 km is far too short to be that full corridor and reads instead as the length of a single one of the three constituent pipelines cluster B found bundled into this row. I was not able to pin down precisely which of the three (РІ, ШДКРІ, or АТІ) has an own-length of 164 km — moldovatransgaz.md/mtg.md's public pages (checked via the mtg.md mirror per gotcha 2) give only aggregate network figures (1,560 km total Moldovan network) and name the unrelated Ananiev-Cernauti-Bogorodceni line, not a per-asset length table — so I'm not proposing a specific fill, just closing the length_ratio flag as 'explained by the already-staged frankenstein-row finding, not an independent defect', and leaving the precise 164 km attribution to whoever executes cluster B's split.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false
+  }
+ ]
+}

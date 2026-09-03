@@ -1,0 +1,356 @@
+{
+ "project_id": "P4657",
+ "pipeline_name": "Sichuan–Shanghai Gas Pipeline",
+ "segment_name": "Trunk line",
+ "sheet_row": 2553,
+ "wiki": "https://www.gem.wiki/Sichuan%E2%80%93Shanghai_Gas_Pipeline",
+ "resolutions": [
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+    "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Sinopec's own official regulatory asset-disclosure page/PDF (trqi.sinopec.com, dated 2019-12-05), table '表2 天然气管网设施基础信息', row '川气东送管道江西支线 / 管道 / 天然气 / 黄梅-九江 / 江西黄梅、九江市 / 50.19 / 8 / 2010年6月 / 30' — this is a THIRD-PARTY-ACCESS transparency filing the pipeline operator is legally required to publish (NDRC third-party access rules), naming this exact branch, its length (50.19 km, exact), design pressure (8 MPa), commissioning date (2010年6月 = June 2010, exact), and capacity (30 亿立方米/年 = 3.00 bcm/y, exact). Fetched the shtml landing page (redirected/linked to the underlying PDF); downloaded the PDF via curl and extracted with pdftotext -layout since WebFetch's built-in PDF handling could not parse it usefully. url_verifier reports FAIL on raw substring match against this PDF (encoding/whitespace artifacts in extraction) despite the values being clearly present in my own pdftotext -layout read of the table — hand-confirmed per BRIEF's false-negative policy. Row 5 (trunk): '川气东送管道干线 / 管道 / 天然气 / 普光-上海 / [8 provinces incl. 江西] / 1628.64 / 10 / 2009年1月 / 150'. Both Sinopec's 2019 disclosure and NDRC's 2023 tariff-setting notice list this trunk as an active, tariff-rated facility years apart — STATUS inferred per verification policy."
+    },
+    {
+     "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "NDRC's official tariff-setting notice 发改价格〔2023〕1628号 (2023-12-05), '国家发展改革委关于核定跨省天然气管道运输价格的通知', attachment table '国家管网集团经营的跨省天然气管道表'. Row 10: '川气东送 / 四川达州 / 上海青浦 / 达化专线、川维支线、南京支线、江西支线、武石化支线、西一线联络线等' — names this exact trunk's start (Dazhou, Sichuan) and end (Qingpu, Shanghai), operator context (PipeChina/国家管网集团, the table's subject), and lists '江西支线' (the Jiangxi branch, P4649) among its official sub-branches. Downloaded via curl + pdftotext -layout (url_verifier FAILs on raw substring match against this PDF — same CJK-PDF extraction limitation as the Sinopec disclosure PDF; hand-confirmed true positive, values clearly present in my own extraction, re-verified by re-downloading and diffing byte-for-byte identical file at time of shard-writing)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Ladder rung 6 (PipeChina/Sinopec disclosures) per BRIEF's explicit instruction for this national-trunk-parent row. Matched to the TRUNK row specifically ('川气东送管道干线', not any branch) in the Sinopec table, avoiding the aggregate-vs-segment trap the other way around (a branch spec would not source this parent)."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Row 5 (trunk): '川气东送管道干线 / 管道 / 天然气 / 普光-上海 / [8 provinces incl. 江西] / 1628.64 / 10 / 2009年1月 / 150'. Sinopec table: 气种=天然气 (natural gas), exact."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Ladder rung 6 (PipeChina/Sinopec disclosures) per BRIEF's explicit instruction for this national-trunk-parent row. Matched to the TRUNK row specifically ('川气东送管道干线', not any branch) in the Sinopec table, avoiding the aggregate-vs-segment trap the other way around (a branch spec would not source this parent)."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Row 5 (trunk): '川气东送管道干线 / 管道 / 天然气 / 普光-上海 / [8 provinces incl. 江西] / 1628.64 / 10 / 2009年1月 / 150'. Sinopec table classifies as 管道 (pipeline) in a transmission third-party-access disclosure; NDRC's notice is itself a transmission-tariff regulation applying only to inter-provincial transmission trunks."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Ladder rung 6 (PipeChina/Sinopec disclosures) per BRIEF's explicit instruction for this national-trunk-parent row. Matched to the TRUNK row specifically ('川气东送管道干线', not any branch) in the Sinopec table, avoiding the aggregate-vs-segment trap the other way around (a branch spec would not source this parent)."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "values": {
+    "StartYear1": "2009",
+    "StartMonth1": "12"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+    "https://www.thepaper.cn/newsDetail_forward_1543492",
+    "https://www.china5e.com/news/news-1088350-1.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Trunk row's '投产日期' column reads 2009年1月 (Jan 2009) — year matches GEM's 2009 but month does not (GEM: Dec 2009)."
+    },
+    {
+     "url": "https://www.thepaper.cn/newsDetail_forward_1543492",
+     "ok": true,
+     "contains_value": true,
+     "note": "澎湃新闻 2016 article gives full commercial operation date as Aug 31 2010 (全线投产) — a THIRD date, describing full-line commercial commissioning rather than initial gas-in."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Three sources, three different dates for this one row, none matching GEM's Dec 2009 exactly: Sinopec's own disclosure says Jan 2009; thepaper.cn says full commercial launch Aug 31 2010; GEM says Dec 2009. Plausible reconciliation (not confirmed): Jan 2009 = first gas-in on an early completed section, Dec 2009 = a phased full-trunk connection milestone, Aug 2010 = declared full commercial operation/tariff start — large trunk pipelines commonly have staggered gas-in vs commercial-operation dates. Staging as REFS_ADDED because the YEAR 2009 is directly supported by a primary operator source, but tier is low and this needs human adjudication on which exact month GEM should carry, or whether StartYear2/StartMonth2 should record the 2010 commercial-launch milestone separately. Not calling this DEAD_LINK or leaving UNRESOLVED since real, live, on-topic evidence exists — just conflicting."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "15.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+    "https://www.china5e.com/news/news-1088350-1.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Trunk row's capacity column reads 150 (亿立方米/年) = 15.00 bcm/y — exact match."
+    },
+    {
+     "url": "https://www.china5e.com/news/news-1088350-1.html",
+     "ok": true,
+     "contains_value": true,
+     "note": "china5e.com, Sinopec-sourced coverage of a compression-upgrade project, states capacity raised to 150亿立方米/年 (15 bcm/y) — exact match. Verified live via url_verifier for '150亿立方米'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Two distinct hosts (trqi.sinopec.com, china5e.com) both give the exact 15.00 bcm/y figure, satisfying the source-diversity floor on host count — but both ultimately originate from Sinopec/PipeChina disclosures about the same compression-upgrade project, so per rule 4 (independence means AGREEING independent origins, not merely two URLs) this is not two independent confirmations of one fact — tier medium, independent=false, documented honestly rather than defaulting to high because two hosts were hit."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "1628.64",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Trunk row's length column reads 1628.64 (km) — exact match, hand-confirmed against url_verifier's FAIL on raw PDF-text substring match per the false-negative policy."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Single-host sourcing for this exact figure (only the Sinopec disclosure gives 1628.64 km precisely). Note for the record: en.wikipedia.org's Sichuan–Shanghai gas pipeline article states a different total, ~1,702 km, for what it describes as the whole system including branches/laterals — that is a system-wide figure (trunk+branches combined) and does not contradict 1628.64 km for the trunk-only segment this row (P4657, 'Trunk line') represents; noting the discrepancy rather than silently reconciling it, since I could not confirm Wikipedia's own methodology for what it bundles into 1,702 km."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "1016",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": null,
+   "independent": null,
+   "researcher_notes": "Neither the Sinopec disclosure table nor the NDRC tariff table carries a diameter column. Explicitly rejected the wiki_attributions candidate for this row (mee.gov.cn EIA doc under wiki_section 'Weiyuan/Lu County—Tongliang Trunk Line 威远/泸县—铜梁输气干线') — that section, and its 1016mm/1219mm dual-spec + 282.77km + 20 bcm/y figures, describe the SECOND, PARALLEL line (川气东送二线/Sichuan–Shanghai PARALLEL Gas Pipeline, a physically different pipeline from this row's system, 川气东送一线), not P4657's own trunk. My own WebSearch corroborated this: 1016mm/10MPa EIA documents found via search are explicitly titled '川气东送二线天然气管道工程' (Line 2 project). Confirmed via own reading, not inherited uncritically. baike.baidu.com (403-blocked, could not fetch/verify) and a Sichuan EIA completion doc (sthjt.sc.gov.cn, confirmed HTTP 404, genuinely dead) were both candidate leads pointing toward 1016mm being correct for the Line-1 trunk too, but neither could be verified this pass. Left UNRESOLVED rather than stage an unverifiable value."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "values": {
+    "FuelSource": "The main source of gas supply for the Sichuan-to-Eastern China Gas Pipeline trunk line includes onshore gas sources such as China Petroleum and Chemical Corporation's Puguang Gas Field, Fuling Shale Gas, Yuanba Gas Field, and the Shanghai Yangshan Port LNG receiving terminal."
+   },
+   "proposed_refs": [
+    "https://www.china5e.com/news/news-1088350-1.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.china5e.com/news/news-1088350-1.html",
+     "ok": true,
+     "contains_value": true,
+     "note": "Article names the trunk's gas sources: conventional sources include 普光气田 (Puguang Gas Field), 涪陵页岩气 (Fuling Shale Gas), 元坝气田 (Yuanba Gas Field), and a fourth conventional source (Nanchuan shale gas, not in GEM's list); emergency/peak-shaving sources separately include 上海LNG返输 (Shanghai LNG return-flow)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Honest partial match, not silently resolved: 3 of GEM's 4 named sources (Puguang/Fuling shale/Yuanba) match this article exactly. GEM's 4th source, 'Yangshan Port LNG', does not exactly match this article's own 4th CONVENTIONAL source (南川页岩气/Nanchuan shale gas) but plausibly corresponds instead to the article's separately-listed EMERGENCY source '上海LNG返输' (Shanghai LNG return-flow, i.e. gas fed back from the Yangshan-supplied Shanghai LNG terminal network) — a defensible but not exact correspondence. Staging as REFS_ADDED given 3/4 exact + 1 plausible, tier medium for the imperfect match, single host."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Puguang Town",
+    "StartPrefecture/District": "Xuanhan County, Dazhou City",
+    "StartState/Province": "Sichuan",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Qingpu District",
+    "EndState/Province": "Shanghai",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [
+    "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+    "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+    "https://www.thepaper.cn/newsDetail_forward_1543492"
+   ],
+   "verifications": [
+    {
+     "url": "http://trqi.sinopec.com/trqi/cqds/jcxx/20191205/news_20191205_840069053975.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "Trunk row: 起讫点 '普光-上海' (Puguang-Shanghai), transit provinces incl. 四川/江西/上海, matching Sichuan start / Shanghai end."
+    },
+    {
+     "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "NDRC table row 10: 起点 四川达州 (Dazhou, Sichuan) / 终点 上海青浦 (Qingpu, Shanghai) — exact prefecture-city and district match to GEM's StartPrefecture/District and EndLocation."
+    },
+    {
+     "url": "https://www.thepaper.cn/newsDetail_forward_1543492",
+     "ok": true,
+     "contains_value": true,
+     "note": "澎湃新闻 confirms the same Puguang(Sichuan)-to-Shanghai route in its restructuring/ownership coverage."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Three genuinely distinct-origin hosts (Sinopec operator disclosure, NDRC government tariff regulation, thepaper.cn journalism) independently agree on the same Sichuan(Dazhou/Puguang)-to-Shanghai(Qingpu) route. Deliberately excluded the wiki's own Location-adjacent candidates for the WRONG pipeline (川气东送二线/Parallel Line Weiyuan-Tongliang section) — see Diameter notes for the full trap description."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Operator [ref]",
+   "tab": "operators_owners",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "国家石油天然气管网集团有限公司 [50%]; 中国人寿保险股份有限公司 [43.86%]; 国投交通控股有限公司 [6.14%]"
+   },
+   "proposed_refs": [
+    "https://www.thepaper.cn/newsDetail_forward_1543492",
+    "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.thepaper.cn/newsDetail_forward_1543492",
+     "ok": true,
+     "contains_value": true,
+     "note": "澎湃新闻 2016: reports the 43.86%/6.14% China Life/SDIC Communications stake acquisition in the Sinopec pipeline company operating this trunk, matching those two percentages exactly."
+    },
+    {
+     "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "NDRC's 2023 tariff table lists this trunk under 国家管网集团经营的跨省天然气管道 (pipelines OPERATED BY PipeChina/国家管网集团) — confirms PipeChina as current operator, consistent with the QCC value's 50% PipeChina line, though without the percentage breakdown."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Same two-host, complementary-not-identical situation as P4649's Operator unit (thepaper.cn gives the 2016 percentage split, ndrc.gov.cn confirms current PipeChina operatorship, neither alone restates the full current 50/43.86/6.14 split; qcc.com itself WAF-blocked at 567). Tier medium, independent=false, documented rather than inflated."
+  },
+  {
+   "project_id": "P4657",
+   "sheet_row": 2553,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "1016",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "http://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/201708/W020170811558636175834.pdf",
+     "ok": false,
+     "contains_value": false,
+     "note": "302-redirects to https://www.mee.gov.cn/404/index.shtml -- confirmed dead. This was the wiki-attributed candidate v1 already rejected on relevance grounds (it describes the PARALLEL Sichuan-Shanghai line, not this trunk); now also confirmed gone at the origin, so the relevance rejection is moot either way."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Pool triage: the ~10-URL Jiangsu-feeder-pipeline cluster (jsaeit.com x2, jsgh.com.cn, jsgx.net, jshbgz.cn, water8848.com, bbs.co188.com, renrendoc.com, liyang.gov.cn, both fzggw.jiangsu.gov.cn 2018 pages) is entirely about small Jiangsu SUPPORTING/feeder lines (Wukun, Liyi/Ligao, Jinwu, Yiyangtai, Yutai pipelines) -- physically distinct from this row's trunk, confirmed by direct content reads (government approvals, EIA docs, tender notices). ccxi.com.cn and pdf.dfcfw.com (financial/credit-rating PDFs) both concern Jiangsu Guoxin Group, an unrelated entity -- wrong-entity, declined. en.wikipedia.org infobox has no diameter field. Neither taohuren.com URL yielded article content (both serve a JS-obfuscated anti-bot challenge page, confirmed on a clean --compressed re-fetch). No pool URL and no fresh search turned up a segment-specific diameter source. Matches v1's batch_08.json conclusion: neither the Sinopec disclosure table nor the NDRC tariff table carries a diameter column for this row. Still open."
+  }
+ ]
+}

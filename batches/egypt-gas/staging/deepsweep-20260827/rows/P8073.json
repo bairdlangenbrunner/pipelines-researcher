@@ -1,0 +1,43 @@
+{
+  "project_id": "P8073",
+  "pipeline_name": "Aswan-Kima Gas Pipeline",
+  "sheet_row": 4333,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to Status/Fuel/PipelineType/Length/Diameter; note the map (not full-text) basis in ResearcherNotes",
+      "researcher_notes": "P8073 has no gem.wiki page (confirmed empty in wiki_citations.json), so this is open-web research from scratch, per scope guidance. The row's only cited source is the EGAS Annual Report 2017/2018 PDF (egyptoil-gas.com), which the automated checker flagged as NOT containing 'operating' in full text. Applied the VISUAL/MAP TEST instead, per this scope's standing instruction that these 40 rows were identified visually off the GASCO national-grid map on printed p.35: the cached crop `batches/egypt-gas/archive/staging/route-creation-20260807/maps/egas2018_p35_gasco_national_grid.png` shows, in the Aswan/Kima cluster (bottom of the Nile valley corridor, south of Kom Ombo/Edfo), a segment explicitly labeled '24\"-20 k.m' running from the main north-south trunk down through a green 'Consumer' node next to the 'Aswan' label to a blue 'Distribution' node next to 'KIMA' (the KIMA fertilizer/ammonia plant icon) -- an EXACT match to GEM's Diameter=24in/LengthKnown=20km. The line is drawn in the map's 'Existing P/L' green style (per the map's own legend), which supports Status=operating -- a legend/color read, not a text hit, and consistent with this cohort's map-sourced provenance. I also located a SECOND rendering of the identical '24\"-20 km' label at a different page of the SAME underlying document: `batches/egypt-gas/staging/map-traces-gasco/maps/gasco2018_p19.png`, documented in that directory's PROVENANCE.md as 'EGAS Annual Report 2017/18 p.19' -- i.e. the same PDF as the current [ref], not a second independent source, so this is corroboration WITHIN one document (two page placements agreeing), not 2-independent-source high tier. I could not locate a truly independent (different-origin) document giving the same 24in/20km figure -- WebSearch was unavailable this session (session search budget exhausted at 200/200) and WebFetch against Bing/DuckDuckGo/Google search-result pages returned no usable results (captcha/irrelevant snippets) for Arabic and English queries on 'Aswan KIMA gas pipeline'. I DID find independent (non-GEM, non-wiki) confirmation that the destination itself is real and gas-consuming: Egypt Oil & Gas, 'Egypt, BP Agree to Speed up New Projects' (2021-11-16), reports KIMA Fertilizer Company in Aswan has been 'operating since 1960' and 'now produces blue ammonia' -- ammonia synthesis requires a hydrogen/gas feedstock, consistent with a natural-gas supply line reaching the plant. That article corroborates the EXISTENCE of a real, still-operating gas-consuming facility at the stated location; it does not independently corroborate the specific 20km/24in figure. Net: tier=medium (one strong, exactly-matching primary source cited twice within the same document, plus independent corroboration that the endpoint facility is real and gas-fed) -- not high, since no second independent document with the same length/diameter numbers was found despite the attempt. This is a genuine sourcing gap, not a defect: record as a caveat, do not force a fabricated second citation.",
+      "proposed_refs": ["https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf", "https://egyptoil-gas.com/news/egypt-bp-agree-to-speed-up-new-projects/"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no merge -- P8072 and P8073 are two distinct segments of one corridor, not a duplicate",
+      "researcher_notes": "Watchlist question: is P8073 (Aswan-Kima, 20km/24in) the same physical line as P8072 (Kima Aswan Industrial, 4km/16in) entered twice? Answer: NO, per the source map itself. On the same GASCO/EGAS national-grid map, the '24\"-20 km' label describes the LONGER, WIDER segment running from the main trunk down to the Aswan/Kima cluster; the map draws the pipe continuing on, unlabeled for length, from the 'Aswan' consumer node to the 'KIMA' distribution node -- a visibly shorter final stretch into the plant itself, at a narrower gauge consistent with a plant-internal industrial tie-in. This matches the guidance heuristic exactly: a same-corridor pair with DIFFERENT diameters (24in vs 16in) AND different lengths (20km vs 4km) is the signature of two real, sequential segments of one supply chain (regional trunk + short industrial spur), not one line double-counted at two lengths. No merge recommended. (P8072 itself was not yet in this deep-sweep's rows/ directory as of this audit, so its own shard should cross-reference this finding when it is written.)",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "move the 'Kima' value from EndPrefecture/District into EndLocation (currently blank); EndPrefecture/District should hold a real Aswan Governorate administrative unit or be left blank, not a facility name",
+      "researcher_notes": "The Location unit for this row is already flagged 'irregular': true by the worklist tooling, and inspection confirms why: the values dict has StartLocation='Aswan', StartState/Province='Aswan', StartCountryOrArea='Egypt', EndPrefecture/District='Kima', EndState/Province='Aswan', EndCountryOrArea='Egypt' -- there is NO EndLocation value at all. 'Kima' (the fertilizer/ammonia plant, not an administrative prefecture or district of Aswan Governorate) has been placed in the EndPrefecture/District field instead of EndLocation, which sits blank. This is a field-placement data-quality issue, not an existence or duplicate problem -- the map evidence above supports the pipeline running to the KIMA facility, so 'Kima' is the right END LOCATION value, just filed in the wrong column. Recommend a mechanical fix: EndLocation = 'Kima', EndPrefecture/District = blank or the actual governorate district (Aswan city/markaz) if that granularity is wanted.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P8073 (Aswan-Kima, 24in/20km, operating): existence/spec confirmed at medium tier via a map-legend read of the row's own cited EGAS Annual Report 2017/18 (the '24\"-20km' label appears at two page placements within that ONE document, not 2 independent sources) plus independent (Egypt Oil & Gas, 2021) confirmation that KIMA is a real, still-operating gas-consuming ammonia plant; confirmed NOT a duplicate of P8072 (different diameter/length = two real sequential segments, per the watchlist heuristic); one attribution defect flagged -- EndLocation is blank and 'Kima' is misfiled in EndPrefecture/District instead."
+}

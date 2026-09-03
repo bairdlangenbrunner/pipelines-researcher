@@ -1,0 +1,67 @@
+{
+  "project_id": "P0276",
+  "pipeline_name": "Valley Crossing Pipeline",
+  "sheet_row": 129,
+  "wiki": "https://www.gem.wiki/Valley_Crossing_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change needed; add the refs below to Status/Fuel/Owner/Start/Capacity/Diameter/Location cells",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE/ATTRIBUTION all confirmed independently, real physical pipeline. Opened all 12 of this row's harvested wiki citations: bit.ly/2uGjXm4 (dead, HTTP 404 -- was a link-shortened Spectra Energy legacy page, unusable regardless as a shortener), seekingalpha.com (403, blocked), fractracker.org (OK, live, National Energy & Petrochemical Map shows the line), eia.gov/naturalgas/data.php (OK, live agency data page), enbridge.com factsheet PDF (200 but no longer names Valley Crossing specifically -- stale asset list), brownsvilleherald.com (200 but the archived article text no longer resolves on the live page -- likely re-templated CMS; not used), the wiki's cited FERC EA URL ferc.gov/industries/gas/enviro/eis/2017/CP17-19-000-EA.pdf (404, moved), bizjournals.com (403, blocked), rgvstoplng.wixsite.com (OK, live, activist blog corroborating the project's existence/route concerns from 2016, low tier), ogj.com (OK, live, confirms Enbridge + Valley Crossing + a 2022 720 MMcf/d expansion deal with Texas LNG), savergv.org (OK, live but JS-shell with little indexable prose), businesswire.com (timeout, not confirmed but content matched independently via ogj.com and pgjonline.com describing the same Jan 2022 Texas LNG agreement). None of the 12 raise an existence or classification doubt -- collectively they corroborate a real, currently-operating Enbridge interstate/intrastate-hybrid gas pipeline that has been expanded twice since 2019 (Annova LNG 2020, Texas LNG 2022), which is inconsistent with a phantom/GEM-only entry. Moved past the wiki's dead FERC link to the CURRENT FERC EA (ferc.gov/sites/default/files/2020-06/CP17-19-000-EA.pdf, found via search, not the wiki) and the Commission's own order (ferc.gov/sites/default/files/2020-08/CP17-19.pdf) -- url_verifier FAILs both as 'missing expected: Valley Crossing' but this is the documented large-PDF false-negative (url_verifier.py's own docstring: 'the extractor does not reach the whole document' on big PDFs); downloaded and ran pdftotext -layout manually and confirmed 'Valley Crossing' appears repeatedly plus the exact project description ('to construct and operate an approximately 1,000-foot-long, 42-inch-diameter, natural gas transmission pipeline...Valley Crossing System... capable of delivering up to 2.6 billion cubic feet per day'), so the PDF is genuinely on-topic despite the automated screen. DUPLICATE check against the roster: Valley Crossing is NOT a duplicate of P0257 Sur de Texas-Tuxpan Gas Pipeline despite matching capacity (2600 MMcf/d) and diameter (42in) -- they are the correct cross-border segmentation of one continuous export corridor: Valley Crossing is the US onshore+shallow-Gulf segment (Agua Dulce, TX to the international boundary, per FERC docket CP17-19), and Sur de Texas-Tuxpan is the separately-regulated Mexican offshore continuation (border to Tuxpan, Veracruz) -- same practice GEM uses elsewhere for cross-border pipelines, not a double-count. CLASSIFICATION correct: interstate/intrastate hybrid natural gas transmission pipeline, gas fuel, operating status all confirmed. OWNER confirmed Enbridge 100% (Valley Crossing Pipeline, LLC is described as an Enbridge subsidiary consistently across Houston Chronicle, OGJ, NaturalGasIntel, PGJ, and BNamericas -- no other owner ever named; originated as a Spectra Energy project pre-2017 merger, per the wiki's own dead bit.ly citation, then became Enbridge's after the Enbridge-Spectra merger closed Feb 2017). STATUS=operating confirmed current as of 2022 (Texas LNG expansion agreement executed and reported live). STARTYEAR1=2019 confirmed exactly: Houston Chronicle (sourced from Enbridge's own FERC in-service filing) states Enbridge 'filed a Thursday morning notice with Federal Energy Regulatory Commission stating that the company placed the Valley Crossing Pipeline into service on Feb. 14' (2019), corroborated by Pipeline & Gas Journal's April 2019 issue headline 'Valley Crossing Pipeline Goes in Service to Mexico' and NaturalGasIntel's 'begins flowing' article. CAPACITY=2600 MMcf/d confirmed exactly and independently by the FERC EA ('up to 2.6 billion cubic feet per day'), Houston Chronicle, and NaturalGasIntel search summaries -- all consistent with GEM's 2600.00 MMcf/d. DIAMETER='42, 48' confirmed exactly by the FERC EA text: 'The intrastate Valley Crossing System consists of approximately 165 miles of 48-inch- and 42-inch-diameter natural gas transmission pipeline' plus the 42-inch border-crossing segment -- matches GEM's '42, 48' precisely. LOCATION confirmed: StartLocation Agua Dulce (FERC EA + Houston Chronicle both describe the origin as the Agua Dulce hub near Corpus Christi, TX) and EndLocation Gulf of Mexico (FERC EA: the border-crossing project 'would be located in the Gulf of Mexico about 30 miles east of Brownsville, Texas') both match GEM's Location cells exactly.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/data.php",
+        "https://www.houstonchronicle.com/business/energy/article/Enbridge-puts-Valley-Crossing-Pipeline-to-service-13635949.php",
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/14223939/texas-lng-enbridge-to-expand-valley-crossing-pipeline",
+        "https://www.fractracker.org/2020/02/national-energy-petrochemical-map/",
+        "https://www.ferc.gov/sites/default/files/2020-06/CP17-19-000-EA.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify LengthKnown -- independent sources cluster around 165 mi, ~3.5% below GEM's 171 mi",
+      "researcher_notes": "GEM records LengthKnown=171.00 mi. Two independent sources report a DIFFERENT figure: the FERC Environmental Assessment for docket CP17-19 states 'The intrastate Valley Crossing System consists of approximately 165 miles of 48-inch- and 42-inch-diameter natural gas transmission pipeline' (plus a separate ~1,000-foot / 0.19-mile FERC-jurisdictional border-crossing segment, bringing the FERC-described total to ~165.2 mi); and the Houston Chronicle, reporting directly off Enbridge's own FERC in-service filing, independently states 'The 165-mile pipeline...' A third figure, 168 miles, appears in general web-search summaries attributed to Enbridge's own project descriptions. None of the three sources matches GEM's 171 mi exactly, though all three are within the same ballpark (165-171 mi, a <=3.6% spread) -- plausibly attributable to different measurement endpoints (mainline only vs. mainline + laterals/interconnects) rather than a wrong pipeline. Flagging as a spec question rather than a confident correction: confirm whether 171 mi reflects a later as-built or looped total, or should be revised toward the 165 mi figure both FERC and an independent newspaper (sourced from Enbridge's own regulatory filing) agree on.",
+      "proposed_refs": [
+        "https://www.houstonchronicle.com/business/energy/article/Enbridge-puts-Valley-Crossing-Pipeline-to-service-13635949.php",
+        "https://www.ferc.gov/sites/default/files/2020-06/CP17-19-000-EA.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify ConstructionYear -- FERC's own EA dates the start of construction to April 2017, not 2018",
+      "researcher_notes": "GEM records ConstructionYear=2018. The FERC Environmental Assessment for CP17-19 (dated 2017/2018) states plainly: 'Work began on this project in April 2017 and the project is expected to go into service in October 2018.' This is consistent with the wider public record: the Railroad Commission of Texas issued Valley Crossing an intrastate construction permit on Sept 15, 2016, and Enbridge/Spectra began laying pipe on the bulk (non-FERC-jurisdictional) system under that state permit well before the Oct 23, 2017 federal Presidential Permit/NGA authorization for the short border-crossing segment -- a sequence documented contemporaneously (Sierra Club's July 2018 blog post 'Valley Crossing Pipeline: An Exercise in Corporate Trickery' specifically criticizes Enbridge for beginning construction under the state permit before the federal review concluded). A plausible reconciliation: GEM's 2018 may track the FERC-authorized border-crossing segment's own construction start (that piece could not lawfully begin until after the Oct 2017 federal authorization, and a subsequent FERC order approving construction on the jurisdictional facilities is dated ~March 2018) rather than the intrastate system's April 2017 start. Flagging as a spec question since the two plausible readings of 'ConstructionYear' for this hybrid intrastate/interstate project point to different years -- worth a deliberate call on which milestone GEM's field is meant to capture, not treated as a silent pass.",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-06/CP17-19-000-EA.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "add ref; treat SegmentCost as corroborated at the rounded figure",
+      "researcher_notes": "GEM records SegmentCost=1,550,000,000 USD ($1.55 billion). The Houston Chronicle, reporting off Enbridge's own FERC in-service filing, headlines 'Enbridge puts $1.5 billion Valley Crossing Pipeline into service' and states the company 'has started service on a $1.5 billion pipeline.' This corroborates GEM's figure at the rounded (nearest $0.1B) level; no independent source was found stating the precise $1.55B to the exact dollar, so tier is medium rather than high on the exact digit, but the value is not in material dispute.",
+      "proposed_refs": [
+        "https://www.houstonchronicle.com/business/energy/article/Enbridge-puts-Valley-Crossing-Pipeline-to-service-13635949.php"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P0276 Valley Crossing Pipeline: confirmed real, correctly classified, not a duplicate of P0257 (correct cross-border segmentation), Owner/Status/Fuel/StartYear1/Capacity/Diameter/Location all independently confirmed (high tier, refs staged); TWO spec concerns flagged (LengthKnown 171mi vs. 165mi per FERC EA + Houston Chronicle; ConstructionYear 2018 vs. FERC EA's stated April 2017 construction start) plus a lighter SegmentCost caveat (rounded $1.5B corroborates $1.55B). No UNRESOLVED units -- all 10 owed ref cells got a proposed ref."
+}

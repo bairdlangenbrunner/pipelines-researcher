@@ -1,0 +1,363 @@
+{
+  "project_id": "P1295",
+  "pipeline_name": "Gemini Carthage Pipeline",
+  "sheet_row": 760,
+  "wiki": "https://www.gem.wiki/Gemini_Carthage_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/Status/Fuel/StartYear1/Location/Owner; add Length, PipelineType and FuelSource fills (see fills[])",
+      "researcher_notes": "EXISTENCE + CLASSIFICATION: real, correctly classified intrastate gas transmission pipeline, confirmed independently of gem.wiki and of any GEM/GulfPub-style surface, via THREE independent origins that each name this specific pipeline (not a generic/aggregate mention): (1) World Pipelines trade press, 'Development of the Gemini Carthage Pipeline in Texas' (worldpipelines.com, dated 2018-12-28, url_verifier OK on 'Gemini Carthage'+'Harrison and Panola') — 'Gemini Midstream Holdings, LLC ... have announced the development of the Gemini Carthage Pipeline, a new natural gas system in Harrison and Panola Counties, Texas, capable of delivering in excess of 1.2 billion ft3/d of high pressure, dry natural gas'; (2) Trace Midstream press release PDF (tracemidstream.com, dated 2020-01-31; url_verifier's naive substring check FAILS on this PDF as a documented false negative — per url_verifier.py's own docstring on PDFs whose text stream the extractor can't fully read — so I downloaded it and confirmed by hand with `pdftotext -layout`: it names 'the Gemini Carthage Pipeline (\"GCP\"), an existing 50-mile natural gas system in Harrison and Panola Counties, Texas, capable of delivering in excess of 1.2 billion cubic feet per day (bcf/d)' with 'initial in-service date of May 2019' and anchor producers Rockcliff Energy and Tanos Exploration); (3) Texas Railroad Commission's live 'Natural Gas Tariffs and Rate Schedules' filer list (rrc.texas.gov, page states 'Last updated on September 1st, 2026', url_verifier OK on 'GEMINI CARTHAGE') — an official, currently-active regulatory registry listing 'GEMINI CARTHAGE PIPELINE, LLC' as a 'Transmission' tariff filer (distinct from the separately listed 'GEMINI GULF COAST PIPELINE, LLC', GCP's sister project — no risk of the two being confused/conflated on this roster; GGCP is not itself a GEM row and is out of scope for this pass). RRC's CURRENT listing also confirms Status=operating is still true today, not just as of the 2018-2020 sources. CLASSIFICATION: RRC's own 'Transmission' designation (as opposed to 'Distribution' or a gathering-only filer) matches treating this as a transmission trunk, not a gathering/feeder line, even though GEM's PipelineType cell is currently blank (deep-filled below). Fuel=Gas confirmed by both (1) and (2) ('natural gas system', 'dry natural gas'). Location (StartLocation=Harrison County / EndLocation=Panola County, Texas) confirmed verbatim by both (1) and (2). DUPLICATE CHECK against the 45-row Texas roster: no other row describes this Harrison–Panola County corridor or a 'Carthage'-named system; not a relabel/segment double-count of any other PID on the list. Opened all 4 harvested wiki citations for this row: worldpipelines.com (live, cited), geminimidstream.com/gcp (ConnectionError live AND on Wayback — web.archive.org content-serving was unreachable from this session all day, a known network condition per project history, not evidence the capture doesn't exist; not cited, no fabricated substitute), rrc.texas.gov general tariff page (live, cited, and it independently corroborates far more — the exact entity name — than the generic tariff-schedule context the wiki citation implied), and the tracemidstream.com PDF (live per curl 200, content hand-verified via pdftotext, cited despite the verifier's PDF-extraction false negative)."
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "no change; note that the sourced figure is a floor ('in excess of'), not an exact nameplate spec",
+      "researcher_notes": "CAPACITY: GEM's 12.40 bcm/y converts to exactly 1.2 bcf/d (1.2 bcf/d × 365 d/y × 0.0283168 bcm/bcf ≈ 12.40 bcm/y), which is precisely the figure both independent sources give — World Pipelines (2018, pre-construction) and Trace Midstream (2020, post in-service) both say the system is 'capable of delivering in excess of 1.2 billion [cubic feet/ft3] per day.' Both sources use 'in excess of,' i.e. a stated floor rather than an exact nameplate number, so GEM's 12.40 is a reasonable rounding of the sourced figure but is technically a minimum, not a precise capacity spec. Not material enough to recommend a change — flagging as a caveat only. StartYear1=2019 is corroborated by both sources agreeing on the year (World Pipelines projected 1Q19 operational in its 2018 forecast; Trace's 2020 release gives the confirmed actual 'initial in-service date of May 2019') — the 1Q19-forecast-vs-May-2019-actual gap is normal project-timeline slip, not a conflict, and StartMonth1=5 is now deep-filled from the Trace release (see fills[])."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+        "https://www.rrc.texas.gov/gas-services/natural-gas-tariffs-rate-schedules/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.rrc.texas.gov/gas-services/natural-gas-tariffs-rate-schedules/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trace Midstream's 2020 release additionally confirms operating status directly ('an existing ... system', in-service since May 2019) but is cited on Start/Capacity/Location instead to keep each ref list to its clearest support; RRC's tariff-filer list is dated 'Last updated on September 1st, 2026,' i.e. it independently confirms the pipeline is STILL an active filer today, not merely historically operating."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "'a new natural gas system ... delivering ... dry natural gas'; corroborated by Trace Midstream's release describing the same system's 'high pressure, dry natural gas.' [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2018"
+      },
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Dated December 28, 2018, this article IS the project's public development announcement ('have announced the development of the Gemini Carthage Pipeline'), directly supporting ProposalYear=2018. Single origin for this specific year (Trace's 2020 release only discusses the system as already existing by then, giving no proposal date), so tier=medium rather than high; no second independent source found naming an announcement/proposal year. [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2019",
+        "StartMonth1": "5"
+      },
+      "primary_value": "2019",
+      "proposed_refs": [
+        "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/"
+      ],
+      "verifications": [
+        {
+          "url": "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trace's Jan 2020 release states 'Since its initial in-service date of May 2019' — deep-filling StartMonth1=5 alongside the already-present StartYear1=2019 from that same sentence. World Pipelines' Dec 2018 forecast ('will be operational in the 1Q19') independently agrees on year 2019, giving two independent origins for StartYear1; StartMonth1=5 itself rests on the single Trace source (the only one giving an actual in-service month rather than a pre-construction forecast quarter), so treat the month specifically as medium-strength even though the overall unit is tiered high on the year. url_verifier FAILS on the Trace PDF (documented false negative on this file's text stream — see validity[] note); manually confirmed via pdftotext."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "12.40",
+        "CapacityUnits": "bcm/y"
+      },
+      "primary_value": "12.40",
+      "proposed_refs": [
+        "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/"
+      ],
+      "verifications": [
+        {
+          "url": "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources: 'capable of delivering in excess of 1.2 billion cubic feet [ft3] per day.' 1.2 bcf/d × 365 d/y × 0.0283168 bcm/bcf ≈ 12.40 bcm/y, matching GEM's value exactly (see the spec caveat in validity[] re: 'in excess of' being a floor, not an exact spec)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Harrison County",
+        "StartPrefecture/District": "Harrison County",
+        "StartState/Province": "Texas",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Panola County",
+        "EndPrefecture/District": "Panola County",
+        "EndState/Province": "Texas",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Harrison County",
+      "proposed_refs": [
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+        "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources independently state the system is 'in Harrison and Panola Counties, Texas' verbatim, exactly matching GEM's Start/End county split."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "oo_sheet_row": 1131,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Gemini Carthage Pipeline LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Gemini Carthage Pipeline LLC",
+      "proposed_refs": [
+        "https://www.rrc.texas.gov/gas-services/natural-gas-tariffs-rate-schedules/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.rrc.texas.gov/gas-services/natural-gas-tariffs-rate-schedules/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Texas RRC's current active tariff-filer list names the entity 'GEMINI CARTHAGE PIPELINE, LLC' — an exact match (modulo case/comma) to GEM's Owner1, from an authoritative government registry independent of Gemini/Trace's own materials. Corroborated at the brand level (not the exact-legal-name level) by both World Pipelines and Trace Midstream identifying the system as Gemini's asset. [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "50",
+        "LengthKnownUnits": "miles"
+      },
+      "primary_value": "50",
+      "proposed_refs": [
+        "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "DEEP-FILL of a genuinely blank field (LengthKnown/LengthKnownUnits were both empty on the sheet). Trace's 2020 release: 'the continued growth and expansion of the Gemini Carthage Pipeline (\"GCP\"), an existing 50-mile natural gas system in Harrison and Panola Counties, Texas.' World Pipelines' 150-mile figure is NOT this pipeline's length — it describes gathering pipelines Gemini separately acquired in Harrison County, TX and Lincoln Parish, LA before GCP was built, so it must not be conflated as a second source for GCP's own length. Only one source gives GCP's own length — tier=medium, and I could not independently corroborate 50 miles via FERC (expected: this is a Texas intrastate line, not FERC-jurisdictional) or via PHMSA/NPMS/EIA in this session (WebSearch quota was exhausted mid-pass; geminimidstream.com/gcp itself, which likely also states this, was unreachable live and its Wayback capture was unreachable too — see validity[]). [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.rrc.texas.gov/gas-services/natural-gas-tariffs-rate-schedules/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.rrc.texas.gov/gas-services/natural-gas-tariffs-rate-schedules/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "DEEP-FILL of a genuinely blank field. RRC's tariff-filer list classifies 'GEMINI CARTHAGE PIPELINE, LLC' as 'Transmission' (as opposed to 'Distribution', which several other filers on the same list carry either alone or in addition). Single regulatory source — tier=medium — but it is the authoritative Texas classification for exactly this filing entity, and is consistent with both trade-press descriptions of GCP as a high-pressure trunk delivering into the Carthage hub area rather than a gathering/feeder line. [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 760,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Haynesville Shale"
+      },
+      "primary_value": "Haynesville Shale",
+      "proposed_refs": [
+        "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+        "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.worldpipelines.com/business-news/28122018/development-of-the-gemini-carthage-pipeline-in-texas/",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://tracemidstream.com/sites/default/files/2021-08/trace-haynesville-release_1312020.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "DEEP-FILL of a genuinely blank field, value spelled to match the existing controlled-vocabulary convention already in use elsewhere on the GGIT gas tab ('Haynesville Shale'). World Pipelines: the acquired gathering assets 'provided Gemini with a strategic asset base in the core of the Haynesville,' with GCP's anchor shipper Rockcliff Energy II LLC producing from a dedicated Haynesville-area acreage block. Trace's release: 'Gemini's natural gas assets in the Haynesville region of East Texas' and GCP's 'two anchor producers, Rockcliff Energy and Tanos Exploration.' Two independent sources agree the gas GCP carries originates from Haynesville Shale production in the Harrison/Panola County area."
+    }
+  ],
+  "summary": "P1295 Gemini Carthage Pipeline: CONFIRMED real, correctly classified Texas intrastate gas transmission line (existence backed by 3 independent origins incl. a currently-active Texas RRC tariff-filer listing dated 2026-09-01), no duplicate/misclassification found on the 45-row roster. 9 REFS_ADDED (Status/Fuel/Proposal/Start(+month)/Capacity/Location/Owner from the worklist, plus deep-fills for previously-blank Length=50 mi, PipelineType=transmission, FuelSource=Haynesville Shale), tiers 6 high / 3 medium, 0 UNRESOLVED. One caveat only: Capacity's sourced '1.2 bcf/d' is stated as a floor ('in excess of'), not an exact nameplate figure; Diameter remains blank/unsourced (checked all 3 primary docs plus RRC filer page; FERC N/A since it's intrastate; WebSearch quota exhausted mid-pass, geminimidstream.com/gcp and its Wayback capture both unreachable this session)."
+}

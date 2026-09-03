@@ -1,0 +1,194 @@
+{
+ "project_id": "P4776",
+ "resolutions": [
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier's automated substring screen FAILs on this 8.16MB/24-page CJK-text PDF (both '天然气' and '天然气利用规划' misses; confirmed HTTP 200/live). Manually confirmed live via curl + pdftotext -layout on the fetched bytes (PDF page 6, section 省级天然气长输管道): '承接川气东送工程气源的江西省天然气管网一期工程已建成管道870公里，主要建成九江—南昌、九江-沙河、九江-景德镇、南昌-丰城、高安-新余、丰城-抚州6条干线和田南-上高支线。' Names 丰城-抚州 (Fengcheng-Fuzhou) verbatim as one of six built Phase I trunk lines. STATUS inferred per verification policy: an official 2014 statement the line is 已建成 (built/completed) supports 'operating'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "researcher_notes": "Official Jiangxi Provincial Development & Reform Commission planning document (赣发改规划[2014]325号, 江西省天然气利用规划 2013-2020) names Fengcheng-Fuzhou verbatim as a built provincial long-distance gas transmission trunk. Single independent government source -> tier medium. Original wiki candidate (nc.gov.cn PDF, https://www.nc.gov.cn/ncszf/jggl/...) is NXDOMAIN per BRIEF host notes; not reused."
+  },
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually confirmed via pdftotext (see Status unit) -- the whole document and this passage are specifically about 天然气 (natural gas) pipelines; automated substring screen fails for the same large-PDF-extraction reason noted on the Status unit."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "researcher_notes": "Same DRC plan passage; fuel type is unambiguous (天然气 = natural gas) throughout the cited section."
+  },
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually confirmed via pdftotext: the passage's section heading is 省级天然气长输管道 ('provincial long-distance/transmission gas pipelines'), directly matching PipelineType=transmission."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "researcher_notes": "Section heading in the DRC plan classifies this exact trunk group as 长输管道 (long-distance transmission pipeline)."
+  },
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "values": {
+    "StartYear1": "2011",
+    "StartMonth1": "8"
+   },
+   "proposed_refs": [
+    "https://news.sina.com.cn/o/2011-08-29/193423070729.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "https://news.sina.com.cn/o/2011-08-29/193423070729.shtml",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier OK, 200 + '2011' present. Dateline 2011-08-29 supports StartYear1=2011, StartMonth1=8 (rule: datelines support ProposalYear/Start dating)."
+    }
+   ],
+   "class_out": "CONFIRMED",
+   "tier": "medium",
+   "researcher_notes": "Reused from payload's wiki_candidate (already verdict SUPPORTED); re-verified live, still OK. Single source -> tier medium; no independent second source for the exact month found."
+  },
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "508",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "researcher_notes": "Wiki's candidate (cx.jxgzwztb.com) is NXDOMAIN (confirmed dead domain, not just blocked -- per BRIEF host notes). Searched Chinese-language (丰城-抚州 天然气管道 管径/全长/招标/环境影响评价) for an independent diameter source; found none. DRC plan (赣发改规划[2014]325号) names the trunk but gives no per-segment diameter. 508mm/DN508 matches the diameter used on the other two Phase I trunk rows in this batch (P4778, P4779) which is at least internally consistent within the network, but that is not an independent source and is not cited. Leaving UNRESOLVED rather than reusing a dead-domain URL."
+  },
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Fengcheng",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Fuzhou",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually confirmed via pdftotext: DRC plan names the trunk '丰城-抚州' verbatim, confirming the Fengcheng->Fuzhou endpoints at city level."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "researcher_notes": "Same DRC plan passage confirms the route endpoints (city-level) as an official provincial naming, not just GEM's own labeling."
+  },
+  {
+   "project_id": "P4776",
+   "sheet_row": 2667,
+   "ref_col": "Operator [ref]",
+   "tab": "operators_owners",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家石油天然气管网集团有限公司 [46%]"
+   },
+   "proposed_refs": [
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier's automated screen FAILs on this 4.2MB/35-page PDF (ConnectTimeout on first try, 200-but-'54%'-not-found on second -- large-PDF extraction gap, confirmed live). Manually confirmed via pdftotext -layout (PDF page 12, ownership footnote 5): '天然气集团持有天然气管道公司54%的股权，剩余46%股权由国家管网集团东部原油储运有限公司（原“中石化管道储运有限公司”）持有。' This is a 2025 CCXI (China Chengxin International) credit rating report for Jiangxi Provincial Investment Group, an independent rated-bond disclosure."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "researcher_notes": "qcc.com (m.qcc.com) stays an ACCESS FAILURE (HTTP 567 WAF, confirmed again) -- not reused as a live ref, but this bond rating report independently corroborates the same 54%/46% split, and is more precise about the 46% holder's identity: 国家管网集团东部原油储运有限公司 (formerly 中国石化管道储运有限公司), a subsidiary of the sheet's stated 国家石油天然气管网集团有限公司 (PipeChina). Same ownership split applies to all four batch_01 PIDs (oo_sheet_row 3627-3630) since they share one QCCOwner cell text -- flagging for the coordinator that this source is reusable across P4776/P4777/P4778/P4779's Operator units (see shared_evidence.json)."
+  }
+ ]
+}

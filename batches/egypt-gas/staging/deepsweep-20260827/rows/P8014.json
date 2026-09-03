@@ -1,0 +1,32 @@
+{
+  "project_id": "P8014",
+  "pipeline_name": "Zaafarana-Kuraimat Gas Pipeline",
+  "sheet_row": 4274,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Upgrade the weak site-search [ref] on Status/Length/Capacity/PipelineType/Location to the two sources found here (EGAS Annual Report 2018 map p.35 + the Egypt Oil & Gas feature); no other action needed.",
+      "researcher_notes": "EXISTENCE: confirmed by 2 independent sources. (1) Egypt Oil & Gas magazine feature 'Egypt's Gas Distribution Network, An Intricate Economic Web' names a 'Zaafarana-Korimat' pipeline explicitly, stating it 'plays a critical role in transporting gas that is to be pumped in two stations, the Ras Bakr Transmission Station and the Korimat Power Station' -- an independent trade-press source, not GEM-derived. (2) GASCO's own 'National Gas Grid' wall map, printed p.35 of the EGAS Annual Report 2018/2019 (the sheet's own current Diameter [ref], https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf) -- I rendered that page at 400dpi and read the map directly rather than full-text-searching it (per this batch's rule: entries drawn visually off this map will not show up in a text search). It draws a solid green ('EXISTING P/L', not the red 'under construction' or blue 'under study' legend colors) line running from the 'Koraimat' node east across the Eastern Desert to the 'Za'frana' node on the Gulf of Suez coast, labeled '18\" 162 k.m' directly on the line. That is an exact match on diameter (18 in) and a 1 km / 0.6% difference on length (map: 162 km vs sheet: 163.00 km) -- not material, reads as rounding/vintage. Caution: the sheet's existing Diameter [ref] previously 'passed' an automated check on token '18', but that is a false-positive risk since '18' also matches '2018' throughout this report; the real support is the visual map read done here, verified again with a non-generic token (url_verifier ... 'GASCO' -> OK; 'Koraimat'/'National Gas Grid' both FAIL because they are map-image text, not extractable, exactly the map-vs-text-search gap this scope warned about). STATUS: the same map's green (existing) line styling directly supports Status=operating. CLASSIFICATION: correctly transmission -- shown as part of GASCO's high-pressure National Gas Grid, not a local distribution/gathering line. DUPLICATE WATCHLIST (P8021 'Kuraimat-Al Tebbin' vs P8014 'Zaafarana-Kuraimat', queried by the orchestrator): NOT a duplicate/segment-of-one-trunk. The same map shows Koraimat as a genuine multi-pipeline hub with at least three physically distinct lines meeting there: this 18in/162km line arriving from Za'frana (Gulf of Suez side), a separate 22in/87km line to/from Tebbin (matches P8021 almost exactly), and a third 32-36in/70-88km line arriving from the Dahshour/El Fayum direction (the well-documented, EIB-financed 'Dahshour-El Kureimat' GASCO line, ~90km/36in, operational since 2007 -- not one of the 40 in-scope rows). Three different diameters converging on one node is the signature of real, separate pipelines feeding a hub, not one trunk double-counted under two names. Minor attribution note (not elevated to a concern): StartState/Province is recorded as 'Gulf of Suez', a geographic descriptor rather than a formal Egyptian governorate -- Zaafarana town sits in Red Sea Governorate -- but this is a batch-wide convention (several other rows in this cohort use the same style, e.g. P8015's EndLocation='Red sea'), not specific to this row, so I am not flagging it as a standalone attribution concern.",
+      "proposed_refs": ["https://egyptoil-gas.com/features/egypts-gas-distribution-network-an-intricate-economic-web/", "https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Leave Capacity (105.00 MMcf/d) flagged as unresolved pending a citable source; do not treat the one lead found (UNECE/Korkor paper) as support until it can actually be read.",
+      "researcher_notes": "Capacity = 105.00 MMcf/d has NO independent corroboration I could verify, and the sheet's current [ref] for it (a bare egyptoil-gas.com site-search URL) does not contain the value either, exactly as the worklist's own existing_ref_checks already flagged ('200 but data value not found'). One lead surfaced via search: a UNECE paper by Dr. Hamed Korkor ('Egyptian Natural Gas Industry Development', unece.org/fileadmin/DAM/ie/se/pdfs/wpgas/session/17_countr/korkor.pdf) is indexed with the line 'The project aims at transporting and processing 107 MMSCFD of associated gases at GUPCO Ras Bakr processing unit. The gases are collected from Belayim fields in Sinai and GUPCO offshore October field' -- 107 MMSCFD is close to the sheet's 105.00, but I could NOT verify this: unece.org returns a Cloudflare bot challenge to every fetch path tried (direct, wayback, jina.ai reader), so per standing rule this is a BLOCK, not a confirmed source, and it never went through url_verifier. It also describes GAS PROCESSING capacity at the Ras Bakr station (from Belayim + October field associated gas), which is not obviously the same figure as this transmission pipeline's throughput from Zaafarana to Kuraimat -- plausibly related infrastructure, not necessarily the same number. Recommend a fresh attempt at that PDF (or GUPCO/EGPC production-report searches) in a session where unece.org isn't challenge-walled, rather than citing it now.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P8014 confirmed real and correctly classified (2 independent sources incl. a direct read of GASCO's own grid map showing an 18in/162km existing line Koraimat<->Za'frana, matching the sheet almost exactly); NOT a duplicate of the separate Dahshour-Kuraimat or Kuraimat-Tebbin lines feeding the same hub. UNRESOLVED: Capacity (105 MMcf/d) has no verifiable independent source -- one promising lead (UNECE/Korkor PDF, ~107 MMSCFD) is blocked by unece.org's bot challenge and unverified."
+}

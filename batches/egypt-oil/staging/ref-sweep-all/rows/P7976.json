@@ -1,0 +1,91 @@
+{
+ "project_id": "P7976",
+ "pipeline_name": "El-Hafair-Suez Oil Pipeline",
+ "sheet_row": 1258,
+ "wiki": "https://www.gem.wiki/El-Hafair-Suez_Oil_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Existence, route, length (35 km), diameter (18 in) and capacity (50,000 bpd) are all confirmed exact against the Sept 2020 Egypt Oil & Gas Newspaper (Issue 165, EOG's own trade publication). But the sheet's current [ref] URL (egyptoil-gas.com/reports_category/monthly/page/7/) is broken: it is a bare archive-listing page (ten unrelated report titles/dates, none about this pipeline) and does not name El-Hafair, Suez, or any of this row's values anywhere. Replace the [ref] on Fuel, PipelineType, Status, Capacity, Length, Diameter, StartLocation and EndLocation with the corrected URL below (Operator/Owner ref can stay or move too, since it's the same broken page).",
+   "researcher_notes": "STARTED FROM THE SHEET'S OWN CITATION per the brief: fetched https://egyptoil-gas.com/reports_category/monthly/page/7/ directly (both via url_verifier and a manual HTML fetch). It 200s but is confirmed to be nothing more than a paginated 'Monthly Reports' category archive listing ten unrelated report titles (Nov 2020-Aug 2021) plus nav chrome -- it never contains 'El-Hafair', 'Suez', or any of this row's numbers. url_verifier FAILs on every value token (Hafair, 35, 18, 50,000) from this URL. Per the task brief this kind of generic/aggregate non-naming citation is itself an existence flag, so I chased it: gem.wiki's own citation text names the source as the 'Monthly Reports - Part 7/ September 2020 edition' -- so I went looking for the actual September 2020 EOG article instead of the broken index link. Found it: 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad' (egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/, datePublished 2020-09-07T09:54:20+02:00, i.e. Egypt Oil & Gas Newspaper, September 2020, Issue 165). This URL serves as a raw PDF body under a text/html header (confirmed by byte-inspection: response starts '%PDF-1.6', Adobe InDesign 15.0, 4 pages) -- exactly the 'large/compressed PDF' false-negative pattern url_verifier.py's own docstring warns about (large PDFs aren't fully text-extracted by the substring screen), which is why the raw verifier check FAILs on 'Hafair' even though the content is there; verifier passes on 'Suez' alone (liveness confirmed) and I manually downloaded the PDF and ran `pdftotext -layout` myself to confirm the rest. Page 12-13 carries a table headed 'Crude Oil Infrastructure in the Gulf of Suez/Sinai' listing 'the Gulf of Suez and Sinai's mainly eight crude oil pipelines' with columns From/To/Length(Km)/Diameter(Inches)/Capacity(bbl/d), crediting EGPC's data. The row 'Al Hafair-Suez: Al Hafair -> Suez, 35, 18, 50,000' is an EXACT match on every GEM value for P7976. The same table also carries 'Ras Shukheir-Al Hafair: 215/26/140,000' (= P7975 exactly), and two 'Al Hafair-Mostorod' rows at 135/18-20/85,000 and 115/24/85,000 (= P7977 and P7978 exactly) -- so this one table is the real common primary source behind the whole El-Hafair family bulk-loaded 2026-03-15/16, and it is NOT GEM-derived (an Egyptian oil-industry trade newspaper, sourced to EGPC). Classification confirmed: the source's own text calls it one of the region's crude-oil TRANSMISSION pipelines (as distinct from field gathering lines discussed elsewhere in the same issue), matching GEM's PipelineType=transmission / Fuel=Oil. Cross-checked the routes-repo geometry (P7976.geojson, 3-vertex line from ~29.737N/32.376E near the OSM-confirmed locality 'الحفائر' (El-Hafair), Suez governorate, through to ~29.960N/32.533E at Suez) -- geographically consistent with a ~35 km corridor, corroborating plausibility (not counted as an independent source, per rule 1). Checked this scope's OSM and GulfPub recon runs (batches/egypt-oil/staging/recon-{osm,gulfpub}-20260827/match_diff.json) for independent corroboration: NEITHER supports it. GulfPub's two 'additions' scored against P7976 (Safir-Meleiha, Kalabsha-Khepri) are unrelated Western Desert oilfield gathering lines that only coincidentally share a similar length (~30.5-30.6 km vs GEM's 35 km) -- false-positive length matches, not real overlaps (both NEAR_MISS/DISCOVERY_CANDIDATE, composite scores 0.28-0.35, well below threshold; no name or route match). OSM's two 'additions' against P7976 are both red-confidence and below threshold too (0.17 and 0.29 composite) -- one unnamed way partially inside P7976's own drawn route (FRAGMENT_OF_EXISTING, not new information), the other a short unnamed stub scored on length alone. So this remains a SINGLE strong, on-point, exact-match primary source, not two independent ones -- I could not find a second (WebSearch quota was exhausted this session at 200/200; targeted WebFetch probes at en.wikipedia.org/wiki/Petroleum_Pipelines_Company and egyptoil-gas.com's own site search for 'Al Hafair' both came back empty). Tier stays medium, not high, on that basis, despite the strength/specificity of the one match. Duplicate check against the full 46-row Egypt-oil roster: NOT a duplicate of P7975 (Ras Shukheir->El-Hafair, different route/diameter/capacity), P7977 or P7978 (El-Hafair->Mostorod, different destination and diameter/capacity) -- the primary source itself lists all four as distinct pipelines in one table, each with its own length/diameter/capacity, radiating from the same Al Hafair junction station; this is a real small hub network, not a bulk duplicate or relabel.",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "attribution",
+   "recommendation": "Keep Operator=Petroleum Pipeline Company (PPC) / Owner=EGPC (100%) as-is; do not treat as independently confirmed for this specific line.",
+   "researcher_notes": "The Sept 2020 EOG article explicitly names PPC as operator only for SUMED ('operated by the Petroleum Pipeline Company (PPC)'); it does not repeat an operator attribution for the Al Hafair-family lines described immediately afterward in the same table/section. PPC is Egypt's dedicated national crude/product pipeline operating company under EGPC and is the standard operator for EGPC-owned domestic crude trunklines across this scope, so the sheet's Operator=PPC / Owner1=EGPC 100% is a reasonable default and I found nothing contradicting it in any source read -- but it is inference from industry structure, not an explicit per-line statement, so this stays a caveat rather than a fresh confirmation. No ref change proposed for Operator/Owner beyond what applies to the rest of the row (same broken page-7 citation, same fix).",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1258,
+   "ref_col": "StartLocation [ref]",
+   "value_cols": [
+    "StartLocation"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "El-Hafair"
+   },
+   "primary_value": "El-Hafair",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CLOSES AN EXISTING ORPHAN [ref]. On the live sheet this row's StartLocation value cell is BLANK while its StartLocation [ref] cell is filled (with the paginated category-index URL) -- an orphan ref, which the standing rule forbids. Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai', gives this line's 'From' as 'Al Hafair'. Proposed value 'El-Hafair' uses GEM's own transliteration as already carried in this row's PipelineName (source spells it 'Al Hafair'); the place is the same. Value and ref are staged together so the pair ships as a unit and the orphan is resolved rather than perpetuated. Single source -> medium. Hand-confirmed via pdftotext -layout on the embedded PDF; url_verifier's substring screen false-negatives on this document (two tables laid out side by side, extraction interleaves columns), so ok/contains_value are encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1258,
+   "ref_col": "EndLocation [ref]",
+   "value_cols": [
+    "EndLocation"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Suez"
+   },
+   "primary_value": "Suez",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CLOSES AN EXISTING ORPHAN [ref]. On the live sheet this row's EndLocation value cell is BLANK while its EndLocation [ref] cell is filled (with the paginated category-index URL) -- an orphan ref, which the standing rule forbids. Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai', gives this line's 'To' as 'Suez'. Proposed value 'Suez' uses GEM's own transliteration as already carried in this row's PipelineName (source spells it 'Suez'); the place is the same. Value and ref are staged together so the pair ships as a unit and the orphan is resolved rather than perpetuated. Single source -> medium. Hand-confirmed via pdftotext -layout on the embedded PDF; url_verifier's substring screen false-negatives on this document (two tables laid out side by side, extraction interleaves columns), so ok/contains_value are encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  }
+ ],
+ "summary": "P7976 confirmed real, correctly classified, and correctly specified (35 km / 18 in / 50,000 bpd, El-Hafair->Suez) via my own pdftotext extraction of the Sept 2020 Egypt Oil & Gas Newspaper (Issue 165) PDF -- an exact match, and not a duplicate of P7975/P7977/P7978 (same source lists all four as distinct lines off one El-Hafair junction). The sheet's own [ref] was pointing at a broken listing page that names nothing about this pipeline; corrected URL proposed for all value columns. GulfPub/OSM recon checked and neither corroborates independently (near-misses are unrelated pipes / geometry fragments). One open caveat: PPC-as-operator is the reasonable industry-structure default, not an explicit per-line statement. Tier medium throughout -- single strong source; WebSearch quota was exhausted this session so a second independent source was not found."
+}

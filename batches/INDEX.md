@@ -20,53 +20,81 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260730_1700_ET_china-guangxi-gas_route-creation.xlsx`
 - `archive/` — 1 superseded/applied file(s)
 
+## china-jiangxi-gas
+
+- `staging/deepsweep-20260902` — rows=44 fills=4 updates=0 status-pending=7 refs(DEAD_LINK=2, REFS_ADDED=270, REVERIFIED=12, UNRESOLVED=127) routes=0 new(none)
+- `staging/recon-gulfpub-20260902` — recon inputs
+- `deliverables/pipelines_batch_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx`
+- `archive/` — 1 superseded/applied file(s)
+
 ## china-trunks-gas
 
-- `staging/recon-gulfpub-20260730` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/route-creation` [route-creation] — rows=42 fills=0 updates=0 status-pending=0 refs(none) routes=42 new(none)
 - `deliverables/pipelines_batch_20260730_1708_ET_china-trunks-gas_route-creation.xlsx`
 
 ## egypt-gas
 
 - `staging/annual` — rows=7 fills=16 updates=0 status-pending=1 refs(REFS_ADDED=44, REVERIFIED=19, UNRESOLVED=1) routes=0 new(monitor=3, new_row=4)
+- `staging/deepsweep-20260827` — rows=40 fills=9 updates=0 status-pending=0 refs(REFS_ADDED=46, REVERIFIED=202, UNRESOLVED=18) routes=0 new(none)
 - `staging/map-traces-gasco` — no store — invisible to discovery
 - `staging/qc` [assembled packet: qc] — rows=57 fills=10 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260708` — recon inputs
-- `staging/recon-gulfpub-20260729` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
+- `staging/recon-gulfpub-20260827` — recon inputs
 - `staging/recon-osm-20260729` — recon inputs
+- `staging/recon-osm-20260827` — recon inputs
 - `staging/ref-sweep-operating` — rows=50 fills=119 updates=0 status-pending=0 refs(REFS_ADDED=240, REVERIFIED=182, UNRESOLVED=17) routes=50 new(none)
 - `staging/route-creation-20260810` [route-creation] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=34 new(none)
 - `staging/route-creation-20260811` [route-creation] — rows=2 fills=0 updates=0 status-pending=0 refs(none) routes=2 new(none)
 - `staging/route-creation-20260811-p7589` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none)
+- `staging/route-creation-20260827` [route-creation] — rows=20 fills=0 updates=0 status-pending=0 refs(none) routes=20 new(none)
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_egypt-gas_handoff-evidence.xlsx`
 - `deliverables/pipelines_batch_20260729_0910_ET_egypt-gas_reconciliation-osm.xlsx`
-- `deliverables/pipelines_batch_20260729_0941_ET_egypt-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260810_1800_ET_egypt-gas_route-creation.xlsx`
-- `archive/` — 13 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1359_ET_egypt-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260827_1108_ET_egypt-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260827_1108_ET_egypt-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260827_1326_ET_egypt-gas_deepsweep.xlsx`
+- `deliverables/pipelines_batch_20260827_1326_ET_egypt-gas_route-creation.xlsx`
+- `archive/` — 15 superseded/applied file(s)
+
+## egypt-oil
+
+- `staging/recon-gulfpub-20260827` — recon inputs
+- `staging/recon-osm-20260827` — recon inputs
+- `staging/ref-sweep-all` — rows=46 fills=14 updates=0 status-pending=0 refs(REFS_ADDED=172, REVERIFIED=201, UNRESOLVED=71) routes=0 new(none)
+- `staging/route-creation-20260827` [route-creation] — rows=1 fills=0 updates=0 status-pending=0 refs(none) routes=1 new(none)
+- `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_route-creation.xlsx`
+- `deliverables/pipelines_batch_20260827_1343_ET_egypt-oil_deepsweep.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## india-gas
 
 - `staging/annual` — rows=27 fills=18 updates=0 status-pending=7 refs(DEAD_LINK=27, REFS_ADDED=65, REVERIFIED=62, UNRESOLVED=68) routes=0 new(none)
 - `staging/cancelled-review` — rows=13 fills=9 updates=0 status-pending=3 refs(DEAD_LINK=9, REFS_ADDED=51, REVERIFIED=8, UNRESOLVED=41) routes=0 new(none)
 - `staging/qc` [assembled packet: handoff] — rows=75 fills=40 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/recon-gulfpub-20260810` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260810` — recon inputs
 - `staging/redundancy` [redundancy] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=35 fills=15 updates=0 status-pending=0 refs(REFS_ADDED=236, REVERIFIED=5, UNRESOLVED=57) routes=0 new(none)
 - `staging/register-crosswalk` [register-crosswalk] — rows=40 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=118) routes=0 new(none)
 - `deliverables/pipelines_batch_20260810_1851_ET_india-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260810_1851_ET_india-gas_handoff-evidence.xlsx`
-- `deliverables/pipelines_batch_20260810_1851_ET_india-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260810_1851_ET_india-gas_reconciliation-osm.xlsx`
-- `archive/` — 2 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1359_ET_india-gas_reconciliation-gulfpub.xlsx`
+- `archive/` — 3 superseded/applied file(s)
 
 ## iran-gas
 
 - `staging/annual` — rows=8 fills=14 updates=0 status-pending=5 refs(DEAD_LINK=3, REFS_ADDED=41, REVERIFIED=33, UNRESOLVED=3) routes=0 new(matched_existing=1, new_row=9)
-- `staging/recon-gulfpub-20260729` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/ref-sweep-operating` — rows=31 fills=93 updates=0 status-pending=0 refs(DEAD_LINK=20, REFS_ADDED=33, REVERIFIED=21, UNRESOLVED=198) routes=31 new(none)
-- `deliverables/pipelines_batch_20260729_0941_ET_iran-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260812_1359_ET_iran-gas_reconciliation-gulfpub.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## iraq-gas
 
@@ -75,7 +103,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/cancelled-review` [sweep] — rows=4 fills=0 updates=0 status-pending=2 refs(REFS_ADDED=16, REVERIFIED=6, UNRESOLVED=8) routes=0 new(none)
 - `staging/qc` [assembled packet: handoff] — rows=52 fills=3 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-gulfpub-20260705` — recon inputs
-- `staging/recon-gulfpub-20260729` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-gulfpub-followup` [update] — rows=5 fills=4 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/recon-osm-20260729` — recon inputs
 - `staging/redundancy` [redundancy] — rows=15 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
@@ -84,20 +112,21 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/route-creation` [route-creation] — rows=34 fills=0 updates=0 status-pending=0 refs(none) routes=34 new(none)
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_handoff-evidence.xlsx`
-- `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260729_1104_ET_iraq-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260731_1525_ET_iraq-gas_route-creation.xlsx`
-- `archive/` — 11 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1359_ET_iraq-gas_reconciliation-gulfpub.xlsx`
+- `archive/` — 12 superseded/applied file(s)
 
 ## iraq-oil
 
 - `staging/discovery` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=4)
 - `staging/recon-gulfpub-20260603` — recon inputs
-- `staging/recon-gulfpub-20260728` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260728` — recon inputs
 - `deliverables/pipelines_batch_20260717_1802_ET_iraq_discovery.xlsx`
-- `deliverables/pipelines_batch_20260728_1804_ET_iraq-oil_gulfpub-reconciliation.xlsx`
 - `deliverables/pipelines_batch_20260728_1804_ET_iraq-oil_osm-reconciliation.xlsx`
+- `deliverables/pipelines_batch_20260812_1359_ET_iraq-oil_reconciliation-gulfpub.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## israel-gas
 
@@ -117,22 +146,22 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/annual` — rows=11 fills=5 updates=0 status-pending=3 refs(DEAD_LINK=36, REFS_ADDED=19, REVERIFIED=65, UNRESOLVED=11) routes=0 new(none)
 - `staging/cancelled-review` — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=12, UNRESOLVED=6) routes=0 new(none)
 - `staging/qc` [assembled packet: handoff] — rows=48 fills=38 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/recon-gulfpub-20260811` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260811` — recon inputs
 - `staging/redundancy` [redundancy] — rows=28 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=39 fills=4 updates=0 status-pending=0 refs(DEAD_LINK=39, REFS_ADDED=177, REVERIFIED=62, UNRESOLVED=148) routes=0 new(none)
-- `deliverables/pipelines_batch_20260811_1001_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx`
-- `deliverables/pipelines_batch_20260811_1043_ET_kazakhstan-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260812_1255_ET_kazakhstan-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260812_1255_ET_kazakhstan-gas_handoff-evidence.xlsx`
-- `archive/` — 1 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1344_ET_kazakhstan-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260814_0120_ET_kazakhstan-gas_reconciliation-osm.xlsx`
+- `archive/` — 3 superseded/applied file(s)
 
 ## libya-gas
 
 - `staging/annual` — rows=6 fills=10 updates=0 status-pending=1 refs(REFS_ADDED=19, REVERIFIED=24, UNRESOLVED=3) routes=0 new(new_row=1)
 - `staging/cancelled-review` [sweep] — rows=2 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=9, REVERIFIED=1, UNRESOLVED=6) routes=0 new(none)
 - `staging/qc` [assembled packet: handoff] — rows=38 fills=27 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/recon-gulfpub-20260729` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260728` — recon inputs
 - `staging/redundancy` [redundancy] — rows=16 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=30 fills=37 updates=0 status-pending=0 refs(REFS_ADDED=192, REVERIFIED=30, UNRESOLVED=19) routes=0 new(none)
@@ -141,8 +170,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260728_1149_ET_libya-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260728_1235_ET_libya-gas_handoff-evidence.xlsx`
-- `deliverables/pipelines_batch_20260729_0941_ET_libya-gas_reconciliation-gulfpub.xlsx`
-- `archive/` — 3 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1359_ET_libya-gas_reconciliation-gulfpub.xlsx`
+- `archive/` — 4 superseded/applied file(s)
 
 ## malaysia-gas
 
@@ -163,43 +192,75 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/annual` — rows=6 fills=3 updates=0 status-pending=4 refs(DEAD_LINK=9, REFS_ADDED=29, REVERIFIED=13, UNRESOLVED=9) routes=0 new(none)
 - `staging/cancelled-review` — rows=1 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=8, UNRESOLVED=2) routes=0 new(none)
 - `staging/qc` [assembled packet: handoff] — rows=70 fills=19 updates=0 status-pending=0 refs(none) routes=0 new(none)
-- `staging/recon-gulfpub-20260807` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/recon-osm-20260807` — recon inputs
 - `staging/ref-sweep-operating` — rows=63 fills=2 updates=0 status-pending=0 refs(REFS_ADDED=108, UNRESOLVED=351) routes=0 new(none)
 - `staging/register-crosswalk` [register-crosswalk] — rows=51 fills=0 updates=0 status-pending=0 refs(REFS_ADDED=98) routes=0 new(none)
-- `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260810_1112_ET_pakistan-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260810_1112_ET_pakistan-gas_handoff-evidence.xlsx`
-- `archive/` — 2 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1359_ET_pakistan-gas_reconciliation-gulfpub.xlsx`
+- `archive/` — 3 superseded/applied file(s)
 
 ## saudi-arabia-gas
 
 - `staging/annual` — rows=22 fills=21 updates=0 status-pending=0 refs(DEAD_LINK=2, REFS_ADDED=79, REVERIFIED=99, UNRESOLVED=1) routes=0 new(new_row=3)
-- `staging/recon-gulfpub-20260729` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/ref-sweep` — rows=65 fills=6 updates=0 status-pending=0 refs(DEAD_LINK=40, REFS_ADDED=130, REVERIFIED=179, UNRESOLVED=155) routes=0 new(none)
 - `staging/ref-sweep-critical` — rows=65 fills=103 updates=0 status-pending=0 refs(DEAD_LINK=40, REFS_ADDED=130, REVERIFIED=179, UNRESOLVED=153) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=40 fills=66 updates=0 status-pending=0 refs(REFS_ADDED=198, REVERIFIED=53, UNRESOLVED=45) routes=40 new(none)
 - `deliverables/pipelines_batch_20260713_1305_ET_saudi-arabia-gas_discovery.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_saudi-arabia-gas_annual-indev.xlsx`
 - `deliverables/pipelines_batch_20260728_1731_ET_saudi-arabia-gas_deepsweep.xlsx`
-- `deliverables/pipelines_batch_20260729_0941_ET_saudi-arabia-gas_reconciliation-gulfpub.xlsx`
-- `archive/` — 2 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260812_1359_ET_saudi-arabia-gas_reconciliation-gulfpub.xlsx`
+- `archive/` — 3 superseded/applied file(s)
 
 ## saudi-arabia-oil
 
 - `staging/discovery` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=4)
-- `staging/recon-gulfpub-20260603` — recon inputs
+- `staging/recon-gulfpub-20260812` — recon inputs
 - `staging/ref-sweep` — rows=3 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=9, REFS_ADDED=20, REVERIFIED=6) routes=0 new(none)
 - `staging/ref-sweep-10row` — rows=10 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=25, REFS_ADDED=67, REVERIFIED=10, UNRESOLVED=6) routes=0 new(none)
 - `deliverables/pipelines_batch_20260717_1804_ET_saudi-arabia_discovery.xlsx`
+
+## ukraine-gas
+
+- `staging/annual` — rows=2 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=1, REFS_ADDED=6, REVERIFIED=4) routes=0 new(none)
+- `staging/cancelled-review` — rows=6 fills=4 updates=0 status-pending=2 refs(DEAD_LINK=1, REFS_ADDED=36, UNRESOLVED=19) routes=0 new(none)
+- `staging/qc` [assembled packet: handoff] — rows=47 fills=26 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/recon-gulfpub-20260812` — recon inputs
+- `staging/recon-osm-20260812` — recon inputs
+- `staging/redundancy` [redundancy] — rows=23 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/ref-sweep-operating` — rows=39 fills=7 updates=0 status-pending=0 refs(DEAD_LINK=17, REFS_ADDED=189, REVERIFIED=5, UNRESOLVED=107) routes=0 new(none)
+- `deliverables/pipelines_batch_20260812_1409_ET_ukraine-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260814_0120_ET_ukraine-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260815_1946_ET_ukraine-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260815_1946_ET_ukraine-gas_handoff-evidence.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## united-arab-emirates-oil
 
 - `staging/discovery` — rows=0 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(new_row=1)
 - `deliverables/pipelines_batch_20260717_1811_ET_uae_discovery.xlsx`
 
+## united-states-gas
+
+- `staging/deepsweep-tx-operating` — rows=45 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=10, REVERIFIED=14, UNRESOLVED=357) routes=0 new(none)
+
 ## united-states-oil
 
 - `staging/update-delaware-express` [update] — rows=2 fills=0 updates=33 status-pending=0 refs(none) routes=0 new(none)
 - `staging/update-permian-express` [update] — rows=4 fills=0 updates=20 status-pending=0 refs(none) routes=0 new(none)
+
+## uzbekistan-gas
+
+- `staging/qc` [assembled packet: handoff] — rows=31 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/recon-gulfpub-20260826` — recon inputs
+- `staging/recon-osm-20260826` — recon inputs
+- `staging/redundancy` [redundancy] — rows=17 fills=0 updates=0 status-pending=0 refs(none) routes=0 new(none)
+- `staging/ref-sweep-operating` — rows=18 fills=4 updates=0 status-pending=1 refs(DEAD_LINK=2, REFS_ADDED=84, REVERIFIED=38, UNRESOLVED=34) routes=0 new(none)
+- `deliverables/pipelines_batch_20260826_1350_ET_uzbekistan-gas_reconciliation-gulfpub.xlsx`
+- `deliverables/pipelines_batch_20260826_1350_ET_uzbekistan-gas_reconciliation-osm.xlsx`
+- `deliverables/pipelines_batch_20260827_0931_ET_uzbekistan-gas_handoff-actions.xlsx`
+- `deliverables/pipelines_batch_20260827_0931_ET_uzbekistan-gas_handoff-evidence.xlsx`
+- `archive/` — 4 superseded/applied file(s)

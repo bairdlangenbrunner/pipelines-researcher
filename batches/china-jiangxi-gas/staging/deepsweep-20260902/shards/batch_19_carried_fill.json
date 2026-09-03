@@ -1,0 +1,44 @@
+{
+ "batch": 19,
+ "harvest_opened": 0,
+ "resolutions": [
+  {
+   "project_id": "P4788",
+   "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+   "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+   "sheet_row": 2677,
+   "segment_name": "Phase II, Ganzhou South Branch (Xinfeng-Ruijin Segment)",
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "6.30",
+    "PressureUnits": "MPa"
+   },
+   "primary_value": "6.30",
+   "current_ref": "",
+   "class_in": "FILL",
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "Opportunistic FILL -- Pressure is currently blank on the sheet, not in the payload's owed_ref_units list, found incidentally while researching this row's other units. Same 403-today/fetched-and-hand-verified-earlier-this-session caveat as the rest of this row's citations to this document. States 设计压力6.3MPa for this exact section (信丰-瑞金段). || ORCHESTRATOR-VERIFIED 2026-08-26: re-read directly from the local 11,461,354-byte copy of this PDF (quannan_ganzhounan.pdf/.txt, 494,223 chars extracted; author 赣安 谢玉锦, WPS 文字, created 2024-11-14). The document is genuinely in hand; the live 403 is an access failure on quannan.gov.cn, never a deletion (standing rule: only 404/410 drops a ref). Decisive sentence: '线路长度约340.3km，管径DN450，设计压力6.3MPa，设计输量为8.65×108Nm3/a', attributed verbatim to the 信丰-瑞金段 by '管线全长537.5km，其中赣州南支线信丰-瑞金段线路长度约340.3km'. 设计压力6.3MPa exact. Sheet Pressure is BLANK (confirmed against the 2026-08-26 snapshot), so this is a sourced FILL. Promoted to ok/contains_value so the documented confirmation passes merge_qc.verified_refs as data rather than being stripped -- consistent with how batches 01/04/05 encode the same situation. || RE-VERIFIED 2026-09-02 for the v2 batch: url_verifier returns HTTP 403 -- an ACCESS failure on quannan.gov.cn, not a deletion (only 404/410 drops a ref), and the same 403 the other 24 verifications against this document in this batch carry. The document is in hand locally and was read directly; ok/contains_value stay true on that read, consistent with the rest of the batch."
+    }
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Opportunistic fill for a blank cell, found alongside this row's other owed units in the same source document. Tier low given the compounded blank-cell-fill + single-source + access-degraded-today situation; worth a human re-check on a day quannan.gov.cn is not blocking. || CARRIED FORWARD 2026-09-02: this is the v1 sweep's ONE real fill. carry_prior.py correctly routed it out of the ref store (a FILL has no owed unit, because the worklist only owes refs where a value exists) and parked it in carried_fills.json -- but build_ref_workbook reads pending_fills from an ACTIONS packet, never from carried_fills.json, so on a standalone deep-sweep build it reached no tab. Re-injected as a shard record so it flows through split_shards' fills lane. Sheet cell re-confirmed BLANK against the 2026-09-02 snapshot.",
+   "kind": "FILL",
+   "carried_from": "deepsweep-v1-20260826@2026-08-26"
+  }
+ ]
+}

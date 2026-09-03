@@ -124,16 +124,24 @@ def country_matches(rec_country: str | None, want: str) -> bool:
     are the majority of GEM's rows in both countries (defect found 2026-08-12).
 
     The GEM side has always done this correctly via `split_countries`; the
-    reference side was the asymmetry. Whole-string equality is tried FIRST because
+    reference side was the asymmetry. The whole-string test comes FIRST because
     four `_COUNTRY_ALIASES` keys contain a comma ('congo, the democratic republic
     of the', 'korea, republic of', …) and splitting before the alias lookup would
     shred them.
+
+    `want` is normalized here rather than assumed normalized. Every in-repo caller
+    already passes `normalize_country(...)` output, but the raw form is the obvious
+    thing to pass from a one-off script, and it used to fail SILENTLY against every
+    multi-country string — `country_matches('Russia, Ukraine', 'Ukraine')` returned
+    False, because `split_countries` yields lowercase. Normalizing is idempotent, so
+    the existing callers are unaffected.
     """
     if not rec_country:
         return False
-    if rec_country == want:
+    w = normalize_country(want)
+    if normalize_country(rec_country) == w:
         return True
-    return want in split_countries(rec_country)
+    return w in split_countries(rec_country)
 
 
 _NAME_STOP = {

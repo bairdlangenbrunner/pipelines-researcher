@@ -1,0 +1,70 @@
+{
+  "project_id": "P8004",
+  "pipeline_name": "Gulf of Suez-SUMED Offshore Gas Pipeline",
+  "sheet_row": 4264,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Treat as real infrastructure but do not upgrade the sourcing tier past medium/low until an EGAS/SUMED-side or independent trade-press confirmation of the exact 12 km / 24-inch specs is found.",
+      "researcher_notes": "No gem.wiki page exists for this row (wiki field blank, and it is not among the two rows in this 40-row cohort that have one), so this is open-web research from scratch, not a citation-rot check. EVERY value on this row (Status, Fuel, PipelineType, ConstructionYear, Length, Diameter) currently rests on exactly ONE source appearing under two URLs on one origin: zafmarine.com/en/projects/sumed-gas-line and zafmarine.com/en/news/sumed-gas-line-installation-completed. Both re-verified live (url_verifier OK, 200, expected content present). Test applied: full-text read of both pages (not a maps-only source, so the EGAS-2018-map caveat that applies elsewhere in this cohort doesn't apply here) plus company-profile check on zafmarine.com/en (ZafMarine, f.k.a. El Zafarana Marine and Petroleum Services, Suez-based marine contractor operating since 2008, ISO 9001/45001, names real clients GUPCO, SAIPEM, Petrobel, SUMED) plus English- and Arabic-language open-web search for any independent corroboration (SUMED itself, EGAS, GASCO, Egypt Oil & Gas, Reuters/Argus-type trade press, Arabic outlets attaqa.net/petro-news.com/agrinewz.com). Found: no SUMED, EGAS, or independent press item names this specific 12 km/24-inch pipeline. That is a real corroboration gap under standing rule 4 (>=2 independent sources), so despite existing_ref_checks marking these cells HAS_REF/value_checked=true, the underlying tier is a single non-independent promotional source, not confirmed-high. However, existence is plausible on circumstantial grounds: ZafMarine is a real, established contractor with verifiable real clients including SUMED itself, and independent trade press (egyptoil-gas.com 'Fifth Floating Regasification Unit to Join Egypt's Gas Grid via Aqaba Port', and Rigzone/Enerdata coverage of Egypt's 2025 FSRU program) confirms that in the same window (H1-H2 2025) Egypt was physically connecting a second FSRU (Energos Eskimo, 750 mmcf/d) to the national grid specifically at the SUMED berth in Ain Sokhna -- i.e. a real subsea gas tie-in project was genuinely underway at this exact location and timeframe, which is consistent with (though not verbatim proof of) ZafMarine's claimed 12 km/24-inch installation. No duplicate found against the other 39 rows in this cohort -- the nearest Ain-Sokhna-adjacent rows (P8033 Ain Sokhna-Abu Sultan 106 km/32in, P8038 Ras Bakr-Ain Sokhna 192 km/16in) have unrelated routes and specs.",
+      "proposed_refs": ["https://www.zafmarine.com/en/projects/sumed-gas-line", "https://www.zafmarine.com/en/news/sumed-gas-line-installation-completed"],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Route to Update: sheet Status='construction' likely stale. The row's own cited source states the installation was already COMPLETE as of 2025-03-15, and StartYear1 is blank despite that. Verify with EGAS/SUMED and, if confirmed, change Status to 'operating' with StartYear1 ~2025 -- do not silently leave 'construction' standing against its own source.",
+      "researcher_notes": "The zafmarine.com/en/news page is titled 'SUMED Gas Line Installation Completed Successfully' and states the project was 'completed two weeks ahead of schedule, with zero safety incidents or environmental violations,' dated 2025-03-15 -- i.e. the sheet's OWN cited source says this pipeline is finished, not under construction, and that was 17+ months before this audit (today 2026-08-27). ConstructionYear=2025 is consistent with that completion date, but Status='construction' and StartYear1=blank are not. Circumstantial support that it is now in service: independent press (egyptoil-gas.com; Rigzone 'Egypt's EGAS Leases Another FSRU from New Fortress Energy', 16-Jul-2025) confirms the Energos Eskimo FSRU -- the vessel this line most plausibly serves, see the attribution finding below -- was reported operational at Ain Sokhna by July 2025. I did not find a source giving an exact 'gas started flowing' date precise enough to fill StartYear1/StartYear2 with confidence, so I am flagging rather than fabricating a fill.",
+      "proposed_refs": ["https://www.zafmarine.com/en/news/sumed-gas-line-installation-completed"],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Verify with EGAS/SUMED whether this line is genuinely an offshore-production-platform gathering tie-in (as ZafMarine's copy literally says) or is actually the FSRU send-out/grid-connection line for Ain Sokhna's second FSRU (Energos Eskimo). If the latter, FuelSource should note imported/regasified LNG rather than implying domestic offshore production, and PipelineName/ResearcherNotes should say so explicitly.",
+      "researcher_notes": "ZafMarine's own copy says the pipeline connects 'offshore production platforms' to the 'SUMED (Suez-Mediterranean) pipeline network' -- but SUMED's only Gulf-of-Suez/Ain Sokhna gas-relevant asset is the Ain Sukhna Product Hub (ASPH), which berths FSRUs (Floating Storage & Regasification Units) importing LNG for regas and grid injection, not gas-producing platforms. Independent trade press (egyptoil-gas.com 'Fifth Floating Regasification Unit...') explicitly describes Egypt in 2025 working to 'connect the Energos Eskimo... to SUMED... berth[s]... in Ain Sokhna port' as part of a 4-FSRU, 2,700 mmcf/d grid-connection program -- i.e. a real subsea tie-in project at this exact SUMED berth in the same window ZafMarine claims completion (March 2025) and before Energos Eskimo went operational (reported by July 2025). 'Offshore production platform' is an odd description for a moored import FSRU, so ZafMarine's marketing copy is plausibly loose/imprecise rather than this being a genuinely separate field-gathering line; I could not find a second source that explicitly names the FSRU as this pipeline's origin, so this is flagged as open rather than corrected outright. FuelSource is currently blank on the sheet -- left blank here rather than guessed, pending that confirmation.",
+      "proposed_refs": ["https://egyptoil-gas.com/news/fifth-floating-regasification-unit-to-join-egypts-gas-grid-via-aqaba-port/"],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 4264,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartPrefecture/District",
+      "values": {
+        "StartPrefecture/District": "Gulf of Suez",
+        "StartState/Province": "Red Sea",
+        "StartCountryOrArea": "Egypt",
+        "EndLocation": "Ain Sokhna",
+        "EndPrefecture/District": "SUMED Port",
+        "EndState/Province": "Suez",
+        "EndCountryOrArea": "Egypt"
+      },
+      "primary_value": "Gulf of Suez",
+      "proposed_refs": ["https://www.zafmarine.com/en/projects/sumed-gas-line"],
+      "verifications": [
+        {"url": "https://www.zafmarine.com/en/projects/sumed-gas-line", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This cluster's location values were an orphan (values present, Location [ref] blank) -- a standing-rule violation. The zafmarine.com project page names both endpoints in substance: 'Gulf of Suez' as the pipeline's location and the 'SUMED (Suez-Mediterranean) pipeline network' at Ain Sokhna as the connection point, matching the sheet's Start=Gulf of Suez/Red Sea and End=Ain Sokhna/Suez. Single non-independent source, so tier=low, not upgraded further -- pairing a ref to the existing value, not asserting high confidence."
+    }
+  ],
+  "summary": "P8004 (Gulf of Suez-SUMED Offshore Gas Pipeline): existence confirmed with caveat (single non-independent contractor source, circumstantially corroborated by independent press on the 2025 Ain Sokhna second-FSRU grid-connection program); staged 2 concerns (Status likely stale 'construction' vs. the cited source's own 'completed 2025-03-15', and an open attribution question of whether this is really an FSRU send-out line rather than an offshore-production-platform feeder) plus 1 ref-only fill (orphan Location [ref]). No duplicate found in-cohort. Nothing UNRESOLVED left unaddressed -- both concerns are routed to Update for EGAS/SUMED-side confirmation rather than silently passed or fabricated."
+}

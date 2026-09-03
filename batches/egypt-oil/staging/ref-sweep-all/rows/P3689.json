@@ -1,0 +1,249 @@
+{
+  "project_id": "P3689",
+  "pipeline_name": "Badr El Din-El Hamra Oil Pipeline",
+  "sheet_row": 1068,
+  "wiki": "https://www.gem.wiki/Badr_El_Din-El_Hamra_Oil_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/route; paste the refs below; leave StartLocation cluster + Owner% open per the two flags noted",
+      "researcher_notes": "RE-AUDIT NOTE: a shard already existed at this path from a prior pass. Re-derived every finding independently before reading it, then diffed against it. Two corrections to the prior pass: (1) it attributed a quote 'Al-Hamra Petroleum Port in New Alamein' to wepco-eg.com/operation-services/badr-terminal/ as an exact match for EndPrefecture/District='El Almeen' - I downloaded and grepped that page's raw text directly and that phrase, and the word 'Alamein'/'Almein' in any form, does NOT appear on it anywhere. This looks like a fabricated/hallucinated quote, not a real citation - corrected below (the real, indirect 'New Alamein City' phrase lives on a DIFFERENT WEPCO page, about-us/, in an unrelated storage-expansion context, so I downgraded EndLocation from high to medium and dropped the false quote). (2) The prior pass never found wepco-eg.com/about-us/ at all, which independently states WEPCO's core activities include 'Managing & Operating WEPCO 12” pipeline' - a second, independent match for Diameter=12in (upgrading that fill from medium to high) and direct support that WEPCO itself, not just the El Hamra terminal, owns/operates the 12-inch gathering pipeline (upgrading Owner1=WEPCO from UNRESOLVED to a filled, medium-tier ref). Diameter, Owner, and Fuel/Status tiers changed below versus the prior file for these reasons; nothing else did.\n\nEXISTENCE + CLASSIFICATION + DUPLICATE (checked first, per instructions): the wiki citation pool held 4 URLs. Verified all 4 live/dead status: (1) egyptoil-gas.com PDF 'The Western Desert: Egypt's Giant Petroleum Reservoir' (Egypt Oil & Gas Newspaper, Issue 159, March 2020) - HTTP 200, but url_verifier's substring check FAILS on every token because it does not extract PDF text at all (confirmed by reading its source: it matches raw r.text against a compressed PDF byte stream, which can never contain the plaintext) - this is the documented large/PDF-extractor limitation (source_roster.md, sweep.md) applied to a small PDF for the same root cause. Downloaded the file directly and ran `pdftotext -layout`, which resolves it cleanly: line 214 reads 'Badr El Din- Badr El Din 1 El Hamra 128 12 60,000' under a table headed Length(Km)/Diameter(Inches)/Capacity(bbl/d) - an EXACT match on GEM's LengthKnown=128km, Diameter=12in, Capacity=60,000bpd. (2) wepco-eg.com/operations-services/badr-1/ (the literal wiki-cited URL) is a genuine 404 - the site restructured to 'operation-services' (singular) and 'badr-terminal' as the slug; found the live equivalent by crawling wepco-eg.com's own nav: https://www.wepco-eg.com/operation-services/badr-terminal/ (200, verified, describes 'the historic Badr-1 Field, in operation since the early 1980s' and crude transfer to 'the primary storage facilities at the Al-Hamra Oil Port'). (3) egyptoil-gas.com/news/bapetco-exceeds-production-plans-by-11/ - live, verified, names 'Badr 1 field' and 'Al-Hamra Petroleum Port' together. (4) offshore-technology.com's Badr El-Din field market-data page - live but a thin subscription teaser about the FIELD only (operator listed as 'Badr Petroleum', owners 'Capricorn Energy and Cheiron Petroleum'); it names no pipeline, so treated as background context only, not a pipeline-specific corroboration, consistent with the standing rule that a citation not naming the specific asset is not support for it.\n\nEXISTENCE/ROUTE: confirmed by TWO independent, non-GEM origins that agree with each other and with GEM. The Egypt Oil & Gas Newspaper table states plainly: 'The Western Desert has four crude oil pipelines. Three pipelines transport crude oil from the production areas, specifically from Meleiha, Badr El Din, and Abu Gharadig concessions to El Hamra terminal... then is shipped by the fourth pipeline, El Hamra-Sidi Kerir, to refineries in Alexandria.' Its table then gives, exactly: Meleiha-El Hamra 167km/16in/90,000bpd; Badr El Din-El Hamra 128km/12in/60,000bpd (= P3689, exact match); Abu Gharadig-El Hamra 140km/12,16in/60,000bpd; El Hamra-Sidi Kerir-Alexandria 90km/16in/200,000bpd. These map 1:1 onto roster rows P0572, P3689, P3688, and P3693 respectively with matching or near-matching specs (P0572's sheet Capacity=140,000 does NOT match the table's 90,000 for Meleiha - flagging for the record since it touches a different PID, but out of scope for this shard; not a P3689 issue). This independently confirms all four are distinct physical lines, not duplicates of one another, closing the roster's implicit duplicate question for P3689 cleanly. Separately, WEPCO's own corporate site (wepco-eg.com) independently corroborates the same Badr-1-to-El-Hamra flow from a second, fully independent (non-trade-press) origin: the badr-terminal page describes ongoing crude transfer from Badr-1 (and neighboring Petro-Sannan/Burj Al-Arab/Petro-Fayoum fields) to Al-Hamra Oil Port, and the about-us page separately states WEPCO's core activities include 'Managing & Operating WEPCO 12” pipeline' alongside managing El-Hamra Terminal as 'a centralized hub for crude oil storage and handling' serving 'all Western Desert oil producers.' Tier for EXISTENCE/ROUTE: high (2 independent sources agree, and one of them corroborates 3 sibling rows simultaneously with exact numeric matches, which is strong evidence the table itself is accurate rather than coincidental).\n\nCLASSIFICATION: correctly a crude-oil transport pipeline (Fuel=Oil), not gas/NGL/gathering-only - both independent sources describe crude oil specifically. No concern.\n\nDUPLICATE: checked against the full 46-row Egypt-oil roster, not just the orchestrator's named watchlist (P3689 isn't on that watchlist). Not a duplicate - see the 4-pipeline table match above.\n\nATTRIBUTION: Operator = 'بدر الدين للبترول (بابيتكو)' = Badr El Din Petroleum Company (BAPETCO). Well-documented as the BED FIELD's operator/developer (the PDF: 'BAPETCO was initially formed to develop and operate BED-1, Shell's first discovery in the field'; offshore-technology.com separately lists the field operator as 'Badr Petroleum', presumably the same entity under a shortened name) - consistent with the scope note that 'Badr El Din Company' in Egyptian sources = BAPETCO the operator, not the field itself, so GEM's Operator value is reading correctly, not conflating the two. Caveat, unchanged from before: no source I could verify explicitly names BAPETCO, as opposed to WEPCO or a dedicated pipelines company, as operator of THIS TRANSPORT SEGMENT specifically (as distinct from the upstream field) - plausible on the standard oil-field-to-terminal pattern (producer operates the gathering line to the receiving terminal, which is then run by a separate midstream company), not proven, so kept at medium rather than high.\n\nATTRIBUTION CONCERN (see the separate validity entry below): StartPrefecture/District = 'Siwa Desert' does not fit any source's description of Badr field's location and looks geographically implausible.\n\nSTART YEAR: StartYear1=1982 is only approximately corroborated - WEPCO's badr-terminal page: 'the historic Badr-1 Field, in operation since the early 1980s.' Consistent with, but does not pinpoint, 1982, and describes field production start rather than confirming the pipeline's own construction year (though for a dedicated field-to-terminal gathering line the two would typically coincide). Kept at medium.\n\nNo hallucination/phantom-entity concern for the pipeline itself: this is real, correctly classified, non-duplicate, with core specs matching an independent trade-press table exactly and existence independently corroborated by the operating company's own site.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.wepco-eg.com/operation-services/badr-terminal/",
+        "https://www.wepco-eg.com/about-us/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "verify/correct StartPrefecture/District ('Siwa Desert'); every independently-sourced description of Badr field's location points to the Qattara Depression edge near Alamein/Matruh, nowhere near Siwa",
+      "researcher_notes": "GEM's StartPrefecture/District for this row is 'Siwa Desert'. Every independent source I found describing Badr-1/Badr El Din field's location disagrees with that: WEPCO's own site places it 'in the western desert on the edge of Qattara Depression... about 300 km west of Cairo, 90 km south of Alamein City... adjacent to Abu Gharadig Field' (homepage nav summary, corroborated by the badr-terminal page's own 'Qattara Depression' framing carried in GEM's StartLocation field, which IS supported). Siwa Oasis/the Siwa depression is a distinct, much more remote location near the Libyan border, roughly 250+ km further southwest/west of the Qattara-Alamein-Matruh cluster where every source places Badr, Meleiha, Abu Gharadig, and El Hamra - none of the sources I checked (WEPCO, the Egypt Oil & Gas table, offshore-technology.com, EGPC/Shell/BAPETCO context in the PDF) mention Siwa in connection with Badr El Din at all. This reads as a likely data error (possibly a mix-up with a different Western Desert prospect, or a mis-entered administrative label) rather than a confirmable fact - flagging as a low-severity attribution concern for a human to check against GEM's coordinate/route data, not something I can fix with a citation of my own. Left the whole StartLocation ref cluster UNRESOLVED (not filled) rather than paste a ref that would appear to validate 'Siwa Desert' along with the parts that are actually supported (Qattara Depression / Western Desert / Egypt).",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Oil"},
+      "primary_value": "Oil",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.wepco-eg.com/operation-services/badr-terminal/"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.wepco-eg.com/operation-services/badr-terminal/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Listed in the dedicated 'CRUDE OIL INFRASTRUCTURE' table (one of the Western Desert's four crude oil pipelines); WEPCO's site independently and repeatedly describes Badr-1-to-El-Hamra flow as crude oil. Two independent sources agree -> high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.wepco-eg.com/operation-services/badr-terminal/"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.wepco-eg.com/operation-services/badr-terminal/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "2020 trade-press table lists it as existing, in-use crude infrastructure (no construction/planned flag). WEPCO's own site independently and currently (its most recent content describes ongoing digital-transformation/pumping-station upgrade projects) frames the Badr-1-to-Al-Hamra flow as present-tense, active. Two independent sources agree the line is active -> high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1982"},
+      "primary_value": "1982",
+      "proposed_refs": ["https://www.wepco-eg.com/operation-services/badr-terminal/"],
+      "verifications": [{"url": "https://www.wepco-eg.com/operation-services/badr-terminal/", "ok": true, "contains_value": false}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "WEPCO's own site: 'the historic Badr-1 Field, in operation since the early 1980s.' Consistent with, but does not pinpoint, 1982, and describes field-production start rather than confirming the pipeline's own build year. Single approximate source -> medium; contains_value=false is the honest read (the page says 'early 1980s', not '1982')."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "128.00", "LengthKnownUnits": "km"},
+      "primary_value": "128.00",
+      "proposed_refs": ["https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"],
+      "verifications": [{"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Table row 'Badr El Din- El Hamra | Badr El Din 1 | El Hamra | 128 | 12 | 60,000' under header Length(Km)/Diameter(Inches)/Capacity(bbl/d) - exact match, verified via pdftotext -layout after url_verifier's PDF-extraction limitation returned a false content FAIL (documented in researcher_notes above and per source_roster.md/sweep.md precedent for this class of tool limitation). Single strong, specific source -> medium; I could not locate a second independent source giving an exact length figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12", "DiameterUnits": "in"},
+      "primary_value": "12",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.wepco-eg.com/about-us/"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.wepco-eg.com/about-us/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Table's Diameter(Inches) column = 12, exact match. Independently, WEPCO's own about-us page lists among its core activities 'Managing & Operating WEPCO 12” pipeline' - this is the only purely-12-inch line in the roster's Western-Desert-to-El-Hamra family (Abu Gharadig-El Hamra runs 12/16in dual, Meleiha-El Hamra is 16in, El Hamra-Sidi Kerir is 16in), so the singular '12” pipeline' WEPCO names is most plausibly this segment. Two independent sources agree -> high (upgraded from the prior pass's medium, which had not found the about-us page)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "60,000.00", "CapacityUnits": "bpd"},
+      "primary_value": "60,000.00",
+      "proposed_refs": ["https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"],
+      "verifications": [{"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same table row, Capacity(bbl/d) column = 60,000, exact match to GEM's Capacity=60,000.00 bpd. WEPCO's badr-terminal page separately mentions '16,000-barrel per day pumps' at the Badr-1 crude pumping station, which is directionally consistent with (roughly a quarter of, on a multi-pump station) but not a clean independent confirmation of a 60,000 bpd pipeline design capacity, so not counted as a second source. Single specific source -> medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Badr field"},
+      "primary_value": "Badr field",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.wepco-eg.com/operation-services/badr-terminal/"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.wepco-eg.com/operation-services/badr-terminal/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources independently name the Badr El Din / Badr-1 field as the crude source feeding this line to El Hamra. Two independent sources agree -> high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "StartLocation [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Qattara Depression", "StartPrefecture/District": "Siwa Desert", "StartState/Province": "Western Desert", "StartCountryOrArea": "Egypt"},
+      "primary_value": "Qattara Depression",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartLocation='Qattara Depression', StartState/Province='Western Desert', and StartCountryOrArea='Egypt' are all corroborated (WEPCO: Badr field 'on the edge of Qattara Depression' in 'the western desert'). But StartPrefecture/District='Siwa Desert' is not - see the separate attribution-concern validity entry above; Siwa is a distant, unrelated location per every source found. Left the whole cluster UNRESOLVED rather than stamp a ref that would appear to validate 'Siwa Desert' along with the parts that check out."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "EndLocation [ref]",
+      "value_cols": ["EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "EndLocation",
+      "values": {"EndLocation": "El Hamra", "EndPrefecture/District": "El Almeen", "EndState/Province": "Matruh", "EndCountryOrArea": "Egypt"},
+      "primary_value": "El Hamra",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.wepco-eg.com/about-us/"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.wepco-eg.com/about-us/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CORRECTION to the prior pass: it cited badr-terminal/ for an exact-match quote 'Al-Hamra Petroleum Port in New Alamein', claiming that as a high-tier match for EndPrefecture/District='El Almeen'. I downloaded that page's raw text directly and searched it: the words 'Alamein'/'Almein' do not appear on it in any form - that quote does not exist on that page and appears to have been fabricated. El Hamra terminal's EXISTENCE and identity as the endpoint IS very well confirmed (it is WEPCO's named primary asset across every WEPCO page checked). The 'New Alamein' <-> El Hamra connection has real but indirect support instead, on a DIFFERENT page: WEPCO's about-us/ states a short-term (2025) goal of 'Adding 130K tons of petroleum product storage for New Alamein City' - i.e. WEPCO is expanding storage FOR New Alamein City, consistent with El Hamra sitting in/near that district, but this is not a direct statement that the terminal itself is located in 'El Almeen'. GEM's own roster uses the same district under two spellings on different rows (P3691: 'New Almien City'; this row: 'El Almeen'), suggesting an internal naming-consistency issue rather than a factual location error. EndState/Province='Matruh' is consistent with how GEM treats El Hamra on other rows (P3691, P7328) but I found no independent, non-GEM source stating El Hamra's governorate explicitly. Given the fabricated quote is now removed and the real support is indirect, downgraded from the prior pass's 'high' to medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "بدر الدين للبترول (بابيتكو)"},
+      "primary_value": "بدر الدين للبترول (بابيتكو)",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+        "https://www.offshore-technology.com/marketdata/badr-el-din-development-lease-conventional-oil-field-egypt/"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.offshore-technology.com/marketdata/badr-el-din-development-lease-conventional-oil-field-egypt/", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PDF confirms BAPETCO (Badr El Din Petroleum Company) 'was initially formed to develop and operate BED-1, Shell's first discovery in the field' - well-documented as the BED FIELD's operator, matching the scope note that 'Badr El Din Company' in Egyptian sources = BAPETCO the operator, not the field. offshore-technology.com separately names the field operator 'Badr Petroleum' (contains_value=false since it doesn't use the string BAPETCO, but is almost certainly the same entity under a shortened label - not counted toward independence at full weight because of that naming gap). Caveat, carried from the prior pass and still open: no source explicitly names BAPETCO as operator of THIS TRANSPORT SEGMENT as distinct from the upstream field - plausible on the standard field-to-terminal pattern, not proven -> medium, not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1068,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "WEPCO", "Owner1%": "100.00%"},
+      "primary_value": "WEPCO",
+      "proposed_refs": ["https://www.wepco-eg.com/about-us/"],
+      "verifications": [{"url": "https://www.wepco-eg.com/about-us/", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IMPROVEMENT over the prior pass, which left this UNRESOLVED entirely. WEPCO's own about-us page lists 'Managing & Operating WEPCO 12” pipeline' among its core activities, alongside operating El-Hamra Terminal as the receiving hub for this and the other Western Desert crude lines - i.e. WEPCO names itself (not a third party) as the entity running the pipeline. No source states an ownership PERCENTAGE, so the '100.00%' figure specifically remains unconfirmed by an independent source (a common gap for Egyptian state/company midstream assets) - filled the Owner1 name at medium, not high, and flag the exact percentage as still open."
+    }
+  ],
+  "summary": "P3689 confirmed real, correctly classified, non-duplicate: an independent Egypt Oil & Gas Newspaper trade-press table names this exact route (Badr El Din 1 -> El Hamra) with length/diameter/capacity matching GEM's 128km/12in/60,000bpd EXACTLY, and the same table independently confirms 3 sibling roster rows (P0572, P3688, P3693) are distinct real lines, closing any duplicate doubt. Verdict: confirmed (caveat). Corrected one fabricated quote from a prior pass at this same file path (a claimed exact-match citation for EndLocation that does not exist on the cited page) and added a source the prior pass missed (WEPCO's about-us page), which upgrades Diameter to high tier and fills Owner1=WEPCO at medium (previously left fully unresolved). Filled 9 ref units at REFS_ADDED (Fuel/Status/Start/Length/Diameter/Capacity/FuelSource/EndLocation/Operator/Owner). Two items UNRESOLVED/flagged: StartLocation's 'Siwa Desert' sub-field looks like a genuine data error (raised as a separate low-severity attribution concern - every source places Badr field near Qattara Depression/Alamein/Matruh, nowhere near Siwa), and Owner1's exact 100% figure is unconfirmed."
+}

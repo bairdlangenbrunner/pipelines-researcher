@@ -1,0 +1,49 @@
+{
+  "project_id": "P8076",
+  "pipeline_name": "Damietta-Abu Madi Gas Pipeline",
+  "sheet_row": 4336,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Length/Diameter/Fuel/PipelineType/existence; see the two attribution concerns below (Status ref, Start/End direction).",
+      "researcher_notes": "EXISTENCE + SPEC checked against the row's own two cited sources, read directly (both are Egypt Oil & Gas magazine PDFs whose text layer defeats simple substring search — WebFetch's own HTML->markdown conversion and url_verifier's extractor both report 'no readable text' for name tokens like 'Abu Madi'/'Damietta', a documented ligature/complex-PDF false-negative family per url_verifier.py's own docstring. I downloaded and read the PDFs as rendered page images (visual read, not text-search) to resolve this rather than accepting the FAIL at face value. Test applied: full visual read of the cited table, not a text-search miss. FINDING: both PDFs contain an EXACT line-item match. (1) 'A Guide to the Nile Delta's Oil and Gas Resources' (egyptoil-gas.com, Feb 2020, Issue 158), p.35, table 'Natural Gas Infrastructure in the Nile Delta': row 'Abu Madi-Damietta | From: Abu Madi | To: Damietta | Length 42 Km | Diameter 16 Inches' -- matches GEM's LengthKnown=42.00 km and Diameter=16 in exactly. Same page/table also independently corroborates 4 sibling rows in this same 40-row batch (P8019 Damanhur-Tanta 60km/28in, P8024 Talkha-Tanta-Cairo 125km/28in, P8077 Meadia-Damanhur 50km/20in, P8078 Alexandria Network-Damanhur 45km/24in all match this same table exactly), which is strong circumstantial evidence this whole cluster of NA's entries is a faithful transcription of one real, internally-consistent published dataset rather than fabrication. (2) 'Egypt's Natural Gas Pipelines: Towards a Regional Transit Hub' (egyptoil-gas.com, Dec 2023, Issue 204), p.19, table 'Nile Delta/Cairo/Nile Valley' (explicitly sourced to Wood Mackenzie for this section): row 'Abu Madi-Damietta | From: Abu Madi | To: Damietta | Length 42 Km' -- again exact length match (no diameter column in this table). CAVEAT ON INDEPENDENCE: both are the same publisher (Egypt Oil & Gas) and the 2023 table is explicitly Wood Mackenzie-sourced; I could not confirm the 2020 table's ultimate origin (possibly also EGAS/Wood Mackenzie), so I am NOT treating these as two fully independent origins per the corroboration rubric -- scoring this medium (one strong lineage, corroborated twice) rather than high. Diameter (16in) appears in only the 2020 table, uncorroborated by a second source. Fuel=Gas and PipelineType=transmission are trivially supported by the same 2020 report (a natural-gas-infrastructure guide; 42km/16in trunk line from a gas treatment plant to a demand center is a normal transmission classification, not a gathering/feeder line). CLASSIFICATION: no evidence of misclassification. DUPLICATE: checked against all 40 rows in the batch roster -- no other row names Abu Madi or this Damietta corridor; not a duplicate. GOVERNORATE UNCONFIRMED: I could not independently confirm Abu Madi is in Dakahlia governorate (EndState/Province) this session -- WebSearch quota was exhausted mid-task (200/200) and my WebFetch attempts at Wikipedia/Marefa/Bing turned up nothing specific. Neither of the two cited PDFs states a governorate for Abu Madi, only the plant/city names. This is not evidence Dakahlia is wrong, just an open item for a future pass with search capacity.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/",
+        "https://egyptoil-gas.com/reports/egypts-natural-gas-pipelines-towards-a-regional-transit-hub/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Update leg: verify Start/End assignment; consider swapping to Start=Abu Madi (Dakahlia)/End=Damietta and renaming to 'Abu Madi-Damietta' to match the source and the physical flow direction, OR confirm the current order is an intentional GEM convention independent of flow direction.",
+      "researcher_notes": "Both of the row's own cited sources name this pipeline 'Abu Madi-Damietta' with From=Abu Madi, To=Damietta (gas moves from the Abu Madi gas treatment plant, in production since 1977 per the same Feb-2020 report, to the Damietta demand/export hub -- SEGAS LNG plant, fertilizer/ammonia plants). GEM's PipelineName is reversed: 'Damietta-Abu Madi', and correspondingly EndPrefecture/District='Abu Mad' (End=Abu Madi) implies Start=Damietta -- opposite of both sources' From/To order and of the apparent physical flow direction. StartLocation/StartPrefecture/StartState are all currently blank, so this isn't a hard factual error (both endpoints are correctly identified as a set), but it breaks the source's own naming and, going by the sibling rows in this batch (e.g. P8032 Ameriya-Dahshour, P8039 Sadat-Dahshour, P8042 UGDC-Suez), the batch generally names Start=upstream/production side, End=downstream/demand side -- which this row does not follow. Flagging as attribution rather than existence/spec since the underlying facts (both endpoints, length, diameter) are right; only the labeled direction is questionable. Not staging a 'fill' for the blank Start fields since doing so under the CURRENT (possibly-reversed) order could entrench the wrong direction -- this needs a human Update decision, not a mechanical fill.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/",
+        "https://egyptoil-gas.com/reports/egypts-natural-gas-pipelines-towards-a-regional-transit-hub/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Replace the Status [ref] URL with a real citation, or leave it for the ref-sweep leg to source. Do not delete the 'operating' value itself -- it is uncontested and consistent with both cited spec sources treating this as existing (non-planned) infrastructure.",
+      "researcher_notes": "The Status [ref] cell currently points to https://egyptoil-gas.com/?s=Gas+Pipelines+Egypt -- a live site SEARCH-RESULTS page (query string '?s=Gas+Pipelines+Egypt'), not a specific article. url_verifier already flagged this in the worklist ('200 but data value not found') and I re-ran it myself with the same result -- confirmed FAIL, and unlike the two report PDFs above this is not a PDF-extraction false negative: a search-results page for a generic query genuinely does not name this pipeline or state a status for it. This is a bad citation, though I have no reason to doubt the 'operating' VALUE itself: both the 2020 and 2023 cited spec reports list Abu Madi-Damietta among current/existing Nile Delta infrastructure (no '(Pre-2021)'/planned-style qualifier the way some Western Desert rows in the same 2023 report carry), and Abu Madi has been in continuous gas production since 1977 feeding a still-active demand hub at Damietta. I did not find a replacement citation that explicitly states 'operating' for this specific line (WebSearch quota was exhausted before I could pursue this further), so I'm flagging the ref as broken rather than fabricating or silently swapping in a URL that doesn't actually confirm status.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P8076 Damietta-Abu Madi: existence + length(42km) + diameter(16in) CONFIRMED (medium tier) via two Egypt Oil & Gas PDF reports the row already cites -- both name it 'Abu Madi-Damietta' (42km, From Abu Madi To Damietta); 2 attribution concerns staged (Start/End likely reversed vs. source's own From/To and the batch's flow convention; Status [ref] is a dead-end search-results URL, not a real citation) -- no replacement Status source found, UNRESOLVED."
+}

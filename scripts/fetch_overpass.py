@@ -30,6 +30,7 @@ and unparsed; ingest.py does the unit normalization per the manifest.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -120,6 +121,14 @@ ATTR_TAGS = {
     "diameter": "osm_diameter",
     "start_date": "osm_start_date",
     "usage": "osm_usage",
+    # `usage` (transmission/distribution) and `pressure` are the two tags that separate
+    # trunk pipe from the low-pressure network GGIT does not track — the distinction that
+    # decides whether an unmatched trace is a Discovery lead or out of scope. Ukraine made
+    # the case: 1,004 features fetched, 741 of them sub-0.5 km stubs whose operators are
+    # city and district distribution utilities. Neither tag filters the fetch (both are
+    # sparse, and a missing tag must never drop real pipe) — they ride along so recon
+    # triage can sort on them instead of on trace length alone.
+    "pressure": "osm_pressure",
     "location": "osm_location",
     "name:en": "osm_name_en",
     "name:ar": "osm_name_local",
@@ -145,24 +154,48 @@ def _way_line(el: dict) -> list | None:
 
 
 def _collect_lines(js: dict) -> list[tuple[list, dict]]:
-    """-> [(coords, {osm_type, osm_id, tags})]; relation members flattened to ways."""
+    """-> [(coords, {osm_type, osm_id, tags})]; relation members flattened to ways.
+
+    A way that is BOTH matched standalone and carried as a relation member must enter
+    the stitch exactly once. Overpass returns both, and feeding the same geometry to
+    linemerge twice makes it emit the shared part twice — exact-duplicate output
+    features with identical way sets, so even the geometry-derived `osm_id_key`
+    discriminator hashes them the same (measured 2026-08-27: Egypt oil, 3 features /
+    83.3 km, the SUMED route relation over ways also tagged individually). A
+    duplicated reference record is a phantom counterpart in every recon that reads
+    the extract, so the dedup happens here, at the source.
+
+    The way's own tags win (they are the specific ones); the relation's tags fill any
+    key the way lacks, so a name carried only on the relation still survives.
+    """
     lines = []
+    by_way_id: dict[str, int] = {}
     for el in js.get("elements", []) or []:
-        t = el.get("type")
-        if t == "way":
-            c = _way_line(el)
-            if c:
-                lines.append((c, {"osm_type": "way", "osm_id": el.get("id"),
-                                  "tags": el.get("tags", {})}))
-        elif t == "relation":
-            rtags = el.get("tags", {})
-            for m in el.get("members", []) or []:
-                if m.get("type") == "way" and m.get("geometry"):
-                    c = [[p["lon"], p["lat"]] for p in m["geometry"]
-                         if "lon" in p and "lat" in p]
-                    if len(c) >= 2:
-                        lines.append((c, {"osm_type": "relation", "osm_id": el.get("id"),
-                                          "tags": rtags}))
+        if el.get("type") != "way":
+            continue
+        c = _way_line(el)
+        if c:
+            by_way_id[str(el.get("id"))] = len(lines)
+            lines.append((c, {"osm_type": "way", "osm_id": el.get("id"),
+                              "tags": dict(el.get("tags", {}))}))
+    for el in js.get("elements", []) or []:
+        if el.get("type") != "relation":
+            continue
+        rtags = el.get("tags", {}) or {}
+        for m in el.get("members", []) or []:
+            if m.get("type") != "way" or not m.get("geometry"):
+                continue
+            ref = str(m.get("ref"))
+            if ref in by_way_id:                      # already in as a standalone way
+                tags = lines[by_way_id[ref]][1]["tags"]
+                for k, v in rtags.items():
+                    tags.setdefault(k, v)             # relation fills gaps only
+                continue
+            c = [[p["lon"], p["lat"]] for p in m["geometry"]
+                 if "lon" in p and "lat" in p]
+            if len(c) >= 2:
+                lines.append((c, {"osm_type": "relation", "osm_id": el.get("id"),
+                                  "tags": dict(rtags)}))
     return lines
 
 
@@ -184,8 +217,12 @@ def _stitch(lines: list[tuple[list, dict]]) -> list[dict]:
         pts = set(map(tuple, part.coords))
         contributing = sorted({str(m["osm_id"]) for c, m in lines
                                if pts & set(map(tuple, c))})
-        sample_tags = next((m["tags"] for c, m in lines
-                            if pts & set(map(tuple, c))), {})
+        # Prefer a contributing way that actually carries a name: a merged part
+        # spans several ways and only some are named, so taking whichever came
+        # first silently drops the name axis for the whole part.
+        contrib_tags = [m["tags"] for c, m in lines if pts & set(map(tuple, c))]
+        sample_tags = next((t for t in contrib_tags if (t.get("name") or "").strip()),
+                           contrib_tags[0] if contrib_tags else {})
         props = {
             "source": "OSM", "license": "ODbL",
             "attribution": "© OpenStreetMap contributors",
@@ -207,6 +244,43 @@ def _stitch(lines: list[tuple[list, dict]]) -> list[dict]:
         props["lifecycle"] = _lifecycle_of(sample_tags)
         feats.append({"type": "Feature", "geometry": mapping(part),
                       "properties": props})
+    return _disambiguate_keys(feats)
+
+
+def _disambiguate_keys(feats: list[dict]) -> list[dict]:
+    """Make `osm_id_key` unique, because the way-id set alone is NOT unique.
+
+    `contributing` is "which source ways share a vertex with this part", so when a
+    way group merges into several DISCONNECTED parts that each touch the same set of
+    ways, every part gets an identical key. Measured 2026-08-26 across the registry:
+    62 features in the 10 registered extracts collide, incl. 6 in Uzbekistan carrying
+    865.8 km and 7 in Kazakhstan carrying 711.7 km. ingest.py papers over it by
+    suffixing '#2', '#3' — but that suffix is ASSIGNMENT-ORDER dependent, so the
+    manifest's `provenance.oid_field: osm_id_key` cannot support cross-scrape
+    identity: re-fetch, get the parts back in another order, and '#2' names a
+    different piece.
+
+    The discriminator is derived from the part's own GEOMETRY, so it is stable across
+    re-fetches (identical geometry -> identical id) and changes only when the shape
+    does, which is what an identity key should do.
+
+    Deliberately a post-pass that touches ONLY keys that actually collide: a key that
+    is already unique is emitted byte-identical to before, in every extract. So
+    re-fetching a country moves nothing except ids that are unstable garbage today.
+    """
+    from collections import Counter
+    counts = Counter(f["properties"]["osm_id_key"] for f in feats)
+    for f in feats:
+        key = f["properties"]["osm_id_key"]
+        if counts[key] < 2:
+            continue
+        coords = f["geometry"]["coordinates"]
+        if coords and isinstance(coords[0][0], (list, tuple)):   # MultiLineString
+            coords = [pt for line in coords for pt in line]
+        # 6 decimals ~ 0.1 m: finer than any OSM trace, coarse enough that float
+        # repr noise across shapely/proj versions cannot flip the digest.
+        blob = ";".join(f"{x:.6f},{y:.6f}" for x, y in coords).encode()
+        f["properties"]["osm_id_key"] = f"{key}#{hashlib.blake2s(blob, digest_size=3).hexdigest()}"
     return feats
 
 

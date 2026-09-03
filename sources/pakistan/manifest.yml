@@ -1,0 +1,121 @@
+# PPIS / DGPC "Energy Infrastructure Map - 2025" — a vector-PDF digitization, not a scrape.
+# Reconciled against GEM via:  python scripts/reconcile.py --source pakistan ...
+# Pure-declarative: no adapter.py. READ NOTES.md FIRST — this source is geometry-first on
+# purpose, because its per-feature LABELS are nearest-text artifacts, not stated attributes.
+#
+# The ingest input is derived, not as-delivered: run
+#   python sources/pakistan/prepare.py
+# to rebuild data/ppis-pipelines.geojson from the tracked source PDF.
+#
+# Pakistan-only by construction — a single-country national map. A later brochure edition
+# is a new datasets[] entry (or a new source), never an in-place overwrite: the shape_ids
+# are assignment-ordered and do not survive a re-extraction (see oid_stability).
+
+source: pakistan            # = the folder name, which is the CLI key. A SECOND Pakistani
+                            # reference source gets its own sources/<name>/ folder rather
+                            # than a datasets[] entry here — this one is a single map.
+display_name: "PPIS Energy Infrastructure Map 2025 (Directorate General of Petroleum
+  Concessions / Pakistan Petroleum Information Service, Investment Brochure 2025, p.6)"
+source_tier: 3                 # The MAP is government-agency grade (DGPC is the licensing
+                               # regulator). The DIGITIZATION carries a 3.3 km median /
+                               # 21.8 km max georeferencing residual and machine-assigned
+                               # per-feature labels. Tier 3, like OSM and the Malaysian Gas Map.
+default_crs: "EPSG:4326"
+
+provenance:
+  origin_url: "https://ppisonline.com/Brochure/Investment%20Brochure%202025.pdf"
+  scraped_date: "2026-08-26"   # date the PDF was retrieved + digitized
+  oid_field: shape_id          # stamped by prepare.py, PPIS-0001..
+  oid_stability: unstable      # stable WITHIN one extraction and reproducible from the same
+                               # PDF, but the ids are assignment-ordered: a different PDF
+                               # edition, or a change to the class dictionary, renumbers from
+                               # scratch. Cross-edition identity does NOT survive.
+
+datasets:
+  # ONE dataset, split by per-feature commodity via fuel_field — NOT two entries pointing
+  # at the same file, which would ingest all 412 features twice and let an oil line score
+  # against a gas row.
+  #
+  # Gas: 398 LineStrings, ~19,212 km — SNGPL's Punjab/KP transmission network, SSGCL's
+  # Sindh/Balochistan network, the two operators' dashed PLANNED lines (21 stitched runs),
+  # and the three planned import/trunk corridors (Iran-Pakistan, TAPI, Pakistan Stream).
+  # Oil: 14 LineStrings, ~2,248 km — the PARCO Karachi-Mahmud Kot crude line, the PAPCO
+  # white-oil system (Karachi-Mahmud Kot-Faisalabad-Machike), and 12 short refinery-area
+  # connectors (the `oil_planned_uc` class — the weakest in the extraction, see NOTES.md).
+  #
+  # A network class is one feature PER BRANCH BETWEEN JUNCTIONS: SNGPL is 278 features
+  # because that is the graph, not because the extraction fragmented. So a single GEM row
+  # will legitimately match many features, and the length totals above are network totals.
+  # A DASHED line is the exception: it is one feature per dashed RUN, stitched end-to-end,
+  # so `drawn_as: dashed` features are whole lines rather than branches.
+  - name: pipelines
+    scraped_date: "2026-08-26"
+    commodity_default: gas
+    fuel_field: commodity        # per-feature 'gas' | 'oil', stamped by prepare.py
+    fuel_map: { gas: gas, oil: oil }
+    format: geojson
+    path: data/ppis-pipelines.geojson
+    geometry: feature
+    column_map:
+      country_const: "Pakistan"
+      status: status             # already normalized to GEM vocab by prepare.py
+      description: description
+      # `drawn_as` ('solid' | 'dashed') and `dash_marks_stitched` ride along in the geojson
+      # but are extraction provenance, not attributes — nothing in the engine reads them.
+      # DELIBERATELY UNMAPPED — do not "fix" these by pointing them at a column:
+      #   name             — there is no per-feature name on the map. `nearest_text` is the
+      #                      closest annotation within 6 pt; on a dense network one label
+      #                      sits near several branches, so mapping it would make one GEM
+      #                      row a magnet for a whole junction. Survives in `description`.
+      #   diameter_raw /
+      #   length_raw       — `label_diameter_in` / `label_length_km` come from that same
+      #                      nearest-text guess. The VALUES are genuine published content;
+      #                      the ASSIGNMENT to a feature is ours. Mapping them would let an
+      #                      artifact raise Diameter_Conflicts against GEM. Use them as a
+      #                      lead for a targeted lookup, never as a sourced attribute.
+      #   operator/owners/
+      #   start_year       — the map carries none of them.
+    units:
+      # No attribute length column is mapped, so there is no declared unit to disprove:
+      # every length this source contributes is geodesic_km computed from the trace. The
+      # usual `geodesic_km / length_km ~ 1.0` proof is N/A here, not skipped. Independent
+      # check instead: the five named trunk routes reproduce their published lengths to
+      # within -7%..+5% (NOTES.md), and lengths were never fitted to anything.
+      diameter_units: in
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      # prepare.py already emits GEM lowercase vocab; identity map so the intent is explicit
+      # and a future class carrying a raw map string fails loudly instead of passing through.
+      operating: operating
+      proposed: proposed
+      # No 'construction' entry on purpose: the one class the map marks "UNDER
+      # CONST./PLANNED" conflates two GEM statuses, so prepare.py emits a BLANK status for
+      # it. Blank is the honest reading and means this source raises no Status_Conflicts
+      # there. Do not resolve it to one value to make the column look complete.
+
+matching:
+  # Same shape as OSM's and the Malaysian Gas Map's blocks, for the same reason: the NAME
+  # axis is dead BY CONSTRUCTION (see column_map), so geometry is the only substantive
+  # signal — and here the geometry is good: publisher-drawn vector coordinates, not a
+  # raster trace, georeferenced at a 3.3 km median residual with zero bias.
+  name_weight: 0.05
+  endpoint_weight: 0.15
+  diameter_weight: 0.0
+  length_weight: 0.05
+  geometry_weight: 0.75
+  green_threshold: 0.75
+  yellow_threshold: 0.45
+  # 12 km, above the 2 km onshore-survey default and above OSM's 10 km, for TWO stacked
+  # reasons — this is a documented error budget, not slack for a sloppy trace:
+  #   (1) this extraction's own residual: 3.3 km median, 14.7 km p90, 21.8 km max;
+  #   (2) the GEM side is mostly schematic — 52 of 70 Pakistan gas rows sit at
+  #       'very low (straight line/schematic)' and 11 more at 'low', so GEM's own
+  #       geometry deviates from the real corridor by more than this source does.
+  # A tight buffer would score a correctly digitized line as a non-match against a GEM
+  # straight-line placeholder, which is exactly the pairing this source exists to inform.
+  buffer_km_for_overlap: 12.0
+  # No geoarea_weight override. The dead-axes condition (unnamed reference features x
+  # ROUTELESS GEM rows) does not hold: all 74 GEM Pakistan rows (70 gas, 4 oil) carry a
+  # route. Geometry is live on both sides — it is merely coarse on GEM's side, which the
+  # buffer above handles. Do not add one.

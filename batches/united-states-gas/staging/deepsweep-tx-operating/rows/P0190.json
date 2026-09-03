@@ -1,0 +1,364 @@
+{
+  "project_id": "P0190",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 49,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "none needed",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, well-documented, currently active interstate gas transmission trunk. Confirmed independently via offshore-technology.com (GlobalData trade database profile of the system, calling it an active gas pipeline project) and a Jan. 2025 Federal Register notice (Florida Gas Transmission Company, LLC blanket-authorization filing) showing ongoing FERC-regulated activity. The operator's own June-2026 'Phase IX' project brochure (energytransfer.com, PDF, verified 200 + manually confirmed via pdftotext since url_verifier's PDF text extraction missed the tokens) additionally shows the system still expanding (Phase IX targeted Q4 2028 in-service, 'more than 70 years of reliable service'), i.e. not a phantom, not retired. CLASSIFICATION: correctly a natural-gas transmission trunk (Fuel=Gas), not a gathering/process line. DUPLICATE: checked against the 45-row roster. P3242 (len 3.0 mi) and P4051 (len 24.7 mi), both also named 'Florida Gas Transmission Pipeline', are NOT duplicates of this network row -- the gem.wiki page itself lists named sub-projects (East-West Project, Galveston County Project, Putnam Expansion Project, East Louisiana Project, Big Bend Project), and a harvested Pipeline & Gas Journal 'Planned Projects' PDF (Oct. 2018, s3.amazonaws.com/pgj-wp-media, opened and read) independently confirms FGT files individual FERC projects like 'East-West Project' as separate line items distinct from the whole-system figure -- consistent with GGIT's convention of one network/system row (this one, spanning Port Lavaca, TX to Miami, FL) plus separate rows for discrete expansion-project segments. So P0190, P3242 and P4051 are legitimately distinct GEM entries, not a double count. Two real, separate spec problems found instead -- see the other validity entries on StartYear1 and Capacity.",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+        "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct StartYear1 from 1998 to 1959 (original in-service year); 1998 is likely a mis-keyed FERC filing/expansion-phase date, not the pipeline's start year",
+      "researcher_notes": "GEM's StartYear1=1998 is materially wrong for a system-level start date. Two independent sources put the original in-service date at 1959: offshore-technology.com's GlobalData profile states outright 'The Florida Gas Transmission System project started operations in 1959,' and a Broward County Board of County Commissioners agenda exhibit ('History of Florida Gas Transmission Company, LLC -- Pipeline License Agreement', cragenda.broward.org PDF, opened and read via pdftotext -- url_verifier flags a content-check FAIL on this PDF but that is the documented PDF-extraction limitation in url_verifier.py's own header; the 200 status is real and I manually confirmed the tokens '1967' and 'Florida Gas' are present in the extracted text) shows the County approving a pipeline license agreement with 'Florida Gas Transmission Company' as far back as October 17, 1967 -- i.e. the pipeline was already an established, operating system nearly 20 years before GEM's 1998 date. 1998 is most likely a mis-copied date from FGT's Phase IV expansion, which was filed with FERC on Dec. 1, 1998 (per Natural Gas Intelligence coverage found in search) -- a real event, but an expansion-phase filing date, not the system's start year. This is a spec error the whole way GEM's data-entry pattern for legacy 1950s-60s US interstate trunks (built well before FERC's modern e-Library) seems prone to: a later, easily-searchable expansion date gets substituted for an original in-service year that requires digging into historical/legal records to find.",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+        "https://cragenda.broward.org/docs/2018/CCCM/20181113_571/27703_Exhibit%203%20-%20Agreement%20History.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "update Capacity from 1,059.44 MMcf/d to reflect the system's actual current mainline capacity (~3.2-3.7 Bcf/d per independent sources); the current sheet value understates capacity by roughly 3x",
+      "researcher_notes": "GEM's Capacity=1,059.44 MMcf/d is materially too low for the current system. Rextag Corporation (independent commercial pipeline-GIS data vendor, unrelated to GEM, verified live) states FGT's current 'System Capacity: 3.7 Bcf/d' against 'Miles of Pipeline: 5380' for the same system. That figure is directionally consistent with FGT's own public expansion history: a 2009 Florida Public Service Commission filing (floridapsc.com, verified) discusses FGT having '139 MMcf/d of excess capacity that will be available following its Phase VIII expansion in 2011' -- i.e. total system capacity was already well above 1,059 MMcf/d even before the ~800 MMcf/d Phase VIII addition went in service, and the operator's own June-2026 Phase IX brochure describes a further planned expansion of 'up to 526 million cubic feet per day' on top of today's base, which would be nonsensical language for a system whose base capacity were only ~1,059 MMcf/d. I could not pin an exact independently-sourced Bcf/d figure to a specific year matching GEM's 1,059.44 precision, so I'm not proposing a replacement number to paste -- only flagging that the existing figure is stale/wrong and should be re-researched against a current FERC Index of Customers or FGT's own current tariff (Third Revised Volume No. 1) rather than being carried forward unchanged.",
+      "proposed_refs": [
+        "https://rextag.com/pages/florida-gas-transmission",
+        "https://www.floridapsc.com/pscfiles/website-files/PDF/Agendas/archive/091006cc/09100607.html"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "none needed; length is within normal reporting variance",
+      "researcher_notes": "GEM's LengthKnown=8,529.52 km (5,301.7 mi) is corroborated within ~1-1.5% by three independent sources describing the same whole system: offshore-technology.com states 8,626 km; Rextag states 5,380 miles (8,658.5 km); Wikipedia's article text states 'approximately 5,380-mile.' All three cluster in the 5,380-5,400-mile / 8,600-8,690-km range, GEM's figure sits just under that cluster -- a small, non-material variance typical of which laterals/loops are counted as part of the 'system' figure at any given time, not a data error worth flagging as a concern.",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+        "https://rextag.com/pages/florida-gas-transmission",
+        "https://en.wikipedia.org/wiki/Florida_Gas_Transmission"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "no change to the sheet's Operator1/Owner1 entity name; optionally note the JV in ResearcherNotes",
+      "researcher_notes": "Operator/Owner1 = 'Florida Gas Transmission Co LLC' 100% is the correct name of the direct FERC-jurisdictional operating/owning entity -- confirmed by Wikipedia ('FGT is owned by Florida Gas Transmission Company, LLC, a 100 percent owned subsidiary of Citrus Corp') and independently by the Jan. 2025 Federal Register notice, which names 'Florida Gas Transmission Company, LLC' as the filer/regulated entity. Caveat, not an error: the true ultimate ownership sits one level up, at Citrus Corp, a 50/50 joint venture between Kinder Morgan, Inc. and Energy Transfer -- neither parent is named on the sheet, but that matches the roster's own convention elsewhere (e.g. P0161 Enable Gas Transmission is self-owned/self-operated in the same style), so I'm not recommending a change, just flagging the JV context for anyone reconciling operator identity later.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+        "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "leave as-is; flagged for awareness only, no change recommended",
+      "researcher_notes": "StartLocation='Port Lavaca' (TX) / EndLocation='Miami' (FL): could NOT independently corroborate the specific city 'Port Lavaca' to 2 sources. gem.wiki's own text ('The pipeline runs from Port Lavaca, Texas, to Miami, Florida') cites only the operator's own system-map page (fgttransfer.energytransfer.com/ipost/FGT/maps/system-map), and that page has since been restructured -- fetched live, it now just redirects to a generic Energy Transfer asset index with no FGT-specific map or location text, so even the operator source that originally supported 'Port Lavaca' is no longer live in that form. Every other independent source I found (Wikipedia, Rextag, general search) only describes the origin generically as 'South Texas' / 'from Texas', never pinning the specific city. Not flagging this as a hard concern -- 'Port Lavaca' is plausible (it sits on the Texas Gulf Coast gas-gathering corridor FGT is known to draw from) and nothing contradicts it -- but it is currently single-sourced to a now-dead operator page, so I'm not proposing a ref for this cell this pass.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+        "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Independently confirmed active/operating: a GlobalData industry profile plus a live Jan. 2025 FERC/Federal Register filing under this operating company's name."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Explicitly described as a natural gas pipeline project. [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1998"
+      },
+      "primary_value": "1998",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cannot support 1998 -- see the paired validity concern recommending 1959 instead. Leaving this ref cell UNRESOLVED rather than sourcing a value I believe is wrong."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "1059.44",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "1059.44",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cannot support 1,059.44 MMcf/d -- see the paired validity concern; independent sources put current system capacity around 3.2-3.7 Bcf/d, roughly 3x this figure. Leaving UNRESOLVED rather than sourcing a value I believe is stale."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "8529.52",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "8529.52",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+        "https://rextag.com/pages/florida-gas-transmission"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/florida-gas-transmission-system-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://rextag.com/pages/florida-gas-transmission",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "8,529.52 km is within ~1-1.5% of two independent figures (8,626 km and 5,380 mi = ~8,659 km); close enough to corroborate, not a discrepancy worth staging as a concern."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Port Lavaca",
+        "StartState/Province": "Texas",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Miami",
+        "EndState/Province": "Florida",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Port Lavaca",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The state-level route (TX -> FL) is well corroborated, but the specific city 'Port Lavaca' rests on a single operator source (the wiki's cited fgttransfer.energytransfer.com system-map page, since restructured and no longer showing this) with no independent second source naming that exact city. Leaving UNRESOLVED rather than re-citing a now-dead page."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "oo_sheet_row": 178,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Florida Gas Transmission Co LLC"
+      },
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+        "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Entity name confirmed by Wikipedia and by a live 2025 Federal Register filing under this same operating-company name. Ultimate JV ownership (Citrus Corp = Kinder Morgan 50% / Energy Transfer 50%) noted as context in the paired validity entry, not proposed as a sheet change."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 49,
+      "oo_sheet_row": 178,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Florida Gas Transmission Co LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+        "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/01/10/2025-00354/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same sourcing as Operator. Wikipedia is explicit that Florida Gas Transmission Company, LLC is 100% owned by Citrus Corp (itself a KMI/Energy Transfer JV) -- the sheet's direct-entity ownership figure (Owner1=100%) is consistent with that chain at the immediate-owner level."
+    }
+  ],
+  "summary": "P0190 (Florida Gas Transmission Pipeline, Port Lavaca TX -> Miami FL) is a real, active, well-documented interstate gas trunk, correctly classified, and not a duplicate of the roster's other FGT-named rows (P3242/P4051 are distinct named sub-projects). Two spec concerns staged: StartYear1=1998 should be ~1959 (2 independent sources; 1998 looks like a mis-copied Phase IV filing date), and Capacity=1,059.44 MMcf/d is materially stale (independent sources put current capacity at ~3.2-3.7 Bcf/d, roughly 3x higher) -- neither fixed on the sheet, both left as UNRESOLVED ref-fills paired with validity concerns since I would not paste a replacement number I couldn't source to the sheet's own precision. Length and Status/Fuel/Operator/Owner confirmed with verified refs added (REFS_ADDED). Location (Port Lavaca specifically) left UNRESOLVED -- single now-dead operator source, no independent corroboration of that exact city. Of the 9 harvested wiki citations, opened 5 directly (bit.ly excluded per the abarrelfull/wikidot ban); kindermorgan.com's FGT page is now a genuine 404, oilandgaswatch.org/pipeline/6491 is JS-rendered and unreadable via static fetch, the fgttransfer.energytransfer.com system-map page has been restructured and no longer shows FGT-specific content; eia.gov's two generic pages, fractracker.org and texasenergyreport.com were left unopened this pass."
+}

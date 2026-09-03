@@ -1,0 +1,59 @@
+{
+ "project_id": "P8018",
+ "pipeline_name": "Suez-Port Said Gas Pipeline",
+ "sheet_row": 4278,
+ "wiki": "",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "KEEP THE ROW -- existence CONFIRMED, do NOT retire, downgrade to inferred, or fold into P8002's family. Re-point the ref cells off the EGAS Annual Report 2018 (which does not support them) and off the search-results URL onto the article URL (staged). Diameter and endpoints are corroborated; only the length divergence stays open, tracked separately.",
+   "researcher_notes": "SUPERSEDED WITHIN THIS BATCH -- see revision below.\n\nORIGINAL FINDING: No gem.wiki page exists for P8018 (wiki field blank, confirmed empty in wiki_citations.json), so this is open-web + primary-document research from scratch, per scope note. Three tests applied, all negative for a distinct 'Suez-Port Said' trunk:\n\n(1) TEXT test on the row's own cited source: ran url_verifier against https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf for 'Port Said' -> FAIL, missing. Full pdftotext -layout extraction of the whole 36-page report (cached locally) confirms 'Port Said' appears only twice in running text, neither near 'Suez' or a pipeline description; 'Suez' appears 6 times, none pairing with Port Said.\n\n(2) MAP test (the scope-mandated test for this cohort, since many P80xx rows were identified visually off the GASCO national-grid map on printed p.35/physical PDF page 19 of this same report -- a full-text miss there is NOT dispositive per the scope note). I rendered that exact map at high resolution and traced it by hand. Suez city sits in its own corridor cluster (feeding Sinai-east via a '24\" 145 km' line and the Cairo/New Capital/Tebbin corridor via unlabeled southbound lines) that is visually disconnected from the Delta/Port-Said coastal cluster on the map. Port Said sits ~200km north in the Damietta/El-Tina/Salhia/Romana coastal cluster, whose own lines run south toward Abu Sultan/10th of Ramadan/Cairo -- not toward Suez. I could not trace any single drawn line joining the two labeled 'Suez' and 'Port Said' hub icons. A '16\" 165 km' label does appear on this map, but it sits inside the El-Tina/Port-Said/Sinai-coast cluster next to a 'Town Gas' facility marker, nowhere near the Suez hub -- i.e. the map most plausibly places a 165 km line entirely within the Delta/north-Sinai coastal network, not on a Suez-to-Port-Said axis.\n\n(3) INDEPENDENT-SOURCE cross-check: EgyptOil&Gas's feature 'Egypt's Gas Distribution Network, An Intricate Economic Web' (citing Wood Mackenzie research) enumerates, by name, all of Egypt's major named trunk pipelines in exactly the two candidate corridors: the 'Gulf of Suez to Sinai' group (7 lines, named examples given: 'Trans Gulf Gas' and 'Zaafarana-Korimat') and the 'Nile Delta, Cairo, and Nile Valley' group (10 lines: Abu Madi-Talkha I&II, Talkha-Tanta-Cairo, Abu Madi-Damietta, Meadia-Damanhur, Alexandria Network-Damanhur, Damanhur-Tanta, 'Cairo Ring-Port Said Line', Korimat-Al Tebbin, Korimat-Beni Suef). This article's data checks out elsewhere (it gives Damanhur-Tanta's capacity as exactly 700.1 mmcf/d, matching GEM P8019's CapacityMmcfd to one decimal, and Korimat-Al Tebbin / Korimat-Beni Suef match this cohort's P8021/P8014 family) -- so it is a credible, checkable enumeration, and it names NO 'Suez-Port Said' pipeline in either list. The nearest analog by destination is 'Cairo Ring-Port Said Line' -- a different route (from the Cairo ring network, not from Suez city) that is not currently represented under that name anywhere in this 40-row roster.\n\nSHARPEST EVIDENCE: a real, officially documented 165 km line does exist in Egypt's national grid -- but it is not this one. An Egyptian Ministry of Petroleum 'National Natural Gas Grid Projects' status report (Arabic; cached locally by a prior subagent this batch, original URL not re-derived this session -- web.archive.org content-fetch and direct petroleum.gov.eg lookups both failed from this environment, a known network condition per the country note, not evidence the document is illegitimate) lists among lines completed 2014/2015-Dec 2020: 'خط غاز التينة/ابو سلطان/العاصمة الادارية (المرحلة الاولى والثانية)' -- 'El-Tina/Abu Sultan/New Administrative Capital line (phases 1 & 2)' -- length 165 km, diameter 42 inch. That is P8018's exact length (165) attached to a real, named, differently-routed, 42\"-not-16\" pipeline that is essentially the same system already in this roster under a near-identical name at P8002 ('El Tina-Abu Sultan-New Administrative Capital Gas Pipeline', though P8002 currently records only 73 km, phase 1 alone). This is a strong signal that P8018's '165 km' figure originates from that unrelated El-Tina/Abu-Sultan/Cairo system and was misattributed to a fabricated 'Suez-Port Said' identity with the wrong diameter (16\" vs the source's 42\") -- not independently sourced for the route or diameter claimed.\n\nCLASSIFICATION: 'transmission' is not itself objectionable for a claimed 165 km trunk, so I am not raising a separate classification flag -- the classification question is subsumed by the existence question.\n\nDUPLICATE check against the 40-row roster: no other row in this cohort claims the Suez-Port Said route. The one plausible relationship is the misattribution to the El-Tina/Abu-Sultan/New-Capital system flagged above (which maps most closely to P8002, outside today's single-PID scope) -- flagging as an open question for Update/cross-country-note follow-up rather than asserting a firm merge target, since P8002's own recorded length (73 km) does not match either the 165 km 'phase 1+2' government figure or P8018's value cleanly enough to call it a confident duplicate without researching P8002 directly.\n\nSOURCING DEFECT (independent of the existence question): the sheet's current [ref] for Status/Fuel/PipelineType/Capacity, https://egyptoil-gas.com/?s=Gas+Pipelines+Egypt, is a live dynamic SEARCH-RESULTS URL, not an article -- it returns 200 but (confirmed via url_verifier) supports none of the specific values it is cited for ('operating', '230.30'). A search-query URL is not a citable source under any reading; it should never have been used as a [ref] value regardless of the existence question.\n\nNet: I could not confirm this pipeline exists as named/routed/specified anywhere outside GEM's own row. Treating as a concern rather than confirming.\n\nREVISION (2026-08-27, batch QC): EXISTENCE CONFIRMED -- the document all three of the original tests were reaching for was in this same batch's hands. Egypt Oil & Gas Newspaper, Sept 2020, Issue 165, 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Natural Gas Infrastructure in the Gulf of Suez/Sinai', lists 'Suez-Port Said: Suez -> Port Said, 160 km, 16 in'. That matches this row's PipelineName, StartLocation, EndLocation AND Diameter (16 in) exactly; the section's prose frames it as one of the seven Gulf-of-Suez/Sinai gas lines, i.e. a distinct trunk, not part of another system. The original's three tests were correctly designed and correctly executed -- they simply tested the WRONG DOCUMENT, the EGAS Annual Report 2018, which genuinely does not describe this line in text or on the p.35 map. WITHDRAWN, and must not be acted on: 'downgrade to inferred/unsourced', 'consider whether this row is a mis-assembled duplicate of the El-Tina/Abu Sultan/New Administrative Capital system (P8002's family)', and 'retire the row'. This row stands. The ONE thing that does not reconcile is length -- 165.00 km on the sheet vs 160 km in the source -- which is filed as its own spec concern on this row and is part of a four-row pattern in which the sheet is consistently the longer figure.",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/features/egypts-gas-distribution-network-an-intricate-economic-web/"
+   ],
+   "tier": "low",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do NOT change LengthKnown (165.00 km) on this evidence alone. Record the divergence and seek a third source. The row's endpoints and diameter are unaffected and the EndLocation fill is staged independently of this.",
+   "researcher_notes": "NEW FINDING (2026-08-27, batch QC): the Sept-2020 EOG gas table gives 'Suez-Port Said: Suez -> Port Said, 160 km, 16 in' against the sheet's 165.00 km -- a 5 km / 3.0% gap on a row whose name, endpoints and diameter all match the source exactly. NOTE THE PATTERN: this is the third of four Egypt rows this one document disagrees with on length, and in every case the SHEET IS LONGER -- P8016 256 vs 245, P8018 165 vs 160, P7341 (oil) 340 vs 280, and out-of-scope P3659 235 vs 185. A consistent direction across four independent rows points at a measurement CONVENTION difference (EOG quoting point-to-point trunk length, GEM including spurs/laterals or as-built slack) rather than four separate errors. Worth settling once for the whole family rather than row by row."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 4278,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "EndLocation"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Port Said"
+   },
+   "primary_value": "Port Said",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EndLocation is BLANK while EndState/Province reads 'Port Said'. The EOG gas table gives this line's 'To' as 'Port Said'. Note this fill is independent of the row's length conflict -- endpoints agree, only the km differs. Source: Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Natural Gas Infrastructure in the Gulf of Suez/Sinai'. Value and ref staged together so the pair ships as a unit. Single source -> medium. Hand-confirmed via pdftotext -layout on the article's embedded PDF (Issue 165, 6 Sep 2020, 4 pp). url_verifier returns 200 but its substring screen false-negatives here: the crude and gas infrastructure tables are laid out side by side, so extraction interleaves adjacent-cell text. ok/contains_value encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  }
+ ],
+ "summary": "Concern (existence/attribution): no independent source (govt National Gas Grid report, Wood Mackenzie/EgyptOil&Gas comprehensive trunk-line listing, or the GASCO national-grid map itself) names or routes a 'Suez-Port Said' gas pipeline; the recorded 165 km exactly matches a real but differently-routed, differently-sized (42\" not 16\") documented line (El-Tina/Abu Sultan/New Administrative Capital, phases 1&2 -- same family as roster row P8002), suggesting misattribution. Current [ref] is a non-specific search-results URL that verifiably supports none of its cited values. No UNRESOLVED fills staged (existing values, not blanks, are what's in question)."
+}

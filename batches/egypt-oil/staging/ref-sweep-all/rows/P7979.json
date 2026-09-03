@@ -1,0 +1,78 @@
+{
+ "project_id": "P7979",
+ "pipeline_name": "Zeit Bay Facilities-Ras Gharib Oil Pipeline",
+ "sheet_row": 1990,
+ "wiki": "https://www.gem.wiki/Zeit_Bay_Facilities-Ras_Gharib_Oil_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Existence CONFIRMED -- no action. Capacity (97,000 bpd) remains the one unsourced value on this row.",
+   "researcher_notes": "SUPERSEDED WITHIN THIS BATCH -- see revision below.\n\nORIGINAL FINDING: The row's ENTIRE sourcing base -- every one of the 9 ref units (Fuel, PipelineType, Status, Capacity, Length, Diameter, StartLocation, EndLocation, Operator, Owner) -- rests on one citation: https://egyptoil-gas.com/reports_category/monthly/page/7/ and /page/2/, described on gem.wiki as 'Monthly Reports - Part 2- November 2024 Edition, retrieved 2026-03-16'. I fetched both URLs directly (curl, browser UA, 200 OK, 184KB each) and confirmed neither page contains the string 'Zeit', 'Gharib', or 'Ras Gharib' anywhere in the HTML. These are not a specific report article -- they are paginated CATEGORY-INDEX pages of Egypt Oil & Gas's monthly-report archive ('Monthly Reports - Part 7' / 'Part 2', a collection-page schema.org type), whose contents are whatever happens to be in that pagination slot on the day it's fetched. As of today (2026-08-27) neither page lists a 'November 2024' edition at all -- newer posts have pushed it off both pages 2 and 7 -- so even the citation's own dateline is no longer reachable from the URL it names. This is a fundamentally unstable, non-permalink citation: it was never a reference TO this pipeline, and would not remain one even if it once coincidentally listed a relevant report title.\n\nCross-checked the worklist's own existing_ref_checks: Status ('operating') and Capacity/Length (97,000 / 83) all correctly FAILED value-match against both URLs. Diameter ('18') shows 'ok: true, expected content present' -- I verified this is a FALSE POSITIVE: '18' appears on the page only as an ad-zone id ('zoneid=18') and a CSS font-size ('18.0px'), coincidental noise, not a diameter figure. So in fact zero of this row's numeric/status claims are actually supported by the cited page; the automated checker's pass on Diameter should not be trusted here.\n\nIndependent verification attempt: WebSearch was unavailable this session (budget exhausted at 200/200 before I could run a query). Bing and DuckDuckGo scraped via curl returned bot-challenge/cached-generic pages regardless of query terms (not usable). Checked Wikipedia (EN) for 'Zeit Bay', 'Zeit Bay oil field', 'Ras Gharib' (exists but does not mention Zeit Bay or any pipeline -- only broad historical/petroleum-center context, and itself flagged by Wikipedia as needing more citations), 'Gulf of Suez Petroleum Company/Corporation' (no article), 'Suez Oil Company' (no article); Arabic Wikipedia 'رأس غارب' (Ras Gharib) mentions only that 'several nearby offshore platforms in the Gulf of Suez feed into its storage tanks' -- generic, no pipeline named, no Zeit Bay connection, no specs. Ran egyptoil-gas.com's own site search for 'Zeit Bay': all hits are 2013-era Dana Petroleum/Zeitco EXPLORATION-WELL news (North Zeit Bay field discoveries tied into the 'Lorcan production facility'), none mention Ras Gharib, a pipeline, or export/transport infrastructure. GEM's own wiki page (read for leads only, never cited) confirms it carries exactly the one broken citation and nothing else -- no start year, no cost, no other refs.\n\nGeographic plausibility: both Zeit Bay and Ras Gharib are real, well-documented Gulf of Suez oil locations (Zeit Bay/Zeitco field cluster in the south near Ras Shukheir/July field; Ras Gharib a historic onshore GPC production center further north), so a coastal crude-gathering line between them is not implausible on its face -- but plausibility is not the same as sourcing, and I could not find ANY document, English or Arabic, that names this specific pipeline, its length, its diameter, or its capacity. Note for context, not concluded as fact: P7975-P7979 (Ras Shukheir-El-Hafair, El-Hafair-Suez, El-Hafair-Musturad x2, Zeit Bay-Ras Gharib) were all entered/updated within one day (2026-03-15/16) and all cite the identical broken egyptoil-gas.com pagination-page pattern -- this looks like a systematic citation-quality defect across that whole micro-batch, not a defect unique to P7979, and is worth flagging up if the other four rows haven't already been separately caught.\n\nNo roster match found for a duplicate/relabel -- no other P79xx or P73xx row shares this name or these endpoints, and the Zeit Bay/Ras Gharib corridor doesn't overlap the El-Hafair hub-and-spoke pattern formed by P7975-P7978. Classification (Fuel=Oil, PipelineType=transmission) is plausible for an 18in/97,000bpd trunk but likewise unconfirmed by any source. Recommend: hold at existence/concern, do not treat current values as verified, and route to a follow-up pass with WebSearch available and/or Arabic-language EGPC/PPC annual-report material once budget resets.\n\nREVISION (2026-08-27, batch QC): The EOG crude table names 'Zeit Bay Facilities-Ras Gharib' (Zeit Bay Facilities -> Ras Gharib, 83 km, 18 in) -- exact match to the sheet's length and diameter. This row's own ref leg found and cited that article in this same batch; this validity record was written without it, which is the cross-leg gap documented in the batch note. One item survives unchanged: the table's Capacity cell for this line is '-', so the sheet's 97,000 bpd is still uncorroborated and stays UNRESOLVED.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "StartLocation [ref]",
+   "value_cols": [
+    "StartLocation"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Zeit Bay"
+   },
+   "primary_value": "Zeit Bay",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CLOSES AN EXISTING ORPHAN [ref]. On the live sheet this row's StartLocation value cell is BLANK while its StartLocation [ref] cell is filled (with the paginated category-index URL) -- an orphan ref, which the standing rule forbids. Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai', gives this line's 'From' as 'Zeit Bay Facilities'. Proposed value 'Zeit Bay' uses GEM's own transliteration as already carried in this row's PipelineName (source spells it 'Zeit Bay Facilities'); the place is the same. Value and ref are staged together so the pair ships as a unit and the orphan is resolved rather than perpetuated. Single source -> medium. Hand-confirmed via pdftotext -layout on the embedded PDF; url_verifier's substring screen false-negatives on this document (two tables laid out side by side, extraction interleaves columns), so ok/contains_value are encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1990,
+   "ref_col": "EndLocation [ref]",
+   "value_cols": [
+    "EndLocation"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Ras Gharib"
+   },
+   "primary_value": "Ras Gharib",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CLOSES AN EXISTING ORPHAN [ref]. On the live sheet this row's EndLocation value cell is BLANK while its EndLocation [ref] cell is filled (with the paginated category-index URL) -- an orphan ref, which the standing rule forbids. Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai', gives this line's 'To' as 'Ras Gharib'. Proposed value 'Ras Gharib' uses GEM's own transliteration as already carried in this row's PipelineName (source spells it 'Ras Gharib'); the place is the same. Value and ref are staged together so the pair ships as a unit and the orphan is resolved rather than perpetuated. Single source -> medium. Hand-confirmed via pdftotext -layout on the embedded PDF; url_verifier's substring screen false-negatives on this document (two tables laid out side by side, extraction interleaves columns), so ok/contains_value are encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  }
+ ],
+ "summary": "P7979 flagged verdict=concern / concern_type=existence: its only citation is a non-permalink egyptoil-gas.com pagination-index page that names neither 'Zeit Bay' nor 'Ras Gharib' and supports zero of the row's values (diameter's automated pass is a false-positive substring match); no independent corroboration found (WebSearch quota exhausted, Bing/DDG scraping blocked, Wikipedia silent on the pipeline). UNRESOLVED pending a follow-up pass with search access."
+}

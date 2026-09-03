@@ -1,0 +1,38 @@
+{
+  "project_id": "P7315",
+  "pipeline_name": "Agroud-Ain Sokhna Oil Pipeline",
+  "sheet_row": 813,
+  "wiki": "https://www.gem.wiki/Agroud-Ain_Sokhna_Oil_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Wadi Hagool-Ain Sokhna( Pipeline 2)",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action — investigated as a possible duplicate/relabel of P7331 per the orchestrator's watchlist and RULED OUT. Optional cosmetic fix: both P7315 and P7331 currently share the identical display `PipelineName` ('Agroud-Ain Sokhna Oil Pipeline'), which is what makes them look like a duplicate at a glance; only `SegmentName` distinguishes them today.",
+      "researcher_notes": "DUPLICATE CHECK (orchestrator watchlist item): P7315 ('Wadi Hagool-Ain Sokhna (Pipeline 2)', 65 km, construction) and P7331 ('Agroud-Wadi Hagool (Pipeline 1)', 35 km, construction) both carry the sheet's `PipelineName` 'Agroud-Ain Sokhna Oil Pipeline' and both have diameter 36 in, which is exactly the ambiguous same-name/same-diameter pattern the watchlist flagged. Fetched the independent trade source egyptoil-gas.com (2026-02-11, 'National Pipelines Get Major Efficiency Boost') which describes this exact corridor: 'the new line from the Sokhna area to the Ajroud area in Suez... the first phase of which was completed with a length of 35 km, and the second phase with a length of 65 km is being implemented.' This is an EXACT match to P7331=Phase 1=35 km and P7315=Phase 2=65 km. Verdict: NOT a duplicate — these are two sequential, distinct construction phases of one Agroud→Wadi Hagool→Ain Sokhna corridor, correctly recorded as two separate GEM rows (segment-level granularity), not a double-count of one pipeline. Same diameter across phases is expected for two segments of one continuous line. ('Agroud' in GEM/gem.wiki is an alternate transliteration of 'Ajroud'/'أجرود' as used by egyptoil-gas.com and alarabiya.net — a spelling variant, not a data error; url_verifier only matched once the 'Ajroud' spelling was used as the expected token instead of 'Agroud'.) EXISTENCE: independently confirmed by egyptoil-gas.com (verified live 200, contains 'Ajroud' and '65 km' — `python scripts/url_verifier.py https://egyptoil-gas.com/news/national-pipelines-get-major-efficiency-boost/ Ajroud '65 km'` = OK) plus the sheet's existing alarabiya.net citation, which currently 403s to automated fetchers (confirmed BLOCK not deletion: Wayback CDX shows the exact URL served HTTP 200 / 30,071 bytes as recently as 2026-03-27, snapshot digest IR7DRBS3UJPIDP2AFUU62PVNKK6PTJWA; the article's own title translates as 'Egyptian Petroleum Pipelines invests 1.2 billion EGP to build a new line to transport crude,' consistent with GEM's Cost=1,250,000,000 EGP). Could not read the alarabiya full body this session — every web.archive.org content fetch (both curl and WebFetch) hit a ConnectTimeout, while the CDX API answered normally, which per prior sessions' finding is a network condition on this host, not evidence about the source; existing_ref_checks' 403 on the live URL is likewise a bot-wall, not a dead link, so it should stay in the [ref] cell per standing rule (never delete a once-working ref over an access failure). STATUS ('construction'): confirmed independently by egyptoil-gas.com ('...is being implemented' = under construction for the 65 km phase). One of the sheet's two current Status refs, petro-mag.org, does NOT actually support the claim — WebFetch shows that URL is a bare table-of-contents/index page for Petroleum Magazine's Dec-2024 issue with no mention of Agroud/Ajroud/Ain Sokhna/Wadi Hagool anywhere; this matches url_verifier's own 'value not found' result on it. Recommend dropping petro-mag.org from Status [ref] (it adds nothing) while keeping alarabiya.net + relying on egyptoil-gas.com for corroboration. CLASSIFICATION: correct — Fuel='Oil, oil products', PipelineType='transmission' are consistent with a PPC/EGPC national crude-oil trunk line; nothing found suggests it is a gathering/process/feeder line. ATTRIBUTION: Owner1=Egyptian General Petroleum Corp (100%), ref egpc.com.eg — page verified live (200); reasonable as OWNER (EGPC is the parent state company; Petroleum Pipelines Company, the likely day-to-day operator, is an EGPC affiliate) — no attribution error. StartLocation='Suez'/EndLocation='Ain Sokhna' (both Suez Governorate) is a reasonable generalization for a segment whose more precise endpoints are Wadi Hagool and Ain Sokhna, both within Suez Governorate/the Eastern Desert coast — not an error. LENGTH: 65.00 km is an EXACT match to egyptoil-gas.com's stated 65 km for this phase — high confidence. COST: 1,250,000,000 EGP is consistent with (though not byte-for-byte identical to) alarabiya's headline figure of '1.2 مليار جنيه' (1.2 billion EGP); given the alarabiya body text could not be read this session, treat Cost as medium confidence pending a re-read. DIAMETER: see the paired fills[] entry — could not independently source 36 in this session (marked UNRESOLVED, not fabricated).",
+      "proposed_refs": ["https://egyptoil-gas.com/news/national-pipelines-get-major-efficiency-boost/"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Wadi Hagool-Ain Sokhna( Pipeline 2)",
+      "sheet_row": 813,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "36", "DiameterUnits": "in"},
+      "primary_value": "36",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter [ref] is currently blank (MISSING_REF) though the value (36 in) is populated. Could not independently source it this session: petro-mag.org (wiki-harvested citation) is a bare magazine table-of-contents page that does not mention this pipeline at all (verified via WebFetch — no article text, only an index); alarabiya.net (the sheet's other cited source for this row) is confirmed live via Wayback CDX but 403s to automated fetch and its full body could not be read (web.archive.org content-fetch timeouts this session, a network condition, not a source failure); egyptoil-gas.com's parallel coverage of this exact project states lengths and phase status but not diameter; elwatannews.com (cited on the companion Phase-1 row P7331) also returned HTTP 403 to WebFetch. This session's WebSearch budget was exhausted (200/200) before a broader Arabic-language search for a diameter-bearing source could be run. Leaving Diameter [ref] UNRESOLVED rather than fabricating a citation — flag for a follow-up ref pass with search budget available."
+    }
+  ],
+  "summary": "P7315 confirmed real (independently corroborated by egyptoil-gas.com, existence/length/status all match exactly) and correctly classified; the P7331 same-name/same-diameter duplicate question is RESOLVED as NOT a duplicate — the two rows are Phase 1 (35 km, P7331) and Phase 2 (65 km, P7315) of one Agroud/Ajroud→Wadi Hagool→Ain Sokhna corridor per an independent trade source. One weak existing citation flagged (petro-mag.org is a TOC page, doesn't mention the pipeline) and Diameter [ref] stays UNRESOLVED (couldn't independently source 36 in this session; WebSearch quota exhausted) — no other concerns."
+}

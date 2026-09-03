@@ -102,6 +102,7 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 | province | scope (grid rows) | status | batch |
 |---|---|---|---|
 | Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx` (repackaged 07-30: recommended edits now overlay `Gas_Backend`; 07-29 build archived); staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
+| Jiangxi | **44** — all 41 Jiangxi-terminus rows + the 3 transiting national mainlines (P4657/P4934/P4947) | **v2 DELIVERED 2026-09-02, staged not applied** (supersedes v1); **v3 PLANNED** off MZ's 2026-09-03 feedback — `notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md` | `pipelines_batch_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx` (11 tabs); staging `batches/china-jiangxi-gas/staging/deepsweep-20260902/`; v1 archived at `archive/deepsweep-v1-20260826/` |
 
 ## Route creation §8 — ALL 103 no-route gas rows (2026-07-30, staged NOT applied)
 
@@ -183,6 +184,115 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   UNRESOLVED; 75 refs re-verified live. Status review: 23 confirm / 10 stale /
   3 change / 7 unclear. Validity: 43 concerns incl. 6 existence, 2 duplicate,
   10 attribution. 89 fills. Baird reviews the workbook; nothing applied.
+- **Jiangxi v3 — PLANNED 2026-09-03, not run.** MZ reviewed v2 ("looks really good") with
+  four points: blanks on operating rows unfilled (241 owed `MISSING_VALUE` units on the 44 rows,
+  171 on `operating`; v2 staged 4 fills); facts in found sources not carried to the other
+  columns (P4777's 825 km / 3.1 bn RMB / Oct 2008 are in the Sina article staged on P4776);
+  refs that don't name the pipeline (keyword hits on "A" or "B" for an "A–B" row); and one
+  ref per data point (168 of 270 `REFS_ADDED` are single-source; 7 documents carry 166
+  units). Mechanisms now in the engine (`--owe-fills`, `name_found` + `relevance_qc`,
+  document-exhaustion + two-source rules in the SOP/contract, `sweep_gates.py` I/J/K); the
+  plan, the re-research list and the carry-forward rule:
+  `notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md`. v3 carries v2 forward (re-key,
+  re-verify, don't re-discover) and SUPERSEDES it when delivered — one pending state.
+- **Jiangxi grid v2 — DELIVERED 2026-09-02, staged not applied; SUPERSEDES v1.** Baird
+  reset the scope ("it wasn't very comprehensive… include any trunk lines"): **44 rows** =
+  all 41 Jiangxi-terminus rows **plus** the three transiting national mainlines P4657,
+  P4934, P4947 that v1 excluded. Legs `refs` / `fills` / `validity` / **`status-review`**
+  (new); no OSM recon, no routes leg, no discovery. The 18 rows v1 swept were **carried
+  forward, not re-discovered** — every prior `REFS_ADDED` re-keyed onto the fresh worklist
+  (the gas tab re-sorted; all 18 moved -2 rows), its URLs re-verified, only the
+  `UNRESOLVED` re-researched. ONE file to work:
+  `…_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx` (11 tabs); v1's workbook and
+  staging dir archived to `batches/china-jiangxi-gas/archive/deepsweep-v1-20260826/`, so
+  there is exactly one pending state. Store 453 = 411 ref units + 26 validity + 12 status
+  reviews + 4 fills. Ref-lane outcome **270 `REFS_ADDED` / 127 `UNRESOLVED` / 12 `REVERIFIED`
+  / 2 `DEAD_LINK`**, tiers 82 high / 175 medium / 14 low, **49 distinct verified hosts**;
+  status verdicts 6 stale / 4 unclear / 1 change / 1 confirm (16 records staged, 12 kept —
+  a row has ONE status, so `split_shards` keeps the last shard's verdict). Gates B/D/E/F clean, A=1 (P5888 on
+  `sohu.com` alone). Delivery note:
+  `notes/delivery-2026-09-02-china-jiangxi-gas-deepsweep-v2.md`.
+  **The province's defining fact is still a 3.7% citation base** (v1 measured
+  `MISSING_REF` 156 / `HAS_REF` 6) — calibrate this like India, not Pakistan: a blank here
+  means nobody looked, so an `UNRESOLVED` is an unfinished result, not a correct one. v1's
+  98 `REFS_ADDED` over 18 rows became 270 over 44.
+- **The Jiangxi cluster to adjudicate is P4778 ↔ P5861, and it arrived reciprocally.** Two
+  agents at opposite ends of the fan-out each filed a `__REDUNDANCY__` naming the other's
+  row — "Phase I, Gao'an–Xinyu" vs "West-East Gas Pipeline 2, XinYu Branch (Gao'an–Xinyu)",
+  identical corridor and StartYear. Reciprocity is **corroboration, not two findings**:
+  deliver it as ONE cluster or the same question gets adjudicated twice. `validate_shards.py`
+  now detects reciprocal filings, including when the counterpart is named only in prose.
+- **Phase I vs Phase II is an operator question across the whole grid, not a row defect.**
+  The CCXI credit-rating PDF splits the operator by phase; cross-tabbing all 44 rows gives
+  23 phase-labelled (15 Phase I / 8 Phase II), 12 blank `FuelSource`, 5 filled, **3 in
+  tension**. It surfaced on ONE row buried inside a `FuelSource [ref]` record's notes on an
+  `UNRESOLVED` unit — the Egypt P5121 burial pattern again — and was promoted to a
+  cohort-level sentinel on P5862. Not auto-corrected.
+- **Two aggregate-vs-segment defects, and one adjudicated non-defect.** P4788's
+  `SegmentCost` 2,172,600,000 CNY is the total for all four Ganzhou South branches; P4928's
+  `Capacity` 30.00 bcm/y is the WEP3 *system* total, not the Ji'an–Fuzhou East Section.
+  **P4934's 125 bn RMB is correct** — that row IS the whole-system row, so a system-level
+  total is the right match. Read the row's granularity before calling a system figure a
+  defect.
+- **P5865/P5866 — an archive.org 429 is a RATE limit, so the answer is patience in the same
+  session, not another day or another IP.** Two `jxgajc.com` completion-acceptance filings
+  settle both rows; the **host no longer resolves in DNS**, so Wayback is the only route, and
+  archive.org 429'd every path for hours (the `id_` fetches *and* the CDX API). The reading
+  that "the limit is IP-level and both rows stay open" was **WRONG**: the 429 / `http=000` is
+  per-request and transient, and a plain bounded retry loop (6 tries, ~6–8 s apart) got a 200
+  on both captures — `20230902005946` (P5865) and `20230902105154` (P5866) — within a minute.
+  What is NOT a route, so nobody re-tries it: `web.archive.org` has no AAAA record (IPv6
+  egress), the Memento aggregator `timetravel.mementoweb.org` returns 403 Request Denied, and
+  IA login cookies from `~/.config/internetarchive/ia.ini` make no difference (the first 200
+  came with an empty `Cookie` header). Staged as `batch_20_wayback_recovered.json`, 26 records
+  / 21 ref units. What the documents settled: **P5865's status is stale and its own new ref
+  proves it** (竣工 Nov 2021 → `construction` → `operating`, `StartYear1` 2021, `medium`
+  because 竣工 is completion, not gas-in); **P5865 `StartPrefecture/District` = `Fengcheng`,
+  not `Yifeng`** (「项目位于樟树市、丰城市境内」 plus 12.7 of 20.2 km allotted to 丰城市;
+  Tuochuan is a town of Fengcheng, Yifeng a different county under the same Yichun
+  prefecture); **P5865's capacity stays `UNRESOLVED`** (the filing prints 5×10⁶ Nm³/a =
+  0.005 bcm/y against the sheet's 0.13, and that figure is itself implausible against sister
+  segment P5866, so it settles nothing — the agent that recalled ~5×10⁶ Nm³/a from memory was
+  right to refuse to stage it, and it is still not staged); **P5866 corroborated on eight
+  values exactly** (19.12 km, DN500, 2017-12, 2021, 0.50 bcm/y, 80,830,000 RMB, `FuelSource`
+  verbatim, `operating` at 14.6% of design) with `StartPrefecture/District` filled blank →
+  `Jiujiang`; and **P5866's 6.43× capacity outlier is REFUTED and re-filed as a ROUTE defect**
+  — the geometry is over-drawn against a documented 19.12 km branch, so it joins P5862 as a §8
+  redraw. **No direction swap on P5866, deliberately:** the filing names Jinshawan → Hukou,
+  the reverse of the sheet, but that is chainage order — gas enters the branch from the
+  national trunks at the Hukou distribution station, so the sheet reads as flow direction.
+- **Watch for `fzggw.jiangsu.gov.cn` in a Jiangxi harvest — Jiangsu is not Jiangxi.** The
+  wiki harvest surfaces it repeatedly and it is always a false lead.
+- **Jiangxi's `UNRESOLVED` fills are uncitable, not unknown.** All 8 unresolved fills sit on
+  rows that already carry route geometry (P4776 62.34 km/2 vtx, P4778 56.88/11, P4780
+  136.02/20, P4781 19.37/6, P4782 100.96/38, P5859 50.62/2). GEM's own geometry can't be
+  cited under standing rule 1, so the cells correctly stay unfilled on our side — but MZ owns
+  those routes and can fill them from her own lane. Carry the table, don't report bare
+  UNRESOLVEDs.
+- **Jiangxi route-vs-sheet length: 7 divergences, one of them not a defect.** P5862 30.10x,
+  P5866 6.43x, P5887 2.12x, P4784 1.87x, P4783 0.57x, P4788 0.09x, P4777 0.07x. **P4777 is
+  expected** — it is the Phase I network-granularity parent row (825 km system vs a 14-vertex
+  corridor trace), so it is not a finding. Routes are MZ's lane; nothing redrawn here.
+- **P4788 is the row to read first.** Three findings, all filed as questions not edits:
+  `FuelSource` reads `Sichuan-Shanghai gas pipeline/West-East gas pipeline II` but the
+  operator's own emergency plan names the feed points as WEP2 valve chamber #149 or the
+  **WEP3** Ruijin station, with 川气东送 appearing 0 times in 494,223 chars (WEP2 corroborated,
+  WEP3 missing, Sichuan-Shanghai unsupported — though absence in one document is not absence
+  in fact); the redraw coordinates in its `__VALIDITY__` were **DMS read as decimal**, putting
+  the Xinfeng anchor 38.7 km off (correct: Xinfeng 114.82255/25.43558, Ruijin
+  116.00923/25.94623); and while 340.3 km IS attributed to this section by the document (the
+  aggregate hypothesis stays refuted), the terminal stations are only 131.8 km apart
+  great-circle, so 2.58x sinuosity leaves **both** the 340.30 length and the 31.78 km route
+  open. A redraw should measure ~140–190 km.
+- **Chinese engineering PDFs quote coordinates in DMS.** Transcribing the degree-minute digits
+  as decimal degrees costs tens of kilometres (38.7 km on P4788's start anchor). Convert, and
+  say which form you are writing.
+- **Jiangxi's citable DRC plan is a third-party rehost.** 江西省天然气利用规划 2013–2020
+  (赣发改规划 2014 325号) is served from `img9.qianzhan.com/policy/202307/14/…pdf` because the
+  government copy at `nc.gov.cn` is NXDOMAIN. It is a rehosted **primary**, not a tertiary
+  aggregator's own content, so it is citable — but it is a 2014 *planning* document, thin
+  support for 2026 operating status unless paired (it backs 39 proposed refs, and `huaon.com`
+  is the second source on the units that reach `high`).
 - `docs/reference/source_roster.md` has no China section yet — seed it from the
   pilot's verified sources (live: news.bjx.com.cn, gx.chinanews.com.cn,
   gx.xinhuanet.com, ndrc.gov.cn, pipechina.com.cn, cnpc.com.cn, sinopec.com,

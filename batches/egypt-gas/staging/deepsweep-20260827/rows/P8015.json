@@ -1,0 +1,43 @@
+{
+  "project_id": "P8015",
+  "pipeline_name": "Zeit Bay-Ras Shukheir",
+  "sheet_row": 4275,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Real, correctly-classified gas line, but treat sourcing as thin: (1) find a second, truly independent (non-egyptoil-gas.com) source for the 40km/16in/140 MMcf/d specs before green-lighting to high tier; (2) confirm current status given the source table's own '(Pre-2017)' annotation on the Zeit Bay end and the fact the article is now 6 years old; (3) swap the Status/Fuel/PipelineType/Capacity/Location [ref] cells off the generic egyptoil-gas.com site-SEARCH URL (https://egyptoil-gas.com/?s=Gas+Pipelines+Egypt, which literally fails a content check for 'operating' and '140.00') onto the specific 'Crude Oil Squad' report URL that actually carries the table; (4) for consistency, note PipelineName lacks the 'Gas Pipeline' suffix every other row in this cohort carries ('Zeit Bay-Ras Shukheir' vs e.g. 'Zeit Bay-Ras Shukheir Gas Pipeline') -- cosmetic, not a blocker.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: confirmed. Egypt Oil & Gas Newspaper's Sept 2020 report 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad' (Issue 165, currently cited on this row's Diameter/Length [ref] cells) contains a 'Natural Gas Infrastructure in the Gulf of Suez/Sinai' table with a row named 'Zeit Bay-Ras Shukheir', From 'Zeit Bay (Pre-2017)', To 'Ras Shukheir', Length 40 km, Diameter 16 in, Capacity 140 mmcf/d -- an EXACT match to every GEM spec value on this row. The page serves as a single-object PDF with a two-column magazine layout, and its own docstring-documented weakness (url_verifier.py's 'LARGE PDFs' / multi-content-stream caveat) means the automated substring screen FAILS on the name tokens 'Zeit'/'Shukheir'/'Pre-2017' even though they are provably present -- I confirmed this manually two ways: `pdftotext -layout` recovers the full table text including 'Zeit Bay- Ras Shukheir ... 40 16 140', and a word-by-word pdfplumber extraction with x/y coordinates on page 4 (words at top=288-296, x=355-458) reconstructs the exact row: Pipeline='Zeit Bay-Ras Shukheir', From='Zeit Bay (Pre-2017)', To='Ras Shukheir', Length=40, Diameter=16, Capacity=140. The automated check DOES pass on the numeric tokens '40'+'16'+'140' together and on the article title 'Crude Oil Squad', which is the citation basis used below (per url_verifier.py's own instruction to override a PDF-extraction false negative after manual confirmation, not to discard the source). This is the correct application of the guidance in this scope's brief: NA (researcher on this cohort) frequently sourced rows visually off scanned tables/maps that a naive full-text search misses -- here the 'miss' is a PDF-extraction artifact on the SAME source already cited for Length/Diameter, not evidence the pipeline is fictitious. WEAK SECOND ANGLE: a separate, earlier Egypt Oil & Gas feature ('Visiting Suez Oil Company', Dec 2014, https://egyptoil-gas.com/features/visiting-suez-oil-company/) independently (different year, different byline, before the 2020 report existed) describes Zeit Bay's LPG/gas-separation plant pumping '130 tons of natural gas per day... to GUPCO's 104 station 38 km away, through which they go to either Cairo's Qatameya LPG plant or to Assiut' -- i.e. a real, sourced natural-gas offtake line running roughly the same distance in roughly the same direction (toward the Ras Shukheir/GUPCO hub). It does NOT literally name 'Ras Shukheir' (I could not verify a direct link between 'GUPCO's 104 station' and Ras Shukheir from an independent page -- gulfoilandgas.com's OSOCO profile, which a search snippet suggested confirms this, does NOT actually mention '104' anywhere on read), and its distance (38 km) is close but not identical to GEM's 40 km. Because both of my candidate sources are the SAME publication (Egypt Oil & Gas Newspaper), this does not clear the standing 2-independent-source bar (different authors/years from one outlet is weaker than a second outlet) -- tier is MEDIUM, not high. DUPLICATE: checked against the full 40-pipeline roster. No collision -- P8015 is the sole 'Zeit Bay' row, and it is clearly the segment immediately upstream of P8016 'Ras Shukheir-Suez Trunkline Gas Pipeline' (which the same 2020 table separately lists as Ras Shukheir->Suez, 245 km per the source vs GEM's 256 km, a P8016 discrepancy out of scope here) -- sequential segments of one corridor, not a double-count of each other. ATTRIBUTION: Fuel=Gas and PipelineType=transmission both match how the source itself categorizes the line (its own 'Natural Gas Infrastructure' table, alongside Trans Gulf Gas and the Ras Shukheir-Suez Trunkline). FuelSource='Zeit bay field' is plausible (Zeit Bay is a real, EGPC/RWE-DEA joint-venture (Suez Oil Company) producing field, confirmed via suco-eg.com and the 2014 feature) but MISSING_REF and not independently pinned to this specific pipeline by any source found -- left unresolved rather than force a ref onto an existing value.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+        "https://egyptoil-gas.com/features/visiting-suez-oil-company/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 4275,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Zeit Bay"},
+      "primary_value": "Zeit Bay",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartLocation is blank on the sheet even though the source table this row is built from names the origin explicitly: 'Zeit Bay-Ras Shukheir' pipeline, From='Zeit Bay (Pre-2017)', To='Ras Shukheir' (Egypt Oil & Gas 'Crude Oil Squad' report, Sept 2020, Natural Gas Infrastructure table, page 4). Automated url_verifier substring check on the exact token 'Zeit Bay' FAILS on this URL due to a documented PDF-text-extraction limitation on this large, multi-content-stream, two-column-layout PDF (the same limitation the Length/Diameter [ref] cells on this row already work around) -- confirmed present by manual pdftotext -layout AND pdfplumber word/coordinate extraction (see validity notes). The automated check does independently pass on the numeric tokens '40'+'16'+'140' on the same URL, which I use as the citable anchor. Filling StartLocation only; leaving StartPrefecture/District blank (source doesn't give a governorate/district finer than 'Red sea', already populated)."
+    }
+  ],
+  "summary": "P8015 confirmed real, correctly classified (Egypt Oil & Gas 'Crude Oil Squad' Sept-2020 table names this exact 40km/16in/140mmcf/d Zeit Bay-Ras Shukheir gas line; a 2014 same-publisher feature gives weak circumstantial 38km support); no duplicate in the 40-row roster. Staged 1 concern (spec/sourcing: single-publication corroboration only, '(Pre-2017)' currency flag on the source's own Zeit Bay label, and 5 of this row's [ref] cells cite a non-specific site-search URL that fails its own content check) + 1 fill (StartLocation='Zeit Bay', medium tier). FuelSource ref left UNRESOLVED (value plausible, no direct citation found)."
+}

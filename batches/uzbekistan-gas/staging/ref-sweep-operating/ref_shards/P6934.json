@@ -1,0 +1,64 @@
+{
+  "project_id": "P6934",
+  "pipeline_name": "Bukhara-Tashkent-Bishkek-Almaty Gas Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 3752,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://kun.uz/ru/news/2020/12/26/epsilon-edc-vedutsya-masshtabnyye-raboty-po-modernizatsii-gazotransportnoy-infrastruktury-uzbekistana",
+        "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana"
+      ],
+      "verifications": [
+        {"url": "https://kun.uz/ru/news/2020/12/26/epsilon-edc-vedutsya-masshtabnyye-raboty-po-modernizatsii-gazotransportnoy-infrastruktury-uzbekistana", "ok": true, "contains_value": true},
+        {"url": "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "The brief's DEAD_LINK flag did not reproduce: re-verified the current_ref (kun.uz, 2020-12-26) with url_verifier.py (OK, 200, token present) and a raw curl -sI (HTTP/2 200, cloudflare) -- live, matching the prior row-audit and sibling-shard (P6933/P6935) findings on this same URL, i.e. this was a transient scan-time issue, not a real dead link. Content, fetched and read directly (not via the wiki footnote list, which is corridor/downstream-only per the row audit): 'В круглосуточном режиме продолжаются работы на других участках магистральных газопроводов «Мубарек - Зирабулак» (БГР-ТБА)...' (gloss: 'Round-the-clock work continues on other sections of the trunk gas pipelines \"Mubarek - Zirabulak\" (BGR-TBA)...') -- a trunk line undergoing active capital repair/modernization is by definition in service, not proposed/shelved. Added uzreport.news (2020-09-09) as a second source, verified live (200, token '1020' and 'Зирабулакское' present): it itemizes the same 2020 modernization program by УМГ (management unit) and km-range, naming 'Мубарек-Зирабулак (БГР-ТБА) I, II, III нитки' and 'Мубарек-Зирабулак I, II нитки' as work items under active capital repair -- string II (this row's own segment) is explicitly named in both groupings. tier=medium, not high: both outlets ultimately trace to the same EPSILON EDC 2020 works-progress program rather than fully separate origins (consistent with the sibling P6933 shard's own tiering on the identical pair of sources). Searched Russian only; no segment-II-specific evidence newer than Dec 2020 was found, but the row audit's corridor-level 2026 continuity evidence (Gazprom/Kazakhstan transit expansion through this same system) weighs against any dormancy reading, so status=operating is confirmed as-is."
+    },
+    {
+      "ref_col": "Diameter [ref]",
+      "sheet_row": 3752,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Not supportable, deliberately -- this unit is the already-SETTLED question named in the batch brief. Re-verified the current_ref (uzreport.news, 2020-09-09) live: it is NOT dead (200, contra the brief's DEAD_LINK class), but it gives Ø1020x12mm for the Mubarek-Zirabulak overhaul sections covering strings I/II and I/II/III together -- ONE diameter, 1020mm, not a per-thread 1021mm figure for string II specifically. Confirmed directly: fetched and read the live page text myself ('Зирабулакское УМГ, капремонт МГ «Мубарек-Зирабулак» (БГР-ТБА) I, II, III нитки, участок 50-78 км (Ø1020х12 мм...)' and '...Мубарек-Зирабулак I, II нитки, участок 3-50 км (Ø1020х12 мм...)'). This matches the row-audit's already-staged finding that the sheet's 1020/1021/1022mm sequence across P6933/P6934/P6935 is a segment-index-into-diameter defect, with the correction to 1020mm already staged elsewhere -- and the batch brief explicitly instructs NOT to propose refs for 1021 or 1022 on this row family. Per the standing rule to support only the RECORDED value and never a different one, and per that explicit instruction, I did not search further for a source that might genuinely state 1021mm (none is expected to exist -- the discrepancy is a data-entry artifact, not a real alternate spec). class_out is UNRESOLVED rather than a mismatched or fabricated citation, consistent with sibling P6935's identical handling of its own 1022mm unit. Searched: Russian only (uzreport.news content re-check); no fresh search was warranted given the settled disposition."
+    },
+    {
+      "ref_col": "Operator [ref]",
+      "sheet_row": 3752,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.utg.uz/company/about/structure/",
+        "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana"
+      ],
+      "verifications": [
+        {"url": "https://www.utg.uz/company/about/structure/", "ok": true, "contains_value": true},
+        {"url": "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru",
+      "researcher_notes": "The row audit tried and could not clear url_verifier for this unit (utg.uz/ru/about/history/ is a genuine 404, and utg.uz's other about/contact pages either 404 or render client-side with no server text). I found a working replacement on the SAME domain: https://www.utg.uz/company/about/structure/ (verified live, 200, url_verifier OK on token 'Зирабулак') -- this is Uztransgaz's own official territorial-structure page (headed 'АО \"УЗТРАНСГАЗ\"'), and it server-renders (unlike the other about/ pages) a full listing of its territorial УМГ (Управление Магистральных Газопроводов / trunk-pipeline management-unit) branches, including this exact entry, read directly from the fetched page: '...Начальство Абобакиров Мирзохид Мамадиевич Зирабулакское Управление Магистральных Газопроводов Телефон +99899 022-77-24 ... E-mail umg_zirabulak@utg.uz...' -- i.e. Zirabulakskoe UMG is listed as an internal territorial branch of AO Uztransgaz itself (not a separate subsidiary or JV). Chained with uzreport.news (2020-09-09, verified live, tokens '1020' and 'Зирабулакское' both present), which independently names 'Зирабулакское УМГ' as the unit executing capital-repair work on the Mubarek-Zirabulak line's string II specifically ('...I, II, III нитки...' / '...I, II нитки...' repair items) -- the two sources are independent in origin (Uztransgaz's own corporate site vs. an unaffiliated trade-press outlet) and together establish that the branch operating THIS segment is organizationally part of AO Uztransgaz. tier=medium: the value (Operator=Узтрансгаз) is supported by a genuine chain of two independent primary/press sources rather than either source stating 'Uztransgaz operates Mubarek-Zirabulak II' verbatim in one sentence. Searched Russian only."
+    },
+    {
+      "ref_col": "Owner [ref]",
+      "sheet_row": 3752,
+      "class_out": "UNRESOLVED",
+      "proposed_refs": [],
+      "verifications": [
+        {"url": "https://utg.uz/ru/about/history/", "ok": false, "contains_value": false}
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Genuine search, not cleared. Current ref utg.uz/ru/about/history/ 301-redirects to https://www.utg.uz/ru/about/history/, which is a confirmed genuine HTTP 404 (re-verified live) -- a real deletion candidate, not an access failure. Its Wayback capture (20260314231446) exists per the availability API but web.archive.org content-serving was unreachable from this session (ConnectTimeout/429) -- a network condition, not evidence the capture is bad; not citing a page I could not actually read. Tried the wiki's own dedicated ownership-structure seed citation next: utg.uz/ru/invest/aktsii-i-dividendy/ ('Информация о структуре акционерного капитала АО \"Узтрансгаз\"') -- this 302-redirects to https://www.utg.uz/ru/invest/stocks/struktura-aktsionernogo-kapitala/ (200 live), but that page is entirely client-rendered (Bitrix JS bundle only, no server-side article text in the raw HTML, confirmed by direct fetch) and fails any substring check -- a new, more specific dead end than the row audit found (it hadn't reached this redirect target). Also pulled Uztransgaz's own 2020 annual disclosure PDF (utg.uz/invest/reports/godovye-otchety/, '2020 год К4 годовой отчет.pdf', text-extracted directly) -- it lists companies in which AO Uztransgaz itself holds 20%+ stakes (its downstream subsidiaries), not AO Uztransgaz's own shareholder register, so it does not answer who owns Uztransgaz. Did not locate an explicit, citable statement of Uztransgaz's ownership percentage of this specific pipeline within a genuine effort; the underlying fact (state monopoly Uztransgaz wholly owns its own trunk-pipeline network, and Zirabulakskoe UMG appears as an internal branch, not a separate legal entity, per the Operator unit's finding) is not in doubt, but GEM's Owner1/Owner1% field records an equity fact this session could not source to an explicit disclosure. Leaving UNRESOLVED rather than fabricating or reusing the dead citation; recommend a future pass try a JS-capable fetch of struktura-aktsionernogo-kapitala/ or a working Wayback session for the original history/ page. Searched: Russian only."
+    }
+  ]
+}

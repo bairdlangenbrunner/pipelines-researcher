@@ -1,0 +1,229 @@
+{
+  "project_id": "P1773",
+  "pipeline_name": "Romania-Ukraine Interconnector",
+  "sheet_row": 964,
+  "wiki": "https://www.gem.wiki/Siret-Khotyn_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action — existence and identity are solidly documented; see status_reviews for the current-status correction",
+      "researcher_notes": "EXISTENCE: real, officially-documented project, not a GEM-only entity. The wiki's own citations (ENTSOG TYNDP 2020 xlsx/PDF, Transgaz PDSNT plans) are the right leads but the raw xlsx/large-PDF files fail url_verifier's substring screen because the tool can't parse binary content (documented false-negative in the verifier's own docstring — 'LARGE PDFs — the extractor does not reach the whole document'). Downloaded and read with `pdftotext -layout`: the ENTSOG 'TYNDP 2020 - Annex A - Projects Details' PDF (page 262-264) carries the exact project under EU project code PRJ-G-121 'Romania - Ukraine Gas Interconnection', split into two ENTSOG sub-projects — TRA-N-596 'Interconnection between the RO and the UA gas transmission systems' (the Romanian side, pipeline section 'Gheraesti - Siret', host country Romania) and TRA-N-502 'Interconnector Romania - Ukraine' (host country Ukraine, pipeline section 'Ukrainian part'). This confirms GEM's split is correct GEM convention (cross-border pipeline recorded as two country-scoped segments) and that P1773/'Siret-Khotyn Gas Pipeline' corresponds specifically to TRA-N-502, the 30 km Ukrainian-side spur — NOT to the much larger Romanian-side 'Gheraesti-Siret' pipeline (130-146 km across editions, tracked as its own GEM entity in Romania, out of this country's scope). Transgaz's own national development plans (PDSNT 2018-2027, PDSNT 2021-2030, and the newest PDSNT 2026-2035) independently corroborate the parent project across six years of filings. Not a duplicate of anything else on the Ukraine roster (P1487 is the unrelated Poland-Ukraine Hermanowice interconnector).",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "correct Diameter 27.60 in -> 27.56 in (precise conversion of the sourced 700 mm) and add a ref; do not use the Romanian-side cost figures for SegmentCost",
+      "researcher_notes": "DIAMETER is the metric-round-trip-with-false-precision defect the scope note warned about (same family as P1465/P3063). ENTSOG's TRA-N-502 pipeline table gives the Ukrainian-part pipe as 700 mm. 700/25.4 = 27.5591 in, which rounds to 27.56 in, not the sheet's 27.60 in — a small but real discrepancy consistent with someone typing a rounder-looking number instead of converting precisely. Recommend correcting to 27.56 in (or storing 700 mm directly) and citing the source. LENGTH (30 km) matches TRA-N-502's table exactly ('Ukrainian part... Length (km) 30'). CAPACITY (7.70 MMSCMD): ENTSOG lists the capacity increment at the Siret(RO)/Khotyn(UA) point as 58.10 GWh/d (RO->UA) and 87.10 GWh/d (UA->RO). Converting GWh/d to MMSCMD with the standard ~11 kWh/Sm3 gas heating-value convention gives roughly 5.3 and 7.9 MMSCMD respectively -- the sheet's 7.70 MMSCMD sits within ~3% of the UA->RO (export) figure, which is a reasonable match given the conversion-factor approximation; treated as confirmed, single-source. SEGMENTCOST (40,000,000 EUR) could NOT be corroborated. All cost figures found in Transgaz's own planning documents (125M EUR in the 2018-2027 plan, 150M EUR in 2021-2030, 450M EUR in the new 2026-2035 plan) price the much longer 130-146 km ROMANIAN section (Gheraesti-Siret), a different segment/different GEM entity -- applying any of those numbers to this 30 km Ukrainian spur would be wrong. ENTSOG's financial-assistance fields for TRA-N-502 show no grant/cost figures either (both 'Grants for studies/works amount: Mln EUR 0.0', i.e. not applicable, not a cost estimate). No independent figure for a 40M EUR Ukrainian-side cost was found anywhere in the source ladder (tsoua.com, the TSO of Ukraine's own network-development-plan PDF, is Cloudflare-gated -- 403 to every UA tried, including the Wayback copy which also failed to fetch in time); leave SegmentCost as UNRESOLVED rather than force a source onto an unverified number.",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "keep Owner1 = Gas Transmission System Operator of Ukraine, 100% -- add the ENTSOG ref",
+      "researcher_notes": "Applying the country-wide rule (post-1 Jan 2020 the GTS operator is TSOU, not the pre-2020 Ukrtransgaz): ENTSOG's TRA-N-502 entry (filed 15/06/2020, right at the transition) lists the 'Ukrainian part' sponsor as 'JSC \"Ukrtransgaz\" 100%' but the project-level Operator field as 'LLC Gas TSO of Ukraine' -- i.e. the document itself is straddling the handover, naming the newly-created TSOU as operator while the legacy Ukrtransgaz entity still shows as the nominal 2020-era sponsor of record. That is fully consistent with the sheet's current Owner1 = 'Gas Transmission System Operator of Ukraine' (100%), which reflects the post-handover state correctly. No Gazprom attribution anywhere on this row (correctly so -- this line lies wholly inside Ukraine/at the RO border, not the Russia corridor).",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ENTSOG TYNDP 2020 Annex A lists TRA-N-502 'Interconnector Romania - Ukraine' as a natural-gas transmission project (PRJ-G-121, gas TSOs Transgaz/Gas TSO of Ukraine). url_verifier substring check fails on this PDF (binary-extraction limitation on a large PDF, documented in the tool's own docstring); content confirmed manually via `pdftotext -layout` (page 262-264)."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ENTSOG classifies TRA-N-502 as 'Pipeline including CS' -- a transmission-grade interconnector with compressor infrastructure on the Romanian side, matching 'transmission'. Manually confirmed via pdftotext (see Fuel fill note re: url_verifier's PDF limitation)."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "30.00", "LengthKnownUnits": "km"},
+      "primary_value": "30.00",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "TRA-N-502's 'Pipelines and Compressor Stations' table: pipeline section 'Ukrainian part', Length (km) = 30, Total = 30. Exact match to the sheet value."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "27.56", "DiameterUnits": "in"},
+      "primary_value": "27.56",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same table: Diameter (mm) = 700 for the Ukrainian-part pipe. 700 mm / 25.4 = 27.5591 in -> 27.56 in (2 dp), a small correction from the sheet's current 27.60 in -- a metric-round-trip false-precision defect (see validity concern_type=spec). Proposing the precise conversion; sourced figure is 700 mm."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "7.70", "CapacityUnits": "MMSCMD"},
+      "primary_value": "7.70",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ENTSOG's capacity-increment table for the Siret(RO)/Khotyn(UA) point gives 58.10 GWh/d (RO->UA) and 87.10 GWh/d (UA->RO). Using the standard ~11 kWh/Sm3 gas-energy convention, 87.10 GWh/d converts to roughly 7.9 MMSCMD -- within ~3% of the sheet's 7.70 MMSCMD (UA->RO / export direction). Kept the existing value; single-source medium tier given the unit-conversion approximation."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Khotyn", "StartState/Province": "Chernivtsi Oblast", "StartCountryOrArea": "Ukraine", "EndLocation": "Siret", "EndState/Province": "Bukovina", "EndCountryOrArea": "Romania"},
+      "primary_value": "Khotyn",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ENTSOG literally names the interconnection point 'Siret (RO) / Khotyn (UA)' for both TRA-N-596 and TRA-N-502, and the Transgaz PDSNT plans separately confirm 'Siret' as the Romanian border locality and 'Ucraina' as the destination system. Khotyn sits in Chernivtsi Oblast, Ukraine (general geography, uncontested); Siret is a town in Suceava County, in the historical Bukovina region of Romania, matching EndState/Province='Bukovina'. Endpoints confirmed as recorded."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "FID [ref]",
+      "value_cols": ["FIDStatus", "FIDYear"],
+      "primary_value_col": "FIDStatus",
+      "values": {"FIDStatus": "Pre-FID"},
+      "primary_value": "Pre-FID",
+      "proposed_refs": [
+        "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf",
+        "https://www.transgaz.ro/sites/default/files/Planul%20de%20dezvoltare%20al%20Sistemului%20National%20de%20Transport%20gaze%20naturale%202026-2035.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.transgaz.ro/sites/default/files/Planul%20de%20dezvoltare%20al%20Sistemului%20National%20de%20Transport%20gaze%20naturale%202026-2035.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ENTSOG (2020) flags TRA-N-502 as 'Non-FID'. Six years later, Transgaz's own PDSNT 2026-2035 (section 7.7, shareholder-approved 21 July 2026) still lists the parent interconnector's 'Faza proiectului' as 'Actualizare SPF' (updating the pre-feasibility study) -- i.e. still well upstream of FID. Both filings trace back to the same reporting parties (Transgaz/TSOU self-reporting to ENTSOG and to Romania's own regulator), so treated as one strong origin rather than two fully independent ones -- medium tier. FIDYear correctly left blank."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "40000000.00", "SegmentCostUnits": "EUR"},
+      "primary_value": "40000000.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not corroborate a 40,000,000 EUR figure for this 30 km Ukrainian-side segment specifically. Every cost figure found in the source ladder (125M/150M/450M EUR across the 2018-2027, 2021-2030 and 2026-2035 Transgaz plans) prices the much longer Romanian-side Gheraesti-Siret pipeline (130-146 km), a different GEM entity. ENTSOG's TRA-N-502 financial-assistance fields show no cost total, only CEF-grant fields (both 0.0, meaning 'not applicable', not a project cost). tsoua.com (the Ukrainian TSO's own network-development-plan PDF, which might carry the Ukrainian-side cost) is behind Cloudflare's bot-challenge for every UA tried; its Wayback snapshot (20220402091140, 20.2 MB) is itself an incomplete capture -- Wayback's own response header says 'wayback content truncated by \"time\"', and two full re-downloads (16.7 MB each, byte-for-byte identical) both leave the PDF's trailer/xref missing, so this is a permanently truncated archive record, not a network hiccup on our end -- worth a follow-up attempt against a different snapshot or a live re-fetch once/if the Cloudflare wall lifts, not treated as a dead end. Leaving SegmentCost UNRESOLVED rather than pairing it with a source that doesn't actually support it."
+    },
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "oo_sheet_row": 1366,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Gas Transmission System Operator of Ukraine", "Owner1%": "100.00%"},
+      "primary_value": "Gas Transmission System Operator of Ukraine",
+      "tab": "operators_owners",
+      "proposed_refs": ["https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf"],
+      "verifications": [{"url": "https://www.entsog.eu/sites/default/files/2021-07/TYNDP_2020%20-%20Annex%20A%20-%20Projects%20Details.pdf", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "TRA-N-502 (filed 15/06/2020, right at the Ukrtransgaz->TSOU unbundling) lists Operator = 'LLC Gas TSO of Ukraine' for the project, consistent with the sheet's Owner1. See validity concern_type=attribution for the full reasoning."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Siret-Khotyn Gas Pipeline",
+      "sheet_row": 964,
+      "current_status": "cancelled",
+      "verdict": "change",
+      "proposed_status": "proposed",
+      "proposed_changes": {
+        "Status": "proposed",
+        "StartYear1": "2032"
+      },
+      "evidence_date": "2026-07",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.transgaz.ro/sites/default/files/Planul%20de%20dezvoltare%20al%20Sistemului%20National%20de%20Transport%20gaze%20naturale%202026-2035.pdf",
+        "https://www.stiripesurse.ro/romania-pregateste-magistrale-noi-de-gaze-spre-ucraina-si-republica-moldova-si-intareste-ruta-catre-serbia_3905571"
+      ],
+      "verifications": [
+        {"url": "https://www.transgaz.ro/sites/default/files/Planul%20de%20dezvoltare%20al%20Sistemului%20National%20de%20Transport%20gaze%20naturale%202026-2035.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.stiripesurse.ro/romania-pregateste-magistrale-noi-de-gaze-spre-ucraina-si-republica-moldova-si-intareste-ruta-catre-serbia_3905571", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ro",
+      "researcher_notes": "The sheet's 'cancelled' is a real state, not an error -- Romanian press (economedia.ro headline, checked but returned HTTP 403 to automated fetch, not cited) reported Transgaz DROPPED this project from its development plans in 2022 following the Russian invasion, and the project is absent from the intervening PDSNT editions (its own 'Modificari fata de planurile anterioare' comparison table in the new plan shows blank cells for the 2020/2022/2024 plan generations). BUT that changed after the sheet's 2025-05-29 update: Transgaz's shareholders gave PRELIMINARY approval on 21 July 2026 (98.29% of votes) to the updated PDSNT 2026-2030... 2035 plan, which REINSTATES this project as item 7.7 'Interconectare Romania - Ucraina pe directia Gherăiești - Siret', now in the 'Actualizare SPF' (updated pre-feasibility study) phase, target completion year 2032, investment estimate 450 million EUR (all confirmed directly in the plan PDF, section 7.7, and independently reported by stiripesurse.ro on 2026-07-22, which adds the shareholder-vote detail the plan PDF itself doesn't state -- treated as two distinct pieces of information even though both trace to Transgaz's corporate action). adevarul.ro (2026-05-03) independently corroborates the pre-vote version of the same plan naming 'interconectarea cu sistemul de transport din Ucraina (Gherăești-Siret)' among the planned 2026+ investments (verified via url_verifier, not counted toward tier given it covers the same underlying fact as the two cited sources). CAVEAT: all of this direct, dated evidence is for the ROMANIAN side of the interconnector (Transgaz's own project, section 7.7, covering the ~130 km Gheraesti-Siret pipe). I could not get independent confirmation that the UKRAINIAN side specifically (TSOUA's TRA-N-502, i.e. the physical asset this GEM row actually represents) has also been reinstated -- tsoua.com is Cloudflare-gated to every UA tried. The revival is inferred to extend to the Ukrainian spur because (a) ENTSOG tracks both halves under one project code (PRJ-G-121) and (b) the Transgaz plan explicitly states the point of the project IS to create new cross-border capacity with Ukraine at Siret ('Proiectul creeaza o noua capacitate transfrontaliera cu Ucraina in zona localitatii Siret') -- a Romanian-side line with no matching Ukrainian-side line would serve no purpose. Recommend Status='proposed' (early planning/pre-feasibility, matching the still-Pre-FID FIDStatus) rather than reverting to 'construction' or 'operating' -- nothing here suggests physical work has begun. StartYear1 proposed at 2032 to replace the stale 2025 figure (itself inherited from the abandoned 2018-2027/2021-2030 plan cycle); if ShelvedCancelledType is currently populated on this row it should be cleared along with the Status change. Flag this one for a human look before merging given the Ukrainian-side evidence gap -- a 'change' is proposed here per the >=2-source rule for the parent project, but a reviewer may reasonably want direct TSOUA confirmation before flipping this specific row."
+    }
+  ],
+  "summary": "P1773 (Siret-Khotyn Gas Pipeline, the 30km Ukrainian side of the Romania-Ukraine interconnector, ENTSOG TRA-N-502/PRJ-G-121) is a real, correctly-classified, non-duplicate project with length/diameter/capacity/location/owner all confirmed against ENTSOG's TYNDP 2020 filing (diameter corrected 27.60in -> 27.56in for the sourced 700mm); SegmentCost (40M EUR) is unresolved, likely misattributed from the much larger Romanian-side project's cost figures. Biggest finding: the sheet's 'cancelled' Status is stale — Transgaz's shareholder-approved PDSNT 2026-2035 plan (21 Jul 2026) reinstates the parent interconnector at pre-feasibility stage, target 2032, 450M EUR — proposed Status change to 'proposed' with a caveat that direct Ukrainian-side (TSOUA) confirmation is unavailable (site Cloudflare-gated)."
+}

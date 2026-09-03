@@ -1,0 +1,509 @@
+{
+ "batch": 6,
+ "harvest_opened": 17,
+ "resolutions": [
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家石油天然气管网集团有限公司 [46%]"
+   },
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "CCXI 2022 rating report on 江西省天然气集团; url_verifier substring check failed on this 2.3MB CJK PDF (documented false-negative class). Manually confirmed via pdftotext -layout: line ~262 lists 江西省天然气管道有限公司（天然气管道公司）持股比例 54.00%."
+    },
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "SSE 2025-04-03 bond credit rating report on 江西省投资集团; url_verifier substring check failed on this large PDF (documented false-negative class). Manually confirmed via pdftotext -layout: footnote 5 states 天然气集团持有天然气管道公司54%的股权，剩余46%股权由国家管网集团东部原油储运有限公司（原\"中国石化管道储运有限公司\"）持有."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Company-level ownership of 江西省天然气管道有限公司 (the operator/QCCOwner named for both P5865 and P5866) corroborated by TWO independent credit-rating documents on two distinct hosts: (1) CCXI's 2022 credit rating report on 江西省天然气集团有限公司 (hosted via Qixin/企查查's PDF cache, http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf) — page text (line ~262) lists 江西省天然气管道有限公司/天然气管道公司 at '持股比例 54.00%'; (2) SSE's 2025-04-03 bond credit-rating report on 江西省投资集团有限公司 (https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf) — footnote 5 states verbatim '天然气集团持有天然气管道公司54%的股权，剩余46%股权由国家管网集团东部原油储运有限公司（原\"中国石化管道储运有限公司\"）持有.' Both documents agree on the 54%/46% split. url_verifier flagged both PDFs 'missing expected' on automated substring search (a documented false-negative class for large/CJK PDFs per BRIEF) — manually confirmed via `pdftotext -layout` + grep; both quotes above are the exact matched lines. NOTE for a human reviewer: both sources name the 46% holder as the specific PipeChina subsidiary '国家管网集团东部原油储运有限公司' (PipeChina Eastern Crude Oil Storage & Transport Co.), not the sheet's current parent-group entity '国家石油天然气管网集团有限公司' — a corporate-hierarchy granularity difference (subsidiary vs. parent), not a contradiction; staged value keeps the sheet's existing entity name unchanged, flagging the more precise subsidiary name here rather than overwriting silently. m.qcc.com (the wiki's own candidate host for this fact) remained WAF-blocked (HTTP 567) all day per BRIEF's measured conditions."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "values": {
+    "ProposalYear": "2017",
+    "ProposalMonth": "9"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "values": {
+    "ConstructionYear": "2019",
+    "ConstructionMonth": "11"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "0.13",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "20.20",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "508",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Tuochuan Town",
+    "StartPrefecture/District": "Yifeng",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Salt Chemical Industry Base",
+    "EndPrefecture/District": "Zhangshu",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "values": {
+    "SegmentCost": "110000000.00",
+    "SegmentCostUnits": "RMB"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese + English, ~14 queries across the shared session budget): 樟树 天然气 支线 管道 (Zhangshu branch), 江西省天然气管道有限公司 拓埠镇 樟树 盐化工基地, 江西 樟树 天然气 管道 核准 批复, 樟树盐化工基地 天然气 管道 竣工, 宜春 天然气 支线 天然气管网. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-11456.aspx — the domain no longer resolves (ENOTFOUND on both jxgajc.com and www.jxgajc.com, confirming BRIEF's 'ports shut' note) and its Wayback capture (20230902005946) could not be read: 5+ serial fetch attempts (curl with browser UA, WebFetch, r.jina.ai proxy, translate.google.com proxy) all returned HTTP 429 'suspected abusive bot traffic' — the CDX availability API confirms the snapshot EXISTS, so this is the BRIEF's documented rate-limit condition, not link rot. Opened 17 of 21 harvest_pool_live URLs (shared pool for this wiki page, listing multiple Jiangxi provincial gas branches): china5e.com and sohu.com both describe the Jinggangshan branch (203km); tt.m.jxnews.com.cn describes Leping-Dexing-Wuyuan; wuning.gov.cn describes Yongxiu-Wuning-Xiushui; two archive.org screenshot items describe Ganzhou South Phase 2 and Shenguili-Pengze Phase 1; jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html is a withdrawn/404 government page; news.bjx.com.cn (x2) and news.sina.com.cn/sohu describe the provincial backbone network in general terms with no Zhangshu-specific figures. None names this branch, its endpoints (Tuochuan Town, Yifeng -> Zhangshu Salt Chemical Industry Base), or its specs (20.20km/508mm). No independent alternate source found despite the extensive search; the value is uncitable today, not unknown — GEM's own route geometry cannot substitute (rule 1)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "__STATUS__",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "construction"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Verdict: STALE. ConstructionYear/Month = 2019-11 — nearly 7 years ago — for a 20.20km branch line. Peer Jiangxi branches found in the harvest pool commission in far shorter windows: Jinggangshan (203km, china5e.com/sohu.com) reports roughly a 1-year build period; Yongxiu-Wuning-Xiushui (138km, wuning.gov.cn) similar. A 20km branch sitting in 'construction' for 7 years with the wiki page last touched 2024-10-04 (per roster) is inconsistent with every comparable branch's build timeline. Extensive search (see the Fuel/Length/etc. UNRESOLVED notes on this row) found no completion announcement, no ongoing-construction news, and no evidence either way — the sole prior source (jxgajc.com) is a dead domain with its Wayback capture rate-limited (429) all day. This reads as nobody having re-checked the row since the original load, not as confirmed ongoing construction — recommend a status-review follow-up once jxgajc.com's Wayback capture or an EIA/completion-acceptance document becomes accessible."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "values": {
+    "ConstructionYear": "2017",
+    "ConstructionMonth": "12"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "values": {
+    "StartYear1": "2021"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "0.50",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "19.12",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "500",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "values": {
+    "FuelSource": "West-East Gas Pipeline Line 2 and Sichuan-to-East Gas Transmission"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Hukou",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Jinshawan",
+    "EndPrefecture/District": "Jiujiang",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "values": {
+    "SegmentCost": "80830000.00",
+    "SegmentCostUnits": "RMB"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Searched (Chinese, several queries within the shared session budget): 湖口 金沙湾 天然气 联通工程, 江西省天然气管网与湖口LNG二期联通工程, 九江 湖口 金沙湾 天然气 支线 管道. Found one highly specific candidate not in the harvest pool — www.soultnuts.com hosting a '江西省天然气管网与湖口LNG二期联通工程项目 安全验收评价报告' (safety acceptance evaluation report) — but both curl and WebFetch returned HTTP 522 (Cloudflare origin unreachable, Retry-After 120) on every attempt; documented as an access failure, not usable as a citation without a successful re-fetch. The row's sole known origin (wiki candidate_url) is jxgajc.com/Hr/show-10438.aspx — same dead-domain + Wayback-429 condition as P5865 (see that row's note); the Wayback CDX API confirms capture 20230902105154 exists but content fetches 429'd on every serial retry. Opened 17 of 21 shared harvest_pool_live URLs — none name Jinshawan, Hukou, or this branch's specs (19.12km/500mm/0.50bcm-y); all describe other provincial branches (see P5865's note for the breakdown). No independent alternate source found; uncitable today, not unknown."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家石油天然气管网集团有限公司 [46%]"
+   },
+   "tab": "operators_owners",
+   "proposed_refs": [
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "Pre-existing carried ref (medium tier, single source). Confirmed present via pdftotext -layout, footnote 5 (see P5865's Operator record for the exact quote)."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "NEW second independent source found this pass (CCXI 2022 rating report), same 54%/46% split. Manually confirmed via pdftotext -layout (see P5865's Operator record)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "NOT an owed unit for this row (already_sourced at medium/carried) — flagged as a bonus tier upgrade. The pre-existing single-source (SSE bond PDF) carried ref is now corroborated by a second independent document (CCXI/qixin rating report) found while resolving P5865's Operator unit for the same operating company (江西省天然气管道有限公司). Recommend upgrading medium -> high. Same corporate-hierarchy naming nuance applies (see P5865's Operator note): both sources name the 46% holder as the PipeChina subsidiary 国家管网集团东部原油储运有限公司, not the sheet's parent-group entity name — flagged, not silently overwritten."
+  },
+  {
+   "project_id": "P5866",
+   "sheet_row": 3330,
+   "ref_col": "__VALIDITY__",
+   "value_cols": [
+    "Capacity"
+   ],
+   "values": {
+    "Capacity": "0.50",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Flagging per launch instruction ('P5866's capacity is a 6.43x outlier against its peers'). Cross-checking against the payload's own prior_findings for this row, which actually describes a DIFFERENT 6.43x figure — a route-vs-sheet LENGTH ratio, not capacity ('Route-vs-sheet length ratio 6.43x — route accuracy is very low (straight line/schematic), so the ROUTE is the weak side here, not necessarily the length'). Recording both, since neither could be settled this pass: (1) CAPACITY — 0.50 bcm/y on a 19.12km/500mm branch is high relative to the peer branches surfaced in the harvest pool at similar or larger scale (e.g. Yongxiu-Wuning-Xiushui 138km and Jinggangshan 203km both read well under 0.50 in the general network descriptions opened this pass, though neither gives a precise segment figure to compare cleanly) — could not be verified or refuted because the row's sole known source (jxgajc.com) is inaccessible today (dead domain, Wayback 429-rate-limited all day) and no independent alternate source was found. (2) LENGTH-vs-ROUTE — per prior_findings, GEM's own route geometry disagrees with the sheet's 19.12km by 6.43x, and RouteAccuracy is 'very low (straight line/schematic)', which per this project's own convention means the drawn route — not the sheet length — is the weak side; not restaging that as a length concern. Recommend a human re-check of Capacity specifically once jxgajc.com's Wayback capture becomes readable, since that document is the only known source for this value and it has not actually been read by anyone on this pass."
+  }
+ ]
+}

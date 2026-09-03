@@ -1,0 +1,80 @@
+{
+ "project_id": "P7978",
+ "pipeline_name": "El-Hafair-Musturad Oil Pipelines",
+ "sheet_row": 572,
+ "wiki": "https://www.gem.wiki/El-Hafair-Musturad_Oil_Pipelines",
+ "validity": [
+  {
+   "segment_name": "Pipeline 2",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Replace the broken [ref] link on Fuel/PipelineType/Status/Capacity/Length/Diameter/StartLocation/EndLocation with the direct article URL below (the category-listing URL currently in the sheet does not itself name the pipeline and fails a content check, even though it is the correct underlying source).",
+   "researcher_notes": "EXISTENCE/SPEC: confirmed independently. The sheet's own ResearcherNotes (Nagwa) say the data was 'captured from September 2020 Research & Analysis https://egyptoil-gas.com/reports_category/monthly/page/7/' -- that URL is a category-archive listing page (a paginated list of monthly-report links), and it does not mention 'El-Hafair', 'Musturad', or any of the numeric values (url_verifier: 200 but 'operating'/'85,000.00'/'115.00'/'24' all absent). I traced the actual September-2020 EgyptOil&Gas 'Research & Analysis' piece she meant: 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad' (egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/, byline Amina Hussein/Reham Gamal/Tasneem Madi, FY2019/20 production data in the body -> dates it to exactly the cited edition). It is a PDF served at that URL (200 live, confirmed with curl; url_verifier cannot parse embedded PDF text per its own docstring, so I extracted it with pdftotext -layout). Its table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai' lists EIGHT lines and includes, verbatim: 'Al Hafair-Suez | Al Hafair | Suez | 35 | 18 | 50,000' (= P7976, exact match) and TWO separate rows both labelled 'Al Hafair-Mostorod | Al Hafair | Mostorod Refinery': one '135 | 18/20 | 85,000' and one '115 | 24 | 85,000'. The second row matches P7978 (this row) EXACTLY on length (115 km), diameter (24 in) and capacity (85,000 bpd); the first matches P7977/'Pipeline 1' exactly. DUPLICATE check (P7977 vs P7978, both 'El-Hafair-Musturad Oil Pipelines'): NOT a duplicate -- this single source itemizes them as two distinct table rows/physical lines from the same origin (Al Hafair) to the same destination (Mostorod refinery) with different diameters (18/20in vs 24in) and different lengths (135 vs 115 km), i.e. the same-name-different-diameter pattern the orchestrator flagged as 'usually two real parallel lines, not a duplicate.' GEM's Pipeline-1/Pipeline-2 split under one wiki page is the correct model, not a double count. CLASSIFICATION: correctly 'transmission' -- the source describes it as a crude-oil pipeline moving crude from the Al Hafair production/gathering point in the Gulf-of-Suez (Suez governorate, confirmed via a second, unrelated web source placing El-Hafair in Suez Governorate) to the Mostorod refinery near Cairo (Qalyubia governorate) -- a field-to-refinery trunk line, not a gathering/feeder line. Fuel=Oil confirmed (table is explicitly 'Crude Oil Infrastructure'). ATTRIBUTION (caveat, not raised as a concern): the source does not name an operator/owner for this specific line (only for SUMED explicitly). Operator='Petroleum Pipeline Company(PPC)' and Owner='EGPC 100%' are consistent with PPC's documented exclusive national concession for crude-oil/product pipeline transport (multiple independent web sources describe PPC, an EGPC entity, as operating essentially all of Egypt's crude and product trunk lines) and with the convention used elsewhere in this tracker, but I could not find a line-specific citation naming PPC/EGPC for El-Hafair-Musturad, so treat that attribution as medium-confidence inference rather than directly sourced. TIER: medium, single strong source (a substantive, named-author, tabulated infrastructure inventory, not a wire-story reprint and not GEM-derived) -- I searched further in both English and Arabic (petro-mag.org, youm7, dostor, elwatannews, PPC/EGPC corporate pages, almerja.com's Arab-pipelines roundup) and could not find a second independent source giving line-level specs for the 115km/24in Al Hafair-Mostorod pipeline specifically, so this stays medium, not high. NOT cited: abarrelfull.wikidot.com's 'Mostorod Refinery Project' page turned up in search -- correctly excluded per the standing ban, not read for leads either. No blank fields (StartLocation, EndLocation as distinct facility-name fields, FuelSource, StartYear1/ProposalYear, FIDStatus) could be filled with sourced confidence from what I found, so left as-is rather than fabricated.",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Pipeline 2",
+   "sheet_row": 572,
+   "ref_col": "StartLocation [ref]",
+   "value_cols": [
+    "StartLocation"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "El-Hafair"
+   },
+   "primary_value": "El-Hafair",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CLOSES AN EXISTING ORPHAN [ref]. On the live sheet this row's StartLocation value cell is BLANK while its StartLocation [ref] cell is filled (with the paginated category-index URL) -- an orphan ref, which the standing rule forbids. Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai', gives this line's 'From' as 'Al Hafair'. Proposed value 'El-Hafair' uses GEM's own transliteration as already carried in this row's PipelineName (source spells it 'Al Hafair'); the place is the same. Value and ref are staged together so the pair ships as a unit and the orphan is resolved rather than perpetuated. Single source -> medium. Hand-confirmed via pdftotext -layout on the embedded PDF; url_verifier's substring screen false-negatives on this document (two tables laid out side by side, extraction interleaves columns), so ok/contains_value are encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  },
+  {
+   "segment_name": "Pipeline 2",
+   "sheet_row": 572,
+   "ref_col": "EndLocation [ref]",
+   "value_cols": [
+    "EndLocation"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Musturad"
+   },
+   "primary_value": "Musturad",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CLOSES AN EXISTING ORPHAN [ref]. On the live sheet this row's EndLocation value cell is BLANK while its EndLocation [ref] cell is filled (with the paginated category-index URL) -- an orphan ref, which the standing rule forbids. Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Crude Oil Infrastructure in the Gulf of Suez/Sinai', gives this line's 'To' as 'Mostorod Refinery'. Proposed value 'Musturad' uses GEM's own transliteration as already carried in this row's PipelineName (source spells it 'Mostorod Refinery'); the place is the same. Value and ref are staged together so the pair ships as a unit and the orphan is resolved rather than perpetuated. Single source -> medium. Hand-confirmed via pdftotext -layout on the embedded PDF; url_verifier's substring screen false-negatives on this document (two tables laid out side by side, extraction interleaves columns), so ok/contains_value are encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  }
+ ],
+ "summary": "P7978 confirmed (caveat): real, correctly-classified 115km/24in/85,000bpd Al Hafair-Mostorod crude trunk, verbatim-matched in an EgyptOil&Gas research report (the article the sheet's own note names but mislinks to a non-supporting category page); NOT a duplicate of sibling P7977 (Pipeline 1, 135km/18-20in) -- the same source itemizes both as separate physical lines. Recommend swapping the sheet's [ref] URL to the direct article link above; no UNRESOLVED items."
+}

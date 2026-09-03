@@ -59,9 +59,10 @@ _UA = "Mozilla/5.0 (compatible; pipelines-researcher/1.0)"
 
 # UA for fetching gem.wiki itself (harvest_wiki_citations.py, wiki_alignment.py) —
 # NOT for external sites, which need the browser-ish _UA above to get past their own
-# bot walls. The gem.wiki zone runs Cloudflare Under Attack Mode, and a WAF rule keyed
-# on the leading "baird-wiki" token is the only thing that gets a script through; any
-# other UA gets 403 "cf-mitigated: challenge" (verified 2026-08-10). Deliberately
+# bot walls. The leading "baird-wiki" token is GEM's firewall identity for this
+# traffic, and the WAF-bypass key whenever the zone runs Cloudflare Under Attack Mode
+# (it did 2026-08-07 → ~08-11; off again since, but the token stays — if gem.wiki
+# starts 403ing "cf-mitigated: challenge", check the UA first). Deliberately
 # byte-identical to goit-ggit-data-ops/gem-wiki/gemwiki.py's USER_AGENT so both repos
 # present as one client in GEM's firewall logs — keep them in sync, and see that repo's
 # gem-wiki/README.md → Auth for the full writeup.
@@ -84,6 +85,22 @@ _MIN_BODY_CHARS = 1500
 # stripped: real values do live in JSON-LD blocks.
 _NOISE_MARKUP_RE = re.compile(r"<(svg|style|template)\b.*?</\1\s*>", re.S | re.I)
 
+# URL shapes that are navigation surfaces rather than documents — see the check in
+# `verify_url` for why these can never be a `[ref]`. Category/tag matching deliberately
+# requires the path to END at the listing (or at a /page/N/), so a real article that
+# merely lives under /category/<x>/<slug> is untouched. `/topic/<slug>` is deliberately
+# NOT here: Britannica uses it as its ARTICLE path (8 Saudi oil refs cite
+# britannica.com/topic/Trans-Arabian-Pipeline, all legitimate). Nor is a bare `?q=`,
+# which sites use for plenty besides search — only the search engines' own wrappers.
+_NON_CITATION_RE = re.compile(
+    r"(?:"
+    r"[?&](?:s|search|query)="
+    r"|/search/?(?:[?#]|$)"
+    r"|/page/\d+/?(?:[?#]|$)"
+    r"|/(?:category|reports_category|tag|author)/[^/?#]*/?(?:[?#]|$)"
+    r"|(?:google|bing|duckduckgo|yandex)\.[a-z.]+/(?:search|url)\?"
+    r")", re.I)
+
 # A 200 that is really an access-denied / bot-challenge / geo-block interstitial. Checked
 # regardless of body length — a block page padded with inline graphics is not short.
 # NOT a deletion: standing rule is that a blocked origin gets its Wayback snapshot ADDED
@@ -94,6 +111,15 @@ _BLOCK_PHRASES = (
     "verify you are human", "are you a human", "enable javascript and cookies",
     "request blocked", "unusual traffic", "cf-error-details", "ddos protection",
     "your access to this site has been limited", "why have i been blocked",
+    # Chinese-language WAF/challenge wording. The list was English+Russian only until
+    # 2026-08-26, so every Chinese block page served under HTTP 200 verified as clean
+    # prose — the same false-PASS family as the energybase.ru case above, and it matters
+    # because the China province sweeps cite provincial-government and registry hosts
+    # almost exclusively. Found on the Jiangxi gas sweep: qcc.com (企查查, the company
+    # registry behind 33 of that batch's wiki citations) serves
+    # "由于您访问的链接有可能对网站造成安全威胁，您的访问被阻断" from its WAF.
+    "访问被阻断", "拒绝访问", "对网站造成安全威胁", "人机验证", "滑动验证",
+    "请输入验证码", "访问频率过高", "请求过于频繁", "网站防火墙", "该页面禁止访问",
 )
 
 
@@ -203,6 +229,19 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         return {"ok": False, "status": None,
                 "reason": "web.archive.org/save/ is the Save Page Now instruction endpoint, "
                           "not a snapshot — cite web.archive.org/web/<timestamp>/<url>"}
+    # A site-search query, a paginated archive index or a bare category/tag listing is
+    # NAVIGATION, not a document. It cannot support a data value at all: its content is
+    # whatever the site published most recently, so a value "found" on it today is gone
+    # next month, and the page 200s for ANY query (egyptoil-gas.com/?s=<nonsense> returns
+    # 172 KB of chrome). Worse, it passes a naive substring screen whenever the digits
+    # happen to land in a result snippet — which is exactly how 104 of Egypt's 560 filled
+    # ref units (18.6%, 16 rows across BOTH trackers) came to rest on just two such URLs,
+    # 81 of them scored `ok` (2026-08-27). Flag the shape and make the unit owed, so the
+    # researcher chases the underlying article/report instead of re-citing the index.
+    if _NON_CITATION_RE.search(url or ""):
+        return {"ok": False, "status": None,
+                "reason": "search/index page, not a document — cite the underlying "
+                          "article or report, not a mutable navigation surface"}
     try:
         import requests
     except ImportError:
@@ -242,8 +281,31 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
             d["reason"] = (d.get("reason", "") +
                            " [cert chain unverified — retried with TLS verification off; "
                            "page is live, identity not cryptographically confirmed]")
+        if sec_retry:
+            d["sec_ua_retry"] = True
+            d["reason"] = (d.get("reason", "") +
+                           " [sec.gov 403'd the default UA; retried with an identifying "
+                           "UA per SEC's fair-access policy]")
         return d
 
+    # sec.gov enforces its fair-access policy by UA content, not rate alone: it 403s the
+    # generic `_UA` string outright (no contact info in it) regardless of pace, while a UA
+    # carrying a name + email passes immediately — confirmed 2026-09-02 auditing P0162
+    # (Mississippi River Transmission), where every EDGAR filing URL (Energy Transfer's
+    # EX-21.1 subsidiaries list, CenterPoint/Enable 10-Ks) 403'd on the first try and 200'd
+    # on retry with an identifying UA. This is a transport-policy defect on our side, same
+    # family as the insecure_tls retry above — not evidence the filing is gone — so retry
+    # once, loudly labeled, instead of leaving every SEC citation in the US batch unusable.
+    sec_retry = False
+    if r.status_code == 403 and "sec.gov" in (url or "").lower():
+        try:
+            r2 = requests.get(url, timeout=timeout,
+                               headers={"User-Agent": "pipelines-researcher (research contact: baird.langenbrunner@globalenergymonitor.org)"})
+            if r2.status_code == 200:
+                r = r2
+                sec_retry = True
+        except Exception:
+            pass
     if r.status_code != 200:
         return _fin({"ok": False, "status": r.status_code, "reason": f"HTTP {r.status_code}"})
     # requests falls back to ISO-8859-1 (the HTTP default for text/*) whenever the server
@@ -265,15 +327,27 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # "value not found". Only matters when we are actually checking for content.
     stub = len(body.strip()) < _MIN_BODY_CHARS
     checking = bool(expected or any_of or name)
-    # A block/challenge interstitial is a 200 that proves nothing, at any body length. It
-    # is NOT evidence the page is gone, so never let this read as a deletion.
+    # A block/challenge interstitial is a 200 that proves nothing, at any body length, and
+    # regardless of whether we were asked to match content. It is NOT evidence the page is
+    # gone, so never let this read as a deletion.
+    #
+    # This deliberately does NOT depend on `checking`. It used to (`blocked and checking`),
+    # which meant the commonest call shape in this repo — a bare `verify_url(url)` reachability
+    # check with no needle, which is how every `[ref]` cell gets screened — sailed straight
+    # past the interstitial and returned a bare `ok=True, reason='200'`. That is the worst
+    # possible verdict: a hard PASS on a page we never saw. Caught 2026-08-16 on
+    # energybase.ru, which serves «Доступ ограничен» (naming the caller's IP and ASN) under
+    # HTTP 200 — the 2026-08-12 repair fixed the phrase list and the match surface but left
+    # this gate in place, so the no-needle path stayed broken.
     blocked = _blocked_as(text)
-    if blocked and checking:
+    if blocked:
+        tail = ("anything 'found' on it is a false positive"
+                if checking else "the 200 says nothing about whether the page still exists")
         return _fin({"ok": False, "status": 200, "blocked": True,
                      "reason": f"200 but this is an access-block/challenge interstitial "
-                               f"(matched {blocked!r}), not the page — anything 'found' on it is "
-                               f"a false positive. NOT a deletion: keep the ref and ADD a Wayback "
-                               f"snapshot alongside; only a confirmed 404/410 may drop a ref."})
+                               f"(matched {blocked!r}), not the page — {tail}. NOT a deletion: "
+                               f"keep the ref and ADD a Wayback snapshot alongside; only a "
+                               f"confirmed 404/410 may drop a ref."})
     missing = [e for e in expected if e and not _contains(text, e)]
     if missing:
         if stub:
@@ -286,14 +360,21 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
             tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
             return _fin({"ok": False, "status": 200, "reason": f"200 but data value not found (none of {forms}){tail}"})
     # `text`, not `body` — a name must appear in prose too, not in an svg/style block.
+    # `name_found` travels with the verdict whenever a name was asked for, so a caller (and
+    # the merge-time relevance gate) can tell "the page names this pipeline" apart from
+    # "the page merely contains the number" — the keyword-match failure where a page about
+    # endpoint A or endpoint B gets cited for the A–B line.
     if name and not (_name_present(text, name) if fuzzy else _contains(text, name)):
         tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
-        return _fin({"ok": False, "status": 200, "reason": f"200 but name not found (fuzzy): {name!r}{tail}"})
+        return _fin({"ok": False, "status": 200, "name_found": False,
+                     "reason": f"200 but name not found (fuzzy): {name!r}{tail}"})
+    named = {"name_found": True} if name else {}
     if stub and checking:
         # Matched inside a stub is not to be trusted either — surface it, don't silently pass.
-        return _fin({"ok": True, "status": 200,
+        return _fin({"ok": True, "status": 200, **named,
                 "reason": f"200 + content present, BUT body only {len(body.strip())} chars — verify against full text"})
-    return _fin({"ok": True, "status": 200, "reason": "200 + expected content present" if checking else "200"})
+    return _fin({"ok": True, "status": 200, **named,
+                 "reason": "200 + expected content present" if checking else "200"})
 
 
 def surface_forms(value) -> list[str]:

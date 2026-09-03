@@ -7,35 +7,50 @@
 #   ./scripts/refresh_csvs.sh --working  # writes data/{tracker}_working.csv (gitignored)
 #
 # Header is at CSV row index 2 for the two tracker tabs (load with header=2). The
-# operators/owners tab (GID 1489950650) has its header at row index 1 (load with header=1);
-# it is ProjectID-keyed and holds the Operator [ref] / Owner [ref] source columns.
+# operators/owners tab has its header at row index 1 (load with header=1); it is
+# ProjectID-keyed and holds the Operator [ref] / Owner [ref] source columns.
 #
-# ONE PATH: an AUTHENTICATED per-tab read via gws (~/.config/gws-gem, the read-only work
-# profile) in scripts/_sheets_pull.py. Baird is deliberately removing anonymous access to
-# these documents, so the authenticated CLI/MCP path is the standing method for every
-# shared-drive and Google Docs/Sheets operation — not a fallback.
+# THE PULL ENGINE LIVES IN ../gem-db-ops — this script is a thin wrapper.
+# As of 2026-08-11 the authenticated tab->CSV reader that used to live here
+# (scripts/_sheets_pull.py, now deleted) is `gem-db-ops/gem_sheets.py`, and the
+# per-tracker entry points are `gem-db-ops/{goit,ggit}/pull.py`. Same gws profile
+# (~/.config/gws-gem, read-only), same FORMATTED_VALUE reads, same right-padding,
+# so the row offsets this repo depends on are unchanged — verified byte-identical
+# on the Oil/NGL tab against the 2026-08-11 10:19 snapshot. Do not re-add a local
+# copy of the reader; fix gem-db-ops instead and every consumer gets the fix.
 #
-# The old anonymous `export?format=csv&gid=` URL began returning 401 on every tab on
-# 2026-07-29 and is gone for good; don't re-add it. The GIDs below are kept only because
-# they identify the tabs in docs and CSV-export URLs elsewhere in the repo.
+# Each pull also writes a sibling `<snapshot>.colmap.json` (header -> 0-indexed
+# column, plus canonical short names and drift warnings). It's derivable, so it's
+# gitignored; scripts that want it can re-derive with
+# `python3 ../gem-db-ops/gem_colmap.py <csv> --tracker goit`.
+#
+# Anonymous access is gone for good: the old `export?format=csv&gid=` URL began
+# returning 401 on every tab on 2026-07-29 (the sheet lives in a shared drive,
+# driveId 0AFOra93TfZAeUk9PVA). Don't re-add it. The GIDs below are kept only
+# because docs elsewhere in the repo identify the tabs by gid.
 # If the read fails with an auth error, ask Baird to run `gws-gem auth login` (needs a browser).
 
 set -euo pipefail
 
-SHEET_ID="1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek"
-OIL_GID="456134080"
-GAS_GID="1020144097"
-OWNERS_GID="1489950650"
-# Tab titles drive the pull — Sheets values.get takes a title, not a gid
-OIL_TAB="Oil/NGL pipelines"
-GAS_TAB="Gas pipelines"
-OWNERS_TAB="Pipeline operators/owners"
+# Tab titles/GIDs now live in gem-db-ops/gem_sheets.py's TABS registry; these are
+# retained as documentation of which tabs this script covers.
+#   Oil/NGL pipelines          gid 456134080   -> gem-db-ops/goit/pull.py
+#   Gas pipelines              gid 1020144097  -> gem-db-ops/ggit/pull.py
+#   Pipeline operators/owners  gid 1489950650  -> --with-owners
 
 # Resolve repo root no matter where the script is invoked from
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 REPO_ROOT="$( cd -- "${SCRIPT_DIR}/.." &> /dev/null && pwd )"
 DATA_DIR="${REPO_ROOT}/data"
 mkdir -p "${DATA_DIR}"
+
+# Sibling checkout of the pull engine; override with GEM_DB_OPS_REPO.
+DB_OPS="${GEM_DB_OPS_REPO:-${REPO_ROOT}/../gem-db-ops}"
+if [[ ! -f "${DB_OPS}/gem_sheets.py" ]]; then
+  echo "ERROR: gem-db-ops not found at ${DB_OPS}" >&2
+  echo "       Clone it beside this repo, or set GEM_DB_OPS_REPO=/path/to/gem-db-ops" >&2
+  exit 1
+fi
 
 if [[ "${1:-}" == "--working" ]]; then
   OIL_OUT="${DATA_DIR}/GOIT_oil_ngl_working.csv"
@@ -48,16 +63,12 @@ else
   OWNERS_OUT="${DATA_DIR}/GEM_operators_owners_snapshot_${STAMP}.csv"
 fi
 
-# pull <label> <gid> <tab title> <out path>
-pull() {
-  local label="$1" gid="$2" tab="$3" out="$4"
-  echo "→ ${label} (gid ${gid}) → ${out}"
-  python3 "${SCRIPT_DIR}/_sheets_pull.py" "${tab}" "${out}"
-}
+echo "→ Oil/NGL + operators/owners → ${OIL_OUT}, ${OWNERS_OUT}"
+python3 "${DB_OPS}/goit/pull.py" --output "${OIL_OUT}" \
+        --with-owners --owners-output "${OWNERS_OUT}"
 
-pull "Oil/NGL"          "${OIL_GID}"    "${OIL_TAB}"    "${OIL_OUT}"
-pull "Gas"              "${GAS_GID}"    "${GAS_TAB}"    "${GAS_OUT}"
-pull "Operators/owners" "${OWNERS_GID}" "${OWNERS_TAB}" "${OWNERS_OUT}"
+echo "→ Gas → ${GAS_OUT}"
+python3 "${DB_OPS}/ggit/pull.py" --output "${GAS_OUT}"
 
 # Sanity check the pulled files aren't HTML error pages
 for f in "${OIL_OUT}" "${GAS_OUT}" "${OWNERS_OUT}"; do

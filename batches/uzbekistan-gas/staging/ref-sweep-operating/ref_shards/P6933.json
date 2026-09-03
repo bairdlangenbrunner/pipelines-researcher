@@ -1,0 +1,38 @@
+{
+  "project_id": "P6933",
+  "pipeline_name": "Bukhara-Tashkent-Bishkek-Almaty Gas Pipeline",
+  "resolutions": [
+    {
+      "ref_col": "Status [ref]",
+      "sheet_row": 3751,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://kun.uz/ru/news/2020/12/26/epsilon-edc-vedutsya-masshtabnyye-raboty-po-modernizatsii-gazotransportnoy-infrastruktury-uzbekistana",
+        "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana"
+      ],
+      "verifications": [
+        {"url": "https://kun.uz/ru/news/2020/12/26/epsilon-edc-vedutsya-masshtabnyye-raboty-po-modernizatsii-gazotransportnoy-infrastruktury-uzbekistana", "ok": true, "contains_value": true},
+        {"url": "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "The brief's DEAD_LINK flag did not reproduce: I re-verified the current_ref (kun.uz, 2020-12-26) directly with url_verifier.py (OK, 200, token 'Мубарек' present in visible article text) and again with a raw curl -sI (HTTP/2 200, cloudflare). This matches the prior deep-sweep audit shard's independent finding on the same URL (also OK/200) -- the DEAD_LINK classification was evidently a transient issue at scan time, as the audit shard separately documented for the sibling Diameter ref on this same row (flagged ReadTimeout, re-verified live). Content: kun.uz (2020-12-26) is an article on Epsilon EDC's ongoing modernization of Uzbekistan's gas-transport infrastructure, raising corridor throughput from 67 to 72 million m3/day, and explicitly names 'Мубарек - Зирабулак' among the lines being worked -- by definition an in-service line undergoing capital repair/modernization is operating, not proposed or shelved (English gloss: 'Epsilon EDC: large-scale work under way to modernize Uzbekistan's gas transport infrastructure' ... names the Mubarek-Zirabulak line among corridors covered). No English-language word 'operating' appears (expected prose-equivalence gap, per project rule this still counts as support). Added uzreport.news (2020-09-09) as a second source: it names the same Mubarek-Zirabulak (I/II/III нитки) line under capital repair in the same 2020 modernization program (English gloss: 'Zirabulak gas-transport management unit, capital repair of the Mubarek-Zirabulak main gas pipeline (BGR-TBA), strings I, II, III'). CAVEAT (carried from the prior audit shard, still applicable): both outlets ultimately trace to the same Epsilon EDC corporate PR material rather than fully separate origins, so this is NOT the 2-independent-origin 'high' bar -- tier medium. No newer (2023-2026) segment-specific status evidence was found in this pass either (searched kun.uz, uzreport.news, gazeta.uz, utg.uz archives, ru); network-level continuity (Uztransgaz still actively operating/repairing its trunk grid through 2024-2025) is documented in the row-audit shard but was not independently re-verified here since it does not bear on THIS unit's value."
+    },
+    {
+      "ref_col": "Diameter [ref]",
+      "sheet_row": 3751,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana"
+      ],
+      "verifications": [
+        {"url": "https://uzreport.news/economy/epsilon-edc-prodoljaetsya-razvitie-gazotransportnoy-infrastrukturi-uzbekistana", "ok": true, "contains_value": true}
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "The brief's DEAD_LINK flag did not reproduce: re-verified the current_ref directly with url_verifier.py (OK, 200, token '1020' present) and a raw curl -sI (HTTP/1.1 200, nginx) -- matches the prior deep-sweep audit shard's own finding on this exact URL, which it explicitly flagged as a transient ReadTimeout at its own scan time, not a genuine dead link; two independent re-checks now confirm it live. Content: uzreport.news (2020-09-09) gives, for the Zirabulak gas-transport management unit's capital repair of the Mubarek-Zirabulak main gas pipeline (BGR-TBA) strings I/II/III, section 50-78 km: 'Ø1020х12 мм - 2,1 км', and a second project entry for strings I/II, section 3-50 km: also 'Ø1020х12 мм - 8,0 км' (English gloss: outer diameter 1020 mm, 12 mm wall thickness, cited for the repaired sections of this line) -- directly supports the recorded Diameter=1020/mm for this segment. Per the standing settled-question note on this row, do NOT extend this reading to the sibling 1021/1022 mm values on P6934/P6935 -- that is a separate, already-staged sheet-defect correction, out of scope here. Only one source found naming the diameter for this specific string (no second, fully independent outlet was located repeating the same figure), so tier medium rather than high, consistent with the row audit's own tiering."
+    }
+  ]
+}

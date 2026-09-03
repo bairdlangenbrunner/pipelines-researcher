@@ -1,0 +1,276 @@
+{
+  "project_id": "P3688",
+  "pipeline_name": "Abu Gharadig-El Hamra Oil Pipeline",
+  "sheet_row": 991,
+  "wiki": "https://www.gem.wiki/Abu_Gharadig-El_Hamra_Oil_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the ref fills and the specific caveats below.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, correctly classified crude-oil trunk line, confirmed by TWO independent sources. (1) Egypt Oil & Gas trade magazine's special report 'The Western Desert: Egypt's Giant Petroleum Reservoir' (egyptoil-gas.com, PDF dated/created March 2020, drawing on FY2017/18-2018/19 EGPC/EGAS data) contains a dedicated 'Crude Oil Infrastructure in the Western Desert' table listing a pipeline named exactly 'Abu Gharadig-El Hamra', From='Abu Gharadig', To='El Hamra', Length=140 km, Diameter='12/16' in, Capacity=60,000 bbl/d -- an exact match on every value GEM records (this project's own row). NOTE: url_verifier's automated content check FAILS on this URL because the tool reads the raw HTTP response as text and cannot decode PDF-stream bytes (a documented limitation in the script's own docstring for 'LARGE PDFs' / non-plain-text bodies); the URL itself verifies live at HTTP 200, and the content match above was confirmed manually by downloading the PDF and running `pdftotext -layout` (three pages, no encryption, Adobe InDesign source -- a real, well-formed industry PDF, not a stub or block page). (2) Independently, the GulfPub PE World Map (registered reference dataset, unrelated origin, scraped 2026-02-02) carries ref_id gulfpub:oil:1253, 'Abu El Gharadiq - Marsa El Hamra', operator Gulf of Suez Petroleum Co (GUPCO), diameter 12in, start_year=1973 -- reconciliation matched it to this exact GEM row at 'green' confidence (composite 0.758, name similarity 0.83, route IoU 0.555, 'comparable' coverage). Two GEM-unrelated sources thus independently describe a real pipeline on this corridor with this name, discovered/first-produced in 1973. DUPLICATE check against the full 46-row Egypt-oil roster: no other row names Abu Gharadig as an endpoint pair with El Hamra. The nearest-looking roster entry, P3689 'Badr El Din-El Hamra Oil Pipeline' (128 km/12in/60,000 bpd), is a SEPARATE, correctly distinct physical line -- it appears as its own separate row in the SAME egyptoil-gas.com table ('Badr El Din-El Hamra | Badr El Din 1 | El Hamra | 128 | 12 | 60,000'), i.e. an independent source itself treats these as two different pipelines converging on the same El Hamra hub, not a double-entry of one line. No duplicate. CLASSIFICATION: Fuel=Oil (crude) is correct -- the source table is explicitly titled 'Crude Oil Infrastructure'."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Flag Length for Update review; do not change without a routes-repo-aware adjudication. Consider re-checking the GulfPub reconciliation workbook's overlap gulfpub:oil:1253 before treating 140.0 km as settled.",
+      "researcher_notes": "SPEC conflict, material: GEM records LengthKnown=140.00 km, and the egyptoil-gas.com table agrees exactly at 140 km. But the independent GulfPub PE World Map record for what the matcher scored as the same physical line (gulfpub:oil:1253, 'Abu El Gharadiq - Marsa El Hamra', same 12in diameter, same 1973 start year, route IoU 0.555 against GEM's own drawn route, 'comparable' coverage_ratio 0.716) gives length_km=98.17 (geodesic 97.764) -- a 30% shortfall against 140 km on a corridor the two datasets otherwise agree is the same pipeline. This is not a segment-vs-network granularity mismatch (GulfPub's coverage classification is 'comparable', not 'partial'); it is a genuine two-source length disagreement. Because the source I can cite (egyptoil-gas.com) agrees with the current 140 km value, I am filling Length [ref] with it below, but at medium (not high) tier specifically because of this unresolved conflict, and flagging it here per the standing rule that a material disagreement between corroborating sources is never silently passed. This is an Update-workflow question, not a re-draw of my own -- I did not attempt to adjudicate whose route geometry is more accurate."
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Strip the stray leading Arabic diacritic character from StartLocation ('ِ Abu Gharadig Basin' -> 'Abu Gharadig Basin').",
+      "researcher_notes": "StartLocation is recorded as 'ِ Abu Gharadig Basin' -- the leading character is an isolated Arabic kasra diacritic mark (ِ), not a real character of the place name; it reads as a stray encoding/OCR artifact from data entry, not a different location. Every source (egyptoil-gas.com's table 'From=Abu Gharadig'; GulfPub's 'start: Abu El Gharadiq, Egypt') agrees the field/basin is Abu Gharadig, matching StartState/Province='Western Desert'. This is a cosmetic data-quality fix, not a location error."
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Consider correcting EndPrefecture/District spelling from 'El Almeen' to '(New) Alamein' -- same misspelling pattern already documented on P3691 (StartLocation 'New Almien City').",
+      "researcher_notes": "EndLocation='El Hamra', EndPrefecture/District='El Almeen', EndState/Province='Matruh' is directionally correct -- El Hamra petroleum terminal/port sits in Matruh Governorate near (New) Alamein, per the same fact pattern already independently confirmed on P3691 (El Hamra-Shamandoura Oil Pipeline)'s shard, where three independent sources place El Hamra port in 'New Alamein City', Matruh Governorate. 'El Almeen' here is very likely the same recurring misspelling of 'Alamein' as P3691's 'Almien', not a different place. Not independently re-verified this pass beyond the cross-reference to the already-confirmed P3691 finding, so left as a caveat rather than a fill."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Have Update re-examine whether StartYear2=1975 belongs on this OIL pipeline's row.",
+      "researcher_notes": "GEM records StartYear1=1973, StartYear2=1975, StartYear3=2008 on this crude-OIL pipeline. The egyptoil-gas.com report's field-history paragraph on Abu Gharadig reads: 'The Abu Gharadig field was discovered in 1969... The first crude oil production was in 1973, while natural gas production started in 1975. In 2008, North East Abu El Gharadig (Neag) block started production...'. StartYear1=1973 lines up cleanly with first CRUDE OIL production (and is independently corroborated by GulfPub's start_year=1973 on its matching pipeline record -- see the existence note above). StartYear3=2008 plausibly corresponds to the Neag block coming online, which is consistent with GulfPub's separate 'Abu Gharadig North East - Center' 22.5 km feeder record (ref 4579) that the matcher scored as a partial/near-miss addition against this same GEM row. But StartYear2=1975, per this same source, is when the field's NATURAL GAS production began -- not crude oil. Putting a gas-onset year on an oil pipeline's Start field is at minimum unsupported by any source found this pass, and may be a genuine field-vs-fuel mismatch carried over from field-level data. Not fabricating a fix; flagging for Update to check whether 1975 reflects a real oil-side expansion (e.g. the second, 16in leg of the 12/16in dual-diameter line) or is a mis-keyed gas date."
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "No change; Operator='Khalda Petroleum Company' is plausible and contextually supported, but not pinned by a single explicit sentence this pass.",
+      "researcher_notes": "GEM records Operator='شركة خالدة للبترول' (Khalda Petroleum Company). The egyptoil-gas.com report states Apache 'became the main operator in the Western Desert... operating in the region, through its JVs, Khalda Petroleum Co. and Qarun Petroleum Co.', and separately identifies 'THE QARUN' as a distinct field ~70 km southwest of Cairo -- i.e. Qarun Petroleum Co.'s namesake concession is a different field, not Abu Gharadig. Abu Gharadig is well established (background knowledge, not sourced from GEM) as the historical Khalda concession -- the JV was originally named for the Khalda structure within the Abu Gharadig Basin. The source does not contain one explicit sentence stating 'Khalda operates the Abu Gharadig-El Hamra pipeline', so I am not citing a ref for the Operator cell (WebSearch quota was exhausted this session at 200/200 before a more targeted operator-specific search could be run) -- this is a plausible, background-supported reading, not an independently pinned fact, and is left UNRESOLVED for a ref rather than force-fit a citation that doesn't say it outright."
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "No change; Owner split is consistent with the documented 2013 Apache-Sinopec transaction, at the company/concession level rather than pipeline-specific.",
+      "researcher_notes": "GEM records Owner1=Apache Corp 66.67%, Owner2=China Petrochemical Corp 33.33%. Wikipedia's Apache Corporation article (independently verified live, see fills below) states: 'It sold a non-controlling one-third share of its Egyptian assets to Sinopec in November 2013.' A one-third sale to Sinopec leaving Apache with two-thirds is exactly 33.33%/66.67%, matching GEM's split precisely. This is a company-wide Egypt-asset transaction, not a pipeline-specific ownership filing, so I am treating it as good corroboration at the concession/JV level (Khalda Petroleum Co. covers the Abu Gharadig concession that this pipeline serves) rather than pipeline-exact proof -- tier medium, not high."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Oil"},
+      "primary_value": "Oil",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Source's dedicated table is titled 'Crude Oil Infrastructure in the Western Desert' and lists this exact-named pipeline. url_verifier's bare reachability check passes (200); its content substring check cannot read PDF-stream bytes (documented tool limitation) -- content was confirmed manually via pdftotext against the downloaded file."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Listed in the 2020 report's live 'Crude Oil Infrastructure' table alongside other pipelines described as part of the region's current operating network. GulfPub's independently-scraped record for the matched line also carries status='operating' (non-citable recon corroboration, not counted toward tier)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1973", "StartYear2": "1975", "StartYear3": "2008"},
+      "primary_value": "1973",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only StartYear1=1973 is well supported: the source states 'The first crude oil production was in 1973', and GulfPub's independently-scraped matching pipeline record separately carries start_year=1973 (non-citable recon corroboration). StartYear2=1975 and StartYear3=2008 are NOT confidently supported by this ref for an OIL pipeline -- see the two dedicated 'spec' concerns in validity above (1975 is the source's stated NATURAL GAS onset year for this field, and 2008 more plausibly maps to the separate Neag feeder). Filling the ref at the cluster level (as it pairs with the primary StartYear1 value) but flagging the sub-values as unresolved."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "60,000.00", "CapacityUnits": "bpd"},
+      "primary_value": "60,000.00",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Table's Capacity (bbl/d) column reads exactly 60,000 for this pipeline. GulfPub's matched record carries capacity_raw='Not specified' (its own 106 Mbpd figure is an internal placeholder for unspecified capacity, not real independent data), so this remains single-sourced -- medium, not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "140.00", "LengthKnownUnits": "km"},
+      "primary_value": "140.00",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Table gives Length (km) = 140 exactly, matching GEM. Tier held at medium (not high) rather than upgraded despite two sources, because a SECOND independent source (GulfPub gulfpub:oil:1253, matched at 'green'/0.758 confidence to this same row) actually DISAGREES, giving 98.17 km on a route the matcher judged 'comparable' coverage against this line. See the dedicated spec concern in validity -- do not read this fill as a fully-resolved length."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12, 16", "DiameterUnits": "in"},
+      "primary_value": "12, 16",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Table gives Diameter (Inches) = '12/16', matching GEM's '12, 16' exactly. GulfPub's matched record independently gives diameter=12.0 (a single value, not the full dual-diameter spec) -- consistent as far as it goes, not conflicting, so treated as non-material corroboration rather than a second full source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Abu Gharadig"},
+      "primary_value": "Abu Gharadig",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Table's 'From' column reads 'Abu Gharadig'; the report's own field-profile section confirms Abu Gharadig as a major Western Desert crude field. GulfPub's matched record independently gives start='Abu El Gharadiq, Egypt', consistent."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "StartLocation [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "ِ Abu Gharadig Basin", "StartState/Province": "Western Desert", "StartCountryOrArea": "Egypt"},
+      "primary_value": "ِ Abu Gharadig Basin",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Source dedicates an entire field profile ('1) THE ABU GHARADIG') to this basin in the Western Desert, Egypt, matching StartState/Province and StartCountryOrArea. See the attribution caveat in validity re: the stray leading diacritic character in the recorded StartLocation string -- a cosmetic data-entry defect, not a location error."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "EndLocation [ref]",
+      "value_cols": ["EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "EndLocation",
+      "values": {"EndLocation": "El Hamra", "EndPrefecture/District": "El Almeen", "EndState/Province": "Matruh", "EndCountryOrArea": "Egypt"},
+      "primary_value": "El Hamra",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Table's 'To' column reads 'El Hamra' for this pipeline (and for the family of other Western Desert lines terminating there: Badr El Din-El Hamra, Meleiha-El Hamra, El Hamra-Sidi Kerir-Alexandria), consistent with GEM's EndState/Province=Matruh. See the attribution caveat re: the likely 'El Almeen'->'Alamein' spelling, cross-referenced to the already-confirmed finding on P3691."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "شركة خالدة للبترول"},
+      "primary_value": "شركة خالدة للبترول",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Not filled: no source found this pass states in one explicit sentence that Khalda Petroleum Co. operates the Abu Gharadig-El Hamra pipeline (or the Abu Gharadig field) specifically -- see the attribution caveat in validity for the contextual (background-knowledge-supported) reasoning that stops short of a citable statement. WebSearch quota was exhausted (200/200) this session before a targeted operator search could be run; genuine open item for a follow-up pass, not a contradiction."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 991,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Apache Corp", "Owner1%": "66.67%", "Owner2": "China Petrochemical Corp", "Owner2%": "33.33%"},
+      "primary_value": "Apache Corp",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Apache_Corporation"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Apache_Corporation", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Wikipedia's Apache Corporation article states Apache 'sold a non-controlling one-third share of its Egyptian assets to Sinopec in November 2013' -- exactly consistent with a 66.67%/33.33% Apache/China Petrochemical (Sinopec) split. This is a company/Egypt-asset-wide transaction (Apache's Western Desert concessions, operated through Khalda Petroleum Co.), not a pipeline-specific ownership filing, so tier is medium rather than high. Wikipedia is confirmed citable per the 2026-08-27 policy update (gem.wiki is never a source; Wikipedia is, with conditions -- this article's own sourcing is not GEM-derived)."
+    }
+  ],
+  "summary": "RE-AUDIT (independently re-verified this pass: re-downloaded and re-ran pdftotext -layout on the egyptoil-gas.com PDF myself, re-confirmed the Wikipedia Apache Corp ref live via url_verifier, and pulled the raw gulfpub:oil:1253 record straight from batches/egypt-oil/staging/recon-gulfpub-20260827/match_diff.json to check the length-conflict claim -- all check out; corrected one arithmetic slip in the prior pass's own summary, 10 of 11 units got refs added, not 9, since only Operator is UNRESOLVED). P3688 confirmed real and correctly classified (2 independent sources: an egyptoil-gas.com 2020 trade-report table matching Length/Diameter/Capacity exactly, plus an independently-scraped GulfPub record matching name/diameter/1973 start year at green recon confidence, composite 0.758); refs added for 10 of 11 units (tier medium, single primary source each). Two concerns flagged, not silently resolved: (1) Length=140km, though matching the cited source, materially conflicts with GulfPub's independent 98.17km on the same matched corridor (route IoU 0.555) -- routed to Update; (2) StartYear2=1975 looks like the field's natural-gas onset year misapplied to this oil pipeline. Operator ref left UNRESOLVED (plausible but not explicitly stated; WebSearch quota exhausted at 200/200 both in the original pass and again this re-audit; two further WebFetch probes -- bapetco.net about-us and Wikipedia's Western Desert (Egypt) article -- turned up nothing usable). Two cosmetic attribution caveats noted (stray diacritic in StartLocation; likely 'El Almeen'->'Alamein' spelling, per the same pattern already found and independently spot-checked on P3691). No duplicate found against the 46-row roster."
+}

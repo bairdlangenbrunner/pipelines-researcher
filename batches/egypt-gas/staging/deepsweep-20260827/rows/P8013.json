@@ -1,0 +1,76 @@
+{
+ "project_id": "P8013",
+ "pipeline_name": "Trans Sinai Gas Pipeline I",
+ "sheet_row": 4273,
+ "wiki": "",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Add 'Trans Gulf Gas Pipeline' to OtherEnglishNames (preferred over an outright rename -- see below). Swap Status/Fuel/PipelineType/Capacity/Length/Location [ref] off the search-results URL onto the article URL (staged). Correct EndPrefecture/District 'Ras Baker Transmissin Station' -> 'Ras Bakr Transmission Station' and fill the blank EndLocation with the same (staged as a fill).",
+   "researcher_notes": "SUPERSEDED WITHIN THIS BATCH -- see revision below.\n\nORIGINAL FINDING: Existence and specs are real, but the PIPELINE NAME appears wrong. The row's own current_ref for 4 of 7 units is a non-specific egyptoil-gas.com SEARCH URL (https://egyptoil-gas.com/?s=Gas+Pipelines+Egypt) — a live query, not a citable article, and url_verifier correctly flags it as not containing the values. Chasing that search for the real source turned up Egypt Oil & Gas Newspaper, Sept 2020, Issue 165, 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad' (Research & Analysis, by Amina Hussein/Reham Gamal/Tasneem Madi) — which is ALSO the exact URL already cited for Diameter. That URL loads as a raw PDF (not HTML), so url_verifier's plain-text match fails on it (its own code comment flags this: 'On a big PDF, a content FAIL says nothing; download it and pdftotext -layout') — I did exactly that: `pdftotext` on the downloaded bytes (WebFetch's AI summarizer also missed the table, likely a table-extraction miss on its end) surfaces a p.13 'Natural Gas Infrastructure in the Gulf of Suez/Sinai' table listing 'the Gulf of Suez and Sinai have seven natural gas pipelines,' the first row named PIPELINE = 'Trans Gulf Gas', From = 'Petreco Plant', To = 'Ras Bakr Transmission Station', Length(km) 75, Diameter(in) 12, Capacity(mmcf/d) 110 — an EXACT match to every GEM value on this row (Length 75.00 km, Diameter 12 in, Capacity 110.00 MMcf/d, StartLocation Petreco Plant, EndPrefecture/District 'Ras Baker Transmissin Station' [Baker/Bakr transliteration, 'Transmissin' typo in GEM's own cell]) EXCEPT the name: the source calls it 'Trans Gulf Gas', never 'Trans Sinai'. A second egyptoil-gas.com piece ('Egypt's Gas Distribution Network, An Intricate Economic Web', 15 Jul 2024) repeats the identical 'Trans Gulf Gas' / 'Ras Bakr Transmission Station' / 835.8 mmcf/d-total claim but explicitly attributes it back to 'a Research & Analysis report by Egypt Oil & Gas referencing Wood Mackenzie' — i.e. it is the SAME Sept-2020 origin republished, not a second independent source (do not double-count it per the corroboration rule). No page anywhere uses 'Trans Sinai' for this Petreco->Ras Bakr line. Geographically this also makes more sense than GEM's name: the line crosses the GULF OF SUEZ itself (Petreco/Abu Rudeis on the Sinai west coast -> Ras Bakr on the mainland/Ras Gharib side), which is what 'Trans-GULF' describes; a true 'Trans-SINAI' line would run along the Sinai peninsula itself, which is exactly what the separate 'Abr Sinai' (Arabic for Trans/Across-Sinai) family does (P8041 El Tena East->North Sinai dia 36in, P8044 Bair El Abd->North Sinai dia 36in — both North Sinai, both 36in). Likely explanation: researcher NA cross-applied the 'Trans-Sinai' English gloss of the Abr Sinai family onto this unrelated Gulf-crossing line. This reads as a naming/attribution defect, not a phantom entity — the physical pipeline is real and correctly specced.\n\nREVISION (2026-08-27, batch QC): CORROBORATED, and the source read directly. The EOG gas table's first row is 'Trans Gulf Gas: Petreco Plant -> Ras Bakr Transmission Station, 75 km, 12 in, 110 mmcf/d' -- an exact match to this row on length, diameter, capacity AND StartLocation. The naming finding stands and is strengthened: the source calls it 'Trans Gulf Gas', never 'Trans Sinai', and the report's own prose reinforces it ('Two of the seven pipelines, i.e. Trans Gulf Gas and Zaafarana-Korimat, transport natural gas to be pumped in two stations: Ras Bakr Transmission Station and Korimat Power Station'). The sheet's own geography agrees with the source's name and not with its own: StartState/Province='Sinai', EndState/Province='Gulf of Suez' describe a GULF crossing, which is what 'Trans Gulf' means. ONE CHANGE OF EMPHASIS: prefer OtherEnglishNames over a rename. 'Trans Sinai Gas Pipeline I' is a segment-numbered GEM family name shared with sibling rows, so renaming this row alone would break that family's naming while leaving the siblings; the alias records the source's name without that side effect. Flag the delta, defer the rename.",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No merge — keep P8013 as its own row, but see the naming finding above.",
+   "researcher_notes": "Checked against the DUPLICATE/IDENTITY WATCHLIST question about the 'Trans Sinai'/'Abr Sinai' family: despite the name collision, P8013 is NOT the same physical pipe as P8041 'Abr Sina Gas Pipeline I' (El Tena East->North Sinai, 55 km, 36in) or P8044 'Abr Sinai Gas Pipeline I' (Bair El Abd->North Sinai, 75 km, 36in). Those two run along the NORTH SINAI coast toward El Arish per an EIB EIA for the 'GASCO Abr Sinai Onshore Gas Pipeline' (El-Tena East to El-Arish in two loops, loop 1 ~33 km / loop 2 ~78 km — roughly consonant with P8041/P8044's lengths, a separate open question not scored here) at 36in. P8013 runs Petreco Plant (Sinai west coast, Gulf of Suez side, near Abu Rudeis) across the Gulf of Suez to Ras Bakr Transmission Station on the mainland side, at 12in — a different corridor, a different diameter, and (per the source table above) a different literal name ('Trans Gulf' vs the North Sinai lines' Arabic-derived 'Abr Sinai'/Trans-Sinai gloss). Same-name-family confusion, not a duplicate entity.",
+   "proposed_refs": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Keep Length/Diameter/Capacity as-is; re-point their [ref] cells to the specific report URL (see naming finding) instead of the generic search-results URL.",
+   "researcher_notes": "SPEC check: Length 75.00 km, Diameter 12 in, and Capacity 110.00 MMcf/d each match the p.13 table in Egypt Oil & Gas Newspaper Sept 2020 Issue 165 EXACTLY (see full extraction in the naming finding above) — no material disagreement. This is a single origin (Wood-Mackenzie-sourced Egypt Oil & Gas research piece, republished once by the same outlet in 2024) rather than two independent sources, so tier is medium, not high; I found no second, differently-sourced table anywhere online giving these specs. Status='operating' and Fuel='Gas' are consistent with the same table (an inventory of existing/current infrastructure, not a planned-pipelines list), though the table does not use the literal word 'operating'. PipelineType='transmission' is reasonable given the line feeds a named 'Transmission Station'.",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 4273,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "EndLocation"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Ras Bakr Transmission Station"
+   },
+   "primary_value": "Ras Bakr Transmission Station",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/"
+   ],
+   "verifications": [
+    {
+     "url": "https://egyptoil-gas.com/reports/gulf-of-suez-eastern-desert-and-sinai-egypts-crude-oil-squad/",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EndLocation is BLANK on the sheet while EndPrefecture/District carries 'Ras Baker Transmissin Station' -- two typos ('Baker' for 'Bakr', 'Transmissin' for 'Transmission'). The EOG gas table gives this line's 'To' as 'Ras Bakr Transmission Station'. Proposed as the EndLocation value AND as the correct spelling; the prefecture/district cell should be corrected to match. Source: Egypt Oil & Gas Newspaper (Sept 2020, Issue 165), 'Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad', table 'Natural Gas Infrastructure in the Gulf of Suez/Sinai'. Value and ref staged together so the pair ships as a unit. Single source -> medium. Hand-confirmed via pdftotext -layout on the article's embedded PDF (Issue 165, 6 Sep 2020, 4 pp). url_verifier returns 200 but its substring screen false-negatives here: the crude and gas infrastructure tables are laid out side by side, so extraction interleaves adjacent-cell text. ok/contains_value encoded true deliberately per the standing rule that a screen miss is not a verdict."
+  }
+ ],
+ "summary": "P8013 is a real, correctly-specced pipeline (75km/12in/110MMcf/d Petreco Plant->Ras Bakr Transmission Station all confirmed exact vs Egypt Oil & Gas Sept-2020 Issue-165 table) but is misnamed: the same source calls it 'Trans Gulf Gas', never 'Trans Sinai' -- recommend renaming and re-pointing 4 [ref] cells off a generic search-URL onto the specific report; NOT a duplicate of the North-Sinai Abr Sinai/P8041/P8044 family despite the name collision (different corridor, different diameter, single-origin medium-tier sourcing throughout)."
+}

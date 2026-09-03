@@ -1,0 +1,54 @@
+{
+  "project_id": "P8019",
+  "pipeline_name": "Damanhur-Tanta Gas Pipeline",
+  "sheet_row": 4279,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Replace the current generic ref (a bare egyptoil-gas.com search-results URL, which never actually names this pipeline) with the two specific documents found below; no change to Status/Fuel/PipelineType/Length/Diameter values needed.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE, all resolved. The sheet's current [ref] for Status, Fuel, PipelineType, Capacity, and Location is https://egyptoil-gas.com/?s=Gas+Pipelines+Egypt - a live search-results page (200) that does NOT name 'Damanhur' or 'Tanta' anywhere (confirmed by direct verifier run with those tokens: FAIL). The worklist's own existing_ref_checks already flagged this for Status and Capacity ('200 but data value not found'). Per the scope's existence rule, a citation this generic is itself a red flag - so I searched from scratch rather than accept it.\n\nFound genuine, specific, independent confirmation: (1) Egypt Oil & Gas magazine's dedicated infrastructure report 'A Guide to the Nile Delta's Oil and Gas Resources' (Feb 2020, Issue 158, egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/) contains a literal table 'NATURAL GAS INFRASTRUCTURE IN THE NILE DELTA' with columns Pipeline/From/To/Length(Km)/Diameter(Inches). The row reads exactly: 'Damanhur-Tanta | Damanhur | Tanta | 60 | 28' - matching GEM's Length=60.00 km and Diameter=28 in exactly, and confirming direction Damanhur->Tanta. IMPORTANT TEST NOTE: this is a large PDF and url_verifier's automated substring check FAILS on 'Damanhur' and 'Tanta' as standalone tokens (a documented false-negative class per the verifier's own docstring: 'LARGE PDFs - the extractor does not reach the whole document'). I did not accept that FAIL as evidence of absence - I downloaded the PDF directly and ran `pdftotext`, which recovered the full text including the table (lines 549-557 of the extracted text), so the value is genuinely present; I'm citing the URL (it verifies OK on the token 'Nile Delta', which the extractor does reach) with this manual-confirmation caveat documented. The same table also lists Talkha-Tanta-Cairo (125km/28in, matches roster P8024 exactly), Meadia-Damanhur (50km/20in, matches roster P8077 exactly), and Alexandria Network-Damanhur (45km/24in, matches roster P8078 exactly) as three SEPARATE line items with different lengths/diameters from Damanhur-Tanta - this is direct, source-based evidence that P8019 is NOT a duplicate or mislabeling of any of those three superficially similar 'Damanhur'/'Tanta'-adjacent rows; all four are named as distinct physical pipelines in the same primary table.\n(2) A second egyptoil-gas.com piece, the feature 'Egypt's Gas Distribution Network, An Intricate Economic Web' (egyptoil-gas.com/features/egypts-gas-distribution-network-an-intricate-economic-web/), states verbatim: 'These pipelines include Abu Madi-Talkha I & II, Talkha-Tanta-Cairo, Abu Madi-Damietta, Meadia-Damanhur, Alexandria Network-Damanhur, Damanhur-Tanta, Cairo Ring-Port Said Line, Korimat-Al Tebbin, and Korimat-Beni Suef. The Damanhur-Tanta line has the largest natural capacity with 700.1 mmcf/d.' This exactly matches GEM's Capacity=700.10 MMcf/d and again lists Damanhur-Tanta as one line among several distinctly-named ones (again arguing against any duplicate reading). Verifier: OK on tokens 'Damanhur-Tanta' + '700.1'.\nCLASSIFICATION: 'transmission' is consistent with both sources - this is one of GASCO's named Nile-Delta-area natural gas transmission lines, not a gathering/process/feeder line.\nTIER CALL: both supporting documents are published by the same outlet (Egypt Oil & Gas / egyptoil-gas.com), so despite being two separate editorial works (a data-table report vs. a distribution-network feature) with different original numbers, I am NOT treating them as two independent origins per the corroboration rule (same publisher, likely both drawing on GASCO's own published network data). Tier = medium, independent = false. I could not find a second, differently-sourced document giving line-specific length/diameter/capacity figures within this pass; a GASCO/EGAS primary map or table (e.g. the EGAS Annual Report 2018 grid map referenced for other rows in this scope) would be the natural second source but I could not locate/read a usable copy of it before this session's web-search budget was exhausted (200/200 WebSearch calls used) - a separately-sourced spec confirmation stays a genuine open item, not something I'm claiming as done.\nAlso confirmed via Wikipedia (citable per 2026-08-27 policy) that Damanhur is the seat of Beheira Governorate and Tanta is the seat of Gharbia Governorate, supporting a Location fill below.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/",
+        "https://egyptoil-gas.com/features/egypts-gas-distribution-network-an-intricate-economic-web/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 4279,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartState/Province", "EndLocation", "EndState/Province"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Damanhur",
+        "StartState/Province": "Beheira",
+        "EndLocation": "Tanta",
+        "EndState/Province": "Gharbia"
+      },
+      "primary_value": "Damanhur",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/",
+        "https://en.wikipedia.org/wiki/Damanhur",
+        "https://en.wikipedia.org/wiki/Tanta"
+      ],
+      "verifications": [
+        {"url": "https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/", "ok": true, "contains_value": "manual (pdftotext) - see researcher_notes; automated substring check false-negatives on this large PDF"},
+        {"url": "https://en.wikipedia.org/wiki/Damanhur", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Tanta", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartLocation/EndLocation and StartState/Province/EndState/Province were blank (only StartCountryOrArea/EndCountryOrArea='Egypt' were filled). The Nile Delta infrastructure report names the pipeline's own endpoints as 'From: Damanhur, To: Tanta' (same table row cited in validity above), and Wikipedia confirms Damanhur is the capital of Beheira Governorate and Tanta is the capital of Gharbia Governorate. StartPrefecture/District and EndPrefecture/District left blank - no reliable finer-grained locality found for either endpoint beyond the city/governorate level, and I'm not forcing one."
+    }
+  ],
+  "summary": "P8019 Damanhur-Tanta: confirmed (caveat), concern_type=none - existence, classification (transmission), and non-duplication all independently confirmed via an Egypt Oil & Gas infrastructure table (exact length/diameter match, large-PDF verifier false-negative documented and manually resolved via pdftotext) plus a separate egyptoil-gas.com feature (exact capacity match); tier=medium (single publisher, no second independent origin found this pass). One fill staged: Location (Start/End city + governorate). No UNRESOLVED items; the sheet's prior generic search-URL ref should be swapped for the two specific URLs found."
+}

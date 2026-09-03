@@ -26,13 +26,28 @@ to one original; anything citing GEM/gem.wiki (circular — see standing rule 1)
 When sources conflict, prefer the one higher in `source_roster.md`, note the
 conflict, and lower the tier.
 
+**The staged `independent` field means the rubric above, not "independent of GEM."**
+It is the yes/no column a researcher reads when deciding whether to paste a value, so
+a wrong `yes` is worse than a missing one. It may be `true` only when the record
+actually carries **2+ surviving refs** — surviving meaning after merge-time QC has
+dropped the ones that failed verification, which is exactly when agents get it wrong
+(the flag used to outlive its own refs). A unit that loses the claim cannot stay at
+tier `high`; a single source is `medium` at best. Enforced in
+`merge_qc.independence_qc()` and applied by all three mergers, so no pass can restate
+it; `scripts/repair_independence.py` applies the same invariant to dirs merged before
+the fix.
+
 **Single-source-that-confirms is fillable, not blank.** The 2+ target governs when a
 value is *settled* (green); it does **not** mean a lone source is discarded. If exactly
 one source can be found but its page **verifiably contains the precise data point**
 (the pipeline is named and the value/status is stated on the page), that ref is
 **sufficient to fill the `[ref]` cell at medium/yellow** — fill it, don't leave the cell
-blank. Keep hunting for a second independent source (which promotes it to green); only
-*fail to confirm on the page* drops to red / blank+note. "Prefer blank + a note" applies
+blank. **The hunt for the second source is an obligation, not a suggestion:** a single-
+source unit's notes must say what was searched for the second and why it was not found
+(researcher feedback 2026-09-03 — the sweeps were reading as "limited range of sources").
+Aim for a different publisher AND a different document class (regulator approval ↔
+operator disclosure ↔ press ↔ EIA/acceptance notice). Only *fail to confirm on the page*
+drops to red / blank+note. "Prefer blank + a note" applies
 to a **single weak source that does not actually confirm** the value — not to a single
 source that does. This holds regardless of the lone source's roster rank: a confirmed-
 on-page single source is yellow even if it isn't "top-tier."
@@ -48,6 +63,13 @@ valid: it names the Rasht-Chelavand line and describes its expansion completing 
 it substring-searched for the token `operating`.) The `url_verifier` "value not found" result
 on a status is a **screen artifact, not a verdict** — the agent decides.
 
+**A ref must name THIS pipeline.** Containing the right number is not enough: a page about
+terminus A, or about terminus B, or about the parent trunk, is not a ref for the "A–B" segment
+row unless it names that segment. Pass `name=` to `url_verifier` on every check (it records
+`name_found`); a unit whose verified refs all come back `name_found: false` is capped at `low`
+by `merge_qc.relevance_qc`. When the page names the line in another language, pass that name
+too or encode the hand-confirmed match in the verification `note`.
+
 **Match names fuzzily; read the full page.** Transliteration varies (Chelavend↔Chelavand,
 Kordkuy↔Kordkoy) — don't reject a source because it spells the name one letter off (pass the
 name to `url_verifier` via `name=`, which matches with transliteration tolerance). And never
@@ -60,9 +82,10 @@ un-fillable, mine the pipeline's gem.wiki reference list (captured to
 `wiki_citations.json`) and, for every backend data point whose `[ref]` is blank or weak,
 check whether one of those already-vetted citations confirms the value on its page. If it
 does — low, medium, or high — add it (subject to the URL verifier and the no-GEM /
-no-fabrication rules). Wiki citations are candidate sources, not auto-valid: a bare
-Wikipedia URL is weak (prefer the underlying source it cites), and dead/rotted links
-still fail the verifier.
+no-fabrication rules). Wiki citations are candidate sources, not auto-valid: a Wikipedia
+URL **is citable** (policy reversed 2026-08-27 — see `source_roster.md`) but tiers as one
+secondary source, so prefer the underlying source it cites and never count two language
+editions as two sources; and dead/rotted links still fail the verifier.
 
 ## Reconciliation-side mapping (composite score → color)
 

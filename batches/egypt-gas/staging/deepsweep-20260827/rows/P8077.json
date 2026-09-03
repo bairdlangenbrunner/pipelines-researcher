@@ -1,0 +1,32 @@
+{
+  "project_id": "P8077",
+  "pipeline_name": "Meadia-Damanhur Gas Pipeline",
+  "sheet_row": 4337,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartState/Province from 'Damietta' to Alexandria (or the specific Abu Qir/Beheira boundary area actually named by source); StartLocation/StartPrefecture should reflect 'Abu Qir Development Area', not Damietta.",
+      "researcher_notes": "The sheet's OWN cited Location [ref] (egyptoil-gas.com 'A Guide to the Nile Delta's Oil and Gas Resources', Feb 2020 issue 158, sourced by the article to EGAS + EGPC data) contradicts the sheet's current StartState/Province value. The article's 'Natural Gas Infrastructure in the Nile Delta' table lists this exact pipeline: 'Meadia-Damanhur | From: Abu Qir Development Area | To: Damanhur | 50 km | 20 in' -- matching GEM's own Length (50 km) and Diameter (20 in) exactly. But GEM's StartState/Province is currently 'Damietta'. Abu Qir is in Alexandria Governorate (confirmed via Wikipedia: 'Abu Qir... 23 km northeast of Alexandria'), roughly 150+ km from Damietta governorate on the opposite side of the Nile Delta -- these are not adjacent or plausibly confusable locations on a map, only on a list. A second egyptoil-gas.com source (the 'regional transit hub' report, table sourced to Wood Mackenzie) independently lists the same pipeline's origin as 'Abu Qir Development Area' as well, agreeing with the first. Likely mechanism: the row immediately ABOVE Meadia-Damanhur in the same source table is 'Abu Madi-Damietta' (Abu Madi field -> Damietta, 42 km/16 in) -- a plausible transcription slip when this row was originally staged (mixing up the adjacent table row's endpoint). Note: automated url_verifier flags a content-match FAIL on 'Abu Qir' for both PDF report URLs -- this is the tool's own documented false-negative pattern for large/embedded-font PDFs (see url_verifier.py docstring); manual `pdftotext` extraction on both files confirms 'Abu Qir Development Area' is literally present in each. EndState/Province='Beheira'/EndPrefecture='Damanhur' are correct and unaffected -- only the start attribution is wrong.",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/", "https://egyptoil-gas.com/reports/egypts-natural-gas-pipelines-towards-a-regional-transit-hub/"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the attribution fix above.",
+      "researcher_notes": "EXISTENCE: confirmed at high tier. This exact named pipeline ('Meadia-Damanhur') appears independently in THREE egyptoil-gas.com publications with agreeing route: (1) 'A Guide to the Nile Delta's Oil and Gas Resources' (Feb 2020, table sourced to EGAS/EGPC), (2) 'Egypt's Natural Gas Pipelines: Towards a Regional Transit Hub' (table sourced to Wood Mackenzie), (3) 'Egypt's Gas Distribution Network: An Intricate Economic Web' (feature, names it in a list of the Nile Delta's active pipelines carrying ~2,200 mmcf/d combined). All three are published by the same outlet, but the first two attribute their underlying data to two DIFFERENT primary sources (EGAS/EGPC official data vs. Wood Mackenzie research) that independently agree on route and length -- not one wire story reprinted. This is not a GEM-derived circular citation; it is not on gem.wiki (this row is one of the 38/40 rows in this scope with no wiki page). CLASSIFICATION: correct -- a 20-inch, 50 km natural-gas trunk moving gas from a field development area to a governorate distribution hub is properly 'transmission', not gathering/feeder; all three sources describe it as part of Egypt's natural-gas transmission network. DUPLICATE check against the watchlist: P8077 vs P8078 'Alexandria Network-Damanhur' -- these are DISTINCT lines, confirmed by the SAME source table listing both as separate rows with different origins (Abu Qir Development Area vs. Alexandria Network), different lengths (50 vs 45 km) and different diameters (20 vs 24 in) feeding the same Damanhur hub. Not a duplicate/relabel. SPEC: Length 50 km corroborated by TWO of the three sources (EGAS/EGPC table and Wood Mackenzie table independently agree) -- tier high. Diameter 20 in appears in one source (EGAS/EGPC table) -- tier medium, unconflicting. Capacity 360 MMcf/d appears in one source (Wood Mackenzie table) -- tier medium, unconflicting, matches GEM's CapacityUnits='MMcf/d'. Status='operating' and Fuel='Gas' are not literal substrings in the two feature-article refs but are reasonably inferred from context (all three articles describe it, in present tense, as part of Egypt's currently-operating natural-gas transmission grid, not a planned/proposed line) -- consistent with url_verifier's documented status-is-inferable guidance. No conflicting values found anywhere for Length, Diameter, Capacity, Status, or Fuel.",
+      "proposed_refs": ["https://egyptoil-gas.com/reports/a-guide-to-the-nile-deltas-oil-and-gas-resources/", "https://egyptoil-gas.com/reports/egypts-natural-gas-pipelines-towards-a-regional-transit-hub/", "https://egyptoil-gas.com/features/egypts-gas-distribution-network-an-intricate-economic-web/"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P8077 Meadia-Damanhur: existence/classification/duplicate-vs-P8078 all confirmed (medium-high); Length/Diameter/Capacity confirmed against the sheet's own cited sources; but StartState/Province='Damietta' is a real attribution error -- the same cited source names the start as 'Abu Qir Development Area' (Alexandria Governorate), nowhere near Damietta, likely a transcription slip from the adjacent 'Abu Madi-Damietta' table row. No blank fields could be reliably filled (no construction year or FuelSource detail found in available sources; Owner/Operator lives on the separate OO tab, out of this worklist's scope)."
+}

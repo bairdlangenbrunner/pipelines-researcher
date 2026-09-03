@@ -1,0 +1,86 @@
+{
+ "project_id": "P3984",
+ "pipeline_name": "Gazli-Kagan Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1990,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Reused the deep-sweep audit's finding (rows/P3984.json validity[] spec concern) rather than re-deriving: the only sourced capacity figure for this corridor is Sputnik Uzbekistan (2021-11-29), 'за сутки через данный магистральный газопровод проходит 35 млн кубометров природного газа' -- '35 million m3/day passes daily through this trunk gas pipeline' -- which is explicitly the COMBINED throughput of the corridor's three then-existing lines (I, II, III) just before line IV's addition, not segment III's own individual figure. Sibling row P2290 (lines I+II) also carries the identical 35.00 figure, which is the double-count signature (a corridor-total copied onto two segment rows). Re-checked Uztransgaz's own 2022 ESG/sustainability report (utg.uz, PDF, confirmed reachable HTTP 200, full text extracted via pdftotext) for a per-line throughput figure -- it lists Gazli-Kagan I line (Ø1020mm) among assets modernized in 2021-2022 but gives no capacity/million-m3 figure for any individual line, only an aggregate national gas-transit figure elsewhere in the report. No further Russian-language search was possible this pass (session WebSearch budget was exhausted after two queries: '\"Газли-Каган\" третья нитка газопровод производительность млн м3' and '\"Газли-Каган\" газопровод собственник Узтрансгаз' -- the second of those is what surfaced the ESG report lead via WebFetch, not WebSearch). Leaving UNRESOLVED rather than citing a source that only supports the corridor aggregate, not segment III's own capacity -- this is a spec concern for Update, not a sourceable ref."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1990,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250905224526/http://www.ngm.uz/ru/page/view/22"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250905224526/http://www.ngm.uz/ru/page/view/22",
+     "ok": true,
+     "contains_value": true,
+     "independently_reverified": false,
+     "existence_confirmed_via_api": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The dead current_ref (http://ngm.uz/ru/page/view/22) is a 503 today (confirmed via curl -sI, 3 attempts), not a 404/410, so per standing rule it is NOT deleted and should be kept, not swapped -- this Wayback capture is offered ALONGSIDE it, restoring the original content. Fetched the Wayback snapshot (20250905224526, live and readable today -- the 2026-08-26 web.archive.org content-serving outage the deep-sweep audit hit has since cleared) of ngm.uz's 'РЕАЛИЗОВАННЫЕ ПРОЕКТЫ' (realized projects) page, a construction-firm project list. It itemises: '«Газли – Каган» участок км 0 – 10, 78 – 116. Диаметр 1020мм, протяженность 48км (2005 – 2006гг)' -- 'Gazli-Kagan, section km 0-10, 78-116. Diameter 1020mm, length 48km (2005-2006)'. The km-marker span 0-116 is the pipeline's own stated full extent (matching LengthKnown=116.00 km exactly); the '48км' figure is only the length of the two sub-sections actually built/relaid in that 2005-2006 phase (10km + 38km), which reconciles with StartYear1=2006 as the completion of a phased build following the 2002 ConstructionYear phase (see the deep-sweep audit's validity notes for the two-phase reconciliation). url_verifier's purely-numeric-needle boundary check produces a false negative on the token '116' alone here (it sits before a sentence-ending period, which the digit-boundary regex treats as a possible decimal continuation -- a known verifier limitation, not a content problem); confirmed instead with the literal substrings 'Каган', '78 &ndash; 116', and '1020мм', which the verifier passes clean (OK, 200 + expected content present) -- manually inspected in the raw fetched text before construction to make sure the match was real prose, not markup/telemetry. | VERIFICATION STATUS (orchestrator, 2026-08-26): this Wayback capture's EXISTENCE is independently confirmed — archive.org's availability API returns the snapshot at the EXACT cited timestamp — so the URL is real, not fabricated. Its CONTENT was NOT re-read at merge time: web.archive.org content serving was unreachable from this machine all day (hard timeout at 45s on 3 attempts, browser UA) while archive.org's API answered in 0.5s, and Claude Code's own fetch path is blocked from the host. That is a machine-local network condition and says nothing about the source. The value-present claim above is the researching agent's read, not an independent re-verification — CONFIRM THE LINK OPENS AND CARRIES THE VALUE BEFORE PASTING THIS REF.",
+   "verification_status": "capture_exists_content_unread"
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1990,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20250905224526/http://www.ngm.uz/ru/page/view/22",
+    "https://www.utg.uz/upload/medialibrary/ESG-%D0%BE%D1%82%D1%87%D0%B5%D1%82%20%D0%A3%D0%A2%D0%93%202022%2029.08.2023.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20250905224526/http://www.ngm.uz/ru/page/view/22",
+     "ok": true,
+     "contains_value": true,
+     "independently_reverified": false,
+     "existence_confirmed_via_api": true
+    },
+    {
+     "url": "https://www.utg.uz/upload/medialibrary/ESG-%D0%BE%D1%82%D1%87%D0%B5%D1%82%20%D0%A3%D0%A2%D0%93%202022%2029.08.2023.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent sources, both giving 1020mm for the Gazli-Kagan I line: (1) the restored ngm.uz Wayback capture above -- 'Диаметр 1020мм' on the km 0-10/78-116 section (2005-2006 relay), same page/URL used for the Length unit. (2) Uztransgaz's own official 'ESG-отчет об устойчивом развитии АО Узтрансгаз 2022' (ESG sustainability report), a corporate PDF -- confirmed reachable (HTTP 200, url_verifier OK; downloaded file is 2,911,543 bytes, byte-identical to the server's declared Content-Length, so not truncated). url_verifier cannot parse this PDF's text for the substring check (a documented limitation for large PDFs, per the verifier's own module docstring) so I extracted it with pdftotext and confirmed directly: 'Магистральный газопровод «Газли - Каган» I нитка Ду 1020 мм участок, 78-112 км протяженностью 34 км' -- 'Gazli-Kagan trunk gas pipeline, line I, Ø1020mm, section km 78-112, length 34km' -- listed under the 'АО «Узтрансгаз»' 2021-2022 pipeline modernization program, ready-for-service after reconstruction. Both sources independently name the Gazli-Kagan I line's diameter as 1020mm on overlapping sub-sections of the same 0-116km corridor that constitutes segment III. | VERIFICATION STATUS (orchestrator, 2026-08-26): this Wayback capture's EXISTENCE is independently confirmed — archive.org's availability API returns the snapshot at the EXACT cited timestamp — so the URL is real, not fabricated. Its CONTENT was NOT re-read at merge time: web.archive.org content serving was unreachable from this machine all day (hard timeout at 45s on 3 attempts, browser UA) while archive.org's API answered in 0.5s, and Claude Code's own fetch path is blocked from the host. That is a machine-local network condition and says nothing about the source. The value-present claim above is the researching agent's read, not an independent re-verification — CONFIRM THE LINK OPENS AND CARRIES THE VALUE BEFORE PASTING THIS REF.",
+   "verification_status": "capture_exists_content_unread"
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1990,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.utg.uz/upload/medialibrary/ESG-%D0%BE%D1%82%D1%87%D0%B5%D1%82%20%D0%A3%D0%A2%D0%93%202022%2029.08.2023.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.utg.uz/upload/medialibrary/ESG-%D0%BE%D1%82%D1%87%D0%B5%D1%82%20%D0%A3%D0%A2%D0%93%202022%2029.08.2023.pdf",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "The deep-sweep audit found no pipeline-specific naming of Uztransgaz for this asset and correctly left it unresolved rather than force a plausible-but-generic attribution. This pass located one: Uztransgaz's own official 2022 ESG report (same PDF as the Diameter unit; reachable HTTP 200, url_verifier OK; verifier cannot substring-check PDF text -- confirmed via pdftotext, a documented workaround for large PDFs) lists 'Магистральный газопровод «Газли - Каган» I нитка Ду 1020 мм участок, 78-112 км протяженностью 34 км' under the section header 'АО «Узтрансгаз»' -- i.e. this pipeline appears as one of the company's OWN assets, reconstructed under its 2021-2022 investment/modernization program for 'контролирование действующих объектов магистральных газопроводов' (control of existing trunk gas pipeline facilities). This is Uztransgaz's own corporate report naming Gazli-Kagan I as an asset it modernizes/operates -- a direct, if single-source, statement of ownership/operation (tier medium per the corroboration rule: one strong source). No second independently-worded source naming Uztransgaz specifically for THIS pipeline (as opposed to describing Uztransgaz-the-company's shareholding structure, which the deep sweep already correctly ruled out as off-topic) was found within this pass's search budget."
+  }
+ ]
+}

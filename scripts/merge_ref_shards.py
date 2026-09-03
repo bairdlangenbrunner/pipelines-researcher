@@ -26,7 +26,7 @@ import argparse, json, os, collections, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from merge_qc import verified_refs, iter_shards, qc_note  # noqa: E402
+from merge_qc import verified_refs, iter_shards, qc_note, independence_qc, relevance_qc  # noqa: E402
 
 _VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
 
@@ -76,11 +76,16 @@ def main():
                 notes = qc_note(notes, f"no verified corroborating ref -> {cls.lower()}.")
                 downgraded += 1
 
+            tier, indep, notes = independence_qc(
+                refs, (u.get("tier") or "").strip().lower(),
+                bool(u.get("independent", False)), notes)
+            if refs:
+                tier, notes = relevance_qc(verifs, tier, notes)
             r["class_out"] = cls
             r["proposed_refs"] = refs
             r["verifications"] = verifs
-            r["tier"] = (u.get("tier") or "").strip().lower()
-            r["independent"] = bool(u.get("independent", False))
+            r["tier"] = tier
+            r["independent"] = indep
             r["source_language"] = u.get("source_language", r.get("source_language", "en"))
             if notes:
                 r["researcher_notes"] = notes

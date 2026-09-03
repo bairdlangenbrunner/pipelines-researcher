@@ -1,0 +1,52 @@
+{
+ "project_id": "P8016",
+ "pipeline_name": "Ras Shukheir-Suez Trunkline Gas Pipeline",
+ "sheet_row": 4276,
+ "wiki": "",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Re-cite Status/Fuel/PipelineType/Capacity off the EGAS Annual Report 2018 map (already used for Length/Diameter) instead of the generic search-results ref; no change to the underlying values.",
+   "researcher_notes": "EXISTENCE + CLASSIFICATION + DUPLICATE checks, in that order, per scope priority. TEST APPLIED: this row has no gem.wiki page (confirmed against wiki_citations.json, which only harvested P8000/P8002 of the 40-row cohort), and full-text search of the cited EGAS Annual Report 2018 PDF for 'Ras Shukheir' FAILS (confirmed both with pdftotext -layout on the full 22MB/36-page document and with url_verifier). Per the scope's own ruling on this cohort (rows identified visually off the GASCO grid map, not the report's running text), a text-search miss is not evidence the citation is bad, so I read the map itself: PDF page 19 = printed page 35, the GASCO 'NATIONAL GAS GRID' wall map. Cropped and 3x-upscaled the embedded raster (native 1811x2001, no upsampling artifact risk at this scale) around the Ras Bakr/Ras Shukeir/Za'frana corridor on the Gulf of Suez west coast. Three separate solid green ('Existing P/L' per the map's own legend) 16-inch lines are labeled there, stacked: '16\" 192 km', '16\" 256 km', '16\" 75 km'. GEM's 256 km / 16 in for P8016 matches the middle label EXACTLY, positioned on the same coastal corridor the row's own endpoints describe (Ras Shukheir north to Suez). The line is drawn solid/green (existing), not the map's red (under construction) or blue (under study) symbology, corroborating Status= operating from the same document. It sits on GASCO's own 'National Gas Grid' (the country's gas transmission backbone map), corroborating PipelineType=transmission and Fuel=Gas. DUPLICATE check against the roster: the map's OTHER two labels in this same cluster resolve to two more of this scope's rows on inspection - '16\" 192 km' matches P8038 (Ras Bakr-Ain Sokhna, len=192, dia=16) - so the map corroborates THREE separate, real, parallel 16-inch trunk lines rather than raising a duplicate flag between P8016 and P8038: same corridor, same diameter, but different lengths on the map's own labeling, which is the 'not suspicious' pattern per the scope's own rule of thumb. VERDICT: existence, length, diameter, status and classification are corroborated by this ONE primary document (a visual read, not a second independent text source - I could not find a second, distinct corroborating source before this session's WebSearch quota (200/200) was exhausted; open-web search mostly surfaces the GEOGRAPHICALLY SAME-NAMED but functionally DIFFERENT crude-oil trunk lines out of Ras Shukeir port (e.g. Ras Shukeir-Suez / Ras Shukeir-Asyut crude oil lines, GPC/EGPC infrastructure, 20-36in) - these are NOT this gas line and should not be confused with it, but they also cannot corroborate it since gas and crude are separate systems here. Tier is therefore medium (one strong primary source), not high.",
+   "proposed_refs": [
+    "https://egyptoil-gas.com/wp-content/uploads/2019/01/EGAS-Annual-Report-2018-EN.pdf"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Leave Capacity as-is but treat as unsourced; do not rely on the current [ref]. Look for a GUPCO/EGPC operations report or a subsequent EGAS annual report edition that states throughput for this specific line before upgrading its tier.",
+   "researcher_notes": "Capacity [ref] currently points to https://egyptoil-gas.com/?s=Gas+Pipelines+Egypt - a site SEARCH-RESULTS page, not an article. Verified this names neither the pipeline nor the value: url_verifier FAILS on 'Ras Shukheir' AND independently on the pair ['Ras Shukheir', '256']. The worklist's automated check had marked this ref 'OK' for Capacity=160 and Status=operating, but I re-ran url_verifier with the specific tokens '160' and 'Ras Shukheir' together and it FAILS - the standalone '160' hit is a false positive (a bare number, not the value in context; nothing on that generic search page names this pipeline at all). The GASCO map corroborates length/diameter/status/classification (see the existence note) but carries NO capacity figures for any line. I found no other source for the 160 MMcf/d figure before exhausting this session's search budget. This is not evidence the value is wrong - GUPCO-operated Gulf of Suez lines of this diameter/length plausibly run in this range - but it is currently uncorroborated by any specific, verifiable source. Not fabricating a fill; flagging as an open sourcing gap rather than silently passing it.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Verify Ras Shukheir/Ras Gharib's current governorate (Red Sea vs Suez) against a current administrative source, and fill the blank StartPrefecture/District and EndLocation cells once the endpoint node (Suez city vs Ain Sokhna) is confirmed - do not guess.",
+   "researcher_notes": "The Location unit is flagged 'irregular': true in the worklist and is visibly incomplete: StartPrefecture/District and EndLocation are both blank, and StartState/Province is given as 'Suez' for the START point (Ras Shukheir). Ras Shukheir/Ras Gharib sit well south of Suez Governorate on the Gulf of Suez coast, in what is Red Sea Governorate under Egypt's current administrative map - Ras Gharib was historically administered as a Suez Governorate exclave before a mid-2000s boundary reorganization moved it into Red Sea Governorate, so 'Suez' may be a stale label rather than a location error, but I could not confirm the cutover date or current status against an independent source before the session's search budget ran out. Flagging as an open attribution question rather than asserting either way, plus the two genuinely blank sub-fields as a incomplete-location note (not a fabricated-value fill).",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Do NOT change LengthKnown (256.00 km) on this evidence alone. Record the divergence in ResearcherNotes and seek a third source. Diameter and Capacity are unaffected -- both match this source exactly and are staged.",
+   "researcher_notes": "NEW FINDING (2026-08-27, batch QC): the Sept-2020 EOG gas table gives 'Ras Shukheir-Suez Gas Trunkline: Ras Shukheir -> Suez, 245 km, 16 in, 160 mmcf/d'. Diameter (16) and Capacity (160 MMcf/d) match the sheet exactly, which makes the identity certain; LENGTH does not -- 245 km vs the sheet's 256.00 km, an 11 km / 4.5% gap. Flagged as a divergence, not a correction, per the standing rule."
+  }
+ ],
+ "fills": [],
+ "summary": "P8016 confirmed (caveat): existence/length(256km)/diameter(16in)/status/transmission-classification all corroborated by the GASCO National Gas Grid map (EGAS Annual Report 2018, printed p.35) as one of three distinct parallel 16in lines in the corridor (rules out a duplicate with P8038's 192km line); tier medium, single-source only - WebSearch quota exhausted before a second independent source could be found. Two open concerns staged: Capacity (160 MMcf/d) is uncorroborated by any specific source (current [ref] is a generic search page, false-positive-verified) - UNRESOLVED; and StartState/Province='Suez' for Ras Shukheir plus two blank location sub-fields is an open attribution question, not resolved."
+}

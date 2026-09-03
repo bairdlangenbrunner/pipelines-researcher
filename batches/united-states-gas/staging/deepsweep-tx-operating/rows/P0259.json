@@ -1,0 +1,55 @@
+{
+  "project_id": "P0259",
+  "pipeline_name": "Tennessee Gas Pipeline",
+  "sheet_row": 112,
+  "wiki": "https://www.gem.wiki/Tennessee_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/duplicate/ownership; see spec and attribution concerns filed separately for Capacity and EndState/Province.",
+      "researcher_notes": "EXISTENCE: real, well-documented interstate gas transmission system, not a GEM-only entity. Independently confirmed via Wikipedia, Kinder Morgan's own operations pages, EIA Today in Energy, a 2012 SEC EDGAR 10-K filing (Kinder Morgan, Inc., FY2012), and The Australian Pipeliner trade-press coverage of the 2012 acquisition. Historical origin verified via a Business History Conference (thebhc.org) account: the Federal Power Commission issued TGP's certificate of public convenience and necessity on Sept 24, 1943 (war-effort priority, construction ordered to start by Feb 1944), with the first line completed Oct 1944 -- corroborates GEM's StartYear1=1943 (the certificate/authorization year; commercial deliveries began the following year, not a material conflict for a multi-year wartime build). CLASSIFICATION: correctly a gas transmission trunk system (PipelineType=transmission, Fuel=Gas) -- one of the largest interstate gas pipeline networks in the US, running from the Texas/Louisiana Gulf Coast to the Northeast. DUPLICATE: checked against the full 45-row Texas-operating roster supplied for this batch; no other row represents this system or a segment of it under another name -- P0259 is the sole GEM row for the TGP network and is unique. ATTRIBUTION (Operator/Owner): Operator 'Tennessee Gas Pipeline LLC' is a minor name variant of the legal entity 'Tennessee Gas Pipeline Company, L.L.C.' (same company; immaterial). Owner 'Kinder Morgan' 100% is corroborated by two independent sources: The Australian Pipeliner (2012, trade press, verified live) and a 2012 SEC EDGAR press-release exhibit describing Kinder Morgan Energy Partners' Aug 13, 2012 completion of its acquisition of '100 percent of Tennessee Gas Pipeline' from Kinder Morgan Inc (TGP remains an indirect wholly owned KMI subsidiary today per Kinder Morgan's current site) -- the SEC filing could not be pushed through url_verifier (SEC.gov 403s the tool's generic user-agent as an 'undeclared automated tool'; this is a bot-wall, not a dead link -- I fetched the exact document manually with a declared UA and read it directly, and separately confirmed a Wayback capture exists at 20230416070453, though web.archive.org content-serving was intermittently unreachable to the automated verifier during this session, a known network condition and not evidence about the source) so it is not listed in proposed_refs; the trade-press source and Kinder Morgan's own current site suffice to corroborate Owner independently. LENGTH: GEM's 11,760.00 mi is closely matched by Kinder Morgan's own current site (two current KM pages both say 'approximately 11,824-mile pipeline system', verified) -- within ~0.5%, not material. Older 2012-era sources (the SEC 10-K and Australian Pipeliner, both verified/confirmed) describe a larger 13,900-mile / 22,370 km system; this is a real historical shrinkage most likely reflecting a decade of segment abandonments/divestitures rather than an error, so it's recorded as a caveat, not a concern -- current-day figures agree with GEM. Coverage note: 38 citations were harvested from this row's gem.wiki page; I opened/checked 6 directly (the Kinder Morgan Natural-Gas index page, the EIA 'New natural gas pipeline capacity...' article, the KM '261 Upgrade' page [confirmed dead, 404 -- not currently used in any filled ref cell so no retraction needed], the Reuters Mississippi Crossing article [blocked, HTTP 401 bot-wall, not a confirmed 404 so not treated as deleted], the bit.ly-redirected Wikipedia citation [read via the live en.wikipedia.org article instead], and a targeted open-web search ladder beyond the harvested pool that surfaced the SEC 10-K and Australian Pipeliner corroboration used above) and left the remaining ~32 (mostly PHMSA incident-report citations, historic newspaper articles, and other Kinder Morgan project pages unrelated to the concerns raised here) unopened as not needed to resolve existence/classification/duplicate/ownership, which were already well corroborated.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Tennessee_Gas_Pipeline",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://kindermorgan.com/pages/business/gas_pipelines/east/TGP",
+        "https://www.eia.gov/todayinenergy/detail.php?id=50376",
+        "https://www.pipeliner.com.au/internationalnews/kinder-morgan-acquires-tennessee-gas-pipeline-and-el-paso-natural-gas-pipeline/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct EndState/Province, currently 'New United Kingdom' -- not a valid place and almost certainly data corruption (reads like a garbled/auto-replaced 'New England'). Replace with an accurate Northeast terminus; EndCountryOrArea (United States) is correct and does not need to change.",
+      "researcher_notes": "The sheet's Location cluster reads StartState/Province=Texas / StartCountryOrArea=United States (correct) but EndState/Province='New United Kingdom' -- there is no such place; it is not a US state, UK region, or any real jurisdiction. Every independent source describing TGP's terminus places it in the US Northeast/New England, never the United Kingdom: Wikipedia says the system 'delivers natural gas to West Virginia, New Jersey, New York, and New England'; Kinder Morgan's own pages say it serves 'New York City and Boston in the Northeast'; and the EIA's 'New natural gas pipeline capacity expands access to export and Northeast markets' article states directly that the Station 261 upgrade lets TGP deliver additional gas 'into New England'. EndCountryOrArea is already correctly 'United States', which rules out a country-level mix-up and points instead to a corrupted state/region entry (my best guess: a stray or mis-scoped find/replace of a country name onto this cell, since 'New England' and 'New United Kingdom' share the word 'New' and 'England'/'United Kingdom' are near-synonyms elsewhere in the sheet's own vocabulary). I'm not proposing a specific replacement state myself since TGP is a multi-state network-wide row without one single true terminus (deliveries reach NY, NJ, MA, and elsewhere) -- a human call is needed on whether to name one representative Northeast state (e.g. Massachusetts, matching the Boston endpoint cited above) or a regional label the schema already accepts elsewhere.",
+      "proposed_refs": [
+        "https://www.eia.gov/todayinenergy/detail.php?id=50376",
+        "https://en.wikipedia.org/wiki/Tennessee_Gas_Pipeline",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify Capacity. GEM's 1,000.00 MMcf/d for the whole TGP network reads roughly an order of magnitude low against every independent figure found for total system design capacity; it looks like a single project/expansion number (or a stale/placeholder figure) rather than the network total. Recommend either updating Capacity to reflect the multi-Bcf/d system total (with the correct as-of year) or, if 1,000 MMcf/d is meant to describe one specific lateral/expansion, documenting that scope explicitly in ResearcherNotes so the value isn't read as the whole-system figure.",
+      "researcher_notes": "The Australian Pipeliner (2012, independent trade press, url_verifier-confirmed live) states directly: 'The Tennessee Gas Pipeline (TGP) is an approximately 22,370 km pipeline system with a design capacity of about 7.5 billion [cubic feet] Bcf per day' -- i.e. ~7,500 MMcf/d, 7.5x GEM's figure. Kinder Morgan, Inc.'s own FY2012 10-K (SEC EDGAR) independently corroborates the same order of magnitude for the same year: 'The system has a design capacity of approximately 8.0 billion cubic feet per day for natural gas' (I fetched and read this filing directly with a declared user-agent; SEC.gov blocks the project's automated verifier's generic UA with an HTTP 403 'undeclared automated tool' bot-wall, and a matching Wayback capture at timestamp 20230416070453 was intermittently unreachable to the automated tool this session -- a known network-flakiness issue, not evidence the filing is unreal -- so this source is not in proposed_refs but is a second, genuinely independent origin agreeing with the trade-press figure). Later secondary reporting (aggregated web search, not independently re-verified line by line) puts TGP's design capacity higher still in more recent years -- roughly 12 Bcf/d by 2020 -- consistent with a string of expansion projects since 2012 (Natural Gas Intelligence: TGP opened 'more than 1.4 Bcf/d of new pipeline capacity to New York, New Jersey and New England' via Loops 317/321/325; TGP had already sold 80% of 5.9 Bcf/d of capacity circa 2000). None of these multi-year figures are anywhere close to 1,000 MMcf/d for the network as a whole. I could not find any source describing TGP's total system capacity at exactly 1,000 MMcf/d, though several individual TGP expansion projects are sized near that range (e.g., the Northeast Energy Direct project, cancelled, was scaled 'up to 1.2-1.3 Bcf/d'; smaller upgrades like Station 261 add only ~20 MMcf/d) -- it's plausible 1,000 MMcf/d was pulled from one such project rather than the whole-network total this row represents.",
+      "proposed_refs": [
+        "https://www.pipeliner.com.au/internationalnews/kinder-morgan-acquires-tennessee-gas-pipeline-and-el-paso-natural-gas-pipeline/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [],
+  "summary": "P0259 (Tennessee Gas Pipeline) is a real, correctly classified, non-duplicate Kinder Morgan gas transmission network (existence/classification/duplicate/ownership all confirmed, high tier) -- but flagged 2 concerns: EndState/Province='New United Kingdom' is corrupted/invalid data (attribution), and Capacity=1000.00 MMcf/d is roughly an order of magnitude below every independently sourced system-capacity figure (~7.5-12+ Bcf/d) (spec)."
+}

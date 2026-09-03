@@ -1,0 +1,67 @@
+{
+ "meta": {
+  "mode": "route-creation",
+  "commodity": "gas",
+  "scope": {
+   "country": "Egypt",
+   "commodity": "gas"
+  },
+  "note": "Standalone follow-up: resolves the P7589 ROUTE_PARTIAL left open by batches/egypt-gas/staging/route-creation-20260810/.",
+  "vocab_fix_20260827": "suggested_route_accuracy was staged as 'low (within kilometers)', which is not in the live RouteAccuracy vocabulary (high / medium / low / 'very low (straight line/schematic)' / 'very high (within meters)'). apply_route_candidates.py would have aborted on it. Corrected to 'low'."
+ },
+ "resolutions": [
+  {
+   "project_id": "P7589",
+   "sheet_row": "3979",
+   "pipeline_name": "Framid Field Gas Pipeline",
+   "segment_name": "",
+   "ref_col": "__ROUTE__",
+   "class_in": "ROUTE",
+   "class_out": "ROUTE_CANDIDATE",
+   "value_cols": [],
+   "primary_value_col": null,
+   "values": {},
+   "primary_value": "",
+   "current_ref": "",
+   "method": "corridor_follow_osm",
+   "geometry_file": "candidate_routes/P7589.geojson",
+   "source": {
+    "name": "OpenStreetMap",
+    "url": "https://www.openstreetmap.org/way/545729460",
+    "license": "ODbL",
+    "odbl": true,
+    "fetched_utc": "2026-08-11T00:00:00Z"
+   },
+   "georef": null,
+   "replacement": false,
+   "geometry_signals": {},
+   "qc_passed": true,
+   "packet": "",
+   "length_km": 36.92,
+   "sheet_length_km": 38.0,
+   "length_ratio": 0.971,
+   "current_route_accuracy": "no route",
+   "suggested_route_accuracy": "low",
+   "start_name": "Faramid field wellpad cluster (Faramid Development Lease, East Obaiyed)",
+   "start_lon": 26.98931,
+   "start_lat": 31.05146,
+   "end_name": "Obaiyed gas plant (BAPETCO), Matrouh",
+   "end_lon": 26.6142,
+   "end_lat": 31.0996,
+   "proposed_refs": [
+    "https://www.openstreetmap.org/way/545729460",
+    "https://www.openstreetmap.org/node/6960778686"
+   ],
+   "verifications": [],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Resolves the 08-10 ROUTE_PARTIAL. START anchor is now hard: Faramid is a named DEVELOPMENT LEASE (map code 94) inside the East Obaiyed concession on the EGPC/EGAS/GANOPE Egypt Concession Map (eug.petroleum.gov.eg), bbox 26.9497-27.0666 E / 30.9999-31.0997 N, ~50 km2; five graded wellpads sit inside the traced polygon on Esri imagery (evidence/faramid_lease_and_pads.geojson). The repo's earlier start guess (30.9659, 26.8891, '30 km NW of Meleiha') is ~13 km off and falls OUTSIDE the lease - superseded. END anchor: the 07-2026 rejection of 'Badr El Din' as a 159 km false match is WITHDRAWN. Egypt Oil & Gas reports Agiba 'extending another line from the Faramid field to Badr El Din Company to process 24 mcf/d'; 'Badr El Din Company' is BAPETCO, which per SPE/JPT and Capricorn still operates Obaiyed/BED/NEAG/AESW after Shell's 2021 sale to Cheiron. The processing point is therefore the BAPETCO OBAIYED GAS PLANT (OSM flare nodes 11276921280/81/82; 'Petrojet El Oubaid' node 6960778686), not the BED field 159 km away. Sheet capacity 25.00 MMcf/d matches the '24 mcf/d' in the same sentence. GEOMETRY: the line is drawn along the EXISTING Obaiyed export right-of-way (OSM way/545729460), a multi-lane graded pipeline corridor visible continuously in Esri imagery from the Faramid pads WNW to the plant; it passes 1.07 km from pad B. Length 36.9 km vs 38.0 km on the sheet (0.97). The straight-line alternative (pad -> plant, no corridor) is 35.2 km (0.93) and never departs more than ~2.4 km from this polyline, which is why 'low (within kilometres)' holds under either hypothesis. NOT VERIFIED: no separate Faramid-specific trench is distinguishable from the pre-existing trunk in the basemap, and OSM carries no Faramid line - the corridor is inferred from co-location plus standard shared-ROW practice, not observed as a distinct new scar. Route [ref] cites the OSM corridor way and the plant node; the lease polygon comes from the EUG concession map, which is cited in the notes rather than as a URL ref because it is a raster map sheet, not a per-pipeline page.",
+   "proposed_sheet": {
+    "RouteCreator": "CB",
+    "RouteNotes": "CB: drawn along the existing Obaiyed export right-of-way from the Faramid development lease wellpads to the BAPETCO Obaiyed gas plant; endpoints sourced, corridor inferred",
+    "Route [ref]": "https://www.openstreetmap.org/way/545729460; https://www.openstreetmap.org/node/6960778686"
+   }
+  }
+ ]
+}

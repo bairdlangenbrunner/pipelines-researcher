@@ -49,8 +49,14 @@ def harvest(staging: Path) -> int:
             found.append({
                 "project_id": sh.get("project_id"),
                 "sheet_row": r.get("sheet_row", 0),
-                "pipeline_name": sh.get("pipeline_name", ""),
-                "segment_name": "",
+                # Row identity, from the record first and the shard doc second. Both were
+                # read off `sh` alone (and segment_name was hardcoded blank), so every
+                # harvested row landed on Gas_Validity with empty name columns -- on the tab
+                # that carries a sweep's HIGHEST-value findings, leaving the reader a bare
+                # ProjectID. split_shards now stamps identity onto each ref_shards/<PID>.json.
+                "pipeline_name": r.get("pipeline_name") or sh.get("pipeline_name", ""),
+                "segment_name": r.get("segment_name") or sh.get("segment_name", ""),
+                "wiki": r.get("wiki") or sh.get("wiki", ""),
                 "ref_col": "__VALIDITY__",
                 "value_cols": [],
                 "primary_value_col": "",
@@ -70,8 +76,11 @@ def harvest(staging: Path) -> int:
                 "file is the adjudicated one.",
                 "proposed_refs": r.get("proposed_refs", []),
                 "verifications": r.get("verifications", []),
-                "tier": r.get("tier", "n/a"),
-                "independent": r.get("independent", False),
+                # `or`, not a .get default: a shard that writes an explicit null tier
+                # (sentinels carry no tier -- there is no value being sourced) has the
+                # key present, so the default never fires and None reaches the store.
+                "tier": r.get("tier") or "n/a",
+                "independent": r.get("independent") or False,
                 "source_language": r.get("source_language", "en"),
                 "researcher_notes": r.get("researcher_notes", ""),
                 MARK: str(sf.name),

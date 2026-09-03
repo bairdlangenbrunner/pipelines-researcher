@@ -18,7 +18,7 @@ import argparse, collections, json, os, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from merge_qc import bad_cost_units, verified_refs, iter_shards, qc_note  # noqa: E402
+from merge_qc import bad_cost_units, verified_refs, iter_shards, qc_note, independence_qc  # noqa: E402
 
 
 def main():
@@ -56,12 +56,14 @@ def main():
         for col, val in bad_cost_units(values).items():
             print(f"  WARN {os.path.basename(p)}: {col}={val!r} — units must be a bare "
                   "currency code; put the magnitude in the cost number (fix the shard)")
+        d_tier, d_indep, notes = independence_qc(
+            refs, d.get("tier", ""), d.get("independent", False), notes)
         candidates.append({
             "slug": d.get("slug", os.path.basename(p)[:-5]), "class": cls,
             "name": d.get("name", ""), "matched_project_id": d.get("matched_project_id", ""),
             "values": values, "refs": refs,
             "verifications": d.get("verifications", []) or [],
-            "tier": d.get("tier", ""), "independent": d.get("independent", False),
+            "tier": d_tier, "independent": d_indep,
             "source_language": d.get("source_language", "en"),
             "monitor_reason": d.get("monitor_reason", ""), "researcher_notes": notes,
         })

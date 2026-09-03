@@ -1,0 +1,267 @@
+#!/usr/bin/env python3
+"""Pre-delivery gates for any sweep staging dir. Read-only: reports, never edits.
+
+Promoted 2026-09-03 from the Jiangxi-only `predelivery_checks.py` (deepsweep-20260902) so
+every sweep runs the same gates instead of each batch re-deriving them. The lesson they
+encode: a sweep that looks comprehensive by REF COUNT can be thin by ORIGIN COUNT — Jiangxi
+v1 shipped 98 REFS_ADDED, three documents carried 71 of them, and 4 of 18 rows rested on a
+single host — and the tier column is what a researcher trusts when deciding to paste.
+MZ's 2026-09-03 feedback on v2 added the other two axes these gates now cover: RELEVANCE
+(a ref must name the pipeline, not just contain its number) and COVERAGE OF BLANKS (a
+blank value on an operating row is owed work, not a non-unit).
+
+    python scripts/sweep_gates.py --staging batches/<scope>/staging/<run>/ [--json]
+        [--dominant-min 15] [--pool harvest_screen.json]
+
+Gates (all advisory; exit code is always 0 — they inform the delivery note):
+  A  SOURCE DIVERSITY   -- a row whose sourced units all trace to <2 distinct hosts.
+  B  FALSE HIGH         -- a `high` unit whose verified refs share one host or number <2.
+  C  DOMINANT DOCUMENT  -- one URL carrying >= --dominant-min units cannot be the second
+                           source for a `high`: one origin restated is still one origin.
+  D  INDEPENDENCE FLAG  -- `independent: true` on a unit with <2 verified refs.
+  E  ORPHAN REFS        -- a ref with no paired value, or a sourced value with no ref.
+  F  BANNED / GEM       -- gem.wiki, globalenergymonitor.org, abarrelfull anywhere.
+  G  HARVEST COVERAGE   -- live pool URLs never opened on a row that still reports
+                           UNRESOLVED (needs --pool, or harvest_screen.json in the dir).
+  H  RECOVERED SPN      -- live origins behind Save-Page-Now citations, unopened on an
+                           UNRESOLVED row (needs spn_recovered_origins.json; else skipped).
+  I  RELEVANCE          -- a sourced unit none of whose verifications says name_found=true:
+                           either the page does not name the pipeline (name_found=false)
+                           or nobody checked (field absent). Both are listed, separately.
+  J  BLANKS COVERAGE    -- worklist MISSING_VALUE units (--owe-fills) with no FILL record
+                           of any class in the store: an owed blank nobody reported on.
+  K  SINGLE-SOURCE UNITS -- REFS_ADDED units with exactly one verified ref (the 2-per-data-
+                           point target unmet). Not a defect (medium is fillable) but the
+                           count is the honest measure of how far the batch is from green.
+"""
+from __future__ import annotations
+
+import argparse
+import collections
+import json
+import sys
+from pathlib import Path
+from urllib.parse import urlparse
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
+
+BANNED = tuple(GEM_HOSTS + BLOCKLIST_HOSTS)
+SOURCED = {"REFS_ADDED", "REVERIFIED", "CONFIRMED"}
+SENTINEL_PREFIX = "__"
+
+
+def host(u: str) -> str:
+    h = (urlparse(u).netloc or "").lower()
+    if h == "web.archive.org":
+        # a capture is the ORIGIN's bytes — count the origin (same rule as merge_qc.origin_host)
+        path = urlparse(u).path
+        parts = path.split("/", 3)
+        if len(parts) == 4 and parts[1] == "web":
+            h = (urlparse(parts[3]).netloc or "").lower()
+    return h[4:] if h.startswith("www.") else h
+
+
+def verified(r: dict) -> list[str]:
+    """Refs the merge would actually KEEP: ok && contains_value. Counting proposed_refs
+    instead would credit a row for URLs that get dropped at merge — which is precisely
+    how a row ends up looking two-sourced in the workbook and single-sourced in fact."""
+    ok = {v.get("url") for v in (r.get("verifications") or [])
+          if v.get("ok") and v.get("contains_value")}
+    return [u for u in (r.get("proposed_refs") or []) if u in ok]
+
+
+def _load(path: Path):
+    return json.loads(path.read_text()) if path.exists() else None
+
+
+def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) -> dict:
+    store = json.loads((staging / "staged_resolutions.json").read_text())
+    res = store["resolutions"]
+    wl = _load(staging / "worklist.json") or {}
+    pool = _load(pool_path) if pool_path else _load(staging / "harvest_screen.json")
+    spn = _load(staging / "spn_recovered_origins.json")
+
+    by_pid = collections.defaultdict(list)
+    for r in res:
+        by_pid[r.get("project_id")].append(r)
+
+    url_units = collections.Counter()
+    for r in res:
+        for u in set(verified(r)):
+            url_units[u] += 1
+    dominant = {u for u, n in url_units.items() if n >= dominant_min}
+
+    A, B, C, D, E, F, G, H = [], [], [], [], [], [], [], []
+    I_false, I_unchecked, J, K = [], [], [], []
+    for pid, recs in sorted(by_pid.items()):
+        hosts = {host(u) for r in recs if r.get("class_out") in SOURCED
+                 for u in verified(r)} - {""}
+        sourced_n = sum(1 for r in recs if r.get("class_out") in SOURCED)
+        if sourced_n and len(hosts) < 2:
+            A.append((pid, sourced_n, sorted(hosts)))
+        for r in recs:
+            vr = verified(r)
+            vh = {host(u) for u in vr} - {""}
+            tier = (r.get("tier") or "").lower()
+            col = r.get("ref_col")
+            sentinel = str(col).startswith(SENTINEL_PREFIX)
+            if tier == "high" and (len(vr) < 2 or len(vh) < 2):
+                B.append((pid, col, len(vr), sorted(vh)))
+            if tier == "high" and len(vh) == 2 and dominant & set(vr) and \
+                    len([u for u in vr if u not in dominant]) < 2:
+                C.append((pid, col, sorted(set(vr) & dominant)))
+            if r.get("independent") and len(vr) < 2:
+                D.append((pid, col, len(vr)))
+            has_val = any(str(v).strip() for v in (r.get("values") or {}).values())
+            if vr and not has_val and not sentinel:
+                E.append((pid, col, "ref without a paired value"))
+            if has_val and not vr and r.get("class_out") in SOURCED and not sentinel:
+                E.append((pid, col, "value marked sourced with no verified ref"))
+            for u in (r.get("proposed_refs") or []):
+                if any(b in u.lower() for b in BANNED):
+                    F.append((pid, col, u))
+            if vr and not sentinel and r.get("class_out") in SOURCED:
+                okv = [v for v in (r.get("verifications") or []) if v.get("ok")]
+                named = [v for v in okv if "name_found" in v]
+                if named and not any(v.get("name_found") for v in named):
+                    I_false.append((pid, col, vr[0]))
+                elif not named:
+                    I_unchecked.append((pid, col))
+            if r.get("class_out") == "REFS_ADDED" and len(vr) == 1 and not sentinel:
+                K.append((pid, col))
+
+    # G — harvest coverage. Pool is a FLAT LIST of {ok, status, reason, url, project_ids}.
+    if pool:
+        live_by_pid = collections.defaultdict(set)
+        for e in pool:
+            if e.get("ok"):
+                for p in e.get("project_ids") or []:
+                    live_by_pid[p].add(e["url"])
+        # "Opened" = cited OR verified: a URL read and REJECTED was still opened.
+        opened = {u for r in res for u in (r.get("proposed_refs") or [])}
+        opened |= {v.get("url") for r in res for v in (r.get("verifications") or []) if v.get("url")}
+        for pid, recs in sorted(by_pid.items()):
+            if not any(r.get("class_out") == "UNRESOLVED" for r in recs):
+                continue
+            unopened = live_by_pid.get(pid, set()) - opened
+            if unopened:
+                G.append((pid, len(unopened), len(live_by_pid.get(pid, set()))))
+        if spn:
+            spn_by_pid = collections.defaultdict(set)
+            for e in spn:
+                if e.get("ok"):
+                    for p in e.get("project_ids") or []:
+                        spn_by_pid[p].add(e["origin"])
+            for pid, recs in sorted(by_pid.items()):
+                if not any(r.get("class_out") == "UNRESOLVED" for r in recs):
+                    continue
+                unopened = spn_by_pid.get(pid, set()) - opened
+                if unopened:
+                    H.append((pid, len(unopened), sorted(unopened)[0]))
+
+    # J — blanks coverage: every worklist MISSING_VALUE unit needs SOME record in the
+    # store (a FILL of any class_out, or a ref record on the same cell). "No record" means
+    # the owed blank was never reported on — the silent-skip MZ flagged.
+    owed = [u for u in (wl.get("units") or []) if u.get("class") == "MISSING_VALUE"]
+    if owed:
+        have = {(r.get("project_id"), r.get("ref_col")) for r in res}
+        for u in owed:
+            key = (u.get("project_id"), u.get("ref_col"))
+            if key not in have:
+                J.append((u.get("project_id"), u.get("ref_col"), u.get("status", "")))
+
+    return {
+        "records": len(res), "rows": len(by_pid),
+        "A_single_host_rows": A, "B_false_high": B, "C_dominant_document": C,
+        "D_independence_flag": D, "E_orphan_refs": E, "F_banned_sources": F,
+        "G_unopened_pool_on_unresolved_rows": G,
+        "H_recovered_spn_origins_unopened": H,
+        "I_relevance_name_not_found": I_false,
+        "I_relevance_unchecked": I_unchecked,
+        "J_owed_blanks_unreported": J,
+        "K_single_source_refs_added": K,
+        "fills_owed": len(owed),
+        "fills_staged": sum(1 for r in res if r.get("class_in") == "FILL"),
+        "pool_present": bool(pool),
+        "dominant_documents": sorted(((n, u) for u, n in url_units.items()
+                                      if n >= dominant_min), reverse=True),
+    }
+
+
+def report(out: dict, dominant_min: int) -> None:
+    def sec(k, rows, ok_msg, fmt, cap=40):
+        print(f"\n{k}  ({len(rows)})")
+        if not rows:
+            print(f"    PASS — {ok_msg}")
+        for r in rows[:cap]:
+            print("    " + fmt(r))
+        if len(rows) > cap:
+            print(f"    … {len(rows) - cap} more")
+
+    print(f"sweep gates — {out['records']} records, {out['rows']} rows")
+    sec("A  source diversity (<2 distinct hosts on a sourced row)", out["A_single_host_rows"],
+        "every sourced row rests on 2+ origins",
+        lambda r: f"{r[0]}: {r[1]} sourced unit(s), hosts={r[2] or ['(none)']}")
+    sec("B  tier `high` without 2 verified refs on 2 hosts", out["B_false_high"],
+        "every high tier has 2+ independent origins",
+        lambda r: f"{r[0]} {r[1]}: {r[2]} verified ref(s), hosts={r[3]}")
+    sec(f"C  `high` leaning on a dominant document (>={dominant_min} units)", out["C_dominant_document"],
+        "no high tier rests on one restated origin",
+        lambda r: f"{r[0]} {r[1]}: dominant {r[2]}")
+    sec("D  independent=true with <2 verified refs", out["D_independence_flag"],
+        "the independence flag matches the rubric",
+        lambda r: f"{r[0]} {r[1]}: {r[2]} verified ref(s)")
+    sec("E  orphan refs / unsourced sourced-values", out["E_orphan_refs"],
+        "no orphans in either direction", lambda r: f"{r[0]} {r[1]}: {r[2]}")
+    sec("F  banned or GEM sources", out["F_banned_sources"], "0 GEM surfaces, 0 blocklisted",
+        lambda r: f"{r[0]} {r[1]}: {r[2]}")
+    if out["pool_present"]:
+        sec("G  live pool URLs never opened on a row still UNRESOLVED",
+            out["G_unopened_pool_on_unresolved_rows"], "the harvested pool was worked to exhaustion",
+            lambda r: f"{r[0]}: {r[1]} of {r[2]} live pool URL(s) unopened")
+        sec("H  live origins behind Save-Page-Now citations, unopened on an UNRESOLVED row",
+            out["H_recovered_spn_origins_unopened"], "no recoverable SPN origin is left unread",
+            lambda r: f"{r[0]}: {r[1]} unopened, e.g. {r[2][:78]}")
+    else:
+        print("\nG/H  skipped — no harvest_screen.json (pass --pool to enable)")
+    sec("I  relevance: sourced unit whose refs do NOT name the pipeline (name_found=false)",
+        out["I_relevance_name_not_found"], "every checked ref names the pipeline",
+        lambda r: f"{r[0]} {r[1]}: {r[2][:80]}")
+    sec("I' relevance UNCHECKED (no name_found on any ok verification)",
+        out["I_relevance_unchecked"], "every sourced unit carries a relevance check",
+        lambda r: f"{r[0]} {r[1]}", cap=15)
+    if out["fills_owed"]:
+        sec(f"J  owed blanks with no record at all (fills owed {out['fills_owed']}, "
+            f"FILL records staged {out['fills_staged']})", out["J_owed_blanks_unreported"],
+            "every owed blank was reported on (filled or honest UNRESOLVED)",
+            lambda r: f"{r[0]} {r[1]} [{r[2]}]")
+    else:
+        print(f"\nJ  skipped — worklist has no MISSING_VALUE units (built without --owe-fills); "
+              f"FILL records staged: {out['fills_staged']}")
+    sec("K  REFS_ADDED on exactly one verified ref (2-per-data-point target unmet)",
+        out["K_single_source_refs_added"], "every added ref is two-sourced",
+        lambda r: f"{r[0]} {r[1]}", cap=10)
+    if out["dominant_documents"]:
+        print("\ndominant documents (one origin carrying many units):")
+        for n, u in out["dominant_documents"]:
+            print(f"    {n:3d}  {u[:100]}")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--staging", required=True)
+    ap.add_argument("--dominant-min", type=int, default=15)
+    ap.add_argument("--pool", help="harvest_screen.json (flat list of screened pool URLs); "
+                                   "default <staging>/harvest_screen.json if present")
+    ap.add_argument("--json", action="store_true")
+    a = ap.parse_args()
+    out = run(Path(a.staging), a.dominant_min, Path(a.pool) if a.pool else None)
+    if a.json:
+        print(json.dumps(out, ensure_ascii=False, indent=1))
+    else:
+        report(out, a.dominant_min)
+
+
+if __name__ == "__main__":
+    main()

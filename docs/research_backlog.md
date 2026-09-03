@@ -1,7 +1,7 @@
 # Research backlog — unfinished / ongoing projects
 
 Inventory of started-but-unfinished research threads. Baselined **2026-07-15** by a
-full-repo audit and maintained continuously since (latest entries 2026-07-28). Update
+full-repo audit and maintained continuously since (latest entries 2026-09-03). Update
 this file when a thread closes or a new one opens; per-country detail stays in
 `docs/country_notes/`, and this file just tracks what's open and where.
 
@@ -21,6 +21,20 @@ rows; incl. 9 broken-status rows flagged as data bugs). 4 of 137 countries done 
 far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 
 ## 2. Research legs started but not finished
+
+> **ALSO READ — the non-citation ref screen (2026-08-27) makes 10 units outside Egypt
+> owed again.** A site-search URL, a paginated archive index and a bare category/tag
+> listing are navigation surfaces, not documents: their content changes weekly and they
+> 200 for any query, so they can never support a value. `url_verifier` now rejects them
+> and `repair_noncitation_screen.py --all --apply` re-screened every built worklist
+> (91 checks flipped, 89 units newly owed — 79 of them Egypt's). Outside Egypt:
+> **uzbekistan-gas/ref-sweep-operating 8 units** (all on `liting.uz/page/4`),
+> **iraq-gas/ref-sweep-operating 1**, **libya-gas/annual 1**. Uzbekistan's 8 sit in a
+> **delivered, staged-not-applied** workbook that will NOT reflect this until rebuilt —
+> the units still show as sourced there. Rebuild before that batch is worked, or note the
+> 8 by hand. Full writeup, incl. the two false positives the pattern was narrowed to avoid
+> (Britannica `/topic/` article paths, bare `?q=`):
+> `notes/escalation-2026-08-27-ref-screen-defects.md`.
 
 > **READ FIRST — every GulfPub recon in this section was RE-RUN 2026-08-12, so the
 > workbook filenames and counts in the rows below are superseded.** The reference-side
@@ -66,13 +80,15 @@ far via the campaign path (Iraq, Iran, Saudi Arabia, Egypt).
 | **Pakistan gas: OSM + GulfPub recon untriaged** | First-ever Pakistan pass (2026-08-07). Both workbooks are **standalone and NOT in the handoff packet** (`recon_actions=0`), so nothing routes them into the actions file. GulfPub (94 features): **82 overlaps — the best match rate of any country swept so far**, and the reason the existence question narrowed before the SNGPL register closed it; 12 additions (under the >30 gate), 0 status conflicts, 11 near-misses. OSM: only **9 features for the whole country** — 4 overlaps, 3 `FRAGMENT_OF_EXISTING`, 1 `ROUTE_FOR_EXISTING`, 1 `NEAR_MISS`, **0 discovery candidates**. OSM coverage of Pakistan gas transmission is effectively absent — do not read the thin result as agreement | `batches/pakistan-gas/deliverables/pipelines_batch_20260807_1530_ET_pakistan-gas_reconciliation-{gulfpub,osm}.xlsx`; `docs/country_notes/pakistan.md` |
 | **India gas: OSM + GulfPub recon untriaged** | First-ever India pass (2026-08-10). Both workbooks are **standalone and NOT in the handoff packet** (`recon_actions=0`). GulfPub (158 features — the largest reference extract of any country swept): 74 overlaps, **84 additions**, 40 GEM-only, **22 status conflicts**, 22 ambiguous — **BOTH escalation gates crossed** (>30 additions; 22/74 = 30% conflicts, >10%). Dispositions: NEAR_MISS 56, DISCOVERY_CANDIDATE 23, FRAGMENT_OF_EXISTING 5. Caveat before adjudicating any length conflict: **15 of the 158 GulfPub features repeat a SYSTEM total on a segment feature** (the whole HVJPL/GREP/DVPL family carries one 4,657 km figure across 6 features) — that is GulfPub's artifact, not GEM's error. OSM (61 features / 2,721 km, 44% named): 1 overlap, 60 additions, 34 `FRAGMENT_OF_EXISTING`, 25 `DISCOVERY_CANDIDATE`. **The thin OSM overlap is NOT a matcher defect** — health line clean (44.3% named × 98.7% GEM routed, no `MATCH_QUALITY` warning), and the cause is granularity: short OSM fragments of very long GEM trunk lines score 1.00 on name but ~0.18 IoU → composite 0.34–0.44 against a 0.45 threshold. India is the healthiest OSM extract in the registry so far, and `sources/osm/manifest.yml` deliberately carries **no `geoarea_weight` override** for `gas_in` — do not add one | `batches/india-gas/deliverables/pipelines_batch_20260810_1851_ET_india-gas_reconciliation-{gulfpub,osm}.xlsx`; `docs/country_notes/india.md` |
 | **Malaysia gas: GulfPub + OSM + Malaysian Gas Map recon untriaged** | First-ever Malaysia pass (2026-08-12) and the first run against **three** sources. All three workbooks are **standalone and NOT in the handoff packet** (`recon_actions=0`). **All three crossed the >30-additions gate in a country with FIVE GEM rows**, which is the batch's headline: GulfPub (55 refs) 4 overlaps / **51 additions** (41 `DISCOVERY_CANDIDATE`) / 3 GEM-only / **3 status conflicts on 4 matched rows = 75%**, so the material-conflict gate crossed too; Malaysian Gas Map (67 refs) **0 overlaps** / 67 additions (65 discovery); OSM (29 refs) **0 overlaps** / 29 additions (21 `FRAGMENT_OF_EXISTING`, 8 discovery). The two null runs both carry `MATCH_QUALITY` (0% of refs named in either) and **neither is a discovery set**. **OSM is not an independent check here** — P1065/P1066 cite `openinframap.org`, an OSM render, so its 92% containment of their routes is near-tautological; read `Route [ref]` before crediting a geometry source. Nothing routes to Discovery until the scope ruling in §4 lands | `batches/malaysia-gas/deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-{gulfpub,osm,malaysian-gas-map}.xlsx`; `docs/country_notes/malaysia.md` |
+| **Ukraine gas: OSM + GulfPub recon untriaged** | First-ever Ukraine pass (2026-08-15). Both workbooks are **standalone and NOT in the handoff packet** (`recon_actions=0`). GulfPub (158 refs — post multi-country-filter fix; the pre-fix run saw 111 and every conclusion off it is void): **73 overlaps (46.2%, a healthy run)**, 85 additions with **23 `DISCOVERY_CANDIDATE` that are named Ukrainian trunk lines at 25–170 km**, and 15 status conflicts. **Do not read the 20.5% conflict rate at face value** — it collapses onto five GEM rows, two of which (P1487, P0788) are one-to-many **attractor** matches rather than disagreements. OSM: **1,003 additions cross the gate on volume alone and are NOT a Discovery signal** — health line clean, `MATCH_QUALITY` correctly silent, and the 0.1% overlap rate is a **scope** mismatch: 815 of 1,004 features are under 1 km and the named operator tags (Talnivske UEGG, Cherkasytransgaz, Kyivgaz) are district and city **distribution** utilities, which GGIT does not cover. The worth-a-look subset is small — the two Krasnodar Krai–Crimea traces, "Soyuz", and three unnamed 300–429 km traces. Re-run 2026-08-14 after the Cyrillic name fix; **no bucket moved**, 49 records gained a corrected "closest GEM" attribution | `batches/ukraine-gas/deliverables/pipelines_batch_20260812_1409_ET_ukraine-gas_reconciliation-gulfpub.xlsx` + `…_20260814_0120_ET_…-osm.xlsx`; `docs/country_notes/ukraine.md` |
+| **Ukraine oil (GOIT)** | never swept — 20 rows. The gas pass established that Ukraine's problem is an **empty citation base, not empty facts** (3.29% of gas ref cells filled, 2nd lowest of 52 scopes), and there is no reason to expect the oil rows differ | `docs/country_notes/ukraine.md` |
 | **Malaysia oil (GOIT)** | never swept — 5 rows (P7908–P7912), all `operating`, all `high` accuracy, all added by IM in Feb 2026. Low priority on their own, but they are the concrete form of the gas scope question: GOIT maps the oil lines on corridors GulfPub proposes on the gas side | `docs/country_notes/malaysia.md` |
 | **Saudi Arabia / Iran gas: fresh standalone GulfPub recon workbooks (2026-07-29)** | Produced by the length-units re-run (§4) and **not in any packet**. Saudi (20 refs): 18 overlaps / 2 additions / 23 GEM-only / **9 status conflicts** / 1 ambiguous. Iran (43 refs): 25 overlaps / 18 additions / 25 GEM-only / 3 status conflicts / 10 ambiguous. **Both pre-fix runs date from 07-05/07-06 and predate the admin-area geo signal, per-dataset matching overrides and the 'very low' re-grade — read these as fresh runs, not deltas**, and expect their packets' `Gas_GulfPub` crosswalk tabs to be stale | `batches/{saudi-arabia-gas,iran-gas}/deliverables/pipelines_batch_20260729_0941_ET_*_reconciliation-gulfpub.xlsx` |
 | **Israel gas: Ashdod–Ashkelon onshore gap (P3620)** | routes + sheet edits APPLIED 2026-07-23 (Baird bridged the Ashdod HDD bore so P3620 meets P3657; routes-repo merge `72d29de1`; sheet RouteAccuracy→medium/RouteNotes/Route [ref] written rows 1036/1063; batch archived), but P3620 geometry is still partial — 2.1 of 4 sheet km; the Ashkelon-side ~2.4 km onshore run has no public vector yet (OSM empty, TAMA 37/A/2/7 blueprint sheets cover Ashdod only) — need the Ashkelon-side statutory sheet or an INGL/permit map to finish it. P3657 is complete | `batches/israel-gas/archive/route-creation-p3620-p3657/README.md` |
 | **Iran general open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md`; CLAUDE.md |
 | **Re-run link checks for every country swept before 2026-08-11 (engine defect, ours)** | `url_verifier.verify_url` returned a bare `request failed: SSLError` for hosts serving an incomplete TLS chain, which reads as a dead link. It now retries once with verification off and stamps `insecure_tls: True` — that verdict means **the page IS live**. In Kazakhstan gas the defect hit **51 of 105 ref cells with ZERO real 404s** (45 SSLError + 5 ConnectionError + 1 ReadTimeout; the operating leg went 55 → 63 all-live once fixed), because half the country's refs are `adilet.zan.kz`. So any earlier country whose worklist shows `SSLError` link-rot flags has **false DEAD_LINK findings staged**, and the only fix is to re-run the worklist — the flags cannot be re-read. Known affected hosts so far: `adilet.zan.kz`, `pgjonline.com`, `eeer.org`. Two sibling defects fixed the same day (diameter units per row; thousands separator vs multi-value comma) have their own blast radii recorded in `docs/sops/reconciliation.md` — the QC `Diameter_OutOfRange` sheet of **any** workbook built before 2026-08-11 should be discarded (1,497 false findings, 1 real) | `docs/sops/sweep.md` §Verifier false-negatives; `docs/sops/{reconciliation,qc}.md`; commits `37ab566`, `7613c39` |
 | **OSM recon: read `best_guess` as arithmetic, not geography, in four pre-2026-08-11 runs (reporting defect, ours)** | `reconcile.py disposition()` printed "Nearest was P####" on every `DISCOVERY_CANDIDATE`/`NEAR_MISS`. When the reference is unnamed (`s_name` 0), the guessed GEM row has **no drawn route** (`g_untested`) and no province score got through (`s_geoarea` 0), the only live axis is **length** — so "nearest" was whichever row happened to be a similar number of kilometres, anywhere in the country. Kazakhstan OSM had 18 unnamed traces spread lon 51→78 all "nearest" to routeless P5776 (17.8 km), several 1,500 km from its corridor. **Fixed 2026-08-11**: the note now names the dead axes and says to read the PID as arithmetic. Kazakhstan was re-run + its workbook rebuilt. **NOT re-run** (their GEM snapshots are older, so a re-run would silently move matches and break the packets' `SheetRow` locators): `iraq-oil/recon-osm-20260728` **82 of 184**, `egypt-gas/recon-osm-20260729` 10/21, `india-gas/recon-osm-20260810` 8/61, `iraq-gas/recon-osm-20260729` 2/46 — in those workbooks ignore the `Nearest`/`best_guess` PID on any addition whose reference is unnamed and whose guessed row has no route. GulfPub runs are unaffected (0 blind in all 12) | `scripts/reconcile.py` `disposition()`; `batches/kazakhstan-gas/deliverables/…_20260811_1043_ET_…reconciliation-osm.xlsx` |
-| **Re-verify refs in pending staged batches against the block-page false positive (engine defect, ours)** | `url_verifier.verify_url` matched expected content against **raw HTML** and matched a numeric needle as a **bare substring**, while block-page detection only fired below 1,500 chars. So an IP/geo-block interstitial that returns HTTP 200 could be certified as verified — reproduced on `energybase.ru`, where the only occurrence of the expected `1262` was inside the SVG path coordinate `589.126229`. **Fixed 2026-08-12**: svg/style/template stripped before matching (script kept — real values live in JSON-LD), whole-number semantics for numeric needles, and length-independent block-phrase detection in Russian and English. The verdict is worded to prevent the wrong reaction — a block is **NOT a deletion**, so keep the ref and ADD a Wayback snapshot; only a confirmed 404/410 may drop one. **Not yet done:** re-verify the refs in *pending, not-yet-applied* staged batches — the bounded set that would actually ship wrong. Start with the countries whose sources skew to geo-blocking hosts (Russian trade press: Ukraine, Kazakhstan, Russia, Central Asia). Found by a subagent that distrusted a green verdict and reported the tool rather than the ref | `notes/escalation-2026-08-12-url-verifier-false-positive-on-block-pages.md`; `scripts/url_verifier.py` |
+| **Re-verify refs in pending staged batches against the block-page false positive (engine defect, ours)** | `url_verifier.verify_url` matched expected content against **raw HTML** and matched a numeric needle as a **bare substring**, while block-page detection only fired below 1,500 chars. So an IP/geo-block interstitial that returns HTTP 200 could be certified as verified — reproduced on `energybase.ru`, where the only occurrence of the expected `1262` was inside the SVG path coordinate `589.126229`. **Fixed 2026-08-12**: svg/style/template stripped before matching (script kept — real values live in JSON-LD), whole-number semantics for numeric needles, and block-phrase detection in Russian and English made length-independent. The verdict is worded to prevent the wrong reaction — a block is **NOT a deletion**, so keep the ref and ADD a Wayback snapshot; only a confirmed 404/410 may drop one. **The 08-12 fix was incomplete and the second half landed 2026-08-16**: block detection was gated on `blocked and checking`, so it only ran when a needle was supplied. The commonest call shape in this repo is a bare `verify_url(url)` reachability screen with no needle — every `[ref]` cell audit — and that path sailed past the interstitial and returned `ok=True, reason='200'`, a hard PASS on a page we never saw. The gate is gone; detection now runs on every 200. Re-test on `energybase.ru` flips 15 Ukraine URLs from pass to `blocked`. **Not yet done:** re-verify the refs in *pending, not-yet-applied* staged batches — the bounded set that would actually ship wrong. **Ukraine gas IS done** (2026-08-16, all 390 staged URLs): the 15 newly-blocked `energybase.ru` pages sit only in `researcher_notes`/`verifications`/`wiki_citations`, **none in `proposed_refs`**, so nothing shipped wrong there. Start the rest with countries whose sources skew to geo-blocking hosts (Russian trade press: Kazakhstan, Russia, Central Asia). Found by a subagent that distrusted a green verdict and reported the tool rather than the ref | `notes/escalation-2026-08-12-url-verifier-false-positive-on-block-pages.md`; `scripts/url_verifier.py` |
 | **LNG carrier quarterly reconciliation** | "designed and partially executed" vs SFOC data; referenced `instructions.md` methodology is **not in this repo** — orphaned | `docs/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
 
 ## 3. Staged, awaiting Baird's manual application (research complete)
@@ -270,9 +286,72 @@ per cell rather than trusting either signal.
 
 ## 4. Decisions needed from Baird
 
-- **Route three-way sync drift — 26 rows, none of them ours (2026-07-31).** The new
-  standing audit `scripts/audit_route_sync.py` found `RouteType`/`RouteAccuracy`/routes-repo
-  disagreements outside our batches. Two are urgent: **P7274 Longhorn Oil (US)** claims
+- **Repair the `independent` flag in 11 other countries' staged dirs — 1,337 units, and
+  their workbooks need rebuilding with them (2026-08-27).** `independent` means the rubric's
+  ">=2 independent agreeing sources", but no merger ever tested the claim against the refs
+  the record carried, so it survived even after merge-time QC stripped those refs — **306
+  units claim independent corroboration while carrying ZERO refs**. Cause fixed
+  (`merge_qc.independence_qc`, applied at all five sites in `merge_deepsweep_shards` plus
+  `merge_ref_shards` / `merge_discovery_shards`), and **Egypt repaired** (113 flags, 39 tiers,
+  now 0 residual). The rest is one command —
+  `python scripts/repair_independence.py --all --apply` — but it is a deterministic metadata
+  repair of **pending review surfaces whose delivered workbooks were built from those dirs**,
+  so applying it without rebuilding leaves the two inconsistent, and rebuilding a
+  researcher's current deliverable mid-review is Baird's call. Largest: `india-gas` 252/102,
+  `saudi-arabia-gas` 210/40, `pakistan-gas` 181/102, `china-guangxi-gas` 167/45. No value,
+  `class_out`, ref or verification is touched; the tier demotions (`high` -> `medium`, 420 of
+  them) are the half that changes what a reader sees. Full ledger + per-scope table:
+  `notes/escalation-2026-08-27-independent-flag-outlived-its-refs.md`.
+
+- **A `ProjectID` cell has been overwritten with a URL — GGIT gas SheetRow 3114 (2026-08-27).**
+  The row (`Anhui Gas Pipeline Network` / `Bengbu Branch (Liuxiangzi-High-Tech Industrial
+  Development Zone)`, China) carries
+  `ProjectID = https://archive.org/details/p-5596-bengbu-branch` — the same value as its own
+  `Route [ref]`, which is correctly placed. Four independent signals all give **P5596**: the
+  neighbours run P5594, P5595, ⟨this row⟩, P5597, P5598; the archive slug itself reads
+  `p-5596-bengbu-branch`; `P5596` appears **nowhere else** in either tracker, so there is no
+  duplicate-ID risk; and the routes repo already holds `P5596.geojson`. It is the **only**
+  malformed ProjectID across all 4,342 gas + 2,096 oil rows. This also explains two entries in
+  the sync audit below: the row reads `Mapped` + `high` and `audit_route_sync.py` reports "no
+  live geometry" purely because it resolves geometry **by the ProjectID cell**, which is now a
+  URL — the geometry is fine, the row's *identity* is broken, which silently breaks every join
+  and route lookup keyed on ProjectID. One cell, mechanical and pre-verified; needs
+  authorization. Found incidentally during the Egypt 2026-08-27 pass; out of that scope.
+- **Egypt gas: are P8055 and P8009 the same physical pipeline? (2026-08-27).** Both are
+  routeless North Sinai rows, and the case that they are one line entered twice is
+  circumstantial but consistent on five axes: "Trans-Sinai" and "Abr Sinai" are two English
+  renderings of the same Arabic phrase عبر سيناء, and GASCO's own English materials use both
+  (the EIB's 2007 EIA is titled *GASCO Abr Sinai Onshore Gas Pipeline* while the GASCO PDF calls
+  the equivalent project *Trans-Sinai*); the lengths match at 28 km against P8009's Dec-2024
+  reading; both sources describe their subject as a **duplication** (ازدواج) of the pre-existing
+  line — i.e. of GEM's own already-mapped P8044 — not as a new corridor; the construction
+  timelines overlap across the Dec 2024, Nov 2025 and Apr 2026 sources; and both rows were
+  entered by the same researcher from two different documents. P8008 does **not** match on
+  length (15.5 km) and is likely distinct. Not merged — flagged for adjudication; the two rows
+  are staged as corridor-only `ROUTE_PARTIAL`s in
+  `batches/egypt-gas/staging/route-creation-20260827/`.
+- **Egypt gas: P8055's entire citation base is a dead URL (2026-08-27).** All seven of its
+  filled `[ref]` cells — Status, Fuel, PipelineType, Length, Diameter, Location and
+  ProjectLevelCost — cite one GASCO PDF,
+  `gasco.com.eg/wp-content/uploads/2024/12/National-Natural-Gas-Grid-Expansion-Projects.pdf`,
+  which is a **confirmed HTTP 404** — re-verified directly through `url_verifier.py`, so this is
+  a genuine deletion and not a block. A Wayback fallback was reported absent by the research
+  pass, but that could **not** be re-confirmed from this session: IA's CDX API answered `429`
+  and then timed out repeatedly, which is a network condition and **not** evidence about the
+  source. So treat "no capture exists" as unverified and re-run the CDX check before acting.
+  This is one of the rare cases the standing rule allows a ref to actually drop, but the values
+  it supported — Length, Diameter, Cost — need re-sourcing first, so it routes to Update rather
+  than to a deletion.
+- **Route three-way sync drift — 39 rows, all but two of them not ours (2026-07-31;
+  re-measured 2026-08-27).** The standing audit `scripts/audit_route_sync.py` found
+  `RouteType`/`RouteAccuracy`/routes-repo disagreements outside our batches. Current count
+  is gas A17/B4/C5/D3 + oil A5/B0/C3/D2 = **39** (the 2026-07-31 reading was 26; the tracker
+  has grown, and the count is a live measurement, not a fixed list).
+  **Two ARE ours and are pre-verified to the exact cell, awaiting authorization to write:**
+  **P7338** — Oil/NGL cell **CV1210**, `Unavailable (cannot find route)` →
+  `Mapped route (at any accuracy)` (a real 3-point LineString exists at
+  `liquid-pipelines/P7338.geojson`; `RouteAccuracy` is already `low`), and **P5596** — Gas
+  cell **F3114**, `https://archive.org/details/p-5596-bengbu-branch` → `P5596`. Two are urgent: **P7274 Longhorn Oil (US)** claims
   `Mapped` + `high` over an *empty* repo placeholder, and **P5970 BC Gas (Canada)** carries
   geometry **39.8×** its sheet length (near-certainly another pipeline's trace). ~12 more are
   mechanical `RouteType` flips; the rest split into route-correctness conflicts (incl. the

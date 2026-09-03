@@ -1,0 +1,191 @@
+{
+  "project_id": "P0250",
+  "pipeline_name": "Sabine Natural Gas Pipeline System",
+  "sheet_row": 103,
+  "wiki": "https://www.gem.wiki/Sabine_Natural_Gas_Pipeline_System",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action needed on existence/classification/duplicate/attribution/route; see separate spec concern on Capacity.",
+      "researcher_notes": "EXISTENCE: strongly confirmed, independent of GEM/wiki. A PHMSA (federal pipeline safety regulator) enforcement closure letter dated 2024-03-22 (CPF 4-2022-036-NOPV) states PHMSA inspected 'EnLink Processing Services, LLC's (EnLink) Sabine natural gas pipeline system in Louisiana and Texas' from 2021-08-09 through 2022-01-17, issued a Final Order with a $57,000 civil penalty on 2023-09-12, and closed the case in 2024 after EnLink complied -- i.e. a federal regulator physically inspected this exact pipeline as recently as 2021-2022 and it remained an active enforcement subject through March 2024. Separately, Sabine Pipe Line Company's FERC Gas Tariff (Second Revised Volume No. 1, filed with FERC, effective 1993, Docket RS92-78-003) states in its Preliminary Statement: 'Sabine Pipe Line Company (Sabine) is a corporation, organized under the laws of the State of Delaware, engaged in the business of transporting natural gas in interstate commerce under authorization granted by and subject to the jurisdiction of the Federal Energy Regulatory Commission. Sabine owns and operates a natural gas transmission pipeline extending from its eastern terminus at the Henry Hub, Vermilion Parish, Louisiana, to its western terminus in Jefferson County, Texas.' (Erath is the town in Vermilion Parish where Henry Hub sits; Port Arthur is the largest city in Jefferson County, TX -- both match GEM's StartLocation/EndLocation exactly.) CLASSIFICATION: correct -- an interstate FERC-jurisdictional natural gas transmission pipeline (Fuel=Gas), not a gathering/processing line. Confirmed by both the FERC tariff's own language and the PHMSA letter's description. Note: a same-named but wholly separate 'Sabine Pass' cluster of pipelines/compression projects (Kinder Morgan Louisiana Pipeline, NGPL's Sabine Pass Compression Project) serves Sabine Pass LNG near Cameron Parish/Sabine Pass, LA -- these are DIFFERENT assets from EnLink's Erath-to-Port Arthur 'Sabine Pipe Line'; ruled out confusion by endpoints and ownership. DUPLICATE: checked against the full 45-row Texas-operating-gas roster -- no other row shares Sabine's endpoints (Erath/Vermilion Parish, LA <-> Port Arthur/Jefferson County, TX), name, or ownership. Not a relabel or segment double-count of any roster entry. ATTRIBUTION (Owner): EnLink Midstream 100% is corroborated by two independent sources -- the PHMSA closure letter (addressed to 'EnLink Processing Services, LLC' as the entity operating the Sabine system, cc'ing EnLink Midstream senior staff) and Rextag Corporation's commercial pipeline database ('EnLink Midstream Partners, LP ... owns the pipeline, while Sabine Pipe Line Company, LLC operates it'). Minor entity-family nuance noted (EnLink Processing Services LLC vs Sabine Pipe Line Company LLC vs EnLink Midstream parent) but all are EnLink Midstream subsidiaries -- consistent with GEM's Owner1='EnLink Midstream'. ROUTE/Location: Erath, LA -> Port Arthur, TX corroborated by the FERC tariff (Henry Hub/Vermilion Parish -> Jefferson County) and Rextag ('131-mile pipeline located between Erath, Louisiana, and Port Arthur, Texas... extends from Vermilion Parish, Louisiana to Jefferson County, Texas'). Harvested wiki citation pool for this row is small (2 citations) -- both opened: (1) a bit.ly-shortened link to an old 'Sabine Natural Gas Pipeline System' page on Sabine Pipeline's own site (a shortener, not independently re-resolved/re-verified as still live -- not cited here per the standing rule against citing shorteners without resolving them), and (2) sabinepipeline.enlink.com/about-sabine-pipe-line-llc/, which IS live (200) but is a legacy frameset shell (title 'Sabine Pipe Line, LLC - Informational Postings') whose actual content loads via header.cfm/frameindex.cfm/body.cfm subframes that return the same empty frameset when fetched directly (likely bot-gated by an Incapsula WAF) -- so it confirms the company's FERC-mandated Informational Postings site is live and current, but supplies no extractable facts; not relied on for any value here beyond confirming liveness.",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf",
+        "https://www.ferc.gov/sites/default/files/2020-05/016522_000110__contents.pdf",
+        "https://rextag.com/pages/sabine-pipe-line"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Verify Capacity: two independent sources put Sabine's system capacity at ~300-330 MMcf/d, materially above the sheet's 235.00 MMcf/d. Route to Update leg to reconcile (possible unit/measurement-basis difference, e.g. firm/design vs a de-rated or contracted figure, or the sheet value is simply stale).",
+      "researcher_notes": "GEM's Capacity=235.00 MMcf/d could NOT be independently corroborated, and two independent sources disagree with it in the same direction: (1) EnLink Midstream Partners, LP's FY2014 Form 10-K (SEC EDGAR, filed 2015-02-20 -- the year EnLink acquired Sabine from Chevron affiliates for $234.0 million effective 2014-11-01) states verbatim: 'Sabine Pipeline: approximately 130 miles of natural gas pipelines in Texas and southern Louisiana with a total capacity of approximately 300 MMcf/d.' (the live SEC URL 403s the verifier's UA -- a SEC fair-access bot-wall, confirmed live via curl with a declared UA returning the exact quote -- so cited via its Wayback Machine snapshot, which passes url_verifier). (2) Rextag Corporation's independent commercial pipeline database states the system 'operates at 0.33 Bcf/d' (=330 MMcf/d) and 'functions at full capacity.' Both are meaningfully higher than the sheet's 235 MMcf/d (28-40% higher) and are independent of each other (an SEC filing by the then-new owner vs. a third-party commercial GIS/pipeline-data vendor) and of GEM (every web search result quoting '235 MMcf/d' traces back to GEM's own gem.wiki page, i.e. it is NOT independently attested anywhere I could find -- a red flag per rule 1, since a value that only echoes back to our own wiki is not corroboration). I could not find a later, more specific EnLink disclosure that would explain a capacity reduction from ~300-330 down to 235 (EnLink's 10-Ks after FY2014 stop itemizing 'Sabine Pipeline' by name in the properties table, folding it into broader segment language), so I cannot rule out that 235 reflects a genuine later de-rating/contraction -- but as it stands the sheet's number is NOT the one two independent sources report. Not staged as a fill (did not add 235 as REFS_ADDED) because I cannot confirm it; not overwritten either per the no-auto-apply rule -- flagging for Update.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20160103053401/http://www.sec.gov:80/Archives/edgar/data/1179060/000117906015000007/enlk201410-k.htm",
+        "https://rextag.com/pages/sabine-pipe-line"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf",
+        "https://rextag.com/pages/sabine-pipe-line"
+      ],
+      "verifications": [
+        {"url": "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf", "ok": true, "contains_value": true},
+        {"url": "https://rextag.com/pages/sabine-pipe-line", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status inferred by context, not a literal word match: PHMSA physically inspected this operator's Sabine gas pipeline system in 2021-2022 and pursued/closed an enforcement action against it through March 2024 -- a retired/idle pipeline would not be the subject of an active PHMSA compliance case in that window. Rextag's current commercial dataset separately describes it as functioning 'at full capacity.' url_verifier's automated substring check on the PHMSA PDF misses the word 'Sabine' (large/complex PDF text-extraction limitation, documented in url_verifier.py's own docstring) -- confirmed manually via pdftotext -layout, which shows the exact sentence quoted in researcher_notes above; the PDF verifies OK on plain liveness (200)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf",
+        "https://www.ferc.gov/sites/default/files/2020-05/016522_000110__contents.pdf"
+      ],
+      "verifications": [
+        {"url": "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.ferc.gov/sites/default/files/2020-05/016522_000110__contents.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PHMSA's own closure letter names it 'EnLink's ... Sabine natural gas pipeline system'; Sabine's FERC Gas Tariff Preliminary Statement (Original Sheet No. 10) describes it as 'a natural gas transmission pipeline.' Both PDFs verify OK for plain liveness (200); the exact-substring check misses the text due to PDF-extraction limits on these documents (confirmed manually via pdftotext -layout, per url_verifier.py's own documented caveat)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1987"},
+      "primary_value": "1987",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not independently confirm or refute StartYear1=1987. Wikipedia's Henry Hub article (citable per current policy) says the Henry Hub FACILITY itself began operating in the early 1950s (built by Stone & Webster for The Texas Company/Texaco) -- but that describes the hub/compressor-station facility, not necessarily the current ~130-mile Sabine transmission line's in-service date, so it neither confirms nor contradicts 1987. A web search surfaced a claim that Sabine Pipe Line Company's FERC blanket certificate was issued 1983-03-31 (Docket CP83-199-000), but I was not able to independently pull and read the underlying Federal Register/FERC document myself to confirm that fact firsthand (only saw it in a search-engine synthesis), so I am NOT citing or relying on it -- flagging as an unverified lead rather than a finding. Recommend a follow-up pass search FERC eLibrary directly for the original CP-docket certificate/order that placed the current line in service.",
+      "verdict_note": "not a fabricated ref; left UNRESOLVED per standing rule against inventing URLs"
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "235.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "235.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "NOT staged as a fill for 235.00 -- see the paired validity 'concern' (concern_type=spec) above. Every independently-verifiable source I found (EnLink's own FY2014 10-K, Rextag's commercial database) puts capacity materially higher (~300-330 MMcf/d); no independent source corroborates 235 specifically (it appears to trace back to GEM's own wiki page wherever it shows up in search). Left UNRESOLVED rather than fabricating support for the current value or silently overwriting it."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "211.00", "LengthKnownUnits": "km"},
+      "primary_value": "211.00",
+      "proposed_refs": [
+        "http://web.archive.org/web/20160103053401/http://www.sec.gov:80/Archives/edgar/data/1179060/000117906015000007/enlk201410-k.htm",
+        "https://rextag.com/pages/sabine-pipe-line"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20160103053401/http://www.sec.gov:80/Archives/edgar/data/1179060/000117906015000007/enlk201410-k.htm", "ok": true, "contains_value": true},
+        {"url": "https://rextag.com/pages/sabine-pipe-line", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "211.00 km = 131.1 miles. EnLink's FY2014 10-K: 'approximately 130 miles.' Rextag: '131-mile pipeline located between Erath, Louisiana, and Port Arthur, Texas.' Both independently agree with the sheet's length to within rounding. Two independent origins (SEC filing by the owner; third-party commercial GIS/pipeline database) -> high tier."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Erath",
+        "StartState/Province": "Louisiana",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Port Arthur",
+        "EndState/Province": "Texas",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Erath",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-05/016522_000110__contents.pdf",
+        "https://rextag.com/pages/sabine-pipe-line"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-05/016522_000110__contents.pdf", "ok": true, "contains_value": true},
+        {"url": "https://rextag.com/pages/sabine-pipe-line", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sabine's own FERC Gas Tariff Preliminary Statement: pipeline 'extending from its eastern terminus at the Henry Hub, Vermilion Parish, Louisiana, to its western terminus in Jefferson County, Texas' (Erath sits in Vermilion Parish; Port Arthur is Jefferson County's largest city). Rextag independently: 'located between Erath, Louisiana, and Port Arthur, Texas... extends from Vermilion Parish, Louisiana to Jefferson County, Texas.' Two independent origins agree exactly. FERC PDF verifies OK on plain liveness; the exact-phrase substring check misses it due to a PDF-extraction limit, confirmed manually via pdftotext -layout (Original Sheet No. 10, Preliminary Statement)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 103,
+      "oo_sheet_row": 232,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "EnLink Midstream", "Owner1%": "100.00%"},
+      "primary_value": "EnLink Midstream",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf",
+        "https://rextag.com/pages/sabine-pipe-line"
+      ],
+      "verifications": [
+        {"url": "https://primis.phmsa.dot.gov/enforcement-documents/42022036NOPV/42022036NOPV_Closure%20Letter_03222024_(21-219815).pdf", "ok": true, "contains_value": true},
+        {"url": "https://rextag.com/pages/sabine-pipe-line", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PHMSA's 2024 closure letter addresses 'EnLink Processing Services, LLC's (EnLink) Sabine natural gas pipeline system' and cc's EnLink Midstream operations staff. Rextag independently: 'EnLink Midstream Partners, LP (Global Infrastructure) owns the pipeline, while Sabine Pipe Line Company, LLC operates it.' Both agree the asset sits within the EnLink Midstream corporate family at 100%; entity-name variation across sources (EnLink Processing Services LLC / EnLink Midstream Partners LP / Sabine Pipe Line Company LLC) reflects normal parent/subsidiary/operating-entity layering, not a conflict. tier=high on two independent origins (federal regulator + third-party commercial database)."
+    }
+  ],
+  "summary": "P0250 (Sabine Natural Gas Pipeline System, Erath LA -> Port Arthur TX): existence, classification, route, and 100% EnLink Midstream ownership all independently confirmed (PHMSA 2024 enforcement closure letter + Sabine's own FERC tariff + Rextag) -- no duplicate/misclassification found against the 45-row roster. Length (211 km/131 mi) corroborated by EnLink's FY2014 10-K + Rextag. Capacity is a genuine spec concern: the sheet's 235 MMcf/d is uncorroborated everywhere except GEM's own wiki, while EnLink's FY2014 10-K and Rextag both independently report ~300-330 MMcf/d -- routed to Update. StartYear1=1987 is UNRESOLVED (no independent confirmation found)."
+}

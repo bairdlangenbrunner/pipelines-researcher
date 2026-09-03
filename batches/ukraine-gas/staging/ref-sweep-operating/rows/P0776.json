@@ -1,0 +1,167 @@
+{
+  "project_id": "P0776",
+  "pipeline_name": "Yelets-Kursk-Kyiv Gas Pipeline",
+  "sheet_row": 391,
+  "wiki": "https://www.gem.wiki/Yelets-Kursk-Kyiv_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to existence/classification/duplicate status; keep as operating gas transmission trunk line, but see the separate spec and attribution concerns below.",
+      "researcher_notes": "EXISTENCE + DUPLICATE CHECK: the gem.wiki page's own top citation (energybase.ru, 8 backlinks) is completely inaccessible — the whole site returns a 200-status 'access restricted / IP blocked' page to every fetch attempt (WebFetch, curl with browser UA, from this environment), and it has no Wayback snapshot at all (empty CDX result), so it could not be used to verify anything on this row. Falling back to two OTHER sources already cited on the wiki page and independently verified live: (1) the Kursk Oblast regional administration's own emergency-planning page (kursk.ru, archived, cite_note-:6-10 on the wiki) states verbatim: 'По территории области проходят 2 магистральных газопровода' (2 trunk gas pipelines cross the oblast), and under the first corridor (in service since 1981, 246 km within Kursk Oblast, 5-thread construction) lists FIVE separately named lines sharing that corridor, including both '«Елец-Курск-Диканька» диаметр трубы 1220 мм ... производительность 65 млн. м3/сут' and, as a DISTINCT line, '«Елец-Курск-Киев» диаметр трубы 1220 мм, рабочее давление 55 кг/кв.см, производительность 45 млн. м3/сут' — an EXACT match to this row's Diameter (1220mm) and Capacity (45.00 mill.Sm3/day). (2) Gazprom Transgaz Moscow's own Yelets LPUMG page (moskva-tr.gazprom.ru, cite_note-:3-2 on the wiki; live site unreachable from here, verified via a 2017 Wayback capture) independently states: 'Через КС Елец проходят два газопровода «Петровск-Елец», далее «Елец-Курск-Киев» и «Петровск-Елец» (расширение) далее «Елец-Курск-Диканька», обеспечивающие природным газом Украину' — i.e. the OPERATOR itself describes 'Yelets-Kursk-Kyiv' and 'Yelets-Kursk-Dykanka' as fed by two DIFFERENT physical intake lines ('Petrovsk-Yelets' vs 'Petrovsk-Yelets expansion'), not one line under two names. That refutes a duplicate/merge with P0775 (Yelets-Kursk-Dykanka) at the operator level, independent of GEM. Two independent, non-GEM, non-wiki, government/operator sources agreeing the pipeline is real and is a distinct named asset = tier high for existence and non-duplicate status. Note: one CITED source (eegas.com, cite_note-9) is a false lead for this specific row — it documents the 'Yelets-Kremenchug-Krivoi Rog' (YKKR) pipeline (=P0783), NOT Yelets-Kursk-Kyiv, despite backlinking from this wiki page; do not treat it as support for P0776. CLASSIFICATION: kursk.ru's own language ('магистральный газопровод' = trunk/main gas pipeline) supports PipelineType=transmission (not gathering/feeder), consistent with GEM.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/",
+        "https://web.archive.org/web/20170412025448/http://moskva-tr.gazprom.ru/eletskoe-lpumg/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Route to Update: verify whether LengthKnown=297km and EndLocation=Kyiv are internally consistent. 297 km is geographically implausible for a Yelets(Lipetsk Oblast, Russia)-to-Kyiv route (~650 km straight-line, more by pipe); it lines up far better with just the Russian-territory portion of the route. Research the true full length to Kyiv, or reframe EndLocation as the RU/UA border crossing point if that is what 'Kyiv' actually denotes in the source data (a common/commercial destination rather than the physical terminus). Cross-check P0775 (298km, same corridor, same implausibility) for the same defect.",
+      "researcher_notes": "Sheet: LengthKnown=297.00 km, StartLocation=Yelets/Lipetsk Oblast/Russia, EndLocation=Kyiv/Ukraine. Straight-line distance from Yelets to Kyiv is roughly 650 km, so a real pipe route would be at least that long, almost certainly more. 297 km is under half that. Independent evidence points to 297km being, at most, the length of ONLY the Russian-territory portion: kursk.ru states the shared 5-thread corridor (which carries this named line) runs 246 km WITHIN Kursk Oblast alone, before even reaching Ukraine — add the additional distance from Yelets (Lipetsk Oblast) to the Kursk Oblast boundary and the total in-Russia mileage lands very close to 297 km, i.e. right around the Russia/Ukraine border near Sudzha (kursk.ru also lists Suzhansky/Sudzha district as one of the six districts this corridor crosses, with a branch feeding a GRS at Sudzha itself). If that reading is right, 'LengthKnown=297' captures only the mapped/known Russian segment to the border, and 'Kyiv' in EndLocation is the ultimate market/political destination rather than the literal pipe terminus this length measures — a plausible, but unconfirmed, explanation that should be verified rather than assumed. As a sanity check on the roster, P0783 (Yelets-Kremenchuk-Kryvyi Rih, ~750-800 km destination distance) is recorded at 771 km — proportionate to its endpoints — which makes P0776's disproportion stand out further. I could not find any source (independent or otherwise) stating a full point-to-point length for 'Yelets-Kursk-Kyiv,' so I am not proposing a replacement number — flagging the implausibility for Update rather than leaving it silently unresolved. Minor secondary note: eegas.com's 2009 dispute-era table lists a separate line item 'Kursk-Kiev' at 14 bcm/yr (~38 mcm/day) alongside 'Yelets-Kursk-Dikan'ka' at 15 bcm/yr — both somewhat lower than kursk.ru's nameplate 45/65 mcm/day for the equivalent lines, consistent with 'contracted import flow during a supply dispute' rather than rated technical capacity; not treated as a capacity contradiction, just noted since it independently corroborates a 'Kursk-to-Kyiv' leg existing as its own named entity.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ru"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Route to Update: Owner1 (Gazprom PJSC) is recorded at 100% while a second owner (Gas Transmission System Operator of Ukraine) is also listed with no percentage at all — internally inconsistent for a two-owner record, and it overstates Gazprom's stake on a pipeline whose Ukrainian section (if it truly reaches Kyiv) is state-owned, not Gazprom's. Split the ownership by section (Gazprom/Gazprom Transgaz Moscow for the Russian portion, Gas TSO of Ukraine for the Ukrainian portion) with real percentages, per the country-wide rule that Gazprom does not own any Ukrainian GTS asset. If the length finding above resolves to 'this row is 100% within Russia,' the second owner's presence would itself need re-examining.",
+      "researcher_notes": "Current values: Owner1 = 'Gazprom PJSC' at 100.00%, Owner2 = 'Gas Transmission System Operator of Ukraine' with NO percentage populated. Two owners listed but the percentages sum to (at minimum) 100% via Owner1 alone, i.e. Owner2's stake is undefined/zero by omission — that is either a data-entry gap or a signal the row hasn't actually been reconciled with the country-wide Gazprom/TSOU split described in the sweep's own standing guidance (post-2020 the Ukrainian GTS is operated by the unbundled Gas TSO of Ukraine, not Gazprom, and Gazprom does not own Ukrainian-territory pipe). Gazprom Transgaz Moscow's own Yelets LPUMG page (independently verified above) does confirm Gazprom's subsidiary operates the Russian-side compressor station feeding this line, so a Gazprom stake in the Russian portion is not itself wrong — the defect is the 100% figure combined with an unweighted second owner on what the sheet itself treats as a two-country asset. Did not stage a fill for this cell: proposing a ref for the existing (internally inconsistent) values would endorse a number I don't believe is right, and I don't have a verified source for the correct split percentages.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 391,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "1220", "DiameterUnits": "mm"},
+      "primary_value": "1220",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Kursk Oblast administration's official emergency-planning page names 'Елец-Курск-Киев' explicitly and states 'диаметр трубы 1220 мм' — an exact, direct match. Single accessible source (energybase.ru, the wiki's other cited source for this fact, is IP-blocked with no Wayback copy), so tier=medium not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 391,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "45.00", "CapacityUnits": "mill.Sm3/day"},
+      "primary_value": "45.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Same kursk.ru page states 'производительность 45 млн. м3/сут' (capacity 45 million m3/day) for 'Елец-Курск-Киев' specifically — exact match to the sheet's 45.00 mill.Sm3/day. Single accessible source, tier=medium. eegas.com's 2009 dispute-era table gives a lower 14 bcm/yr (~38 mcm/day) for a 'Kursk-Kiev' line item, plausibly a contracted-flow figure rather than rated capacity (see validity notes) — not used as a fill source since it's a different measurement basis and only loosely consistent."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 391,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1981"},
+      "primary_value": "1981",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "kursk.ru states the shared corridor carrying 'Елец-Курск-Киев' (among 4 other named lines in the same 5-thread bundle) has been 'в эксплуатации с 1981 года' (in service since 1981) — matches StartYear1=1981 exactly. This is a corridor-level date (applies to the whole bundle, not found stated separately for this line alone), and it's the only source I could verify for the date, so tier=medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 391,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "kursk.ru describes the line as one of the region's 'магистральных газопроводов' (trunk/main gas pipelines) — consistent with transmission, not a gathering or process line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 391,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "Named and described throughout as a 'газопровод' (gas pipeline) carrying м3/сут gas volumes; no ambiguity about commodity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 391,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20221201201006/https://kursk.ru/residents/page-117879/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ru",
+      "researcher_notes": "kursk.ru (archived 2022-12-01, i.e. after the Feb-2022 invasion but well before the Aug-2024 Sudzha incursion and the Jan-2025 transit halt) still lists this line in the active-corridor emergency-planning section, evidence it was in service at that point. I did NOT find any 2025/2026-dated source confirming current operation, and this specific corridor's route crosses the Sudzhansky district (Sudzha was the last remaining transit entry point, captured by Ukrainian forces Aug 2024, transit itself ceased Jan 1 2025) — per standing country guidance I am not proposing to change Status off the transit halt alone (the GTS keeps operating domestically/in reverse-flow regardless of transit), but flagging that this line's specific current state around the Sudzha border area is genuinely unclear post-2024 and would benefit from a dated 2025/2026 check, which I could not source."
+    }
+  ],
+  "summary": "P0776 (Yelets-Kursk-Kyiv) is real and distinct from P0775 (Yelets-Kursk-Dykanka) — confirmed via kursk.ru + Gazprom Transgaz Moscow's own Yelets LPUMG page, both independently naming it as a separate line fed by a separate intake ('Petrovsk-Yelets' vs 'Petrovsk-Yelets expansion'); Diameter/Capacity/Start/PipelineType/Fuel/Status refs filled at medium tier off kursk.ru (the wiki's primary cited source, energybase.ru, is fully IP-blocked with no Wayback copy). TWO concerns staged, nothing UNRESOLVED left blank without explanation: (1) SPEC — LengthKnown=297km is geographically implausible for a Yelets-to-Kyiv route (~650km straight-line); independent evidence suggests 297km may capture only the Russian-territory segment to the border, with 'Kyiv' as a market destination rather than literal terminus — flagged for Update, no replacement number fabricated; P0775 likely shares the same defect. (2) ATTRIBUTION — Owner1 Gazprom PJSC at 100% alongside an unweighted Owner2 (Gas TSO of Ukraine) is internally inconsistent and overstates Gazprom's stake; flagged for Update, no owner fill staged."
+}

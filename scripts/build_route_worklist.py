@@ -118,8 +118,12 @@ def main() -> None:
     args = ap.parse_args()
 
     import pandas as pd
-    df = pd.read_csv(args.csv, header=2, low_memory=False)
-    df = df[df["PipelineName"].notna()].copy()
+    # keep_default_na=False: researcher initials "NA" (Nagwa) are in pandas' default
+    # na_values, so the default read silently blanks RouteCreator/Researcher — and
+    # RouteCreator is exactly the attribution an §8 apply must not overwrite.
+    df = pd.read_csv(args.csv, header=2, low_memory=False,
+                     keep_default_na=False, na_values=[])
+    df = df[df["PipelineName"].astype(str).str.strip() != ""].copy()
     df["SheetRow"] = df.index + 4
     scope = df[df["CountriesOrAreas"].fillna("").str.contains(args.country, case=False)]
 
@@ -129,6 +133,33 @@ def main() -> None:
         scope = scope[scope["ProjectID"].isin(keep)]
     else:
         scope = scope[scope["RouteAccuracy"].fillna("").str.strip().str.lower().isin(eligible)]
+
+    # RouteType can declare that a row HAS no geometry of its own. "Included in other
+    # ProjectID" is not a gap to fill: the pipe is drawn on another row, so routing this
+    # one double-counts the same steel and breaks the convention its own RouteNotes
+    # states. RouteAccuracy 'no route' is the CORRECT value there, which is why the
+    # accuracy filter alone cannot see it. (9 gas rows tracker-wide as of 2026-08-27,
+    # all 9 accuracy-eligible; Egypt's P0477 South Valley is one.)
+    _rt = scope["RouteType"].fillna("").str.strip()
+    _incl = _rt == "Included in other ProjectID"
+    if _incl.any():
+        print(f"  excluded {int(_incl.sum())} row(s) with RouteType 'Included in other "
+              f"ProjectID' (geometry belongs to another row): "
+              f"{', '.join(sorted(scope[_incl]['ProjectID'].astype(str)))}")
+        scope = scope[~_incl]
+
+    # These two declare a row with NO NEW PHYSICAL PIPE (see CLAUDE.md: expansion with no
+    # new pipe -> LengthKnown 0, Diameter blank). They are NOT auto-excluded, because a
+    # loop/expansion row does sometimes legitimately carry its parent's corridor and the
+    # convention is not uniform tracker-wide. Surfaced instead of decided: QC detects,
+    # Update fixes.
+    _noPipe = _rt.isin(["Capacity expansion only", "Bidirectionality upgrade only"])
+    _noPipe = _noPipe.reindex(scope.index, fill_value=False)
+    if _noPipe.any():
+        print(f"  !! {int(_noPipe.sum())} row(s) in scope are RouteType 'Capacity expansion "
+              f"only'/'Bidirectionality upgrade only' — no new physical pipe. Confirm each "
+              f"warrants geometry of its own before drawing: "
+              f"{', '.join(sorted(scope[_noPipe]['ProjectID'].astype(str)))}")
 
     # facility gazetteer (optional / graceful-absent)
     gz = None

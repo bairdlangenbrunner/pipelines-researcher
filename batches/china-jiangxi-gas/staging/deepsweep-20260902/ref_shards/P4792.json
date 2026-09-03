@@ -1,0 +1,122 @@
+{
+ "project_id": "P4792",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "segment_name": "Yifeng-Tonggu Branch",
+ "sheet_row": 2681,
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "resolutions": [
+  {
+   "project_id": "P4792",
+   "sheet_row": 2681,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier FAILs on '天然气' on this large (8MB) PDF (extraction miss); hand-confirmed via pdftotext -layout — the document's own title is '江西省发展改革委关于印发江西省天然气利用规划(2013-2020年)的通知' (赣发改规划(2014)325号), a Jiangxi DRC natural-gas utilization plan whose Table 5 (省级天然气管道规划建设项目) lists provincial branch pipeline construction projects including a Yifeng-area/Tonggu-area entry"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Single authoritative document (Jiangxi DRC 2014 gas utilization plan) but its segment table is OCR-corrupted in places (nonsensical place-name fragments appear elsewhere in the same table), so this is used only for the general provincial-network classification (any pipeline in this plan is by definition part of the gas transmission network), not for a precise segment-level number. Tier kept low deliberately."
+  },
+  {
+   "project_id": "P4792",
+   "sheet_row": 2681,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "same 2014 provincial plan; Table 5 lists this class of project as 长输管道 (long-distance transmission pipeline) branch construction"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Same source and same caveat as Fuel above."
+  },
+  {
+   "project_id": "P4792",
+   "sheet_row": 2681,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Yifeng",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Tonggu",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "inferred",
+   "independent": false,
+   "researcher_notes": "The 2014 provincial plan's Table 5 has a row that OCRs as '宣丰一铜鼓→彦水 110' — '宣丰' is plausibly an OCR misread of '宜丰' (Yifeng) given the visual similarity of 宣/宜, which would make this 'Yifeng-Tonggu, 110km', matching P4792's endpoints exactly. But the same table row carries an unexplained '→彦水' fragment and other rows in this table contain outright nonsensical place names (confirmed OCR corruption elsewhere in the document), so I am not confident enough in this single ambiguous digit/character read to stage it as a confirming ref. Declined rather than staged on shaky OCR — left UNRESOLVED. A cleaner re-extraction of this specific PDF (or a non-OCR source for this branch) would very likely close this unit; worth a follow-up pass."
+  },
+  {
+   "project_id": "P4792",
+   "sheet_row": 2681,
+   "ref_col": "Operator [ref]",
+   "tab": "operators_owners",
+   "value_cols": [
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家石油天然气管网集团有限公司 [46%]"
+   },
+   "proposed_refs": [
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/267eb2e9bb8d0f73972210e2a2241bbb.pdf",
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/267eb2e9bb8d0f73972210e2a2241bbb.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "see P4790 Operator record for full quote"
+    },
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "see P4790 Operator record for full quote (hand-confirmed false negative on '46%')"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Same two sources and same 54%/46% split as P4790 — one operating entity (江西省天然气管道有限公司) covers the whole province network."
+  }
+ ]
+}

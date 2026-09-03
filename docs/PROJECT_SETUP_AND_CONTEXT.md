@@ -36,12 +36,16 @@ sources exist.
 
 ## 3. Live data access
 
-The live backend Google Sheet is set to "Anyone with link can view" permanently.
+The live backend Google Sheet lives in a work shared drive and is read **authenticated
+only** — anonymous link access was withdrawn 2026-07-29 (see below).
 
 **Sheet ID:** `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
 
-Pull the tabs with `./scripts/refresh_csvs.sh`, which reads each one through an
-**authenticated** Sheets `values.get` (`gws-gem`, read-only) in `scripts/_sheets_pull.py`:
+Pull the tabs with `./scripts/refresh_csvs.sh`. Since 2026-08-11 that script is a thin
+wrapper around the shared pull engine in the sibling **`gem-db-ops`** repo — it calls
+`gem-db-ops/goit/pull.py --with-owners` and `gem-db-ops/ggit/pull.py`, which read each tab
+through an **authenticated** Sheets `values.get` (`gws-gem`, read-only) in
+`gem-db-ops/gem_sheets.py`. Set `GEM_DB_OPS_REPO` if that checkout isn't beside this repo:
 
 ```bash
 ./scripts/refresh_csvs.sh              # dated snapshots into data/

@@ -1,0 +1,101 @@
+{
+  "project_id": "P1297",
+  "pipeline_name": "Stratton Ridge Pipeline",
+  "sheet_row": 761,
+  "wiki": "https://www.gem.wiki/Stratton_Ridge_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action — existence, classification, status, fuel and in-service year all hold up; add the refs below.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION — real, well-documented FERC-jurisdictional project, correctly classified as a gas pipeline. The Federal Register (federalregister.gov, docket nos. CP17-56-000/CP17-57-000, 'Texas Eastern Transmission, L.P., Brazoria Interconnector Gas Pipeline, LLC; Notice of Schedule for Environmental Review of the Stratton Ridge Expansion Project', 2017-08-10) describes the physical project exactly: 'a new 0.5 mile, 30-inch-diameter pipeline lateral in Brazoria County, Texas to interconnect with the BIG intrastate pipeline system' plus a new Angleton Compressor Station and Clean Burn Equipment at the existing Mont Belvieu Compressor Station, designed to move 'up to 322,000 dekatherms per day of natural gas on a firm basis ... to a delivery point on the BIG Pipeline near Stratton Ridge, Texas.' That 0.5-mile lateral figure is an EXACT match to GEM's LengthKnown=0.5 mi, confirming GEM is tracking the short interconnect lateral itself (not the pre-existing 30.5-mile, 42-inch BIG Pipeline it ties into, which is NOT separately tracked in GGIT — checked, no 'Brazoria Interconnector' row exists). Corroborated independently by Pipeline & Gas Journal's 'Planned/Proposed Projects' tables (two editions, March 2018 and October 2018, both pulled and read via pdftotext since the PDFs are large enough that the verifier's substring grep misses on them — SEE NOTE in url_verifier.py about large/oddly-encoded PDFs): both list 'Operator: Texas Eastern Transmission / Project: Stratton Ridge Project / Location: Brazoria County, TX / Capacity: 322 MDth/d / Docket: CP17-57' with completion 2Q 2019, matching GEM's Status=operating (StartYear1=2019) and Fuel=Gas. STATUS: EIA's own 'Natural Gas Pipeline Projects' table (EIA-NaturalGasPipelineProjects_Jan2019.xlsx, downloaded and parsed directly with openpyxl since it's a binary file the verifier's grep can't read — confirmed live 200 and content manually verified) carries a 'Stratton Ridge Expansion' row: Operator Texas Eastern Transmission, Status Approved, Year In Service 2019 — consistent with GEM's operating/2019. No duplicate: checked the full local GGIT gas snapshot for both 'Stratton' and 'Brazoria' — P1297 is the only row for either. Opened all 7 harvested wiki citations for this row (FracTracker map — generic, does not name Stratton Ridge textually, not used; EIA data.php landing page — drilled into the actual Jan2019 pipeline-projects xlsx it links to rather than citing the landing page itself, per the no-navigation-surface rule; Federal Register; S&P Global — paywalled beyond the headline, read via its Wayback capture; two Pipeline News/PGJ PDFs; Enbridge's own 2017 project page, dead at its live URL (404, access failure not a deletion — page removed after project completion) so read via Wayback).",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2017/08/10/2017-16879/texas-eastern-transmission-lp-brazoria-interconnector-gas-pipeline-llc-notice-of-schedule-for",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/03/Proposed.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2019.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action — GEM's 322 MMcf/d is the best-supported figure; note the caveat if anyone later revisits capacity.",
+      "researcher_notes": "CAPACITY — GEM's Capacity=322.00 MMcf/d is directly and independently corroborated: the FERC Federal Register notice states the project is 'designed to provide the capacity necessary for Texas Eastern to transport up to 322,000 dekatherms per day'; the S&P Global headline (read via its Wayback capture, since the live page 403s behind a paywall) is literally 'Texas Eastern applies for 322,000-Dth/d Stratton Ridge expansion project'; and both Pipeline & Gas Journal tables list 'Capacity: 322 MDth/d' against Docket CP17-57. Three independent origins (a federal government notice, a financial-data trade publisher, and an industry trade journal) all agree to the digit, and MMcf/d and Dth/d are essentially interchangeable units for pipeline-quality natural gas — so 322 is solid. CAVEAT: two other sources describe a larger number for what appears to be a broader or earlier-stage scope of the same umbrella project — EIA's Jan2019 pipeline-projects table lists 'Additional Capacity (MMcf/d)' = 500 for its 'Stratton Ridge Expansion' row, and Enbridge's own 2017 project page (pre-FERC-approval, 'Under review' status) cites 'Peak day capacity: Up to 400,000 dekatherms per day.' Read in context, the Enbridge page is describing the wider business deal (which also included Enbridge/Spectra's acquisition of the pre-existing 42-inch BIG Pipeline from ConocoPhillips) at an earlier, unapproved stage, and EIA's 500 may likewise reflect a different accounting than the specific CP17-56/57 certificate. Not recommending a value change — the post-approval, docket-specific figure (322) is the one three sources converge on — but flagging so a reviewer isn't surprised if they hit the 500/400,000 figures elsewhere.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2017/08/10/2017-16879/texas-eastern-transmission-lp-brazoria-interconnector-gas-pipeline-llc-notice-of-schedule-for",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/03/Proposed.pdf",
+        "http://web.archive.org/web/20220103184030/https://www.spglobal.com/marketintelligence/en/news-insights/trending/LHU-rXmuQ_1a1YDzpggUVA2"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Review SegmentCost — Pipeline & Gas Journal (independent trade press) reports $94 million for this same docketed project, vs GEM's $200,000,000; don't paste either figure without checking the FERC docket estimate directly.",
+      "researcher_notes": "SEGMENTCOST — material disagreement, flagging rather than passing silently. GEM records SegmentCost=200,000,000 USD. EIA's Jan2019 pipeline-projects table lists 'Cost (millions)' = 200 for its 'Stratton Ridge Expansion' row — an exact match to GEM's number, which is itself a reason for caution rather than confidence: an exact two/three-significant-figure match this clean is at least as consistent with EIA (or a shared upstream source) being the ORIGIN of GEM's number as with independent agreement. Pipeline & Gas Journal's March 2018 'Proposed Projects' table, by contrast, lists 'Cost: $94 million' for the identical project (same operator, same Brazoria County location, same Docket CP17-57, same 2Q2019 completion) — less than half of $200M. Both tables could in principle be describing different scopes (e.g., EIA's $200M folding in the separate BIG Pipeline acquisition from ConocoPhillips that was bundled into the same 'Stratton Ridge Project' announcement, versus PGJ's $94M being construction cost for just the certificated compressor-station-and-lateral work), but neither source states that explicitly, so this is a genuine open question rather than a resolved caveat. Do not treat $200M as confirmed by EIA alone.",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/03/Proposed.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2019.xlsx"
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action — Louisiana start / Texas end is independently corroborated; add the ref.",
+      "researcher_notes": "LOCATION/ATTRIBUTION — GEM's StartState/Province=Louisiana, EndState/Province=Texas is independently corroborated by EIA's Jan2019 pipeline-projects table, whose 'Stratton Ridge Expansion' row lists Beg_State=LA, End_State=TX, Region(s)=South Central, and 'Crosses State Border=Yes.' CAVEAT worth recording: the FERC Federal Register notice, which describes the actual NEW physical facilities built under this certificate, names only Texas locations — the new Angleton Compressor Station (Brazoria County, TX), the 0.5-mile lateral (Brazoria County, TX), and the Mont Belvieu Compressor Station upgrade (Chambers County, TX); no Louisiana facility is mentioned anywhere in that notice. The most likely reconciliation is that the broader Texas Eastern system this project draws additional capacity from originates upstream in Louisiana (Texas Eastern's mainline is fed from Gulf Coast/Louisiana supply points), which is presumably what EIA's 'Beg_State' reflects, even though the certificated construction itself sits entirely in Texas. Not recommending a change — GEM's existing Location value is the one two independent characterizations (EIA, and whatever originally populated the row) agree on — but noting the tension for anyone digitizing a route.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2019.xlsx",
+        "https://www.federalregister.gov/documents/2017/08/10/2017-16879/texas-eastern-transmission-lp-brazoria-interconnector-gas-pipeline-llc-notice-of-schedule-for"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action — Enbridge ownership of Texas Eastern Transmission (the certificate holder/operator) is well documented.",
+      "researcher_notes": "OWNER — GEM's Owner1=Enbridge (100%) checks out. The FERC applicant/operator is Texas Eastern Transmission, LP (TETLP); Enbridge's own 2017 project page (read via Wayback, since the live URL 404s — the page was taken down after project completion, an access failure not a deletion of anything GEM cites) lists the project's ownership at the time as 'Spectra Energy Partners, LP (100%)' — Spectra Energy Partners was the Enbridge-controlled MLP that owned TETLP following Enbridge's February 2017 acquisition of Spectra Energy, and was itself folded fully into Enbridge in 2018. Independently, Wikipedia's Enbridge article (en.wikipedia.org/wiki/Enbridge, checked live) lists 'Texas Eastern (12.12 Bcf/d): delivers natural gas from Texas and the Gulf Coast through 8,532 miles of pipeline...' among Enbridge's current gas-transmission assets and separately describes 'Texas Eastern Transmission, LP, a division of Enbridge' in its incident-history section. Two independent lines of evidence (Enbridge's own historical disclosure + Wikipedia's current characterization) both land on Enbridge as the ultimate owner/operator group, consistent with GEM's Owner1=Enbridge 100%.",
+      "proposed_refs": [
+        "http://web.archive.org/web/20170911041516/http://www.enbridge.com/projects-and-infrastructure/projects/stratton-ridge-project",
+        "https://en.wikipedia.org/wiki/Enbridge"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 761,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "30", "DiameterUnits": "in"},
+      "primary_value": "30",
+      "proposed_refs": ["https://www.federalregister.gov/documents/2017/08/10/2017-16879/texas-eastern-transmission-lp-brazoria-interconnector-gas-pipeline-llc-notice-of-schedule-for"],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2017/08/10/2017-16879/texas-eastern-transmission-lp-brazoria-interconnector-gas-pipeline-llc-notice-of-schedule-for", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter was blank on the sheet. The FERC Federal Register notice states the new lateral is '30-inch-diameter.' Only one source gives a diameter for this specific short lateral (as opposed to the 42-inch pre-existing BIG Pipeline it connects to, which is a different, larger pipe) — neither PGJ table nor the Enbridge project page states a diameter for the lateral itself — so this is staged at medium/single-source rather than high; recommend a second source (e.g. the FERC docket CP17-57 certificate order itself, on elibrary.ferc.gov) if a reviewer wants to push it to high."
+    }
+  ],
+  "summary": "P1297 Stratton Ridge Pipeline confirmed real, correctly classified, no duplicate (existence/status/fuel/capacity/start-year/owner/location all corroborated by FERC Federal Register notice + 2 PGJ trade-press tables + S&P Global + EIA pipeline-projects table + Wikipedia); one genuine open concern (SegmentCost: PGJ's $94M vs GEM/EIA's $200M for the same docketed project); one deep fill added (Diameter=30in, medium tier, single source)."
+}

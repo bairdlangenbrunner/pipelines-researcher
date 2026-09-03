@@ -36,6 +36,8 @@ link to original sources — use those.
 | Pakistan — gas | OGRA `ogra.org.pk`; and SNGPL's own audited asset register (see the Pakistan country note) |
 | Kazakhstan — legal/orders | `adilet.zan.kz` (official legal database) — see the Kazakhstan note below |
 | Kazakhstan — gas operator | QazaqGaz `qazaqgaz.kz`; Intergas Central Asia `intergas.kz`; KazMunayGas `kmg.kz` + `ar<YYYY>.kmg.kz` |
+| Egypt — ministry | Ministry of Petroleum & Mineral Resources `petroleum.gov.eg` — news pages `/ar-eg/media-center/news/news-pages/Pages/Mop_<DDMMYYYY>_NN.aspx` **and its `/Documents/*.pdf` library** (see note below) |
+| Egypt — gas transmission operator | GASCO `www.gasco.com.eg` — note the **`www.` is required** (the bare host has no A record) and its uploads keep **spaces in filenames**; the project register is described below |
 | (others) | search `"<country>" "energy regulator" OR "petroleum regulator"`; add findings here |
 
 **Kazakhstan — there is NO public line-wise gas-pipeline register** (surveyed 2026-08-11).
@@ -114,6 +116,55 @@ India/PNGRB 2026-08-10).
 
 Oil and Gas Watch (`oilandgaswatch.org`) — digitized routes + permit tracking,
 useful as a primary-adjacent lead.
+
+**Egypt — GASCO publishes a machine-readable project register, and GEM's link to it is
+mistyped** (found 2026-08-27). **"National Natural Gas Grid Expansion Projects"**, 1 page,
+generated from Excel 18 Dec 2024, English, extracts cleanly with `pdftotext -layout`:
+
+> `https://www.gasco.com.eg/wp-content/uploads/2024/12/National%20Natural%20Gas%20Grid%20Expansion%20Projects.pdf`
+
+Per project it gives **length (km), diameter (in), governorate, cost in BOTH EGP and USD
+millions, status, and completion date** — better structured than the news pages this project
+normally works from, and it is the transmission operator's own. It underpins at least four GEM
+rows (P8005, P8006/P8007, P8055, P6685), and P8055 and P6685 were clearly entered *from* it:
+their `ProjectLevelCost` values reproduce its USD column exactly.
+
+**Three traps, all live:**
+- **The filename uses spaces (`%20`), not hyphens.** Eight `[ref]` cells cite a hyphenated
+  variant that returns an honest 404. That 404 is about the *spelling*, not the document.
+- **`gasco.com.eg` without `www.` does not resolve at all** — a `ConnectionError`, which the
+  standing rule does not treat as a deletion. Do not read one as the other.
+- **`url_verifier` returns `insecure_tls: True`** here (incomplete cert chain, same signature as
+  `adilet.zan.kz`) — that means the page **is live**, identity merely unconfirmed.
+
+Generalising: **before calling an Egyptian source deleted, vary the URL** — spaces vs hyphens,
+`www.` vs bare — and query Wayback **host-wide** (`matchType=domain`), not by exact URL. The
+capture of this file was invisible to an exact-URL CDX query and surfaced immediately in a
+domain listing. Worked example: `notes/escalation-2026-08-27-egypt-gas-trans-sinai-cluster-and-p3931.md`.
+
+**Egypt — the ministry's `/Documents/` PDF library is a separate surface from its news pages,
+and it is under-used** (found 2026-08-27). The news pages under
+`/ar-eg/media-center/news/news-pages/Pages/` are what the tracker already cites heavily; the
+document library at
+`/ar-eg/gas-and-petrol/distribution-marketing-transporting/Documents/` is not. Its
+**"2020 خطوط الشبكة القومية للغازات الطبيعية"** ("2020 National Natural Gas Network Lines",
+2 pp, live 200, Wayback capture `20260730181015`) is an official narrative of the national grid
+programme and names individual projects:
+- grid length, mains + branches, end FY2021/22: **~86,000 km**;
+- **executed FY2014/15 → Jan 2023: 1,234 km total, ~19.5 bn EGP** incl. compressor stations —
+  named: the feeders to the New Administrative Capital, Burullus and Beni Suef power stations
+  (Siemens); **خط غاز العامرية/العلمين** (Ameriya/El Alamein, to New Alamein City); and
+  **خط التينة غرب/ميت نما** (El-Tina West / Mit Nama, carrying Zohr gas);
+- **under construction: ~75 km total, ~7.5 bn EGP** — named: **خط السليمانية/شمال الجيزة**
+  (Suleimaniya / North Giza), the Fayoum old-expansions feeder project (Hayah Karima),
+  **خط ازدواج عبر سيناء** (the Trans-Sinai *duplication* line), and Dahshour compressor units 5 & 6.
+
+It is Arabic, RTL, and extracts cleanly with `pdftotext` (~4.2k chars) — no visual read needed.
+It is a **status and existence** source, not a spec source: it gives no per-line diameter or
+capacity, and its lengths are programme totals, never per-line. Search the library by browsing
+the `/Documents/` path rather than by site search — and note that `egyptoil-gas.com/?s=` and
+`/reports_category/…/page/N/`, which 16 Egypt rows were resting on, are navigation surfaces that
+`url_verifier` now rejects outright.
 
 ### OPEC Annual Statistical Bulletin (ASB) — the workhorse for OPEC members
 
@@ -207,6 +258,7 @@ Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
 | **GulfPub** (PE World Map) | 2 | oil, gas | global | yes (WKT/GeoJSON) | `sources/gulfpub/manifest.yml` |
 | **OpenStreetMap** (Overpass) | 3 | oil, gas | per-country pulls (Libya gas today) | yes (ODbL) | `sources/osm/manifest.yml` |
 | **Malaysian Gas Map** (MGA, 2022 ed.) | 3 | gas | Malaysia only | yes (digitized) | `sources/malaysian_gas_map/manifest.yml` |
+| **PPIS Energy Infrastructure Map 2025** (DGPC/PPIS/LMK) | 3 | gas, oil | Pakistan only | yes (digitized) | `sources/pakistan/manifest.yml` |
 
 To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-URL
 `report_citation` (name + scrape date), never by a GEM URL.
@@ -239,6 +291,31 @@ To add a dataset, see `sources/README.md`. A scraped dataset is cited by a non-U
   `sources/malaysian_gas_map/prepare.py`; the as-delivered artifacts are tracked in
   `extraction/`. Note GEM's P1065/P1066 already cite this same publication in
   `Route [ref]`, so it is **not fully independent** of those two rows' geometry.
+- **PPIS map is the registry's second digitized document**, and the first where the
+  **source PDF itself is tracked** — page 6 of the Pakistan Petroleum Information
+  Service *Investment Brochure 2025* (`ppisonline.com`, DGPC/PPIS/LMK Resources), a
+  vector page, so `sources/pakistan/prepare.py` re-derives all 412 LineStrings
+  (21,460 km) from the PDF deterministically; nothing is hand-traced. Registered
+  2026-08-26. Four things to know, all in `sources/pakistan/NOTES.md`: (1) the map's
+  **own drawn graticule is not the control** — it carries a +12.3 km north bias, so
+  the transform is fitted to 57 city GCPs (LCC, median 3.3 km, p90 14.7 km) and the
+  graticule is only a cross-check; (2) `buffer_km_for_overlap` is **12 km**, the
+  stacked error budget of this extraction plus GEM's own schematic Pakistani
+  geometry, not matcher slack; (3) the legend **conflates two GEM statuses** on
+  "OIL PIPELINE UNDER CONST./PLANNED", so those 12 features carry a **blank**
+  status rather than a coin flip — `ingest.py` reporting `UNMAPPED status (12)` is
+  expected; (4) it maps **no name, diameter, length or operator** — the page labels
+  cities and fields, not segments — so it is matched as classified geometry and
+  corroborates **corridors and existence only**, never a spec. (5) **No dashed line in
+  the PDF carries a dash array** — dashes are separate primitives, either filled polygons
+  (the import corridors) or 0.035 pt hairline strokes (every dashed line in the map body),
+  and both are stitched into ONE LineString per dashed run, so a dashed pipeline is never
+  emitted as a string of fragments. Those hairlines sit in the operators' EXISTING colour
+  and are separated from solid pipe **only by stroke width**; the legend pairs a solid
+  EXISTING and a dashed PLANNED entry in the identical colour, so the 21 stitched runs are
+  `sngpl_gas_planned` / `ssgcl_gas_planned` at `proposed`, not operating. The 86
+  SSGCL-planned filled marks stay unextracted — all inside the differently-scaled
+  Hyderabad-Badin inset.
 - **The master dataset-registry sheet is NOT public** — a `curl` CSV export hits an HTML login
   wall, and that is now the norm rather than the exception (anonymous access to work documents
   is being withdrawn deliberately). Read it authenticated: `gws-gem sheets spreadsheets values
@@ -278,12 +355,32 @@ facility a corridor serves (§8). As GEM databases they are bound by standing ru
 corroboration tier.** Every hit is flagged `citable: false`; each anchored endpoint
 still needs its own independent public `[ref]`.
 
+## Wikipedia — citable (policy reversed, Baird 2026-08-27)
+**Wikipedia is an acceptable `[ref]`**, and the distinction that matters is
+**Wikipedia is not gem.wiki**: rule 1 forbids self-citation, not encyclopedias. The
+prior roster line ("never cite directly") is withdrawn — it was never enforced by
+`url_verifier` and had left ~36 live Wikipedia `[ref]` cells in the tracker in a
+permanent grey zone. Treat it as any other secondary source:
+
+- **Tier it as one secondary source**, so it is medium alone and reaches green only
+  paired with an independent second source. Two language editions of the same article
+  are ONE source, not two — the interwiki text is usually a translation.
+- **Prefer the underlying citation when the article carries one** — it is nearly always
+  the better `[ref]` and often primary. Citing Wikipedia is allowed, not preferred.
+- **A Wikipedia statement whose own footnote is GEM cannot corroborate anything.**
+  Rule 1 exists to surface what *other* sources say; a GEM figure that has been copied
+  into Wikipedia and cited back is still GEM. Check the article's footnote before
+  counting it toward the 2-independent-source tier.
+- The `[ref]` should point at the specific article, not a category or portal page.
+
 ## Forbidden / cautioned
-- **GEM.wiki / globalenergymonitor.org** — never self-cite (standing rule 1).
-- **Wikipedia** — never cite directly; use it only to reach original sources.
+- **GEM.wiki / globalenergymonitor.org** — never self-cite (standing rule 1). This is
+  the one wiki that stays forbidden; `url_verifier` rejects it by host.
 - **A Barrel Full (`abarrelfull.wikidot.com`) and any `wikidot.com` page** — tertiary
-  wiki aggregators that restate other sources (same class as Wikipedia). Never cite;
-  read only to reach the underlying source. `url_verifier` rejects them.
+  aggregators that restate other sources with no editorial trail and no footnotes to
+  chase. Never cite; read only to reach the underlying source. `url_verifier` rejects
+  them. (They are NOT "the same class as Wikipedia" — that comparison is withdrawn
+  along with the Wikipedia ban.)
 - **theodora.com** — never an acceptable reference (`url_verifier` rejects it).
 - A scraped dataset alone never reaches green (Tier-2 ceiling).
 

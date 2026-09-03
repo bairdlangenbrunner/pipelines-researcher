@@ -1,0 +1,38 @@
+{
+  "project_id": "P8012",
+  "pipeline_name": "Old Fayoum Gas Pipeline",
+  "sheet_row": 4272,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence, length (12 km) and construction status all corroborate. Add the two verified sources below to Status/Fuel/PipelineType/Length/Location [ref]; the current ref (petro-mag.org flip-book viewer page) is the same underlying document but is not text-searchable — cite the direct PDF instead, or keep both. Leave Diameter and Capacity blank (genuinely unsourced, not fillable). No status conflict despite the two sources being ~20 months apart.",
+      "researcher_notes": "TEST APPLIED: full-text read of the actual underlying document, not just a keyword miss on the viewer page. The current [ref] (https://petro-mag.org/ar/Magazine/v?id=b505c5e8-6d88-447d-959d-270acf864417) is an HTML flip-book viewer for GASCO/Ministry of Petroleum's 'Petroleum Magazine' (November 2025, golden-jubilee special issue) — its HTML shell carries no article text (page images loaded via a viewer widget), so url_verifier and a plain WebFetch both correctly report no mention of Fayoum on the viewer page itself. That is a tooling limitation, not evidence the source is wrong (same class of false-negative url_verifier.py documents for large/ligature-encoded Arabic PDFs). I pulled the linked source PDF directly (https://petro-mag.org/Uploads/Files/8485d495-066a-4039-af4c-1eb97a28c3ef.pdf, 146pp, 51.9 MB) and ran pdftotext -enc UTF-8 on it. Page ~51-52, under the GASCO 'National Natural Gas Network' section, 'Ongoing projects' (المشروعات الجارية) subheading, the text reads (transliterated): 'المشروع الرئاسي حياة كريمة لتغذية الفيوم الجديدة (قطر 24 بوصة بطول 18.5 كم)، ومدينة أطسا (قطر 16 بوصة بطول 9.5 كم)، وتدعيم الفيوم القديمة بطول 12 كم' = 'The presidential Hayah Karima initiative project to feed New Fayoum (24\" dia, 18.5 km) and Atsa city (16\" dia, 9.5 km), and reinforcing Old Fayoum, 12 km.' This EXACTLY matches GEM's LengthKnown=12.00 km for P8012, gives no diameter for the Old Fayoum leg (matches GEM's blank Diameter — don't fabricate one), and lists it under 'ongoing' projects as of the Nov-2025 issue, supporting Status=construction. It also independently confirms P8011 Atsa (9.5 km / 16\") at the exact GEM value. SECOND, independent corroboration: Masrawy (masrawy.com, 2024-03-04), quoting GASCO chairman Yasser Salah El-Din: 'جاري استكمال مشروع خط السليمانية - شمال الجيزة قطر 42 بوصة، ومشروع خطوط تغذية الفيوم الجديدة ومدينة أطسا وتدعيم الفيوم القديمة بإجمالى أطوال 40 كم' = 'currently being completed: the Sulaimaniya-North Giza line (42\"), and the New Fayoum + Atsa city + Old Fayoum-reinforcement feed lines, 40 km total.' 18.5 + 9.5 + 12 = 40.0 km exactly, arithmetically cross-validating the per-segment PDF breakdown against Masrawy's independently-reported aggregate. Both sources describe the project as ongoing/in-progress (جاري / المشروعات الجارية), 20 months apart (Mar-2024, Nov-2025) with no drift — this is NOT a status conflict, it is a genuinely multi-year-ongoing reinforcement project. url_verifier note: the direct PDF URL returns 200 and passes the trivial numeric token '12' but FAILS on distinctive Arabic tokens ('الفيوم') and on '18.5' — this matches the tool's own documented large-PDF/ligature-encoded-Arabic false-negative class (raw text extraction hits kashida/tatweel glyphs mid-word, e.g. the file literally renders the word as 'الفيـوم' with an inserted justification character, breaking naive substring search); I overrode the automated screen with a manual pdftotext read per the tool's own guidance. EXISTENCE: CONFIRMED (2 independent sources, arithmetically cross-validated, not GEM-derived). CLASSIFICATION: no change — StartLocation=EndLocation='Old Fayoum' (flagged 'irregular' in the worklist) is NOT a data error; the source explicitly calls this a 'تدعيم' (reinforcement/looping) of the existing local grid at one town, not a point-to-point corridor, which is exactly what a same-start/end record should look like. PipelineType=transmission is consistent with how every other short GASCO feeder in this cohort (P8011 Atsa, P8021, P8031, etc.) is classified and I found no reason to break that convention. Fuel=Gas trivially confirmed (this is GASCO's National Natural Gas Network). DUPLICATE WATCHLIST: 'P8011 Atsa vs P8012 Old Fayoum, both Fayoum-area, related?' — ANSWERED: related but NOT duplicates. Both sources describe three DISTINCT physical lines funded/announced together under one Hayah Karima package (New Fayoum 18.5 km/24\", Atsa 9.5 km/16\" = P8011, Old Fayoum 12 km = P8012), each serving a different town; the 40 km total only reconciles if all three are counted once each, which rules out P8011 and P8012 being the same line under two names. Note for the record (out of scope to stage here): the 'New Fayoum' 18.5 km/24\" leg named in both sources does not appear anywhere in this 40-row roster — worth a discovery check in a later pass, not raised as a P8012 defect.",
+      "proposed_refs": [
+        "https://petro-mag.org/Uploads/Files/8485d495-066a-4039-af4c-1eb97a28c3ef.pdf",
+        "https://www.masrawy.com/news/news_economy/details/2024/3/4/2547609/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "duplicate",
+      "recommendation": "No merge. Keep P8011 and P8012 as separate rows.",
+      "researcher_notes": "Orchestrator watchlist question 'P8011 Atsa vs P8012 Old Fayoum, related?' resolved with sourcing, not assumption: both GASCO sources (Petroleum Magazine Nov-2025 PDF and Masrawy 2024-03-04) name Atsa (9.5 km/16\") and Old Fayoum (12 km) as two separate lines in one funded package alongside a third, untracked New Fayoum line (18.5 km/24\"); 18.5+9.5+12=40.0 km matches Masrawy's independently-reported package total exactly, which only works if all three are distinct, non-overlapping lines. P8011 and P8012 are siblings from the same announcement, not a relabel/segment double-count of one pipe.",
+      "proposed_refs": [
+        "https://petro-mag.org/Uploads/Files/8485d495-066a-4039-af4c-1eb97a28c3ef.pdf",
+        "https://www.masrawy.com/news/news_economy/details/2024/3/4/2547609/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [],
+  "summary": "P8012 confirmed real (2 independent GASCO-sourced reports, arithmetically cross-validated against P8011 Atsa + an untracked New Fayoum leg); length 12 km and construction status both corroborate exactly; not a duplicate of P8011 (sibling lines, same funding package); Diameter/Capacity left blank, genuinely unsourced."
+}

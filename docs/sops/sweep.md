@@ -98,11 +98,23 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
    `--province` scopes sub-country by Start/End province (either terminus; China's
    province batches — idiom + trunk-exclusion regex in `docs/country_notes/china.md`).
    Classifies each row×pair ref cell: `SKIP` (all values blank), `MISSING_REF` (value
-   filled, ref blank), `HAS_REF` (ref filled → re-verify). It also **joins the operators/owners
+   filled, ref blank), `HAS_REF` (ref filled → re-verify) — and, with **`--owe-fills`**,
+   **`MISSING_VALUE`** (value blank → the `fills` leg OWES a sourced value or an honest
+   `UNRESOLVED`). Always pass `--owe-fills` on a `deep` sweep: without it a blank cell is a
+   non-unit nobody reports on, which is how Jiangxi v2 shipped 4 fills against 571 blanks
+   (MZ 2026-09-03: "lots of blank data on operating projects"). Default owed stems are
+   Length / Capacity / Diameter / Start / Construction / SegmentCost / Pressure / FuelSource /
+   Proposal / Operator / Owner; `--fill-pairs <stems|all>` overrides. The run prints
+   `fills owed … by status / by column`; **`operating` rows carry the bulk and matter most.**
+   It also **joins the operators/owners
    tab by ProjectID** (default latest snapshot; `--owners-csv` to override, `--no-owners` to skip)
    and emits real `Operator [ref]` / `Owner [ref]` units (`tab:'operators_owners'`) classified the
    same way. `--verify-existing` HTTP-checks every existing ref URL up front (tracker + OO;
-   deterministic, **no agent tokens**) so most `HAS_REF` units pre-classify live vs dead.
+   deterministic, **no agent tokens**) so most `HAS_REF` units pre-classify live vs dead. It
+   passes the row's `pipeline_name` to the verifier, so an existing ref that is live and
+   carries the value but **never names the pipeline** comes back `name_absent: true` — an
+   advisory relevance flag (an English name won't appear on a Chinese page), and the unit
+   is a re-read, not a pass.
 3. **Harvest** — `scripts/harvest_wiki_citations.py --worklist … --out …/wiki_citations.json`.
    Start research from the row's gem.wiki page: harvest its **outbound** external citations
    (once per ProjectID). We *visit* gem.wiki but **never cite it** — only the underlying
@@ -114,9 +126,16 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
      needs a 2nd independent corroborating link.
    - **MISSING_REF / degraded HAS_REF:** rank harvested candidates (link text/context vs
      the value + source tier in `source_roster.md`), `url_verifier.verify_url(url,
-     any_of=surface_forms(value), name=<pipeline/entity name>)` each — pass `name=` so a
-     transliteration variant (Chelavend↔Chelavand) still matches — keep the live +
-     value-present ones. **For status, don't gate on the status token**: a page describing
+     any_of=surface_forms(value), name=<pipeline/entity name>)` each — **`name=` is
+     mandatory, not optional**: it is the relevance check. A page that contains the number
+     but does not name THIS pipeline (its FULL name — "A–B", not a page about A or about B, and
+     not a page about the parent system when the row is a segment) is not a ref for it. The
+     verifier records `name_found` on every verification; when the name is in another script
+     (Chinese/Arabic/Cyrillic) pass the `OtherLanguage*` name too, or read the page and
+     encode the hand-confirmed match as `name_found: true` with the matched string in `note`.
+     A `[ref]` whose page doesn't name the pipeline is MZ's 2026-09-03 finding #3 — the
+     merge caps such a unit at `low` (`merge_qc.relevance_qc`) and `sweep_gates.py` gate I
+     lists it. Keep the live + value-present + pipeline-named ones. **For status, don't gate on the status token**: a page describing
      the line operating/expanding/inaugurated/transiting gas confirms `operating` by
      inference (§ Verifier false-negatives → Content). If the verifier flags a short/stub
      body, **re-fetch the full text** before deciding. If gem.wiki
@@ -126,6 +145,25 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
      supports is a miss (e.g. Iran P5984's pgjonline "Rasht–Chelvand … completed" was
      harvested but not staged onto `Status [ref]`). A harvested URL whose page confirms the
      value is fillable even as a lone source (yellow), per `confidence_tiers.md`.
+   - **Read every document you open to EXHAUSTION — for every column, and for every
+     sibling row.** A source found for one cell is a source for every fact on its page: when
+     an approval notice found for `Status [ref]` also states length, diameter, investment,
+     construction start and commissioning, stage it onto `Length [ref]`, `Diameter [ref]`,
+     `SegmentCost [ref]`, `Construction [ref]` and `Start [ref]` too (as `REFS_ADDED` where
+     the value is on the sheet, as a `FILL` where the cell is blank). Then check the run's
+     other in-scope rows: a page about the trunk usually names its branches, and a page about
+     segment I usually states segment II's numbers. Jiangxi v2 shipped P4777's length, cost and
+     construction date `UNRESOLVED` while the Sina article staged on P4776 stated all three
+     (MZ 2026-09-03, finding #2). The one limit is the aggregate-vs-segment rule: a SYSTEM
+     figure is not a ref for a SEGMENT cell — say so in notes and file `__VALIDITY__` rather
+     than stage it. Record in `researcher_notes` which other cells/rows the document served.
+   - **Two refs per data point is the target for EVERY unit, not just the hard ones.** After
+     the first source lands, the second search is owed: different publisher, different
+     document class (regulator ↔ operator ↔ press ↔ EIA), never a restatement. A single-source
+     unit is fillable at `medium`, but its notes must say what was searched for the second and
+     why it was not found — a bare single ref with no second-search note is unfinished
+     (MZ 2026-09-03, finding #4: "limited range of sources"). `sweep_gates.py` gate K counts
+     the single-source `REFS_ADDED`; gates A/C catch a row or a batch resting on one origin.
    - **Search in the country's language(s), not just English.** Seed from the row's
      `OtherLanguage*` name columns and transliterations (Saudi → Arabic: Aramco Arabic
      press, Argaam, SPA). Foreign pages still pass `url_verifier`; the "contains the value"
@@ -153,7 +191,7 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
 value**. The substring check is a **screen, not the verdict** — *you* read the page and make the
 call. Two families of false negative:
 
-**Liveness false-negatives** (page is live; don't class `DEAD_LINK`). **Six families now**, and
+**Liveness false-negatives** (page is live; don't class `DEAD_LINK`). **Seven families now**, and
 the hit rate is not marginal: the Iraq ref-gap re-pass (2026-07-28) found **33 of 41 "dead" refs
 were false negatives** (an earlier Iraq sweep: 6 of 27). Treat a `DEAD_LINK` classification as a
 hypothesis you still have to test by hand. **Standing rule (Baird, 2026-07-30): a once-working
@@ -185,12 +223,27 @@ never swapped in as a replacement:
 - **Large PDFs.** A token FAIL on a big PDF (OPEC ASB editions, ministry annual reports) is **not
   evidence the source lacks the value** — the verifier may never have read far enough into the
   document. Extract with `pdftotext` and search the table yourself before ruling.
-- **CAPTCHA / bot interstitials that return HTTP 200.** The response is a challenge page, not the
-  article, but nothing in the status code says so. Pair this with the stub-body flag below: a 200
-  whose body is short *or* reads as a challenge is an unread page, not a missing value.
+- **CAPTCHA / bot / IP-block interstitials that return HTTP 200.** The response is a challenge or
+  access-denied page, not the article, but nothing in the status code says so. Pair this with the
+  stub-body flag below: a 200 whose body is short *or* reads as a challenge is an unread page, not
+  a missing value. **`verify_url` now detects these itself and returns `blocked: True`** — but note
+  the fix landed in two halves, and until **2026-08-16** detection only ran when an expected-content
+  needle was supplied. A bare `verify_url(url)` reachability screen — which is how most `[ref]`
+  cells get checked — returned a plain `ok=True, reason='200'` on a page nobody had read. Seen on
+  `energybase.ru`, which serves «Доступ ограничен» naming the caller's IP and ASN. **A `blocked`
+  verdict is emphatically NOT a deletion**: keep the ref and add a Wayback capture alongside.
 - **JS-gated stubs.** The server returns a 200 shell and the article text is injected client-side,
   so the substring check sees an empty article. Fetch the rendered page (or a Wayback capture,
   which usually snapshots the hydrated HTML) before concluding anything.
+- **A `ConnectionError` you caused yourself — never fan out verification at web.archive.org.**
+  Re-verifying Ukraine's 390 staged URLs at 10 concurrent threads (2026-08-16) got our IP
+  connection-*refused* by the Internet Archive: `ConnectionError … [Errno 61]`. Fifteen Wayback
+  URLs sitting in `proposed_refs` failed, including captures that had returned 200 minutes
+  earlier and still do. **The verifier reports this identically to a dead ref**, so a burst of
+  Wayback failures in one run is a rate-limit signature, not link rot — re-test a known-good
+  capture serially before believing any of them. Keep archive.org verification serial with a
+  pause; the throttle outlasts the run by several minutes. Same shape as the SSL family above:
+  a transport failure on our side is never evidence a page is gone.
 
 **Content false-negatives** (page is live *and supports the value*, but the dumb substring check
 misses it — this is the eurasianet/P5984 failure):
@@ -232,10 +285,21 @@ and supports the value* (by full-text read, `pdftotext`, `curl`, or a real Wayba
 keeping the ref.
 
 ## Legs beyond refs: `fills` + `validity` (the `deep` preset)
+**Subagent brief:** start every fan-out from `docs/sops/templates/deep_sweep_brief.md` (copy to the
+run dir as `BRIEF.md`, fill the scope slots, delete no rules) — it carries the four review rules
+(relevance / exhaustion / owed blanks / second source) and the record contract.
+
 The combined mode (`workflows.md §3`, `deep` preset): in one pass per row, do the standard
-refs leg **plus** (a) research and fill **blank value fields** with paired refs (best-effort
-on weak fields like Capacity — don't force a number), and (b) **critically confirm the
-existing data points and judge each pipeline's validity / existence**. Same standing rules —
+refs leg **plus** (a) research and fill **blank value fields** with paired refs, and (b)
+**critically confirm the existing data points and judge each pipeline's validity /
+existence**. **(a) is an OWED set, not an opportunistic one:** the worklist's
+`MISSING_VALUE` units (`--owe-fills`, step 2) are the fills leg's worklist, and every one
+ends as a sourced `FILL` or an `UNRESOLVED` with a note saying what was searched — the same
+contract as a `MISSING_REF`. Never force a number (a weak Capacity stays blank rather than
+fabricated), but never skip a blank silently either; the delivery note reports
+`fills owed / filled / unresolved` by status, and `sweep_gates.py` gate J lists owed blanks
+with no record at all. Prioritise `operating` rows — a blank Length/Diameter/Capacity/
+StartYear on an operating line is the gap the researchers see first. Same standing rules —
 still read-and-stage only. **Operating-status rows are a legitimate deep-sweep target** (not
 just in-dev) — Baird often runs a deep sweep on operating pipelines specifically to catch
 **redundant/duplicate** entries, so the existence/duplicate leg can be the *driving* reason.
@@ -436,8 +500,49 @@ python scripts/harvest_sentinel_findings.py --staging $STG/    # accepts repeate
 
 It appends each dropped sentinel as a proper `__VALIDITY__` resolution (`class_out:
 UNRESOLVED` — validity is read-and-flag, never an applied edit) and is idempotent, so a
-re-run replaces rather than duplicates. Run it after `merge_ref_shards.py` whenever a
-ref-gap pass rode along with validity work, and reconcile the count against the WARN.
+re-run replaces rather than duplicates. Run it whenever a ref-gap pass rode along with
+validity work, and reconcile the count against the WARN.
+
+**It runs LAST in the chain — after `merge_deepsweep_shards.py`, not just after
+`merge_ref_shards.py`.** `merge_deepsweep_shards.py` re-folds by purge-and-rebuild, and
+its `is_old_deepsweep()` drops every record whose `ref_col` is `__VALIDITY__` /
+`__STATUS__` / `__ROUTE__` — precisely what the harvester writes. Harvest before it and
+the sentinels are silently zeroed out again (verified on Jiangxi: 2 → 0, no warning).
+
+**The harvester globs `ref_shards/P*.json` — the merge globs `ref_shards/*.json`.** So a
+fan-out that shards by BATCH rather than by PID (`batch_03.json`, e.g. when one subagent
+carries four rows) satisfies the merge and is **silently invisible to the harvester** — the
+refs land, every sentinel vanishes, and nothing warns. Split batch shards to per-PID files
+before merging (Jiangxi's `split_shards.py` is the pattern) and check the harvester's printed
+resolution count is non-zero when you know the shards carried sentinels.
+
+**A `kind: FILL` record falls through BOTH scripts.** A fill on a blank-value row has no
+baseline ref unit either — correctly, since the no-orphan-refs rule means a blank value
+column emits no ref unit for the worklist to carry — so `merge_ref_shards.py` drops it for
+want of a key, and the harvester only rescues the two sentinels. It is harmless while the
+fill is `UNRESOLVED` (no value, no refs), which is why this hid: **a successfully sourced
+fill is the one that vanishes.** Fills are `merge_deepsweep_shards.py`'s job and it reads
+them from `rows/<PID>.json` as `fills[]`, so route them there. `split_shards.py` sends each
+record to exactly one destination **structurally, not on the `kind` tag**: if the worklist owes
+no unit at `(pid, ref_col)` then the value column is blank, so the record IS a fill whatever it
+called itself. Trusting the tag is not enough — three of Jiangxi's batch-02 records said "FILL
+target: LengthKnown is blank" in their own notes and carried `kind: null`, and would have been
+lost the moment one of them succeeded. It also joins row identity
+(`pipeline_name`/`wiki`/`sheet_row`) back from the worklist, which a fill record doesn't carry.
+
+**Re-sweeping a scope: a CARRIED fill needs the same care, and it has its own way to vanish.**
+When a v2 sweep supersedes a v1 batch, the carry step folds v1's `REFS_ADDED` onto v2's units
+by `(pid, ref_col)` — and a fill matches nothing, for exactly the reason above. Do not park it
+in a side file: **`carried_fills.json` was written by Jiangxi's `carry_prior.py` and read by
+nobody**, because `build_ref_workbook.py` takes `pending_fills` from an *actions* packet
+(a §6 handoff), not from the staging dir. On a standalone deep-sweep build the file exists,
+the count reports "wrote 1 prior fill(s)", and the record reaches no tab. That lost the v1
+Jiangxi sweep's one real fill (P4788 `Pressure` = 6.30 MPa, sourced). Put a carried fill back
+in the store with `class_in: "FILL"` — the store *is* the fills lane (`fill_res` selects on
+that field) — taking the **fresh** `sheet_row` from a sibling record of the same PID, never
+the prior run's locator. And reconcile the count across the two runs (`class_in FILL: 9 → 1`
+is a question, not a statistic): **a file written by one stage and read by none is a silent
+loss**, and the stage that wrote it will report success.
 
 ### Merge-time QC normalization (run before `build_ref_workbook.py`)
 Subagents are not perfectly consistent; normalize deterministically at merge:
@@ -445,6 +550,21 @@ Subagents are not perfectly consistent; normalize deterministically at merge:
   live-but-non-matching page is not a valid ref — no orphan/unsupported refs).
 - **Downgrade to `UNRESOLVED`** any `REFS_ADDED`/`REVERIFIED`/`DEAD_LINK` record left with
   zero valid refs after stripping; add a `[QC]` note.
+- **The converse of the strip rule is a shard-authoring requirement, and it is where evidence
+  actually gets lost.** `verified_refs` reads the shard's OWN verification objects — it never
+  re-fetches — so a manual confirmation of a false-negative page (bot-wall, large CJK PDF,
+  prose/unit-form mismatch, engineering-convention equivalence) must be encoded as
+  `ok: true, contains_value: true` **plus** a note stating who verified it and how. Recording it
+  as `ok: false` with the explanation in prose reads to the merge as "not verified": the ref is
+  stripped, the record is then honestly downgraded to `UNRESOLVED`, and the unit reports as
+  *no source found* when in fact a source was found and discarded. The downgrade is a real safety
+  net, which is exactly why this is invisible — nothing errors. **Check it per batch:** count
+  records where `proposed_refs` is non-empty and `verified_refs()` returns empty; that number
+  should be zero except for refs deliberately kept in-cell under standing rule 5 (a blocked or
+  unparseable page that is not a 404/410 stays in the sheet but must NOT enter a proposal).
+  Jiangxi's batch 03 encoded 14 confirmations as `ok: false` where batches 01/04/05 encoded the
+  same situations correctly, zeroing 11 of its records — 31 of 47 refs kept before the fix, 45
+  after, on the highest-yield batch of the five.
 - **Watch field semantics** — e.g. drop `FuelSource="Natural Gas"` fills (`FuelSource` is
   the upstream field/plant, not the fuel type; `gem_schema.md`).
 - Re-assert the pre-delivery invariants (below) on the merged file: 0 unverified refs,
@@ -464,9 +584,18 @@ every URL through `url_verifier` (even ones that worked last batch) · no orphan
 pastes manually.
 
 ## Pre-delivery checks
-README present; every `Proposed ref(s)` cell verified (HTTP 200 + value present) and free
-of GEM/theodora/abarrelfull/wikidot; tier colors correct; no orphan refs; Unresolved units have a
-`ResearcherNotes` reason and no fabricated URL. Full checklist: `docs/sops/qc.md`.
+Run **`python scripts/sweep_gates.py --staging <run dir>`** on the merged store and quote its
+counts in the delivery note. It is read-only and advisory (gates A–K): A source diversity per
+row · B false `high` · C `high` leaning on a dominant document · D `independent` flag vs
+verified refs · E orphans · F banned/GEM · G harvested pool URLs never opened on a still-
+`UNRESOLVED` row · H recovered Save-Page-Now origins unopened · **I relevance** (sourced
+units whose refs do not name the pipeline, and units where nobody checked) · **J owed blanks
+with no record** · **K single-source `REFS_ADDED`** (the two-per-data-point target unmet).
+A non-zero I/J/K is not a blocker but the count goes in the delivery note verbatim — it is
+what the researcher will find, so say it first. Then: README present; every `Proposed
+ref(s)` cell verified (HTTP 200 + value present) and free of GEM/theodora/abarrelfull/wikidot;
+tier colors correct; Unresolved units have a `ResearcherNotes` reason and no fabricated URL.
+Full checklist: `docs/sops/qc.md`.
 
 ## Escalation gates
 Stop and report rather than mass-producing low-value rows if: a large fraction of

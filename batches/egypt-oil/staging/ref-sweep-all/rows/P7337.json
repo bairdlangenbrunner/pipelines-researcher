@@ -1,0 +1,60 @@
+{
+  "project_id": "P7337",
+  "pipeline_name": "Suez-Musturad Oil Products Pipeline",
+  "sheet_row": 1843,
+  "wiki": "https://www.gem.wiki/Suez-Musturad_Oil_Products_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change. Cite the same MPED brochure for Owner (see fills) and note in ResearcherNotes that the automated verifier's Arabic-PDF content check is unreliable on this 34MB/352pp file — confirmed manually via pdftotext -layout.",
+      "researcher_notes": "EXISTENCE + CLASSIFICATION + FUEL confirmed, independent of GEM. Downloaded the sheet's own currently-cited source, mped.gov.eg's 'b_mop full brochure.pdf' (Egyptian Ministry of Petroleum 2018-2019 activity report, 352pp, Adobe InDesign, CreationDate 2020-01-30). NOTE: the file the site serves is 34,546,781 bytes per Content-Length; a first curl pull silently truncated at 22MB (no error) producing an unparseable PDF — always check downloaded size against Content-Length before concluding a PDF is corrupt. Ran pdftotext -layout on the complete file (poppler chokes without -layout on this RTL Arabic InDesign export unless the file is complete). Page 42-43 (\"قطاع البترول\" / Petroleum Sector projects) lists, as a distinct completed project (start 2017/12, end 2019/6, cost 193 million EGP, location 'القليوبية - السويس' / Qalyubia-Suez): \"إحلال وتجديد وصلة من خط المنتجات السويس / مسطرد بطول 55 كم وقطر 18 بوصة شركة أنابيب البترول\" = 'Replacement/renewal of a 55 km, 18-inch connection from the Suez/Musturad PRODUCTS line, Petroleum Pipelines Company [PPC]'. This is an exact independent match on name (Suez/Musturad), product class (خط المنتجات = products line, matching Fuel='Oil products (only)'), and diameter (18 in) — not GEM-derived, not the almerja/wikipedia lineage. PipelineType=transmission is correct: PPC is Egypt's state trunk-pipeline operator and this is its inter-governorate transmission network, not a gathering/feeder line. Geographic location field 'Qalyubia-Suez' matches StartState/Province=Suez / EndState/Province=Al-Qalyubia exactly. STATUS: the existing automated ref-check flagged 'operating' as not found in the PDF (true, but the doc is entirely Arabic — an English keyword search against Arabic body text will never match; this is a verifier-methodology gap, not a data problem, and is explicitly called out as a known limitation in url_verifier.py's own docstring for large/Arabic PDFs). Read as a document: describing a 2017-2019 REPLACEMENT/RENEWAL of an existing connection is only possible if the line already existed and was in active service being refurbished, which corroborates 'operating' by implication rather than literal text match. No conflicting status signal found anywhere.",
+      "proposed_refs": ["https://mped.gov.eg/adminpanel/sharedfiles/b_mop%20full%20brochure.pdf"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change — P7332 and P7337 are two distinct physical lines on the same corridor, not a duplicate. No merge.",
+      "researcher_notes": "DUPLICATE CHECK vs P7332 'Suez-Musturad Oil Pipeline' (134 km, dia=12in, Fuel=Oil/crude per worklist) — orchestrator flagged this pair as a same-name/same-length watchlist item. RESOLVED as two separate real pipelines, not a double-entry, on strong evidence: the SAME MPED 2018-2019 brochure page (42) that documents P7337's 18-inch PRODUCTS line ALSO documents, as a SEPARATE line-item project in the same year, 'إحلال وتجديد وصلة من خط المازوت (السويس / مسطرد) بطول 42 كم وقطر 12 بوصة (مرحلة أولى 17 كم)' = 'Replacement/renewal of a 42 km, 12-inch connection from the MAZOUT [fuel oil] (Suez/Musturad) line' (start 2015/8, end 2018/12, cost 153.8M EGP, location Cairo). This is a 12-inch line explicitly called out as a DIFFERENT product (mazout/fuel oil, under the 'Oil' commodity umbrella distinct from GEM's 'Oil products (only)' Fuel tag) from the 18-inch 'products' line — matching P7332's separately-recorded 12in diameter. A single primary source itemizing two concurrent, differently-dimensioned, differently-classified renewal projects on the same named corridor in the same annual report is strong evidence these are parallel lines, not one pipeline entered twice. Independently: P7332's OWN current refs (petro-news.com/11234, almalnews.com) are a wholly separate citation lineage from P7337's (mped.gov.eg, almerja.com) — Egyptian press covers them as separate news items too. Also relevant: an older source (almerja.com, already cited for P7337's Length, citing Alexandersson & Norstrom 'World Shipping' 1963 and the Oxford Regional Economic Atlas) independently lists TWO distinct 134 km lines on this exact corridor — 'خط السويس / مسطرد' (134 km, 2.3M metric tons/yr) and 'خط السويس مسطرد طلوبة' (134 km, 1.8M metric tons/yr) — consistent with a real two-line corridor going back decades, not a modern data-entry artifact. Per the orchestrator's own rule of thumb ('a same-name pair with DIFFERENT diameters is usually two real parallel lines'), this applies here: 12in vs 18in, different Fuel classification, different citation lineage, and a primary source describing them as two concurrent-but-separate projects.",
+      "proposed_refs": ["https://mped.gov.eg/adminpanel/sharedfiles/b_mop%20full%20brochure.pdf"],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Keep LengthKnown=134 km at current tier; if a future pass has WebSearch budget, try to find a second source stating the FULL 134 km length specifically for the 18-inch products line (not just a segment).",
+      "researcher_notes": "SPEC check on LengthKnown=134.00 km. The sheet's own currently-cited source for Length (ns1.almerja.com/more.php?idm=281868, already re-verified live and containing '134') is an old academic-derived Arabic reference list of Arab petroleum pipelines (footnoting Alexandersson & Norstrom 'World Shipping', Uppsala 1963, and an Oxford Regional Economic Atlas) that gives '134 km' for a 'Suez/Musturad' line TWICE — once as 'خط السويس / مسطرد' (2.3M metric tons/yr) and once as 'خط السويس مسطرد طلوبة' (1.8M metric tons/yr) — i.e. it independently records exactly two 134 km lines on this corridor, matching GEM's own two-row (P7332/P7337) split at the same length. This is genuine support for '134 km' as a real, sourced figure for a Suez-Musturad line, but the almerja page does NOT distinguish which of its two entries is the crude line vs the products line, so I cannot independently confirm 134 km specifically for the 18-inch PRODUCTS variant (P7337) as opposed to the 12-inch mazout variant (P7332) — both GEM rows already carry the identical 134.00 figure, which may itself reflect that ambiguity being resolved the same way on both rows historically. The MPED 2018-2019 brochure (independently confirms existence/diameter/product-type, see above) only documents a 55 km SEGMENT renewal, not the total route length, so it neither confirms nor contradicts 134 km as the full length. WebSearch quota for this session was exhausted (200/200) before a further corroborating source could be located, so I did not manufacture a second citation. Tier held at medium (single strong source, not yet 2-independent) rather than downgrading, since nothing contradicts 134 km and the pre-existing ref already passes url_verifier live.",
+      "proposed_refs": ["https://ns1.almerja.com/more.php?idm=281868"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 5712,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Egyptian General Petroleum Corp", "Owner1%": "100.00%"},
+      "primary_value": "Egyptian General Petroleum Corp",
+      "proposed_refs": ["https://mped.gov.eg/adminpanel/sharedfiles/b_mop%20full%20brochure.pdf"],
+      "verifications": [{"url": "https://mped.gov.eg/adminpanel/sharedfiles/b_mop%20full%20brochure.pdf", "ok": true, "contains_value": false}],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "ar",
+      "researcher_notes": "Left UNRESOLVED rather than staged. The MPED 2018-2019 brochure names the executing entity for this exact line's renewal as 'شركة أنابيب البترول' (Petroleum Pipelines Company / PPC), which IS the well-known EGPC-group operating subsidiary for Egypt's national crude/products trunk network — but the document nowhere states 'owned by EGPC' in so many words, and the automated verifier cannot confirm the phrase reliably on this large Arabic PDF (a known extractor limitation, documented in url_verifier.py). Naming PPC as executor is consistent with, but not a direct citation for, Owner1=Egyptian General Petroleum Corp 100% — the inferential gap (PPC as operator vs EGPC as ultimate owner) is exactly the kind of attribution leap the sweep protocol says not to force. Recommend Update leg pursue a source that states ownership/holding structure explicitly (e.g. EGPC or PPC's own corporate materials) rather than pasting this citation."
+    }
+  ],
+  "summary": "P7337 (Suez-Musturad Oil Products Pipeline, 134km/18in) CONFIRMED as a real, correctly-classified, non-duplicate 18-inch products line distinct from P7332's 12-inch crude/mazout line -- the same MPED 2018-2019 Ministry of Petroleum brochure independently documents both as separate concurrent PPC renewal projects (18in products vs 12in mazout) on the Suez-Musturad corridor, page 42-43. Two caveats staged: Length=134km rests on one strong but ambiguous source (almerja lists two 134km lines on this corridor without naming which is which) -- tier held at medium, not raised to high; Owner (EGPC) fill left UNRESOLVED since the brochure names PPC as executor, not EGPC as owner by name -- no value pasted. Nothing UNRESOLVED among the pre-existing sourced fields; all currently-cited refs (mped.gov.eg brochure, ns1.almerja.com) reverified live."
+}

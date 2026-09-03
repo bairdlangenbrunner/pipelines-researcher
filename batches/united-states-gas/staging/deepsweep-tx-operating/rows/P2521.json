@@ -1,0 +1,87 @@
+{
+  "project_id": "P2521",
+  "pipeline_name": "Corpus Christi Pipeline",
+  "sheet_row": 1299,
+  "wiki": "https://www.gem.wiki/Corpus_Christi_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Stage III Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to existence/classification/duplicate status. Also confirms Length/Diameter/Capacity exactly.",
+      "researcher_notes": "EXISTENCE: confirmed via two independent government sources. (1) FERC's own Environmental Assessment for Docket Nos. CP18-512-000 (LNG) and CP18-513-000 (pipeline), applicant Cheniere Corpus Christi Pipeline, L.P. \"CCPL would construct approximately 21 miles of new 42-inch-diameter natural gas pipeline\" [i.e. the 'Stage 3 Pipeline'], installed 'generally parallel to the 48-inch-diameter [existing] Corpus Christi Pipeline' authorized under Docket CP12-508-000 (downloaded from the live energy.gov mirror of the FERC EA and read in full via pdftotext -layout; url_verifier passes on the token 'Corpus Christi' -- it FAILS on more specific tokens like '42-inch' only because this is a 6.7MB PDF and the verifier's extractor does not reach page 13/~200, a documented large-PDF false-negative, not evidence of a content mismatch). (2) EIA's own 'Natural Gas Pipeline Projects' dataset (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, live 200, last-updated-by-row 2026-07-06, downloaded and parsed locally with pandas because it is a binary spreadsheet the verifier's substring check cannot read as text) independently lists a 'Corpus Christi Stage III Pipeline' row: Cheniere Energy Corpus Christi, 21 miles, 42-inch diameter, docket CP18-513, San Patricio County TX. Both name the same docket, the same operator family, and the same physical facility.\n\nCLASSIFICATION: correct. It is a FERC-jurisdictional interstate natural-gas feed-gas transmission pipeline under NGA Section 7 (confirmed by both the FERC EA and Cheniere Corpus Christi Holdings LLC's FY2025 10-K, SEC EDGAR accession 0001693317-26-000003, filed 2026-02-26, which states transportation of gas 'through the Corpus Christi Pipeline' is FERC-regulated). Fuel=Gas is correct.\n\nDUPLICATE CHECK against the 45-row roster: NOT a duplicate/relabel of P0373 (also named 'Corpus Christi Pipeline', Sinton->Texas). These are two distinct, separately FERC-docketed pipelines built years apart: P0373 = the ORIGINAL Corpus Christi Pipeline, Docket CP12-508-000, 23 miles / 48-inch / 2,250 MMcf/d, completed 2018-05-23 (EIA 'Historical Projects' sheet row 893 -- exact match to P0373's 37 km/48in/2250 GEM values; also independently described, unprompted, in a May-2017-dated Pipeline & Gas Journal 'Ongoing Projects' PDF harvested from this row's own wiki page: 'Length: 23 miles, Diameter: 48 inches, Location: Sinton, TX - Corpus Christi, TX' -- that PGJ PDF describes P0373, NOT P2521; it predates Stage 3's 2018/2019 FERC filing and never mentions a 42-inch or Stage 3 line, so it is not usable as a P2521 ref). P2521 = the Stage 3 expansion pipeline, Docket CP18-513-000, 21 miles / 42-inch / 1,530 MMcf/d, filed for/EA'd 2018-2019, 'installed generally parallel to' but physically separate from the 48-inch line. Different diameters, different capacities, different dockets, different construction timelines -- two real, non-duplicate segments of the same corridor, exactly the pattern the sweep guidance describes as legitimate (GEM tracks segments).\n\nLENGTH/DIAMETER/CAPACITY: all three GEM values (33.80 km, 42.00 in, 1,530.00 MMcf/d) are confirmed exactly. 21 miles = 33.796 km (matches 33.80 to two decimals). 42-inch matches the FERC EA table verbatim. 1,530 MMcf/d matches EIA's 'Additional Capacity (MMcf/d)' field exactly (the FERC EA's own rounder 'approximately 1.5 Bcf/d' is consistent with, not in tension with, the more precise 1,530 figure). No spec concern on any of these three fields.\n\nHarvest-pool accounting: all 5 of this row's harvested wiki citations were opened -- the Pipeline & Gas Journal PDF (describes P0373, not this row), FracTracker's national map (opened; does not name this pipeline specifically, just a general infrastructure-map legend -- not usable as a citable ref), eia.gov/naturalgas/data.php (live general data portal, no row-specific figures), cheniere.com/where-we-work/cc-pipeline (confirmed dead, HTTP 404 -- not currently used in any live [ref] cell so nothing to swap; a Wayback capture exists at 20250818235305 but web.archive.org was rate-limiting/bot-blocking this session's requests when checked, so its content is unread -- not needed given the FERC/EIA/SEC sourcing below is sufficient), and the FERC EA PDF (the load-bearing source, above).",
+      "proposed_refs": [
+        "https://www.energy.gov/sites/prod/files/2019/09/f66/ea-2111-corpus-christi-lng-stage-3-2019-03.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Stage III Pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Change Status from 'operating' to 'construction' (the line is real and partially in service, but per two independent, current sources the FULL project is not complete). Do not keep StartYear1=2022 -- propose StartYear1=2024 for the interim partial-service start (or leave blank pending a firmer primary source naming the exact month), and add a note/second date for the current ~2029 full-completion target. Also upgrade DelayType from 'inferred' to 'confirmed' -- the delay is now documented (a FERC extension filing), not merely suspected.",
+      "researcher_notes": "GEM's Status='operating' and StartYear1='2022' are contradicted by two independent, CURRENT sources -- and interestingly, the sheet's own existing (unsourced) Delayed=yes/DelayType=inferred flag already seems to have sensed this before either of us found a primary source for it.\n\n(1) EIA's 'Natural Gas Pipeline Projects' table (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, downloaded and parsed locally -- a live document the verifier's substring check cannot read because it is a binary spreadsheet, the same documented false-negative class as ligature-encoded/large PDFs) places this pipeline in the STILL-ACTIVE 'Natural Gas Pipeline Projects' sheet (not the 'Historical/Completed' sheet, where P0373 correctly sits), with Status='Construction', Year In Service Date=2027, and this note (row last updated 2026-07-06): 'New 21-mile, 42-inch bi-directional interstate feed gas pipeline in San Patricio County, TX delivering gas to Cheniere's Corpus Christi Stage 3 midscale liquefaction trains. Partial in-service September 2024 providing 510,000 Dth/d of interim firm service. On 8/27/2025 CCPL requested a FERC extension to 12/31/2029 to construct and place the full project in service (prior extension deadline was 6/30/2027).'\n\n(2) Independently, Cheniere Corpus Christi Holdings, LLC's FY2025 Form 10-K (SEC EDGAR, CIK 0001693317, accession 0001693317-26-000003, filed 2026-02-26 -- fetched directly from sec.gov/Archives; url_verifier's generic UA gets HTTP 403 from SEC's bot-access-control, which requires a UA carrying identifying contact info per SEC's developer policy -- this is a bot-wall false-negative, the same 401/403 pattern the verifier's own docstring already documents for other hosts, NOT evidence the filing is unreachable: a compliant UA ('pipelines-researcher research@example.com') gets a clean 200 and I read the full text) states in its own words: the Corpus Christi Stage 3 Project, 'which was under construction as of December 31, 2025.' The same filing's exhibit list also shows pipeline-specific change orders running through 2023 ('Package 6 Feed Gas Pipeline Interfaces', 'Package 6 Feed Gas Pipeline and Pig Receiver DMM'), consistent with a multi-year build, not a 2022 completion.\n\nSo the pipeline is REAL and partially carrying gas (510 of 1,530 MMcf/d nameplate, since ~Sept 2024) -- this is not an existence concern -- but 'operating' overstates its status and 2022 is not a real milestone for it (no source anywhere names 2022; the true history is an original ~2022-vintage target that slipped, per the FERC extension). Two independent origins (a federal regulatory/statistical dataset, and the operator's own audited SEC disclosure) agree on 'still under construction' as of the most recent read (mid-2026 dataset / Dec-2025 10-K), so this is a material, well-corroborated disagreement, not a single-source quibble.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.sec.gov/Archives/edgar/data/1693317/000169331726000003/cch-20251231.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Stage III Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "No change. Owner1=Cheniere Energy (100%) is accurate at the ultimate-parent level; note for the record that the direct FERC-docketed title holder is the subsidiary Cheniere Corpus Christi Pipeline, L.P. (CCPL).",
+      "researcher_notes": "Owner1='Cheniere Energy' / 100% confirmed as the ultimate parent. The FERC EA (energy.gov, url_verifier OK) names the applicant/title-holder as 'Cheniere Corpus Christi Pipeline, L.P. (CCPL)'. Cheniere Corpus Christi Holdings, LLC's FY2025 10-K (SEC EDGAR, same filing as above) confirms CCPL sits inside the wholly-owned Cheniere corporate family (Cheniere Energy, Inc. -> ... -> Cheniere Corpus Christi Holdings -> CCP/CCPL), and EIA's table independently labels the operator 'Cheniere Energy Corpus Christi'/'Cheniere Corpus Christi Pipeline'. Tier kept at medium rather than high because both documents ultimately trace to Cheniere's own regulatory filing and disclosure (not two origins independent of the company itself) -- but there is no disagreement to resolve, so this is a caveat, not a concern.",
+      "proposed_refs": [
+        "https://www.energy.gov/sites/prod/files/2019/09/f66/ea-2111-corpus-christi-lng-stage-3-2019-03.pdf",
+        "https://www.sec.gov/Archives/edgar/data/1693317/000169331726000003/cch-20251231.htm"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Stage III Pipeline",
+      "sheet_row": 1299,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "EndLocation",
+        "EndPrefecture/District"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Stage 3 LNG Facilities M&R Station (pipeline milepost 0.0)",
+        "StartPrefecture/District": "San Patricio County",
+        "EndLocation": "Sinton Compressor Station Expansion (pipeline milepost 21.0)",
+        "EndPrefecture/District": "San Patricio County"
+      },
+      "primary_value": "Stage 3 LNG Facilities M&R Station (pipeline milepost 0.0)",
+      "proposed_refs": [
+        "https://www.energy.gov/sites/prod/files/2019/09/f66/ea-2111-corpus-christi-lng-stage-3-2019-03.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.energy.gov/sites/prod/files/2019/09/f66/ea-2111-corpus-christi-lng-stage-3-2019-03.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartLocation/EndLocation were blank; StartState/Province, StartCountryOrArea, EndState/Province, EndCountryOrArea (all Texas/United States) were already correct and are confirmed by the same FERC EA, which places the entire pipeline within San Patricio County, TX, from milepost 0.0 (the Stage 3 LNG Facilities M&R Station / pig receiver, at the Corpus Christi Stage 3 LNG site) to milepost 21.0 (the Sinton Compressor Station Expansion / pig launcher). Single-source fill (FERC EA table A.6.2-1) -- tier medium, not independent, since only one document gives this granular milepost-level detail; the county/state-level facts are separately corroborated by EIA's table (San Patricio Co./TX; see the Location validity note)."
+    }
+  ],
+  "summary": "P2521 (Corpus Christi Stage III Pipeline) exists, is correctly classified, and is not a duplicate of P0373 (the separate, earlier 48-inch Corpus Christi Pipeline); Length/Diameter/Capacity all confirmed exactly via FERC EA + EIA. CONCERN: Status=operating and StartYear1=2022 are wrong -- EIA (July 2026) and Cheniere's own FY2025 10-K both show the pipeline still under construction (only 510 of 1,530 MMcf/d in interim service since Sept 2024, full in-service now targeted 2029 per an 8/27/2025 FERC extension request)."
+}

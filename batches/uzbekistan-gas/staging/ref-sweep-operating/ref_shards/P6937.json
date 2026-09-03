@@ -1,0 +1,90 @@
+{
+ "project_id": "P6937",
+ "pipeline_name": "Kelif-Dushanbe Gas Pipeline",
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 3755,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.cdu.ru/tek_russia/articles/3/1216/",
+    "https://timesca.com/turkmenistan-gas-exports-tajikistan/"
+   ],
+   "verifications": [
+    {"url": "https://www.cdu.ru/tek_russia/articles/3/1216/", "ok": true, "contains_value": true},
+    {"url": "https://timesca.com/turkmenistan-gas-exports-tajikistan/", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Searched Russian first. cdu.ru (TEK Russia / CDU energy-statistics agency, RU) explicitly names this pipeline among Tajik Transgaz's currently-held balance of trunk gas pipelines: 'На балансе «Таджиктрансгаза» находятся: магистральные газопроводы... в том числе газопроводы «Келиф — Душанбе»...' (Tajik Transgaz holds on its balance the trunk gas pipelines... including the Kelif-Dushanbe gas pipeline) -- this lists it as active current infrastructure, not a decommissioned/historical asset. This is the same page the sheet already cites; re-verified live (200, token present) -- the DEAD_LINK classification on the input brief appears to be an automated-check false negative from searching the literal English string 'operating' on a Russian-language page (matches the deep-sweep audit's finding on this row). Corroborating, independent, English-language: Times of Central Asia (2026-08-26, 'Turkmenistan Gas Exports: Could Tajikistan Become a New Market?') confirms Tajikistan's 2024 gas imports (~267 million cubic meters) were Uzbek-origin gas moving through the existing corridor, i.e. gas is currently flowing to Dushanbe over this trunk system -- supports the pipeline's physical asset being in current operating use. CAVEAT (carried from the deep-sweep audit, not grounds for a status change): the same article frames any TURKMEN-origin gas reaching Tajikistan via Kelif as still prospective/on-paper as of Aug 2026, so the Turkmen segment specifically may be idle while the Uzbek segment is what is actively moving gas -- flagged for whoever next reviews FuelSource/segment-level flow, not a Status concern on this operating trunk."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 3755,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "The only source that names StartYear1=1975 for this specific pipeline is the UN Statistics Division PPT (unstats.un.org/unsD/energy/meetings/cis2011/ac.240-p2_fuel.ppt), reachable only via a web.archive.org capture. Re-tried today: direct curl to both the brief's cited capture (20260812163236) and the earliest known capture per the archive.org availability API (20220722114946, confirmed to exist via https://archive.org/wayback/available, which itself IS reachable) both timed out; WebFetch also reported it is unable to fetch from web.archive.org. This matches the country note's documented network condition (archive.org's API answers, web.archive.org content-serving does not, on this machine) -- not evidence the capture is bad, but per the access-failure rule I cannot cite a page I could not actually read this session. Searched in Russian for an independent alternative naming a 1975 start year for the Kelif-Dushanbe line specifically: cdu.ru (already used for Status) names the pipeline but gives no build/commissioning year, only an aggregate current network length; ria.ru's 2003 wire on Turkmen-Uzbek pipeline-transfer talks names the pipeline but is dated 2003 with no construction-year content. Russian Wikipedia pages (Kelif, Economy of the Tajik SSR) do state a 1975 build year, corroborating the sheet's value, but per source_roster.md Wikipedia is never citable directly and was read for leads only. Found no citable non-Wikipedia independent source for 1975. Leaving UNRESOLVED rather than citing an unreadable capture or a banned source."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 3755,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Same access problem as Start [ref]: LengthKnown=300.00 km is sourced only to the unstats.un.org PPT via a web.archive.org capture, and web.archive.org content-serving was unreachable from this machine today (confirmed by direct curl timeouts on two different capture timestamps, including the earliest one on record per archive.org's availability API, plus a WebFetch refusal) -- a network condition, not a dead-link finding, so per the access-failure rule I am not citing a page I could not read. Searched in Russian for an independent length figure for this specific line: cdu.ru gives only an aggregate figure (917 km total across five named Tajik trunk lines, not broken out per line) and neither ria.ru nor the other seed citations state a per-line length. Separately worth flagging (per the deep-sweep audit, outside this ref-sweep's scope to resolve): the row's own mapped RouteAccuracy=high geometry yields LengthEstimateKm=406.14 km, 35% longer than the 300 km 'known' figure -- a genuine spec discrepancy that a route-integrity review should look at, not something this pass can adjudicate. Leaving UNRESOLVED rather than citing an unreadable capture."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 3755,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.cdu.ru/tek_russia/articles/3/1216/",
+    "https://ria.ru/20030114/298122.html"
+   ],
+   "verifications": [
+    {"url": "https://www.cdu.ru/tek_russia/articles/3/1216/", "ok": true, "contains_value": true},
+    {"url": "https://ria.ru/20030114/298122.html", "ok": true, "contains_value": true}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "ru",
+   "researcher_notes": "Two independent Russian sources both name the pipeline using exactly its two endpoint place names, which is what supports StartLocation=Kelif / EndLocation=Dushanbe: cdu.ru lists 'газопроводы «Келиф — Душанбе»' among Tajik Transgaz's held trunk pipelines (i.e. the Dushanbe end sits on Tajikistan's own operated network, consistent with EndCountryOrArea=Tajikistan -- Dushanbe is Tajikistan's capital, an uncontested fact). ria.ru (2003) independently names 'Келиф-Душанбе' as one of two trunk TRANSIT gas pipeline sections (with Мубарек-Келиф, i.e. Mubarek-Kelif) under Turkmen-Uzbek intergovernmental negotiation to transfer sections TO Turkmenistan -- consistent with Kelif being the Turkmenistan-side origin/border point of the corridor (Kelif is a settlement in Lebap Province, Turkmenistan, on the Amu Darya), matching StartCountryOrArea=Turkmenistan. Neither source states 'Turkmenistan'/'Tajikistan' as bare country labels for this line -- that attribution rests on standard, uncontested geography (Dushanbe = the capital of Tajikistan; Kelif = a Turkmen town) rather than being independently re-derived from a gazetteer this session: geonames.org's Kelif entry (geonameId 1219017) is JS-rendered and returned no country text to url_verifier despite a 200, so per rule 3 it was not cited. Tier kept at medium (place-name identity confirmed by 2 independent sources; country attribution not independently re-sourced)."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 3755,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [
+    {"url": "https://www.cdu.ru/tek_russia/articles/3/1216/", "ok": true, "contains_value": false}
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Reused and re-verified the deep-sweep audit's fill finding on this exact unit (row's audit shard, fills[0]) rather than re-deriving from scratch -- concur with its conclusion after an independent re-check today. cdu.ru confirms Tajik Transgaz as the balance-holder/operator of this pipeline on Tajik territory -- only ONE of the three named operators (Узтрансгаз, Tajik Transgaz, Turkmengaz). On cdu.ru, Uztransgaz appears only as Tajikistan's gas SUPPLIER (import contract context), not as pipeline operator. Re-checked mfa.gov.tm/en/articles/84 (Turkmenistan's list of its own main export gas pipelines) today: it does not mention Kelif, Kelif-Dushanbe, or Tajikistan among its named pipelines at all, confirming the audit's finding that this URL is irrelevant to this specific line despite being a live 200. Found nothing independently naming Turkmengaz as operator of a Turkmen segment of this specific line. Leaving UNRESOLVED per the country's calibration: a genuine Russian-language search that comes up short on a state-monopoly multi-country asset is an honest UNRESOLVED, not a failure to look."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 3755,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [
+    {"url": "https://utg.uz/ru/about/history/", "ok": false, "contains_value": false},
+    {"url": "https://www.mfa.gov.tm/en/articles/84", "ok": true, "contains_value": false},
+    {"url": "https://www.cdu.ru/tek_russia/articles/3/1216/", "ok": true, "contains_value": false}
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "ru",
+   "researcher_notes": "Owner1/2/3 = Uztransgaz, Tajik Transgaz, Turkmengaz -- the same three-party claim as Operator [ref], and it fails to clear the bar for the same reason. Of the three current_ref URLs: utg.uz/ru/about/history/ re-verified today as a confirmed HTTP 404 (via url_verifier and a raw curl status check), so it cannot support anything and should be dropped as dead, not kept as an inaccessible-but-live page. mfa.gov.tm/en/articles/84 is live (200) but re-read in full today -- it is Turkmenistan's own enumerated list of its main EXPORT gas pipelines (Turkmenistan-China, Dowletabat-Deryalyk, Korpeje-Kurtkui, Dowletabat-Hangeran, East-West) and Kelif-Dushanbe is not among them; it does not mention this pipeline at all, so it is a live but irrelevant citation for this Owner claim. cdu.ru (the third current_ref, live) names Tajik Transgaz as the balance-holder of this pipeline within Tajikistan -- independent support for Owner2=Tajik Transgaz only, not for the primary_value Uztransgaz or for Turkmengaz. Tried the utg.uz Wayback capture (20260314231446, confirmed to exist per the availability API) as a possible replacement for the dead utg.uz page, per the dead-link protocol -- web.archive.org content-serving was unreachable from this machine today (same network condition as the Start/Length units), so it could not be read or cited. No independent source found naming Uztransgaz or Turkmengaz as co-owners of this specific multi-country line (as opposed to being each country's national gas company in general). Leaving UNRESOLVED rather than citing a 404, an irrelevant-but-live page, or an unreadable capture."
+  }
+ ]
+}

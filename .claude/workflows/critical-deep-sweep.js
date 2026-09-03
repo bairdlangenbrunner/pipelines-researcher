@@ -84,12 +84,33 @@ ${ROSTER}
 1. NEVER cite gem.wiki / globalenergymonitor.org, theodora.com, or A Barrel Full /
    abarrelfull.wikidot.com / any wikidot.com page. Read for leads only. url_verifier rejects them.
 2. NEVER fabricate a URL. If you cannot verify, say so in researcher_notes — no invented links.
-3. Run EVERY url through the verifier before you cite it:
-   \`python scripts/url_verifier.py "<url>" "<expected substring>" ["<more>"]\` → cite only if it
-   prints OK/200 AND contains the expected token(s). Use distinctive tokens (numbers, place names).
+3. Run EVERY url through the verifier before you cite it, WITH THE PIPELINE NAME:
+   \`python scripts/url_verifier.py "<url>" "<expected substring>" ["<more>"] --name "<pipeline name>"\`
+   (or \`verify_url(url, any_of=surface_forms(value), name=<pipeline_name>)\`) → cite only if it
+   prints OK/200 AND contains the expected token(s) AND names the pipeline. Use distinctive tokens
+   (numbers, place names). Every verification object you write carries "name_found": true|false.
+   RELEVANCE: a page about terminus A, or about terminus B, or about the parent trunk, is NOT a ref
+   for the "A-B" segment row unless it names that segment (its FULL name, or its local-language
+   name from the worklist's OtherLanguage* columns). If the name is in another script and the
+   verifier misses it, read the page and encode the hand-confirmed match as name_found=true with
+   the matched string in "note". A ref whose page never names the pipeline is capped at low at
+   merge and listed by the pre-delivery gates -- do not stage it as if it were support.
 4. Corroborate with >=2 INDEPENDENT sources (separate origins; not one wire story reprinted, not two
    pages both tracing to GEM). tier: high = >=2 independent working+value-present; medium = 1 strong;
-   low = 1 weak/partial/conflicting. Search in the country's languages too where English is thin.
+   low = 1 weak/partial/conflicting. TWO REFS PER DATA POINT IS THE TARGET FOR EVERY UNIT: after the
+   first source lands, the second search is owed -- a different publisher and a different document
+   class (regulator approval / operator disclosure / press / EIA or acceptance notice). A single-
+   source unit is fillable at medium, but its researcher_notes must say what you searched for the
+   second source and why none was found. Search in the country's languages too where English is thin.
+5. Read every document you open TO EXHAUSTION, for every column and every sibling row. A source
+   found for one cell is a source for every fact on its page: if the approval notice you found for
+   Status also states length, diameter, investment, construction start and commissioning date, stage
+   it onto Length / Diameter / SegmentCost / Construction / Start [ref] too (REFS_ADDED where the
+   value is on the sheet, a fill where the cell is blank). Then check the roster: a page about the
+   trunk names its branches, and a page about segment I states segment II's numbers -- write those
+   into your researcher_notes naming the other PID, so the orchestrator can route them (findings do
+   not propagate across a fan-out by themselves). Limit: a SYSTEM figure is never a ref for a
+   SEGMENT cell (aggregate-vs-segment rule) -- note it and file a validity concern instead.
 
 ## What to do, IN THIS PRIORITY ORDER (existence + classification FIRST)
 1. EXISTENCE — Is this pipeline real? Find independent evidence it physically exists/is being built.
@@ -104,8 +125,13 @@ ${ROSTER}
 5. SPEC — length, diameter, capacity, dates. CRITICALLY confirm each against >=2 independent sources.
    It is NOT enough that a page mentions the pipeline — the source must AGREE with the GEM number.
    Material disagreement → concern_type="spec", verdict="concern" (never silently pass it).
-Also DEEP-FILL genuinely blank value fields with a paired, verified ref (best-effort; do not force a
-number on weak fields like Capacity — leave blank rather than fabricate).${statusInstr}${EXTRA}
+6. FILLS ARE OWED, NOT OPPORTUNISTIC. Every worklist unit for ${pid} with class == "MISSING_VALUE"
+   is a blank the sheet owes a value for (Length, Capacity, Diameter, StartYear, ConstructionYear,
+   SegmentCost, Pressure, FuelSource, Operator, Owner …). For EACH ONE emit a fills[] object: a
+   sourced value with a paired verified ref when you find one, otherwise class_out="UNRESOLVED" with
+   researcher_notes saying what you searched. Never force a number (a weak Capacity stays blank rather
+   than fabricated); never skip a blank silently. Blank cells on OPERATING rows come first -- they are
+   what the researchers notice.${statusInstr}${EXTRA}
 
 A pipeline that is real and correctly classified but has a lesser caveat → verdict="confirmed (caveat)".
 Only open existence/duplicate/classification doubt → verdict="concern".
@@ -129,15 +155,22 @@ Write \`${STAGING}/rows/${pid}.json\` = a single JSON object EXACTLY shaped like
     { "segment_name": "<or empty>", "sheet_row": <int>, "ref_col": "Capacity [ref]",
       "value_cols": ["Capacity"], "primary_value_col": "Capacity", "values": {"Capacity": "<val>"},
       "primary_value": "<val>", "proposed_refs": ["https://...verified..."],
-      "verifications": [{"url":"https://...","ok":true,"contains_value":true}],
+      "verifications": [{"url":"https://...","ok":true,"contains_value":true,"name_found":true,
+                          "note":"<the phrase on the page that states the value and names the line>"}],
       "class_out": "REFS_ADDED|UNRESOLVED", "tier": "high|medium|low", "independent": true,
-      "source_language": "en", "researcher_notes": "<why this value / source>" }
+      "source_language": "en", "researcher_notes": "<why this value / source; what you searched for a 2nd source>" }
+  ],
+  "cross_row_leads": [
+    { "project_id": "<other PID from the roster>", "url": "https://...verified...",
+      "facts": "<what the page states about THAT row, e.g. '825 km, 3.1 bn RMB, construction Oct 2008'>" }
   ],
   "summary": "<one line>"
 }
 Emit at least one validity object per pipeline (use verdict="confirmed (caveat)", concern_type="none"
 if you found nothing wrong, summarizing what you confirmed).${STATUS_REVIEW ? ' In annual-update mode also emit\nat least one status_reviews object per segment row (shaped as specified above).' : ''} validity[].proposed_refs and all
-fills[].proposed_refs must have passed url_verifier. Before finishing, run
+fills[].proposed_refs must have passed url_verifier (with --name). One fills[] object per
+MISSING_VALUE unit in your worklist slice (sourced or UNRESOLVED) -- an owed blank with no object
+is a defect the pre-delivery gates list. Before finishing, run
 \`python -c "import json; json.load(open('${STAGING}/rows/${pid}.json'))"\` to confirm it parses.
 Return ONLY a 2-line summary: the verdict/concern_types you staged, and any UNRESOLVED. Your shard
 file is the deliverable, not your message.`

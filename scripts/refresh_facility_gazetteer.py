@@ -47,7 +47,7 @@ import paths  # noqa: E402
 
 csv.field_size_limit(2 ** 24)  # GOGET WKT polygons blow past the default field limit
 
-DB_OPS = paths.repo_root().parent / "gem-db-ops"
+DB_OPS = paths.db_ops_repo()  # sibling pull engine; override with GEM_DB_OPS_REPO
 GOGET_DIR = DB_OPS / "goget" / "gem_export_goget_tables"
 GOGPT_CSV = DB_OPS / "gogpt" / "gem_export_gogpt.csv"
 DATA = paths.repo_root() / "data"

@@ -1,0 +1,180 @@
+{
+  "project_id": "P0530",
+  "pipeline_name": "Sumed Oil Pipeline",
+  "sheet_row": 535,
+  "wiki": "https://www.gem.wiki/Sumed_Oil_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action — existence and classification solid",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: SUMED (Suez-Mediterranean Pipeline) is one of the best-documented crude oil pipelines in the world — a strategic Suez Canal bypass built after the 1967 canal closure. Confirmed independently by: Wikipedia (en.wikipedia.org/wiki/Sumed_pipeline), the operator's own site (sumed.org), the U.S. EIA (eia.gov/todayinenergy/detail.php?id=61025), and current 2026 reporting (Egypt Independent, 'Egypt's SUMED oil flows jump 150% on Red Sea trade rerouting') confirming it is actively operating today amid Red Sea shipping disruptions. Correctly classified Fuel=Oil (crude oil transshipment line, not gas/products). No hallucination risk here — this is a Tier-1 real, active, well-known asset.",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://www.eia.gov/todayinenergy/detail.php?id=61025"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "duplicate",
+      "recommendation": "no merge — orchestrator's watchlist question (P0530 vs P5121) is resolved: keep both rows as-is",
+      "researcher_notes": "DUPLICATE WATCHLIST RESOLVED: P0530 and P5121 both read 'Sumed Oil Pipeline', Ain Sukhna->Alexandria, 320 km / 42 in / 1,250,000 bpd — identical on every visible spec. This is NOT a duplicate/relabel. Multiple independent sources (Wikipedia, sumed.org's own facilities page) confirm SUMED is physically built as TWO PARALLEL 42-inch, 320 km pipelines sharing one corridor (Ain Sukhna -> Dahshour booster -> Sidi Kerir), with a combined system capacity of 2.5 million bpd. GEM has deliberately modeled this as two rows via segment_name — P0530 = 'Pipeline 1', P5121 = 'Pipeline 2' — which is the correct way to represent a genuine twin-line system, not a double-count. Minor cross-row inconsistency worth a separate note (not this row's defect): sumed.org's own history page dates the FIRST line's start to January 1977 (first tanker loaded at Sidi Kerir) and the SECOND line/phase to October 1978 (capacity doubled to 80 million tons/yr) — P0530's StartYear1=1977 matches 'Pipeline 1' correctly, but P5121 ('Pipeline 2') also carries StartYear1=1977 in the worklist, which per sumed.org's own timeline should likely be 1978. That is P5121's issue to flag/fix, not this row's.",
+      "proposed_refs": ["https://sumed.org/?p=facilities", "https://sumed.org/?p=history"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "correct StartPrefecture/District from 'Sinai Peninsula' to 'Ain Sokhna' (matching sibling rows P7331/P7315/P7327/P7321, all of which correctly use 'Ain Sokhna' as the Prefecture/District for this exact location)",
+      "researcher_notes": "GEOGRAPHY ERROR: sheet has StartLocation='Ain Sukhna terminal', StartPrefecture/District='Sinai Peninsula', StartState/Province='North Red Sea'. Ain Sukhna (Ain Sokhna) is on the WESTERN/African shore of the Gulf of Suez, in Suez Governorate — roughly 55 km south of Suez city and ~120 km east of Cairo. It is NOT part of the Sinai Peninsula, which lies on the opposite (eastern) side of the Suez Canal/Gulf of Suez. Confirmed via multiple independent sources describing Ain Sokhna as a town in Suez Governorate on the Gulf of Suez's west bank. This is also an internal-consistency defect: four OTHER Egypt-oil rows in this same tracker that reference the identical Ain Sokhna location (P7331 EndPrefecture/District, P7315 EndPrefecture/District, P7327 StartPrefecture/District, P7321 StartLocation) all correctly write 'Ain Sokhna' — only P0530 and its twin P5121 substitute the wrong 'Sinai Peninsula'. Separately, the sheet's StartState/Province taxonomy for this location is itself inconsistent tracker-wide (variously 'Suez', 'Suez Gulf', 'North Red Sea' across different Ain Sokhna rows) — flagging as a broader open question for Update, not resolving it here since no single value is clearly the sheet's intended standard.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "correct FuelSource from 'Gulf of Suez' to reflect the crude's actual origin — e.g. 'Saudi Arabia (Persian Gulf crude, via Ain Sukhna terminal)' — matching the sheet's own convention of naming a specific origin field/terminal (cf. P3719 FuelSource='Tobruk terminal', P7328='Midor - Middle East Oil Refinery', P3688='Abu Gharadig')",
+      "researcher_notes": "LIKELY MISATTRIBUTION: FuelSource='Gulf of Suez' appears to conflate the GEOGRAPHIC LOCATION of the intake terminal (Ain Sukhna sits on the Gulf of Suez) with the ACTUAL SOURCE of the crude oil moving through the line. Per gem_schema.md's own convention (documented for the gas sheet but applied identically across every other Egypt-oil FuelSource cell in this worklist), FuelSource should name the specific upstream field/terminal feeding the line, not a generic body of water. SUMED carries NO locally-produced Gulf-of-Suez crude at all — it is a pure transshipment line: VLCCs deliver imported crude to Ain Sukhna, which is then pumped to Sidi Kerir for reloading onto tankers bound for the Mediterranean/Europe. Al Jazeera (2020, still describing the same unchanged system): 'The vast majority of crude entering the pipeline comes from Saudi Arabia, with Kuwait and Iraq contributing much less' and 'designed to pump 2.5 million barrels of Persian Gulf crude'. Wikipedia independently corroborates: SUMED provides 'an alternative to the Suez Canal for transporting oil from the Persian Gulf region to the Mediterranean.' Two independent sources agree the origin is Persian/Arabian Gulf crude (predominantly Saudi), not Gulf-of-Suez production — the current value is not merely imprecise, it names the wrong body of water for the wrong reason (intake geography vs. crude origin).",
+      "proposed_refs": ["https://www.aljazeera.com/economy/2020/7/27/oil-flows-through-egypts-sumed-pipeline-slow-dramatically", "https://en.wikipedia.org/wiki/Sumed_pipeline"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Pipeline 1",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on Length/Diameter/dates; Capacity is a reasonable arithmetic split, not an explicitly sourced per-line figure",
+      "researcher_notes": "SPEC CHECK: Length=320 km and Diameter=42 in both confirmed at high tier by 3 independent sources (Wikipedia, operator sumed.org's own facilities page, and multiple current news sources) — no disagreement found anywhere. Status=operating confirmed current as of 2026 (Egypt Independent: 'SUMED oil flows jump 150% on Red Sea trade rerouting', describing live 2026 throughput). ProposalYear=1974 matches sumed.org's own history: 'SUMED was established by Law No 7, 1974' (precursor five-nation agreement was Dec 1973 per a 1973 NYT piece in the wiki's own citation list, so 1974 = formal legal establishment, a defensible ProposalYear anchor). StartYear1=1977 matches sumed.org's own timeline precisely for THIS line ('Pipeline 1'): first tanker (Esthel) loaded at Sidi Kerir January 1977. CAVEAT on Capacity=1,250,000 bpd: no source states a per-line figure explicitly — every source (Wikipedia, EIA, Al Jazeera) states only the combined SYSTEM capacity of 2.5 million bpd across both twin lines. 1,250,000 x 2 = 2,500,000 is an exact, arithmetically consistent split for two identically-specced (42in/320km) parallel lines, but it is a derived value, not a directly cited one — tier medium for Capacity specifically, high for everything else in this cluster.",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://sumed.org/?p=facilities", "https://sumed.org/?p=history"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Oil"}, "primary_value": "Oil",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://sumed.org/?p=facilities"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": true},
+        {"url": "https://sumed.org/?p=facilities", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "SUMED is a crude oil transshipment pipeline; both sources describe it as such."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"}, "primary_value": "operating",
+      "proposed_refs": ["https://www.egyptindependent.com/egypts-sumed-oil-flows-jump-150-on-red-sea-trade-rerouting/", "https://www.eia.gov/todayinenergy/detail.php?id=61025"],
+      "verifications": [
+        {"url": "https://www.egyptindependent.com/egypts-sumed-oil-flows-jump-150-on-red-sea-trade-rerouting/", "ok": true, "contains_value": true},
+        {"url": "https://www.eia.gov/todayinenergy/detail.php?id=61025", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Actively operating and carrying record/near-record throughput as of 2026 per current Egyptian press coverage; EIA background confirms the standing 2.5M bpd design capacity."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear", "values": {"ProposalYear": "1974"}, "primary_value": "1974",
+      "proposed_refs": ["https://sumed.org/?p=history"],
+      "verifications": [{"url": "https://sumed.org/?p=history", "ok": true, "contains_value": true}],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Operator's own history page: 'SUMED was established by Law No 7, 1974' (January 1974). Single strong primary source (medium tier) — the earlier Dec-1973 five-nation political agreement reported by the NYT is a precursor negotiation, not the same event, so not counted as a second independent corroboration of the 1974 date specifically."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"], "primary_value_col": "StartYear1", "values": {"StartYear1": "1977"}, "primary_value": "1977",
+      "proposed_refs": ["https://sumed.org/?p=history", "https://en.wikipedia.org/wiki/Sumed_pipeline"],
+      "verifications": [
+        {"url": "https://sumed.org/?p=history", "ok": true, "contains_value": true},
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Operator's own timeline: first tanker loaded at Sidi Kerir January 1977, marking commissioning of this (the first) line. Wikipedia independently states the system was commissioned 1977."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity", "values": {"Capacity": "1,250,000.00", "CapacityUnits": "bpd"}, "primary_value": "1,250,000.00",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://www.eia.gov/todayinenergy/detail.php?id=61025"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": false},
+        {"url": "https://www.eia.gov/todayinenergy/detail.php?id=61025", "ok": true, "contains_value": false}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Neither source states a per-line figure — both state the combined 2-line system capacity as 2.5 million bpd. 1,250,000 bpd is an exact half-split across two identically-specced (42in/320km) parallel lines, which is arithmetically sound but not a directly cited per-line number, hence medium tier rather than high. Cited refs support the combined total that the per-line figure derives from."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown", "values": {"LengthKnown": "320.00", "LengthKnownUnits": "km"}, "primary_value": "320.00",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://sumed.org/?p=facilities"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": true},
+        {"url": "https://sumed.org/?p=facilities", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "320 km confirmed by the operator's own site and independently by Wikipedia; no conflicting length found anywhere."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter", "values": {"Diameter": "42", "DiameterUnits": "in"}, "primary_value": "42",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://sumed.org/?p=facilities"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": true},
+        {"url": "https://sumed.org/?p=facilities", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "42-inch diameter confirmed by the operator's own site ('twin 42-inch') and independently by Wikipedia."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {"FuelSource": "Gulf of Suez"}, "primary_value": "Gulf of Suez",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "NOT staged — see validity concern (attribution). Independent sources (Wikipedia, Al Jazeera) both indicate the crude's actual origin is Persian/Arabian Gulf (predominantly Saudi Arabia), not the Gulf of Suez; declining to cite sources in support of what appears to be an incorrect current value. Route to Update for a corrected value before a ref is attached."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "StartLocation [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea"], "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Ain Sukhna terminal", "StartPrefecture/District": "Sinai Peninsula", "StartState/Province": "North Red Sea", "StartCountryOrArea": "Egypt"}, "primary_value": "Ain Sukhna terminal",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "NOT staged as a clean REFS_ADDED — see validity concern (attribution). StartLocation='Ain Sukhna terminal' and StartCountryOrArea='Egypt' are correct and well-supported, but StartPrefecture/District='Sinai Peninsula' is geographically wrong (Ain Sukhna is in Suez Governorate, on the opposite shore from Sinai) and StartState/Province is inconsistent with sibling rows referencing the same location. Because this is one combined ref cluster covering a value that is partly wrong, citing sources here would misleadingly appear to certify the Sinai Peninsula claim. Route to Update for a corrected Prefecture/District (-> 'Ain Sokhna', matching P7331/P7315/P7327/P7321) before pairing a ref."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "ref_col": "EndLocation [ref]",
+      "value_cols": ["EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"], "primary_value_col": "EndLocation",
+      "values": {"EndLocation": "Sidi Kerir", "EndState/Province": "Alexandria", "EndCountryOrArea": "Egypt"}, "primary_value": "Sidi Kerir",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://sumed.org/?p=facilities"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": true},
+        {"url": "https://sumed.org/?p=facilities", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Sidi Kerir terminal, on the Mediterranean coast west of Alexandria, confirmed as the endpoint by both the operator's own site and Wikipedia; Alexandria Governorate placement is correct."
+    },
+    {
+      "segment_name": "Pipeline 1", "sheet_row": 535, "oo_sheet_row": 467, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1", "values": {"Owner1": "Arab Petroleum Pipelines Co (SUMED)", "Owner1%": "100.00%"}, "primary_value": "Arab Petroleum Pipelines Co (SUMED)",
+      "proposed_refs": ["https://en.wikipedia.org/wiki/Sumed_pipeline", "https://sumed.org/"],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Sumed_pipeline", "ok": true, "contains_value": true},
+        {"url": "https://sumed.org/", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Owner1 name matches the operating/asset-owning joint-venture company confirmed by both its own site ('SUMED - the Arab Petroleum Pipelines Company', also styled 'Arab Petroleum Pipelines Co-Sumed') and Wikipedia's infobox ('Arab Petroleum Pipeline Company'). 100% is correct at this level — SUMED itself is the sole legal owner of the physical pipeline asset. CAVEAT for a possible future deeper pass: the underlying SHAREHOLDERS of the SUMED company (not of the pipeline directly) are, per Wikipedia: EGPC/Egypt 50%, Saudi Aramco 15%, IPIC/UAE 15%, three Kuwaiti companies 5% each (15% total), QatarEnergy 5%. Not staged as additional Owner2-6 rows here since that would double-count against Owner1=100% and conflates 'who owns the pipeline' with 'who owns the pipeline-owning company' — flagging for Baird's judgment on whether GEM wants the beneficial-ownership breakdown instead of/alongside the JV entity."
+    }
+  ],
+  "summary": "Sumed Oil Pipeline (P0530, Pipeline 1 of the twin SUMED system) confirmed real, correctly classified, and NOT a duplicate of P5121 (the two rows are the genuine twin 42in/320km lines, per operator's own facilities page) — 9 of 11 ref units staged REFS_ADDED (high/medium tier); 2 attribution concerns found and left UNRESOLVED rather than falsely sourced: StartPrefecture/District='Sinai Peninsula' is geographically wrong (should be 'Ain Sokhna'/Suez Governorate, per 4 sibling rows' own convention), and FuelSource='Gulf of Suez' misattributes the crude's origin (independent sources say Persian/Arabian Gulf, predominantly Saudi Arabia, not Gulf-of-Suez production)."
+}

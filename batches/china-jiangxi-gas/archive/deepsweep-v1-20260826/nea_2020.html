@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="publishid" content="138687842.13.3.0"/><meta name="pageid" content="11200.1176.0.0.1116451.0.0.0.0.0.115104.138687842"/>
+<meta name="description" content="国家能源网" />
+<meta name="keywords" content="国家能源网" />
+<script src="http://www.xinhuanet.com/global/js/pageCore.js"></script>
+<title>
+通管道建储罐 今年能源有“底气”---国家能源局
+</title>
+<link href="http://www.nea.gov.cn/static/default/css/public/master_nyj_v1.0.css" rel="stylesheet" type="text/css" />
+<link href="http://www.nea.gov.cn/static/default/css/article.css" rel="stylesheet" type="text/css" />
+<link href="http://www.nea.gov.cn/2015nyj/xinban/topbase.css" rel="stylesheet" />
+<script src="http://www.nea.gov.cn/static/default/js/public/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script language="javascript">
+$(document).ready(function(){　
+
+var lefttmp = new Image();
+lefttmp.src= "http://www.xinhuanet.com/photo/static/arr_left.cur";
+var righttmp = new Image();
+righttmp.src= "http://www.xinhuanet.com/photo/static/arr_right.cur";
+leng = $("a",$("#div_currpage")).length;
+	
+if(leng!=0)
+//curr里有a标签==稿件不止一页
+	{
+
+		//看一共有多少个a标签
+		leng = leng -1;
+		var nextLin  = $("a",$("#div_currpage"))[leng].href;//对于多页的情况，取得下一页的地址
+		var oneword = location.href+"#";
+		if(nextLin==oneword)
+		{
+		leng = leng -1;
+		nextLin  = $("a",$("#div_currpage"))[leng].href;
+		}
+		var currurl = location.href;//当前页链接地址<meta http-equiv="expires" content="Sunday 26 October 2011 01:00 GMT" /> 
+				
+		var underpd = currurl.substring(currurl.indexOf("c_")+2,currurl.indexOf(".htm"));	
+		if (underpd.indexOf("_")==-1)
+			{
+
+			prevLink = location.href;//如果是文章首页，则左键仍是替换到本页面
+			nextLink = $("a",$("#div_currpage"))[0].href;      //下一页的赋值
+			setTimeout("window.opener=null;window.location.href='"+nextLink+"'",60000);//30秒跳转到下一页
+		}
+
+	else
+		//是末页，http://news.xinhuanet.com/photo/2011-08/06/c_121822530.htm
+		{
+			//当前页分页号判断
+			var currnum = currurl.indexOf(".htm");//链接中第一次出现.htm的位置
+			var underlineindex = currurl.lastIndexOf("_")+1; //下划线甄别标识，第一页则不是下划线
+			//下一页的分页号
+			var nextnum = nextLin.indexOf(".htm");//链接中第一次出现.htm的位置
+			var underlinenext = nextLin.lastIndexOf("_")+1; //下划线甄别标识，第一页则不是下划线
+			var undernum = nextLin.substr(nextLin.indexOf("c_")).split("_").length-1;
+			
+			var temp = currurl.substring(underlineindex,currnum);//当前页的分页号
+			var nexttemp = 	nextLin.substring(underlinenext,nextnum);//最后a标签的分页号
+			var boolx = parseInt(temp,10)>parseInt(nexttemp,10);
+			
+			if((boolx)||(undernum==1))//末页
+
+					{
+					
+						if($("img",$("a",$("#content"))).length==0)//没有带链接的图片
+			
+							{
+								prevLink = nextLin;
+									if(undernum==1)
+									{
+										nextLink = nextLin;
+									}
+									else
+									{
+										nextLink = prevLink.substr(0,(prevLink.lastIndexOf("_")))+".htm";
+									}
+								setTimeout("window.opener=null;window.location.href='"+nextLink+"'",60000);//30秒跳转到下一页
+							}
+			
+						else//末页正文图片有链接
+							{
+								prevLink = nextLin;
+								nextLink = $("a",$("#content"))[0].href;//把正文第一个带链接的链接地址赋给下一页
+							}
+
+					}
+
+				else//不是末页
+					{
+
+							prevLink = $("a",$("#div_currpage"))[0].href;//把正文第一个带链接的链接地址赋给下一页
+							nextLink = nextLin;//把正文最后一个带链接的链接地址赋给下一页
+					}
+
+		}
+	}
+else
+//只有一页
+	{
+		prevLink = location.href;
+		nextLink = location.href;
+	}
+
+document.onkeydown = pageEvent;
+  function pageEvent(evt) {
+    evt = evt || window.event;
+    var key = evt.which || evt.keyCode;
+    if (key == 37) location = prevLink;
+    if (key == 39) location = nextLink;
+  };
+		
+		var lefturl		= prevLink;
+		var righturl	= nextLink;
+		var imgurl		= righturl;
+
+			$("#content img").each(function(){ 
+				var width = $(this).width();
+				var thisImage=$(this); 
+				//alert("01");
+				$(thisImage)[0].onmousemove=function(){
+					
+					if(event.offsetX<width/2){
+					
+						this.style.cursor	= 'url('+lefttmp.src+'),auto';
+						imgurl				= lefturl;
+					}
+					
+					else{
+					
+						this.style.cursor	= 'url('+righttmp.src+'),auto';
+						imgurl				= righturl;
+					}
+					
+	                                                }
+	               
+				$(thisImage)[0].onmouseup=function(){
+					top.location=imgurl;
+	
+				}   
+             });
+　　　　
+　　	});
+</script>
+</head>
+<body>
+<script src="http://www.nea.gov.cn/2015nyj/xinban/topnav.js" type="text/javascript"></script>
+<div class="main-colum">
+<div class="now-site">您当前位置：<a href="http://www.nea.gov.cn/" target="_blank">首页</a> > 正文</div>
+<div class="channel-page">
+<div class="article-title">
+<div class="hr_10"></div>
+<div class="titles">
+通管道建储罐 今年能源有“底气”
+</div>
+<div class="hr_10"></div>
+<span class="times">
+发布时间：2020-01-08
+</span>
+<span class="author">
+来源：国家能源局
+</span>
+<span class="switchsize"><b class="bigger">大</b><b class="medium">中</b><b class="smaller">小</b></span>
+<div class="arrow"></div>
+</div>
+<div class="article-box">
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+<div class="article-content">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td align="left" valign="top">
+<p>　　河北唐山，黄色的管道蜿蜒交错，地面上一块块青砖散发着新铺设的味道，中俄东线唐山联络压气站在2019年11月30日具备了投产条件；河南焦作，直径29米、高29米的LNG储罐内部，正在进行内层钢板的拼装、焊接，豫北LNG应急储备中心已经完成了大约70%的工程量。</p>
+<p>　　“用气做饭、取暖都可方便、很暖和，现在冬天都不开空调了。”河南焦作许良镇南道村村民李桂英乐呵呵地对记者说。“燃气壁挂炉开着，屋里把暖气片打开，10分钟屋里温度就上来了，比过去烧煤真的好太多了！”河北廊坊北旺乡大枣村村民周继春脸上堆满了笑容。国家能源局开展的专项整治漠视侵害群众利益问题督导工作，使各省保障群众用气的许多先进经验和典型做法浮出水面。</p>
+<p>
+<p><strong>　　管道互联互通 打破输气瓶颈</strong></p>
+<p>　　“我们这个项目目的是解决唐山到宝坻天然气输送的瓶颈问题。”在中俄东线天然气管道工程项目部互联互通工程项目（唐山-宝坻）管理分部，项目经理张天成告诉记者，为切实推进天然气产供销体系建设，消除供应保障设施瓶颈，强化资源串换和互供互保能力，加快形成全国天然气一张网，国家发展改革委、能源局将中俄东线长岭-永清段列入2019年天然气基础设施互联互通重点工程，其中唐山-宝坻段要求在2019年11月30日完成。</p>
+<p>　　“唐山到宝坻原来只有一条输气管道，为了京津冀保供，现在俄罗斯的进口天然气、盘锦双六储气库的天然气、大连LNG转输的天然气以及唐山LNG接收站的天然气4路气源都要汇集到唐山，然后由唐山往宝坻方向输送，这样在80千米的路径上形成了天然气输送通道的瓶颈。” 张天成介绍说。</p>
+<p>　　记者在河北唐山市西北方向的丰润区陶立营村看到，已经秋收后荒芜的农田中有新埋设的管线翻土的痕迹。据介绍，中俄东线唐山-宝坻1219毫米的钢管输气管道都埋于1.5米以下的地下空间，来年的农耕不受影响。</p>
+<p>　　大约2千米外，中俄东线唐山联络压气站占地面积40000多平米，室外管道新刷的防腐漆油光锃亮，以醒目的黄色为主，中间“点缀”着一些红色。3间压缩机厂房里分别布置着3台压气站最重要的设备——压缩机组。管道内的天然气在这里经过加压后，输气量将大大增加。唐山联络压气站与一墙之隔的永唐秦管道唐山分输压气站合建，通过两个站场实现中俄东线管道与唐山LNG外输管道、永唐秦管道的互联互通。</p>
+<p>　　《国家能源局关于开展专项整治漠视侵害群众利益问题工作的通知》印发后，河北省相关部门和企业积极组织中俄东线河北段、鄂安沧管线途径市县及项目建设单位，多次召开协调推进会，解决项目建设遇到的困难和问题。除中俄东线唐山-宝坻项目外，鄂安沧管线一期工程，陕京四线马坊—香河支干线，陕京四线张家口压气站，中石化鄂安沧输气管道与中石油陕京二、三线安平联通工程均已建成投运。今冬河北省天然气管网输送能力可达1亿立方米左右，基本可满足高峰日1.1亿立方米左右的输送需求。</p>
+<p>　　中俄东线终端唐山-宝坻段的另一端的天津市，涉及的互联互通重点工程共有4项。其中，中石化天津LNG接收站气化能力扩建工程已投产；唐山LNG外输管线（曹妃甸-宝坻段）一般线路段已完成招标工作，2019年11月21日举行了唐山LNG项目及配套外输管线项目推进大会。此外，中俄东线永清-泰兴段山东省域范围内也在积极推进。</p>
+<p>
+<p><strong>　　建设储气设施 应急储备保障</strong></p>
+<p>　　豫中郑州、豫北焦作、豫东周口、豫南驻马店、豫西洛阳、豫西南南阳，在形状如大象的河南地图上，6座区域性LNG应急储备中心均匀分布；中原文23地下储气库，平顶山叶县盐穴两个储气库，一个在头，一个在腰，支撑着河南天然气的“底气”；一条正在规划建设中的管道从江苏盐城滨海县，经过3省8市跨越600多千米，未来会将海上LNG源源不断送入河南。记者在河南天然气安全管理与应急调度中心，通过大屏幕初步领略河南储气设施建设雄伟蓝图。</p>
+<p>　　在国家能源局专项整治漠视侵害群众利益问题检查督导工作中，“全面推进储气调峰设施建设”的河南模式被作为典型经验。</p>
+<p>　　采取“租地下库容、引海气入豫、建区域中心”等方式，河南省在全国率先成立省级储气平台公司，全面推进全省储气调峰设施建设。通过参股建设江苏滨海大型LNG储罐项目，租赁中石油平顶山盐穴储气库、中原文23地下储气库、建设省内6座区域性LNG应急储备中心，河南初步形成“1+2+6”储气设施建设模式。</p>
+<p>　　“在中海油江苏公司滨海大型天然气储罐基地，河南参建两个储罐基地，用来接海上的LNG，气化后通过管道再运到河南；两个罐储气量达到44万水立方。6 座LNG应急储备中心的储气罐每个2万立方米，气化之后共计7200万立方米。两个储气库的储气能力分别为4亿立方米/年和3亿立方米/年。”河南省天然气储运有限公司相关负责人列出的数据细化了记者脑海中河南储气能力建设规模。</p>
+<p>　　储气设施建设在其他一些省份也逐步得到落实。北方重点地区利用中央预算内资金和省级财政资金，积极推进储气设施建设任务落实。2018—2019年国家发展改革委、能源局共安排30亿元中央预算内投资，切块下达给北方15省，共支持百余个政府应急储气项目建设。</p>
+<p>　　记者从河南天然气安全管理与应急调度中心的实时监控画面看到，6座区域性LNG应急储备中心正在有序建设，2020年可全部竣工投运，届时全省总储气能力将达10亿立方米，可有效解决河南储气调峰能力不足问题。</p>
+<p>　　驱车80分钟赶赴位于焦作的豫北LNG应急储备中心，记者看到屹立的储气罐和林立的单体气化器，以及封顶的办公楼，这个中心已具雏形，覆盖范围包括焦作、新乡、安阳、鹤壁、濮阳、济源以及滑县和长垣等6市2县1500万居民。</p>
+<p>　　名为“双金属全容罐”的储气罐分为内外两层，金属罐外罐已全部完成，内罐安装正在进行，近距离能够看到内外罐之间的保温层。据介绍，储气罐高29米，容积2万水立方，存储的将是零下162摄氏度的液态气体。不远处，一台台气化器就像稍大的空调柜机，横平竖直呈矩阵排列。气化区的单体气化器共有40台，每小时气化量可达10万立方米。</p>
+<p>
+<p><strong>　　协调气源供应 保证用气需求</strong></p>
+<p>　　“用燃气比以前用煤炉方便多了，还干净卫生。用煤球坏东西。这都是以前烧煤的时候熏黑的。”阎桂莲边说边指着厨房上方的墙壁给记者看。</p>
+<p>　　阎桂莲是河南焦作市博爱县许良镇南道村村民，她把自家几十平米的院子改成了一个小超市。超市东北是厨房，北边是正房，西边是楼梯通向二楼。“以前厨房或者屋里生火，煤烟就会窜到超市中，现在改了燃气，做饭取暖都特别干净省事。取暖随时都能开，每个屋都有开关，哪个屋用哪个屋开，经济实惠。”她说。记者看到，厨房里的燃气灶、整体橱柜、壁挂炉都干干净净，与城市家庭已经别无二致。</p>
+<p>　　博爱县从去年开展气电“双替代”工作，今年“煤改气”用户2700户。居民和地方发展改革委均表示，居民气源有保障，即使出现紧急情况，也“压非保民”，保证老百姓温暖过冬。</p>
+<p>　　据记者了解，今年各省“煤改气”和天然气供应均按照“以气定改”“压民保非”的原则进行，主动与上游气源企业积极衔接，争取增加供气规模，同时紧盯供气合同的签订执行。</p>
+<p>　　天津市发展改革委与中石油天然气销售天津分公司联合印发《关于下达全市2019-2020年冬季农村清洁取暖煤改气供气计划的通知》，本着增量气优先保障冬季农村清洁取暖的原则，在全国率先下达了冬季清洁取暖“煤改气”用气计划，落实资源6.6亿方，保证了平价气供气增量优先保障民生。</p>
+<p>　　江西省天然气集团有限公司部署3家下属单位采取问题自查上报方式，彻底排除长输管道气源保障、天然气技术设施互联互通重点工程推进方面存在的突出问题。针对中石油天然气销售江西分公司天然气合同量偏小的情况，江西省能源局多次召开会议，到国家发展改革委、能源局和中石油天然气销售公司进行协调，于8月底促成中石油增补了部分天然气供应量。</p>
+<p>　　在应急保供方面，甘肃省签订天然气应急预案，全省城镇燃气企业日最大用气量约1200万方/天，调峰能力达到360万方/天。山西省工业用气规模相对较大，并有相当规模的煤层气和煤制焦炉气产量，山西省制定了天然气应急预案，山西日最大可压减气量548万立方米。</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="back-top"></div>
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+</div>
+<div class="article-other">
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+
+<div class="clear"></div>
+</div>
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+<div class="hr_10"></div>
+</div>
+</div>
+<script src="http://www.nea.gov.cn/2015nyj/xinban/bottom.js" type="text/javascript"></script>
+<script src="http://www.nea.gov.cn/static/default/js/public/article-font.js" type="text/javascript"></script>
+</body>
+</html>

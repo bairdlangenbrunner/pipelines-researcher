@@ -4,9 +4,12 @@
 **Scope:** tracker-wide, not Pakistan-specific. Surfaced during the Pakistan gas pass.
 **Severity:** degraded two committed workflow legs; no data was wrong as a result.
 
-> **STATUS — read this first.** Fixed 2026-08-10. The gem.wiki zone runs Cloudflare in
-> Under Attack Mode, and a WAF rule keyed on a leading **`baird-wiki`** User-Agent token
-> is what lets a script through — no allowlist or token needed, just the right UA. Added
+> **STATUS — read this first.** Fixed 2026-08-10; Under Attack Mode itself was switched
+> off by 2026-08-11 (any UA passes again), but keep the `baird-wiki` UA — it is the
+> firewall identity and the bypass if UAM returns. During the incident the gem.wiki zone
+> ran Cloudflare in Under Attack Mode, and a WAF rule keyed on a leading **`baird-wiki`**
+> User-Agent token was what let a script through — no allowlist or token needed, just the
+> right UA. Added
 > as `url_verifier.WIKI_UA` and wired into `harvest_wiki_citations.py` and
 > `wiki_alignment.py` (deliberately byte-identical to `goit-ggit-data-ops`'s
 > `gem-wiki/gemwiki.py` USER_AGENT so both repos present as one client in the firewall

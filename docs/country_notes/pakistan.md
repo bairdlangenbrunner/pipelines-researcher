@@ -176,6 +176,44 @@ totals. **Keep all rows.** Staged as `confirmed (caveat)` in
   entries. **P5486** (Mardan–Swat) is the one row the register does not account for —
   now an existence question rather than a duplicate one (see Open items).
 
+## The PPIS Energy Infrastructure Map — a third cartographer (registered 2026-08-26)
+
+Page 6 of the Pakistan Petroleum Information Service **Investment Brochure 2025**
+(`ppisonline.com/Brochure/Investment%20Brochure%202025.pdf`; DGPC / PPIS / LMK
+Resources) is a **vector** page, so it digitizes exactly rather than by hand-tracing.
+Registered as `sources/pakistan/` (tier 3, gas + oil) and re-derivable from the tracked
+PDF via `sources/pakistan/prepare.py`: **412 LineStrings / 21,460 km**, ten classified
+pipeline classes, georeferenced off 57 city GCPs (LCC, median 3.3 km). Quirks and the
+full method: `sources/pakistan/NOTES.md`.
+
+Why it matters for this country specifically:
+
+- The July-2023 bulk-load cohort is **cartographic in origin** (see above), and this is
+  a *third* cartographer of the same network — one published by the licensing side
+  (DGPC) rather than by SNGPL/SSGC themselves. It is corroboration of **corridors and
+  existence**, not of specs: the page labels cities and fields, never segments, so the
+  manifest maps no name, diameter, length or operator.
+- **Independence is partial and unverified.** It is plainly independent of SNGPL's own
+  transmission map; its relationship to the PEPL Energy Map (the other half of the
+  bulk-load pair) has **not** been established — both are national energy maps and may
+  share upstream data. Treat the pair as one voice until that is checked.
+- Long-line lengths validate well against published figures (Iran–Pakistan 796 vs
+  781 km, TAPI 814 vs 774, Pakistan Stream 1,089 vs ~1,100, PARCO crude 804 vs 864,
+  white-oil 1,131 vs ~1,179), and the refined-oil line terminates at Machike within
+  ~1 km of truth — so the corridor geometry is usable evidence, at Tier 3 weight.
+- **Dashed = PLANNED, and the tell is stroke width alone.** The PDF carries no dash
+  arrays, so every dashed line is many separate primitives; the map body draws them as
+  0.035 pt hairlines in the operators' **EXISTING colour**, which a colour-only reading
+  turns into operating pipe. The legend pairs a solid EXISTING and a dashed PLANNED entry
+  in the identical colour, so the 226 hairline marks stitch into **21 runs emitted as
+  `sngpl_gas_planned` (8) / `ssgcl_gas_planned` (13) at `proposed`** — 531 km that would
+  otherwise have corroborated existence for pipe the publisher marks as unbuilt. Read
+  those 21 against GEM's in-dev rows, never against the operating cohort.
+- **Not yet reconciled** — the source is registered and ingest-clean (412 records,
+  412 with geometry), but no `reconcile.py` run against the 74 GEM Pakistan rows has
+  been made. That is the obvious next step, and it is the first reference source with
+  real coverage of the **4 oil rows**.
+
 ## Reconciliation results (2026-08-07; GulfPub re-run 2026-08-12)
 
 > **GulfPub RE-RUN 2026-08-12 — work
@@ -212,5 +250,7 @@ totals. **Keep all rows.** Staged as `confirmed (caveat)` in
    dates are the leads.
 5. **P0451 (IPI) owner attribution** — `Pasargad Energy Development Co` unsupported.
 6. **Oil (4 rows) not swept.**
-7. Neither recon workbook is subsumed by the handoff packet — they are separate review
+7. **Run the PPIS map recon** — `sources/pakistan/` is registered and ingest-clean but
+   never reconciled; it is also the first reference source that covers the oil rows.
+8. Neither recon workbook is subsumed by the handoff packet — they are separate review
    surfaces (see `docs/research_backlog.md` §2).

@@ -6,8 +6,9 @@ header row every run; never hard-code offsets (the schema drifts).
 
 ## The tabs
 
-Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
-("Anyone with link can view"). Pull via `scripts/refresh_csvs.sh` (curl).
+Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek` (work shared drive,
+authenticated reads only). Pull via `scripts/refresh_csvs.sh`, which wraps the shared
+engine in `../gem-db-ops` (`goit/pull.py`, `ggit/pull.py`).
 
 | Tab | Commodity | GID | Cols | Rows (approx) | Header row |
 |---|---|---|---|---|---|
@@ -31,7 +32,8 @@ Backend Google Sheet `1foPLE6K-uqFlaYgLPAUxzeXfDO5wOOqE7tibNHeqTek`
 - **Buffer rows:** ~104 reserved/blank `ProjectID`s exist at the tail of each tracker
   tab. Exclude them from QC and matching (filter to rows with a real `PipelineName`/`Status`).
 - **Pull it with `./scripts/refresh_csvs.sh`** (authenticated Sheets `values.get` per tab via
-  `gws-gem`). The anonymous CSV export died 2026-07-29 and anonymous access to these documents
+  `gws-gem`, implemented once in `../gem-db-ops/gem_sheets.py` — never re-implement it here).
+  The anonymous CSV export died 2026-07-29 and anonymous access to these documents
   is being withdrawn deliberately — don't curl an export URL. Drive MCP is not a substitute
   either: `download_file_content` returns the first tab only and `read_file_content` is
   lossy/truncating. `FORMATTED_VALUE` per-tab reads are the lossless path.

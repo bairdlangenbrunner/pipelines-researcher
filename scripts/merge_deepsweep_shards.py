@@ -27,7 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from merge_qc import (bad_cost_units, verified_refs, iter_shards, qc_note,  # noqa: E402
-                      status_qc, is_ref_only)
+                      status_qc, is_ref_only, independence_qc, relevance_qc)
 
 
 def main():
@@ -44,6 +44,15 @@ def main():
         # snapshot the ref-sweep output as the preserved baseline
         json.dump(json.load(open(cur_path)), open(prior_path, "w"), indent=1)
         print(f"snapshotted {cur_path} -> {prior_path}")
+
+    # The snapshot is the baseline, so a LATER re-seed never reaches the merged output --
+    # which is exactly how a fix to seed_resolutions_from_worklist.py (`link_live` losing its
+    # HTTP status) survived a --force re-seed and three merges unnoticed (2026-08-27, Egypt).
+    # Re-seeding is the normal way to pick up a worklist repair, so say so rather than
+    # silently preferring the stale file; refresh with:  cp staged_resolutions.json prior
+    if os.path.exists(cur_path) and os.path.getmtime(cur_path) > os.path.getmtime(prior_path) + 1:
+        print(f"  WARN {cur_path} is NEWER than {prior_path} -- merging the OLDER snapshot. "
+              "If you just re-seeded, copy it over the .prior.json first.")
 
     prior = json.load(open(prior_path))
     meta = dict(prior.get("meta", {}))
@@ -85,6 +94,10 @@ def main():
         ident = {"project_id": pid, "pipeline_name": d.get("pipeline_name", ""),
                  "wiki": d.get("wiki", "")}
         for v in d.get("validity", []) or []:
+            v_refs = v.get("proposed_refs", []) or []
+            v_tier, v_indep, v_notes = independence_qc(
+                v_refs, v.get("tier", ""), v.get("independent", False),
+                v.get("researcher_notes", ""))
             new_validity.append({**ident,
                 "sheet_row": d.get("sheet_row", ""),
                 "segment_name": v.get("segment_name", ""),
@@ -93,10 +106,10 @@ def main():
                 "class_in": "VALIDITY", "class_out": "UNRESOLVED",
                 "verdict": v.get("verdict", ""), "concern_type": v.get("concern_type", ""),
                 "recommendation": v.get("recommendation", ""),
-                "researcher_notes": v.get("researcher_notes", ""),
-                "proposed_refs": v.get("proposed_refs", []) or [],
+                "researcher_notes": v_notes,
+                "proposed_refs": v_refs,
                 "verifications": v.get("verifications", []) or [],
-                "tier": v.get("tier", ""), "independent": v.get("independent", False),
+                "tier": v_tier, "independent": v_indep,
                 "source_language": v.get("source_language", "en")})
         for f in d.get("fills", []) or []:
             refs = verified_refs(f.get("proposed_refs", []), f.get("verifications", []))
@@ -104,6 +117,10 @@ def main():
             cls = f.get("class_out", "UNRESOLVED")
             if f.get("proposed_refs") and not refs:
                 cls = "UNRESOLVED"; notes = qc_note(notes, "dropped unverified ref(s).")
+            f_tier, f_indep, notes = independence_qc(
+                refs, f.get("tier", ""), f.get("independent", False), notes)
+            if refs:
+                f_tier, notes = relevance_qc(f.get("verifications", []), f_tier, notes)
             for col, val in bad_cost_units(f.get("values")).items():
                 print(f"  WARN {pid} {f.get('ref_col', '')}: {col}={val!r} — units must be "
                       "a bare currency code; put the magnitude in the cost number (fix the shard)")
@@ -115,8 +132,8 @@ def main():
                 base["class_out"] = "REFS_ADDED" if refs else "UNRESOLVED"
                 base["proposed_refs"] = refs
                 base["verifications"] = f.get("verifications", []) or []
-                base["tier"] = f.get("tier", "")
-                base["independent"] = f.get("independent", False)
+                base["tier"] = f_tier
+                base["independent"] = f_indep
                 base["source_language"] = f.get("source_language", "en")
                 base["researcher_notes"] = notes
                 n_refonly += 1
@@ -129,7 +146,7 @@ def main():
                 "values": f.get("values", {}), "primary_value": f.get("primary_value", ""),
                 "current_ref": "", "class_in": "FILL", "class_out": cls,
                 "proposed_refs": refs, "verifications": f.get("verifications", []) or [],
-                "tier": f.get("tier", ""), "independent": f.get("independent", False),
+                "tier": f_tier, "independent": f_indep,
                 "source_language": f.get("source_language", "en"), "researcher_notes": notes})
         for s in d.get("status_reviews", []) or []:
             refs = verified_refs(s.get("proposed_refs", []), s.get("verifications", []))
@@ -138,6 +155,8 @@ def main():
                 notes = qc_note(notes, "dropped unverified ref(s).")
             verdict, changes, cls, notes = status_qc(
                 s.get("verdict"), s.get("proposed_changes"), refs, notes)
+            s_tier, s_indep, notes = independence_qc(
+                refs, s.get("tier", ""), s.get("independent", False), notes)
             new_status.append({**ident,
                 "sheet_row": s.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": s.get("segment_name", ""),
@@ -150,7 +169,7 @@ def main():
                 "evidence_date": s.get("evidence_date", ""),
                 "staleness_rule": s.get("staleness_rule", ""),
                 "proposed_refs": refs, "verifications": s.get("verifications", []) or [],
-                "tier": s.get("tier", ""), "independent": s.get("independent", False),
+                "tier": s_tier, "independent": s_indep,
                 "source_language": s.get("source_language", "en"), "researcher_notes": notes})
 
         for rt in d.get("routes", []) or []:
@@ -161,6 +180,8 @@ def main():
             # coordinates are never fabricated (standing rule 2): a suggestion with both
             # endpoints coordinated is SUGGESTED; a corridor-only one (missing coords) is PARTIAL.
             has_coords = all(rt.get(k) is not None for k in ("start_lat", "start_lon", "end_lat", "end_lon"))
+            rt_tier, rt_indep, notes = independence_qc(
+                refs, rt.get("tier", ""), rt.get("independent", False), notes)
             new_routes.append({**ident,
                 "sheet_row": rt.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": rt.get("segment_name", ""),
@@ -175,7 +196,7 @@ def main():
                 "current_route_accuracy": rt.get("current_route_accuracy", ""),
                 "suggested_route_accuracy": rt.get("suggested_route_accuracy", ""),
                 "proposed_refs": refs, "verifications": rt.get("verifications", []) or [],
-                "tier": rt.get("tier", ""), "independent": rt.get("independent", False),
+                "tier": rt_tier, "independent": rt_indep,
                 "source_language": rt.get("source_language", "en"), "researcher_notes": notes})
 
     for pid in sorted(pid_set):

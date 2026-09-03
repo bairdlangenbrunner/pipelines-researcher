@@ -1,0 +1,71 @@
+{
+  "project_id": "P3296",
+  "pipeline_name": "Transcontinental Gas Pipeline",
+  "sheet_row": 1728,
+  "wiki": "https://www.gem.wiki/Transcontinental_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Gulf Connector Expansion",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Row is real, correctly classified, and its key values check out. Swap the generic Capacity [ref] (the eia.gov landing page, which existing_ref_checks already flags as not literally containing '475') for the two documents that actually state the number: the Williams/Transco SEC 10-K and the EIA Historical Pipeline Projects spreadsheet, both cited below.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real and correctly classified. This is Transco's 'Gulf Connector' capacity expansion, placed in service January 2019 -- a compression-only addition to the existing interstate transmission system (Transco), not a standalone new pipeline. Independently confirmed by (1) Williams Companies' own SEC Form 10-K for FY2018 (filed 2019, EDGAR accession 0000107263-19-000007), which states verbatim: 'In January 2019, the Gulf Connector project was placed into service. This project expanded Transco's existing natural gas transmission system to provide incremental firm transportation capacity from Station 65 in Louisiana to delivery points in Wharton and San Patricio Counties, Texas. The project increased capacity by 475 Mdth/d.' -- verified live, exact match on Station 65 / Wharton / San Patricio / 475. (2) EIA's 'Historical Natural Gas Pipeline Projects (1996-2024)' spreadsheet carries its own line item: Project Name 'Gulf Connector Expansion Project', Operator 'Transcontinental Gas Pipeline', Project Type 'Reversal', Status 'Completed', Year In Service 2019, Additional Capacity 475 MMcf/d, Miles blank, FERC Docket CP16-494 -- independently matches Capacity and StartYear exactly, and the blank Miles field corroborates GEM's LengthKnown=0. (3) Two Pipeline & Gas Journal construction-report issues (July 2019 and August 2019) independently list 'Gulf Connector Expansion Project / Operator: Transcontinental Gas Pipe Line Company, LLC / Type: increasing compression on the existing pipeline / Location: Texas-Louisiana / Capacity: 475 MDth/d / Completion: 1Q 2019' -- trade press, a third independent origin, agreeing on the same no-new-pipe / 475 / 1Q2019 facts (PDF copies read but no longer had a resolvable public URL this session -- not counted toward tier). (4) FERC's own Environmental Assessment for a wholly separate docket (Corpus Christi Liquefaction Stage 3, CP18-512/513-000, March 2019) independently names 'Williams Gulf Connector Expansion Project' in its cumulative-impacts table as 'improvements to the Transco system between Louisiana and south Texas... construction of a new compressor station (Station 17) in San Patricio County', 2018-2019, 55.2 acres -- a fourth, fully independent (FERC staff's own document, not Williams') confirmation of the same LA-to-San-Patricio-County corridor and the compression-only nature of the work, though I could not locate a live public URL for this EA this session (FERC eLibrary is a JS app that doesn't serve docket documents to a plain fetch, and WebSearch quota was exhausted) -- treated as corroboration in notes only, not cited. CLASSIFICATION: transmission, correct -- part of Transco's FERC-regulated interstate mainline. DUPLICATE CHECK: not a duplicate. Compared against the 45-row roster; P0271 ('Transcontinental Gas Pipeline', offshore->New York, 10,200 mi) is the Transco MAINLINE system row. P3296 is one of many discrete FERC-authorized capacity-expansion projects GEM tracks as separate rows sharing the same wiki page (the page's own TOC lists ~20 separate 'Expansion Project' entries -- Garden State, Diamond East, Gateway, Sabine Pass Compression, Hillabee I/II/III, Regional Energy Access, Gulf Connector, Appalachian Connector, Texas to Louisiana Energy Pathway, Southeast Supply Enhancement, Southeast Energy Connector, Power Express, Alabama Georgia Connector, Gillis West, Decatur Lateral); this is the standing GEM convention for the Transco family, not a double-count. CAVEAT: the EIA spreadsheet's own Beg_State field for this row reads 'MS' (Mississippi) and its free-text Project Notes field says 'Transco reversal to MS/AL; includes 850 MMcf/d additional takeaway capacity out of Marcellus' -- this looks like EIA's own data-entry cross-contamination with a different, unrelated 2019 Transco project (the wiki page separately tracks a 'Hillabee Expansion Project, Phase 2' completed the same year, serving Alabama/Mississippi, cited to a different Williams press release). It is an EIA data-quality issue, not evidence against GEM's Louisiana/Texas endpoints: two fully independent documents (the SEC 10-K and FERC's own Corpus Christi Stage 3 EA) explicitly and specifically name the Louisiana-to-San Patricio-County-Texas corridor, and EIA's own State(s) field for the row does include both LA and TX alongside the anomalous MS. Wiki citation coverage: of the 29 harvested citations on this wiki page, 2 map to the Gulf Connector paragraph specifically (cite_note-williams-12, the Williams press release -- live URL now 404, Wayback captures exist per the CDX API but web.archive.org content-serving was rate-limited/bot-blocked all session so the capture itself was not read; and cite_note-sec-34, the SEC 10-K, opened and verified). The remaining ~27 citations on the page concern other Transco projects entirely (NESE, Atlantic Sunrise, Hillabee, Appalachian Connector, Rivervale South to Market, EPA settlement, Sabine Pass storage, etc.) and were skimmed to confirm they do not pertain to Gulf Connector.",
+      "proposed_refs": ["https://www.sec.gov/Archives/edgar/data/107263/000010726319000007/wmb_20181231x10k.htm", "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Gulf Connector Expansion",
+      "sheet_row": 1728,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Station 65",
+        "StartState/Province": "Louisiana",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Wharton and San Patricio Counties",
+        "EndState/Province": "Texas",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Station 65",
+      "proposed_refs": ["https://www.sec.gov/Archives/edgar/data/107263/000010726319000007/wmb_20181231x10k.htm", "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726319000007/wmb_20181231x10k.htm", "ok": true, "contains_value": true},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing sheet values (Station 65, Louisiana -> Wharton and San Patricio Counties, Texas) match the SEC 10-K verbatim: 'incremental firm transportation capacity from Station 65 in Louisiana to delivery points in Wharton and San Patricio Counties, Texas.' EIA's spreadsheet independently lists both LA and TX among the project's State(s) (also lists an anomalous MS -- flagged in validity notes as an EIA data-entry artifact, not a reason to doubt the sourced LA/TX corridor). No value change; ref-only fill."
+    },
+    {
+      "segment_name": "Gulf Connector Expansion",
+      "sheet_row": 1728,
+      "oo_sheet_row": 2487,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Transco",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Transco",
+      "proposed_refs": ["https://www.sec.gov/Archives/edgar/data/107263/000010726319000007/wmb_20181231x10k.htm", "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726319000007/wmb_20181231x10k.htm", "ok": true, "contains_value": true},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources agree the entity that built/owns/operates the Gulf Connector expansion is Transcontinental Gas Pipe Line Company, LLC ('Transco') -- the SEC 10-K discusses it as Williams' wholly-owned FERC-regulated pipeline subsidiary undertaking this project with no co-owner mentioned; EIA lists 'Pipeline Operator Name: Transcontinental Gas Pipeline'. The entity name is corroborated by 2 independent sources (tier would be high on that alone), but neither source states the 100.00% ownership split as an explicit number -- it is inferred from the absence of any joint-venture partner in either account, so held at medium rather than high. No value change; ref-only fill."
+    }
+  ],
+  "summary": "P3296 (Transco 'Gulf Connector Expansion', 475 MMcf/d compression-only capacity addition, Station 65 LA -> Wharton/San Patricio Co. TX, in-service Jan 2019) confirmed real, correctly classified, not a duplicate -- verified against Williams' own SEC 10-K (verbatim match on Station 65/Wharton/San Patricio/475/2019), the EIA Historical Pipeline Projects spreadsheet (475 MMcf/d, 2019, FERC docket CP16-494), 2 Pipeline & Gas Journal issues, and FERC's own Corpus Christi Stage 3 EA (a separate docket); flagged one caveat (EIA's own Beg_State field is an internally inconsistent 'MS', likely cross-contaminated with a different 2019 Transco project) and staged 2 ref-only fills (Location, Owner) plus a recommendation to swap the generic/weak Capacity [ref] for the two verified sources found here. Nothing UNRESOLVED."
+}

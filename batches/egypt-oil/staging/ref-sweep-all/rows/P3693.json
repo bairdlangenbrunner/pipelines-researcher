@@ -1,0 +1,371 @@
+{
+  "project_id": "P3693",
+  "pipeline_name": "El Hamra-Sidi Krir-Alexandria Oil Pipeline",
+  "sheet_row": 1253,
+  "wiki": "https://www.gem.wiki/El_Hamra-Sidi_Krir-Alexandria_Oil_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the ref fills and the specific caveats below.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, correctly classified crude-oil trunk line, confirmed by TWO independent sources, neither GEM-derived. (1) Egypt Oil & Gas trade magazine's special report 'The Western Desert: Egypt's Giant Petroleum Reservoir' (egyptoil-gas.com PDF, created March 2020, drawing on FY2017/18-2018/19 data) has a dedicated 'Crude Oil Infrastructure in the Western Desert' table that names all FOUR El Hamra-linked pipelines as distinct lines: Meleiha-El Hamra (167km/16in/90,000bpd), Badr El Din-El Hamra (128km/12in/60,000bpd), Abu Gharadig-El Hamra (140km/12-16in/60,000bpd) -- and 'El Hamra-Sidi Kerir-Alexandria', From=El Hamra, To=Alexandria, Length=90km, Diameter=16in, Capacity=200,000bpd -- an EXACT match on every value GEM records for this row. The text explains the mechanism: three pipelines deliver Western Desert crude to El Hamra terminal, 'then it is shipped by the fourth pipeline, El Hamra-Sidi Kerir, to refineries in Alexandria'. (url_verifier's automated content check FAILS on this URL because it reads the raw HTTP response as text and cannot decode PDF-stream bytes -- a documented tool limitation for PDFs, not a real content miss; the URL itself is live at HTTP 200, and every value above was confirmed manually via `pdftotext` against the downloaded file.) (2) Independently, the GulfPub PE World Map (registered reference dataset, scraped 2026-02-02) carries ref_id gulfpub:oil:4592, 'Marsa El Hamra - Sidi Kerir', status=Operating, and the reconciliation engine's own route metrics show its drawn endpoints sit only 0.28 km from GEM's own route endpoints for P3693 (endpoint_score 0.946) -- i.e. an independently-scraped, independently-drawn pipeline occupying the identical corridor. Matched at 'yellow' confidence in the committed egypt-oil GulfPub reconciliation run (batches/egypt-oil/staging/recon-gulfpub-20260827/match_diff.json, overlaps). Two GEM-unrelated sources thus independently confirm a real pipeline exists on this exact corridor. DUPLICATE check against the full 46-row Egypt-oil roster: no other row claims El Hamra-to-Sidi Kerir/Alexandria. The three other El Hamra-family rows (P0572 Mleiha-El Hamra, P3689 Badr El Din-El Hamra, P3688 Abu Gharadig-El Hamra) are all INBOUND feeders delivering crude TO El Hamra from producing fields; P3693 is the one OUTBOUND line carrying it onward -- the same EOG source table treats all four as separate lines, so this is not a re-entry of any of them. Also checked against P0530/P5121 (Sumed Oil Pipeline, Ain Sukhna->Alexandria via Sidi Kerir): NOT a duplicate -- Sumed is a completely different physical system (42in twin line, 320km, sourced from Ain Sukhna on the Gulf of Suez, carrying largely imported/transit crude), while P3693 originates at El Hamra in the Western Desert and carries domestically-produced crude; the two pipelines merely arrive in the same general Alexandria/Sidi Kerir refining corridor, which is expected (that is where Egypt's Mediterranean refineries are clustered), not evidence of one row being a re-entry of the other. CLASSIFICATION: Fuel=Oil (crude) is correct -- the EOG source table is explicitly titled 'Crude Oil Infrastructure' and GulfPub separately classifies its matching record under its own 'oil' tracker.",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Route to Update for adjudication on Diameter and Length only (16in/90km GEM vs 20in/99.78km GulfPub). Do NOT treat GulfPub's Capacity=295,000bpd as a competing data point -- see the separate 'none'-type validity entry below documenting that GulfPub oil Capacity_Mbpd is not real sourced data for this or any oil-tracker row.",
+      "researcher_notes": "SPEC conflict, material but narrower than an earlier pass on this same row concluded -- re-verified against the raw gulfpub-oil-global.geojson feature (OBJECTID_1=4592), not just the derived match_diff.json summary. GEM (matching the egyptoil-gas.com table exactly) records Diameter=16in, LengthKnown=90km. GulfPub's independently-scraped record for the same corridor ('Marsa El Hamra - Sidi Kerir', Petroleum Pipelines Co) gives Diameter=20in (composite diameter-signal score 0.0 -- a flat disagreement, not a close call) and length=62 (raw field is MILES per the source manifest -> 99.78km geodesic) -- about 11% longer than GEM's 90km. Both of these ARE genuine independently-reported values (diameter and length are populated directly in GulfPub's source schema, not derived) and both agree on Status=operating and on the start point (El Hamra / Marsa El Hamra) and broadly on the destination (Alexandria refineries / Sidi Kerir Terminal), so this reads as the same single physical pipeline described with different technical specs by two sources, not two different pipelines. RETRACTED FROM THE PRIOR PASS: Capacity is NOT part of this conflict -- GulfPub's raw 'capacity' text field for this exact record reads 'Not specified' (confirmed against the source geojson), and the 295,000bpd number an earlier version of this note cited from Capacity_Mbpd is a data-quality artifact of the reference dataset itself, not a competing measurement -- see the dedicated entry below. Because the citable source I verified (egyptoil-gas.com) agrees with GEM's current Diameter/Length numbers, I am filling Diameter/Length [ref] with it below, but at medium (not high) tier specifically because of the unresolved GulfPub disagreement on those two fields -- per the standing rule that a material disagreement between corroborating sources is never silently passed. Not attempting to adjudicate which source's numbers (or which vintage of the pipeline, e.g. a possible later re-rating/expansion) is correct. Minor unrelated note: GulfPub's own reconciliation output lists this same ref record (oid 4592) in its 'ambiguous' bucket as a near-tie between P3693 (composite 0.5705, the winning match) and P7977 El-Hafair-Musturad (0.5635) -- P7977 is a materially different pipeline (different names/endpoints) and this reads as name-matching noise from shared generic tokens, not a genuine identity question; not raising it as a duplicate concern.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Registry-level finding, out of scope for a single-PID fix -- escalate to whoever owns sources/gulfpub/: `Capacity_Mbpd` in the OIL dataset (gulfpub-oil-global.geojson) needs the same 'never use as capacity corroboration' caveat that sources/gulfpub/NOTES.md already documents for the GAS dataset's Capacity_mmcfd, and every already-committed oil GulfPub reconciliation that reported a Capacity conflict/corroboration should be treated as suspect until re-checked. This finding stands on its own regardless of what Update decides about P3693's spec conflict above.",
+      "researcher_notes": "NEW FINDING (not in the prior pass on this row): while checking whether GulfPub's Capacity=295,000bpd for this row was real corroborating data, I pulled the raw oil source file (sources/gulfpub/data/gulfpub-oil-global.geojson) directly rather than trusting the manifest/match_diff summary, and found `Capacity_Mbpd` is NOT sourced capacity data for the oil dataset -- it is a value derived purely from `diameter`, decoupled from the dataset's own text capacity field. Proof: (1) the raw `capacity` text field is the literal string 'Not specified' on 1,366 of 1,645 oil features (83%), including this exact record (oid 4592); (2) grouping all 1,645 features by `diameter`, the great majority of diameters map to exactly one `Capacity_Mbpd` value tracker-wide (e.g. every diameter=20.0 record, this one included, carries Capacity_Mbpd=295.0; diameter=28.0 -> 579.0; diameter=32.0 -> 756.0; diameter=40.0 -> 1182.0; diameter=48.0 -> 1702.0 -- a few diameters have 2-3 values, consistent with minor data entry noise around an otherwise deterministic diameter->capacity table, not per-pipeline measurement); (3) most conclusively, on the 26 features whose raw `capacity` text DOES state a real figure ('1.4 million barrels per day' -- all on the 'Druzhba'/'Almetievsk-Samara' pipelines, a completely unrelated Russian/European system unrelated to Egypt), `Capacity_Mbpd` still varies purely by that record's own diameter (295.0 for a 20in Druzhba segment, 1702.0 for a 48in one, etc.) and NEVER reflects the stated 1,400 Mbpd -- i.e. the field ignores real reported capacity even when the source itself states one. This is the oil-tracker analogue of the already-documented gas-tracker defect (sources/gulfpub/NOTES.md: '`Capacity_mmcfd` is a constant `300` placeholder ... must never be used as a capacity corroboration'), except worse in practice because it is diameter-varying rather than a flat constant, so it looks like plausible real data to a researcher (and did, in the version of this shard's spec-conflict note written before this check). This is registry-wide, not Egypt- or P3693-specific: `sources/gulfpub/manifest.yml`'s oil dataset column_map still maps `capacity: Capacity_Mbpd` with no caveat, and every committed oil GulfPub reconciliation (at minimum egypt-oil, iraq-oil, saudi-arabia-oil per a repo-wide grep for `Capacity_Mbpd` in batches/) inherits this. I am not editing the shared manifest/NOTES.md myself -- that is a cross-country decision + re-run outside a single-PID validity pass -- but flagging it prominently per the standing 'fix our own defects' rule so it reaches whoever can make that call.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Have Update re-verify Operator. Petroleum Pipelines Co (PPC) -- Egypt's actual national crude/products trunk-pipeline operator -- is at least as plausible a fit as WEPCO for this specific outbound export line, and one independent source names PPC explicitly. Do not paste PPC over WEPCO on this pass alone (no citable open-web ref found for either name against this exact pipeline), but flag for a documented decision rather than leaving WEPCO unexamined.",
+      "researcher_notes": "GEM records Operator='شركة بترول الصحراء الغربية (ويبكو)' -- i.e. Western Desert Petroleum Company (WEPCO). This is a real, well-documented company (operator of El Hamra Terminal since 1968, per its own official 'About Us' page at wepco-eg.com/about-us/, live-verified 2026-08-27), so the entity itself is not fabricated. But whether WEPCO is the OPERATOR OF THIS SPECIFIC 90km/16in export pipeline to Sidi Kerir/Alexandria is a genuinely open question, on two independent signals found this pass: (1) The GulfPub PE World Map's independent record for this exact corridor (gulfpub:oil:4592, route endpoints 0.28km from GEM's own -- see the existence note above) names the operator as 'Petroleum Pipelines Co' (PPC), not WEPCO. (2) WEPCO's own current official website is detailed about what it directly operates -- its 'About Us' page states WEPCO's core operations are 'Onshore shipping to local refineries', 'Offshore export/import ... via tankers', and explicitly 'Managing & Operating WEPCO 12\" pipeline' (singular, 12-inch -- not 16in or 20in); its 'El Hamra Terminal' operations page separately describes WEPCO's own marine-loading subsea lines in detail (a 36in/9km SBM line since 2019 and a 30in/7km SBM line) -- and NEITHER page anywhere mentions 'Sidi Kerir' as a place (the only 'Sidi' hit on either page is 'Sidi Gaber', a different Alexandria neighborhood that is part of WEPCO's mailing address) or 'Alexandria' as a shipping destination for a trunk pipeline. The 2020 EOG trade report itself only ties WEPCO to controlling/monitoring crude AT the terminal and cites 'WEPCO's official website' for the general routing description, not for who operates the fourth (outbound) pipeline specifically. Given PPC is Egypt's standard national operator for long-haul crude/product trunk pipelines (already independently confirmed as the operator on this same corridor by a separate scraped dataset), and WEPCO's own current self-description of its pipeline assets does not include this line, I am NOT citing a ref for Operator this pass (leaving it UNRESOLVED) -- GulfPub is an internal registered dataset, not a fetchable/citable URL, and WebSearch quota was exhausted this session before a targeted PPC-vs-WEPCO search could be run on this specific pipeline. This is flagged as attribution concern for Update, not a fix I am making unilaterally.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Fix the spelling typo EndLocation/EndState-Province 'Alexandrai' -> 'Alexandria'. Separately, consider whether EndLocation should read 'Sidi Kerir' (the pipeline's own namesake terminal, and GulfPub's explicit endpoint 'Sidi Kerir Terminal') rather than the broader city name 'Alexandria' -- both independent sources point at Sidi Kerir specifically as the physical terminus, with Alexandria as the nearby city/refining hub the crude is ultimately destined for.",
+      "researcher_notes": "EndLocation and EndState/Province are both currently keyed as 'Alexandrai' -- a plain spelling typo for 'Alexandria' (not a different place; both this pipeline's own GEM name and the egyptoil-gas.com source agree the destination region is Alexandria). Separately, on precision: the pipeline's own name ('...-Sidi Krir-Alexandria') and GulfPub's independent record ('end: Sidi Kerir Terminal, Egypt') both suggest the physical pipe terminates specifically at Sidi Kerir (a coastal industrial/refining locality about 45km west of central Alexandria, also SUMED's own Mediterranean terminal town), with 'Alexandria' functioning as the destination region/market for the crude rather than the literal pipeline terminus. Not changing EndLocation on my own judgment (this is a precision refinement, not a factual error, and I did not independently verify Sidi Kerir's exact coordinates against the current drawn route this pass), but flagging it alongside the typo fix since both touch the same cell.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Oil"
+      },
+      "primary_value": "Oil",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source's dedicated table is titled 'Crude Oil Infrastructure in the Western Desert' and lists this exact-named pipeline. url_verifier's bare reachability check passes (200); its content substring check cannot read PDF-stream bytes (documented tool limitation) -- content confirmed manually via pdftotext against the downloaded file."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source describes the pipeline in active present tense ('is shipped by the fourth pipeline ... to refineries in Alexandria'), confirming operating status as of the report's FY2017/18-2018/19 data (PDF dated March 2020). Independently corroborated: GulfPub's matching record (gulfpub:oil:4592) also carries status_raw='Operating' -- a second, agreeing independent source on this specific field, though not cited here since it is an internal dataset, not a fetchable URL. No evidence found of any subsequent shutdown/decommissioning; the ~6-8 year gap since the source's data vintage is a mild recency caveat, not a reason to doubt current operating status."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "200,000.00",
+        "CapacityUnits": "bpd"
+      },
+      "primary_value": "200,000.00",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source's crude-oil-infrastructure table lists Capacity=200,000 for this exact named pipeline, matching GEM precisely (units bpd inferred from context/order-of-magnitude, matching the sibling rows in the same table). Staged at medium (single strong source) rather than high: GulfPub's matching record for this corridor states no real capacity of its own (raw text field = 'Not specified') -- its Capacity_Mbpd=295.0 is a diameter-derived data-quality artifact of the reference dataset, not a second measurement, and must NOT be read as a corroborating or conflicting capacity value (see the dedicated registry-defect validity entry above). Diameter and Length, by contrast, DO have a genuine unresolved GulfPub disagreement -- see the spec-concern validity entry."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "90.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "90.00",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source lists Length=90km for this exact named pipeline, matching GEM precisely. CONFLICT flagged separately in validity: GulfPub's independent geometry for the same corridor (endpoints 0.28km from GEM's own) measures length_km=99.78 (geodesic 99.51) -- about 11% longer. Staging this ref at medium tier specifically because of that unresolved conflict."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "16.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "16.00",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source lists Diameter=16in for this exact named pipeline, matching GEM precisely. CONFLICT flagged separately in validity: GulfPub's independent record for the same corridor gives 20in instead -- a flat disagreement (diameter-signal score 0.0 in the reconciliation match), not a close call. Staging this ref at medium tier specifically because of that unresolved conflict."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "El Hamra"
+      },
+      "primary_value": "El Hamra",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source's From/To table lists 'From: El Hamra' for this pipeline, and the surrounding text explains El Hamra terminal is where crude from three producing-field pipelines is consolidated before being shipped onward by this fourth line -- consistent with FuelSource='El Hamra' denoting the terminal/consolidation point the crude enters this line from, not a producing field name."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "StartLocation [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "El Hamra",
+        "StartCountryOrArea": "Egypt"
+      },
+      "primary_value": "El Hamra",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source table: 'From: El Hamra'. Independently corroborated by GulfPub's matching record start point 'Marsa El Hamra, Egypt' and by the reconciliation engine's route metrics showing GEM's own start endpoint sits 0.28km from GulfPub's independently-drawn one."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "EndLocation [ref]",
+      "value_cols": [
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "EndLocation",
+      "values": {
+        "EndLocation": "Alexandrai",
+        "EndState/Province": "Alexandrai",
+        "EndCountryOrArea": "Egypt"
+      },
+      "primary_value": "Alexandrai",
+      "proposed_refs": [
+        "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://egyptoil-gas.com/wp-content/uploads/2020/03/The-Western-Desert-Egypt%E2%80%99s-Giant-Petroleum-Reservoir-.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Source table: 'To: Alexandria', and text confirms the line ships crude 'to refineries in Alexandria'. Staging this ref for the region/destination as recorded, but see the separate attribution-concern validity entry: (1) the current value 'Alexandrai' is a plain spelling typo for 'Alexandria' that should be fixed independent of sourcing, and (2) both independent sources point at Sidi Kerir specifically as the physical terminus, with Alexandria as the destination region/market -- a precision question left for Update, not resolved here."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "شركة بترول الصحراء الغربية (ويبكو)"
+      },
+      "primary_value": "شركة بترول الصحراء الغربية (ويبكو)",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Leaving UNRESOLVED rather than staging a ref -- see the dedicated attribution-concern validity entry above. WEPCO is real and does operate El Hamra Terminal, but its own current site describes its directly-managed pipeline asset as a single 12in line and never mentions Sidi Kerir/Alexandria, while an independent scraped dataset names 'Petroleum Pipelines Co' as operator of this exact corridor. Not confident enough either way to cite a ref; WebSearch quota was exhausted this session (200/200) before a targeted operator-specific search could be run."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1253,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Egyptian General Petroleum Corp",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Egyptian General Petroleum Corp",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Owner1='Egyptian General Petroleum Corp' 100% is plausible at the parent-company level (Egypt's crude/product trunk-pipeline network is state-owned via EGPC and its subsidiaries -- GulfPub's 'Petroleum Pipelines Co', the operator its independent record names for this exact corridor, is itself a wholly EGPC-owned subsidiary), but no source found this pass states an explicit ownership percentage for THIS pipeline specifically. Left UNRESOLVED rather than force-fit a citation that does not say so outright; WebSearch quota was exhausted this session before a more targeted ownership-filing search could be run."
+    }
+  ],
+  "summary": "P3693 confirmed real, correctly classified, and NOT a duplicate of any other roster row (2 independent sources: an egyptoil-gas.com 2020 trade-report table matching Length/Diameter/Capacity exactly -- independently re-verified via pdftotext against the live PDF, table transcribed in full -- plus an independently-scraped GulfPub record on the identical corridor, route endpoints 0.28km apart, independently re-verified against the raw source geojson). Refs added for 7 of 9 units (tier medium). Concerns: (1) material spec conflict -- GulfPub disagrees on Diameter (20in vs GEM's 16in) and Length (~99.8km vs 90km); (2) a REGISTRY-WIDE data-quality defect newly found this pass and NOT specific to this row: GulfPub oil's Capacity_Mbpd column (295,000bpd for this record) is a diameter-derived artifact, not sourced capacity -- its own raw capacity text says 'Not specified' here and is provably ignored even on rows where a real capacity IS stated -- so the Capacity 'conflict' an earlier version of this note raised is RETRACTED; the analogous gas-side defect (Capacity_mmcfd constant-300 placeholder) is already documented in sources/gulfpub/NOTES.md but the oil-side one is not, and it has been silently inflating/fabricating Capacity conflicts across every committed oil GulfPub reconciliation, not just Egypt -- flagged for escalation outside this single-PID pass; (3) attribution concern on Operator -- GulfPub names 'Petroleum Pipelines Co' as operator of this exact corridor, while WEPCO's own current official website describes its directly-managed pipeline as a single 12in line and never mentions Sidi Kerir/Alexandria; left UNRESOLVED rather than guess (WebSearch quota exhausted at 200/200, confirmed still exhausted on retry this pass; DuckDuckGo HTML bot-blocked, Bing HTML search returned irrelevant results for this query). Also flagged: 'Alexandrai' is a plain spelling typo for 'Alexandria', and both independent sources suggest the precise terminus is Sidi Kerir rather than Alexandria proper. Operator and Owner refs left UNRESOLVED."
+}

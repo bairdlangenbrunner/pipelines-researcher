@@ -146,8 +146,13 @@ datasets:
   #     106.7 / 77.6 / 69.1 / 61.8 / 61.5 / 52.8 / 28.5 / 11.6 / 3.5 / 1.5 / 0.7 km)
   #     but attribute-blind: ZERO named, zero diameter, zero operator, and 10 of 21
   #     are <0.5 km stubs. See NOTES.md.
+  # Re-fetched 2026-08-27 with the fixed _collect_lines()/_disambiguate_keys(): 21
+  # features, 319 vertices and ZERO named — all three identical to the 07-29 pull, so
+  # nothing about this extract's content moved. Only identity changed: unique
+  # osm_id_key 19/21 -> 21/21, clearing the collision warning that ingest raised on
+  # osm:gas_eg:w1324000712_1324000713_1324000717. No committed finding is falsified.
   - name: gas_eg
-    scraped_date: "2026-07-29"
+    scraped_date: "2026-08-27"
     commodity_default: gas
     format: geojson
     path: data/osm-eg-gas.geojson
@@ -344,6 +349,177 @@ datasets:
     # is reconciled against a THIRD source (malaysian_gas_map, 67 traces / 5,273 km)
     # whose geometry is independent of OSM's — an admin-area fallback here would blur the
     # one axis on which the two can disagree. Thresholds untouched.
+
+  # --- Ukraine, gas (2026-08-12): 1,004 features / 1,260 ways, ALL lifecycle=operating,
+  #     7,334 km — by far the RICHEST extract in the registry, and rich in the wrong way.
+  #     741 of the 1,004 features are stubs under 0.5 km and the top operators are local
+  #     DISTRIBUTION utilities (Тальнівське УЕГГ 78, Черкаситрансгаз 26, Київгаз 18),
+  #     i.e. the extract is dominated by the low-pressure distribution network that GGIT
+  #     does not track. Only 78 features exceed 10 km. 92 named, 48 with a diameter.
+  #     Expect a large DISCOVERY_CANDIDATE pile that is real pipe but OUT OF SCOPE for a
+  #     transmission tracker — triage by trace length before treating any of it as a gap.
+  - name: gas_ua
+    scraped_date: "2026-08-12"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-ua-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Ukraine"
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    # No geoarea_weight override, and for the opposite reason to gas_iq/gas_eg/gas_pk:
+    # nothing here is dead. Both axes are the LIVEST in the registry — 92 named features
+    # against 45 of 47 GEM Ukraine gas rows carrying a mapped route (13 high, 10 medium) —
+    # so the dead-axes condition that override exists for does not hold. The risk in
+    # Ukraine runs the other way: the distribution stubs are dense enough to create
+    # near-misses against the source-level 10 km overlap buffer. Do NOT fix that by
+    # editing the shared `matching:` block below — it would move every committed run in
+    # every other country. Read the run's health line first and, if the buffer really is
+    # too loose here, add a per-dataset override in THIS block.
+
+  # --- Uzbekistan, gas (2026-08-26): 124 features / 420 ways, all lifecycle=operating,
+  #     6,314.6 km total. Structurally the RICHEST gas extract in the registry by length:
+  #     eight features exceed 400 km (897.4 / 661.7 / 632.7 / 618.0 / 589.3 / 540.9 /
+  #     428.2 / 411.1) and those eight alone carry 5,379 km — i.e. OSM has drawn the
+  #     Central Asian trunk corridors, which is exactly what GEM tracks here. 69 of 124
+  #     are sub-1 km stubs (59 sub-0.5 km), Ukraine's scope-mismatch shape, so expect
+  #     the additions pile to be dominated by distribution fragments.
+  #
+  #     ATTRIBUTES ARE ALL BUT ABSENT: 2 features named, 2 carry a diameter, ZERO carry
+  #     an operator or owner. And Uzbekistan is the THIRD Cyrillic scope after Ukraine
+  #     and Kazakhstan — both names are Russian, so the 2026-08-14 translit_cyrillic fix
+  #     is load-bearing here, not incidental: without it the name axis sees the empty
+  #     string on the only two features that have anything to say.
+  #       w292481601_579695357  589.3 km  'Средняя Азия - Центр'  DN1422  → the CAC trunk
+  #       w418346623             35.0 km  'Газопровот УППГ Кувачи Алат - УППГ Северные Шады'
+  #     Note the first is a GEM row that Kazakhstan's pass already staged. The research
+  #     legs exclude those shared trunks; THIS run must not — reconcile.py needs the full
+  #     31-row GEM roster or the trunks' reference counterparts re-bucket as
+  #     DISCOVERY_CANDIDATE (see workflows.md §3).
+  - name: gas_uz
+    scraped_date: "2026-08-26"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-uz-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Uzbekistan"   # the fetch is ISO-scoped; features carry no country tag
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+    # No geoarea_weight override — Ukraine's reasoning, and more emphatically. That
+    # override exists for the dead-axes condition (gas_iq / gas_eg / gas_pk), and it does
+    # not hold: 29 of 31 GEM Uzbekistan gas rows carry a mapped route and the accuracy
+    # distribution is the best of any scope swept so far (16 high, 4 medium, 1 low, 8 very
+    # low, 2 no route). Geometry is doing the work the source-level weights already give
+    # it. If the run comes back thin, read the health line before touching any weight:
+    # with 2 named features the NAME axis genuinely is near-dead, and MATCH_QUALITY firing
+    # on that alone is a true report, not a tuning signal.
+    #
+    # CONFIRMED BY MEASUREMENT 2026-08-26, so this is no longer a judgement call. The run
+    # did come back thin — null, in fact (0 overlaps from 124 records, max composite
+    # 0.4411 against the 0.45 yellow gate). A throwaway A/B with geoarea_weight 0.30
+    # (manifest restored, nothing committed, deliverable built WITHOUT it) moved it to
+    # 4 overlaps / 83.1% geoarea-scored and silenced MATCH_QUALITY — and 3 of those 4 are
+    # manufactured: a 1.625 km stub and a 0.036 km stub (36 METRES) each "corroborating"
+    # the same 350 km GEM row at route IoU 0.029 / 0.027. They clear the gate on
+    # s_geoarea = 1.0 alone, because a stub anywhere inside a declared terminus province
+    # scores full marks and 69 of these 124 features are sub-1 km. That is structural, not
+    # bad luck. Only the 4th (name 0.54 + diameter hit + geo-foreign) is real, and it is a
+    # genuine PARTIAL the null run already surfaces as an addition.
+    #   Note the contrast with gas_iq / gas_pk, where the override IS right: their stub
+    # overlaps sit ON the GEM corridor, so PARTIAL-labelled fragments are true matches
+    # (see reconcile.coverage() — "nothing here changes the match; it labels what the
+    # match is worth"). Uzbekistan's stubs are merely in the same province.
+    #   Do not revisit this without re-running that A/B. The geoarea axis is also dead on
+    # exactly the rows this batch is about: it is untestable on 9 of the 18 domestic rows
+    # (P2290, P2698, P3983, P3984, P6933-P6935, P6965, P6966 declare no foreign country
+    # and no state/province), i.e. the Gazli-Kagan and Mubarek clusters.
+
+  # --- Egypt, oil (2026-08-27): 32 features / 40 ways, 544.5 km, all
+  #     lifecycle=operating / substance=oil. 5 named (all SUMED strings: 'sumed 1',
+  #     'sumed 7', 'sumed 8.1/8.2/8.3'), 5 carry a diameter, 7 an operator.
+  #     THIS EXTRACT IS THE ONE THAT EXPOSED THE DUPLICATE-FEATURE DEFECT in
+  #     fetch_overpass._collect_lines() — a way matched BOTH standalone and as a
+  #     member of the SUMED route relation was fed to linemerge twice, so the shared
+  #     part came out twice with identical geometry (3 features / 83.3 km duplicated;
+  #     the geometry-derived osm_id_key discriminator hashes exact duplicates the
+  #     same, which is how it surfaced as 36 unique keys for 39 features). Fixed the
+  #     same day; first fetch 39 feats / 872.6 km, corrected fetch 32 / 544.5 km with
+  #     the vertex set IDENTICAL (0 lost, 0 gained) — only double-counted mileage
+  #     left. See NOTES.md.
+  #     No geoarea_weight override, for Pakistan's reason: the GEOMETRY axis is ALIVE
+  #     here. 45 of 46 GEM Egypt oil rows are routed (23 medium, 7 low, 6 high, 6 very
+  #     low, 3 very high; only P7326 is 'no route'), so the dead-axes condition that
+  #     justifies the admin-area fallback in gas_iq/oil_iq/gas_eg/gas_pk does not hold.
+  #     The geoarea axis would also be near-free here — StartCountryOrArea and
+  #     EndCountryOrArea are filled on all 46 rows and only 2 rows have both
+  #     state/province cells blank — which is exactly why it must NOT be weighted up:
+  #     it would score full marks for any trace anywhere in Egypt.
+  - name: oil_eg
+    scraped_date: "2026-08-27"
+    commodity_default: oil
+    format: geojson
+    path: data/osm-eg-oil.geojson
+    geometry: feature
+    column_map:
+      country_const: "Egypt"       # the fetch is ISO-scoped; features carry no country tag
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
 
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so

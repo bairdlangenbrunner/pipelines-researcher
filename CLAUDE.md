@@ -59,8 +59,15 @@ Where things live — **read on demand as the workflow dictates, not all at once
    single → medium/low; none verifiable → inferred/presumed. The same wire story
    republished, multiple outlets tracing to one original, and anything citing GEM
    do NOT count. Record the tier + sources in `ResearcherNotes`. Detail:
-   `docs/reference/confidence_tiers.md`.
-5. **Banned source: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`).
+   `docs/reference/confidence_tiers.md`. **Four corollaries from researcher feedback
+   (MZ, 2026-09-03, on Jiangxi v2) — all encoded in the Sweep SOP + `sweep_gates.py`:**
+   (a) a ref must NAME the pipeline (`url_verifier … name=`, `name_found`; a page about one
+   terminus or the parent trunk is not a ref for the "A–B" row); (b) every document opened is
+   read to exhaustion for EVERY column and sibling row (one approval notice sources
+   Length/Diameter/Cost/Construction/Start at once); (c) blank values are OWED units
+   (`build_ref_worklist.py --owe-fills` → `MISSING_VALUE`), not skipped; (d) the second
+   source is owed for every unit — a single-source note says what was searched.
+5. **Banned sources: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`) **and theodora.com** (tertiary aggregator; `url_verifier` rejects both).
    Never use it as a reference, ever — not even alongside corroborating sources, not
    in any output, note, or lane (Baird directive 2026-07-17, all GEM researcher
    projects). If it's the only place a value appears, treat the value as unsourced;
@@ -104,23 +111,23 @@ For a multi-tab spreadsheet, prefer Sheets `values.get` per tab over Drive MCP
 ### Fetching gem.wiki needs a specific User-Agent
 
 `harvest_wiki_citations.py` and `wiki_alignment.py` *visit* gem.wiki (never cite it —
-standing rule 1). Since 2026-08-07 the gem.wiki zone runs Cloudflare **Under Attack
-Mode**, and the only thing that gets a script through is a WAF bypass rule keyed on the
-leading **`baird-wiki`** token in the User-Agent. Any other UA gets `403` with
-`cf-mitigated: challenge` — it is not an auth problem and no credential helps.
+standing rule 1). The gem.wiki zone ran Cloudflare **Under Attack Mode** 2026-08-07
+→ ~08-11 (every non-`baird-wiki` UA got `403` `cf-mitigated: challenge`); UAM is
+**off again** (verified 2026-08-11), but the `baird-wiki` UA token stays — it is the
+identity GEM's infra admin knows in the firewall logs, and the WAF-bypass key if UAM
+returns. If gem.wiki fetches start 403ing again, check the UA first.
 
 - Use `url_verifier.WIKI_UA` for gem.wiki. It is **byte-identical** to
   `USER_AGENT` in `goit-ggit-data-ops/gem-wiki/gemwiki.py`, deliberately: both repos
   present as one client in GEM's firewall logs. **Change one, change the other.**
 - Do **not** use `WIKI_UA` for external sites — they need the browser-ish `_UA`, and
   the token means nothing off GEM's zone.
-- The rule is zone-wide, not scoped to `/w/api.php`, which is why fetching rendered
-  article HTML works at all.
-- GEM's infra admin asked for ~5 req/sec against gem.wiki. `_MIN_INTERVAL` (1.0s) is
-  already stricter, so the existing pauses comply — but the two repos share one
-  identity now, so don't run wiki-fetching passes in both at the same time.
+- GEM's infra admin asked for ~5 req/sec against gem.wiki (part of the standing
+  arrangement, not a UAM-era measure). `_MIN_INTERVAL` (1.0s) is already stricter,
+  so the existing pauses comply — but the two repos share one identity, so don't
+  run wiki-fetching passes in both at the same time.
 - Full writeup, including the account's actual rights: that repo's
-  `gem-wiki/README.md` → Auth.
+  `gem-wiki/README.md` → Auth and the Cloudflare section.
 
 ---
 
@@ -346,6 +353,16 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
    preset**; unmatched reference records are bucketed by `disposition`
    (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
    standing principle that a reference route is presumptively real pipe.
+   **`osm_id_key` was not unique until 2026-08-26** — `fetch_overpass._stitch()` keyed each merged
+   part by which source ways touch it, so disjoint parts of one way group collided (62 features
+   across the 10 registered extracts; worst by distance uz 6/865.8 km, kz 7/711.7 km, ua 26/251.7 km).
+   `ingest.py`'s `#2`/`#3` suffixing meant **no geometry was lost and no committed finding is
+   falsified** — what broke is *identity*, since that suffix is assignment-order dependent, so the
+   manifest's `provenance.oid_field` could not survive a re-scrape. `_disambiguate_keys()` appends a
+   geometry-derived blake2s discriminator **only to colliding keys**, leaving every unique key
+   byte-identical; **so re-fetching a country moves nothing but unstable ids, and no re-run is owed.**
+   Only Uzbekistan has been re-fetched (it had no committed run); every other extract keeps its
+   current keys until next fetched. Writeup: `sources/osm/NOTES.md`.
 2. **QC workbook** (`build_qc_workbook.py`) — rebuild of `GOIT_oil_ngl_QC.xlsx`
    (Status, RouteAccuracy, OtherVocab, Owner, WikiLink, Geo, NameUniqueness,
    DateLogic, Diameter, BroadSweep; route/WKT sheet dropped).
@@ -480,7 +497,80 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   Egypt OIL is effectively done — 45/46 mapped, P7326 legitimately null-placeholdered;
   the one defect is **P7338**, real geometry but `RouteType = Unavailable`, a three-way-
   sync violation fixable with `--backfill-route-type`.**
-  Oil not yet swept):**
+  **+ deep sweep + research pass 2026-08-27 — gas (40 rows) AND oil (ALL 46, the
+  tracker's FIRST-EVER Egypt oil sweep), staged not applied. SEVEN files to work**, the
+  deep sweeps do NOT subsume the recons: `…_20260827_1326_ET_egypt-gas_deepsweep.xlsx` + `…_1343_ET_egypt-oil_deepsweep.xlsx`
+  + `…_1326_ET_egypt-gas_route-creation.xlsx` + `…_20260827_1108_ET_egypt-{gas,oil}_reconciliation-{gulfpub,osm}.xlsx`.
+  Gas is 40 of 127 rows because the 88 carrying staged-unapplied July/August research are
+  `--exclude-pids`'d — **research legs only, never the recon leg**. Totals: gas 266 ref
+  records (46 `REFS_ADDED` / 202 `REVERIFIED` / 18 `UNRESOLVED`) + 9 fills + 80 validity;
+  oil 444 (172/201/71) + 14 fills + 110 validity.
+  **The headline is a citation-FORM defect, not a research gap:** 106 `[ref]` cells on 20
+  Egypt rows cite an `egyptoil-gas.com` **navigation surface** — a mutable site-search page
+  (65 gas cells) or page 7 of a paginated category index (41 oil cells) — instead of the
+  article, which is live, verifier-clean and supports the values (EOG Newspaper Sept 2020
+  Issue 165, *"Gulf of Suez, Eastern Desert and Sinai: Egypt's Crude Oil Squad"*, two tables
+  covering 7 crude + 7 gas lines). The correct form is already in use on the same tab (69 gas
+  cells / 21 rows) and **both forms sit on P8013 at once**. Recovering it yielded 26 oil + 15
+  gas ref upgrades and 14 fills, incl. P8084's `Diameter` (blank on the sheet) and closure of
+  **9 pre-existing orphan `[ref]` cells** on P7975–P7979.
+  **The method lesson is ours: findings do not propagate across a fan-out.** In SEVEN places
+  an agent asked for exactly the document a sibling agent in the same run was reading, and
+  **two of those recommended destroying real rows** — P8084 (*"drop/relabel as an
+  unverified/GEM-only entry"*; the source names it and its 150 km matches exactly) and P8018
+  (*"retire the row"* / fold into P8002's family; the source matches name, both endpoints AND
+  diameter). Both WITHDRAWN in staging with the originals preserved. Neither agent was
+  careless — both tested the wrong document (EGAS AR 2018). **Rule: no `existence` concern
+  ships without first grepping the run's other shards for the row's name and endpoints.**
+  Surviving existence concerns are real: P8010, P8042.
+  **A crossed recon gate is a claim until you read what crossed it** (Uzbekistan, again):
+  oil GulfPub reads **57.5% status conflicts** and it is an artifact — 21 of 23 are the single
+  row **P7326** matched to 21 unrelated *Gulf of Suez offshore* lines because it is blind on
+  every separating axis (`no route`, **both endpoints blank**), leaving diameter+length alone;
+  all 21 are `yellow`, none `green`. Real oil conflicts: **two** (P7315, P3689). Gas GulfPub's
+  6 / 44 = 13.6% are 6 genuine row-level questions. No additions gate crossed (15/20/28/27).
+  Both OSM runs healthy, and **`ROUTE_FOR_EXISTING` = 0 in both** — OSM offers no geometry for
+  any routeless Egypt row. **Generalisable: a row with no route AND no endpoints is a
+  false-match attractor for any attribute-axis source** — fix by giving it endpoints, never by
+  retuning weights.
+  **Length pattern, flagged not applied:** this one document disagrees with four rows and the
+  sheet is longer EVERY time (P7341 340/280, P8016 256/245, P8018 165/160, out-of-scope P3659
+  235/185) — reads as a measurement-convention difference, to settle once for the family.
+  P7341's 340 km is independently backed by a live Youm7 2019-05-26 article, so that one is a
+  genuine two-source conflict. Also: **P8013 is called "Trans Gulf Gas"**, never "Trans Sinai",
+  staged as an `OtherEnglishNames` alias NOT a rename (the family is segment-numbered). The
+  report's *"operated by the Petroleum Pipeline Company (PPC)"* attaches to **SUMED alone** —
+  it reads like a blanket attribution for all eight lines and would be wrong. Rule 1 verified
+  clean: 0 GEM-surface URLs in any `[ref]` cell across all 173 Egypt rows.
+  **Routes (the ask's second half):** 21 routeless gas rows (11 blank `RouteAccuracy` + 10
+  `no route`; blank MEANS no route) → **5 candidates + 15 partials**, all 5 PASS
+  `validate_route_candidate.py`. The 21st, P7589, deliberately NOT re-drawn — its candidate is
+  already staged from 08-11 and re-drawing would stage a competitor for the same PID. The 52
+  rows at `very low` already have geometry, so out of scope. Oil has exactly one routeless row,
+  **P7326, NOT DRAWN** — one endpoint only, the other inferable solely from GEM's own geometry,
+  which rule 1 forbids citing.
+  **Harvest coverage, and a correction to how it is measured:** 36 of 90 harvested
+  citations were never opened by the harvest path — but **4 are also the row's own
+  `current_ref`**, read through ref *verification* instead, so the honest figure is **32**.
+  Subtract already-cited URLs before reporting harvest coverage, or the metric credits the
+  leg with less reading than it did. Screened: **11 live / 7 confirmed 404 / 8 blocked
+  (403-401-502) / 4 network / 2 rejected as navigation surfaces** — those last two
+  (`google.com/search?q=…`, `petrojet.com.eg/view/company/page/6`) are the EOG defect
+  arriving by a different route, since **the harvester takes whatever a wiki page footnotes
+  and wiki pages footnote search surfaces** — screen harvested URLs for index-ness, not just
+  reachability. `wepco-eg.com` restructured: three genuine 404s (P3689/P3691/P3693), the only
+  harvested sources here confirmed *gone* rather than merely unreachable. `bit.ly/2oFzXCm`
+  verifies live but a shortener is never a citable ref — resolve it or drop it.
+  **P5121's `StartYear1` is a THIRD instance of the cross-leg blindness, caught in QC:** the
+  sheet's 1977 is the SUMED *system* year (both sources behind it date the system, so neither
+  can corroborate a segment cell) while sumed.org separates Pipeline 1 = Jan 1977 from
+  Pipeline 2 = Oct 1978, and **P5121 is Pipeline 2**. The finding already existed as an aside
+  inside P0530's *duplicate* record while P5121's own record asserted *"StartYear all
+  corroborate"*. Now staged as a `concern/spec` on P5121 with that claim carved out; oil
+  workbook rebuilt at `1343_ET` (validity 110 → 111, every ref class unchanged). Also:
+  `ar.wikipedia`'s SUMED **infobox says 30″ against its own body's 42″** — cite the prose.
+  Escalation:
+  `notes/escalation-2026-08-27-egypt-eog-navigation-surface-citations.md`):**
   `docs/country_notes/egypt.md`.
 - **United States (oil: Delaware Express + Permian Express batches staged not
   applied; deepwater-export open item):** `docs/country_notes/united-states.md`.
@@ -584,6 +674,146 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   P1065's 0.46 length ratio is network-vs-mainline granularity, closed with no change. A blank
   `Operator` here IS the tracker norm (22.53% filled overall / 18.44% gas) — do not import
   India's reading. Oil (5 rows) not swept):** `docs/country_notes/malaysia.md`.
+- **Ukraine (gas: first-ever full pass 2026-08-15, staged not applied. **THREE files to work** —
+  the packet does NOT subsume the recons (`recon_actions=0`):
+  `…_20260815_1946_ET_ukraine-gas_handoff-{actions,evidence}.xlsx` +
+  `…_20260812_1409_ET_…reconciliation-gulfpub.xlsx` +
+  `…_20260814_0120_ET_…reconciliation-osm.xlsx` (re-run after the Cyrillic name fix; **no
+  finding moved**, 49 corrected "closest GEM" attributions only). The country's defining fact
+  is an **empty citation base, not empty facts**: **34 of 1,034 `[ref]` cells are filled —
+  3.29%**, 2nd lowest of the 52 scopes with 20+ gas rows, and 17 of the 22 refs on operating
+  rows are dead links. `Length [ref]` and `Capacity [ref]` are each filled on **exactly one**
+  of 47 rows — and length and capacity are precisely what this pass found wrong, repeatedly.
+  **So calibrate the INVERSE of Kazakhstan:** there an `UNRESOLVED` on a per-string spec is
+  often correct; here a blank usually means nobody looked, and the legs moved a large block
+  off `UNRESOLVED` once actually worked. Read the 126 `UNRESOLVED` units as *unfinished*.
+  The unlock for the Soviet-era trunks is **VNIPItransgaz's "Основные объекты" table**
+  (`vtg.com.ua/experience/main/gts.html`) — live URL a genuine 404, **Wayback capture serves
+  the whole table**, sourcing seven ref units; our earlier "404 ⇒ unsourced" reading is
+  WITHDRAWN. **Its trap: the name cells carry `rowspan`s**, several lines under one heading
+  mapping in order onto the rows beneath — that is what produced P0777's 1,112 km (522 km and
+  590 km are two DIFFERENT lines, summed). Open: P7817/P7818 three-way sync violation (real
+  geometry, `RouteType` still `Not mapped` — the only two out of sync); cluster A confirmed
+  duplicate at 399.90 km; P3381/P3382 sharing ONE over-drawn geojson that is not their
+  corridor; P1471's `StartCountryOrArea` (**Novopskov is in Luhansk Oblast, UKRAINE** — the
+  route is right, the country columns are the defect); P1457's 516 km being the whole
+  Rostov–Taganrog–Zhdanov system; P1773 carried as LIVE in Transgaz's own PDSNT against GEM's
+  `cancelled`. Occupied-territory operators (P1488/P7817/P7818) are **deliberately**
+  `UNRESOLVED` — GTSOU is affirmatively wrong for pipe laid by the occupying power. Gotchas:
+  `utg.ua`/`tsoua.com` 403 (block, not deletion), `moldovatransgaz.md` fails TLS (use the
+  `mtg.md` mirror), `energybase.ru` serves a 200 block page, Ukrainian routes are 2–5 vertex
+  **schematics** so a drawn span is a LOWER BOUND, and geocoder false matches are the dominant
+  route defect (P0778 resolved to Komárno **Slovakia** — corrected, its 80 km is vindicated).
+  OSM's 1,003 additions cross the gate on volume alone and are a **scope** mismatch, not a
+  Discovery signal — 815 of 1,004 features are sub-1 km distribution stubs. Oil (20 rows) not
+  swept):** `docs/country_notes/ukraine.md`.
+- **Uzbekistan (gas: first-ever full pass 2026-08-26, staged not applied. **THREE files to work** —
+  the packet does NOT subsume the recons (`recon_actions=0`):
+  `…_20260827_0931_ET_uzbekistan-gas_handoff-{actions,evidence}.xlsx` (rebuilt 2026-08-27 to carry the
+  13 escalations — the `1412_ET` and `1419_ET` builds are archived and superseded, don't work them) +
+  `…_20260826_1350_ET_…reconciliation-{gulfpub,osm}.xlsx`. Ref work
+  on the 18 in-scope rows: **84 `REFS_ADDED` / 34 `UNRESOLVED` / 2 `DEAD_LINK`** (+38 reverified), 41
+  open decisions, 43 concerns, 14 mechanical flags.
+  The country's defining fact is that **13 of its 31 gas rows ARE Kazakhstan's rows** — a transit
+  country's trunks are ONE row that both `--country` scopes select, so re-researching them stages
+  contradictory records on the same sheet cells and the last workbook pasted wins silently. Baird
+  set scope to the **18 domestic rows** (31 rows / 283 units → 18 / 152, 78 `HAS_REF` / 74
+  `MISSING_REF`), enforced by the new `build_ref_worklist.py --exclude-pids` flag off
+  `batches/uzbekistan-gas/carried_from_kazakhstan.txt` — **derived from Kazakhstan's
+  `staged_resolutions.json`, never hand-typed**, and every PID confirmed to carry a real staged
+  record first. Two consequences: those 13 rows now **depend on the Kazakhstan batch being applied**
+  (until then neither batch researches them — the packet must say so), and **the exclusion stops at
+  the research legs — the recon leg keeps all 31 GEM rows** or the trunks' reference counterparts
+  re-bucket as `DISCOVERY_CANDIDATE`, manufacturing phantom additions for pipe GEM already tracks.
+  §9 step 3 is consequently EMPTY (P0740 was the only `cancelled` row and it is one of the 13).
+  **The wiki-ref trap is the sharp part of Baird's ask:** 18 rows map to 11 pages, so a harvested URL
+  is a candidate for the unit *(ProjectID × ref column)* and earns the cell only when the page names
+  that segment's own value — P6933/P6934/P6935 (`SegmentName = Mubarek-Zirabulak I/II/III`) point at
+  the BTBA page **whose own parent rows P0739/P5810 are two of the excluded 13**, so its citations are
+  about the parent trunk, not the strings. Link rot measured twice: **39 of 78 existing filled ref
+  cells carry a dead/missing link — exactly half** — and 118 harvested URLs → 80 live / 14 true
+  404-410 / 14 blocked (NOT deletions) / 8 timeout-DNS-5xx. Gotchas: **Uzbekistan is the THIRD
+  Cyrillic scope** (Uzbek is Latin but OSM's 2 named features are Russian, so `translit_cyrillic` is
+  load-bearing); `utg.uz/ru/about/history/` is a confirmed 404 whose **Wayback capture
+  `20260314231446` exists and is UNREAD** — `web.archive.org` content serving was unreachable all day
+  2026-08-26 while `archive.org`'s API answered in 0.5s, which is a network condition and **not
+  evidence about the source**; `Operator` is not on the GGIT gas tab (OO tab, 13/31 filled,
+  `Operator [ref]` 0/31). OSM `gas_uz` registered with **no `geoarea_weight` override** deliberately —
+  29/31 GEM rows routed, 16 `high`, so the dead-axes condition does not hold and `MATCH_QUALITY` on
+  the name axis alone is a true report, not a tuning signal. **Its ingest surfaced a registry-wide
+  defect in OUR code, fixed the same day:** `osm_id_key` — the manifest's `provenance.oid_field`, i.e.
+  the whole basis of cross-scrape identity — **was not unique**, because `_stitch()` keyed each merged
+  part by *which source ways touch it*, so disjoint parts of one way group collided. Uzbekistan was the
+  worst-hit extract by distance (6 features / 865.8 km; one key covering 618.01 + 144.95 + 25.49 km),
+  Kazakhstan next (7 / 711.7 km), 62 features across the 10 registered extracts. **No committed finding
+  is falsified** — `ingest.py` was already suffixing `#2`/`#3`, so no geometry was lost — but that suffix
+  is assignment-order dependent, so identity across scrapes was unreliable. `_disambiguate_keys()` in
+  `fetch_overpass.py` now appends a **geometry-derived** blake2s discriminator, and **only to keys that
+  actually collide**, so every already-unique key is byte-identical and re-fetching a country moves
+  nothing but unstable ids. Uzbekistan re-fetched immediately (no committed run to move): 124 features,
+  geometry set identical, 113/124 keys unchanged, warning gone. **Every other extract keeps its current
+  keys until it is next re-fetched** — no re-run is owed. Writeup: `sources/osm/NOTES.md`.
+  **The pass's own findings.** `Operator` RESOLVED for 8 of 9 rows at **medium, deliberately not
+  high** — no document names any of these pipelines together with its operator, so per-line
+  attribution is inference from a sourced sole-operator regime (Decree 4388 of 9 July 2019, Uztransgaz
+  as *"yagona operator"*) plus endpoints that are MGQB directorate seats. **P2698 must NOT be
+  defaulted to Uztransgaz** — two independent signals make it the odd row out (no directorate covers
+  Surxondaryo/Sherobod/Termiz/Denov/Qarshi, and its own `Owner1` is `Uzbekneftegaz`). The
+  Cyrillic/Latin `Operator` split on P6933–P6937 is the SHEET's inconsistency, not ours (our staged
+  values mirror it) — 5 attribution concerns, not auto-applied, since P6937's multi-party string needs
+  a human split. Both border flags resolved and **neither warrants a country-column change**: P4071's
+  Tajik crossing is a 2-vertex-chord artifact (redraw), and P6936/P6937's Afghan vertices at 14–36 km
+  depth are too deep for Amu Darya slop (only 0.77 km is plausible) — **do NOT add Afghanistan**.
+  **Both recon gates crossed and the conflict gate is EMPTY in fact:** GulfPub's 9/48 = 18.75% is all
+  one disagreement on two rows (P6963/P6964, `construction → operating`), 0/33 = 0.00% excluding them,
+  caused by P6964's off-corridor route inflating `LengthEstimateKm` to 111.29 km — **fix redundancy
+  cluster E and the gate dissolves**; OSM's 124 additions crosses >30 on volume alone and is a SCOPE
+  mismatch (69 sub-1 km stubs, 52.6% of mileage within 2 km of a GEM vertex). A `geoarea_weight`
+  override was **REFUSED on measured evidence**: at 0.30 it yields 4 overlaps of which 3 are
+  manufactured (a 1.625 km and a 0.036 km stub each "corroborating" the same ~350 km row at route IoU
+  0.029/0.027, clearing on `s_geoarea = 1.0` alone) — unlike `gas_iq`/`gas_pk` where stubs sit ON the
+  corridor. **Two method defects of OURS, both caught by reconciling counts:** `web.archive.org`
+  content is unreadable from a session by BOTH available paths (local curl times out, harness fetcher
+  refuses) while the CDX API answers in 0.5s, so existence is provable and content is not — 11 units
+  cite a capture, **5 rest on one alone**, and P6933's `Owner [ref]` had claimed a clean read at tier
+  high with "Independent? yes" while the escalation recorded that capture as unread (corrected to
+  existence-only, support now on its live `lex.uz` leg); and **`independent` was set `True` on 13
+  single-source units** whose own notes said "single independent source" — the field means the rubric's
+  ≥2-agreeing, not "independent of GEM", and it renders as the yes/no column a researcher trusts when
+  deciding to paste (all 13 → `False`, 2 also high → medium; classes unmoved at 84/34/2). WebSearch hit
+  its 200/200 session quota, leaving exactly two questions open for a fresh session: **P2698's
+  operator** and **P6936's `StartYear1`**.
+  Open calls: GulfPub's 74-records-vs-31-rows inclusion rule (additions landed at 26, just under the
+  gate), Russian/Uzbek research-language capability, and whether to add the recoverable Wayback
+  snapshots (a sheet write). **The Wikipedia policy gap is CLOSED (Baird 2026-08-27): gem.wiki is
+  never a source, Wikipedia IS citable** — `source_roster.md`'s ban is withdrawn and replaced by
+  citable-with-conditions rules (tiers as ONE secondary source; two language editions of an article
+  are one source; an article whose own footnote is GEM cannot corroborate, since rule 1 is about
+  self-citation not encyclopedias). No verifier change was needed — `BLOCKLIST_HOSTS` never listed
+  it — so the ~36 live Wikipedia `[ref]` cells tracker-wide are legitimate.
+  **The pass's own coverage gap, measured 2026-08-27:** the wiki harvest pulled 127 unique citations
+  and **88 were never opened**, because the ref legs were written to satisfy each owed cell rather
+  than to exhaust the harvested pool — a subagent stopped at the first sufficient source and never
+  returned to the rest of the page's citations. 83 of the 88 sit on rows that still report
+  `UNRESOLVED`, though 72 of those are on the two PARENT-TRUNK pages (49 Central Asia–China, 23 BTBA)
+  whose citations describe the trunk and not the string, so declining them is right and only ~11 are
+  real untested yield. Rule going forward: **the harvested pool is a worklist, not a lookup table** —
+  a ref leg reports how many harvested citations it opened, and an unopened citation on a row with an
+  owed cell is an open item, not a silent pass. All 90 were then screened through `url_verifier`:
+  **55 live / 35 failed, of which only 12 are confirmed 404/410** — the other 23 are access failures
+  the standing rule does not treat as deletions — so the pool is now a measured 55-URL reading list,
+  16 of them off the parent-trunk pages. **But a reachability screen is not a read, and `utg.uz` proves
+  it: its `/ru/press-service/novosti/…` section serves a SOFT 404** — the Yangiyer–Akhangaran press
+  release 200s with 139,482 bytes and a nonsense sibling slug 200s with 139,384, neither carrying an
+  article, while `/ru/invest/` 404s honestly for a bogus slug (so the behaviour is section-specific and
+  cannot be inferred from the host). Prove a suspected soft 404 by fetching a nonsense sibling and
+  diffing the bodies. Nothing needs un-staging (these were harvested candidates, never filled cells),
+  but the one page that might have settled **P6963/P6964** is unreadable at the origin and Wayback
+  timed out again, so that conflict stays open. The one page from the pool that WAS readable,
+  `utg.uz/ru/invest/aktsii-i-dividendy/`, is real and dated (share capital at 01.04.2024: MoEF 51.7%,
+  Uzbekneftegaz 46.78%) and is **declined on the unit rule** — it names who owns the COMPANY, not any
+  pipeline. Oil (2 rows) not swept):**
+  `docs/country_notes/uzbekistan.md`.
 - **Nigeria (divestiture ownership sweep not started):**
   `docs/country_notes/nigeria.md`.
 - **Israel (gas: INGL/TMNG-map ground-truth batch 2026-07-23 staged not applied —
@@ -594,7 +824,90 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   MZ's province queue (they have routes/wiki + the trunk systems; cycle plan in
   gem-desk `research-cycles/ggit-2026-pipelines-update/`); scope via
   `build_ref_worklist.py --province` + trunk-exclusion regex; Guangxi deep-sweep pilot
-  DELIVERED 2026-07-30 staged not applied. **+ §8 route creation 2026-07-30: ALL 103
+  DELIVERED 2026-07-30 staged not applied. **+ Jiangxi grid v2 DELIVERED 2026-09-02 staged not
+  applied — SUPERSEDES the 08-26 v1** (`…_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx`,
+  11 tabs, **ONE file to work**; v1's workbook + staging archived to
+  `batches/china-jiangxi-gas/archive/deepsweep-v1-20260826/`, so there is exactly one pending
+  state). Baird reset the scope ("include any trunk lines"): **44 rows** = all 41
+  Jiangxi-terminus rows **plus** the three transiting national mainlines P4657/P4934/P4947 that
+  v1 excluded; legs refs/fills/validity **+ status-review** (no OSM recon, no routes, no
+  discovery). v1's 18 rows were **carried forward, not re-discovered** — prior `REFS_ADDED`
+  re-keyed onto the fresh worklist (the tab re-sorted, all 18 moved -2), URLs re-verified, only
+  the `UNRESOLVED` re-researched. 453 records, ref lane 411: **270 `REFS_ADDED` / 127 `UNRESOLVED` / 12
+  `REVERIFIED` / 2 `DEAD_LINK`**, tiers 82 high / 175 medium / 14 low across **49 verified
+  hosts**, + 26 validity + 12 status reviews (6 stale / 4 unclear / 1 change / 1 confirm) + 4
+  fills. Gates
+  B/D/E/F clean; A=1 (P5888 on `sohu.com` alone); C flags 33 `high`s whose second origin is one
+  of six documents carrying 145 units between them — concentration, not a defect. Delivery note:
+  `notes/delivery-2026-09-02-china-jiangxi-gas-deepsweep-v2.md`. **3.7% citation base
+  (`HAS_REF` 6/162) — calibrate as India, not Pakistan:** a blank means nobody looked, so an
+  `UNRESOLVED` is unfinished, not correct. **The cluster to adjudicate is P4778 ↔ P5861, and it
+  arrived RECIPROCALLY** — two agents at opposite ends of the fan-out each filed a
+  `__REDUNDANCY__` naming the other's row (identical Gao'an–Xinyu corridor, same StartYear);
+  reciprocity is corroboration, so deliver it as ONE cluster. **Phase I vs Phase II is a
+  grid-wide operator question, not a row defect** (CCXI credit-rating PDF splits the operator by
+  phase; 23 phase-labelled rows = 15 I / 8 II, 3 `FuelSource` in tension) — it surfaced buried
+  inside one `FuelSource [ref]` record's notes on an `UNRESOLVED` unit, the Egypt P5121 burial
+  pattern, and was promoted to a cohort sentinel on P5862. Two aggregate-vs-segment defects
+  (P4788 `SegmentCost` = all four Ganzhou South branches; P4928 `Capacity` = the WEP3 system) —
+  but **P4934's 125 bn RMB is CORRECT**, that row IS the whole-system row, so read granularity
+  before calling a system figure a defect. **An archive.org 429 is a RATE limit — the answer is patience
+  INSIDE the session, not a later day or a different IP** (P5865/P5866, the batch's one
+  "blocked" finding, and our reading of it — *"the limit is IP-level, both rows stay open"* —
+  was WRONG). `jxgajc.com` no longer resolves in DNS, so the two CDX-confirmed captures
+  (`20230902005946`, `20230902105154`) were the only route, and archive.org 429'd every path
+  including its own CDX API for hours; a plain bounded retry loop (6 tries, ~6–8 s apart)
+  returned 200 on BOTH within a minute. Not routes, so don't re-try them: `web.archive.org`
+  has no AAAA record, `timetravel.mementoweb.org` returns 403, and IA login cookies change
+  nothing (the first 200 carried an empty `Cookie` header). Yield (`batch_20_wayback_recovered.json`,
+  26 records / 21 ref units): P5865's status is **stale** off its own new ref (竣工 Nov 2021 →
+  `operating`, `StartYear1` 2021, medium — 竣工 is completion, not gas-in) and its
+  `StartPrefecture/District` is **`Fengcheng`, not `Yifeng`**; P5865's capacity stays
+  `UNRESOLVED` (the filing's 5×10⁶ Nm³/a is itself implausible against sister segment P5866);
+  P5866 corroborated on eight values exactly, `StartPrefecture/District` filled → `Jiujiang`,
+  and its **6.43× capacity outlier REFUTED and re-filed as a ROUTE defect** (geometry
+  over-drawn against a documented 19.12 km branch — joins P5862 as a §8 redraw).
+  `fzggw.jiangsu.gov.cn` recurs in the harvest — **Jiangsu ≠ Jiangxi**.
+  Its 8 unresolved fills (v1) are **uncitable, not unknown** — every one sits on a row that
+  already has route geometry, which rule 1 forbids citing but MZ can fill from. Read P4788
+  first (`FuelSource` names WEP3 not Sichuan-Shanghai; its redraw coords were DMS-as-decimal,
+  38.7 km off; 340.30 km vs 131.8 km between its own terminals leaves length AND route open).
+  **The batch's method lesson is ours, not the data's:** three silent-loss defects, all found
+  by reconciling counts rather than by any error — the harvester must run LAST (it writes
+  `__VALIDITY__`, which `merge_deepsweep_shards` purges, so harvest-then-merge zeroes sentinels
+  2→0 silently); `split_shards` must route fills **structurally** off the worklist's owed set,
+  never off the `kind` tag; and a hand-confirmed false negative must be encoded
+  `ok=true/contains_value=true` + note, because `ok=false` + prose is stripped by
+  `verified_refs` and then honestly downgraded to `UNRESOLVED`, so found evidence reports as
+  *no source found* (batch 03: 11 records zeroed, 31→45 refs kept). **v2 added seven more of
+  ours, same family — all caught by reconciling counts, none by an error:** a carried FILL
+  parked in a side file (`carried_fills.json` is written by the carry step and read by NOBODY —
+  `build_ref_workbook` takes `pending_fills` from an *actions* packet, so on a standalone
+  deep-sweep build v1's one real fill, P4788 `Pressure` = 6.30 MPa sourced, reached no tab;
+  a carried fill belongs in the store as `class_in: FILL`, with the FRESH `sheet_row`);
+  a shard emitting `sentinel:` instead of `ref_col:` (routing is keyed on `ref_col`, so two
+  `__STATUS__` records would have gone to the ref lane and been dropped with one WARN — shard
+  fixed and `split_shards` hardened to accept the alias); a verdict parser that rejected
+  `Required status-review verdict: 'unclear'.` because the apostrophe was not a separator
+  (7/4/1/2-blank → 7/6/1); and **citation FORM is now a structural gate** in
+  `validate_shards.py` — prose written into a citation field, and a BARE HOST (a site root is a
+  mutable navigation surface, the Egypt `egyptoil-gas.com` lesson) both fail the validator.
+  The last three are the **silent-DUPLICATION / silent-MISRENDER twins** of that family, all
+  three surfaced by the batch_20 recovery: (a) `split_shards` APPENDED every `__STATUS__`, so
+  P5865 reached `Gas_StatusReview` with three contradictory verdicts side by side (`stale`
+  inferred, `unclear`, then `change` once the blocked source was read) and nothing saying which
+  was current — a row has ONE status, so it gets one verdict, last shard wins, supersessions
+  reported (4 here); (b) **a proposed value carried on a ref-lane record never tints** —
+  `_backend_view` colors values only from the FILL and STATUS lanes, so a correction written
+  into a `Location [ref]` record printed on the paste surface looking like the sheet's own
+  value, which is worse than invisible; re-file it as the pattern the workbook already supports
+  (ref record keeps the CURRENT values, a `kind: FILL` twin on the same cluster carries the
+  proposed one, `_merge_ref_unit` unions both records' refs) and key `validate_shards`'
+  duplicate detection by LANE so the designed pair is a note, not a collision; (c) every
+  `Gas_Validity` row shipped with **blank name columns** because
+  `harvest_sentinel_findings` reads `pipeline_name` off the shard DOC while `split_shards`
+  wrote `{project_id, resolutions}` only — the tab carrying a sweep's highest-value findings
+  gave the reader a bare ProjectID (fixed at the cause in both scripts; 26/26 now named). **+ §8 route creation 2026-07-30: ALL 103
   no-route gas rows (incl. MZ's operating rows + P8028/P8029 per Baird) — 80
   candidate geojsons + 23 corridor partials, three batches/workbooks (Guangxi grid
   18+5, other grids 28+10 in the cross-province dir

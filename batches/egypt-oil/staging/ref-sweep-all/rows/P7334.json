@@ -1,0 +1,101 @@
+{
+  "project_id": "P7334",
+  "pipeline_name": "El-Tibeen-Asyut Oil Products Pipeline",
+  "sheet_row": 1259,
+  "wiki": "https://www.gem.wiki/El-Tibeen-Asyut_Oil_Products_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Fuel/PipelineType/Status/route/diameter. Two ref-only gaps closed (Capacity, EndLocation) using the sheet's own already-cited youm7.com source; Diameter's existing petro-mag.org ref is now confirmed by manual PDF read (automated verifier cannot parse this site's client-rendered magazine viewer/PDF).",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/SPEC — confirmed, with one caveat. The sheet's own cited source (youm7.com, 2019-05-26, 'كل ما تريد معرفته عن تنفيذ توسعات مشروعات خطوط نقل منتجات البترول بالصعيد', already the current_ref on Fuel/PipelineType/Status/Length/StartLocation) is a direct, itemised EGPC/Ministry-of-Petroleum-sourced account of Upper Egypt product-line projects. I fetched and read the full article (not just the verifier's substring check). Item 9 reads verbatim: 'تم الانتهاء من تنفيذ خط نقل المنتجات البترولية من التبين حتى أسيوط بطول 376 كم بمعدل 3 ألاف طن يومياً لسد احتياجات محافظات وجه قبلى من المنتجات البترولية' = 'Completed construction of the petroleum-products transport line from El-Tibeen to Asyut, 376 km, at a rate of 3,000 tons/day, to meet Upper Egypt governorates' petroleum-product needs.' This is an exact, explicit match to GEM's LengthKnown=376.00 km, Capacity=3,000.00 Tn/d, Status=operating ('تم الانتهاء' = completed), Fuel=Oil products (only), PipelineType=transmission (a 376 km inter-governorate trunk), and StartLocation/EndLocation (El-Tibeen, Helwan/Cairo area -> Asyut). This is a SECOND, independent, primary confirmation beyond GEM itself — high confidence on existence/classification/status/route.\n\nSECOND INDEPENDENT SOURCE, and it resolves the Diameter ambiguity the automated verifier flagged: the existing Diameter [ref] cites petro-mag.org's magazine viewer (a JS-rendered flipbook the verifier's plain-text check cannot parse — confirmed by inspecting the raw HTML, which contains zero occurrences of 'التبين' or 'أسيوط'; the page only embeds a <embed>/pdf-object pointing at a downloadable PDF). I downloaded that PDF directly (https://petro-mag.org/Uploads/Files/1db11fff-b2e2-445c-aa2f-a1c78dbd7c9b.pdf, the magazine's own 'ديسمبر.pdf' / December 2024 issue, PPC's dedicated company section pp.131-138) and ran pdftotext on it (per url_verifier.py's own documented guidance for PDFs: 'on a big PDF, a content FAIL says nothing; download it and pdftotext -layout'). It states: 'اسم المشروع: إحلال وتجديد جزء من خط '12 منتجات التبين / أسيوط إلى قطر '16 بطول 75 كم. هدف المشروع: لتأمين ورفع معدلات تدفيع المنتجات البترولية من التبين إلى أسيوط والعكس' = 'Rehabilitation/renewal of part of the 12-inch El-Tibeen/Asyut products line TO 16-inch diameter, 75 km, to secure and raise delivery rates ... both directions.' In plain terms: the trunk is fundamentally 12-inch, with one 75 km segment upgraded to 16-inch — exactly matching GEM's Diameter='12,16'. This is direct confirmation from Petroleum Pipelines Company's (PPC) own corporate account (the article opens 'تمارس الشركة نشاطها منذ عام 1955 ... شركة أنابيب البترول', i.e. it is PPC's own report of its own network, footer www.ppc.com.eg) that the El-Tibeen/Asyut line still exists and is in active service as of December 2024 — a second, independent status confirmation five years after the 2019 completion report.\n\nCAVEAT: the 376 km length and 3,000 Tn/d capacity numbers are each stated explicitly in only ONE source (youm7, 2019); the PPC magazine doesn't restate the whole-line totals (it only discusses the 75 km rehab segment), so those two figures individually are medium- rather than high-tier pending a second explicit corroboration. Owner=Egyptian General Petroleum Corp (100%) is generic/boilerplate (EGPC's own 'About EGPC' page, not pipeline-specific) but is consistent with the PPC account, since PPC was itself established by EGPC's governing board (per the same PDF: 'تأسست الشركة العامة لنقل البترول بالأنابيب في 9 أكتوبر 1962 بقرار مجلس إدارة المؤسسة المصرية العامة للبترول') — i.e. PPC is EGPC's own pipeline-transport arm, so EGPC as ultimate 100% owner is not contradicted.",
+      "proposed_refs": [
+        "https://www.youm7.com/story/2019/5/26/%D9%83%D9%84-%D9%85%D8%A7-%D8%AA%D8%B1%D9%8A%D8%AF-%D9%85%D8%B9%D8%B1%D9%81%D8%AA%D9%87-%D8%B9%D9%86-%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%AA%D9%88%D8%B3%D8%B9%D8%A7%D8%AA-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%B7-%D9%86%D9%82%D9%84/4257527",
+        "https://petro-mag.org/Uploads/Files/1db11fff-b2e2-445c-aa2f-a1c78dbd7c9b.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "ar"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Flag for Update: reconcile P7334 vs P7325 (both named 'El-Tibeen-Asyut Oil Products Pipeline'). Evidence points to P7325's 75 km / 16in / construction spec being an IN-PLACE rehab of a 75 km segment already inside P7334's 376 km / operating line, not a new/parallel route. Recommend either (a) zeroing P7325's LengthKnown per the standing 'expansion with no new physical pipe -> LengthKnown = 0' convention and recording it as a capacity-upgrade note on P7334, or (b) if PPC in fact laid new pipe alongside the old corridor (true parallel duplication, as its own report elsewhere calls similar projects 'ازدواج' = duplication/twinning), keep P7325 separate but say so explicitly in both rows' ResearcherNotes so the 376 km total isn't read as excluding the upgrade. Either way, the current pair of rows with no cross-reference between them risks double-counting length in country/commodity totals.",
+      "researcher_notes": "DUPLICATE CHECK vs roster watchlist pair P7325 (len=75.0, dia=16, status=construction) vs P7334 (len=376.0, dia=12,16, status=operating), both named 'El-Tibeen-Asyut Oil Products Pipeline'. This is NOT the simple 'same length+diameter = suspicious' case the orchestrator flagged as diagnostic — it's more specific and better evidenced than that heuristic suggests. PPC's own December-2024 magazine (see PDF above, pp.131-138, 'ثالثاً: مشروعات الإحلال والتجديد' / 'Third: Rehabilitation and Renewal Projects') lists, as an ACTIVE/ongoing project: 'إحلال وتجديد جزء من خط '12 منتجات التبين / أسيوط إلى قطر '16 بطول 75 كم' (rehab of part of the 12in El-Tibeen/Asyut products line, upgrading a 75 km stretch to 16in). The same document's EIA-approvals list (item 8) restates the identical 75 km/16in project under the label 'بنى سويف / أسيوط' (Beni Suef/Asyut) 'من غرفة 15 حتى غرفة 18 بالمنيا' (from valve-chamber 15 to chamber 18, in Minya governorate) — i.e. a defined MIDDLE segment of the same corridor described in the youm7 2019 article as the El-Tibeen(Cairo)->Beni Suef->El Minya->Asyut trunk. P7325's length (75.0 km), diameter (16in, the UPGRADED size) and status (construction) match this PPC project to the kilometre and the inch. That 75 km segment, at its OLD 12in diameter, is what P7334's mixed '12,16' diameter field is already accounting for as part of its 376 km total (see validity entry above). So P7325 looks like the exact same physical corridor segment being re-entered as an independent 'new' pipeline under construction, which would double-count roughly 75 km of pipe that P7334 already carries as operating. I did not find any statement that this rehab is being built on an entirely new alignment (new right-of-way) rather than in the existing trench/corridor — PPC's own wording is 'إحلال وتجديد' (replace-in-place and renew), not 'إنشاء' (new construction) or 'ازدواج' (duplication/twinning, PPC's term elsewhere in the same document for genuine parallel second lines, e.g. the Minya-Asyut duplication project). That word choice is itself evidence against a genuine second parallel pipe. I am not merging or editing either row myself — this is a routing flag for Update, per the deep-sweep brief.",
+      "proposed_refs": [
+        "https://petro-mag.org/Uploads/Files/1db11fff-b2e2-445c-aa2f-a1c78dbd7c9b.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1259,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "3,000.00", "CapacityUnits": "Tn/d"},
+      "primary_value": "3,000.00",
+      "proposed_refs": [
+        "https://www.youm7.com/story/2019/5/26/%D9%83%D9%84-%D9%85%D8%A7-%D8%AA%D8%B1%D9%8A%D8%AF-%D9%85%D8%B9%D8%B1%D9%81%D8%AA%D9%87-%D8%B9%D9%86-%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%AA%D9%88%D8%B3%D8%B9%D8%A7%D8%AA-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%B7-%D9%86%D9%82%D9%84/4257527"
+      ],
+      "verifications": [
+        {"url": "https://www.youm7.com/story/2019/5/26/%D9%83%D9%84-%D9%85%D8%A7-%D8%AA%D8%B1%D9%8A%D8%AF-%D9%85%D8%B9%D8%B1%D9%81%D8%AA%D9%87-%D8%B9%D9%86-%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%AA%D9%88%D8%B3%D8%B9%D8%A7%D8%AA-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%B7-%D9%86%D9%82%D9%84/4257527", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Article text (item 9): 'بمعدل 3 ألاف طن يومياً' = 'at a rate of 3 thousand tons/day' — written as words, not the numeral '3,000', which is why the automated verifier's substring match wasn't attempted on this token; manually confirmed the value against the full article text. Single explicit source for the number itself (see validity entry for the existence/status/diameter corroboration from a second, independent source)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1259,
+      "ref_col": "EndLocation [ref]",
+      "value_cols": ["EndLocation", "StartPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "EndLocation",
+      "values": {"EndState/Province": "Asyut", "EndCountryOrArea": "Egypt"},
+      "primary_value": "Asyut",
+      "proposed_refs": [
+        "https://www.youm7.com/story/2019/5/26/%D9%83%D9%84-%D9%85%D8%A7-%D8%AA%D8%B1%D9%8A%D8%AF-%D9%85%D8%B9%D8%B1%D9%81%D8%AA%D9%87-%D8%B9%D9%86-%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%AA%D9%88%D8%B3%D8%B9%D8%A7%D8%AA-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%B7-%D9%86%D9%82%D9%84/4257527"
+      ],
+      "verifications": [
+        {"url": "https://www.youm7.com/story/2019/5/26/%D9%83%D9%84-%D9%85%D8%A7-%D8%AA%D8%B1%D9%8A%D8%AF-%D9%85%D8%B9%D8%B1%D9%81%D8%AA%D9%87-%D8%B9%D9%86-%D8%AA%D9%86%D9%81%D9%8A%D8%B0-%D8%AA%D9%88%D8%B3%D8%B9%D8%A7%D8%AA-%D9%85%D8%B4%D8%B1%D9%88%D8%B9%D8%A7%D8%AA-%D8%AE%D8%B7%D9%88%D8%B7-%D9%86%D9%82%D9%84/4257527", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Same article names Asyut as the line's terminus ('من التبين حتى أسيوط' = 'from El-Tibeen to Asyut'); already the current_ref for StartLocation/Fuel/PipelineType/Status/Length on this row but was missing from EndLocation [ref] specifically — closing that gap with the same, already-verified source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1259,
+      "oo_sheet_row": 5709,
+      "tab": "operators_owners",
+      "kind": "operator",
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Petroleum Pipeline Company(PPC)"},
+      "primary_value": "Petroleum Pipeline Company(PPC)",
+      "proposed_refs": [
+        "https://petro-mag.org/Uploads/Files/1db11fff-b2e2-445c-aa2f-a1c78dbd7c9b.pdf"
+      ],
+      "verifications": [
+        {"url": "https://petro-mag.org/Uploads/Files/1db11fff-b2e2-445c-aa2f-a1c78dbd7c9b.pdf", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "ar",
+      "researcher_notes": "Operator/Operator [ref] are both genuinely blank on the operators_owners tab (OwnerRow 5709). PPC's own Dec-2024 corporate magazine describes the El-Tibeen/Asyut line as part of its own network in an article that opens by describing PPC's founding and current 6,300 km pipeline network -- i.e. this is PPC's own account of its own asset, the strongest kind of operator attribution available. Verifier can't text-match this PDF (binary/JS-rendered source, same caveat as the Diameter ref above); confirmed manually via pdftotext, which is the documented workaround for this tool limitation. Name string 'Petroleum Pipeline Company(PPC)' matches the exact convention already used on 5 sibling Egypt-oil rows in this same roster/researcher batch (P7965, P7975, P7976, P7977, P7979) rather than the alternate 'Petroleum Pipelines Co' string used on a different sub-cluster (P7363-65), for sheet consistency. This is a best-effort deep-fill beyond the leg's owed worklist units (Operator wasn't one of the 9 tracked units for this row) -- flagging in case downstream merge doesn't expect it."
+    }
+  ],
+  "summary": "P7334 confirmed real/correctly classified: independent 2019 press account (already the sheet's own ref) explicitly states 376 km / 3,000 Tn/d / completed, and PPC's own Dec-2024 corporate magazine independently confirms the line's continued existence and explains the '12,16' mixed diameter as a 75 km rehab-to-16in segment -- but that same 75 km/16in/construction spec is an exact match for sibling row P7325, raising a DUPLICATE/double-count concern (flagged, not resolved). Filled 2 missing refs (Capacity, EndLocation) off the sheet's own existing source and deep-filled a blank Operator (Petroleum Pipeline Company(PPC), medium tier). Nothing UNRESOLVED."
+}

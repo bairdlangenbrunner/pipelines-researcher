@@ -1,0 +1,61 @@
+{
+  "project_id": "P0369",
+  "pipeline_name": "Atmos Pipeline Texas",
+  "sheet_row": 184,
+  "wiki": "https://www.gem.wiki/Atmos_Pipeline_Texas",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on existence/classification/ownership/length/status/fuel; keep as network-level row",
+      "researcher_notes": "Opened all 3 of the row's harvested wiki citations (3/3 of the pool): (1) atmosenergy.com/apt/about-atmos-pipeline-texas — live (verified via url_verifier), states Atmos Pipeline-Texas is 'a regulated intrastate natural gas transmission pipeline network and storage company... one of the largest intrastate pipeline operations with approximately 5,700 miles of transmission pipelines within the state of Texas', operated for Atmos Energy's Mid-Tex Division and other customers. (2) eia.gov/maps/layer_info-m.php — currently returns 503 and, even when live, is a generic EIA interactive-map-layer metadata page, not pipeline-specific; it cannot corroborate any of this row's values and is a weak/uninformative citation on the wiki page. (3) the harvested Vaquero Midstream investor-conference PDF (lbcg.com) — live, but does NOT describe Atmos Pipeline-Texas at all; see the Capacity concern below, where the same document is the actual (mis)source of GEM's Capacity value. EXISTENCE: confirmed independently of GEM — APT is a real, extensively documented entity: a Sept. 2021 filing 'COMMENTS BY THE ATMOS PIPELINE-TEXAS DIVISION OF ATMOS ENERGY CORPORATION' before the Railroad Commission of Texas (hosted at rrc.texas.gov, docket on 16 TAC §7.455 curtailment standards) states verbatim: 'APT is an unincorporated division of Atmos Energy Corporation. APT is an intrastate natural gas transmission pipeline operating solely in Texas... consisting of approximately 5,700 miles of transmission pipeline, approximately 700 city gate meters, five underground storage facilities, and 48 gas compressors.' This independently corroborates existence, the intrastate-transmission classification, the ~5,700-mile length, and the Atmos Energy Corp ownership (APT is literally an unincorporated division of Atmos Energy Corp, not a separate legal entity, so Owner1=Atmos Energy Corp 100% is correct). CLASSIFICATION: correctly a Gas transmission network row (PipelineType currently blank -- see fills). No duplicate risk against the other 44 rows in this batch's roster (all are distinct named systems/operators; APT is the only Atmos-branded row). CAVEAT: every corroborating document (atmosenergy.com, the RRC filing, and Atmos's own May-2025 investor deck) ultimately traces to Atmos Energy Corp itself -- I could not find a fully third-party (press/regulatory-independent) source restating the 5,700-mile figure, so tier is medium rather than high despite three separate Atmos-authored documents agreeing. Status=operating and Fuel=Gas are both confirmed by the same sources (APT is described throughout as an active, currently-operating regulated transmission system).",
+      "proposed_refs": [
+        "https://www.atmosenergy.com/apt/about-atmos-pipeline-texas",
+        "https://www.rrc.texas.gov/media/2msoylcp/7-455-7-305-comments-atmospipelinetx.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not paste 180 MMcf/d as system Capacity. Route to Update to research and replace with an accurate system-wide capacity/design-throughput figure (e.g. from an Atmos 10-K, RRC tariff filing, or trade-press profile); flag the current value as likely a full order of magnitude too low.",
+      "researcher_notes": "GEM's Capacity = 180 MMcf/d for this row traces, via the gem.wiki page's own citation [3], to the harvested Vaquero Midstream investor-conference PDF (lbcg.com, 'day-1-kirk-blackim...vaquero-midstream.pdf', Nov. 2018) -- confirmed live and downloaded (pdftotext -layout; url_verifier confirms 200, but its content-substring check misses on this large PDF, a documented false-negative pattern for big PDFs per url_verifier.py's own docstring, so I read it directly). That deck is a Permian Basin gathering/processing overview for Vaquero Midstream's Caymus plant. It never once names 'Atmos Pipeline-Texas' or 'Atmos Pipeline Texas' as a subject -- the sole 'Atmos' references are to a single 16-inch residue-gas interconnect labeled 'Atmos Line X-2' at the Caymus plant tailgate, with capacity given as '180,000 Mcfd' (=180 MMcf/d), alongside sibling interconnects (Northern Natural 30\", Enterprise 36\", ONEOK OWT 60,000 Mcfd, etc.). That is the capacity of ONE Permian-Basin delivery interconnect into the APT system, not APT's own system-wide transmission capacity -- the wiki editor appears to have misattributed a single-interconnect figure from a slide deck to the whole ~5,700-mile, 831-Bcf/yr statewide network. Independent scale check: Atmos Energy Corp's own May 2025 investor 'Analyst Update' deck (s201.q4cdn.com, live, confirmed via pdftotext) states APT 'Transported approximately 831 Bcf in Fiscal 2024 -- Average throughput of 2.3 Bcf/d' (=2,300 MMcf/d), i.e. average throughput alone is already >12x the recorded 180 MMcf/d 'capacity'. (Throughput is not identical to nameplate capacity, so I am not proposing 2,300 as a direct replacement value -- but it firmly establishes the current 180 MMcf/d figure is not credible for the whole system.) Both underlying documents are real and live; the defect is a citation/attribution mismatch, not a fabricated ref. Only 1 of the row's 3 harvested wiki citations bears on this issue (opened 3/3 -- see the existence note above for the other two).",
+      "proposed_refs": [
+        "http://www.lbcg.com/media/downloads/events/715/day-1-kirk-blackim-vice-president-business-development-vaquero-midstream.13415.pdf",
+        "https://s201.q4cdn.com/158157484/files/doc_presentations/2025/May/16/Analyst-Update-May-2025.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 184,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.rrc.texas.gov/media/2msoylcp/7-455-7-305-comments-atmospipelinetx.pdf",
+        "https://www.atmosenergy.com/apt/about-atmos-pipeline-texas"
+      ],
+      "verifications": [
+        {"url": "https://www.rrc.texas.gov/media/2msoylcp/7-455-7-305-comments-atmospipelinetx.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.atmosenergy.com/apt/about-atmos-pipeline-texas", "ok": true, "contains_value": true}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "PipelineType was blank. Both the RRC filing ('APT is an intrastate natural gas transmission pipeline') and the Atmos about-page ('a regulated intrastate natural gas transmission pipeline network') explicitly describe APT as a transmission system, matching the controlled-vocab value 'transmission'. RRC PDF content confirmed by local pdftotext read (its url_verifier substring check false-negatives on this PDF, a documented large-PDF limitation); the atmosenergy.com page passed url_verifier directly on the token 'transmission'."
+    }
+  ],
+  "summary": "P0369 Atmos Pipeline Texas: existence/classification/ownership/length/status confirmed (caveat, medium tier -- all corroboration traces to Atmos Energy Corp itself) via an RRC regulatory filing + the company's own site; ONE spec concern staged -- Capacity=180 MMcf/d is a misattributed single-Permian-interconnect figure from the harvested Vaquero Midstream deck, not APT's system capacity (Atmos's own 2025 investor deck puts average system throughput at 2.3 Bcf/d, >12x higher); one fill added (PipelineType=transmission). No UNRESOLVED units; no duplicate/misclassification found."
+}
