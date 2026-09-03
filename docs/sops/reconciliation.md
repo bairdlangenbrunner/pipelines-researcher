@@ -156,6 +156,9 @@ GEM rows routed, the composite distribution — because a zero-overlap run is ot
 ambiguous between "GEM is missing all of this" and "every signal was blank". It raises a
 `MATCH_QUALITY` escalation when both the name and geometry axes are mostly dead, or when a
 run of ≥5 records returns zero overlaps. **Never read a null run as a discovery set.**
+The third guard is **License**: the crosswalk/additions tabs carry the source's licence
+column, and OSM coordinates are ODbL share-alike — whether any OSM geometry is reused in the
+routes repo is Baird's call, never the agent's.
 
 **A `best_guess` PID is only a location claim when a locational axis was alive.** With an
 unnamed reference (`s_name` 0), a **routeless** guessed row (`g_untested`) and no province

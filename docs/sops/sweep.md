@@ -31,6 +31,21 @@ this SOP is the operational sequence.
 - Optional `--status` filter (default: **all** statuses, incl. operating).
 - Decision for the current program: **upgrade single-source data points to ≥2
   corroborating links** (a lone working source still needs a second, independent one).
+- **Transit countries share ROWS, so the second scope swept must exclude the first's.** A
+  trunk crossing Uzbekistan and Kazakhstan is ONE row that both `--country` scopes select —
+  Uzbekistan gas overlaps Kazakhstan gas on **13 of its 31 rows** (the CAC, CA–China,
+  Bukhara–Ural and BTBA strings). Re-researching them stages a second record against the
+  same sheet cell, and whichever workbook is pasted last wins silently.
+  `build_ref_worklist.py --exclude-pids` takes a comma list or `@<file>` (one PID per line,
+  `#` comments); **derive the file from the other country's
+  `staging/*/staged_resolutions.json`, never by hand**, keep it at
+  `batches/<scope>/carried_from_<other>.txt` as the batch's record of what it is not
+  accountable for, and note the carried rows in the country note. The run prints an
+  `EXCLUDED …` line — never let rows drop silently. **The exclusion applies to the research
+  legs ONLY (§9 steps 1–4, 7), never to the recon leg:** `reconcile.py` needs the FULL
+  in-country GEM roster on the GEM side, or the excluded rows' reference counterparts
+  re-bucket as `DISCOVERY_CANDIDATE` — manufacturing phantom additions out of trunks GEM
+  already tracks. Leave `--country` alone there.
 
 ## The ref-pair model (group-walk)
 `scripts/ref_pairs.py::discover_ref_pairs` re-derives, from the **fresh header every
@@ -336,16 +351,10 @@ whenever they're present. For the recon leg, run the scoped recon (`ingest.py` �
 `recon_*_crosswalk.json` and emits one `<Cmdty>_<Source>` tab each. Nothing here is
 auto-applied.
 
-**A reference route is presumptively real pipe.** The leg's output is not "matched vs
-noise" — every unmatched reference record carries a `Disposition` saying what it most
-likely IS: `ROUTE_FOR_EXISTING` (candidate geometry for a routeless GEM row → human
-routes-repo PR, never auto-replaced), `FRAGMENT_OF_EXISTING`, `NEAR_MISS` (scored just
-under threshold — adjudicate by hand), `DISCOVERY_CANDIDATE` (rule out an existing row
-under another name → `OtherEnglishNames` before treating as new; only genuine misses go
-to §4). Never dismiss the unmatched bucket wholesale. Two guards on over-reading it: a
-`partial` Coverage label means the trace corroborates LOCATION only (a 0.1 km stub says
-nothing about a 105 km line), and the License column governs reuse of OSM coordinates
-(ODbL share-alike — Baird's call, never the agent's).
+**A reference route is presumptively real pipe** — every unmatched reference record
+carries a `Disposition` (`ROUTE_FOR_EXISTING` / `FRAGMENT_OF_EXISTING` / `NEAR_MISS` /
+`DISCOVERY_CANDIDATE`) and is worked by it, never dismissed wholesale; the table, the
+`partial` Coverage guard and the License (ODbL) guard live in the Reconciliation SOP §4.
 
 **Check the run's health before believing a thin result.** `reconcile.py` emits
 `MATCH_QUALITY` when the name and geometry axes are both mostly dead — unnamed reference
@@ -574,6 +583,8 @@ Subagents are not perfectly consistent; normalize deterministically at merge:
 Applied to each `[ref]` cell on the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` tabs (and the tier cell on the bucket tabs):
 green = ≥2 independent working sources · yellow = single source · red = low/none ·
 **blue = re-verified existing ref (no action)** · red Current-ref cell (DeadLinks tab) = dead/value-missing.
+A residual red cell after the pass = no independent source supports the current GEM value
+(often a value disagreement), not merely unsearched.
 
 ## Standing rules (echoed)
 Visit-but-**never-cite** gem.wiki/globalenergymonitor (rule 1) · **never theodora** ·

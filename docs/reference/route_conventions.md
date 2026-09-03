@@ -60,6 +60,10 @@ curl -sL "https://raw.githubusercontent.com/GlobalEnergyMonitor/GOIT-GGIT-pipeli
   roughly *where* the pipe runs and nothing more.
 - `no route` — none available, or a capacity expansion with no new pipe.
 - `very high (within meters)` — survey-grade.
+- **The ladder is capped for unbuilt pipe:** `high` / `very high` are reserved for built
+  lines; `proposed`, `shelved`, `cancelled` and `construction` rows top out at `medium`, and
+  the cap moves `RouteAccuracy` only, never `RouteType` (`controlled_vocab.md` → "RouteAccuracy:
+  the unbuilt cap", Baird 2026-08-06).
 
 **A blank `RouteAccuracy` means `no route`** (Baird 2026-08-11) — on a newly added row the
 cell simply hasn't been filled in yet. So a blank-accuracy row is **eligible for §8 route

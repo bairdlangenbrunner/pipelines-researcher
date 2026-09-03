@@ -77,12 +77,8 @@ before** the run) today. See the Reconciliation SOP for phase detail.
    Reads `sources/gulfpub/manifest.yml` (+ `adapter.py` if present). Spot-check 5
    records vs the raw GeoJSON (status mapped, diameter set, length→km, geodesic
    computed, geometry sidecar present).
-   **If `geodesic_km ÷ length_km` sits near 1.609 on those records, stop — the manifest's
-   `length_units` is wrong.** Confirm it dataset-wide *and per country* before continuing
-   (one country's block can differ: `units.length_units_by_country`), fix the manifest, and
-   re-run. That is a manifest fix plus a re-run, not an escalation — and re-run every other
-   country already shipped off the same dataset, because their `Ref Length` columns are wrong
-   too. `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+   **`geodesic_km ÷ length_km` near 1.609 = the manifest's `length_units` is wrong** — fix the
+   manifest and re-run every shipped scope (Reconciliation SOP → Engine invariants).
 4. **Reconcile** (match + geometry + diff + score):
    ```bash
    python scripts/reconcile.py --source gulfpub --country "Saudi Arabia" \
@@ -160,21 +156,11 @@ existing refs deterministically (no agent tokens). Route/geometry `[ref]` cells 
 **out of scope** (dropped by `discover_ref_pairs`). Start research from the
 harvested gem.wiki outbound citations — visit gem.wiki, **never cite it**.
 
-**Transit countries share ROWS, so the second scope swept must exclude the first's.**
-A trunk crossing Uzbekistan and Kazakhstan is ONE row that both `--country` scopes
-select — Uzbekistan gas overlaps Kazakhstan gas on **13 of its 31 rows** (the CAC,
-CA–China, Bukhara–Ural and BTBA strings). Re-researching them stages a second record
-against the same sheet cell, and whichever workbook is pasted last wins silently.
-`--exclude-pids` takes a comma list or `@<file>` (one PID per line, `#` comments);
-**derive the file from the other country's `staging/*/staged_resolutions.json`, never
-by hand**, keep it at `batches/<scope>/carried_from_<other>.txt` as the batch's record
-of what it is not accountable for, and note the carried rows in the country note. The
-run prints an `EXCLUDED …` line — never let rows drop silently.
-
-**The exclusion applies to the research legs ONLY (steps 1–4, 7 of §9), never to the
-recon leg.** `reconcile.py` needs the FULL in-country GEM roster on the GEM side or the
-excluded rows' reference counterparts re-bucket as `DISCOVERY_CANDIDATE` — manufacturing
-phantom additions out of trunks GEM already tracks. Leave `--country` alone there.
+**Transit countries share rows** — the second scope swept passes
+`--exclude-pids @batches/<scope>/carried_from_<other>.txt` (derived from the other
+scope's `staged_resolutions.json`) and checks the run's `EXCLUDED …` line. **Research legs
+only, never the recon leg** — `reconcile.py` keeps the full `--country` roster. Why, and the
+Uzbekistan/Kazakhstan case: Sweep SOP → Inputs.
 
 ### refs-only preset (inline research loop)
 
@@ -207,20 +193,12 @@ python scripts/build_refsweep_briefs.py --staging $STG/   # → ref_shards/_brie
 #   → one research subagent per brief writes ref_shards/<PID>.json
 python scripts/merge_ref_shards.py --staging $STG/        # fold onto staged_resolutions.prior.json
 python scripts/merge_deepsweep_shards.py --staging $STG/  # re-fold validity/fills/status
-python scripts/harvest_sentinel_findings.py --staging $STG/  # LAST — see below
+python scripts/harvest_sentinel_findings.py --staging $STG/  # harvester LAST — Sweep SOP §Sentinels
 ```
 
-**The harvester runs LAST, and the order is not cosmetic.**
-`merge_deepsweep_shards.py` re-folds by purge-and-rebuild: its `is_old_deepsweep()`
-drops every record whose `ref_col` is `__VALIDITY__`/`__STATUS__`/`__ROUTE__`, which is
-exactly what the harvester writes. So harvesting first and merging second **silently
-zeroes the sentinels back out** — verified empirically on Jiangxi (2 → 0, no warning).
-
-`merge_ref_shards.py` matches shards by `(project_id, ref_col, sheet_row)`, so any
-`__VALIDITY__`/`__REDUNDANCY__` sentinel a research subagent wrote has no baseline record
-and is **dropped with a WARN** — the refs land, the sourced verdict vanishes.
-`harvest_sentinel_findings.py` folds them back in (idempotent). Never ship a batch whose
-WARN count you haven't reconciled (Sweep SOP §Sentinels).
+The order is not cosmetic: the harvester rescues the sentinels `merge_ref_shards.py`
+drops with a WARN, and `merge_deepsweep_shards.py` purges them if it runs after —
+reconcile the WARN count before shipping (Sweep SOP §Sentinels).
 
 The `routes` leg is carried on the shards automatically (`routes[]` →
 `__ROUTE__` at merge). The `recon` leg runs **once per reference dataset** — in the
@@ -243,22 +221,10 @@ done
 #   <Cmdty>_<Source> tab each. Adding a source needs no workbook edit.
 ```
 
-**Read the run's health line before trusting a thin result.** `reconcile.py` emits a
-`MATCH_QUALITY` escalation when the name and geometry axes are both mostly dead
-(unnamed reference features × routeless GEM rows), which is the normal OSM condition —
-Iraq gas 2026-07-28 scored 0 overlaps from 52 features with a top composite of 0.438
-against a 0.45 threshold, and that null read as a legitimate finding for weeks. The fix
-is the admin-area signal (`geoarea_weight`, per-dataset in the manifest), not a lower
-threshold.
-
-**Triage by `Disposition`, not by matched/unmatched.** A reference route is
-presumptively REAL pipe: `ROUTE_FOR_EXISTING` = candidate geometry for a routeless GEM
-row (human routes-repo PR; never auto-replaced), `FRAGMENT_OF_EXISTING` = partial trace
-of a tracked line, `NEAR_MISS` = adjudicate by hand, `DISCOVERY_CANDIDATE` = check for an
-existing row under another name (→ `OtherEnglishNames`) *before* treating it as new. A
-`partial` Coverage label means the trace corroborates LOCATION only — a 0.1 km OSM stub
-is not evidence about a 105 km line. Check the tab's License column before any OSM
-geometry is reused (ODbL share-alike; Baird's call).
+Read the run's `MATCH_QUALITY` health line before trusting a thin result (Sweep SOP →
+recon leg), and triage every unmatched reference record by `Disposition`
+(`ROUTE_FOR_EXISTING` / `FRAGMENT_OF_EXISTING` / `NEAR_MISS` / `DISCOVERY_CANDIDATE`),
+never as one Additions pile — Reconciliation SOP §4 is the one home for that table.
 
 ### Build (all presets)
 
@@ -268,14 +234,10 @@ python scripts/build_ref_workbook.py --staging $STG/ \
 python scripts/recalc.py batches/<scope>/deliverables/pipelines_batch_<stamp>_<scope>_<preset-mode>.xlsx
 ```
 
-Leads with the paste-ready **`<Cmdty>_Backend`** tab (1:1 mirror of the FULL
-tracker backend — every column in sheet order, current values prefilled, overlays
-tier-colored only on touched cells, leading `SheetRow` locator; **don't paste the
-computed/formula columns back over the live formulas**) and
-**`<Cmdty>_OperatorsOwners`** (mirror of the operators/owners tab, `[ref]` precedes
-its values). In-dev preset leads with `<Cmdty>_StatusReview`. Residual red cells =
-no independent source supports the current GEM value (often a value disagreement),
-not merely unsearched. Present standalone, or roll into a §6 handoff packet.
+Leads with the paste-ready `<Cmdty>_Backend` + `<Cmdty>_OperatorsOwners` tabs (in-dev:
+`<Cmdty>_StatusReview`); layout, paste-back caveat and colour meanings in
+`docs/reference/workbook_conventions.md` + Sweep SOP → Output / Tier → color. Present
+standalone, or roll into a §6 handoff packet.
 
 ---
 
@@ -372,13 +334,9 @@ QC/Handoff SOP (`docs/sops/qc.md`); sidecar contract:
    gem.wiki is VISITED for the diff but NEVER cited as a source. No GulfPub route
    comparison in this pass (future work; see `docs/research_backlog.md`).
 
-   **Class-level escalations → `<staging>/escalations.json`** (optional). Anything no
-   single row action can carry — a whole class of wrong values, an ingest defect, a
-   scope ruling — goes in a `notes/escalation-*.md` memo AND a one-line entry here
-   (`[{title, summary, memo}]`), which `build_ref_workbook` renders as an
-   `ESCALATIONS` row in both READMEs. Without it the researcher working from the
-   workbook never learns the memo exists. Say in the summary which affected rows are
-   staged as fills and which are memo-only — that gap is the thing that gets lost.
+   **Class-level escalations** go in a `notes/escalation-*.md` memo AND
+   `<staging>/escalations.json` (`[{title, summary, memo}]` → the READMEs' `ESCALATIONS`
+   row) — QC SOP → Escalate.
 
 **Tracker-wide mechanical QC workbook** (global audits, no assembly):
 `python scripts/build_qc_workbook.py --tracker oil [--country <C>] --output
