@@ -207,6 +207,12 @@ def main():
     meta["n_units"] = len(merged)
     meta["class_out_counts"] = dict(collections.Counter(r.get("class_out") for r in merged))
     meta["class_in_counts"] = dict(collections.Counter(r.get("class_in") for r in merged))
+    if "ref_class_out_counts" in meta:
+        # merge_ref_shards wrote this before the shards flipped HAS_REF/MISSING_REF
+        # class_out (line above: REFS_ADDED/UNRESOLVED); refresh it or it goes stale
+        # (Egypt 08-27 shipped 45/202/19 in meta against 46/202/18 in the records).
+        meta["ref_class_out_counts"] = dict(collections.Counter(
+            r.get("class_out") for r in merged if r.get("class_in") in ("HAS_REF", "MISSING_REF")))
     meta["n_validity_flags"] = len(new_validity)
     meta["n_fills"] = len(new_fills)
     meta["n_status_reviews"] = len(new_status)

@@ -636,7 +636,7 @@ below.) Staging: `batches/egypt-gas/staging/deepsweep-20260827`,
 `batches/egypt-{gas,oil}/staging/route-creation-20260827`,
 `batches/egypt-{gas,oil}/staging/recon-{gulfpub,osm}-20260827`.
 
-**Scope, and why gas is 40 of 127 rows and not all of them.** The 88 gas rows carrying staged,
+**Scope, and why gas is 40 of 127 rows and not all of them.** The 87 gas rows carrying staged,
 unapplied research from the July/August batches are **excluded from the research
 legs** via `--exclude-pids` — re-researching a row with a pending staged record
 stages a contradictory record against the same sheet cells, and whichever

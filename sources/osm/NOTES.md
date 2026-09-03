@@ -83,8 +83,8 @@ with this part* — so when one way group merges into several **disconnected** p
 touch the same set of ways, every part got an **identical key**.
 
 Measured across the 10 registered extracts: **62 features collided**, worst by distance in
-Uzbekistan (6 features / 865.8 km) and Kazakhstan (7 / 711.7 km); Malaysia and Pakistan had
-none. The Uzbekistan case is the clearest — one key covered three disjoint pieces of 618.01,
+Uzbekistan (6 features / 865.8 km) and Kazakhstan (7 / 711.7 km), worst by count Ukraine
+(26 / 251.7 km); Malaysia and Pakistan had none. The Uzbekistan case is the clearest — one key covered three disjoint pieces of 618.01,
 144.95 and 25.49 km.
 
 **No committed finding is falsified.** `ingest.py` already caught it and suffixed `#2`/`#3`, so

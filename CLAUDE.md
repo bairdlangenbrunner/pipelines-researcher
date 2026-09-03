@@ -340,7 +340,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **Saudi Arabia (gas packet 2026-07-08, rebuilt 2026-07-28, PARTIALLY APPLIED — check each cell
   before pasting; hinges on the P1897–P1925 class decision; oil ref-sweep partial):** `docs/country_notes/saudi-arabia.md`.
 - **Egypt (gas + oil: deep sweep + recon + routes 2026-08-27, staged not applied; 7 files to work):**
-  `docs/country_notes/egypt.md`. Gas researched only 40 of 127 rows — the other 88 carry unapplied
+  `docs/country_notes/egypt.md`. Gas researched only 40 of 127 rows — the other 87 carry unapplied
   July/August staged work (`--exclude-pids`); the deep sweeps do NOT subsume the four recon workbooks.
 - **United States (oil: Delaware Express + Permian Express staged not applied; deepwater-export
   open item):** `docs/country_notes/united-states.md`.
