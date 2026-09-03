@@ -184,13 +184,10 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
      press, Argaam, SPA). Foreign pages still pass `url_verifier`; the "contains the value"
      check leans on language-agnostic tokens (numbers, years, diameters). Record the source
      language in `ResearcherNotes`.
-   - **Corroboration & tier:** seek ≥2 working, **independent** links (independence per
-     `confidence_tiers.md`: separate origins; NOT the same wire story / GEM-citing). Assign
-     tier → 2+ independent = **high/green**; a single source that **verifiably confirms the
-     value on its page** = **medium/yellow** (fill it — don't leave blank — regardless of the
-     source's roster rank); single source that does **not** actually confirm / partial
-     conflict = **low/red**; none verifiable = **Unresolved + ResearcherNotes** (no
-     fabricated URL — standing rule 2).
+   - **Corroboration & tier:** seek ≥2 working, **independent** links and assign the tier
+     per `confidence_tiers.md` (independence, the single-confirming-source-is-fillable rule,
+     and the `independent` field are all defined there); none verifiable = `UNRESOLVED` +
+     `ResearcherNotes`, never a fabricated URL (standing rule 2).
 5. Stage one resolution per unit (`class_out` ∈ `REFS_ADDED` / `REVERIFIED` / `DEAD_LINK` /
    `UNRESOLVED`, `proposed_refs`, `verifications`, `tier`, `independent`, `source_language`,
    `researcher_notes`, `harvested_from_wiki`; carry `tab` through for owner/operator units) into
@@ -261,15 +258,12 @@ never swapped in as a replacement:
   a transport failure on our side is never evidence a page is gone.
 
 **Content false-negatives** (page is live *and supports the value*, but the dumb substring check
-misses it — this is the eurasianet/P5984 failure):
+misses it):
 - **STATUS is inferred from context, not matched literally.** Do **not** require the status token
-  (`operating`, etc.) to appear on the page. A page saying the line *carries gas / is being
-  expanded / was inaugurated / transits N bcm to <country>* **confirms `operating`** even though
-  the word never appears — **make that inference yourself.** (eurasianet's "work on expanding its
-  Rasht-Chelavand pipeline would be completed … boosting the volume it can transit to Azerbaijan
-  to 5.5 bcm" confirms P5984 = operating; the automated check failed only because it substring-
-  searched for the literal token `operating`.) Treat a status `any_of` miss as **expected**, not
-  disqualifying.
+  to appear on the page — a page saying the line carries gas / is being expanded / was
+  inaugurated confirms `operating`, and a status `any_of` miss is **expected**, not
+  disqualifying. Rule + the P5984/eurasianet worked example: `confidence_tiers.md` → "Status is
+  inferred from context".
 - **VALUES are often phrased in prose / equivalent units — do the equivalence yourself.**
   "an additional 6 BCM of natural gas to be exported to Egypt annually" fully supports
   `Capacity = 6` + `CapacityUnits = bcm/y` — "annually" / "per year" / "a year" **is** the
