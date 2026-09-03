@@ -212,6 +212,50 @@ disagree badly → `Route_Conflicts`, not a replacement.
 - Honor standing rules: never cite GEM, never fabricate URLs, corroborate (the
   reference is one source — a single Tier-2 dataset never reaches green alone).
 
+## Engine invariants the bugs taught
+
+Each of these was a shipped defect first; the ledger (A/B counts, re-runs, archived
+workbooks) lives in the named note — this list is the rule only.
+
+- **A country scope is a JOIN, never a bare `==`.** A multi-country reference record
+  (a cross-border transit trunk) must match every country it names; `ingest.py`,
+  `reconcile.py` and `adapter_base.py` all go through `normalize.country_matches()`.
+  Until 2026-08-12 the reference side compared strings with `==` and silently dropped
+  every transit trunk (Ukraine gas 111 → 158 refs, Kazakhstan 32 → 63); the falsified
+  bucket is `gem_only`. All committed GulfPub recons were re-run that day.
+  `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
+- **A thin recon is a claim about the pipeline until the input count is checked.**
+  `MATCH_QUALITY` covers a dead matcher, never records that never arrived — reconcile the
+  ingested count against the raw extract before reading any bucket.
+- **A diagnostic must report the MATCHER's view of the data, never the data's own.**
+  The health line counts `name_norm`, not the raw name: until 2026-08-14 a Cyrillic-only
+  name normalized to the empty string while the line still reported it as "named", so
+  Ukraine OSM read "9.2% of refs named" on a run where the matcher saw none and
+  `MATCH_QUALITY` stayed silent through a 0.1% overlap rate. Fixed via
+  `normalize.translit_cyrillic()` + the transliterated-boilerplate stoplist in
+  `match.GENERIC_NAME_TOKENS`; both Cyrillic extracts (Ukraine, Kazakhstan) re-run with no
+  bucket count moved — a corrected "closest GEM" attribution is the expected gain when a
+  manifest weights `name` 0.10 against geometry 0.45, and is NOT a reason to retune.
+  `notes/escalation-2026-08-14-cyrillic-names-invisible-to-matcher.md`.
+- **`MATCH_QUALITY` is fixed with a per-dataset `geoarea_weight` override, never by
+  lowering a threshold and never by retuning a shared source-level block** (that moves
+  committed runs in other countries). And only when the dead-axes condition actually
+  holds — measure first; where GEM rows are mostly routed, the warning on the name axis
+  alone is a true report (Uzbekistan, India, Kazakhstan all refused an override on evidence).
+- **A unit declared in a manifest is a claim to verify, not a given.** GulfPub gas
+  `length_units` sat wrong (`km`, actually miles) through a scrape repoint and four
+  countries' workbooks; check `geodesic_km ÷ length_km` on the ingest (≈ 1.609 means the
+  declared unit is miles). `units.length_units_by_country` handles a block that differs
+  (GulfPub gas: Canada km, everything else miles). Fixed 2026-07-29; any gas recon workbook
+  stamped before `20260729_0941_ET` has `Ref Length (km)` ~38% short.
+  `notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`.
+- **An OID field is identity, not geometry — verify it is unique before trusting it across
+  scrapes.** OSM's `osm_id_key` collided on disjoint parts of one way group until
+  2026-08-26 (62 features across 10 extracts; `ingest.py`'s `#2`/`#3` suffixing lost no
+  geometry, so no committed finding is falsified, but the suffix is order-dependent).
+  `_disambiguate_keys()` now appends a geometry-derived discriminator to colliding keys
+  only, so a re-fetch moves nothing but unstable ids and owes no re-run. `sources/osm/NOTES.md`.
+
 ## Audit trail (`batches/<scope>/staging/recon-<source>-<YYYYMMDD>/`)
 
 Committed (agent-authored): `staged_recon_verdicts.json`,

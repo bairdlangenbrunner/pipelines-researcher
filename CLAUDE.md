@@ -300,69 +300,24 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
 
 ## Active workstreams
 
-1. **Reconciliation engine + GulfPub** — the pluggable framework (this build).
-   Generalizes the one-off `working_files/GOIT_SaudiArabia_Gulfpub_Comparison.xlsx`
-   (the golden reference) to any source/country/commodity, with a route-geometry
-   pass (GulfPub treated as more accurate than low/medium GEM routes; human review
-   before any replacement). In practice GulfPub corroboration has so far shipped
-   inside the Country Sweep's recon crosswalk leg (`build_recon_crosswalk.py`, one
-   `<Cmdty>_<Source>` tab per registered dataset — `build_gulfpub_crosswalk.py` is now a
-   deprecated shim). First standalone §2 workbooks delivered 2026-07-28 (Iraq oil, OSM +
-   GulfPub); Egypt gas followed 2026-07-29, then Iraq/Saudi/Iran gas the same day off the
-   length-units re-run, and **Iraq gas moved its recon OUT of the packet entirely the same
-   day** (both sources standalone at `20260729_1104_ET`; the packet's recon tabs retired).
-   **A standalone §2 workbook is NOT picked up by a
-   handoff packet** — the packet only carries staging dirs listed in its "Prior staged
-   packets" line, so Libya's, Egypt's and Iraq's recon output are separate review surfaces
-   that must be worked alongside the actions file (all logged in
-   `docs/research_backlog.md` §2). Whether recon ships inside the packet or standalone is a
-   per-country choice, so **read the packet's `recon_actions` count before assuming**:
-   `0` means the recon findings are in separate files.
-   **A unit declared in a manifest is a claim to verify, not a given** — the gas
-   `length_units` sat wrong (`km`, actually miles) through a scrape repoint and four
-   countries' workbooks. `units.length_units_by_country` exists for the case where one
-   country's block differs (GulfPub gas: Canada is km, everything else miles); fixed and
-   re-run 2026-07-29 (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`). Any gas
-   recon workbook stamped before `20260729_0941_ET` has `Ref Length (km)` ~38% short.
-   **A country scope is a JOIN, not an equality test — the reference side got this wrong
-   until 2026-08-12.** `ingest.py`, `reconcile.py` and `adapter_base.py` each compared a
-   scraped record's country string with `==`, so every **multi-country** record was silently
-   dropped — i.e. exactly the cross-border transit trunks, which in a transit country are
-   the majority of what GEM tracks (Ukraine gas 111 → 158 refs, Kazakhstan 32 → 63). The GEM
-   side never had the bug. Fixed onto one shared `normalize.country_matches()`; **never
-   write a bare `==` against a country string.** ALL committed GulfPub recons were re-run
-   2026-08-12 and their predecessors archived — the falsified bucket is `gem_only`
-   ("no reference counterpart exists"). Ledger + per-scope A/B:
-   `notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`.
-   Corollary: **a thin recon is a claim about the pipeline until the input count is
-   checked** — `MATCH_QUALITY` covers a dead matcher, never records that never arrived.
-   **A non-Latin reference name was INVISIBLE to the name axis until 2026-08-14.**
-   `normalize_name()`'s `[^a-z0-9]` filter reduced a Cyrillic-only name to the empty string,
-   and `reconcile`'s health line counted the RAW name — so Ukraine OSM reported "9.2% of refs
-   named" on a run where the matcher saw none, and `MATCH_QUALITY` stayed silent through a
-   0.1% overlap rate. Fixed via `normalize.translit_cyrillic()` + a transliterated-boilerplate
-   stoplist in `match.GENERIC_NAME_TOKENS`; the health line now counts `name_norm`. Rule:
-   **a diagnostic must report the MATCHER's view of the data, never the data's own.** Only
-   Ukraine + Kazakhstan OSM carried Cyrillic (GEM's own columns are 100% Latin); both re-run
-   2026-08-14 and **no bucket count moved in either** — the gain is corrected "closest GEM"
-   attribution (49 records in Ukraine, 2 in Kazakhstan), because the OSM manifest weights
-   `name` at only 0.10 against geometry 0.45. That is the correct reading, NOT a reason to
-   retune weights. Ledger + A/B:
-   `notes/escalation-2026-08-14-cyrillic-names-invisible-to-matcher.md`.
-   **OSM is a second registered source and runs by default in the `deep`
-   preset**; unmatched reference records are bucketed by `disposition`
-   (ROUTE_FOR_EXISTING / FRAGMENT_OF_EXISTING / NEAR_MISS / DISCOVERY_CANDIDATE) on the
-   standing principle that a reference route is presumptively real pipe.
-   **`osm_id_key` was not unique until 2026-08-26** — `fetch_overpass._stitch()` keyed each merged
-   part by which source ways touch it, so disjoint parts of one way group collided (62 features
-   across the 10 registered extracts; worst by distance uz 6/865.8 km, kz 7/711.7 km, ua 26/251.7 km).
-   `ingest.py`'s `#2`/`#3` suffixing meant **no geometry was lost and no committed finding is
-   falsified** — what broke is *identity*, since that suffix is assignment-order dependent, so the
-   manifest's `provenance.oid_field` could not survive a re-scrape. `_disambiguate_keys()` appends a
-   geometry-derived blake2s discriminator **only to colliding keys**, leaving every unique key
-   byte-identical; **so re-fetching a country moves nothing but unstable ids, and no re-run is owed.**
-   Only Uzbekistan has been re-fetched (it had no committed run); every other extract keeps its
-   current keys until next fetched. Writeup: `sources/osm/NOTES.md`.
+1. **Reconciliation engine (GulfPub + OSM)** — the pluggable framework, generalizing
+   `working_files/GOIT_SaudiArabia_Gulfpub_Comparison.xlsx` (the golden reference) to any
+   source/country/commodity; also feeds the Country Sweep's recon crosswalk leg
+   (`build_recon_crosswalk.py`; `build_gulfpub_crosswalk.py` is a deprecated shim). First
+   standalone §2 workbooks 2026-07-28; most countries since ship recon standalone, and **a
+   standalone §2 workbook is NOT picked up by a handoff packet** (read `recon_actions`; QC SOP
+   → handoff contract). OSM runs by default in the `deep` preset; unmatched reference records
+   bucket by `disposition` (Reconciliation SOP §4). Shipped engine defects, each now a rule in
+   the Reconciliation SOP → "Engine invariants the bugs taught":
+   - GulfPub gas `length_units` was miles read as km — fixed 2026-07-29; a manifest unit is a
+     claim to verify (`notes/escalation-2026-07-29-gulfpub-gas-length-miles.md`).
+   - Country scope compared with `==` dropped every multi-country transit trunk — fixed
+     2026-08-12 via `normalize.country_matches()`, all GulfPub recons re-run
+     (`notes/escalation-2026-08-12-multicountry-reference-filter-dropped-transit-trunks.md`).
+   - Cyrillic reference names were invisible to the name axis and the health line hid it —
+     fixed 2026-08-14, no bucket moved (`notes/escalation-2026-08-14-cyrillic-names-invisible-to-matcher.md`).
+   - `osm_id_key` was not unique (62 features / 10 extracts; uz 6/865.8 km, kz 7/711.7 km,
+     ua 26/251.7 km) — fixed 2026-08-26, no geometry lost, no re-run owed (`sources/osm/NOTES.md`).
 2. **QC workbook** (`build_qc_workbook.py`) — rebuild of `GOIT_oil_ngl_QC.xlsx`
    (Status, RouteAccuracy, OtherVocab, Owner, WikiLink, Geo, NameUniqueness,
    DateLogic, Diameter, BroadSweep; route/WKT sheet dropped).

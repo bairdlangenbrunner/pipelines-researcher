@@ -137,7 +137,11 @@ AllFillsBackend, the one paste surface unifying fills + paste-ready ref work →
 OperatorsOwners → discovery tabs → WikiUpdates → RouteSuggestions → OpenFlags);
 `<stem>-evidence.xlsx` holds the audit trail (ConfirmedAudit, FillDetail,
 RefWorkDetail, non-action wiki/route/flag context, MonitorList). Confirmed and
-known-staged rows appear ONLY in the evidence file. After delivery, run
+known-staged rows appear ONLY in the evidence file. **A standalone §2 recon workbook is
+NOT picked up by the packet** — it carries only the staging dirs listed in its "Prior staged
+packets" line, so whether recon ships inside the packet or standalone is a per-country
+choice: read the packet's `recon_actions` count before assuming, and `0` means the recon
+findings are separate review surfaces to be worked alongside the actions file. After delivery, run
 `python scripts/staged_summary.py --country <C> --commodity <c>` and reconcile the
 country note — the summary output wins over any hand-written count. Workbook
 layout: `docs/reference/workbook_conventions.md` §Handoff packet.
