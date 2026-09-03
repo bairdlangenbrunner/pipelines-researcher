@@ -174,6 +174,18 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
 
 ## Open items
 
+- **P5596 (Anhui Gas Pipeline Network / Bengbu Branch, Liuxiangzi–High-Tech Industrial
+  Development Zone) — `ProjectID` cell overwritten with a URL; found 2026-08-27, NOT written.**
+  GGIT gas SheetRow 3114 (cell F3114) reads `ProjectID =
+  https://archive.org/details/p-5596-bengbu-branch` — the same value as its own, correctly
+  placed, `Route [ref]`. Four independent signals give **P5596**: the neighbours run P5594,
+  P5595, ⟨this row⟩, P5597, P5598; the archive slug itself reads `p-5596-bengbu-branch`;
+  `P5596` appears nowhere else in either tracker (no duplicate-ID risk); and the routes repo
+  already holds `P5596.geojson`. It is the only malformed ProjectID across all 4,342 gas +
+  2,096 oil rows, and it is why `audit_route_sync.py` reports the row (`Mapped` + `high`) as
+  "no live geometry" — the audit resolves geometry by the ProjectID cell. One cell, mechanical
+  and pre-verified; needs Baird's authorization (a live-sheet write). Out of MZ's province
+  queue — found incidentally during the Egypt 2026-08-27 pass.
 - **Guangxi pilot — DELIVERED 2026-07-29, staged not applied.** Full deep sweep +
   status-review over all 43 grid rows
   (`…_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx`, 9 tabs; rebuilt 07-30 so
