@@ -1,3 +1,12 @@
+> **ARCHIVED 2026-09-03.** The original Claude-chat methodology, superseded by:
+> `docs/sops/discovery.md` (Phase 3 search strategies + route research),
+> `docs/sops/update.md` / `docs/sops/sweep.md` (Phase 2 research sequence),
+> `docs/reference/source_roster.md` (source hierarchy), `docs/reference/confidence_tiers.md`
+> (corroboration + tiers), `docs/reference/workbook_conventions.md` (Phase 4 workbook layout —
+> the "3-sheet Excel" below predates the two-file handoff packet), `docs/sops/qc.md`
+> (pre-delivery checks), `docs/reference/controlled_vocab.md` (vocabulary),
+> `docs/country_notes/united-states.md` + `nigeria.md` (country notes). Do not update.
+
 # GOIT Pipeline Research Workflow — Deep Research Agentic Instructions
 
 ## Overview

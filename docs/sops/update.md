@@ -7,10 +7,12 @@ the Reconciliation SOP is resolved here through normal source-search, not
 auto-applied. **Whole-country "re-verify everything" work is NOT an Update** —
 that is a Country Sweep (`docs/sops/sweep.md`, workflows.md §3).
 
-The deep research rules (source hierarchy, URL-verification, corroboration,
-expansion-vs-construction, divestiture sweeps, route research) live in the
-authoritative methodology, `docs/GOIT_Pipeline_Research_Workflow.md` Phase 2. This
-SOP is the operational sequence; cite the methodology for the *how*.
+The deep research rules each have one home: source hierarchy →
+`docs/reference/source_roster.md`; URL verification → standing rule 2 + `scripts/url_verifier.py`;
+corroboration and tiers → `docs/reference/confidence_tiers.md`; route research →
+`docs/sops/discovery.md` "Route / map research" + `docs/reference/route_conventions.md`;
+expansion-vs-construction and divestiture sweeps → step 3 below. This SOP is the
+operational sequence.
 
 ## Inputs
 - Scope: country + commodity (oil / NGL / gas) + the specific rows/questions.
@@ -20,16 +22,24 @@ SOP is the operational sequence; cite the methodology for the *how*.
 2. **Derive the worklist**: the named rows ∪ any reconciliation value-disagreements
    or handoff-packet fixes queued for this scope ∪ (if asked) stale in-dev rows.
 3. For each pipeline:
-   - Research per methodology Phase 2 — source hierarchy in
-     `docs/reference/source_roster.md`, country tips in `docs/country_notes/`.
-   - **Expansion vs. new construction:** if no new physical pipe is built →
-     `LengthKnown = 0`, `Diameter = blank`; note the expansion type in `ResearcherNotes`.
+   - Research priorities, in order: status changes (proposed → construction →
+     operating, or → shelved/cancelled); missing `[ref]` URLs; then the key data
+     fields. Source hierarchy in `docs/reference/source_roster.md`, country tips in
+     `docs/country_notes/`.
+   - **Expansion vs. new construction:** for any capacity expansion (pump-station
+     additions, DRA injection, terminal upgrades, looping) check whether new physical
+     pipe is laid. None → `LengthKnown = 0`, `Diameter = blank`. Some (a looping project
+     adds parallel pipe) → record the NEW pipe's length and diameter, never the existing
+     system's. Note the expansion type in `ResearcherNotes`.
    - **Ownership divestitures:** if a divestiture touched multiple pipelines, update
      **all** affected rows, not only those that surfaced in search.
    - Record the confidence tier + corroborating sources in `ResearcherNotes`
      (`docs/reference/confidence_tiers.md`).
 4. `scripts/url_verifier.py <url> <expected…>` on **every** URL before it enters the
-   workbook — no exceptions, even URLs that worked last batch. Reject GEM URLs.
+   workbook — no exceptions, even URLs that worked last batch. Reject GEM URLs. Never
+   guess paths, query strings or page IDs; a fact whose exact URL can't be located goes
+   in `ResearcherNotes` as `Source: <company> press release dated <date>, titled
+   '<title>' — URL not verified`, with the `[ref]` cell left blank.
 5. `scripts/entity_lookup.py "<owner>" "<country>"` before staging any new owner —
    don't create duplicate entities.
 6. Stage findings as `batches/<scope>/staging/<run>/staged_updates.json` (committed

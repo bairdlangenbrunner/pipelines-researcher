@@ -22,9 +22,9 @@ QC's BroadSweep flags orphan refs (ref filled, value blank); the refs leg fixes 
 inverse (value present, ref blank) and re-verifies live refs. Both share the one ref-pair
 model in `scripts/ref_pairs.py`.
 
-The deep-research rules (source hierarchy, corroboration, independence) live in
-`docs/GOIT_Pipeline_Research_Workflow.md` Phase 2 and `docs/reference/confidence_tiers.md`;
-this SOP is the operational sequence.
+The deep-research rules live in `docs/reference/source_roster.md` (source hierarchy) and
+`docs/reference/confidence_tiers.md` (corroboration, independence); this SOP is the
+operational sequence.
 
 ## Inputs
 - Scope: country + tracker (oil / gas). One tracker per batch.

@@ -1,10 +1,9 @@
 # Workflow recipes
 
-Step-by-step command sequences for the workflows routed from `CLAUDE.md`. The
-research methodology (`docs/GOIT_Pipeline_Research_Workflow.md`) is authoritative
-for *what* to research; the SOPs (`docs/sops/`) are the operational rules; this file
-is the glue — which commands, in which order. Read the section for the workflow
-you're running, plus its SOP.
+Step-by-step command sequences for the workflows routed from `CLAUDE.md`. The SOPs
+(`docs/sops/`) are the rules and the methodology, `docs/reference/` holds the rubrics
+and conventions; this file is the glue — which commands, in which order. Read the
+section for the workflow you're running, plus its SOP.
 
 **Fresh-pull shorthand:** `./scripts/refresh_csvs.sh` → dated GOIT + GGIT +
 operators/owners snapshots in `data/` (tracker tabs `header=2`, operators/owners tab

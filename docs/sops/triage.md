@@ -6,7 +6,7 @@ before any doer runs.
 
 ## Sequence
 1. `scripts/refresh_csvs.sh`; load `header=2`; exclude buffer rows.
-2. **Gap analysis** (methodology `docs/GOIT_Pipeline_Research_Workflow.md` Phase 1):
+2. **Gap analysis** (this list is the one home for the in-dev key-column inventory):
    per country/commodity, categorize by `Status`; for each in-development pipeline
    (`proposed`/`construction`/`shelved`) tally missing key columns (`Status [ref]`,
    `Owner`, years, `Capacity`, `LengthKnown`, `Diameter`, endpoints, `Cost`,

@@ -38,8 +38,8 @@ python scripts/build_recon_workbook.py --staging batches/<scope>/staging/recon-g
   qc/handoff, annual update, route creation.
 - **[docs/reference/](docs/reference/)** — schema, controlled vocab, confidence
   tiers, workbook conventions, route conventions, source roster, staged-JSON schema.
-- **[docs/GOIT_Pipeline_Research_Workflow.md](docs/GOIT_Pipeline_Research_Workflow.md)**
-  — the authoritative 4-phase research methodology.
+- **[docs/archive/](docs/archive/)** — superseded docs kept for the record (the original
+  4-phase research methodology, the pre-migration setup snapshot).
 - **[sources/README.md](sources/README.md)** — how to register a new reference dataset.
 
 ## Layout

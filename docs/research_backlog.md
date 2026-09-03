@@ -55,7 +55,7 @@ Cross-cutting — read before working any row below:
 | **Saudi / Iran gas GulfPub recon (2026-07-29 re-run)** | standalone, in no packet; read as fresh runs, not deltas — packet `Gas_GulfPub` tabs are stale | `docs/country_notes/{saudi-arabia,iran}.md` |
 | **Israel gas P3620 Ashdod–Ashkelon gap** | applied 2026-07-23 but geometry still partial (Ashkelon-side ~2.4 km has no public vector) | `batches/israel-gas/archive/route-creation-p3620-p3657/README.md`; `docs/country_notes/israel.md` |
 | **Iran open items** | P6074 verify-before-removal; P5367 reclassify as Neka–Ray segment | `docs/country_notes/iran.md` |
-| **LNG carrier quarterly reconciliation** | orphaned — its `instructions.md` methodology is not in this repo | `docs/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
+| **LNG carrier quarterly reconciliation** | orphaned — its `instructions.md` methodology is not in this repo | `docs/archive/PROJECT_SETUP_AND_CONTEXT.md` §9/§11 |
 
 ## 3. Staged, awaiting Baird's manual application (research complete)
 

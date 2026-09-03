@@ -16,8 +16,9 @@ pre-verified one-off, and §8 route candidates via the apply recipe in
 
 Where things live — **read on demand as the workflow dictates, not all at once**:
 
-- **Research methodology** (authoritative for *what* to research):
-  `docs/GOIT_Pipeline_Research_Workflow.md` (the 4-phase deep-research workflow).
+- **Research methodology** (*what* to research) lives in the SOPs + reference: source
+  hierarchy `source_roster.md`, tiers `confidence_tiers.md`, discovery search + route
+  research `sops/discovery.md`, targeted research `sops/update.md`.
 - **SOPs** (operational *how*): `docs/sops/` — `triage.md`, `reconciliation.md`
   (pluggable GEM↔dataset diff), `sweep.md` (Country Sweep — the research engine),
   `discovery.md`, `update.md` (targeted fixes), `qc.md` (QC + handoff packet),
@@ -38,8 +39,9 @@ Where things live — **read on demand as the workflow dictates, not all at once
   `python scripts/staged_summary.py --index` — never hand-edited.
 - **Research backlog** (unfinished/ongoing threads): `docs/research_backlog.md`.
 - **Session memos** (triage memos, escalation writeups): `notes/`.
-- **Historical project context**: `docs/PROJECT_SETUP_AND_CONTEXT.md` (pre-migration
-  snapshot; its pending-items list is stale — this file + country notes are authoritative).
+- **Archived docs**: `docs/archive/` — `PROJECT_SETUP_AND_CONTEXT.md` (pre-migration
+  snapshot; its pending list is stale — this file + country notes are authoritative) and
+  `GOIT_Pipeline_Research_Workflow.md` (the original 4-phase methodology, superseded).
 
 ---
 

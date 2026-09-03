@@ -27,6 +27,7 @@ reads the mirror first and falls back to `scripts/fetch_route.sh <ProjectID>`
 ```bash
 ./scripts/fetch_route.sh P5367            # -> P5367.geojson
 curl -sL "https://raw.githubusercontent.com/GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes/main/{path}" -o route.geojson
+curl -s "https://api.github.com/repos/GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes/contents/{path}"   # list a folder / locate a file by ProjectID
 ```
 
 ## Conventions

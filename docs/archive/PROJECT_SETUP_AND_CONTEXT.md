@@ -1,3 +1,7 @@
+> **ARCHIVED 2026-09-03.** Pre-migration snapshot, kept for the record. Superseded by
+> `CLAUDE.md` (rules, access, workstreams), `docs/country_notes/` (pending items) and
+> `docs/reference/controlled_vocab.md` (vocabulary). Do not update.
+
 # GOIT/GGIT Project — Setup & Context
 
 > **Historical (pre-migration) snapshot.** `CLAUDE.md` is the authoritative operational
@@ -111,13 +115,14 @@ EPSG:4326 is the standard projection.
 
 ## 6. Controlled-vocabulary casing (locked)
 
-- **lowercase:** Status, RouteAccuracy, PipelineType
-- **Title Case (exceptions):** DelayType, ShelvedCancelledType, FIDStatus, Delayed, Opposition
+- **lowercase:** Status, RouteAccuracy, PipelineType, DelayType, ShelvedCancelledType,
+  Delayed, Opposition (corrected 2026-08-07 against both live tabs)
+- **Capitalized (the one exception):** FIDStatus (`Pre-FID`, `FID`)
 - `very high (within meters)` is a valid RouteAccuracy value.
 - Lowercase is the de facto sheet convention even where older standing rules say otherwise.
 - When in doubt, pull a real row and match exact casing/spelling.
 
-(Full vocabularies are in `GOIT_Pipeline_Research_Workflow.md`.)
+(Full vocabularies: `docs/reference/controlled_vocab.md`.)
 
 ---
 
