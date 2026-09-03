@@ -384,8 +384,11 @@ the row-by-row legs detected. Both are read-and-flag only.
   row plus its member segments). Detection stays in the prior dirs; adjudication happens
   here, staging one `__VALIDITY__` record per implicated row carrying the **cluster-level**
   recommendation, so the handoff shows one coherent ruling instead of N contradictory pairs.
-  Built by a per-batch one-off `build_redundancy.py` in the run dir (the clusters are
-  country-specific findings, not a reusable algorithm) — copy the Libya or Iraq script.
+  Built by `scripts/build_redundancy.py --staging <dir> --country <C>` from the run dir's
+  `clusters.json` (or a `clusters/` dir of one JSON per cluster): the clusters are
+  country-specific findings and stay in the run dir as data; the emitter is shared. A
+  row adjudicated as `concern_type: none` was examined and CLEARED — it stages as
+  CONFIRMED so the next sweep sees the question was asked and answered.
   **Resolve to in-tracker precedent, not invention** — see the aggregate-corridor
   convention in `docs/reference/gem_schema.md`, and cite the precedent rows in the record.
   The pass cuts both ways: on Iraq it **withdrew 12 of our own 16** duplicate/existence

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Split the Leg-3 worklist into four corridor briefs for the research fan-out.
+"""SUPERSEDED 2026-09-03 by scripts/build_leg3_briefs.py (generic --staging/--groups
+emitter). This copy uses the older CLUSTERS/FIELDS/GEOM shape, which does NOT load
+through the promoted script. Kept for the run record only.
+
+Split the Leg-3 worklist into four corridor briefs for the research fan-out.
 
     python batches/libya-gas/staging/qc/build_leg3_briefs.py
 

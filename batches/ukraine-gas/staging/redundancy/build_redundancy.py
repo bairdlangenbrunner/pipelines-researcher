@@ -1,4 +1,8 @@
-"""Ukraine gas §9 step 4 — redundancy / duplicate adjudication.
+"""SUPERSEDED 2026-09-03 by scripts/build_redundancy.py (generic --staging/--clusters
+emitter, same record schema; its clusters/*.json still load via `--clusters clusters/`).
+Kept for the run record only.
+
+Ukraine gas §9 step 4 — redundancy / duplicate adjudication.
 
 Takes the duplicate-flagged validity records raised row-by-row across
 ukraine-gas/{ref-sweep-operating,annual,cancelled-review}, the GulfPub + OSM recons

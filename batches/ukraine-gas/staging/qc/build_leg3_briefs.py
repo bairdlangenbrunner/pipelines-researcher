@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Split the Leg-3 worklist into nine briefs for the research fan-out.
+"""SUPERSEDED 2026-09-03 by scripts/build_leg3_briefs.py (generic --staging/--groups
+emitter, same brief shape; this GROUPS table still loads via `--groups <this file>`).
+Kept for the run record only.
+
+Split the Leg-3 worklist into nine briefs for the research fan-out.
 
     python batches/ukraine-gas/staging/qc/build_leg3_briefs.py
 

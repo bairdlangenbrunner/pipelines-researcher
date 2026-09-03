@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Stage the Kazakhstan-gas redundancy adjudication (§3 `validity` leg, cluster-level).
+"""SUPERSEDED 2026-09-03 by scripts/build_redundancy.py (generic --staging/--clusters
+emitter, same record schema; this CLUSTERS table still loads via `--clusters <this
+file>`). Kept for the run record only.
+
+Stage the Kazakhstan-gas redundancy adjudication (§3 `validity` leg, cluster-level).
 
 The operating / in-dev / cancelled deep sweeps, the GulfPub + OSM recons and the
 source survey each raised duplicate-and-overlap questions row-by-row. This pass

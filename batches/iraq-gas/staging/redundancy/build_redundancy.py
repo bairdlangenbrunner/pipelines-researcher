@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Cluster-level adjudication of the duplicate/existence flags raised row-by-row by
+"""SUPERSEDED 2026-09-03 by scripts/build_redundancy.py (generic --staging/--clusters
+emitter). This copy predates the cluster-table shape — it builds a record list directly
+— so it does NOT load through the promoted script. Kept for the run record only.
+
+Cluster-level adjudication of the duplicate/existence flags raised row-by-row by
 iraq-gas/annual and iraq-gas/ref-sweep-operating.
 
 Read-and-flag only; no edits applied. Five clusters, adjudicated against the primary

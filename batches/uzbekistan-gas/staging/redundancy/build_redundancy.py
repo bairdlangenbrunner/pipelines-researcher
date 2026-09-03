@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Stage the Uzbekistan-gas redundancy adjudication (§3 `validity` leg, cluster-level).
+"""SUPERSEDED 2026-09-03 by scripts/build_redundancy.py (generic --staging/--clusters
+emitter, same record schema; this CLUSTERS table still loads via `--clusters <this
+file>`). Kept for the run record only.
+
+Stage the Uzbekistan-gas redundancy adjudication (§3 `validity` leg, cluster-level).
 
 The operating deep sweep + status review and the targeted ref-gap re-pass raised
 duplicate-and-overlap questions row by row. This pass resolves them into EIGHT

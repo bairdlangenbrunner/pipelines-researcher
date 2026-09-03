@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Stage the Libya-gas redundancy adjudication (§3 `validity` leg, cluster-level).
+"""SUPERSEDED 2026-09-03 by scripts/build_redundancy.py (generic --staging/--clusters
+emitter, same record schema; this CLUSTERS table still loads via `--clusters <this
+file>`). Kept for the run record only.
+
+Stage the Libya-gas redundancy adjudication (§3 `validity` leg, cluster-level).
 
 The operating + in-dev deep sweeps each flagged duplicates row-by-row ("compare
 P0483 against P1862"). This pass resolves those pairwise flags into SEVEN structural

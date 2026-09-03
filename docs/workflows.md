@@ -130,8 +130,9 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 **Two follow-on passes the `validity` leg keeps generating** (own run dirs, same scope,
 read-and-flag only; rules + how to build each: Sweep SOP §"Two follow-on passes"):
 `staging/redundancy/` resolves the row-by-row *pairwise* duplicate flags into
-**cluster-level** `__VALIDITY__` rulings (per-batch one-off `build_redundancy.py` — copy
-the Libya or Iraq script), and `staging/cancelled-review/` sweeps the `cancelled` rows
+**cluster-level** `__VALIDITY__` rulings (`python scripts/build_redundancy.py --staging
+<dir> --country <C>` reading the run dir's `clusters.json` — the clusters are data, the
+emitter is shared), and `staging/cancelled-review/` sweeps the `cancelled` rows
 that fall through both the operating sweep and the `in-dev` status filter.
 
 ### Common first steps (all presets)
@@ -312,8 +313,10 @@ QC/Handoff SOP (`docs/sops/qc.md`); sidecar contract:
    validity/fills get clobbered (the script guards, but be deliberate). If the
    country has NO prior sweep validity pass, every Leg-3 brief must add the
    existence check for its row (SOP escalation rule).
-5. **Leg 3 — targeted research fan-out** on `worklist.json` rows (bake a one-off
-   workflow from the packet's research script; one subagent per flagged row
+5. **Leg 3 — targeted research fan-out** on `worklist.json` rows (group rows that
+   share a source ladder in `groups.json`, then `python scripts/build_leg3_briefs.py
+   --staging <qc dir>` writes `rows/_briefs/`; bake a one-off workflow from the
+   packet's research script, one subagent per brief
    resolves the SPECIFIC flagged disagreement, ≥2 independent sources, every URL
    through `url_verifier`). Then:
    ```bash
