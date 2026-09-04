@@ -75,7 +75,16 @@ Roster `applied` is blank for every country, deliverable presence is not a signa
 
 ## 4. Decisions needed from Baird
 
-- **Repair the `independent` flag in 11 other scopes (1,337 units) and rebuild their workbooks** — one command (`repair_independence.py --all --apply`), but it changes researchers' current review surfaces. `notes/escalation-2026-08-27-independent-flag-outlived-its-refs.md`.
+- **Repair the `independent` flag across the staged batches and rebuild their workbooks** — one command
+  (`repair_independence.py --all --apply`), but it changes researchers' current review surfaces. The gate was
+  tightened 2026-09-04 to count distinct PUBLISHERS rather than ref count (two articles on one outlet were
+  passing as independent), so the dry run is now **1,564 flags / 591 tier demotions across 43 staging dirs**.
+  `notes/escalation-2026-08-27-independent-flag-outlived-its-refs.md`.
+- **Nine live `[ref]` cells cite through URL shorteners, and two of them serve the banned abarrelfull** (P0020's
+  `Start [ref]` + `Diameter [ref]`); a third (P0533 `Route [ref]`) is a Google search URL. Eight of the nine are
+  GOIT oil. Our verifier bug that let them through is FIXED; the cells themselves need Baird's call — re-source,
+  de-shorten, or retire (only the two confirmed 404s may retire; the 403 may not).
+  `notes/escalation-2026-09-04-shortened-urls-bypass-the-blocklist.md`.
 - **GGIT gas SheetRow 3114: `ProjectID` overwritten with a URL — restore `P5596`** (one pre-verified cell, gas F3114; also explains a route-sync audit entry). `notes/review-2026-07-31-route-sync-drift-other-rows.md`; `docs/country_notes/china.md`.
 - **Egypt gas: are P8055 and P8009 one pipeline?** (Trans-Sinai / Abr Sinai; both staged as corridor-only partials) — `docs/country_notes/egypt.md`.
 - **Egypt gas: P8055's whole citation base is one confirmed-404 GASCO PDF** — re-source Length/Diameter/Cost via Update before any ref drops; re-check Wayback first. `docs/country_notes/egypt.md`.

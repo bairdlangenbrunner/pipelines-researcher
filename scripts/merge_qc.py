@@ -7,6 +7,7 @@ GEM / blocklisted hosts are stripped (defense in depth; url_verifier rejects the
 """
 import glob
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -46,12 +47,19 @@ _WAYBACK_RE = re.compile(r"^https?://web\.archive\.org/web/[^/]+/(https?://.*)$"
 def origin_host(url):
     """Publisher host for independence counting. A Wayback capture is the ORIGIN's
     bytes, so `web.archive.org/web/<ts>/<url>` counts as <url>'s host — otherwise a
-    live page plus its own snapshot would read as two sources."""
+    live page plus its own snapshot would read as two sources.
+
+    The port is stripped for the same reason: `opec.org` and `opec.org:80` are one
+    publisher, and counting them as two let Libya P1859's `Diameter [ref]` pass the
+    independence gate on a single OPEC document (found 2026-09-04). Any normalization
+    added here must keep asking one question — would a reader call these the same
+    publisher?"""
     u = (url or "").strip()
     m = _WAYBACK_RE.match(u)
     if m:
         u = m.group(1)
-    return urlparse(u).netloc.lower().removeprefix("www.")
+    host = urlparse(u).netloc.lower().removeprefix("www.")
+    return host.rsplit(":", 1)[0] if ":" in host else host
 
 
 def independence_qc(refs, tier, independent, notes):
@@ -109,12 +117,31 @@ def relevance_qc(verifs, tier, notes):
 
 def iter_shards(pattern):
     """Yield (path, parsed-dict) for every shard matching the glob, sorted;
-    print a WARN and skip any unreadable one (a bad shard never kills a merge)."""
+    print a WARN and skip any unreadable one (a bad shard never kills a merge).
+
+    Two things are skipped rather than parsed as research:
+
+    * `_`-prefixed sidecars. The brief builders write `_manifest.json` and
+      `_groups.json` into the very directory the shards land in, and a shard glob
+      picks them up. `_groups.json` is a LIST, which crashed merge_ref_shards on the
+      US gas batch (2026-09-04); `_manifest.json` is a dict, so it would not have
+      crashed anything — it would have quietly counted as a shard forever. Real
+      shards are named for a ProjectID, so no `_` name is ever research.
+    * Any payload that is not a dict, for the same reason a bad shard does not kill
+      a merge: one malformed file must not cost the batch its other 38.
+    """
     for p in sorted(glob.glob(pattern)):
+        if os.path.basename(p).startswith("_"):
+            continue
         try:
-            yield p, json.load(open(p))
+            d = json.load(open(p))
         except Exception as e:
             print(f"  WARN unreadable shard {p}: {e}")
+            continue
+        if not isinstance(d, dict):
+            print(f"  WARN skipping non-dict shard {p} ({type(d).__name__})")
+            continue
+        yield p, d
 
 
 def qc_note(notes, msg):

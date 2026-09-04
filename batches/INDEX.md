@@ -23,6 +23,7 @@ applied). See docs/workflows.md "Batch artifacts".
 ## china-jiangxi-gas
 
 - `staging/deepsweep-20260902` — rows=44 fills=4 updates=0 status-pending=7 refs(DEAD_LINK=2, REFS_ADDED=270, REVERIFIED=12, UNRESOLVED=127) routes=0 new(none)
+- `staging/deepsweep-20260903` — rows=44 fills=1 updates=0 status-pending=0 refs(REFS_ADDED=258, REVERIFIED=12, UNRESOLVED=141) routes=0 new(none)
 - `staging/recon-gulfpub-20260902` — recon inputs
 - `deliverables/pipelines_batch_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx`
 - `archive/` — 1 superseded/applied file(s)
@@ -245,7 +246,8 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## united-states-gas
 
-- `staging/deepsweep-tx-operating` — rows=45 fills=0 updates=0 status-pending=0 refs(DEAD_LINK=10, REVERIFIED=14, UNRESOLVED=357) routes=0 new(none)
+- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=325, REVERIFIED=14, UNRESOLVED=42) routes=0 new(none)
+- `deliverables/pipelines_batch_20260904_1144_ET_united-states-gas_deepsweep.xlsx`
 
 ## united-states-oil
 

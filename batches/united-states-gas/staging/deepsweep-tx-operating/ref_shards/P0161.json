@@ -1,0 +1,47 @@
+{
+ "project_id": "P0161",
+ "pipeline_name": "Enable Gas Transmission",
+ "harvest_opened": 4,
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 22,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1591763/000159176315000012/a2014enbl10-k.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1591763/000159176315000012/a2014enbl10-k.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Enable Midstream Partners, LP FY2014 Form 10-K (SEC EDGAR, filed 2015-02-18, CIK 0001591763), 'Interstate Transportation' section: 'EGT General. EGT is a 5,946-mile interstate pipeline that provides natural gas transportation and storage services to customers principally in the Anadarko, Arkoma and Ark-La-Tex basins in Oklahoma, Texas, Arkansas, Louisiana and Kansas. The system has the capacity to transport 6.6 Bcf/d of natural gas as of December 31, 2014.' 6.6 Bcf/d = 6,600 MMcf/d, an exact match to the sheet's 6600.00 MMcf/d. Verified live via url_verifier.py with both '6.6' and 'Perryville' present in the fetched text. Single source (one publisher, the operator's own SEC filing) -> medium/not independent per the brief's rule. Checked adjacent 10-Ks for a second, higher-confidence corroborating figure: this capacity figure moves year to year as EGT's system is expanded/contracted (FY2015-2017 10-Ks: 6.5 Bcf/d; FY2018: 6.0 Bcf/d; FY2019: 6.3 Bcf/d; FY2020: 6.2 Bcf/d) -- only the FY2014 filing states exactly 6.6 Bcf/d, so no other Enable 10-K corroborates the specific sheet value (they'd corroborate a range, not the number). The seed investor-presentation citation (Enable Midstream Q4 2017 IR Presentation PDF, on the legacy businesswire-hosted investors.enablemidstream.com subdomain) is DEAD -- the host times out/returns HTTP 409 (confirmed with a real, non-PDF error body), Wayback's availability API returns no snapshot for that exact URL, and a domain-wide Wayback CDX query for the file also came back empty (retried after an initial 'Internet Archive: Temporarily Offline' service outage resolved) -- treated as unrecoverable, not proposed. eia.gov/naturalgas/data.php and eia.gov/maps/layer_info-m.php (which now redirects live to atlas.eia.gov/search) are both generic data-portal/navigation surfaces, not deep links to a specific document, so neither is citable per the brief's rule against navigation-surface refs. CONCERN: none -- this is a data-continuity note, not a contradiction; the sheet's exact value simply dates the row to FY2014-era capacity, which is a legitimate documented figure for this system, not a competing claim."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 22,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1591763/000159176315000012/a2014enbl10-k.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1591763/000159176315000012/a2014enbl10-k.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same Enable Midstream Partners FY2014 10-K, same passage: EGT is described as serving 'customers principally in the Anadarko, Arkoma and Ark-La-Tex basins in Oklahoma, Texas, Arkansas, Louisiana and Kansas' -- explicitly naming both Texas and Louisiana as states within the EGT system -- and the following sentence names 'Perryville, Louisiana' as the system's key off-system delivery hub where EGT interconnects with ANR, SONAT, Tennessee Gas, Texas Gas, Texas Eastern, Gulf South, Trunkline, Columbia Gas and Midcontinent Express, giving Louisiana a concrete, named anchor point consistent with the sheet's EndState/Province=Louisiana. This row represents the EGT system as a whole (a multi-state interstate network, not one point-to-point segment), so a Texas-origin / Louisiana-terminus pair is a reasonable two-point summary of a system whose western reach is the Anadarko Basin (Texas Panhandle/Oklahoma) and whose principal eastern delivery hub is Perryville, LA. Same single-source caveat as the Capacity unit -> medium/not independent. The Wayback-captured enablemidstream.com/company/operations/projects/ page (2022-12-07 snapshot; live URL times out) confirms EGT still operates across this corridor (citing the MASS and Gulf Run projects tied to EGT's Anadarko/Arkoma-to-Gulf Coast/Southeast markets) but does not name Texas or Louisiana specifically, so it was not strong enough to add as a second independent unit and was not proposed. fuelfix.com's 2013 Houston Chronicle article on the CenterPoint/OGE Enable Midstream naming (a seed citation) is now a confirmed dead link -- it 301-redirects to houstonchronicle.com/business/fuelfix/... which itself returns HTTP 404 -- and its content (a corporate-naming story) would not have supported this unit's value regardless. CONCERN: none."
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+[
+ {
+  "title": "Half the researched SegmentCost values don't survive primary sources (8 of 16)",
+  "summary": "Of 16 SegmentCost cells researched in this cohort, 6 could not be sourced at all and 2 are contradicted by primary sources — several by 10x+ (P0196 Gulf Crossing: sheet $121M vs Boardwalk's own 10-Ks at $1.4-1.8bn; P0373 Corpus Christi: sheet $500M vs Cheniere's $375-398M capitalized; P0290 Nueva Era: sheet $500M vs $353.4M financed; P0257: TC Energy's own page and Mexico's federal project database both ~US$2.1bn; P1297: sheet's $200M looks like total project cost vs PGJ's $94M for construction). NOT a tracker-wide defect — SegmentCost is 53.3% referenced tracker-wide, BETTER than Capacity's 42.7%, and this cohort's 5.3% is largely selection effect (rows chosen for being stale). The claim is narrow: among stale rows, a cost value checked against primary sources fails about half the time. Do NOT blank the 6 unsourceable ones — undisclosed is not wrong.",
+  "memo": "notes/escalation-2026-09-04-us-gas-segmentcost-unsupported.md"
+ },
+ {
+  "title": "'New United Kingdom' is a find-and-replace accident — and is NOT mechanically fixable",
+  "summary": "Two gas rows carry EndState/Province = 'New United Kingdom': P0176 Dominion Gas Pipeline (SheetRow 37) and P0259 Tennessee Gas Pipeline (SheetRow 112). Both are New England termini, so 'England' -> 'United Kingdom' clearly ran across the column. But the column holds individual STATES everywhere else (Massachusetts, Connecticut, Maine, New Hampshire, New York all present; 'New England' appears zero times in either tracker), so restoring 'New England' would introduce an unprecedented value. The repair is to research each row's actual terminus state — an Update item, not a sheet fix. The other 7 'United Kingdom' hits in the tab are legitimate North Sea rows; leave them.",
+  "memo": ""
+ },
+ {
+  "title": "StartState/Province is wrong on at least 2 of 45 rows — and it drove cohort selection",
+  "summary": "P2613 Sierrita Gas Pipeline (SheetRow 1349) has StartState/Province='Texas', but every source found (NGI, Kinder Morgan's own 10-K and current SGP overview PDF, Mitsui, AZCentral) places Tucson and the entire route in ARIZONA. P2636 Wildcat Gas Pipeline (SheetRow 1362) reads Texas->Texas but its origin was traced to Grady County, OKLAHOMA (flagged, not confirmed). Both were found independently by two research agents. This matters beyond the two cells: the Texas slice of the stale-operating cohort was selected BY this column, so a wrong state silently pulls the wrong rows into a batch and leaves the right ones out. Worth an audit of the column before batches 2-5 are sliced.",
+  "memo": ""
+ }
+]

@@ -1,158 +1,279 @@
 {
-  "project_id": "P0264",
-  "pipeline_name": "Texas Intrastate System Gas Pipeline",
-  "sheet_row": 117,
-  "wiki": "https://www.gem.wiki/Texas_Intrastate_System_Gas_Pipeline",
-  "validity": [
+ "project_id": "P0264",
+ "pipeline_name": "Texas Intrastate System Gas Pipeline",
+ "sheet_row": 117,
+ "wiki": "https://www.gem.wiki/Texas_Intrastate_System_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no change to Status/Fuel/Length/Capacity/Location; add the verified ref",
+   "researcher_notes": "EXISTENCE + CLASSIFICATION + core spec (length/capacity) CONFIRMED against a primary source. Enterprise Products Partners L.P.'s own SEC 10-K (fiscal year 2022, filed 2023-02, 'at February 1, 2023') carries a line item 'Texas Intrastate System (2) | Texas | Various (5) | 6,770 [miles] | 7,328 [MMcf/d]' in its natural-gas-pipelines asset table -- an EXACT match to GEM's LengthKnown=6770.00 mi and Capacity=7328.00 MMcf/d. Narrative text in the same filing: 'The Texas Intrastate System is comprised of the 6,161-mile Enterprise Texas pipeline system and the 609-mile Channel pipeline system. The Texas Intrastate System gathers, transports and stores natural gas from supply basins in Texas including the Permian Basin and Eagle Ford and Barnett Shales for delivery to local gas distribution companies, electric utility plants and industrial and municipal consumers... serves ... Corpus Christi, San Antonio/Austin, Beaumont/Orange and Houston' -- confirms Fuel=Gas, Status=operating (active table entry, active gross-margin discussion elsewhere in the filing), and Location=Texas/Texas, US/US. This is a genuine, well-documented Enterprise Products asset, not a GEM-only/hallucinated entity, and it is correctly classified as gas transmission+storage (the filing's table separates it from Enterprise's 'gathering system' rows). CHECKED FOR DUPLICATE against the 45-row roster: no match. The one adjacent asset, Old Ocean Pipeline (P0298, Maypearl->Texas), is explicitly listed in the SAME 10-K table as its OWN separate line item (50% JV, 240 mi, distinct from the Texas Intrastate System) and the filing states 'The Old Ocean Pipeline transports natural gas from an injection point on our Texas Intrastate System near Maypearl' -- i.e. a connected but genuinely separate physical asset, so no fold/merge is warranted. VERIFICATION METHOD NOTE: url_verifier.py returned 200-but-'value not found' on the annualreports.com PDF -- this is the documented large-PDF false negative (script's own docstring cites the OPEC ASB2012 precedent: 'the extractor does not reach the whole document'). Downloaded the PDF directly and ran `pdftotext -layout`; the exact table row and narrative text quoted above are present at that file's line 989 (~9% into an 11,476-line extraction, past whatever window url_verifier's extractor reads). Treating this as a manually-confirmed live+on-topic source per that documented exception. SEC EDGAR's own hosted copy of the identical 10-K (sec.gov/Archives/edgar/data/1061219/000106121923000006/form10k.htm) was independently confirmed byte-for-byte identical on this table via direct curl+text-extraction, but url_verifier itself 403s on sec.gov (its fixed User-Agent trips SEC's bot wall; a custom UA string gets 200) -- so it is NOT used as the citable ref pending a UA fix, only as internal corroboration that the annualreports.com mirror is faithful. HARVESTED CITATION POOL (4 on this wiki page): (1) bit.ly/2sYVgic -> 'A Barrel Full' -- BANNED, never cited, not opened for content. (2) annualreports.com NYSE_EPD_2022.pdf -- cited here (path had moved from .../AnnualReports/PDF/ to .../AnnualReportArchive/e/; both resolve to the same document; the wiki's old path 404s, corrected path used). (3) enterpriseproducts.com/operations/natural-gas-pipelines-services -- confirmed 404 (site restructured; current equivalent https://www.enterpriseproducts.com/operations/natural-gas/ is a high-level overview page with no line-item Texas Intrastate detail, so not substitutable as a value-bearing ref). (4) rbnenergy.com Texas-intrastate-exports article -- confirmed 403 (bot wall blocks this session on every attempt: WebFetch and curl with a browser UA both 403); this is an access failure per standing rules, not a deletion, but it cannot be cited since it can't be read. All 4 harvested citations were opened/attempted; none besides #2 yielded a usable ref.",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "revise Owner1% away from 100.00% -- source says 'Various'; do not paste 100% as a flat corroborated value",
+   "researcher_notes": "The sheet's Owner1=Enterprise Products Partners / Owner1%=100.00% is NOT supported by Enterprise's own SEC 10-K, which is the best available primary source for this exact system. The same filing that confirms length/capacity states the Texas Intrastate System's 'Ownership Interest' as 'Various (5)', with footnote (5): 'We proportionately consolidate our undivided interests, which range from 22% to 80%, in 1,471 miles of the Texas Intrastate System... The remainder of our Texas Intrastate System is wholly owned.' So ~1,471 of the 6,770 miles (21.7%) are held as undivided joint interests at 22-80% (mixed across segments, not one blended percentage), and only the remaining ~5,299 miles (78.3%) are wholly (100%) owned by Enterprise. I searched the filing's other undivided-interest footnotes (which elsewhere name a co-owner, e.g. 'Port Arthur ... Pipeline Company, L.L.C.' for a different asset) -- no co-owner is named for the Texas Intrastate System's undivided-interest segments in this document, so I cannot propose a specific replacement Owner2. Enterprise is unambiguously the correct PRIMARY owner and sole operator of record ('We operate our natural gas pipelines... with the exception of the White River Hub, Old Ocean Pipeline and certain segments of the Texas Intrastate System') -- this is not a wrong-operator or duplicate issue, only an overstated ownership percentage on an aggregate multi-segment system. Recommend an Update-leg follow-up to identify the JV partner(s) on the 1,471-mile undivided-interest portion (likely findable in an older EPD 10-K footnote or an FERC/RRC filing naming the specific joint pipeline), or at minimum annotate Owner1% as approximate/majority rather than 100%.",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "soften StartYear1=1960 to reflect that no source pins down an exact year; treat as decade-level inference, not a hard-sourced precise date",
+   "researcher_notes": "StartYear1=1960 asserts more precision than any available source supports. GEM's own gem.wiki narrative (read for leads only, never cited) itself says only 'first operational in the 1960s' -- a decade, not a specific year -- and none of the four harvested citations (Enterprise's SEC 10-K, its since-moved ops page, RBN Energy, A Barrel Full) states a specific founding year; the 10-K is a financial/regulatory disclosure and does not discuss original pipeline construction dates for legacy assets it later assembled/acquired into this aggregate system. Enterprise Products the COMPANY was founded in 1968 (per Wikipedia and company history materials), which is itself LATER than 1960, meaning at least some component pipe predates Enterprise's own founding and was acquired from a predecessor operator -- plausible for an intrastate system built up from legacy assets, but it means '1960' cannot be Enterprise's own construction date and is unverified as anyone's construction date. This is a low-severity spec caveat, not an existence or duplicate issue -- flagging so the exact year isn't treated as independently corroborated.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Adjudicate the Owner conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Owner [ref]: the Texas Intrastate System is NOT uniformly 100% Enterprise-owned end to end -- per Enterprise's own FY2023 10-K footnote (5), about 1,469 of its 6,719 miles are proportionately-consolidated undivided interests ranging 22%-80% (i.e., partially owned with unnamed co-owners), while the remaining ~5,250 miles are wholly owned. This does not contradict Enterprise being the correct Owner1/operator of record, and no source names a specific second owner entity to add as Owner2, so no value change is proposed -- flagging for awareness only, since a future editor with access to the segment-level breakdown may want to split this network-level row's ownership more precisely. Searched and ruled out: the annualreports.com-hosted 'NYSE_EPD_2022.pdf' seed citation is a confirmed dead link (live URL 404s, and Wayback's availability API returns no snapshot for that exact path) -- superseded here by the SEC's own EDGAR-hosted FY2023 10-K, which is the authoritative primary-source version of the same annual-report content and covers the identical asset table.",
+   "proposed_refs": [
+    "http://web.archive.org/web/20220925225803/https://enterpriseproducts.com/operations/natural-gas-pipelines-services",
+    "https://www.sec.gov/Archives/edgar/data/1061219/000106121924000006/form10k.htm"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "no change to Status/Fuel/Length/Capacity/Location; add the verified ref",
-      "researcher_notes": "EXISTENCE + CLASSIFICATION + core spec (length/capacity) CONFIRMED against a primary source. Enterprise Products Partners L.P.'s own SEC 10-K (fiscal year 2022, filed 2023-02, 'at February 1, 2023') carries a line item 'Texas Intrastate System (2) | Texas | Various (5) | 6,770 [miles] | 7,328 [MMcf/d]' in its natural-gas-pipelines asset table -- an EXACT match to GEM's LengthKnown=6770.00 mi and Capacity=7328.00 MMcf/d. Narrative text in the same filing: 'The Texas Intrastate System is comprised of the 6,161-mile Enterprise Texas pipeline system and the 609-mile Channel pipeline system. The Texas Intrastate System gathers, transports and stores natural gas from supply basins in Texas including the Permian Basin and Eagle Ford and Barnett Shales for delivery to local gas distribution companies, electric utility plants and industrial and municipal consumers... serves ... Corpus Christi, San Antonio/Austin, Beaumont/Orange and Houston' -- confirms Fuel=Gas, Status=operating (active table entry, active gross-margin discussion elsewhere in the filing), and Location=Texas/Texas, US/US. This is a genuine, well-documented Enterprise Products asset, not a GEM-only/hallucinated entity, and it is correctly classified as gas transmission+storage (the filing's table separates it from Enterprise's 'gathering system' rows). CHECKED FOR DUPLICATE against the 45-row roster: no match. The one adjacent asset, Old Ocean Pipeline (P0298, Maypearl->Texas), is explicitly listed in the SAME 10-K table as its OWN separate line item (50% JV, 240 mi, distinct from the Texas Intrastate System) and the filing states 'The Old Ocean Pipeline transports natural gas from an injection point on our Texas Intrastate System near Maypearl' -- i.e. a connected but genuinely separate physical asset, so no fold/merge is warranted. VERIFICATION METHOD NOTE: url_verifier.py returned 200-but-'value not found' on the annualreports.com PDF -- this is the documented large-PDF false negative (script's own docstring cites the OPEC ASB2012 precedent: 'the extractor does not reach the whole document'). Downloaded the PDF directly and ran `pdftotext -layout`; the exact table row and narrative text quoted above are present at that file's line 989 (~9% into an 11,476-line extraction, past whatever window url_verifier's extractor reads). Treating this as a manually-confirmed live+on-topic source per that documented exception. SEC EDGAR's own hosted copy of the identical 10-K (sec.gov/Archives/edgar/data/1061219/000106121923000006/form10k.htm) was independently confirmed byte-for-byte identical on this table via direct curl+text-extraction, but url_verifier itself 403s on sec.gov (its fixed User-Agent trips SEC's bot wall; a custom UA string gets 200) -- so it is NOT used as the citable ref pending a UA fix, only as internal corroboration that the annualreports.com mirror is faithful. HARVESTED CITATION POOL (4 on this wiki page): (1) bit.ly/2sYVgic -> 'A Barrel Full' -- BANNED, never cited, not opened for content. (2) annualreports.com NYSE_EPD_2022.pdf -- cited here (path had moved from .../AnnualReports/PDF/ to .../AnnualReportArchive/e/; both resolve to the same document; the wiki's old path 404s, corrected path used). (3) enterpriseproducts.com/operations/natural-gas-pipelines-services -- confirmed 404 (site restructured; current equivalent https://www.enterpriseproducts.com/operations/natural-gas/ is a high-level overview page with no line-item Texas Intrastate detail, so not substitutable as a value-bearing ref). (4) rbnenergy.com Texas-intrastate-exports article -- confirmed 403 (bot wall blocks this session on every attempt: WebFetch and curl with a browser UA both 403); this is an access failure per standing rules, not a deletion, but it cannot be cited since it can't be read. All 4 harvested citations were opened/attempted; none besides #2 yielded a usable ref.",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
+     "url": "http://web.archive.org/web/20220925225803/https://enterpriseproducts.com/operations/natural-gas-pipelines-services",
+     "ok": true,
+     "contains_value": true
     },
     {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "revise Owner1% away from 100.00% -- source says 'Various'; do not paste 100% as a flat corroborated value",
-      "researcher_notes": "The sheet's Owner1=Enterprise Products Partners / Owner1%=100.00% is NOT supported by Enterprise's own SEC 10-K, which is the best available primary source for this exact system. The same filing that confirms length/capacity states the Texas Intrastate System's 'Ownership Interest' as 'Various (5)', with footnote (5): 'We proportionately consolidate our undivided interests, which range from 22% to 80%, in 1,471 miles of the Texas Intrastate System... The remainder of our Texas Intrastate System is wholly owned.' So ~1,471 of the 6,770 miles (21.7%) are held as undivided joint interests at 22-80% (mixed across segments, not one blended percentage), and only the remaining ~5,299 miles (78.3%) are wholly (100%) owned by Enterprise. I searched the filing's other undivided-interest footnotes (which elsewhere name a co-owner, e.g. 'Port Arthur ... Pipeline Company, L.L.C.' for a different asset) -- no co-owner is named for the Texas Intrastate System's undivided-interest segments in this document, so I cannot propose a specific replacement Owner2. Enterprise is unambiguously the correct PRIMARY owner and sole operator of record ('We operate our natural gas pipelines... with the exception of the White River Hub, Old Ocean Pipeline and certain segments of the Texas Intrastate System') -- this is not a wrong-operator or duplicate issue, only an overstated ownership percentage on an aggregate multi-segment system. Recommend an Update-leg follow-up to identify the JV partner(s) on the 1,471-mile undivided-interest portion (likely findable in an older EPD 10-K footnote or an FERC/RRC filing naming the specific joint pipeline), or at minimum annotate Owner1% as approximate/majority rather than 100%.",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "soften StartYear1=1960 to reflect that no source pins down an exact year; treat as decade-level inference, not a hard-sourced precise date",
-      "researcher_notes": "StartYear1=1960 asserts more precision than any available source supports. GEM's own gem.wiki narrative (read for leads only, never cited) itself says only 'first operational in the 1960s' -- a decade, not a specific year -- and none of the four harvested citations (Enterprise's SEC 10-K, its since-moved ops page, RBN Energy, A Barrel Full) states a specific founding year; the 10-K is a financial/regulatory disclosure and does not discuss original pipeline construction dates for legacy assets it later assembled/acquired into this aggregate system. Enterprise Products the COMPANY was founded in 1968 (per Wikipedia and company history materials), which is itself LATER than 1960, meaning at least some component pipe predates Enterprise's own founding and was acquired from a predecessor operator -- plausible for an intrastate system built up from legacy assets, but it means '1960' cannot be Enterprise's own construction date and is unverified as anyone's construction date. This is a low-severity spec caveat, not an existence or duplicate issue -- flagging so the exact year isn't treated as independently corroborated.",
-      "proposed_refs": [],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://www.sec.gov/Archives/edgar/data/1061219/000106121924000006/form10k.htm",
+     "ok": true,
+     "contains_value": true
     }
-  ],
-  "fills": [
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "promoted_from": "Owner [ref]|the Texas Intrastate System is NOT uniformly 100% Enterprise"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "sheet_row": 117,
-      "ref_col": "Status [ref]",
-      "value_cols": ["Status"],
-      "primary_value_col": "Status",
-      "values": {"Status": "operating"},
-      "primary_value": "operating",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "verifications": [{"url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf", "ok": true, "contains_value": true, "note": "url_verifier substring check false-negatives on this large PDF (documented extractor-window limitation); manually confirmed live (HTTP 200) and content-present via pdftotext -layout, exact table row quoted in validity notes"}],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Active line item in Enterprise Products Partners' FY2022 10-K natural-gas-pipelines table (as of Feb 1, 2023) plus active gross-margin/volume discussion elsewhere in the same filing confirms ongoing operation."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 117,
-      "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"],
-      "primary_value_col": "Fuel",
-      "values": {"Fuel": "Gas"},
-      "primary_value": "Gas",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "verifications": [{"url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf", "ok": true, "contains_value": true, "note": "same manual-verification override as the Status fill"}],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Filing describes the system as gathering/transporting/storing natural gas; correctly classified as a gas transmission+storage system, not NGL."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 117,
-      "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"],
-      "primary_value_col": "Capacity",
-      "values": {"Capacity": "7328.00", "CapacityUnits": "MMcf/d"},
-      "primary_value": "7328.00",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "verifications": [{"url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf", "ok": true, "contains_value": true, "note": "10-K table cell reads '7,328' MMcf/d for the Texas Intrastate System -- exact match; manual pdftotext confirmation per the large-PDF override"}],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Exact match to the sheet's own primary source's asset table."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 117,
-      "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"],
-      "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "6770.00", "LengthKnownUnits": "mi"},
-      "primary_value": "6770.00",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "verifications": [{"url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf", "ok": true, "contains_value": true, "note": "10-K table cell reads '6,770' miles, and narrative breaks it down as 6,161-mile Enterprise Texas pipeline + 609-mile Channel pipeline (=6,770); manual pdftotext confirmation per the large-PDF override"}],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Exact match; the 6,161+609=6,770 mi component breakdown in the filing's prose independently cross-checks the table total within the same document."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 117,
-      "ref_col": "Location [ref]",
-      "value_cols": ["StartState/Province", "StartCountryOrArea", "EndState/Province", "EndCountryOrArea"],
-      "primary_value_col": "StartState/Province",
-      "values": {"StartState/Province": "Texas", "StartCountryOrArea": "United States", "EndState/Province": "Texas", "EndCountryOrArea": "United States"},
-      "primary_value": "Texas",
-      "proposed_refs": ["https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"],
-      "verifications": [{"url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf", "ok": true, "contains_value": true, "note": "10-K table 'Location(s)' column reads 'Texas'; manual pdftotext confirmation per the large-PDF override"}],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "This is a state-spanning multi-mainline aggregate system wholly within Texas (Waha-Katy and Waha-Carthage mainlines per the wiki description); no discrete start/end city is appropriate at the network-row grain, consistent with how other big multi-segment systems (e.g. Southern Natural Gas Pipeline) are recorded elsewhere in this tracker."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 117,
-      "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1"],
-      "primary_value_col": "StartYear1",
-      "values": {"StartYear1": "1960"},
-      "primary_value": "1960",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Could not independently source an exact founding year; see the spec concern in validity[] -- best available characterization from any source (including the uncitable gem.wiki narrative) is only 'the 1960s', and Enterprise itself was not founded until 1968, so 1960 cannot be Enterprise's own construction date. Leaving unresolved rather than pasting a ref onto an unverified precise year."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 117,
-      "oo_sheet_row": 246,
-      "tab": "operators_owners",
-      "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%"],
-      "primary_value_col": "Owner1",
-      "values": {"Owner1": "Enterprise Products Partners", "Owner1%": "100.00%"},
-      "primary_value": "Enterprise Products Partners",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Do NOT paste a ref onto the current 100.00% value -- see the attribution concern in validity[]. The sheet's own cited primary source (Enterprise's FY2022 10-K) explicitly contradicts 100% ownership ('Various', ~78.3% wholly owned / ~21.7% undivided joint interests at 22-80%, unnamed partner). Enterprise remains correctly named as the operator and majority/primary owner, so I am not proposing to remove Owner1 -- only flagging that Owner1% as currently stated is unsupported and the record is incomplete (no JV partner named in this filing)."
+     "url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "url_verifier substring check false-negatives on this large PDF (documented extractor-window limitation); manually confirmed live (HTTP 200) and content-present via pdftotext -layout, exact table row quoted in validity notes",
+     "name_found": true
     }
-  ],
-  "summary": "P0264 (Texas Intrastate System Gas Pipeline, Enterprise Products) CONFIRMED real, correctly classified, and confirmed exact on Length (6,770 mi) and Capacity (7,328 MMcf/d) against Enterprise's own FY2022 SEC 10-K (medium tier, single strong primary source); no duplicate found against the 45-row roster. TWO concerns staged: attribution (Owner1%=100% is wrong -- the same 10-K states 'Various' ownership, ~21.7% of miles held via unnamed 22-80% undivided joint interests) and a low-severity spec caveat (StartYear1=1960 is more precise than any source, including gem.wiki's own '1960s', actually supports). UNRESOLVED: StartYear1 and Owner1% (flagged, no ref pasted, rather than corroborate an unsupported value)."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Active line item in Enterprise Products Partners' FY2022 10-K natural-gas-pipelines table (as of Feb 1, 2023) plus active gross-margin/volume discussion elsewhere in the same filing confirms ongoing operation."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "same manual-verification override as the Status fill",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Filing describes the system as gathering/transporting/storing natural gas; correctly classified as a gas transmission+storage system, not NGL."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "7328.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "7328.00",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "10-K table cell reads '7,328' MMcf/d for the Texas Intrastate System -- exact match; manual pdftotext confirmation per the large-PDF override",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Exact match to the sheet's own primary source's asset table."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "6770.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "6770.00",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "10-K table cell reads '6,770' miles, and narrative breaks it down as 6,161-mile Enterprise Texas pipeline + 609-mile Channel pipeline (=6,770); manual pdftotext confirmation per the large-PDF override",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Exact match; the 6,161+609=6,770 mi component breakdown in the filing's prose independently cross-checks the table total within the same document."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartState/Province",
+   "values": {
+    "StartState/Province": "Texas",
+    "StartCountryOrArea": "United States",
+    "EndState/Province": "Texas",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Texas",
+   "proposed_refs": [
+    "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.annualreports.com/HostedData/AnnualReportArchive/e/NYSE_EPD_2022.pdf",
+     "ok": true,
+     "contains_value": true,
+     "note": "10-K table 'Location(s)' column reads 'Texas'; manual pdftotext confirmation per the large-PDF override",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "This is a state-spanning multi-mainline aggregate system wholly within Texas (Waha-Katy and Waha-Carthage mainlines per the wiki description); no discrete start/end city is appropriate at the network-row grain, consistent with how other big multi-segment systems (e.g. Southern Natural Gas Pipeline) are recorded elsewhere in this tracker."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1960"
+   },
+   "primary_value": "1960",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not independently source an exact founding year; see the spec concern in validity[] -- best available characterization from any source (including the uncitable gem.wiki narrative) is only 'the 1960s', and Enterprise itself was not founded until 1968, so 1960 cannot be Enterprise's own construction date. Leaving unresolved rather than pasting a ref onto an unverified precise year."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 117,
+   "oo_sheet_row": 246,
+   "tab": "operators_owners",
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Enterprise Products Partners",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Enterprise Products Partners",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Do NOT paste a ref onto the current 100.00% value -- see the attribution concern in validity[]. The sheet's own cited primary source (Enterprise's FY2022 10-K) explicitly contradicts 100% ownership ('Various', ~78.3% wholly owned / ~21.7% undivided joint interests at 22-80%, unnamed partner). Enterprise remains correctly named as the operator and majority/primary owner, so I am not proposing to remove Owner1 -- only flagging that Owner1% as currently stated is unsupported and the record is incomplete (no JV partner named in this filing)."
+  }
+ ],
+ "summary": "P0264 (Texas Intrastate System Gas Pipeline, Enterprise Products) CONFIRMED real, correctly classified, and confirmed exact on Length (6,770 mi) and Capacity (7,328 MMcf/d) against Enterprise's own FY2022 SEC 10-K (medium tier, single strong primary source); no duplicate found against the 45-row roster. TWO concerns staged: attribution (Owner1%=100% is wrong -- the same 10-K states 'Various' ownership, ~21.7% of miles held via unnamed 22-80% undivided joint interests) and a low-severity spec caveat (StartYear1=1960 is more precise than any source, including gem.wiki's own '1960s', actually supports). UNRESOLVED: StartYear1 and Owner1% (flagged, no ref pasted, rather than corroborate an unsupported value)."
 }

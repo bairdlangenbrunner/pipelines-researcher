@@ -36,11 +36,30 @@ CELL_MAX = 32000
 
 
 def J(v):
+    """Coerce one shard value into something openpyxl will accept.
+
+    Shards are written by research subagents, so a field's type is a convention, not a
+    guarantee: on the US gas batch (2026-09-04) one agent wrote `wiki` as a structured
+    dict of harvest counts where every other shard wrote a string, and openpyxl's
+    "Cannot convert ... to Excel" killed the whole deliverable after the merge chain had
+    already succeeded. One agent's field must never cost the batch its workbook — render
+    what came in and let the researcher see it.
+
+    The length clamp is here for the same reason: Excel refuses a cell over 32,767
+    characters, and a long researcher note is exactly the kind of field that reaches it.
+    Truncation is marked, never silent, so nobody reads a cut-off note as the whole note.
+    """
     if v is None:
         return ""
+    if isinstance(v, bool) or isinstance(v, (int, float)):
+        return v
     if isinstance(v, list):
-        return ", ".join(str(x) for x in v)
-    return v
+        v = ", ".join(str(x) for x in v)
+    elif isinstance(v, dict):
+        v = "; ".join(f"{k}: {x}" for k, x in v.items())
+    elif not isinstance(v, str):
+        v = str(v)
+    return v if len(v) <= CELL_MAX else v[:CELL_MAX] + " … [truncated]"
 
 
 def _style_header(ws, ncols):

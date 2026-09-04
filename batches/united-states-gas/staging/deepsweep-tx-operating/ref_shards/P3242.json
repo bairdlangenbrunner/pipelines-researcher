@@ -1,0 +1,69 @@
+{
+ "project_id": "P3242",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": 7,
+ "resolutions": [
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 1712,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CONCERN: found a directly on-point primary-adjacent source, but it CONTRADICTS the sheet's StartYear1=2022 rather than supporting it, so nothing is proposed here (per the brief: do not change the value, flag instead). EIA's 'Natural Gas Pipeline Projects' table (eia.gov/naturalgas/data.php, downloaded EIA-NaturalGasPipelineProjects_Jul2021.xlsx / _Oct2021.xlsx / _Jan2022.xlsx / _Jan2023.xlsx directly and parsed with openpyxl -- url_verifier's substring screen FAILs on this URL because it cannot parse .xlsx binary content, confirmed by reading the parsed cell values directly) carries a row for 'Galveston County Project' / operator 'Florida Gas Trans Co' / FERC docket CP20-505: Aug-2020 vintage shows Status='Applied', Year In Service=2021; the Jul-2021, Oct-2021 and both later 'Historical Projects' editions all show Status='Completed', Completed Date=2021-02-01, Year In Service=2021. All four EIA snapshots agree the project actually went in service February 2021, not 2022, and none shows a 2022 date at any stage. This also bears on the paired Delay [ref] unit -- see that record. Not proposing this as a ref for StartYear1 since it would be an orphan ref that contradicts rather than supports the cell; Update should review whether StartYear1 should be 2021. No other independent source located: SEC EDGAR full-text search for the exact phrase 'Galveston County Project' returned 0 hits; the seed PGJ Planned Projects PDF (Oct 2018) has an FGT entry but it is the unrelated 'East-West Project' (Louisiana-to-Texas Gulf Coast bidirectional expansion), with no mention of Galveston anywhere in the document; texasenergyreport.com's Aug 2018 article is now paywalled behind a login form and its headline ('Partial Construction On East-West Pipeline Expansion Granted') also points to the East-West Project, not this lateral."
+  },
+  {
+   "ref_col": "Delay [ref]",
+   "sheet_row": 1712,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CONCERN, same evidence as the Start [ref] unit: EIA's pipeline-projects table shows the Galveston County Project (FERC CP20-505) as filed/'Applied' in 2020 targeting a 2021 in-service date, then 'Completed' with an actual completed date of 2021-02-01 -- i.e. the project appears to have gone in service ON its originally targeted year, not later, which is in tension with Delayed=yes/DelayType=inferred. Per the brief, not changing the value -- flagging for Update to review whether the delay inference (likely driven by the sheet's own StartYear1=2022 read against an earlier expected date) is still correct once StartYear1 is reconciled against the EIA/FERC record. No source found that itself states 'delayed' or explains a delay for this specific lateral, so the unit stays UNRESOLVED rather than DEAD_LINK/REFS_ADDED."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1712,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA Natural Gas Pipeline Projects table (Jul 2021 release, downloaded and parsed directly with openpyxl; url_verifier substring FAIL is a known false negative -- it cannot read .xlsx binary content, confirmed by reading the parsed row myself): the 'Galveston County Project' row (operator Florida Gas Trans Co, FERC docket CP20-505) lists Miles=2.6, close to but not exactly matching the sheet's LengthKnown=3.00 mi (a ~0.4 mi / 13% difference, plausibly route-miles vs a rounder public-facing figure, or EIA's 2.6 mi covering the two new pipe segments while 3.0 mi is a fuller tie-in-to-tie-in figure -- the project description ('two pipeline segments on the FGT Mainline') is consistent with a short lateral of this general size). Reported as supporting rather than a hard conflict given how close the figures are; same reading holds across the Oct-2021, Jan-2022 and Jan-2023 editions of the table (all show Miles=2.6 for this project). Tier medium/single-source: no second, independently-published length figure was located (see Start [ref] notes for what else was checked)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1712,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same EIA table row: State(s)=TX, Beg_State=TX, End_State=TX (matching the sheet's StartState/Province=Texas, EndState/Province=Texas, StartCountryOrArea/EndCountryOrArea=United States), Region=South Central throughout, Crosses State Border=No, and the project Notes field reads 'Install two pipeline segments on the FGT Mainline that connect to a natural gas power plant in Galveston, Texas' -- directly confirms the segment is wholly within Texas (Galveston County specifically), consistent with the sheet's (unspecified-city) Texas-to-Texas value. Tier medium/single-source -- no second corroborating source located for this specific lateral (see notes on the Start [ref] unit for the sources checked and ruled out: fgttransfer.energytransfer.com's system-map page is only a bare asset-code index with no Galveston/Texas geographic detail; kindermorgan.com's old FGT page returns a confirmed 404 -- KM sold FGT to Energy Transfer in 2016, page is stale/dead but was never a proposed ref so no DEAD_LINK classification applies; fractracker.org's petrochemical-map writeup does not mention this project)."
+  }
+ ]
+}

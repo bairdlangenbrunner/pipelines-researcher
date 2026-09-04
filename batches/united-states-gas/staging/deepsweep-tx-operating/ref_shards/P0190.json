@@ -1,0 +1,56 @@
+{
+ "project_id": "P0190",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": 6,
+ "resolutions": [
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 49,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched hard, no independent source confirms 1998 as this system-level row's start year. gem.wiki's own citation for 'Start year: 1998' traces SOLELY to the banned bit.ly/2smVBv2 -> abarrelfull.wikidot.com (confirmed by resolving the shortener with curl -sI), so it is not usable even as a lead beyond the number itself. Checked: (1) Wikipedia's Florida_Gas_Transmission article -- no start year given at all. (2) EIA's official 'Historical Projects (1996-2024)' pipeline-projects table (full scan of all ~20 Florida Gas Trans Co rows 1996-2024) -- the only 1998 entry is the small 'FGT Alabama Power Lateral' (Docket CP98-249, +62 MMcf/d, 1 mile, AL only), a minor lateral addition, not a system-wide in-service/founding date. (3) Kinder Morgan's FGT asset page (live 404; Wayback capture used) and Rextag's FGT informational posting -- neither states an in-service year. (4) Kinder Morgan's FY2018 10-K (SEC EDGAR) -- describes FGT only as a present-day '5,300-mile' system, no history/founding date. (5) SEC EDGAR full-text search for 'Florida Gas' + '1959' (488 hits) and spot-checked the most promising non-fund hit (Florida Public Utilities Co 10-K/10-Q) -- describes FPU's FGT transportation contracts from 1990-1992 onward, no founding-year statement for FGT itself, so this neither confirms nor contradicts 1998. (6) Web search engines other than WebSearch (DuckDuckGo html/lite, Bing, Ecosia, Mojeek) were tried via curl as a WebSearch-budget-exhaustion workaround and all returned bot-check shells or empty result sets, not usable. No CONCERN is filed -- there is no affirmative evidence 1998 is wrong (FGT's original mainline dates to 1959 per general industry knowledge, but I could not independently source that either, so I am not asserting a contradiction on an unsourced recollection)."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 49,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched hard, no independent source confirms 1059.44 MMcf/d. gem.wiki itself states this figure as '1059.44 million cubic feet per day / 3 billion [sic] cubic meters per day' and cites it SOLELY to the banned abarrelfull URL. Cross-check: 1059.44 MMcf/d converts, essentially exactly, from 30,000,000 cubic metres/day (30,000,000 x 35.3147 ft3/m3 / 1e6 = 1059.44), i.e. this looks like a metric-origin figure (probably '30 mcm/d') converted once and never independently re-verified since -- consistent with it never having been re-sourced beyond the original abarrelfull entry. Checked for a real modern figure instead: Rextag's FGT informational-posting page states current whole-system capacity as 3.7 Bcf/d (i.e. ~3,700 MMcf/d), and Kinder Morgan's FY2018 10-K gives the system as '5,300 miles' with no capacity figure -- neither corroborates 1059.44, and the Rextag figure is more than 3x higher, consistent with 1059.44 being a stale/historical design-capacity snapshot from well before the Phase IV-VIII expansions (EIA's Historical Projects table shows +200/+298/+180/+130/+121/+820/+343 MMcf/d added in phases from 2001-2011 alone). EIA's own 'Pipeline State2State Capacity' dataset (Jan-2021 vintage, full history 1990-2020 for every Florida-Gas-Trans-Co state-pair segment) was checked in full: none of its per-segment capacity values (e.g. Escambia AL->Santa Rosa FL: 1475 in 1998, 2224 by 2003+) is 1059.44 or a component that sums/matches it exactly, and none carry two-decimal precision (all are whole MMcf/d). No independent source with this specific number was found. No CONCERN filed -- not asserting the number is wrong, only that it is unconfirmed outside the banned source."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 49,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+    "http://web.archive.org/web/20200413011849/https://www.kindermorgan.com/pages/business/gas_pipelines/east/FGT/default.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Florida_Gas_Transmission",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "http://web.archive.org/web/20200413011849/https://www.kindermorgan.com/pages/business/gas_pipelines/east/FGT/default.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two distinct publishers independently corroborate the STATE-level portion of this Location group (StartState/Province=Texas, EndState/Province=Florida, both StartCountryOrArea/EndCountryOrArea=United States): Wikipedia's Florida Gas Transmission article states the pipeline 'brings gas from Texas, Louisiana, Mississippi, and Alabama into Florida.' Kinder Morgan's own FGT asset page (live URL now 404s -- confirmed via curl -o -w '%{http_code}' -- so the Wayback capture from 2020-04-13 is cited instead) independently states FGT 'transports natural gas from south Texas to south Florida.' CAVEAT (not a CONCERN, a precision note): neither source, nor any other source checked (Rextag informational posting, Kinder Morgan's FY2018 10-K via SEC EDGAR, EIA's pipeline-projects/state2state-capacity tables), names the exact towns 'Port Lavaca' or 'Miami' as the specific origin/terminus points -- those two town-level names (this unit's StartLocation/EndLocation primary values) remain independently unconfirmed at that granularity, even though gem.wiki's own citation for them (fgttransfer.energytransfer.com/ipost/FGT/maps/system-map) was checked directly and found to be a login-gated portal with only a generic interconnect-map list, no town-level endpoint labels -- so it would not have supported the exact claim either. Port Lavaca (Calhoun County, TX) is geographically consistent with FGT's known South Texas receipt corridor near Matagorda/Wharton counties (see the East-West Project sourcing on P4051, same system), and Miami-area delivery is consistent with FGT's documented major customer Florida Power & Light (Wikipedia) and its Turkey Point Lateral project (EIA Historical Projects table, 2006, FL) -- but these are inferences from adjacent facts, not direct naming, so they are not cited as independent confirmation of the exact town-level values."
+  }
+ ]
+}

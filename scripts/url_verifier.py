@@ -55,6 +55,16 @@ GEM_HOSTS = ("gem.wiki", "globalenergymonitor")
 # imports this tuple). A Barrel Full lives at abarrelfull.wikidot.com; "abarrellfull"
 # covers the common double-l misspelling, "wikidot.com" the wider free-wiki platform.
 BLOCKLIST_HOSTS = ("theodora.com", "theodora", "abarrelfull", "abarrellfull", "wikidot.com")
+
+# URL shorteners. A shortener is never a citable reference — it is an opaque,
+# revocable indirection whose target can be repointed after we cite it — and worse, it
+# BYPASSES the blocklist, because GEM_HOSTS/BLOCKLIST_HOSTS are string tests against the
+# submitted URL. Measured 2026-09-04 on the US-gas harvest: 9 of 20 harvested bit.ly
+# links resolve to abarrelfull.wikidot.com, and `bit.ly/2sYGqrY` verified `ok=True,
+# 200 + expected content present` while serving the banned source. Resolve it and cite
+# the target, or drop it.
+SHORTENER_HOSTS = ("bit.ly", "tinyurl.com", "goo.gl", "ow.ly", "t.co", "buff.ly",
+                   "is.gd", "rebrand.ly", "cutt.ly", "shorturl.at", "trib.al")
 _UA = "Mozilla/5.0 (compatible; pipelines-researcher/1.0)"
 
 # UA for fetching gem.wiki itself (harvest_wiki_citations.py, wiki_alignment.py) —
@@ -70,6 +80,25 @@ WIKI_UA = "baird-wiki/1.0 (baird.langenbrunner@globalenergymonitor.org)"
 
 # per-domain politeness floor for verify_many (seconds between hits to one host)
 _MIN_INTERVAL = 1.0
+
+# Opt-in in-process response cache. A sweep that verifies ONE document against many rows'
+# names (carry_prior re-checking 22 units sourced from a 4 MB bond PDF, one row at a time)
+# otherwise downloads that document once per row. Set `url_verifier.RESPONSE_CACHE = {}`
+# before calling verify_url/verify_many and every fetch of the same (url, verify) is served
+# from the dict after the first. Default None = no caching (a verification run must see
+# the live page). Never persisted; never shared across processes.
+RESPONSE_CACHE: dict | None = None
+
+
+def _http_get(url: str, timeout, headers, verify: bool = True):
+    import requests
+    key = (url, verify, headers.get("User-Agent", ""))
+    if RESPONSE_CACHE is not None and key in RESPONSE_CACHE:
+        return RESPONSE_CACHE[key]
+    r = requests.get(url, timeout=timeout, headers=headers, verify=verify)
+    if RESPONSE_CACHE is not None:
+        RESPONSE_CACHE[key] = r
+    return r
 # A 200 whose body is shorter than this, when we were checking for content, is treated as a
 # likely block page / cookie wall / archive interstitial / truncated fetch — not a real article.
 # Flagged so the agent re-fetches the FULL text rather than banking a false "value not found".
@@ -178,12 +207,36 @@ def name_forms(name) -> list[str]:
     return [f for f in forms if f]
 
 
+_NON_LATIN_RE = re.compile(r"[\u0370-\u03ff\u0400-\u052f\u0530-\u058f\u0590-\u05ff\u0600-\u06ff"
+                           r"\u0900-\u0dff\u0e00-\u0e7f\u1100-\u11ff\u3040-\u30ff\u3400-\u4dbf"
+                           r"\u4e00-\u9fff\uac00-\ud7af\uf900-\ufaff]")
+_DASHES_RE = re.compile(r"[\-\u2010-\u2015\u2212\uff0d~\uff5e]")
+
+
+def _cjk_norm(s: str) -> str:
+    """Match surface for a non-Latin name: NFKC (full-width -> ASCII), lowercase, all
+    whitespace removed (CJK prose is unspaced; extraction inserts spaces at random),
+    every dash variant -> '-' (丰城—抚州 / 丰城－抚州 / 丰城-抚州 are one name)."""
+    s = unicodedata.normalize("NFKC", str(s or "")).lower()
+    s = _DASHES_RE.sub("-", s)
+    return re.sub(r"\s+", "", s)
+
+
 def _name_present(text: str, name: str, cutoff: float = 0.86) -> bool:
     """True if `name` appears in `text` allowing minor transliteration variation. Exact
     (folded) substring first; else per-significant-token difflib against the page's word
     list (tokens < 4 chars are too ambiguous to fuzzy-match and must appear exactly)."""
     if not name:
         return True
+    # `_fold` keeps only [a-z0-9], so a Chinese, Cyrillic or Arabic name folds to NOTHING
+    # -- and an empty token list made the loop below return True vacuously: every
+    # non-Latin name "matched" every page. Caught 2026-09-03 wiring `--name` into the
+    # Jiangxi v3 carry-forward (江西支线 passed against a 404 body). Names in a script the
+    # fold cannot represent are matched as exact substrings on a normalised surface
+    # (NFKC, lowercase, whitespace removed, dash variants unified) -- no fuzz, since there
+    # is no transliteration noise to tolerate in the page's own script.
+    if _NON_LATIN_RE.search(str(name)) or not _fold(name):
+        return _cjk_norm(name) in _cjk_norm(text)
     folded_text = _fold(text)
     if any(_fold(f) and _fold(f) in folded_text for f in name_forms(name)):
         return True
@@ -200,6 +253,103 @@ def _name_present(text: str, name: str, cutoff: float = 0.86) -> bool:
         if not difflib.get_close_matches(tok, words, n=1, cutoff=cutoff):
             return False
     return True
+
+
+def _pdf_text(content: bytes, max_pages: int = 400) -> tuple[str, str]:
+    """Text layer of a PDF, or ("", why) when none could be read.
+
+    `requests.text` on a PDF is binary soup, so every content/name check against it is a
+    false negative — the Jiangxi v2 sweep's three dominant documents (a DRC plan, a bond
+    prospectus and a county EIA, all PDFs) FAILED the verifier on values provably in them
+    and had to be hand-confirmed one by one. Under the mandatory `--name` rule that false
+    negative would cap every PDF-sourced unit at `low`. pypdf first (in-process), pdftotext
+    as the fallback; a scanned PDF with no text layer reports as such rather than as a miss."""
+    err = ""
+    try:
+        import io
+        from pypdf import PdfReader
+        rd = PdfReader(io.BytesIO(content))
+        parts = []
+        for pg in rd.pages[:max_pages]:
+            try:
+                parts.append(pg.extract_text() or "")
+            except Exception:                                   # noqa: BLE001
+                continue
+        txt = "\n".join(parts)
+        if txt.strip():
+            return txt, ""
+        err = "pypdf found no text layer"
+    except Exception as e:                                      # noqa: BLE001
+        err = f"pypdf: {type(e).__name__}"
+    try:
+        import shutil, subprocess, tempfile
+        if shutil.which("pdftotext"):
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as fh:
+                fh.write(content)
+                tmp = fh.name
+            out = subprocess.run(["pdftotext", "-layout", tmp, "-"], capture_output=True,
+                                 timeout=120)
+            txt = out.stdout.decode("utf-8", "replace")
+            if txt.strip():
+                return txt, ""
+            err += "; pdftotext found no text layer (scanned image?)"
+        else:
+            err += "; pdftotext not installed"
+    except Exception as e:                                      # noqa: BLE001
+        err += f"; pdftotext: {type(e).__name__}"
+    return "", err.strip("; ")
+
+
+def _sheet_text(content: bytes, max_cells: int = 400_000) -> tuple[str, str]:
+    """Cell text of an XLSX/XLS workbook, or ("", why) when none could be read.
+
+    Same lesson as _pdf_text, learned again 2026-09-04: an .xlsx body is a ZIP, so
+    `requests.text` is binary soup and EVERY content/name check against it is a false
+    negative. EIA's `EIA-NaturalGasPipelineProjects_*.xlsx` — the single most-cited
+    document in the US gas cohort — was reporting `name_found: False` for pipelines
+    listed by name in its own rows, which under the relevance gate would have capped
+    those units at `low` on the strength of a parser failure.
+
+    openpyxl (read_only, values only) for the modern format; pandas/xlrd for legacy .xls.
+    Cell values are flattened to one tab-separated line per row, which is enough for the
+    substring and name checks and keeps big workbooks cheap."""
+    err = ""
+    try:
+        import io
+        import openpyxl
+        wb = openpyxl.load_workbook(io.BytesIO(content), read_only=True, data_only=True)
+        parts, n = [], 0
+        for ws in wb.worksheets:
+            parts.append(str(ws.title))
+            for row in ws.iter_rows(values_only=True):
+                cells = [str(c) for c in row if c is not None]
+                n += len(cells)
+                if cells:
+                    parts.append("\t".join(cells))
+                if n >= max_cells:
+                    break
+            if n >= max_cells:
+                break
+        wb.close()
+        txt = "\n".join(parts)
+        if txt.strip():
+            return txt, ""
+        err = "openpyxl found no cell values"
+    except Exception as e:                                      # noqa: BLE001
+        err = f"openpyxl: {type(e).__name__}"
+    try:
+        import io
+        import pandas as pd
+        sheets = pd.read_excel(io.BytesIO(content), sheet_name=None, header=None,
+                               dtype=str)
+        txt = "\n".join(df.fillna("").astype(str).agg("\t".join, axis=1).str.cat(sep="\n")
+                        for df in sheets.values())
+        if txt.strip():
+            return txt, ""
+        err += "; pandas read no rows"
+    except Exception as e:                                      # noqa: BLE001
+        err += f"; pandas: {type(e).__name__}"
+    return "", err.strip("; ")
 
 
 def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = True,
@@ -225,6 +375,12 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # capture of the live origin instead of serving the archive, so it is never evidence.
     # Use web.archive.org/web/<timestamp>/<url>. 348 of these had accumulated in the
     # backend before the 2026-08-05 repair (notes/wayback-save-repair-20260805/).
+    from urllib.parse import urlparse as _up
+    _h = _up(low).netloc.removeprefix("www.")
+    if _h in SHORTENER_HOSTS:
+        return {"ok": False, "status": None,
+                "reason": f"{_h} is a URL shortener, not a citable address — resolve it "
+                          f"and cite the target document"}
     if "web.archive.org/save/" in low:
         return {"ok": False, "status": None,
                 "reason": "web.archive.org/save/ is the Save Page Now instruction endpoint, "
@@ -255,8 +411,9 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # `insecure_tls` says the bytes are real but the identity was not cryptographically
     # confirmed, so treat the page as live and readable, not as authenticated.
     insecure = False
+    is_pdf = False
     try:
-        r = requests.get(url, timeout=timeout, headers={"User-Agent": _UA})
+        r = _http_get(url, timeout, {"User-Agent": _UA})
     except Exception as e:
         is_ssl = "SSL" in type(e).__name__ or "certificate" in str(e).lower()
         if not is_ssl:
@@ -267,12 +424,28 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
         except Exception:
             pass
         try:
-            r = requests.get(url, timeout=timeout, headers={"User-Agent": _UA}, verify=False)
+            r = _http_get(url, timeout, {"User-Agent": _UA}, verify=False)
             insecure = True
         except Exception as e2:
             return {"ok": False, "status": None,
                     "reason": f"request failed: {type(e).__name__}; retry without cert "
                               f"verification also failed: {type(e2).__name__}"}
+    # The bans above are string tests on the SUBMITTED url, so any redirect — a
+    # shortener, a vanity domain, an aggregator's own 301 — walks straight through them.
+    # Re-apply them to where we actually landed, and to every hop on the way.
+    _chain = [h.url for h in (getattr(r, "history", None) or [])] + [getattr(r, "url", url) or url]
+    for _u in _chain:
+        _low = _u.lower()
+        if any(h in _low for h in GEM_HOSTS):
+            return {"ok": False, "status": None,
+                    "reason": f"redirects to a GEM surface ({_u}) — never self-cite "
+                              f"(standing rule 1)"}
+        _hit = next((h for h in BLOCKLIST_HOSTS if h in _low), None)
+        if _hit:
+            return {"ok": False, "status": None,
+                    "reason": f"redirects to {_hit} ({_u}) — blocklisted tertiary "
+                              f"aggregator, never an acceptable reference"}
+
     def _fin(d: dict) -> dict:
         """Stamp the insecure-TLS retry onto whatever verdict the checks reach, so the
         provenance travels with the result instead of vanishing into a bare ok=True."""
@@ -281,6 +454,8 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
             d["reason"] = (d.get("reason", "") +
                            " [cert chain unverified — retried with TLS verification off; "
                            "page is live, identity not cryptographically confirmed]")
+        if is_pdf:
+            d["pdf"] = True
         if sec_retry:
             d["sec_ua_retry"] = True
             d["reason"] = (d.get("reason", "") +
@@ -317,6 +492,28 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     if (r.encoding or "").lower() in ("iso-8859-1", "ascii") and r.apparent_encoding:
         r.encoding = r.apparent_encoding
     body = r.text or ""
+    ctype = (r.headers.get("Content-Type") or "").lower()
+    is_pdf = "pdf" in ctype or (r.content or b"")[:5] == b"%PDF-"
+    if is_pdf:
+        body, pdf_err = _pdf_text(r.content or b"")
+        if not body.strip():
+            # No text layer readable — that is NOT a content miss. Say so; the researcher
+            # reads it another way (OCR, a mirror) rather than banking a false negative.
+            return _fin({"ok": False, "status": 200, "pdf": True,
+                         "reason": f"200 PDF but no text could be extracted ({pdf_err}) — "
+                                   f"not a content miss; read it another way"})
+    raw = r.content or b""
+    is_sheet = ("spreadsheet" in ctype or "excel" in ctype
+                or raw[:4] == b"PK\x03\x04" and low.split("?")[0].endswith((".xlsx", ".xlsm"))
+                or raw[:8] == b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"
+                or low.split("?")[0].endswith((".xlsx", ".xlsm", ".xls")))
+    if is_sheet and not is_pdf:
+        body, xl_err = _sheet_text(raw)
+        if not body.strip():
+            # Identical rule to the PDF branch: an unreadable workbook is not a miss.
+            return _fin({"ok": False, "status": 200, "spreadsheet": True,
+                         "reason": f"200 spreadsheet but no cells could be read ({xl_err}) "
+                                   f"— not a content miss; read it another way"})
     # Match against prose, not markup — and with whole-number semantics for numeric
     # needles. See _match_surface / _contains.
     text = _match_surface(body)
@@ -364,11 +561,20 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # the merge-time relevance gate) can tell "the page names this pipeline" apart from
     # "the page merely contains the number" — the keyword-match failure where a page about
     # endpoint A or endpoint B gets cited for the A–B line.
-    if name and not (_name_present(text, name) if fuzzy else _contains(text, name)):
+    # `name` may be ONE string or a LIST of forms (Latin name, segment name, the
+    # OtherLanguage* names): a Chinese approval notice names 丰城-抚州输气干线, never
+    # "Phase I, Fengcheng-Fuzhou Gas Pipeline", so a single-form check against a CJK page
+    # is a guaranteed false negative. Any form present = the page names the line; the
+    # matched form is reported so the researcher can see WHICH identity carried it.
+    name_list = [n for n in ([name] if isinstance(name, str) else (name or [])) if n]
+    matched = next((n for n in name_list
+                    if (_name_present(text, n) if fuzzy else _contains(text, n))), None)
+    if name_list and matched is None:
         tail = f" — re-fetch full text (body only {len(body.strip())} chars, likely block/stub)" if stub else ""
+        shown = name_list[0] if len(name_list) == 1 else name_list
         return _fin({"ok": False, "status": 200, "name_found": False,
-                     "reason": f"200 but name not found (fuzzy): {name!r}{tail}"})
-    named = {"name_found": True} if name else {}
+                     "reason": f"200 but name not found (fuzzy): {shown!r}{tail}"})
+    named = {"name_found": True, "name_matched": matched} if name_list else {}
     if stub and checking:
         # Matched inside a stub is not to be trusted either — surface it, don't silently pass.
         return _fin({"ok": True, "status": 200, **named,
@@ -443,7 +649,10 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("url")
     ap.add_argument("expected", nargs="*", help="substrings the page must contain (exact)")
-    ap.add_argument("--name", help="proper name the page must mention (fuzzy/transliteration-tolerant)")
+    ap.add_argument("--name", action="append",
+                    help="proper name the page must mention (fuzzy/transliteration-tolerant); "
+                         "repeatable — any one form present counts (Latin name, segment name, "
+                         "OtherLanguage* name)")
     ap.add_argument("--exact-name", action="store_true", help="require --name as an exact substring")
     args = ap.parse_args()
     res = verify_url(args.url, *args.expected, name=args.name, fuzzy=not args.exact_name)

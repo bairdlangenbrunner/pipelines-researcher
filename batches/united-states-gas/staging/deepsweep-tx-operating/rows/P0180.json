@@ -1,71 +1,104 @@
 {
-  "project_id": "P0180",
-  "pipeline_name": "East Texas Gas Pipeline",
-  "sheet_row": 41,
-  "wiki": "https://www.gem.wiki/East_Texas_Gas_Pipeline",
-  "validity": [
+ "project_id": "P0180",
+ "pipeline_name": "East Texas Gas Pipeline",
+ "sheet_row": 41,
+ "wiki": "https://www.gem.wiki/East_Texas_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Add proposed refs to Status/Fuel/Capacity/Length [ref] cells (all currently MISSING_REF); no value change needed for these.",
+   "researcher_notes": "EXISTENCE / STATUS / FUEL / CAPACITY / LENGTH. The pipeline is real, operating, and correctly classified as a natural gas transmission line, not GEM-only. It is Energy Transfer Partners' intrastate 'East Texas Pipeline' (asset code ETGP/ETTX), which appears continuously in ETP/Energy Transfer's own SEC filings from 2003 through today and on Energy Transfer's live Texas-HB1796 capacity-transparency posting. The wiki page's one harvested citation (bit.ly/2lWcvjz -> 'East Texas Gas Pipeline, Energy Transfer Partners website, accessed December 2017') was opened and resolved (curl -IL): it 301s to http://www.energytransfer.com/ops_intrastate.aspx, which now itself redirects to https://www.energytransfer.com/ops_intrastate.aspx and dead-ends in a 403 (WAF block, volt-adc) -- so the ORIGINAL cited page is no longer independently fetchable in its 2017 form. I located Energy Transfer's CURRENT equivalent public disclosure -- the live Texas-intrastate design-capacity posting at etcetconnect.energytransfer.com (asset ETGP), which is the same page family the old citation pointed at -- and it states verbatim: 'East Texas Pipeline. Capacity of 2.4 Bcf/d. Approximately 370 miles of natural gas pipeline. The East Texas pipeline connects three treating facilities, one of which we own, with our Southeast Texas System... provided access to the Katy Hub. The East Texas pipeline expansions include the 36-inch East Texas extension to connect our Reed compressor station in Freestone County to our Grimes County compressor station, the 36-inch Katy expansion connecting Grimes to the Katy Hub, and the 42-inch Southeast Bossier pipeline connecting our Cleburne to Carthage pipeline to the HPL system.' This matches GEM's Capacity=2400 MMcf/d and LengthKnown=595 km (370 mi x 1.60934 = 595.46 km) exactly, and independently confirms Status=operating (it is a live, currently-posted capacity disclosure) and Fuel=Gas. Existence is further corroborated by an INDEPENDENT (non-ETP) trade-press source: Natural Gas Intelligence, 'Energy Transfer Plans New 650 MMcf/d East Texas Pipeline' (naturalgasintel.com, dated 2003-06-06 per the article's own schema.org metadata) -- a contemporaneous, third-party report of the same project years before GEM or gem.wiki existed. CAVEAT / independence: the SPEC values themselves (2.4 Bcf/d, 370 mi) are corroborated by only ONE origin (Energy Transfer/ETP's own disclosures), though that origin is internally consistent across a live regulatory-transparency page and multiple SEC filings spanning 2003-2010 (see the separate StartYear finding below for the detailed history) -- I could not find a non-operator source stating the CURRENT 2.4 Bcf/d / 370 mi figures, so tier is medium, not high, on the spec cells. I opened the single harvested wiki citation (1 of 1, 100% of the pool).",
+   "proposed_refs": [
+    "https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP",
+    "https://www.naturalgasintel.com/news/energy-transfer-plans-new-650-mmcfd-east-texas-pipeline/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Revise StartYear1 from 2008 to 2004 (the pipeline's actual in-service year per the operator's own SEC-filed disclosures); consider recording 2008 separately (StartYear2) as the year the Carthage Loop/Southeast Bossier expansion raised capacity to ~2.0 Bcf/d, since that appears to be the source of the current '2008' value, not the original in-service date.",
+   "researcher_notes": "SPEC / DATE CONFLICT, material. GEM records StartYear1=2008 for this pipeline. Energy Transfer Partners' own SEC EDGAR filings state a materially earlier in-service date and document the growth trajectory that likely explains where '2008' came from: (1) An 8-K investor-presentation exhibit filed 2005-01-12 (SEC accession 0000950134-05-000582, exhibits dex992.htm/dex991.htm) states verbatim: 'East Texas Pipeline System Completed June 21, 2004 [.] 78 miles of pipeline [.] 500 MMcf/d of capacity (expandable to 1.0 Bcf/d) [.] Connects three treating facilities with SETPS [.] Total capital expenditures approximately $71.4 mm', and separately: 'Our East Texas Pipeline System consists of the Bossier and Katy Pipelines. The Bossier Pipeline, completed in June 2004, is a 78-mile natural gas pipeline that connects three treating facilities... The current average throughput of the East Texas Pipeline System is approximately 300 MMcf/d.' (2) A September 2006 8-K investor-presentation exhibit (accession 0001193125-06-194569, dex992.htm) shows the system had grown to 'Capacity of 720 MMcf/d... 148 miles of pipeline' by that date. (3) ETP's FY2008 Form 10-K (filed 2009-03-02, accession 0001193125-09-041407, d10k.htm) describes the pipeline at '320 miles... Capacity of 2.0 Bcf/d' after the Carthage Loop expansion, and separately states an XTO shipper agreement's 'term... began in June 2004 when the pipeline became operational.' This is an unambiguous, repeated, dated statement from the operator's own regulatory disclosures across three separate filing years (2005, 2006, 2009) that the pipeline first went into service June 2004 -- not 2008. 2008 is real in the pipeline's history (it is when ETP announced/completed the Carthage Loop and Southeast Bossier expansion that pushed capacity to 2.0 Bcf/d -- see the 2007-10-08 8-K press-release exhibit, accession 0000950134-07-021017, h50423exv99w1.htm -- filed under co-registrant CIK 1276187 (Energy Transfer Partners GP), NOT 1012569, confirmed live HTTP 200 with verbatim text 'construction expected to commence June 2008 ... expected to be in service by September 2008'), but it is an EXPANSION-PHASE milestone, not the pipeline's origin. VERIFICATION CAVEAT: url_verifier.py returns HTTP 403 for all sec.gov URLs above under its generic UA (confirmed independently: SEC.gov 403s the exact same UA string via a bare curl test, i.e. this is SEC's UA-based access policy, not a dead/removed filing) -- a documented bot-wall false-negative class per the verifier's own docstring. I manually confirmed all three filings are live (HTTP 200) and contain the quoted text verbatim using curl with an identifying contact User-Agent (SEC's own fair-access convention). Because they did not pass the verifier as run, I am NOT listing them in proposed_refs per the hard requirement, and am instead naming them here in full so a human/reviewer can re-check directly: https://www.sec.gov/Archives/edgar/data/1012569/000095013405000582/d21643exv99w2.htm , https://www.sec.gov/Archives/edgar/data/1012569/000119312506194569/dex992.htm , https://www.sec.gov/Archives/edgar/data/1012569/000119312509041407/d10k.htm , https://www.sec.gov/Archives/edgar/data/1276187/000095013407021017/h50423exv99w1.htm . Single-origin (all Energy Transfer/ETP), so even setting the access issue aside this would only reach medium/low, not high -- flagging as a concern for Update rather than auto-applying.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change; StartState/Province, StartCountryOrArea, EndState/Province, EndCountryOrArea (all Texas/US) are correct and wholly consistent with every source (the system is a wholly-intrastate Texas pipeline). See the separate fills entry proposing EndLocation='Katy'.",
+   "researcher_notes": "LOCATION. All four existing Location values (Start/End State=Texas, Start/End Country=United States) are corroborated by every source reviewed -- the pipeline is explicitly and repeatedly described as a Texas intrastate system (subject to Texas HB 1796 capacity-posting rules, which apply only to Texas intrastate pipelines) running entirely within Texas. StartLocation/EndLocation are blank in GEM; I deliberately did NOT force a StartLocation fill -- the 'East Texas Pipeline System' is described across sources as a multi-branch network (Bossier Pipeline + Katy Pipeline, later joined by the Reed/Freestone County - Grimes County extension and the Cleburne-to-Carthage/Southeast Bossier pipeline), so it has several plausible origin points (three treating facilities, plus compressor stations in Freestone and Grimes counties) rather than one crisp start node, and I would rather leave it blank than force an arbitrary pick. EndLocation is much better defined -- see fills.",
+   "proposed_refs": [
+    "https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change; Owner1=ETP Legacy 100% is consistent with every source (the pipeline has been Energy Transfer/ETP's own asset continuously since 2004, with no ownership change documented in any filing reviewed).",
+   "researcher_notes": "ATTRIBUTION / OWNER. No source names an owner other than Energy Transfer Partners/Energy Transfer -- every SEC filing from 2005 through 2009 and the current (2026) live etcetconnect.energytransfer.com capacity page describe it as 'our' pipeline / an Energy Transfer intrastate asset, with no divestiture, sale, or joint-venture structure mentioned anywhere. I found no independent (non-ETP) source naming ownership, which is expected for an intrastate pipeline with no FERC docket -- this is a single-origin confirmation, not independently corroborated, hence caveat rather than a clean high-tier pass.",
+   "proposed_refs": [
+    "https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Adjudicate the Start conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Start [ref]: could not confirm a clean 2008 in-service/start year, and found evidence the pipeline is older. Energy Transfer Partners' 2008 SEC prospectus supplement (424B2, filed 2008-07-16, SEC EDGAR accession 0000950129-08-003976) already describes the East Texas pipeline as an existing asset with ~700 MMcf/d of capacity in mid-2008, and describes a then-pending 'Katy expansion' (56 miles of 36-inch pipe) that would raise its capacity 'from approximately 700 MMcf/d to more than 1.1 Bcf/d,' originally expected in service Q4 2008. The FY2009 10-K's project-completion table (SEC EDGAR accession 0001193125-10-039066) shows the Katy expansion's actual completion was February 2009, not 2008. So the pipeline predates 2008 (at lower capacity), and the specific expansion phase that pushed it toward its later, larger footprint completed in early 2009. No source found pinning a 2008 in-service date for the segment as GEM records it. Declining to cite a ref for StartYear1=2008; flagging the pre-2008 origin + Jan/Feb-2009 expansion-completion evidence for Update to reconcile.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "promoted_from": "Start [ref]|could not confirm a clean 2008 in-service/start year, and fo"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 41,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "EndLocation"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Katy"
+   },
+   "primary_value": "Katy",
+   "proposed_refs": [
+    "https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "Add proposed refs to Status/Fuel/Capacity/Length [ref] cells (all currently MISSING_REF); no value change needed for these.",
-      "researcher_notes": "EXISTENCE / STATUS / FUEL / CAPACITY / LENGTH. The pipeline is real, operating, and correctly classified as a natural gas transmission line, not GEM-only. It is Energy Transfer Partners' intrastate 'East Texas Pipeline' (asset code ETGP/ETTX), which appears continuously in ETP/Energy Transfer's own SEC filings from 2003 through today and on Energy Transfer's live Texas-HB1796 capacity-transparency posting. The wiki page's one harvested citation (bit.ly/2lWcvjz -> 'East Texas Gas Pipeline, Energy Transfer Partners website, accessed December 2017') was opened and resolved (curl -IL): it 301s to http://www.energytransfer.com/ops_intrastate.aspx, which now itself redirects to https://www.energytransfer.com/ops_intrastate.aspx and dead-ends in a 403 (WAF block, volt-adc) -- so the ORIGINAL cited page is no longer independently fetchable in its 2017 form. I located Energy Transfer's CURRENT equivalent public disclosure -- the live Texas-intrastate design-capacity posting at etcetconnect.energytransfer.com (asset ETGP), which is the same page family the old citation pointed at -- and it states verbatim: 'East Texas Pipeline. Capacity of 2.4 Bcf/d. Approximately 370 miles of natural gas pipeline. The East Texas pipeline connects three treating facilities, one of which we own, with our Southeast Texas System... provided access to the Katy Hub. The East Texas pipeline expansions include the 36-inch East Texas extension to connect our Reed compressor station in Freestone County to our Grimes County compressor station, the 36-inch Katy expansion connecting Grimes to the Katy Hub, and the 42-inch Southeast Bossier pipeline connecting our Cleburne to Carthage pipeline to the HPL system.' This matches GEM's Capacity=2400 MMcf/d and LengthKnown=595 km (370 mi x 1.60934 = 595.46 km) exactly, and independently confirms Status=operating (it is a live, currently-posted capacity disclosure) and Fuel=Gas. Existence is further corroborated by an INDEPENDENT (non-ETP) trade-press source: Natural Gas Intelligence, 'Energy Transfer Plans New 650 MMcf/d East Texas Pipeline' (naturalgasintel.com, dated 2003-06-06 per the article's own schema.org metadata) -- a contemporaneous, third-party report of the same project years before GEM or gem.wiki existed. CAVEAT / independence: the SPEC values themselves (2.4 Bcf/d, 370 mi) are corroborated by only ONE origin (Energy Transfer/ETP's own disclosures), though that origin is internally consistent across a live regulatory-transparency page and multiple SEC filings spanning 2003-2010 (see the separate StartYear finding below for the detailed history) -- I could not find a non-operator source stating the CURRENT 2.4 Bcf/d / 370 mi figures, so tier is medium, not high, on the spec cells. I opened the single harvested wiki citation (1 of 1, 100% of the pool).",
-      "proposed_refs": ["https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP", "https://www.naturalgasintel.com/news/energy-transfer-plans-new-650-mmcfd-east-texas-pipeline/"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Revise StartYear1 from 2008 to 2004 (the pipeline's actual in-service year per the operator's own SEC-filed disclosures); consider recording 2008 separately (StartYear2) as the year the Carthage Loop/Southeast Bossier expansion raised capacity to ~2.0 Bcf/d, since that appears to be the source of the current '2008' value, not the original in-service date.",
-      "researcher_notes": "SPEC / DATE CONFLICT, material. GEM records StartYear1=2008 for this pipeline. Energy Transfer Partners' own SEC EDGAR filings state a materially earlier in-service date and document the growth trajectory that likely explains where '2008' came from: (1) An 8-K investor-presentation exhibit filed 2005-01-12 (SEC accession 0000950134-05-000582, exhibits dex992.htm/dex991.htm) states verbatim: 'East Texas Pipeline System Completed June 21, 2004 [.] 78 miles of pipeline [.] 500 MMcf/d of capacity (expandable to 1.0 Bcf/d) [.] Connects three treating facilities with SETPS [.] Total capital expenditures approximately $71.4 mm', and separately: 'Our East Texas Pipeline System consists of the Bossier and Katy Pipelines. The Bossier Pipeline, completed in June 2004, is a 78-mile natural gas pipeline that connects three treating facilities... The current average throughput of the East Texas Pipeline System is approximately 300 MMcf/d.' (2) A September 2006 8-K investor-presentation exhibit (accession 0001193125-06-194569, dex992.htm) shows the system had grown to 'Capacity of 720 MMcf/d... 148 miles of pipeline' by that date. (3) ETP's FY2008 Form 10-K (filed 2009-03-02, accession 0001193125-09-041407, d10k.htm) describes the pipeline at '320 miles... Capacity of 2.0 Bcf/d' after the Carthage Loop expansion, and separately states an XTO shipper agreement's 'term... began in June 2004 when the pipeline became operational.' This is an unambiguous, repeated, dated statement from the operator's own regulatory disclosures across three separate filing years (2005, 2006, 2009) that the pipeline first went into service June 2004 -- not 2008. 2008 is real in the pipeline's history (it is when ETP announced/completed the Carthage Loop and Southeast Bossier expansion that pushed capacity to 2.0 Bcf/d -- see the 2007-10-08 8-K press-release exhibit, accession 0000950134-07-021017, h50423exv99w1.htm -- filed under co-registrant CIK 1276187 (Energy Transfer Partners GP), NOT 1012569, confirmed live HTTP 200 with verbatim text 'construction expected to commence June 2008 ... expected to be in service by September 2008'), but it is an EXPANSION-PHASE milestone, not the pipeline's origin. VERIFICATION CAVEAT: url_verifier.py returns HTTP 403 for all sec.gov URLs above under its generic UA (confirmed independently: SEC.gov 403s the exact same UA string via a bare curl test, i.e. this is SEC's UA-based access policy, not a dead/removed filing) -- a documented bot-wall false-negative class per the verifier's own docstring. I manually confirmed all three filings are live (HTTP 200) and contain the quoted text verbatim using curl with an identifying contact User-Agent (SEC's own fair-access convention). Because they did not pass the verifier as run, I am NOT listing them in proposed_refs per the hard requirement, and am instead naming them here in full so a human/reviewer can re-check directly: https://www.sec.gov/Archives/edgar/data/1012569/000095013405000582/d21643exv99w2.htm , https://www.sec.gov/Archives/edgar/data/1012569/000119312506194569/dex992.htm , https://www.sec.gov/Archives/edgar/data/1012569/000119312509041407/d10k.htm , https://www.sec.gov/Archives/edgar/data/1276187/000095013407021017/h50423exv99w1.htm . Single-origin (all Energy Transfer/ETP), so even setting the access issue aside this would only reach medium/low, not high -- flagging as a concern for Update rather than auto-applying.",
-      "proposed_refs": [],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No change; StartState/Province, StartCountryOrArea, EndState/Province, EndCountryOrArea (all Texas/US) are correct and wholly consistent with every source (the system is a wholly-intrastate Texas pipeline). See the separate fills entry proposing EndLocation='Katy'.",
-      "researcher_notes": "LOCATION. All four existing Location values (Start/End State=Texas, Start/End Country=United States) are corroborated by every source reviewed -- the pipeline is explicitly and repeatedly described as a Texas intrastate system (subject to Texas HB 1796 capacity-posting rules, which apply only to Texas intrastate pipelines) running entirely within Texas. StartLocation/EndLocation are blank in GEM; I deliberately did NOT force a StartLocation fill -- the 'East Texas Pipeline System' is described across sources as a multi-branch network (Bossier Pipeline + Katy Pipeline, later joined by the Reed/Freestone County - Grimes County extension and the Cleburne-to-Carthage/Southeast Bossier pipeline), so it has several plausible origin points (three treating facilities, plus compressor stations in Freestone and Grimes counties) rather than one crisp start node, and I would rather leave it blank than force an arbitrary pick. EndLocation is much better defined -- see fills.",
-      "proposed_refs": ["https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No change; Owner1=ETP Legacy 100% is consistent with every source (the pipeline has been Energy Transfer/ETP's own asset continuously since 2004, with no ownership change documented in any filing reviewed).",
-      "researcher_notes": "ATTRIBUTION / OWNER. No source names an owner other than Energy Transfer Partners/Energy Transfer -- every SEC filing from 2005 through 2009 and the current (2026) live etcetconnect.energytransfer.com capacity page describe it as 'our' pipeline / an Energy Transfer intrastate asset, with no divestiture, sale, or joint-venture structure mentioned anywhere. I found no independent (non-ETP) source naming ownership, which is expected for an intrastate pipeline with no FERC docket -- this is a single-origin confirmation, not independently corroborated, hence caveat rather than a clean high-tier pass.",
-      "proposed_refs": ["https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "fills": [
-    {
-      "segment_name": "",
-      "sheet_row": 41,
-      "ref_col": "Location [ref]",
-      "value_cols": ["EndLocation"],
-      "primary_value_col": "EndLocation",
-      "values": {"EndLocation": "Katy"},
-      "primary_value": "Katy",
-      "proposed_refs": ["https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP"],
-      "verifications": [{"url": "https://etcetconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=ETGP", "ok": true, "contains_value": true}],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "EndLocation is currently blank. Every source reviewed, spanning 2005 SEC filings through the current (2026) live Energy Transfer capacity page, consistently and specifically names the Katy Hub (Katy, Texas -- Waller/Harris/Fort Bend county area) as the delivery terminus of the East Texas Pipeline System ('provided access to the Katy Hub'; 'the 36-inch Katy expansion connecting Grimes to the Katy Hub'). This is the one endpoint of the system that is unambiguous and stable across the pipeline's entire documented history, unlike the origin side (see the location validity note on why StartLocation was left unfilled). Single-origin (Energy Transfer), so medium not high."
-    }
-  ],
-  "summary": "Confirmed real, operating, correctly-classified Energy Transfer intrastate gas pipeline (no existence/duplicate/classification issue); current Length (595 km/370 mi) and Capacity (2400 MMcf/d/2.4 Bcf/d) corroborated by Energy Transfer's own live regulatory capacity-transparency page + 2003 independent trade press for existence. One material UNRESOLVED-worthy concern: StartYear1=2008 conflicts with ETP's own SEC filings (2005/2006/2009), which repeatedly state the pipeline was completed and became operational in June 2004, with 2008 actually marking a later Carthage Loop expansion phase -- flagged for Update, SEC refs not machine-verifiable (SEC.gov 403s the verifier's UA; manually confirmed live+content). Added EndLocation='Katy' fill; StartLocation deliberately left blank (multi-branch network, no single origin point)."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EndLocation is currently blank. Every source reviewed, spanning 2005 SEC filings through the current (2026) live Energy Transfer capacity page, consistently and specifically names the Katy Hub (Katy, Texas -- Waller/Harris/Fort Bend county area) as the delivery terminus of the East Texas Pipeline System ('provided access to the Katy Hub'; 'the 36-inch Katy expansion connecting Grimes to the Katy Hub'). This is the one endpoint of the system that is unambiguous and stable across the pipeline's entire documented history, unlike the origin side (see the location validity note on why StartLocation was left unfilled). Single-origin (Energy Transfer), so medium not high."
+  }
+ ],
+ "summary": "Confirmed real, operating, correctly-classified Energy Transfer intrastate gas pipeline (no existence/duplicate/classification issue); current Length (595 km/370 mi) and Capacity (2400 MMcf/d/2.4 Bcf/d) corroborated by Energy Transfer's own live regulatory capacity-transparency page + 2003 independent trade press for existence. One material UNRESOLVED-worthy concern: StartYear1=2008 conflicts with ETP's own SEC filings (2005/2006/2009), which repeatedly state the pipeline was completed and became operational in June 2004, with 2008 actually marking a later Carthage Loop expansion phase -- flagged for Update, SEC refs not machine-verifiable (SEC.gov 403s the verifier's UA; manually confirmed live+content). Added EndLocation='Katy' fill; StartLocation deliberately left blank (multi-branch network, no single origin point)."
 }

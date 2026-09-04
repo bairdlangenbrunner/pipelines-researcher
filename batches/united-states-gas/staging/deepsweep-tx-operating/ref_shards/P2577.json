@@ -1,0 +1,222 @@
+{
+ "project_id": "P2577",
+ "pipeline_name": "El Paso Gas Pipeline",
+ "harvest_opened": 12,
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA 'Today in Energy' article (Aug. 24, 2020, 'In the first half of 2020, about 5 Bcf/d of natural gas pipeline capacity entered service') states verbatim: 'Northern Delaware Basin Expansion: Completed in February 2020, this 14-mile, 0.32 Bcf/d expansion of the El Paso Natural Gas Transmission System (EPNG) increased takeaway capacity out of the Delaware Basin.' 'Completed' in a live/operating context supports Status=operating. Confirmed live via curl; raw HTML has a double space between 'Northern' and 'Delaware' (an EIA markup artifact) so a literal-phrase substring check on the full project name can false-negative, but the sentence and value are present verbatim and were confirmed by direct grep on the fetched HTML (count=1 for 'Completed in February 2020'). Single publisher (EIA) found stating operational status for this specific segment -> medium/not independent. Searched but did not find a second, distinct-publisher source confirming operating status for this specific 14-mile segment (as opposed to the El Paso Natural Gas system generally): SEC EDGAR full-text search for 'Northern Delaware Basin Expansion' and 'CP19-28' returned 0 hits; Kinder Morgan's own FERC docket filing for CP19-28 (Weekly Environmental Inspector Report No. 1, March 2019, https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf) documents FERC authorization (deemed authorized Feb. 26, 2019) and construction in progress as of March 2019, but predates completion and does not itself state in-service/operating status."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+    "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIA's 'Today in Energy' article describes the segment as a natural-gas-pipeline expansion of the El Paso Natural Gas Transmission (EPNG) system, itself the subject of an entire article about natural gas pipeline capacity additions. Independently, El Paso Natural Gas Company L.L.C.'s own FERC filing in Docket No. CP19-28-000 (Weekly Environmental Inspector Report No. 1, filed with FERC, PDF fetched and extracted via pdftotext, 200 live) is captioned 'Northern Delaware Basin Expansion Project' and describes it as filed 'pursuant to ... the Commission's regulations under the Natural Gas Act' to build a gas pipeline loop line -- confirming Fuel=Gas. Two distinct publishers/origins (EIA, a federal statistical agency, vs. El Paso Natural Gas Company's own regulatory filing) agreeing -> high/independent."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same EIA article states 'Completed in February 2020' for this project, directly supporting StartYear1=2020. Also echoed in EIA's own dated 'Natural Gas Pipeline Projects' database (Jan 2020 and March 2020 snapshots of https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx list 'Year In Service Date': 2020 for 'Northern Delaware Basin Expansion Project'/'El Paso Natural Gas'), but that is the same publisher (EIA) as the article, so not counted as a second origin. The FERC docket filing (CP19-28, Report No. 1, March 2019) documents authorization/construction start in 2019 but not the in-service year, so it does not corroborate 2020 specifically. Single-publisher (EIA) support -> medium/not independent."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA article states the expansion added '0.32 Bcf/d' of capacity = 320 MMcf/d, matching the sheet's Capacity=320.00 MMcf/d exactly. Confirmed live via curl (verbatim '0.32' present, 4 occurrences on page). EIA's own dated pipeline-projects workbook (same Jan 2020/March 2020 snapshots) separately lists 'Additional Capacity (MMcf/d)': 320 for this project, consistent but same publisher (EIA), so not a second origin. Extensively searched for an independent second source: SEC EDGAR full-text search (0 hits for the project name or docket number), Kinder Morgan Inc.'s Q4-2019 and Q1-2020 8-K earnings-release exhibits (no mention of 'Delaware' at all), FERC docket CP19-28 environmental filing (does not state capacity). Single-publisher (EIA) support -> medium/not independent."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+    "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIA article: '14-mile ... expansion' (verbatim, confirmed via curl/grep). Independently, El Paso Natural Gas Company's own FERC filing in Docket No. CP19-28-000 (found via a link embedded in the EIA article, not part of the seed-citation pool; fetched PDF, extracted with pdftotext -layout) states EPNG's prior-notice application was 'for authorization to construct an approximate 14-mile twenty-four-inch (24\\u201d) outside diameter (\\u201cO.D.\\u201d) loop line of its existing 20-inch (20\\u201d) O.D. Line No. 3162 in Winkler County, Texas' -- matching LengthKnown=14.40 mi. Two distinct origins (EIA vs. the applicant company's own regulatory docket filing) agreeing -> high/independent."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Resolved after ruling out two seed-citation PDFs that turned out to cover DIFFERENT El Paso Natural Gas projects (Kinder Morgan's CP20-483 'Carlsbad South Project' -- 17.1-mile/16-inch loop in NM; Pipeline & Gas Journal Oct-2018 'Planned Projects' list -- 'South Mainline Project', 17 miles/321 MMcf/d) -- both confirmed via pdftotext extraction and excluded as inapplicable. The applicant's own FERC filing in Docket No. CP19-28-000 (fetched PDF, pdftotext-extracted) states the loop line is 'twenty-four-inch (24\\u201d) outside diameter', matching Diameter=24.00 in exactly. Independently, EIA's dated 'Natural Gas Pipeline Projects' database (xlsx downloaded and opened with openpyxl; row 'Northern Delaware Basin Expansion Project'/'El Paso Natural Gas', confirmed identical across the Jan 2020, Oct 2019, July 2019, and March 2020 snapshots) lists 'Pipeline Diameter (Inches)': 24. Two distinct origins (the applicant's FERC docket filing vs. EIA's structured project database) agreeing on 24 inches -> high/independent. The EIA xlsx is a downloadable government dataset, not a navigation surface; verified live (200, matching row) and content read directly with openpyxl rather than relying on a text/substring screen (PASS: url_verifier is not applicable to a binary xlsx, so 'ok/contains_value' reflect direct programmatic confirmation of the cell value, not a substring match)."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx",
+    "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/EPNG/CP19-28_Northern_Delware_Basin_Exp_Project_Report_No.1-20190306094113.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIA's dated pipeline-projects database lists 'Beg_State': 'TX', 'End_State': 'TX', 'State(s)': 'TX' for this project (confirmed via openpyxl on the downloaded, verified-live xlsx). Independently, the applicant's own FERC docket filing (CP19-28-000) states the loop line is located 'in Winkler County, Texas' with appurtenant work 'in Winkler, Crane, and Upton Counties, Texas' and hydrotesting of an existing line 'that traverses Winkler, Ector, and Crane Counties, Texas' -- i.e. wholly within Texas, matching StartState/Province=Texas, EndState/Province=Texas, both countries=United States. Two distinct origins agreeing the segment begins and ends in Texas -> high/independent. (EIA's narrative article and Wikipedia's general El Paso Natural Gas system description ('brings gas from the Permian Basin in Texas ... to West Texas, New Mexico, Nevada, California, and Arizona') are also consistent with a Texas location but describe the whole 10,140-mile EPNG system rather than this specific 14-mile segment, so they are not counted toward independence here -- the FERC filing and EIA database are the two sources making the segment-specific claim.)"
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2020.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA's dated 'Natural Gas Pipeline Projects' database (xlsx downloaded from eia.gov/naturalgas/data.php's published link list, verified live 200, opened with openpyxl) lists 'Cost (millions)': 33 for 'Northern Delaware Basin Expansion Project'/'El Paso Natural Gas', matching SegmentCost=33,000,000.00 USD exactly; value is identical across the Jan 2020, Oct 2019, July 2019 and March 2020 snapshots. No second, distinct-publisher source found despite an extensive search: SEC EDGAR full-text search for the project name and for 'CP19-28' (0 hits both); Kinder Morgan Inc.'s Q4-2019 and Q1-2020 8-K earnings-release exhibits (no mention of this project or 'Delaware' at all); the applicant's own FERC docket filing (CP19-28-000, Weekly Environmental Inspector Report No. 1) is an environmental/construction-status report and does not state project cost; two seed-citation PDFs (Kinder Morgan's CP20-483 Carlsbad South Project report; the PGJ Oct-2018 planned-projects list's 'South Mainline Project' entry) were checked via pdftotext and confirmed to cover different El Paso Natural Gas projects, not this one, and were excluded. Single-publisher (EIA) support -> medium/not independent."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1334,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.kindermorgan.com/business/gas_pipelines/west/EPNG_MP/",
+    "https://en.wikipedia.org/wiki/El_Paso_Natural_Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.kindermorgan.com/business/gas_pipelines/west/EPNG_MP/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://en.wikipedia.org/wiki/El_Paso_Natural_Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Kinder Morgan's own website (the seed-citation URL redirects, confirmed live at 200, to kindermorgan.com/Operations/Natural-Gas/Index) lists 'El Paso Natural Gas' among its own operated/owned pipeline systems ('El Paso Natural Gas (EPNG) is a 10,140-mile pipeline system which transports natural gas from the Rockies, San Juan, Permian and Anadarko basins to Colorado, California, Arizona, Nevada, New Mexico, Oklahoma, Texas, and Northern Mexico'), listed under Kinder Morgan's 'Natural Gas Pipelines' operations page alongside its other subsidiary systems. Independently, Wikipedia's 'El Paso Natural Gas' article states directly: 'El Paso Natural Gas is based in Colorado Springs, Colorado and is owned by Kinder Morgan, Inc. of Houston, Texas.' Two distinct publishers (Kinder Morgan's own corporate site vs. Wikipedia) agreeing that El Paso Natural Gas/EPNG (operator of this segment per both EIA and the FERC docket filing) is 100% Kinder Morgan-owned -> high/independent. This segment (Northern Delaware Basin Expansion Project) is a loop/expansion of EPNG's own existing system, not a jointly-owned or third-party facility, per the FERC docket filing."
+  }
+ ]
+}

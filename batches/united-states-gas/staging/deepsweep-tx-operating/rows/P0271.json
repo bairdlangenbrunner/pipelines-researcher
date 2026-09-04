@@ -1,104 +1,170 @@
 {
-  "project_id": "P0271",
-  "pipeline_name": "Transcontinental Gas Pipeline",
-  "sheet_row": 124,
-  "wiki": "https://www.gem.wiki/Transcontinental_Gas_Pipeline",
-  "validity": [
+ "project_id": "P0271",
+ "pipeline_name": "Transcontinental Gas Pipeline",
+ "sheet_row": 124,
+ "wiki": "https://www.gem.wiki/Transcontinental_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no action — existence/classification solidly confirmed",
+   "researcher_notes": "EXISTENCE/CLASSIFICATION: not in doubt. Transco (Transcontinental Gas Pipe Line Company, LLC) is the largest-volume interstate natural gas transmission system in the US, running from south Texas to New York City; it is documented by Williams' own corporate site (owner/operator), Wikipedia (independent secondary source with its own citations), Rextag (independent pipeline-data aggregator), an SEC-filed 10-K under Transco's own CIK, multiple FERC-docketed expansion projects (NESE, Gateway, Hillabee, Gulf Connector, Southeast Supply Enhancement) and decades of trade-press coverage (marked its 75th anniversary in Dec 2025). PipelineType='transmission' and Fuel='Gas' are unambiguously correct — this is the archetype of an interstate gas transmission trunk, not a gathering/process/feeder line. Status='operating' correct and current (actively expanding as of 2024-2025). DUPLICATE CHECK against the 45-row roster: P3296 ('Transcontinental Gas Pipeline | Station 65->Texas | len=0.0 cap=475.00') is NOT a duplicate/double-count of this row — it is a small distinct expansion-project segment on the Transco system (capacity 475 MMcf/d vs this row's system-wide 16,800 MMcf/d), consistent with how this tracker records a main-line system row alongside separately tracked expansion-project rows on the same physical pipeline. No fold recommended. HARVESTED CITATION POOL: 29 URLs harvested from gem.wiki. I opened/used 4 of them directly relevant to this row's SYSTEM-LEVEL specs (length/capacity/start year/location): eia.gov/naturalgas/data.php (already the sheet's own current_ref), rextag.com/pipeline/transcontinental-gas-pipeline (already the sheet's Capacity current_ref). The remaining ~25 (Kallanish, centraljersey, dec.ny.gov, nytimes, nj.com, grist, forbes, citylimits, stopthewilliamspipeline, investor.williams press releases on Hillabee/Gulf Connector/debt issuance, appvoices, hartenergy, EPA settlement, businesswire dividend, ijglobal x2, nola.com, virginiaplaces, sec.gov 10-K) describe SPECIFIC expansion projects, financings, legal fights, or an environmental settlement — none bear on the aggregate system-level length/capacity/start-year values this validity pass is checking, so they were screened by title/context and correctly not opened; they would matter for a segment-level row (e.g. NESE, Hillabee, Gulf Connector) but this row is the main-line system aggregate. I supplemented with fresh open-web search (Wikipedia, Williams.com, a 75th-anniversary trade-press piece) rather than relying only on the harvested pool, since the pool skews toward controversy/finance coverage rather than core specs."
+  },
+  {
+   "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Correct LengthKnownUnits from 'km' to 'mi' (keep LengthKnown=10200), or convert to km (~16,415 km) if 'mi' is not wanted — do not leave 10200 labeled as km.",
+   "researcher_notes": "LENGTH UNIT DEFECT (same family as the documented ASB Iraq/Libya mi-as-km escalations). GEM records LengthKnown=10200.00, LengthKnownUnits='km', and LengthKnownKm=10200.00 (i.e. the km-normalized column is a bare copy of the raw value, not an actual conversion — a strong tell no unit conversion ever happened). But every independent source on this pipeline states the ~10,000-10,500 figure in MILES, not km: (1) Rextag (rextag.com/pipeline/transcontinental-gas-pipeline, the sheet's OWN cited Capacity source) states 'Miles of Pipeline: 10000' and describes it as 'a 10,000-mile system from Texas to New York City'; (2) Wikipedia's Transcontinental Pipeline infobox states 'Length: 10,500 mi (16,900 km)' — i.e. Wikipedia's own editors give the km-equivalent, and it is ~16,900 km, not 10,500 km; (3) Williams' own corporate site (the operator) describes Transco as 'nearly 10,000 miles of pipelines.' Three independent origins (aggregator, encyclopedia, operator) all converge on ~10,000-10,500 MILES. If GEM's 10200 were actually kilometers it would be only ~6,340 miles, which contradicts every source and is physically too short for a Gulf-Coast-to-NYC mainline system with this many laterals. Tier high (3 independent sources). This is a value-affecting unit-label defect, not a request to silently retag — flagging as a concern per SOP rather than auto-correcting.",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
+    "https://rextag.com/pipeline/transcontinental-gas-pipeline",
+    "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Re-verify Capacity against a current source and update; the sheet's own cited ref (rextag) does not support 16800 MMcf/d. Candidate figure ~18,600 MMcf/d (18.6 Bcf/d) per rextag's current page, but the number moves almost yearly with Transco's frequent expansions — pin it to a dated source rather than pasting blind.",
+   "researcher_notes": "CAPACITY spec check: GEM records Capacity=16800.00 MMcf/d, cited to https://rextag.com/pipeline/transcontinental-gas-pipeline. But that exact page, fetched now, states Transco's 'System Capacity: 18.6 Bcf/d' (=18,600 MMcf/d) — the row's OWN cited source no longer (if it ever did) supports the recorded value; url_verifier confirms the page is live but does not contain '16800'/'16,800'/'16800.00'. Independent corroboration that the true figure is well above 16.8 Bcf/d for at least several years: Williams press materials put Transco's design capacity at 17.3 MMdth/d after the Gateway expansion, 17.2 MMdth/d after Rivervale South to Market, a Feb-2020 record delivery of 17.15 MMdth, 19.6 MMdth/d per Williams' own May-2021 site, and ~18.6 MMdth/d at Dec 31, 2022 per a Williams SEC filing summary. None of these multi-year, multi-source figures land at 16.8 — the recorded value looks like a stale/superseded snapshot (Transco has undergone near-continuous FERC-approved expansions: Gateway, Rivervale South to Market, Hillabee Phase II, Gulf Connector, Southeastern Trail, Regional Energy Access, Southside Reliability, Southeast Supply Enhancement). Tier medium: one current disagreeing primary-adjacent source (rextag) plus several secondary/trade-press figures across years, all higher than 16800, but I could not pin an authoritative as-of-date FERC/10-K figure to a single replacement number in the time available — flagging as a material disagreement per SOP rather than pasting an unverified replacement.",
+   "proposed_refs": [
+    "https://rextag.com/pipeline/transcontinental-gas-pipeline"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "swap Start [ref] to the sources below — the current EIA ref does not actually verify the value",
+   "researcher_notes": "StartYear1=1950 is CORRECT and well-corroborated, but the sheet's current Start [ref] (eia.gov/naturalgas/data.php#pipelines) is a generic dataset-navigation page that does not name Transco or state 1950 (url_verifier: '200 but data value not found'). Two independent sources directly confirm 1950: Wikipedia's Transcontinental Pipeline infobox ('Year Commissioned: 1950'), and Williams' own 75th-anniversary piece (Dec 2025, 'Transco at 75') — a trade-press writeup of the same anniversary (marcellusdrilling.com, Dec 2025, 'Transco Pipeline Turns 75 Years Old') independently confirms the same 1950 founding year via the 75th-anniversary arithmetic. Also independently detailed by Williams' own archival post ('From the Archives: Transco Year 1'): first gas delivered to Danville, VA in Dec 1950, regular NYC service began Jan 1951. Tier high (2+ independent, non-operator-dependent sources agree). No value change needed — this is a citation-quality upgrade, not a spec concern.",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
+    "https://marcellusdrilling.com/2025/12/transco-pipeline-turns-75-years-old-flows-16-of-u-s-natgas/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Adjudicate the Capacity conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Capacity [ref]: none of the company's own current materials describe a whole-system capacity anywhere near 16,800 MMcf/d as a single figure — the two figures actually found on Williams' own site (19,500 MMcf/d peak design capacity, full system) and the largest single EIA border crossing (5,118 MMcf/d) bound the true figure loosely but do not corroborate 16,800 specifically. This may reflect the sheet value being an older/point-in-time design-capacity figure for the Main Line segment specifically, which none of the sources checked isolate.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "promoted_from": "Capacity [ref]|none of the company's own current materials describe a whole"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Adjudicate the Length conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Length [ref]: flagging for Update review — it is possible the sheet's 10,200 km value itself reflects a unit or scope mislabel (e.g., a Main-Line-only sub-total, or km/mi conflation, given 10,200 in miles would be 16,415 km, close to Wikipedia's 16,900 km whole-system figure) but this is speculation not confirmed by any source; not changing the value per instructions.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "promoted_from": "Length [ref]|flagging for Update review — it is possible the sheet's 10,2"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
+   "sheet_row": 124,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "offshore",
+    "StartState/Province": "Texas",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "New York",
+    "EndState/Province": "New York",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "offshore",
+   "proposed_refs": [
+    "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+    "https://rextag.com/pipeline/transcontinental-gas-pipeline"
+   ],
+   "verifications": [
     {
-      "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "no action — existence/classification solidly confirmed",
-      "researcher_notes": "EXISTENCE/CLASSIFICATION: not in doubt. Transco (Transcontinental Gas Pipe Line Company, LLC) is the largest-volume interstate natural gas transmission system in the US, running from south Texas to New York City; it is documented by Williams' own corporate site (owner/operator), Wikipedia (independent secondary source with its own citations), Rextag (independent pipeline-data aggregator), an SEC-filed 10-K under Transco's own CIK, multiple FERC-docketed expansion projects (NESE, Gateway, Hillabee, Gulf Connector, Southeast Supply Enhancement) and decades of trade-press coverage (marked its 75th anniversary in Dec 2025). PipelineType='transmission' and Fuel='Gas' are unambiguously correct — this is the archetype of an interstate gas transmission trunk, not a gathering/process/feeder line. Status='operating' correct and current (actively expanding as of 2024-2025). DUPLICATE CHECK against the 45-row roster: P3296 ('Transcontinental Gas Pipeline | Station 65->Texas | len=0.0 cap=475.00') is NOT a duplicate/double-count of this row — it is a small distinct expansion-project segment on the Transco system (capacity 475 MMcf/d vs this row's system-wide 16,800 MMcf/d), consistent with how this tracker records a main-line system row alongside separately tracked expansion-project rows on the same physical pipeline. No fold recommended. HARVESTED CITATION POOL: 29 URLs harvested from gem.wiki. I opened/used 4 of them directly relevant to this row's SYSTEM-LEVEL specs (length/capacity/start year/location): eia.gov/naturalgas/data.php (already the sheet's own current_ref), rextag.com/pipeline/transcontinental-gas-pipeline (already the sheet's Capacity current_ref). The remaining ~25 (Kallanish, centraljersey, dec.ny.gov, nytimes, nj.com, grist, forbes, citylimits, stopthewilliamspipeline, investor.williams press releases on Hillabee/Gulf Connector/debt issuance, appvoices, hartenergy, EPA settlement, businesswire dividend, ijglobal x2, nola.com, virginiaplaces, sec.gov 10-K) describe SPECIFIC expansion projects, financings, legal fights, or an environmental settlement — none bear on the aggregate system-level length/capacity/start-year values this validity pass is checking, so they were screened by title/context and correctly not opened; they would matter for a segment-level row (e.g. NESE, Hillabee, Gulf Connector) but this row is the main-line system aggregate. I supplemented with fresh open-web search (Wikipedia, Williams.com, a 75th-anniversary trade-press piece) rather than relying only on the harvested pool, since the pool skews toward controversy/finance coverage rather than core specs."
+     "url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     },
     {
-      "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Correct LengthKnownUnits from 'km' to 'mi' (keep LengthKnown=10200), or convert to km (~16,415 km) if 'mi' is not wanted — do not leave 10200 labeled as km.",
-      "researcher_notes": "LENGTH UNIT DEFECT (same family as the documented ASB Iraq/Libya mi-as-km escalations). GEM records LengthKnown=10200.00, LengthKnownUnits='km', and LengthKnownKm=10200.00 (i.e. the km-normalized column is a bare copy of the raw value, not an actual conversion — a strong tell no unit conversion ever happened). But every independent source on this pipeline states the ~10,000-10,500 figure in MILES, not km: (1) Rextag (rextag.com/pipeline/transcontinental-gas-pipeline, the sheet's OWN cited Capacity source) states 'Miles of Pipeline: 10000' and describes it as 'a 10,000-mile system from Texas to New York City'; (2) Wikipedia's Transcontinental Pipeline infobox states 'Length: 10,500 mi (16,900 km)' — i.e. Wikipedia's own editors give the km-equivalent, and it is ~16,900 km, not 10,500 km; (3) Williams' own corporate site (the operator) describes Transco as 'nearly 10,000 miles of pipelines.' Three independent origins (aggregator, encyclopedia, operator) all converge on ~10,000-10,500 MILES. If GEM's 10200 were actually kilometers it would be only ~6,340 miles, which contradicts every source and is physically too short for a Gulf-Coast-to-NYC mainline system with this many laterals. Tier high (3 independent sources). This is a value-affecting unit-label defect, not a request to silently retag — flagging as a concern per SOP rather than auto-correcting.",
-      "proposed_refs": [
-        "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
-        "https://rextag.com/pipeline/transcontinental-gas-pipeline",
-        "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Re-verify Capacity against a current source and update; the sheet's own cited ref (rextag) does not support 16800 MMcf/d. Candidate figure ~18,600 MMcf/d (18.6 Bcf/d) per rextag's current page, but the number moves almost yearly with Transco's frequent expansions — pin it to a dated source rather than pasting blind.",
-      "researcher_notes": "CAPACITY spec check: GEM records Capacity=16800.00 MMcf/d, cited to https://rextag.com/pipeline/transcontinental-gas-pipeline. But that exact page, fetched now, states Transco's 'System Capacity: 18.6 Bcf/d' (=18,600 MMcf/d) — the row's OWN cited source no longer (if it ever did) supports the recorded value; url_verifier confirms the page is live but does not contain '16800'/'16,800'/'16800.00'. Independent corroboration that the true figure is well above 16.8 Bcf/d for at least several years: Williams press materials put Transco's design capacity at 17.3 MMdth/d after the Gateway expansion, 17.2 MMdth/d after Rivervale South to Market, a Feb-2020 record delivery of 17.15 MMdth, 19.6 MMdth/d per Williams' own May-2021 site, and ~18.6 MMdth/d at Dec 31, 2022 per a Williams SEC filing summary. None of these multi-year, multi-source figures land at 16.8 — the recorded value looks like a stale/superseded snapshot (Transco has undergone near-continuous FERC-approved expansions: Gateway, Rivervale South to Market, Hillabee Phase II, Gulf Connector, Southeastern Trail, Regional Energy Access, Southside Reliability, Southeast Supply Enhancement). Tier medium: one current disagreeing primary-adjacent source (rextag) plus several secondary/trade-press figures across years, all higher than 16800, but I could not pin an authoritative as-of-date FERC/10-K figure to a single replacement number in the time available — flagging as a material disagreement per SOP rather than pasting an unverified replacement.",
-      "proposed_refs": [
-        "https://rextag.com/pipeline/transcontinental-gas-pipeline"
-      ],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "swap Start [ref] to the sources below — the current EIA ref does not actually verify the value",
-      "researcher_notes": "StartYear1=1950 is CORRECT and well-corroborated, but the sheet's current Start [ref] (eia.gov/naturalgas/data.php#pipelines) is a generic dataset-navigation page that does not name Transco or state 1950 (url_verifier: '200 but data value not found'). Two independent sources directly confirm 1950: Wikipedia's Transcontinental Pipeline infobox ('Year Commissioned: 1950'), and Williams' own 75th-anniversary piece (Dec 2025, 'Transco at 75') — a trade-press writeup of the same anniversary (marcellusdrilling.com, Dec 2025, 'Transco Pipeline Turns 75 Years Old') independently confirms the same 1950 founding year via the 75th-anniversary arithmetic. Also independently detailed by Williams' own archival post ('From the Archives: Transco Year 1'): first gas delivered to Danville, VA in Dec 1950, regular NYC service began Jan 1951. Tier high (2+ independent, non-operator-dependent sources agree). No value change needed — this is a citation-quality upgrade, not a spec concern.",
-      "proposed_refs": [
-        "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
-        "https://marcellusdrilling.com/2025/12/transco-pipeline-turns-75-years-old-flows-16-of-u-s-natgas/"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
+     "url": "https://rextag.com/pipeline/transcontinental-gas-pipeline",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Williams' own site: pipeline 'extends from south Texas to New York City' across 13 states. Rextag independently: 'a 10,000-mile system from Texas to New York City.' Both agree with GEM's recorded start (offshore Texas) / end (New York) endpoints; 'offshore' start is consistent with Transco's Gulf of Mexico production-area origin described in both sources."
+  },
+  {
+   "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
+   "sheet_row": 253,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Transco",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Transco",
+   "proposed_refs": [
+    "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+    "https://en.wikipedia.org/wiki/Transcontinental_Pipeline"
+   ],
+   "verifications": [
     {
-      "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
-      "sheet_row": 124,
-      "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
-      "primary_value_col": "StartLocation",
-      "values": {"StartLocation": "offshore", "StartState/Province": "Texas", "StartCountryOrArea": "United States", "EndLocation": "New York", "EndState/Province": "New York", "EndCountryOrArea": "United States"},
-      "primary_value": "offshore",
-      "proposed_refs": [
-        "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
-        "https://rextag.com/pipeline/transcontinental-gas-pipeline"
-      ],
-      "verifications": [
-        {"url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/", "ok": true, "contains_value": true},
-        {"url": "https://rextag.com/pipeline/transcontinental-gas-pipeline", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Williams' own site: pipeline 'extends from south Texas to New York City' across 13 states. Rextag independently: 'a 10,000-mile system from Texas to New York City.' Both agree with GEM's recorded start (offshore Texas) / end (New York) endpoints; 'offshore' start is consistent with Transco's Gulf of Mexico production-area origin described in both sources."
+     "url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     },
     {
-      "segment_name": "SYSTEM/NETWORK INFO (Main Line)",
-      "sheet_row": 253,
-      "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%"],
-      "primary_value_col": "Owner1",
-      "values": {"Owner1": "Transco", "Owner1%": "100.00%"},
-      "primary_value": "Transco",
-      "proposed_refs": [
-        "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
-        "https://en.wikipedia.org/wiki/Transcontinental_Pipeline"
-      ],
-      "verifications": [
-        {"url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/", "ok": true, "contains_value": true},
-        {"url": "https://en.wikipedia.org/wiki/Transcontinental_Pipeline", "ok": true, "contains_value": false}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Williams' own site states plainly: 'Williams owns and operates the nation's largest and most reliable interstate natural gas transmission pipeline, called Transco' (100% ownership implied — no co-owner ever mentioned anywhere in the sourcing). Wikipedia's infobox names the owner as 'Williams Companies' rather than 'Transco' specifically — a naming-level nuance (Transco/Transcontinental Gas Pipe Line Company, LLC is the wholly-owned operating subsidiary that legally holds the pipeline; Williams Companies is the ultimate parent), not a disagreement about who owns it. GEM's convention of recording the operating-subsidiary name ('Transco') as Owner1 is consistent with the sheet's own naming for this pipeline. Tier medium — one direct operator self-statement plus one independent tertiary source naming the parent, not two sources both independently naming the exact same legal entity."
+     "url": "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true
     }
-  ],
-  "summary": "P0271 (Transco) confirmed real, correctly classified, no duplicate; staged 2 spec concerns (LengthKnownUnits mislabeled km when 3 independent sources give ~10,000-10,500 MILES; Capacity 16800 MMcf/d contradicted by its own cited rextag source, which now states 18.6 Bcf/d) plus 2 ref fills (Location, Owner) and a Start [ref] citation-quality upgrade (value 1950 confirmed correct by 2 independent sources, old EIA ref didn't actually support it). No UNRESOLVED items — everything checked resolved to a verdict."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Williams' own site states plainly: 'Williams owns and operates the nation's largest and most reliable interstate natural gas transmission pipeline, called Transco' (100% ownership implied — no co-owner ever mentioned anywhere in the sourcing). Wikipedia's infobox names the owner as 'Williams Companies' rather than 'Transco' specifically — a naming-level nuance (Transco/Transcontinental Gas Pipe Line Company, LLC is the wholly-owned operating subsidiary that legally holds the pipeline; Williams Companies is the ultimate parent), not a disagreement about who owns it. GEM's convention of recording the operating-subsidiary name ('Transco') as Owner1 is consistent with the sheet's own naming for this pipeline. Tier medium — one direct operator self-statement plus one independent tertiary source naming the parent, not two sources both independently naming the exact same legal entity."
+  }
+ ],
+ "summary": "P0271 (Transco) confirmed real, correctly classified, no duplicate; staged 2 spec concerns (LengthKnownUnits mislabeled km when 3 independent sources give ~10,000-10,500 MILES; Capacity 16800 MMcf/d contradicted by its own cited rextag source, which now states 18.6 Bcf/d) plus 2 ref fills (Location, Owner) and a Start [ref] citation-quality upgrade (value 1950 confirmed correct by 2 independent sources, old EIA ref didn't actually support it). No UNRESOLVED items — everything checked resolved to a verdict."
 }

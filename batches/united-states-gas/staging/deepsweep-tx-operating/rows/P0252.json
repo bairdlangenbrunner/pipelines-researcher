@@ -1,309 +1,339 @@
 {
-  "project_id": "P0252",
-  "pipeline_name": "Southern Natural Gas Pipeline",
-  "sheet_row": 105,
-  "wiki": "https://www.gem.wiki/Southern_Natural_Gas_(SNG)_Pipeline",
-  "validity": [
+ "project_id": "P0252",
+ "pipeline_name": "Southern Natural Gas Pipeline",
+ "sheet_row": 105,
+ "wiki": "https://www.gem.wiki/Southern_Natural_Gas_(SNG)_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No action — existence, classification and non-duplicate status are all solidly confirmed.",
+   "researcher_notes": "EXISTENCE: solidly confirmed, independent of GEM/wiki. Southern Natural Gas (SNG) is a real, FERC-jurisdictional interstate gas transmission system, wholly-owned 50/50 by subsidiaries of Kinder Morgan and Southern Company, HQ'd in Birmingham AL, in continuous service since the late 1920s. Confirmed via: (1) Kinder Morgan's own live current system page (kindermorgan.com/pages/business/gas_pipelines/east/SNG) describing SNG's ownership, route and services today; (2) Kinder Morgan's South System Expansion 4 (SSE4) FAQ PDF dated 11 Aug 2025, an active FERC pre-filing project (Docket opened 30 Oct 2024) on this same system; (3) the 2016 PR Newswire release announcing the Southern Company/Kinder Morgan strategic venture; (4) Southern Company's own 2016 transaction factsheet PDF; (5) UtilityDive's independent 2016 trade-press coverage of the same transaction closing; (6) a Wikipedia stub (en.wikipedia.org/wiki/Southern_Natural_Pipeline) that carries its own citation to an archived FERC pipeline-code page (not GEM). CLASSIFICATION: correctly recorded as gas transmission — every source describes SNG as a large interstate natural-gas transmission trunk system, not a gathering/processing/NGL line. DUPLICATE: checked against the full 45-row TX-operating roster provided — no other row describes this LA/MS/AL-to-Southeast trunk corridor; SNG is a distinct, unique physical system (its Georgia interconnects to Elba Express / Carolina Gas Transmission are separate GEM entities outside this roster, not roster duplicates). HARVESTED-POOL COVERAGE: opened all 3 of this row's harvested wiki citations — the bit.ly link resolved (301) to the Wikipedia stub above and was read; the PR Newswire article was read in full; the Southern Company factsheet PDF was downloaded and read via `pdftotext -layout` after url_verifier gave a false-negative content match on it (a known PDF-layout extraction limitation per the verifier's own docstring — manually confirmed the exact expected text is present in the extracted layout). Supplemented with independent open-web research: Kinder Morgan's current SNG page, its Aug-2025 SSE4 FAQ PDF (same pdftotext-manual-verify false-negative pattern, likely from the document's 'ti'-ligature encoding), and UtilityDive (blocked by the verifier's bot-wall UA — 403 — but confirmed live and content-matching manually via curl with a real browser User-Agent, another documented false-negative class).",
+   "proposed_refs": [
+    "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+    "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Verify StartState/Province=Texas — check whether SNG still has any Texas-side interconnect/origin, or correct the start state to Louisiana per the operator's current description.",
+   "researcher_notes": "GEM records StartState/Province=Texas, EndState/Province=Florida. EndState=Florida is well corroborated: Florida is named as an SNG market state by Kinder Morgan's current page, the 2016 PR Newswire release, and UtilityDive's independent 2016 coverage (3 agreeing sources). StartState=Texas is NOT corroborated by the CURRENT operator description: Kinder Morgan's own live SNG page states the system 'extend[s] from natural gas supply basins in Louisiana, Mississippi and Alabama' — Texas is absent from both the current supply-basin list and the current market-area list for SNG specifically (checked the full page text; Texas appears only in the descriptions of KM's other, separate Texas intrastate systems on the same page — HPL, Tejas, KMTP, etc. — never in the SNG paragraph). By contrast, the 2016 PR Newswire release and UtilityDive's 2016 article both DID call Texas one of SNG's supply-basin states at the time of the Kinder Morgan/Southern Company transaction. This is either a genuine change in the system's footprint since 2016 (an interconnect or lateral divested/retired) or looser regional language in the 2016 PR materials — either way, the current authoritative operator source does not support Texas as an origin state today, so this warrants a human check before continuing to carry Texas as the StartState.",
+   "proposed_refs": [
+    "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Reconcile LengthKnown (12,231 km / 7,600 mi) against Kinder Morgan's current stated ~6,900-mile (~11,105 km) system length.",
+   "researcher_notes": "GEM's LengthKnown=12,231.00 km converts to exactly 7,600.4 miles — matching the 2016 PR Newswire release's '7,600-mile pipeline system' figure to one decimal (12,231 = 7,600 x 1.60934), and roughly matching Southern Company's own 2016 factsheet ('7,000-mile') and UtilityDive's independent 2016 reporting ('approximately 7,000 miles'). So the value is genuinely traceable to real, contemporaneous, non-GEM sources from the 2016 KM/Southern Company transaction. HOWEVER, Kinder Morgan's CURRENT live SNG system page (accessed today) states the system is 'an approximately 6,900-mile pipeline system' — about 700 miles (~9%) shorter than GEM's figure, and this is the operator's own present-day characterization, not a decade-old press figure. Flagging as a material spec conflict per the sweep's spec rule rather than silently keeping the 2016-vintage number: either the system's mapped mileage has genuinely changed since 2016 (divestiture/rationalization) or GEM's figure needs revisiting against the current operator disclosure.",
+   "proposed_refs": [
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+    "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Verify Capacity (3,900 MMcf/d) against Kinder Morgan's current stated ~4.4 Bcf/d design capacity; no source found supporting the 3,900 figure specifically.",
+   "researcher_notes": "No independent source was found that states SNG's design capacity as 3,900 MMcf/d specifically — this value could not be corroborated. Kinder Morgan's own South System Expansion 4 (SSE4) Project FAQ, dated 11 Aug 2025 (an active FERC pre-filing docket opened 30 Oct 2024, so this is a current, authoritative operator disclosure, not a stale figure): 'SNG has a design capacity of approximately 4.4 billion cubic feet [per day].' SSE4 itself is described as adding a further ~1.3 Bcf/d on top of that existing 4.4 Bcf/d baseline, and has not yet gone into service (still in FERC pre-filing as of the FAQ's date), so the 4.4 Bcf/d figure is the PRE-expansion current capacity, not a future/planned number. GEM's 3,900 MMcf/d (3.9 Bcf/d) is materially lower than this current baseline. GEM's LastUpdated for this row is 2023-08-30, so it is possible 3,900 was accurate for 2023 and capacity has grown since via other completed expansions (e.g., the search-surfaced 'Evangeline Pass Phase 2' project, ~1.1 Bcf/d, completed 'in May' of an unconfirmed year) — but that would need to be checked against dated FERC/company records rather than assumed. Not filling a replacement number since I could not independently verify 4.4 Bcf/d beyond this single (albeit authoritative and current) operator source.",
+   "proposed_refs": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Minor — confirm in-service/founding year: 1928 (Wikipedia infobox, itself footnoted to an archived FERC pipeline-code page) vs. 1929 (Kinder Morgan's own 2025 SSE4 FAQ: 'has been in the natural gas pipeline business since 1929').",
+   "researcher_notes": "Low-severity one-year discrepancy between two otherwise-credible, non-GEM sources on SNG's founding/in-service year. GEM's StartYear1=1928 agrees with the Wikipedia infobox value (which is independently footnoted to an archived FERC pipeline-code list, not GEM), but Kinder Morgan's own current SSE4 FAQ PDF states 1929. Not enough to overturn the existing value, but worth a note for whoever next touches this row's Start fields.",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline"
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Adjudicate the Capacity conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Capacity [ref]: capacity legitimately grew between the two filings' dates via SNG/Elba Express expansion projects the 2018 10-K itself describes as placed in service Dec 2018 -- 3.9 Bcf/d appears to be the earlier/pre-2018-expansion design capacity that matches the sheet's static 3900.00 value). An earlier El Paso Pipeline Partners 10-K/8-K (2009-2010, also SEC-filed) instead gives SNG's 2008-vintage design capacity as 3.7 Bcf/d (7,600 mi) -- again a different, non-matching vintage, not usable as a second source for 3900.00. No second, distinct-publisher, exactly-agreeing source was found after this search; single-source, so medium/independent=false.",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1004155/000100415516000204/sogas8-kex99x1assignofsonat.htm"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No action — existence, classification and non-duplicate status are all solidly confirmed.",
-      "researcher_notes": "EXISTENCE: solidly confirmed, independent of GEM/wiki. Southern Natural Gas (SNG) is a real, FERC-jurisdictional interstate gas transmission system, wholly-owned 50/50 by subsidiaries of Kinder Morgan and Southern Company, HQ'd in Birmingham AL, in continuous service since the late 1920s. Confirmed via: (1) Kinder Morgan's own live current system page (kindermorgan.com/pages/business/gas_pipelines/east/SNG) describing SNG's ownership, route and services today; (2) Kinder Morgan's South System Expansion 4 (SSE4) FAQ PDF dated 11 Aug 2025, an active FERC pre-filing project (Docket opened 30 Oct 2024) on this same system; (3) the 2016 PR Newswire release announcing the Southern Company/Kinder Morgan strategic venture; (4) Southern Company's own 2016 transaction factsheet PDF; (5) UtilityDive's independent 2016 trade-press coverage of the same transaction closing; (6) a Wikipedia stub (en.wikipedia.org/wiki/Southern_Natural_Pipeline) that carries its own citation to an archived FERC pipeline-code page (not GEM). CLASSIFICATION: correctly recorded as gas transmission — every source describes SNG as a large interstate natural-gas transmission trunk system, not a gathering/processing/NGL line. DUPLICATE: checked against the full 45-row TX-operating roster provided — no other row describes this LA/MS/AL-to-Southeast trunk corridor; SNG is a distinct, unique physical system (its Georgia interconnects to Elba Express / Carolina Gas Transmission are separate GEM entities outside this roster, not roster duplicates). HARVESTED-POOL COVERAGE: opened all 3 of this row's harvested wiki citations — the bit.ly link resolved (301) to the Wikipedia stub above and was read; the PR Newswire article was read in full; the Southern Company factsheet PDF was downloaded and read via `pdftotext -layout` after url_verifier gave a false-negative content match on it (a known PDF-layout extraction limitation per the verifier's own docstring — manually confirmed the exact expected text is present in the extracted layout). Supplemented with independent open-web research: Kinder Morgan's current SNG page, its Aug-2025 SSE4 FAQ PDF (same pdftotext-manual-verify false-negative pattern, likely from the document's 'ti'-ligature encoding), and UtilityDive (blocked by the verifier's bot-wall UA — 403 — but confirmed live and content-matching manually via curl with a real browser User-Agent, another documented false-negative class).",
-      "proposed_refs": [
-        "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-        "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "Verify StartState/Province=Texas — check whether SNG still has any Texas-side interconnect/origin, or correct the start state to Louisiana per the operator's current description.",
-      "researcher_notes": "GEM records StartState/Province=Texas, EndState/Province=Florida. EndState=Florida is well corroborated: Florida is named as an SNG market state by Kinder Morgan's current page, the 2016 PR Newswire release, and UtilityDive's independent 2016 coverage (3 agreeing sources). StartState=Texas is NOT corroborated by the CURRENT operator description: Kinder Morgan's own live SNG page states the system 'extend[s] from natural gas supply basins in Louisiana, Mississippi and Alabama' — Texas is absent from both the current supply-basin list and the current market-area list for SNG specifically (checked the full page text; Texas appears only in the descriptions of KM's other, separate Texas intrastate systems on the same page — HPL, Tejas, KMTP, etc. — never in the SNG paragraph). By contrast, the 2016 PR Newswire release and UtilityDive's 2016 article both DID call Texas one of SNG's supply-basin states at the time of the Kinder Morgan/Southern Company transaction. This is either a genuine change in the system's footprint since 2016 (an interconnect or lateral divested/retired) or looser regional language in the 2016 PR materials — either way, the current authoritative operator source does not support Texas as an origin state today, so this warrants a human check before continuing to carry Texas as the StartState.",
-      "proposed_refs": [
-        "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
-      ],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Reconcile LengthKnown (12,231 km / 7,600 mi) against Kinder Morgan's current stated ~6,900-mile (~11,105 km) system length.",
-      "researcher_notes": "GEM's LengthKnown=12,231.00 km converts to exactly 7,600.4 miles — matching the 2016 PR Newswire release's '7,600-mile pipeline system' figure to one decimal (12,231 = 7,600 x 1.60934), and roughly matching Southern Company's own 2016 factsheet ('7,000-mile') and UtilityDive's independent 2016 reporting ('approximately 7,000 miles'). So the value is genuinely traceable to real, contemporaneous, non-GEM sources from the 2016 KM/Southern Company transaction. HOWEVER, Kinder Morgan's CURRENT live SNG system page (accessed today) states the system is 'an approximately 6,900-mile pipeline system' — about 700 miles (~9%) shorter than GEM's figure, and this is the operator's own present-day characterization, not a decade-old press figure. Flagging as a material spec conflict per the sweep's spec rule rather than silently keeping the 2016-vintage number: either the system's mapped mileage has genuinely changed since 2016 (divestiture/rationalization) or GEM's figure needs revisiting against the current operator disclosure.",
-      "proposed_refs": [
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-        "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG"
-      ],
-      "tier": "medium",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Verify Capacity (3,900 MMcf/d) against Kinder Morgan's current stated ~4.4 Bcf/d design capacity; no source found supporting the 3,900 figure specifically.",
-      "researcher_notes": "No independent source was found that states SNG's design capacity as 3,900 MMcf/d specifically — this value could not be corroborated. Kinder Morgan's own South System Expansion 4 (SSE4) Project FAQ, dated 11 Aug 2025 (an active FERC pre-filing docket opened 30 Oct 2024, so this is a current, authoritative operator disclosure, not a stale figure): 'SNG has a design capacity of approximately 4.4 billion cubic feet [per day].' SSE4 itself is described as adding a further ~1.3 Bcf/d on top of that existing 4.4 Bcf/d baseline, and has not yet gone into service (still in FERC pre-filing as of the FAQ's date), so the 4.4 Bcf/d figure is the PRE-expansion current capacity, not a future/planned number. GEM's 3,900 MMcf/d (3.9 Bcf/d) is materially lower than this current baseline. GEM's LastUpdated for this row is 2023-08-30, so it is possible 3,900 was accurate for 2023 and capacity has grown since via other completed expansions (e.g., the search-surfaced 'Evangeline Pass Phase 2' project, ~1.1 Bcf/d, completed 'in May' of an unconfirmed year) — but that would need to be checked against dated FERC/company records rather than assumed. Not filling a replacement number since I could not independently verify 4.4 Bcf/d beyond this single (albeit authoritative and current) operator source.",
-      "proposed_refs": [],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Minor — confirm in-service/founding year: 1928 (Wikipedia infobox, itself footnoted to an archived FERC pipeline-code page) vs. 1929 (Kinder Morgan's own 2025 SSE4 FAQ: 'has been in the natural gas pipeline business since 1929').",
-      "researcher_notes": "Low-severity one-year discrepancy between two otherwise-credible, non-GEM sources on SNG's founding/in-service year. GEM's StartYear1=1928 agrees with the Wikipedia infobox value (which is independently footnoted to an archived FERC pipeline-code list, not GEM), but Kinder Morgan's own current SSE4 FAQ PDF states 1929. Not enough to overturn the existing value, but worth a note for whoever next touches this row's Start fields.",
-      "proposed_refs": [
-        "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline"
-      ],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://www.sec.gov/Archives/edgar/data/1004155/000100415516000204/sogas8-kex99x1assignofsonat.htm",
+     "ok": true,
+     "contains_value": true
     }
-  ],
-  "fills": [
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "promoted_from": "Capacity [ref]|capacity legitimately grew between the two filings' dates vi"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Status [ref]",
-      "value_cols": [
-        "Status"
-      ],
-      "primary_value_col": "Status",
-      "values": {
-        "Status": "operating"
-      },
-      "primary_value": "operating",
-      "proposed_refs": [
-        "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
-      ],
-      "verifications": [
-        {
-          "url": "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-          "ok": true,
-          "contains_value": true
-        },
-        {
-          "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-          "ok": true,
-          "contains_value": true
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Kinder Morgan's current live system page describes SNG as an actively-operated system today (services offered, scheduling hotline, pipeline electronic bulletin board link); its Aug-2025 SSE4 FAQ likewise describes it as an existing in-service system being expanded. UtilityDive (2016, independent trade press, confirmed live manually after a verifier bot-wall false-negative) and the 2016 PR Newswire release corroborate continuous operation since well before GEM's 2023 LastUpdated."
+     "url": "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     },
     {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Fuel [ref]",
-      "value_cols": [
-        "Fuel"
-      ],
-      "primary_value_col": "Fuel",
-      "values": {
-        "Fuel": "Gas"
-      },
-      "primary_value": "Gas",
-      "proposed_refs": [
-        "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
-      ],
-      "verifications": [
-        {
-          "url": "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-          "ok": true,
-          "contains_value": true
-        },
-        {
-          "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-          "ok": true,
-          "contains_value": true
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Every source, independently, describes SNG as a natural gas pipeline system — self-evident and unambiguous across all sources checked."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Owner [ref]",
-      "value_cols": [
-        "Owner1",
-        "Owner1%",
-        "Owner2",
-        "Owner2%"
-      ],
-      "primary_value_col": "Owner1",
-      "values": {
-        "Owner1": "Kinder Morgan",
-        "Owner1%": "50.00%",
-        "Owner2": "Southern Co",
-        "Owner2%": "50.00%"
-      },
-      "primary_value": "Kinder Morgan",
-      "proposed_refs": [
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-        "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-          "ok": true,
-          "contains_value": true
-        },
-        {
-          "url": "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
-          "ok": true,
-          "contains_value": true
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "50/50 Kinder Morgan / Southern Company ownership is stated explicitly and identically by: the 2016 PR Newswire transaction announcement ('Southern Company will acquire a 50 percent equity interest ... Kinder Morgan will retain the remaining 50 percent'), Southern Company's own 2016 factsheet PDF ('Each company owns a 50 percent equity interest'), Kinder Morgan's CURRENT live SNG page ('SNG is owned by subsidiaries of Kinder Morgan and Southern Company, which each own a 50% interest'), and UtilityDive's independent 2016 coverage. Ownership is unchanged from 2016 to today per KM's own current page — high tier."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Length [ref]",
-      "value_cols": [
-        "LengthKnown",
-        "LengthKnownUnits"
-      ],
-      "primary_value_col": "LengthKnown",
-      "values": {
-        "LengthKnown": "12231.00",
-        "LengthKnownUnits": "km"
-      },
-      "primary_value": "12231.00",
-      "proposed_refs": [
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-          "ok": true,
-          "contains_value": true
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "12,231 km converts exactly to 7,600.4 miles, matching the 2016 PR Newswire release's '7,600-mile pipeline system' figure — the apparent origin of GEM's number. Corroborated in the same rough range (rounded to ~7,000 mi) by Southern Company's own factsheet and UtilityDive's independent coverage. Tier set to medium rather than high, and a companion spec CONCERN filed in validity[], because Kinder Morgan's CURRENT live system page now states ~6,900 miles — a ~9% lower figure than the 2016-vintage number GEM carries. See validity concern for the recommended follow-up; not silently passing the conflict. [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Capacity [ref]",
-      "value_cols": [
-        "Capacity",
-        "CapacityUnits"
-      ],
-      "primary_value_col": "Capacity",
-      "values": {
-        "Capacity": "3900.00",
-        "CapacityUnits": "MMcf/d"
-      },
-      "primary_value": "3900.00",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Could not find a source stating SNG's design capacity as 3,900 MMcf/d specifically. Kinder Morgan's own 2025 SSE4 FAQ states a current design capacity of approximately 4.4 Bcf/d (4,400 MMcf/d) — see the companion spec concern in validity[]. Leaving unresolved rather than fabricating support for the existing value or silently substituting the 4.4 Bcf/d figure without a second corroborating source."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Start [ref]",
-      "value_cols": [
-        "StartYear1",
-        "StartMonth1",
-        "StartYear2",
-        "StartYear2Month",
-        "StartYear3",
-        "StartYear3Month"
-      ],
-      "primary_value_col": "StartYear1",
-      "values": {
-        "StartYear1": "1928"
-      },
-      "primary_value": "1928",
-      "proposed_refs": [
-        "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline"
-      ],
-      "verifications": [
-        {
-          "url": "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline",
-          "ok": true,
-          "contains_value": false
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "The Wikipedia infobox (independently footnoted to an archived FERC pipeline-code page) agrees with GEM's 1928, but Kinder Morgan's own current SSE4 FAQ says 1929 — see the companion spec concern in validity[]. Marking unresolved rather than claiming a clean 2-source corroboration on a value that in fact has a live conflict."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 105,
-      "ref_col": "Location [ref]",
-      "value_cols": [
-        "StartLocation",
-        "StartPrefecture/District",
-        "StartState/Province",
-        "StartCountryOrArea",
-        "EndLocation",
-        "EndPrefecture/District",
-        "EndState/Province",
-        "EndCountryOrArea"
-      ],
-      "primary_value_col": "StartLocation",
-      "values": {
-        "StartState/Province": "Texas",
-        "StartCountryOrArea": "United States",
-        "EndState/Province": "Florida",
-        "EndCountryOrArea": "United States"
-      },
-      "primary_value": "Texas",
-      "proposed_refs": [
-        "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
-          "ok": true,
-          "contains_value": true
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "EndState/Province=Florida is well corroborated (Florida named as an SNG market state by 3 independent sources). StartState/Province=Texas is NOT corroborated by the current operator description — see the attribution concern in validity[]. Marking the combined Location unit unresolved rather than REFS_ADDED because one of its two key fields is actively in question."
+     "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "summary": "SNG existence/classification/non-duplicate status all confirmed at high tier (real, well-documented Kinder Morgan/Southern Company 50-50 interstate gas trunk system since the late 1920s); flagged 4 concerns for human review — StartState/Province=Texas is not supported by the operator's current system description (attribution), LengthKnown 12,231 km disagrees ~9% with Kinder Morgan's current ~6,900-mile figure (spec), Capacity 3,900 MMcf/d has no corroborating source and conflicts with KM's current ~4.4 Bcf/d disclosure (spec), and StartYear1 1928 vs. KM's own 1929 is a minor spec discrepancy — plus UNRESOLVED ref-fills for Start, Capacity and Location pending those same conflicts."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Kinder Morgan's current live system page describes SNG as an actively-operated system today (services offered, scheduling hotline, pipeline electronic bulletin board link); its Aug-2025 SSE4 FAQ likewise describes it as an existing in-service system being expanded. UtilityDive (2016, independent trade press, confirmed live manually after a verifier bot-wall false-negative) and the 2016 PR Newswire release corroborate continuous operation since well before GEM's 2023 LastUpdated."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Every source, independently, describes SNG as a natural gas pipeline system — self-evident and unambiguous across all sources checked."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Kinder Morgan",
+    "Owner1%": "50.00%",
+    "Owner2": "Southern Co",
+    "Owner2%": "50.00%"
+   },
+   "primary_value": "Kinder Morgan",
+   "proposed_refs": [
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+    "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://kindermorgan.com/pages/business/gas_pipelines/east/SNG",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "50/50 Kinder Morgan / Southern Company ownership is stated explicitly and identically by: the 2016 PR Newswire transaction announcement ('Southern Company will acquire a 50 percent equity interest ... Kinder Morgan will retain the remaining 50 percent'), Southern Company's own 2016 factsheet PDF ('Each company owns a 50 percent equity interest'), Kinder Morgan's CURRENT live SNG page ('SNG is owned by subsidiaries of Kinder Morgan and Southern Company, which each own a 50% interest'), and UtilityDive's independent 2016 coverage. Ownership is unchanged from 2016 to today per KM's own current page — high tier."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "12231.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "12231.00",
+   "proposed_refs": [
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "12,231 km converts exactly to 7,600.4 miles, matching the 2016 PR Newswire release's '7,600-mile pipeline system' figure — the apparent origin of GEM's number. Corroborated in the same rough range (rounded to ~7,000 mi) by Southern Company's own factsheet and UtilityDive's independent coverage. Tier set to medium rather than high, and a companion spec CONCERN filed in validity[], because Kinder Morgan's CURRENT live system page now states ~6,900 miles — a ~9% lower figure than the 2016-vintage number GEM carries. See validity concern for the recommended follow-up; not silently passing the conflict. [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "3900.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "3900.00",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not find a source stating SNG's design capacity as 3,900 MMcf/d specifically. Kinder Morgan's own 2025 SSE4 FAQ states a current design capacity of approximately 4.4 Bcf/d (4,400 MMcf/d) — see the companion spec concern in validity[]. Leaving unresolved rather than fabricating support for the existing value or silently substituting the 4.4 Bcf/d figure without a second corroborating source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1928"
+   },
+   "primary_value": "1928",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Southern_Natural_Pipeline",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "The Wikipedia infobox (independently footnoted to an archived FERC pipeline-code page) agrees with GEM's 1928, but Kinder Morgan's own current SSE4 FAQ says 1929 — see the companion spec concern in validity[]. Marking unresolved rather than claiming a clean 2-source corroboration on a value that in fact has a live conflict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 105,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartState/Province": "Texas",
+    "StartCountryOrArea": "United States",
+    "EndState/Province": "Florida",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Texas",
+   "proposed_refs": [
+    "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.prnewswire.com/news-releases/southern-company-kinder-morgan-enter-southern-natural-gas-pipeline-strategic-venture-300296288.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EndState/Province=Florida is well corroborated (Florida named as an SNG market state by 3 independent sources). StartState/Province=Texas is NOT corroborated by the current operator description — see the attribution concern in validity[]. Marking the combined Location unit unresolved rather than REFS_ADDED because one of its two key fields is actively in question."
+  }
+ ],
+ "summary": "SNG existence/classification/non-duplicate status all confirmed at high tier (real, well-documented Kinder Morgan/Southern Company 50-50 interstate gas trunk system since the late 1920s); flagged 4 concerns for human review — StartState/Province=Texas is not supported by the operator's current system description (attribution), LengthKnown 12,231 km disagrees ~9% with Kinder Morgan's current ~6,900-mile figure (spec), Capacity 3,900 MMcf/d has no corroborating source and conflicts with KM's current ~4.4 Bcf/d disclosure (spec), and StartYear1 1928 vs. KM's own 1929 is a minor spec discrepancy — plus UNRESOLVED ref-fills for Start, Capacity and Location pending those same conflicts."
 }

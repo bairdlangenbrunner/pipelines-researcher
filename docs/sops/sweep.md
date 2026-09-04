@@ -235,6 +235,38 @@ never swapped in as a replacement:
 - **Large PDFs.** A token FAIL on a big PDF (OPEC ASB editions, ministry annual reports) is **not
   evidence the source lacks the value** — the verifier may never have read far enough into the
   document. Extract with `pdftotext` and search the table yourself before ruling.
+- **Client-rendered document viewers (DocumentCloud and friends).** The viewer page is an
+  empty SPA shell, so a fetch returns markup with none of the document's words in it — a
+  false "value not found" on a document that plainly contains the value. Go to the asset
+  endpoint instead: `assets.documentcloud.org/documents/<id>/<slug>.txt` (also `.pdf`).
+  Found 2026-09-04 reading the Texas RRC T-4 permit for P0268. The general move — for any
+  JS-only page, look for the underlying data/asset URL rather than scraping the shell.
+- **Spreadsheet refs (`.xlsx`/`.xls`) — handled automatically since 2026-09-04.** An `.xlsx` body
+  is a ZIP, so before the fix every content and `name=` check against one matched binary soup and
+  came back a false negative. `verify_url` now extracts cell text (openpyxl, pandas/xlrd fallback)
+  exactly as it does PDF text, and an unreadable workbook reports `spreadsheet: True` with "not a
+  content miss" rather than a miss. This mattered immediately: EIA's
+  `EIA-NaturalGasPipelineProjects_*.xlsx` is the most-cited document in the US gas cohort, and it
+  was reporting `name_found: False` for pipelines listed by name in its own rows.
+- **A missing `name_found` is UNKNOWN, never `False`.** `relevance_qc` caps a unit at `low` when no
+  ref names the pipeline, so treating "the verifier could not read the document" as "the document
+  does not name it" turns a parser failure into a downgraded ref. Where a shard's verifications
+  lack the field, backfill it from evidence — `scripts/backfill_name_found.py` re-fetches each ref,
+  passes the row's aliases, and leaves anything it cannot read unstamped.
+- **Always pass the row's `OtherEnglishNames` to a name check.** That column exists to record what
+  everyone else calls the pipeline, and the operator's own page usually uses the alias: Williams
+  writes "Transco", never "Transcontinental Gas Pipeline", and EIA lists P2499 as "Carlsbad Gateway
+  Pipeline", not "Agua Blanca". Checking the GEM name alone reads both as pages about some other
+  pipeline. `backfill_name_found.py --csv <snapshot>` joins the column automatically.
+- **A `name_found: False` on a page that is plainly the right pipeline means the ALIAS is missing
+  from GEM — fix the data, never the gate.** P0257 is filed as "Sur de Texas-Tuxpan Gas Pipeline"
+  with a blank `OtherEnglishNames`, so seven refs to offshore-technology.com's profile of the same
+  line came back `False`: the page publishes the English translation, "South Texas-Tuxpan"
+  (2026-09-04). The tempting repair — let the check match a distinctive token like "Tuxpan" — is
+  the one repair you must not make: matching a single endpoint proper noun re-admits precisely the
+  failure the gate exists to catch (a page about endpoint A cited for the "A–B" row, MZ on Jiangxi
+  v2). Correct the verification from re-verified evidence, and stage the alias into
+  `OtherEnglishNames` so the next sweep never asks the question again.
 - **CAPTCHA / bot / IP-block interstitials that return HTTP 200.** The response is a challenge or
   access-denied page, not the article, but nothing in the status code says so. Pair this with the
   stub-body flag below: a 200 whose body is short *or* reads as a challenge is an unread page, not

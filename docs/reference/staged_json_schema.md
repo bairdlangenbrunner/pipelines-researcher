@@ -102,6 +102,16 @@ row on the operators/owners tab).
 other (no orphan values/refs). `class_out` `REFS_ADDED` = corroborated;
 `UNRESOLVED` = not corroborated, do not apply.
 
+A few researchable columns have **no paired `[ref]` column in the schema** —
+`OtherEnglishNames` is the one this batch hit (US gas P0257, 2026-09-04). Such a fill
+carries `ref_col: ""` and empty `proposed_refs`, and states its corroboration in
+`researcher_notes` instead; the "never one without the other" rule is about orphan `[ref]`
+*cells*, and there is no cell to orphan. It still classes `REFS_ADDED` when corroborated,
+because that value means *corroborated* and the vocabulary has no other word for it —
+inventing a `FILL` class instead makes the record invisible to `staged_summary.py` (which
+counts `class_in=FILL` + `class_out=REFS_ADDED`) and drops it from the handoff's
+`AllFillsBackend` paste surface, which filters on the same pair.
+
 **Validity records** (`ref_col="__VALIDITY__"`): read-and-flag only, never an edit.
 Extra fields: `verdict` (`"confirmed (caveat)"` \| `"concern"`), `concern_type`
 (`existence`/`duplicate`/`classification`/`attribution`/`spec`/`none`),

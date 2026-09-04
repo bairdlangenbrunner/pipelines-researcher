@@ -1,192 +1,304 @@
 {
-  "project_id": "P3242",
-  "pipeline_name": "Florida Gas Transmission Pipeline",
-  "sheet_row": 1712,
-  "wiki": {
-    "citations_total": 9,
-    "citations_opened": 9,
-    "citations_used": 0,
-    "notes": "All 9 harvested wiki citations for P3242 were opened/checked. bit.ly/2smVBv2 resolves to abarrelfull.wikidot.com (BANNED, excluded). kindermorgan.com/.../FGT/default.aspx is a confirmed 404 (dead). oilandgaswatch.org/pipeline/6491 is a JS SPA, unreadable via curl (blocked, not confirmed dead). The remaining live pages (energytransfer.com ipost FGT system map, fractracker.org national map, eia.gov/maps/layer_info-m.php, a 2018 Pipeline News 'Planned Projects' PDF, a 2018 Texas Energy Report blog post about FGT's unrelated 'East-West Pipeline Expansion') are all general/off-target and none name this specific ~2.6-3 mi lateral. None of the 9 were usable as citations. The one useful lead in the pool was eia.gov/naturalgas/data.php, which pointed to EIA's structured 'Natural Gas Pipeline Projects' historical dataset -- that dataset (found independently, not one of the 9 URLs) plus an independent SEC EDGAR search supplied the actual corroboration below."
+ "project_id": "P3242",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "sheet_row": 1712,
+ "wiki": {
+  "citations_total": 9,
+  "citations_opened": 9,
+  "citations_used": 0,
+  "notes": "All 9 harvested wiki citations for P3242 were opened/checked. bit.ly/2smVBv2 resolves to abarrelfull.wikidot.com (BANNED, excluded). kindermorgan.com/.../FGT/default.aspx is a confirmed 404 (dead). oilandgaswatch.org/pipeline/6491 is a JS SPA, unreadable via curl (blocked, not confirmed dead). The remaining live pages (energytransfer.com ipost FGT system map, fractracker.org national map, eia.gov/maps/layer_info-m.php, a 2018 Pipeline News 'Planned Projects' PDF, a 2018 Texas Energy Report blog post about FGT's unrelated 'East-West Pipeline Expansion') are all general/off-target and none name this specific ~2.6-3 mi lateral. None of the 9 were usable as citations. The one useful lead in the pool was eia.gov/naturalgas/data.php, which pointed to EIA's structured 'Natural Gas Pipeline Projects' historical dataset -- that dataset (found independently, not one of the 9 URLs) plus an independent SEC EDGAR search supplied the actual corroboration below."
+ },
+ "validity": [
+  {
+   "segment_name": "Galveston County Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No action -- existence, classification and non-duplicate status all confirmed.",
+   "researcher_notes": "EXISTENCE/CLASSIFICATION: confirmed real. EIA's 'Natural Gas Pipeline Projects' historical dataset (Historical Projects sheet, both the Jan-2022 and Jan-2023 editions) carries this exact project: Project Name 'Galveston County Project', Pipeline Operator Name 'Florida Gas Trans Co', Status 'Completed', Completed Date 2021-02-01, State TX, Docket Number CP20-505 (Authority: FERC), Project Type 'Lateral' / Pipeline Type 'Intrastate', Project Notes 'Install two pipeline segments on the FGT Mainline that connect to a natural gas power plant in Galveston, Texas', Demand Served 'Electric'. No Federal Register notice exists for CP20-505 -- checked via the FR API -- which is expected, not a red flag: a facility this small typically clears under a blanket-certificate 'prior notice' (18 CFR 157.205/157.208) with no individual FR publication. DUPLICATE CHECK: checked against the 45-pipeline TX-operating roster. P0190 ('Florida Gas Transmission Pipeline', Port Lavaca-to-Florida, ~8,529 mi) is the mainline aggregate row; P4051 is a Louisiana segment (~24.7 mi); P3296 is the 'Station 65' segment. All are distinct, differently-scoped GEM rows for the same larger FGT system -- consistent with GEM's known segment-based tracking of this pipeline family. No duplicate. CAVEAT: EIA lists Miles = 2.6 for this project vs. GEM's LengthKnown = 3.00 mi (~15% difference) -- see the separate spec concern below; every other spec value (capacity, diameter, cost) matches EIA exactly.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
   },
-  "validity": [
+  {
+   "segment_name": "Galveston County Project",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Correct StartYear1 from 2022 to 2021. EIA's FERC-docket-sourced record (Docket CP20-505) gives Completed Date 2021-02-01 and Year In Service Date 2021, a full calendar year earlier than the sheet's current value. This also plausibly bears on the Delayed/DelayType flag (Delayed='yes', DelayType='inferred') -- if that inference was made against the (apparently wrong) 2022 date, it may need re-checking once StartYear1 is corrected. Not resolved independently here; leaving Delay [ref] UNRESOLVED rather than guessing.",
+   "researcher_notes": "Same EIA Historical Projects record as above. This is a genuine value disagreement, not a citation gap -- do not paste the EIA ref onto the existing 2022 value; the ref supports 2021. Single-source (EIA) but authoritative (government dataset compiled from the FERC docket) and internally consistent across both the Jan-2022 and Jan-2023 EIA editions.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Minor: verify LengthKnown against the original FERC CP20-505 filing. EIA's Historical Projects dataset lists Miles = 2.6 vs. the sheet's 3.00 mi (~15% short). Given capacity, diameter and cost all match EIA exactly, this reads as an as-built-vs.-filed or rounding difference rather than a different project -- flagging rather than recommending a specific replacement value.",
+   "researcher_notes": "Not filling Length [ref] with the EIA ref as-is, since it would falsely appear to corroborate the sheet's existing 3.00 mi when the source actually says 2.6 mi.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Adjudicate the Start conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Start [ref]: found a directly on-point primary-adjacent source, but it CONTRADICTS the sheet's StartYear1=2022 rather than supporting it, so nothing is proposed here (per the brief: do not change the value, flag instead). EIA's 'Natural Gas Pipeline Projects' table (eia.gov/naturalgas/data.php, downloaded EIA-NaturalGasPipelineProjects_Jul2021.xlsx / _Oct2021.xlsx / _Jan2022.xlsx / _Jan2023.xlsx directly and parsed with openpyxl -- url_verifier's substring screen FAILs on this URL because it cannot parse .xlsx binary content, confirmed by reading the parsed cell values directly) carries a row for 'Galveston County Project' / operator 'Florida Gas Trans Co' / FERC docket CP20-505: Aug-2020 vintage shows Status='Applied', Year In Service=2021; the Jul-2021, Oct-2021 and both later 'Historical Projects' editions all show Status='Completed', Completed Date=2021-02-01, Year In Service=2021. All four EIA snapshots agree the project actually went in service February 2021, not 2022, and none shows a 2022 date at any stage. This also bears on the paired Delay [ref] unit -- see that record. Not proposing this as a ref for StartYear1 since it would be an orphan ref that contradicts rather than supports the cell; Update should review whether StartYear1 should be 2021. No other independent source located: SEC EDGAR full-text search for the exact phrase 'Galveston County Project' returned 0 hits; the seed PGJ Planned Projects PDF (Oct 2018) has an FGT entry but it is the unrelated 'East-West Project' (Louisiana-to-Texas Gulf Coast bidirectional expansion), with no mention of Galveston anywhere in the document; texasenergyreport.com's Aug 2018 article is now paywalled behind a login form and its headline ('Partial Construction On East-West Pipeline Expansion Granted') also points to the East-West Project, not this lateral.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "promoted_from": "Start [ref]|found a directly on-point primary-adjacent source, but it CO"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "verifications": [
     {
-      "segment_name": "Galveston County Project",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No action -- existence, classification and non-duplicate status all confirmed.",
-      "researcher_notes": "EXISTENCE/CLASSIFICATION: confirmed real. EIA's 'Natural Gas Pipeline Projects' historical dataset (Historical Projects sheet, both the Jan-2022 and Jan-2023 editions) carries this exact project: Project Name 'Galveston County Project', Pipeline Operator Name 'Florida Gas Trans Co', Status 'Completed', Completed Date 2021-02-01, State TX, Docket Number CP20-505 (Authority: FERC), Project Type 'Lateral' / Pipeline Type 'Intrastate', Project Notes 'Install two pipeline segments on the FGT Mainline that connect to a natural gas power plant in Galveston, Texas', Demand Served 'Electric'. No Federal Register notice exists for CP20-505 -- checked via the FR API -- which is expected, not a red flag: a facility this small typically clears under a blanket-certificate 'prior notice' (18 CFR 157.205/157.208) with no individual FR publication. DUPLICATE CHECK: checked against the 45-pipeline TX-operating roster. P0190 ('Florida Gas Transmission Pipeline', Port Lavaca-to-Florida, ~8,529 mi) is the mainline aggregate row; P4051 is a Louisiana segment (~24.7 mi); P3296 is the 'Station 65' segment. All are distinct, differently-scoped GEM rows for the same larger FGT system -- consistent with GEM's known segment-based tracking of this pipeline family. No duplicate. CAVEAT: EIA lists Miles = 2.6 for this project vs. GEM's LengthKnown = 3.00 mi (~15% difference) -- see the separate spec concern below; every other spec value (capacity, diameter, cost) matches EIA exactly.",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Correct StartYear1 from 2022 to 2021. EIA's FERC-docket-sourced record (Docket CP20-505) gives Completed Date 2021-02-01 and Year In Service Date 2021, a full calendar year earlier than the sheet's current value. This also plausibly bears on the Delayed/DelayType flag (Delayed='yes', DelayType='inferred') -- if that inference was made against the (apparently wrong) 2022 date, it may need re-checking once StartYear1 is corrected. Not resolved independently here; leaving Delay [ref] UNRESOLVED rather than guessing.",
-      "researcher_notes": "Same EIA Historical Projects record as above. This is a genuine value disagreement, not a citation gap -- do not paste the EIA ref onto the existing 2022 value; the ref supports 2021. Single-source (EIA) but authoritative (government dataset compiled from the FERC docket) and internally consistent across both the Jan-2022 and Jan-2023 EIA editions.",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
-      ],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Minor: verify LengthKnown against the original FERC CP20-505 filing. EIA's Historical Projects dataset lists Miles = 2.6 vs. the sheet's 3.00 mi (~15% short). Given capacity, diameter and cost all match EIA exactly, this reads as an as-built-vs.-filed or rounding difference rather than a different project -- flagging rather than recommending a specific replacement value.",
-      "researcher_notes": "Not filling Length [ref] with the EIA ref as-is, since it would falsely appear to corroborate the sheet's existing 3.00 mi when the source actually says 2.6 mi.",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
-      ],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "Manually opened with openpyxl (binary xlsx -- url_verifier's substring check can't read it, so verified by direct parse). 'Historical Projects (1996-2022)' sheet, Galveston County Project row: Status='Completed', Completed Date 2021-02-01, Year In Service 2021; no later retirement/removal noted -> operating.",
+     "name_found": true
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA's own field is 'Completed', which combined with the 2021 in-service date and no evidence of retirement supports GEM's 'operating'."
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "verifications": [
     {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "Status [ref]",
-      "value_cols": ["Status"],
-      "primary_value_col": "Status",
-      "values": {"Status": "operating"},
-      "primary_value": "operating",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "Manually opened with openpyxl (binary xlsx -- url_verifier's substring check can't read it, so verified by direct parse). 'Historical Projects (1996-2022)' sheet, Galveston County Project row: Status='Completed', Completed Date 2021-02-01, Year In Service 2021; no later retirement/removal noted -> operating."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "EIA's own field is 'Completed', which combined with the 2021 in-service date and no evidence of retirement supports GEM's 'operating'."
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"],
-      "primary_value_col": "Fuel",
-      "values": {"Fuel": "Gas"},
-      "primary_value": "Gas",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "Row appears in EIA's 'Natural Gas Pipeline Projects' dataset; Project Notes describe it as a natural-gas lateral serving an electric demand."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Undisputed -- EIA's dataset is natural-gas-pipeline-specific by definition."
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"],
-      "primary_value_col": "Capacity",
-      "values": {"Capacity": "107.00", "CapacityUnits": "MMcf/d"},
-      "primary_value": "107.00",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "EIA field 'Additional Capacity (MMcf/d)' = 107, exact match to GEM's 107.00 MMcf/d."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Exact numeric match."
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"],
-      "primary_value_col": "Diameter",
-      "values": {"Diameter": "12, 20", "DiameterUnits": "in"},
-      "primary_value": "12, 20",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "EIA field 'Pipeline Diameter (Inches)' = '12,20', exact match (this project installs two pipeline segments of different diameters per EIA's Project Notes)."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Exact match, and explains the multi-value diameter -- two segments installed, per EIA's Project Notes."
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits"],
-      "primary_value_col": "SegmentCost",
-      "values": {"SegmentCost": "18900000.00", "SegmentCostUnits": "USD"},
-      "primary_value": "18900000.00",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "EIA field 'Cost (millions)' = 18.9, exact match to GEM's $18,900,000."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Exact numeric match."
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
-      "primary_value_col": "StartLocation",
-      "values": {
-        "StartLocation": "Galveston County (FGT Mainline tap)",
-        "StartState/Province": "Texas",
-        "StartCountryOrArea": "United States",
-        "EndLocation": "Galveston, Texas (delivery to a gas-fired power plant)",
-        "EndState/Province": "Texas",
-        "EndCountryOrArea": "United States"
-      },
-      "primary_value": "Galveston County (FGT Mainline tap)",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "EIA Project Notes verbatim: 'Install two pipeline segments on the FGT Mainline that connect to a natural gas power plant in Galveston, Texas.' State(s)=TX, Beg/End State=TX."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "StartState/Province and EndState/Province were already correctly 'Texas'/'United States' on the sheet (blank ref); adding StartLocation/EndLocation text from EIA's own project description. The specific power plant name is not identified in this source and was not independently confirmed elsewhere, so left generic ('a gas-fired power plant') rather than guessing a facility name."
-    },
-    {
-      "segment_name": "Galveston County Project",
-      "sheet_row": 1712,
-      "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%"],
-      "primary_value_col": "Owner1",
-      "values": {"Owner1": "Florida Gas Transmission Co LLC", "Owner1%": "100.00%"},
-      "primary_value": "Florida Gas Transmission Co LLC",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
-        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000022/kmi-2019x10kxexh211.htm"
-      ],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx", "ok": true, "contains_value": true, "note": "EIA field 'Pipeline Operator Name' = 'Florida Gas Trans Co' (abbreviated form of the same entity)."},
-        {"url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000022/kmi-2019x10kxexh211.htm", "ok": true, "contains_value": true, "note": "Kinder Morgan, Inc. 2019 Form 10-K, Exhibit 21.1 (Subsidiaries of the Registrant) lists 'Florida Gas Transmission Company, LLC' as a Delaware entity. Verified live: SEC EDGAR 403'd a generic User-Agent; a SEC-compliant identifying UA returned HTTP 200 with the exact entity name present."}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Two independent government-origin documents (EIA's compiled pipeline-projects dataset and Kinder Morgan's SEC 10-K exhibit) both name the same legal entity as the operator/owner. The wiki-cited kindermorgan.com FGT page (fgttransfer.energytransfer.com era link) is now a confirmed 404 and was not usable. Note the KMI 10-K exhibit lists corporate family membership, not a direct percentage-ownership statement -- '100%' reflects that Florida Gas Transmission Company, LLC is itself the direct asset-owning entity (its own parent, Citrus Corp, is a separate 50/50 KMI/Kinetiq joint venture one level up, which is not in tension with GEM's existing Owner1/Owner1% convention of naming the direct owning entity)."
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "Row appears in EIA's 'Natural Gas Pipeline Projects' dataset; Project Notes describe it as a natural-gas lateral serving an electric demand.",
+     "name_found": true
     }
-  ],
-  "summary": "P3242 (Galveston County Project, FGT lateral, Texas) confirmed real via EIA's FERC-docketed (CP20-505) pipeline-projects dataset + SEC 10-K; not a duplicate of P0190/P4051/P3296. 7 fields filled (Status, Fuel, Capacity, Diameter, SegmentCost, Location, Owner) at medium/high tier. Two spec concerns staged: StartYear1 should be 2022->2021 (medium), and a minor Length 3.00mi-vs-EIA's-2.6mi discrepancy (low). Delay/DelayType left UNRESOLVED -- no independent source found."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Undisputed -- EIA's dataset is natural-gas-pipeline-specific by definition."
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "107.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "107.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "EIA field 'Additional Capacity (MMcf/d)' = 107, exact match to GEM's 107.00 MMcf/d.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Exact numeric match."
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "12, 20",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "12, 20",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "EIA field 'Pipeline Diameter (Inches)' = '12,20', exact match (this project installs two pipeline segments of different diameters per EIA's Project Notes).",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Exact match, and explains the multi-value diameter -- two segments installed, per EIA's Project Notes."
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "18900000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "18900000.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "EIA field 'Cost (millions)' = 18.9, exact match to GEM's $18,900,000.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Exact numeric match."
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Galveston County (FGT Mainline tap)",
+    "StartState/Province": "Texas",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Galveston, Texas (delivery to a gas-fired power plant)",
+    "EndState/Province": "Texas",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Galveston County (FGT Mainline tap)",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "EIA Project Notes verbatim: 'Install two pipeline segments on the FGT Mainline that connect to a natural gas power plant in Galveston, Texas.' State(s)=TX, Beg/End State=TX.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "StartState/Province and EndState/Province were already correctly 'Texas'/'United States' on the sheet (blank ref); adding StartLocation/EndLocation text from EIA's own project description. The specific power plant name is not identified in this source and was not independently confirmed elsewhere, so left generic ('a gas-fired power plant') rather than guessing a facility name."
+  },
+  {
+   "segment_name": "Galveston County Project",
+   "sheet_row": 1712,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Florida Gas Transmission Co LLC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Florida Gas Transmission Co LLC",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000022/kmi-2019x10kxexh211.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "note": "EIA field 'Pipeline Operator Name' = 'Florida Gas Trans Co' (abbreviated form of the same entity).",
+     "name_found": true
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000022/kmi-2019x10kxexh211.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "Kinder Morgan, Inc. 2019 Form 10-K, Exhibit 21.1 (Subsidiaries of the Registrant) lists 'Florida Gas Transmission Company, LLC' as a Delaware entity. Verified live: SEC EDGAR 403'd a generic User-Agent; a SEC-compliant identifying UA returned HTTP 200 with the exact entity name present.",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent government-origin documents (EIA's compiled pipeline-projects dataset and Kinder Morgan's SEC 10-K exhibit) both name the same legal entity as the operator/owner. The wiki-cited kindermorgan.com FGT page (fgttransfer.energytransfer.com era link) is now a confirmed 404 and was not usable. Note the KMI 10-K exhibit lists corporate family membership, not a direct percentage-ownership statement -- '100%' reflects that Florida Gas Transmission Company, LLC is itself the direct asset-owning entity (its own parent, Citrus Corp, is a separate 50/50 KMI/Kinetiq joint venture one level up, which is not in tension with GEM's existing Owner1/Owner1% convention of naming the direct owning entity)."
+  }
+ ],
+ "summary": "P3242 (Galveston County Project, FGT lateral, Texas) confirmed real via EIA's FERC-docketed (CP20-505) pipeline-projects dataset + SEC 10-K; not a duplicate of P0190/P4051/P3296. 7 fields filled (Status, Fuel, Capacity, Diameter, SegmentCost, Location, Owner) at medium/high tier. Two spec concerns staged: StartYear1 should be 2022->2021 (medium), and a minor Length 3.00mi-vs-EIA's-2.6mi discrepancy (low). Delay/DelayType left UNRESOLVED -- no independent source found."
 }

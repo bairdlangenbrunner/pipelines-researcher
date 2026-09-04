@@ -1,0 +1,38 @@
+{
+ "project_id": "P0250",
+ "pipeline_name": "Sabine Natural Gas Pipeline System",
+ "harvest_opened": 2,
+ "resolutions": [
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 103,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://web.archive.org/web/20151013082015/http://www.sabinepipeline.com/CompanyOverview.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20151013082015/http://www.sabinepipeline.com/CompanyOverview.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Wayback capture (2015-10-13) of Sabine Pipe Line LLC's own 'Company Overview' page, resolved from the wiki's seed short-link bit.ly/2rZM0gE (curl -sIL: 301 -> http://www.sabinepipeline.com/CompanyOverview.aspx). The live URL is now a CONFIRMED 404 (verified directly, both http and https, with a browser UA) -- the sabinepipeline.com domain has been retired; the pipeline's current owner (EnLink Midstream, itself acquired by ONEOK in 2024) now redirects sabinepipeline.enlink.com -> sabinepipeline.oneok.com -> gasnom.com, a nomination portal with no historical/company-overview content. So the Wayback capture is the only surviving copy of this page, not a substitute for a reachable live page. Captured text reads verbatim: 'Sabine Pipe Line LLC has committed itself to providing exceptional customer service since its inception as an open-access interstate pipeline in 1987.' This directly and exactly matches the sheet's StartYear1=1987. `url_verifier.py` returned a FAIL ('200 but missing expected: [\"1987\"]') on this URL -- a false negative; I fetched the same capture manually via curl and confirmed '1987' appears verbatim in the raw HTML (grep count=1) in exactly this sentence, so contains_value is set true despite the automated screen. Single publisher (the pipeline's own operator), so tier=medium/independent=false: no second, distinct-publisher source stating the 1987 in-service year was found. Checked and ruled out: the sabinepipeline.enlink.com 'About Sabine Pipe Line LLC' page (the wiki's other seed citation) across 6+ Wayback snapshots (2020-2025) and its live redirect chain -- an Elementor/WordPress page whose extractable text is only nav/menu items and a boilerplate overview paragraph with no year or capacity figure (confirmed by parsing every '.elementor-widget-container' block); Wikipedia's 'Henry Hub' article confirms Sabine Pipe Line LLC's ownership chain (Chevron -> EnLink 2014, and by extension ONEOK) but states no in-service date; SEC full-text search across Devon Midstream Partners' 2013 S-1 and multiple Epsilon Energy 10-Ks (all of which mention 'Sabine Pipe Line' as a header-system operator near Erath, LA / the Henry Hub interconnect) contain no in-service-date statement; no dedicated Wikipedia article on 'Sabine Pipe Line' exists (site search returns no match)."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 103,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched hard, found no source stating a 235 MMcf/d (or equivalent Dth/d) system capacity figure for Sabine Pipe Line. Searched and ruled out: (1) both wiki seed citations (bit.ly/2rZM0gE -> sabinepipeline.com/CompanyOverview.aspx via its 2015 Wayback capture, and sabinepipeline.enlink.com's About page across 6+ Wayback snapshots 2020-2025) -- neither states any capacity figure, only a 'Capacities Jan 2009 - Feb 2015' nav-menu link whose target page was not itself captured/reachable; (2) SEC EDGAR full-text search for '\"Sabine Pipe Line\" \"design capacity\"' (32 hits, all Epsilon Energy / Vine Resources filings discussing THEIR OWN gathering-system design capacity near Sabine's system, not Sabine's own capacity), '\"Sabine Pipe Line\" \"system capacity\"' (22 hits, same pattern), '\"Sabine Pipe Line\" \"certificated capacity\"' (3 hits, all decades-old Enron Corp 8-K exhibits where 'Sabine Pipe Line Company Inc.' appears only as a counterparty name in a contract-assignment schedule, no capacity language attached), and '\"Sabine Pipe Line\" MMcf/d' (54 hits, spot-checked Devon Midstream Partners' 2013 S-1 -- mentions Sabine only as the operator of the Henry Hub header/interconnect system, no capacity number); (3) Wikipedia's 'Henry Hub' article gives capacity figures for the Henry Hub complex as a whole (1.8 Bcf/d transport, 520,000 Dth/d compression) but explicitly for the hub, not attributed to the Sabine Pipe Line system specifically; (4) FERC eLibrary's public search endpoint (elibrary.ferc.gov) returns only a JavaScript application shell over a plain GET/curl fetch -- its docket search requires an interactive session and could not be queried headlessly in the time available; a targeted eLibrary docket lookup for Sabine Pipe Line LLC's original 1980s certificate order or its current FERC Gas Tariff/Statement of Operating Conditions (which would state system design capacity) is the most promising next step but was not completed. No data-quality concern -- the value itself is plausible for a Henry Hub-area interstate header system of this vintage, just not independently sourced yet."
+  }
+ ]
+}

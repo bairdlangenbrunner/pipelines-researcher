@@ -1,171 +1,266 @@
 {
-  "project_id": "P0203",
-  "pipeline_name": "Houston Gas Pipeline (HPL) System",
-  "sheet_row": 62,
-  "wiki": "https://www.gem.wiki/Houston_Gas_Pipeline_(HPL)_System",
-  "validity": [
+ "project_id": "P0203",
+ "pipeline_name": "Houston Gas Pipeline (HPL) System",
+ "sheet_row": 62,
+ "wiki": "https://www.gem.wiki/Houston_Gas_Pipeline_(HPL)_System",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no action — existence, classification, ownership and endpoints all independently corroborated across a 20+ year documentary trail",
+   "researcher_notes": "EXISTENCE: strongly confirmed, independent of GEM/wiki, with an unusually deep and continuous paper trail. AEP's own 2001 acquisition press release (via electricnet.com, verified live) states AEP agreed to buy Houston Pipe Line Co. (HPL) from Enron Corp., describing 'more than 4,400 miles of pipe with capacity of approximately 2.4 Bcf/d' plus the Bammel storage facility (~118 Bcf). Power Engineering (power-eng.com, verified live, independent trade press) independently reports the deal's completion the same year. Energy Intelligence (energyintel.com, verified live — page title itself, 'Energy Transfer Partners Adds Houston Pipe Line to Holdings', confirms the topic; body paywalled) and Natural Gas Intelligence (naturalgasintel.com, verified live, found via independent search, not in the harvested pool) both independently report the January 2005 transaction in which Energy Transfer Partners' midstream subsidiary La Grange Acquisition LP acquired the HPL system from AEP for $825M — NGI gives the same 2005-era figures as the SEC filing (~4,200 mi / 2.4 Bcf/d), an independent trade-press confirmation of a fact set that also appears in ETP's own SEC Form 8-K/A (filed 2005-03-17, CIK 1012569, accession 000119312505053153) — I read the 8-K/A directly (it 403s against this repo's url_verifier UA — SEC EDGAR's fair-access policy requires a compliant contact-string User-Agent our verifier doesn't send — so it is NOT cited as a proposed_ref per the hard 'every URL passes url_verifier.py' rule, but I confirmed it manually with a compliant UA and it names 'Houston Pipeline System', 'La Grange Acquisition, L.P.', '~4,200 miles', '2.4 Bcf/d' and the Bammel facility, matching NGI's independent account exactly). Energy Transfer's own current, live capacity-postings page (hpletconnect.energytransfer.com, verified live) confirms the same system is still operating today under the ET umbrella with updated 2013-era stats (5.3 Bcf/d, ~3,900 mi). Together this is a continuous, multiply-corroborated ownership/operating chain (Enron -> AEP 2001 -> Energy Transfer Partners 2005 -> Energy Transfer LP today) spanning five independent origins (AEP's own press release via electricnet, Power Engineering, Energy Intelligence, Natural Gas Intelligence, and ET's current site) plus the SEC record — this is not a GEM-only or hallucinated entity. CLASSIFICATION: correct. Every source describes HPL as a large intrastate natural gas gathering/transportation and storage system (not a gathering-only or processing line), consistent with GEM's Fuel=Gas and its treatment as a network-style transmission entry (StartLocation/EndLocation='Multiple', Texas) alongside comparably-structured rows in this scope (Enable Gas Transmission P0161, Southern Natural Gas Pipeline P0252, Transcontinental Gas Pipeline P0271). DUPLICATE: checked against the full 45-row roster — no other row names or plausibly describes this system (East Texas Gas Pipeline P0180 and other ETP-owned rows in the roster are named, separately-tracked ETP intrastate systems, not relabels of HPL). ATTRIBUTION: Owner1='ETP Legacy' 100% is GEM's own vocabulary for legacy Energy Transfer Partners subsidiaries (used identically across 10 other ET-family rows in the operators/owners tab, e.g. East Texas Gas Pipeline, Trunkline, Transwestern) and matches the sourced ownership history exactly — ET's own site lists 'Houston Pipe Line Company LP' among its asset list at hpletconnect.energytransfer.com, and the SEC 8-K/A + NGI both independently confirm La Grange Acquisition LP (an ET/ETP subsidiary) took the controlling interest in 2005. StartCountryOrArea/EndCountryOrArea = United States and StartState/Province=EndState/Province=Texas confirmed by every source (South Texas, Gulf Coast, East Texas, western Gulf of Mexico, Houston, Corpus Christi, Texas City are all named service areas). Harvested-citation-pool coverage: the wiki page carries 5 citations; I opened/attempted all 5 (the ET capacity page — its wiki-cited deep link is itself DEAD, see the paired spec note below; the electricnet AEP release; the Power Engineering article; the SEC 8-K/A, blocked by SEC's bot-wall against our verifier's UA, read manually instead; and the Energy Intelligence piece, paywalled beyond its title) and added one further independent source (naturalgasintel.com) via open-web search.",
+   "proposed_refs": [
+    "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001",
+    "https://www.power-eng.com/news/aep-completes-purchase-of-houston-pipe-line-company-from-enron/#gref",
+    "https://www.energyintel.com/0000017b-a7a6-de4c-a17b-e7e6adac0001",
+    "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/",
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "correct the wiki page's dead capacity-page URL (informational, GEM does not maintain gem.wiki); no sheet change needed — Capacity matches exactly and Length is within the range the source's own text explains",
+   "researcher_notes": "The gem.wiki page's own citation for design capacity, https://hpletconnect.energytransfer.com/ipost/HPL/capacity/design-capacity-for-intrastates, is a DEAD deep link — it 302-redirects to the site's own /ipost/error/asset-not-found page (confirmed by inspecting the raw HTTP response). ET's ipost system was restructured to use a query-string asset selector; the live equivalent is https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL (found by walking the site's own navigation from https://hpletconnect.energytransfer.com/ipost/main/index?asset=HPL), which is what I am proposing as the ref instead — this is a URL-format fix, not a deletion, per the standing rule (the content the wiki meant to cite is still live, just at the corrected URL). That page states verbatim: 'Houston Pipeline System (\"HPL System\") Capacity of 5.3 Bcf/d, Approximately 3,900 miles of natural gas pipeline, Bammel storage facility with 62 Bcf.' Capacity: 5.3 Bcf/d = 5,300 MMcf/d, an EXACT match to the sheet's Capacity=5300.00 MMcf/d. Length: the source's 'approximately 3,900 miles' is 100 mi (2.6%) above the sheet's LengthKnown=3800.00 mi, but the same page/10-K text (verified identical wording in Energy Transfer Partners' FY2013 Form 10-K, same origin) separately notes ETP was 'currently converting approximately 84 miles of pipeline from the HPL System to crude service' as of that filing — netting to ~3,816 mi, closely reconciling with the sheet's 3,800. I am treating this as corroborated rather than a material conflict given the source's own 'approximately' framing and the built-in explanation for the gap; it is not a clean two-source hard match, though, so I am staging both Length and Capacity at medium tier rather than high. INDEPENDENCE CAVEAT: I could not find a second, genuinely independent source (FERC eLibrary docket, EIA infrastructure table) stating the CURRENT 3,800 mi / 5,300 MMcf/d figures — the capacity page and ETP's FY2013 10-K are the same origin (identical text), so this is effectively one source for the exact current numbers, corroborated only by the multi-decade history of consistent, larger figures reported independently at earlier dates (see the existence finding). The page itself is also stale — it still describes a project 'expected to be completed in 2014' and 'As of December 31, 2013' data, live in 2026 with no apparent update since; the true current mileage/capacity could have drifted further without the page reflecting it. Recommend a future pass check FERC eLibrary or EIA's pipeline infrastructure tables for an independent current figure. Not staging as a hard 'concern' since nothing here conflicts with the sheet — flagging transparently as a caveat instead, per the no-silent-pass rule.",
+   "proposed_refs": [
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 62,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+    "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "no action — existence, classification, ownership and endpoints all independently corroborated across a 20+ year documentary trail",
-      "researcher_notes": "EXISTENCE: strongly confirmed, independent of GEM/wiki, with an unusually deep and continuous paper trail. AEP's own 2001 acquisition press release (via electricnet.com, verified live) states AEP agreed to buy Houston Pipe Line Co. (HPL) from Enron Corp., describing 'more than 4,400 miles of pipe with capacity of approximately 2.4 Bcf/d' plus the Bammel storage facility (~118 Bcf). Power Engineering (power-eng.com, verified live, independent trade press) independently reports the deal's completion the same year. Energy Intelligence (energyintel.com, verified live — page title itself, 'Energy Transfer Partners Adds Houston Pipe Line to Holdings', confirms the topic; body paywalled) and Natural Gas Intelligence (naturalgasintel.com, verified live, found via independent search, not in the harvested pool) both independently report the January 2005 transaction in which Energy Transfer Partners' midstream subsidiary La Grange Acquisition LP acquired the HPL system from AEP for $825M — NGI gives the same 2005-era figures as the SEC filing (~4,200 mi / 2.4 Bcf/d), an independent trade-press confirmation of a fact set that also appears in ETP's own SEC Form 8-K/A (filed 2005-03-17, CIK 1012569, accession 000119312505053153) — I read the 8-K/A directly (it 403s against this repo's url_verifier UA — SEC EDGAR's fair-access policy requires a compliant contact-string User-Agent our verifier doesn't send — so it is NOT cited as a proposed_ref per the hard 'every URL passes url_verifier.py' rule, but I confirmed it manually with a compliant UA and it names 'Houston Pipeline System', 'La Grange Acquisition, L.P.', '~4,200 miles', '2.4 Bcf/d' and the Bammel facility, matching NGI's independent account exactly). Energy Transfer's own current, live capacity-postings page (hpletconnect.energytransfer.com, verified live) confirms the same system is still operating today under the ET umbrella with updated 2013-era stats (5.3 Bcf/d, ~3,900 mi). Together this is a continuous, multiply-corroborated ownership/operating chain (Enron -> AEP 2001 -> Energy Transfer Partners 2005 -> Energy Transfer LP today) spanning five independent origins (AEP's own press release via electricnet, Power Engineering, Energy Intelligence, Natural Gas Intelligence, and ET's current site) plus the SEC record — this is not a GEM-only or hallucinated entity. CLASSIFICATION: correct. Every source describes HPL as a large intrastate natural gas gathering/transportation and storage system (not a gathering-only or processing line), consistent with GEM's Fuel=Gas and its treatment as a network-style transmission entry (StartLocation/EndLocation='Multiple', Texas) alongside comparably-structured rows in this scope (Enable Gas Transmission P0161, Southern Natural Gas Pipeline P0252, Transcontinental Gas Pipeline P0271). DUPLICATE: checked against the full 45-row roster — no other row names or plausibly describes this system (East Texas Gas Pipeline P0180 and other ETP-owned rows in the roster are named, separately-tracked ETP intrastate systems, not relabels of HPL). ATTRIBUTION: Owner1='ETP Legacy' 100% is GEM's own vocabulary for legacy Energy Transfer Partners subsidiaries (used identically across 10 other ET-family rows in the operators/owners tab, e.g. East Texas Gas Pipeline, Trunkline, Transwestern) and matches the sourced ownership history exactly — ET's own site lists 'Houston Pipe Line Company LP' among its asset list at hpletconnect.energytransfer.com, and the SEC 8-K/A + NGI both independently confirm La Grange Acquisition LP (an ET/ETP subsidiary) took the controlling interest in 2005. StartCountryOrArea/EndCountryOrArea = United States and StartState/Province=EndState/Province=Texas confirmed by every source (South Texas, Gulf Coast, East Texas, western Gulf of Mexico, Houston, Corpus Christi, Texas City are all named service areas). Harvested-citation-pool coverage: the wiki page carries 5 citations; I opened/attempted all 5 (the ET capacity page — its wiki-cited deep link is itself DEAD, see the paired spec note below; the electricnet AEP release; the Power Engineering article; the SEC 8-K/A, blocked by SEC's bot-wall against our verifier's UA, read manually instead; and the Energy Intelligence piece, paywalled beyond its title) and added one further independent source (naturalgasintel.com) via open-web search.",
-      "proposed_refs": [
-        "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001",
-        "https://www.power-eng.com/news/aep-completes-purchase-of-houston-pipe-line-company-from-enron/#gref",
-        "https://www.energyintel.com/0000017b-a7a6-de4c-a17b-e7e6adac0001",
-        "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/",
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
+     "url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     },
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "spec",
-      "recommendation": "correct the wiki page's dead capacity-page URL (informational, GEM does not maintain gem.wiki); no sheet change needed — Capacity matches exactly and Length is within the range the source's own text explains",
-      "researcher_notes": "The gem.wiki page's own citation for design capacity, https://hpletconnect.energytransfer.com/ipost/HPL/capacity/design-capacity-for-intrastates, is a DEAD deep link — it 302-redirects to the site's own /ipost/error/asset-not-found page (confirmed by inspecting the raw HTTP response). ET's ipost system was restructured to use a query-string asset selector; the live equivalent is https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL (found by walking the site's own navigation from https://hpletconnect.energytransfer.com/ipost/main/index?asset=HPL), which is what I am proposing as the ref instead — this is a URL-format fix, not a deletion, per the standing rule (the content the wiki meant to cite is still live, just at the corrected URL). That page states verbatim: 'Houston Pipeline System (\"HPL System\") Capacity of 5.3 Bcf/d, Approximately 3,900 miles of natural gas pipeline, Bammel storage facility with 62 Bcf.' Capacity: 5.3 Bcf/d = 5,300 MMcf/d, an EXACT match to the sheet's Capacity=5300.00 MMcf/d. Length: the source's 'approximately 3,900 miles' is 100 mi (2.6%) above the sheet's LengthKnown=3800.00 mi, but the same page/10-K text (verified identical wording in Energy Transfer Partners' FY2013 Form 10-K, same origin) separately notes ETP was 'currently converting approximately 84 miles of pipeline from the HPL System to crude service' as of that filing — netting to ~3,816 mi, closely reconciling with the sheet's 3,800. I am treating this as corroborated rather than a material conflict given the source's own 'approximately' framing and the built-in explanation for the gap; it is not a clean two-source hard match, though, so I am staging both Length and Capacity at medium tier rather than high. INDEPENDENCE CAVEAT: I could not find a second, genuinely independent source (FERC eLibrary docket, EIA infrastructure table) stating the CURRENT 3,800 mi / 5,300 MMcf/d figures — the capacity page and ETP's FY2013 10-K are the same origin (identical text), so this is effectively one source for the exact current numbers, corroborated only by the multi-decade history of consistent, larger figures reported independently at earlier dates (see the existence finding). The page itself is also stale — it still describes a project 'expected to be completed in 2014' and 'As of December 31, 2013' data, live in 2026 with no apparent update since; the true current mileage/capacity could have drifted further without the page reflecting it. Recommend a future pass check FERC eLibrary or EIA's pipeline infrastructure tables for an independent current figure. Not staging as a hard 'concern' since nothing here conflicts with the sheet — flagging transparently as a caveat instead, per the no-silent-pass rule.",
-      "proposed_refs": [
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
-      ],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status is inferable, not literal, per the sweep's own rules. ET's current live capacity page describes the system in active present-tense operational terms (current committed/stored storage volumes, present-tense transportation description). Independently, the 20+ year chain of trade-press reporting (AEP 2001, ETP 2005) with no report of shutdown or abandonment corroborates continuous operation through to the present live posting."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 62,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+    "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "sheet_row": 62,
-      "ref_col": "Status [ref]",
-      "value_cols": ["Status"],
-      "primary_value_col": "Status",
-      "values": {"Status": "operating"},
-      "primary_value": "operating",
-      "proposed_refs": [
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
-        "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/"
-      ],
-      "verifications": [
-        {"url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL", "ok": true, "contains_value": true},
-        {"url": "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Status is inferable, not literal, per the sweep's own rules. ET's current live capacity page describes the system in active present-tense operational terms (current committed/stored storage volumes, present-tense transportation description). Independently, the 20+ year chain of trade-press reporting (AEP 2001, ETP 2005) with no report of shutdown or abandonment corroborates continuous operation through to the present live posting."
+     "url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     },
     {
-      "segment_name": "",
-      "sheet_row": 62,
-      "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"],
-      "primary_value_col": "Fuel",
-      "values": {"Fuel": "Gas"},
-      "primary_value": "Gas",
-      "proposed_refs": [
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
-        "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001"
-      ],
-      "verifications": [
-        {"url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL", "ok": true, "contains_value": true},
-        {"url": "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Both sources describe HPL explicitly as a natural gas pipeline/gathering-transportation-storage system; two independent origins agreeing."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 62,
-      "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"],
-      "primary_value_col": "Capacity",
-      "values": {"Capacity": "5300.00", "CapacityUnits": "MMcf/d"},
-      "primary_value": "5300.00",
-      "proposed_refs": [
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
-      ],
-      "verifications": [
-        {"url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Energy Transfer's own current capacity-postings page states 'Capacity of 5.3 Bcf/d' = 5,300 MMcf/d, an exact match. Identical wording also appears in ETP's FY2013 Form 10-K, but that is the same origin (company disclosure), not a second independent source, so staged at medium tier. See the paired spec caveat in validity[] — no independent (FERC/EIA) confirmation of the current figure was located."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 62,
-      "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"],
-      "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "3800.00", "LengthKnownUnits": "mi"},
-      "primary_value": "3800.00",
-      "proposed_refs": [
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
-      ],
-      "verifications": [
-        {"url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Source states 'approximately 3,900 miles' (2013-era), ~100 mi / 2.6% above the sheet's 3,800 — but the same source separately notes ~84 miles were being converted out of gas service to crude at the time, which nets close to 3,800. Single origin (see spec caveat in validity[]); staged as a supporting ref rather than a conflict given the reconciling detail, but flagged transparently rather than silently pasted as a clean match."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 62,
-      "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndState/Province", "EndCountryOrArea"],
-      "primary_value_col": "StartLocation",
-      "values": {"StartLocation": "Multiple", "StartState/Province": "Texas", "StartCountryOrArea": "United States", "EndLocation": "Multiple", "EndState/Province": "Texas", "EndCountryOrArea": "United States"},
-      "primary_value": "Multiple",
-      "proposed_refs": [
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
-        "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001"
-      ],
-      "verifications": [
-        {"url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL", "ok": true, "contains_value": true},
-        {"url": "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Both sources confirm this is a Texas-wide intrastate network with no single start/end point (South Texas, Gulf Coast, East Texas, western Gulf of Mexico gathering areas; Houston, Corpus Christi, Texas City, Katy Hub, Houston Ship Channel and Agua Dulce market connections) — the sheet's 'Multiple'/Texas/United States framing for both endpoints is correct for a network-style entry, corroborated by two independent origins."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 62,
-      "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%"],
-      "primary_value_col": "Owner1",
-      "values": {"Owner1": "ETP Legacy", "Owner1%": "100.00%"},
-      "primary_value": "ETP Legacy",
-      "proposed_refs": [
-        "https://www.energyintel.com/0000017b-a7a6-de4c-a17b-e7e6adac0001",
-        "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/",
-        "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
-      ],
-      "verifications": [
-        {"url": "https://www.energyintel.com/0000017b-a7a6-de4c-a17b-e7e6adac0001", "ok": true, "contains_value": true},
-        {"url": "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/", "ok": true, "contains_value": true},
-        {"url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Energy Intelligence's headline ('Energy Transfer Partners Adds Houston Pipe Line to Holdings') and Natural Gas Intelligence's independent 2005 report (La Grange Acquisition LP, an Energy Transfer/ETP subsidiary, acquired the controlling interest from AEP) are two independent trade-press origins confirming Energy Transfer Partners took 100% control in 2005; ET's current site independently confirms HPL is still listed among its own present-day assets. 'ETP Legacy' is GEM's established vocabulary for this exact ownership lineage (used identically on 10 other Energy Transfer-family rows in the operators/owners tab), so no relabeling is needed."
+     "url": "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "summary": "P0203 (Houston Gas Pipeline (HPL) System) confirmed as a real, correctly-classified, continuously-operating intrastate Texas gas network with an unusually deep 20+ year independent documentary trail (Enron->AEP 2001->ETP 2005->ET today) and no duplicate in the 45-row roster; filled Status/Fuel/Location/Owner refs at high tier and Capacity/Length at medium tier (single-origin operator disclosure, exact match on Capacity, ~2.6%-off but internally-reconciled Length); one caveat flagged (not a hard concern) — the wiki's own cited capacity-page URL is dead and I substituted the site's corrected live URL, and no fully independent FERC/EIA source could be found for the exact current spec figures."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both sources describe HPL explicitly as a natural gas pipeline/gathering-transportation-storage system; two independent origins agreeing."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 62,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "5300.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "5300.00",
+   "proposed_refs": [
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
+   ],
+   "verifications": [
+    {
+     "url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Energy Transfer's own current capacity-postings page states 'Capacity of 5.3 Bcf/d' = 5,300 MMcf/d, an exact match. Identical wording also appears in ETP's FY2013 Form 10-K, but that is the same origin (company disclosure), not a second independent source, so staged at medium tier. See the paired spec caveat in validity[] — no independent (FERC/EIA) confirmation of the current figure was located."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 62,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "3800.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "3800.00",
+   "proposed_refs": [
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
+   ],
+   "verifications": [
+    {
+     "url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Source states 'approximately 3,900 miles' (2013-era), ~100 mi / 2.6% above the sheet's 3,800 — but the same source separately notes ~84 miles were being converted out of gas service to crude at the time, which nets close to 3,800. Single origin (see spec caveat in validity[]); staged as a supporting ref rather than a conflict given the reconciling detail, but flagged transparently rather than silently pasted as a clean match."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 62,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Multiple",
+    "StartState/Province": "Texas",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Multiple",
+    "EndState/Province": "Texas",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Multiple",
+   "proposed_refs": [
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+    "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001"
+   ],
+   "verifications": [
+    {
+     "url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://www.electricnet.com/doc/aep-will-buy-enrons-houston-pipeline-company-0001",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both sources confirm this is a Texas-wide intrastate network with no single start/end point (South Texas, Gulf Coast, East Texas, western Gulf of Mexico gathering areas; Houston, Corpus Christi, Texas City, Katy Hub, Houston Ship Channel and Agua Dulce market connections) — the sheet's 'Multiple'/Texas/United States framing for both endpoints is correct for a network-style entry, corroborated by two independent origins."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 62,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "ETP Legacy",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "ETP Legacy",
+   "proposed_refs": [
+    "https://www.energyintel.com/0000017b-a7a6-de4c-a17b-e7e6adac0001",
+    "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/",
+    "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.energyintel.com/0000017b-a7a6-de4c-a17b-e7e6adac0001",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://naturalgasintel.com/news/energy-transfer-picks-up-houston-pipe-line-from-aep-for-825m/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://hpletconnect.energytransfer.com/ipost/capacity/design-capacity-for-intrastates?asset=HPL",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Energy Intelligence's headline ('Energy Transfer Partners Adds Houston Pipe Line to Holdings') and Natural Gas Intelligence's independent 2005 report (La Grange Acquisition LP, an Energy Transfer/ETP subsidiary, acquired the controlling interest from AEP) are two independent trade-press origins confirming Energy Transfer Partners took 100% control in 2005; ET's current site independently confirms HPL is still listed among its own present-day assets. 'ETP Legacy' is GEM's established vocabulary for this exact ownership lineage (used identically on 10 other Energy Transfer-family rows in the operators/owners tab), so no relabeling is needed."
+  }
+ ],
+ "summary": "P0203 (Houston Gas Pipeline (HPL) System) confirmed as a real, correctly-classified, continuously-operating intrastate Texas gas network with an unusually deep 20+ year independent documentary trail (Enron->AEP 2001->ETP 2005->ET today) and no duplicate in the 45-row roster; filled Status/Fuel/Location/Owner refs at high tier and Capacity/Length at medium tier (single-origin operator disclosure, exact match on Capacity, ~2.6%-off but internally-reconciled Length); one caveat flagged (not a hard concern) — the wiki's own cited capacity-page URL is dead and I substituted the site's corrected live URL, and no fully independent FERC/EIA source could be found for the exact current spec figures."
 }

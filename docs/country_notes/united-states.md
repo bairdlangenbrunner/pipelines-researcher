@@ -27,6 +27,50 @@ any country — use it for both attributes and routes.
 - **Conversions** (e.g. Double H → Hiland Express): note as a conversion in
   `RouteNotes`; the existing route may already be in PHMSA/GEM.
 
+## Gas (GGIT) — the staged campaign
+
+US gas is **529 rows / 4,935 ref units**, ~12x the largest pass this repo has run, so it
+is being worked in slices, not as one country sweep. Slice 1 = the **217 operating rows
+last touched <=2023** ("stale operating cohort"), sub-sliced by region.
+
+**Scope the slice by region, and audit the column you slice on first.**
+`StartState/Province` is wrong on at least 2 of the 45 rows in batch 1 — P2613 Sierrita
+(SheetRow 1349) reads `Texas` but the whole route is in **Arizona**; P2636 Wildcat
+(SheetRow 1362) reads Texas->Texas but its origin traces to **Grady County, Oklahoma**
+(flagged, not confirmed). Both were caught independently by two agents. A wrong state
+does not just mis-describe a row, it silently pulls the wrong rows into the batch and
+leaves the right ones out.
+
+**Recon legs are deliberately OFF for US gas.** GulfPub carries only 10 US gas features,
+and OSM carries 62,221 US gas ways against 529 GEM rows — a 118:1 scope mismatch that
+would bury the research legs in unmatched-reference triage. Revisit per-slice, never
+whole-country.
+
+**FERC silence is not an existence concern.** Many Texas gas lines are **intrastate** and
+therefore never appear in FERC eLibrary. Check the **Texas RRC** (T-4/T-4A permits) before
+treating a FERC gap as a signal — P0268's operator name was settled by an RRC permit.
+
+- **Staged, NOT applied (gas):** batch 1, `batches/united-states-gas/staging/deepsweep-tx-operating/`
+  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260904_1144_ET_united-states-gas_deepsweep.xlsx`).
+  All 381 ref units carry an outcome -> REFS_ADDED 325, REVERIFIED 14, UNRESOLVED 42,
+  595 proposed refs, 23 fills, 163 validity findings (74 `concern` verdicts; 90 records
+  carry a `concern_type` — spec 65, attribution 23, classification 1, duplicate 1 — so
+  16 sit on `confirmed (caveat)`). Three escalations ride in the workbook's
+  README; the SegmentCost one has its own memo
+  (`notes/escalation-2026-09-04-us-gas-segmentcost-unsupported.md`).
+  **Only 208 of the 381 units got a dedicated ref-research pass** (`ref_researched`).
+  The other 173 still resolved — 159 picked up refs harvested from the validity leg's
+  evidence, 14 were reverified live links — but none of those 159 has had a
+  >=2-independent search of its own. The batch is a finished pass over the rows, not
+  over every cell.
+- **`New United Kingdom` is a find-and-replace scar, and is NOT a mechanical fix.**
+  P0176 (SheetRow 37) and P0259 (SheetRow 112) carry it in `EndState/Province`; both are
+  New England termini. But the column holds individual STATES everywhere else
+  (`Massachusetts`, `Connecticut`, `Maine`, `New Hampshire`, `New York` all present) and
+  `New England` appears **zero** times in either tracker, so restoring it would introduce
+  an unprecedented value. Research each row's real terminus state. The other 7
+  `United Kingdom` hits in the tab are legitimate North Sea rows — leave them.
+
 ## Open items
 - Keep deepwater-export terminal pipeline components distinct from the terminal
   records (LengthKnown often 0 — onshore expansion only).

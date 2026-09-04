@@ -1,89 +1,137 @@
 {
-  "project_id": "P2499",
-  "pipeline_name": "Agua Blanca Pipeline",
-  "sheet_row": 1288,
-  "wiki": "https://www.gem.wiki/Agua_Blanca_Pipeline",
-  "validity": [
+ "project_id": "P2499",
+ "pipeline_name": "Agua Blanca Pipeline",
+ "sheet_row": 1288,
+ "wiki": "https://www.gem.wiki/Agua_Blanca_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Sendero Gateway Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "none — existence and classification are solidly documented",
+   "researcher_notes": "EXISTENCE/CLASSIFICATION: this row is the Sendero Carlsbad Gateway pipeline (FERC Docket CP18-538), a real, well-documented interstate gas transmission line, NOT a GEM-only or hallucinated entity. FERC's own Environmental Assessment (Jan. 2019, read via pdftotext) describes 'Sendero Carlsbad Gateway, LLC' filing under NGA Section 7(c) to build 'approximately 23 miles of 24-inch-diameter natural gas transmission pipeline in Eddy County, New Mexico and Culberson County, Texas' carrying 'about 400 million standard cubic feet of natural gas per day from Gateway's newly expanded Carlsbad cryogenic gas processing plant... to the Agua Blanca intrastate pipeline owned by White Water Midstream.' FERC issued the certificate Oct. 2019 (Natural Gas Intelligence, Oct. 14, 2019, independently verified). EIA's own 'Today in Energy' (Aug. 24, 2020, independently verified) separately confirms: 'Sendero Carlsbad Gateway Project: This new pipeline was completed in May 2020 and connects natural gas processing plants in southeastern New Mexico to the Waha hub. The 23-mile, 24-inch pipeline has a capacity of 0.40 Bcf/d.' Two independent origins (FERC's own order/EA vs. EIA's independent statistical analysis, plus NGI trade press) all agree — correctly classified as an interstate gas transmission pipeline, not gathering/distribution. Note the FERC EA PDF itself could not be cited (fails url_verifier — PDF text is zip/deflate-compressed so the raw-byte substring check can't find plaintext; this is a verifier tooling limitation on this specific PDF, not a defect in the source, which I read directly via pdftotext)."
+  },
+  {
+   "segment_name": "Sendero Gateway Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no roster conflict; note the wider Agua Blanca system already has its own separate segment rows",
+   "researcher_notes": "DUPLICATE CHECK: no other row in the 45-pipeline TX-operating roster is named Agua Blanca. Checked the full current GGIT gas snapshot directly and found the wider system is already split across THREE separate GEM rows under the same PipelineName 'Agua Blanca Pipeline': P2498 (the mainline itself, no SegmentName, 163 mi/36 in/1,250 MMcf/d), P2499 (this row, SegmentName='Sendero Gateway Project', 23 mi/24 in/400 MMcf/d — the FERC-jurisdictional Carlsbad spur Sendero built and WhiteWater acquired in Aug. 2021), and P7109 (SegmentName='Targa Red Hills Interconnect', no values filled). So P2499 is NOT a duplicate/relabel of P2498 — it is the deliberately separate, differently-sized, differently-owned (originally Sendero, not WhiteWater/MPLX) spur line, correctly split out. GEM's own P7109 row is what carries the Targa Resources interconnect, which resolves what would otherwise look like a missing-owner gap (see the attribution finding below)."
+  },
+  {
+   "segment_name": "Sendero Gateway Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "no change — Length/Diameter/Capacity/Location/Fuel/Status all independently triangulated",
+   "researcher_notes": "SPEC/ATTRIBUTION (length, diameter, capacity, endpoints, fuel, status) — the strongest-sourced part of this row. THREE independent origins agree exactly: (1) FERC's own Environmental Assessment (agency's finding, read via pdftotext, not independently citable per url_verifier — see existence note): '23 miles of 24-inch-diameter... about 400 million standard cubic feet... per day'; (2) Natural Gas Intelligence, Oct. 14 2019 (trade press, verified live): 'the 23-mile, 24-inch diameter pipeline'... '400 MMcf/d natural gas pipeline'; (3) EIA Today in Energy, Aug. 24 2020 (independent government statistical analysis, verified live): 'The 23-mile, 24-inch pipeline has a capacity of 0.40 Bcf/d' and 'connects natural gas processing plants in southeastern New Mexico to the Waha hub.' All three exactly match GEM's LengthKnown=23 mi, Diameter=24 in, Capacity=400 MMcf/d. Location: StartLocation=Carlsbad NM is corroborated (Carlsbad/Eddy County is where the Carlsbad cryogenic gas plant sits, per both FERC and EIA). EndLocation='Waha Hub' is corroborated verbatim by EIA ('connects... to the Waha hub'); note FERC's EA instead names the immediate physical terminus as a WhiteWater meter station/interconnect with the Agua Blanca intrastate system in Culberson County, TX (MP 23.3) rather than 'Waha Hub' by name — the two descriptions are consistent (the interconnect feeds into the corridor that reaches Waha) but describe the endpoint at slightly different levels of granularity; flagging only as a minor caveat, not a defect. Fuel=Gas and Status=operating are trivially confirmed by every source (natural gas transmission pipeline, completed and in service since May 2020, no evidence of any subsequent outage/retirement).",
+   "proposed_refs": [
+    "https://www.naturalgasintel.com/ferc-oks-senderos-permian-carlsbad-gateway-pipeline-glick-dissents/",
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Sendero Gateway Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "StartYear1=2020 confirmed; consider adding StartMonth1 (see fills)",
+   "researcher_notes": "StartYear1=2020: EIA's Today in Energy (Aug. 24, 2020, independently verified) states the pipeline 'was completed in May 2020' — a single strong, precise, government-statistical source; consistent with (but not independently duplicated by) FERC's Oct. 2019 certificate approval and the construction timeline described in NGI's Oct. 2019 article. Calling this medium rather than high tier since only EIA pins the exact year/month explicitly; nothing found contradicts it.",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Sendero Gateway Project",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "verify Owner1/Owner2 specifically for the Sendero Gateway spur post-acquisition; do NOT add Targa Resources here (it already has its own row, P7109)",
+   "researcher_notes": "OWNERSHIP is the row's real open question. This spur was built and originally owned by Sendero Carlsbad Gateway, LLC (a Sendero Midstream Partners subsidiary) per the FERC docket — NOT WhiteWater/MPLX at construction. The wiki page cites 'WhiteWater Announces Acquisition of Sendero's Gateway Pipeline' (whitewatermidstream.com/news, Aug. 26, 2021) as the basis for the current WhiteWater Midstream ownership, but I could NOT independently verify that specific 2021 transaction: whitewatermidstream.com serves only a bare JS-shell with no article content to either WebFetch or curl (both /news and /projects), and I could not reach a syndicated copy (WebSearch quota was exhausted this session at 200/200 calls; DuckDuckGo/Bing scraping was bot-blocked; archive.org repeatedly returned 429/timeouts for related URLs). Separately, an independent source I DID verify — NS Energy Business, Feb. 5, 2019 ('First Infrastructure Capital to acquire 80% stake in Agua Blanca pipeline') — describes the WIDER Agua Blanca system's 2019 ownership as: First Infrastructure Capital Advisors (80% combined, via acquiring WhiteWater Midstream itself [60%] plus WPX Energy's direct 20% stake), with 'MPLX's subsidiary MarkWest Energy Partners and Targa Resources' named as the other stakeholders (percentages not given). GEM's own 'Parent' column for this row already reflects the First Infrastructure Capital / MPLX LP structure correctly. Targa Resources is NOT missing from GEM overall — it already has its own dedicated row for this system, P7109 'Targa Red Hills Interconnect,' so no Targa addition is owed on P2499 itself. What remains genuinely unconfirmed: whether the Sendero Gateway SPUR specifically (this 23-mile line, distinct from the P2498 mainline) is actually co-owned by MPLX post-acquisition, or whether WhiteWater acquired/holds it outright — the NS Energy source describes the mainline JV, not this spur, and I found no independent source describing the spur's ownership split after the 2021 sale. Recommend a follow-up pass with a fresh WebSearch budget to locate the actual 2021 acquisition announcement text (via Hart Energy, Reuters, S&P Global, or an SEC filing) before treating Owner2=MPLX as settled for this specific row.",
+   "proposed_refs": [
+    "https://www.nsenergybusiness.com/news/agua-blanca-pipeline-ownership/"
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Sendero Gateway Project",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "verify SegmentCost=$45,000,000 or leave uncited; do not assume it is the $100M processing-plant figure",
+   "researcher_notes": "SegmentCost=$45,000,000 (USD) has NO independent corroboration in anything I could read. NGI's Oct. 2019 article mentions only a DIFFERENT, co-located asset's cost — 'its affiliate had already completed a $100 million processing plant designed to work in tandem with the Carlsbad Gateway line' — that $100M is the Sendero processing PLANT, not the 23-mile PIPELINE, and should not be conflated with GEM's $45M pipeline figure. FERC's EA contains no cost figures at all (checked directly). IJGlobal's project-finance transaction pages ('Agua Blanca and Waha Connector Pipelines (121km) Expansion') plausibly carry a cost figure but are now paywalled behind a 2024 platform migration (ijglobal.com -> infrastructure.greenstreet.com -> product/login page); could not read them. The ICF/NMOGA 'Economic Importance of New Mexico Oil and Natural Gas Infrastructure' PDF (a wiki-cited source) 403'd (expired S3 hotlink protection on the CloudFront-hosted copy) — an access failure, not a deletion. Since I cannot independently confirm $45,000,000, I am not proposing a ref for it and flag it as an unresolved spec item rather than silently passing it.",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Adjudicate the Owner conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Owner [ref]: none of the three sources states Owner1%/Owner2% splits for this specific segment (the sheet leaves Owner1%/Owner2% blank, consistent with unknown split) -- not a value contradiction, just noting the split itself is not independently sourced.",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1552000/000155200024000007/mplx-20231231xex211.htm",
+    "https://web.archive.org/web/20211023052945/https://whitewatermidstream.com/projects",
+    "https://web.archive.org/web/20220519115304/https://whitewatermidstream.com/assets/Carlsbad_Gateway_Overview.pdf"
+   ],
+   "verifications": [
     {
-      "segment_name": "Sendero Gateway Project",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "none — existence and classification are solidly documented",
-      "researcher_notes": "EXISTENCE/CLASSIFICATION: this row is the Sendero Carlsbad Gateway pipeline (FERC Docket CP18-538), a real, well-documented interstate gas transmission line, NOT a GEM-only or hallucinated entity. FERC's own Environmental Assessment (Jan. 2019, read via pdftotext) describes 'Sendero Carlsbad Gateway, LLC' filing under NGA Section 7(c) to build 'approximately 23 miles of 24-inch-diameter natural gas transmission pipeline in Eddy County, New Mexico and Culberson County, Texas' carrying 'about 400 million standard cubic feet of natural gas per day from Gateway's newly expanded Carlsbad cryogenic gas processing plant... to the Agua Blanca intrastate pipeline owned by White Water Midstream.' FERC issued the certificate Oct. 2019 (Natural Gas Intelligence, Oct. 14, 2019, independently verified). EIA's own 'Today in Energy' (Aug. 24, 2020, independently verified) separately confirms: 'Sendero Carlsbad Gateway Project: This new pipeline was completed in May 2020 and connects natural gas processing plants in southeastern New Mexico to the Waha hub. The 23-mile, 24-inch pipeline has a capacity of 0.40 Bcf/d.' Two independent origins (FERC's own order/EA vs. EIA's independent statistical analysis, plus NGI trade press) all agree — correctly classified as an interstate gas transmission pipeline, not gathering/distribution. Note the FERC EA PDF itself could not be cited (fails url_verifier — PDF text is zip/deflate-compressed so the raw-byte substring check can't find plaintext; this is a verifier tooling limitation on this specific PDF, not a defect in the source, which I read directly via pdftotext)."
+     "url": "https://www.sec.gov/Archives/edgar/data/1552000/000155200024000007/mplx-20231231xex211.htm",
+     "ok": true,
+     "contains_value": true
     },
     {
-      "segment_name": "Sendero Gateway Project",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "no roster conflict; note the wider Agua Blanca system already has its own separate segment rows",
-      "researcher_notes": "DUPLICATE CHECK: no other row in the 45-pipeline TX-operating roster is named Agua Blanca. Checked the full current GGIT gas snapshot directly and found the wider system is already split across THREE separate GEM rows under the same PipelineName 'Agua Blanca Pipeline': P2498 (the mainline itself, no SegmentName, 163 mi/36 in/1,250 MMcf/d), P2499 (this row, SegmentName='Sendero Gateway Project', 23 mi/24 in/400 MMcf/d — the FERC-jurisdictional Carlsbad spur Sendero built and WhiteWater acquired in Aug. 2021), and P7109 (SegmentName='Targa Red Hills Interconnect', no values filled). So P2499 is NOT a duplicate/relabel of P2498 — it is the deliberately separate, differently-sized, differently-owned (originally Sendero, not WhiteWater/MPLX) spur line, correctly split out. GEM's own P7109 row is what carries the Targa Resources interconnect, which resolves what would otherwise look like a missing-owner gap (see the attribution finding below)."
+     "url": "https://web.archive.org/web/20211023052945/https://whitewatermidstream.com/projects",
+     "ok": true,
+     "contains_value": true
     },
     {
-      "segment_name": "Sendero Gateway Project",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "spec",
-      "recommendation": "no change — Length/Diameter/Capacity/Location/Fuel/Status all independently triangulated",
-      "researcher_notes": "SPEC/ATTRIBUTION (length, diameter, capacity, endpoints, fuel, status) — the strongest-sourced part of this row. THREE independent origins agree exactly: (1) FERC's own Environmental Assessment (agency's finding, read via pdftotext, not independently citable per url_verifier — see existence note): '23 miles of 24-inch-diameter... about 400 million standard cubic feet... per day'; (2) Natural Gas Intelligence, Oct. 14 2019 (trade press, verified live): 'the 23-mile, 24-inch diameter pipeline'... '400 MMcf/d natural gas pipeline'; (3) EIA Today in Energy, Aug. 24 2020 (independent government statistical analysis, verified live): 'The 23-mile, 24-inch pipeline has a capacity of 0.40 Bcf/d' and 'connects natural gas processing plants in southeastern New Mexico to the Waha hub.' All three exactly match GEM's LengthKnown=23 mi, Diameter=24 in, Capacity=400 MMcf/d. Location: StartLocation=Carlsbad NM is corroborated (Carlsbad/Eddy County is where the Carlsbad cryogenic gas plant sits, per both FERC and EIA). EndLocation='Waha Hub' is corroborated verbatim by EIA ('connects... to the Waha hub'); note FERC's EA instead names the immediate physical terminus as a WhiteWater meter station/interconnect with the Agua Blanca intrastate system in Culberson County, TX (MP 23.3) rather than 'Waha Hub' by name — the two descriptions are consistent (the interconnect feeds into the corridor that reaches Waha) but describe the endpoint at slightly different levels of granularity; flagging only as a minor caveat, not a defect. Fuel=Gas and Status=operating are trivially confirmed by every source (natural gas transmission pipeline, completed and in service since May 2020, no evidence of any subsequent outage/retirement).",
-      "proposed_refs": [
-        "https://www.naturalgasintel.com/ferc-oks-senderos-permian-carlsbad-gateway-pipeline-glick-dissents/",
-        "https://www.eia.gov/todayinenergy/detail.php?id=44856"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "Sendero Gateway Project",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "spec",
-      "recommendation": "StartYear1=2020 confirmed; consider adding StartMonth1 (see fills)",
-      "researcher_notes": "StartYear1=2020: EIA's Today in Energy (Aug. 24, 2020, independently verified) states the pipeline 'was completed in May 2020' — a single strong, precise, government-statistical source; consistent with (but not independently duplicated by) FERC's Oct. 2019 certificate approval and the construction timeline described in NGI's Oct. 2019 article. Calling this medium rather than high tier since only EIA pins the exact year/month explicitly; nothing found contradicts it.",
-      "proposed_refs": ["https://www.eia.gov/todayinenergy/detail.php?id=44856"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "Sendero Gateway Project",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "verify Owner1/Owner2 specifically for the Sendero Gateway spur post-acquisition; do NOT add Targa Resources here (it already has its own row, P7109)",
-      "researcher_notes": "OWNERSHIP is the row's real open question. This spur was built and originally owned by Sendero Carlsbad Gateway, LLC (a Sendero Midstream Partners subsidiary) per the FERC docket — NOT WhiteWater/MPLX at construction. The wiki page cites 'WhiteWater Announces Acquisition of Sendero's Gateway Pipeline' (whitewatermidstream.com/news, Aug. 26, 2021) as the basis for the current WhiteWater Midstream ownership, but I could NOT independently verify that specific 2021 transaction: whitewatermidstream.com serves only a bare JS-shell with no article content to either WebFetch or curl (both /news and /projects), and I could not reach a syndicated copy (WebSearch quota was exhausted this session at 200/200 calls; DuckDuckGo/Bing scraping was bot-blocked; archive.org repeatedly returned 429/timeouts for related URLs). Separately, an independent source I DID verify — NS Energy Business, Feb. 5, 2019 ('First Infrastructure Capital to acquire 80% stake in Agua Blanca pipeline') — describes the WIDER Agua Blanca system's 2019 ownership as: First Infrastructure Capital Advisors (80% combined, via acquiring WhiteWater Midstream itself [60%] plus WPX Energy's direct 20% stake), with 'MPLX's subsidiary MarkWest Energy Partners and Targa Resources' named as the other stakeholders (percentages not given). GEM's own 'Parent' column for this row already reflects the First Infrastructure Capital / MPLX LP structure correctly. Targa Resources is NOT missing from GEM overall — it already has its own dedicated row for this system, P7109 'Targa Red Hills Interconnect,' so no Targa addition is owed on P2499 itself. What remains genuinely unconfirmed: whether the Sendero Gateway SPUR specifically (this 23-mile line, distinct from the P2498 mainline) is actually co-owned by MPLX post-acquisition, or whether WhiteWater acquired/holds it outright — the NS Energy source describes the mainline JV, not this spur, and I found no independent source describing the spur's ownership split after the 2021 sale. Recommend a follow-up pass with a fresh WebSearch budget to locate the actual 2021 acquisition announcement text (via Hart Energy, Reuters, S&P Global, or an SEC filing) before treating Owner2=MPLX as settled for this specific row.",
-      "proposed_refs": ["https://www.nsenergybusiness.com/news/agua-blanca-pipeline-ownership/"],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "Sendero Gateway Project",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "verify SegmentCost=$45,000,000 or leave uncited; do not assume it is the $100M processing-plant figure",
-      "researcher_notes": "SegmentCost=$45,000,000 (USD) has NO independent corroboration in anything I could read. NGI's Oct. 2019 article mentions only a DIFFERENT, co-located asset's cost — 'its affiliate had already completed a $100 million processing plant designed to work in tandem with the Carlsbad Gateway line' — that $100M is the Sendero processing PLANT, not the 23-mile PIPELINE, and should not be conflated with GEM's $45M pipeline figure. FERC's EA contains no cost figures at all (checked directly). IJGlobal's project-finance transaction pages ('Agua Blanca and Waha Connector Pipelines (121km) Expansion') plausibly carry a cost figure but are now paywalled behind a 2024 platform migration (ijglobal.com -> infrastructure.greenstreet.com -> product/login page); could not read them. The ICF/NMOGA 'Economic Importance of New Mexico Oil and Natural Gas Infrastructure' PDF (a wiki-cited source) 403'd (expired S3 hotlink protection on the CloudFront-hosted copy) — an access failure, not a deletion. Since I cannot independently confirm $45,000,000, I am not proposing a ref for it and flag it as an unresolved spec item rather than silently passing it.",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://web.archive.org/web/20220519115304/https://whitewatermidstream.com/assets/Carlsbad_Gateway_Overview.pdf",
+     "ok": true,
+     "contains_value": true
     }
-  ],
-  "fills": [
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "promoted_from": "Owner [ref]|none of the three sources states Owner1%/Owner2% splits for "
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Sendero Gateway Project",
+   "sheet_row": 1288,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartMonth1"
+   ],
+   "primary_value_col": "StartMonth1",
+   "values": {
+    "StartMonth1": "5"
+   },
+   "primary_value": "5",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+   ],
+   "verifications": [
     {
-      "segment_name": "Sendero Gateway Project",
-      "sheet_row": 1288,
-      "ref_col": "Start [ref]",
-      "value_cols": ["StartMonth1"],
-      "primary_value_col": "StartMonth1",
-      "values": {"StartMonth1": "5"},
-      "primary_value": "5",
-      "proposed_refs": ["https://www.eia.gov/todayinenergy/detail.php?id=44856"],
-      "verifications": [
-        {"url": "https://www.eia.gov/todayinenergy/detail.php?id=44856", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "StartMonth1 was blank. EIA's Today in Energy (Aug. 24, 2020) states the Sendero Carlsbad Gateway Project 'was completed in May 2020' — filling StartMonth1=5 (May) alongside the already-present StartYear1=2020. Single strong government-statistical source; nothing found contradicts it, but only one origin pins the month specifically, so tier=medium."
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "summary": "P2499 (Sendero Carlsbad Gateway spur of the Agua Blanca system) is a real, well-documented FERC-certificated (CP18-538) gas transmission pipeline; Length/Diameter/Capacity/Location/Fuel/Status all confirmed at high tier by FERC's own EA + NGI + EIA (23 mi, 24 in, 400 MMcf/d, Carlsbad NM to Waha Hub, in service since May 2020) and no duplicate (the wider system is already correctly split across P2498/P2499/P7109). Two open concerns, neither existence-threatening: Owner1/Owner2 (WhiteWater/MPLX) could not be independently confirmed for this specific spur post-2021 acquisition (WebSearch quota was exhausted mid-task; whitewatermidstream.com's own cited press release is a JS shell with no readable content), and SegmentCost=$45,000,000 has no corroborating source (the only nearby dollar figure found, $100M, is for the separate co-located processing plant, not this pipeline). StartMonth1 filled (May, from EIA) as a blank-field bonus. UNRESOLVED: SegmentCost sourcing and the post-acquisition Owner attribution for this segment specifically."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "StartMonth1 was blank. EIA's Today in Energy (Aug. 24, 2020) states the Sendero Carlsbad Gateway Project 'was completed in May 2020' — filling StartMonth1=5 (May) alongside the already-present StartYear1=2020. Single strong government-statistical source; nothing found contradicts it, but only one origin pins the month specifically, so tier=medium."
+  }
+ ],
+ "summary": "P2499 (Sendero Carlsbad Gateway spur of the Agua Blanca system) is a real, well-documented FERC-certificated (CP18-538) gas transmission pipeline; Length/Diameter/Capacity/Location/Fuel/Status all confirmed at high tier by FERC's own EA + NGI + EIA (23 mi, 24 in, 400 MMcf/d, Carlsbad NM to Waha Hub, in service since May 2020) and no duplicate (the wider system is already correctly split across P2498/P2499/P7109). Two open concerns, neither existence-threatening: Owner1/Owner2 (WhiteWater/MPLX) could not be independently confirmed for this specific spur post-2021 acquisition (WebSearch quota was exhausted mid-task; whitewatermidstream.com's own cited press release is a JS shell with no readable content), and SegmentCost=$45,000,000 has no corroborating source (the only nearby dollar figure found, $100M, is for the separate co-located processing plant, not this pipeline). StartMonth1 filled (May, from EIA) as a blank-field bonus. UNRESOLVED: SegmentCost sourcing and the post-acquisition Owner attribution for this segment specifically."
 }

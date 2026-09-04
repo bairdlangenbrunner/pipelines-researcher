@@ -1,71 +1,84 @@
 {
-  "project_id": "P2636",
-  "pipeline_name": "Wildcat Gas Pipeline",
-  "sheet_row": 1362,
-  "wiki": "https://www.gem.wiki/Wildcat_Gas_Pipeline",
-  "validity": [
+ "project_id": "P2636",
+ "pipeline_name": "Wildcat Gas Pipeline",
+ "sheet_row": 1362,
+ "wiki": "https://www.gem.wiki/Wildcat_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "Attach the three sources below to the Status/Fuel/Proposal/Start/Capacity/FuelSource ref clusters (all currently MISSING_REF, no fabricated data changes needed).",
+   "researcher_notes": "EXISTENCE + core specs: real, well-corroborated project, not a GEM-only entity. Opened all 4 of the row's harvested wiki citations: (1) eia.gov/naturalgas/data.php is a generic landing page that does NOT itself name Wildcat -- but it links to EIA's actual 'Natural Gas Pipeline Projects' historical workbook, which I downloaded directly and read: row 905 of the 'Historical Projects (1996-2024)' tab reads Project Name='Project Wildcat', Pipeline Operator Name='Enable Gas Transmission', Project Type='New Pipeline', Status='Completed', Completed Date=2018-08-01, Year In Service Date=2018, Beg_State='OK', End_State='TX', Additional Capacity (MMcf/d)=400, Pipeline Type='Interstate', Project Notes='Takeaway capacity out of Anadarko basin; to north TX processing plant'. This is a government (EIA) source, independent of GEM. (2) The wiki's second citation is a broken/mislabeled Google Images search URL whose link_text ('Don't Stop 'Til You Get Enough') let me identify and locate the real source via Wayback CDX: RBN Energy, \"Don't Stop 'Til You Get Enough (Capacity) -- Natural Gas Projects Vie to Provide SCOOP/STACK Takeaway Capacity\", published 2017-05-17 (Wayback snapshot 20170517010154, live rbnenergy.com URL now 403s to non-browser UAs). It states: \"Earlier this month (Wednesday, May 3), Enable Midstream announced Project Wildcat, a 400-MMcf/d rich gas takeaway project\" -- confirming the exact proposal date (May 2017) and capacity. (3) journalrecord.com, 'Enable's Wildcat critical to SCOOP and STACK' (2018-05-04, Sarah Terry-Cobo) -- paywalled but the visible lede text confirms: \"Continental has committed to paying for 400 million cubic feet per day of natural gas capacity in Enable's Wildcat line. The project will connect Oklahoma oil and gas fields to the Tolar Hub in Johnson County, Texas\" and ties the project to a 25% rise in gas gathered from 'the Anadarko Basin, which includes both the SCOOP and STACK plays'. (4) spglobal.com article ('Continental Resources to move Oklahoma gas on Enable Midstream project Wildcat') is bot-blocked (\"Security Controls Triggered\" -- an access failure, not evidence of deletion) and has no Wayback snapshot under its current or a guessed legacy URL, so it is not cited, but its own headline independently corroborates the Oklahoma origin. Net: Capacity=400.00 MMcf/d confirmed by all 3 readable sources (tier high). FuelSource='Anadarko Basin' confirmed by RBN + Journal Record + EIA notes (tier high). ProposalYear=2017/ProposalMonth=May confirmed precisely (Wed May 3, 2017 announcement per RBN) (tier high). StartYear1=2018 confirmed by EIA's Completed Date 2018-08-01 / Year In Service 2018 (tier high, EIA + contemporaneous 2018 trade coverage). Status=operating and Fuel=Gas are consistent with all sources describing an in-service natural gas takeaway pipeline; EIA independently classifies it 'Interstate' 'New Pipeline' 'Completed', which also answers the classification question -- this is a real transmission-class interstate gas pipeline per EIA's own criteria, not a mere gathering stub, so GGIT tracking it as a transmission pipeline is correct.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/",
+    "https://web.archive.org/web/20170517010154/https://rbnenergy.com/don%E2%80%99t-stop-till-you-get-enough-natural-gas-projects-vie-to-provide-scoop-stack-takeaway-capacity"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Correct StartState/Province from 'Texas' to 'Oklahoma'. The sheet currently has BOTH StartState/Province and EndState/Province set to 'Texas' -- that is wrong for the start. This is an Oklahoma-to-Texas interstate takeaway line, not a Texas-only line. EndState/Province='Texas' is correct and stays. See fills[] for the specific delivery-point city/county to add.",
+   "researcher_notes": "Two independent sources agree the line originates in Oklahoma, not Texas: EIA's own project table lists Beg_State='OK', End_State='TX', Crosses State Border='Yes' (i.e., EIA itself classifies this as an interstate, cross-state line -- it could not do that if both ends were Texas). Journal Record (2018-05-04) is explicit: 'The project will connect Oklahoma oil and gas fields to the Tolar Hub in Johnson County, Texas.' RBN Energy corroborates the Oklahoma origin contextually (SCOOP/STACK plays are entirely within Oklahoma's Anadarko Basin counties). GEM's current StartState/Province='Texas' has no source support and conflicts with both independent sources that do address the question -- this looks like a copy-paste of the End state into the Start field rather than a researched value.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No change to Owner1. Not a duplicate of P0161.",
+   "researcher_notes": "OWNERSHIP: GEM's Owner1='Enable Midstream Partners LP' (100%) is consistent with EIA's operator-of-record 'Enable Gas Transmission' -- Enable Gas Transmission LLC is the FERC-certificated operating subsidiary through which Enable Midstream Partners LP holds its interstate pipeline assets, so the parent-company attribution is a defensible simplification, not an error. DUPLICATE CHECK against the 45-row roster: 'Enable Gas Transmission' also appears as its own GEM row, P0161 (len=9495 mi, cap=6600 MMcf/d) -- a large, pre-existing multi-state mainline network under the same operating subsidiary. I checked whether P2636 is really a relabeled piece of that trunk rather than a genuine standalone asset. Evidence against folding it in: EIA classifies 'Project Wildcat' as Project Type='New Pipeline' (not 'Expansion'), it was announced and covered in trade press under its own name (RBN Energy May 2017, Journal Record May 2018) as a specific new capital project with its own shipper commitment (Continental Resources, 400 MMcf/d) distinct from the pre-existing EGT system's contracted capacity, and it has a specific origin (Anadarko Basin gathering area) and delivery point (Tolar Hub, Johnson County TX) that are not simply 'the EGT mainline'. This reads as a genuine standalone lateral/segment under the same operator family, consistent with GEM's segment-level tracking convention -- not a duplicate of P0161.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1362,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "EndLocation",
+    "EndPrefecture/District"
+   ],
+   "primary_value_col": "EndLocation",
+   "values": {
+    "EndLocation": "Tolar",
+    "EndPrefecture/District": "Johnson County"
+   },
+   "primary_value": "Tolar",
+   "proposed_refs": [
+    "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "Attach the three sources below to the Status/Fuel/Proposal/Start/Capacity/FuelSource ref clusters (all currently MISSING_REF, no fabricated data changes needed).",
-      "researcher_notes": "EXISTENCE + core specs: real, well-corroborated project, not a GEM-only entity. Opened all 4 of the row's harvested wiki citations: (1) eia.gov/naturalgas/data.php is a generic landing page that does NOT itself name Wildcat -- but it links to EIA's actual 'Natural Gas Pipeline Projects' historical workbook, which I downloaded directly and read: row 905 of the 'Historical Projects (1996-2024)' tab reads Project Name='Project Wildcat', Pipeline Operator Name='Enable Gas Transmission', Project Type='New Pipeline', Status='Completed', Completed Date=2018-08-01, Year In Service Date=2018, Beg_State='OK', End_State='TX', Additional Capacity (MMcf/d)=400, Pipeline Type='Interstate', Project Notes='Takeaway capacity out of Anadarko basin; to north TX processing plant'. This is a government (EIA) source, independent of GEM. (2) The wiki's second citation is a broken/mislabeled Google Images search URL whose link_text ('Don't Stop 'Til You Get Enough') let me identify and locate the real source via Wayback CDX: RBN Energy, \"Don't Stop 'Til You Get Enough (Capacity) -- Natural Gas Projects Vie to Provide SCOOP/STACK Takeaway Capacity\", published 2017-05-17 (Wayback snapshot 20170517010154, live rbnenergy.com URL now 403s to non-browser UAs). It states: \"Earlier this month (Wednesday, May 3), Enable Midstream announced Project Wildcat, a 400-MMcf/d rich gas takeaway project\" -- confirming the exact proposal date (May 2017) and capacity. (3) journalrecord.com, 'Enable's Wildcat critical to SCOOP and STACK' (2018-05-04, Sarah Terry-Cobo) -- paywalled but the visible lede text confirms: \"Continental has committed to paying for 400 million cubic feet per day of natural gas capacity in Enable's Wildcat line. The project will connect Oklahoma oil and gas fields to the Tolar Hub in Johnson County, Texas\" and ties the project to a 25% rise in gas gathered from 'the Anadarko Basin, which includes both the SCOOP and STACK plays'. (4) spglobal.com article ('Continental Resources to move Oklahoma gas on Enable Midstream project Wildcat') is bot-blocked (\"Security Controls Triggered\" -- an access failure, not evidence of deletion) and has no Wayback snapshot under its current or a guessed legacy URL, so it is not cited, but its own headline independently corroborates the Oklahoma origin. Net: Capacity=400.00 MMcf/d confirmed by all 3 readable sources (tier high). FuelSource='Anadarko Basin' confirmed by RBN + Journal Record + EIA notes (tier high). ProposalYear=2017/ProposalMonth=May confirmed precisely (Wed May 3, 2017 announcement per RBN) (tier high). StartYear1=2018 confirmed by EIA's Completed Date 2018-08-01 / Year In Service 2018 (tier high, EIA + contemporaneous 2018 trade coverage). Status=operating and Fuel=Gas are consistent with all sources describing an in-service natural gas takeaway pipeline; EIA independently classifies it 'Interstate' 'New Pipeline' 'Completed', which also answers the classification question -- this is a real transmission-class interstate gas pipeline per EIA's own criteria, not a mere gathering stub, so GGIT tracking it as a transmission pipeline is correct.",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
-        "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/",
-        "https://web.archive.org/web/20170517010154/https://rbnenergy.com/don%E2%80%99t-stop-till-you-get-enough-natural-gas-projects-vie-to-provide-scoop-stack-takeaway-capacity"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "Correct StartState/Province from 'Texas' to 'Oklahoma'. The sheet currently has BOTH StartState/Province and EndState/Province set to 'Texas' -- that is wrong for the start. This is an Oklahoma-to-Texas interstate takeaway line, not a Texas-only line. EndState/Province='Texas' is correct and stays. See fills[] for the specific delivery-point city/county to add.",
-      "researcher_notes": "Two independent sources agree the line originates in Oklahoma, not Texas: EIA's own project table lists Beg_State='OK', End_State='TX', Crosses State Border='Yes' (i.e., EIA itself classifies this as an interstate, cross-state line -- it could not do that if both ends were Texas). Journal Record (2018-05-04) is explicit: 'The project will connect Oklahoma oil and gas fields to the Tolar Hub in Johnson County, Texas.' RBN Energy corroborates the Oklahoma origin contextually (SCOOP/STACK plays are entirely within Oklahoma's Anadarko Basin counties). GEM's current StartState/Province='Texas' has no source support and conflicts with both independent sources that do address the question -- this looks like a copy-paste of the End state into the Start field rather than a researched value.",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
-        "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No change to Owner1. Not a duplicate of P0161.",
-      "researcher_notes": "OWNERSHIP: GEM's Owner1='Enable Midstream Partners LP' (100%) is consistent with EIA's operator-of-record 'Enable Gas Transmission' -- Enable Gas Transmission LLC is the FERC-certificated operating subsidiary through which Enable Midstream Partners LP holds its interstate pipeline assets, so the parent-company attribution is a defensible simplification, not an error. DUPLICATE CHECK against the 45-row roster: 'Enable Gas Transmission' also appears as its own GEM row, P0161 (len=9495 mi, cap=6600 MMcf/d) -- a large, pre-existing multi-state mainline network under the same operating subsidiary. I checked whether P2636 is really a relabeled piece of that trunk rather than a genuine standalone asset. Evidence against folding it in: EIA classifies 'Project Wildcat' as Project Type='New Pipeline' (not 'Expansion'), it was announced and covered in trade press under its own name (RBN Energy May 2017, Journal Record May 2018) as a specific new capital project with its own shipper commitment (Continental Resources, 400 MMcf/d) distinct from the pre-existing EGT system's contracted capacity, and it has a specific origin (Anadarko Basin gathering area) and delivery point (Tolar Hub, Johnson County TX) that are not simply 'the EGT mainline'. This reads as a genuine standalone lateral/segment under the same operator family, consistent with GEM's segment-level tracking convention -- not a duplicate of P0161.",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
+     "url": "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     }
-  ],
-  "fills": [
-    {
-      "segment_name": "",
-      "sheet_row": 1362,
-      "ref_col": "Location [ref]",
-      "value_cols": ["EndLocation", "EndPrefecture/District"],
-      "primary_value_col": "EndLocation",
-      "values": {"EndLocation": "Tolar", "EndPrefecture/District": "Johnson County"},
-      "primary_value": "Tolar",
-      "proposed_refs": ["https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/"],
-      "verifications": [
-        {"url": "https://journalrecord.com/2018/05/04/enables-wildcat-critical-to-scoop-and-stack/", "ok": true, "contains_value": true}
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Both StartLocation and EndLocation/EndPrefecture-District are currently blank. Journal Record names the delivery point explicitly: 'the Tolar Hub in Johnson County, Texas.' EIA's project table corroborates the OK->TX cross-state route (see validity concern above) but gives no city/county-level detail, so this specific fill rests on one strong source only (tier medium, not independent). StartLocation left blank deliberately -- no source pins a single origin point; this is a gathering-area takeaway drawing gas from multiple wells across the Anadarko Basin (SCOOP/STACK), not a single wellhead or facility, so forcing a StartLocation value would be fabricated precision."
-    }
-  ],
-  "summary": "P2636 Wildcat Gas Pipeline: existence, capacity (400 MMcf/d), FuelSource (Anadarko Basin), ProposalYear/Month (2017 May), StartYear1 (2018) and classification all confirmed high-tier via EIA's own Natural Gas Pipeline Projects table + RBN Energy (2017) + Journal Record (2018), three independent sources, refs proposed for six MISSING_REF clusters; NOT a duplicate of P0161 Enable Gas Transmission despite shared operator family. One genuine attribution defect found and flagged: StartState/Province is wrongly set to 'Texas' (should be 'Oklahoma' -- this is an OK-to-TX interstate line per EIA + Journal Record), plus a fill for the previously-blank delivery point (EndLocation=Tolar, EndPrefecture/District=Johnson County). No UNRESOLVED items."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Both StartLocation and EndLocation/EndPrefecture-District are currently blank. Journal Record names the delivery point explicitly: 'the Tolar Hub in Johnson County, Texas.' EIA's project table corroborates the OK->TX cross-state route (see validity concern above) but gives no city/county-level detail, so this specific fill rests on one strong source only (tier medium, not independent). StartLocation left blank deliberately -- no source pins a single origin point; this is a gathering-area takeaway drawing gas from multiple wells across the Anadarko Basin (SCOOP/STACK), not a single wellhead or facility, so forcing a StartLocation value would be fabricated precision."
+  }
+ ],
+ "summary": "P2636 Wildcat Gas Pipeline: existence, capacity (400 MMcf/d), FuelSource (Anadarko Basin), ProposalYear/Month (2017 May), StartYear1 (2018) and classification all confirmed high-tier via EIA's own Natural Gas Pipeline Projects table + RBN Energy (2017) + Journal Record (2018), three independent sources, refs proposed for six MISSING_REF clusters; NOT a duplicate of P0161 Enable Gas Transmission despite shared operator family. One genuine attribution defect found and flagged: StartState/Province is wrongly set to 'Texas' (should be 'Oklahoma' -- this is an OK-to-TX interstate line per EIA + Journal Record), plus a fill for the previously-blank delivery point (EndLocation=Tolar, EndPrefecture/District=Johnson County). No UNRESOLVED items."
 }

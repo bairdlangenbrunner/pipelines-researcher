@@ -383,6 +383,15 @@ Kazakhstan 40 / Saudi gas 38 / Egypt 26 / India 19 / Pakistan 16). Treat it as a
   them. (They are NOT "the same class as Wikipedia" — that comparison is withdrawn
   along with the Wikipedia ban.)
 - **theodora.com** — never an acceptable reference (`url_verifier` rejects it).
+- **URL shorteners** (`bit.ly`, `tinyurl.com`, `goo.gl`, `t.co`, `ow.ly`, `buff.ly`,
+  `is.gd`, `rebrand.ly`, `cutt.ly`, `shorturl.at`, `trib.al`) — never a citable address:
+  an opaque, revocable indirection whose target can be repointed after we cite it.
+  Resolve it and cite the target document. `url_verifier` rejects them pre-fetch, and
+  re-applies the GEM + blocklist bans to the final URL **and every redirect hop** —
+  because a ban is about the bytes served, never the string submitted. Until
+  2026-09-04 it was a string test on the submitted URL only, so `bit.ly/2sYGqrY`
+  verified clean while serving abarrelfull; nine such cells are live in the tracker.
+  `notes/escalation-2026-09-04-shortened-urls-bypass-the-blocklist.md`.
 - A scraped dataset alone never reaches green (Tier-2 ceiling).
 
 ## Most productive search patterns

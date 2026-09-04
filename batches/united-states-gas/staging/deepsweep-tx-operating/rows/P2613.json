@@ -1,304 +1,351 @@
 {
-  "project_id": "P2613",
-  "pipeline_name": "Sierrita Gas Pipeline",
-  "sheet_row": 1349,
-  "wiki": "https://www.gem.wiki/Sierrita_Gas_Pipeline",
-  "validity": [
+ "project_id": "P2613",
+ "pipeline_name": "Sierrita Gas Pipeline",
+ "sheet_row": 1349,
+ "wiki": "https://www.gem.wiki/Sierrita_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Correct StartState/Province from 'Texas' to 'Arizona'. StartLocation (Tucson) and StartPrefecture/District (Pima County) are already right for Arizona; only the state field is wrong. This row's presence in a Texas-scoped batch is itself a symptom of the bad value.",
+   "researcher_notes": "The pipeline does not touch Texas at all. Independently confirmed by FOUR sources, none derived from another: (1) Kinder Morgan's own company overview PDF (pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf, retrieved same date as the sheet's LastUpdated 2023-08-23; verifier gives OK/200 liveness but its PDF-text extraction misses the content check on this doc -- confirmed by hand with pdftotext -layout, which reads: 'extends from Kinder Morgan, Inc.'s El Paso Natural Gas pipeline system, near Tucson, Arizona, to the United States-Mexico border near Sasabe, Arizona'); (2) EIA's own Today in Energy article (eia.gov/todayinenergy/detail.php?id=44856, verified OK/200 + content), an independent federal agency, describing 'the Sierrita export pipeline from Tucson, Arizona, to the U.S. border with Mexico'; (3) Kinder Morgan's 2018 Form 10-K (SEC EDGAR, verified OK/200 + content via the verifier's own sec.gov UA retry), which places the asset as 'Near Tucson, Arizona, to the U.S.-Mexico border near Sasabe, Arizona'; (4) Mexico's federal gas-pipeline status register (gob.mx PDF, verified OK/200 liveness, content confirmed by hand with pdftotext -- lists the Sierrita Gas Pipeline (Tucson-Sasabe) under Entidad = 'Arizona'). Existence, classification (interstate/international natural gas transmission lateral, not gathering), and ownership are all otherwise confirmed clean -- see the confirmed-caveat entry below. This is a single-field location defect, not an existence or duplicate concern."
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Update Capacity from 200.00 MMcf/d to reflect the 2020 compression expansion -- current nameplate is materially higher. Kinder Morgan's own current company overview states 523,640 Dth/d; EIA independently confirms a +0.32 Bcf/d (320 MMcf/d) 'Sierrita Pima Expansion' completed in early 2020 on top of the original ~200 MMcf/d design capacity, which brackets the same ~520 MMcf/d total. Length (60 mi) and Diameter (36 in) are unaffected -- this was a compression/looping-style throughput increase, not new pipe, consistent with the same physical lateral described throughout.",
+   "researcher_notes": "GEM's current value of 200.00 MMcf/d is the pipeline's ORIGINAL 2014 design capacity, not its current one. That original figure is well corroborated for 2014: Natural Gas Intelligence's Oct 31 2014 in-service article ('The approximately $204 million pipeline has the capacity to deliver 200 MMcf/d of gas', verified OK/200 + content) and Mexico's gob.mx federal register ('Capacidad (mmpcd) 195*', verified OK/200 liveness, content confirmed by hand) both independently agree on ~195-200 MMcf/d as of 2014. But the pipeline was subsequently expanded: EIA's Today in Energy piece (Aug 24 2020, independent US federal source, verified OK/200 + content on 'Sierrita' + '0.32') states 'the 0.32 Bcf/d Sierrita Pima Expansion, was also completed in early 2020, increasing the capacity on the Sierrita export pipeline from Tucson, Arizona, to the U.S. border with Mexico.' Kinder Morgan's own current company overview PDF (retrieved 2023-08-23, the same date as the sheet's own LastUpdated -- verifier OK/200 liveness, content hand-confirmed via pdftotext) independently states the pipeline 'currently provides 523,640 dekatherms per day (Dth/d) of firm transportation capacity... The Sierrita pipeline system was built in 2014 and expanded in 2020.' 200 + 320 = 520 MMcf/d, which is in the same range as 523,640 Dth/d (Dth and Mcf are approximately but not exactly equivalent for pipeline gas, so I'm not proposing an exact converted figure as a drop-in replacement -- that conversion depends on the gas's actual heating content, which none of these sources state). Net: the sheet's Capacity is stale by roughly 2.5x. I did not add a Capacity [ref] fill pairing a source with the current (likely wrong) 200.00 value, since that would misrepresent a source that actually describes a higher current capacity as confirming the lower one -- this needs an Update-leg value change before a ref belongs on it."
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No action beyond the two concerns above and the SegmentCost caveat noted here.",
+   "researcher_notes": "Existence: extensively documented as a real, in-service pipeline -- SEC filings from BOTH joint-venture partners (Kinder Morgan's 2018 and 2022 Form 10-Ks, and Petroleos Mexicanos' own 2022 Form 20-F, all on SEC EDGAR and verified OK/200 with content confirmed), EIA, Mexico's federal gas-pipeline registry, Kinder Morgan's own investor-relations in-service press release (Oct 31 2014), Natural Gas Intelligence, and local press covering the pre-construction controversy (azcentral.com 2014, verified OK/200 + content). Not a phantom or GEM-only entity. Classification: correctly a natural-gas transmission lateral (36-inch, interstate + international), not a gathering/process line -- confirmed by every source above. No duplicate found against the 45-row TX-operating roster; Sierrita's Tucson-Sasabe/Sonora corridor is not shared with any other row in the set. Fuel = Gas: confirmed (all sources describe natural gas transportation; capacity stated in Dth/d and MMcf/d, gas-only units). StartYear1 = 2014: confirmed independently by Kinder Morgan's Oct 31 2014 in-service press release, the Oct 31 2014 Natural Gas Intelligence article, and Mexico's gob.mx register (fecha de operacion Dic/2014). Length = 60.00 mi: corroborated within normal rounding by NGI ('61-mile') and Mexico's register (97 km = 60.28 mi); Kinder Morgan's own 2018 and 2022 10-K asset tables both list the JV interest at exactly 60 miles. Diameter = 36.00 in: confirmed exactly by both NGI and Kinder Morgan's company overview ('36-inch diameter'). Owner1/2/3 (Kinder Morgan 35% / MGI Enterprises US LLC 35% / MIT Pipeline Investment Americas Inc 30%): confirmed at high tier by two genuinely independent parties to the JV itself -- Kinder Morgan's 2018 Form 10-K ('We operate Sierrita Gas Pipeline LLC and own a 35% interest... MGI Enterprises U.S. LLC, a subsidiary of PEMEX, owns 35%; and MIT Pipeline Investment Americas, Inc., a subsidiary of Mitsui & Co., Ltd, owns 30%') and Petroleos Mexicanos' own 2022 Form 20-F, which separately reports its 35.00% equity-method stake in 'Sierrita Gas Pipeline LLC' and notes the company 'was created on June 24, 2013' -- consistent with an in-service date the following year. SegmentCost = $200,000,000: a caveat, not a concern -- Natural Gas Intelligence reported an approximate $204 million project cost at construction (2014) and Mexico's federal register lists $182 million (MMUSD); the sheet's $200M sits between the two. A ~10% spread across two independent estimates for pipeline capex is ordinary reporting variance (budget vs. final, or differing cost scope), not a material conflict. Harvested-citation coverage: of the 17 citations on this row's wiki page, I opened and evaluated 14 (both Kinder Morgan 10-Ks, the Pemex 20-F, both Kinder Morgan investor documents, the Mexican federal register, EIA's Today in Energy piece and its general Natural Gas Data page, NGI, azcentral, and the Arizona Daily Independent/Fronteras background pieces on the pre-construction routing dispute). I did not open: IJGlobal's two project-database links (paywalled asset-transaction database, not needed given the SEC-filing-level corroboration already in hand), the Mitsui press release (now a dead 404 on mitsui.com -- confirmed by direct fetch, page reads 'The page you are looking for cannot be found'; not cited, not needed), and the Akron Beacon Journal general 2013 background piece on US-Mexico gas exports (not pipeline-specific)."
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Adjudicate the Location conflict raised during the ref pass — sourced evidence disagrees with the sheet. No value changed.",
+   "researcher_notes": "Location [ref]: the sheet's `StartState/Province` field reads 'Texas', but every source found (NGI, KM's own 10-K, Mitsui, AZCentral, and KM's own current SGP overview PDF) places Tucson and the entire pipeline route in ARIZONA, not Texas -- Pima County, Tucson, and Sasabe are all Arizona locations. This looks like a data entry error on `StartState/Province` (should be Arizona). Not corrected here per the no-value-change rule; flagging for Update.",
+   "proposed_refs": [
+    "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630719000033/kmi-2018x10k.htm",
+    "https://web.archive.org/web/20230921180310/https://www.mitsui.com/jp/en/release/2013/1205023_6472.html"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "Correct StartState/Province from 'Texas' to 'Arizona'. StartLocation (Tucson) and StartPrefecture/District (Pima County) are already right for Arizona; only the state field is wrong. This row's presence in a Texas-scoped batch is itself a symptom of the bad value.",
-      "researcher_notes": "The pipeline does not touch Texas at all. Independently confirmed by FOUR sources, none derived from another: (1) Kinder Morgan's own company overview PDF (pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf, retrieved same date as the sheet's LastUpdated 2023-08-23; verifier gives OK/200 liveness but its PDF-text extraction misses the content check on this doc -- confirmed by hand with pdftotext -layout, which reads: 'extends from Kinder Morgan, Inc.'s El Paso Natural Gas pipeline system, near Tucson, Arizona, to the United States-Mexico border near Sasabe, Arizona'); (2) EIA's own Today in Energy article (eia.gov/todayinenergy/detail.php?id=44856, verified OK/200 + content), an independent federal agency, describing 'the Sierrita export pipeline from Tucson, Arizona, to the U.S. border with Mexico'; (3) Kinder Morgan's 2018 Form 10-K (SEC EDGAR, verified OK/200 + content via the verifier's own sec.gov UA retry), which places the asset as 'Near Tucson, Arizona, to the U.S.-Mexico border near Sasabe, Arizona'; (4) Mexico's federal gas-pipeline status register (gob.mx PDF, verified OK/200 liveness, content confirmed by hand with pdftotext -- lists the Sierrita Gas Pipeline (Tucson-Sasabe) under Entidad = 'Arizona'). Existence, classification (interstate/international natural gas transmission lateral, not gathering), and ownership are all otherwise confirmed clean -- see the confirmed-caveat entry below. This is a single-field location defect, not an existence or duplicate concern."
+     "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+     "ok": true,
+     "contains_value": true
     },
     {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Update Capacity from 200.00 MMcf/d to reflect the 2020 compression expansion -- current nameplate is materially higher. Kinder Morgan's own current company overview states 523,640 Dth/d; EIA independently confirms a +0.32 Bcf/d (320 MMcf/d) 'Sierrita Pima Expansion' completed in early 2020 on top of the original ~200 MMcf/d design capacity, which brackets the same ~520 MMcf/d total. Length (60 mi) and Diameter (36 in) are unaffected -- this was a compression/looping-style throughput increase, not new pipe, consistent with the same physical lateral described throughout.",
-      "researcher_notes": "GEM's current value of 200.00 MMcf/d is the pipeline's ORIGINAL 2014 design capacity, not its current one. That original figure is well corroborated for 2014: Natural Gas Intelligence's Oct 31 2014 in-service article ('The approximately $204 million pipeline has the capacity to deliver 200 MMcf/d of gas', verified OK/200 + content) and Mexico's gob.mx federal register ('Capacidad (mmpcd) 195*', verified OK/200 liveness, content confirmed by hand) both independently agree on ~195-200 MMcf/d as of 2014. But the pipeline was subsequently expanded: EIA's Today in Energy piece (Aug 24 2020, independent US federal source, verified OK/200 + content on 'Sierrita' + '0.32') states 'the 0.32 Bcf/d Sierrita Pima Expansion, was also completed in early 2020, increasing the capacity on the Sierrita export pipeline from Tucson, Arizona, to the U.S. border with Mexico.' Kinder Morgan's own current company overview PDF (retrieved 2023-08-23, the same date as the sheet's own LastUpdated -- verifier OK/200 liveness, content hand-confirmed via pdftotext) independently states the pipeline 'currently provides 523,640 dekatherms per day (Dth/d) of firm transportation capacity... The Sierrita pipeline system was built in 2014 and expanded in 2020.' 200 + 320 = 520 MMcf/d, which is in the same range as 523,640 Dth/d (Dth and Mcf are approximately but not exactly equivalent for pipeline gas, so I'm not proposing an exact converted figure as a drop-in replacement -- that conversion depends on the gas's actual heating content, which none of these sources state). Net: the sheet's Capacity is stale by roughly 2.5x. I did not add a Capacity [ref] fill pairing a source with the current (likely wrong) 200.00 value, since that would misrepresent a source that actually describes a higher current capacity as confirming the lower one -- this needs an Update-leg value change before a ref belongs on it."
+     "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630719000033/kmi-2018x10k.htm",
+     "ok": true,
+     "contains_value": true
     },
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No action beyond the two concerns above and the SegmentCost caveat noted here.",
-      "researcher_notes": "Existence: extensively documented as a real, in-service pipeline -- SEC filings from BOTH joint-venture partners (Kinder Morgan's 2018 and 2022 Form 10-Ks, and Petroleos Mexicanos' own 2022 Form 20-F, all on SEC EDGAR and verified OK/200 with content confirmed), EIA, Mexico's federal gas-pipeline registry, Kinder Morgan's own investor-relations in-service press release (Oct 31 2014), Natural Gas Intelligence, and local press covering the pre-construction controversy (azcentral.com 2014, verified OK/200 + content). Not a phantom or GEM-only entity. Classification: correctly a natural-gas transmission lateral (36-inch, interstate + international), not a gathering/process line -- confirmed by every source above. No duplicate found against the 45-row TX-operating roster; Sierrita's Tucson-Sasabe/Sonora corridor is not shared with any other row in the set. Fuel = Gas: confirmed (all sources describe natural gas transportation; capacity stated in Dth/d and MMcf/d, gas-only units). StartYear1 = 2014: confirmed independently by Kinder Morgan's Oct 31 2014 in-service press release, the Oct 31 2014 Natural Gas Intelligence article, and Mexico's gob.mx register (fecha de operacion Dic/2014). Length = 60.00 mi: corroborated within normal rounding by NGI ('61-mile') and Mexico's register (97 km = 60.28 mi); Kinder Morgan's own 2018 and 2022 10-K asset tables both list the JV interest at exactly 60 miles. Diameter = 36.00 in: confirmed exactly by both NGI and Kinder Morgan's company overview ('36-inch diameter'). Owner1/2/3 (Kinder Morgan 35% / MGI Enterprises US LLC 35% / MIT Pipeline Investment Americas Inc 30%): confirmed at high tier by two genuinely independent parties to the JV itself -- Kinder Morgan's 2018 Form 10-K ('We operate Sierrita Gas Pipeline LLC and own a 35% interest... MGI Enterprises U.S. LLC, a subsidiary of PEMEX, owns 35%; and MIT Pipeline Investment Americas, Inc., a subsidiary of Mitsui & Co., Ltd, owns 30%') and Petroleos Mexicanos' own 2022 Form 20-F, which separately reports its 35.00% equity-method stake in 'Sierrita Gas Pipeline LLC' and notes the company 'was created on June 24, 2013' -- consistent with an in-service date the following year. SegmentCost = $200,000,000: a caveat, not a concern -- Natural Gas Intelligence reported an approximate $204 million project cost at construction (2014) and Mexico's federal register lists $182 million (MMUSD); the sheet's $200M sits between the two. A ~10% spread across two independent estimates for pipeline capex is ordinary reporting variance (budget vs. final, or differing cost scope), not a material conflict. Harvested-citation coverage: of the 17 citations on this row's wiki page, I opened and evaluated 14 (both Kinder Morgan 10-Ks, the Pemex 20-F, both Kinder Morgan investor documents, the Mexican federal register, EIA's Today in Energy piece and its general Natural Gas Data page, NGI, azcentral, and the Arizona Daily Independent/Fronteras background pieces on the pre-construction routing dispute). I did not open: IJGlobal's two project-database links (paywalled asset-transaction database, not needed given the SEC-filing-level corroboration already in hand), the Mitsui press release (now a dead 404 on mitsui.com -- confirmed by direct fetch, page reads 'The page you are looking for cannot be found'; not cited, not needed), and the Akron Beacon Journal general 2013 background piece on US-Mexico gas exports (not pipeline-specific)."
+     "url": "https://web.archive.org/web/20230921180310/https://www.mitsui.com/jp/en/release/2013/1205023_6472.html",
+     "ok": true,
+     "contains_value": true
     }
-  ],
-  "fills": [
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "promoted_from": "Location [ref]|the sheet's `StartState/Province` field reads 'Texas', but e"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+    "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "ref_col": "Status [ref]",
-      "value_cols": [
-        "Status"
-      ],
-      "primary_value_col": "Status",
-      "values": {
-        "Status": "operating"
-      },
-      "primary_value": "operating",
-      "proposed_refs": [
-        "https://www.eia.gov/todayinenergy/detail.php?id=44856",
-        "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
-          "ok": true,
-          "contains_value": true
-        },
-        {
-          "url": "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf",
-          "ok": true,
-          "contains_value": false,
-          "note": "verifier gives 200 liveness but cannot extract this PDF's text for a content check; manually confirmed via pdftotext -layout, which reads 'currently provides... firm transportation capacity' in present tense as of the document's 2023-08-23 retrieval date"
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "EIA (independent federal source) and Kinder Morgan's own current overview both describe the pipeline as presently in active service."
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
     },
     {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "ref_col": "Fuel [ref]",
-      "value_cols": [
-        "Fuel"
-      ],
-      "primary_value_col": "Fuel",
-      "values": {
-        "Fuel": "Gas"
-      },
-      "primary_value": "Gas",
-      "proposed_refs": [
-        "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-        "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-          "ok": true,
-          "contains_value": true
-        },
-        {
-          "url": "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf",
-          "ok": true,
-          "contains_value": false,
-          "note": "PDF text-extraction limitation; manually confirmed via pdftotext -layout describing dekatherm-denominated natural gas transportation capacity"
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Unambiguously a natural gas pipeline in every source; no hydrocarbon-type ambiguity anywhere in the record."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "ref_col": "Start [ref]",
-      "value_cols": [
-        "StartYear1",
-        "StartMonth1",
-        "StartYear2",
-        "StartYear2Month",
-        "StartYear3",
-        "StartYear3Month"
-      ],
-      "primary_value_col": "StartYear1",
-      "values": {
-        "StartYear1": "2014"
-      },
-      "primary_value": "2014",
-      "proposed_refs": [
-        "https://ir.kindermorgan.com/news/news-details/2014/Kinder-Morgan-Places-Sierrita-Pipeline-in-Service-to-Provide-Natural-Gas-to-Customers-in-Mexico/default.aspx",
-        "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/"
-      ],
-      "verifications": [
-        {
-          "url": "https://ir.kindermorgan.com/news/news-details/2014/Kinder-Morgan-Places-Sierrita-Pipeline-in-Service-to-Provide-Natural-Gas-to-Customers-in-Mexico/default.aspx",
-          "ok": true,
-          "contains_value": true
-        },
-        {
-          "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-          "ok": true,
-          "contains_value": true
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Kinder Morgan's own in-service press release and NGI's independent same-day (Oct 31, 2014) news report agree exactly; Mexico's gob.mx register separately confirms 'Dic/2014' (December 2014)."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "ref_col": "Length [ref]",
-      "value_cols": [
-        "LengthKnown",
-        "LengthKnownUnits"
-      ],
-      "primary_value_col": "LengthKnown",
-      "values": {
-        "LengthKnown": "60.00",
-        "LengthKnownUnits": "mi"
-      },
-      "primary_value": "60.00",
-      "proposed_refs": [
-        "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-        "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-          "ok": true,
-          "contains_value": true,
-          "note": "article states '61-mile' -- within normal rounding of the sheet's 60.00"
-        },
-        {
-          "url": "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf",
-          "ok": true,
-          "contains_value": false,
-          "note": "verifier 200s but can't extract this PDF's text; manually confirmed via pdftotext -layout: 'Sierrita Gas Pipeline (Tucson-Sasabe)... 97 [km]' = 60.28 mi"
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Two independent sources both land within ~1 mile of the sheet's 60.00; Kinder Morgan's own 2018 and 2022 10-K asset tables also list exactly 60 miles for its 35% JV interest."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "ref_col": "Diameter [ref]",
-      "value_cols": [
-        "Diameter",
-        "DiameterUnits"
-      ],
-      "primary_value_col": "Diameter",
-      "values": {
-        "Diameter": "36.00",
-        "DiameterUnits": "in"
-      },
-      "primary_value": "36.00",
-      "proposed_refs": [
-        "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-        "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-          "ok": true,
-          "contains_value": true,
-          "note": "'36-inch diameter'"
-        },
-        {
-          "url": "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf",
-          "ok": true,
-          "contains_value": false,
-          "note": "PDF text-extraction limitation; manually confirmed via pdftotext -layout: '36-inch diameter pipeline'"
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Exact agreement between NGI (2014, independent press) and Kinder Morgan's own current overview."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "ref_col": "SegmentCost [ref]",
-      "value_cols": [
-        "SegmentCost",
-        "SegmentCostUnits",
-        "SegmentCostYear"
-      ],
-      "primary_value_col": "SegmentCost",
-      "values": {
-        "SegmentCost": "200000000.00",
-        "SegmentCostUnits": "USD"
-      },
-      "primary_value": "200000000.00",
-      "proposed_refs": [
-        "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-        "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
-          "ok": true,
-          "contains_value": false,
-          "note": "article states 'approximately $204 million' -- close to but not an exact match on the sheet's $200,000,000"
-        },
-        {
-          "url": "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf",
-          "ok": true,
-          "contains_value": false,
-          "note": "verifier 200s but can't extract this PDF's text; manually confirmed via pdftotext -layout: Inversion (MMUSD) = 182"
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Two independent cost estimates ($204M per NGI at 2014 construction, $182M per Mexico's federal register) bracket the sheet's $200M within ordinary reporting variance for project capex -- neither source matches exactly, so tier is medium rather than high, but this is a caveat, not a material conflict."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 1349,
-      "oo_sheet_row": 2008,
-      "tab": "operators_owners",
-      "ref_col": "Owner [ref]",
-      "value_cols": [
-        "Owner1",
-        "Owner1%",
-        "Owner2",
-        "Owner2%",
-        "Owner3",
-        "Owner3%"
-      ],
-      "primary_value_col": "Owner1",
-      "values": {
-        "Owner1": "Kinder Morgan",
-        "Owner1%": "35.00%",
-        "Owner2": "MGI Enterprises US LLC",
-        "Owner2%": "35.00%",
-        "Owner3": "MIT Pipeline Investment Americas, Inc",
-        "Owner3%": "30.00%"
-      },
-      "primary_value": "Kinder Morgan",
-      "proposed_refs": [
-        "https://www.sec.gov/Archives/edgar/data/1506307/000150630719000033/kmi-2018x10k.htm",
-        "https://www.sec.gov/Archives/edgar/data/932782/000093278223000004/ck0000932782-20221231.htm"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630719000033/kmi-2018x10k.htm",
-          "ok": true,
-          "contains_value": true,
-          "note": "verifier confirms 200 + content after its own sec.gov UA retry; text reads 'We operate Sierrita Gas Pipeline LLC and own a 35% interest... MGI Enterprises U.S. LLC, a subsidiary of PEMEX, owns 35%; and MIT Pipeline Investment Americas, Inc., a subsidiary of Mitsui & Co., Ltd, owns 30%'"
-        },
-        {
-          "url": "https://www.sec.gov/Archives/edgar/data/932782/000093278223000004/ck0000932782-20221231.htm",
-          "ok": true,
-          "contains_value": true,
-          "note": "verifier confirms 200 + 'Sierrita' present; text separately reports PEMEX's own 35.00% equity-method stake in 'Sierrita Gas Pipeline LLC'"
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Two genuinely independent JV partners (Kinder Morgan and PEMEX, via separate SEC filings -- a 10-K and a 20-F, filed by two different companies) both report the same 35% stakes, and Kinder Morgan's own filing separately names the third partner's 30% share (Mitsui, via MIT Pipeline Investment Americas). [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+     "url": "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf",
+     "ok": true,
+     "contains_value": false,
+     "note": "verifier gives 200 liveness but cannot extract this PDF's text for a content check; manually confirmed via pdftotext -layout, which reads 'currently provides... firm transportation capacity' in present tense as of the document's 2023-08-23 retrieval date",
+     "name_found": true
     }
-  ],
-  "summary": "Sierrita Gas Pipeline (P2613) is a real, well-documented, correctly classified Kinder Morgan/PEMEX/Mitsui JV natural-gas lateral -- no existence, duplicate, or classification concern -- but carries two genuine defects: StartState/Province is wrongly set to 'Texas' when the entire pipeline (Tucson to Sasabe) is in Arizona (confirmed by 4 independent sources), and Capacity (200 MMcf/d) is the stale pre-2020 design figure, materially understating the current ~520 MMcf/d nameplate after a confirmed 2020 compression expansion (EIA + Kinder Morgan's own current overview). Six ref cells filled at high/medium tier (Status, Fuel, Start, Length, Diameter, SegmentCost) plus the separate Owner unit corroborated at high tier via both JV partners' own SEC filings (Kinder Morgan 10-K + PEMEX 20-F)."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIA (independent federal source) and Kinder Morgan's own current overview both describe the pipeline as presently in active service."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+    "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf",
+     "ok": true,
+     "contains_value": false,
+     "note": "PDF text-extraction limitation; manually confirmed via pdftotext -layout describing dekatherm-denominated natural gas transportation capacity",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Unambiguously a natural gas pipeline in every source; no hydrocarbon-type ambiguity anywhere in the record."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2014"
+   },
+   "primary_value": "2014",
+   "proposed_refs": [
+    "https://ir.kindermorgan.com/news/news-details/2014/Kinder-Morgan-Places-Sierrita-Pipeline-in-Service-to-Provide-Natural-Gas-to-Customers-in-Mexico/default.aspx",
+    "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/"
+   ],
+   "verifications": [
+    {
+     "url": "https://ir.kindermorgan.com/news/news-details/2014/Kinder-Morgan-Places-Sierrita-Pipeline-in-Service-to-Provide-Natural-Gas-to-Customers-in-Mexico/default.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Kinder Morgan's own in-service press release and NGI's independent same-day (Oct 31, 2014) news report agree exactly; Mexico's gob.mx register separately confirms 'Dic/2014' (December 2014)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "60.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "60.00",
+   "proposed_refs": [
+    "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+    "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+     "ok": true,
+     "contains_value": true,
+     "note": "article states '61-mile' -- within normal rounding of the sheet's 60.00",
+     "name_found": true
+    },
+    {
+     "url": "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf",
+     "ok": true,
+     "contains_value": false,
+     "note": "verifier 200s but can't extract this PDF's text; manually confirmed via pdftotext -layout: 'Sierrita Gas Pipeline (Tucson-Sasabe)... 97 [km]' = 60.28 mi",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources both land within ~1 mile of the sheet's 60.00; Kinder Morgan's own 2018 and 2022 10-K asset tables also list exactly 60 miles for its 35% JV interest."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "36.00",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "36.00",
+   "proposed_refs": [
+    "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+    "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+     "ok": true,
+     "contains_value": true,
+     "note": "'36-inch diameter'",
+     "name_found": true
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/SGP/SGP_CI_Cpny_Overview.pdf",
+     "ok": true,
+     "contains_value": false,
+     "note": "PDF text-extraction limitation; manually confirmed via pdftotext -layout: '36-inch diameter pipeline'",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Exact agreement between NGI (2014, independent press) and Kinder Morgan's own current overview."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "200000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "200000000.00",
+   "proposed_refs": [
+    "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+    "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.naturalgasintel.com/sierrita-pipeline-comes-online-adding-to-u-s-to-mexico-natgas-export-options/",
+     "ok": true,
+     "contains_value": false,
+     "note": "article states 'approximately $204 million' -- close to but not an exact match on the sheet's $200,000,000",
+     "name_found": true
+    },
+    {
+     "url": "https://www.gob.mx/cms/uploads/attachment/file/265260/Estatus_Gasoductos_octubre_2017.pdf",
+     "ok": true,
+     "contains_value": false,
+     "note": "verifier 200s but can't extract this PDF's text; manually confirmed via pdftotext -layout: Inversion (MMUSD) = 182",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent cost estimates ($204M per NGI at 2014 construction, $182M per Mexico's federal register) bracket the sheet's $200M within ordinary reporting variance for project capex -- neither source matches exactly, so tier is medium rather than high, but this is a caveat, not a material conflict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1349,
+   "oo_sheet_row": 2008,
+   "tab": "operators_owners",
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Kinder Morgan",
+    "Owner1%": "35.00%",
+    "Owner2": "MGI Enterprises US LLC",
+    "Owner2%": "35.00%",
+    "Owner3": "MIT Pipeline Investment Americas, Inc",
+    "Owner3%": "30.00%"
+   },
+   "primary_value": "Kinder Morgan",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630719000033/kmi-2018x10k.htm",
+    "https://www.sec.gov/Archives/edgar/data/932782/000093278223000004/ck0000932782-20221231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630719000033/kmi-2018x10k.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "verifier confirms 200 + content after its own sec.gov UA retry; text reads 'We operate Sierrita Gas Pipeline LLC and own a 35% interest... MGI Enterprises U.S. LLC, a subsidiary of PEMEX, owns 35%; and MIT Pipeline Investment Americas, Inc., a subsidiary of Mitsui & Co., Ltd, owns 30%'",
+     "name_found": true
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/932782/000093278223000004/ck0000932782-20221231.htm",
+     "ok": true,
+     "contains_value": true,
+     "note": "verifier confirms 200 + 'Sierrita' present; text separately reports PEMEX's own 35.00% equity-method stake in 'Sierrita Gas Pipeline LLC'",
+     "name_found": true
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Two genuinely independent JV partners (Kinder Morgan and PEMEX, via separate SEC filings -- a 10-K and a 20-F, filed by two different companies) both report the same 35% stakes, and Kinder Morgan's own filing separately names the third partner's 30% share (Mitsui, via MIT Pipeline Investment Americas). [QC 2026-09-02: single-origin — `independent` reset to False per the confidence rubric (>=2 AGREEING independent sources), tier capped at medium.]"
+  }
+ ],
+ "summary": "Sierrita Gas Pipeline (P2613) is a real, well-documented, correctly classified Kinder Morgan/PEMEX/Mitsui JV natural-gas lateral -- no existence, duplicate, or classification concern -- but carries two genuine defects: StartState/Province is wrongly set to 'Texas' when the entire pipeline (Tucson to Sasabe) is in Arizona (confirmed by 4 independent sources), and Capacity (200 MMcf/d) is the stale pre-2020 design figure, materially understating the current ~520 MMcf/d nameplate after a confirmed 2020 compression expansion (EIA + Kinder Morgan's own current overview). Six ref cells filled at high/medium tier (Status, Fuel, Start, Length, Diameter, SegmentCost) plus the separate Owner unit corroborated at high tier via both JV partners' own SEC filings (Kinder Morgan 10-K + PEMEX 20-F)."
 }
