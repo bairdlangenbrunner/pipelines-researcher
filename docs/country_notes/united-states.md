@@ -51,7 +51,7 @@ therefore never appear in FERC eLibrary. Check the **Texas RRC** (T-4/T-4A permi
 treating a FERC gap as a signal — P0268's operator name was settled by an RRC permit.
 
 - **Staged, NOT applied (gas):** batch 1, `batches/united-states-gas/staging/deepsweep-tx-operating/`
-  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260904_1144_ET_united-states-gas_deepsweep.xlsx`).
+  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260904_1354_ET_united-states-gas_deepsweep.xlsx` — the 1144 build is archived: it predates the contested-cell fix, so its `Gas_Backend` shows none of the 74 open concerns).
   All 381 ref units carry an outcome -> REFS_ADDED 325, REVERIFIED 14, UNRESOLVED 42,
   595 proposed refs, 23 fills, 163 validity findings (74 `concern` verdicts; 90 records
   carry a `concern_type` — spec 65, attribution 23, classification 1, duplicate 1 — so
@@ -63,6 +63,17 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
   evidence, 14 were reverified live links — but none of those 159 has had a
   >=2-independent search of its own. The batch is a finished pass over the rows, not
   over every cell.
+- **P0271 Transco — Capacity is 7 years stale, candidate pinned (2026-09-04).** GEM's
+  16800.00 MMcf/d is the year-end-2018 figure; the row's own cited ref (rextag) says 18.6
+  Bcf/d, which is itself the 2021/2022 number. The FY2025 Williams/Transco joint Form 10-K
+  (`sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm`, filed 2026-02-24)
+  states *"At December 31, 2025, Transco's system had a design capacity totaling approximately
+  20.6 MMdth/d"* = **20,600 MMcf/d** (MMdth/d = MMcf/d for pipeline-quality gas), and its four
+  itemised 2025 expansions sum to exactly the 19.8 -> 20.6 step. Tier **medium**, not high:
+  no independent second source restates the system total (trade press traces to Williams' own
+  April-2025 release; EIA's State-to-State workbook is independent but point-to-point, not a
+  system figure). Staged as a CONTESTED candidate on `Gas_Backend`, not an applied edit —
+  adjudicate before pasting, and repoint `Capacity [ref]` to the 10-K when you do.
 - **`New United Kingdom` is a find-and-replace scar, and is NOT a mechanical fix.**
   P0176 (SheetRow 37) and P0259 (SheetRow 112) carry it in `EndState/Province`; both are
   New England termini. But the column holds individual STATES everywhere else

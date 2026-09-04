@@ -16,9 +16,9 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/deepsweep-pilot` — rows=43 fills=54 updates=0 status-pending=13 refs(REFS_ADDED=235, REVERIFIED=75, UNRESOLVED=129) routes=0 new(none)
 - `staging/route-creation` [route-creation] — rows=23 fills=0 updates=0 status-pending=0 refs(none) routes=23 new(none)
-- `deliverables/pipelines_batch_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx`
 - `deliverables/pipelines_batch_20260730_1700_ET_china-guangxi-gas_route-creation.xlsx`
-- `archive/` — 1 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260904_1355_ET_china-guangxi-gas_deepsweep.xlsx`
+- `archive/` — 2 superseded/applied file(s)
 
 ## china-jiangxi-gas
 
@@ -57,9 +57,9 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260812_1359_ET_egypt-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-gas_reconciliation-osm.xlsx`
-- `deliverables/pipelines_batch_20260827_1326_ET_egypt-gas_deepsweep.xlsx`
 - `deliverables/pipelines_batch_20260827_1326_ET_egypt-gas_route-creation.xlsx`
-- `archive/` — 15 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260904_1355_ET_egypt-gas_deepsweep.xlsx`
+- `archive/` — 16 superseded/applied file(s)
 
 ## egypt-oil
 
@@ -70,8 +70,8 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_reconciliation-osm.xlsx`
 - `deliverables/pipelines_batch_20260827_1108_ET_egypt-oil_route-creation.xlsx`
-- `deliverables/pipelines_batch_20260827_1343_ET_egypt-oil_deepsweep.xlsx`
-- `archive/` — 1 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260904_1355_ET_egypt-oil_deepsweep.xlsx`
+- `archive/` — 2 superseded/applied file(s)
 
 ## india-gas
 
@@ -184,9 +184,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-gulfpub.xlsx`
 - `deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-malaysian-gas-map.xlsx`
 - `deliverables/pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-osm.xlsx`
-- `deliverables/pipelines_batch_20260812_1344_ET_malaysia-gas_deepsweep.xlsx`
 - `deliverables/pipelines_batch_20260812_1344_ET_malaysia-gas_handoff-actions.xlsx`
 - `deliverables/pipelines_batch_20260812_1344_ET_malaysia-gas_handoff-evidence.xlsx`
+- `deliverables/pipelines_batch_20260904_1355_ET_malaysia-gas_deepsweep.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## pakistan-gas
 
@@ -211,10 +212,10 @@ applied). See docs/workflows.md "Batch artifacts".
 - `staging/ref-sweep-critical` — rows=65 fills=103 updates=0 status-pending=0 refs(DEAD_LINK=40, REFS_ADDED=130, REVERIFIED=179, UNRESOLVED=153) routes=0 new(none)
 - `staging/ref-sweep-operating` — rows=40 fills=66 updates=0 status-pending=0 refs(REFS_ADDED=198, REVERIFIED=53, UNRESOLVED=45) routes=40 new(none)
 - `deliverables/pipelines_batch_20260713_1305_ET_saudi-arabia-gas_discovery.xlsx`
-- `deliverables/pipelines_batch_20260728_1731_ET_saudi-arabia-gas_annual-indev.xlsx`
-- `deliverables/pipelines_batch_20260728_1731_ET_saudi-arabia-gas_deepsweep.xlsx`
 - `deliverables/pipelines_batch_20260812_1359_ET_saudi-arabia-gas_reconciliation-gulfpub.xlsx`
-- `archive/` — 3 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260904_1355_ET_saudi-arabia-gas_annual-indev.xlsx`
+- `deliverables/pipelines_batch_20260904_1355_ET_saudi-arabia-gas_deepsweep.xlsx`
+- `archive/` — 5 superseded/applied file(s)
 
 ## saudi-arabia-oil
 
@@ -246,8 +247,11 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## united-states-gas
 
+- `staging/deepsweep-gulf-operating` — no store — invisible to discovery
 - `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=325, REVERIFIED=14, UNRESOLVED=42) routes=0 new(none)
-- `deliverables/pipelines_batch_20260904_1144_ET_united-states-gas_deepsweep.xlsx`
+- `staging/state-audit-20260904` — no store — invisible to discovery
+- `deliverables/pipelines_batch_20260904_1354_ET_united-states-gas_deepsweep.xlsx`
+- `archive/` — 1 superseded/applied file(s)
 
 ## united-states-oil
 

@@ -101,7 +101,7 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 
 | province | scope (grid rows) | status | batch |
 |---|---|---|---|
-| Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx` (repackaged 07-30: recommended edits now overlay `Gas_Backend`; 07-29 build archived); staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
+| Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260904_1355_ET_china-guangxi-gas_deepsweep.xlsx` (rebuilt 09-04 so open validity concerns render orange on `Gas_Backend`; 07-29/07-30 builds archived); staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
 | Jiangxi | **44** — all 41 Jiangxi-terminus rows + the 3 transiting national mainlines (P4657/P4934/P4947) | **v2 DELIVERED 2026-09-02, staged not applied** (supersedes v1); **v3 PLANNED** off MZ's 2026-09-03 feedback — `notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md` | `pipelines_batch_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx` (11 tabs); staging `batches/china-jiangxi-gas/staging/deepsweep-20260902/`; v1 archived at `archive/deepsweep-v1-20260826/` |
 
 ## Route creation §8 — ALL 103 no-route gas rows (2026-07-30, staged NOT applied)
@@ -188,7 +188,7 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   queue — found incidentally during the Egypt 2026-08-27 pass.
 - **Guangxi pilot — DELIVERED 2026-07-29, staged not applied.** Full deep sweep +
   status-review over all 43 grid rows
-  (`…_20260730_1637_ET_china-guangxi-gas_deepsweep.xlsx`, 9 tabs; rebuilt 07-30 so
+  (`…_20260904_1355_ET_china-guangxi-gas_deepsweep.xlsx`, 9 tabs; rebuilt 09-04 so
   the 13 change/stale status verdicts + 33 tracker fills overlay `Gas_Backend`
   tier-colored with their corroborating refs). Headline: 219/295
   existing ref links dead (116 = geo-blocked `fgw.gxzf.gov.cn` alone); ref-gap

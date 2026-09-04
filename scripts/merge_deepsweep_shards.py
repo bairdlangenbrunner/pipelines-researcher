@@ -110,6 +110,12 @@ def main():
                 "proposed_refs": v_refs,
                 "verifications": v.get("verifications", []) or [],
                 "tier": v_tier, "independent": v_indep,
+                # `contested` is what puts a concern on the Backend paste surface and
+                # `promoted_from` is what ranks a researched finding above the ref-pass
+                # echo of it — both are authored in the shard, so the merge must carry
+                # them or the deliverable silently loses the orange marking entirely
+                "contested": v.get("contested") or {},
+                "promoted_from": v.get("promoted_from", ""),
                 "source_language": v.get("source_language", "en")})
         for f in d.get("fills", []) or []:
             refs = verified_refs(f.get("proposed_refs", []), f.get("verifications", []))

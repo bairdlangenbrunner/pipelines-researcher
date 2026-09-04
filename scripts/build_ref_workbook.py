@@ -16,6 +16,9 @@ Sheets (commodity-prefixed; empty omitted; README first):
                            the FULL backend column set in exact sheet order, current values
                            prefilled, with proposed ref(s)/values overlaid on touched cells
                            (colored by corroboration tier). Leading SheetRow = row locator.
+                           ORANGE = CONTESTED, the anti-tier: the cell keeps its CURRENT
+                           value and an open validity concern disputes it — hover for the
+                           finding/candidate, adjudicate on _Validity, never paste it.
   <Cmdty>_OperatorsOwners  paste-ready mirror of the separate "Pipeline operators/owners"
                            backend tab (ProjectID-keyed; [ref] PRECEDES its values) — the
                            Operator [ref] / Owner [ref] cells, colored by tier.
@@ -67,6 +70,7 @@ import sys
 from pathlib import Path
 
 from openpyxl import Workbook
+from openpyxl.comments import Comment
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
@@ -80,6 +84,11 @@ from build_discovery_workbook import (  # noqa: E402  (discovery tabs in handoff
 )
 
 BLUE_FILL = PatternFill("solid", fgColor="DDEBF7")   # re-verified (blue), per confidence_tiers
+# CONTESTED (orange) is deliberately OUTSIDE the green/yellow/red/blue corroboration
+# palette: those four all mean "this is the cell content to paste", while orange means
+# the OPPOSITE — stop, an open validity concern disputes the CURRENT value, adjudicate
+# before touching it. Never reuse a tier color for it.
+CONTESTED_FILL = PatternFill("solid", fgColor="FCD5A5")
 VALIDITY_REF = "__VALIDITY__"   # synthetic ref_col sentinel on deep-sweep validity records
 STATUS_REF = "__STATUS__"       # synthetic ref_col sentinel on annual-update status reviews
 ROUTE_REF = "__ROUTE__"         # synthetic ref_col sentinel on deep-sweep route suggestions
@@ -431,6 +440,74 @@ def _ref_cell_fill(r: dict):
     return CONF_FILL.get(_tier_color(r), PatternFill())
 
 
+def _contested_cols(r: dict) -> dict:
+    """Backend value columns a validity CONCERN disputes -> the candidate value, if the
+    finding proposes one ("" when it only disputes the current value).
+
+    Reads the record's structured `contested` field. Deep-sweep subagents author it
+    alongside `recommendation`; `backfill_contested.py` infers it for records staged
+    before the field existed. A concern with no `contested` map still reaches the
+    row-level marker on the Backend mirror (and the Validity tab), it just can't point
+    at a cell.
+
+    WHY this exists (US gas TX batch 1, 2026-09-04): a validity concern that CONTRADICTS
+    an existing value had no path onto the Backend mirror at all — VALIDITY records are
+    filtered out of it by design — so 58 spec concerns across 45 rows, several of them
+    naming a concrete correction, rendered as untouched, untinted cells on the one tab
+    the README tells the researcher to work from. Found by Baird on P0271, whose Capacity
+    (16,800 MMcf/d) is contradicted by its OWN cited ref (rextag, now 18.6 Bcf/d).
+    `promote_ref_concerns.py` had already moved these findings one hop (ref notes ->
+    Validity tab); this is the second hop (Validity tab -> the paste surface).
+    """
+    if (r.get("verdict") or "").strip() != "concern":
+        return {}
+    c = r.get("contested")
+    if isinstance(c, dict):
+        return {k: ("" if v is None else str(v)) for k, v in c.items() if str(k).strip()}
+    if isinstance(c, (list, tuple)):          # tolerate a bare column list
+        return {str(k): "" for k in c if str(k).strip()}
+    return {}
+
+
+def _contested_note(r: dict) -> str:
+    """Cell-comment text for a contested cell: what the concern says and what to do.
+    The recommendation is authoritative; the finding is truncated (the full text is on
+    the Validity tab, which is where adjudication actually happens)."""
+    parts = [f"OPEN VALIDITY CONCERN ({(r.get('concern_type') or 'spec')}) — do not paste "
+             f"this cell as-is."]
+    rec = (r.get("recommendation") or "").strip()
+    if rec:
+        parts.append(f"Recommendation: {rec}")
+    cand = {k: v for k, v in _contested_cols(r).items() if str(v).strip()}
+    if cand:
+        parts.append("Candidate value(s): " + "; ".join(f"{k} = {v}" for k, v in cand.items()))
+    tier = (r.get("tier") or "").strip()
+    if tier:
+        parts.append(f"Corroboration tier: {tier}"
+                     f"{' (independent)' if r.get('independent') else ''}")
+    srcs = list(r.get("proposed_refs") or [])
+    if srcs:
+        parts.append("Sources: " + ", ".join(srcs[:4]))
+    note = (r.get("researcher_notes") or "").strip()
+    if note:
+        parts.append("Finding: " + (note[:700] + " ..." if len(note) > 700 else note))
+    parts.append("Full finding + adjudication: the *_Validity tab (sweep) or *_Concerns "
+                 "gatekeeper (handoff), same ProjectID.")
+    return "\n\n".join(parts)
+
+
+_TIER_RANK = {"high": 0, "medium": 1, "low": 2}
+
+
+def _concern_rank(r: dict) -> tuple:
+    """Sort key for concerns landing on the same cell: a researched finding before a
+    promoted echo of it, then by corroboration tier, then by the one that names a
+    candidate value."""
+    return (1 if r.get("promoted_from") else 0,
+            _TIER_RANK.get((r.get("tier") or "").strip(), 3),
+            0 if any(str(v).strip() for v in _contested_cols(r).values()) else 1)
+
+
 def _int_or_zero(v):
     try:
         return int(v)
@@ -514,7 +591,7 @@ def _restamp_sheet_rows(records, pid_row: dict) -> int:
 
 
 def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_values=False,
-                  sheet_row_col=True):
+                  sheet_row_col=True, contested=None):
     """The PRIMARY tab: a 1:1 paste-ready mirror of the GEM tracker backend. Reproduces the
     tracker's FULL column set in exact sheet order (every backend column, including computed
     ones), one row per in-scope segment, with current values prefilled from the snapshot.
@@ -531,6 +608,11 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
     column aligns 1:1 with the sheet and blocks copy-paste with no offset (rows located by
     ProjectID). Owner/Parent refs are staged on the separate
     Operators/Owners tab, so they never overlay here (there is no Owner [ref] backend column).
+    `contested` is a SEPARATE list of open validity concerns that tint rows this tab is
+    already rendering; unlike the concerns riding inside `resolutions` (the sweep mirror,
+    which mirrors every in-scope row anyway) they never CREATE a row, so the handoff paste
+    tab keeps its "one row per segment that has a fill" contract while still showing a
+    researcher that a cell they are about to paste next to is disputed.
     Falls back to identity columns only if the snapshot header can't be loaded."""
     # group resolutions by segment (ProjectID, SheetRow), first-seen order; index by ref_col
     seg_order: list[tuple] = []
@@ -541,18 +623,31 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
             segs[sk] = {"base": r, "by_ref": {}}
             seg_order.append(sk)
         rc = r.get("ref_col")
-        if rc == STATUS_REF:
+        if rc == VALIDITY_REF:
+            # A validity record is never an edit and must never reach `by_ref` (its
+            # synthetic ref_col would render as a phantom backend column). Concerns ride
+            # in a separate bucket that tints the CURRENT value of each disputed cell.
+            if (r.get("verdict") or "").strip() == "concern":
+                segs[sk].setdefault("contested", []).append(r)
+        elif rc == STATUS_REF:
             # proposed status change (verdict change/stale): its values overlay their
             # backend cells; when it carries corroborating ref(s) they take over the
             # Status [ref] cluster (they support the NEW value — a refs-leg unit on the
             # same cluster corroborates the old one). A dormancy-inferred change with no
             # ref stays under the synthetic key: values overlay, no [ref] cell is touched.
             segs[sk]["by_ref"]["Status [ref]" if r.get("proposed_refs") else rc] = r
-        elif rc and rc != VALIDITY_REF:
+        elif rc:
             # a FILL takes its cluster over a ref-leg twin recorded for the same cell —
             # the sweep stages both, but only the FILL carries the proposed VALUE — while
             # both records' refs are unioned onto the cell (see _merge_ref_unit)
             segs[sk]["by_ref"][rc] = _merge_ref_unit(segs[sk]["by_ref"].get(rc), r)
+
+    # concerns that only ANNOTATE — attached after the grouping loop precisely so they
+    # cannot introduce a segment of their own (see the `contested` note in the docstring)
+    for r in contested or []:
+        sk = (r.get("project_id", ""), r.get("sheet_row", ""))
+        if sk in segs:
+            segs[sk].setdefault("contested", []).append(r)
 
     # fall back to a minimal identity header if the snapshot couldn't be loaded
     header = list(backend_header) if backend_header else \
@@ -578,6 +673,38 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
                        "SegmentName": b.get("segment_name", "")}
         ws.append(([srow] if sheet_row_col else []) + [current.get(h, "") for h in header])
         rn = ws.max_row
+        # CONTESTED overlay first, so a genuine proposed edit below can overwrite it: an
+        # orange cell keeps the CURRENT value and means "an open concern disputes this —
+        # adjudicate", the opposite of the tier colors, which mean "paste this".
+        # strongest finding first: `promote_ref_concerns.py` lifts a duplicate of the same
+        # conflict out of the ref notes at tier low ("Adjudicate the X conflict..."), and
+        # it must not be the note a researcher reads before the researched one that
+        # actually names a candidate value.
+        for r in sorted(segs[sk].get("contested", []), key=_concern_rank):
+            for vc in _contested_cols(r):
+                ci = col_idx.get(vc)
+                if not ci:
+                    continue
+                cell = ws.cell(rn, ci)
+                # never tint an empty cell (an empty tinted cell reads as a proposed
+                # blank) — a concern on a blank column stays in the row-level marker
+                if not str(cell.value or "").strip():
+                    continue
+                cell.fill = CONTESTED_FILL
+                prev = cell.comment.text + "\n\n———\n\n" if cell.comment else ""
+                cell.comment = Comment(prev + _contested_note(r), "deep sweep",
+                                       height=280, width=460)
+            # row-level marker on whichever column locates the row (SheetRow on the sweep
+            # mirror, ProjectID on the paste tabs, which carry no locator column), so a
+            # concern that names no column (existence/duplicate) or only blank ones is
+            # still visible HERE, on the paste surface, not just three tabs away
+            mi = 1 if sheet_row_col else col_idx.get("ProjectID")
+            if mi:
+                loc = ws.cell(rn, mi)
+                loc.fill = CONTESTED_FILL
+                prev = loc.comment.text + "\n\n———\n\n" if loc.comment else ""
+                loc.comment = Comment(prev + _contested_note(r), "deep sweep",
+                                      height=300, width=460)
         for rc, r in segs[sk]["by_ref"].items():
             # overlay proposed value(s) onto their backend value cells (skip cols off-schema).
             # A FILL or STATUS unit's values are genuinely PROPOSED, so they earn the tier
@@ -637,7 +764,7 @@ def _prune_trailing_empty(value_cols, resolutions, ref_col):
     return value_cols[: last + 1] if last >= 0 else value_cols[:1]
 
 
-def _operators_owners_view(wb, title, resolutions):
+def _operators_owners_view(wb, title, resolutions, concerns=None):
     """Paste-ready mirror of the backend "Pipeline operators/owners" tab (GID 1489950650),
     where the `[ref]` column PRECEDES its values. ProjectID-keyed (one row per ProjectID);
     for each ref unit the `[ref]` cell — carrying the proposed ref(s), color-coded by
@@ -687,6 +814,13 @@ def _operators_owners_view(wb, title, resolutions):
     for col, h in enumerate(headers[len(base):], start=len(base) + 1):
         ws.column_dimensions[get_column_letter(col)].width = 46 if h.endswith(" [ref]") else 18
 
+    # open validity concerns that dispute owner/operator attribution, by ProjectID. This
+    # tab renders only the columns an oo ref unit carries, so the marker goes on the
+    # ProjectID cell rather than a value cell (which may not exist on this tab at all).
+    by_pid_concern: dict[str, list] = {}
+    for r in concerns or []:
+        by_pid_concern.setdefault(r.get("project_id", ""), []).append(r)
+
     for pid in proj_order:
         b = projs[pid]["base"]
         by_ref = projs[pid]["by_ref"]
@@ -698,6 +832,12 @@ def _operators_owners_view(wb, title, resolutions):
                 rowvals.append(r.get("values", {}).get(vc, "") if r else "")
         ws.append(rowvals)
         rn = ws.max_row
+        for cr in sorted(by_pid_concern.get(pid, []), key=_concern_rank):
+            idc = ws.cell(rn, 1)
+            idc.fill = CONTESTED_FILL
+            prev = idc.comment.text + "\n\n———\n\n" if idc.comment else ""
+            idc.comment = Comment(prev + _contested_note(cr), "deep sweep",
+                                  height=300, width=460)
         for rc in ref_order:
             r = by_ref.get(rc)
             if not r:
@@ -1534,8 +1674,12 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "no ref by design) or unclear. NOT auto-applied."))
     if afb_res:
         t = f"{prefix}_AllFillsBackend"
+        # open concerns tint the rows this tab already carries (they never add one — a
+        # concern on a fill-less row lives on Decisions alone). Without this a researcher
+        # could paste a green fill into a row whose neighbouring cell a prior packet
+        # flagged as wrong, and this surface would never say so.
         _backend_view(wb_a, t, afb_res, backend_header, snapshot_rows, color_values=True,
-                      sheet_row_col=False)
+                      sheet_row_col=False, contested=open_dec)
         defs_a.append((t,
                        f"PASTE-READY ({len(afb_res)} cell units) — THE one paste surface for the "
                        "tracker tab: ALL corroborated fills AND all paste-ready reference work "
@@ -1547,16 +1691,25 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "A tier-colored VALUE cell = a proposed new value "
                        "(its [ref] cell is colored too — paste them together); a colored [ref] "
                        "cell with an untinted value = ref-only work (value already on the sheet). "
+                       "ORANGE is the opposite of the tier colors: the cell keeps its CURRENT "
+                       "value and an open validity concern disputes it — settle it on the "
+                       "Decisions tab first, never paste it. An orange ProjectID marks a concern "
+                       "that names no column of its own. "
                        "Paste the colored cells only — never the computed/formula columns. "
                        "Verification detail: the evidence file's FillDetail / RefWorkDetail tabs."))
     if oo_units:
         t = f"{prefix}_OperatorsOwners"
-        _operators_owners_view(wb_a, t, oo_units)
+        # attribution concerns dispute exactly this tab's Owner/Operator/Parent values
+        _operators_owners_view(wb_a, t, oo_units,
+                               concerns=[r for r in open_dec
+                                         if r.get("concern_type") == "attribution"])
         defs_a.append((t,
                        f"PASTE-READY ({len(oo_units)} units) — mirror of the separate \"Pipeline "
                        "operators/owners\" backend tab (GID 1489950650), ProjectID-keyed, [ref] "
                        "PRECEDES its values. Owner/Operator fills and refs, carried + this "
-                       "packet's own, tier-colored. Paste back by ProjectID — NOT onto a tracker row."))
+                       "packet's own, tier-colored. An orange ProjectID = an open attribution "
+                       "concern on that row (Decisions tab) — settle it before pasting. "
+                       "Paste back by ProjectID — NOT onto a tracker row."))
     if nr_new and backend_header:
         t = f"{prefix}_NewRows"
         _, oo_rows = _new_rows_view(wb_a, t, backend_header, nr_new)
@@ -2039,8 +2192,15 @@ def main() -> None:
             key=lambda f: (_int_or_zero(f.get("sheet_row")), f.get("ref_col", "")))
         if afb_res:
             afb_title = f"{prefix}_AllFillsBackend"
+            # carried validity concerns tint the rows this tab already renders (they never
+            # add one — the Concerns gatekeeper above is where a fill-less concern lives).
+            # Without this, a row could show a green fill beside a cell a prior packet
+            # flagged as wrong, and the paste surface would never say so.
+            afb_contested = [c for c in concerns
+                             if (c.get("verdict") or "").strip() == "concern"]
             _backend_view(wb, afb_title, afb_res, backend_header, snapshot_rows,
-                          color_values=True, sheet_row_col=False)
+                          color_values=True, sheet_row_col=False,
+                          contested=afb_contested)
             sheet_defs.append((afb_title,
                                "PASTE-READY — ALL corroborated fills for the scope unified in the exact GEM "
                                "tracker backend layout: the carried pending fills from prior packets PLUS this "
@@ -2049,7 +2209,11 @@ def main() -> None:
                                "aligns 1:1 with the sheet (locate rows by ProjectID). Filled "
                                "values AND their paired [ref] cells are overlaid, colored by corroboration "
                                "tier (green=≥2 independent / yellow=single / red=low or none / "
-                               "blue=re-verified). Paste the colored cells only — never the computed/formula "
+                               "blue=re-verified). ORANGE is the opposite of those four: the cell keeps "
+                               "its CURRENT value and a carried validity concern disputes it — adjudicate "
+                               "on the Concerns tab before touching it, never paste it. An orange "
+                               "ProjectID marks a concern that names no column of its own. "
+                               "Paste the colored cells only — never the computed/formula "
                                "columns. The PendingFills / Fills tabs below hold the per-fill detail; "
                                "owner/operator fills live there + on the oo backend tab, not a tracker row."))
     elif tracker_res or fill_res or status_res:
@@ -2063,7 +2227,12 @@ def main() -> None:
                      and r.get("ref_col") not in OO_PRIMARY]
         status_changes = [r for r in status_res
                           if r.get("class_out") in ("CHANGE_PROPOSED", "STALE")]
-        backend_res = tracker_res + own_fills + status_changes
+        # ...plus every open validity CONCERN, which contests a CURRENT value rather than
+        # proposing an edit. These render orange (see _contested_cols): they must be on
+        # the paste surface, because a researcher working from this tab would otherwise
+        # paste over a cell the sweep has flagged as wrong.
+        concerns = [r for r in validity_res if (r.get("verdict") or "").strip() == "concern"]
+        backend_res = tracker_res + own_fills + status_changes + concerns
         if backend_res:
             backend_title = f"{prefix}_Backend"
             _backend_view(wb, backend_title, backend_res, backend_header, snapshot_rows)
@@ -2077,18 +2246,28 @@ def main() -> None:
                                "(new Status + ShelvedCancelledType/start-year cells; a stale verdict with no ref "
                                "is dormancy-inferred — red, ShelvedCancelledType=inferred by design). Untinted "
                                "values are current sheet values. A red [ref] cell keeping its existing text = "
-                               "unresolved, needs manual sourcing. Work from THIS tab; the StatusReview / *_Refs_* "
+                               "unresolved, needs manual sourcing. ORANGE is NOT a tier — it is the opposite of "
+                               "the tier colors: an orange cell keeps the CURRENT value and means an open "
+                               "validity concern DISPUTES it (hover the cell for the finding, candidate value and "
+                               "sources; an orange SheetRow means the row carries a concern that names no single "
+                               "column). Do NOT paste an orange cell — adjudicate it first on the *_Validity tab. "
+                               "Work from THIS tab; the StatusReview / *_Refs_* "
                                "tabs below hold the per-verdict and per-ref detail."))
 
     # operators/owners paste-ready mirror (ProjectID-keyed, ref-precedes-values)
     if oo_res:
         oo_title = f"{prefix}_OperatorsOwners"
-        _operators_owners_view(wb, oo_title, oo_res)
+        oo_concerns = [r for r in validity_res
+                       if (r.get("verdict") or "").strip() == "concern"
+                       and (r.get("concern_type") or "") == "attribution"]
+        _operators_owners_view(wb, oo_title, oo_res, concerns=oo_concerns)
         sheet_defs.append((oo_title,
                            "PASTE-READY — mirror of the separate \"Pipeline operators/owners\" backend tab "
                            "(GID 1489950650), ProjectID-keyed, where the [ref] column PRECEDES its values. "
                            "Operator [ref] / Owner [ref] cells carry the proposed ref(s), color-coded by "
-                           "tier. Paste each back onto that tab by ProjectID — NOT onto a tracker row."))
+                           "tier. Paste each back onto that tab by ProjectID — NOT onto a tracker row. "
+                           "An ORANGE ProjectID = an open attribution concern on that row (hover for the "
+                           "finding); adjudicate it on the *_Validity tab before pasting owner work."))
 
     # HANDOFF: corroborated fills + actionable ref work carried from prior packets.
     if pending_fills:

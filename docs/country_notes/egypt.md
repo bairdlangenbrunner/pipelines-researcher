@@ -624,8 +624,8 @@ row's own `CountriesOrAreas`) would catch it; still an open call in the 08-26 tr
 
 **SEVEN files to work** — the deep sweeps do NOT subsume the recons:
 
-- `…_20260827_1326_ET_egypt-gas_deepsweep.xlsx` (7 tabs)
-- `…_20260827_1343_ET_egypt-oil_deepsweep.xlsx` (8 tabs)
+- `…_20260904_1355_ET_egypt-gas_deepsweep.xlsx` (7 tabs; rebuilt 09-04 for the orange contested cells, 08-27 build archived)
+- `…_20260904_1355_ET_egypt-oil_deepsweep.xlsx` (8 tabs; rebuilt 09-04 for the orange contested cells, 08-27 build archived)
 - `…_20260827_1326_ET_egypt-gas_route-creation.xlsx` (3 tabs)
 - `…_20260827_1108_ET_egypt-gas_reconciliation-{gulfpub,osm}.xlsx`
 - `…_20260827_1108_ET_egypt-oil_reconciliation-{gulfpub,osm}.xlsx`

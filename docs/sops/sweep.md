@@ -452,6 +452,16 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
     `spec` / `none`.
   - `recommendation` — short human-facing next step (e.g. "reclassify as NGL", "merge into
     P####", "verify endpoint before keeping").
+  - `contested` (on a `concern`) — `{backend column: candidate value}`: the cells the
+    finding disputes, candidate where the evidence names one, `""` where it only says the
+    current value is wrong. **This is not optional bookkeeping — it is the only thing that
+    puts a concern on the paste surface.** Validity records are filtered out of the
+    `_Backend` mirror (they propose no edit), so without `contested` a finding that the
+    CURRENT value is wrong renders there as an ordinary untinted cell and the researcher
+    pastes straight over it. With it, the builder tints that cell **orange** — the
+    anti-tier, outside green/yellow/red/blue — and hangs the finding, candidate and
+    sources on it as a comment. Name the exact column (`LengthKnownUnits`, not "units").
+    Backfill legacy staging with `scripts/backfill_contested.py`.
   - `researcher_notes` — the full finding (authoritative); `proposed_refs` + `verifications`
     — the independent sources backing the judgment (encouraged, even though it is not a ref edit).
 - **`ref_col="__STATUS__"` (the `status-review` leg / `in-dev` preset)** — a per-segment-row

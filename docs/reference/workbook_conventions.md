@@ -47,10 +47,14 @@ Standard cells (`Updated`, `New`, reconciliation `Overlaps` Confidence):
 - **green tint** `E2EFDA` — a whole discovery/Addition row (new to GEM)
 - **blue** `4472C4` — value unchanged but re-verified this batch
 - **yellow fill** — a route-replacement-candidate cell
+- **orange** `FCD5A5` — **CONTESTED, the anti-tier.** The four tier colors all mean *"this
+  is the content to paste"*; orange means the opposite — the cell keeps its CURRENT value
+  and an open validity concern disputes it, so adjudicate before touching it. Never reuse a
+  tier color for this and never use orange for anything else.
 
-**Never colour an empty cell.** A fill (green tint / tier colour / re-verified blue)
-means "this cell holds a value/ref I staged". If a value was searched for and not found,
-leave the cell **blank and white** — an empty coloured cell is always a builder bug.
+**Never colour an empty cell.** A fill (green tint / tier colour / re-verified blue / the
+contested orange) means "this cell holds a value/ref I staged, or one I am disputing".
+If a value was searched for and not found, leave the cell **blank and white** — an empty coloured cell is always a builder bug.
 Corollary rules the builders enforce, not just style:
 - **A researched value and its `[ref]` travel together** — never a value with no `[ref]`,
   never a `[ref]` with no value (both directions of the no-orphan rule).
@@ -123,7 +127,15 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   (Baird, 2026-07-30): geo-blocked / anti-bot 403 / timed-out URLs are access problems, not
   deletions — `_annotate_kept_refs` keeps every current URL not confirmed deleted (HTTP
   404/410 in the worklist's `existing_ref_checks`) ahead of the proposed refs, so a blocked
-  origin gets its Wayback snapshot *added*, never swapped in. Prepend a single **`SheetRow`**
+  origin gets its Wayback snapshot *added*, never swapped in. **Open validity concerns ride
+  here too, tinted orange** (Baird, 2026-09-04, on US-gas P0271/Transco: the sheet's Capacity
+  was contradicted by its own cited ref and the researcher, working from this tab as the
+  README tells them to, had no way to see it — validity records were filtered off the mirror
+  by design). A concern's `contested` map ({backend column: candidate value}) names the cells;
+  each gets the orange fill, its current value untouched, and a comment carrying the
+  recommendation, any candidate value, tier and sources. A concern naming no column — or only
+  blank ones — marks the row's locator cell instead (`SheetRow` here, `ProjectID` on the paste
+  tabs), so an existence/duplicate doubt is never invisible. Prepend a single **`SheetRow`**
   locator column (the tracker's row number, not a backend field) and freeze through `ProjectID`.
   - Loaded by `_backend_snapshot(meta)` (full header at CSV row index 2; data rows keyed by the
     composite **`(ProjectID, SheetRow)`**, since a multi-segment ProjectID has >1 row and
@@ -201,7 +213,10 @@ mirror; **no leading `SheetRow` locator** — every column aligns 1:1 with the s
 so cells copy-paste with no offset, rows located by ProjectID (unlike the sweep
 `<Cmdty>_Backend` mirror, which keeps the locator); a tier-colored VALUE cell = a
 proposed new value, a colored `[ref]` cell
-with an untinted value = ref-only work) → `<Cmdty>_OperatorsOwners` (same, for the
+with an untinted value = ref-only work; an **orange** cell or ProjectID = a carried
+validity concern disputes that cell — adjudicate on `<Cmdty>_Concerns` first, never paste
+it. Concerns only annotate rows this tab already carries a fill for; a concern on a
+fill-less row lives on the Concerns gatekeeper alone, which is why that tab is read first) → `<Cmdty>_OperatorsOwners` (same, for the
 oo tab; owner/operator fills AND refs) → `<Cmdty>_NewRows` / `<Cmdty>_NewRowRefs`
 / `<Cmdty>_MatchedExisting` → `<Cmdty>_WikiUpdates` (flag-severity WIKI_UPDATE
 rows only — wiki link leftmost, stale wiki value red, Action column = the edit) →

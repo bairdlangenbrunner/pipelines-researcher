@@ -80,9 +80,9 @@ golden reference the engine generalizes).
 ## Open items — gas (2026-07-08 full packet: in-dev sweep + discovery + operating deep sweep; PARTIALLY applied — candidates for review)
 Workbooks (**rebuilt 2026-07-28** against `GGIT_gas_snapshot_20260728.csv`; the 07-08
 originals had 275 + 436 stale `SheetRow` locators and are now in `archive/`):
-`pipelines_batch_20260728_1731_ET_saudi-arabia-gas_annual-indev.xlsx`,
+`pipelines_batch_20260904_1355_ET_saudi-arabia-gas_annual-indev.xlsx`,
 `pipelines_batch_20260713_1305_ET_saudi-arabia-gas_discovery.xlsx`,
-`pipelines_batch_20260728_1731_ET_saudi-arabia-gas_deepsweep.xlsx`.
+`pipelines_batch_20260904_1355_ET_saudi-arabia-gas_deepsweep.xlsx` (both rebuilt 09-04 for the orange contested cells; the 07-28 pair is archived).
 
 **Not "unapplied" any more.** Testing each staged ref URL against its live `[ref]` cell
 on 2026-07-28: **annual-indev 100 of 199 ref units are already live** (4 partial),

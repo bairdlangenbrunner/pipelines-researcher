@@ -282,6 +282,11 @@ def load_staged_context(staging_dirs: list[str | Path]) -> dict:
                         "proposed_refs": r.get("proposed_refs") or [],
                         "tier": r.get("tier", ""),
                         "independent": r.get("independent", ""),
+                        # what the concern disputes, so a handoff packet can tint the
+                        # contested cell on its paste tab and not only list the finding
+                        # on the Concerns gatekeeper (build_ref_workbook._contested_cols)
+                        "contested": r.get("contested") or {},
+                        "promoted_from": r.get("promoted_from", ""),
                         "source_dir": label,
                     })
                 elif ci == "ROUTE" or r.get("ref_col") == "__ROUTE__":

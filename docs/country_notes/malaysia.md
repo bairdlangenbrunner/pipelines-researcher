@@ -18,7 +18,7 @@ with three sources the recon surface is the larger half of the batch:
 - `pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-gulfpub.xlsx`
 - `pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-osm.xlsx`
 - `pipelines_batch_20260812_1343_ET_malaysia-gas_reconciliation-malaysian-gas-map.xlsx`
-- `pipelines_batch_20260812_1344_ET_malaysia-gas_deepsweep.xlsx` (the per-leg sweep workbook;
+- `pipelines_batch_20260904_1355_ET_malaysia-gas_deepsweep.xlsx` (the per-leg sweep workbook, rebuilt 09-04 for the orange contested cells;
   its decisions are carried into the actions file — work the actions file)
 
 **Read the escalation memos before working any of it:**

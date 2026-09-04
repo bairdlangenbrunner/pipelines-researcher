@@ -115,7 +115,20 @@ counts `class_in=FILL` + `class_out=REFS_ADDED`) and drops it from the handoff's
 **Validity records** (`ref_col="__VALIDITY__"`): read-and-flag only, never an edit.
 Extra fields: `verdict` (`"confirmed (caveat)"` \| `"concern"`), `concern_type`
 (`existence`/`duplicate`/`classification`/`attribution`/`spec`/`none`),
-`recommendation` (short human next step). `class_out` is always `UNRESOLVED`.
+`recommendation` (short human next step), and — on a `concern` — **`contested`**:
+`{backend column: candidate value}`, the cells the finding disputes, with the candidate
+replacement where the evidence supports naming one and `""` where it only says the
+current value is wrong. `class_out` is always `UNRESOLVED`.
+
+`contested` is what puts a concern on the **paste surface**. A validity record proposes no
+edit, so it is filtered out of the `<Cmdty>_Backend` mirror; `contested` lets the builder
+tint the disputed CURRENT value **orange** there (deliberately outside the green/yellow/
+red/blue tier palette — those mean "paste this", orange means "stop, adjudicate"), with the
+finding, candidate and sources in the cell comment. A concern naming no column still tints
+the row's `SheetRow` locator. Omit it and the finding is visible only on the `_Validity`
+tab — which is exactly how P0271/Transco's Capacity, contradicted by its own cited ref,
+read as an ordinary untouched cell in the US-gas TX batch (2026-09-04). Backfill records
+staged before the field existed with `scripts/backfill_contested.py`.
 
 **`__REDUNDANCY__` is a shard-only sentinel, not a stored `ref_col`.** Research subagents
 emit it when answering "is this row a double-count?", but it has no baseline record, so
