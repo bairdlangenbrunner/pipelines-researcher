@@ -46,6 +46,14 @@ operational sequence.
   in-country GEM roster on the GEM side, or the excluded rows' reference counterparts
   re-bucket as `DISCOVERY_CANDIDATE` — manufacturing phantom additions out of trunks GEM
   already tracks. Leave `--country` alone there.
+- **Slicing a big country by an arbitrary PID list (US gas regions):** `--include-pids` is a
+  UNION with the country/status scope, not a filter — passing 50 PIDs still verifies every
+  existing ref on all ~300 US operating rows (batch 2 ran 38 min against eia.gov before it was
+  killed). Cut the slice with `--country` + `--exclude-pids @<complement>` instead, where the
+  complement is every in-country PID not in the slice, built from `CountriesOrAreas` via
+  `normalize.split_countries` (lowercased) — the builder scopes country on that column, not on
+  `Start/EndCountryOrArea`, so a complement built from the termini lets multi-country rows leak
+  in. Keep both files in the run dir (`include_pids.txt`, `exclude_pids.txt`).
 
 ## The ref-pair model (group-walk)
 `scripts/ref_pairs.py::discover_ref_pairs` re-derives, from the **fresh header every

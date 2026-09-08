@@ -41,6 +41,16 @@ last touched <=2023** ("stale operating cohort"), sub-sliced by region.
 does not just mis-describe a row, it silently pulls the wrong rows into the batch and
 leaves the right ones out.
 
+**The state columns were audited before batch 2** (2026-09-04,
+`notes/audit-2026-09-04-us-gas-startstate-column.md`; data in
+`batches/united-states-gas/staging/state-audit-20260904/`): every stale-operating row's
+`Start/EndState/Province` was spatial-joined against its routes-repo geometry. Of the 172
+non-Texas rows, 98 agree, 15 disagree (8 start / 7 end), 9 are blank on a routed row, and 50
+have no route at all — 18 of those blank in the start column (14 FGT expansion phases,
+P0251 Sea Robin, P2497, P2614, P5401). **Slice by the audit's `derived` state, never by
+`--province`**, and cut the slice with `--country` + `--exclude-pids @<complement>`:
+`--include-pids` is a UNION with the country scope, not a filter (Sweep SOP → carried rows).
+
 **Recon legs are deliberately OFF for US gas.** GulfPub carries only 10 US gas features,
 and OSM carries 62,221 US gas ways against 529 GEM rows — a 118:1 scope mismatch that
 would bury the research legs in unmatched-reference triage. Revisit per-slice, never
