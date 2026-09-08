@@ -1,0 +1,354 @@
+{
+  "project_id": "P2500",
+  "pipeline_name": "AlaTenn Gas Pipeline",
+  "sheet_row": 1287,
+  "wiki": "https://www.gem.wiki/AlaTenn_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/status; row is correctly split from the base AlaTenn mainline (P0185) and correctly carries LengthKnown=0/Diameter=blank as a compressor-only expansion. See the separate spec finding on SegmentCost.",
+      "researcher_notes": "EXISTENCE: real, independently confirmed as a distinct, completed FERC-tracked expansion project, not a GEM-only entity. EIA's own 'Historical Projects (1996-2024)' pipeline-projects table (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, downloaded and parsed directly with openpyxl - the wiki's cited 'Natural Gas Data, Pipeline Projects' link is only the navigation page, so I went to the actual workbook it points to) carries a row named exactly 'Alabama Compressor Station Upgrade', Pipeline Operator Name 'AlaTenn Pipeline', Project Type 'Expansion', Status 'Completed', Completed Date 2020-10-08, Docket Number CP19-476, Authority FERC, Cost (millions) 5.4, Additional Capacity (MMcf/d) 38.5, notes 'Increase compression on AlaTenn pipeline and increase deliveries to growing demand in Alabama; flow through compressor will increase from 59 MMcf/d to 97 MMcf/d.' Independently, the Federal Register notice of the underlying FERC filing (govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf, 84 FR 28297, Docket CP19-476-000) confirms American Midstream (AlaTenn), LLC filed June 3, 2019 to abandon 4 old compressor units (1,455 hp) and install 2 new units (3,550 hp) at its Decatur Compression Station, Limestone County, Alabama, 'to provide additional firm transportation service to the City of Huntsville, Alabama, d/b/a Huntsville Utilities and improve system reliability,' estimated cost $5,415,200 (url_verifier's substring check false-negatived on the exact dollar string and en-dash-encoded docket number - a known PDF-extraction artifact per the tool's own docs; I confirmed both by hand with pdftotext -layout). A third, wholly independent origin - the current operator's own live site, blackbearllc.com/natural-gas-transmission - still lists 'AlaTenn: FERC-Regulated Interstate, 325 miles, 2-20 inch, 550-977# MAOP, 292 MDth/d capacity' among Black Bear's active systems today, confirming Status=operating is still correct as of 2026, not stale. PipelineType=transmission is correct: AlaTenn is explicitly a FERC-regulated interstate natural-gas TRANSMISSION system (Black Bear's own site header; the FR notice describes 'additional firm transportation service'), not a gathering/process line. CLASSIFICATION/DUPLICATE: GEM correctly tracks this expansion as its own segment row separate from the AlaTenn mainline. The fresh GGIT snapshot (2026-09-04) confirms P0185 = 'AlaTenn Gas Pipeline' with no SegmentName, LengthKnown=475 km/295 mi, Capacity=200 MMcf/d, StartYear1=2002 - the base trunk described in the wiki's 'Project Details' section (from Selmer, TN to Huntsville, AL) - while P2500 carries the wiki's separate 'Expansion Projects > Alabama Compressor Station Upgrade' figures (LengthKnown=0, Capacity=39, StartYear1=2020, Cost ~$5M), matching a compression-only capacity add with no new pipe. This is the correct GEM convention (LengthKnown=0/Diameter=blank for an expansion adding no new physical pipe) and not a duplicate/relabel of P0185 or of any other roster row - no other roster pipeline's geography or figures overlap with this Alabama compressor project. Capacity is essentially confirmed but not exact: GEM's 39.00 MMcf/d is a ~1.3% rounding of the EIA/FERC-derived 38.5 MMcf/d (59->97 MMcf/d differential); immaterial, not staged as a concern, but the more precise EIA figure is offered in the Capacity fill for Baird's consideration. Opened all 10 of this row's harvested wiki citations: 2 (Wikipedia mirror, Bloomberg private-company snapshot) are stale/paywalled and not chased further (they only ever supported historical ownership predating Black Bear, already superseded); the businesswire.com acquisition release 403s to a scripted UA (confirmed via Wayback, see the Owner fill) and is a system-level (not AlaTenn-specific) press release, so it is used only as owner-chain context, not a segment ref; the FERC tariff-index PDF and the generic eia.gov/naturalgas/data.php page are both navigation/index surfaces, not citable for any one value; the remaining 6 (blackbearllc.com x2, PGJ 2017 - confirmed dead, 404, no Wayback capture - EnergyTech 2023, eia.gov data.php) were opened and are folded into this finding and the fills below. Also opened 6 sources found via open-web search beyond the wiki pool: the EIA historical-projects xlsx itself, the Federal Register/govinfo PDF, a PHMSA public-awareness brochure (pipelinesafetyinfo.com), a PHMSA PRIMIS enforcement notice (Nov 2025), and 2 trade-press pieces (pgjonline.com, worldpipelines.com/businesswire via search) on the 2025 Enstor-Black Bear acquisition.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf",
+        "https://www.blackbearllc.com/natural-gas-transmission"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "contested": {"SegmentCost": ""},
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct SegmentCost from 5,000,000 USD to 5,415,200 USD (or the EIA-rounded 5,400,000) - the sheet's current figure does not match either primary source.",
+      "researcher_notes": "GEM's current SegmentCost=5,000,000.00 USD does not match the two sourced figures for this specific project: the applicant's own FERC filing (Federal Register notice, govinfo.gov PDF, 84 FR 28297) states 'AlaTenn estimates the cost of the project to be $5,415,200'; EIA's Historical Projects table independently lists Cost (millions)=5.4 for the same 'Alabama Compressor Station Upgrade'/CP19-476 row - consistent with, and evidently just a rounding of, the FERC estimate. Both numbers trace to the same underlying June-2019 AlaTenn cost estimate (not two independently derived costs - flagging this rather than claiming tier=high), but they agree with each other and both disagree with the sheet's $5,000,000 by ~8%. The wiki page itself states 'Cost: US$5 million [10]' (citation 10 = the generic eia.gov/naturalgas/data.php page), which is almost certainly a rounding of the same 5.4/5.415 figure one step further, and appears to be where the sheet's current 5,000,000 came from. Recommend Update correct the value to the more precise, primary $5,415,200 (or EIA's rounded 5,400,000) rather than the doubly-rounded $5,000,000. See the Capacity fill for a related, smaller (immaterial) rounding note.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.blackbearllc.com/natural-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Historical Projects (1996-2024)' row: Project Name 'Alabama Compressor Station Upgrade', Pipeline Operator Name 'AlaTenn Pipeline', Status 'Completed', Completed Date 2020-10-08"},
+        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "live current-operations page lists 'AlaTenn: FERC-Regulated Interstate, 325 miles, 2-20 inch, 550-977# MAOP, 292 MDth/d capacity' among Black Bear's active systems today"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA's 'Completed' status (Oct 2020) plus the operator's own current (2026) site both confirm operating; two clearly separate origins (US govt data table vs. operator's live site)."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "workbook is EIA's 'Natural Gas Pipeline Projects' table"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "filing is under the Natural Gas Act, describes 'additional firm transportation service'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivially confirmed - natural gas pipeline, both sources are gas-specific by definition."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.blackbearllc.com/natural-gas-transmission",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "page header: 'NATURAL GAS TRANSMISSION ... AlaTenn: FERC-Regulated Interstate'"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'provide additional firm transportation service to the City of Huntsville, Alabama'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as a FERC-regulated interstate transmission system, not gathering/processing."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2019", "ProposalMonth": "6"},
+      "primary_value": "2019",
+      "proposed_refs": ["https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf"],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Take notice that on June 3, 2019, American Midstream (AlaTenn), LLC ... filed a request'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single strong primary source (the FERC filing notice itself, which states the exact filing date). Searched SEC EDGAR full-text search and trade press (PGJ, NGI, Reuters via web search) for a second, independent account of this specific project's proposal date; found none - this small blanket-authorization filing did not generate separate trade-press coverage of its filing date (only of its 2020 completion, via EIA)."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the Federal Register/govinfo filing notice, the EIA historical-projects workbook, FERC eLibrary (via web search), and trade press for an explicit construction-start date; found only the filing date (2019-06) and the completion date (2020-10-08, EIA), no explicit construction-start month/year. This is a small blanket-authorization compressor swap (no FERC certificate order beyond the prior-notice filing - the docket text itself says the activity is 'deemed to be authorized' absent a protest, so no separate order exists to check for a construction-commencement date). Leaving blank rather than inferring a date between the June 2019 filing and October 2020 completion."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2020", "StartMonth1": "10"},
+      "primary_value": "2020",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row: Completed Date 2020-10-08, Year In Service Date 2020"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2020 confirmed; adding StartMonth1=10 (October), sourced from EIA's exact Completed Date 2020-10-08. Only one dated primary source found for the specific month (the Federal Register notice only gives the 2019 filing date, not the 2020 completion date) - both the EIA table and the FR notice ultimately trace to the same CP19-476 filing/project, so marking independent=false despite two documents; the pipeline's continued current operation (see Status fill) is corroborated by a genuinely separate, non-FERC-derived source (blackbearllc.com)."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "39.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "39.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": false, "name_found": true, "note": "row: Additional Capacity (MMcf/d) = 38.5, notes 'flow through compressor will increase from 59 MMcf/d to 97 MMcf/d' (97-59=38); GEM's 39.00 does not exact-match but is within ~1.3% rounding"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirming the current value (39.00) with a caveat, not correcting it: EIA's precise figure for this project's added capacity is 38.5 MMcf/d (derived from the FERC filing's stated 59->97 MMcf/d compressor flow increase). The ~0.5 MMcf/d / 1.3% gap is immaterial and likely just GEM's own earlier rounding, so I am not filing this as a spec concern - but flagging the more precise sourced figure (38.5) for Baird in case a tighter number is wanted. Single primary source (EIA), which itself derives from the same FERC filing as every other figure on this row - independent=false."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only pressure figure found is a SYSTEM-level MAOP range for the whole current AlaTenn pipeline (550-977# per blackbearllc.com/natural-gas-transmission), not a figure specific to the Decatur compressor upgrade segment - per the aggregate-vs-segment rule, not staged as this segment's Pressure. Searched the FERC filing notice and EIA table; neither states an operating pressure for this specific project. Leaving blank."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "0.00", "LengthKnownUnits": "km"},
+      "primary_value": "0.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row's 'Miles' column is blank for this project (a compressor-only upgrade, no new pipe)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed correct: EIA's own table leaves Miles blank for this project, and the FERC filing describes only compressor unit replacement (4 old units -> 2 new units) at an existing station, no new pipeline segment. Consistent with the standing GEM convention that a no-new-pipe expansion carries LengthKnown=0."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Correctly blank, not an owed gap: this is a compressor-only expansion adding no new pipeline (LengthKnown=0), so per the standing GEM convention ('expansion with no new physical pipe -> LengthKnown=0, Diameter blank') there is no new-pipe diameter to report. EIA's own table also leaves Pipeline Diameter (Inches) blank for this row."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source specific to this compressor-upgrade project names an upstream gas supply basin. The wiki's 2017 PGJ citation (now a dead link, 404, no Wayback capture) describes a DIFFERENT, earlier connection bringing 'additional Northeast Marcellus gas' onto the AlaTenn system generally - that is a fact about the base mainline (P0185), not about this 2019-2020 Decatur compressor project specifically, so it is not conflated here; flagged as a cross_row_lead for P0185 instead. Leaving FuelSource blank."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Decatur",
+        "StartPrefecture/District": "Limestone County",
+        "StartState/Province": "Alabama",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Huntsville",
+        "EndPrefecture/District": "Madison County",
+        "EndState/Province": "Alabama",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Decatur",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf",
+        "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'install two new compressor units ... at its Decatur Compressor Station' in Limestone County, Alabama; project delivers to 'the City of Huntsville, Alabama, d/b/a Huntsville Utilities'"},
+        {"url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA public-awareness brochure for 'BBT AlaTenn, LLC' lists Alabama counties of operation: Colbert, Madison, Lawrence, Morgan, Limestone"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartState/EndState=Alabama were already correct and filled; adding city/county-level detail from the FERC filing (compressor station in Decatur/Limestone County, delivery point Huntsville/Madison County) plus a second, independent PHMSA-sourced operator brochure confirming the same Alabama counties. Note for the record: EIA's own table lists this project's Beg_State as 'MS' (Mississippi) and End_State as 'AL', reflecting the broader AlaTenn system's upstream gas flow crossing from Mississippi into Alabama ('Crosses State Border: Yes') - but the physical compressor work and delivery point are both squarely in Alabama per the FERC filing and PHMSA brochure, so StartState/EndState=Alabama/Alabama is not changed; noting the EIA nuance here rather than silently ignoring it."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "5415200.00", "SegmentCostUnits": "USD", "SegmentCostYear": "2019"},
+      "primary_value": "5415200.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12814.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'AlaTenn estimates the cost of the project to be $5,415,200' (substring check false-negatived on the literal comma-formatted dollar figure and en-dash docket number - confirmed by hand with pdftotext -layout)"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Cost (millions) = 5.4, consistent with the FERC filing's $5,415,200 estimate"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Proposing a CORRECTION to the sheet's current SegmentCost (5,000,000) - see the paired spec concern in validity[]. Both sources trace to the same underlying 2019 AlaTenn cost estimate (independent=false), but they agree with each other precisely and both disagree with the sheet's rounder $5,000,000. SegmentCostYear=2019 is the year of the applicant's cost estimate (the filing date); this is a proposed addition since the cell was previously blank."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "oo_sheet_row": 1907,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "BBT AlaTenn, LLC"},
+      "primary_value": "BBT AlaTenn, LLC",
+      "proposed_refs": [
+        "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf",
+        "https://primis.phmsa.dot.gov/enforcement-documents/32025024NOPV/32025024NOPV_PCO_11062025_(24-297583).pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA public-awareness brochure titled 'BBT AlaTenn, LLC', Houston TX address, lists Alabama counties of operation"},
+        {"url": "https://primis.phmsa.dot.gov/enforcement-documents/32025024NOPV/32025024NOPV_PCO_11062025_(24-297583).pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA Nov-2025 Notice of Probable Violation: 'BBT Alatenn, L.L.C. ... are the separate Operators inspected that are all owned by Black Bear Transmission, LLC'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independently dated PHMSA-derived documents (a public-awareness brochure and a 2025 formal enforcement notice, years apart) both name 'BBT AlaTenn, LLC' / 'BBT Alatenn, L.L.C.' as the registered operating entity, distinct from the Owner ('Black Bear Transmission LLC', already correct on the sheet). A third source, Black Bear's own July 2023 press release (blackbearllc.com/post/black-bear-transmission-begins-natural-gas-delivery-to-new-power-plant-units), also self-identifies as 'its BBT AlaTenn, LLC (\\\"AlaTenn\\\") pipeline system' - fully consistent."
+    },
+    {
+      "segment_name": "Alabama Compressor Station Upgrade",
+      "sheet_row": 1287,
+      "oo_sheet_row": 1907,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Black Bear Transmission LLC", "Owner1%": "100.00%"},
+      "primary_value": "Black Bear Transmission LLC",
+      "proposed_refs": [
+        "https://www.blackbearllc.com/natural-gas-transmission",
+        "https://primis.phmsa.dot.gov/enforcement-documents/32025024NOPV/32025024NOPV_PCO_11062025_(24-297583).pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "AlaTenn listed under Black Bear Transmission's current natural-gas-transmission operations"},
+        {"url": "https://primis.phmsa.dot.gov/enforcement-documents/32025024NOPV/32025024NOPV_PCO_11062025_(24-297583).pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'BBT Alatenn, L.L.C. ... are the separate Operators ... that are all owned by Black Bear Transmission, LLC' (Nov 2025)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner1=Black Bear Transmission LLC (100%) confirmed current and correct by two independent origins (operator's own live site + a Nov-2025 federal PHMSA enforcement letter). IMPORTANT OWNERSHIP-CHAIN NOTE for Update/Baird (not a field owed by this worklist, so not staged as a fill): Black Bear Transmission itself was acquired by Enstor Pipeline Holdings, LLC (an Enstor Gas affiliate) from Basalt Infrastructure Partners, announced Aug 2025 and completed Nov 2025 (pgjonline.com, 'Enstor Completes Acquisition of Black Bear Transmission, Adding 1,700 Miles of Pipelines'; blackbearllc.com's own site banner: 'Black Bear is now owned by Enstor Gas'). This does not change Owner1 (Black Bear Transmission LLC remains the correct direct owner of the AlaTenn asset), but GEM's Parent field for P2500 currently reads 'Project Tarpon Holdco LLC [100.00%]' (a Basalt-era holding entity, sourced from the 2020 businesswire acquisition release) and is very likely now stale post-acquisition - worth a targeted Update pass on Parent (and on every other Black Bear-owned GEM row: Ozark Gas Transmission, BBT Midla, BBT Trans-Union) even though Parent isn't one of this row's owed cells."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0185",
+      "url": "https://www.blackbearllc.com/post/black-bear-transmission-begins-natural-gas-delivery-to-new-power-plant-units",
+      "facts": "July 2023: 'Black Bear Transmission LLC ... announced its BBT AlaTenn, LLC (\"AlaTenn\") pipeline system has started delivering natural gas supply for commissioning of three new natural gas-fueled power plant units owned and operated by the Tennessee Valley Authority (TVA) in Colbert County, Alabama,' described as 'the culmination of a multi-year collaborative effort between TVA and AlaTenn.' This reads as a separate capacity/lateral project on the AlaTenn system (TVA's Colbert County coal-to-gas conversion) that does not correspond to any PID in this batch's 50-row roster and may not yet be captured anywhere in GEM - worth a Discovery/Update look at whether AlaTenn needed (and built) additional capacity beyond the 2020 Decatur compressor upgrade to serve this TVA load, distinct from P2500."
+    },
+    {
+      "project_id": "P0185",
+      "url": "https://www.blackbearllc.com/natural-gas-transmission",
+      "facts": "Live current-operations page states the AlaTenn system today is '325 miles, 2-20 inch, 550-977# MAOP, 292 MDth/d capacity, 290 MDth/d FT contracts, 5,760 HP Compression, 56 delivery points, 7 receipt points' - larger than P0185's current GEM figures (295 mi / 200 MMcf/d, start 2002), consistent with the system having grown via P2500's 2020 compressor upgrade (200->~238-239 MMcf/d bump) plus the 2023 TVA-related work above and other undocumented laterals/loops; useful baseline for a future P0185 deep-sweep or Update pass."
+    }
+  ],
+  "summary": "P2500 (AlaTenn Alabama Compressor Station Upgrade): confirmed real, correctly classified/split from base pipeline P0185, not a duplicate - EIA's own historical pipeline-projects table + a Federal Register/FERC docket notice (CP19-476) + PHMSA operator records independently confirm existence, status, near-zero length, and ownership; staged refs on 6 already-valued cells (Status/Fuel/PipelineType/Start/Capacity/Length) plus new sourced fills for Operator (BBT AlaTenn, LLC), Location detail, Proposal date, and a corrected SegmentCost (flagged as a spec concern: sheet's $5,000,000 should be $5,415,200 per two aligned primary sources). UNRESOLVED: Construction date, Pressure, Diameter (correctly not applicable), FuelSource."
+}

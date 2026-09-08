@@ -1,0 +1,270 @@
+{
+  "project_id": "P5401",
+  "pipeline_name": "Acadian Gas Pipeline System",
+  "sheet_row": 2991,
+  "wiki": "https://www.gem.wiki/Acadian_Gas_Pipeline_System",
+  "validity": [
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on Status/Fuel/PipelineType/Start; keep as-is, add corroborating refs (below) and the Wayback snapshots alongside the existing bot-blocked ref",
+      "researcher_notes": "EXISTENCE: strongly confirmed, real and well-documented. This row is Enterprise Products Partners' May 31, 2023 compression-only capacity expansion of its Acadian Haynesville Extension pipeline (part of the Acadian Gas Pipeline System), adding ~400 MMcf/d of Haynesville takeaway capacity and raising total system capacity from ~2.1 Bcf/d to 2.5 Bcf/d. Confirmed via: (1) Enterprise's own May 31 2023 press release (posted on ir.enterpriseproducts.com, distributed via Businesswire, and restated on the company's 'Our History' timeline page) -- the row's existing current_ref; (2) Oil & Gas Journal, 'EPP completes 400-MMcfd Acadian Haynesville Extension expansion' (Christopher E. Smith, May 31 2023), an independently bylined trade-press writeup; (3) EIA's own 'Natural Gas Pipeline Projects' historical workbook (EIA-NaturalGasPipelineProjects.xlsx), which carries a distinct row: Project Name 'Acadian Haynesville Extension', Operator 'Enterprise Products Partners', Project Type 'Expansion', Status 'Completed', Completed Date 2023-05-31, Additional Capacity (MMcf/d) 400, State(s) LA -- a federal dataset independent of the company's own announcement, and NOT traceable to GEM. Tier: high (2+ independent origins: company disclosure vs. EIA's federal compilation; OGJ trade press as a third angle). LIVENESS: the sheet's existing current_ref (ir.enterpriseproducts.com) now 403s/times out to scripted clients -- confirmed this is a bot-wall, not a dead page (curl with a browser UA also gets 403, but the page IS live and unchanged per its Wayback capture, which passes verification with the pipeline name and '400' both present). Per standing rule this is NOT a deletion -- add the Wayback snapshot (http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension) alongside the existing ref, do not replace it. Same finding for the wiki-cited Businesswire mirror of the same release (also 403 direct, Wayback at http://web.archive.org/web/20260213033426/https://www.businesswire.com/news/home/20230531005287/en/Enterprise-Completes-Expansion-of-Acadian-Haynesville-Extension passes). CLASSIFICATION: correct. The press release explicitly states 'The expansion project added compression, increasing total natural gas transportation capacity ... from approximately 2.1 Bcf/d to 2.5 Bcf/d' -- no new linear pipe was built, so GEM's LengthKnown=0/Diameter=blank for this row is the CORRECT encoding per the no-new-physical-pipe rule, not a gap. PipelineType=transmission and Fuel=Gas are both correct for this high-diameter intrastate mainline capacity addition. DUPLICATE: not a duplicate. The Acadian family in this roster is four distinct, correctly-separated GEM rows for the same corridor, exactly as flagged in the task brief: P0143 (the legacy ~1,000-mile South Louisiana Acadian system predating the Haynesville extension), P3283 (the ~80-mile Gillis Lateral, proposed Sep. 2019 per the wiki-cited Pipeline & Gas Journal article -- via Wayback since the live pgjonline.com URL now 404s -- and completed 4Q2021 per Aegis Hedging's Dec. 2021 'Two Haynesville-area pipeline projects due in 2021' insight, both describing an 80-mile/1 Bcf/d lateral matching P3283's len=83/cap=1000 roster values), P5709 (the original 2011 Haynesville Extension mainline build -- 270 mi, dia 30/36/42, cap 1800 MMcf/d, matching EIA's separate 2011 'New Pipeline' row for 'Acadian Haynesville Extension' almost exactly), and P5401 (this row: the 2023 compression-only capacity expansion of that same P5709 mainline, correctly logged as its own zero-length expansion phase, the same pattern GEM uses for the Florida Gas Transmission phases). No merge is warranted. Opened and read to exhaustion: the Enterprise IR/Businesswire press release (twice, direct + Wayback), Enterprise's 'Our History' timeline page (restates the same May 2023 announcement verbatim, no new facts), the OGJ article, the EIA historical projects workbook (all Acadian-named rows), the wiki-cited 2019 PGJ article and the Aegis Hedging insight (both found to describe P3283, not this row -- see cross_row_leads), and attempted the wiki-cited mergr.com / 2010 SEC filing / bit.ly / job-posting citations, which are 2000-2010 ownership-history citations irrelevant to this 2023 row. 6 of 15 wiki-harvested citations for the Acadian page were opened; the remainder (mergr.com acquisition note, 2000 bit.ly release, 2010 SEC investor deck, two job-posting citations, and the enterprise system-map citation) concern corporate history/ownership pre-dating this expansion or are non-substantive and were not pursued further.",
+      "proposed_refs": [
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/14294585/epp-completes-400mmcfd-acadian-haynesville-extension-expansion",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "do not fill SegmentCost or LengthKnown from the EIA workbook's row for this project -- both fields on that row are aggregate/system figures, not this project's own numbers",
+      "researcher_notes": "Caution for future work on this row, not a live defect (both fields are currently blank on the sheet, so nothing needs correcting today). EIA's 'Natural Gas Pipeline Projects' workbook carries a row for this exact project (Completed Date 2023-05-31, Additional Capacity 400 MMcf/d -- matches) but its 'Cost (millions)' field shows 3800 and its 'Miles' field shows 275. Both are misleading if lifted directly: (a) the press release states this expansion is 'the first of $3.8 billion of organic growth capital projects' scheduled to complete in 2023 across MULTIPLE Enterprise projects (PDH 2, NGL fractionator 12, Poseidon, Mentone II, Texas Western Products) -- EIA appears to have attached that company-wide 2023 capex total to this one project row, not a project-specific cost; no source anywhere states a segment-specific dollar figure for just this compression expansion. (b) 'Miles: 275' on this expansion row is suspiciously close to the ~270 miles of the ORIGINAL Haynesville Extension mainline (P5709, confirmed via EIA's separate 2011 'New Pipeline' row and matching the roster's P5709 len=270) -- i.e. it reads as the system's total mileage restated on the expansion row, not new pipe, which directly contradicts the press release's explicit 'added compression' (no new linear pipe) language. This is exactly the aggregate-vs-segment trap the sweep SOP warns about. Recommend: leave SegmentCost UNRESOLVED and keep LengthKnown=0 as-is; do not use the EIA workbook's Cost/Miles columns for this row if pasting from it in the future.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "400.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "400.00",
+      "proposed_refs": [
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/14294585/epp-completes-400mmcfd-acadian-haynesville-extension-expansion",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/14294585/epp-completes-400mmcfd-acadian-haynesville-extension-expansion", "ok": true, "contains_value": true, "name_found": true, "note": "\"Enterprise Products Partners LP (EPP) has completed a 400-MMcfd expansion of its Acadian Haynesville Extension natural gas pipeline, increasing its capacity to 2.5 bcfd.\""},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row: Project Name='Acadian Haynesville Extension', Operator='Enterprise Products Partners', Project Type='Expansion', Completed Date=2023-05-31, Additional Capacity (MMcf/d)=400"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Value already on the sheet (400.00 MMcf/d), only the [ref] was missing (MISSING_REF). Two independent origins: OGJ trade press and EIA's federal pipeline-projects dataset, both matching the company's own May 2023 announcement exactly."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "0.00", "LengthKnownUnits": "km"},
+      "primary_value": "0.00",
+      "proposed_refs": [
+        "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension",
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/14294585/epp-completes-400mmcfd-acadian-haynesville-extension-expansion"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension", "ok": true, "contains_value": true, "name_found": true, "note": "\"The expansion project added compression, increasing total natural gas transportation capacity on the Acadian Haynesville Extension from approximately 2.1 billion cubic feet per day ... to 2.5 Bcf/d\" -- no new pipe/mileage built"},
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/14294585/epp-completes-400mmcfd-acadian-haynesville-extension-expansion", "ok": true, "contains_value": false, "name_found": true, "note": "confirms the 400-MMcfd capacity increase but does not itself use the word 'compression'; corroborating only, primary support is the press release"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "LengthKnown=0 is correct: this is a compression-only capacity expansion, no new physical pipe (per the no-new-pipe rule). MISSING_REF filled with the press release stating the expansion added compression only."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation","StartPrefecture/District","StartState/Province","StartCountryOrArea","EndLocation","EndPrefecture/District","EndState/Province","EndCountryOrArea"],
+      "primary_value_col": "StartState/Province",
+      "values": {"StartState/Province": "Louisiana", "EndState/Province": "Louisiana"},
+      "primary_value": "Louisiana",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row fields Beg_State='LA', End_State='LA', State(s)='LA'"},
+        {"url": "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension", "ok": true, "contains_value": true, "name_found": true, "note": "describes the expansion serving 'the Mississippi River Corridor' and 'the Louisiana [LNG] export market' -- the whole Acadian Haynesville Extension is a Louisiana intrastate system"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartCountryOrArea/EndCountryOrArea already say 'United States'; the state cells were blank. Both termini fall within Louisiana (the entire Acadian Haynesville Extension is a Louisiana intrastate mainline; this expansion adds compression at existing stations on that same line, not a new corridor). Only a state-level fill is offered, per the segment's own compression-only, no-new-route nature -- no county-level locations are stated in any source for this specific expansion."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "oo_sheet_row": 4198,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Enterprise Products Partners"},
+      "primary_value": "Enterprise Products Partners",
+      "proposed_refs": [
+        "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension", "ok": true, "contains_value": true, "name_found": true, "note": "Enterprise Products Partners L.P. announces completion of its own Acadian Haynesville Extension expansion"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row field Pipeline Operator Name='Enterprise Products Partners'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator cell was fully blank on the operators/owners tab. Same entity as Owner1 (already 100% Enterprise Products Partners on the sheet) -- Enterprise both owns and operates its own intrastate Acadian system, confirmed by both the company's own release and EIA's independent compilation."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "oo_sheet_row": 4198,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Enterprise Products Partners", "Owner1%": "100.00%"},
+      "primary_value": "Enterprise Products Partners",
+      "proposed_refs": [
+        "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20260505074448/https://ir.enterpriseproducts.com/news-releases/news-release-details/enterprise-completes-expansion-acadian-haynesville-extension", "ok": true, "contains_value": true, "name_found": true, "note": "Enterprise announces completion of expansion of 'its' Acadian Haynesville Extension"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row field Pipeline Operator Name='Enterprise Products Partners' for the 2023 Acadian Haynesville Extension expansion; no other owner named in any source"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Value already on the sheet (100% Enterprise), only the [ref] was missing (MISSING_REF). No source states an ownership percentage explicitly (all describe Enterprise as sole operator of its own system) -- tier medium because 100% ownership is inferred from 'its'/'our' language and EIA's single-operator listing rather than an explicit percentage statement; searched SEC 10-K filings for an explicit ownership breakdown of Acadian Gas LLC and found none beyond the historical 2000 acquisition record."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source gives an explicit proposal/FID announcement date for this specific 400 MMcf/d compression expansion. Searched: the May 2023 press release (states completion only, no earlier proposal date), OGJ's same-day writeup, EIA's workbook ('Last Updated Date' 2023-06-01 is a data-entry timestamp, not a proposal date), and the wiki-cited 2019 Pipeline & Gas Journal article + Aegis Hedging's Dec. 2021 insight -- both of which turned out to describe a DIFFERENT, earlier Acadian project (the Gillis Lateral, proposed Sep. 2019, completed 4Q2021 -- see cross_row_leads for P3283), not this 2023 expansion. Leaving blank rather than guessing a year from the Gillis Lateral timeline."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a construction-start date; a compression-only expansion (adding horsepower at existing compressor stations) is not described as having a discrete 'construction start' the way a new-build lateral is -- all sources give only the May 2023 in-service/completion date, already captured in Start [ref]. Searched the same source set as Proposal [ref] above with no result."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No operating pressure figure found in the press release, OGJ, EIA workbook, or Enterprise's history page -- none of these disclose pipeline pressure ratings. Left blank rather than guessing."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Correctly blank, not a research gap: per the press release, this expansion 'added compression' with no new linear pipe, so there is no new-build diameter to report (see the LengthKnown=0 validity finding above). Do not fill from the mainline's own 30/36/42-inch diameter (that belongs to P5709, the original Haynesville Extension build) -- that would be the same aggregate-vs-segment error flagged for SegmentCost/Miles above."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per gem_schema.md, FuelSource wants a named upstream field/plant/facility, not a fuel type or broad play. All sources describe the gas source only as 'the Haynesville' or 'Haynesville producers' generically (an entire multi-state shale play spanning dozens of individual fields, not one named facility) -- no source names a specific feeder field or gathering system for this compression expansion. Left blank per the schema's instruction not to default a generic label."
+    },
+    {
+      "segment_name": "Acadian Haynesville Extension Capacity Expansion",
+      "sheet_row": 2991,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No project-specific cost figure exists in any source. EIA's workbook lists 'Cost (millions): 3800' on this project's row, but that is Enterprise's company-wide 2023 growth-capex total ('the first of $3.8 billion of organic growth capital projects' per the press release, spanning PDH 2, NGL fractionator 12, Poseidon, Mentone II, and Texas Western Products alongside this pipeline) -- not this project's own cost. Flagged as a spec caveat above; left blank rather than fabricating a segment-specific split of an aggregate figure."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P3283",
+      "url": "http://web.archive.org/web/20241213221301/https://pgjonline.com/news/2019/09-sep/enterprise-to-expand-extend-acadian-gas-pipeline-system-in-louisiana",
+      "facts": "Gillis Lateral: proposed/announced Sep. 20, 2019 (Pipeline & Gas Journal); 80-mile, 1 Bcf/d intrastate lateral originating near Cheneyville, LA on the Acadian Haynesville Extension, terminating at third-party interconnects near Gillis, LA; paired with a Mansfield compressor-station (De Soto Parish) upgrade that raises the mainline's own capacity by 300 MMcf/d (1.8 to 2.1 Bcf/d); expected in service mid-2021. Matches roster P3283 (len=83, cap=1000) closely. Note: the live pgjonline.com URL for this article now 404s -- only the Wayback capture is usable."
+    },
+    {
+      "project_id": "P3283",
+      "url": "https://lngprime.com/americas/enterprise-says-new-pipeline-serves-us-gulf-coast-lng-terminals/36900/",
+      "facts": "Gillis Lateral in service (Dec. 16, 2021 article): ~80-mile pipeline from near Alexandria, LA on the Acadian Haynesville Extension to Gillis, LA interconnects; ~1 Bcf/d capacity; commercial service started via a Mansfield compressor-station (De Soto Parish) horsepower increase, raising the Acadian Haynesville Extension's own capacity from 1.8 to 2.1 Bcf/d. Confirms the P3283 in-service timing and the 1.8-to-2.1-Bcf/d step that immediately preceded this row's (P5401's) further 2.1-to-2.5-Bcf/d step in 2023."
+    },
+    {
+      "project_id": "P5709",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's historical projects workbook carries a separate 2011 row: 'Acadian Haynesville Extension', Enterprise Products Partners, Project Type 'New Pipeline', Completed 2011-11-01, Cost $1,500M, 270 miles, Additional Capacity 1800 MMcf/d, Diameter '30, 36, 42' in, Intrastate/State authority. Matches roster P5709 (len=270, dia=30/36/42, cap=1800) closely -- this is the original mainline build P5401 later expanded via compression."
+    },
+    {
+      "project_id": "P5709",
+      "url": "https://www.enterpriseproducts.com/about-us/our-history/",
+      "facts": "Enterprise's own history timeline (2009 entry): unitholders approved the Duncan Energy/Acadian Gas LLC joint plan on Oct. 23, 2009 to extend the existing ~1,000-mile South Louisiana Acadian system into northwest Louisiana's Haynesville Shale via a 249-mile, 36-inch-and-30-inch pipeline with capacity up to 1.4 Bcf/d, connecting to the affiliated Cypress Gas Pipeline. Gives a 2009 proposal date and an earlier (249 mi/1.4 Bcf/d) planned scope for what became the 270-mi/1800-MMcf/d P5709 build; useful for P5709's ProposalYear."
+    }
+  ],
+  "summary": "P5401 (Acadian Haynesville Extension Capacity Expansion) is confirmed real, correctly classified as a zero-length/no-diameter compression-only capacity expansion (not a duplicate of P5709's original mainline build), with 400 MMcf/d capacity now double-sourced (OGJ + EIA) and Length/Location/Operator/Owner refs added; Proposal, Construction, Pressure, Diameter, FuelSource, and SegmentCost remain UNRESOLVED (Diameter correctly blank by design; SegmentCost flagged because EIA's own $3.8B/275-mi figures on this row are misleading company-wide/system aggregates, not this project's own numbers)."
+}

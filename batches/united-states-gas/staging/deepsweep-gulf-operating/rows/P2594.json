@@ -1,0 +1,591 @@
+{
+  "project_id": "P2594",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 1337,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Putnam Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/attribution; row is a real, correctly-classified, correctly-attributed FGT interstate mainline-loop expansion, not a duplicate of any other roster row. See the separate spec concern on LengthKnown.",
+      "researcher_notes": "EXISTENCE: strongly confirmed real. Two independent US-government primary sources document this exact project: (1) EIA's own 'Historical Projects (1996-2024)' pipeline-projects workbook (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, downloaded and parsed directly with openpyxl rather than relying on the wiki's cited generic eia.gov/naturalgas/data.php navigation page, which is not itself citable) carries a row named exactly 'Putnam Expansion Project', Pipeline Operator Name 'Florida Gas Transmission', Status 'Completed', Completed Date 2022-02-25, Docket CP19-474, Cost(millions) 102.6, Miles 20.7, Additional Capacity (MMcf/d) 169, Diameter 30. (2) FERC's own Federal Register notices for Docket CP19-474-000 - Notice of Application (govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf, filed May 31, 2019), Notice of Schedule for Environmental Review (govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf), and Notice of Availability of the Environmental Assessment (govinfo.gov/content/pkg/FR-2019-12-12/pdf/2019-26759.pdf) - independently describe Florida Gas Transmission Company, LLC's application to construct a 13.7-mile West Loop and a 7.0-mile East Loop of 30-inch pipe in Columbia, Union, Clay, Putnam, and Orange counties, Florida, to serve growing power-generation demand (Seminole Electric Cooperative). Note: federalregister.gov's own page and PDF path were blocked/404 to scripted fetches - all three notices were retrieved instead via their govinfo.gov/content/pkg/... PDF mirrors, confirmed real PDFs and extracted with pdftotext -layout. A third independent line of confirmation - EIA's own editorial coverage (Today in Energy, eia.gov/todayinenergy/detail.php?id=52478, and the Natural Gas Weekly Update archive for 2022-05-19) - describes the Putnam Expansion (169 MMcf/d = 0.17 Bcf/d) entering service in Q1 2022, consistent with the workbook's 2022-02-25 completion date. CLASSIFICATION: correctly classified as a genuine FGT interstate natural-gas TRANSMISSION-loop expansion (real new pipe, not a phantom/GEM-only entity, not gathering/processing) - the FERC filings describe NGA-regulated interstate transportation capacity additions via looping, and this is properly a physical-pipe expansion (LengthKnown/Diameter both populated, per the standing convention), unlike some other FGT-family expansion rows in this batch that are compression-only (LengthKnown=0). DUPLICATE: checked against all other Florida Gas Transmission-family roster rows in this batch (P2529 East Louisiana Project, P2627 Mobile Bay Lateral Expansion, P2738 South Alabama Project, P4028-P4040 and P4050/P4060, the Phase IV-VIII/AE-Cooperative/Turkey-Point/East-Leg/Alabama-Power-Lateral/Sanford/Southwest-Alabama rows) via the fresh GGIT snapshot (2026-09-04) and the worklist's pipeline_name/segment_name pairing - none of these carry the Putnam Expansion Project name, docket (CP19-474), or overlapping county geography; no duplicate/relabel concern. Cross-referenced EIA's full FGT-family project list (22 rows) against the roster and found it maps cleanly 1:1 to all 18 other FGT rows in this batch by project name, with three EIA-listed FGT projects (East-West Project/CP17-8, Galveston County Project/CP20-505, Mobile County Project/CP22-12) and one cancelled project (Big Bend Project/CP21-45) that do NOT correspond to any roster PID in this batch - flagged as cross_row_leads below for a possible Discovery/scope check, not claimed as evidence against THIS row. ATTRIBUTION: Owner (Florida Gas Transmission Co LLC, 100%) and Location (Florida-to-Florida, no state-border crossing) both confirmed correct; Operator was blank and is filled with 'Energy Transfer' below - see the Owner/Operator/Location fills for full sourcing. Opened all 9 of this row's harvested wiki citations (shared across the whole FGT-family wiki page): #1 (A Barrel Full) is banned, never used; #5 (the wiki's cited kindermorgan.com FGT page) is CONFIRMED DEAD (404 via curl) - I did not force a Wayback capture of the dead page since a live, better replacement (kindermorgan.com/Operations/Natural-Gas/Index) was found and used instead; #3/#4/#6/#8/#12 are all instances of the same generic eia.gov/naturalgas/data.php navigation page (not citable on its own, but it correctly points toward EIA's data - I went to the actual underlying workbook/articles instead); #9 (oilandgaswatch.org/pipeline/6491) is for the main FGT trunk, not Putnam specifically, and Putnam's own oilandgaswatch page (/pipeline/3352) is an empty JS shell (403/no server-rendered content) - not usable either way; #7 (fractracker.org) and #10 (a Pipeline & Gas Journal PDF on s3) and #11 (texasenergyreport.com, an unrelated East-West Pipeline Expansion article) were opened and found not to add project-specific facts beyond what FERC/EIA already provided. All facts used in this shard come from FERC's own docket filings and EIA's independently-maintained data, not from any wiki-harvested citation.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2019-12-12/pdf/2019-26759.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct LengthKnown from 30.30 km to 33.31 km (equivalently, 20.7 mi to match the sibling FGT rows' 'mi' unit convention) - the sheet's current figure is not supported by either primary source and both agree closely with each other on a materially longer length.",
+      "researcher_notes": "GEM's current LengthKnown=30.30 km does not match either of the two independent primary sources found for this specific project: FERC's own Notice of Schedule for Environmental Review (govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf, Docket CP19-474) describes a 13.7-mile West Loop plus a 7.0-mile East Loop = 20.7 miles total; EIA's independently-maintained 'Historical Projects (1996-2024)' workbook lists Miles=20.7 for the same project/docket. 20.7 mi = 33.31 km, a ~9.9% increase over the sheet's 30.30 km. I could not find any source, including the wiki's own citation pool, supporting 30.30 km (which back-converts to ~18.83 mi, matching neither loop individually nor their sum) - this appears to be a genuine data error, not a scope/definition difference (unlike, e.g., a system-vs-segment ambiguity). Recommend Update correct the value to 33.31 km, or convert to miles (20.70 mi) to match the 'mi' unit convention used by every other Florida Gas Transmission-family row in this batch (P2627, P2738, P4028-P4040, P4050, P4060 all record LengthKnownUnits='mi'; P2594 alone uses 'km') - flagging both the value error and the unit-convention inconsistency for Baird's judgment on which correction path to take.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "contested": {
+        "LengthKnown": ""
+      }
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Historical Projects (1996-2024)' row: Project Name 'Putnam Expansion Project', Pipeline Operator Name 'Florida Gas Transmission', Status 'Completed', Completed Date 2022-02-25, Docket CP19-474."
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's live Natural Gas operations index lists Florida Gas Transmission (FGT) among its current interstate systems, confirming the mainline (and its completed loop expansions, including Putnam) is still in active service as of 2026, not stale."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA's 'Completed' construction status (2022-02-25) plus the operator family's current (2026) live operations page both confirm operating; two clearly separate origins (US govt data table vs. corporate site)."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "table is EIA's 'Natural Gas Pipeline Projects' workbook; row is a natural-gas transmission-loop project."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Notice of Application filed under the Natural Gas Act for the Putnam Expansion Project, Docket CP19-474-000."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivially confirmed - a natural gas transmission-loop project on an interstate NGA-regulated gas pipeline; both sources are gas-specific by definition."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2019",
+        "ProposalMonth": "5"
+      },
+      "primary_value": "2019",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Federal Register Notice of Application: Florida Gas Transmission Company, LLC filed its application for the Putnam Expansion Project (Docket CP19-474-000) on May 31, 2019."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only a single origin found for a specific proposal date - the FERC application-filing notice itself (May 31, 2019). Searched specifically for an earlier open-season/precedent-agreement announcement (the usual earlier 'proposal' milestone for FERC pipeline projects) via web search and FGT's own open-season archive; found only open-season notices for OTHER FGT-family projects (Phase VIII, East-West, etc.), none naming Putnam specifically. Staging the FERC filing date as ProposalYear/Month since it is the earliest documented, verifiable milestone, but flagging tier=medium/independent=false since a second, earlier corroborating source was searched for and not found."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the FERC Notice of Application (2019-06), the Notice of Schedule for Environmental Review (govinfo FR-2019-08-20/2019-17896), the Notice of Availability of the EA (govinfo FR-2019-12-12/2019-26759), the EIA Historical Projects workbook, EIA's Today in Energy article (id=52478) and Natural Gas Weekly Update archive (2022/05_19) for an explicit construction-start month/year; none states one. A search-engine-synthesized result surfaced a specific claim ('FERC issued a Notice to Proceed with Construction on Feb 2, 2021') sourced only to a CourtListener court-opinion page; CourtListener returned an AWS WAF JS challenge (HTTP 202, empty body) to every UA tried, no Wayback snapshot exists for the URL, and the CourtListener REST API 401'd without an auth token I don't have - so this specific date could not be independently verified and is NOT staged. Also explicitly ruled out conflating this with a similarly-worded but DIFFERENT project: Seacoast Gas Transmission's separate 'Seminole Lateral' (~21 mi), which also delivers to the Seminole Electric plant but is a different company's different pipeline - a search result blended the two and I discarded the blended paragraph rather than let it contaminate this field. Leaving ConstructionYear/Month blank rather than staging an unverified date."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2022",
+        "StartMonth1": "2"
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/todayinenergy/detail.php?id=52478",
+        "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2022/05_19/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Putnam Expansion Project' row: Completed Date = 2022-02-25."
+        },
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=52478",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Today in Energy (May 2022): Florida Gas Transmission's Putnam Expansion (0.17 Bcf/d = 169 MMcf/d) entered service in Q1 2022."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2022/05_19/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Natural Gas Weekly Update (2022-05-19 archive): confirms the Putnam Expansion Project's Q1 2022 in-service timing."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2022 already matched the sheet and is now confirmed; adding StartMonth1=2 from EIA's precise Completed Date (2022-02-25). Flagging tier=medium/independent=false rather than high: all three sources trace to EIA as the ultimate origin (the workbook, and two EIA editorial articles evidently drawing on the same underlying data), so this is corroboration within one source family, not from two truly separate origins. FERC's own docket (the application/EA notices) provides only the authorization framework and never states a completion date, so it could not serve as the needed second independent origin for the month."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "169.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "169.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Additional Capacity (MMcf/d) = 169 for the Putnam Expansion Project row."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Notice of Application states the project's incremental firm transportation capacity."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's existing Capacity=169.00 MMcf/d confirmed exactly by both EIA's independently-maintained project table and FERC's own docket filing - two separate origins, no discrepancy."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/operating-pressure figure specific to the Putnam loops was found in any of the three Federal Register/FERC filings retrieved (Notice of Application, Notice of Schedule for Environmental Review, Notice of Availability of the EA), the EIA Historical Projects workbook, or the EIA articles. FGT's system-wide MAOP (where published) would be a SYSTEM-level fact, not specific to this segment, so per the aggregate-vs-segment rule it would not be staged here even if found. Leaving blank."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "33.31",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "33.31",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC filing describes the Putnam Expansion as looping FGT's mainline with a 13.7-mile West Loop and a 7.0-mile East Loop = 20.7 miles total (30-inch pipe, Columbia/Union/Clay/Putnam/Orange counties, FL)."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Historical Projects' row independently lists Miles = 20.7 for the Putnam Expansion Project / Docket CP19-474 - exact match to the FERC filing's 13.7+7.0 total."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PROPOSING A CORRECTION - see the paired spec concern in validity[]. 20.7 miles = 33.31 km (20.7 x 1.60934), sourced independently by both FERC's own docket filing and EIA's separately-maintained project table - these agree with each other to the decimal and both disagree with the sheet's current 30.30 km (a ~9.9% understatement; 30.30 km back-converts to ~18.83 mi, which matches neither loop individually nor their sum). Also note: every other Florida Gas Transmission-family row in this batch (P2627, P2738, P4028-P4040, P4050, P4060) records LengthKnown in 'mi', while this row alone uses 'km' - worth Baird's attention as a possible unit-entry inconsistency on top of the value error, though I could not determine whether that contributed to the error."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC filing specifies 30-inch-diameter pipe for both the West and East loops."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Diameter (Inches) = 30 for the Putnam Expansion Project row."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's existing Diameter=30.00 in confirmed exactly by both FERC's docket filing and EIA's project table."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source specific to the Putnam loops names an upstream gas-supply basin for this expansion. FGT's system-wide receipt points (South Texas, offshore Gulf of Mexico, Perryville/LA interconnects, etc., per the wiki's system-map citation) are a SYSTEM-level fact about the whole FGT mainline, not this segment specifically - per the aggregate-vs-segment rule, not staged here. Leaving FuelSource blank."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartState/Province",
+      "values": {
+        "StartLocation": "Columbia County mainline interconnect",
+        "StartPrefecture/District": "Columbia County",
+        "StartState/Province": "Florida",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Seminole Generating Station, Palatka",
+        "EndPrefecture/District": "Seminole Electric Cooperative",
+        "EndState/Province": "Florida",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Florida",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-08-20/pdf/2019-17896.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC filing places all Putnam Expansion facilities (West and East Loops) in Columbia, Union, Clay, Putnam, and Orange counties, Florida."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "State(s)=FL, Beg_State=FL, End_State=FL, Crosses State Border=No."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's existing StartState/Province=Florida, EndState/Province=Florida, and both CountryOrArea=United States fields all confirmed by two independent sources (FERC's own docket + EIA's project table), entirely intra-Florida, no state-border crossing. StartLocation/StartPrefecture-District and EndLocation are newly proposed fills (previously blank) inferred from the FERC filing's county list and the existing EndPrefecture/District='Seminole Electric Cooperative' value (the loops deliver toward Seminole Electric's Seminole Generating Station near Palatka, Putnam County, FL) - flagging these two as somewhat more inferential than the confirmed state/country fields, since the FERC notice gives a county list for the whole project rather than naming discrete loop endpoints."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1337,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "102600000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2019"
+      },
+      "primary_value": "102600000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Cost (millions) = 102.6 for the Putnam Expansion Project row."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-06-18/pdf/2019-12813.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Notice of Application: applicant's estimated project cost is $102,572,436."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's existing SegmentCost=$102,600,000 confirmed - EIA's rounded $102.6M figure matches almost exactly; FERC's raw applicant estimate is $102,572,436, an immaterial ~0.03% difference (EIA's own rounding of the same underlying estimate), not a concern. SegmentCostYear=2019 newly proposed (previously blank) as the year of the applicant's cost estimate/filing."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1989,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Energy Transfer"
+      },
+      "primary_value": "Energy Transfer",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://www.sec.gov/Archives/edgar/data/1276187/000127618718000011/ete12-31x201710k.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's live Natural Gas index confirms Florida Gas Transmission is operated by Energy Transfer (KM retains a minority equity interest but does not operate FGT)."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1276187/000127618718000011/ete12-31x201710k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Energy Transfer's own SEC 10-K (FY2017): 'ETP operates the FEP and FGT joint ventures' - Energy Transfer Partners confirmed as FGT's operator in the parent company's own regulatory filing."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator cell was blank (MISSING_VALUE). Filling 'Energy Transfer' - confirmed by two independent corporate disclosures (Kinder Morgan's own current site, which holds no operating role, and Energy Transfer's own SEC 10-K, the operator's own regulatory filing) that agree Energy Transfer (via its ETP subsidiary/GP) operates FGT day-to-day, distinct from Owner1 (Florida Gas Transmission Co LLC, the certificated entity)."
+    },
+    {
+      "segment_name": "Putnam Expansion Project",
+      "sheet_row": 1989,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Florida Gas Transmission Co LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://www.sec.gov/Archives/edgar/data/1276187/000127618718000011/ete12-31x201710k.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's live corporate page confirms Florida Gas Transmission Company, LLC as the certificated interstate pipeline entity, jointly owned by Energy Transfer (majority) and Kinder Morgan (minority, non-operating)."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1276187/000127618718000011/ete12-31x201710k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Energy Transfer's SEC 10-K discusses its FGT joint-venture interest, corroborating Florida Gas Transmission Co LLC as the owning entity of record for the certificated pipeline (GEM's Owner1 field records the certificated entity, not the parent equity holders)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's existing Owner1='Florida Gas Transmission Co LLC' (100%) confirmed correct - the certificated FERC entity - by two independent corporate filings/disclosures."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P4038",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's row for 'FGT AE Cooperative Upgrade' (Docket CP00-40, Completed 2001-11-08) lists Miles=0.2, while the current GGIT snapshot has P4038's LengthKnown=0.0. A small (0.2 mi) discrepancy, worth a quick check on P4038's own deep-sweep pass - may just be GEM's 'no new physical pipe' rounding convention applied to a near-zero-length loop, not necessarily an error."
+    },
+    {
+      "project_id": "P4031",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's row for 'FGT East Leg Expansion' (Docket CP07-82) lists Miles=6.64, while the current GGIT snapshot has P4031's LengthKnown=7.0 mi - a small (~5%) rounding-level difference, likely immaterial but worth noting for P4031's own pass."
+    },
+    {
+      "project_id": "P4030",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's row for 'Jacksonville Expansion Project' (Docket CP15-144) lists Additional Capacity=15 MMcf/d, while the current GGIT snapshot has P4030's Capacity=50,000 MMBtu/d - these are different unit bases (MMcf/d vs MMBtu/d) and not directly comparable without a Btu-content assumption; flagging for P4030's own pass to confirm the capacity figure and unit are correctly reconciled against EIA's MMcf/d figure."
+    },
+    {
+      "project_id": null,
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's Historical Projects workbook lists an FGT-family 'East-West Project' (Docket CP17-8, Completed 2019-01-22, Cost $68.9M, 24.7 mi, 275 MMcf/d) that does NOT correspond to any Florida Gas Transmission-named PID in this batch's 50-row roster (checked against all 19 FGT-family rows: P2529, P2594, P2627, P2738, P4028-P4040, P4050, P4060). Possible Discovery/scope gap - worth a check whether GEM tracks this under a different name or has simply not captured it."
+    },
+    {
+      "project_id": null,
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's workbook lists an FGT-family 'Galveston County Project' (Docket CP20-505, Completed 2021-02-01, Cost $18.9M, 2.6 mi, 107 MMcf/d, 12/20-inch) with no corresponding roster PID in this batch. Also flagging: the Texas county name is unusual for what is otherwise a Florida-focused FGT family - may indicate this project is on FGT's Texas mainline/origin segment rather than the Florida peninsula loops; worth a Discovery check."
+    },
+    {
+      "project_id": null,
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's workbook lists an FGT-family 'Mobile County Project' (Docket CP22-12, Completed 2022-01-31, Cost $0.32M, 175 MMcf/d) with no corresponding roster PID in this batch - a small project, easy to miss; worth a Discovery check."
+    },
+    {
+      "project_id": null,
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's workbook lists a CANCELLED FGT-family 'Big Bend Project' (Docket CP21-45, Cost $38M, 3.2 mi, 29 MMcf/d, 36-inch) with no corresponding roster PID - expected, since this batch scopes to operating pipelines only; noting for whatever shelved/cancelled review pass eventually covers FGT."
+    }
+  ],
+  "summary": "P2594 (Florida Gas Transmission, Putnam Expansion Project): confirmed real, correctly classified as a genuine interstate transmission-loop expansion, correctly attributed (Owner=Florida Gas Transmission Co LLC 100%, Operator filled as Energy Transfer, Location Florida-to-Florida), not a duplicate of any other FGT-family roster row - two independent US-government primary sources (EIA's Historical Projects workbook + FERC's own Federal Register docket CP19-474 filings) converge throughout. Staged refs/fills on all 14 worklist units: REFS_ADDED for Status/Fuel/Proposal/Start(+month)/Capacity/Diameter/Location/SegmentCost(+year)/Operator/Owner, including a CORRECTED Length value (sheet's 30.30 km unsupported by any source; two independent sources agree on 20.7 mi = 33.31 km, staged as a spec concern - also flags a unit-convention mismatch vs sibling FGT rows, which all use 'mi'). UNRESOLVED: Construction date (only lead is an unverifiable CourtListener-sourced claim, blocked by an AWS WAF challenge with no Wayback snapshot), Pressure (no segment-specific MAOP found), FuelSource (only system-level FGT receipt-point data exists, not segment-specific). Seven cross_row_leads flagged for sibling PIDs and three/four possible FGT-family Discovery gaps (East-West Project, Galveston County Project, Mobile County Project, cancelled Big Bend Project) found in EIA's workbook with no matching roster PID in this batch."
+}

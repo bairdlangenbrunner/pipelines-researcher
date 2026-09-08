@@ -60,6 +60,19 @@ whole-country.
 therefore never appear in FERC eLibrary. Check the **Texas RRC** (T-4/T-4A permits) before
 treating a FERC gap as a signal — P0268's operator name was settled by an RRC permit.
 
+- **Staged, NOT applied (gas):** batch 2, `batches/united-states-gas/staging/deepsweep-gulf-operating/`
+  (50 operating Gulf Coast rows — LA/MS/AL/FL + offshore GoM; deliverable
+  `pipelines_batch_20260908_1712_ET_united-states-gas_deepsweep-gulf.xlsx`). 926 records over
+  the 715-unit worklist -> REFS_ADDED 244, REVERIFIED 9, DEAD_LINK 10, UNRESOLVED 184,
+  326 fills, 153 validity findings (60 `concern` — spec 34, attribution 24, classification 1,
+  duplicate 1). 90 orange contested cells across 39 of the 50 rows, concentrated in
+  Capacity (9), LengthKnown (8) and SegmentCost (8). Researched in two runs: 13 rows
+  2026-09-04, the other 37 on 09-08.
+  **Two owed blanks carry no record at all** (gate J: P0192 `SegmentCost [ref]`,
+  P2497 `Operator [ref]`) — the subagents skipped them; they are owed, not resolved.
+  17 of the 50 rows are Florida Gas Transmission, 14 of those expansion phases, so read
+  segment-vs-system carefully: a system figure restated on a phase row is a `spec` concern,
+  not a ref.
 - **Staged, NOT applied (gas):** batch 1, `batches/united-states-gas/staging/deepsweep-tx-operating/`
   (45 operating TX-sliced rows; deliverable `pipelines_batch_20260904_1354_ET_united-states-gas_deepsweep.xlsx` — the 1144 build is archived: it predates the contested-cell fix, so its `Gas_Backend` shows none of the 74 open concerns).
   All 381 ref units carry an outcome -> REFS_ADDED 325, REVERIFIED 14, UNRESOLVED 42,

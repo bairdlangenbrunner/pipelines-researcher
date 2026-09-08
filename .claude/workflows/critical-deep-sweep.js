@@ -147,6 +147,7 @@ Write \`${STAGING}/rows/${pid}.json\` = a single JSON object EXACTLY shaped like
     { "segment_name": "<or empty>", "verdict": "confirmed (caveat)|concern",
       "concern_type": "existence|duplicate|classification|attribution|spec|none",
       "recommendation": "<short human next step, e.g. 'reclassify as NGL' / 'merge into P####' / 'verify endpoint'>",
+      "contested": {"<backend column the finding disputes>": "<candidate value, or \"\" if the evidence only says the current value is wrong>"},
       "researcher_notes": "<the full finding — what you checked, what the sheet's own sources say, what independent sources say vs GEM, your reasoning>",
       "proposed_refs": ["https://...verified..."], "tier": "high|medium|low",
       "independent": true, "source_language": "en" }
@@ -167,7 +168,13 @@ Write \`${STAGING}/rows/${pid}.json\` = a single JSON object EXACTLY shaped like
   "summary": "<one line>"
 }
 Emit at least one validity object per pipeline (use verdict="confirmed (caveat)", concern_type="none"
-if you found nothing wrong, summarizing what you confirmed).${STATUS_REVIEW ? ' In annual-update mode also emit\nat least one status_reviews object per segment row (shaped as specified above).' : ''} validity[].proposed_refs and all
+if you found nothing wrong, summarizing what you confirmed). ON EVERY verdict="concern", fill
+\`contested\` — it is the ONLY thing that puts your finding on the paste surface. A validity record
+proposes no edit, so it is filtered off the _Backend mirror; \`contested\` is what tints the disputed
+CURRENT value orange there with your finding attached. Omit it and a researcher pastes straight over
+the cell you flagged. Name the EXACT backend column ("LengthKnownUnits", not "units"), give the
+candidate value where your evidence names one, and "" where it only establishes the current value is
+wrong. A concern about the row as a whole (existence/duplicate) may leave it {}.${STATUS_REVIEW ? ' In annual-update mode also emit\nat least one status_reviews object per segment row (shaped as specified above).' : ''} validity[].proposed_refs and all
 fills[].proposed_refs must have passed url_verifier (with --name). One fills[] object per
 MISSING_VALUE unit in your worklist slice (sourced or UNRESOLVED) -- an owed blank with no object
 is a defect the pre-delivery gates list. Before finishing, run

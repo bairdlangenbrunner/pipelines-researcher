@@ -1,0 +1,329 @@
+{
+  "project_id": "P2627",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 1355,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Add proposed refs to Status/Fuel/Length/Diameter/Capacity/Start/SegmentCost [ref] cells (all currently MISSING_REF, values unchanged) and fill FuelSource/Operator/Owner [ref]. ProposalYear/ConstructionYear/Pressure remain UNRESOLVED (see fills). See the separate attribution concern for the Location cell, which IS wrong.",
+      "researcher_notes": "EXISTENCE, CLASSIFICATION and SPEC all confirmed by 3 independent, non-GEM origins. This is a real, completed FERC lateral: FERC docket CP09-455 (the sheet's cited wiki page names Docket CP09-455/CP09-456 nowhere directly, but the harvested citation pool's bit.ly link resolves to the BANNED abarrelfull.wikidot.com mirror -- not used). (1) EIA's official 'U.S. Natural Gas Pipeline Projects' workbook (eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx, Historical Projects tab) carries a row named 'FGT Mobile Bay Lateral Expansion' -- an exact name match to this GEM segment -- Operator 'Florida Gas Trans Co', Project Type 'Lateral', Status 'Completed', Completed Date 2011-09-22, Year In Service 2011, State(s) 'AL', Cost (millions) 34, Miles 8.9, Additional Capacity (MMcf/d) 343, Diameter (Inches) 24, Docket CP09-455 -- matching GEM's LengthKnown (8.90 mi), Diameter (24 in), Capacity (343.00 MMcf/d) and SegmentCost (34,000,000 USD) EXACTLY. (2) FERC's own Federal Register EA notice (2010-8707, docket CP09-455/CP09-456) states: 'Approximately 8.8 miles of 24-inch-diameter mainline pipeline, from near Grand Bay in Mobile County, Alabama to the existing FGT Compressor Station (CS) 44 in Mobile County, Alabama' -- confirms diameter and length (8.8 vs 8.9 mi is EIA/FERC rounding, not a discrepancy) and independently corroborates the project is real and FERC-certificated. (3) Natural Gas Intelligence (naturalgasintel.com, contemporaneous 2010 trade-press article) states FGT 'is requesting authorization to build extension facilities to transport 342,610 MMBtu/d of regasified natural gas from the proposed $1.1 billion LNG plant in Pascagoula to the existing Mobile Bay Lateral' and that 'the existing Mobile Bay Lateral runs from FGT's mainlines near Citronelle, AL, to FGT's Compressor Station 44 in Mobile Bay, AL' -- 342,610 MMBtu/d is materially the same figure as 343.00 MMcf/d (natural gas heat content ~1,000-1,050 Btu/scf), an independent (different publisher, different document class -- trade press vs. FERC notice vs. federal statistical workbook) corroboration of Capacity, and a second independent statement that the lateral is wholly within Alabama. Classification (Lateral, gas transmission, not gathering) matches EIA's own 'Project Type=Lateral' field and the FERC docket. DUPLICATE CHECK against the 37-row roster: no other FGT row (P2529 East Louisiana 0.0mi/cap75; P2594 Putnam 30.3mi/cap169; P2738 South Alabama 0.0mi/cap60; P4028-P4060, lengths 0.3-483.0mi) matches this row's 8.9mi/24in/343MMcf/d signature -- this is its own distinct, non-duplicated project. Opened and read to exhaustion: EIA workbook (Historical Projects tab, full FGT block), FR 2010 EA notice (2010-8707, full text), FR 2008 NOI (E8-30744, full text -- pre-filing dockets PF08-31/PF08-32, distinct from the eventual CP09-455 certificate docket), NGI article (full text), en.wikipedia.org/wiki/Florida_Gas_Transmission (full text, for Operator/Owner corporate-structure context). CROSS-ROW LEAD (not on the 37-row roster, so not filed as a cross_row_leads object): the FR 2010 EA notice and the NGI article both describe a companion 'Pascagoula Expansion Project' (Transco, CP09-456) of ~15.5 miles of 26-inch pipe from Jackson County, MS to Grand Bay, Mobile County, AL, ~810,000-820,000 Dth/d, delivering regasified LNG from the Gulf LNG Clean Energy Pascagoula terminal into this Mobile Bay Lateral -- no roster PID matches that signature (Mississippi is out of this batch's scope); flagging for a future Mississippi/Transco discovery pass rather than fabricating a PID match. Of the 9 harvested wiki citations for this shared FGT wiki page, opened: bit.ly/2smVBv2 (resolves to banned abarrelfull.wikidot.com, not used), eia.gov/naturalgas/data.php (navigation page, not cited as a value ref -- used the specific workbook instead), kindermorgan.com FGT page (checked, no longer resolves to this content -- not used), fractracker.org and oilandgaswatch.org (general system maps, do not name 'Mobile Bay Lateral' specifically -- not used for this segment); the remaining citations (fgttransfer.energytransfer.com system map, eia.gov layer-info page, PGJ 'Planned Projects' PDF, texasenergyreport.com) are page-level/system-level and were skimmed but do not add segment-specific facts beyond what EIA/FERC/NGI already establish.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas",
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "contested": {
+        "StartState/Province": "Florida"
+      },
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartState/Province from 'Florida' to 'Alabama' (EndState/Province='Alabama' is already correct). All 3 independent sources place this specific lateral entirely within Mobile County/Citronelle/Grand Bay, Alabama -- it never touches Florida. Do not add a ref to the current 'Florida' value; the Location [ref] fill below is left UNRESOLVED for this reason.",
+      "researcher_notes": "GEM's Location cluster currently reads StartState/Province='Florida', EndState/Province='Alabama'. Every independent source read for this row places the Mobile Bay Lateral Expansion entirely inside Alabama: (1) EIA's official workbook records 'State(s)=AL' (not FL,AL) for this exact named project; (2) FERC's Federal Register EA notice (2010-8707) describes the facilities as running 'from near Grand Bay in Mobile County, Alabama to the existing FGT Compressor Station (CS) 44 in Mobile County, Alabama' -- both termini in Alabama; (3) Natural Gas Intelligence independently states 'the existing Mobile Bay Lateral runs from FGT's mainlines near Citronelle, AL, to FGT's Compressor Station 44 in Mobile Bay, AL'. This is plausibly a schema artifact from FGT's mainline system serving Florida overall (the parent system delivers gas TO Florida), but this specific lateral/expansion segment is a Alabama intrastate-geography addition to the interstate system, not a Florida-to-Alabama line. This is a genuine attribution error on the current sheet, not a deliberate GEM divergence worth just flagging -- recommend correcting the StartState/Province cell.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas",
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Mobile Bay Lateral Expansion' row, Status='Completed', Completed Date 2011-09-22 -- project built and in service, consistent with 'operating'"},
+        {"url": "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/", "ok": true, "contains_value": true, "name_found": true, "note": "describes the lateral as an existing, functioning facility FGT is extending"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No source suggests any outage/abandonment; EIA's 'Completed' + 2011-09-22 in-service date is consistent with a currently operating lateral. Second source (NGI) independent trade press, different document class."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "listed in EIA's Natural Gas Pipeline Projects workbook"},
+        {"url": "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/", "ok": true, "contains_value": true, "name_found": true, "note": "'transport 342,610 MMBtu/d of regasified natural gas'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Straightforward -- natural gas lateral, both sources agree."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Genuinely ambiguous, not force-fillable. FERC's Dec. 29, 2008 Federal Register notice (E8-30744) shows a pre-filing request already underway under Docket Nos. PF08-31/PF08-32 by that date -- an earlier 'proposal' moment than the formal certificate docket. The formal certificate application became Docket CP09-455 (per the docket-number convention and a Lexology digest I could not independently re-verify -- it 403'd and has no Wayback snapshot -- so I am not citing a specific 2009 filing date from it). Without a source pinning down whether GEM's 'Proposal' should track the 2008 pre-filing or the 2009 certificate application, I am leaving this blank rather than guessing. Searched: FERC eLibrary docket sheet (JS app, not scriptable), Google Scholar, additional web search for the CP09-455 filing date -- none returned a citable primary date beyond what's above."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FERC's certificate order (132 FERC 61,040) issued 2010-07-15 authorized construction; EIA's Completed Date is 2011-09-22. Construction plausibly ran roughly late 2010 through mid/late 2011, but no source found states an explicit construction-start month/year for this specific lateral (as opposed to the certificate or in-service dates, which ARE sourced -- see Start [ref]). Not forcing a value. Searched: the FR EA notice (no construction-start date given, only facility description), NGI article (no construction date), EIA workbook (Completed Date + Year In Service only, no separate construction-start field)."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2011"},
+      "primary_value": "2011",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Year In Service Date=2011, Completed Date=2011-09-22"},
+        {"url": "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/", "ok": true, "contains_value": true, "name_found": true, "note": "'targeted for service in fall 2011' -- the interrelated LNG-supply project this lateral extension connects to; consistent with, though not a word-for-word restatement of, EIA's precise 2011-09-22 date"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA gives an exact completed/in-service date (2011-09-22); NGI's 'fall 2011' target for the interconnected LNG project corroborates the same year from a second, independent, contemporaneous (2010) origin. StartMonth1 could be filled as September from EIA alone, but leaving month unfilled since only one source states the exact day/month and the field asked for is StartYear1 (owed value already present)."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "343.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "343.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Additional Capacity (MMcf/d)=343, exact match"},
+        {"url": "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/", "ok": true, "contains_value": true, "name_found": true, "note": "'342,610 MMBtu/d' -- materially the same figure as 343.00 MMcf/d given typical ~1,000-1,050 Btu/scf gas heat content"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins, one exact numeric match (EIA) and one unit-equivalent match (NGI's Dth/MMBtu figure). High confidence."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source read (EIA workbook, FR EA notice, NGI article, Wikipedia) states an operating/MAOP pressure figure for this lateral. A MAOP would most likely surface in the FERC certificate order itself (132 FERC 61,040, full text not located -- only its docket/mileage/date were found via a secondary compilation) or PHMSA NPMS data; neither was reached within this pass. Leaving blank rather than guessing a typical transmission-line pressure."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "8.90", "LengthKnownUnits": "mi"},
+      "primary_value": "8.90",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Miles=8.9, exact match"},
+        {"url": "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'Approximately 8.8 miles of 24-inch-diameter mainline pipeline' -- 0.1 mi off EIA/GEM, ordinary rounding between a pre-construction FERC estimate and the as-built EIA figure, not a material disagreement"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA (as-built, 8.9 mi) exact match; FERC's pre-construction EA estimate (8.8 mi) is the expected kind of minor rounding difference between a proposal-stage estimate and the completed figure, not treated as a spec conflict."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24", "DiameterUnits": "in"},
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Diameter (Inches)=24, exact match"},
+        {"url": "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'24-inch-diameter mainline pipeline'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact agreement, two independent origins."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "34000000.00", "SegmentCostUnits": "USD"},
+      "primary_value": "34000000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Cost (millions)=34 on the 'FGT Mobile Bay Lateral Expansion' row, exact match to GEM's $34,000,000"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per the batch guidance, a segment cost is REFS_ADDED only when a primary source states THAT figure for THAT project scope -- EIA's official workbook does exactly that, an exact match. Single-source (EIA only): searched FERC's Federal Register EA notice (no cost stated), NGI article (states the companion $1.1 billion LNG plant's cost, not this lateral's -- correctly not conflated with SegmentCost), and Wikipedia (no project-level cost) for a second, independent cost figure and found none. Tier=medium and independent=false reflecting the single-source status; not forcing a second source that doesn't exist."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Gulf LNG Clean Energy import terminal, Pascagoula, MS (regasified LNG)"},
+      "primary_value": "Gulf LNG Clean Energy import terminal, Pascagoula, MS (regasified LNG)",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/",
+        "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas"
+      ],
+      "verifications": [
+        {"url": "https://naturalgasintel.com/news/related-transco-fgt-projects-clear-environmental-hurdle/", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT is requesting authorization to build extension facilities to transport 342,610 MMBtu/d of regasified natural gas from the proposed $1.1 billion LNG plant in Pascagoula to the existing Mobile Bay Lateral'"},
+        {"url": "https://www.federalregister.gov/documents/2010/04/16/2010-8707/florida-gas-transmission-company-llc-transcontinental-gas-pipe-line-company-llc-florida-gas", "ok": true, "contains_value": true, "name_found": true, "note": "describes the interconnected 'Pascagoula Expansion Project' receipt meter station near Pascagoula, feeding this Mobile Bay lateral"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Per the gem_schema.md gotcha, FuelSource names the upstream field/plant, not a commodity type -- never 'Natural Gas'. Both sources independently identify the upstream source as the Gulf LNG Clean Energy import/regasification terminal at Pascagoula, MS, feeding this lateral via the companion Pascagoula Expansion Project pipeline. This is an unusual upstream source for a Gulf Coast lateral (regasified LNG import rather than a producing field), worth flagging for QC awareness."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "Florida", "StartCountryOrArea": "United States", "EndState/Province": "Alabama", "EndCountryOrArea": "United States"},
+      "primary_value": "Florida",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "NOT sourcing a ref to the current StartState/Province='Florida' value -- it appears to be wrong. See the paired validity concern (concern_type=attribution): all 3 independent sources place this lateral entirely within Mobile County/Citronelle/Grand Bay, Alabama (near Bay, near CS44), never touching Florida. Recommend the sheet value be corrected to Alabama before adding a ref here; city-level StartLocation/EndLocation could then be filled as Citronelle, AL (or Grand Bay, AL per EIA/FR) and FGT Compressor Station 44, Mobile County, AL respectively, both well-sourced by the FR EA notice and NGI, once the state-level correction lands."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "oo_sheet_row": 2021,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Florida Gas Transmission Company, LLC"},
+      "primary_value": "Florida Gas Transmission Company, LLC",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://en.wikipedia.org/wiki/Florida_Gas_Transmission"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Operator Name='Florida Gas Trans Co' on the 'FGT Mobile Bay Lateral Expansion' row"},
+        {"url": "https://en.wikipedia.org/wiki/Florida_Gas_Transmission", "ok": true, "contains_value": false, "name_found": true, "note": "confirms 'Florida Gas Transmission' as the FERC-certificated system name and describes its corporate structure (see caveat below); does not restate the exact legal-entity string 'Florida Gas Transmission Company, LLC'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Filling 'Florida Gas Transmission Company, LLC' as Operator, matching GEM's own Owner1 string for this and every other FGT row on the roster (P2529, P2594, P2738, P4028-P4060 all carry Owner1='Florida Gas Transmission Co LLC'). CAVEAT worth flagging for QC: Wikipedia describes Energy Transfer Partners as the entity that 'functions as the operator' at the corporate/management level, since FGT LLC is a 50/50 Citrus Corp joint venture between Energy Transfer and Kinder Morgan. GEM's own convention (visible across the whole FGT roster) is to record the direct FERC-certificated operating subsidiary (FGT LLC) rather than looking through to the parent JV partners, and EIA's own 'Pipeline Operator Name' field agrees with that convention, so I've filled consistent with the existing pattern rather than 'Energy Transfer'. Tier=medium because the two sources describe operator identity at different corporate layers, not a clean word-for-word agreement."
+    },
+    {
+      "segment_name": "Mobile Bay Lateral Expansion",
+      "sheet_row": 1355,
+      "oo_sheet_row": 2021,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Florida Gas Transmission Co LLC", "Owner1%": "100.00%"},
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://en.wikipedia.org/wiki/Florida_Gas_Transmission"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Operator Name='Florida Gas Trans Co' confirms FGT LLC as the entity holding this project's FERC certificate/asset"},
+        {"url": "https://en.wikipedia.org/wiki/Florida_Gas_Transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'The pipeline is owned 50% by Energy Transfer Partners (Owner/Operator) and 50% by Kinder Morgan Partnership, each respectively representing units in Citrus Corporation (CitCor)' -- Citrus Corp's JV partners own FGT LLC's equity; FGT LLC itself is the direct titleholder of the physical pipeline assets, consistent with GEM's Owner1='Florida Gas Transmission Co LLC 100%' convention used identically across every other FGT row on the roster"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GEM's Owner1 records the direct asset-owning entity (FGT LLC), not the ultimate corporate parents (Citrus Corp/Energy Transfer/Kinder Morgan) -- this matches every other FGT row on this roster, so it is an established, deliberate GEM convention, not an error. No change recommended. Tier=medium since neither source states the '100%' figure in those literal words for this specific asset; both establish FGT LLC as the sole direct entity associated with the project, which is the substance of the claim."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P2627 (FGT Mobile Bay Lateral Expansion) confirmed real, correctly classified, no duplicate -- EIA workbook + FERC Federal Register EA + Natural Gas Intelligence all agree on length/diameter/capacity/cost/in-service-year (staged high-tier REFS_ADDED on Status/Fuel/Length/Diameter/Capacity/Start/SegmentCost, plus fills for FuelSource/Operator/Owner). One genuine attribution concern: StartState/Province='Florida' is wrong -- all 3 independent sources place this lateral entirely in Alabama. ProposalYear/ConstructionYear/Pressure and the Location [ref] value itself left UNRESOLVED (notes explain what was searched)."
+}

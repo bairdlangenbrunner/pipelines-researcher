@@ -1,0 +1,495 @@
+{
+  "project_id": "P4038",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 2034,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "none — existence, classification, capacity, diameter and start-year all confirmed independently",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION CONFIRMED, independent of GEM. The sheet's own citation pool for this row (9 harvested citations from the FGT gem.wiki page) is thin for this specific sub-project: citation [1] is a bit.ly link that resolves to abarrelfull.wikidot.com (BANNED — skipped per standing rule 5, and per url_verifier's SHORTENER_HOSTS note bit.ly links on this batch are known to hide abarrelfull); citation [4] (eia.gov/naturalgas/data.php) is the navigation page, not a document, per this batch's measured conditions. Neither, as harvested, actually supports the row. So I went past the navigation page to the actual downloadable dataset it links to: EIA's 'U.S. Natural Gas Pipeline Projects' workbook (Jan2021 edition), sheet 'Historical Projects (1996-2020)', row 323/1038. It names the project 'FGT AE Cooperative Upgrade' (exact name match), operator 'Florida Gas Trans Co', status 'Completed', in-service/completed date 2001-11-08 (Year In Service: 2001 — matches GEM's StartYear1 exactly, and gives StartMonth1 = November, currently blank on the sheet), states 'MS,AL' (Beg_State MS / End_State AL — both currently blank on the sheet, only 'United States'/'United States' filled), cost $6.9 million (GEM's SegmentCost is $7,000,000 — a ~1.4% rounding-level variance, not material), Additional Capacity 80 MMcf/d (GEM's Capacity: exact match), Pipeline Diameter '30,36' in (GEM's Diameter: exact match), Pipeline Type 'Interstate', Authority 'FERC', Docket Number 'CP00-40'. Project type 'Expansion' — correctly classified as a gas transmission expansion on FGT's interstate mainline, not a gathering/process line; Fuel=Gas is correct (the workbook itself is EIA's natural-gas pipeline projects table). Checked the roster for a duplicate: none of the other 16 FGT project-name rows in this batch (Phase IV/V/VI/VII/VIII, East Leg, Western Division, Jacksonville, Sanford, Turkey Point, Alabama Power, Mobile Bay, East Louisiana, South Alabama) share this project's name, docket, or figures — 'AE Cooperative Upgrade' is a distinct FERC certificate facility (likely serving Alabama Electric Cooperative / PowerSouth Energy Cooperative, a rural electric co-op with gas-fired generation in south Alabama), not a relabel of a sibling row. Docket CP00-40 is shared with three OTHER named EIA rows (FGT Phase V Stages 1-2, Stage 3, and Stage 4) — i.e. one FERC certificate proceeding authorized several related facilities including this one; that is a normal FERC pattern (a single docket can cover several discrete authorized facilities/stages) and not evidence of a duplicate. TIER: medium, not high — I could not reach a second, fully independent source: elibrary.ferc.gov (for docket CP00-40 itself) is an Angular SPA behind Cloudflare that returns only a JS shell to a scripted client (no accessible API endpoint found — tried /eLibrary/api/docket/, /api/dockets/, /api/docket-sheet, /eLibrary/docket-sheet, all either JS-shell 200s or Cloudflare-challenged); this session's WebSearch budget was exhausted (200/200) before I could search for the docket or 'AE Cooperative' independently, and DuckDuckGo (html + lite) and a scripted fetch of Bing both returned bot-challenge pages with no usable results. Of the row's other harvested citations: kindermorgan.com's FGT page (cite [5]) now 404s (KM sold out of FGT in 2021, irrelevant to existence, not a deletion of a GEM ref since it was never cited on THIS unit); fgttransfer.energytransfer.com's system-map portal (cite [2]) returned 200 but is a login/JS shell with no extractable content; eia.gov/maps/layer_info-m.php (cite [3]) is a generic map-legend page, no project content; fractracker.org's national map article (cite [7]) returned 200 but never names FGT or this project; oilandgaswatch.org/pipeline/6491 (cite [9]) is a Vue SPA that serves only a JS shell to curl (no API endpoint discovered); the Pipeline News PDF (cite [10], 2018) and texasenergyreport.com article (cite [11], 2018, paywalled/empty to a scripted fetch) both concern a different, much later FGT expansion (East-West/2018-19), not this 2001 project. 8 of 9 harvested citations opened; 1 (oilandgaswatch SPA) could not be rendered without a JS-executing client. Recommend a human with browser/FERC-eLibrary access pull docket CP00-40 directly for a true second, fully independent confirmation and precise Proposal/Construction dates.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct LengthKnown from 0.00 to 0.2 mi (EIA: 'Miles' = 0.2 for this exact project)",
+      "researcher_notes": "GEM's LengthKnown = 0.00 mi conflicts with EIA's Historical Projects table, which states 0.2 miles for 'FGT AE Cooperative Upgrade' (same row that exact-matches on name, capacity, diameter, docket and year). LengthKnown=0 is the correct convention only for an expansion with NO new physical pipe (compression/metering only) — but this row's Diameter is filled with real values (30, 36 in), which is inconsistent with a no-new-pipe upgrade and IS consistent with EIA's 0.2 mi (a short tie-in/lateral segment, ~1,000 ft). I did not stage a fills[] object confirming the existing 0.00 value with this ref, since that would silently paper over a real disagreement; flagging here instead so Update can apply the corrected value (0.2 mi) together with this same ref.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "contested": {
+        "LengthKnown": ""
+      }
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "verify Owner1 — Energy Transfer's own site states FGT is owned through 'Citrus,' a 50/50 Kinder Morgan / Energy Transfer joint venture, not solely by 'Florida Gas Transmission Co LLC' at 100%; check whether this applies across all 17 FGT rows in this batch",
+      "researcher_notes": "The Owner [ref] cell carries 'Florida Gas Transmission Co LLC' at 100%, unreferenced. Energy Transfer's own operations page (energytransfer.com/operations/) states in its FGT entry: 'FGT is owned by Citrus, a 50/50 joint venture with Kinder Morgan, Inc. (\"KMI\")' — i.e. per the direct operator/co-owner's own disclosure, the pipeline's equity ownership sits one level up, split 50/50 between KMI and Energy Transfer via the Citrus Corp joint venture, not concentrated 100% in the LLC that holds the FERC certificate. This mirrors the gem.wiki page's own infobox, which lists 'Parent company: Kinder Morgan [50%]; Energy Transfer Partners [50%]' for this same segment — i.e. GEM's own wiki page disagrees with GEM's own sheet value on this row. I can't rule out that GEM's Owner1/Owner2... columns are deliberately tracking the asset-owning LLC rather than the equity structure (a legitimate schema choice), so I'm flagging rather than asserting a fix — but given this looks like a systemic pattern (likely identical Owner1=100% FGT Co LLC on some or all of the other 16 FGT rows in this batch, all one operating company), it's worth a single decision applied across the whole FGT cluster rather than row-by-row guessing.",
+      "proposed_refs": [
+        "https://www.energytransfer.com/operations/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323 of the 'Historical Projects (1996-2020)' sheet: 'FGT AE Cooperative Upgrade' / Status = 'Completed', i.e. built and in service — confirms 'operating'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same EIA project row as the rest of this shard's REFS_ADDED fills; 'Completed' status confirms operating by context (rule: status is inferable, not a literal-token match)."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Workbook is EIA's 'Natural Gas Pipeline Projects' dataset; the row is for a natural-gas transmission facility on the FGT interstate gas system."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed by dataset context (EIA natural-gas pipeline projects table) rather than a literal 'Gas' token on the project row itself."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found stating when this specific facility was PROPOSED/filed. FERC docket 'CP00-40' (from the EIA row) implies a filing sometime around calendar-year 2000 under FERC's docket-prefix convention, but that is an inference from the docket number, not a stated proposal date — I'm not staging it as a value per the no-fabrication rule. elibrary.ferc.gov (where the actual filing date would be) is a JS/Cloudflare-gated SPA I could not query headlessly (see main validity note); WebSearch budget was exhausted before I could search further. A human pulling docket CP00-40 directly would resolve this."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a construction-start date. Given the Nov. 2001 completion date and the small scope ($6.9M, 0.2 mi), construction plausibly began earlier in 2001, but I'm not staging an unstated inference as a value. Same access blockers as Proposal (FERC eLibrary SPA, exhausted search budget) — a human pulling docket CP00-40 would resolve this."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2001",
+        "StartMonth1": "11"
+      },
+      "primary_value": "2001",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323: 'Completed Date' = 2001-11-08 and 'Year In Service Date' = 2001 — confirms StartYear1=2001 exactly and supports StartMonth1=11 (November), currently blank."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1 already on the sheet is confirmed exactly; adding StartMonth1=11 as a bonus fill from the same document's precise completed-date field."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "80.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "80.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323: 'Additional Capacity (MMcf/d)' = 80 — exact match."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match to GEM's existing value."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's project table has no pressure field; no other accessible source (FERC order text, which would state MAOP, is behind the inaccessible eLibrary SPA) states an operating pressure for this specific facility. Leaving blank rather than defaulting to a system-wide FGT mainline pressure figure (which would be an aggregate-vs-segment error)."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30, 36",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30, 36",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323: 'Pipeline Diameter (Inches)' = '30,36' — exact match."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match to GEM's existing value."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource wants the named upstream field/plant feeding the line, not a fuel type (gem_schema.md gotcha). This is a tiny (0.2 mi) tie-in/upgrade drawing from FGT's existing interstate mainline gas stream (historically South Texas / Gulf Coast onshore supply basins feeding the whole FGT system), not a discrete field of its own — I could not attribute a single named upstream source specific to this facility and won't default to a generic 'Gulf Coast supply' guess."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartState/Province",
+        "EndState/Province"
+      ],
+      "primary_value_col": "StartState/Province",
+      "values": {
+        "StartState/Province": "Mississippi",
+        "EndState/Province": "Alabama"
+      },
+      "primary_value": "Mississippi",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323: 'State(s)' = 'MS,AL', 'Beg_State' = MS, 'End_State' = AL."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartState/Province and EndState/Province were blank (only StartCountryOrArea/EndCountryOrArea = 'United States' filled) — this is one of the 19 rows in this batch's scope note with blank state cells. EIA's Beg_State/End_State fields for this exact project place it Mississippi-to-Alabama."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "7000000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "7000000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323: 'Cost (millions)' = 6.9 — GEM's $7,000,000 is a ~1.4% rounding-level variance from the source's $6.9M, not a material disagreement."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sourced figure is $6.9M vs GEM's $7.0M — flagged as a minor variance in the notes, not staged as a spec concern (well under any material threshold and consistent with rounding to the nearest million)."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "oo_sheet_row": 2996,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Florida Gas Transmission Co LLC"
+      },
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 323: 'Pipeline Operator Name' = 'Florida Gas Trans Co' — same entity as GEM's Owner1 naming."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator was blank; filled from the same EIA project row, which names the operator directly for this exact facility."
+    },
+    {
+      "segment_name": "AE Cooperative Upgrade",
+      "sheet_row": 2034,
+      "oo_sheet_row": 2996,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Florida Gas Transmission Co LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://www.energytransfer.com/operations/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.energytransfer.com/operations/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Energy Transfer's operations page names Florida Gas Transmission Company, LLC as the FGT pipeline entity, though it also states FGT is owned through Citrus, a 50/50 KMI/Energy Transfer JV — see the attribution concern in validity[]."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Supplying a ref for the existing value while flagging the underlying 100%-attribution question separately as an attribution concern (see validity[]) — not silently endorsing it as correct."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P4030",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "EIA names this GEM row's project 'Jacksonville Expansion Project' (FGT, FL, docket CP15-144, completed 2017): cost $46.5M, 9 miles, diameter 20,30 in — but Additional Capacity is 15 MMcf/d, NOT 50,000 as currently on the sheet. That capacity value looks like a gross data-entry error (3+ orders of magnitude off) and should be corrected/re-verified against the docket."
+    },
+    {
+      "project_id": "P2529",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'East Louisiana Project' (FGT, states AL/MS/LA, docket CP19-12, completed 2020): cost $5M, capacity 75 MMcf/d, diameter 24 in — capacity/diameter match the sheet exactly; no length given by EIA (consistent with the sheet's LengthKnown=0)."
+    },
+    {
+      "project_id": "P2627",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Mobile Bay Lateral Expansion' (AL, docket CP09-455, completed 2011): cost $34M, 8.9 miles, capacity 343 MMcf/d, diameter 24 in — exact match to the sheet's length/capacity/diameter."
+    },
+    {
+      "project_id": "P2738",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'South Alabama Project' (AL/FL, docket CP18-530, completed 2018): capacity 60 MMcf/d (cost/miles/diameter blank in EIA too) — capacity matches the sheet exactly."
+    },
+    {
+      "project_id": "P4028",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Western Division Project' (MS/AL, docket CP17-23, completed 2018): cost $10.7M, 1 mile, capacity 69 MMcf/d, diameter 36,8 in — exact match."
+    },
+    {
+      "project_id": "P4029",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase VIII Expansion' (AL/FL, docket CP09-17, completed 2011): cost $2,455M, 483 miles, capacity 820 MMcf/d, diameter 42,36,30,24 in — exact match."
+    },
+    {
+      "project_id": "P4032",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase VII Phase 1' (FL, docket CP06-01, completed 2007): cost $63.5M, 17.3 miles, capacity 95 MMcf/d, diameter 36 in — exact match."
+    },
+    {
+      "project_id": "P4033",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Turkey Point Lateral' (FL, docket CP05-64, completed 2006): cost $19.6M, 0.3 miles, capacity 100 MMcf/d, diameter 24 in — exact match."
+    },
+    {
+      "project_id": "P4034",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase VI Project' (AL/FL, docket CP02-27, completed 2003): cost $105M, 33.3 miles (sheet has 33.0 — trivial rounding), capacity 121 MMcf/d, diameter 36 in."
+    },
+    {
+      "project_id": "P4035",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase V Stage 4' (MS/AL/FL, docket CP00-40 — same docket as P4038, part of the same certificate proceeding, completed 2003): cost $132M, 136 miles, capacity 130 MMcf/d, diameter 24,36,16 in — exact match."
+    },
+    {
+      "project_id": "P4036",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase V Stage 3' (FL, docket CP00-40, completed 2002): cost $13M, 15 miles, capacity 180 MMcf/d, diameter 24 in — exact match."
+    },
+    {
+      "project_id": "P4037",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase V Stages 1-2' (MS/AL/FL, docket CP00-40, completed 2002): cost $320M, 64 miles, capacity 298 MMcf/d, diameter 24,36,16 in — exact match."
+    },
+    {
+      "project_id": "P4039",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Phase IV Project' (AL/FL, docket CP99-94, completed 2001): cost $262M, 139 miles, capacity 200 MMcf/d, diameter 30,36 in — exact match."
+    },
+    {
+      "project_id": "P4040",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'FGT Alabama Power Lateral' (AL, docket CP98-249, completed 1998): cost $0.77M, 1 mile, capacity 62 MMcf/d, diameter 12 in — exact match."
+    },
+    {
+      "project_id": "P4050",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Matches EIA's 'Sanford Project' (FL, docket CP19-58, completed 2019): cost $4.2M, 0.4 miles, capacity 36 MMcf/d, diameter 20 in — exact match."
+    },
+    {
+      "project_id": "P2594",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+      "facts": "Likely matches EIA's 'Putnam Expansion Project' (found on the separate 'Natural Gas Pipeline Projects' sheet, not Historical: FL, FERC-approved 2020, target in-service 2022): capacity 169 MMcf/d and diameter 30 in match the sheet exactly, but EIA's length is 20.7 miles vs the sheet's 30.3 miles — worth checking directly on that row."
+    }
+  ],
+  "summary": "P4038 (FGT AE Cooperative Upgrade): existence/classification confirmed via EIA's Historical Projects table + FERC docket CP00-40 (medium tier, single reachable source — FERC eLibrary itself is JS/Cloudflare-gated); Capacity/Diameter/StartYear/Status/Fuel refs added (REFS_ADDED), Location and StartMonth filled; flagged 2 concerns — LengthKnown should be 0.2 mi not 0.00, and Owner1=100% FGT Co LLC conflicts with Energy Transfer's own 50/50-Citrus-JV disclosure (likely systemic across the FGT cluster). UNRESOLVED: ProposalYear, ConstructionYear, Pressure, FuelSource — no source reached them. Bonus: matched 15 sibling FGT rows to named EIA projects/dockets, including a probable gross capacity data-entry error on P4030 (sheet shows 50000, source shows 15 MMcf/d)."
+}

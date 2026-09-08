@@ -1,0 +1,222 @@
+{
+  "project_id": "P4031",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 2027,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "East Leg Expansion",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond applying the sourced refs staged in fills[]. This is a real, correctly-classified, non-duplicate FGT phase project.",
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all confirmed clean. The row's only cited source on gem.wiki is the generic EIA 'naturalgas/data.php' navigation page (cite_note-eia0421-4) -- per the scope note this is a navigation surface, not a ref for any value, so I went to the actual underlying document instead of stopping there. Two independent, name-bearing primary sources found and verified (url_verifier --name, both OK): (1) EIA's own 'Historical Projects (1996-2024)' tab inside https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx (the specific workbook the generic nav page merely links to) contains a dedicated row: Project Name 'FGT East Leg Expansion', Operator 'Florida Gas Trans Co', Type 'Lateral', Status 'Completed', Completed Date 2008-07-01, Year In Service 2008, State FL/FL, Cost $16.0M, Miles 6.64, Additional Capacity 10 MMcf/d, Diameter 30in, Authority FERC, Docket CP07-82. (2) The Federal Register notice of that exact FERC filing (Docket No. CP07-82-000), https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf, states verbatim: 'Florida Gas Transmission Company, LLC (FGT) ... filed in Docket No. CP07-82-000 ... to construct, own, and operate a 6.64 mile loop of FGT's existing 30-inch mainline, located in Clay County, Florida ... Specifically, FGT proposes to construct approximately 6.64 miles of 30-inch pipeline loop (East Leg Expansion) ... FGT estimates the cost of construction to be $16,000,000 ... incremental firm transportation service capacity of 10,000 MMBtu/d to help meet gas requirements for a new electric generation plant that Florida Municipal Power Agency is constructing in St. Lucie County, Florida.' This document literally names 'East Leg Expansion' and gives location, length, diameter, cost and purpose -- url_verifier's substring check missed the two-word phrase only because the PDF's column layout breaks the line between 'East Leg' and 'Expansion' (confirmed OK on '6.64'+'Clay County' with --name 'Florida Gas Transmission'; I hand-confirmed the exact phrase 'East Leg Expansion' by reading the pdftotext output, so name_found=true on this ref). A third source, the 2019 Federal Register notice for FGT's unrelated Sanford Project (https://www.govinfo.gov/content/pkg/FR-2019-02-14/pdf/2019-02345.pdf, verified OK on 'East Leg'+'Sanford' with --name), independently confirms the FGT East Leg mainline corridor is still real, named infrastructure 11 years later ('the existing FGT East Leg mainlines in Orange County, Florida'), corroborating continued operating status. Real-world context check (not cited, doesn't name the segment): FMPA's Treasure Coast Energy Center (St. Lucie County, FL, 300 MW) began serving customers June 2008, matching the stated purpose and the July-2008 in-service timing almost exactly. CLASSIFICATION: correctly modeled as an operating segment/phase of the FGT interstate system (same convention GEM uses for the ~16 other FGT phase rows in this cluster -- Phase IV/V/VI/VII/VIII, Turkey Point, Alabama Power Lateral, AE Cooperative Upgrade, Mobile Bay Lateral, Jacksonville, Western Division, Sanford, Putnam, East Louisiana, South/Southwest Alabama -- all of which I cross-checked against the same EIA workbook and found their own distinct, matching rows; see cross_row_leads). DUPLICATE: checked the full 50-row roster; no other row's length/diameter/capacity/cost/location signature matches this one -- P4031 is not a relabel of any sibling PID. Of the 9 citations harvested from this shared gem.wiki page, I opened 5 (the A Barrel Full bit.ly -- skipped/not opened, banned source; the cited eia.gov/naturalgas/data.php nav page -- confirmed it is indeed just a navigation page with no project-level data; kindermorgan.com/.../FGT -- 404, page retired since KM's FGT stake info moved to Energy Transfer's fgttransfer site, an access failure not a deletion of anything about the pipeline itself; oilandgaswatch.org/pipeline/6491 -- 403 bot-blocked; the EIA workbook itself, found independently, which is the one that actually carries the data). The remaining 4 (PGJ 'Planned Projects' PDF Oct-2018, texasenergyreport.com's 2019 'East-West Pipeline Expansion' story, eia.gov maps/layer_info page, fractracker.org petrochemical map) were not opened -- by title/date/topic none plausibly bears on a 2007-2008 Florida-only lateral loop (the texasenergyreport one is about the unrelated 2019 TX/LA 'East-West Project', a different EIA-workbook row entirely, not to be confused with this row's 'East Leg')."
+    },
+    {
+      "contested": {"LengthKnown": ""},
+      "segment_name": "East Leg Expansion",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct LengthKnown from 7.00 mi to 6.64 mi to match both independent sources exactly.",
+      "researcher_notes": "GEM's sheet states LengthKnown = 7.00 mi. Both independent primary sources give the length as 6.64 miles: the EIA Historical Projects workbook ('FGT East Leg Expansion', Miles = 6.64) and the Federal Register notice of FERC Docket CP07-82 ('construct approximately 6.64 miles of 30-inch pipeline loop (East Leg Expansion)'). The two sources agree with each other exactly and disagree with the sheet by a rounded ~5% (7.00 vs 6.64). This is a real, sourced value that should replace the current unsourced 7.00 -- I did not stage a fills[] ref for the existing 7.00 value since it is not what the sources support; flagging as a spec concern per standing rule 5 instead of silently passing it or citing a source for a number it doesn't state.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2019-02-14/pdf/2019-02345.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Historical Projects (1996-2024)' tab: 'FGT East Leg Expansion', Status='Completed', Year In Service=2008, i.e. in service and operating."},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2019-02-14/pdf/2019-02345.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "2019 FERC Sanford Project notice: 'the existing FGT East Leg mainlines in Orange County, Florida' -- confirms the East Leg corridor is still active infrastructure 11 years after this segment's 2008 in-service date."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Status=operating confirmed by two independent sources 11 years apart: EIA's completion record (2008) and a 2019 FERC filing referencing the East Leg mainlines as existing, active infrastructure."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Filed under the Natural Gas Act to construct a natural gas pipeline loop -- 'East Leg Expansion'."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Listed in EIA's Natural Gas Pipeline Projects workbook."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Both primary sources describe this explicitly as a natural gas pipeline/loop project under the Natural Gas Act."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2007", "ProposalMonth": "2"}, "primary_value": "2007",
+      "proposed_refs": ["https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf"],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Take notice that on February 6, 2007, Florida Gas Transmission Company, LLC (FGT) ... filed in Docket No. CP07-82-000' proposing the East Leg Expansion loop."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Only one source states the filing date explicitly (the FERC docket's own Federal Register notice, which is the primary record of the proposal). Searched the EIA workbook (records only Completed Date/Year In Service, no proposal/filing date field), the Florida PSC 2008 agenda archive, and FMPA's own project pages -- none states a separate proposal date for this specific FGT loop, so a second independent source for the proposal date specifically was not found."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No source states a construction-start date. The FERC notice gives only the Feb 2007 filing date (prior-notice blanket authorization, self-executing ~30-60 days after notice absent protest); EIA's workbook gives only Completed Date (2008-07-01)/Year In Service (2008), no construction-start field. Searched FERC eLibrary docket-adjacent Federal Register notices, the Florida PSC 2008 agenda archive, and FMPA's Treasure Coast Energy Center pages (which give that plant's own Aug-2006 construction start, not FGT's pipe) -- none pins down when FGT broke ground on this specific loop. Leaving blank rather than inferring a date from the ~17-month proposal-to-completion window."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1", "values": {"StartYear1": "2008"}, "primary_value": "2008",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row: Completed Date 2008-07-01, Year In Service 2008."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Only EIA's compiled workbook states the explicit in-service year (2008); the FERC notice gives only the 2007 filing date, not a completion date. Second-source search: FMPA's Treasure Coast Energy Center (the plant this loop was built to serve) began serving customers June 2008 per fmpa.com -- consistent timing, but that page never names 'East Leg Expansion' or FGT's pipeline, so it doesn't qualify as a naming ref per rule 3 and isn't proposed as one. No second source explicitly naming this segment and stating 2008 was found."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "10.00", "CapacityUnits": "MMcf/d"}, "primary_value": "10.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'the East Leg Expansion project will provide incremental firm transportation service capacity of 10,000 MMBtu/d'."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row, Additional Capacity (MMcf/d) column = 10 -- EIA's own normalization of the same figure into MMcf/d, matching the sheet's stated units exactly."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "FERC's own filing states the added capacity as 10,000 MMBtu/d; EIA's workbook (a separate compiling agency) states the same figure normalized into the sheet's MMcf/d column as '10', matching GEM's stored value exactly. Both name the project."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Neither the FERC prior-notice filing nor the EIA workbook states an operating/MAOP pressure for this loop -- small blanket-authorization filings like this one typically omit MAOP from the public notice. PHMSA's operator-level annual report data would give system-wide FGT pressure class, not a segment-specific figure for this 6.64-mile loop, so it wouldn't be a valid ref for this cell. Leaving blank."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "30", "DiameterUnits": "in"}, "primary_value": "30",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'a 6.64 mile loop of FGT's existing 30-inch mainline' / '6.64 miles of 30-inch pipeline loop (East Leg Expansion)'."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row, Pipeline Diameter (Inches) = 30."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Both sources state 30-inch diameter, matching the sheet exactly."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No source found that characterizes a supply-origin/fuel-source category specifically for this 6.64-mile Clay County loop (a capacity-adding loop on FGT's existing mainline, not a new supply-basin connection). Neither the FERC notice nor the EIA workbook addresses upstream gas source. Leaving blank rather than guessing at a system-wide FGT supply-basin characterization for a discrete loop segment."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea",
+                     "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartState/Province",
+      "values": {"StartState/Province": "Florida", "EndState/Province": "Florida"},
+      "primary_value": "Florida",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'a 6.64 mile loop of FGT's existing 30-inch mainline, located in Clay County, Florida' -- entirely within Florida, does not cross a state line."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row: State(s)=FL, Beg_State=FL, End_State=FL, Crosses State Border=blank/No."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Both StartState/Province and EndState/Province were blank on the sheet (only StartCountryOrArea/EndCountryOrArea='United States' were filled). Both sources place this loop entirely within Clay County, Florida -- start and end state are the same (Florida). Not filling StartLocation/EndLocation at the city level since neither source names a more granular start/end point beyond 'Clay County'; that finer-grained detail would need the FERC application exhibits themselves (not in the public Federal Register notice)."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "16000000.00", "SegmentCostUnits": "USD"}, "primary_value": "16000000.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT estimates the cost of construction to be $16,000,000' -- for the East Leg Expansion project specifically, not a system total."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row, Cost (millions) = 16."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Both sources state $16 million for this specific project scope (not a system or phase total restated onto a segment row -- this is the FERC applicant's own cost estimate for exactly this 6.64-mile loop)."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "oo_sheet_row": 2989, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator", "values": {"Operator": "Florida Gas Transmission Company, LLC"},
+      "primary_value": "Florida Gas Transmission Company, LLC",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Florida Gas Transmission Company, LLC (FGT) ... filed ... to construct, own, and operate' the East Leg Expansion loop."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row, Pipeline Operator Name = 'Florida Gas Trans Co'."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Blank Operator field filled with the applicant/operator named in both sources. This loop is a self-operated addition to FGT's own mainline, not a third-party-operated lateral."
+    },
+    {
+      "segment_name": "East Leg Expansion", "sheet_row": 2027, "oo_sheet_row": 2989, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%",
+                     "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%",
+                     "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Florida Gas Transmission Co LLC", "Owner1%": "100.00%"},
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'... filed ... to construct, own, and operate a 6.64 mile loop of FGT's existing 30-inch mainline' -- FGT is the sole owner of the facility it is building on its own mainline."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT East Leg Expansion' row, Pipeline Operator Name = 'Florida Gas Trans Co' (single named entity, no co-owners listed)."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Sheet's existing 100% Owner1='Florida Gas Transmission Co LLC' is confirmed as sole owner by both sources (note: sources use the full legal name 'Florida Gas Transmission Company, LLC' vs the sheet's abbreviated 'Florida Gas Transmission Co LLC' -- same entity, not a discrepancy worth a concern)."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P4030",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA 'Historical Projects (1996-2024)' row 'Jacksonville Expansion Project' (Florida Gas Trans Co): Miles=9, Diameter=20,30in, Additional Capacity=15 MMcf/d, Cost=$46.5M, Year In Service=2017, Docket CP15-144. Miles/Diameter match P4030's sheet values (len=9.0, dia=20,30) but P4030's sheet Capacity=50000.00 does not match this source's 15 MMcf/d -- worth checking whether P4030's Capacity cell has a units or magnitude error."
+    },
+    {
+      "project_id": "P2594",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA row 'Putnam Expansion Project' (Florida Gas Trans Co): Miles=20.7, Diameter=30in, Additional Capacity=169 MMcf/d, Cost=$102.6M, Year In Service=2022, Docket CP19-474. Diameter/Capacity match P2594's sheet values (dia=30, cap=169) but P2594's sheet LengthKnown=30.3 mi conflicts with this source's 20.7 mi -- worth checking."
+    },
+    {
+      "project_id": "P2733",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "P2733's sheet Capacity=818 is close to (but not identical to) EIA's 'FGT Phase VIII Expansion' capacity of 820 MMcf/d, but Phase VIII's length (483 mi, cost $2,455M) is already claimed by P4029 and doesn't match P2733's length (35.41 mi). No confident single-row match for P2733 found in the EIA Historical Projects workbook -- may be a compression-only sub-phase of Phase VIII not separately itemized there; worth a direct FERC docket check (CP09-17 sub-filings) rather than treating this as resolved."
+    }
+  ],
+  "summary": "P4031 (FGT East Leg Expansion) is real and correctly classified/attributed -- confirmed via FERC Docket CP07-82's Federal Register notice + EIA's Historical Projects workbook (both name the project); staged REFS_ADDED refs for Status/Fuel/Start/Capacity/Diameter/Location/SegmentCost/Operator/Owner/Proposal (10 fills), one spec concern (LengthKnown 7.00 should be 6.64 mi per both sources), and UNRESOLVED for Construction date/Pressure/FuelSource (no source found for any of the three)."
+}

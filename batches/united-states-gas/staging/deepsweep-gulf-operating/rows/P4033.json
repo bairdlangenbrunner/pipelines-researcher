@@ -1,0 +1,272 @@
+{
+  "project_id": "P4033",
+  "pipeline_name": "Florida Gas Transmission Pipeline",
+  "sheet_row": 2029,
+  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Turkey Point Lateral",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Recheck SegmentCost against EIA's $19.6M figure for the same project (sheet has $19,400,000; EIA's Historical Projects table has $19.6 million) — a small but real numeric disagreement, not confirmed as-is.",
+      "researcher_notes": "EXISTENCE: confirmed independently of GEM. FERC Federal Register Notice of Application, Docket No. CP05-64-000 (filed Feb. 1, 2005; published 70 FR 7724, Feb. 15, 2005) states verbatim: 'FGT proposes to construct a new 17,000 horsepower electric compressor station and approximately 1,600 feet of 18-inch mainline extension. FGT states that the proposed facilities also include a 24-inch Tee and Side Valve on its existing 24-inch turkey point lateral...located in Miami-Dade County, Florida' — this independently names the 'Turkey Point lateral,' gives its diameter (24-inch), and places it at FPL's Turkey Point Power Plant. Separately, EIA's own 'Historical Projects (1996-2024)' table (eia-naturalgaspipelineprojects.xlsx, sheet 'Historical Projects (1996-2024)') carries a discrete row: Project Name 'FGT Turkey Point Lateral', Operator 'Florida Gas Trans Co', Project Type 'Lateral', Status 'Completed', Completed Date 2006-12-01, Year In Service 2006, Beg_State/End_State FL/FL, Cost (millions) 19.6, Miles 0.3, Additional Capacity (MMcf/d) 100, Diameter (in) 24, Authority FERC, Docket Number CP05-64. GEM's Length (0.30 mi), Diameter (24 in), Capacity (100 MMcf/d) and StartYear1 (2006) all match this EIA row exactly. CAVEAT ON INDEPENDENCE: both of these sources ultimately trace to the same underlying FERC docket (CP05-64) — the EIA table's own 'Authority/Docket Number' columns cite that docket as its source, and the Federal Register notice is FERC's own restatement of the company's filed application. Per the sweep's independence rule ('FERC + the applicant's own filing IN that FERC docket are ONE origin'), this is closer to one paperwork trail reported via two federal publications than two truly independent investigations. I searched for a third, genuinely separate source — Kinder Morgan's/Energy Transfer's FGT system-map/tariff pages, PHMSA special-permit filings for FGT, the NRC Turkey Point Units 6&7 COL environmental report (which would independently describe the existing gas lateral serving the plant), and general trade press from 2005-2006 — and found none that states these specific figures; the NRC PDFs (nrc.gov/docs/ML1025/ML102580481.pdf and ML1431/ML14311A254.pdf) both 403'd to scripted fetches, and the FGT system map (fgttransfer.energytransfer.com/ipost/FGT/maps/system-map) returns 200 but is a static/interactive map with no extractable text naming the lateral. So EXISTENCE and CLASSIFICATION (it is genuinely an interstate FERC-jurisdictional lateral, not gathering/gas processing) are solid; the numeric SPEC values are corroborated but from what is effectively a single origin. NOTE ALSO: the FERC notice frames the 24-inch lateral as already 'existing' as of Feb. 2005, while the compressor-station/tee project itself (the ~1,600 ft of 18-inch mainline extension) is what completed in Dec. 2006 per EIA — so 'StartYear1 = 2006' most likely marks the in-service date of this compressor/tie-in upgrade project (which EIA books under the lateral's name), not necessarily the very first construction of the 24-inch pipe itself, which may predate 2005. This is a GEM-schema granularity issue (project vs. original construction), not an existence/duplicate problem — no other roster PID represents an earlier 'Turkey Point Lateral' segment, so there is nothing to merge or split against. CLASSIFICATION: correctly recorded as an interstate transmission lateral (NGA section 7 jurisdictional), not a gathering line. DUPLICATE: checked against all 49 other roster rows — no other PID has this length/diameter/capacity combination or documents the same Miami-Dade/Turkey Point location; not a duplicate. SegmentCost DISCREPANCY: EIA's $19.6 million does not match the sheet's $19,400,000 — close (about 1%) but not an exact match, so I am not staging it as a confirming ref; flagged above for Baird's review rather than silently passed.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects table lists 'FGT Turkey Point Lateral', Status='Completed', Year In Service Date=2006, Docket CP05-64 — a completed, in-service interstate lateral with no abandonment noted; status inferred as operating from this context per confidence_tiers guidance (status is inferable, not literal)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only one origin found (EIA table, itself sourced from the FERC docket); no separate 2026-era confirmation (e.g. a current FGT system map or PHMSA record) that explicitly still lists this lateral was found, though there is no positive evidence of abandonment either."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Application filed pursuant to the Natural Gas Act (NGA) sections 7(b)/7(c) — a natural-gas facilities certificate proceeding naming the Turkey Point lateral."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Fuel=Gas is definitional for a Natural Gas Act certificate proceeding; not independently at issue."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2005", "ProposalMonth": "2"},
+      "primary_value": "2005",
+      "proposed_refs": ["https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "\"Take notice that on February 1, 2005, Florida Gas Transmission Company (FGT)...filed in Docket No. CP05-64-000 an application...\" — the certificate application date."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Regulator's own published notice states the exact filing date; no separate source needed to fix a filing date on the public docket record. Second-source search: EIA table only gives a 'Last Updated Date' (2009), not a filing date, so it does not corroborate ProposalYear independently — noting this rather than claiming false corroboration."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the FERC Federal Register notice (E5-615, application only — no construction-start date), the EIA Historical Projects table (gives only Completed Date 2006-12-01 / Year In Service 2006, no construction-start), PHMSA filings for Florida Gas Transmission, and general web/trade-press search for a 2005-2006 construction start date specific to this project; the FERC ORDER granting the certificate (which would typically state an authorized construction window) was not retrievable — elibrary.ferc.gov's docket search is JS-rendered and the order text was not found via web search. Leaving blank rather than estimating a year from the ~10-month gap between application (Feb 2005) and completion (Dec 2006)."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2006", "StartMonth1": "12"},
+      "primary_value": "2006",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Turkey Point Lateral' row: Completed Date 2006-12-01, Year In Service Date 2006."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2006 already on sheet matches EIA exactly; adding StartMonth1=12 (December), which was blank, from the same table's exact completed date. Single-origin caveat as noted in the validity entry — searched trade press/operator disclosures for a second confirmation of the exact month and found none."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "100.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "100.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Turkey Point Lateral' row: Additional Capacity (MMcf/d) = 100, matching the sheet exactly."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact match to GEM's value. Single-origin caveat as above."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value": "",
+      "values": {},
+      "primary_value_col": "Pressure",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/design pressure specific to the Turkey Point lateral located. Checked the FERC Federal Register notice (no pressure figure given), the EIA table (no pressure column populated for this row), and PHMSA's public special-permit dockets for Florida Gas Transmission (e.g. PHMSA-2020-0044, which covers a different segment/class-location change, not Turkey Point). Leaving blank rather than guessing a typical FGT system MAOP."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "0.30", "LengthKnownUnits": "mi"},
+      "primary_value": "0.30",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Turkey Point Lateral' row: Miles = 0.3, matching the sheet exactly."},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'approximately 1,600 feet of 18-inch mainline extension' (1,600 ft = 0.303 mi, consistent with the rounded 0.3 mi on the sheet, though this text attributes the new footage to an 18-inch mainline extension rather than explicitly to the 24-inch lateral itself — see validity note on project-vs-lateral granularity)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's 0.3 mi matches the sheet exactly; the FERC notice's 1,600 ft is consistent in magnitude but describes an 18-inch mainline extension, not explicitly the 24-inch lateral — flagged as a granularity caveat, not a contradiction, since both numbers plausibly describe the same short 2006 construction scope."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "24", "DiameterUnits": "in"},
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Turkey Point Lateral' row: Pipeline Diameter (Inches) = 24."},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "\"a 24-inch Tee and Side Valve on its existing 24-inch turkey point lateral\" — states the lateral's diameter directly."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both sources agree exactly with the sheet's 24-inch value."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per gem_schema.md, FuelSource names the upstream field/plant feeding the line, not the commodity. The Turkey Point Lateral is a short delivery tap off FGT's mainline transmission system to FPL's Turkey Point plant — it draws from FGT's blended interstate supply (originating in south Texas/Gulf Coast), not from one named field or plant, so no single FuelSource can be attributed. Leaving blank rather than defaulting to 'Natural Gas' (the documented mistake from the Saudi sweep)."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartState/Province", "EndState/Province"],
+      "primary_value_col": "StartState/Province",
+      "values": {"StartState/Province": "Florida", "EndState/Province": "Florida"},
+      "primary_value": "Florida",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Turkey Point Lateral' row: Beg_State = FL, End_State = FL."},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "\"facilities...located in Miami-Dade County, Florida\" and \"on the grounds of the Turkey Point Power Plant owned by Florida Power & Light Company (FPL)\" — a wholly intrastate, single-county lateral."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartState/Province and EndState/Province were blank (only StartCountryOrArea/EndCountryOrArea='United States' were filled); both termini sit within Miami-Dade County, Florida per both sources, so State/Province is Florida at both ends (a very short intra-county tap, not a cross-state line)."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "oo_sheet_row": 2991,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Florida Gas Transmission Company, LLC"},
+      "primary_value": "Florida Gas Transmission Company, LLC",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "\"Florida Gas Transmission Company (FGT), 1331 Lamar Street, Suite 650, Houston, Texas 77010, filed in Docket No. CP05-64-000...\" — names FGT as the applicant/operator."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/eia-naturalgaspipelineprojects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'FGT Turkey Point Lateral' row: Pipeline Operator Name = 'Florida Gas Trans Co'."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both sources name FGT as operator, matching the Owner1 value already on the operators/owners tab; single-origin caveat as elsewhere (both trace to the CP05-64 docket)."
+    },
+    {
+      "segment_name": "Turkey Point Lateral",
+      "sheet_row": 2029,
+      "oo_sheet_row": 2991,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Florida Gas Transmission Co LLC", "Owner1%": "100.00%"},
+      "primary_value": "Florida Gas Transmission Co LLC",
+      "proposed_refs": ["https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf"],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2005-02-15/pdf/E5-615.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Florida Gas Transmission Company is the sole applicant/facility owner named in the certificate application; no co-owner named."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Consistent with 100% FGT ownership already on the sheet."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P4033 (Turkey Point Lateral, FGT): existence and classification confirmed via FERC docket CP05-64-000 and EIA's Historical Projects table (both name it and match length/diameter/capacity/year exactly); one real caveat — SegmentCost ($19.4M on sheet vs $19.6M in EIA) doesn't match and stays unconfirmed, and ConstructionYear/Pressure/FuelSource are UNRESOLVED after a genuine search; no duplicate found against the 49-row roster."
+}

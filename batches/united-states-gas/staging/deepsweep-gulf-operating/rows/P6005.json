@@ -1,0 +1,533 @@
+{
+  "project_id": "P6005",
+  "pipeline_name": "Kinetica Energy Express",
+  "sheet_row": 3457,
+  "wiki": "https://www.gem.wiki/Kinetica_energy_express",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification; see spec caveats below on Length/Diameter/Start sourcing and on the Location/state discrepancy in the offshore-technology.com profile",
+      "researcher_notes": "EXISTENCE: real, actively FERC-regulated interstate gas company, independent of GEM and independent of its own website. Kinetica Energy Express, LLC (KEE) holds NGA blanket certificate Docket No. CP12-489-000, originally granted when KEE was formed in 2012 specifically to acquire Tennessee Gas Pipeline Company's ('Tennessee'/Kinder Morgan) offshore-Gulf-of-Mexico + onshore-Louisiana 'Production Area Facilities' (Federal Register 2012-08-14, Docket CP12-489-000/CP12-490-000: 'Tennessee proposes to sell to Kinetica certain pipeline systems consisting of approximately 1,300 miles of various diameter pipeline, compression facilities at three locations totaling approximately 34,250 horsepower, twelve offshore platforms, and various appurtenant and auxiliary facilities'). KEE continues filing under that same blanket certificate through at least May 2026 (Federal Register 2026-05-13: KEE requests authorization for an 11,110-hp compressor addition in Pecan Island/Acadia Parish, Louisiana, 'to alleviate system deliverability constraints...on the mainline') -- 15 distinct Federal Register notices span 2012-2026, none GEM-derived. Kinetica Partners LLC's own PHMSA-related public-safety brochure (pipelinesafetyinfo.com, one of the 3 wiki-harvested citations) independently corroborates: 'Companies operating under the Kinetica umbrella are: Transmission -- Kinetica Energy Express, LLC, Kinetica Deepwater Express, LLC; Gathering -- Kinetica Midstream Energy, LLC,' explicitly placing KEE in the Transmission category (matching GEM's PipelineType=transmission) and stating the combined Kinetica system 'span[s] the Louisiana Gulf Coast from Cameron Parish to Plaquemines Parish' -- matching GEM's own Start=Plaquemines/End=Cameron almost exactly. offshore-technology.com (GlobalData market-data page, also wiki-harvested) is a 3rd independent source confirming a 1,139km/36in gas pipeline 'operated by Kinetica Partners.' CLASSIFICATION: transmission is correct (KEE is the umbrella's transmission arm, distinct from sister entity Kinetica Midstream Energy LLC, which holds the gathering lines -- not a classification error). DUPLICATE CHECK: compared against all 49 other rows in the 50-row Gulf Coast roster; no other row names Kinetica, and none of the other Louisiana intrastate/offshore lines (Acadian, Bridgeline, LIG, RIGS, Tiger, Nautilus, Garden Banks, Mississippi Canyon, Sea Robin, Chandeleur, Destin, Independence Trail) describe the Cameron-to-Plaquemines corridor -- no duplicate found. Note for a future sweep leg (not this roster): Kinetica also operates a distinct sister transmission company, 'Kinetica Deepwater Express, LLC,' per the same PSI brochure -- if GEM tracks that entity elsewhere under a different PID, it is NOT the same physical pipe as P6005 and should not be merged. WIKI CITATION POOL: all 3 harvested citations opened and read to exhaustion (offshore-technology.com, the PSI PDF, and the 2020-05-11 Federal Register abandonment notice); none were unreadable.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2012/08/14/2012-19866/tennessee-gas-pipeline-company-llc-kinetica-energy-express-llc-notice-of-applications-and-offer-of",
+        "https://www.federalregister.gov/documents/2026/05/13/2026-09561/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing",
+        "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "do not silently accept offshore-technology.com's 'starts at Texas' framing -- it conflicts with 2 independent sources and with GEM's own (correct) Location values; treat that one line on the GlobalData profile as unreliable",
+      "researcher_notes": "offshore-technology.com's prose states (twice, in both the visible text and its embedded schema block) that the pipeline 'starts at Texas (the US) and ends in Louisiana (the US).' This conflicts with GEM's current StartState/Province=Louisiana (StartLocation=Plaquemines) and with 2 independent sources: (1) Kinetica Partners' own PHMSA-adjacent safety brochure, which places the entire system 'from Cameron Parish to Plaquemines Parish' -- both in Louisiana, no Texas segment; (2) every Federal Register notice I read (2012, 2020, 2021, 2026) locates KEE's physical facilities exclusively in Louisiana parishes (Vermillion, Lafourche, Acadia) and the adjoining Gulf of Mexico OCS -- 'Texas' appears in these filings only as KEE's Houston, TX mailing/headquarters address, never as a pipeline terminus. My read: the GlobalData page's 'starts at Texas' line is most likely a template artifact that conflated the company's Houston HQ address (which the same GlobalData page separately and correctly states: 'Kinetica is headquartered in Houston, Texas') with the pipeline's physical start point. GEM's own StartState/Province=Louisiana is therefore CORRECT and independently corroborated -- no change recommended -- but this GlobalData source should not be cited for the Location cell precisely because of this internal contradiction (I did not propose it as a Location ref below).",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "flag StartYear1=1960 as weakly sourced; a future pass should try to confirm against the original Tennessee Gas Pipeline in-service date for these facilities rather than accept the GlobalData line at face value",
+      "researcher_notes": "StartYear1=1960 is supported ONLY by the single offshore-technology.com/GlobalData line ('The Kinetica Energy Express project started operations in 1960'), which I could not corroborate with any second, independent source this session. Notably, Kinetica Energy Express, LLC did not exist as a certificated jurisdictional entity until 2012-2013 (FERC Docket CP12-489-000) -- '1960' is only plausible as the vintage of the underlying physical pipe when it was still part of Tennessee Gas Pipeline Company's system (TGP is one of the oldest US interstate systems and its Gulf Coast production-area facilities plausibly do predate 1960s-era construction), not as a date associated with the current corporate name. I searched for an independent second source (PHMSA NPMS/annual-report vintage data, a TGP-era FERC certificate order for the specific 'Production Area Facilities,' and Kinetica's own 'about'/history pages) but found nothing that states an in-service year for this system; kineticallc.com's about page returned 200 but contained no historical/founding-date prose I could extract. Staged at low tier rather than withheld, since GlobalData is a legitimate industry database and no source contradicts 1960 -- but this is a single-source value, flagged for further verification rather than treated as settled.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2026/05/13/2026-09561/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing",
+        "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2026/05/13/2026-09561/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "May 2026 notice: KEE seeks to add compression 'to alleviate system deliverability constraints, allow for stabilized gas pressure on the mainline...to existing customers' -- confirms active operation 4 months before this sweep."
+        },
+        {
+          "url": "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Profiles KEE as a present-tense operating gas pipeline project."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (FERC regulatory filing vs. GlobalData industry database), 2026 vs 2021 vintage."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+        "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'PRODUCTS TRANSPORTED: Product: Natural Gas' listed for the Kinetica system including Kinetica Energy Express, LLC."
+        },
+        {
+          "url": "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Describes KEE as a 'gas pipeline.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivial, 2 independent sources agree."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+        "https://www.federalregister.gov/documents/2021/12/21/2021-27562/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Lists 'Transmission -- Kinetica Energy Express, LLC' as distinct from 'Gathering -- Kinetica Midstream Energy, LLC.'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2021/12/21/2021-27562/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KEE holds an NGA Section 7 blanket certificate (interstate transmission jurisdiction), not a gathering-line exemption."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator's own umbrella classification plus its FERC (interstate-transmission) jurisdictional status both agree."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a proposal/announcement date distinct from KEE's formation. Lead for a future pass (not force-filled, since it is ambiguous whether this counts as a 'proposal' for GEM's purposes): Federal Register 2012-08-14 (Docket CP12-489-000) states Kinetica 'filed' its founding certificate application on July 26, 2012, to acquire and become the new jurisdictional operator of Tennessee Gas Pipeline's Gulf Coast production-area facilities. That date marks KEE's creation as an entity/certificate holder, not a new-build announcement for physical pipe (which appears to predate 2012, possibly to the 1960s per the Start caveat above) -- flagging rather than fabricating a ProposalYear on that ambiguous basis. Searched further for an original 1960s-era TGP construction announcement; found none accessible this session."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source gives a construction-start date. The system was acquired/re-certificated by Kinetica in 2012-2013 rather than newly constructed then; the physical pipe's actual construction date (plausibly the 1960s, per the Start caveat) was not locatable this session (checked kineticallc.com/about -- no historical prose; FERC dockets found describe abandonment/expansion of specific laterals, not original construction of the mainline)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1960"
+      },
+      "primary_value": "1960",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Kinetica Energy Express project started operations in 1960.' Single source -- see validity caveat above; no independent corroboration found."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only source for 1960; see the Start-year validity caveat above for why this should be treated as unconfirmed rather than settled. Second-source search: PHMSA NPMS/annual-report vintage fields and a TGP-era FERC certificate order were sought but not accessible this session."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a design/throughput capacity figure for KEE. offshore-technology.com's profile text does not include a Bcf/d or MMcf/d number; the FERC compressor-addition notice (2026) gives horsepower (11,110 hp) and project cost, not a Mcf/d capacity; the PSI safety brochure gives no throughput figures. Not force-filled."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states an operating/MAOP pressure figure for KEE within the sources available this session. Not force-filled."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "1139.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "1139.00",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Kinetica Energy Express is a 1,139km-long onshore pipeline project' -- matches GEM's LengthKnown exactly."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only one source states this exact figure. Second-source search: the 2012 FERC founding docket gives an aggregate figure for the whole acquired system ('approximately 1,300 miles of various diameter pipeline' plus 12 offshore platforms and compression) -- LARGER than 1,139 km (708 mi) and covering a mixed transmission+gathering+offshore-platform scope, so it is an aggregate/system figure, not a like-for-like corroboration of the 1,139 km mainline segment GEM tracks (aggregate-vs-segment rule -- not cited as a match). No other primary source with a matching or conflicting mileage was found this session. Recommend a future pass try the original CP12-489 certificate order (not just the notice) for an as-built mainline mileage figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'This gas pipeline, with a maximum diameter of 36 inches' -- matches GEM's Diameter exactly."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same single-source caveat as Length. Note the broader KEE-held system includes other, smaller-diameter segments under the same blanket certificate (a 2020 FERC abandonment notice describes 16-in PSN 5140 and 12-in PSN 3761 offshore laterals in Vermillion Parish; a 2021 notice describes an 8-in/10-in inactive lateral in Lafourche Parish) -- GEM's single Diameter=36 value is consistent with this being the 36-inch MAINLINE specifically (the 2026 FERC notice explicitly refers to 'the mainline'), with these other-diameter laterals being separate, smaller facilities under the same corporate umbrella rather than part of the tracked 1,139 km segment. Flagging for awareness, not as a conflict."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source specifies an upstream gas-source region/play for KEE. The PSI brochure describes Kinetica's own separation/dehydration/gathering facilities (Patterson, Johnson Bayou, Pecan Island, Cocodrie) implying Gulf of Mexico OCS production as a feed source, but does not name a specific field/play with enough precision to fill this field responsibly. Not force-filled."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Plaquemines",
+        "StartState/Province": "Louisiana",
+        "StartCountryOrArea": "United States",
+        "EndPrefecture/District": "Cameron",
+        "EndState/Province": "Louisiana",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Plaquemines",
+      "proposed_refs": [
+        "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+        "https://www.federalregister.gov/documents/2012/08/14/2012-19866/tennessee-gas-pipeline-company-llc-kinetica-energy-express-llc-notice-of-applications-and-offer-of"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Our pipelines span the Louisiana Gulf Coast from Cameron Parish to Plaquemines Parish' -- matches GEM's Start=Plaquemines/End=Cameron, both Louisiana."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2012/08/14/2012-19866/tennessee-gas-pipeline-company-llc-kinetica-energy-express-llc-notice-of-applications-and-offer-of",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Founding facilities located 'offshore in the Gulf of Mexico and onshore in the State of Louisiana' -- confirms Louisiana, not Texas."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "2 independent sources confirm both parishes are correct as recorded and that the system is entirely Louisiana-based -- this directly contradicts offshore-technology.com's 'starts at Texas' line (see validity caveat; that source is deliberately NOT proposed here). StartPrefecture/District and EndLocation remain blank; no source gave a more specific place name for either, so left blank rather than guessed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source gives a construction/acquisition cost for the 1,139 km mainline itself. Cost figures I did find are for unrelated, smaller-scope projects on the same certificate -- $27,540,000 estimated replacement cost for the 2021 Lafourche Parish 8-in/10-in lateral abandonment, and $40 million for the 2026 Pecan Island/Acadia Parish compressor addition -- both aggregate-vs-segment mismatches (a lateral-abandonment estimate and a compression-only capex figure are not a mainline construction/acquisition cost) so neither is proposed as a SegmentCost ref."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Kinetica Energy Express, LLC"
+      },
+      "primary_value": "Kinetica Energy Express, LLC",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2026/05/13/2026-09561/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing",
+        "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2026/05/13/2026-09561/kinetica-energy-express-llc-notice-of-request-under-blanket-authorization-and-establishing",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KEE is the named filer/certificate holder operating this system as of May 2026."
+        },
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Names 'Kinetica Energy Express, LLC' as the Transmission operating company under the Kinetica umbrella."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Filling the blank Operator cell with the FERC-certificated operating entity itself (Kinetica Energy Express, LLC), distinct from Owner1='Kinetica Partners' (the parent holding company, already on the sheet). Origin note: all FERC filings share one origin family (KEE's own regulatory filings, per the standing FERC-plus-applicant rule) while the PSI brochure is a second, distinct public-safety-register origin -- both name the same operator consistently across 15 years of filings and multiple document types."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3457,
+      "oo_sheet_row": 4728,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinetica Partners",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Kinetica Partners",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+        "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.offshore-technology.com/marketdata/kinetica-energy-express-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...and is owned by Kinetica Partners' plus an ownership-percentage chart showing 'Kinetica Partners: 100%.'"
+        },
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Louisiana%20(PAL)/Kinetica%20Partners%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Identifies Kinetica Energy Express, LLC as one of the companies operating 'under the Kinetica umbrella,' i.e. under parent Kinetica Partners LLC."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "2 independent sources agree Owner1=Kinetica Partners at 100%."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P2497",
+      "url": "https://www.federalregister.gov/documents/2012/08/14/2012-19866/tennessee-gas-pipeline-company-llc-kinetica-energy-express-llc-notice-of-applications-and-offer-of",
+      "facts": "Tennessee Gas Pipeline Company, L.L.C. filed (Docket CP12-490-000, same 2012-08-14 notice) to abandon-by-sale to Kinetica Energy Express 'certain natural gas facilities located offshore in the Gulf of Mexico and onshore in the State of Louisiana (Production Area Facilities)' -- approximately 1,300 miles of various-diameter pipeline, compression at 3 locations (~34,250 hp total), and 12 offshore platforms, sold/transferred circa 2012-2013. P2497's current GEM row shows LengthKnown=0.0 -- worth checking whether that reflects TGP's post-2013 divestiture of these Gulf Coast production-area facilities (i.e., TGP's remaining mainline mileage genuinely excludes what is now Kinetica's system), or whether P2497 is an interconnection-point stub unrelated to mileage. Independent of GEM; a government record naming both companies."
+    }
+  ],
+  "summary": "P6005 Kinetica Energy Express: existence and transmission classification strongly confirmed (15 Federal Register notices 2012-2026 independent of GEM, plus Kinetica's own PHMSA-adjacent safety brochure), no duplicate found in the 50-row roster; Length=1139km/Diameter=36in/StartYear=1960 are each single-sourced (offshore-technology.com/GlobalData only) and staged at medium/low tier rather than high, with a flagged data-quality caveat that the same GlobalData page's 'starts at Texas' claim is contradicted by 2 independent sources and should not be used for Location. 10 of 15 worklist units filled with REFS_ADDED (Status, Fuel, PipelineType, Start, Length, Diameter, Location, Operator, Owner, plus Location's sub-fields); 5 UNRESOLVED for lack of any locatable source (Proposal, Construction, Capacity, Pressure, FuelSource, SegmentCost -- 6 actually, see file) -- none force-filled."
+}
