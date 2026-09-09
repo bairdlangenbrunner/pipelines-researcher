@@ -107,12 +107,14 @@ def run_one(staging: Path, pid: str) -> dict:
     # that covered the MISSING_REF units before the deep sweep ran — tx-operating does.
     # Ignoring it would report every one of those units as never worked and send a recovery
     # pass to redo research that is already staged.
-    ref_shard = staging / "ref_shards" / f"{pid}.json"
-    if ref_shard.exists():
+    for sub in ("ref_shards", "ref_shards_recovery"):
+        ref_shard = staging / sub / f"{pid}.json"
+        if not ref_shard.exists():
+            continue
         try:
             records += json.loads(ref_shard.read_text()).get("resolutions") or []
         except json.JSONDecodeError as e:
-            return {"pid": pid, "error": f"ref_shards/{pid}.json does not parse: {e}",
+            return {"pid": pid, "error": f"{sub}/{pid}.json does not parse: {e}",
                     "units": len(units)}
     unreported, silent, malformed = check(units, records)
     return {

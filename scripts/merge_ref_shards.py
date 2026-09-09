@@ -34,8 +34,15 @@ _VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--staging", required=True)
+    ap.add_argument("--shard-dir", default="ref_shards", action="append", dest="shard_dirs",
+                    help="shard directory under --staging, repeatable. A recovery pass writes "
+                         "`ref_shards_recovery/` rather than `ref_shards/` so it cannot "
+                         "overwrite a shard from the original leg (4 of tx's 41 would have "
+                         "been clobbered, 2026-09-09); merge both by passing both.")
     args = ap.parse_args()
     S = args.staging.rstrip("/")
+    # argparse `append` on a default keeps the default as element 0 only if nothing was passed
+    dirs = args.shard_dirs if args.shard_dirs == ["ref_shards"] else args.shard_dirs[1:]
 
     prior_path = os.path.join(S, "staged_resolutions.prior.json")
     cur_path = os.path.join(S, "staged_resolutions.json")
@@ -55,7 +62,7 @@ def main():
         idx.setdefault((r.get("project_id", ""), r.get("ref_col", "")), r)
 
     n_shards, applied, unmatched, downgraded = 0, 0, [], 0
-    for p, d in iter_shards(os.path.join(S, "ref_shards", "*.json")):
+    for p, d in iter_shards(*[os.path.join(S, sd, "*.json") for sd in dirs]):
         n_shards += 1
         pid = d.get("project_id") or os.path.basename(p)[:-5]
         for u in d.get("resolutions", []) or []:

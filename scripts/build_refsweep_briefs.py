@@ -27,6 +27,8 @@ Usage:
 """
 import argparse, json, os, collections
 
+OUT_SUB = "ref_shards"
+
 
 # Standing rule 4(e), verbatim in every brief so the obligation travels with the work
 # rather than with whatever prompt happens to dispatch it (see the module docstring).
@@ -62,9 +64,24 @@ def main():
     ap.add_argument("--staging", required=True)
     ap.add_argument("--classes", default="UNRESOLVED,DEAD_LINK",
                     help="comma list of class_out values to research (default gap classes)")
+    ap.add_argument("--from-coverage", metavar="JSON",
+                    help="recovery mode: scope to exactly the units `check_shard_coverage.py "
+                         "--all --json` reports as unreported for this staging dir, instead "
+                         "of the class_out gap classes. Use this to re-run what a sweep "
+                         "dropped — it targets the dropped units only, so the agent is not "
+                         "sent to redo research that is already staged.")
     args = ap.parse_args()
     S = args.staging.rstrip("/")
     want = {c.strip() for c in args.classes.split(",") if c.strip()}
+
+    # (pid, ref_col) pairs the coverage checker says were never reported on. `sheet_row` is
+    # deliberately NOT part of the key: owner/operator units live on the operators-owners tab
+    # and the seeder drops their oo_sheet_row, so the pair is what both sides can agree on.
+    only = None
+    if args.from_coverage:
+        only = {(r["pid"], u.get("ref_col", ""))
+                for r in json.load(open(args.from_coverage))
+                for u in (r.get("unreported") or [])}
 
     res = json.load(open(os.path.join(S, "staged_resolutions.json")))["resolutions"]
     wc_path = os.path.join(S, "wiki_citations.json")
@@ -72,14 +89,49 @@ def main():
     if os.path.exists(wc_path):
         cites = json.load(open(wc_path)).get("pages", {})
 
-    gaps = [r for r in res
-            if r.get("class_in") in ("HAS_REF", "MISSING_REF") and r.get("class_out") in want]
+    if only is not None:
+        gaps = [r for r in res
+                if (r.get("project_id", ""), r.get("ref_col", "")) in only]
+        seen = {(r.get("project_id", ""), r.get("ref_col", "")) for r in gaps}
+        # MISSING_VALUE units are never seeded into the store (seed_resolutions_from_worklist.py
+        # seeds MISSING_REF only), so a dropped blank has no record to scope from. Take it
+        # straight off the worklist instead — dropping it here would silently re-lose exactly
+        # the units gate J just caught.
+        missing = only - seen
+        if missing:
+            wl = json.load(open(os.path.join(S, "worklist.json")))["units"]
+            by_key = {(u.get("project_id", ""), u.get("ref_col", "")): u for u in wl}
+            for key in sorted(missing):
+                u = by_key.get(key)
+                if u is None:
+                    print(f"  WARN {key[0]} {key[1]} is in neither the store nor the "
+                          f"worklist — not briefed")
+                    continue
+                gaps.append({"project_id": u["project_id"], "ref_col": u["ref_col"],
+                             "sheet_row": u.get("oo_sheet_row") or u.get("sheet_row", ""),
+                             "segment_name": u.get("segment_name", ""),
+                             "pipeline_name": u.get("pipeline_name", ""),
+                             "wiki": u.get("wiki", ""),
+                             "value_cols": u.get("value_cols", []),
+                             "values": u.get("values", {}),
+                             "primary_value": u.get("primary_value", ""),
+                             "current_ref": u.get("current_ref", ""),
+                             "class_out": "UNREPORTED_BLANK"})
+            gaps.sort(key=lambda r: (r.get("project_id", ""), r.get("ref_col", "")))
+    else:
+        gaps = [r for r in res
+                if r.get("class_in") in ("HAS_REF", "MISSING_REF") and r.get("class_out") in want]
 
     by_pid = collections.OrderedDict()
     for r in gaps:
         by_pid.setdefault(r.get("project_id", ""), []).append(r)
 
-    out_dir = os.path.join(S, "ref_shards", "_briefs")
+    # A recovery pass must not write over the original leg's shards (4 of tx's 41 would
+    # have gone, 2026-09-09). Its output is a sibling dir both merge_ref_shards.py
+    # (--shard-dir) and check_shard_coverage.py already read alongside ref_shards/.
+    global OUT_SUB
+    OUT_SUB = "ref_shards_recovery" if only is not None else "ref_shards"
+    out_dir = os.path.join(S, OUT_SUB, "_briefs")
     os.makedirs(out_dir, exist_ok=True)
 
     manifest = []
@@ -99,8 +151,22 @@ def main():
             "current_ref": r.get("current_ref", ""),
             "class_out": r.get("class_out", ""),   # DEAD_LINK = had a ref that died; UNRESOLVED = never had one
         } for r in rs]
+        # Documents this row already yielded. A recovery agent that starts from a blank
+        # search re-opens the FERC notice its predecessor already read; the dropped unit is
+        # usually stated in a document that is right here.
+        already = collections.OrderedDict()
+        for r in res:
+            if r.get("project_id") != pid:
+                continue
+            for u in (r.get("proposed_refs") or []):
+                if isinstance(u, str) and u.strip():
+                    already.setdefault(u.strip(), []).append(r.get("ref_col", ""))
+
         brief = {
             "contract": CONTRACT,
+            "write_shard_to": os.path.join(S, OUT_SUB, f"{pid}.json"),
+            "refs_already_on_this_row": [{"url": u, "sourced": sorted(set(c))}
+                                         for u, c in already.items()],
             "coverage_gate": (f"python scripts/check_shard_coverage.py --staging {S} "
                               f"--pid {pid}"),
             "project_id": pid,
@@ -114,9 +180,10 @@ def main():
         manifest.append({"project_id": pid, "pipeline_name": b.get("pipeline_name", ""),
                          "n_units": len(units), "n_seed_citations": len(seed)})
 
-    json.dump({"staging": S, "classes": sorted(want), "n_pids": len(manifest),
+    json.dump({"staging": S, "shard_dir": OUT_SUB,
+               "classes": sorted(want), "n_pids": len(manifest),
                "n_units": len(gaps), "briefs": manifest},
-              open(os.path.join(S, "ref_shards", "_manifest.json"), "w"), indent=1)
+              open(os.path.join(S, OUT_SUB, "_manifest.json"), "w"), indent=1)
     print(f"wrote {len(manifest)} briefs to {out_dir}")
     print(f"  {len(gaps)} gap units | classes={sorted(want)}")
     for m in manifest:

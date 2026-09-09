@@ -115,8 +115,8 @@ def relevance_qc(verifs, tier, notes):
     return tier, qc_note(notes, msg + ".")
 
 
-def iter_shards(pattern):
-    """Yield (path, parsed-dict) for every shard matching the glob, sorted;
+def iter_shards(*patterns):
+    """Yield (path, parsed-dict) for every shard matching the glob(s), sorted;
     print a WARN and skip any unreadable one (a bad shard never kills a merge).
 
     Two things are skipped rather than parsed as research:
@@ -130,7 +130,7 @@ def iter_shards(pattern):
     * Any payload that is not a dict, for the same reason a bad shard does not kill
       a merge: one malformed file must not cost the batch its other 38.
     """
-    for p in sorted(glob.glob(pattern)):
+    for p in sorted(q for pattern in patterns for q in glob.glob(pattern)):
         if os.path.basename(p).startswith("_"):
             continue
         try:
