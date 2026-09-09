@@ -353,8 +353,11 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **Egypt (gas + oil: deep sweep + recon + routes 2026-08-27, staged not applied; 7 files to work):**
   `docs/country_notes/egypt.md`. Gas researched only 40 of 127 rows — the other 87 carry unapplied
   July/August staged work (`--exclude-pids`); the deep sweeps do NOT subsume the four recon workbooks.
-- **United States (oil: Delaware Express + Permian Express staged not applied; deepwater-export
-  open item):** `docs/country_notes/united-states.md`.
+- **United States (gas: slice 1 batches 1-4 staged not applied, 4 files to work — the rule-4(e)
+  recovery pass is done and all four deliverables rebuilt on it (`_1906_ET`); next batch 5, then
+  slice 2; oil: Delaware Express + Permian Express staged not applied; deepwater-export open
+  item):** `docs/country_notes/united-states.md`. Sliced, never whole-country; recon legs
+  deliberately off.
 - **Pakistan (gas: first-ever full pass 2026-08-07 + SNGPL crosswalk 2026-08-10, staged not applied;
   3 files to work):** `docs/country_notes/pakistan.md`. Recons standalone; 51 of 70 rows are one bulk
   map load, so `UNRESOLVED` is often the correct outcome — never delete a row off an existence flag.

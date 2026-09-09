@@ -38,7 +38,46 @@ West, and **batch 5 (East, 30 rows) closes the cohort** — Illinois 8, Oklahoma
 MA 2, AR/NC/TN/TX/GA/VT 1 each. Batch 5 will be the first slice to run on the fixed subagent
 contract (standing rule 4(e) — an uncited value is owed a ref). Outside the cohort, **312 US gas rows
 have never been swept**: 109 operating (LastUpdated >= 2024), 97 proposed, 66 cancelled,
-26 construction, 11 shelved, 2 idle. That remainder is slice 2 and has not been scoped.
+26 construction, 11 shelved, 2 idle, and **1 with a blank `Status`** — P3162 North Bakken
+Expansion (SheetRow 1664), which falls out of every status-filtered slice silently and must be
+placed by hand. That remainder is slice 2 and has not been scoped.
+
+**Order of work (2026-09-09).** 1. ~~rule-4(e) recovery pass over batches 1-4~~ and
+2. ~~rebuild all four slice-1 deliverables~~ — both **DONE** (see below). 3. Batch 5, closing
+slice 1. 4. **Then** slice 2, which needs scoping before it needs research. Discovery (§4) is a
+peer of the sweep, not its successor — it consumes recon Additions, and recon is off for US gas —
+so it is sequenced separately and, like the sweep, must be cut into slices rather than run
+whole-country (>5 candidate clusters escalates).
+
+**The rule-4(e) recovery pass is COMPLETE (2026-09-09), and all four deliverables were rebuilt on
+top of it** (`_1906_ET` stamps; every earlier US gas workbook is superseded and predates the
+recovered refs). 70 subagents / 70 shards, 0 errors, into `ref_shards_recovery/` per slice
+(tx 5, gulf 24, appalachian 27, west 14) — kept out of `ref_shards/` so a recovery shard cannot
+clobber an original-leg one. **Gate L — uncited values never worked, the measure the pass
+existed to close — went from 258 units of debt to zero on all four slices** (owed: tx 357,
+gulf 422, appalachian 404, west 399), and gates E (orphan refs), F (banned/GEM) and J (blanks
+coverage) are zero everywhere too. Coverage reports `0 with gaps` on all four.
+Five defects in the merge/QC chain were fixed to get there, each now guarded: `merge_ref_shards.py`
+appends an unseeded `MISSING_VALUE` unit as a `FILL` (the seeder never stages those, so recovery
+research for them was being dropped at merge — the exact silent loss the pass existed to fix);
+those records are tagged `leg: "refs"` so `merge_deepsweep_shards.py`'s FILL purge leaves them
+alone; `check_shard_coverage.py` now blocks a sourced record whose `values` is empty (the ref-only
+fold has nothing to compare, so the ref lands orphaned — appalachian P0310 shipped all 9 columns
+that way and passed the old check); and the ref-less name columns (`OtherEnglishNames`, the
+`OtherLanguage*` set) are exempted in both the coverage checker and gate E, since they have no
+paired `[ref]` column at all.
+Substantive findings the recovery surfaced: **P2497 Acadiana Expansion is documented throughout as
+a Kinder Morgan Louisiana Pipeline LLC facility** (FERC CP19-484-000, KMI 8-Ks), not Tennessee Gas
+Pipeline as tracked — a classification question, flagged not applied. P3585 North Bakken Operator =
+WBI Energy Transmission, Inc.; P0239 Panhandle Eastern = Panhandle Eastern Pipe Line Company, LP;
+P3170 Santa Fe Mainline construction began May 2020.
+Still open from the pass: **21 contradictory duplicate `(ProjectID, ref_col)` records** where two
+records on the same cell disagree (gulf P0192/P0263 Location, P2497 Start, P2500 SegmentCost,
+P2594 Length, P5823 Diameter, P0165 Owner; appalachian P0153/P0182 Location; west P0151 FuelSource,
+P0194/P0208/P0273 Location, P0231 Capacity+Length, P0273 Capacity+Length+Owner, P3158
+Diameter+SegmentCost, P0281 Operator) — adjudicate before pasting those cells. A further 106
+duplicates are complementary (one record refines the other) and 66 benign; the fold should absorb
+those rather than let them accrete.
 
 **Scope the slice by region, and audit the column you slice on first.**
 `StartState/Province` is wrong on at least 2 of the 45 rows in batch 1 — P2613 Sierrita
@@ -70,14 +109,14 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 - **Staged, NOT applied (gas):** batch 4, `batches/united-states-gas/staging/deepsweep-west-operating/`
   (46 operating West rows — the Rockies, Northern Plains, Pacific Northwest, Southwest and
   Upper Midwest remainder, sliced by the state audit's `derived` state; deliverable
-  `pipelines_batch_20260909_1509_ET_united-states-gas_deepsweep-west.xlsx`). 861 records over
+  `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-west.xlsx`). 861 records over
   the 663-unit worklist -> REFS_ADDED 276, UNRESOLVED 123 on the refs leg, 332 fills
   (293 folded to ref-only — the highest fold rate of the four slices), 130 validity findings
   (75 `concern` + 2 `needs correction` — spec 43, attribution 28, classification 4, duplicate 2).
   100 orange contested cells across 38 of the 46 rows on `Gas_Backend`, plus 51 across 23 rows on
   `Gas_OperatorsOwners`. `contested` arrived structured on 72 of 77 concerns; the other 5 name no
-  backend column and stay row-level markers. **Gate J: 3** (P3170 Construction, P0239 and P3585
-  Operator). **Gate L: 36** uncited values never worked, concentrated in P0254 (9) and P0275 (9).
+  backend column and stay row-level markers. Gate J's 3 owed blanks (P3170 Construction, P0239 and P3585 Operator) and gate L's
+  36 never-worked uncited values were all closed by the recovery pass; both gates now read 0.
   Ran in two passes — 29 rows, then the 17 that died on a session limit; the resumed 17 added only
   1 new gap, so the split is not a quality seam.
   Headline findings: **P0266 Cheyenne–Beatrice should be `retired`, not operating** (the only
@@ -97,7 +136,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 - **Staged, NOT applied (gas):** batch 3, `batches/united-states-gas/staging/deepsweep-appalachian-operating/`
   (46 operating Appalachian Basin + Mid-Atlantic rows — OH/PA/WV/NY/MI/NJ/MD/DE/VA/IN, sliced by
   the state audit's `derived` state; deliverable
-  `pipelines_batch_20260908_2103_ET_united-states-gas_deepsweep-appalachian.xlsx`). 861 records over
+  `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-appalachian.xlsx`). 861 records over
   the 663-unit worklist -> REFS_ADDED 384, REVERIFIED 6, DEAD_LINK 3, UNRESOLVED 318, 296 fills
   (248 folded to ref-only), 150 validity findings (83 `concern` — spec 45, attribution 33,
   classification 3, duplicate 2). 119 orange contested cells across 43 of the 46 rows on
@@ -121,30 +160,28 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
   value found, so they carry a row-level flag for human review, not a candidate.
 - **Staged, NOT applied (gas):** batch 2, `batches/united-states-gas/staging/deepsweep-gulf-operating/`
   (50 operating Gulf Coast rows — LA/MS/AL/FL + offshore GoM; deliverable
-  `pipelines_batch_20260908_1712_ET_united-states-gas_deepsweep-gulf.xlsx`). 926 records over
+  `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-gulf.xlsx`). 926 records over
   the 715-unit worklist -> REFS_ADDED 244, REVERIFIED 9, DEAD_LINK 10, UNRESOLVED 184,
   326 fills, 153 validity findings (60 `concern` — spec 34, attribution 24, classification 1,
   duplicate 1). 90 orange contested cells across 39 of the 50 rows, concentrated in
   Capacity (9), LengthKnown (8) and SegmentCost (8). Researched in two runs: 13 rows
   2026-09-04, the other 37 on 09-08.
-  **Two owed blanks carry no record at all** (gate J: P0192 `SegmentCost [ref]`,
-  P2497 `Operator [ref]`) — the subagents skipped them; they are owed, not resolved.
+  The two owed blanks the original run skipped (gate J: P0192 `SegmentCost [ref]`,
+  P2497 `Operator [ref]`) were both worked by the recovery pass; gate J now reads 0.
   17 of the 50 rows are Florida Gas Transmission, 14 of those expansion phases, so read
   segment-vs-system carefully: a system figure restated on a phase row is a `spec` concern,
   not a ref.
 - **Staged, NOT applied (gas):** batch 1, `batches/united-states-gas/staging/deepsweep-tx-operating/`
-  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260904_1354_ET_united-states-gas_deepsweep.xlsx` — the 1144 build is archived: it predates the contested-cell fix, so its `Gas_Backend` shows none of the 74 open concerns).
+  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-tx.xlsx` — the 09-04 builds are superseded: 1144 predates the contested-cell fix and 1354 predates the recovery pass).
   All 381 ref units carry an outcome -> REFS_ADDED 325, REVERIFIED 14, UNRESOLVED 42,
   595 proposed refs, 23 fills, 163 validity findings (74 `concern` verdicts; 90 records
   carry a `concern_type` — spec 65, attribution 23, classification 1, duplicate 1 — so
   16 sit on `confirmed (caveat)`). Three escalations ride in the workbook's
   README; the SegmentCost one has its own memo
   (`notes/escalation-2026-09-04-us-gas-segmentcost-unsupported.md`).
-  **Only 208 of the 381 units got a dedicated ref-research pass** (`ref_researched`).
-  The other 173 still resolved — 159 picked up refs harvested from the validity leg's
-  evidence, 14 were reverified live links — but none of those 159 has had a
-  >=2-independent search of its own. The batch is a finished pass over the rows, not
-  over every cell.
+  Originally only 208 of the 381 units got a dedicated ref-research pass (`ref_researched`);
+  the 173 that resolved off harvested validity-leg evidence were swept by the 2026-09-09
+  recovery pass, which closed the slice's gate-L debt (357 owed) to zero.
 - **P0271 Transco — Capacity is 7 years stale, candidate pinned (2026-09-04).** GEM's
   16800.00 MMcf/d is the year-end-2018 figure; the row's own cited ref (rextag) says 18.6
   Bcf/d, which is itself the 2021/2022 number. The FY2025 Williams/Transco joint Form 10-K

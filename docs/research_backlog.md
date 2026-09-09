@@ -43,7 +43,8 @@ Cross-cutting — read before working any row below:
 | **Nigeria divestiture ownership sweep** | not started | `docs/country_notes/nigeria.md` |
 | **Japan P1050 owner: JAPEX or ENEOS?** | JOGMEC 2024 vs the dead 2022 edition; needs an independent source, do not apply ENEOS off one document | `notes/escalation-2026-08-12-unarchivable-xlsx-refs.md` §2 |
 | ~~Gazprom Orenburg refs unarchivable~~ | RESOLVED 2026-08-12 via the sibling edition in Wayback | `notes/escalation-2026-08-12-unarchivable-xlsx-refs.md` §1 |
-| **United States** | deepwater-export open item; 131-row Stage A slot unstarted | `docs/country_notes/united-states.md` |
+| **United States gas campaign** | slice 1 (217 stale-operating) 187/217 swept, none applied; rule-4(e) recovery pass over batches 1-4 COMPLETE 2026-09-09 (gate L 258 -> 0) and all four deliverables rebuilt on it; next batch 5 (East, 30 rows), then slice 2 (312 never-swept rows, unscoped — subsumes the retired 131-row Stage A slot). 21 contradictory duplicate records await adjudication. Discovery not started. | `docs/country_notes/united-states.md` |
+| **United States oil** | deepwater-export open item; Delaware Express + Permian Express staged not applied | `docs/country_notes/united-states.md` |
 | **Iraq oil** | Grand Faw third line, P0544 status; first OSM + GulfPub recon (2026-07-28) untriaged, no oil sweep or packet to carry it | `docs/country_notes/iraq.md` |
 | **Egypt gas recon (GulfPub + OSM, 2026-07-29)** | standalone, not in the packet; 40 all-`NEAR_MISS` additions over the gate | `docs/country_notes/egypt.md` |
 | **Libya gas recon (GulfPub + OSM, 2026-07-28)** | standalone, not in the packet; the GulfPub file also holds untriaged `Oil_*` tabs — the only Libya oil output | `docs/country_notes/libya.md` |
