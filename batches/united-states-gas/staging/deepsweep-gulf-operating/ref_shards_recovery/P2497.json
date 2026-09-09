@@ -1,0 +1,79 @@
+{
+ "project_id": "P2497",
+ "pipeline_name": "Tennessee Gas Pipeline",
+ "harvest_opened": [
+  "https://www.ferc.gov/sites/default/files/2020-04/CP19-484-EA.pdf",
+  "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm",
+  "https://www.sec.gov/Archives/edgar/data/1506307/000150630722000002/kmi2021q48-kex991.htm",
+  "https://www.sec.gov/Archives/edgar/data/1506307/000150630722000018/kmi-2021x10kxexh211.htm",
+  "https://gascompressionmagazine.com/2020/03/20/acadiana-project-moves-forward/",
+  "https://www.federalregister.gov/documents/2020/02/12/2020-02805/kinder-morgan-louisiana-pipeline-llc-columbia-gulf-transmission-llc-notice-of-availability-of-the",
+  "https://pipeline2.kindermorgan.com/Documents/KMLP/KMLP_CI_Cpny_Overview.pdf",
+  "https://www.1012industryreport.com/pipelines/kinder-morgan-gets-thumbs-up-for-acadiana-pipeline-project/"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 1904,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-484-EA.pdf",
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm"
+   ],
+   "verifications": [
+    {"url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-484-EA.pdf",
+     "ok": true, "contains_value": true, "name_found": true,
+     "note": "'KMLP requests authorization to construct and operate three new natural gas-fired compressor units at its existing Compressor Station 760' (Acadia Parish, LA) -- names Kinder Morgan Louisiana Pipeline LLC (KMLP) as the entity that will construct AND operate the Acadiana Project facilities. Document separately references the 'Tennessee Gas Pipeline system' (safety/gathering context), satisfying the name check for this P2497 row."},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm",
+     "ok": true, "contains_value": true, "name_found": true,
+     "note": "'Kinder Morgan Louisiana Pipeline's approximately $145 million Acadiana expansion project began partial service on October 1, 2021...' -- attributes the Acadiana project to KMLP. Document separately discusses 'Tennessee Gas Pipeline (TGP)' natural gas deliveries, satisfying the name check."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Operator cell (row 1904, operators/owners tab) was blank -- no value, no ref. FERC Docket No. CP19-484-000 (the Acadiana Project) was filed by, and per the EA is constructed AND operated by, Kinder Morgan Louisiana Pipeline LLC (KMLP) -- a Kinder Morgan interstate gas subsidiary that is legally distinct from Tennessee Gas Pipeline Company, L.L.C. (TGP). The two systems physically interconnect at the Columbia Gulf Meter Station in Evangeline Parish, LA (FERC EA). KMI's Q3 2021 8-K corroborates, attributing the project to 'Kinder Morgan Louisiana Pipeline.' PROPOSED VALUE: Operator = 'Kinder Morgan Louisiana Pipeline LLC'. This is a MISSING_VALUE unit (no existing value, not just a missing ref) delivered via the ref_shards_recovery resolutions schema, which carries no dedicated value field -- flagging in researcher_notes and in my final report so the orchestrator can route the actual cell fill through whatever mechanism applies (e.g. fills[] merge). SEPARATE FLAG: this segment ('Acadiana Expansion Project') is tracked under P2497 'Tennessee Gas Pipeline,' but all primary documentation (FERC docket, KMI's own 8-Ks) identifies it as a Kinder Morgan Louisiana Pipeline LLC facility, not a Tennessee Gas Pipeline Company facility -- worth a classification check on whether this segment belongs under a KMLP project entity instead of/in addition to P2497."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1284,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630722000018/kmi-2021x10kxexh211.htm",
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm"
+   ],
+   "verifications": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630722000018/kmi-2021x10kxexh211.htm",
+     "ok": true, "contains_value": true, "name_found": true,
+     "note": "Kinder Morgan, Inc.'s FY2021 Form 10-K Exhibit 21.1 (List of Subsidiaries) lists both 'Kinder Morgan Louisiana Pipeline LLC' and 'Tennessee Gas Pipeline Company, L.L.C.' as subsidiaries of Kinder Morgan, Inc. -- confirms 100% Kinder Morgan ownership of KMLP, the entity that operates the Acadiana Expansion Project."},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm",
+     "ok": true, "contains_value": true, "name_found": true,
+     "note": "KMI reports the Acadiana expansion project within its own consolidated 'Natural Gas Pipelines' segment results ('Kinder Morgan Louisiana Pipeline's approximately $145 million Acadiana expansion project...'), consistent with wholly-owned status; document separately names Tennessee Gas Pipeline (TGP)."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Owner1=Kinder Morgan / 100.00% already recorded; [ref] cell was blank. Confirmed via KMI's own SEC Exhibit 21.1 subsidiaries list (both KMLP, the Acadiana Project's operating entity, and TGP are listed as KMI subsidiaries) and KMI's Q3 2021 8-K segment reporting, which folds the Acadiana project's results into KMI's own consolidated disclosure. No indication anywhere in the docket, EA, or KMI filings of a minority JV partner in KMLP -- the recorded 100% Kinder Morgan ownership is corroborated as recorded."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 1284,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm",
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630722000002/kmi2021q48-kex991.htm"
+   ],
+   "verifications": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630721000104/kmi2021q38-kex991.htm",
+     "ok": true, "contains_value": true, "name_found": true,
+     "note": "'Kinder Morgan Louisiana Pipeline's approximately $145 million Acadiana expansion project began partial service on October 1, 2021...' -- $145M vs the recorded $143M is a ~1.4% variance (an in-progress cost estimate as of Q3 2021, before the project's completion)."},
+    {"url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630722000002/kmi2021q48-kex991.htm",
+     "ok": true, "contains_value": true, "name_found": true,
+     "note": "'Kinder Morgan Louisiana Pipeline's approximately $127 million Acadiana expansion project was placed in full service on October 20, 2021, ahead of schedule.' -- KMI's OWN post-completion cost figure is ~11% below the $143M recorded on the sheet. This is materially different, not a rounding match."}
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "SegmentCost=143000000.00 USD already recorded; [ref] cell was blank. Two KMI 8-Ks (already cited on this row for Start [ref]/Status [ref]) bracket this figure at different project stages: the Q3 2021 8-K (pre-completion) estimates ~$145M (within rounding of the recorded $143M); KMI's OWN Q4 2021 8-K (filed after the project's Oct 20, 2021 full in-service date) states the completed cost was ~$127M -- an ~11% variance from $143M that is NOT a rounding difference. FLAG FOR ORCHESTRATOR: recommend revalidating SegmentCost against the $127M actual/completed-cost figure in the Q4 2021 8-K, which postdates and supersedes the Q3 estimate. Separately, a press republish (10/12 Industry Report, Oct 2020, sourced to Reuters) states the pre-FERC-approval estimate as exactly '$143 million,' matching the sheet precisely, but that page never names Tennessee Gas Pipeline and so fails this row's per-ref naming gate (contract corollary a) -- noted here for context only, not used as a proposed ref."
+  }
+ ]
+}

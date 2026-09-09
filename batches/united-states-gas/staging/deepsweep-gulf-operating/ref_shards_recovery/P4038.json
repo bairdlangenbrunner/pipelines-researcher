@@ -1,0 +1,32 @@
+{
+ "project_id": "P4038",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": [
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+  "https://www.federalregister.gov/documents/2000/08/31/00-22258/florida-gas-transmission-company-supplemental-notice-of-intent-to-prepare-an-environmental-impact",
+  "https://www.federalregister.gov/documents/2002/02/06/02-2773/florida-gas-transmission-company-notice-of-amendment"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2034,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Historical Projects (1996-2020)' tab, row 'FGT AE Cooperative Upgrade' (Pipeline Operator Name: Florida Gas Trans Co; Docket Number CP00-40; States MS,AL; Completed 2001-11-08; Year In Service 2001; Cost (millions) 6.9; Additional Capacity 80 MMcf/d; Pipeline Diameter 30,36 in) — all matching the fields already sourced to this same URL on this row (Start=2001, Capacity=80 MMcf/d, Diameter=30/36in, SegmentCost≈$7,000,000 vs 6.9M, within rounding) — states Miles = 0.2."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA's historical natural gas pipeline projects dataset (already cited on this row for Capacity/Diameter/Fuel/Location/Operator/SegmentCost/Start/Status) carries a dedicated 'FGT AE Cooperative Upgrade' row that also gives Miles = 0.2 for this project — the same document sources Length too, it just wasn't carried over when the sibling columns were filled. NOTE FOR ROUTING: this is NOT a rounding-tolerance match. The sheet records LengthKnown = 0.00 mi (the 'expansion with no new physical pipe' convention), but EIA's own figure for this exact project (matched on operator, docket CP00-40, cost, capacity, diameter and in-service year) states a nonzero 0.2 mi, i.e. EIA's source data implies a short new tie-in/lateral was built alongside the compression upgrade, not zero new pipe — a material discrepancy on the classification underlying LengthKnown=0, not just the number. Flagging as a validity/spec concern for Update to adjudicate (0.00 vs 0.2 mi); not changing the value in this refs-only pass. Searched for a second independent source: web searches for \"AE Cooperative\" + Florida Gas Transmission, \"Alabama Electric Cooperative\" (AE Cooperative's likely full name, later renamed PowerSouth Energy Cooperative in 2008) + FGT lateral, and the FERC Docket CP00-40 Phase V Expansion Federal Register notices (2000-08-31 supplemental NOI/EIS scoping notice and 2002-02-06 notice of amendment) — both notices describe the broader ~190-215 mile, multi-state Phase V program in aggregate and never break out or name an 'AE Cooperative' sub-project specifically, so they cannot serve as a second citation for this line item. No independent second source located; single-sourced to EIA pending further research."
+  }
+ ]
+}

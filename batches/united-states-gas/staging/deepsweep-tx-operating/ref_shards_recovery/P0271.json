@@ -1,0 +1,72 @@
+{
+ "project_id": "P0271",
+ "pipeline_name": "Transcontinental Gas Pipeline",
+ "harvest_opened": [
+  "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
+  "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+  "https://marcellusdrilling.com/2025/12/transco-pipeline-turns-75-years-old-flows-16-of-u-s-natgas/",
+  "https://www.eia.gov/naturalgas/data.php"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 124,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
+    "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+    "https://marcellusdrilling.com/2025/12/transco-pipeline-turns-75-years-old-flows-16-of-u-s-natgas/"
+   ],
+   "verifications": [
+    {"url": "https://en.wikipedia.org/wiki/Transcontinental_Pipeline", "ok": true, "contains_value": true, "name_found": true,
+     "note": "\"Transcontinental Gas Pipe Line (Transco) is a natural gas pipeline which brings gas from the Gulf coast of Texas, Louisiana, Mississippi, and Alabama, to New Jersey and much of the New York metropolitan area\" -- present-tense description of an active, in-service system confirms operating status by context."},
+    {"url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/", "ok": true, "contains_value": true, "name_found": true,
+     "note": "\"Williams owns and operates the nation's largest and most reliable interstate natural gas transmission pipeline, called Transco\" -- explicit present-tense \"operates\"."},
+    {"url": "https://marcellusdrilling.com/2025/12/transco-pipeline-turns-75-years-old-flows-16-of-u-s-natgas/", "ok": true, "contains_value": true, "name_found": true,
+     "note": "\"Today, Transco, now owned by Williams, transports about 16% of the natural gas consumed in the United States\" -- dated Dec. 11, 2025, confirms current operating status."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded value 'operating' reconfirmed. The carried-forward ref (eia.gov/naturalgas/data.php#pipelines) is a generic EIA natural-gas data-portal landing page that never names Transcontinental Gas Pipe Line/Transco anywhere on the page (fails url_verifier's --name check for both 'Transcontinental Gas Pipeline' and 'Transco') -- it does not actually source this row and should not be relied on as the ref. Replaced with three sources that name the pipeline directly and state or clearly imply current operation: Wikipedia (encyclopedic, describes the system in the present tense as actively moving gas), Williams' own site (explicit 'owns and operates'), and Marcellus Drilling News (Dec 2025, 'Today, Transco... transports about 16%'). Also tried eia.gov/naturalgas/pipelines/ for a company-specific EIA page -- 403'd (bot-block, not evidence of anything); not needed given three independent hits above."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 124,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Transcontinental_Pipeline",
+    "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/"
+   ],
+   "verifications": [
+    {"url": "https://en.wikipedia.org/wiki/Transcontinental_Pipeline", "ok": true, "contains_value": true, "name_found": true,
+     "note": "Infobox field 'Type: Natural gas'; body text 'Transcontinental Gas Pipe Line (Transco) is a natural gas pipeline which brings gas from the Gulf coast...'."},
+    {"url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/", "ok": true, "contains_value": true, "name_found": true,
+     "note": "\"...interstate natural gas transmission pipeline, called Transco\" -- names the fuel directly."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded value 'Gas' reconfirmed by two independent sources that both explicitly call Transco a natural-gas pipeline. Same defect as Status: the carried-forward EIA data.php generic landing page never names this pipeline and does not actually source the cell (fails url_verifier --name check); replaced rather than reverified."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 124,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/",
+    "https://en.wikipedia.org/wiki/Transcontinental_Pipeline"
+   ],
+   "verifications": [
+    {"url": "https://www.williams.com/2021/05/06/critical-energy-infrastructure-to-power-americas-clean-energy-future/", "ok": true, "contains_value": true, "name_found": true,
+     "note": "\"Williams owns and operates the nation's largest and most reliable interstate natural gas transmission pipeline, called Transco\" -- states 'transmission' verbatim."},
+    {"url": "https://en.wikipedia.org/wiki/Transcontinental_Pipeline", "ok": true, "contains_value": true, "name_found": true,
+     "note": "Describes a ~10,500-mile, 42-in interstate system (FERC code 29) moving gas from Gulf-coast producing states to the New York metro area -- a long-haul interstate carrier, i.e. transmission by definition, corroborating Williams' explicit 'transmission' label even though Wikipedia's own infobox doesn't use that word."}
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded value 'transmission' reconfirmed -- Williams' own site states 'transmission pipeline' verbatim; Wikipedia's description of a ~10,500-mile interstate FERC-jurisdictional system corroborates the same classification by definition (interstate long-haul gas pipe = transmission, distinct from gathering/distribution) even without using the literal word. Same defect as the other two units: the carried-forward EIA data.php generic page never names this pipeline, so it was replaced rather than reverified."
+  }
+ ]
+}

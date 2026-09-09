@@ -1,0 +1,179 @@
+{
+ "project_id": "P0150",
+ "pipeline_name": "Algonquin Gas Transmission Pipeline",
+ "harvest_opened": [
+  "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf",
+  "https://www.eia.gov/naturalgas/data.php",
+  "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+  "https://www.sec.gov/Archives/edgar/data/72741/000007274119000017/a201810kdocument.htm",
+  "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2016/04_21",
+  "http://wamc.org/post/ferc-authorizes-algonquin-put-most-its-pipeline-service",
+  "https://www.offshore-technology.com/marketdata/algonquin-gas-gas-pipeline-the-us/",
+  "https://sape2016.org/wp-content/uploads/2013/10/091616-aim_pipeline_summary_091616_final.pdf"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 11,
+   "class_out": "REVERIFIED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/data.php#pipelines"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/data.php#pipelines",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Page resolves (HTTP 200) as EIA's natural gas pipeline data/mapping portal; it is a categorical, not a named-entity, source (no literal 'Algonquin' string on the static page — it links out to EIA's interactive interstate pipeline layer). It supports 'operating' only by category (EIA's operating natural gas transmission pipeline network), consistent with how this ref was already staged pre-recovery for this row's Status/Fuel/PipelineType. Re-verified live; no change to value or ref."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recorded Status=operating for the AIM segment (sheet row 11). EIA's national natural gas pipeline data page (already staged on this row for Fuel/PipelineType/Status) is a categorical source, not a named citation — it corroborates via EIA's classification of the Algonquin system as part of its operating interstate natural gas transmission network. Re-confirmed live and unchanged; searched additionally for a named, dated confirmation of AIM specifically being in service (found one — see Construction/Owner records below, which independently confirm the AIM segment has been carrying gas since 2016) but that source is recorded against Construction, not duplicated here since it does not itself state 'operating' as a status token."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 11,
+   "class_out": "REVERIFIED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/data.php#pipelines"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/data.php#pipelines",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Same EIA natural gas pipeline data portal as Status/PipelineType above; categorical source for Fuel=Gas (EIA's natural-gas-specific pipeline dataset). Re-verified live, page still resolves."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recorded Fuel=Gas. The FERC order (Docket CP14-96-000, already opened on this row) independently and directly corroborates this: the AIM Project is repeatedly described as a natural gas transmission project ('firm transportation service' of 342,000 Dth/day of natural gas). Re-verifying the EIA ref as still live; the FERC order is a second, independent, named source for the same fact even though it is filed here under Proposal/Construction/Length rather than duplicated onto this record."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 11,
+   "class_out": "REVERIFIED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/data.php#pipelines"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/data.php#pipelines",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Same EIA data portal; categorical source for PipelineType=transmission (EIA's interstate natural gas transmission pipeline dataset). Re-verified live."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recorded PipelineType=transmission. FERC order (Docket CP14-96-000) independently corroborates: Algonquin is repeatedly identified as an interstate natural gas transmission company under NGA section 7(c), and AIM is authorized mainline transmission capacity. Re-verifying the EIA ref as still live and unchanged."
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "sheet_row": 11,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order, Docket No. CP14-96-000 (already staged on this row for Capacity/Diameter/FuelSource/Location/SegmentCost/__VALIDITY__): '1. On February 28, 2014, Algonquin Gas Transmission, LLC (Algonquin) filed an application in Docket No. CP14-96-000 ... for authorization to construct and operate its Algonquin Incremental Market Project (AIM Project)...' — restated verbatim again at para. 53: 'On February 28, 2014, Algonquin filed its application for authorization to construct the AIM Project.' Names the AIM Project directly and states the filing date twice."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONTRADICTS THE SHEET. Recorded ProposalYear=2014/ProposalMonth=8 (August 2014); the dead current_ref was a generic elibrary.ferc.gov search URL, not a document. The actual FERC order for this exact docket (CP14-96-000) states, twice, that Algonquin filed the AIM Project application on February 28, 2014 — not August. ProposalYear=2014 is correct; ProposalMonth=8 appears to be wrong (should be 2/February). The order does contain an August 2014 date, but for a different milestone: 'Commission staff issued the draft EIS for the AIM Project on August 6, 2014' and 'Notice of the draft EIS was published in the Federal Register on August 12, 2014' (para. 53-54) — this looks like the likely source of the August confusion (draft-EIS notice date mistaken for the application/proposal date). Recommend correcting ProposalMonth to February (2). Flagging for validity review rather than silently changing the value."
+  },
+  {
+   "ref_col": "Construction [ref]",
+   "sheet_row": 11,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf",
+    "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2016/04_21"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same FERC order, para. 92 area: 'AIM Project construction is planned for 2015 and 2016.' Order issued March 3, 2015 and conditions completion 'within two years from the date of this order' (Ordering Para. B(1)), i.e. by ~March 2017. Confirms construction occurred in 2015 (matches recorded ConstructionYear=2015) but does not itself give a specific month, so it does not independently confirm ConstructionMonth=10 (October)."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2016/04_21",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Natural Gas Weekly Update (April 2016 archive edition): reports the Algonquin Incremental Market (AIM) project under active construction as of April 2016, 'scheduled for completion in November 2016,' adding 342 MMcf/d to the existing 2,740 MMcf/d system. Independently (government, second source) corroborates construction spanning 2015-2016, consistent with recorded ConstructionYear=2015, though again does not itself state a construction-start month."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded ConstructionYear=2015/ConstructionMonth=10; the dead current_ref was the same generic elibrary.ferc.gov search URL as Proposal. Two independent sources (FERC order + EIA weekly report) corroborate that AIM construction ran across 2015-2016 (targeting a November 2016 completion), agreeing with ConstructionYear=2015, but neither source states a specific October start month, so ConstructionMonth=10 is not independently pinned down by what these two documents say — flagging for validity review on the month only, not the year. Searched further for a month-specific groundbreaking date (RBN Energy node/5161 blocked by Cloudflare; naturalgasintel.com paywalled; archive.org Wayback CDX/availability API was rate-limited (HTTP 429) on repeated attempts this session) without success; not treating those blocks as evidence the October date is wrong, just unconfirmed by what was reachable."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 11,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20160208052639/http://www.ferc.gov/CalendarFiles/20150303170720-CP14-96-000.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same FERC order, para. 4: 'Algonquin proposes to construct, install, operate, and maintain approximately 37.4 miles of pipeline and related facilities in New York, Connecticut, and Massachusetts,' itemized as five components (20.1 + 2.0 + 9.1 + 1.3 + 4.1 + 0.8 = 37.4 miles) matching the AIM Project scope of this exact segment/row."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Recorded LengthKnown=37.00 mi; the dead current_ref was empty (no prior source). FERC order states approximately 37.4 miles for the AIM Project — within rounding of the recorded 37.00 mi (0.4 mi gap), so this is a supporting ref for the recorded value per the rounding-tolerance rule, not a contradiction. Only one usable source found: offshore-technology.com (already checked) gives only the whole-system 1,131-mile figure, not AIM-specific; Enbridge's factsheet likewise states only the 1,131-mile whole-system length; the sape2016.org opposition-group PDF (already checked) does not state an AIM mileage figure; RBN Energy (node/5161) is Cloudflare-blocked and naturalgasintel.com is paywalled; Wayback availability API was rate-limited (429) on repeated tries this session. Tier set to medium (single source) rather than high pending a second independent AIM-specific mileage citation."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 11,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+    "https://www.sec.gov/Archives/edgar/data/72741/000007274119000017/a201810kdocument.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Enbridge's own 'Energy Infrastructure Assets' factsheet (already staged on this row for Operator/__VALIDITY__), Algonquin Gas Transmission entry (p.69-70): 'Ownership: Enbridge (100% Algonquin Base Business membership interest and 85% Algonquin Incremental Market project membership interest); Eversource Energy (15% Algonquin Incremental Market project membership interest)'. Directly names the AIM project and gives an 85%/15% Enbridge/Eversource split for this specific segment, distinct from 100% Enbridge on the rest of the base system."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/72741/000007274119000017/a201810kdocument.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Eversource Energy 2018 Form 10-K, Note K (Investments): 'As of December 31, 2018 and 2017, Eversource's investments included ... a 15 percent ownership interest in a FERC-regulated natural gas transmission business of $155.0 million and $159.6 million, respectively.' Confirms the 15 percent figure from an independent regulatory filing by the other owner; the 10-K does not itself name 'Algonquin' or 'AIM' in this note (Eversource's only FERC-regulated gas transmission equity investment of this kind is its AIM stake, per the Enbridge factsheet and Eversource's other public AIM-shipper disclosures), so name_found is false for this record even though the value corroborates."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONTRADICTS THE SHEET. Recorded Owner1=Enbridge/100% for this row (sheet row 11, the 'Algonquin Incremental Market (AIM) Gas Pipeline' segment specifically — not the base Algonquin system, which is separately 100% Enbridge). Enbridge's own factsheet states the AIM project specifically is 85% Enbridge / 15% Eversource Energy membership interest, and Eversource's 2018 10-K independently confirms a matching 15 percent ownership interest (valued at $155.0M/2018, $159.6M/2017) in a FERC-regulated gas transmission business. Two independent sources (the two counterparties themselves) agree on an 85/15 split, not 100% Enbridge, for this AIM-specific row. Recommend correcting Owner1%=85.00% and adding Owner2=Eversource Energy / Owner2%=15.00% on this row. Also checked the 2015 FERC order (para. 3): as of March 2015 Algonquin was 'an indirect, wholly-owned subsidiary of Spectra Energy Partners, LP' — pre-dates both the Enbridge/Spectra merger (Feb 2017) and, seemingly, the Eversource AIM equity stake, so it does not conflict with the 85/15 finding, it simply reflects an earlier ownership chain (Spectra, later Enbridge)."
+  }
+ ]
+}

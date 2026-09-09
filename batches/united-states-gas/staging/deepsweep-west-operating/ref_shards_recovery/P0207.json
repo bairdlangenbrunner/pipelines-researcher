@@ -1,0 +1,42 @@
+{
+    "project_id": "P0207",
+    "pipeline_name": "Kern River Gas Pipeline",
+    "harvest_opened": [
+        "https://www.sec.gov/Archives/edgar/data/1081316/000108131626000003/bhe-20251231.htm",
+        "https://19january2021snapshot.epa.gov/sites/static/files/2019-06/documents/kern_river_mc_factsheet_webready_2019-05.pdf",
+        "https://en.wikipedia.org/wiki/Kern_River_Pipeline",
+        "https://www.kernrivergas.com/About-Us/Overview",
+        "https://www.brkenergy.com/news/midamerican-energy-holdings-company-is-now-berkshire-hathaway-energy"
+    ],
+    "resolutions": [
+        {
+            "ref_col": "Owner [ref]",
+            "sheet_row": 65,
+            "class_out": "REFS_ADDED",
+            "proposed_refs": [
+                "https://www.sec.gov/Archives/edgar/data/1081316/000108131626000003/bhe-20251231.htm",
+                "https://19january2021snapshot.epa.gov/sites/static/files/2019-06/documents/kern_river_mc_factsheet_webready_2019-05.pdf"
+            ],
+            "verifications": [
+                {
+                    "url": "https://www.sec.gov/Archives/edgar/data/1081316/000108131626000003/bhe-20251231.htm",
+                    "ok": true,
+                    "contains_value": true,
+                    "name_found": true,
+                    "note": "Berkshire Hathaway Energy Co 2025 Form 10-K: 'The BHE Pipeline Group consists of BHE GT&S, Northern Natural Gas and Kern River, each an indirect wholly owned subsidiary of BHE.' Same filing states the asset is held directly by that entity, not by BHE itself: 'Kern River owns the entire mainline section, which extends from the system's point of origination near Opal, Wyoming, through the Central Rocky Mountains to Daggett, California' -- confirming Owner1 = Kern River Gas Transmission Company at 100%, with BHE as the (indirect) ultimate parent rather than the GEM Owner-field entity."
+                },
+                {
+                    "url": "https://19january2021snapshot.epa.gov/sites/static/files/2019-06/documents/kern_river_mc_factsheet_webready_2019-05.pdf",
+                    "ok": true,
+                    "contains_value": true,
+                    "name_found": true,
+                    "note": "EPA Methane Challenge fact sheet: 'Kern River Gas Transmission Company, based in Salt Lake City, Utah, is a subsidiary of Berkshire Hathaway Energy and has been in business since 1992.' Independently corroborates that Kern River Gas Transmission Company is the entity holding/operating the pipeline, wholly within the Berkshire Hathaway Energy family."
+                }
+            ],
+            "tier": "high",
+            "independent": true,
+            "source_language": "en",
+            "researcher_notes": "Sheet records Owner1 = 'Kern River Gas Transmission Co' at 100%, no other owners listed. Confirmed via BHE's 2025 Form 10-K (SEC EDGAR, filed 2026), which states Kern River is 'an indirect wholly owned subsidiary of BHE' and separately that 'Kern River owns the entire mainline section' of the pipeline system -- i.e. the pipeline asset is held by the Kern River Gas Transmission Company entity itself (100%), which is in turn wholly owned (indirectly) by Berkshire Hathaway Energy further up the corporate chain. This is corroborated independently by the EPA Methane Challenge fact sheet ('Kern River Gas Transmission Company ... is a subsidiary of Berkshire Hathaway Energy') and by Wikipedia ('It is owned and operated by the Kern River Gas Transmission Company, a subsidiary of Berkshire Hathaway Energy') -- not cited as a proposed ref since the SEC 10-K and EPA fact sheet are independently sufficient and higher-tier, but consistent with them. No conflict with the recorded value; REFS_ADDED at the same value (Kern River Gas Transmission Co, 100%). kernrivergas.com/About-Us/Overview is JS-rendered and returned no readable body text via fetch or curl (not usable as a ref); brkenergy.com's MidAmerican-to-BHE rename announcement page fetched but did not name Kern River specifically, so not used."
+        }
+    ]
+}

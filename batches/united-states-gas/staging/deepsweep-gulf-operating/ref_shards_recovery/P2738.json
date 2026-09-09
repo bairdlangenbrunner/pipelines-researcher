@@ -1,0 +1,40 @@
+{
+ "project_id": "P2738",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": [
+  "https://www.ferc.gov/sites/default/files/2020-05/jul-energy-infrastructure.pdf",
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+  "https://www.govinfo.gov/content/pkg/FR-2018-08-07/pdf/2018-16819.pdf"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1397,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-05/jul-energy-infrastructure.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-05/jul-energy-infrastructure.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "FERC July 2018 Energy Infrastructure Update, p.1: 'Florida Gas requests authorization for its South Alabama Project, which includes replacing a compressor in Santa Rosa County, FL, and modifying a delivery point in Escambia County, AL to increase deliverability by 60 MMcf/d.' Names the South Alabama Project specifically and places both its facilities in Florida (Santa Rosa County) and Alabama (Escambia County) — does NOT support the recorded StartState/Province=Mississippi."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "'Historical Projects (1996-2024)' tab, row for 'South Alabama Project' / operator 'Florida Gas Trans Co': State(s)='AL,FL', Beg_State='AL', End_State='FL', Completed 2018-11-26, Additional Capacity 60 MMcf/d — matches the FERC notice's 60 MMcf/d figure exactly and independently corroborates an Alabama–Florida location, not Mississippi–Alabama."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONTRADICTS THE SHEET. Recorded Location for this segment is StartState/Province=Mississippi / EndState/Province=Alabama, both United States. Two independent primary sources — the FERC Office of Energy Projects' July 2018 Energy Infrastructure Update (already on this row for Capacity/Fuel/Length/Proposal/Start) and EIA's Natural Gas Pipeline Projects historical database (already on this row for Capacity/Construction/Start/Status) — both identify FGT's 'South Alabama Project' (the exact same segment_name on this row) as a compressor replacement in Santa Rosa County, FLORIDA plus a delivery-point modification in Escambia County, ALABAMA, adding 60 MMcf/d of deliverability; EIA's own Beg_State/End_State fields for this named project are 'AL'/'FL'. No Mississippi facility or county is named in either source, or anywhere else searched (govinfo's original FERC prior-notice, FR-2018-08-07/2018-16819, restates the same Santa Rosa Co. FL / Escambia Co. AL description but failed url_verifier's name-fuzzy-match check on 'Florida Gas Transmission Pipeline' vs its filed name 'Florida Gas Transmission, LLC', so it is not included as a proposed ref here, only as corroborating context). A 2025-vintage FGT open-season notice for a separate, later 'South Central Alabama Project' does reference Mississippi (George County) and Mobile County, AL receipt points feeding an Escambia Co., AL delivery point — that is a different, more recent project with a similar name; it should not be confused with this row's 2018 'South Alabama Project'. Recommend Update/validity review of StartState/Province and StartCountryOrArea for sheet row 1397: the segment as sourced appears to run Florida–Alabama, not Mississippi–Alabama — flagging for routing per this pass's brief, not overwriting the value here."
+  }
+ ]
+}

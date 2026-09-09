@@ -1,0 +1,157 @@
+{
+ "project_id": "P3296",
+ "pipeline_name": "Transcontinental Gas Pipeline",
+ "harvest_opened": [
+  "https://www.eia.gov/naturalgas/data.php#pipelines",
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+  "http://web.archive.org/web/20260217151408/https://www.williams.com/2019/01/04/gulf-connector-project-placed-into-service/",
+  "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1728,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "http://web.archive.org/web/20260217151408/https://www.williams.com/2019/01/04/gulf-connector-project-placed-into-service/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Historical Projects (1996-2024)' tab, row for 'Gulf Connector Expansion Project' / operator 'Transcontinental Gas Pipeline': Status='Completed', Completed Date=2019-01-01, Year In Service Date=2019 -- a completed, in-service project supports GEM's 'operating'."
+    },
+    {
+     "url": "http://web.archive.org/web/20260217151408/https://www.williams.com/2019/01/04/gulf-connector-project-placed-into-service/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Williams newsroom, dated Jan 4 2019: 'Williams' Gulf Connector Project has been placed into full service, further connecting its Transco pipeline...' -- names the segment (Gulf Connector) and the trunk (Transco) and states in-service."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status is context-inferred, not a literal token (per url_verifier guidance, 'operating' rarely appears verbatim). EIA's own historical-projects dataset marks the project Completed with a Jan 2019 completed/in-service date, and Williams (the operator) independently confirms 'placed into full service' the same month. Two independent publishers (federal statistical agency vs. the pipeline operator) agree -> operating, high/independent. No contradiction with the recorded value."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1728,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Workbook is titled 'Natural Gas Pipeline Projects'; the Gulf Connector Expansion Project row sits in that dataset under operator 'Transcontinental Gas Pipeline'."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC notice: Transcontinental Gas Pipe Line Company's application for its 'Gulf Connector Expansion Project' would 'enable 475,000 dekatherms per day of incremental firm natural gas transportation' -- explicitly a natural-gas project."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIA's natural-gas-pipeline-projects dataset and FERC's own notice of application (filed under the Natural Gas Act) both identify this as a natural gas project -> Fuel=Gas confirmed by two independent government sources. No contradiction."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "sheet_row": 1728,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Row's 'Pipeline Type' field = 'Interstate' and 'Authority' = 'FERC', docket CP16-494 -- EIA's own category for FERC-jurisdictional interstate gas pipelines, i.e. transmission (as opposed to gathering/distribution)."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Application filed 'pursuant to section 7(c) of the Natural Gas Act' -- the certificate mechanism specifically for interstate natural gas transmission service; project is 'incremental firm natural gas transportation' on Transco's interstate system."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Neither source uses the literal word 'transmission' -- both use the regulatory/EIA equivalent 'interstate [natural gas pipeline / transportation]' under NGA section 7(c), which is definitionally GEM's 'transmission' category (as distinct from gathering or local distribution). Tier held at medium for that inference gap rather than a verbatim match; no contradiction with the recorded value."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 1728,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "http://web.archive.org/web/20260217151408/https://www.williams.com/2019/01/04/gulf-connector-project-placed-into-service/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Row: 'Completed Date' = 2019-01-01, 'Year In Service Date' = 2019 for the Gulf Connector Expansion Project / Transcontinental Gas Pipeline."
+    },
+    {
+     "url": "http://web.archive.org/web/20260217151408/https://www.williams.com/2019/01/04/gulf-connector-project-placed-into-service/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Press release dated Jan 4, 2019: 'Gulf Connector Project has been placed into full service' -- names the segment and states the in-service date."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "EIA (Year In Service Date=2019) and Williams' own contemporaneous Jan 2019 press release agree on StartYear1=2019, high/independent. No contradiction."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1728,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Row: 'Miles' field is blank and 'Project Type' = 'Reversal' -- EIA records no new pipeline mileage for this project."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2016/08/31/2016-20975/transcontinental-gas-pipe-line-company-llc-notice-of-application",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC notice describes the Project's full physical scope as 'three new compressor stations totaling 30,650 horsepower ... a new interconnect ... and piping and valve modifications ... to allow for bi-directional flow' -- compression/interconnect/valve work only, no new mainline pipe segments named or mileage given."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Both EIA (blank Miles, 'Reversal' project type) and FERC's own notice (scope = compressor stations + interconnect + valve/piping modifications for bi-directional flow, no new line segments) independently support LengthKnown=0.00 km -- the expansion added capacity/flow-reversal capability, not new pipe. No contradiction."
+  }
+ ]
+}

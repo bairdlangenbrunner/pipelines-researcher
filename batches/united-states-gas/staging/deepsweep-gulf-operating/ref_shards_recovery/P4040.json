@@ -1,0 +1,253 @@
+{
+ "project_id": "P4040",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": [
+  "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+  "http://fgttransfer.energytransfer.com/ipost/FGT/maps/system-map",
+  "https://www.sec.gov/Archives/edgar/data/1012569/000101256912000015/ex992citrus12311110-k.htm",
+  "https://www.sec.gov/Archives/edgar/data/203248/000020324806000013/suform10k_123105.htm"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Historical Projects (1996-2024)' sheet, row for Project Name='FGT Alabama Power Lateral', Pipeline Operator Name='Florida Gas Trans Co', Docket Number='CP98-249': field 'Additional Capacity (MMcf/d)' = 62 — matches the sheet's Capacity=62.00 MMcf/d exactly."
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Docket CP98-249-000 Notice of Application (63 FR 11229): Florida Gas 'requests Commission authorization to obtain up to 32,000 MMBtu per day of firm capacity on Bay Gas Storage... for delivery to Alabama Power's Olin Cogen Plant' plus 'authority to use up to 32,000 MMBtu per day of interruptible service' — up to 64,000 MMBtu/d combined firm+interruptible, consistent with ~62 MMcf/d after Btu-to-cf conversion; corroborates the EIA figure though stated in different units."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (62 MMcf/d). EIA's completed-project database (keyed to the same FERC docket, CP98-249, as the govinfo notice already on this row) states the built capacity exactly. The originating FERC filing corroborates in MMBtu/d terms (32,000 firm + up to 32,000 interruptible = up to 64,000 MMBtu/d), which converts to ~62 MMcf/d at typical pipeline heating value — not an exact unit match but consistent, independent corroboration from the underlying regulatory filing."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same 'FGT Alabama Power Lateral' / Docket CP98-249 row: field 'Pipeline Diameter (Inches)' = 12 — matches the sheet's Diameter=12 in exactly. This is EIA's as-built/completed-project record (Status='Completed', last updated 2009-06-26), i.e. the final constructed spec."
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "States the Feb. 1998 AS-FILED application proposed 'about one mile of 10-inch lateral... in Washington County, Alabama for deliveries to Alabama Power Company' — 10-inch, NOT 12-inch. Flagged as a genuine discrepancy between the initial proposal and the as-built spec, not treated as contradicting the sheet (see researcher_notes and orchestrator flag)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (12 in), sourced from EIA's completed-project database, which ties to the exact same docket (CP98-249) as the govinfo FERC notice already staged on this row and gives the as-built diameter. FLAG FOR ORCHESTRATOR: the underlying Feb. 1998 FERC Notice of Application (govinfo 98-5779) describes the PROPOSED lateral as 10-inch, not 12-inch — a material difference, not a rounding variance. Two readings are possible: (a) the diameter was changed between application and construction (not uncommon over a ~9-month filing-to-service window), or (b) one of the two documents has a transcription/typo. No source was found stating both a filing-stage and a completion-stage diameter in the same document, so this could not be resolved further from the documents opened this pass. Since the authoritative as-built source (EIA) matches the sheet exactly, this is recorded as REFS_ADDED rather than UNRESOLVED, but the 10-in/12-in conflict between the two primary sources on this row is real and worth a validity-leg look if anyone revisits this segment."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "The workbook is EIA's 'Natural Gas Pipeline Projects' database; the 'FGT Alabama Power Lateral' (Docket CP98-249) row sits in it as a natural-gas pipeline project — confirms Fuel=Gas."
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Filed 'pursuant to Section 7(c) of the Natural Gas Act' to deliver gas volumes measured in MMBtu/day to Alabama Power's Olin Cogen Plant — confirms this lateral carries natural gas."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (Gas). Both a federal statistical database scoped to natural-gas pipeline projects and a Natural Gas Act regulatory filing for this exact lateral confirm the fuel."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same Docket CP98-249 row: field 'Miles' = 1 — matches the sheet's LengthKnown=1.00 mi exactly."
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Florida Gas proposes to: (1) Construct, own and operate about one mile of 10-inch lateral... in Washington County, Alabama for deliveries to Alabama Power Company' — 'about one mile' matches the sheet's 1.00 mi."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (1.00 mi). Both the as-built EIA record and the original FERC application state a 1-mile lateral."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1012569/000101256912000015/ex992citrus12311110-k.htm",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1012569/000101256912000015/ex992citrus12311110-k.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Citrus Corp. 2011 Form 10-K (Southern Union Exhibit 99.2): 'Citrus Corp. maintains 100 percent of the membership interest in Florida Gas Transmission Company, LLC (Florida Gas)' — confirms Florida Gas Transmission Company, LLC is held as a single, undivided 100% interest at the pipeline-entity level, matching Owner1='Florida Gas Transmission Co LLC' / Owner1%='100.00%'. (Same source already staged on the sibling P4039 row of this same pipeline for the identical fact.)"
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Florida Gas Transmission Company (Florida Gas), 1400 Smith Street, Houston, Texas 77002... Florida Gas proposes to: (1) Construct, own and operate about one mile of 10-inch lateral...' — names Florida Gas Transmission Company as the sole entity constructing, owning and operating this specific lateral."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Pipeline Operator Name' = 'Florida Gas Trans Co' for this project — corroborates the same operating company."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (Florida Gas Transmission Co LLC, 100%). The SEC 10-K confirms the 100% membership-interest structure of the operating LLC itself (the fact this row's Owner1%=100.00% states); the 1998 FERC notice and EIA project record both independently name the same company as the entity that built, owns and operates this specific lateral. 'Florida Gas Transmission Company' (1998 filings) and 'Florida Gas Transmission Co LLC' (current sheet name) are the same entity under its later LLC reorganization, not a different owner."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same Docket CP98-249 row: field 'Cost (millions)' = 0.77 (= $770,000) — matches the sheet's SegmentCost=770000.00 USD exactly."
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Florida Gas states that Alabama Power would reimburse it for all construction costs, about $769,000' — within rounding of the sheet's $770,000 (~0.13% difference, an estimate-at-filing vs. final-recorded-cost gap)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded ($770,000). EIA's completed-project record matches exactly; the original FERC filing's pre-construction estimate of ~$769,000 agrees within rounding ($1,000 / 0.13% gap — immaterial, not flagged as a discrepancy)."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same Docket CP98-249 row: 'Year In Service Date' = 1998, 'Completed Date' = 1998-12-01 — matches the sheet's StartYear1=1998."
+    },
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-1998-03-06/pdf/98-5779.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Florida Gas requests that a preliminary determination of this Application... be granted by May 1, 1998, to assure that service can commence by the planned November 1, 1998, in-service date of the Olin Cogen Plant' — planned in-service within 1998, matching the sheet's StartYear1."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (1998). FERC's planned Nov. 1, 1998 in-service date and EIA's recorded Dec. 1, 1998 completed date both fall within 1998, consistent with the sheet's year-only StartYear1 (no month recorded on the sheet to compare against the ~1-month planned-vs-actual slip)."
+  },
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2036,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "http://fgttransfer.energytransfer.com/ipost/FGT/maps/system-map"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same Docket CP98-249 row: field 'Status' = 'Completed' — the lateral was built and placed in service; no retirement/abandonment is recorded anywhere in the database for this project."
+    },
+    {
+     "url": "http://fgttransfer.energytransfer.com/ipost/FGT/maps/system-map",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Energy Transfer's current pipeline-asset directory lists 'Florida Gas Transmission' among its active operated systems (link: '../main/index?asset=FGT') — corroborates that the FGT system this lateral belongs to is a currently operating asset, though the page indexes the system as a whole and does not name this specific lateral."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded (operating). No source found that names this specific lateral and confirms it is in service as of today; corroboration is (a) EIA's project database recording it as completed/built with no later abandonment note, and (b) Florida Gas Transmission's confirmed current status as an active Energy Transfer-operated system. Tiered medium rather than high because neither source re-confirms this particular short lateral segment (vs. the whole FGT system) is still in service today — worth a closer look on a future status-review leg if this segment is ever individually at issue (e.g. if Alabama Power's Olin Cogen Plant delivery point were ever reported retired)."
+  }
+ ]
+}

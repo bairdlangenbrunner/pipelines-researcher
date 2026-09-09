@@ -1,0 +1,39 @@
+{
+ "project_id": "P4031",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": [
+  "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2027,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.govinfo.gov/content/pkg/FR-2007-02-26/pdf/E7-3215.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Federal Register notice of FGT's FERC Docket CP07-82-000 prior-notice filing: 'FGT proposes to construct approximately 6.64 miles of 30-inch pipeline loop (East Leg Expansion)' — names the East Leg Expansion segment directly and states its length."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Historical Projects (1996-2024)' tab, row for 'FGT East Leg Expansion' (Pipeline Operator Name: Florida Gas Trans Co; Docket Number CP07-82; in-service 2008-07-01; Pipeline Diameter 30 in): Miles = 6.64, independently corroborating the FERC filing's 6.64-mile figure for the same docket/segment."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent primary sources (the FERC/Federal Register prior-notice filing for Docket CP07-82-000, and EIA's Natural Gas Pipeline Projects historical dataset, keyed to the same docket number) both give 6.64 miles for the East Leg Expansion loop, vs. the 7.00 mi recorded on the sheet — a 0.36 mi (~5%) gap, consistent with GEM rounding a FERC-filed mileage up to a whole number; flagging as a within-rounding discrepancy rather than changing the recorded value. Both URLs were already open on this row for other columns (EIA xlsx sourced Capacity/Diameter/Fuel/Location/Operator/Owner/SegmentCost/Start/Status/__VALIDITY__; the FR-2007-02-26 filing sourced Capacity/Diameter/Fuel/Location/Operator/Owner/Proposal/SegmentCost/__VALIDITY__) but neither had previously been read for Length, despite both stating it explicitly for this exact segment."
+  }
+ ]
+}

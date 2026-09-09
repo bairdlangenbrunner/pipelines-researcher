@@ -1,0 +1,41 @@
+{
+ "project_id": "P5830",
+ "pipeline_name": "Rockies Express Gas Pipeline",
+ "harvest_opened": [
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+  "https://www.sec.gov/Archives/edgar/data/1633651/000163365116000043/a991rex20151231gaapfinanci.htm",
+  "https://oilandgaswatch.org/pipeline/rec_d2vkf7p7uo67v8p3jg10",
+  "https://www.hydrocarbons-technology.com/projects/rockies_express/"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 3296,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.sec.gov/Archives/edgar/data/1633651/000163365116000043/a991rex20151231gaapfinanci.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "'Historical Projects (1996-2024)' tab, row for Pipeline Operator Name='Rockies Express Pipeline', Project Name='Zone 3 East-to-West Project' (Status=Completed, Year In Service Date=2015): 'Additional Capacity (MMcf/d)' = 1200 -- names the operator and this exact project by name, but states 1200 MMcf/d, not the recorded 1800.00."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1633651/000163365116000043/a991rex20151231gaapfinanci.htm",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Rockies Express Pipeline LLC 2015 10-K/financial statements (Note on the Zone 3 East-to-West Project): \"Zone 3 East-to-West Project was placed into commercial service on August 1, 2015 and creates an additional 1.2 million Dth per day of firm takeaway capacity from the Utica and Marcellus Shale Plays and the Appalachian Basin, as further discussed in Note 7 - Regulatory Matters.\" Names the project directly and states 1.2 million Dth/d (~1200 MMcf/d), matching the EIA figure exactly and not the recorded 1800.00 MMcf/d."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONTRADICTS SHEET, not a rounding-level gap: the sheet records Capacity=1800.00 MMcf/d for the 'Zone 3 East-to-West Project' segment (row 3296), but two independent primary sources -- EIA's official pipeline-projects tracker (govt., 'Historical Projects' tab) and Rockies Express Pipeline LLC's own 2015 10-K/financial-statement filing (the project sponsor's primary regulatory disclosure) -- both name this exact project and both state 1.2 million Dth/day (~1200 MMcf/d) of ADDITIONAL firm takeaway capacity created by the project, i.e. 600 MMcf/d (33%) below the recorded 1800.00. Both sources agree with each other precisely (1200 MMcf/d = 1.2 million Dth/d) and neither states or implies 1800. A third source (hydrocarbons-technology.com) could not be checked this pass -- it 403'd on both curl-with-browser-UA and a direct fetch, and the Wayback availability API was rate-limited (429) at the time of the check -- but the two primary sources already in hand (a federal statistical agency + the project company's own SEC filing) meet the 2-independent-source target on their own. Recording as REFS_ADDED (carrying the sheet's existing 1800.00 MMcf/d value, per the owed-a-ref rule) rather than UNRESOLVED because sources WERE found and they agree closely with each other -- but flagging this as a real, material discrepancy for the orchestrator to route to Update: 1800.00 does not match either source found for this specific segment/project and should likely be corrected to 1200 MMcf/d, cited to the two refs above. Note: 1800 MMcf/d IS the correct additional-capacity figure for a DIFFERENT REX project on this same pipeline -- EIA's 'KM REX-East Leg 2' row (2009, Completed) -- so the recorded value may have been carried over from the wrong project/segment row rather than a simple typo."
+  }
+ ]
+}

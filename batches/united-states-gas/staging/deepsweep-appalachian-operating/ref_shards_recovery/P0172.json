@@ -1,0 +1,45 @@
+{
+  "project_id": "P0172",
+  "pipeline_name": "Crossroads Gas Pipeline",
+  "harvest_opened": [
+    "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+    "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html",
+    "http://www.naturalgasintel.com/articles/92405-sign-ups-begin-for-east-bound-crossroads-pipeline",
+    "http://webapp1.dlib.indiana.edu/virtual_disk_library/index.cgi/4265704/FID3754/pdf/gas/061898.pdf",
+    "https://www.sec.gov/Archives/edgar/data/1629995/000162999517000003/cpgx-20161231x10k.htm",
+    "https://www.sec.gov/Archives/edgar/data/1111711/000111171115000008/ni-20141231xex21.htm",
+    "https://www.sec.gov/Archives/edgar/data/823392/0000950131-96-001296.txt",
+    "https://www.sec.gov/Archives/edgar/data/823392/0000950131-95-000765.txt"
+  ],
+  "resolutions": [
+    {
+      "ref_col": "Start [ref]",
+      "sheet_row": 33,
+      "class_out": "REFS_ADDED",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/823392/0000950131-96-001296.txt",
+        "https://www.sec.gov/Archives/edgar/data/823392/0000950131-95-000765.txt"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/823392/0000950131-96-001296.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NIPSCO Industries, Inc. 10-K for FY1995 (filed 1996-03-28): \"Crossroads is a natural gas pipeline which was approved by the Federal Energy Regulatory Commission (FERC) as an interstate pipeline in May 1995.\""
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/823392/0000950131-95-000765.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NIPSCO Industries, Inc. 10-K for FY1994 (filed 1995-03-29): \"Crossroads was in operation during 1994, generating operating revenues of $1.8 million. Crossroads currently is seeking certification from the FERC to become an interstate pipeline with service extending into Ohio\"; also \"gas volumes transported through Crossroads, which began operations in 1994.\" Cited alongside the FY1995 filing to show the full timeline underlying the recorded 1995 value."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two NIPSCO Industries, Inc. SEC 10-K filings (primary regulatory disclosures, filed a year apart) together source the recorded StartYear1=1995, but with an important nuance flagged for review rather than silently pasted over: the FY1994 10-K (filed 1995-03-29) states Crossroads (the converted 202-mile ex-crude-oil line, IL/IN state line to Cygnet, OH) 'was in operation during 1994' as an INTRASTATE Indiana pipeline ('Only the Indiana portion of the line is presently in service as an intrastate gas pipeline'), and that gas transportation volumes 'began operations in 1994.' The FY1995 10-K (filed 1996-03-28) then states Crossroads 'was approved by the Federal Energy Regulatory Commission (FERC) as an interstate pipeline in May 1995' -- i.e. FERC's interstate certification (extending service into Ohio) is the specific 1995 event, layered on top of gas having already flowed intrastate since 1994. The recorded sheet value (StartYear1=1995) matches the interstate-certification milestone exactly (month-and-year stated: May 1995), so REFS_ADDED at the recorded value is correct here -- but flagging for the orchestrator that 1994 is the year commercial gas operation actually began on this line, in case 'Start' should reflect first gas flow rather than interstate FERC certification. Not a rounding-level discrepancy; a full year and a different milestone. Independent second/third-party press corroboration (contemporary Natural Gas Intelligence and NWI Times articles cited on gem.wiki for this project) could not be retrieved in this pass -- naturalgasintel.com returned HTTP 403 on both the fetch tool and curl with a browser UA, and nwitimes.com serves only a paywalled headline/date stub (verified via direct curl and the sole Wayback capture, which is itself a client-side captcha challenge page, cdx confirms no earlier snapshot exists); neither could be escalated further within this pass."
+    }
+  ]
+}

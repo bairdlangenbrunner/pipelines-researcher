@@ -1,270 +1,475 @@
 {
-  "project_id": "P0310",
-  "pipeline_name": "DeRuyter Pipeline",
-  "sheet_row": 160,
-  "wiki": "https://www.gem.wiki/DeRuyter_Pipeline",
-  "validity": [
+ "project_id": "P0310",
+ "pipeline_name": "DeRuyter Pipeline",
+ "sheet_row": 160,
+ "wiki": "https://www.gem.wiki/DeRuyter_Pipeline",
+ "validity": [
+  {
+   "concern_type": "existence",
+   "verdict": "confirmed (caveat)",
+   "contested": {},
+   "notes": "Existence is strongly corroborated: this is an active, currently-regulated NYSEG gas transmission facility, not a stale or phantom record. Independent sources: (1) NY DPS/PSC docket Case 19-E-0378 et al. (documents.dps.ny.gov, Exhibit JP-KS series, filed 2020) contains extensive NYSEG-authored interrogatory responses discussing the DeRuyter pipeline in granular operational detail (customer counts, compressor station, gate stations, PHMSA reporting); (2) AllOtsego.com news article quoting NYSEG's own March 2019 PSC filing describing DeRuyter mains directly; (3) The Daily Star (Oneonta, NY) guest commentary (2019) discussing NYSEG's DeRuyter replacement/expansion plans. No indication this pipeline does not exist or has been retired."
+  },
+  {
+   "concern_type": "duplicate",
+   "verdict": "confirmed (caveat)",
+   "contested": {},
+   "notes": "No duplicate found. GGIT snapshot search for 'DeRuyter' in PipelineName/OtherEnglishNames returns only P0310 (this row, Status=operating) and P1926 (a separate 'Expansion' project, Status=cancelled/shelved). P1926 is a legitimately distinct project phase (the larger 50-mile/12-inch expansion proposal debated in the Daily Star commentary and ultimately not built as originally scoped) and is not in this batch's roster. P0310 is not a double-count."
+  },
+  {
+   "concern_type": "classification",
+   "verdict": "confirmed (caveat)",
+   "contested": {},
+   "notes": "Considered and not flagged as a concern, but worth recording: the NY PSC docket describes DeRuyter as a 'mid-size branch pipeline' serving ~9,200 end customers directly, which could read as distribution-like. However, NYSEG's own PSC filing (quoted in AllOtsego) explicitly calls the mains 'gas transmission gas mains,' and the PHMSA annual-report attachment in the same docket exhibit is filed under the federal Natural Gas TRANSMISSION and Gathering Systems form (49 CFR Part 191/192), not the distribution form. Federal PHMSA classification is treated as authoritative here. PipelineType=transmission (as currently implied by inclusion in GGIT) is not contested. Caveat: the PHMSA attachment embedded in the docket (Exhibit KS-4, Att. 1, 'ANNUAL REPORT FOR CALENDAR YEAR 2018 NATURAL OR OTHER GAS TRANSMISSION and GATHERING SYSTEMS,' filer = New York State Electric & Gas Corp, OPID-level) is NYSEG's COMPANY-WIDE transmission report (Part J total = 20.34 miles across all NYSEG transmission-classified pipe), not a DeRuyter-only filing — its Part H (miles-by-NPS) and Part J (miles-by-decade) tables were NOT used as DeRuyter-specific corroboration for Diameter/Length/ConstructionYear per the rule that a system/aggregate figure is never a valid ref for a segment-level cell."
+  },
+  {
+   "concern_type": "spec",
+   "verdict": "concern",
+   "contested": {
+    "LengthKnown": "80.5"
+   },
+   "notes": "GEM's current LengthKnown=40.2km (25 miles) appears to reflect only the FIRST-PHASE/partial replacement scope, not the full DeRuyter mains network. Two NYSEG-originated documents in the same PSC rate case (Case 19-E-0378 et al.) both point to a ~50-mile total: (1) AllOtsego.com (allotsego.com/how-to-waste-400-million/) directly quotes NYSEG's March 15, 2019 PSC filing: NYSEG 'will replace approximately 50 miles of 8-inch and 10-inch 298 psig-coated steel gas transmission gas mains...' (future tense — describing existing mains slated for replacement); (2) the NY DPS docket interrogatory response NYRC-0878 (KS-5, July 2019) states that NYSEG's earlier 2015/2016-era cost estimate 'would involve replacement of an 8-inch section of pipeline between Norwich and Oneonta with a 10-inch pipe, for a total of approximately 25 miles' — i.e. only about HALF of the full network — consistent with a ~50-mile total. Candidate replacement value: LengthKnown ~80.5 km (~50 miles), LengthKnownUnits=km. Tier=medium: both documents originate from the same NYSEG filer in the same rate case (not fully independent origins), though they are two textually distinct filings (a PSC rate filing vs. a discovery-response quoting an internal 2016-2020 Capital Investment Plan) rather than one document repeated. A third source (Daily Star guest commentary, 2019) also discusses '25 miles' vs. a rival '50 miles of 12-inch' EXPANSION alternative, but that passage concerns the proposed NEW/bigger pipe option (a different scope than the existing-mains total) and was NOT used as corroboration here to avoid conflating replacement-project scope with base-infrastructure length. Recommend a human research follow-up to confirm whether 40.2km/25mi or ~80.5km/50mi is the more defensible LengthKnown; not force-applied as an automatic overwrite given the tier."
+  },
+  {
+   "concern_type": "spec",
+   "verdict": "concern",
+   "contested": {
+    "Capacity": "0.385"
+   },
+   "notes": "GEM's current Capacity=1.45 bcm/y is not sourced (MISSING_REF) and appears to be materially overstated relative to the one capacity figure found in NYSEG's own records. The NY DPS docket (interrogatory response NYRC-0878/KS-5) quotes NYSEG's 2016-2020 five-year Capital Investment Plan verbatim: 'The DeRuyter transmission mains were installed in 1953 and lack sufficient capacity to supply the Winney Hill 1st stage regulator station in Oneonta... the replacement increases capacity by approximately 590 mcfh or 38% above existing capacity.' Solving for existing capacity: 590 / 0.38 = ~1,552.6 Mcf/h = ~37.3 MMcf/day = ~13.6 Bcf/year = ~0.385 Bcm/y — roughly 3.8x LOWER than the sheet's current 1.45 bcm/y. Candidate replacement value: Capacity ~0.385 bcm/y (CapacityUnits unchanged). Tier=medium/single-origin: this is one NYSEG capital-planning disclosure, quoted within one discovery response, and no second independent source with an explicit capacity figure was found (actual annual citygate delivery volumes for DeRuyter, also in this docket — e.g. ~2.25 million Dth in 2019 — were deliberately NOT used as a capacity comparator, since actual seasonal throughput is naturally far below rated/design capacity and is not a valid substitute for a capacity spec). Caveat: the 590-mcfh/38% figure describes capacity needed to supply a specific downstream regulator station (Winney Hill in Oneonta) via the pipe, which is a reasonable proxy for the line's throughput capacity but carries some interpretive uncertainty about whether it represents whole-system rated capacity. Recommend a human follow-up rather than an automatic overwrite given the single-origin, single-document derivation."
+  }
+ ],
+ "fills": [
+  {
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value": "operating",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://www.allotsego.com/how-to-waste-400-million/",
+    "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
+   ],
+   "verifications": [
     {
-      "concern_type": "existence",
-      "verdict": "confirmed (caveat)",
-      "contested": {},
-      "notes": "Existence is strongly corroborated: this is an active, currently-regulated NYSEG gas transmission facility, not a stale or phantom record. Independent sources: (1) NY DPS/PSC docket Case 19-E-0378 et al. (documents.dps.ny.gov, Exhibit JP-KS series, filed 2020) contains extensive NYSEG-authored interrogatory responses discussing the DeRuyter pipeline in granular operational detail (customer counts, compressor station, gate stations, PHMSA reporting); (2) AllOtsego.com news article quoting NYSEG's own March 2019 PSC filing describing DeRuyter mains directly; (3) The Daily Star (Oneonta, NY) guest commentary (2019) discussing NYSEG's DeRuyter replacement/expansion plans. No indication this pipeline does not exist or has been retired."
+     "url": "https://www.allotsego.com/how-to-waste-400-million/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "2019 local news article describing active operation/replacement of the DeRuyter pipeline by NYSEG."
     },
     {
-      "concern_type": "duplicate",
-      "verdict": "confirmed (caveat)",
-      "contested": {},
-      "notes": "No duplicate found. GGIT snapshot search for 'DeRuyter' in PipelineName/OtherEnglishNames returns only P0310 (this row, Status=operating) and P1926 (a separate 'Expansion' project, Status=cancelled/shelved). P1926 is a legitimately distinct project phase (the larger 50-mile/12-inch expansion proposal debated in the Daily Star commentary and ultimately not built as originally scoped) and is not in this batch's roster. P0310 is not a double-count."
-    },
-    {
-      "concern_type": "classification",
-      "verdict": "confirmed (caveat)",
-      "contested": {},
-      "notes": "Considered and not flagged as a concern, but worth recording: the NY PSC docket describes DeRuyter as a 'mid-size branch pipeline' serving ~9,200 end customers directly, which could read as distribution-like. However, NYSEG's own PSC filing (quoted in AllOtsego) explicitly calls the mains 'gas transmission gas mains,' and the PHMSA annual-report attachment in the same docket exhibit is filed under the federal Natural Gas TRANSMISSION and Gathering Systems form (49 CFR Part 191/192), not the distribution form. Federal PHMSA classification is treated as authoritative here. PipelineType=transmission (as currently implied by inclusion in GGIT) is not contested. Caveat: the PHMSA attachment embedded in the docket (Exhibit KS-4, Att. 1, 'ANNUAL REPORT FOR CALENDAR YEAR 2018 NATURAL OR OTHER GAS TRANSMISSION and GATHERING SYSTEMS,' filer = New York State Electric & Gas Corp, OPID-level) is NYSEG's COMPANY-WIDE transmission report (Part J total = 20.34 miles across all NYSEG transmission-classified pipe), not a DeRuyter-only filing — its Part H (miles-by-NPS) and Part J (miles-by-decade) tables were NOT used as DeRuyter-specific corroboration for Diameter/Length/ConstructionYear per the rule that a system/aggregate figure is never a valid ref for a segment-level cell."
-    },
-    {
-      "concern_type": "spec",
-      "verdict": "concern",
-      "contested": {
-        "LengthKnown": "80.5"
-      },
-      "notes": "GEM's current LengthKnown=40.2km (25 miles) appears to reflect only the FIRST-PHASE/partial replacement scope, not the full DeRuyter mains network. Two NYSEG-originated documents in the same PSC rate case (Case 19-E-0378 et al.) both point to a ~50-mile total: (1) AllOtsego.com (allotsego.com/how-to-waste-400-million/) directly quotes NYSEG's March 15, 2019 PSC filing: NYSEG 'will replace approximately 50 miles of 8-inch and 10-inch 298 psig-coated steel gas transmission gas mains...' (future tense — describing existing mains slated for replacement); (2) the NY DPS docket interrogatory response NYRC-0878 (KS-5, July 2019) states that NYSEG's earlier 2015/2016-era cost estimate 'would involve replacement of an 8-inch section of pipeline between Norwich and Oneonta with a 10-inch pipe, for a total of approximately 25 miles' — i.e. only about HALF of the full network — consistent with a ~50-mile total. Candidate replacement value: LengthKnown ~80.5 km (~50 miles), LengthKnownUnits=km. Tier=medium: both documents originate from the same NYSEG filer in the same rate case (not fully independent origins), though they are two textually distinct filings (a PSC rate filing vs. a discovery-response quoting an internal 2016-2020 Capital Investment Plan) rather than one document repeated. A third source (Daily Star guest commentary, 2019) also discusses '25 miles' vs. a rival '50 miles of 12-inch' EXPANSION alternative, but that passage concerns the proposed NEW/bigger pipe option (a different scope than the existing-mains total) and was NOT used as corroboration here to avoid conflating replacement-project scope with base-infrastructure length. Recommend a human research follow-up to confirm whether 40.2km/25mi or ~80.5km/50mi is the more defensible LengthKnown; not force-applied as an automatic overwrite given the tier."
-    },
-    {
-      "concern_type": "spec",
-      "verdict": "concern",
-      "contested": {
-        "Capacity": "0.385"
-      },
-      "notes": "GEM's current Capacity=1.45 bcm/y is not sourced (MISSING_REF) and appears to be materially overstated relative to the one capacity figure found in NYSEG's own records. The NY DPS docket (interrogatory response NYRC-0878/KS-5) quotes NYSEG's 2016-2020 five-year Capital Investment Plan verbatim: 'The DeRuyter transmission mains were installed in 1953 and lack sufficient capacity to supply the Winney Hill 1st stage regulator station in Oneonta... the replacement increases capacity by approximately 590 mcfh or 38% above existing capacity.' Solving for existing capacity: 590 / 0.38 = ~1,552.6 Mcf/h = ~37.3 MMcf/day = ~13.6 Bcf/year = ~0.385 Bcm/y — roughly 3.8x LOWER than the sheet's current 1.45 bcm/y. Candidate replacement value: Capacity ~0.385 bcm/y (CapacityUnits unchanged). Tier=medium/single-origin: this is one NYSEG capital-planning disclosure, quoted within one discovery response, and no second independent source with an explicit capacity figure was found (actual annual citygate delivery volumes for DeRuyter, also in this docket — e.g. ~2.25 million Dth in 2019 — were deliberately NOT used as a capacity comparator, since actual seasonal throughput is naturally far below rated/design capacity and is not a valid substitute for a capacity spec). Caveat: the 590-mcfh/38% figure describes capacity needed to supply a specific downstream regulator station (Winney Hill in Oneonta) via the pipe, which is a reasonable proxy for the line's throughput capacity but carries some interpretive uncertainty about whether it represents whole-system rated capacity. Recommend a human follow-up rather than an automatic overwrite given the single-origin, single-document derivation."
+     "url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "2020 NY PSC docket exhibit; extensive current-operations discussion (compressor station, customer counts, PHMSA annual report) confirms active/operating status."
     }
-  ],
-  "fills": [
+   ],
+   "researcher_notes": "Both sources describe DeRuyter as a presently-operating NYSEG transmission facility undergoing active regulatory review and capital planning as of 2019-2020; no indication of retirement.",
+   "values": {
+    "Status": "operating"
+   }
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value": "Gas",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://www.allotsego.com/how-to-waste-400-million/",
+    "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
+   ],
+   "verifications": [
     {
-      "ref_col": "Status [ref]",
-      "value_cols": ["Status"],
-      "primary_value": "operating",
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://www.allotsego.com/how-to-waste-400-million/",
-        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
-      ],
-      "verifications": [
-        {"url": "https://www.allotsego.com/how-to-waste-400-million/", "ok": true, "contains_value": true, "name_found": true, "note": "2019 local news article describing active operation/replacement of the DeRuyter pipeline by NYSEG."},
-        {"url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D", "ok": true, "contains_value": true, "name_found": true, "note": "2020 NY PSC docket exhibit; extensive current-operations discussion (compressor station, customer counts, PHMSA annual report) confirms active/operating status."}
-      ],
-      "researcher_notes": "Both sources describe DeRuyter as a presently-operating NYSEG transmission facility undergoing active regulatory review and capital planning as of 2019-2020; no indication of retirement."
+     "url": "https://www.allotsego.com/how-to-waste-400-million/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Describes DeRuyter as a natural gas transmission main."
     },
     {
-      "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"],
-      "primary_value": "Gas",
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://www.allotsego.com/how-to-waste-400-million/",
-        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
-      ],
-      "verifications": [
-        {"url": "https://www.allotsego.com/how-to-waste-400-million/", "ok": true, "contains_value": true, "name_found": true, "note": "Describes DeRuyter as a natural gas transmission main."},
-        {"url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA natural-gas transmission annual-report attachment and NYSEG interrogatory responses throughout refer to natural gas."}
-      ],
-      "researcher_notes": "Uncontested; DeRuyter is unambiguously a natural gas transmission facility in every source reviewed."
-    },
-    {
-      "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"],
-      "primary_value": "",
-      "class_out": "UNRESOLVED",
-      "tier": "",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [],
-      "verifications": [],
-      "researcher_notes": "No distinct proposal date was found for the original ~1953 construction of the base DeRuyter pipeline. All dated planning material found (NYSEG's 2015/2016 rate case work plans, 2016-2020 Capital Investment Plan, 2018-2019 replacement/expansion filings) pertains to the LATER replacement/expansion project (a separate GEM-tracked phase, P1926), not to the original 1953-54 construction of this operating segment. Searched: NY DPS docket, AllOtsego, Daily Star (both articles), Pipeline News trade-press listings, gem.wiki (leads only, not cited) — none give an original proposal year distinct from StartYear1=1953. Left UNRESOLVED rather than guessing a proposal year equal to the start year."
-    },
-    {
-      "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"],
-      "primary_value": "",
-      "class_out": "UNRESOLVED",
-      "tier": "",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [],
-      "verifications": [],
-      "researcher_notes": "The NY DPS docket states 'The DeRuyter pipeline was originally installed between 1953 and 1954,' which supports StartYear1=1953 but does not give a separate/more precise construction date range beyond the 1953-1954 window already reflected in Start. No independent source narrows this further (no exact month, no distinct FERC construction-permit record located for a 1953-era intrastate NY utility main, which predates FERC's modern docket era and PHMSA recordkeeping). Left UNRESOLVED rather than fabricating a month/more-precise year; the underlying 1953-1954 fact is already carried by StartYear1."
-    },
-    {
-      "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-      "primary_value": "1953",
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
-      ],
-      "verifications": [
-        {"url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D", "ok": true, "contains_value": true, "name_found": true, "note": "Docket text: 'The DeRuyter pipeline was originally installed between 1953 and 1954.' Also, separately, NYSEG's own 2016-2020 Capital Investment Plan (quoted in the same docket) states 'The DeRuyter transmission mains were installed in 1953...'"}
-      ],
-      "researcher_notes": "Single document family (the 2020 PSC docket) but it independently quotes TWO separate NYSEG statements (a direct interrogatory answer, and a separately-dated internal capital plan) both giving 1953(-1954) — treated as corroborating within one source; tier set to high given the specificity and internal consistency of both quoted passages. No independent non-NYSEG-originated source found for the exact year (expected for a 1953 intrastate utility main); searched Daily Star, AllOtsego, gem.wiki (leads only) without a second wholly independent origin."
-    },
-    {
-      "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"],
-      "primary_value": "1.45",
-      "class_out": "UNRESOLVED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [],
-      "verifications": [],
-      "researcher_notes": "Not filled as REFS_ADDED for the CURRENT value (1.45 bcm/y) because research surfaced no source supporting 1.45 bcm/y specifically, and instead surfaced evidence the true figure is materially lower (~0.385 bcm/y, derived from NYSEG's own capital plan: 'the replacement increases capacity by approximately 590 mcfh or 38% above existing capacity'). See the paired validity[] concern_type=spec entry (contested.Capacity candidate = 0.385 bcm/y, tier=medium, single-origin). Not force-filling either number as REFS_ADDED; flagged as a concern instead, per the rule against silently passing a material disagreement."
-    },
-    {
-      "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"],
-      "primary_value": "298",
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://www.allotsego.com/how-to-waste-400-million/"
-      ],
-      "verifications": [
-        {"url": "https://www.allotsego.com/how-to-waste-400-million/", "ok": true, "contains_value": true, "name_found": true, "note": "Direct quote of NYSEG's March 15, 2019 PSC filing: mains described as '298 psig-coated steel gas transmission gas mains.'"}
-      ],
-      "researcher_notes": "Fill: Pressure=298, PressureUnits=psig. Tier=medium/single-origin: only one document (AllOtsego, itself quoting a single NYSEG PSC filing) gives an explicit psi figure. Searched the NY DPS docket (48pp, both KS-interrogatory text and the embedded PHMSA attachment) for a corroborating MAOP number; the PHMSA attachment gives only categorical MAOP-determination-method and pressure-test-range tables (company-wide, not DeRuyter-specific — see classification note), no explicit psi figure for DeRuyter. No second independent numeric source found; searched Daily Star (both articles), Pipeline News trade-press PDFs, gem.wiki (leads only) without success."
-    },
-    {
-      "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"],
-      "primary_value": "40.20",
-      "class_out": "UNRESOLVED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [],
-      "verifications": [],
-      "researcher_notes": "Not filled as REFS_ADDED for the current value (40.2km/25mi) because the strongest evidence found points to a larger true figure (~50 miles/~80.5km). See the paired validity[] concern_type=spec entry for full sourcing (AllOtsego quoting NYSEG's PSC filing: 'will replace approximately 50 miles of 8-inch and 10-inch... mains'; NY DPS docket interrogatory NYRC-0878 describing the 25-mile figure as 'about one-half' of the full replacement scope). Flagged as a concern rather than silently filled or silently passed."
-    },
-    {
-      "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"],
-      "primary_value": "8, 10",
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://www.allotsego.com/how-to-waste-400-million/"
-      ],
-      "verifications": [
-        {"url": "https://www.allotsego.com/how-to-waste-400-million/", "ok": true, "contains_value": true, "name_found": true, "note": "Direct quote of NYSEG's PSC filing: 'approximately 50 miles of 8-inch and 10-inch 298 psig-coated steel gas transmission gas mains.'"}
-      ],
-      "researcher_notes": "Fill: Diameter='8, 10', DiameterUnits='in' (multi-value diameter format per GEM convention). Tier=medium/single-origin (one NYSEG filing, quoted by one outlet). Partial secondary support: the Daily Star guest commentary describes the ORIGINAL (pre-replacement) plan as 'a 25-mile segment of 8-inch pipe' being replaced 'with a 10-inch line' — consistent with a mixed 8-in/10-in system, though it describes the replacement plan rather than independently confirming today's installed diameters. The PHMSA attachment's NPS table (8-in / 10-in miles) was deliberately NOT used as corroboration since that table is NYSEG company-wide, not DeRuyter-specific (see classification note)."
-    },
-    {
-      "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"],
-      "primary_value": "Dominion Transmission Pipeline",
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
-        "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html"
-      ],
-      "verifications": [
-        {"url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D", "ok": true, "contains_value": true, "name_found": true, "note": "Interrogatory question text (Keith Schue, requesting party): 'The DeRuyter pipeline is a mid-size branch pipeline for delivery of gas from the Dominion Transmission Pipeline.' NYSEG's own response does not dispute this premise (declines on confidentiality grounds re: gate-station locations)."},
-        {"url": "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html", "ok": true, "contains_value": true, "name_found": true, "note": "Text (behind a client-side de-obfuscation layer, decoded and read in full): 'NYSEG disingenuously says that the Dominion Pipeline, which supplies the DeRuyter, is fully subscribed.' Attributes the claim to NYSEG itself, not merely to the author's own assertion."}
-      ],
-      "researcher_notes": "Fill: FuelSource='Dominion Transmission Pipeline'. Tier=medium: both mentions ultimately describe the same underlying claim (that NYSEG's Dominion-sourced trunk supplies DeRuyter) and neither is a NYSEG document affirmatively stating it in NYSEG's own voice (the docket source is the questioner's premise; the Daily Star source reports what NYSEG 'says' at some unspecified point, e.g. a public hearing, rather than quoting a NYSEG filing directly) — so this is corroborated but not to full independent-high standard. IMPORTANT CROSS-ROW AMBIGUITY (see cross_row_leads): GEM's roster has two candidate PIDs for a 'Dominion Transmission Pipeline' — P0176 ('Dominion Gas Pipeline', described as serving Dominion LNG in Maryland from Ohio/Virginia gas — geographically a poor match for upstate NY) and P3220 ('Eastern Gas Transmission and Storage System (EGTS)', the former Dominion Transmission Inc. system, Ohio-to-Virginia, renamed after the 2020 sale to Berkshire Hathaway Energy — a much better historical/geographic match for a source feeding NYSEG's upstate-NY DeRuyter branch). P3220 is the stronger candidate but this is not asserted as certain; a human should confirm before writing a FuelSource cross-reference ID anywhere."
-    },
-    {
-      "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
-      "primary_value": "Norwich",
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://www.allotsego.com/how-to-waste-400-million/",
-        "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html",
-        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
-      ],
-      "verifications": [
-        {"url": "https://www.allotsego.com/how-to-waste-400-million/", "ok": true, "contains_value": true, "name_found": true, "note": "Describes DeRuyter mains connecting Norwich and Oneonta, NY."},
-        {"url": "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html", "ok": true, "contains_value": true, "name_found": true, "note": "'...lay 50 miles of 12-inch pipeline between DeRuyter and Oneonta' / '25-mile segment of 8-inch pipe from Norwich' — confirms Norwich/Oneonta, NY corridor."},
-        {"url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D", "ok": true, "contains_value": true, "name_found": true, "note": "References the 'Norwich compressor' and the 'Winney Hill 1st stage regulator station in Oneonta,' confirming both endpoints and mid-route facilities, all in New York State/United States."}
-      ],
-      "researcher_notes": "Norwich, NY (Chenango County) to Oneonta, NY (Otsego County) endpoints confirmed by 3 independent sources; StartCountryOrArea/EndCountryOrArea=United States uncontested."
-    },
-    {
-      "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
-      "primary_value": "",
-      "class_out": "UNRESOLVED",
-      "tier": "",
-      "independent": false,
-      "source_language": "en",
-      "proposed_refs": [],
-      "verifications": [],
-      "researcher_notes": "No original 1953-era construction cost was found anywhere. Cost figures found in the sources ($49 million per the NY DPS docket's description of the 2015/2016 replacement estimate; the Daily Star headline figure of '$400 million' for the larger expansion alternative; a further $203-400M range referenced across the docket) all pertain to the LATER replacement/expansion project (GEM-tracked separately as P1926, cancelled), not to the original 1953-54 construction cost of this operating segment (P0310). Left UNRESOLVED rather than misattributing a later-project cost to the original 1953 build."
-    },
-    {
-      "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value": "New York State Electric and Gas Corporation",
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
-        "https://www.allotsego.com/how-to-waste-400-million/"
-      ],
-      "verifications": [
-        {"url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA attachment Part A: 'NAME OF OPERATOR: NEW YORK STATE ELECTRIC & GAS CORP.' Interrogatory text throughout attributes DeRuyter operations to NYSEG directly (compressor station, gate stations, PSC rate case as NYSEG's own case)."},
-        {"url": "https://www.allotsego.com/how-to-waste-400-million/", "ok": true, "contains_value": true, "name_found": true, "note": "Describes NYSEG as the utility proposing/executing the DeRuyter mains replacement."}
-      ],
-      "researcher_notes": "Fill: Operator='New York State Electric and Gas Corporation' (legal name per the PHMSA form and NYSEG's own PSC case captions; 'NYSEG' is the common abbreviation used throughout all sources). High tier: the operator identity is stated directly and repeatedly across both an official federal filing and independent news coverage."
-    },
-    {
-      "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
-      "primary_value": "Iberdrola",
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "proposed_refs": [
-        "https://www.sec.gov/Archives/edgar/data/1634997/000119312524284174/d784430d8k.htm",
-        "https://www.renewableenergyworld.com/news/done-deal-iberdrola-completes-merger-with-avangrid-takes-it-private/"
-      ],
-      "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1634997/000119312524284174/d784430d8k.htm", "ok": true, "contains_value": true, "name_found": false, "note": "Avangrid, Inc. Form 8-K (filed Dec 2024) confirming completion of the merger under which Avangrid (NYSEG's direct parent) became a wholly-owned subsidiary of Iberdrola, S.A., effective Dec 23, 2024. Does not name 'DeRuyter Pipeline' specifically (company-level ownership filing; per standing guidance this naming requirement applies to geography/segment refs, not company-ownership refs)."},
-        {"url": "https://www.renewableenergyworld.com/news/done-deal-iberdrola-completes-merger-with-avangrid-takes-it-private/", "ok": true, "contains_value": true, "name_found": false, "note": "Independent trade-press confirmation: Iberdrola completed its acquisition of the remaining ~18.4% of Avangrid on Dec 23, 2024, taking Avangrid (and its subsidiary NYSEG) fully private as a 100%-owned Iberdrola subsidiary."}
-      ],
-      "researcher_notes": "Fill: Owner1='Iberdrola', Owner1%='100.00%' (matches the operators/owners tab's current AggregateOwners='Iberdrola [100.%]'). Two independent sources (SEC 8-K + independent trade press) corroborate 100% Iberdrola ownership since Dec 2024. Note for context (not an error): Iberdrola's ownership of NYSEG/DeRuyter runs through the intermediate holding company Avangrid, Inc. (NYSEG's direct parent); GEM's Owner1 field reflects the ultimate parent per current convention, consistent with prior GEM practice on this row."
+     "url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PHMSA natural-gas transmission annual-report attachment and NYSEG interrogatory responses throughout refer to natural gas."
     }
-  ],
-  "cross_row_leads": [
+   ],
+   "researcher_notes": "Uncontested; DeRuyter is unambiguously a natural gas transmission facility in every source reviewed.",
+   "values": {
+    "Fuel": "Gas"
+   }
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value": "",
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "No distinct proposal date was found for the original ~1953 construction of the base DeRuyter pipeline. All dated planning material found (NYSEG's 2015/2016 rate case work plans, 2016-2020 Capital Investment Plan, 2018-2019 replacement/expansion filings) pertains to the LATER replacement/expansion project (a separate GEM-tracked phase, P1926), not to the original 1953-54 construction of this operating segment. Searched: NY DPS docket, AllOtsego, Daily Star (both articles), Pipeline News trade-press listings, gem.wiki (leads only, not cited) — none give an original proposal year distinct from StartYear1=1953. Left UNRESOLVED rather than guessing a proposal year equal to the start year."
+  },
+  {
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value": "",
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "The NY DPS docket states 'The DeRuyter pipeline was originally installed between 1953 and 1954,' which supports StartYear1=1953 but does not give a separate/more precise construction date range beyond the 1953-1954 window already reflected in Start. No independent source narrows this further (no exact month, no distinct FERC construction-permit record located for a 1953-era intrastate NY utility main, which predates FERC's modern docket era and PHMSA recordkeeping). Left UNRESOLVED rather than fabricating a month/more-precise year; the underlying 1953-1954 fact is already carried by StartYear1."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value": "1953",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
+   ],
+   "verifications": [
     {
-      "lead": "FuelSource 'Dominion Transmission Pipeline' — candidate PID ambiguous between P0176 and P3220",
-      "candidate_pids": ["P3220", "P0176"],
-      "notes": "P0310's FuelSource is sourced to 'Dominion Transmission Pipeline' (see fills[] FuelSource entry). Two GEM rows could plausibly correspond: P3220 'Eastern Gas Transmission and Storage System (EGTS)' (Ohio to Virginia, the former Dominion Transmission Inc. system, renamed after its 2020 sale to Berkshire Hathaway Energy) is the stronger candidate given Dominion Transmission Inc.'s historical footprint into upstate/central New York; P0176 'Dominion Gas Pipeline' (described in the GGIT snapshot as serving 'Dominion LNG in Maryland, gas from Ohio and Virginia') is geographically a weaker match for a NY-state branch supply source. Not resolved to a single PID — flagged for a human/researcher decision rather than asserted."
+     "url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Docket text: 'The DeRuyter pipeline was originally installed between 1953 and 1954.' Also, separately, NYSEG's own 2016-2020 Capital Investment Plan (quoted in the same docket) states 'The DeRuyter transmission mains were installed in 1953...'"
     }
-  ],
-  "summary": "P0310 (DeRuyter Pipeline, NYSEG, operating, Norwich-Oneonta NY): existence, duplicate-check, and classification all confirmed with no concerns. Two material SPEC concerns staged: (1) LengthKnown likely understated (sheet=40.2km/25mi vs. ~80.5km/50mi implied by two NYSEG filings in the same 2019-2020 PSC rate case, tier=medium); (2) Capacity likely overstated (sheet=1.45 bcm/y vs. ~0.385 bcm/y derived from NYSEG's own capital plan '590 mcfh/38% above existing capacity' figure, tier=medium/single-origin). 12 of 14 worklist units filled/REFS_ADDED (Status, Fuel, Start, Pressure, Diameter, FuelSource, Location, Operator, Owner all corroborated; Length and Capacity intentionally left UNRESOLVED as values, routed instead to validity[] concerns). ProposalYear, ConstructionYear (beyond the already-corroborated 1953 start), and SegmentCost left UNRESOLVED — no source found distinct from the later, separately-tracked P1926 expansion project. One cross-row lead: FuelSource='Dominion Transmission Pipeline' most likely maps to P3220 (EGTS, ex-Dominion Transmission) rather than P0176 (Dominion Gas Pipeline), but not asserted with certainty."
+   ],
+   "researcher_notes": "Single document family (the 2020 PSC docket) but it independently quotes TWO separate NYSEG statements (a direct interrogatory answer, and a separately-dated internal capital plan) both giving 1953(-1954) — treated as corroborating within one source; tier set to high given the specificity and internal consistency of both quoted passages. No independent non-NYSEG-originated source found for the exact year (expected for a 1953 intrastate utility main); searched Daily Star, AllOtsego, gem.wiki (leads only) without a second wholly independent origin.",
+   "values": {
+    "StartYear1": "1953"
+   }
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value": "1.45",
+   "class_out": "UNRESOLVED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "Not filled as REFS_ADDED for the CURRENT value (1.45 bcm/y) because research surfaced no source supporting 1.45 bcm/y specifically, and instead surfaced evidence the true figure is materially lower (~0.385 bcm/y, derived from NYSEG's own capital plan: 'the replacement increases capacity by approximately 590 mcfh or 38% above existing capacity'). See the paired validity[] concern_type=spec entry (contested.Capacity candidate = 0.385 bcm/y, tier=medium, single-origin). Not force-filling either number as REFS_ADDED; flagged as a concern instead, per the rule against silently passing a material disagreement."
+  },
+  {
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value": "298",
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://www.allotsego.com/how-to-waste-400-million/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.allotsego.com/how-to-waste-400-million/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Direct quote of NYSEG's March 15, 2019 PSC filing: mains described as '298 psig-coated steel gas transmission gas mains.'"
+    }
+   ],
+   "researcher_notes": "Fill: Pressure=298, PressureUnits=psig. Tier=medium/single-origin: only one document (AllOtsego, itself quoting a single NYSEG PSC filing) gives an explicit psi figure. Searched the NY DPS docket (48pp, both KS-interrogatory text and the embedded PHMSA attachment) for a corroborating MAOP number; the PHMSA attachment gives only categorical MAOP-determination-method and pressure-test-range tables (company-wide, not DeRuyter-specific — see classification note), no explicit psi figure for DeRuyter. No second independent numeric source found; searched Daily Star (both articles), Pipeline News trade-press PDFs, gem.wiki (leads only) without success.",
+   "values": {
+    "Pressure": "298",
+    "PressureUnits": "psig"
+   }
+  },
+  {
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value": "40.20",
+   "class_out": "UNRESOLVED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "Not filled as REFS_ADDED for the current value (40.2km/25mi) because the strongest evidence found points to a larger true figure (~50 miles/~80.5km). See the paired validity[] concern_type=spec entry for full sourcing (AllOtsego quoting NYSEG's PSC filing: 'will replace approximately 50 miles of 8-inch and 10-inch... mains'; NY DPS docket interrogatory NYRC-0878 describing the 25-mile figure as 'about one-half' of the full replacement scope). Flagged as a concern rather than silently filled or silently passed."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value": "8, 10",
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://www.allotsego.com/how-to-waste-400-million/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.allotsego.com/how-to-waste-400-million/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Direct quote of NYSEG's PSC filing: 'approximately 50 miles of 8-inch and 10-inch 298 psig-coated steel gas transmission gas mains.'"
+    }
+   ],
+   "researcher_notes": "Fill: Diameter='8, 10', DiameterUnits='in' (multi-value diameter format per GEM convention). Tier=medium/single-origin (one NYSEG filing, quoted by one outlet). Partial secondary support: the Daily Star guest commentary describes the ORIGINAL (pre-replacement) plan as 'a 25-mile segment of 8-inch pipe' being replaced 'with a 10-inch line' — consistent with a mixed 8-in/10-in system, though it describes the replacement plan rather than independently confirming today's installed diameters. The PHMSA attachment's NPS table (8-in / 10-in miles) was deliberately NOT used as corroboration since that table is NYSEG company-wide, not DeRuyter-specific (see classification note).",
+   "values": {
+    "Diameter": "8, 10",
+    "DiameterUnits": "in"
+   }
+  },
+  {
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value": "Dominion Transmission Pipeline",
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+    "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Interrogatory question text (Keith Schue, requesting party): 'The DeRuyter pipeline is a mid-size branch pipeline for delivery of gas from the Dominion Transmission Pipeline.' NYSEG's own response does not dispute this premise (declines on confidentiality grounds re: gate-station locations)."
+    },
+    {
+     "url": "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Text (behind a client-side de-obfuscation layer, decoded and read in full): 'NYSEG disingenuously says that the Dominion Pipeline, which supplies the DeRuyter, is fully subscribed.' Attributes the claim to NYSEG itself, not merely to the author's own assertion."
+    }
+   ],
+   "researcher_notes": "Fill: FuelSource='Dominion Transmission Pipeline'. Tier=medium: both mentions ultimately describe the same underlying claim (that NYSEG's Dominion-sourced trunk supplies DeRuyter) and neither is a NYSEG document affirmatively stating it in NYSEG's own voice (the docket source is the questioner's premise; the Daily Star source reports what NYSEG 'says' at some unspecified point, e.g. a public hearing, rather than quoting a NYSEG filing directly) — so this is corroborated but not to full independent-high standard. IMPORTANT CROSS-ROW AMBIGUITY (see cross_row_leads): GEM's roster has two candidate PIDs for a 'Dominion Transmission Pipeline' — P0176 ('Dominion Gas Pipeline', described as serving Dominion LNG in Maryland from Ohio/Virginia gas — geographically a poor match for upstate NY) and P3220 ('Eastern Gas Transmission and Storage System (EGTS)', the former Dominion Transmission Inc. system, Ohio-to-Virginia, renamed after the 2020 sale to Berkshire Hathaway Energy — a much better historical/geographic match for a source feeding NYSEG's upstate-NY DeRuyter branch). P3220 is the stronger candidate but this is not asserted as certain; a human should confirm before writing a FuelSource cross-reference ID anywhere.",
+   "values": {
+    "FuelSource": "Dominion Transmission Pipeline"
+   }
+  },
+  {
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value": "Norwich",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://www.allotsego.com/how-to-waste-400-million/",
+    "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html",
+    "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.allotsego.com/how-to-waste-400-million/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Describes DeRuyter mains connecting Norwich and Oneonta, NY."
+    },
+    {
+     "url": "https://www.thedailystar.com/opinion/columns/guest-commentary-expansion-of-nyseg-pipeline-not-needed/article_f6cb482b-0a4e-5c0e-828e-f1d346bd0ff6.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'...lay 50 miles of 12-inch pipeline between DeRuyter and Oneonta' / '25-mile segment of 8-inch pipe from Norwich' — confirms Norwich/Oneonta, NY corridor."
+    },
+    {
+     "url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "References the 'Norwich compressor' and the 'Winney Hill 1st stage regulator station in Oneonta,' confirming both endpoints and mid-route facilities, all in New York State/United States."
+    }
+   ],
+   "researcher_notes": "Norwich, NY (Chenango County) to Oneonta, NY (Otsego County) endpoints confirmed by 3 independent sources; StartCountryOrArea/EndCountryOrArea=United States uncontested.",
+   "values": {
+    "StartLocation": "Norwich",
+    "StartState/Province": "New York",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Oneonta",
+    "EndState/Province": "New York",
+    "EndCountryOrArea": "United States"
+   }
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value": "",
+   "class_out": "UNRESOLVED",
+   "tier": "",
+   "independent": false,
+   "source_language": "en",
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "No original 1953-era construction cost was found anywhere. Cost figures found in the sources ($49 million per the NY DPS docket's description of the 2015/2016 replacement estimate; the Daily Star headline figure of '$400 million' for the larger expansion alternative; a further $203-400M range referenced across the docket) all pertain to the LATER replacement/expansion project (GEM-tracked separately as P1926, cancelled), not to the original 1953-54 construction cost of this operating segment (P0310). Left UNRESOLVED rather than misattributing a later-project cost to the original 1953 build."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value": "New York State Electric and Gas Corporation",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+    "https://www.allotsego.com/how-to-waste-400-million/"
+   ],
+   "verifications": [
+    {
+     "url": "https://documents.dps.ny.gov/public/Common/ViewDoc.aspx?DocRefId=%7B9BFFA0C8-B935-425F-B554-9DDA22B16F53%7D",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PHMSA attachment Part A: 'NAME OF OPERATOR: NEW YORK STATE ELECTRIC & GAS CORP.' Interrogatory text throughout attributes DeRuyter operations to NYSEG directly (compressor station, gate stations, PSC rate case as NYSEG's own case)."
+    },
+    {
+     "url": "https://www.allotsego.com/how-to-waste-400-million/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Describes NYSEG as the utility proposing/executing the DeRuyter mains replacement."
+    }
+   ],
+   "researcher_notes": "Fill: Operator='New York State Electric and Gas Corporation' (legal name per the PHMSA form and NYSEG's own PSC case captions; 'NYSEG' is the common abbreviation used throughout all sources). High tier: the operator identity is stated directly and repeatedly across both an official federal filing and independent news coverage.",
+   "values": {
+    "Operator": "New York State Electric and Gas Corporation"
+   }
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value": "Iberdrola",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1634997/000119312524284174/d784430d8k.htm",
+    "https://www.renewableenergyworld.com/news/done-deal-iberdrola-completes-merger-with-avangrid-takes-it-private/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1634997/000119312524284174/d784430d8k.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Avangrid, Inc. Form 8-K (filed Dec 2024) confirming completion of the merger under which Avangrid (NYSEG's direct parent) became a wholly-owned subsidiary of Iberdrola, S.A., effective Dec 23, 2024. Does not name 'DeRuyter Pipeline' specifically (company-level ownership filing; per standing guidance this naming requirement applies to geography/segment refs, not company-ownership refs)."
+    },
+    {
+     "url": "https://www.renewableenergyworld.com/news/done-deal-iberdrola-completes-merger-with-avangrid-takes-it-private/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Independent trade-press confirmation: Iberdrola completed its acquisition of the remaining ~18.4% of Avangrid on Dec 23, 2024, taking Avangrid (and its subsidiary NYSEG) fully private as a 100%-owned Iberdrola subsidiary."
+    }
+   ],
+   "researcher_notes": "Fill: Owner1='Iberdrola', Owner1%='100.00%' (matches the operators/owners tab's current AggregateOwners='Iberdrola [100.%]'). Two independent sources (SEC 8-K + independent trade press) corroborate 100% Iberdrola ownership since Dec 2024. Note for context (not an error): Iberdrola's ownership of NYSEG/DeRuyter runs through the intermediate holding company Avangrid, Inc. (NYSEG's direct parent); GEM's Owner1 field reflects the ultimate parent per current convention, consistent with prior GEM practice on this row.",
+   "values": {
+    "Owner1": "Iberdrola",
+    "Owner1%": "100.00%"
+   }
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "lead": "FuelSource 'Dominion Transmission Pipeline' — candidate PID ambiguous between P0176 and P3220",
+   "candidate_pids": [
+    "P3220",
+    "P0176"
+   ],
+   "notes": "P0310's FuelSource is sourced to 'Dominion Transmission Pipeline' (see fills[] FuelSource entry). Two GEM rows could plausibly correspond: P3220 'Eastern Gas Transmission and Storage System (EGTS)' (Ohio to Virginia, the former Dominion Transmission Inc. system, renamed after its 2020 sale to Berkshire Hathaway Energy) is the stronger candidate given Dominion Transmission Inc.'s historical footprint into upstate/central New York; P0176 'Dominion Gas Pipeline' (described in the GGIT snapshot as serving 'Dominion LNG in Maryland, gas from Ohio and Virginia') is geographically a weaker match for a NY-state branch supply source. Not resolved to a single PID — flagged for a human/researcher decision rather than asserted."
+  }
+ ],
+ "summary": "P0310 (DeRuyter Pipeline, NYSEG, operating, Norwich-Oneonta NY): existence, duplicate-check, and classification all confirmed with no concerns. Two material SPEC concerns staged: (1) LengthKnown likely understated (sheet=40.2km/25mi vs. ~80.5km/50mi implied by two NYSEG filings in the same 2019-2020 PSC rate case, tier=medium); (2) Capacity likely overstated (sheet=1.45 bcm/y vs. ~0.385 bcm/y derived from NYSEG's own capital plan '590 mcfh/38% above existing capacity' figure, tier=medium/single-origin). 12 of 14 worklist units filled/REFS_ADDED (Status, Fuel, Start, Pressure, Diameter, FuelSource, Location, Operator, Owner all corroborated; Length and Capacity intentionally left UNRESOLVED as values, routed instead to validity[] concerns). ProposalYear, ConstructionYear (beyond the already-corroborated 1953 start), and SegmentCost left UNRESOLVED — no source found distinct from the later, separately-tracked P1926 expansion project. One cross-row lead: FuelSource='Dominion Transmission Pipeline' most likely maps to P3220 (EGTS, ex-Dominion Transmission) rather than P0176 (Dominion Gas Pipeline), but not asserted with certainty."
 }

@@ -1,0 +1,42 @@
+{
+ "project_id": "P4039",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": [
+  "https://www.sec.gov/Archives/edgar/data/1012569/000101256912000015/ex992citrus12311110-k.htm",
+  "https://www.sec.gov/Archives/edgar/data/203248/000020324806000013/suform10k_123105.htm",
+  "http://fgttransfer.energytransfer.com/ipost/FGT/maps/system-map",
+  "https://www.energytransfer.com/wp-content/uploads/2026/06/FGT_Phase_IX_June_2026.pdf",
+  "https://www.pipelinesafetyinfo.com/user/file/Florida/Florida%20Gas%20Transmission%20Company.pdf"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 2035,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1012569/000101256912000015/ex992citrus12311110-k.htm",
+    "https://www.sec.gov/Archives/edgar/data/203248/000020324806000013/suform10k_123105.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1012569/000101256912000015/ex992citrus12311110-k.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Citrus Corp. 2011 Form 10-K (Southern Union Exhibit 99.2): 'Citrus Corp. maintains 100 percent of the membership interest in Florida Gas Transmission Company, LLC (Florida Gas)' — names the entity by its full legal name and confirms it is held/organized as a single, wholly-integrated 100% membership interest, matching the sheet's Owner1='Florida Gas Transmission Co LLC' / Owner1%='100.00%' with no other named co-owner of the pipeline entity itself."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/203248/000020324806000013/suform10k_123105.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Southern Union Company 2005 Form 10-K: 'CCE Holdings owns 100 percent of Transwestern and has a 50 percent interest in Citrus Corp, which, in turn, owns 100 percent of Florida Gas' — independently corroborates that Florida Gas Transmission Company is held as one undivided 100% interest at the pipeline-entity level (fragmentation, where it exists, is one level up at Citrus Corp between corporate parents, not at Florida Gas itself)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "REFS_ADDED, same value as recorded. Both SEC 10-K filings (already on this row for Operator [ref]/Status [ref]) name 'Florida Gas Transmission Company, LLC' verbatim and confirm it is held as a single 100% membership interest with no other entity co-named as owner of the pipeline system itself — this matches every other segment of this pipeline in the current sheet (checked all 26 other Florida Gas Transmission Pipeline ProjectIDs in data/GGIT_gas.csv: all record Owner1='Florida Gas Transmission Co LLC [100.%]'), so GEM's established convention here records the certificated operating LLC itself as Owner1, not the upstream corporate-parent chain. NOTE FOR ORCHESTRATOR (not a row-specific contradiction, but worth having on record): per the Citrus 10-K, the membership interest IN Florida Gas Transmission Company, LLC is itself held by Citrus Corp, whose equity is split between two corporate parents (as of the 2011/2005 filings, El Paso Corp / Kinder Morgan successor and a Southern Union / Energy Transfer successor entity, each ~50%); a 2026 web search snippet places this as a Kinder Morgan / Energy Transfer Partners 50/50 JV in more recent years, and Energy Transfer's own June 2026 Phase IX project fact sheet (fetched fresh this pass) describes FGT construction as 'managed by Energy Transfer' but does not itself state a current ownership percentage — so if GEM's data model is ever extended to track the parent-holding-company layer, that would need its own fresh corroboration rather than being read off these 2005/2011 filings. Not flagging this as a sheet error: the Owner1/Owner1% fields as GEM has structured them for this entire pipeline consistently name the operating LLC, and that is exactly what these two sources confirm. Also checked: the Energy Transfer FGT system-map page and PHMSA pipelinesafetyinfo.com operator-registration PDF (both seed/candidate sources) were opened but yielded no additional ownership-percentage language beyond what the two SEC filings already state, so they are not added as redundant proposed_refs."
+  }
+ ]
+}

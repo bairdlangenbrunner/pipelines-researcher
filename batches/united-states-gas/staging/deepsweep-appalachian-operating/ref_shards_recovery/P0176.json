@@ -1,0 +1,96 @@
+{
+ "project_id": "P0176",
+ "pipeline_name": "Dominion Gas Pipeline",
+ "harvest_opened": [
+  "https://en.wikipedia.org/wiki/Dominion_Transmission",
+  "https://www.bhegts.com",
+  "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm",
+  "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm",
+  "https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+  "https://www.eia.gov/naturalgas/data.php",
+  "http://web.archive.org/cdx/search/cdx?url=nyiso.com/public/webdocs/markets_operations/committees/bic_egcwg/meeting_materials/2012-03-05/Dominion_Transmission_Overview_-_NYISO_3.5.12.pdf",
+  "https://web.archive.org/web/20250126024045/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 37,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched for a source stating the system-wide capacity of this pipeline (recorded Capacity=7200.00 MMcf/d) but found none that isolates this specific system at this figure. Tried: (1) the seed NYISO PDF (bit.ly/2kQofCO's underlying Dominion_Transmission_Overview_-_NYISO_3.5.12.pdf) — live URL 404s and the Wayback CDX index (web.archive.org/cdx/search/cdx?url=nyiso.com/...) shows it was NEVER captured (only a 2024 404 crawl exists), so this seed citation is dead with no archived version to fall back to. (2) eia.gov/naturalgas/data.php — a generic national data-portal landing page, no pipeline-specific figures. (3) Dominion Energy's 'West Loop Project' page (both live, which 404s, and the last-good Wayback capture 20250126024045) — describes only a small 5-mile/150,000 Dth/d expansion of the DETI system, not this pipeline's total capacity. (4) Berkshire Hathaway Energy's FY2020 10-K (SEC EDGAR, CIK 1081316) states the whole Eastern Energy Gas system (EGTS + Carolina Gas Transmission combined, transmission+gathering+storage) has 'a design capacity of 12.5 Bcf per day' — this is an aggregate across multiple pipelines and asset classes, not specific to the single system GEM tracks as 'Dominion Gas Pipeline,' and is too large a mismatch (12,500 vs 7,200 MMcf/d) to treat as a rounding match, so it was not used. Web search was unavailable this session (session search budget exhausted) and DuckDuckGo/Bing returned no usable organic results via direct curl (captcha-gated / JS-rendered). No fabricated URL used."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 37,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Same search as Capacity (see that record) turned up no source isolating this pipeline's own system length (recorded LengthKnown=6059.00 km / ~3765 mi). The BHE 10-K's aggregate figure for the combined Eastern Energy Gas system ('approximately 5,400 miles ... of which approximately 5,300 miles are owned by Eastern Energy Gas') is company-wide across EGTS + Carolina Gas Transmission, transmission + gathering + storage pipe combined — roughly 8,690 km, a ~43% gap from the recorded 6,059 km that is too large to be rounding and the wrong scope (whole company vs. this one system), so not used as a ref. NYISO PDF confirmed dead (no Wayback capture ever, see Capacity record); EIA data.php and the West Loop project page (live 404, Wayback 20250126024045) have no system-length figure either. Flagging separately for the orchestrator: the sheet's own LengthEstimateKm (3293.60 km) and LengthKnownKm (6059.00 km) for this same row disagree by nearly 2x, which may be worth a validity look independent of this ref search. No fabricated URL used."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 37,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Dominion_Transmission",
+    "https://www.bhegts.com"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Dominion_Transmission",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Dominion Transmission is a natural gas pipeline that brings gas from the Dominion Cove Point LNG terminal in Maryland and gas from Ohio and Virginia into extensive natural gas storage fields in Pennsylvania and West Virginia, and also brings gas into New England.' Directly names this pipeline (by its pre-2020 legal/common name, 'Dominion Transmission' — the same system GEM tracks as 'Dominion Gas Pipeline'; same FERC code 22, same Cove Point/Ohio/Virginia sourcing GEM records) and states the recorded StartLocation ('Dominion LNG in Maryland, gas from Ohio and Virginia') almost verbatim."
+    },
+    {
+     "url": "https://www.bhegts.com",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "BHE GT&S (current parent-company page for this system, formerly Dominion Energy Transmission): 'Cove Point LNG ... the import, export and liquefaction facility in Lusby, Maryland' — independently corroborates the Maryland/Cove Point LNG start point."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded StartLocation='Dominion LNG in Maryland, gas from Ohio and Virginia' / StartCountryOrArea='United States' — confirmed by two independent sources: Wikipedia's Dominion Transmission article names the exact same route description (Cove Point LNG, Maryland + Ohio + Virginia gas, into PA/WV storage, into New England), and BHE GT&S's own site confirms Cove Point LNG's location in Lusby, Maryland. FLAGGING A CONTRADICTION for the orchestrator, not silently correcting it: the recorded EndState/Province='New United Kingdom' does not match either source — the Wikipedia article states the system 'brings gas into New England,' not any UK-related destination, and EndCountryOrArea is separately (and correctly) recorded as 'United States.' 'New United Kingdom' looks like a data-entry/OCR-style corruption of 'New England' (both are 'New ___' place names, and 'England'/'United Kingdom' are near-synonyms in casual use) rather than a real value — recommend correcting EndState/Province to reflect New England (e.g. specific New England states served) rather than leaving 'New United Kingdom' on the sheet."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 37,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm",
+    "https://www.bhegts.com"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Berkshire Hathaway Energy Co. FY2020 Form 10-K (SEC EDGAR, CIK 1081316), Note 2/Business Combinations: '[BHE, through Eastern Energy Gas Holdings, LLC] assumed approximately $5.6 billion of existing indebtedness for borrowed money, including fair value adjustments, for 100% of the equity interests of Eastern Gas Transmission and Storage, Inc. (\"EGTS\") (formerly known as Dominion Energy Transmission, Inc.) and Carolina Gas Transmission, LLC (formerly known as Dominion Energy Carolina Gas Transmission, LLC)' -- the 'GT&S Transaction' closed November 1, 2020. Names the exact legal successor entity to this pipeline's operator (Dominion Energy Transmission, Inc. -> EGTS) and states BHE holds 100% of its equity."
+    },
+    {
+     "url": "https://www.bhegts.com",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "BHE GT&S's own site: 'BHE GT&S is an interstate natural gas transmission and storage company headquartered in Glen Allen, Virginia ... It is a standalone subsidiary of Berkshire Hathaway Energy.' Independently (company's own current self-description) corroborates BHE ownership of this system today."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CONTRADICTS THE SHEET -- do not treat as a routine confirmation. Recorded Owner1='Dominion Energy' at 100%, but Dominion sold substantially all of its gas transmission and storage business -- including this exact system (Dominion Energy Transmission, Inc., the modern name of the 'Dominion Transmission' pipeline this row tracks) -- to Berkshire Hathaway Energy in the 'GT&S Transaction,' which closed November 1, 2020. BHE's FY2020 10-K states BHE (via Eastern Energy Gas Holdings, LLC) now holds 100% of the equity interests of the renamed entity, Eastern Gas Transmission and Storage, Inc. (EGTS); BHE GT&S's own website confirms it as a current 'standalone subsidiary of Berkshire Hathaway Energy.' The sheet's LastUpdated=2023-08-11 is nearly three years AFTER this sale closed, so 'Dominion Energy 100%' was already stale at last update, not merely outdated since. Note the ref already on this row for Operator [ref] (the same BHE 10-K) presumably reflects this same fact for Operator, but Owner1 was not updated to match -- recommend Owner1=Berkshire Hathaway Energy (or Eastern Energy Gas Holdings, LLC) at 100%, replacing Dominion Energy. Did not propose refs supporting the recorded (now-superseded) Dominion Energy value, since doing so would misstate what these sources say."
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "project_id": "P2099",
+ "pipeline_name": "Northern Border Gas Pipeline",
+ "harvest_opened": [
+  "https://rextag.com/pages/northern-border-pipeline",
+  "https://www.eba-net.org/wp-content/uploads/2023/02/9-Vol3_No2_1982_Committe_Natural_Gas_Certificate.pdf",
+  "https://www.offshore-technology.com/marketdata/northern-border-gas-pipeline-the-us/",
+  "https://en.wikipedia.org/wiki/Northern_Border_Pipeline",
+  "https://www.tcenergy.com/operations/natural-gas/northern-border-pipeline/",
+  "https://pipelineawareness.org/media/rtqjznqi/tc_energy_northern_border_pipeline_company.pdf",
+  "https://ndlegis.gov/files/committees/66-2019/21_5181_03000appendixe.pdf",
+  "https://www.ferc.gov/sites/default/files/2020-05/angta.pdf"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1110,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://rextag.com/pages/northern-border-pipeline",
+    "https://www.eba-net.org/wp-content/uploads/2023/02/9-Vol3_No2_1982_Committe_Natural_Gas_Certificate.pdf",
+    "https://www.offshore-technology.com/marketdata/northern-border-gas-pipeline-the-us/"
+   ],
+   "verifications": [
+    {
+     "url": "https://rextag.com/pages/northern-border-pipeline",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "\"Northern Border Pipeline is a medium-sized 1,412-mile pipeline running from the Montana-Saskatchewan border near Port of Morgan, Montana, to Fort Hayden, Indiana.\" — states both endpoints verbatim as recorded (StartLocation/StartState, EndLocation/EndState)."
+    },
+    {
+     "url": "https://www.eba-net.org/wp-content/uploads/2023/02/9-Vol3_No2_1982_Committe_Natural_Gas_Certificate.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order text, p.355: \"...granted Northern Border a permit authorizing Northern Border to construct, operate, maintain and connect natural gas transmission facilities at the international boundary near Port of Morgan, Montana.\" — corroborates the start point independently of Rextag."
+    },
+    {
+     "url": "https://www.offshore-technology.com/marketdata/northern-border-gas-pipeline-the-us/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Page description metadata: \"The 2,272km-long Northern Border gas pipeline is operated by TC Energy... starts at Montana (the US) and ends in Indiana (the US).\" — third independent source, corroborates both endpoint states (fetched via Wayback capture 20240220215225 after a live 403; page content unchanged from that snapshot per url_verifier's live 200 check)."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded StartLocation/StartState/Province (Port of Morgan, Montana) and EndLocation/EndState/Province (Fort Hayden, Indiana) are directly and verbatim corroborated by Rextag, with the Montana border-crossing point independently corroborated by a 1982 FERC certificate order (eba-net.org) and both endpoint states (Montana -> Indiana) independently corroborated by offshore-technology.com. CONTRADICTION TO FLAG: the recorded StartCountryOrArea is 'Canada', but Montana is a U.S. state and every source describing this crossing (Rextag, the FERC order, TC Energy's own site, offshore-technology.com) treats Port of Morgan/Morgan, Montana as the U.S. side of the Montana-Saskatchewan border, i.e. United States, not Canada -- offshore-technology.com states explicitly the pipeline 'starts at Montana (the US)'. StartCountryOrArea='Canada' appears to be a data error (should be United States, or the row's true start point should be re-pointed to the Canadian side, e.g. Saskatchewan, with StartLocation/StartState/Province corrected to match). Not corrected here per the recovery contract's 'emit the SAME value' rule; flagging for the orchestrator to route to Update. No source names 'Fort Hayden, Indiana' more granularly than the two given here (Wikipedia and the TC Energy/pipelineawareness.org/ND Legislative Council documents describe the eastern terminus only generically as 'the Chicago market area' / 'Chicago', and a 1980s FERC ANGTA history document names the original ANGTS eastern-leg proposal's terminus as 'Dwight, Illinois' -- an earlier planning-stage endpoint, not necessarily the built pipeline's current interconnect); Rextag and offshore-technology.com remain the only two sources found naming Indiana specifically for the current end point, both independent of each other and of the sheet."
+  }
+ ]
+}

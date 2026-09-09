@@ -1,0 +1,143 @@
+{
+ "project_id": "P2529",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "harvest_opened": [
+  "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf",
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+  "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "FERC Docket CP19-12-000 notice: FGT's East Louisiana Project 'will allow FGT to provide additional capacity of up to 75 million cubic feet per day of available firm transportation service to Entergy Louisiana, LLC in Washington Parish, Louisiana' — 75 MMcf/d matches recorded Capacity."},
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "'Historical Projects' tab, row 'East Louisiana Project' / 'Florida Gas Trans Co' / Docket CP19-12: Additional Capacity (MMcf/d) = 75, matching the recorded value exactly."},
+    {"url": "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "FGT's own RP20 tariff filing for the FTS-WD-2 service agreement: 'ELL has contracted for 75,000 MMBtu/day on the in-service date of the Project' (75,000 MMBtu/d ≈ 75 MMcf/d) — third independent corroboration of the 75 figure."}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "Three independent primary sources (FERC Federal Register notice, EIA federal pipeline-projects dataset, FGT's own FERC tariff filing) all name the East Louisiana Project (Docket CP19-12-000) and state 75 MMcf/d (or the MMBtu/d equivalent) of added capacity, matching the recorded 75.00 MMcf/d exactly."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+   "verifications": [
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "'Historical Projects' tab, row 'East Louisiana Project' (Docket CP19-12, Florida Gas Trans Co): Pipeline Diameter (Inches) = 24, matching the recorded value exactly."}
+   ],
+   "tier": "medium", "independent": false, "source_language": "en",
+   "researcher_notes": "EIA's project-level dataset states Pipeline Diameter (Inches) = 24 for this exact project/docket, matching the recorded 24 in. The companion FERC notice and FGT's tariff filing describe the facility work (regulator, valves, EFM/SCADA at an existing site) but do not restate a pipe diameter, so this remains single-sourced; searched FERC eLibrary CP19-12 docket index and a Corps of Engineers Florida Gas 24-inch public notice, neither of which is confirmed to describe this specific project, so they were not added as a second source — a second, independent diameter citation is still owed."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+   ],
+   "verifications": [
+    {"url": "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "Notice describes FGT's East Louisiana Project as authorized 'pursuant to ... the Natural Gas Act' to provide 'firm transportation service' of natural gas to Entergy Louisiana — confirms Fuel = Gas."},
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "The workbook is EIA's 'Natural Gas Pipeline Projects' dataset; the East Louisiana Project row sits in it with Additional Capacity measured in MMcf/d — confirms a natural-gas facility."}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "Both the FERC Natural Gas Act notice and EIA's natural-gas-pipeline-projects dataset identify this as a natural gas facility, matching the recorded Fuel = Gas."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "East Louisiana Project row: the 'Miles' column is blank (no new pipeline mileage recorded), consistent with LengthKnown = 0.00."},
+    {"url": "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "The notice describes the Project as facility modifications only — new regulator, valves, Electronic Flow Meter, and SCADA at an existing mainline valve site, plus work at an existing compressor station site — no new mainline pipeline segment is described, consistent with LengthKnown = 0."}
+   ],
+   "tier": "medium", "independent": true, "source_language": "en",
+   "researcher_notes": "Both sources describe this as a facility/compression-and-metering expansion with no new mainline pipe, consistent with the recorded LengthKnown = 0.00 mi (per the 'expansion with no new physical pipe -> LengthKnown = 0' convention). Neither source states '0 miles' as a literal figure, hence medium rather than high tier."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf",
+    "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "'FGT proposes to install ... appurtenances in FGT's permanent right-of-way easement at an existing mainline valve site in Washington Parish, Louisiana' delivering to 'Entergy Louisiana, LLC in Washington Parish, Louisiana' — confirms Louisiana, United States."},
+    {"url": "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "Service agreement references the delivery point 'located in Washington Parish, Louisiana (the \"East Louisiana Project\")' — directly names the project's location as Louisiana, United States, matching Start/End State = Louisiana."}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "Both the FERC notice and FGT's own tariff filing state the Project's facilities/delivery point are in Washington Parish, Louisiana, matching recorded Start/EndState = Louisiana, United States. Note: EIA's dataset lists broader 'State(s) touched' as AL,MS,LA (compressor-station work is at an existing site in Perry County, Mississippi) with Beg_State=AL/End_State=LA — flagged as informational context, not a contradiction, since the segment's named location (Washington Parish delivery point) is consistently Louisiana across the two direct sources above."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.govinfo.gov/content/pkg/FR-2018-11-15/pdf/2018-24882.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "'Florida Gas Transmission Company, LLC (FGT) ... filed ... a prior notice request ... FGT proposes to construct/modify, own, and operate, certain natural gas mainline facilities' for the East Louisiana Project — confirms FGT as owner."},
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "East Louisiana Project row: Pipeline Operator Name = 'Florida Gas Trans Co', matching recorded Owner1 = Florida Gas Transmission Co LLC."},
+    {"url": "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "Filing is submitted by 'Florida Gas Transmission Company, LLC (FGT)' as the entity building/operating the East Louisiana Project facilities."}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "Three independent sources (FERC notice, EIA dataset, FGT's own FERC filing) name Florida Gas Transmission Company, LLC as the owner/operator of the East Louisiana Project, matching recorded Owner1 = Florida Gas Transmission Co LLC at 100%."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+   "verifications": [
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "East Louisiana Project row: Cost (millions) = 5, i.e. $5 million, matching recorded SegmentCost = 5,000,000 USD exactly."}
+   ],
+   "tier": "medium", "independent": false, "source_language": "en",
+   "researcher_notes": "EIA's project dataset states Cost (millions) = 5 for this exact project/docket (CP19-12), matching the recorded $5,000,000 exactly. Neither the FERC notice nor FGT's tariff filing states a project cost figure, so this remains single-sourced; a second independent cost citation is still owed (checked FERC eLibrary docket index for a cost exhibit — not accessible without a login/eFiling account)."
+  },
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 1302,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf"
+   ],
+   "verifications": [
+    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true,
+     "note": "East Louisiana Project row: Status = 'Completed', Completed Date = 2020-04-07, Year In Service Date = 2020 — supports Status = operating."},
+    {"url": "https://fgtmessenger.energytransfer.com/InfoPost/tariff/fgt/tariff_filings/FGT07-21-20a.pdf", "ok": true, "contains_value": true, "name_found": true,
+     "note": "FGT's July 2020 filing states 'The Project facilities being constructed pursuant to the prior notice request and authorization will be ready for service on August 1, 2020' — confirms the Project was placed in service, supporting Status = operating."}
+   ],
+   "tier": "high", "independent": true, "source_language": "en",
+   "researcher_notes": "EIA classes the project 'Completed' with an in-service date of April/August 2020, and FGT's own contemporaneous tariff filing confirms the facilities were readied for service August 1, 2020 — both support the recorded Status = operating (no status token is expected verbatim; status is inferred from in-service/completed context per confidence_tiers.md)."
+  }
+ ]
+}

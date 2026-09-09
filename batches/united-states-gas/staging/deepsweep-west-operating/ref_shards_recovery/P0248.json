@@ -1,0 +1,73 @@
+{
+    "project_id": "P0248",
+    "pipeline_name": "Ruby Gas Pipeline",
+    "harvest_opened": [
+        "https://www.federalregister.gov/documents/2009/02/17/E9-3222/ruby-pipeline-llc-notice-of-application",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.prnewswire.com/news-releases/ruby-pipeline-files-to-reorganize-under-chapter-11-of-the-bankruptcy-code-301515451.html",
+        "https://pipeline.tallgrassenergylp.com/Content/RUBY/RUBY_tariff.pdf",
+        "https://www.opb.org/news/article/ruby-pipeline-to-open-after-35-billion-and-one-yea/",
+        "https://en.wikipedia.org/wiki/Ruby_Pipeline",
+        "https://web.archive.org/web/2023id_/https://www.hydrocarbons-technology.com/projects/rubypipelineproject/"
+    ],
+    "resolutions": [
+        {
+            "ref_col": "Owner [ref]",
+            "sheet_row": 101,
+            "class_out": "REFS_ADDED",
+            "proposed_refs": [
+                "https://pipeline.tallgrassenergylp.com/Content/RUBY/RUBY_tariff.pdf",
+                "https://www.prnewswire.com/news-releases/ruby-pipeline-files-to-reorganize-under-chapter-11-of-the-bankruptcy-code-301515451.html"
+            ],
+            "verifications": [
+                {
+                    "url": "https://pipeline.tallgrassenergylp.com/Content/RUBY/RUBY_tariff.pdf",
+                    "ok": true,
+                    "contains_value": true,
+                    "name_found": true,
+                    "note": "FERC Original Volume No. 1 Tariff, title page and throughout: 'Ruby Pipeline, L.L.C.' is the tariff-holding, FERC-regulated entity for this system -- confirms the pipeline's title/tariff vests in the Ruby Pipeline LLC entity itself, matching Owner1 = 'Ruby Pipeline LLC'."
+                },
+                {
+                    "url": "https://www.prnewswire.com/news-releases/ruby-pipeline-files-to-reorganize-under-chapter-11-of-the-bankruptcy-code-301515451.html",
+                    "ok": true,
+                    "contains_value": true,
+                    "name_found": true,
+                    "note": "'Ruby Pipeline, L.L.C. (Ruby), a natural gas pipeline joint venture between Kinder Morgan, Inc. (NYSE: KMI) and Pembina Pipeline Corporation ... today announced that it has filed voluntary petitions for reorganization under Chapter 11.' Confirms Ruby Pipeline, L.L.C. is itself the asset-holding project entity (the debtor/titleholder), independent of the FERC tariff filing."
+                }
+            ],
+            "tier": "medium",
+            "independent": true,
+            "source_language": "en",
+            "researcher_notes": "Sheet records Owner1 = 'Ruby Pipeline LLC' at 100%, no other owners listed -- i.e. GEM's Owner field here names the asset-holding project company itself (consistent with FERC practice of certificating pipeline title to a project-specific LLC), not the equity investors behind it. Both proposed refs independently confirm 'Ruby Pipeline, L.L.C.' as that titleholding/tariff-filing entity: the Tallgrass-hosted FERC tariff (Ruby's own Volume No. 1 tariff, filed and administered in the Ruby Pipeline LLC name) and the 2022 PR Newswire bankruptcy release (Ruby Pipeline, L.L.C. as the debtor). REFS_ADDED at the same recorded value. FLAG FOR ORCHESTRATOR: the equity ownership *behind* that LLC has changed twice since construction and is NOT reflected anywhere in Owner1-11 -- originally a subsidiary of The El Paso Corporation (sole developer per the 2009 FERC filing), it became a 50/50 Kinder Morgan Inc. / Pembina Pipeline Corp. joint venture by the time of the 2022 Chapter 11 filing (PR Newswire), and as of January 2023 Tallgrass Energy (a Blackstone Group portfolio company) acquired 100% of Ruby Pipeline, L.L.C. from Kinder Morgan and Pembina via a $282M bankruptcy-court-approved asset sale (Wikipedia, citing Reuters 2026-01-13; Pipeline & Gas Journal, businesswire.com/20230117005497 -- both already refs_already_on_this_row for other columns). If GEM's Owner convention on other US pipelines records the ultimate corporate parent rather than the project LLC, this row may be due for an Update-leg correction to reflect Tallgrass as current owner -- not attempted here since only the recorded value's sourcing, not its correctness, is this unit's scope."
+        },
+        {
+            "ref_col": "SegmentCost [ref]",
+            "sheet_row": 101,
+            "class_out": "REFS_ADDED",
+            "proposed_refs": [
+                "https://www.federalregister.gov/documents/2009/02/17/E9-3222/ruby-pipeline-llc-notice-of-application",
+                "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+            ],
+            "verifications": [
+                {
+                    "url": "https://www.federalregister.gov/documents/2009/02/17/E9-3222/ruby-pipeline-llc-notice-of-application",
+                    "ok": true,
+                    "contains_value": true,
+                    "name_found": true,
+                    "note": "'Ruby estimates that the facilities will cost approximately $2.96 billion.' -- exact match to the recorded SegmentCost of 2,960,000,000.00 USD. This is Ruby Pipeline LLC's own FERC certificate-application cost estimate (Docket CP09-54), filed Feb. 2009 before construction began."
+                },
+                {
+                    "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+                    "ok": true,
+                    "contains_value": true,
+                    "name_found": true,
+                    "note": "'Historical Projects (1996-2024)' tab, row for 'Ruby Pipeline Project' / Pipeline Operator Name 'Ruby Pipeline LLC' / Docket CP09-54: Cost (millions) = 2960 -- i.e. $2,960,000,000, exactly matching the recorded value. Same row also independently corroborates Miles=672.5, Additional Capacity=1500 MMcf/d, Diameter=42in, Completed Date=2011-07-28 against this row's other already-sourced columns."
+                }
+            ],
+            "tier": "high",
+            "independent": true,
+            "source_language": "en",
+            "researcher_notes": "Two independent primary/government sources -- the original 2009 FERC notice-of-application (Ruby's own cost estimate at the certificate stage) and EIA's official Natural Gas Pipeline Projects historical dataset -- both give EXACTLY $2.96 billion (2,960,000,000 / 2960 million), matching the recorded SegmentCost value precisely. REFS_ADDED at the same value, tier high. FLAG FOR ORCHESTRATOR (not a contradiction of the recorded figure, but a note on which milestone it represents): this $2.96B is the pre-construction FERC ESTIMATE, not the final built cost. Two later sources report a higher actual/final cost for the same project: OPB (2011-07-28, quoting a BMO Capital equity analyst) states 'Ruby's parent company, The El Paso Corporation, spent a reported $3.5 billion on the project,' and a 2019-vintage hydrocarbons-technology.com page (Wayback capture, since the live site 403s to this UA) states 'El Paso invested $3.65bn in the project.' Neither of those two figures was used as a proposed ref here because they describe a different quantity (actual spend, not the FERC-estimated facilities cost) and neither matches the recorded value -- but if SegmentCost is meant to capture final/actual cost rather than the original estimate, the recorded $2.96B may be the wrong milestone and the row could be worth an Update-leg look."
+        }
+    ]
+}

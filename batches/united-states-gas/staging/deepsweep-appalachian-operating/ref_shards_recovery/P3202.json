@@ -1,0 +1,110 @@
+{
+ "project_id": "P3202",
+ "pipeline_name": "Vector Gas Pipeline",
+ "harvest_opened": [
+  "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+  "https://web.archive.org/web/20200813175453/https://gascompressionmagazine.com/2020/02/14/bluewater-compression-project-moves-forward/",
+  "https://www.bluewatergasstorage.com/",
+  "https://en.wikipedia.org/wiki/Vector_Pipeline",
+  "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+  "https://www.wecenergygroup.com/"
+ ],
+ "resolutions": [
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 1692,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "COULD NOT SOURCE THE RECORDED VALUE (StartYear1=2022) \u2014 and what I found actively disagrees with it, not just by rounding. EIA's 'Historical Projects (1996-2024)' tab (EIA-NaturalGasPipelineProjects.xlsx, already staged on this row for Capacity/Fuel/Length/Operator/SegmentCost/Status) carries this exact project by name \u2014 'Bluewater Compressor Project', operator 'Bluewater Gas Storage', docket CP19-471, notes 'New compressor station to expand capacity from pressure limited 120,000 Mcf/d, to 500,000 Mcf/d on its interconnect with the Vector Pipeline' \u2014 and states Status=Completed, Completed Date=2021-11-19, Year In Service Date=2021. That is a full year earlier than the sheet's recorded StartYear1=2022, not a rounding-tolerance gap. The other already-staged doc on this row, Gas Compression Magazine's 2020-02-14 piece (archived), independently corroborates the schedule that produced that 2021 date: Bluewater 'must commence construction of the project facilities by June 2020 for the project to be placed into service prior to the 2021/2022 storage withdrawal season' (which opens ~Nov. 1) \u2014 consistent with EIA's Nov. 19, 2021 completion, not with an in-service year of 2022. Both sources name this exact project and agree with each other; neither supports 2022. Also checked the Enbridge factsheet, Wikipedia's Vector_Pipeline page, and offshore-technology.com (all already on this row for __VALIDITY__) \u2014 none states a start/in-service year for this specific compressor project. Not forcing this to REFS_ADDED against the recorded value \u2014 flagging as a likely sheet error for the orchestrator/human to review (StartYear1 probably belongs at 2021, per EIA's Completed Date of 2021-11-19)."
+  },
+  {
+   "ref_col": "Delay [ref]",
+   "sheet_row": 1692,
+   "class_out": "UNRESOLVED",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched for any evidence of a delay to the Blue Water Compressor Project (sheet records Delayed=yes, DelayType=inferred) and found none \u2014 what I found instead points the other way. EIA's Historical Projects tab (already staged on this row) records this project as Status=Completed, Completed Date=2021-11-19, with no revision/slip fields populated. Gas Compression Magazine's 2020-02-14 article (already staged on this row) reports the FERC-set schedule as construction starting by June 2020 to be in service 'prior to the 2021/2022 storage withdrawal season' \u2014 EIA's actual Nov. 19, 2021 completion date meets that window with no indication of slippage. No news search turned up any report of a schedule slip, cost overrun dispute, or FERC delay order for this specific compressor project. My working read: the 'Delayed=yes/inferred' flag on this row is very likely a downstream artifact of the StartYear1 discrepancy flagged on the Start [ref] record above (the sheet's own recorded StartYear1=2022 sits a year after the sourced actual completion, which may be what GEM's dormancy-inference rule keyed on), rather than a real-world delay to the project. Leaving this UNRESOLVED rather than fabricating a citation for a delay the sources do not support \u2014 flagging alongside Start [ref] for the orchestrator to adjudicate together."
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 1692,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+    "https://web.archive.org/web/20200813175453/https://gascompressionmagazine.com/2020/02/14/bluewater-compression-project-moves-forward/",
+    "https://www.bluewatergasstorage.com/",
+    "https://www.wecenergygroup.com/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Historical Projects tab, 'Bluewater Compressor Project' row: State(s)/Beg_State/End_State all = 'MI'. Names the project directly and states Michigan."
+    },
+    {
+     "url": "https://web.archive.org/web/20200813175453/https://gascompressionmagazine.com/2020/02/14/bluewater-compression-project-moves-forward/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "States Bluewater 'is seeking approval to construct, own, and operate a new compressor station in Macomb County, Michigan, USA.' Names the project and states the county + state directly."
+    },
+    {
+     "url": "https://www.bluewatergasstorage.com/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Bluewater Gas Storage's own site: 'Located in St. Clair and Macomb counties, Michigan, Bluewater provides seasonal storage needs for 1.5 million natural gas customers of We Energies and Wisconsin Public Service.' Confirms the Michigan location directly; the Wisconsin connection here is customer/service-territory (We Energies + Wisconsin Public Service, both WEC Energy Group utilities), not a stated pipeline terminus \u2014 supports EndState/Province=Wisconsin only as a corporate/service-area link, not as literal route geometry."
+    },
+    {
+     "url": "https://www.wecenergygroup.com/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "WEC Energy Group corporate site lists 'Bluewater Gas Storage' among its subsidiaries alongside 'We Energies' and 'Wisconsin Public Service' \u2014 corroborates that Bluewater sits in the same Wisconsin-headquartered corporate family as the Wisconsin utilities it serves, but does not itself state a pipeline endpoint."
+    }
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "StartState/Province=Michigan, StartCountryOrArea=United States is SOLIDLY confirmed at high tier by two independent, project-named sources: EIA's Historical Projects tab (State=MI) and Gas Compression Magazine's 2020 article ('Macomb County, Michigan, USA'). EndState/Province=Wisconsin, EndCountryOrArea=United States could NOT be confirmed as a literal pipeline terminus \u2014 no source (including the FERC-derived EIA record, which lists this as a single-state MI project with no cross-state segment) states a Wisconsin endpoint for the Blue Water Compressor Project specifically, which is a point facility (a compressor station tying into Bluewater's existing 20-inch header in Macomb Co., MI), not a linear MI-to-WI route. What I found instead is an indirect corporate/service-territory link: Bluewater Gas Storage is a WEC Energy Group subsidiary alongside We Energies and Wisconsin Public Service, and Bluewater's own site states it provides seasonal storage for customers of those two Wisconsin-headquartered utilities. That may be why GEM recorded an End=Wisconsin (service territory / corporate family), but it is not the same claim as a physical route endpoint, so tier is medium overall (high for Start, low/indirect for End) rather than high across the whole unit. Flagging the End value for the orchestrator to confirm GEM's intended semantics here (service area vs. route terminus) rather than treating it as settled."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "sheet_row": 1692,
+   "class_out": "REFS_ADDED",
+   "proposed_refs": [
+    "https://en.wikipedia.org/wiki/Vector_Pipeline",
+    "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en"
+   ],
+   "verifications": [
+    {
+     "url": "https://en.wikipedia.org/wiki/Vector_Pipeline",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "States verbatim: 'Vector Pipeline L.P. is a joint venture between Calgary-based Enbridge Inc. ... and Detroit-based DTE Energy Company ...' and 'Enbridge provides operating services to Vector and owns a 60% stake.' Directly names Vector Pipeline and states the Enbridge 60% / (by complement) DTE Energy 40% split matching the sheet's Owner1/Owner2/%."
+    },
+    {
+     "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Enbridge's own 'Energy Infrastructure Assets' factsheet (p.89), Vector Pipeline entry: 'Enbridge has a 60% ownership in Vector,' and separately notes the 36-inch U.S. portion 'is leased from DTE Energy' \u2014 a primary, first-party disclosure independently corroborating Enbridge's 60% stake and DTE Energy's position as the other JV/asset partner, matching Wikipedia."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded Owner1=Enbridge 60.00%, Owner2=DTE Energy 40.00% for this row (the Blue Water Compressor Project segment, rolled up under the parent Vector Gas Pipeline project P3202) is corroborated by two independent sources: Wikipedia's Vector_Pipeline article, which states the JV explicitly and gives Enbridge's stake as 60% (DTE holding the remaining 40% by complement, consistent with the article's own account of Duke Energy selling its 30% stake in 2003 'to DTE and Enbridge, who already owned the other 70%'); and Enbridge's own first-party 'Energy Infrastructure Assets' factsheet, which states 'Enbridge has a 60% ownership in Vector' and separately confirms DTE Energy as the pipeline's other commercial partner (leasing it the 36-inch Michigan segment). Both sources speak to the parent Vector Pipeline system's ownership rather than isolating the compressor-station sub-project by name, but that is consistent with how this row's other already-staged refs (Capacity/Fuel/Length/Operator/SegmentCost/Status, sourced from the EIA + Gas Compression Magazine docs) treat this segment as part of the same P3202 Vector Gas Pipeline ownership structure. No source found disagrees with the 60/40 split."
+  }
+ ]
+}
