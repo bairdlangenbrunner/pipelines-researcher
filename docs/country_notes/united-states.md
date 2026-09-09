@@ -32,9 +32,11 @@ any country — use it for both attributes and routes.
 US gas is **529 rows / 4,935 ref units**, ~12x the largest pass this repo has run, so it
 is being worked in slices, not as one country sweep. Slice 1 = the **217 operating rows
 last touched <=2023** ("stale operating cohort"), sub-sliced by region. **141 of them are
-swept** (batch 1 Texas 45, batch 2 Gulf Coast 50, batch 3 Appalachian/Mid-Atlantic 46) —
-76 of the cohort remain (a clean 46 West / 30 East split, scoped as batches 4 and 5),
-and 434 US gas rows have never been swept at all.
+swept** (batch 1 Texas 45, batch 2 Gulf Coast 50, batch 3 Appalachian/Mid-Atlantic 46) and
+batch 4 (West, 46 rows) is in flight. The 76 left after batch 3 split cleanly 46 West / 30 East,
+scoped as batches 4 and 5 — those two close the cohort. Outside the cohort, **312 US gas rows
+have never been swept**: 109 operating (LastUpdated >= 2024), 97 proposed, 66 cancelled,
+26 construction, 11 shelved, 2 idle. That remainder is slice 2 and has not been scoped.
 
 **Scope the slice by region, and audit the column you slice on first.**
 `StartState/Province` is wrong on at least 2 of the 45 rows in batch 1 — P2613 Sierrita
