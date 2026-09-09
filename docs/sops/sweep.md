@@ -641,6 +641,39 @@ the prior run's locator. And reconcile the count across the two runs (`class_in 
 is a question, not a statistic): **a file written by one stage and read by none is a silent
 loss**, and the stage that wrote it will report success.
 
+### Running a recovery pass over an already-merged batch
+
+A non-zero gate L (or a `check_shard_coverage.py --all` gap list) on a batch that is already
+merged is fixed by re-running the refs leg over just the gap units. Four mechanics, learned on
+the US gas batches 1-4 recovery (2026-09-09, 70 shards, gate L 258 → 0):
+
+- **Write recovery shards to `ref_shards_recovery/`, never `ref_shards/`.** A recovery shard is
+  named `<PID>.json` exactly like the original leg's, so writing them to the same directory
+  overwrites the original research (4 of tx's 41 would have gone). `merge_ref_shards.py
+  --shard-dir` is repeatable — pass both directories to merge the original and recovery legs
+  together: `--shard-dir ref_shards --shard-dir ref_shards_recovery`.
+- **A `MISSING_VALUE` unit is never seeded**, so recovery research for one matches no baseline
+  record and would be dropped at merge — the exact silent loss the pass exists to fix.
+  `merge_ref_shards.py` falls back to `worklist.json` and appends it as a new `FILL` record
+  tagged **`leg: "refs"`**. That tag is load-bearing: `merge_deepsweep_shards.py`'s
+  `is_old_deepsweep()` purge-and-rebuild strips every `FILL` from the prior store, and without
+  the tag it takes the refs leg's own output with it.
+- **A sourced record must carry the value its refs state, in `values`** — standing rule 4(e).
+  With `values` empty the ref-only fold has nothing to compare against the sheet, so the record
+  stays a separate `FILL`: the ref lands orphaned (gate E) and the unit's real record keeps its
+  unresearched seed. Stating the value only in `researcher_notes` reads as done and is not.
+  `check_shard_coverage.py` now blocks this on deep-sweep `fills[]`; the refs leg's own schema
+  carries no `values` (it confirms the sheet's value), so its records are tagged `_leg="refs"`
+  and exempt. Except — a `UNREPORTED_BLANK` unit IS the inverse case: the sheet is blank, so
+  the refs-leg record must carry the proposed value in `values`, keyed by the unit's
+  `value_cols`. `build_refsweep_briefs.py` states this in the contract.
+- **`OtherEnglishNames` and the `OtherLanguage*` name columns have no paired `[ref]` column**
+  in either tracker schema, so a fill on one is legitimately ref-less. Both the coverage checker
+  and gate E exempt them; do not "fix" such a record by inventing a ref cell for it.
+
+Rebuild the deliverable afterwards — a workbook built before the recovery pass carries none of
+the recovered refs, and `build_ref_workbook.py` refuses to overwrite, so take a fresh stamp.
+
 ### Merge-time QC normalization (run before `build_ref_workbook.py`)
 Subagents are not perfectly consistent; normalize deterministically at merge:
 - **Strip any `proposed_ref` whose verification is not `ok && contains_value`** (a

@@ -36,6 +36,13 @@ CONTRACT = [
     "EVERY unit below is OWED a record — there is no such thing as a unit that needed "
     "no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is "
     "what this leg is FOR.",
+    "A unit whose class is UNREPORTED_BLANK is the INVERSE case — the sheet cell is blank, "
+    "so there is no recorded value to agree with and you are proposing one. Put it in the "
+    "record's `values` dict, keyed by the column names in that unit's `value_cols` "
+    "(e.g. {\"Operator\": \"WBI Energy Transmission, Inc.\"}), alongside the refs. The "
+    "schema DOES carry values — a proposed value stated only in researcher_notes leaves a "
+    "ref with no value behind it, which is an orphan [ref] cell and gets stripped "
+    "(2026-09-09: two of five recovered blanks arrived this way).",
     "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit "
     "class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state "
     "it. 'Confirmed as recorded' in your summary and nowhere machine-readable is "

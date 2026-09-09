@@ -129,7 +129,12 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             # recorded value is contested, is documentation, not an orphan.
             if vr and not has_val and not sentinel and r.get("class_out") in SOURCED:
                 E.append((pid, col, "ref without a paired value"))
-            if has_val and not vr and r.get("class_out") in SOURCED and not sentinel:
+            # A few tracker value columns have no paired `[ref]` column at all
+            # (OtherEnglishNames, the OtherLanguage* names), so such a record keys to no
+            # ref cell and can orphan nothing — its corroboration lives in researcher_notes
+            # by necessity (tx P0257's alias fix, 2026-09-09).
+            if (has_val and not vr and r.get("class_out") in SOURCED and not sentinel
+                    and str(col or "").strip()):
                 E.append((pid, col, "value marked sourced with no verified ref"))
             for u in (r.get("proposed_refs") or []):
                 if any(b in u.lower() for b in BANNED):
@@ -208,8 +213,17 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
         for u in uncited:
             col_key = (u.get("project_id"), u.get("ref_col"))
             recs = rec_by_key.get((*col_key, u.get("sheet_row")))
-            if not recs and units_per_col[col_key] == 1:
-                recs = rec_by_col.get(col_key)
+            worked = lambda rs: any(  # noqa: E731
+                r.get("class_out") in SOURCED or (r.get("proposed_refs") or [])
+                or (r.get("researcher_notes") or "").strip() for r in (rs or []))
+            # An exact-row hit can return only ONE of several records on the same cell: the
+            # seed, while the research landed on a sibling the fold failed to merge into it
+            # (west P2573 Owner, 2026-09-09 — the deep leg disputed the recorded owner on a
+            # separate FILL and the seed stayed blank). The unit WAS worked, so widen to the
+            # column before calling it never worked; never narrow, so a genuinely untouched
+            # cell on a multi-segment row still reports.
+            if (not recs or not worked(recs)) and units_per_col[col_key] == 1:
+                recs = rec_by_col.get(col_key) or recs
             if not recs:
                 L.append((u.get("project_id"), u.get("ref_col"), u.get("primary_value", "")))
                 continue

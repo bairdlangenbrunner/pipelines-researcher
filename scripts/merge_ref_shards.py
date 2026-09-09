@@ -34,15 +34,18 @@ _VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--staging", required=True)
-    ap.add_argument("--shard-dir", default="ref_shards", action="append", dest="shard_dirs",
-                    help="shard directory under --staging, repeatable. A recovery pass writes "
-                         "`ref_shards_recovery/` rather than `ref_shards/` so it cannot "
-                         "overwrite a shard from the original leg (4 of tx's 41 would have "
-                         "been clobbered, 2026-09-09); merge both by passing both.")
+    ap.add_argument("--shard-dir", action="append", dest="shard_dirs", metavar="DIR",
+                    help="shard directory under --staging, repeatable; defaults to `ref_shards`. "
+                         "A recovery pass writes `ref_shards_recovery/` rather than "
+                         "`ref_shards/` so it cannot overwrite a shard from the original leg "
+                         "(4 of tx's 41 would have been clobbered, 2026-09-09); merge both by "
+                         "passing both.")
     args = ap.parse_args()
     S = args.staging.rstrip("/")
-    # argparse `append` on a default keeps the default as element 0 only if nothing was passed
-    dirs = args.shard_dirs if args.shard_dirs == ["ref_shards"] else args.shard_dirs[1:]
+    # `action="append"` must not carry an argparse default: argparse appends onto the default
+    # object itself, so a string default raises AttributeError and a list default silently
+    # prepends `ref_shards` to every explicit set. Default here, after parsing, instead.
+    dirs = args.shard_dirs or ["ref_shards"]
 
     prior_path = os.path.join(S, "staged_resolutions.prior.json")
     cur_path = os.path.join(S, "staged_resolutions.json")
@@ -56,12 +59,27 @@ def main():
     # index ref records by (pid, ref_col, sheet_row); fall back to (pid, ref_col)
     idx = {}
     for r in res:
-        if r.get("class_in") not in ("HAS_REF", "MISSING_REF"):
+        # FILL is here only so a re-run re-matches the records the MISSING_VALUE fallback
+        # below appended, instead of appending them again. The fills leg's own FILL records
+        # never reach this baseline — merge_deepsweep_shards.py adds those downstream, to
+        # staged_resolutions.json, not to the .prior.json this script reads and writes.
+        if r.get("class_in") not in ("HAS_REF", "MISSING_REF", "FILL"):
             continue
         idx[(r.get("project_id", ""), r.get("ref_col", ""), str(r.get("sheet_row", "")))] = r
         idx.setdefault((r.get("project_id", ""), r.get("ref_col", "")), r)
 
-    n_shards, applied, unmatched, downgraded = 0, 0, [], 0
+    # `MISSING_VALUE` units are never seeded into the store (seed_resolutions_from_worklist.py
+    # only seeds MISSING_REF/HAS_REF), so a recovery pass that researches one has nothing to
+    # match. Dropping it would silently re-lose exactly what gate J had just caught, so fall
+    # back to the worklist and append the finding as a FILL record — the same shape
+    # merge_deepsweep_shards.py produces for the fills leg.
+    wl_by_key = {}
+    wl_path = os.path.join(S, "worklist.json")
+    if os.path.exists(wl_path):
+        for u in json.load(open(wl_path)).get("units", []):
+            wl_by_key.setdefault((u.get("project_id", ""), u.get("ref_col", "")), u)
+
+    n_shards, applied, appended, unmatched, downgraded = 0, 0, 0, [], 0
     for p, d in iter_shards(*[os.path.join(S, sd, "*.json") for sd in dirs]):
         n_shards += 1
         pid = d.get("project_id") or os.path.basename(p)[:-5]
@@ -69,7 +87,27 @@ def main():
             rc, sr = u.get("ref_col", ""), str(u.get("sheet_row", ""))
             r = idx.get((pid, rc, sr)) or idx.get((pid, rc))
             if not r:
-                unmatched.append((pid, rc, sr)); continue
+                w = wl_by_key.get((pid, rc))
+                if not w or w.get("class") != "MISSING_VALUE":
+                    unmatched.append((pid, rc, sr)); continue
+                r = {"project_id": pid, "pipeline_name": w.get("pipeline_name", ""),
+                     "wiki": w.get("wiki", ""), "sheet_row": w.get("sheet_row", ""),
+                     "segment_name": w.get("segment_name", ""), "ref_col": rc,
+                     "value_cols": w.get("value_cols", []),
+                     "primary_value_col": w.get("primary_value_col", ""),
+                     "values": {}, "primary_value": "", "current_ref": "",
+                     "class_in": "FILL", "leg": "refs"}
+                if w.get("tab"):
+                    r["tab"] = w["tab"]
+                if w.get("oo_sheet_row"):
+                    r["oo_sheet_row"] = w["oo_sheet_row"]
+                vals = {k: v for k, v in (u.get("values") or {}).items() if str(v).strip()}
+                if vals:
+                    r["values"] = vals
+                    r["primary_value"] = str(vals.get(r["primary_value_col"], "")) or ""
+                res.append(r)
+                idx[(pid, rc)] = r
+                appended += 1
 
             verifs = u.get("verifications", []) or []
             refs = verified_refs(u.get("proposed_refs", []), verifs)
@@ -108,6 +146,8 @@ def main():
     print(f"applied ref research to {applied} unit(s) across {n_shards} shard(s) -> {prior_path}")
     if downgraded:
         print(f"  QC downgraded {downgraded} unit(s) with no verified ref")
+    if appended:
+        print(f"  appended {appended} unseeded MISSING_VALUE unit(s) as new FILL record(s)")
     if unmatched:
         print(f"  WARN {len(unmatched)} shard unit(s) matched no baseline record: {unmatched[:8]}"
               + (" ..." if len(unmatched) > 8 else ""))

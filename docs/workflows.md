@@ -204,6 +204,21 @@ The order is not cosmetic: the harvester rescues the sentinels `merge_ref_shards
 drops with a WARN, and `merge_deepsweep_shards.py` purges them if it runs after —
 reconcile the WARN count before shipping (Sweep SOP §Sentinels).
 
+**Recovery pass over an already-merged batch** (non-zero gate L, or gaps from
+`check_shard_coverage.py --all`): same recipe, but the subagents write
+`ref_shards_recovery/<PID>.json` so a recovery shard cannot overwrite the original leg's,
+and the merge takes both directories. Then rebuild the deliverable — a workbook built
+before the pass carries none of the recovered refs. Mechanics + the four traps:
+Sweep SOP §"Running a recovery pass over an already-merged batch".
+
+```bash
+python scripts/merge_ref_shards.py --staging $STG/ \
+  --shard-dir ref_shards --shard-dir ref_shards_recovery
+python scripts/merge_deepsweep_shards.py --staging $STG/
+python scripts/check_shard_coverage.py --staging $STG/ --all
+python scripts/sweep_gates.py --staging $STG/            # gate L must read 0
+```
+
 The `routes` leg is carried on the shards automatically (`routes[]` →
 `__ROUTE__` at merge). The `recon` leg runs **once per reference dataset** — in the
 `deep` preset that is **both `gulfpub` and `osm`**, not GulfPub alone. OSM needs a

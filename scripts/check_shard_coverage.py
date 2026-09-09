@@ -81,13 +81,32 @@ def check(units: list[dict], fills: list[dict]) -> tuple[list[dict], list[dict],
               and not (f.get("researcher_notes") or "").strip()]
 
     malformed = []
+    SOURCED_OUT = {"REFS_ADDED", "REVERIFIED", "CONFIRMED"}
     for f in fills:
         why = []
+        # A handful of tracker value columns have no paired `[ref]` column at all
+        # (OtherEnglishNames, the OtherLanguage* names). A fill on one of those is
+        # legitimately ref-less and merges fine as a FILL carrying only values — it is
+        # not unkeyable research (2026-09-09: tx P0257's alias fix was flagged here for
+        # a month while sitting correctly in the merged store the whole time).
         if not (f.get("ref_col") or "").strip():
-            why.append("no ref_col — nothing to key it to a worklist unit")
+            if not any(str(v).strip() for v in (f.get("values") or {}).values()):
+                why.append("no ref_col and no values — nothing to key it to a worklist unit")
         if f.get("class_out") not in VALID_CLASS_OUT:
             why.append(f"class_out={f.get('class_out')!r} is not one of "
                        f"{'/'.join(sorted(VALID_CLASS_OUT))} — dropped at workbook build")
+        # A SOURCED record must carry the value its refs state, in `values` — standing rule
+        # 4(e). With `values` empty the ref-only fold has nothing to compare to the sheet, so
+        # the record stays a separate FILL: the ref lands orphaned (gate E) and the unit's
+        # real record keeps its unresearched seed. Stating the value only in researcher_notes
+        # reads as done and is not (2026-09-09: appalachian P0310 shipped all 9 of its
+        # columns this way and passed coverage, because a record existed for each).
+        if f.get("_leg") != "refs" and (f.get("class_out") or "").upper() in SOURCED_OUT \
+                and not any(
+                str(v).strip() for v in (f.get("values") or {}).values()):
+            why.append("class_out is sourced but `values` is empty — put the value the refs "
+                       "state in `values` (the SAME value, when they agree with the sheet); "
+                       "notes-only leaves an orphan [ref]")
         if why:
             malformed.append({"ref_col": f.get("ref_col"), "why": "; ".join(why)})
     return unreported, silent, malformed
@@ -112,7 +131,12 @@ def run_one(staging: Path, pid: str) -> dict:
         if not ref_shard.exists():
             continue
         try:
-            records += json.loads(ref_shard.read_text()).get("resolutions") or []
+            # The refs leg's schema carries no `values` — it confirms the value already on
+            # the sheet, and merge_ref_shards.py applies its refs onto the seeded record that
+            # holds it. Tag the origin so the "sourced but no values" rule below, which is
+            # about deep-sweep fills[], does not fire on every one of them.
+            records += [dict(r, _leg="refs")
+                        for r in (json.loads(ref_shard.read_text()).get("resolutions") or [])]
         except json.JSONDecodeError as e:
             return {"pid": pid, "error": f"{sub}/{pid}.json does not parse: {e}",
                     "units": len(units)}

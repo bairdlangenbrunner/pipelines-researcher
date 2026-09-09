@@ -59,6 +59,13 @@ def main():
     res = prior["resolutions"]
 
     def is_old_deepsweep(r):
+        # `leg == "refs"` marks a FILL that merge_ref_shards.py appended for a MISSING_VALUE
+        # unit the seed never staged (see its fallback). It is the refs leg's own output, not
+        # a stale copy of this leg's, so this purge — which exists to stop deep-sweep records
+        # accumulating across re-runs — must not take it (2026-09-09: it silently dropped all
+        # five the US gas recovery pass had just rescued).
+        if r.get("leg") == "refs":
+            return False
         return (r.get("class_in") in ("FILL", "VALIDITY", "STATUS", "ROUTE")
                 or r.get("ref_col") in ("__VALIDITY__", "__STATUS__", "__ROUTE__"))
 
