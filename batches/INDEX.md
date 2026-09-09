@@ -247,16 +247,17 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## united-states-gas
 
-- `staging/deepsweep-appalachian-operating` — rows=46 fills=149 updates=0 status-pending=0 refs(DEAD_LINK=3, REFS_ADDED=235, REVERIFIED=6, UNRESOLVED=171) routes=0 new(none)
-- `staging/deepsweep-gulf-operating` — rows=50 fills=160 updates=0 status-pending=0 refs(DEAD_LINK=10, REFS_ADDED=244, REVERIFIED=9, UNRESOLVED=184) routes=0 new(none)
-- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=325, REVERIFIED=14, UNRESOLVED=42) routes=0 new(none)
-- `staging/deepsweep-west-operating` — rows=46 fills=158 updates=0 status-pending=0 refs(REFS_ADDED=276, UNRESOLVED=123) routes=0 new(none)
+- `staging/deepsweep-appalachian-operating` — rows=46 fills=144 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none)
+- `staging/deepsweep-gulf-operating` — rows=50 fills=161 updates=0 status-pending=0 refs(DEAD_LINK=3, REFS_ADDED=352, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none)
+- `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none)
+- `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none)
+- `staging/recovery-20260909` — no store — invisible to discovery
 - `staging/state-audit-20260904` — no store — invisible to discovery
-- `deliverables/pipelines_batch_20260904_1354_ET_united-states-gas_deepsweep.xlsx`
-- `deliverables/pipelines_batch_20260908_1712_ET_united-states-gas_deepsweep-gulf.xlsx`
-- `deliverables/pipelines_batch_20260908_2103_ET_united-states-gas_deepsweep-appalachian.xlsx`
-- `deliverables/pipelines_batch_20260909_1509_ET_united-states-gas_deepsweep-west.xlsx`
-- `archive/` — 1 superseded/applied file(s)
+- `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-appalachian.xlsx`
+- `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-gulf.xlsx`
+- `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-tx.xlsx`
+- `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-west.xlsx`
+- `archive/` — 5 superseded/applied file(s)
 
 ## united-states-oil
 
