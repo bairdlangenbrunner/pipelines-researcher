@@ -1,0 +1,671 @@
+{
+  "project_id": "P0219",
+  "pipeline_name": "Mojave Gas Pipeline",
+  "sheet_row": 76,
+  "wiki": "https://www.gem.wiki/Mojave_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed",
+      "concern_type": "none",
+      "recommendation": "no action on existence, classification, or duplicate status -- well documented and correctly distinguished from P0207 Kern River Gas Pipeline",
+      "researcher_notes": "EXISTENCE and CLASSIFICATION strongly confirmed by 7+ independent primary/regulatory sources spanning 1990-2024, none of which is GEM/gem.wiki: PHMSA Notice of Proposed Safety Order CPF No. 5-2012-1008S (2012, direct fetch); PHMSA Failure Investigation Report -- El Paso-Mojave GT 2012-5-2 (2013, retrieved via Wayback after the live phmsa.dot.gov URL 403'd -- blocked, not deleted, so the original harvested citation is kept and the Wayback capture added alongside per the no-delete-on-block rule); CPUC Decision 90-10-034 (Oct 12, 1990, California PUC, wholly independent of any pipeline-company or federal-regulator chain); USGS Open-File Report 92-447 (1992, a federal geological survey of Mojave Desert pipeline corridors, wholly independent of PHMSA/SEC/company sources -- confirms route, ~142-mile Topock-Daggett segment, and 1991 construction); El Paso Natural Gas Co.'s own FY1993 SEC 10-K (filed 1994, the ORIGINAL owner's own contemporaneous account of the just-completed system); Kinder Morgan's FY2013 and FY2023 10-Ks/Exhibit 21.1 (current corporate parent, two different filing years); Kinder Morgan's current Operations/Natural-Gas/Index corporate page; and Oil & Gas Journal's 1993 trade-press coverage. CLASSIFICATION as an interstate FERC-jurisdictional natural gas transmission pipeline is correct (PHMSA docs, SEC filings, and CPUC decision all agree). NOT A DUPLICATE of P0207 Kern River Gas Pipeline: the two systems share a jointly-held 'Common Facilities' segment between Daggett, CA and the Bifurcation Point near Arvin, CA (undivided interest -- 25% Mojave Pipeline Company LLC / 75% Kern River Gas Transmission Company, per KMI's FY2013 10-K, and independently corroborated by USGS OFR 92-447's ~83-mile shared-conduit description), but Mojave's own exclusive mainline runs Topock, AZ -> Daggett, CA while Kern River's own exclusive mainline runs Opal, WY -> Daggett, CA -- distinct origins, distinct current ultimate ownership (Mojave = Kinder Morgan/El Paso lineage; Kern River = Berkshire Hathaway Energy, per P0207's own shard), and the shared-facilities relationship is a known, expected, non-duplicative structure (also flagged the other direction in P0207's cross_row_leads, whose USGS-sourced lead is consistent with and corroborated by this research).",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf",
+        "https://files.cpuc.ca.gov/LegacyCPUCDecisionsAndResolutions/Decisions/Decisions_D840200_to_D9212077/D9010034_19901012_I8812027.pdf",
+        "https://pubs.usgs.gov/of/1992/0447/report.pdf",
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Update Owner1 from 'El Paso Corp' (dissolved into Kinder Morgan in 2012 and no longer exists as a distinct corporate entity) to 'Kinder Morgan', matching sibling row P3190's already-current convention in this same batch. Owner1% stays 100.00%.",
+      "contested": {
+        "Owner1": "Kinder Morgan"
+      },
+      "researcher_notes": "The sheet's current Owner1 = 'El Paso Corp' [100%] is stale -- El Paso Corp was acquired by and dissolved into Kinder Morgan in 2012, per the batch brief and general corporate-history record. Two independent, current sources confirm Kinder Morgan is the present ultimate parent: KMI's FY2023 10-K Exhibit 21.1 (Subsidiaries of the Registrant) lists both 'Mojave Pipeline Company, L.L.C.' and 'Mojave Pipeline Operating Company, L.L.C.' as current KMI subsidiaries as of Dec 31, 2023; Kinder Morgan's own current Operations/Natural-Gas/Index corporate page describes 'Mojave Pipeline' as one of its own systems ('The Mojave Pipeline is a 500-mile pipeline system...'). Not staging a fills[] REFS_ADDED entry for the current 'El Paso Corp' value itself -- that would endorse a defunct-entity value the batch brief specifically flagged as needing correction; the Owner fills[] entry below documents these same sources as UNRESOLVED against the current value, matching the pattern P0207 (Kern River, this same batch) used for its own analogous stale-holding-name Owner1 concern.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630724000011/kmi-2023x10kxexh211.htm",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct StartYear1 from 1991 to 1992 (StartMonth1 = 3) -- commenced operations March 1, 1992. Add ConstructionYear = 1991 (see fills[]) so the 1991-1992 build span is captured across the two fields instead of compressed into one, likely-wrong StartYear1 value.",
+      "contested": {
+        "StartYear1": "1992",
+        "StartMonth1": "3"
+      },
+      "researcher_notes": "Three independent sources converge on 1992 as the in-service/commissioning year, none supporting the sheet's current StartYear1 = 1991: El Paso Natural Gas Co.'s own FY1993 10-K (filed 1994) states MPC's 'pipeline facilities ... commenced operations on March 1, 1992' (also: 'FERC issued orders [in 1990] authorizing MPC to construct and operate its pipeline facilities' -- construction followed that 1990 authorization); PHMSA's 2012 NOPSO states 'The Mojave Pipeline was built between 1991-1992'; PHMSA's 2013 Failure Investigation Report states 'The Mojave Pipeline was built and commissioned in 1992.' This is the same StartYear1 1991->1992 correction pattern P0207 (Kern River, this same batch) independently found for its own sibling system, entering service Feb. 15, 1992 -- both California-import pipelines commissioned within weeks of each other in early 1992, which is an internally consistent, mutually-corroborating pair, not a coincidence to be suspicious of.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "No change -- retain LengthKnown = 804.70 km (500 mi), confirmed by two current, independent, explicit sources. Caveat only: two other primary sources report different figures for different eras/scopes; noted, not adopted.",
+      "contested": {},
+      "researcher_notes": "804.70 km converts to almost exactly 500 mi (500 x 1.609344 = 804.67 km), and 'approximately 500 miles' / '500-mile' is stated explicitly and independently by: PHMSA's 2012 NOPSO ('MPOC ... operates approximately 500 miles of pipeline') and Kinder Morgan's current Operations/Natural-Gas/Index page ('The Mojave Pipeline is a 500-mile pipeline system'). CAVEAT -- two other primary sources give different figures for different eras/scopes, read together as a plausible growth history rather than an error: El Paso Natural Gas Co.'s own FY1993 10-K (filed 1994, at commissioning) states 'MPC's system consists of approximately 400 miles of pipeline with one mainline compressor station' -- the ORIGINAL, just-completed system; that same 1993 filing separately describes a then-proposed (never observed as built in any later source) 475 MMcf/d, ~352-mile northward extension toward Sacramento/East Bay that ran into a FERC/CPUC jurisdictional dispute (also the subject of the OGJ 1993 article) -- no later source shows this extension exists, consistent with GEM's system remaining ~500 mi rather than ~850+ mi. Separately, Kinder Morgan's FY2013 10-K states an unrepeated 'approximate 562-mile Mojave Pipeline system' figure -- a single one-off occurrence, not corroborated in KMI's own FY2016 or FY2023 filings or any other source reviewed, possibly reflecting a different mile-counting convention (e.g., cumulative lateral/loop footage). Retaining the sheet's 804.70 km given two clean, current, independent matches.",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+        "https://www.sec.gov/Archives/edgar/data/0001506307/000150630714000010/kmi-2013x10k.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "No change -- retain Capacity = 400.00 MMcf/d, confirmed by the pipeline's own original 1993 owner filing plus contemporaneous trade press. Caveat only: a differently-scoped later SEC figure noted, not adopted.",
+      "contested": {},
+      "researcher_notes": "El Paso Natural Gas Co.'s own FY1993 10-K states twice, in its own words: 'The system's present natural gas delivery capacity is 400 MMcf/d' and 'MPC's maximum mainline system inlet capacity is 400 MMcf/d.' Oil & Gas Journal's June 14, 1993 article independently corroborates ('400 MMcfd'). CAVEAT -- Kinder Morgan's FY2013 10-K instead states '[t]he east to west capacity from Topock to the Cadiz interconnect with EPNG is 456 MMcf/d' -- a narrower, specifically-worded sub-corridor/directional-flow metric (Topock-to-Cadiz-interconnect only), not presented as a full-system nameplate/design-capacity revision, and not repeated in any other filing or source reviewed. Retaining 400.00 MMcf/d given the pipeline's own contemporaneous filing plus independent trade-press corroboration.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+        "https://www.ogj.com/home/article/17223953/mojave-expects-ferc-regulation-of-intrastate-pipeline-extension",
+        "https://www.sec.gov/Archives/edgar/data/0001506307/000150630714000010/kmi-2013x10k.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Current Kinder Morgan corporate page describes Mojave as one of its actively-run pipeline systems today."
+        },
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2012 PHMSA enforcement document treats it throughout as an active, currently-operating interstate pipeline under a proposed safety order."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed actively operating: current KM corporate page + PHMSA 2012 enforcement doc + KMI FY2023 10-K Exhibit 21.1 (listing both Mojave entities as current subsidiaries) all describe an active system; no idle/retirement signal found in any source reviewed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt"
+      ],
+      "verifications": [
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'an interstate natural gas pipeline' -- explicit."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'MPC's only business is natural gas transportation' -- explicit, from the original owner's own 1993 filing."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Every source reviewed (PHMSA, SEC, CPUC, KM, OGJ, USGS) describes this uniformly as a natural gas transmission pipeline; no ambiguity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "n/a",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "El Paso Natural Gas Co.'s FY1993 10-K states 'In 1990, FERC issued orders authorizing MPC to construct and operate its pipeline facilities' -- but this is the FERC APPROVAL/authorization year, not a confirmed initial proposal/application-filing year (which would predate 1990); not force-fitting an approval year into ProposalYear. The only other lead found, a Springer academic article (link.springer.com/article/10.1007/BF01067099), failed url_verifier (200 but the page never surfaces 'Mojave' to a plain fetch -- likely a paywalled abstract) and was abandoned as uncitable. No source found stating a distinct proposal/filing year. Leaving blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1991"
+      },
+      "primary_value": "1991",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://pubs.usgs.gov/of/1992/0447/report.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Mojave Pipeline was built between 1991-1992.'"
+        },
+        {
+          "url": "https://pubs.usgs.gov/of/1992/0447/report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "1992 federal USGS report, independent of PHMSA/SEC/company chain: 'the Mojave Pipeline ... was built in 1991.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources (a 2012 PHMSA enforcement document and a wholly separate 1992 federal geological survey) both state 1991 as the construction year, consistent with El Paso's own FY1993 10-K bracket (1990 FERC authorization -> March 1, 1992 in-service)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1991"
+      },
+      "primary_value": "1991",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Original owner's own FY1993 10-K: 'commenced operations on March 1, 1992.'"
+        },
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Mojave Pipeline was built between 1991-1992' -- construction span, not solely 1991."
+        },
+        {
+          "url": "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Mojave Pipeline was built and commissioned in 1992.'"
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not adding a ref to the sheet's current StartYear1=1991 -- three independent sources (the original owner's own 1993 filing, plus two PHMSA documents) converge on 1992 as the actual commissioning/in-service year, not 1991. The correction (StartYear1->1992, StartMonth1->3) is proposed via the validity[] spec concern above rather than force-fit here. This mirrors P0207 (Kern River)'s own independent 1991->1992 StartYear1 finding for its sibling system in this same batch."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "400.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "400.00",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+        "https://www.ogj.com/home/article/17223953/mojave-expects-ferc-regulation-of-intrastate-pipeline-extension"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The system's present natural gas delivery capacity is 400 MMcf/d' -- original owner's own 1993 filing."
+        },
+        {
+          "url": "https://www.ogj.com/home/article/17223953/mojave-expects-ferc-regulation-of-intrastate-pipeline-extension",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent 1993 trade-press corroboration of 400 MMcf/d."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "See validity[] spec caveat re: KMI's FY2013 10-K '456 MMcf/d' figure, which describes a narrower Topock-to-Cadiz sub-corridor, not adopted as a full-system revision."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {
+        "Pressure": "1200, 930",
+        "PressureUnits": "psig"
+      },
+      "primary_value": "1200, 930",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The MAOP of the Mojave Pipeline is 1200 psig from Topock, Arizona to Arvin, California. The two lines ... that leave the Bifurcation Point ... have MAOPs of 930 psig.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'has a maximum allowable operating pressure (MAOP) of 1200 psig. Downstream of Bifurcation Point, Lines 1901 and 1902 have a MAOP of 930 psig.' -- independently states the identical two figures."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both figures (1200 psig mainline, 930 psig on the downstream laterals) are stated identically in both documents. Tier held at medium rather than high because both documents stem from the same 2012 PHMSA enforcement action/investigation, not fully separate origins -- a third, unrelated source for pressure was not found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "804.70",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "804.70",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "verifications": [
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'operates approximately 500 miles of pipeline.'"
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Mojave Pipeline is a 500-mile pipeline system.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "See validity[] spec caveat re: the EPNG FY1993 10-K's original '~400 miles' figure and KMI's FY2013 10-K one-off '562-mile' figure -- neither adopted; 804.70 km matches two clean, current, independent sources almost exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30, 42",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30, 42",
+      "proposed_refs": [
+        "https://pubs.usgs.gov/of/1992/0447/report.pdf",
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pubs.usgs.gov/of/1992/0447/report.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "1992 federal USGS report (independent of PHMSA/company chain): 'the Kern River and Mojave pipelines transport natural gas in 36\" and 30\" pipes, respectively; the shared pipe is 42\".' -- i.e. Mojave's own Topock-Daggett segment is 30\", the Daggett-Bifurcation shared 'Common Facilities' segment is 42\"."
+        },
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "States the Mojave mainline is 42\" from Topock to Daggett, splitting at Bifurcation Point into a 42\" West Lateral (Line 1901) and a 30\" East Lateral (Line 1902)."
+        },
+        {
+          "url": "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "States the Topock-Daggett segment is 30\" OD, and 'From Daggett, the Mojave Pipeline is a 42-inch OD pipeline.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "IMPORTANT INTERNAL DISCREPANCY, flagged rather than silently resolved: all three primary sources agree the system contains BOTH 30\" and 42\" pipe (supporting the aggregate fill 'Diameter=30, 42' at the network-total row level, matching the sheet's multi-diameter convention, e.g. Kern River P0207's '36, 42'), but they disagree on WHICH segment is which: USGS (1992, wholly independent) and the PHMSA Failure Investigation Report (2013) agree that Topock-Daggett = 30\" and the Daggett-onward shared/Common Facilities segment = 42\" (2 of 3 sources, including the one fully independent of the pipeline-industry/regulator chain); the PHMSA NOPSO (2012) states the reverse (Topock-Daggett = 42\", with a 42\"/30\" lateral split occurring further downstream at Bifurcation Point). This reads as a likely drafting inversion in one PHMSA document, not a real physical change in the pipe -- but this row is a network total, not a segment map, so the aggregate diameter set is not in question even though the segment assignment is. Flagging for a future segment-level/route pass rather than silently picking a side."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [
+        "https://web.archive.org/web/20160114030451/http://www.midstreambusiness.com/mojave-pipeline-transports-wyoming-gas-supplies-california-212241"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20160114030451/http://www.midstreambusiness.com/mojave-pipeline-transports-wyoming-gas-supplies-california-212241",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hart Energy/Midstream Business (2013, via Wayback after the live URL 403'd): states Mojave transports Wyoming-sourced gas via a Kern River interconnect at Daggett -- a single, uncorroborated source."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Two candidate leads found, neither clearing the 2-independent-source bar: (a) the English Wikipedia 'Mojave Pipeline' article states the gas originates from the San Juan, Permian, and Anadarko basins via the connected EPNG system -- but this text is near-verbatim identical to gem.wiki's own article on this pipeline, so Wikipedia is NOT independent corroboration for this specific claim (standing rule 1: never cite GEM, and a mirror of GEM's own wording doesn't become independent just because it's hosted elsewhere); (b) Hart Energy/Midstream Business (2013) states Mojave carries Wyoming-sourced gas via a Kern River interconnect -- a single source, not independently corroborated, and plausibly describing supplemental/backfill flows through the shared Daggett facilities rather than the pipeline's primary contracted gas source. Leaving blank rather than adopting either single-source claim."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Topock",
+        "StartState/Province": "Arizona",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Kern County",
+        "EndState/Province": "California",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Topock",
+      "proposed_refs": [
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'originates at the Topock Compressor Station at the California-Arizona border' ... extends to 'customers in the vicinity of Bakersfield, California.'"
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'connects with the El Paso Natural Gas and Transwestern systems near Topock, Arizona, as well as the El Paso Natural Gas and Kern River Gas Transmission Company systems near Cadiz, California.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20240518001055/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/El%20Paso-Mojave%20GT%202012-5-2%20Redacted.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Incident located 'about three miles southwest of Arvin, CA' -- Kern County, California, consistent with the sheet's EndLocation."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartLocation=Topock, AZ and EndLocation=Kern County, CA both confirmed by multiple independent primary sources; no change needed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 76,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "n/a",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "El Paso's FY1993 10-K discusses a LATER proposed (and apparently never-built) $467 million, 475 MMcf/d, ~352-mile expansion toward Sacramento/the East Bay -- that is a different, unbuilt project, not the construction cost of the actual ~400-mile system that was built in 1991-92. No primary source found stating a total original construction cost for the system as actually built. An earlier-session lead (partial 1990 trade-press figures for two individual construction contracts, ~$63M + $27M) was not re-verified to a live, citable URL within this pass and is not cited -- and would in any case be PARTIAL (individual contract awards, not full-project cost) per this project's rule that a SegmentCost value must state the cost of the FULL project scope. Leaving blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 205,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Mojave Pipeline Operating Company, LLC"
+      },
+      "primary_value": "Mojave Pipeline Operating Company, LLC",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+        "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630724000011/kmi-2023x10kxexh211.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0000031986/000095013494000062/0000950134-94-000062.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Original owner's own FY1993 10-K: \"Mojave Pipeline Operating Company ('MPOC'), a wholly owned subsidiary of MPC, is a Texas corporation. MPOC serves as MPC's agent in the management of the pipeline facilities...\""
+        },
+        {
+          "url": "https://primis.phmsa.dot.gov/enforcement-documents/520121008S/520121008S_NOPSO_05042012_text.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Mojave Pipeline Operating Company (Respondent or MPOC), a subsidiary of El Paso Natural Gas Company...'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630724000011/kmi-2023x10kxexh211.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KMI's FY2023 10-K Exhibit 21.1 lists 'Mojave Pipeline Operating Company, L.L.C.' as a current subsidiary."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Three independent sources spanning three decades (1993, 2012, 2023) name the same operating entity. OperatorLocalLanguage/QCC(业主单位) left blank -- an English-language US entity, not applicable."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 205,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "El Paso Corp",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "El Paso Corp",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630724000011/kmi-2023x10kxexh211.htm",
+        "https://www.kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630724000011/kmi-2023x10kxexh211.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KMI's FY2023 10-K Exhibit 21.1 lists 'Mojave Pipeline Company, L.L.C.' as a current KMI subsidiary -- El Paso Corp itself no longer exists as a distinct entity."
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's current corporate page describes Mojave as one of its own current systems."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not adding a ref to the current 'El Paso Corp' value -- El Paso Corp was dissolved into Kinder Morgan in 2012 and no longer exists as a distinct entity. See validity[] attribution concern above proposing Owner1 -> 'Kinder Morgan' (matching sibling row P3190's already-current convention), sourced from KMI's FY2023 10-K Exhibit 21.1 and Kinder Morgan's current corporate page. Note also (context, not a change to Owner1%): the Daggett-Bifurcation 'Common Facilities' segment specifically is held as an undivided 25% (Mojave Pipeline Company, LLC) / 75% (Kern River Gas Transmission Company) tenancy-in-common per KMI's FY2013 10-K -- a sub-asset detail below the network-total row's 100% Owner1 figure, not a change to it; see cross_row_leads for P0207."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0207",
+      "url": "https://www.sec.gov/Archives/edgar/data/0001506307/000150630714000010/kmi-2013x10k.htm",
+      "facts": "Kinder Morgan's FY2013 10-K states: 'Although the Mojave Pipeline system is a wholly owned entity, it shares common pipeline and compression facilities that are 25% owned by Mojave Pipeline Company, LLC and 75% owned by Kern River Gas Transmission Company.' This is the same Daggett-to-Bifurcation-Point 'Common Facilities' segment USGS OFR 92-447 independently describes as an ~83-mile shared conduit (already surfaced in P0207's own cross_row_leads pointing back to P0219). Whoever next revisits P0207 (Kern River) should check whether its Owner fields or any route/length notes reflect this 75% undivided interest in the shared facilities, distinct from Kern River's own 100%-owned exclusive Opal WY -> Daggett CA mainline."
+    }
+  ],
+  "summary": "P0219 Mojave Gas Pipeline: existence/classification/duplicate all CONFIRMED (7+ independent primary sources incl. PHMSA, CPUC, USGS, SEC, none of them GEM); staged REFS_ADDED fills for Status/Fuel/Construction(1991)/Capacity(400 MMcf/d)/Pressure(1200,930 psig)/Length(804.70km)/Diameter(30,42in)/Location/Operator(Mojave Pipeline Operating Company, LLC), all high tier except Pressure (medium); filed 3 concerns -- ATTRIBUTION (Owner1 'El Paso Corp' is a dissolved entity, should be 'Kinder Morgan' per sibling P3190), SPEC (StartYear1 should be 1992/March, not 1991, matching P0207's identical finding for its sibling system), and a documented Length/Capacity caveat (historical 400mi/1993 and outlier 562mi/456MMcfd figures noted but not adopted). UNRESOLVED: Proposal (only an approval year found, not a proposal year), FuelSource (two single-source, non-independent leads -- Wikipedia mirrors gem.wiki, Midstream Business is uncorroborated), SegmentCost (only a different, unbuilt expansion's cost found), and Owner (stale value not endorsed with a ref; correction flagged in validity instead). One cross-row lead filed for P0207 (Kern River) re: the 25%/75% Common Facilities ownership split."
+}

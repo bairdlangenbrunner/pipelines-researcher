@@ -1,0 +1,331 @@
+{
+  "project_id": "P0168",
+  "pipeline_name": "Colorado Interstate Gas Pipeline",
+  "sheet_row": 29,
+  "wiki": "https://www.gem.wiki/Colorado_Interstate_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence, classification, ownership, and core specs (length/capacity) are all independently confirmed. No duplicate: this is a distinct FERC-regulated interstate system from sibling KM pipelines P0282 (Wyoming Interstate) and P0270 (TransColorado) despite common Kinder Morgan parentage — the 'KM Rockies trio' brief note is correct that these must stay three rows, and nothing found here argues for merging any of them.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: confirmed independently via SEC EDGAR 10-K (Colorado Interstate Gas Company, L.L.C., CIK 0000200155, FY2014, filed by the operating entity itself), Wikipedia's well-cited 'Colorado Interstate Gas' article (note: canonical URL has no '_Company' suffix; that variant 404s), and an independent local-history source (Dumas Museum & Art Center, Texas Panhandle) that corroborates the 1928 origin story from a wholly separate origin than Wikipedia. CLASSIFICATION: confirmed as a natural gas interstate transmission pipeline system (not oil/NGL, not a single point-to-point segment) — matches Fuel='Gas', PipelineType framing. DUPLICATE: checked against the 46-row west-operating roster; no other PID represents this same physical CIG system. The 'KM Rockies trio' (P0168 CIG, P0282 WIC, P0270 TransColorado) are confirmed via kindermorgan.com/operations/natural-gas/index as three separately named, separately FERC-tariffed systems under one corporate umbrella — correctly kept as three rows. ATTRIBUTION: Owner='Kinder Morgan' 100% confirmed via Wikipedia ('Coastal merged with El Paso Corp. in 1999, which was bought by Kinder Morgan in 2012') and directly via a kindermorgan.com IR press release specifically about CIG ('El Paso Pipeline Partners Agrees to Acquire Cheyenne Plains Pipeline and Additional Interest in Colorado Interstate Gas Company From El Paso Corporation', May 2012) plus the KM company overview PDF ('Kinder Morgan owns and operates Colorado Interstate Gas (CIG)'). Operator name on the operators/owners tab ('Colorado Interstate Gas Pipeline Co') is a minor label variant of the legal name ('Colorado Interstate Gas Company, L.L.C.' per SEC) — not a defect, just informal sheet naming. SPEC: LengthKnown=6920 km (4,300 mi) and Capacity=5150 MMcf/d are CONFIRMED as genuine network-level totals (this row carries no SegmentName and is the single row for the whole CIG system, so a system-wide source is the correct kind of ref here, not an aggregate-vs-segment defect) via the SEC 10-K ('approximately 4,300 miles of pipeline with a design capacity of 5,150 MMcf/d') and independently via the Kinder Morgan CIG company-overview PDF ('a 4,300 mile pipeline system'), both exact-matching the sheet. IMPORTANT CAVEAT: the wiki page's OWN citation for this length figure (cite_note-2) resolves to abarrelfull.wikidot.com, a banned host per standing rules, and does not appear in the harvested wiki_citations.json (correctly filtered out by the harvester) — meaning the sheet had ZERO legitimate support for this number until this pass, despite the number itself being correct. Do not assume any currently-unreffed GEM value is 'probably fine because it's been there a while' — this row's own history shows a correct-but-completely-unsourced number sitting on a banned citation.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas",
+        "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf",
+        "https://www.kindermorgan.com/operations/natural-gas/index"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct StartYear1/StartYearEarliest from 2008 to 1928 — the year CIG began commercial gas service, confirmed by two independent sources plus the wiki page's own text. 2008 appears to be a mis-entered expansion year, not the founding year.",
+      "contested": {"StartYear1": "1928", "StartYearEarliest": "1928"},
+      "researcher_notes": "Sheet currently shows StartYear1=2008, StartYearEarliest=2008. This is contradicted by (a) the gem.wiki page's own body text ('Start Year: 1928'), (b) Wikipedia's 'Colorado Interstate Gas' article, which gives a detailed, sourced timeline: formed 1927 as a joint venture of Canadian River Gas Company and CIG, began delivering gas 1 June 1928 (reaching Pueblo 19 June, Denver 22 June 1928), and (c) an independent Texas Panhandle local-history source (Dumas Museum & Art Center, 'CIG Provided Gas for Six States' by Glynda Pflug) that corroborates 1928 construction/service start from a wholly separate origin than Wikipedia. Checked this batch's own convention against sibling rows (P0166, P0219, P0270, P0273, P0282) — StartYear1 in this cohort is used for the original/founding construction year, not the latest expansion year, so 1928 is the convention-consistent value, not 2008. Plausible (not asserted as fact) cause: the EIA Natural Gas Pipeline Projects historical workbook lists a 'CIG High Plains Project' completed 2008-11-15 (216 mi, +900 MMcf/d, 24/30-inch) — a major capacity expansion on this system — and 2008 looks like an expansion-year value that was miscoded into the founding-year field. Two independent sources given (Wikipedia + Dumas Museum, separate origins, neither citing GEM or each other); a third corroborating detail is the wiki's own stated 1928 figure, which is directional support only (not counted as one of the two independents since it is the object under dispute).",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas",
+        "https://www.dumasmuseumandartcenter.org/cig.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "StartState/Province currently holds basin names ('Rocky Mountains, Anadarko Basin') instead of states, and EndLocation ('California') internally contradicts EndState/Province ('Colorado'). Both need a human geography/route pass to assign correct state values — evidence here establishes the current values are wrong but does not by itself establish one clean replacement string for a multi-state network system.",
+      "contested": {"StartState/Province": "", "EndLocation": "", "EndState/Province": ""},
+      "researcher_notes": "Two distinct defects in the Location cluster, exactly flagging what the task brief called out for this row. (1) StartState/Province = 'Rocky Mountains, Anadarko Basin' — these are geologic/geographic BASIN names, not US states, and don't belong in a State/Province field. SEC 10-K text: 'We deliver natural gas from production areas in the Rocky Mountains and the Anadarko Basin directly to customers in Colorado and Wyoming and indirectly to the Midwest, Southwest, California and the Pacific Northwest.' Wikipedia adds granularity on original construction geography: gas fields in the Texas Panhandle, western Oklahoma, and western Kansas, extending into Wyoming. So the basin names in the current cell are directionally correct (CIG receipts do come from Rockies + Anadarko basin production) but the FIELD should hold states (candidates per the sources: Wyoming, Texas, Oklahoma, Kansas), not basin names — this is a genuine network-level system spanning multiple upstream states, so a single-state answer would itself be an oversimplification; I am not proposing one string because the evidence does not clearly establish which single value (or ordered list) the sheet's convention wants for a multi-state receipt footprint. (2) EndLocation='California' directly contradicts EndState/Province='Colorado' in the same location record — these should describe the same endpoint and currently name two different states. Per the SEC 10-K, California is only an INDIRECT/secondary downstream market (gas moves there via interconnects, not as CIG's own end-of-line), whereas Colorado is the direct, primary delivery area cited repeatedly across all sources (KM overview PDF, SEC 10-K, Wikipedia). This suggests EndLocation='California' is likely simply wrong/should be Colorado-based, but I'm not certifying a specific replacement city/point without route-level data, hence contested value left blank pending a route/GIS pass. Recommend routing to whoever handles P0168's RouteAccuracy/geometry review, since the existing Route [ref] (pipeportal.kindermorgan.com) may itself resolve the exact state list.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://www.kindermorgan.com/operations/natural-gas/index"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "10-K describes CIG as an active, operating pipeline system with current design capacity and mileage stated in present tense"},
+        {"url": "https://www.kindermorgan.com/operations/natural-gas/index", "ok": true, "contains_value": true, "name_found": true, "note": "Current KM operations page lists CIG among presently-operating natural gas systems"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed operating (not idle/retired) via two independent, current-as-of-fetch sources: the operating company's own SEC 10-K and Kinder Morgan's live operations index."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "10-K repeatedly describes natural gas transportation"},
+        {"url": "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas", "ok": true, "contains_value": true, "name_found": true, "note": "Article describes natural gas delivery throughout"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Natural gas transmission system, confirmed via two independent sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear1", "ProposalMonth1"],
+      "primary_value_col": "ProposalYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No proposal date is meaningfully attributable for this row. This is the base network-level system that entered service in 1928, long before any 'proposal' phase would have been formally documented in a way that survives in modern sources; SEC 10-K and Wikipedia both cover construction/in-service history but neither state a distinct proposal/announcement date separate from the construction narrative. Searched SEC EDGAR full-text search, Wikipedia, Dumas Museum page, and the EIA historical pipeline-projects workbook — none give a proposal date for the original system (the EIA workbook only covers 1996-2024 expansion projects, none of which represent this row's own value). Leaving UNRESOLVED rather than fabricating a value equal to the construction year."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear1", "ConstructionMonth1"],
+      "primary_value_col": "ConstructionYear1",
+      "values": {"ConstructionYear1": "1928"},
+      "primary_value": "1928",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas",
+        "https://www.dumasmuseumandartcenter.org/cig.html"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas", "ok": true, "contains_value": true, "name_found": true, "note": "States CIG began delivering gas 1 June 1928"},
+        {"url": "https://www.dumasmuseumandartcenter.org/cig.html", "ok": true, "contains_value": true, "name_found": true, "note": "Independent Texas Panhandle local-history account corroborating 1928 construction/service start"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same evidence base as the StartYear1 concern above: construction completed and gas service began in 1928, corroborated by two genuinely independent sources (Wikipedia and a local Texas museum page, neither tracing to GEM or to each other)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "5150.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "5150.00",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'design capacity of 5,150 MMcf/d' — exact match"},
+        {"url": "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "KM overview PDF corroborates the 4,300-mile system description alongside the SEC figure"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "5,150 MMcf/d confirmed exact match to the SEC 10-K design capacity figure, corroborated by the KM company overview document. This is a legitimate whole-system figure for this network-level row (no SegmentName), not a mismatched aggregate."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No current system-wide operating pressure figure found. The only pressure figure located anywhere in the sources searched is Wikipedia's mention that the ORIGINAL 1928 pipe was 'limited to 50 psi' — a historical figure for the original 20-22 inch line, not the current system's design/operating pressure, and citing it as today's Pressure value would be misleading (the system has been rebuilt and expanded many times since 1928, e.g. the 2008 High Plains Project). Searched SEC 10-K (no pressure figure given), KM overview PDF and pipeline2.kindermorgan.com tariff/operations pages (no pressure figure), and EIA historical workbook (project-level only, no system-wide pressure). Leaving UNRESOLVED rather than using the stale 1928 figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "6920.00", "LengthUnits": "km"},
+      "primary_value": "6920.00",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'approximately 4,300 miles of pipeline' = 6,920 km — exact match"},
+        {"url": "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'a 4,300 mile pipeline system' — independently matches the SEC figure"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "6,920 km (4,300 mi) confirmed via two independent Kinder Morgan-family documents that both state the identical 4,300-mile figure (SEC 10-K filed by the operating subsidiary, and a separate KM marketing/overview PDF) — treated as sufficiently independent in origin (regulatory filing vs. commercial document) though both ultimately trace to the same corporate parent; noted as a caveat rather than claiming fully separate-origin independence. This is a legitimate network-level total for this no-SegmentName row, not a mismatched system-vs-segment figure. Live natgas.kindermorgan.com index page states a slightly different '4,350-mile' figure — a minor discrepancy versus the 4,300-mile figure in the two cited documents, noted but not treated as invalidating since 4,300 mi is the more authoritative (SEC-filed) and doubly-corroborated number, and is also the number matching the sheet exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single system-wide diameter is attributable. This is a large, multi-decade, multi-segment network (1928 original construction through at least the 2008 High Plains expansion), and sources found give differing diameters for different eras/segments: the ORIGINAL 1928 pipe was 20-22 inches (Wikipedia); the EIA Natural Gas Pipeline Projects workbook lists the 2008 'CIG High Plains Project' segment at 24-inch/30-inch. No source gives one representative diameter for the system as a whole, and picking either figure would misrepresent a network row as if it were a single uniform pipe. Searched SEC 10-K (no diameter given), KM overview/tariff documents, and EIA workbook (project-level, not system-wide). Leaving UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per docs/reference/gem_schema.md, FuelSource must name a single upstream field/plant/facility, never the commodity type ('Natural Gas' would be wrong here, same as the documented Saudi-batch mistake). No single named upstream source is attributable: the SEC 10-K describes receipts from multiple production areas ('the Rocky Mountains and the Anadarko Basin'), and Wikipedia describes the original supply as Texas Panhandle gas fields feeding through the Canadian River Gas Company joint venture. This is a large multi-decade receipt-point network (dozens of interconnects across WY/CO/TX/OK/KS), not a single-field or single-plant-fed line, so no defensible single FuelSource value exists. Leaving UNRESOLVED rather than defaulting to a commodity-type or single-field guess."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartState/Province", "EndLocation", "EndState/Province"],
+      "primary_value_col": "StartState/Province",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "States receipt areas (Rocky Mountains, Anadarko Basin) and delivery areas (Colorado, Wyoming direct; California/Midwest/Southwest/Pacific NW indirect)"},
+        {"url": "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas", "ok": true, "contains_value": true, "name_found": true, "note": "Gives original-construction geography: Texas Panhandle, western Oklahoma, western Kansas, extending into Wyoming"}
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is the same defect documented in the validity concern above (StartState/Province holds basin names, not states; EndLocation contradicts EndState/Province). Evidence establishes the current values are wrong and supplies candidate STATES involved (Wyoming, Texas, Oklahoma, Kansas for receipts/origin; Colorado as the confirmed primary delivery state) but does not establish one clean replacement string, since this network row's true footprint spans multiple states rather than one clean start/end pair — filing as UNRESOLVED (routed instead through the validity concern's contested field) rather than guessing a specific value for a genuinely multi-state system."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 29,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No cost figure found for this network-level row. Original 1928 construction cost is not stated in any source located (Wikipedia, Dumas Museum, SEC 10-K); subsequent expansion costs (e.g. the 2008 High Plains Project in the EIA workbook) are project-level figures for individual capacity additions, not a system-wide total cost, and would misrepresent this base-network row if applied here. Searched SEC EDGAR full-text search, Wikipedia, Dumas Museum, and the EIA Natural Gas Pipeline Projects historical workbook. Leaving UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 158,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Colorado Interstate Gas Pipeline Co"},
+      "primary_value": "Colorado Interstate Gas Pipeline Co",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm",
+        "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/200155/000020015515000003/cig-20141231x10k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Filer is Colorado Interstate Gas Company, L.L.C."},
+        {"url": "https://pipeline2.kindermorgan.com/Documents/CIG/CIG_CI_Cpny_Overview.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "KM overview PDF names CIG as the operating entity"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed operator is the legal entity 'Colorado Interstate Gas Company, L.L.C.' (SEC filer name); the sheet's 'Colorado Interstate Gas Pipeline Co' is an informal label variant, not a wrong entity — no correction needed, just refs added."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 158,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Kinder Morgan", "Owner1%": "100.00%"},
+      "primary_value": "Kinder Morgan",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas",
+        "https://ir.kindermorgan.com/news/news-details/2012/El-Paso-Pipeline-Partners-Agrees-to-Acquire-Cheyenne-Plains-Pipeline-and-Additional-Interest-in-Colorado-Interstate-Gas-Company-From-El-Paso-Corporation/default.aspx"
+      ],
+      "verifications": [
+        {"url": "https://en.wikipedia.org/wiki/Colorado_Interstate_Gas", "ok": true, "contains_value": true, "name_found": true, "note": "'Coastal merged with El Paso Corp. in 1999, which was bought by Kinder Morgan in 2012'"},
+        {"url": "https://ir.kindermorgan.com/news/news-details/2012/El-Paso-Pipeline-Partners-Agrees-to-Acquire-Cheyenne-Plains-Pipeline-and-Additional-Interest-in-Colorado-Interstate-Gas-Company-From-El-Paso-Corporation/default.aspx", "ok": true, "contains_value": true, "name_found": true, "note": "KM IR press release specifically about acquiring the additional interest in Colorado Interstate Gas Company from El Paso Corporation, May 2012"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "100% Kinder Morgan ownership confirmed via two independent sources: Wikipedia's corporate-history narrative and a Kinder Morgan investor-relations press release specifically naming Colorado Interstate Gas Company as the acquisition target (El Paso Pipeline Partners' 2012 acquisition of the remaining interest from El Paso Corp, following KM's earlier 2012 acquisition of El Paso Corporation itself). This matches the ownership chain the batch brief already flagged as correct for P0168 (unlike Cheyenne Plains/Mojave, which still incorrectly show El Paso Corp as owner in this cohort)."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0282",
+      "url": "https://www.kindermorgan.com/operations/natural-gas/index",
+      "facts": "KM's own current operations page describes Wyoming Interstate Company (WIC) as '~850 miles' — this appears to disagree with the roster's figure for P0282 (approx. 800 km / ~497 mi). Worth flagging as a possible mileage mismatch for whoever researches P0282; not resolved here since P0282 is outside this row's scope."
+    },
+    {
+      "project_id": "P0219",
+      "url": "https://www.kindermorgan.com/operations/natural-gas/index",
+      "facts": "KM's operations page describes Mojave Pipeline as a '500-mile' system, closely matching the roster figure for P0219 — useful corroboration for that row's spec confirmation."
+    },
+    {
+      "project_id": "P0270",
+      "url": "https://www.kindermorgan.com/operations/natural-gas/index",
+      "facts": "KM's operations page describes TransColorado as a 'bi-directional 310-mile' pipeline, closely matching the roster figure for P0270 — useful corroboration for that row's spec confirmation. Also confirms TransColorado is operated separately from CIG/WIC despite common KM ownership, supporting the 'KM Rockies trio' brief note that these three stay as distinct rows."
+    }
+  ],
+  "summary": "P0168 (Colorado Interstate Gas) exists, is correctly classified, and its Length (6,920 km/4,300 mi) and Capacity (5,150 MMcf/d) are confirmed via SEC 10-K + Kinder Morgan corporate docs despite the wiki's own citation for that figure resolving to a banned wikidot host; two genuine defects found — StartYear1=2008 should be 1928 (spec concern, contested), and the Location cluster holds basin names instead of states plus an internal California/Colorado contradiction (attribution concern, contested, no single replacement value established)."
+}

@@ -1,0 +1,583 @@
+{
+  "project_id": "P0222",
+  "pipeline_name": "Natural Gas Pipeline Company of America System",
+  "sheet_row": 79,
+  "wiki": "https://www.gem.wiki/Natural_Gas_Pipeline_Company_of_America_System",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no existence/classification/duplicate action needed",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, major, active FERC-jurisdictional interstate natural gas transmission system. Confirmed via Kinder Morgan's own current (2026) operations page (Operations/Natural-Gas/Index), which describes NGPL as 'the largest transporter of natural gas into the high-demand Chicago-area market as well as one of the largest interstate pipeline systems in the country,' plus current-vintage FERC activity: a January 2025 FERC order authorizing NGPL's $72M Texas-Louisiana Expansion Project (PGJ + OGJ, both independently reporting the same docket) and Kinder Morgan, Inc.'s own FY2025 Form 10-K (SEC EDGAR, filed 2026-02-13), which lists 'NGPL' as a live equity-method investment with FY2025 miles/capacity/storage figures. Correctly classified Gas/transmission (not gathering/distribution/storage-only) -- every source describes long-haul interstate transportation to Chicago and Gulf Coast LNG/power markets. DUPLICATE CHECK: cross-checked against the full 46-row west-operating roster (Alliance, BC/Westcoast, Bison, Cheyenne Plains, CIG, Great Lakes, Kern River, TIGT, Mojave, North Baja/NBXP, GTN, Panhandle Eastern, REX/REX Cheyenne Hub, Ruby, Southern Trails, Trailblazer, TransColorado, Transwestern, Tuscarora, Viking, Williston Basin, WIC, Northern Border, Line 1600, Norte Crossing, North Mist, Sierrita, Santa Fe Mainline, El Paso/Carlsbad South, North Bakken Expansion, etc.) -- no overlap found. P0222's Texas Permian Basin/Gulf of Mexico-to-Chicago/Illinois corridor and its unique ~9,100-mile multi-lateral scale do not match any other roster row's geography or identity; no duplicate/relabeling risk identified. CAVEAT: this is a SYSTEM-level GEM row (segment_name blank) aggregating a large multi-lateral, multi-vintage network (original 1930-31 mainline + numerous later laterals/expansions, most recently the 2025 Texas-Louisiana Expansion's 30-inch Louisiana Line). Several recorded spec fields (Capacity, Diameter) likely reflect different vintages/scopes of this evolving system rather than a single current uniform value -- flagged separately below where material.",
+      "proposed_refs": [
+        "https://kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion",
+        "https://www.ogj.com/general-interest/government/article/55245137/ferc-approves-kinder-morgan-ngpl-expansion-new-rover-pipeline-delivery-point",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000011/kmi-20251231.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Update the operators_owners tab Owner row: Owner1 'Kinder Morgan' stays at 37.50%; Owner2 'Brookfield Infrastructure Partners' 25.00% is STALE and should be removed (or set to 0.00%) -- Brookfield fully exited NGPL; Owner3 'ArcLight Capital Partners' should be updated from 37.50% to 62.50%.",
+      "contested": {
+        "Owner2": "REMOVE (Brookfield Infrastructure Partners fully exited)",
+        "Owner2%": "0.00%",
+        "Owner3%": "62.50%"
+      },
+      "researcher_notes": "This is exactly the batch-flagged lead: P0222's ownership row (Kinder Morgan 37.5%; Brookfield 25%; ArcLight 37.5%) matches the June 2023 PRNewswire release EXACTLY -- but NGPL Holdings' cap table changed again after that. On 2025-03-21, Brookfield Infrastructure Partners L.P. signed an agreement to sell its ENTIRE remaining 25% stake in NGPL Holdings LLC to ArcLight Capital Partners (announced via PGJ, 2025-03-xx: 'Brookfield to Sell Pipeline Stake to ArcLight as Part of $1.7 Billion Exit,' explicitly stating the resulting split as Kinder Morgan 37.5% / ArcLight 62.5%). Independent trade-press search (Hart Energy, 'ArcLight Closes $1.7B Deal with Brookfield for NGPL Interests') reports the deal CLOSED 2025-05-13 -- Hart Energy's own site 403-blocks automated fetches (bot-wall, not evidence of deletion; not cited as a proposed_ref for that reason) but the closing is independently corroborated by: (1) Kinder Morgan's OWN CURRENT (2026) operations page, which now states 'NGPL is owned in part by Kinder Morgan, Inc. and funds managed by ArcLight Capital Partners, LLC' -- Brookfield is no longer named as an owner at all on the operator's current site; and (2) Kinder Morgan, Inc.'s own FY2025 Form 10-K (filed 2026-02-13, SEC EDGAR), whose equity-investments table still lists KMI's own NGPL interest at exactly 37.5% -- consistent with KM's stake being unaffected by a Brookfield-to-ArcLight transfer of the OTHER 25% (this does not by itself prove ArcLight now holds 62.5% rather than some other allocation, but it rules out any change to Kinder Morgan's share, and combined with the KM.com page no longer naming Brookfield, and the PGJ announcement's explicit 62.5%/37.5% split, the finding is corroborated by three independent origins: operator's own current site, KMI's own audited 10-K, and contemporaneous trade press). NOTE: even Wikipedia's live article (fetched today, 2026-09-09) is ALSO stale here -- its infobox/lead still says NGPL 'is owned by Kinder Morgan, Brookfield Infrastructure Partners, and ArcLight Capital Partners,' unrevised since the 2023 transaction -- so this is not merely a case of GEM lagging one better-informed secondary source; the correction requires going to the operator's own primary disclosure. A three-way ownership row with stale percentages, exactly the pattern this batch was told to expect.",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/march/brookfield-to-sell-pipeline-stake-to-arclight-as-part-of-17-billion-exit",
+        "https://kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000011/kmi-20251231.htm",
+        "https://www.canadianlawyermag.com/cl-plus/deals/2981"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Capacity is very likely stale/wrong. GEM records Capacity=1600.00 MMcf/d; Kinder Morgan, Inc.'s own FY2025 10-K discloses NGPL's total system 'Design (Bcf/d)' capacity as 8.40 Bcf/d (=8,400 MMcf/d), more than 5x the recorded value. Recommend updating Capacity to 8400.00 MMcf/d, pending a second fully independent corroborating figure (see notes -- a directionally consistent but unciteable low-quality source and an inconclusive EIA search were the only additional checks completed).",
+      "contested": {
+        "Capacity": "8400.00"
+      },
+      "researcher_notes": "KMI's FY2025 Form 10-K (SEC EDGAR, filed 2026-02-13) carries a disclosure table for KMI's equity-method pipeline investments: 'Asset | Ownership Interest | Miles of Pipeline | Design (Bcf/d) Capacity | Storage (Bcf) ... NGPL 37.5% 9,105 8.40 288'. The 9,105-mile and 288-Bcf-storage figures in the SAME row exactly match NGPL's known FULL system totals (not a 37.5% pro-rata slice -- e.g. KM's own site independently states NGPL's storage as 288 Bcf, matching this row precisely), which confirms the '8.40' Design (Bcf/d) figure is also NGPL's own total system design capacity, not a KMI-share-adjusted number: 8.40 Bcf/d = 8,400 MMcf/d. This is materially larger than GEM's recorded 1,600 MMcf/d (1.6 Bcf/d). Searched for a second fully independent source: EIA's public pipeline-capacity releases/today-in-energy pieces did not surface a company-specific NGPL design-capacity figure in the time available. A low-quality, unbylined, internally self-contradictory content-farm page (bluegasexpress.com) states both '6.5 Bcf peak day' (in a table) and '7.8 Bcf/d' (in prose) elsewhere -- excluded as a citable source (fails the source-quality bar; flagged in a prior pass of this research), but its order-of-magnitude (several Bcf/d, not 1.6) is at least directionally consistent with the 10-K figure being closer to correct than GEM's recorded value. Given this is a single verifiable primary-source figure (KMI's own audited 10-K) without a second independent corroboration located, staged as a CONCERN with tier=medium rather than a high-confidence fill -- Update leg should look for an EIA Form-567/pipeline-capacity-report figure or a FERC Form 2 filing for NGPL PipeCo LLC to close the second-source gap before applying.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000011/kmi-20251231.htm"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "Keep Diameter=24in (matches the pipeline's original 1930-31 construction spec, well-sourced), but flag that the current multi-lateral SYSTEM includes at least one other diameter -- no value change proposed.",
+      "contested": {},
+      "researcher_notes": "24-inch is confirmed as NGPL's ORIGINAL construction diameter: Continental Construction (NGPL's predecessor) was incorporated 'for the purpose of constructing a 24-inch natural gas pipeline between the Amarillo, Texas, oil fields and Chicago, Illinois' (Wikipedia, sourced to period newspapers). However, the modern system is multi-lateral and includes other diameters -- e.g. the January-2025 FERC-approved Texas-Louisiana Expansion Project uses NGPL's existing 'Louisiana Line, a system of 30-inch pipelines running from Montgomery County, Texas, to Vermilion Parish, Louisiana' (PGJ and OGJ, independently). Since this is a SYSTEM-level row (no segment breakout), a single Diameter value necessarily oversimplifies a system that has grown to include at least 24-inch and 30-inch mainline/lateral pipe. Not proposing a value change (24in remains defensible as the original/primary mainline spec and is the only diameter with a clean single-value citation), but flagging the caveat for anyone doing route/segment -level work on this system.",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+        "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion",
+        "https://www.ogj.com/general-interest/government/article/55245137/ferc-approves-kinder-morgan-ngpl-expansion-new-rover-pipeline-delivery-point"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion"
+      ],
+      "verifications": [
+        {
+          "url": "https://kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's current (2026) operations page lists NGPL among its active natural-gas pipeline systems, describing ongoing services (Firm/Interruptible Transportation, storage) -- confirms operating status by context."
+        },
+        {
+          "url": "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "January 2025 FERC order authorizing a new $72M expansion of NGPL's facilities -- an actively operating, actively expanding system, not dormant/cancelled."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status='operating' confirmed current via the operator's own live site plus a January-2025 FERC order approving new NGPL construction -- both independently dated within the last two years."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+        "https://kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Natural Gas Pipeline Company of America (NGPL) is a natural gas pipeline company.'"
+        },
+        {
+          "url": "https://kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM's page describes NGPL as transporting natural gas throughout."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Commodity unambiguous across every source opened; two independent refs."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "1930",
+        "ProposalMonth": "5"
+      },
+      "primary_value": "1930",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Continental Construction was incorporated about May 1, 1930, in Delaware and in Texas... for the purpose of constructing a 24-inch natural gas pipeline between the Amarillo, Texas, oil fields and Chicago, Illinois.' Continental Construction is NGPL's direct predecessor (renamed NGPL in Dec 1931)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single-source (Wikipedia, itself sourced to a period Chicago-area history book) for a ~1930 corporate/project date; searched for a second, independent primary source (FERC/ICC-era incorporation record, period newspaper archive) without success in the time available -- staged medium/single-source per standing rule 4(d)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1930",
+        "ConstructionMonth": "6"
+      },
+      "primary_value": "1930",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Work began in Kansas and Nebraska in June [1930], Iowa in July, and Indiana in September. The first hundred miles of pipe began to be laid in September 1930.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same Wikipedia article (read to exhaustion, per rule 4(b)) gives the construction start as June 1930 in Kansas/Nebraska, with work following in other states through September 1930. Single-source, medium tier; no independent second source located for this ~1930 construction date within scope."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1931",
+        "StartMonth1": "9"
+      },
+      "primary_value": "1931",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+        "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline was completed on August 29, 1931, and gas began moving on September 1.' -- exact match on GEM's recorded StartYear1=1931; adds StartMonth1=9 (September)."
+        },
+        {
+          "url": "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Corroborates NGPL's early-20th-century vintage/scale in general terms (does not itself restate the 1931 date) -- kept as a general-corroboration ref, not the source of the specific month."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "GEM's existing StartYear1=1931 is confirmed exactly by Wikipedia's specific date (gas began moving September 1, 1931); adding StartMonth1=9. The precise month/day is single-sourced to Wikipedia, but the year itself (1931) is corroborated by every source in the citation pool describing NGPL's ~1930-31 founding."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "1600.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "1600.00",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000011/kmi-20251231.htm",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "KMI's FY2025 10-K states NGPL's total system design capacity as 8.40 Bcf/d (8,400 MMcf/d), not 1,600 MMcf/d -- this source CONTRADICTS the recorded value rather than confirming it. No source found that supports 1,600 MMcf/d specifically."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source located that supports the sheet's recorded 1,600 MMcf/d. Every current-vintage source found (KMI's own 10-K; a low-quality but directionally-consistent content-farm page) points to a materially larger figure (~7.8-8.4 Bcf/d). Not marking REFS_ADDED because the existing value is not corroborated -- see the paired 'spec' concern in validity[] proposing Capacity=8400.00 with contested={'Capacity':'8400.00'}. Per standing rule 4(e), a discrepancy this large is a correction candidate, not a confirmable ref for the sheet's current number."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "n/a",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No operating-pressure figure for NGPL located in any source opened during this pass (Wikipedia, Kinder Morgan's operations pages, the KMI FY2025 10-K, PGJ/OGJ FERC-approval coverage, the 2023/2025 ownership-transaction press). This level of granularity is typically only in FERC tariff/Statement of Operating Conditions filings, which were not reached within scope. Genuinely unresearched -- MISSING_VALUE owed unit left UNRESOLVED, not treated as correct-by-silence."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "9100.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "9100.00",
+      "proposed_refs": [
+        "https://kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NGPL has approximately 9,100 miles of pipeline...' -- exact match."
+        },
+        {
+          "url": "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NGPL has approximately 9,100 miles of pipeline...' (2023 ArcLight release) -- exact match, independent origin/date from the KM.com page."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "9,100 mi confirmed by 2+ independent sources (Kinder Morgan's current site; the 2023 PRNewswire/ArcLight release), plus a close third data point: KMI's FY2025 10-K states 9,105 miles for the same asset -- a rounding-level difference (5 mi / 0.05%), noted per standing rule 4(d) ('a source agreeing within rounding IS a ref, at medium/high with the discrepancy noted'). LengthKnownUnits='mi' (miles, not km) is CORRECT for this row despite the batch's usual km convention -- every source states miles, and 9,100 mi is the figure, not 9,100 km. No units-bug."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Continental Construction (NGPL's predecessor) was incorporated 'for the purpose of constructing a 24-inch natural gas pipeline between the Amarillo, Texas, oil fields and Chicago, Illinois.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "24in confirmed as the ORIGINAL 1930-31 construction diameter (single primary-ish source: Wikipedia, sourced to period materials). See the paired validity caveat: the modern multi-lateral system also includes 30-inch pipe (the Louisiana Line, per the Jan-2025 Texas-Louisiana Expansion coverage), so a single Diameter value on this SYSTEM-level row is a simplification -- not proposing a change, but flagging for any future segment-level breakout."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "n/a",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source located addressing FuelSource (the fuel used to power NGPL's own compression, e.g. field gas vs. electric-drive) for this system. Not addressed in Wikipedia, Kinder Morgan's operations pages, the KMI 10-K, or the FERC-expansion trade coverage opened during this pass. Genuinely unresearched -- left UNRESOLVED rather than assumed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Texas Permian Basin, Gulf of Mexico",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Chicago",
+        "EndState/Province": "Illinois",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Texas Permian Basin, Gulf of Mexico",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+        "https://kindermorgan.com/Operations/Natural-Gas/Index"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Natural_Gas_Pipeline_Company_of_America",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'It owns pipelines which bring natural gas from the Texas Permian Basin and Gulf of Mexico into the Chicago area.' -- exact match to both StartLocation and EndLocation/EndState."
+        },
+        {
+          "url": "https://kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NGPL is the largest transporter of natural gas into the high-demand Chicago-area market... also a major transporter of natural gas to large [LNG] export facilities and other markets located on the Texas and Louisiana Gulf Coast.' Corroborates the Gulf Coast<->Chicago corridor; does not itself use the word 'Permian' for the supply side."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Start/end geography confirmed by an exact match in Wikipedia's lead sentence, corroborated independently by Kinder Morgan's own current operations page describing the same Gulf-Coast-to-Chicago corridor (though KM's page doesn't itself name 'Permian Basin' -- that specific supply-basin detail is single-sourced to Wikipedia). irregular=true on the worklist unit is appropriate given this SYSTEM-level row spans many receipt/delivery points beyond this simplified two-point summary; no change proposed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Found only an INCREMENTAL project cost -- the $72M Texas-Louisiana Expansion (2025) -- which covers one lateral upgrade, not the full SYSTEM. Not staged as SegmentCost because it would misrepresent this system-level row's total historical construction/segment cost."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "n/a",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No system-level cost figure located for this ~9,100-mile, near-century-old, multi-vintage system (original 1930-31 construction cost, if disclosed at all, was not found in the sources opened). Only a recent incremental project cost ($72M Texas-Louisiana Expansion) was found, which is the wrong scope for a SYSTEM-level SegmentCost figure -- left UNRESOLVED rather than stage a misleading partial figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Kinder Morgan"
+      },
+      "primary_value": "Kinder Morgan",
+      "proposed_refs": [
+        "https://kindermorgan.com/Operations/Natural-Gas/Index",
+        "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion"
+      ],
+      "verifications": [
+        {
+          "url": "https://kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NGPL is owned in part by Kinder Morgan, Inc. and funds managed by ArcLight Capital Partners, LLC. The entity has a dedicated management team and is operated by Kinder Morgan.' -- explicit, current, direct statement."
+        },
+        {
+          "url": "https://pgjonline.com/news/2025/january/ferc-approves-kinder-morgan-s-72-million-texas-louisiana-expansion",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Natural Gas Pipeline Company of America LLC, a subsidiary of Kinder Morgan (KM)' -- independent trade-press corroboration of the KM operating relationship, in coverage of a January-2025 FERC order."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator=Kinder Morgan confirmed explicitly and currently by the operator's own site ('operated by Kinder Morgan') plus independent January-2025 trade-press coverage describing NGPL as KM's subsidiary/operated asset."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 79,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "37.50%",
+        "Owner2": "Brookfield Infrastructure Partners",
+        "Owner2%": "25.00%",
+        "Owner3": "ArcLight Capital Partners",
+        "Owner3%": "37.50%"
+      },
+      "primary_value": "Kinder Morgan",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/march/brookfield-to-sell-pipeline-stake-to-arclight-as-part-of-17-billion-exit",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Confirms the recorded 2023 split was accurate AS OF 2023, but reports Brookfield agreed (2025-03-21) to sell its entire remaining 25% to ArcLight, resulting in KM 37.5% / ArcLight 62.5% -- CONTRADICTS the sheet's current Owner2/Owner3 percentages as of today."
+        },
+        {
+          "url": "https://kindermorgan.com/Operations/Natural-Gas/Index",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Kinder Morgan's current (2026) site names only Kinder Morgan and ArcLight as NGPL's owners -- Brookfield is absent, consistent with a completed exit."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The recorded Owner1/2/3 + percentages exactly match the June-2023 PRNewswire release, but that split is no longer current -- see the paired 'attribution' concern in validity[] (contested Owner2/Owner2%/Owner3%) proposing Kinder Morgan 37.5% / ArcLight 62.5% / Brookfield removed, based on the 2025-03-21 sale announcement (closed per trade press 2025-05-13) and corroborated by Kinder Morgan's own current site no longer naming Brookfield. Left UNRESOLVED here (rather than REFS_ADDED) because no source confirms the EXISTING sheet values are still accurate today; the correction is the deliverable, tracked in validity[]."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P0222 NGPL: existence/classification/duplicate confirmed (real, active, FERC-jurisdictional, no roster overlap); TWO spec/attribution concerns staged -- Owner is STALE (Brookfield's 25% sold to ArcLight, signed 2025-03-21/closed 2025-05-13 per trade press, corroborated by KM's own current site naming only KM+ArcLight; propose KM 37.5% / ArcLight 62.5% / Brookfield removed) and Capacity is likely WRONG (KMI's own FY2025 10-K states NGPL's design capacity as 8.40 Bcf/d = 8,400 MMcf/d vs the recorded 1,600 MMcf/d, single-source medium tier pending a second corroboration); Diameter confirmed-with-caveat (24in is the correct original spec, but the modern system also has 30in pipe). 9 of 14 units staged REFS_ADDED (Status, Fuel, Proposal, Construction, Start, Length, Diameter, Location, Operator); 5 UNRESOLVED (Capacity, Pressure, FuelSource, SegmentCost, Owner)."
+}

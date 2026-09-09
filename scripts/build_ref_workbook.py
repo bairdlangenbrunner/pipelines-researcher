@@ -461,9 +461,20 @@ def _contested_cols(r: dict) -> dict:
     """
     if (r.get("verdict") or "").strip() != "concern":
         return {}
+    def _cand(v):
+        # A few subagents write the value as {"sheet_value": ..., "corrected_value": ...}
+        # instead of the bare candidate the contract asks for (4 of 1,351 across the repo,
+        # 2026-09-09). Unwrap it rather than stringifying the dict into the cell comment.
+        if isinstance(v, dict):
+            for k in ("corrected_value", "proposed_value", "value"):
+                if k in v:
+                    v = v[k]
+                    break
+        return "" if v is None else str(v)
+
     c = r.get("contested")
     if isinstance(c, dict):
-        return {k: ("" if v is None else str(v)) for k, v in c.items() if str(k).strip()}
+        return {k: _cand(v) for k, v in c.items() if str(k).strip()}
     if isinstance(c, (list, tuple)):          # tolerate a bare column list
         return {str(k): "" for k in c if str(k).strip()}
     return {}

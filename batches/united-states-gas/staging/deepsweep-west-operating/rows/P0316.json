@@ -1,0 +1,530 @@
+{
+  "project_id": "P0316",
+  "pipeline_name": "South Saskatchewan Access Pipeline",
+  "sheet_row": 166,
+  "wiki": "https://www.gem.wiki/South_Saskatchewan_Access_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Real, correctly attributed small cross-border gathering line; see the two concerns below (Length spec, PipelineType classification) for the only open items.",
+      "contested": {},
+      "researcher_notes": "Existence: CONFIRMED independently, not GEM-derived. EIA's 'Natural Gas Pipeline Projects' historical workbook (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, 'Historical Projects (1996-2024)' tab, row for 'South Saskatchewan Access Project') lists: operator Steel Reef Pipelines US LLC, Completed 2018-12-14, Year In Service 2018, State(s) ND/SK, Miles 2.2, Additional Capacity 30 MMcf/d, Diameter 10.75in, Authority FERC, Docket CP18-24, Crosses State Border Yes, Notes 'Deliver gas to Canada for processing'. This is one of the two citations the sheet's own wiki page already lists (eia.gov/naturalgas/data.php, cite_note-eia-2, backlinks:8) -- I opened the live workbook behind that generic landing page. Independently, the harvested Pipeline News / Pipeline & Gas Journal PDF (also already cited by the wiki, cite_note-source1-1) carries a dated (11/17) planning-stage entry: 'STEEL REEF INFRASTRUCTURE CORP. -- Project: South Saskatchewan Access Pipeline ... Location: Portal, ND - North Portal, SK ... Start: 4Q 2018 ... Status: Project is undergoing public meetings.' Two independent origins (EIA federal dataset; trade-press planning tracker), neither GEM-derived, both naming the pipeline by its exact name and describing the same ND-SK crossing -- existence is solid, tier=high. DUPLICATE: checked against the full 46-row US-West roster, especially the Williston/Bakken cluster (P0158 Bison, P0281 Williston Basin, P2099 Northern Border, P0367 Valley Expansion, P3158 Traill County, P0306 Doosan Bobcat) that sits in the same basin. No overlap in operator (all six are WBI Energy/MDU or TC Energy/ONEOK systems; P0316 is Steel Reef, an unrelated midstream company) or route (P0316's 2-2.2mi feeder runs Portal ND to North Portal SK specifically for Steel Reef's own SK processing plant, not into any of those larger transmission systems). Not a duplicate/relabel of any roster row. ATTRIBUTION: Owner1 'Steel Reef Infrastructure' [100%] matches PGJ's 'STEEL REEF INFRASTRUCTURE CORP.' (name-variant only, no ownership dispute). Operator was blank on the sheet -- filled below as 'Steel Reef Pipelines US LLC' per EIA's 'Pipeline Operator Name' field, distinct from (subsidiary of) the Owner entity, which is a coherent parent/subsidiary split, not a conflict. CLASSIFICATION (Fuel/commodity): correctly gas, not oil/NGL -- both sources are natural-gas-specific (EIA's gas workbook; Pipeline News gas trade press). Overall: real pipeline, correctly classified as gas, correctly attributed, not a duplicate. The two genuine open items are filed as separate concern records below (Length: 2.00mi vs the sourced 2.2mi; PipelineType classification ambiguity given the FERC CP docket).",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Update LengthKnown from 2.00 to 2.2 (mi) to match the EIA record.",
+      "contested": {
+        "LengthKnown": "2.2",
+        "LengthKnownUnits": "mi"
+      },
+      "researcher_notes": "GEM currently records LengthKnown=2.00mi. EIA's Historical Projects workbook (the same dataset the wiki already cites for 8 other units on this row, and which exact-matches this row's Diameter [10.75in] and Capacity [30 MMcf/d] to the decimal) states Miles=2.2 for this project -- a small but real mismatch (10%), not a rounding-tolerant match. I looked for a second, independent length figure to arbitrate: the harvested Pipeline News PDF's pre-construction (11/17) entry says 'Length: 5 miles', but that is a ~13-month-earlier PLANNING-STAGE estimate (status 'undergoing public meetings', target start 4Q2018) for a project that was still being scoped -- final as-built length routinely differs from an early public-meeting estimate, so I discount it as the arbiter and treat EIA's post-completion (2018-12-14) figure as authoritative for the built asset. I could not reach FERC eLibrary's docket text for CP18-24 (JS-rendered app, blocks scripted/curl access; a second reference to the CP18-24 order itself would be the strongest tie-breaker) or the Canada Energy Regulator's site (site search 404'd) within this session's budget. Recommend the correction to 2.2mi on the strength of the one clean, exact-elsewhere-matching source; flagging as a concern rather than silently overwriting because I only have one clean value.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Have a human pull the actual FERC CP18-24 certificate order text and confirm whether the Commission treated this facility as jurisdictional transportation/transmission or exempt gathering; if transportation, consider reclassifying PipelineType off 'gathering'.",
+      "contested": {
+        "PipelineType": ""
+      },
+      "researcher_notes": "GEM records PipelineType=gathering. That is plausible on the functional description in both my sources (EIA: 'Deliver gas to Canada for processing' -- i.e. moving unprocessed gas from area wells to a foreign processing plant, the classic gathering pattern -- rather than moving pipeline-quality gas to a distribution system or end market). But the same EIA record lists Authority=FERC, Docket=CP18-24 -- a full FERC 'CP' certificate docket. Under NGA Section 1(b), true gathering facilities are normally EXEMPT from FERC's Section 7 certificate jurisdiction; needing an actual FERC certificate is at minimum suggestive that FERC's own jurisdictional determination for this specific facility differs from a plain 'gathering' exemption (it may instead reflect Section 3 border-crossing/export authorization, which does not by itself reclassify the functional type -- I could not distinguish the two without the order text). I tried to pull the CP18-24 order itself from elibrary.ferc.gov (a JS-only React app; scripted/curl access returns only an empty shell, no docket content) and from the Canada Energy Regulator's site (cer-rec.gc.ca search paths I tried both 404'd) and could not resolve either within this session's search budget (WebSearch was already exhausted batch-wide before I reached this row; DuckDuckGo/Bing/Google all returned bot-challenge or JS-shell pages under curl, and WebFetch on the same URLs returned unrelated or empty content). Filing this as a low-confidence classification flag rather than a confident reclassification -- I have a real, sourced reason to doubt 'gathering' is the whole story, but not a sourced alternative value, hence the blank contested value.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "low",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row for 'South Saskatchewan Access Project' shows Status=Completed, Completed Date 2018-12-14, Year In Service Date 2018 -- status is inferred from context per url_verifier convention (a completed, in-service project with no evidence of shutdown is 'operating'), not a literal token match."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Single source (EIA); searched for a second confirming current-operations source -- Steel Reef's own news archive (steelreef.ca/news) references a September 2022 item 'Steel Reef Expands its Gas Capture Service Offering in North Dakota', which would corroborate continued ND-area operations, but the archive's static markup doesn't expose that article's individual URL and I could not resolve a working direct link within budget, so I am not citing it (no fabricated URL). Noting it here as a lead, not a citation."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook -- the dataset itself is gas-only."
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed in Pipeline News (gas trade press) October 2018 issue's planned-projects gas pipeline tracker."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (US federal energy-data agency; gas trade press), both gas-specific by nature of the publication -- commodity is unambiguous."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not staging a confirming ref for 'gathering' -- see the classification concern in validity[]. Neither opened source uses the term 'gathering' or 'transmission'; EIA's descriptive note ('deliver gas to Canada for processing') is consistent with but doesn't state the functional classification, and the same source's FERC CP18-24 certificate detail cuts the other way (see concern). Staging a ref here would either falsely over-confirm the current value or require me to silently substitute a different one I can't source either -- routing this to the human-reviewed concern instead."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2017"
+      },
+      "primary_value": "2017",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Entry tagged '(11/17)' with Status='Project is undergoing public meetings' -- Pipeline News' own last-updated tag for this listing, describing the project at a pre-construction/public-comment stage as of November 2017."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Single source; the '(11/17)' tag is PGJ's internal tracking date rather than a literal 'proposal announced' date, so I'm filling only ProposalYear=2017 and leaving ProposalMonth blank rather than over-specify November. Searched for a second source: EIA's workbook carries no separate proposal/announcement field (only Completed/Year-In-Service), and I could not find an earlier Steel Reef or ND press item within the accessible fetch budget."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Neither source states a construction-start date distinct from the 2018-12-14 completion/in-service date. EIA gives only Completed Date; PGJ (Nov 2017) gives only a planned in-service target (4Q2018), not a construction-start date. Left blank rather than inferring a number from the completion date alone."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2018",
+        "StartMonth1": "December"
+      },
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Completed Date 2018-12-14; Year In Service Date 2018."
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Start: 4Q 2018' (planning-stage target, Nov 2017 vintage) -- agrees on 2018, consistent with EIA's exact December completion."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Year 2018 is two-source (EIA + PGJ), tier=high. Month (December) rests on EIA's exact date alone -- single-source for the month specifically, so treat StartMonth1 at medium confidence even though the year is high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "30.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "30.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Additional Capacity (MMcf/d) = 30 -- exact match to the sheet value."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Single clean source (exact match). PGJ's Nov-2017 pre-construction entry lists 'Capacity: 900 cm/d' -- a different, ambiguous unit I could not cleanly reconcile to MMcf/d, and it is a 13-months-earlier planning figure for a project still 'undergoing public meetings' at the time, not the as-built spec -- discounted rather than used as corroboration or as a conflicting value. No other independent capacity figure found within budget (FERC eLibrary JS-blocked; CER/CRE search pages 404'd)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operating pressure is not stated in either opened source (EIA's workbook has no pressure column; PGJ's planning entry doesn't state one). Left blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not staging a ref that would appear to confirm the sheet's current LengthKnown=2.00mi: my best source (EIA) actually states 2.2mi, a real mismatch -- see the Length spec concern in validity[], which carries the proposed correction and its own supporting ref. Leaving this fill UNRESOLVED rather than double-reporting the same finding two ways."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "10.75",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "10.75",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Diameter (Inches) = 10.75 -- exact match."
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Diameter: 11 inches' (Nov 2017 pre-construction estimate) -- 11in nominal is the conventional way of describing NPS-10 pipe, whose actual OD is exactly 10.75in; treated as consistent with, not conflicting with, EIA's as-built 10.75in."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources, consistent once the nominal-vs-actual-OD convention for NPS-10 pipe is accounted for."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Neither source classifies the gas source (e.g. associated/Bakken casinghead gas vs. conventional gas-well gas). Burke County ND sits in the Williston Basin/Bakken play where associated gas is common, but that is an inference from geography, not a sourced statement about this specific line -- left blank rather than guessed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Portal",
+        "StartState/Province": "North Dakota",
+        "StartCountryOrArea": "United States",
+        "EndPrefecture/District": "North Portal",
+        "EndState/Province": "Saskatchewan",
+        "EndCountryOrArea": "Canada"
+      },
+      "primary_value": "Portal",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "State(s)=ND,SK; Beg_State=ND; End_State=SK; Region(s)=Mountain, Canada."
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Location: Portal, ND - North Portal, SK' -- verbatim match to the sheet's Start/EndLocation."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources, exact match on every geography field already recorded."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Could not corroborate the sheet's existing $47,000,000 figure. EIA's 'Cost (millions)' field is blank for this project row; PGJ's Nov-2017 planning entry states no cost. Checked Steel Reef's own site/news for a disclosed project cost -- none found. FERC's CP18-24 order (which would likely state an estimated cost) was inaccessible via scripted fetch (elibrary.ferc.gov is JS-only). Leaving UNRESOLVED rather than confirming a figure I can't source -- this is an unconfirmed-but-not-contradicted value, so not raised as a separate spec concern."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "oo_sheet_row": 295,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Steel Reef Pipelines US LLC"
+      },
+      "primary_value": "Steel Reef Pipelines US LLC",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Operator Name = 'Steel Reef Pipelines US LLC' for the South Saskatchewan Access Project row."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Single independent source. Note this is a US subsidiary of the Owner entity 'Steel Reef Infrastructure' -- a coherent parent/operating-subsidiary split, not a conflict with the existing Owner1 value. Searched PGJ and Steel Reef's own site for a second source distinguishing operator from owner specifically; neither disambiguates the two names, so tier stays medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 166,
+      "oo_sheet_row": 295,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Steel Reef Infrastructure",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Steel Reef Infrastructure",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Entry attributed to 'STEEL REEF INFRASTRUCTURE CORP.' -- name-variant match to the sheet's 'Steel Reef Infrastructure' (missing 'Corp.' suffix only)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Single source naming the parent entity; confirms the name but not the 100% share (no source states an ownership percentage -- EIA only names the operating subsidiary, not the owner or its share). Searched for a second source on the ownership share specifically; none found within budget."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P3584",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's Historical Projects tab carries the whole 'North Bakken Expansion Project' (MDU Resources/WBI Energy) as ONE aggregate row, not five: Miles=62, Additional Capacity=245 MMcf/d, Diameter=20in (dominant segment), Cost=$260.5 million total, Completed 2022-01-26, FERC Docket CP20-52, Notes 'Bakken takeaway capacity to new markets in ND; connect WBI system to Northern Border pipeline'. This is the project-level total that the batch guidance already flags as probably restated identically (250 MMcf/d) across all five GEM segment rows (P3584-P3588) -- EIA's own aggregate is 245, not 250, and its single diameter (20in) doesn't match any individual segment's own diameter, confirming the aggregate-vs-segment concern and giving whoever works those five rows a dated, sourced total-project cost ($260.5M) they don't currently have."
+    }
+  ],
+  "summary": "Confirmed real, correctly attributed (gas, not duplicate) via EIA + Pipeline News, both independent of GEM; filled 9 owed refs (Status, Fuel, Proposal, Start, Capacity, Diameter, Location, Operator, Owner), left 6 UNRESOLVED (PipelineType, Construction, Pressure, Length, FuelSource, SegmentCost) with searches documented; flagged 2 concerns -- LengthKnown should likely be 2.2mi not 2.00mi (EIA), and PipelineType='gathering' sits oddly against a full FERC CP18-24 certificate (order text inaccessible, so filed low-confidence)."
+}

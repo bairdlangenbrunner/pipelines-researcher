@@ -123,7 +123,11 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             if r.get("independent") and len(vr) < 2:
                 D.append((pid, col, len(vr)))
             has_val = any(str(v).strip() for v in (r.get("values") or {}).values())
-            if vr and not has_val and not sentinel:
+            # Only a SOURCED record's refs reach a `[ref]` cell (build_ref_workbook.py never
+            # writes ref text for UNRESOLVED — see its "must never blank the prefilled current"
+            # rule), so an UNRESOLVED carrying the evidence for WHY a blank is correct, or why a
+            # recorded value is contested, is documentation, not an orphan.
+            if vr and not has_val and not sentinel and r.get("class_out") in SOURCED:
                 E.append((pid, col, "ref without a paired value"))
             if has_val and not vr and r.get("class_out") in SOURCED and not sentinel:
                 E.append((pid, col, "value marked sourced with no verified ref"))

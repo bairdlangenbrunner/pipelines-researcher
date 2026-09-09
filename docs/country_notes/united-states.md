@@ -31,10 +31,12 @@ any country — use it for both attributes and routes.
 
 US gas is **529 rows / 4,935 ref units**, ~12x the largest pass this repo has run, so it
 is being worked in slices, not as one country sweep. Slice 1 = the **217 operating rows
-last touched <=2023** ("stale operating cohort"), sub-sliced by region. **141 of them are
-swept** (batch 1 Texas 45, batch 2 Gulf Coast 50, batch 3 Appalachian/Mid-Atlantic 46) and
-batch 4 (West, 46 rows) is in flight. The 76 left after batch 3 split cleanly 46 West / 30 East,
-scoped as batches 4 and 5 — those two close the cohort. Outside the cohort, **312 US gas rows
+last touched <=2023** ("stale operating cohort"), sub-sliced by region. **187 of them are
+swept** (batch 1 Texas 45, batch 2 Gulf Coast 50, batch 3 Appalachian/Mid-Atlantic 46,
+batch 4 West 46). The 76 left after batch 3 split cleanly 46 West / 30 East; batch 4 took the
+West, and **batch 5 (East, 30 rows) closes the cohort** — Illinois 8, Oklahoma 6, NH 4, SC 4,
+MA 2, AR/NC/TN/TX/GA/VT 1 each. Batch 5 will be the first slice to run on the fixed subagent
+contract (standing rule 4(e) — an uncited value is owed a ref). Outside the cohort, **312 US gas rows
 have never been swept**: 109 operating (LastUpdated >= 2024), 97 proposed, 66 cancelled,
 26 construction, 11 shelved, 2 idle. That remainder is slice 2 and has not been scoped.
 
@@ -65,6 +67,33 @@ whole-country.
 therefore never appear in FERC eLibrary. Check the **Texas RRC** (T-4/T-4A permits) before
 treating a FERC gap as a signal — P0268's operator name was settled by an RRC permit.
 
+- **Staged, NOT applied (gas):** batch 4, `batches/united-states-gas/staging/deepsweep-west-operating/`
+  (46 operating West rows — the Rockies, Northern Plains, Pacific Northwest, Southwest and
+  Upper Midwest remainder, sliced by the state audit's `derived` state; deliverable
+  `pipelines_batch_20260909_1509_ET_united-states-gas_deepsweep-west.xlsx`). 861 records over
+  the 663-unit worklist -> REFS_ADDED 276, UNRESOLVED 123 on the refs leg, 332 fills
+  (293 folded to ref-only — the highest fold rate of the four slices), 130 validity findings
+  (75 `concern` + 2 `needs correction` — spec 43, attribution 28, classification 4, duplicate 2).
+  100 orange contested cells across 38 of the 46 rows on `Gas_Backend`, plus 51 across 23 rows on
+  `Gas_OperatorsOwners`. `contested` arrived structured on 72 of 77 concerns; the other 5 name no
+  backend column and stay row-level markers. **Gate J: 3** (P3170 Construction, P0239 and P3585
+  Operator). **Gate L: 36** uncited values never worked, concentrated in P0254 (9) and P0275 (9).
+  Ran in two passes — 29 rows, then the 17 that died on a session limit; the resumed 17 added only
+  1 new gap, so the split is not a quality seam.
+  Headline findings: **P0266 Cheyenne–Beatrice should be `retired`, not operating** (the only
+  status reclassification in the slice). **P0222's Owner2 Brookfield Infrastructure has fully
+  exited** — remove it and move Owner3 to 62.50%. **P0246 and P0248 both move to Tallgrass
+  Energy**; P0151 to Pembina (100%), P0207 to Berkshire Hathaway Energy, P0278 to DT Midstream,
+  P3170 to Bernhard Capital, P2573 to Northwest Natural. P0231 Northern Natural: LengthKnown
+  1,353 -> 1,377 mi and Capacity 2,900 -> 2,700 MMcf/d, both with a concrete corrected value.
+  P0273 Transwestern LengthKnown 4,168.20 and Capacity 2,100 contested; P0316 LengthKnown 2.2 mi.
+  P0194 Great Lakes runs **Manitoba -> Michigan**, not as recorded. P2517's SegmentCost 185M is
+  contradicted by FERC's own 132,805,200 (Docket CP18-103-000) — flagged, not applied.
+  **P2517, P2569 and P2615 are compression-only expansions**, so their blank Diameter is correct,
+  not an omission (the agents documented the FERC facility description rather than leaving the
+  cell silent). P0254's shard arrived in a schema the agent invented and was re-encoded onto the
+  contract by `staging/deepsweep-west-operating/repair_P0254_shard.py` (research unchanged;
+  pre-repair shard kept as `rows/P0254.json.preraw`).
 - **Staged, NOT applied (gas):** batch 3, `batches/united-states-gas/staging/deepsweep-appalachian-operating/`
   (46 operating Appalachian Basin + Mid-Atlantic rows — OH/PA/WV/NY/MI/NJ/MD/DE/VA/IN, sliced by
   the state audit's `derived` state; deliverable

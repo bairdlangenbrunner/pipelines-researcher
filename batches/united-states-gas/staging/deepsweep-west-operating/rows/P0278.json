@@ -1,0 +1,507 @@
+{
+  "project_id": "P0278",
+  "pipeline_name": "Viking Gas Transmission",
+  "sheet_row": 131,
+  "wiki": "https://www.gem.wiki/Viking_Gas_Transmission",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification; see separate attribution and spec concerns below",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, FERC-jurisdictional interstate natural-gas pipeline, confirmed independently well beyond GEM/gem.wiki. Sources agreeing: (1) DT Midstream's own current asset page (dtmidstream.com/asset/viking-gas-transmission/, verified) lists Viking among its owned/operated interstate pipelines, describing it as a '674-mile bi-directional interstate pipeline with 69,500 HP of installed compression' serving MN/WI/ND and connecting Canadian supply at Emerson, Manitoba; (2) ONEOK's own Dec-31-2024 press release (ir.oneok.com, verified) names Viking as one of three pipelines it sold; (3) a Federal Register notice, Docket No. CP23-41-000 (federalregister.gov, verified, government-hosted, independent of both companies) confirms FERC jurisdiction over 'Viking Gas Transmission Company'; (4) two independent 2014 news articles -- Twin Cities Pioneer Press (twincities.com, verified) and Natural Gas Intelligence (naturalgasintel.com, verified) -- cover a real pipe rupture/explosion in Marshall County, MN, naming 'Viking Gas Transmission Co./Pipeline' as the owner; (5) EIA's Natural Gas Pipeline Projects historical workbook (eia.gov, downloaded and read locally) logs five completed Viking expansion projects 1996-2009 (Northern Looping A & B, System-Wide Expansion, 1999 Expansion, System Integrity, Fargo Lateral Expansion), an independent government record of decades of real capital activity on this system. LOCATION/ROUTE: StartLocation Emerson/Manitoba/Canada -> EndLocation Marshfield/Wisconsin/United States is corroborated verbatim: NGI states 'Viking begins at an intersection with TransCanada Corp. in Manitoba, Canada near the U.S.-Canadian border ... south and southeast through Minnesota and into central Wisconsin where it terminates at a connection with TransCanada's ANR Pipeline at Marshfield, WI.' DT Midstream's page independently states it 'connects Canadian supply at Emerson, Manitoba' and serves 'Minnesota, Wisconsin and North Dakota.' No existence, duplicate, or classification defect found. DUPLICATE CHECK: not the same physical system as any other roster row -- P0194 Great Lakes Gas Transmission is a separate TC Energy system that also crosses MN/WI from Canada, but DT Midstream's own page lists Great Lakes (GLGT) as a separate INTERCONNECT of Viking, not the same pipe; the CER's TransCanada Canadian Mainline profile independently says the same ('South of Emerson, Manitoba, the Canadian Mainline connects with two pipelines - Viking Gas Transmission and Great Lakes Gas Transmission (GLGT)'), though I could not get that CER page (apps.cer-rec.gc.ca) through url_verifier -- curl fetches it fine (200, names both pipelines and Emerson explicitly) but the verifier's Python requests session gets a TLS/connection reset that plain curl with a browser UA does not; I read the page by hand and did not cite it in proposed_refs given the standing rule to cite only verifier-passed URLs. HARVESTED CITATIONS: all 4 of this row's harvested gem.wiki citations were opened. bit.ly/2sYWsSX resolves (curl -I, 301) to abarrelfull.wikidot.com/viking-gas-transmission-company-pipeline -- BANNED, discarded, matches the batch brief's explicit callout that this row's bit.ly link is an abarrelfull redirect. offshore-technology.com/marketdata/... returned 403 to every fetch attempt (blocked, not deleted -- kept as an unusable lead, not cited). oneok.com/vgt/about returned 200 and reads as current ('Viking Gas Transmission Company is owned and operated by ONEOK, Inc.') but is in fact a STALE, un-retired page -- see the attribution concern below; it is a cautionary example of why a live 200 is not proof a harvested citation is still correct. twincities.com was opened and used (existence + ownership-as-of-2014).",
+      "proposed_refs": [
+        "https://dtmidstream.com/asset/viking-gas-transmission/",
+        "https://ir.oneok.com/news-and-events/press-releases/2024/12-31-2024-140048785",
+        "https://www.federalregister.gov/documents/2023/02/21/2023-03462/viking-gas-transmission-company-notice-of-request-under-blanket-authorization-and-establishing",
+        "https://www.twincities.com/2014/05/25/northwestern-minnesota-gas-pipeline-explosion-it-was-just-hell-on-earth/",
+        "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "update Owner1/Owner1% on the Gas_OperatorsOwners tab from 'ONEOK Inc [100%]' to 'DT Midstream Inc [100%]' -- ONEOK sold Viking outright, effective Dec 31, 2024",
+      "contested": {
+        "Owner1": "DT Midstream Inc",
+        "Owner1%": "100.00%"
+      },
+      "researcher_notes": "STALE OWNERSHIP, textbook case of this batch's theme. ONEOK's own investor-relations press release (ir.oneok.com, verified, dated 2024-12-31) states: 'ONEOK, Inc. (NYSE: OKE) today announced that it has closed the sale of its three wholly owned interstate natural gas pipeline systems to DT Midstream, Inc. (NYSE: DTM), effective as of 11:59 p.m. Central on Dec. 31, 2024, for a total cash consideration of $1.2 billion' -- the three systems named are 'Guardian Pipeline, Midwestern and Viking Gas Transmission Pipelines.' DT Midstream's own current asset page (dtmidstream.com, verified) independently lists Viking Gas Transmission among the pipelines it owns and operates today. A DT Midstream press release filed as an SEC Form 8-K exhibit (sec.gov/Archives/edgar/data/1842022/000094787124001058/ss4288402_ex9901.htm, fetched directly with a compliant SEC User-Agent) states 'DT Midstream has acquired 100% operating ownership in Guardian Pipeline, Midwestern Gas Transmission and Viking Gas Transmission,' confirming the 100% share. These are two independent corporate parties' own statements (buyer and seller) plus a government-filed exhibit -- high confidence. The sheet's current Owner1 'ONEOK Inc [100%]' has been wrong for roughly nine months as of this sweep (2026-09-09). Ironically, one of this row's OWN harvested wiki citations -- oneok.com/vgt/about -- still returns HTTP 200 today and still reads 'Viking Gas Transmission Company is owned and operated by ONEOK, Inc.' with no Last-Modified header (dynamic Vercel render, no caching signal); ONEOK simply never took the page down after divesting. A blind 'the citation resolves and names the pipeline' check would have re-confirmed the WRONG owner -- this is exactly the kind of stale-but-live source the batch brief warned about. Owner/operator correction belongs on the Gas_OperatorsOwners tab per project convention, not ResearcherNotes.",
+      "proposed_refs": [
+        "https://ir.oneok.com/news-and-events/press-releases/2024/12-31-2024-140048785",
+        "https://dtmidstream.com/asset/viking-gas-transmission/",
+        "https://www.sec.gov/Archives/edgar/data/1842022/000094787124001058/ss4288402_ex9901.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify current Capacity against a FERC tariff/Form 2 maximum-daily-quantity figure; DT Midstream's own current asset page states ~1.0 Bcf/d design capacity for the system today, roughly double the sheet's 500 MMcf/d",
+      "contested": {
+        "Capacity": "1,000 (approx., needs a second confirming source)"
+      },
+      "researcher_notes": "DT Midstream's current asset page (dtmidstream.com, verified) states: 'The system has approximately 1.0 Bcf/d of design transportation capacity' -- i.e. ~1,000 MMcf/d, about double the sheet's recorded 500.00 MMcf/d. This is plausible rather than a simple error: EIA's Natural Gas Pipeline Projects historical workbook (downloaded from eia.gov and read locally) logs FIVE completed Viking capacity-expansion projects since the sheet's 1996 StartYear1 -- Northern Looping A & B (completed Nov 1996, $8.4M for the B loop), a System-Wide Expansion (completed Nov 1997, $27.9M, MB->WI), a 1999 Expansion ($21.4M, MB->MN->WI), a System Integrity project (completed Oct 2001, $3.9M, SK->ND->MN) and a Fargo Lateral Expansion (completed 2009, $14.6M, MN->ND). If 500 MMcf/d reflects the pipeline's ORIGINAL 1996 in-service capacity before these five expansions, and the sheet was never updated afterward, that would fully explain the gap -- but I could not find a primary source explicitly stating '500 MMcf/d initial capacity' to confirm that reading, and I could not find a second, precisely-numbered CURRENT capacity source independent of DT Midstream (Rextag's page only says Viking 'operates at over 50% capacity,' no absolute figure; offshore-technology.com, which likely has a number, returned 403 on every attempt). I am flagging this as a spec concern rather than filling a new number: the discrepancy is real and material (not rounding), but a single operator-stated figure isn't yet the 2-independent-source bar this project wants for a value change. A FERC Form 2 or tariff maximum-daily-quantity figure would settle it.",
+      "proposed_refs": [
+        "https://dtmidstream.com/asset/viking-gas-transmission/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify the original in-service year via a FERC certificate order (not found this session); EIA's project database is suggestive but not proof that 1996 is correct",
+      "contested": {
+        "StartYear1": ""
+      },
+      "researcher_notes": "The sheet's StartYear1=1996 could not be independently confirmed, and one detail makes it worth a second look rather than a pass-through. EIA's Natural Gas Pipeline Projects 'Historical Projects (1996-2024)' workbook (downloaded from eia.gov, read locally) contains EVERY Viking-branded entry as Project Type 'Expansion' -- never 'New Pipeline' -- starting with two November-1996 looping projects. EIA's own historical coverage begins in 1996, so this is NOT proof the mainline predates 1996 (an original 'New Pipeline' build completed earlier than the workbook's window simply would not appear at all), but it is also not confirmation that 1996 is the in-service year -- an 'Expansion' project by definition requires an already-operating base pipeline. Open-web summaries turned up two mutually-inconsistent claims about Viking's origin -- one that it 'started operations in 1967,' another that it was 'proposed in the late 1970s, approved by FERC in 1985, with construction not commencing until after 1993 and completion in 1996' -- but both traced back to a lightly-sourced AI-generated aggregator page (grokipedia.com) that I am excluding as unverifiable per the banned-tertiary-source spirit of this project (not literally on the blocklist, but not an acceptable primary/secondary source either). I did not have search budget remaining this session to pull the actual FERC certificate docket (this pipeline likely dates to a mid-1980s-to-mid-1990s CP-numbered proceeding) to settle it. Leaving StartYear1 as-is but flagging that its correctness is unconfirmed, not confirmed.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://dtmidstream.com/asset/viking-gas-transmission/",
+        "https://ir.oneok.com/news-and-events/press-releases/2024/12-31-2024-140048785"
+      ],
+      "verifications": [
+        {
+          "url": "https://dtmidstream.com/asset/viking-gas-transmission/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Current DT Midstream asset page describes Viking in the present tense as a live 674-mile system with ~1.0 Bcf/d design capacity, listed among the pipelines DT Midstream 'owns, operates and develops' today."
+        },
+        {
+          "url": "https://ir.oneok.com/news-and-events/press-releases/2024/12-31-2024-140048785",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "ONEOK's Dec-31-2024 release describes Viking as one of 'these essential natural gas systems' being handed to a new operator -- language describing an active operating asset, not a retired one."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status=operating is well supported by every source touching this row, including two 2014 rupture-and-restoration news stories that only make sense for an in-service pipeline. Cited the two clearest current-tense confirmations."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/",
+        "https://www.twincities.com/2014/05/25/northwestern-minnesota-gas-pipeline-explosion-it-was-just-hell-on-earth/"
+      ],
+      "verifications": [
+        {
+          "url": "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a rupture and explosion hit a portion of Oneok Partners LP's 24-inch diameter Viking Gas Transmission Pipeline' -- explicitly a natural-gas pipeline (article covers a gas rupture/explosion and service restoration)."
+        },
+        {
+          "url": "https://www.twincities.com/2014/05/25/northwestern-minnesota-gas-pipeline-explosion-it-was-just-hell-on-earth/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Headline 'Northwestern Minnesota gas pipeline explosion'; body: 'according to Viking Gas Transmission Co., which owns the pipeline.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fuel=Gas confirmed by two independent news outlets describing a natural-gas rupture on this exact pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched EIA's Natural Gas Pipeline Projects historical workbook (coverage begins 1996, no pre-1996 proposal record possible), the Federal Register archive (found only a 2023 blanket-authorization notice, CP23-41-000, unrelated to original certification), the Wikipedia stub article (no dates given), and this row's 4 harvested wiki citations (none give a proposal year). No verifiable proposal year found. An open-web aggregator claimed FERC approval in 1985, but that claim traced to grokipedia.com, an AI-generated wiki I am not treating as citable; excluded rather than staged."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same search as Proposal above. EIA's earliest logged Viking activity is two November-1996 looping/expansion completions (implying construction crews on the system that year, but for an EXPANSION, not necessarily the original build). No primary source states an original mainline construction start year. An open-web aggregator claim of 'construction commencing after 1993' traced to grokipedia.com and was excluded as unverifiable rather than staged."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1996"
+      },
+      "primary_value": "1996",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not confirm the sheet's 1996 in-service year with a primary source this session -- see the paired validity concern (spec/StartYear1) for the full reasoning: EIA logs Viking's earliest tracked activity as 1996 'Expansion' projects (never 'New Pipeline'), which is consistent with, but does not prove, an original 1996 in-service date, since EIA's own historical coverage starts in 1996. Two mutually-conflicting unverified web claims exist (1967 vs. 1985-approved/1996-completed); both traced to a non-citable AI aggregator and were excluded. Flagging as UNRESOLVED rather than re-citing the unconfirmed value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "500.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "500.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not support the sheet's CURRENT 500.00 MMcf/d with a ref -- the one capacity figure I found from the pipeline's current operator (DT Midstream, ~1.0 Bcf/d design capacity) disagrees materially. See the paired validity concern (spec/Capacity) for the full write-up and recommendation; not staging a replacement number here because I only have one strong (not yet 2-independent) source for the higher figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source opened (DT Midstream, ONEOK, EIA, Federal Register, NGI, Twin Cities, Rextag, PipeRiv) states an operating/MAOP pressure figure for Viking. Left blank rather than guessed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "671.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "671.00",
+      "proposed_refs": [
+        "https://dtmidstream.com/asset/viking-gas-transmission/",
+        "https://rextag.com/pages/viking-gas-transmission"
+      ],
+      "verifications": [
+        {
+          "url": "https://dtmidstream.com/asset/viking-gas-transmission/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Viking Gas Transmission is a 674-mile bi-directional interstate pipeline' -- within 0.4% of the sheet's 671.00 mi."
+        },
+        {
+          "url": "https://rextag.com/pages/viking-gas-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Viking Gas Transmission is a medium-sized pipeline covering 662 miles, linking the U.S.-Canada border to Wisconsin' -- 1.3% below the sheet's value; independent commercial pipeline-mapping dataset, not copied from DT Midstream language."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources (DT Midstream's own current asset page at 674 mi; Rextag's independently-mapped pipeline dataset at 662 mi) bracket the sheet's 671.00 mi within about 2%, well inside rounding/measurement-methodology tolerance for a decades-old system with multiple looping additions -- confirming rather than correcting the sheet's value, per the ref-support-equivalence convention."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/"
+      ],
+      "verifications": [
+        {
+          "url": "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a rupture and explosion hit a portion of Oneok Partners LP's 24-inch diameter Viking Gas Transmission Pipeline in northern Minnesota' -- explicit, name-matched diameter figure for the mainline in Marshall County, MN."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only one verifiable diameter figure found (24 in, for the mainline segment in Marshall County, MN, near the Canadian border, per the 2014 NGI rupture story). Staging it because it's a real, name-matched, sourced number for a field that is otherwise entirely blank -- but flagging the caveat explicitly: this describes ONE segment, not necessarily the full 671-mile system, which (like most 1990s-vintage interstate mainlines) may carry a larger diameter nearer the Emerson receipt point or compressor stations. An open-web claim of a 36-inch maximum diameter exists but traces to offshore-technology.com, which returned HTTP 403 on every fetch attempt this session (blocked, not confirmed) -- could not verify it, so did not stage it. A second, ideally system-wide, diameter source is still owed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "DT Midstream's page says Viking 'connects Canadian supply at Emerson, Manitoba' but does not name a specific basin, and none of the other sources opened name one either. Generic 'Canadian supply' is not a specific-enough basin name to stage against this project's controlled vocabulary. Left UNRESOLVED rather than guessed (e.g. assuming Western Canada Sedimentary Basin without a source stating it)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Emerson",
+        "StartState/Province": "Manitoba",
+        "StartCountryOrArea": "Canada",
+        "EndLocation": "Marshfield",
+        "EndState/Province": "Wisconsin",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Emerson",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/",
+        "https://dtmidstream.com/asset/viking-gas-transmission/"
+      ],
+      "verifications": [
+        {
+          "url": "https://naturalgasintel.com/news/oneoks-viking-gas-transmission-ruptured-in-minnesota/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Viking begins at an intersection with TransCanada Corp. in Manitoba, Canada near the U.S.-Canadian border ... south and southeast through Minnesota and into central Wisconsin where it terminates at a connection with TransCanada's ANR Pipeline at Marshfield, WI.' -- matches Emerson/Manitoba/Canada -> Marshfield/Wisconsin/United States exactly."
+        },
+        {
+          "url": "https://dtmidstream.com/asset/viking-gas-transmission/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'serves key utility customers in Minnesota, Wisconsin and North Dakota ... connects Canadian supply at Emerson, Manitoba.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both termini and the intervening states confirmed by two independent, name-matched sources; no change to the existing values."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's historical workbook gives dollar costs for five separate Viking EXPANSION projects since 1996 (Northern Looping B $8.4M/1996, System-Wide Expansion $27.9M/1997, 1999 Expansion $21.4M, System Integrity $3.9M/2001, Fargo Lateral Expansion $14.6M/2009) -- none of which represents the original mainline construction cost this field most likely wants, and none is a single figure for 'the pipeline' as a whole. Not staging any of these as SegmentCost given that ambiguity; noting them here so a future researcher doesn't re-discover the same EIA rows from scratch. No original-construction cost found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "DT Midstream"
+      },
+      "primary_value": "DT Midstream",
+      "proposed_refs": [
+        "https://dtmidstream.com/asset/viking-gas-transmission/",
+        "https://ir.oneok.com/news-and-events/press-releases/2024/12-31-2024-140048785"
+      ],
+      "verifications": [
+        {
+          "url": "https://dtmidstream.com/asset/viking-gas-transmission/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "DT Midstream's own asset page lists Viking Gas Transmission among the pipelines it 'owns, operates and develops.'"
+        },
+        {
+          "url": "https://ir.oneok.com/news-and-events/press-releases/2024/12-31-2024-140048785",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'As the new owner of these pipelines, DT Midstream ...' -- ONEOK's own release naming DT Midstream as the incoming owner/operator effective Dec 31, 2024."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator was blank; filled with the current operator (DT Midstream), the same entity that now holds Owner1 per the paired attribution concern. Two independent corporate-party sources (buyer's own site, seller's own release)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 131,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "ONEOK Inc",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "ONEOK Inc",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cannot support the CURRENT sheet value 'ONEOK Inc [100%]' with a ref -- it is stale. ONEOK sold Viking to DT Midstream effective Dec 31, 2024 (see the paired attribution concern in validity[], which carries the full sourcing and the recommended contested value: Owner1='DT Midstream Inc', Owner1%='100.00%'). Left this fill UNRESOLVED rather than citing a source for a value I have strong reason to believe is wrong."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0194",
+      "url": "https://dtmidstream.com/asset/viking-gas-transmission/",
+      "facts": "DT Midstream's Viking Gas Transmission asset page states Viking 'interconnects with TransCanada, Northern Natural, GLGT and ANR Pipeline' -- GLGT is Great Lakes Gas Transmission (P0194 in this roster). Confirms the two systems are separate but physically interconnected near the Manitoba/Minnesota corridor; not evidence of duplication, but a useful independent confirmation for whoever works P0194."
+    }
+  ],
+  "summary": "P0278 Viking Gas Transmission: real FERC-jurisdictional interstate pipeline, confirmed via DT Midstream, ONEOK's own release, a Federal Register FERC notice, and two independent 2014 news stories -- Status/Fuel/Location/Length confirmed and refs added; found the sheet's Owner1 'ONEOK Inc [100%]' is stale (ONEOK sold Viking to DT Midstream Dec 31, 2024 -- attribution concern, high confidence) and Capacity 500 MMcf/d looks stale against DT Midstream's current ~1.0 Bcf/d design-capacity figure (spec concern, medium). UNRESOLVED: Proposal, Construction, StartYear1 (flagged as unconfirmed, not confirmed -- EIA's project history is suggestive but not proof of a 1996 in-service date), Capacity's replacement value, Pressure, FuelSource, SegmentCost, and the Owner fill itself (routed to the attribution concern instead). Diameter filled at low confidence (24 in, one segment-specific 2014 source) with an explicit single-segment caveat."
+}

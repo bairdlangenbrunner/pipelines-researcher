@@ -1,0 +1,569 @@
+{
+  "project_id": "P2552",
+  "pipeline_name": "Line 1600 Gas Pipeline",
+  "sheet_row": 1315,
+  "wiki": "https://www.gem.wiki/Line_1600_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/ownership structure; see the separate spec concern on Capacity",
+      "contested": {},
+      "researcher_notes": "Existence: strongly confirmed, independent of GEM. Two San Diego Union-Tribune articles (Nikolewski, 2020-02-06 and 2020-03-18) describe Line 1600 in detail as SDG&E's existing 16-inch, ~50-mile natural gas transmission pipeline running from Rainbow Station (Fallbrook area) to Mission Station/Mission Valley, built 1949, serving ~150,000 eastern San Diego County customers. A federal PHMSA interpretation letter dated 2020-08-13 (addressed to SoCalGas, re: Line 1600 longitudinal joint factor) independently states 'Line 1600, a 50-mile San Diego Gas & Electric gas transmission pipeline located in San Diego County, California' originally constructed in 1949 with 16-inch A.O. Smith pipe -- a federal regulator source wholly separate from SDG&E's own filings and from the newspaper. A CPUC A.15-09-013 docket document (SDG&E/SoCalGas response to CPUC Data Request 7, 2018-03-06) gives 'Line 1600 (49.7 miles)' and 16-inch diameter pipe, and confirms it remains an active transmission pipeline (a competing 2015-2018 proposal to de-rate 45 miles of it to distribution service was DENIED by CPUC in 2018; the 2020 project that is actually proceeding, per the SDUT articles, replaces/hydrotests segments while KEEPING transmission service -- so PipelineType=transmission and Fuel=Gas both hold). Classification: correctly a gas transmission pipeline, not gathering/distribution -- confirmed by PHMSA present-tense in 2020 ('Line 1600...gas transmission pipeline') and by the CPUC NOP document rejecting the de-rate-to-distribution alternative. Duplicate check against the 46-row roster: no other row plausibly describes this physical line -- P0207 Kern River and P0219 Mojave (the other two rows in the 'California import trio' the brief calls out) are both interstate FERC pipelines terminating near Bakersfield under an old El Paso lineage; Line 1600 is an intrastate SDG&E line entirely within San Diego County with no interconnect or corporate link to either. No duplicate. Attribution: Owner1='Sempra Energy [100%]' matches the SDUT articles' description of SDG&E as 'fellow Sempra Energy affiliate' (Sempra is SDG&E's parent holding company, confirmed independently on Wikipedia's SDG&E article) -- this is the correct ultimate-parent convention used elsewhere in this batch (cf. Kern River/Berkshire Hathaway in batch 3), so Owner1 is CONFIRMED, not a defect. Operator was blank and is filled below. Opened/read to exhaustion: both SDUT articles, the CPUC NOP, the CPUC DR7 responses, the CPUC SCGC-23 (DR23) responses, and the PHMSA interpretation letter -- 5 of the row's harvested/found documents opened, 2 more harvested citations (sdgenews.com, newsdata.com) attempted and one failed url_verifier (sdgenews.com 404) and one lacked the pipeline name (newsdata.com, only discusses the $677M cost generically).",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct Capacity from 630 MMcf/d to approximately 65 MMcf/d (Line 1600's own nominal capacity); 630 MMcf/d is SDG&E's total system capacity, not this segment's",
+      "contested": {
+        "Capacity": "65"
+      },
+      "researcher_notes": "GEM's Capacity=630.00 MMcf/d for Line 1600 itself does not survive source-checking -- it is SDG&E's SYSTEM-WIDE transmission capacity 'with Line 1600 operating at 640 psig', not Line 1600's own throughput. Two CPUC A.15-09-013 docket documents (SDG&E/SoCalGas's own regulatory filings, same overall proceeding but two separate data-request responses filed a year apart) state this explicitly: the 2018-03-06 DR7 response says 'The nominal capacity of Line 1600 as currently operating as part of the SDG&E transmission system is 65 MMcfd' (contrasted with proposed Line 3602 at 500 MMcfd); the 2017-09-19 SCGC-23 (DR23) response repeatedly frames 'system capacity with Line 1600 operating at 640 psig is 630 MMcfd' as the SDG&E SYSTEM total, and separately reports ACTUAL measured 2017 flows through Rainbow Metering Station into Line 1600 of only 29.96 MMcfd average / 46.32 MMcfd maximum -- an order of magnitude below 630 and consistent with the ~65 MMcfd nominal figure. This is independently corroborated by the wiki's own cited SDUT article, which says the line 'provides only about 10 percent of capacity for the San Diego area' -- 10% of the system's 630 MMcfd is ~63, matching the 65 MMcfd nominal figure almost exactly and confirming 630 was never meant to describe this segment alone. GEM's wiki page appears to have pulled '630 million cubic feet per day' from a generic EIA natural gas data portal (www.eia.gov/naturalgas/data.php) that url_verifier confirms does NOT name Line 1600 or state 630 anywhere -- a classic aggregate-figure-on-a-segment error, likely compounded by conflating the SDG&E-system figure with the segment figure. Recommend Capacity -> 65 (MMcf/d), sourced to the CPUC DR7 response; note the DR7/SCGC-23 pairing is one origin (both are SDG&E/SoCalGas's own regulatory filings in one docket), but the SDUT journalism (independent of the applicant) corroborates the ~10%-of-system proportion independently, and the actual 2017 flow data (29.96-46.32 MMcfd) is real-world telemetry that independently brackets the 65 MMcfd nominal figure from below. This is not a MISSING_VALUE fill -- the cell already carries a value, so it is staged here as a validity concern rather than a REFS_ADDED fill (the source does not agree with the sheet's 630); see the matching fills[] entry on Capacity, which is closed UNRESOLVED for the same reason and points back here.",
+      "proposed_refs": [
+        "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf",
+        "https://www.sdge.com/sites/default/files/SCGC-23_Confidential_Redacted_1.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-02-06/line-1600-decision-by-the-cpuc"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "describes Line 1600 as an existing, currently-in-service line undergoing a replace/hydrotest project ('Crews have already started working...on an old natural gas pipeline')"
+        },
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-02-06/line-1600-decision-by-the-cpuc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "same, describes ongoing operation and the CPUC-approved repair/replace plan on the operating line"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both SDUT articles (2020-02-06, 2020-03-18) and the 2020-08-13 PHMSA letter (present tense, 'Line 1600...gas transmission pipeline', SDG&E 'currently implementing' a Test and Replace Plan) confirm the line is in active service, not proposed/shelved/cancelled."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-02-06/line-1600-decision-by-the-cpuc"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'SDG&E's Line 1600...carrying natural gas to customers'"
+        },
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-02-06/line-1600-decision-by-the-cpuc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'A 50-mile natural gas pipeline project along Interstate 15...Line 1600'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivial confirm -- both sources repeatedly call it a natural gas pipeline; also confirmed by the PHMSA letter and CPUC filings."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Line 1600 was built in 1949; no source found states when the line was originally PROPOSED (as distinct from constructed) -- searched the two SDUT articles, the CPUC NOP, DR7, SCGC-23 responses, and the PHMSA letter, none give a proposal date for the original 1949 construction (all documentation found concerns the 2015-2020 replacement/repair projects, not the original build). Leaving UNRESOLVED rather than assuming ProposalYear=ConstructionYear."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1949"
+      },
+      "primary_value": "1949",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-02-06/line-1600-decision-by-the-cpuc",
+        "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-02-06/line-1600-decision-by-the-cpuc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Originally constructed in 1949, Line 1600 is a 16-inch-wide pipeline'"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Line 1600 is a 16-inch diameter natural gas transmission pipeline originally constructed in 1949 with pipe manufactured by A.O. Smith Corporation'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins: SDUT journalism and a 2020 federal PHMSA interpretation letter, both stating construction in 1949 in near-identical language. Month not stated anywhere found; left blank rather than guessed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1949"
+      },
+      "primary_value": "1949",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Built in 1949, the line provides only about 10 percent of capacity'"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'originally constructed in 1949'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirms the existing sheet value StartYear1=1949; same two independent origins as Construction (SDUT + PHMSA)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [
+        "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf",
+        "https://www.sdge.com/sites/default/files/SCGC-23_Confidential_Redacted_1.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "states Line 1600's OWN nominal capacity is 65 MMcfd, not 630 -- contradicts the sheet's current value rather than confirming it"
+        },
+        {
+          "url": "https://www.sdge.com/sites/default/files/SCGC-23_Confidential_Redacted_1.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "confirms 630 MMcfd is the SDG&E SYSTEM total 'with Line 1600 operating at 640 psig', and reports actual 2017 flows into Line 1600 of only 29.96-46.32 MMcfd"
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Not filled here because the sources found CONTRADICT the sheet's existing value rather than support it -- see the paired validity concern (concern_type=spec, contested.Capacity='65') which carries the full finding and the recommended correction. Do not treat this UNRESOLVED as 'nothing found'; it means the current 630 could not be confirmed and should not be re-cited as-is."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {
+        "Pressure": "640",
+        "PressureUnits": "psig"
+      },
+      "primary_value": "640",
+      "proposed_refs": [
+        "https://www.sdge.com/sites/default/files/SCGC-23_Confidential_Redacted_1.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sdge.com/sites/default/files/SCGC-23_Confidential_Redacted_1.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "repeatedly frames '640 psig' as Line 1600's normal/current operating pressure scenario ('system capacity with Line 1600 operating at 640 psig is 630 MMcfd'; DR 23.2.1/23.3.1 both list 640 psig as the baseline)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single-origin (SDG&E/SoCalGas's own 2017 CPUC A.15-09-013 filing) for the specific 640 psig figure. A 2020 PHMSA interpretation letter independently corroborates the MAGNITUDE -- it states the original 1949 design MAOP was 812.5 psig and a 2019 third-party audit found 'the current established MAOP' is below the audit's 800 psig floor -- consistent with 640 but does not restate that exact number, so it does not fully independently confirm the figure. Searched NPMS/PHMSA public data and the CPUC NOP for a second exact-value source; neither states a numeric current MAOP for Line 1600. Staged at medium given the single precise-value source, flagged honestly rather than inflated to high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "80.50",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "80.50",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+        "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a 50-mile project...on...Line 1600' (50 mi = 80.5 km)"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Line 1600, a 50-mile San Diego Gas & Electric gas transmission pipeline'"
+        },
+        {
+          "url": "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'the entirety of Line 1600 (49.7 miles)'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Three independent origins (SDUT journalism, federal PHMSA letter, CPUC docket filing) converge on ~49.7-50 miles = 79.98-80.5 km, matching the sheet's 80.50 km. Converted explicitly: 50 mi x 1.60934 = 80.47 km; 49.7 mi = 79.98 km -- both round to the sheet's 80.50 km within normal rounding of a 'about 50 miles' figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "16.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "16.00",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+        "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a pipeline 16 inches in diameter'"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Line 1600 is a 16-inch diameter natural gas transmission pipeline'"
+        },
+        {
+          "url": "https://ia.cpuc.ca.gov/Environment/Info/ene/sandiego/Documents/PSRP_CPUC%20PEA%20DR%207%20Responses%20(03-06-18).pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'16-inch-diameter pipe' referring to Line 1600"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Three independent origins agree exactly on 16 inches."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found identifies a specific supply basin/origin for the gas moving through Line 1600 -- it is a San Diego County LOCAL transmission line fed from SDG&E's broader receipt-point network (Otay Mesa, Line 3010 from the LA Basin, interstate connections), not tied to one basin the way an interstate trunk is. Searched the CPUC NOP, DR7, SCGC-23, and PHMSA letter; none characterize a fuel source/basin of origin for this segment specifically. Left blank rather than guessing a generic 'conventional gas' label with no citation behind it."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Rainbow",
+        "StartState/Province": "California",
+        "EndLocation": "Mission Valley, San Diego",
+        "EndState/Province": "California"
+      },
+      "primary_value": "Rainbow",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Line 1600 runs north and south between the Rainbow Station and the Mission Station' (both in San Diego County)"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Line 1600...located in San Diego County, California'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartCountryOrArea/EndCountryOrArea were already correctly 'United States'; both state cells were blank (this row is one of the batch's flagged blank-state rows). Rainbow is an unincorporated community in northern San Diego County near Fallbrook (site of SDG&E's Rainbow Metering Station, the line's documented northern terminus); the line terminates at Mission Station/Mission Valley in the city of San Diego (per the CPUC NOP: 'terminates in Mission Valley, San Diego'). Both termini are confirmed in California by SDUT (independent journalism) and the PHMSA letter (independent federal source); the CPUC NOP document additionally corroborates the Rainbow Metering Station -> Mission Valley routing."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No original construction cost for the 1949 line is available anywhere found. The only cost figure in the sources ($677 million, wiki's 'Replacement Project' section) belongs to the SEPARATE 2020 Line 1600 Pipeline Safety Enhancement Plan (a distinct proposed/in-progress replacement project, not this operating segment's own historical cost) and must not be pasted onto this row's SegmentCost -- doing so would misattribute a 2020 multi-decade replacement program's price tag to a pipeline built in 1949. Left UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1952,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(\u4e1a\u4e3b\u5355\u4f4d)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "San Diego Gas & Electric"
+      },
+      "primary_value": "San Diego Gas & Electric",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'SDG&E's Line 1600 runs north and south...'"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/standards-rulemaking/pipeline/interpretations/74296/san-diego-gas-and-electric-and-southern-california-gas-company-pi-20-0011-08-13-2020-part192-113.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Line 1600, a 50-mile San Diego Gas & Electric gas transmission pipeline'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The wiki page lists 'Operator: San Diego Gas & Electric, SoCalGas' for both Line 1600 and the replacement project, but every primary source that discusses Line 1600 itself (not the broader PSRP/Line 3602 project) attributes it solely to SDG&E ('SDG&E's Line 1600', 'the SDG&E transmission system', PHMSA's 'San Diego Gas & Electric gas transmission pipeline'). SoCalGas is SDG&E's co-applicant on the broader multi-decade replacement PROGRAM and Line 3602 proposal, not a stated operator of Line 1600 itself. Staged Operator=San Diego Gas & Electric only; flagging that the wiki's dual-operator listing looks like it conflates the existing line with the joint replacement project."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1315,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Sempra Energy",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Sempra Energy",
+      "proposed_refs": [
+        "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+        "https://en.wikipedia.org/wiki/San_Diego_Gas_%26_Electric"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sandiegouniontribune.com/business/energy-green/story/2020-03-18/four-groups-join-fight-against-natural-gas-pipeline-project-along-i-15",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'SDG&E, working with fellow Sempra Energy affiliate Southern California Gas' -- confirms Sempra Energy as SDG&E's parent while discussing Line 1600 directly"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/San_Diego_Gas_%26_Electric",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "independently confirms SDG&E is a wholly-owned subsidiary of Sempra Energy; this source does not name Line 1600 specifically, so it corroborates the corporate-parentage fact only, not the pipeline attribution"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirms the sheet's existing Owner1='Sempra Energy [100%]' -- correct under this project's convention of naming the ultimate corporate parent (SDG&E is a wholly-owned Sempra Energy subsidiary), consistent with how batch 3 handled Kern River/Berkshire Hathaway. Primary named-pipeline source is the SDUT article; Wikipedia is supplementary general-corporate corroboration only (name_found=false for that source, noted honestly)."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "Existence/classification/ownership confirmed via SDUT x2 + a federal PHMSA letter + CPUC docket filings; flagged Capacity=630 MMcf/d as a system-total-on-segment spec error (actual Line 1600 capacity ~65 MMcf/d); filled Status/Fuel/Length/Diameter/Start/Construction/Location/Operator/Owner refs, Pressure (medium), UNRESOLVED on ProposalYear/FuelSource/SegmentCost/Capacity."
+}

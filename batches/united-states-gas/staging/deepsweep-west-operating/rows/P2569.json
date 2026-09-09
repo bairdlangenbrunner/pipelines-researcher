@@ -1,0 +1,257 @@
+{
+  "project_id": "P2569",
+  "pipeline_name": "North Baja Gas Pipeline",
+  "sheet_row": 1328,
+  "wiki": "https://www.gem.wiki/North_Baja_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "North Baja XPress Project (NBXP)",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/duplicate status; see separate spec concern for Capacity",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: confirmed independently of GEM. FERC Docket CP20-27-000 (Federal Register notice 2020-01-07; FERC's own Sept-2020 Environmental Assessment, cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf) describes North Baja Pipeline LLC's Dec-16-2019 application to build the North Baja XPress Project: a new 31,900-ISO-hp Titan 250 compressor unit at the existing Ehrenberg Compressor Station (La Paz County, AZ) plus modifications to the El Paso Meter Station (La Paz County, AZ) and Ogilby Meter Station (Imperial County, CA). FERC's clarifying order (Reuters wire, reprinted by pgjonline.com 2023-05-30 and worldpipelines.com 2023-06-01 -- same wire story, counted once) confirms the expansion was put into full service by May 2023. EIA's Natural Gas Pipeline Projects dataset (Historical Projects tab, row 1085, last updated 2023-07-06) independently lists this exact project (Docket CP20-27, Status=Completed, Completed Date 2023-05-25) -- a second, independent origin from the FERC docket/Reuters wire. Real project, not a GEM-only entity. CLASSIFICATION: correctly an interstate natural-gas transmission capacity expansion (FERC Authority=Interstate per EIA), not a gathering/process line; Fuel=Gas is trivially correct. DUPLICATE: NOT a duplicate of P0226 (the North Baja mainline). P2569/NBXP is a distinct FERC certificate (CP20-27) adding compression-only incremental capacity on the existing P0226 route -- GEM's segment-vs-project convention of a separate row for the expansion phase is correct and matches how EIA and FERC themselves track it (a separate docket/project entry layered on the existing pipeline). LengthKnown=0 / Diameter=blank on P2569 are CORRECT per the 'expansion with no new physical pipe' rule -- the FERC EA describes only compressor-unit and meter-station modifications, no new pipeline segment, and EIA's own Miles field for this project is blank/None. ATTRIBUTION: Owner1='North Baja Pipeline LLC' [100%] confirmed by TC Energy's own asset page (tcenergy.com/operations/natural-gas/north-baja-pipeline-system/, live, verified) and by the FERC docket, which names 'North Baja Pipeline, LLC (\"North Baja\")' as the certificate applicant/holder -- a second, independent corroboration comes from en.wikipedia.org/wiki/North_Baja_Pipeline, which places the asset under the TC Energy corporate family (though its 'TC PipeLines LP' parent reference looks stale post-2021 rollup -- that's a P0226-level ownership-chain question, not a P2569 defect). MINOR SCHEMA CAVEAT (not a fix, just a flag): the Location unit is marked 'irregular' in the worklist because 'Ogilby' sits under EndPrefecture/District while EndLocation and StartPrefecture/District are blank -- FERC's docket gives the county-level detail (La Paz County AZ start / Imperial County CA end) that would properly fill those blanks, but this looks like a data-entry convention shared with the parent row P0226 rather than a P2569-specific error, so I'm flagging rather than restaging the whole Location block. DELAY: Delayed=yes/DelayType=inferred is defensible and probably UNDERSTATED -- FERC's own 2020 EA states North Baja's ORIGINAL proposed schedule was construction starting Oct 2021 for an in-service date of Nov 1, 2022; the actual in-service (FERC order effective May 25/30, 2023, EIA Completed Date 2023-05-25) is about 6 months later than that stated target. That's a documented schedule slip against the applicant's own stated plan, not just an inference from silence -- a reviewer could reasonably upgrade DelayType to 'confirmed', though I'm leaving the existing lowercase-vocab value alone since no source uses the word 'delay' explicitly. Read all 6 of this row's harvested wiki citations plus the FERC EA and Federal Register notice (8 documents total); could not read northbajapipeline.com/company_info/ or tcplus.com/North%20Baja (both TC-affiliate mirror pages, same origin as tcenergy.com, low incremental value) or the dead-looking pre-2018 TransCanada citations -- didn't chase further since tcenergy.com/EIA/FERC already independently corroborate everything they'd support.",
+      "proposed_refs": [
+        "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf",
+        "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/",
+        "https://en.wikipedia.org/wiki/North_Baja_Pipeline"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct Capacity from 450 MMcf/d to 495 MMcf/d",
+      "contested": {"Capacity": "495.00"},
+      "researcher_notes": "The sheet's Capacity=450.00 MMcf/d does NOT survive verification -- it is a stale figure. THREE independent origins all state 495, not 450: (1) FERC's own Sept-2020 Environmental Assessment for Docket CP20-27 states explicitly, in its own words: '495,000 dekatherms per day (495 million cubic feet per day) of incremental firm delivery capacity' (cms.ferc.gov EA PDF, p.1 and p.9 of the extracted text) -- this is the primary regulatory document, and the SAME 495,000-Dth/d figure already appears in the Dec-2019 Federal Register notice of application, i.e. the project was proposed at 495, not 450, from day one. (2) EIA's own Natural Gas Pipeline Projects dataset -- the SAME dataset GEM's wiki cites as its source for 450 -- has been updated since GEM last pulled it: the current file (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, row 1085 of the Historical Projects tab, Last Updated Date 2023-07-06) now reads 'Additional Capacity (MMcf/d) = 495', not 450. GEM's own wiki page footnotes the 450 figure to an EIA access dated July 2020 -- i.e. a since-superseded EIA snapshot from before the project was finalized. (3) Reuters' wire story on FERC's May-2023 in-service order (reprinted by pgjonline.com and worldpipelines.com) states '495 MMcf/d' / '0.495 billion ft3/d' throughout. So: FERC docket (2019 AND 2020) + the current EIA dataset + the Reuters wire on the completed project all agree on 495; nothing corroborates 450 except a superseded EIA snapshot from mid-project. Capacity should be corrected to 495.00 MMcf/d; CapacityUnits (MMcf/d) is unchanged.",
+      "proposed_refs": [
+        "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Status [ref]", "value_cols": ["Status"], "primary_value_col": "Status",
+      "values": {"Status": "operating"}, "primary_value": "operating",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion", "ok": true, "contains_value": true, "name_found": true, "note": "'has received permission from U.S. energy regulators to put the North Baja natural gas pipeline expansion...into service' -- confirms operating"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab row 1085: 'North Baja Xpress Project', Status='Completed', Completed Date 2023-05-25"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent origins (Reuters wire via PGJ; EIA govt dataset) both confirm the project is complete/in-service, i.e. operating."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Fuel [ref]", "value_cols": ["Fuel"], "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": [
+        "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf",
+        "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/"
+      ],
+      "verifications": [
+        {"url": "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC EA repeatedly describes the North Baja system and NBXP as natural-gas pipeline facilities"},
+        {"url": "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/", "ok": true, "contains_value": true, "name_found": true, "note": "'The 86-mile (138-km) North Baja Pipeline System delivers natural gas...'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Trivially confirmed natural gas by every source; two independent origins cited."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Proposal [ref]", "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2019", "ProposalMonth": "12"}, "primary_value": "2019",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application"
+      ],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "'On December 16, 2019, North Baja Pipeline, LLC...filed in Docket No. CP20-27-000, an application...for authorization to construct and maintain its North Baja XPress Project.'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Single strong primary source (FERC's own Federal Register notice of the filing date) -- this IS the filing itself, about as authoritative as a proposal date gets. Searched PGJ/Reuters/EIA/Wikipedia for a second, separately-dated confirmation of the December 2019 filing date specifically; none states the filing date independently (they reference the FERC docket, not the filing date). Added ProposalMonth=12 (blank on the sheet) since the source gives it precisely."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Construction [ref]", "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2022"}, "primary_value": "2022",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion", "ok": true, "contains_value": true, "name_found": true, "note": "'FERC approved construction of the North Baja expansion in April 2022.'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "This source states the certificate-to-construct order came in April 2022, which is the basis for ConstructionYear=2022 -- but it is an authorization date, not an on-the-ground 'broke ground' statement. FERC's 2020 EA shows the ORIGINALLY proposed construction start was October 2021 (never met, since the certificate itself wasn't granted until April 2022) -- that superseded plan is itself evidence supporting the Delay flag, not a competing ConstructionYear. Searched for a second source stating an explicit physical construction-start month (EIA dataset has no construction-start column, only Completed Date); none found -- flagging as medium/single-source rather than fabricating a month."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Start [ref]", "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"], "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2023", "StartMonth1": "5"}, "primary_value": "2023",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion", "ok": true, "contains_value": true, "name_found": true, "note": "'In a filing on Tuesday [May 30, 2023], FERC clarified that its May 25 order included approval for all remaining facilities of the North Baja expansion.'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects row 1085: Completed Date=2023-05-25, Year In Service Date=2023"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent origins (Reuters wire via PGJ; EIA govt dataset) both pin the in-service/completion date to May 2023, month 5 -- confirms StartYear1=2023 and adds the month."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Delay [ref]", "value_cols": ["Delayed", "DelayType"], "primary_value_col": "Delayed",
+      "values": {"Delayed": "yes", "DelayType": "inferred"}, "primary_value": "yes",
+      "proposed_refs": [
+        "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf",
+        "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion"
+      ],
+      "verifications": [
+        {"url": "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'North Baja proposes to begin construction in October 2021 to meet an anticipated in-service date of November 1, 2022.' -- the original target"},
+        {"url": "https://pgjonline.com/news/2023/may/ferc-approves-tc-energys-us-mexico-north-baja-natural-gas-pipeline-expansion", "ok": true, "contains_value": true, "name_found": true, "note": "actual in-service clarified May 2023 -- about 6 months past the original Nov-2022 target"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "The FERC EA's stated original schedule (in-service Nov 1, 2022) vs. the actual May 2023 completion is a documented ~6-month slip -- this is stronger than a silent inference and arguably supports upgrading DelayType to 'confirmed', but no source uses the word 'delay' explicitly so I left the vocab as-is and flagged the upgrade option in the validity notes instead of changing controlled vocab unilaterally."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Capacity [ref]", "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "NOT staged as REFS_ADDED: the sheet's current value (450 MMcf/d) does not hold up against three independent sources (FERC's 2019 filing and 2020 EA, the current EIA dataset, and the Reuters wire), all of which state 495 MMcf/d. Rather than cite a ref that would support the wrong number, this is raised as a validity spec concern (contested Capacity -> 495) for Update to apply; see validity[] entry."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Pressure [ref]", "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched the FERC EA (full text, no MAOP/psig figure given for the compressor-station-only scope), the Federal Register notice, PGJ/Reuters/World Pipelines coverage, the TC Energy asset page, and EIA dataset (no pressure column) -- no operating-pressure figure found anywhere for NBXP specifically. Leaving blank rather than estimating from a typical interstate-pipeline MAOP range."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Length [ref]", "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "0.00", "LengthKnownUnits": "km"}, "primary_value": "0.00",
+      "proposed_refs": [
+        "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "the entire Project scope is a new compressor unit + restaged compressor units + meter-station modifications -- no new pipeline segment is described anywhere in the EA"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects row 1085: Miles field is blank/None for this project"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed zero new pipe length -- both the FERC EA's facility description and EIA's own Miles field agree this is a compression-only capacity expansion. CONFIRMING per the standing 'expansion with no new physical pipe' rule, not fixing."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Diameter [ref]", "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [
+        "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf"
+      ],
+      "verifications": [
+        {"url": "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "no new pipeline segment (only compressor/meter-station work) -- a capacity expansion has no diameter of its own"}
+      ],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Blank is CORRECT, not owed: per the standing rule (expansion with no new physical pipe -> Diameter blank), and per the FERC EA's facility description (compressor/meter work only, no new pipe segment), there is no diameter to report for this row. Leaving blank rather than fabricating -- confirms the scope note that P2569 is already correct here."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "FuelSource [ref]", "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "TC Energy's own system page (tcenergy.com/operations/natural-gas/north-baja-pipeline-system/) states the North Baja system 'delivers natural gas produced from West Texas and the Rocky Mountains region' -- but per gem_schema.md's FuelSource convention (a NAMED field/plant, not a broad multi-state region, and never defaulted to something vague), this is too diffuse to stage as a value. Searched FERC EA, Federal Register notice, EIA and trade press for a specific named upstream field/plant feeding NBXP; none found. Leaving blank per the schema's own instruction not to default it."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Ehrenberg", "StartState/Province": "Arizona", "StartCountryOrArea": "United States", "EndPrefecture/District": "Ogilby", "EndState/Province": "California", "EndCountryOrArea": "United States"},
+      "primary_value": "Ehrenberg",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application",
+        "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/"
+      ],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "'existing Ehrenberg Compressor Station located in La Paz County, Arizona...El Paso Meter Station in La Paz County, Arizona, and Ogilby Meter Station in Imperial County, California'"},
+        {"url": "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/", "ok": true, "contains_value": true, "name_found": true, "note": "'The pipeline starts near Ehrenberg, Ariz., and ends near Ogilby, Calif.'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent origins (FERC docket, TC Energy's own page) confirm Ehrenberg AZ -> Ogilby CA. FERC's docket additionally gives county-level detail (La Paz County AZ; Imperial County CA) that the sheet's StartPrefecture/District (blank) and EndPrefecture/District (currently holds 'Ogilby', a place name, not a county) could use -- flagged as a minor schema caveat in the validity record rather than restaged here, since it looks like a data-entry convention shared with parent row P0226."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328,
+      "ref_col": "SegmentCost [ref]", "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "127200000.00", "SegmentCostUnits": "USD"}, "primary_value": "127200000.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "'North Baja estimates the total cost of the Project to be $127.2 million'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects row 1085: Cost (millions) = 127.2"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent origins (FERC's own docket filing and the EIA dataset) both state exactly $127.2 million, matching the sheet's 127,200,000 USD precisely. Note an earlier-stage estimate of ~$90 million appears in some pre-certificate coverage of the original filing -- that was superseded by the $127.2M figure both FERC's docket and EIA now carry, so no conflict is flagged."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328, "oo_sheet_row": 1967,
+      "ref_col": "Operator [ref]", "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"], "primary_value_col": "Operator",
+      "values": {"Operator": "North Baja Pipeline LLC"}, "primary_value": "North Baja Pipeline LLC",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application",
+        "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/"
+      ],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2020/01/07/2020-00017/north-baja-pipeline-llc-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "'North Baja Pipeline, LLC (\"North Baja\")...filed...an application...for authorization to construct and maintain its North Baja XPress Project' -- the FERC certificate holder, which for interstate pipeline SPVs of this kind is the operating entity of record"},
+        {"url": "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/", "ok": true, "contains_value": true, "name_found": true, "note": "TC Energy's own asset page names only 'North Baja Pipeline LLC' -- it does not list a separately-named operator distinct from the owner"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "FLAGGED AMBIGUITY: EIA's dataset instead lists 'Pipeline Operator Name = TC Energy' for this project (the parent brand, not the FERC-jurisdictional subsidiary). I staged 'North Baja Pipeline LLC' because it matches the Owner value already on the sheet and is the entity FERC's own docket treats as the operating/certificate-holding party -- but this is a single-source-class judgment call (both sources I cite are effectively TC-Energy-controlled naming, not a truly independent second confirmation of 'operator' specifically), and a researcher familiar with GEM's TC-Energy-family convention on sibling rows (P0231 GTN, P0278 Viking, P2099 Northern Border, P0226 North Baja itself) should sanity-check whether GEM's Operator column wants the parent brand ('TC Energy') or the named subsidiary here."
+    },
+    {
+      "segment_name": "North Baja XPress Project (NBXP)", "sheet_row": 1328, "oo_sheet_row": 1967,
+      "ref_col": "Owner [ref]", "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1",
+      "values": {"Owner1": "North Baja Pipeline LLC", "Owner1%": "100.00%"}, "primary_value": "North Baja Pipeline LLC",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/",
+        "https://en.wikipedia.org/wiki/North_Baja_Pipeline"
+      ],
+      "verifications": [
+        {"url": "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/", "ok": true, "contains_value": true, "name_found": true, "note": "asset page lists 'Owner: North Baja Pipeline LLC' with no other owner named"},
+        {"url": "https://en.wikipedia.org/wiki/North_Baja_Pipeline", "ok": true, "contains_value": true, "name_found": true, "note": "confirms the US portion is a TC-Energy-family asset (article's 'TC PipeLines LP' parent reference looks stale post-2021 rollup, a P0226-level ownership-chain note, not a P2569 defect)"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "100% single ownership by North Baja Pipeline LLC confirmed by two independent origins (TC Energy's own page; Wikipedia). No other owner is named anywhere in the sourced material for this expansion project."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0226",
+      "url": "https://www.tcenergy.com/operations/natural-gas/north-baja-pipeline-system/",
+      "facts": "TC Energy's own asset page states the North Baja Pipeline System (the mainline P0226, not the NBXP expansion) is '86-mile (138-km)', operating safely since 2002, bidirectional flow, delivering gas from West Texas and the Rocky Mountains region to Western U.S. and Mexico markets, with a lateral serving an electric generating facility in Yuma, AZ. P0226's roster entry currently shows LengthKnown=129 km (~80.2 mi) -- close to FERC's EA description of 'approximately 80-mile-long' but about 9 km/5 mi short of TC Energy's own 138-km/86-mi figure. Worth reconciling which figure P0226's deep sweep lands on."
+    },
+    {
+      "project_id": "P0226",
+      "url": "https://cms.ferc.gov/sites/default/files/2020-09/cp20-27-000_EA_final_0.pdf",
+      "facts": "FERC's 2020 EA for NBXP (Docket CP20-27) describes North Baja's EXISTING mainline system as 'an approximately 80-mile-long natural gas pipeline' -- a second, independent length figure for P0226 to weigh against TC Energy's own 86-mile claim."
+    }
+  ],
+  "summary": "P2569 (North Baja XPress) confirmed real, correctly classified, and correctly segmented from parent P0226 (no duplicate) via FERC Docket CP20-27 + EIA + Reuters; staged 10 REFS_ADDED fills (Status, Fuel, Proposal, Construction, Start, Delay, Length, Location, SegmentCost, plus Owner+Operator on the operators/owners tab) and one material SPEC CONCERN -- Capacity is wrong at 450 MMcf/d, should be 495 MMcf/d per FERC's own docket, the current EIA dataset, and the Reuters wire, all of which agree; UNRESOLVED: Pressure, FuelSource, and Diameter (the last two correctly blank per the no-new-pipe rule, not owed)."
+}

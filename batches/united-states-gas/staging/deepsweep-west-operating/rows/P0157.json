@@ -1,0 +1,491 @@
+{
+  "project_id": "P0157",
+  "pipeline_name": "BC Gas Pipeline",
+  "sheet_row": 18,
+  "wiki": "https://www.gem.wiki/BC_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Westcoast Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to Status/Fuel/StartYear/Owner/Location/Length; add the refs below",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all clear. P0157 is Enbridge's Westcoast (a.k.a. BC) Pipeline, one of Canada's oldest and best-documented gas transmission systems -- confirmed independently by the Canada Energy Regulator's own pipeline profile (apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline, the resolved landing page of the row's own harvested cer-rec.gc.ca citation, cite_note-westcoast-2) and by Enbridge's current factsheets. url_verifier returned a ConnectionError (Connection reset by peer) on both the harvested cer-rec.gc.ca URL and its resolved apps.cer-rec.gc.ca form -- this reproduced 3x over several minutes via python requests/verify_url, while curl -sL (same UA string) succeeded every time with HTTP 200 and the full page (113,971 bytes); this reads as a TLS/client-fingerprint block against the requests library specifically (batch brief's own MEASURED CONDITIONS says cer-rec.gc.ca answers 200 fast), not a dead or fabricated source, so I am citing it with the fetch manually confirmed via curl and documented below rather than dropping the source. STATUS='operating': CER's page describes an actively regulated, currently-expanding system, and Enbridge's factsheet states 'Status: Operational' outright (both the current PDF and the archived Aug 17 2023 snapshot, dated exactly to this row's LastUpdated). FUEL='Gas': CER 'Transported commodity: Natural gas'; Enbridge 'Products transported: Natural gas'. STARTYEAR1=1957: CER 'Commenced operations 1957' / 'started operating in 1957'; Enbridge factsheet 'Since 1957 ... has been the backbone of the natural gas industry in British Columbia'. Two independent origins (Canadian federal regulator vs. the pipeline's owner) agree on all three -- high tier. OWNER1=Enbridge 100%: CER 'CER-regulated company Westcoast Energy Inc. / Parent company Enbridge Inc.'; Enbridge factsheet 'Ownership: Enbridge Inc. (100%)' (both current and the Aug-2023 archived snapshot). High tier, two independent origins. LOCATION (Fort Nelson, BC -> Sumas, WA): CER 'extends south from Fort Nelson ... to the Canada-U.S. border near Huntingdon, British Columbia' with export 'via an interconnection with the Williams Northwest pipeline' at Huntingdon/Sumas; Enbridge factsheet 'stretches ... south to the Canada-U.S. border at Huntingdon/Sumas'. Matches the sheet's existing StartLocation/StartState/EndLocation/EndState/EndCountryOrArea exactly -- no geography defect on this row (unlike several siblings in this batch). Distinct crossing from P0231 GTN's Kingsgate border point further east -- not a duplicate. LENGTH=2,953 km: Enbridge's factsheet states 'Length: 1,835 miles (2,953 km)' verbatim, in both the current PDF and the Aug 17 2023 archived snapshot (the exact date of this row's LastUpdated) -- an exact match, high tier. CER's own profile states a different, larger 'CER-regulated pipeline length: 3,152 km' (Oct 2024), but its own footnote explains why: 'includes all segments of the pipeline, regardless of operating status ... including segments that are in service, deactivated, decommissioned, or abandoned' and warns length 'may not be consistent with data from other sources that use different methods.' CER's Recent Projects section separately lists the Pointed Mountain abandonment (55.6 km) among assets historically part of this system. So the two figures are not in conflict -- CER counts abandoned/decommissioned mileage GEM's operating-length field should not, and Enbridge's 2,953 km (operating length only) is the correct match for GEM's operating-status row. Not flagged as a concern. Opened 2 of the row's 24 harvested wiki citations directly (the cer-rec.gc.ca profile and the BC-Pipeline-Factsheet.pdf); the other ~19 (Wyndwood, Spruce Ridge, Jackfish Lake, T-South 2018 Compressor, Aspen Point, Birch Grove, and similar project pages) concern individual expansion-loop projects from 2016-2022 rather than system totals and were not opened -- a future researcher building a loop-by-loop construction history could start there.",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+        "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "update Capacity from 3400 MMcf/d to 3600 MMcf/d",
+      "contested": {
+        "Capacity": "3600.00"
+      },
+      "researcher_notes": "Sheet Capacity=3400.00 MMcf/d does not match any source found. Enbridge's own factsheet states 'Peak day capacity: 3.6 Bcf/d' (=3,600 MMcf/d) for the whole Westcoast/BC Pipeline system -- and critically this is not a recent change: the Wayback snapshot from 2023-08-17 (the EXACT date this row was last updated) already states the same 3.6 Bcf/d figure verbatim, so 3400 was not correct even as of GEM's own LastUpdated timestamp. Two current (2026) Enbridge press releases found independently of the harvested citation pool (enbridge.com/media-center/news/details?id=123887 and id=123874, both re: the Enbridge-KKR Westcoast joint venture, Aug/Apr 2026) restate the identical 'up to 3.6 billion cubic feet of natural gas per day' figure and add that capacity is expected to rise further to 3.9 Bcf/d once the Sunrise Expansion Program enters service -- so 3.6 Bcf/d is the stable, current baseline, not a stray or since-superseded number. I could not find a second, non-Enbridge source stating the SAME total-system metric: the CER pipeline profile only publishes point-specific capacity ('At Huntingdon/FortisBC Lower Mainland, the capacity is approximately 1.7 Bcf/d') rather than a system peak-day total, so it is not directly comparable and does not corroborate either 3400 or 3600 -- I checked it precisely because the brief flags CER capacity data as a lead, and it comes up short on this specific figure. Tier is medium (single origin -- Enbridge -- albeit stated identically and consistently across a factsheet at the row's own update date and two independent 2026 press releases). Never found any source supporting the current 3400 figure. This is a material (~6%), material spec disagreement -- flagging as a concern rather than silently adding a ref to the current value.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf",
+        "https://www.enbridge.com/media-center/news/details?id=123887&lang=en"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf",
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "BC Pipeline entry (p.73 of the archived Aug 17 2023 PDF) states 'Status: Operational' verbatim."
+        },
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset against python requests); manually confirmed via curl -sL, HTTP 200, 113,971 bytes. Page describes an actively regulated, currently-operating, expanding system (2018-2020 T-South/Spruce Ridge/Silverstar approvals) with no abandonment/status change noted for the mainline."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing value confirmed by two independent origins (CER regulator, Enbridge owner)."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset); manually confirmed via curl -sL, HTTP 200. Page states 'Transported commodity: Natural gas'."
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factsheet: 'The Westcoast pipeline is a natural gas transmission pipeline system'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins agree."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1957"
+      },
+      "primary_value": "1957",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset); manually confirmed via curl -sL, HTTP 200. 'Commenced operations 1957' / 'started operating in 1957'."
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Since 1957, the Westcoast pipeline system has been the backbone of the natural gas industry in British Columbia'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins agree exactly."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "2953.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "2953.00",
+      "proposed_refs": [
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+        "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Westcoast pipeline is a natural gas transmission pipeline system spanning over 2,900 kilometres.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "BC Pipeline entry: 'Length: 1,835 miles (2,953 km)' -- exact match, dated to this row's own LastUpdated (2023-08-17)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CER's own profile states a different, larger 'CER-regulated pipeline length: 3,152 km' but its footnote explains this includes 'in service, deactivated, decommissioned, or abandoned' segments (e.g. the Pointed Mountain abandonment, 55.6 km, also on the same CER page) -- not a contradiction of the operating-length figure GEM tracks, just a different methodology CER warns about explicitly. Not treated as a spec concern."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Fort Nelson",
+        "StartState/Province": "British Columbia",
+        "StartCountryOrArea": "Canada",
+        "EndLocation": "Sumas",
+        "EndState/Province": "Washington",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Fort Nelson",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset); manually confirmed via curl -sL, HTTP 200. 'extends south from Fort Nelson ... to the Canada-U.S. border near Huntingdon' with export via Williams Northwest pipeline at the Huntingdon/Sumas interconnection."
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'It stretches from Fort Nelson in northeast BC ... south to the Canada-U.S. border at Huntingdon/Sumas.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "All six location cells match both sources exactly; no geography defect on this row."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "oo_sheet_row": 147,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Enbridge",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Enbridge",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+        "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset); manually confirmed via curl -sL, HTTP 200. 'CER-regulated company Westcoast Energy Inc. / Parent company Enbridge Inc.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20230817000000/https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Ownership: Enbridge Inc. (100%)' -- dated to this row's own LastUpdated (2023-08-17)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Enbridge Inc. is the ultimate parent owner (100%); Westcoast Energy Inc. is the CER-regulated operating subsidiary -- staged as Operator below, not conflated with Owner."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "oo_sheet_row": 147,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Westcoast Energy Inc."
+      },
+      "primary_value": "Westcoast Energy Inc.",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset); manually confirmed via curl -sL, HTTP 200. 'CER-regulated company Westcoast Energy Inc.'"
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/BC-Pipeline-Factsheet.pdf?rev=340c14e17ad84677af1dbac276129f4e&hash=94FAF3E21A13DBF5AE30C4A408A79C38",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Current factsheet states 'Operator: Westcoast Energy' (an Enbridge company)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Blank cell filled. Note the older (Aug 2023) archived Energy Infrastructure Assets PDF simplifies 'Operator: Enbridge Inc.' while the CER profile and the current (2026) Enbridge BC-Pipeline factsheet both name the actual CER-regulated operating subsidiary, Westcoast Energy Inc. -- used the more precise/regulatory-correct name."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "1949"
+      },
+      "primary_value": "1949",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Frank_McMahon_(oilman)",
+        "https://threeminutehistorycanada.substack.com/p/how-frank-mcmahon-risked-it-all-to"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Frank_McMahon_(oilman)",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'In 1949 he incorporated Westcoast Transmission Co. Ltd. whose business plan included the construction of a 650-mile gas pipeline from Taylor in north-eastern British Columbia to the United States.'"
+        },
+        {
+          "url": "https://threeminutehistorycanada.substack.com/p/how-frank-mcmahon-risked-it-all-to",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'McMahon had begun lobbying both Canadian and U.S. governments for natural gas export and import permissions as early as 1949 -- the same year he incorporated Westcoast Transmission Company Limited by special act of Parliament. His vision was a roughly 1,046 km (650-mile) pipeline from Taylor, B.C., to Vancouver and then across the U.S. border.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both are secondary historical accounts (not primary regulatory filings) but independently written and citing different underlying materials (the Substack piece cites Earle Gray's 'Wildcatters' and CER; Wikipedia cites its own separate footnotes) -- treated as 2 independent origins on this specific fact. ProposalMonth not found in either source, left blank."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1955"
+      },
+      "primary_value": "1955",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Frank_McMahon_(oilman)",
+        "https://threeminutehistorycanada.substack.com/p/how-frank-mcmahon-risked-it-all-to"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Frank_McMahon_(oilman)",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'In 1955 Westcoast was awarded permission from the U.S. Federal Power Commission to export gas. Construction started the same year on the $170-million, 650-mile Westcoast Pipeline ... completed in the fall of 1957.'"
+        },
+        {
+          "url": "https://threeminutehistorycanada.substack.com/p/how-frank-mcmahon-risked-it-all-to",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'When the U.S. Federal Power Commission finally granted approval in November 1955, crews swung into action ... Completed in under two years at a cost of roughly $170 million ... began flowing in 1957.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent secondary histories agree exactly on 1955 construction start / 1957 completion. ConstructionMonth not found in either source, left blank."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Montney Formation"
+      },
+      "primary_value": "Montney Formation",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/westcoast-bc-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier ConnectionError (TLS reset); manually confirmed via curl -sL, HTTP 200. 'The Montney Formation of Alberta and British Columbia has been the target of oil and gas exploration ... The Westcoast pipeline system will be connected to the Woodfibre LNG facility ... Westcoast may help to supply Coastal GasLink via its interconnections with the NGTL system' -- names Montney as the system's dominant current supply basin (page's Supply and Markets section, which is specifically about this pipeline)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single explicit source (CER). Second-source search: Enbridge's own Energy Infrastructure Assets factsheet corroborates only indirectly -- it notes the Aitken Creek storage facility, 'located in the heart of the prolific Montney production region,' connects to 'Enbridge's Westcoast (BC) Pipeline,' which ties Montney to Westcoast but doesn't state it as directly as CER does, so I did not count it as a second full-strength source. Historically (1957) the system's original supply was described as the 'Peace River area' of Alberta/BC -- Montney is the specific modern-era shale formation within that broader area and is not a contradiction, just a more precise current name; noted for context, not staged as a conflicting value."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This row is the whole Westcoast/BC Pipeline SYSTEM (Fort Nelson to Sumas), not one loop -- like the batch's other network rows (CIG, TIGT, Transwestern, Alliance) it has been built and expanded in named loop segments of differing diameter across 70 years (original 1955-57 mainline plus Wyndwood, Spruce Ridge, T-South, Jackfish Lake, Aspen Point, Birch Grove, and now the Sunrise Expansion Program). Two independent secondary histories (Wikipedia's Frank McMahon article and threeminutehistorycanada.substack.com) DO state the ORIGINAL 1955-57 mainline was 'Canada's first big-inch (30-inch) natural gas pipeline' -- but staging '30' as THE Diameter for a row that now represents a much larger, multi-loop, multi-diameter current system would misrepresent it as if the whole system were still 30-inch pipe. Left UNRESOLVED rather than force a partial number; the 30-inch original-mainline detail is recorded here for whoever next builds a proper multi-value figure from the individual expansion-loop CER dockets (several of which were in the row's harvested citation pool but not opened this pass -- see the confirmed-caveat validity note)."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the CER pipeline profile, both Enbridge factsheets, and the Frank McMahon/history pieces -- none states an operating pressure (system-wide or per-segment) for the mainline. A network row of this age and scale plausibly has no single system-wide pressure rating in the public sources I could reach this pass; left UNRESOLVED rather than guess. Not checked: CER REGDOCS facility applications [Folder 90718], which would likely state design pressure per segment but require digging through individual docket filings beyond this pass's scope."
+    },
+    {
+      "segment_name": "Westcoast Pipeline",
+      "sheet_row": 18,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "LEAD, not staged: two independent secondary histories (Wikipedia's Frank McMahon article; threeminutehistorycanada.substack.com) both state the original 1955-57 construction cost as 'roughly $170 million' -- but neither states a currency explicitly (Canadian company/project of that era, so CAD is plausible, but the same history also cites a separate '$400-million' 1954 GAS-SALE contract with the U.S.-based Pacific Northwest Pipeline Corp, so a USD figure can't be ruled out either). Per this batch's own caution that half of batch 1's researched SegmentCost values didn't survive primary sources, and given the currency here is genuinely ambiguous rather than just unstated, left UNRESOLVED rather than stage a value with a guessed currency code. Also, this $170M would only cover the original 1955-57 mainline, not the system's many later expansions (Wyndwood $170.3M 2017, Spruce Ridge $564.5M 2018, T-South 2018 $329M, Jackfish Lake $216.3M 2017 -- all named in the row's own harvested CER citations but not opened this pass), so even a confirmed $170M would only be a partial SegmentCost for a row that represents the whole system."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P0157 (Westcoast/BC Gas Pipeline) confirmed real, correctly classified, correctly owned/located/dated; Capacity flagged as a spec concern (3400 vs. sourced 3600 MMcf/d); 7 blanks filled (Proposal, Construction, FuelSource, Operator + refs for existing Status/Fuel/Start/Length/Location/Owner); Diameter, Pressure, SegmentCost left UNRESOLVED (network-wide row spanning 70 years of loops; no reliable current single-value source found)."
+}
