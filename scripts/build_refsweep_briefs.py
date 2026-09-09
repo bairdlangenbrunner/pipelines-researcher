@@ -15,10 +15,46 @@ merge_ref_shards.py then folds back onto staged_resolutions.prior.json.
 Default scope = the gap classes (UNRESOLVED, DEAD_LINK). Pass --classes to widen (e.g.
 also re-verify REVERIFIED) or narrow.
 
+Each brief carries a `contract` block (standing rule 4e). The deep-sweep leg's per-unit
+emit obligation lives in `.claude/workflows/critical-deep-sweep.js`; THIS leg has no saved
+workflow, so its contract was whatever the dispatching orchestrator happened to write —
+which is exactly the hole that let the four 2026-09 US gas batches drop 218 MISSING_REF
+units. Putting it in the brief means the obligation ships with the work, not with the
+prompt. Pass it to the subagent verbatim.
+
 Usage:
     python scripts/build_refsweep_briefs.py --staging batches/iraq-gas/staging/annual/
 """
 import argparse, json, os, collections
+
+
+# Standing rule 4(e), verbatim in every brief so the obligation travels with the work
+# rather than with whatever prompt happens to dispatch it (see the module docstring).
+CONTRACT = [
+    "EVERY unit below is OWED a record — there is no such thing as a unit that needed "
+    "no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is "
+    "what this leg is FOR.",
+    "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit "
+    "class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state "
+    "it. 'Confirmed as recorded' in your summary and nowhere machine-readable is "
+    "indistinguishable from never having checked it.",
+    "A source agreeing within rounding IS a ref (51.97 mi + 0.5 mi against a recorded 52; "
+    "38.5 against 39): REFS_ADDED at medium/high with the discrepancy in researcher_notes, "
+    "plus a validity `spec` concern if the gap is material. UNRESOLVED means nothing was "
+    "found — never that something slightly different was found.",
+    "UNRESOLVED is a legitimate outcome ONLY with researcher_notes saying what you "
+    "searched. An empty UNRESOLVED reads exactly like a dropped unit and is treated as one.",
+    "Read every document you open to exhaustion, for EVERY column and sibling row — one "
+    "FERC notice routinely sources Length, Diameter, Cost, Construction and Start at once.",
+    "Two independent sources per data point is the target; the same wire story republished "
+    "does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned "
+    "aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
+    "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / "
+    "UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — "
+    "the research is done and vanishes.",
+    "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left "
+    "unreported and every record that cannot merge. It is blocking: do not finish red.",
+]
 
 
 def main():
@@ -64,6 +100,9 @@ def main():
             "class_out": r.get("class_out", ""),   # DEAD_LINK = had a ref that died; UNRESOLVED = never had one
         } for r in rs]
         brief = {
+            "contract": CONTRACT,
+            "coverage_gate": (f"python scripts/check_shard_coverage.py --staging {S} "
+                              f"--pid {pid}"),
             "project_id": pid,
             "pipeline_name": b.get("pipeline_name", ""),
             "wiki": b.get("wiki", ""),

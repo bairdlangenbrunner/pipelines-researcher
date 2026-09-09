@@ -17,6 +17,20 @@ corroborate each other AND contain the precise data point** being referenced.
 - **Blank `[ref]` + filled value** → research and add corroborating source URLs.
 - **Filled `[ref]`** → re-check the URLs still resolve *and* still contain the value.
 
+**Every unit in the brief is OWED a record** (standing rule 4e — the same contract the
+`deep` preset carries, restated here because this leg is the one whose whole worklist is
+`MISSING_REF`). Sources agreeing with the recorded value is the deliverable, not a no-op:
+emit `REFS_ADDED` carrying that SAME value plus the verified ref(s). `UNRESOLVED` means
+nothing was found — never that nothing needed changing, and never that something slightly
+different was found (a source agreeing within rounding IS a ref; see the rounding rule
+under the `deep` preset below). **`python scripts/check_shard_coverage.py --staging <dir>
+--pid <PID>` is blocking here too** — it reads `ref_shards/<PID>.json` `resolutions[]` as
+well as deep-sweep `fills[]`, so it gates a refs-leg shard unchanged, and it flags a record
+that cannot merge (no `ref_col`, or a `class_out` outside REFS_ADDED/REVERIFIED/UNRESOLVED/
+DEAD_LINK) separately from one that was never worked — re-key that record, don't re-research
+it. `build_refsweep_briefs.py` writes this contract into each brief's `contract` block; pass
+it through to the subagent verbatim.
+
 Distinct from QC's link-rot detection: **QC *detects*, the sweep *researches & stages*.**
 QC's BroadSweep flags orphan refs (ref filled, value blank); the refs leg fixes the
 inverse (value present, ref blank) and re-verifies live refs. Both share the one ref-pair

@@ -191,7 +191,10 @@ in the SAME workbook):
 
 ```bash
 python scripts/build_refsweep_briefs.py --staging $STG/   # → ref_shards/_briefs/<PID>.json
-#   → one research subagent per brief writes ref_shards/<PID>.json
+#   → one research subagent per brief writes ref_shards/<PID>.json. Each brief carries a
+#     `contract` block — pass it to the subagent verbatim; every unit is owed a record
+#     (standing rule 4e), and check_shard_coverage.py --pid <PID> blocks the agent finishing.
+python scripts/check_shard_coverage.py --staging $STG/ --all   # blocking, same as the deep leg
 python scripts/merge_ref_shards.py --staging $STG/        # fold onto staged_resolutions.prior.json
 python scripts/merge_deepsweep_shards.py --staging $STG/  # re-fold validity/fills/status
 python scripts/harvest_sentinel_findings.py --staging $STG/  # harvester LAST — Sweep SOP §Sentinels
