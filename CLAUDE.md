@@ -61,14 +61,25 @@ Where things live — **read on demand as the workflow dictates, not all at once
    single → medium/low; none verifiable → inferred/presumed. The same wire story
    republished, multiple outlets tracing to one original, and anything citing GEM
    do NOT count. Record the tier + sources in `ResearcherNotes`. Detail:
-   `docs/reference/confidence_tiers.md`. **Four corollaries from researcher feedback
-   (MZ, 2026-09-03, on Jiangxi v2) — all encoded in the Sweep SOP + `sweep_gates.py`:**
+   `docs/reference/confidence_tiers.md`. **Five corollaries from researcher feedback
+   (a)–(d) MZ 2026-09-03 on Jiangxi v2, (e) Baird 2026-09-09 on US gas — all encoded in the
+   Sweep SOP + `sweep_gates.py`:**
    (a) a ref must NAME the pipeline (`url_verifier … name=`, `name_found`; a page about one
    terminus or the parent trunk is not a ref for the "A–B" row); (b) every document opened is
    read to exhaustion for EVERY column and sibling row (one approval notice sources
    Length/Diameter/Cost/Construction/Start at once); (c) blank values are OWED units
    (`build_ref_worklist.py --owe-fills` → `MISSING_VALUE`), not skipped; (d) the second
-   source is owed for every unit — a single-source note says what was searched.
+   source is owed for every unit — a single-source note says what was searched;
+   (e) **AN UNCITED VALUE IS OWED A REF EXACTLY AS A BLANK IS OWED A VALUE, AND CONFIRMING
+   IT IS AN OUTPUT, NOT A NO-OP.** A `MISSING_REF` unit (value on the sheet, `[ref]` cell
+   empty) ends as a record carrying the ref that states the value — `class_out="REFS_ADDED"`
+   with the SAME value when sources agree — or an `UNRESOLVED` saying what was searched.
+   "Confirmed as recorded" in a summary and nowhere machine-readable is the same as never
+   checking it. A source agreeing within rounding (51.97 mi + 0.5 mi vs a recorded 52) IS a
+   ref, at medium/high with the discrepancy noted — `UNRESOLVED` means nothing was found,
+   never that something slightly different was found. Enforced by
+   `scripts/check_shard_coverage.py` (per shard, blocking, before a subagent finishes) and
+   `sweep_gates.py` gate L (per store, at delivery).
 5. **Banned sources: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`) **and theodora.com** (tertiary aggregator; `url_verifier` rejects both).
    Never use it as a reference, ever — not even alongside corroborating sources, not
    in any output, note, or lane (Baird directive 2026-07-17, all GEM researcher

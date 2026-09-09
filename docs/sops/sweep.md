@@ -347,7 +347,31 @@ ends as a sourced `FILL` or an `UNRESOLVED` with a note saying what was searched
 contract as a `MISSING_REF`. Never force a number (a weak Capacity stays blank rather than
 fabricated), but never skip a blank silently either; the delivery note reports
 `fills owed / filled / unresolved` by status, and `sweep_gates.py` gate J lists owed blanks
-with no record at all. Prioritise `operating` rows — a blank Length/Diameter/Capacity/
+with no record at all.
+
+**The symmetric rule, and the one that was missing (Baird 2026-09-09): a `MISSING_REF` unit
+is owed a record exactly as a blank is.** The sheet already holds the value; the `[ref]` cell
+is empty; supporting it is what this leg is FOR. When the sources agree with the recorded
+value, that agreement is the deliverable — a record carrying the same value, the verified
+ref(s) that state it, and `class_out="REFS_ADDED"`. Confirming a value in shard prose and
+emitting no record is indistinguishable from never checking it, and it is not a hypothetical:
+the four 2026-09 US gas batches dropped **218 units across 47 rows** that way, every one on a
+row whose documents the subagent had already opened, while `MISSING_VALUE` — the only class
+the contract named and gate J counted — ran at 0–1%. Same agents, same runs; the only
+variable was whether the contract carried a per-unit emit rule. Two enforcement points, both
+required: **`scripts/check_shard_coverage.py --staging <dir> --pid <PID>`** blocks each
+subagent before it finishes (it names every unit left without a `fills[]` object), and
+**gate L** catches at the store what slipped past. Note the asymmetry that hid this for so
+long — a dropped blank leaves no record, so gate J catches it by absence, but
+`seed_resolutions_from_worklist.py` seeds every `MISSING_REF` unit, so a dropped one survives
+as an empty `UNRESOLVED` that reads exactly like honest failure. Gate L splits it by whether
+`researcher_notes` is empty: notes = somebody looked, no notes = silence.
+
+**A source that agrees within rounding is a ref, not a non-answer.** 51.97 mi + 0.5 mi against
+a recorded 52 mi, 38.5 against 39, $10.7M against $11M: `REFS_ADDED` at medium/high with the
+discrepancy in `researcher_notes` (and a validity `spec` concern if material). `UNRESOLVED`
+means nothing was found — never that something slightly different was found. The limit stays
+the aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell. Prioritise `operating` rows — a blank Length/Diameter/Capacity/
 StartYear on an operating line is the gap the researchers see first. Same standing rules —
 still read-and-stage only. **Operating-status rows are a legitimate deep-sweep target** (not
 just in-dev) — Baird often runs a deep sweep on operating pipelines specifically to catch
@@ -646,14 +670,21 @@ pastes manually.
 
 ## Pre-delivery checks
 Run **`python scripts/sweep_gates.py --staging <run dir>`** on the merged store and quote its
-counts in the delivery note. It is read-only and advisory (gates A–K): A source diversity per
+counts in the delivery note. It is read-only and advisory (gates A–L): A source diversity per
 row · B false `high` · C `high` leaning on a dominant document · D `independent` flag vs
 verified refs · E orphans · F banned/GEM · G harvested pool URLs never opened on a still-
 `UNRESOLVED` row · H recovered Save-Page-Now origins unopened · **I relevance** (sourced
 units whose refs do not name the pipeline, and units where nobody checked) · **J owed blanks
-with no record** · **K single-source `REFS_ADDED`** (the two-per-data-point target unmet).
-A non-zero I/J/K is not a blocker but the count goes in the delivery note verbatim — it is
-what the researcher will find, so say it first. Then: README present; every `Proposed
+with no record** · **K single-source `REFS_ADDED`** (the two-per-data-point target unmet) ·
+**L uncited values never worked** (`MISSING_REF` units whose record is still `UNRESOLVED`
+with no refs AND no notes — J's twin, the silent-skip counterpart for values the sheet
+already carries).
+A non-zero I/J/K/L is not a blocker but the count goes in the delivery note verbatim — it is
+what the researcher will find, so say it first. **L is the exception in spirit**: unlike the
+others it measures work not done rather than work done thinly, so a non-zero L means the
+batch is unfinished — run the recovery pass before delivering. Catch it earlier with
+`python scripts/check_shard_coverage.py --staging <run dir> --all`, which names the units
+shard by shard and is what each subagent is required to pass before finishing. Then: README present; every `Proposed
 ref(s)` cell verified (HTTP 200 + value present) and free of GEM/theodora/abarrelfull/wikidot;
 tier colors correct; Unresolved units have a `ResearcherNotes` reason and no fabricated URL.
 Full checklist: `docs/sops/qc.md`.

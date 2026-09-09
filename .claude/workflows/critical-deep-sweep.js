@@ -125,13 +125,37 @@ ${ROSTER}
 5. SPEC — length, diameter, capacity, dates. CRITICALLY confirm each against >=2 independent sources.
    It is NOT enough that a page mentions the pipeline — the source must AGREE with the GEM number.
    Material disagreement → concern_type="spec", verdict="concern" (never silently pass it).
-6. FILLS ARE OWED, NOT OPPORTUNISTIC. Every worklist unit for ${pid} with class == "MISSING_VALUE"
-   is a blank the sheet owes a value for (Length, Capacity, Diameter, StartYear, ConstructionYear,
-   SegmentCost, Pressure, FuelSource, Operator, Owner …). For EACH ONE emit a fills[] object: a
-   sourced value with a paired verified ref when you find one, otherwise class_out="UNRESOLVED" with
-   researcher_notes saying what you searched. Never force a number (a weak Capacity stays blank rather
-   than fabricated); never skip a blank silently. Blank cells on OPERATING rows come first -- they are
-   what the researchers notice.${statusInstr}${EXTRA}
+   AGREEMENT IS ALSO AN OUTPUT, NOT A NO-OP: when the source agrees, that source is the ref the
+   cell was missing — emit it as a fills[] REFS_ADDED record per rule 6. Confirming a value and
+   reporting it nowhere machine-readable is the same as never checking it.
+6. EVERY WORKLIST UNIT IS OWED A RECORD — UNCITED VALUES AND BLANKS ALIKE. Filter worklist.json to
+   ${pid} and COUNT your units. You owe exactly ONE fills[] object per unit, whatever its class.
+   Both classes are owed, and the first one is the one this leg exists for:
+   - class == "MISSING_REF" — the sheet HAS a value (Length 52 mi, Capacity 700 MMcf/d, endpoints,
+     dates, owner …) and its [ref] cell is EMPTY. An uncited value is an unsupported value, and
+     supporting it is the CORE PRODUCT of this sweep. When your sources agree with the recorded
+     value, that agreement IS the deliverable: emit the unit carrying the SAME values it already
+     has, the verified ref(s) that state them, and class_out="REFS_ADDED". Writing "length and
+     diameter confirmed as recorded" in your summary and nowhere else is INDISTINGUISHABLE FROM
+     NOT DOING THE WORK — it is the single most common defect in this leg's history (381 units
+     across four US gas batches, every one of them on a row whose documents the agent had already
+     opened). When your sources DISAGREE, emit the corrected value AND file the spec concern in
+     validity[]. When you genuinely find nothing, class_out="UNRESOLVED" with researcher_notes
+     saying what you searched.
+   - class == "MISSING_VALUE" — the cell is BLANK and the sheet owes a value (Length, Capacity,
+     Diameter, StartYear, ConstructionYear, SegmentCost, Pressure, FuelSource, Operator, Owner …):
+     a sourced value with a paired verified ref when you find one, otherwise class_out="UNRESOLVED"
+     with researcher_notes saying what you searched. Never force a number (a weak Capacity stays
+     blank rather than fabricated).
+   Uncited values and blank cells on OPERATING rows come first -- they are what the researchers
+   notice. A unit with NO object is a defect the pre-delivery gates list; an UNRESOLVED with EMPTY
+   researcher_notes is a silent skip the gates list too. Never skip a unit silently.
+7. A SOURCE THAT AGREES WITHIN ROUNDING IS A REF, NOT A NON-ANSWER. If a page names the pipeline and
+   states essentially the recorded value — 51.97 mi + 0.5 mi against a recorded 52 mi, 38.5 against
+   39, $10.7M against $11M — that is REFS_ADDED at medium/high tier with the small discrepancy
+   stated in researcher_notes (and a validity spec concern if it is material). UNRESOLVED means you
+   found NOTHING; it never means you found something slightly different. The limit stays the
+   aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell.${statusInstr}${EXTRA}
 
 A pipeline that is real and correctly classified but has a lesser caveat → verdict="confirmed (caveat)".
 Only open existence/duplicate/classification doubt → verdict="concern".
@@ -176,9 +200,12 @@ the cell you flagged. Name the EXACT backend column ("LengthKnownUnits", not "un
 candidate value where your evidence names one, and "" where it only establishes the current value is
 wrong. A concern about the row as a whole (existence/duplicate) may leave it {}.${STATUS_REVIEW ? ' In annual-update mode also emit\nat least one status_reviews object per segment row (shaped as specified above).' : ''} validity[].proposed_refs and all
 fills[].proposed_refs must have passed url_verifier (with --name). One fills[] object per
-MISSING_VALUE unit in your worklist slice (sourced or UNRESOLVED) -- an owed blank with no object
-is a defect the pre-delivery gates list. Before finishing, run
-\`python -c "import json; json.load(open('${STAGING}/rows/${pid}.json'))"\` to confirm it parses.
+WORKLIST UNIT in your slice -- MISSING_REF and MISSING_VALUE alike, sourced or honestly UNRESOLVED.
+A unit with no object is a defect the pre-delivery gates list. Before finishing, run
+\`python scripts/check_shard_coverage.py --staging ${STAGING} --pid ${pid}\`
+and DO NOT FINISH UNTIL IT PRINTS OK -- it parses your shard and names every worklist unit you left
+without a record. If it lists units, go back and report on them (a sourced record, or UNRESOLVED
+with what you searched); do not delete the unit or hand back a shard it still rejects.
 Return ONLY a 2-line summary: the verdict/concern_types you staged, and any UNRESOLVED. Your shard
 file is the deliverable, not your message.`
 

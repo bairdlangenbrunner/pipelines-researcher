@@ -92,6 +92,12 @@ Nothing in either file is ever auto-applied. Every URL has passed
 | `tab` | str? | `"operators_owners"` = targets the ProjectID-keyed operators/owners tab (GID 1489950650), not the tracker |
 | `wiki` | str? | gem.wiki page visited (never cited) |
 
+Every `MISSING_REF` unit in a run's `worklist.json` is owed one of these records — sources
+that agree with the value already on the sheet produce a `REFS_ADDED` carrying that same
+value, which is the leg's product, not a no-op (standing rule 4e). A seeded `MISSING_REF`
+record left `UNRESOLVED` with no refs and no `researcher_notes` is a silent skip, flagged by
+`sweep_gates.py` gate L and by `scripts/check_shard_coverage.py` before the shard is written.
+
 **Ref records** (`class_in` `HAS_REF` / `MISSING_REF`): `class_out` ∈ `REFS_ADDED` /
 `REVERIFIED` / `DEAD_LINK` / `UNRESOLVED`. Apply = paste `proposed_refs` into the
 `ref_col` cell of `sheet_row` (or, when `tab="operators_owners"`, into that ProjectID's

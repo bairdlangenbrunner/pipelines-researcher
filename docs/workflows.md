@@ -111,7 +111,7 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 
 | Leg | What it stages |
 |---|---|
-| `refs` | fill blank `[ref]`s + re-verify filled ones to the ≥2-independent target (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK`/`UNRESOLVED`; incl. operators/owners-tab units) |
+| `refs` | fill blank `[ref]`s + re-verify filled ones to the ≥2-independent target (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK`/`UNRESOLVED`; incl. operators/owners-tab units). Every `MISSING_REF` unit is OWED a record — sources agreeing with the recorded value is a `REFS_ADDED` carrying that same value, never a no-op (standing rule 4e; gate L + `check_shard_coverage.py`) |
 | `fills` | research blank *value* fields — the worklist's `MISSING_VALUE` units (`--owe-fills`), each owed a sourced `FILL` or an `UNRESOLVED` with a note; paired verified ref required (`class_in="FILL"`) |
 | `validity` | skeptical existence / duplicate / classification / attribution / spec check (`__VALIDITY__`, read-and-flag) |
 | `status-review` | per-segment-row status verdict confirm/change/stale/unclear (`__STATUS__`) |
@@ -145,7 +145,8 @@ python scripts/build_ref_worklist.py --tracker gas --country "<Country>" \
   [--owe-fills]                      # deep preset: blanks become owed MISSING_VALUE units
   --verify-existing --out $STG/worklist.json
 # … research → merge → then, before building the workbook:
-python scripts/sweep_gates.py --staging $STG/   # gates A–K; quote the counts in the delivery note
+python scripts/check_shard_coverage.py --staging $STG/ --all   # every worklist unit reported on? (blocking)
+python scripts/sweep_gates.py --staging $STG/   # gates A–L; quote the counts in the delivery note
 python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json \
   --out $STG/wiki_citations.json
 ```

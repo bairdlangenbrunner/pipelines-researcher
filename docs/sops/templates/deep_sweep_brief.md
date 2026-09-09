@@ -49,6 +49,13 @@ or `from url_verifier import verify_url, surface_forms`.
 * **BLANKS ARE OWED.** Every `MISSING_VALUE` unit in your payload gets a `FILL` record: a sourced
   value with a paired verified ref, or `UNRESOLVED` with what you searched. Never force a number;
   never skip a blank silently. **Operating rows first.**
+* **UNCITED VALUES ARE OWED THE SAME WAY.** Every `MISSING_REF` unit — the sheet HAS the value,
+  its `[ref]` cell is EMPTY — gets a record too. When your sources agree with the recorded value,
+  that agreement IS the deliverable: `REFS_ADDED` carrying the SAME value and the verified ref
+  that states it. "Confirmed as recorded" written in a summary and nowhere machine-readable is
+  the same as never checking it — the most common defect in this leg's history. A source agreeing
+  within rounding (51.97 mi + 0.5 mi vs a recorded 52) IS a ref at medium/high with the gap noted;
+  `UNRESOLVED` means you found NOTHING, never that you found something slightly different.
 * **THE SECOND SOURCE IS OWED.** After the first source lands, search for a second from a
   different publisher AND a different document class (regulator approval ↔ operator disclosure ↔
   press ↔ EIA / acceptance notice). A single-source unit is fillable at `medium`, but its notes

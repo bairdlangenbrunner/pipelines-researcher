@@ -33,6 +33,15 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
   K  SINGLE-SOURCE UNITS -- REFS_ADDED units with exactly one verified ref (the 2-per-data-
                            point target unmet). Not a defect (medium is fillable) but the
                            count is the honest measure of how far the batch is from green.
+  L  UNCITED VALUES NEVER WORKED -- worklist MISSING_REF units (the sheet HAS a value, its
+                           [ref] cell is EMPTY) whose store record is still UNRESOLVED with
+                           NO refs and NO researcher_notes: nobody reported on it. J's twin,
+                           and the one that was missing. A dropped blank leaves no record at
+                           all, so J catches it by absence; a dropped MISSING_REF unit IS
+                           seeded by `seed_resolutions_from_worklist.py`, so it survives as
+                           an empty record that reads exactly like honest failure. The split
+                           against UNRESOLVED-with-notes is the whole point: notes = the
+                           researcher looked and said so; no notes = silence.
 """
 from __future__ import annotations
 
@@ -93,7 +102,7 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
     dominant = {u for u, n in url_units.items() if n >= dominant_min}
 
     A, B, C, D, E, F, G, H = [], [], [], [], [], [], [], []
-    I_false, I_unchecked, J, K = [], [], [], []
+    I_false, I_unchecked, J, K, L = [], [], [], [], []
     for pid, recs in sorted(by_pid.items()):
         hosts = {host(u) for r in recs if r.get("class_out") in SOURCED
                  for u in verified(r)} - {""}
@@ -171,6 +180,42 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             if key not in have:
                 J.append((u.get("project_id"), u.get("ref_col"), u.get("status", "")))
 
+    # L — uncited values never worked: J's twin for MISSING_REF. The seeder gives every one
+    # of these a record, so absence can't be the test; silence is. A record still UNRESOLVED
+    # with no refs AND no notes was never reported on by any subagent.
+    uncited = [u for u in (wl.get("units") or []) if u.get("class") == "MISSING_REF"]
+    L_looked = 0
+    if uncited:
+        # Key on (pid, ref_col, sheet_row): a multi-segment pipeline carries one unit per
+        # SEGMENT ROW on the same ref_col, and each is its own cell in the sheet — crediting
+        # a whole pipeline because one of its segments was worked hides the other segments.
+        # Fall back to (pid, ref_col) only where the pipeline has exactly one unit on that
+        # column, which is also how owner/operator records (keyed to the operators-owners
+        # tab's row, not the tracker's) find their seeded record.
+        rec_by_key, rec_by_col = {}, {}
+        for r in res:
+            if str(r.get("ref_col", "")).startswith(SENTINEL_PREFIX):
+                continue
+            rec_by_key.setdefault(
+                (r.get("project_id"), r.get("ref_col"), r.get("sheet_row")), []).append(r)
+            rec_by_col.setdefault((r.get("project_id"), r.get("ref_col")), []).append(r)
+        units_per_col = collections.Counter(
+            (u.get("project_id"), u.get("ref_col")) for u in uncited)
+        for u in uncited:
+            col_key = (u.get("project_id"), u.get("ref_col"))
+            recs = rec_by_key.get((*col_key, u.get("sheet_row")))
+            if not recs and units_per_col[col_key] == 1:
+                recs = rec_by_col.get(col_key)
+            if not recs:
+                L.append((u.get("project_id"), u.get("ref_col"), u.get("primary_value", "")))
+                continue
+            if any(r.get("class_out") in SOURCED or (r.get("proposed_refs") or [])
+                   or (r.get("researcher_notes") or "").strip() for r in recs):
+                if not any(r.get("class_out") in SOURCED for r in recs):
+                    L_looked += 1
+                continue
+            L.append((u.get("project_id"), u.get("ref_col"), u.get("primary_value", "")))
+
     return {
         "records": len(res), "rows": len(by_pid),
         "A_single_host_rows": A, "B_false_high": B, "C_dominant_document": C,
@@ -181,6 +226,9 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
         "I_relevance_unchecked": I_unchecked,
         "J_owed_blanks_unreported": J,
         "K_single_source_refs_added": K,
+        "L_uncited_values_never_worked": L,
+        "uncited_owed": len(uncited),
+        "uncited_unresolved_but_worked": L_looked,
         "fills_owed": len(owed),
         "fills_staged": sum(1 for r in res if r.get("class_in") == "FILL"),
         "pool_present": bool(pool),
@@ -239,6 +287,14 @@ def report(out: dict, dominant_min: int) -> None:
     else:
         print(f"\nJ  skipped — worklist has no MISSING_VALUE units (built without --owe-fills); "
               f"FILL records staged: {out['fills_staged']}")
+    if out["uncited_owed"]:
+        sec(f"L  uncited values NEVER WORKED (MISSING_REF units owed {out['uncited_owed']}; "
+            f"{out['uncited_unresolved_but_worked']} more unresolved but with notes)",
+            out["L_uncited_values_never_worked"],
+            "every value the sheet carries uncited was reported on (sourced or honest UNRESOLVED)",
+            lambda r: f"{r[0]} {r[1]} — sheet has {str(r[2])[:30]!r}, no ref, no notes")
+    else:
+        print("\nL  skipped — worklist has no MISSING_REF units")
     sec("K  REFS_ADDED on exactly one verified ref (2-per-data-point target unmet)",
         out["K_single_source_refs_added"], "every added ref is two-sourced",
         lambda r: f"{r[0]} {r[1]}", cap=10)
