@@ -1,0 +1,336 @@
+{
+  "project_id": "P0176",
+  "pipeline_name": "Dominion Gas Pipeline",
+  "sheet_row": 37,
+  "wiki": "https://www.gem.wiki/Dominion_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Adjudicate against P3220 (Eastern Gas Transmission and Storage System / EGTS) before any further edits to either row -- likely the same corporate/physical system tracked under its pre-2020 and post-2020 corporate names, not two different pipeline systems.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real. 'Dominion Gas Pipeline' (GEM's row name) is not how any source names an entity -- but 'Dominion Transmission, Inc.' certainly existed and is well documented. DUPLICATE evidence, strongest finding on this row: SEC filing Eastern Gas Transmission & Storage, Inc. 10-K exhibit 3.1 (Certificate of Amendment, filed 2022, CIK 0001936737, https://www.sec.gov/Archives/edgar/data/1936737/000119312522189499/d365547dex31.htm) is the corporate charter history of this exact entity and documents, in order: 'CNG Transmission Corporation' amended April 2000 -> 'Dominion Transmission, Inc.' (named as the surviving corporation in a Dec 31, 2001 certificate of merger) -> renamed 'Dominion Energy Transmission, Inc.' effective May 12, 2017 -> renamed 'Eastern Gas Transmission and Storage, Inc.' effective Nov 2, 2020. Independently, Berkshire Hathaway Energy Co's FY2020 10-K (https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm) states BHE acquired '100% of the equity interests of Eastern Gas Transmission and Storage, Inc. (\"EGTS\") (formerly known as Dominion Energy Transmission, Inc.)' in the Nov 2020 GT&S Transaction, and that EGTS's own pipeline/storage operations sit in 'Maryland, New York, Ohio, Pennsylvania, Virginia and West Virginia.' P0176's GEM values (Owner1='Dominion Energy' 100%, StartLocation naming Maryland/Ohio/Virginia, network-scale length 6,059 km, status=operating) describe exactly this same corporate lineage, one name-era behind P3220's current corporate name (Eastern Gas Transmission and Storage System). Both P0176 and P3220 are recorded as network/system-scale rows (blank SegmentName, thousand-plus-mile lengths, blank or single-state termini) rather than discrete route segments -- the same granularity problem the Sweep SOP already flags for P0169 Columbia Gas Transmission. I could not find a source distinguishing a genuinely separate physical scope for the two rows (e.g. one being transmission-only and the other transmission+storage+gathering) -- the ~380 km length gap (6,059 vs 6,437.38) and ~2,300 MMcf/d capacity gap (7,200 vs 9,500) look like different snapshot years/sources of the same evolving system, not two different pipelines. Recommend Baird/an update pass adjudicate: either merge/retire P0176 into P3220 with genealogy noted, or if GEM intends P0176 as a deliberate historical/legacy entity (pre-2020 corporate era) it needs a non-operating status and a note explaining the split -- an 'operating' status on BOTH names as of a 2023-08-11 LastUpdated (three years after the rename) is very likely double-counting one system. I did not attempt the merge myself -- this is a scope/identity call, not a mechanical fix.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1936737/000119312522189499/d365547dex31.htm",
+        "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Update Owner1 off 'Dominion Energy' -- ownership changed in a documented 2020 transaction, independent of the duplicate-row question above.",
+      "contested": {
+        "Owner1": "Berkshire Hathaway Energy (operating subsidiary Eastern Gas Transmission and Storage, Inc., via Eastern Energy Gas Holdings, LLC)"
+      },
+      "researcher_notes": "The sheet's current Owner1='Dominion Energy' 100% is unreferenced (MISSING_REF) and, per the same SEC filings used for the duplicate finding above, has been wrong since November 2020: Dominion Energy sold 100% of the equity interests in this entity (then 'Dominion Energy Transmission, Inc.') to Berkshire Hathaway Energy for ~$2.5B cash + ~$5.6B assumed debt, closing Nov 1, 2020 (BHE FY2020 10-K, GT&S Transaction section). I am not adding a ref to the existing value since it is stale, not merely unsourced -- flagging as a validity concern per the standing rule against endorsing a wrong value with a citation. Whichever ProjectID this row survives as after the duplicate adjudication, Owner1 needs to move to Berkshire Hathaway Energy / Eastern Energy Gas Holdings LLC.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct EndState/Province -- 'New United Kingdom' is a find-and-replace scar on 'New England' (a region, not a valid state/province value anywhere else in either tracker), and even the intended 'New England' does not match this system's sourced physical footprint.",
+      "contested": {
+        "EndState/Province": "New York"
+      },
+      "researcher_notes": "Confirmed the scar: the gem.wiki-sourced Wikipedia stub 'Dominion Transmission' (en.wikipedia.org/wiki/Dominion_Transmission, last edited 2020, no citations of its own) describes the system as bringing gas 'into New England' -- so GEM's original (uncorrupted) value was almost certainly the region name 'New England,' later mangled to 'New United Kingdom.' But 'New England' is not itself a usable state/province value (it appears zero times elsewhere in either tracker per the batch brief), and more importantly the CURRENT, sourced operating footprint of this system does not extend into any New England state at all: BHE's FY2020 10-K states EGTS's (this entity's successor name) transmission/storage pipelines sit in 'Maryland, New York, Ohio, Pennsylvania, Virginia and West Virginia' -- New York is the northeasternmost point. My read is that the Wikipedia stub's 'into New England' phrasing describes gas flowing onward past Dominion's own pipe via interconnecting pipelines (Algonquin/Iroquois/Tennessee Gas at the NY state line), not that this pipeline's own facilities are sited in a New England state. Proposing New York as the best-supported specific terminus state. This is corroborated by two independent-enough sources (the SEC 10-K's explicit state list, and the Wikipedia stub's storage-fields-in-PA/WV-plus-flow-toward-New-England description, which is consistent with a New York handoff point) but neither source names a specific New York location for this system's terminus, so I'm marking this medium tier rather than high -- treat as the best-evidenced correction, not a pinpoint-verified endpoint. Alternative reading: since this is a network/system-scale row (like P0169's blank StartState convention), leaving EndState/Province blank rather than any single state may be the more honest network-level treatment -- flagging both options for the researcher who applies this.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm",
+        "https://en.wikipedia.org/wiki/Dominion_Transmission"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change beyond the attribution/duplicate concerns above -- Status, Fuel classification, and StartYear1 hold up against independent sources.",
+      "contested": {},
+      "researcher_notes": "Confirmed: Fuel=Gas and Status=operating are trivially supported by every source touched (Wikipedia stub, BHE FY2020 10-K, bhegts.com) -- this is an active, currently-operating natural gas transmission/storage system regardless of which ProjectID survives the duplicate question. StartYear1=2001 is unexpectedly well-supported: the EGTS corporate-charter exhibit (SEC EX-3.1, CIK 0001936737) records a Certificate of Merger 'effective on December 31, 2001' naming 'Dominion Transmission, Inc.' as the surviving corporation -- i.e. the corporate entity GEM's row name derives from began operating under that exact name at the end of 2001, matching StartYear1 to the day. This is currently single-origin (the SEC filer's own corporate-history exhibit) so I'm holding it at medium tier rather than high -- a second, non-Dominion/BHE-filed source (a contemporaneous 2001-2002 trade-press item, or a FERC docket referencing 'Dominion Transmission, Inc.' under that name) is still owed and I did not find one in the time available. I did NOT verify the 6,059 km length or 7,200 MMcf/d capacity against any primary source that states those exact figures for this specific entity/scope -- the only system-scale figures I found (BHE's combined 'Eastern Energy Gas' total of ~5,400 mi / 12.5 Bcf/d) cover EGTS plus Carolina Gas Transmission plus gathering pipelines together, a broader scope than this row, so it is not a valid ref for either the length or the capacity cell (aggregate-vs-segment mismatch) -- left both UNRESOLVED rather than forcing a match or a false 'confirmed.'",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Dominion_Transmission",
+        "https://www.bhegts.com",
+        "https://www.sec.gov/Archives/edgar/data/1936737/000119312522189499/d365547dex31.htm"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Dominion_Transmission",
+        "https://www.bhegts.com"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dominion_Transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Describes the pipeline in present tense bringing gas from Cove Point/Ohio/Virginia into storage and to New England -- status inferred as operating from context (status is not a literal substring per url_verifier's inference rule)."
+        },
+        {
+          "url": "https://www.bhegts.com",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Eastern Gas Transmission and Storage — Provides natural gas transportation and storage services' (present tense, current company page) -- corroborates the successor entity is actively operating."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources both describe active, present-tense operation of this system (under its current or prior corporate name)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/Dominion_Transmission",
+        "https://www.bhegts.com"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dominion_Transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Dominion Transmission is a natural gas pipeline...'"
+        },
+        {
+          "url": "https://www.bhegts.com",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'interstate natural gas transmission and storage company'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivially confirmed as a natural gas system by every source touched."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2001"
+      },
+      "primary_value": "2001",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1936737/000119312522189499/d365547dex31.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1936737/000119312522189499/d365547dex31.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Certificate of Merger of CNG Power Company with and into Dominion Transmission, Inc., 'effective on December 31, 2001,' naming Dominion Transmission, Inc. as the surviving corporation."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match to the corporate-charter date the entity GEM's row name derives from took/held its 'Dominion Transmission, Inc.' identity. Single-origin (SEC/EGTS's own corporate exhibit) -- a second, non-filer source (e.g. a period FERC docket or trade-press item under the 'Dominion Transmission, Inc.' name) is still owed; I searched SEC full-text and general web for one in the time available and did not find one that named this entity with a date."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found dating a 'proposal' for this legacy, decades-old network-scale system -- its predecessor pipe (Consolidated Gas Transmission Corp / CNG Transmission) long predates any FERC-certificate-era 'proposal' filing, and the 2001/2017/2020 dates I found are corporate renaming/merger dates, not project-proposal dates. Searched SEC filings and the harvested citation pool; nothing states a proposal year. Leaving blank rather than guessing."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same problem as ProposalYear -- this is a network aggregate of pipe built across many decades by predecessor companies (Consolidated Gas Transmission Corp and its own predecessors); no single construction year is meaningful or sourced. Left blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found stating a system-wide operating pressure for this network-scale entity (pressure varies by segment on a system this large). Searched the SEC filings, bhegts.com, and the harvested citation pool; none states a pressure figure. Left blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same network-scale problem: a ~6,000 km aggregate system has many diameters (this is exactly the situation the Sweep SOP already treats as correctly-blank for network rows like P0169 Columbia Gas Transmission). No single system-wide diameter is sourced or sourceable. Left blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The harvested NPR/StateImpact article (stateimpact.npr.org/pennsylvania/2017/12/27/dominions-cove-point-plant-preparing-to-export-lng/, live, 200) describes Marcellus Shale gas from northeast Pennsylvania (plus general Appalachian shale-boom gas from PA/OH/WV) flowing toward the Cove Point export terminal -- circumstantially consistent with Appalachian shale gas as this system's fuel source -- but the article never names 'Dominion Transmission' or this pipeline specifically (name_found=false; it is about the Cove Point LNG terminal, not the feeder pipeline network), so per the relevance rule it is not a valid ref for this row's FuelSource cell. I did not find a source that both names this pipeline/entity and states a FuelSource classification. Left blank rather than citing an off-point source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a total historical construction/acquisition cost specific to this system's pipeline assets alone (the only dollar figures found -- BHE's ~$2.5B cash + ~$5.6B assumed debt GT&S Transaction price -- cover the ENTIRE 2020 acquisition: EGTS + Carolina Gas Transmission + Iroquois 50% + Cove Point 25% interest together, not this pipeline's cost alone, so it would be an aggregate-vs-segment mismatch to stage it here). Left blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 37,
+      "oo_sheet_row": 166,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Eastern Gas Transmission and Storage, Inc."
+      },
+      "primary_value": "Eastern Gas Transmission and Storage, Inc.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1081316/000108131621000011/bhe-20201231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'100% of the equity interests of Eastern Gas Transmission and Storage, Inc. (\"EGTS\") (formerly known as Dominion Energy Transmission, Inc.)' -- names the operating entity directly."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Filling with the CURRENT operator name (Eastern Gas Transmission and Storage, Inc.) since that is factually accurate as of today, even though the row's legacy name and unreferenced Owner1 ('Dominion Energy') reflect the pre-2020 identity -- see the duplicate/attribution validity concerns above, which this fill is consistent with, not contradicting. Single-origin (the SEC filer's own 10-K); a second, non-BHE-filed source (state PUC docket, FERC docket, or trade press naming EGTS as operator) is still owed -- I did not find one in the time available. If the duplicate-row question above resolves by merging this row into P3220, this Operator value should carry over there instead."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P3220",
+      "url": "https://www.sec.gov/Archives/edgar/data/1936737/000119312522189499/d365547dex31.htm",
+      "facts": "P3220 'Eastern Gas Transmission and Storage System (EGTS)' is the exact same corporate entity this row (P0176, recorded under a prior corporate name) traces back to -- SEC exhibit 3.1 documents the entity's name history: Consolidated Gas Transmission Corporation -> Dominion Transmission, Inc. (surviving name confirmed by a Dec 31, 2001 certificate of merger) -> Dominion Energy Transmission, Inc. (renamed effective May 12, 2017) -> Eastern Gas Transmission and Storage, Inc. (renamed effective Nov 2, 2020, after Berkshire Hathaway Energy's acquisition). BHE's FY2020 10-K additionally states EGTS's pipeline/storage operations sit in Maryland, New York, Ohio, Pennsylvania, Virginia and West Virginia -- no New England state -- which bears on P3220's own EndState/Province if it needs the same scrutiny. Route P0176's duplicate concern to whoever works P3220 next; do not resolve unilaterally from a single-row pass."
+    }
+  ],
+  "summary": "Concern: likely duplicate of P3220 (Eastern Gas Transmission and Storage) -- P0176's 'Dominion Gas Pipeline' name and P3220 are almost certainly the same entity across a documented 2001->2017->2020 corporate rename (SEC exhibit 3.1 + BHE 10-K), plus a stale Owner1 ('Dominion Energy', pre-Nov-2020 sale) and a corrupted EndState/Province ('New United Kingdom' for 'New England,' itself not matching the sourced MD/NY/OH/PA/VA/WV footprint -- proposed New York). Confirmed Status/Fuel/StartYear1=2001 (matches a Dec 2001 corporate merger date). UNRESOLVED: ProposalYear, ConstructionYear, Pressure, Diameter, FuelSource, SegmentCost (network-scale aggregate with no single sourceable figure); Length and Capacity not independently verified to an exact primary source either (also left un-flagged as UNRESOLVED rather than a false confirm)."
+}

@@ -814,9 +814,15 @@ def _operators_owners_view(wb, title, resolutions, concerns=None):
     for col, h in enumerate(headers[len(base):], start=len(base) + 1):
         ws.column_dimensions[get_column_letter(col)].width = 46 if h.endswith(" [ref]") else 18
 
-    # open validity concerns that dispute owner/operator attribution, by ProjectID. This
-    # tab renders only the columns an oo ref unit carries, so the marker goes on the
-    # ProjectID cell rather than a value cell (which may not exist on this tab at all).
+    # open validity concerns that dispute owner/operator attribution, by ProjectID.
+    # An attribution concern names a real column here (`Owner1`, `Owner2%`, `Operator`),
+    # so tint THAT cell when this tab renders it — the row marker alone says "something
+    # on this row is disputed" and on a 25-row tab where 25 rows are marked that is no
+    # signal at all. The ProjectID marker still goes on every concern, because a concern
+    # may name a column this tab does not carry (or none at all).
+    oo_col_idx: dict[str, int] = {}
+    for i, h in enumerate(headers, start=1):
+        oo_col_idx.setdefault(h, i)
     by_pid_concern: dict[str, list] = {}
     for r in concerns or []:
         by_pid_concern.setdefault(r.get("project_id", ""), []).append(r)
@@ -833,6 +839,18 @@ def _operators_owners_view(wb, title, resolutions, concerns=None):
         ws.append(rowvals)
         rn = ws.max_row
         for cr in sorted(by_pid_concern.get(pid, []), key=_concern_rank):
+            for vc in _contested_cols(cr):
+                ci = oo_col_idx.get(vc)
+                if not ci:
+                    continue
+                vcell = ws.cell(rn, ci)
+                # never tint an empty cell (an empty tinted cell reads as a proposed blank)
+                if not str(vcell.value or "").strip():
+                    continue
+                vcell.fill = CONTESTED_FILL
+                prev = vcell.comment.text + "\n\n———\n\n" if vcell.comment else ""
+                vcell.comment = Comment(prev + _contested_note(cr), "deep sweep",
+                                        height=280, width=460)
             idc = ws.cell(rn, 1)
             idc.fill = CONTESTED_FILL
             prev = idc.comment.text + "\n\n———\n\n" if idc.comment else ""

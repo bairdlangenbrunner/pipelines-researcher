@@ -1,0 +1,258 @@
+{
+  "project_id": "P2630",
+  "pipeline_name": "Dominion Gas Pipeline",
+  "sheet_row": 1357,
+  "wiki": "https://www.gem.wiki/Dominion_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "West Loop Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on existence/classification; see separate attribution and spec concerns below",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION confirmed independently of GEM. Two independent origins name and describe this exact project: (1) Dominion Energy's own dedicated project microsite (dominionenergy.com/.../west-loop-project; live URL now 404s -- retired after project completion -- so cited via its Wayback capture, last live-verified 2023-11-30): 'Dominion Energy Transmission, Inc. (DETI) has proposed the West Loop Project... 150,000 dekatherms per day... adding 5 miles of pipeline... 36-inch pipeline... in-service third quarter of 2021,' with facility-level detail (Beaver Compressor Station/Koppel Regulation Junction/Stitt Gate Site in Beaver County, PA; Carroll Compressor Station in Carroll County, OH). (2) EIA's Natural Gas Pipeline Projects database, which tracks it as its own row across 5+ vintages (Jan2019 through Jul2021) under FERC docket CP19-26, operator 'Dominion Energy Transmission Co', 5.1 mi / 36 in / 150 MMcf/d / $94.2M / PA->OH, status progressing Applied(2019-01-03)->Applied(2019-10-18)->Construction(2020-02-21)->Completed(2021-06-09). Correctly classified: this is a genuine standalone FERC-certificated interstate expansion project (its own docket, its own EIA tracking row), not a system-level duplicate of P0176's much larger 'Dominion Gas Pipeline' network row (6,059 mi) -- it is one discrete loop/expansion segment of that same corporate system, which is exactly how GEM already models it (segment_name='West Loop Expansion Project' under the same wiki page). Fuel=Gas and Status=operating are both correct. Opened and read to exhaustion: the Dominion project page (Wayback), and 5 vintages of the EIA Natural Gas Pipeline Projects workbook (Jan2019, Jan2020, Jan2021, Jul2021; also checked May2018/Aug2018, which do not carry this project, consistent with it not existing publicly before late 2018). Of the harvested wiki-citation pool (6 unique refs for this row after resolving the shared cite_note-eia-6 and cite_note-1 group refs), I opened all 6: the bit.ly link (Wikipedia mirror, general Dominion Transmission background, not West Loop-specific -- not cited here), the NYISO overview PDF (general system overview, pre-dates this project, not cited), the NPR Cove Point/LNG story and the We Are Cove Point opposition page (both about the unrelated Cove Point LNG terminal/opposition, not this expansion -- not cited for this row), the EIA data.php landing page (superseded here by the actual dated EIA project workbooks, which is what the citation's own footnote points to), and the Dominion west-loop-project page (used, via Wayback).",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "West Loop Expansion Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "update Owner1 (operators/owners tab) from 'Dominion Energy' to 'Berkshire Hathaway Energy' (parent of the renamed operating entity); update Operator similarly (see the paired fills[] entries)",
+      "contested": {"Owner1": "Berkshire Hathaway Energy", "Owner1%": "100.00%"},
+      "researcher_notes": "Owner1='Dominion Energy' / 100% is stale for this pipeline as it exists TODAY, and was already wrong on the date it entered service. Two independent SEC filings (both primary, both filed under Dominion Energy, Inc.'s own CIK 0000715957) establish: (1) 8-K dated 2020-07-06 (Ex-99.1, filed 2020-07-05): 'Dominion Energy Agrees to Sell Gas Transmission, Storage Assets to Berkshire Hathaway Energy... Assets covered by the sale agreement include the company's ownership interests in Dominion Energy Transmission [i.e. DETI, the FERC applicant/operator of THIS project per CP19-26 and Dominion's own project page]... transaction valued at $9.7 billion.' (2) 8-K dated 2020-11-02: 'Dominion Energy... announced that it has closed on the sale of the majority of its gas transmission and storage assets to Berkshire Hathaway Energy Company... effective November 1, 2020.' DETI (owner/operator of the West Loop Expansion Project) was explicitly named among the divested assets and closed with the first (majority) tranche, not the follow-on Questar Pipeline tranche that completed in early 2021. Per EIA's own tracked status, the West Loop Expansion Project did not complete construction and enter service until 2021-06-09 -- more than 7 months AFTER the Nov 1, 2020 ownership transfer. So at every point this segment has actually been 'operating,' its owner/operator has been Berkshire Hathaway Energy, never Dominion Energy. Confirmed the successor entity's continuity via SEC EDGAR full-text search: Berkshire Hathaway Energy's own 10-K/8-K filings (2023-2026 vintages) list 'EASTERN GAS TRANSMISSION & STORAGE, INC.' (CIK 0001936737) as a co-registrant subsidiary, alongside 'EASTERN ENERGY GAS HOLDINGS, LLC' (CIK 0001603291 -- the SAME CIK that filed the July/November 2020 Dominion-side 8-Ks as 'Dominion Energy Gas Holdings, LLC'), i.e. DETI's holding-company chain was renamed in place after the sale, not replaced by a new corporate family. This also raises a likely duplicate/rename question for TWO OTHER rows (not mine to fix, flagged as a cross_row_lead): P0176 'Dominion Gas Pipeline' (6,059 mi, still under the old Dominion name, LastUpdated 2023-08-11) and P3220 'Eastern Gas Transmission and Storage System (EGTS)' (6,437.38 mi, already under the new post-sale name, LastUpdated 2022-10-07) may be the SAME physical network carried under its old and new corporate names on two separate GEM rows.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/715957/000119312520187844/d939155dex991.htm",
+        "https://www.sec.gov/Archives/edgar/data/715957/000119312520283437/d13732d8k.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "West Loop Expansion Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "reconsider Delayed=yes/DelayType=inferred -- no documented schedule slip found; recommend blanking both unless a specific delay is sourced",
+      "contested": {"Delayed": "", "DelayType": ""},
+      "researcher_notes": "Every documented schedule milestone for this project lines up, and the actual completion beat the last publicly announced target rather than lagging it. Dominion's own published schedule (its project page): FERC application Q1 2019, FERC order Q4 2019, begin construction Q1 2020, in-service Q3 2021. EIA's independently tracked status transitions corroborate this timeline structurally: 'Applied' with docket CP19-26 already assigned as of the 2019-01-03 update (i.e., filed on or ahead of the Q1-2019 target), still 'Applied' as of 2019-10-18, 'Construction' by 2020-02-21 (consistent with a Q1 2020 construction start), 'Completed' as of 2021-06-09 -- which is Q2 2021, AHEAD of the originally announced Q3 2021 in-service target, not behind it. I found no FERC order date, no rehearing/extension notice, and no trade-press mention of a slip for this specific project in either source I opened. Delayed=yes with DelayType=inferred looks like a mechanical/dormancy-style default applied to this stale row rather than a documented finding (the row's own LastUpdated is 2023-08-11, well after the project's 2021 completion, so 'inferred' as a dormancy proxy does not fit a project that was already complete and operating by then). I searched for a second, disconfirming account (in case the plan changed mid-project) via the EIA vintages spanning the full construction window (2019-2021) and found no gap or resumed-'Applied'/reopened status that would indicate a slip.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Status [ref]", "value_cols": ["Status"], "primary_value_col": "Status",
+      "values": {"Status": "operating"}, "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx",
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 'West Loop Project', Status='Completed', Completed Date=2021-06-09, docket CP19-26"},
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'The project is expected to be in-service in the third quarter of 2021'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "EIA (federal tracking data, independent of the operator) confirms Completed/in-service; Dominion's own page confirms it as an in-service project. Confirmed operating."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Fuel [ref]", "value_cols": ["Fuel"], "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "listed in EIA's Natural Gas Pipeline Projects workbook, a natural gas expansion project"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Trivially confirmed -- an EIA-tracked natural gas pipeline expansion project."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Proposal [ref]", "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2018", "ProposalMonth": "10"}, "primary_value": "2018",
+      "proposed_refs": ["https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project"],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'Proposed Schedule ... Open House - October 25, 2018'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Sourced from Dominion's own published project schedule (the earliest dated public milestone: the Oct 25, 2018 open house). Searched for a second, independent source naming an earlier/different proposal date: the earliest EIA vintage to carry this project is Jan2019 (already 'Applied' with docket CP19-26 assigned by 2019-01-03), and it is absent from the May2018 and Aug2018 EIA vintages -- consistent with (does not contradict) an Oct 2018 public proposal, but does not independently pin the month. No trade-press announcement of the proposal found in the sources opened. Flagging as medium/single-primary-source for the month; the year 2018 is corroborated by EIA's absence-then-presence pattern."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Construction [ref]", "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2020"}, "primary_value": "2020",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'Proposed Schedule ... Begin Construction - 1st Quarter 2020'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row updated 2020-02-21 shows Status='Construction' (prior Jan2020-vintage update, 2019-10-18, still showed 'Applied')"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent sources agree on year 2020 -- Dominion's announced Q1-2020 construction start, and EIA's own tracked status flipping from Applied (as of an Oct 2019 update) to Construction (as of a Feb 2020 update). Left ConstructionMonth blank rather than assert Q1/January specifically, since EIA's update-date is not necessarily the exact construction-start date."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Start [ref]", "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"], "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2021", "StartMonth1": "6"}, "primary_value": "2021",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Status='Completed', Completed Date=2021-06-09"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "StartYear1=2021 confirmed by both EIA (completed 2021-06-09) and Dominion's own Q3-2021 target (same year). Filled the previously blank StartMonth1=6 from EIA's precise completed-date; this is a single primary source for the exact month (Dominion's page gives only a Q3 target, which the actual June completion beat), so month-level precision is medium tier."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Delay [ref]", "value_cols": ["Delayed", "DelayType"], "primary_value_col": "Delayed",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No ref found supporting the EXISTING value (Delayed=yes/DelayType=inferred) -- searched Dominion's own schedule page and 5 vintages of EIA's tracking data, both of which instead show the project completing on/ahead of its own announced schedule (see the paired validity concern, concern_type=spec, which carries the disconfirming evidence and the recommended correction: blank both fields)."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Capacity [ref]", "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "150.00", "CapacityUnits": "MMcf/d"}, "primary_value": "150.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'The project would provide 150,000 dekatherms per day of firm transportation service' (150 MMdth/d ~= 150 MMcf/d)"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Additional Capacity (MMcf/d) = 150"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed by both the operator's own disclosure and EIA's independent tracking; both state exactly 150."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Pressure [ref]", "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched Dominion's project page (no pressure/MAOP figure given) and EIA's Natural Gas Pipeline Projects workbook (no pressure column in that dataset). The FERC order itself (docket CP19-26) would likely state MAOP but I could not reach an accession-numbered FERC document in this pass (elibrary.ferc.gov's docket-sheet UI is a JS application that does not render via a plain HTTP fetch, and it is a mutable search surface, not a citable document, in any case). Leaving blank rather than guess."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Length [ref]", "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "5.10", "LengthKnownUnits": "mi"}, "primary_value": "5.10",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'It would include adding 5 miles of pipeline in an existing right of way'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Miles = 5.1"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "EIA's exact figure (5.1 mi) matches GEM's 5.10 mi precisely; Dominion's page rounds to '5 miles', consistent."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Diameter [ref]", "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "36.00", "DiameterUnits": "in"}, "primary_value": "36.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'Install 5 miles of 36-inch pipeline parallel to existing TL-400 line'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Diameter (Inches) = 36"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed by both sources exactly."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "FuelSource [ref]", "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Per schema convention, FuelSource needs a named upstream field/plant, not 'Natural Gas'. Neither Dominion's project page nor the EIA entry names an upstream supply field -- both describe only the downstream demand (a ~1 GW combined-cycle power plant in Columbiana County, OH, likely South Field Energy Center, per EIA's notes field 'Deliver gas from PA to 1 GW combined cycle power plant in Columbiana County, OH'). Leaving blank rather than default to a fuel type or the destination plant."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartPrefecture/District": "Beaver County", "StartState/Province": "Pennsylvania", "StartCountryOrArea": "United States", "EndPrefecture/District": "Carroll County", "EndState/Province": "Ohio", "EndCountryOrArea": "United States"},
+      "primary_value": "Beaver County",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": true, "contains_value": true, "name_found": true, "note": "'Koppel Regulation Junction, Beaver County (PA) - Install 5 miles of 36-inch pipeline...Stitt Gate Site, Beaver County (PA)...Carroll Compressor Station, Carroll County (OH)'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Beg_State=PA, End_State=OH"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "StartState/EndState (already on the sheet) confirmed by both sources; StartPrefecture/District and EndPrefecture/District (previously blank) filled with county-level detail from Dominion's own facility list (Beaver County PA -> Carroll County OH), which the EIA state-level entry does not contradict. StartLocation/EndLocation (specific facility names) left blank -- no clear single-facility convention match found for those subfields in the time available."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357,
+      "ref_col": "SegmentCost [ref]", "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "94000000.00", "SegmentCostUnits": "USD"}, "primary_value": "94000000.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20231130175733/https://www.dominionenergy.com/projects-and-facilities/natural-gas-projects/west-loop-project", "ok": false, "contains_value": false, "name_found": true, "note": "the archived project page text does not state a dollar cost figure (cost is not on this page); GEM's wiki cites this page for cost anyway -- see notes"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "The existing value ($94,000,000) is corroborated by EIA's precise figure of $94.2 million (Cost (millions)=94.2 in the EIA Natural Gas Pipeline Projects workbook, Jul2021 vintage) -- a 0.2% rounding difference, immaterial. EIA is the primary confirming source for the number; citing it as the ref. (Note: gem.wiki's own page states 'Cost: US$94 million' attributed to the Dominion project-page citation, but the archived Dominion page text I retrieved does not itself contain a cost figure -- likely GEM originally sourced US$94M from the EIA figure via that citation slot, or the live page once carried a cost figure that has since been edited out; either way, EIA's dated $94.2M figure is the solid primary number and is used here.)"
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357, "oo_sheet_row": 2023,
+      "ref_col": "Operator [ref]", "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"], "primary_value_col": "Operator",
+      "values": {"Operator": "Eastern Gas Transmission & Storage, Inc."}, "primary_value": "Eastern Gas Transmission & Storage, Inc.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/715957/000119312520187844/d939155dex991.htm",
+        "https://www.sec.gov/Archives/edgar/data/715957/000119312520283437/d13732d8k.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/715957/000119312520187844/d939155dex991.htm", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Dominion Energy Transmission' among the divested Gas Transmission & Storage assets sold to Berkshire Hathaway Energy"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/715957/000119312520283437/d13732d8k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "confirms the sale closed effective November 1, 2020"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "The project's builder/FERC applicant, Dominion Energy Transmission, Inc. (DETI), was sold by Dominion Energy to Berkshire Hathaway Energy effective Nov 1, 2020 -- before this project even entered service (June 2021). SEC EDGAR full-text search shows Berkshire Hathaway Energy's own 10-K/8-K filings (2023-2026) list the successor registrant as 'Eastern Gas Transmission & Storage, Inc.' (CIK 0001936737), with its parent holding company (CIK 0001603291) renamed in place from 'Dominion Energy Gas Holdings, LLC' to 'Eastern Energy Gas Holdings, LLC'. EIA's own vintages for this project (2019-2021) still show the pre-sale/legacy name 'Dominion Energy Transmission Co' since EIA's operator-name field tends to lag the corporate change; proposing the current legal name here since Operator should reflect who operates the line today. Two independent SEC filings (the divestiture 8-K and the closing 8-K, both under Dominion Energy Inc.'s own CIK) support the ownership-chain history; the specific successor entity name is corroborated by a separate BHE-side SEC filing chain (different filer/CIK)."
+    },
+    {
+      "segment_name": "West Loop Expansion Project", "sheet_row": 1357, "oo_sheet_row": 2023,
+      "ref_col": "Owner [ref]", "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Not confirming the existing value (Owner1='Dominion Energy', 100%) -- it is contested (see the paired validity concern, concern_type=attribution). SEC filings show Dominion Energy sold this project's owning/operating entity (Dominion Energy Transmission, Inc.) to Berkshire Hathaway Energy effective Nov 1, 2020, before this expansion even entered service in June 2021. Proposed correction (Owner1='Berkshire Hathaway Energy', 100%) and supporting refs are carried in the validity object's contested/proposed_refs fields rather than staged here as a plain REFS_ADDED, since this is a value change, not a confirmation."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0176",
+      "url": "https://www.sec.gov/Archives/edgar/data/715957/000119312520283437/d13732d8k.htm",
+      "facts": "P0176 'Dominion Gas Pipeline' (6,059 mi network row) is very likely the SAME physical system as P3220 'Eastern Gas Transmission and Storage System (EGTS)' (6,437.38 mi) under its pre-acquisition corporate name. Dominion Energy sold its gas transmission & storage business -- explicitly including 'Dominion Energy Transmission' (DETI), the FERC-jurisdictional entity that operates this whole network -- to Berkshire Hathaway Energy, closing Nov 1, 2020. The renamed successor entity, per Berkshire Hathaway Energy's own later SEC filings, operates as 'Eastern Gas Transmission & Storage, Inc.' This is worth a dedicated duplicate/rename check between P0176 and P3220 (mileage difference 6,059 vs 6,437.38 mi may reflect different measurement vintages of the same network, or a genuine scope difference -- not established here, flagged for the owner of those rows)."
+    },
+    {
+      "project_id": "P3220",
+      "url": "https://www.sec.gov/Archives/edgar/data/715957/000119312520187844/d939155dex991.htm",
+      "facts": "See the P0176 lead above -- P3220's name 'Eastern Gas Transmission and Storage System (EGTS)' is the exact post-acquisition corporate rebrand of the same DETI system that P0176 still carries under the pre-sale 'Dominion' name; the two rows' LastUpdated dates (P0176: 2023-08-11 under the old name; P3220: 2022-10-07 already under the new name) are consistent with one row having been updated post-sale and the other not."
+    }
+  ],
+  "summary": "P2630 (Dominion Gas Pipeline / West Loop Expansion Project) is real, correctly classified, and its length/diameter/capacity/cost/states are all independently confirmed (Dominion Energy's own project page + EIA); but Owner1='Dominion Energy' is stale attribution (DETI was sold to Berkshire Hathaway Energy effective Nov 1, 2020, before this segment even entered service) and Delayed=yes/inferred is unsupported by any documented schedule slip -- both flagged as concerns with sourced corrections, plus a same-network duplicate/rename lead on P0176 vs P3220. UNRESOLVED: Pressure and FuelSource (no source states either)."
+}

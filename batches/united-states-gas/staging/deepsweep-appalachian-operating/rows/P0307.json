@@ -1,0 +1,307 @@
+{
+  "project_id": "P0307",
+  "pipeline_name": "Mountaineer Gas Pipeline",
+  "sheet_row": 157,
+  "wiki": "https://www.gem.wiki/Mountaineer_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase I",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartState/Province from 'Virginia' to 'West Virginia'. The Phase I distribution trunk line begins at a new interconnection in Morgan County, WV (near Berkeley Springs) and ends at the north end of Mountaineer Gas's Martinsburg-area distribution system in Berkeley County, WV. Both ends are in West Virginia; neither is in Virginia. StartLocation='Berkley' likely intends 'Berkeley [Springs]' (the Morgan County seat) but the state cell is simply wrong, the same find-and-replace/state-mixup pattern flagged elsewhere in this batch (cf. P0176's 'New United Kingdom').",
+      "contested": {"StartState/Province": "West Virginia"},
+      "researcher_notes": "Existence and the rest of the row are solidly confirmed (see the 'confirmed (caveat)' record below), but the Location cluster's StartState/Province is wrong. Independent primary sourcing: (1) Natural Gas Intelligence, 'Mountaineer Planning $45M Expansion in West Virginia's Eastern Panhandle' (2016-04-04), reporting directly from the PSC filing (Case No. 15-1256): 'The first calls for building a 27.5-mile distribution trunk line, beginning at a new interconnection in Morgan County, WV, with a new transmission line from Columbia Gas Transmission LLC (CGT) and extending to the northern end of the company's distribution system, which serves the area of Martinsburg, WV.' (2) West Virginia Public Broadcasting, 'Regulators to Hear Mountaineer Gas Pipeline Expansion Plan': describes the same Segment 1 as running between Berkeley Springs and 'just north of Martinsburg,' both in WV, and names the counties as Morgan, Jefferson and Berkeley -- all West Virginia counties. (3) WVDEP news release on the construction stormwater permit: route is in 'Morgan and Berkeley Counties, West Virginia.' (4) Mountaineer Gas's own site (mountaineergasonline.com/news.html): 'Expand service into Morgan (unserved)...and eventually Jefferson Counties (unserved)' -- again West Virginia counties. No source places any part of Phase I in the Commonwealth of Virginia. Only StartState/Province is disputed; StartLocation, EndLocation ('Martinsburg'), EndState/Province ('West Virginia'), and StartCountryOrArea/EndCountryOrArea ('United States') are consistent with all sources and not contested, so I have not staged a fills[] entry for the Location cluster (doing so would pair a ref against the still-wrong Virginia value). LengthKnown (44.30 km = 27.5 mi) matches the PSC-filed Phase 1 mileage almost exactly, which independently confirms this is the same segment being discussed.",
+      "proposed_refs": [
+        "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/",
+        "https://wvpublic.org/post/regulators-hear-mountaineer-gas-pipeline-expansion-plan"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to Status, Fuel, Length, Owner, or existence/classification; see the attribution concern above for the one wrong field (StartState/Province).",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real and well documented, independent of GEM/gem.wiki and independent of abarrelfull/theodora (neither appears anywhere in this trail). This is Segment 1 ('Phase I') of Mountaineer Gas Company's PSC-approved Eastern Panhandle Market Expansion (EPME), West Virginia PSC Case No. 15-1256-G-390P, filed ~2016-03-31 (Natural Gas Intelligence, 2016-04-04, reporting directly from the filing) and covered independently by WV Public Broadcasting (PSC hearing, Oct 2016), the West Virginia Press Association/State Journal (2017-03-06, VP Moses Skaff interview), the WV Dept. of Environmental Protection (construction stormwater permit news release, ~Feb 2018), Marcellus Drilling News (2018-06, summarizing WVDEP approval + construction start), the Herald-Mail/Hagerstown (2019-01-03, 'first segment...nearly complete'), and Mountaineer Gas's own site (mountaineergasonline.com/news.html, 'Eastern Panhandle Pipeline Project'). CLASSIFICATION: correctly a gas pipeline; it is an intrastate LOCAL-DISTRIBUTION trunk line (Mountaineer Gas Company is a WV LDC, PSC-regulated, not FERC), matching the scope brief's own framing -- not a misclassification. DUPLICATE: NOT a duplicate of P2040 -- P2040 is EPME Segment 2 ('Charles Town Loop', ~24.5 mi, Martinsburg->Charles Town->Middleway->Kearneysville; GEM's 39.4 km for P2040 = 24.48 mi, matching almost exactly -- see cross_row_leads). Also NOT the same asset as P0221 'Mountaineer XPress' (that is TC Energy/Columbia Gas Transmission's unrelated FERC interstate project -- correctly treated by this batch as a name collision, not a duplicate). IMPORTANT WIKI-CITATION HAZARD: gem.wiki's Mountaineer_Gas_Pipeline reference list conflates TWO causally-linked but legally and physically distinct projects: (a) Mountaineer Gas Co.'s own PSC-regulated EPME distribution line (this row, P0307/P2040), and (b) TC Energy/Columbia Gas Transmission's separate ~3.37-mile FERC-jurisdictional 'Eastern Panhandle Expansion Project' a.k.a. the 'Potomac Pipeline' (FERC Docket CP17-80), which crosses under the Potomac River near Hancock, MD to deliver NEW gas supply to Mountaineer's system at the Morgan County interconnection. Citations 7 (TC Energy fact sheet), 9-18 (Potomac River crossing opposition/litigation coverage: Post-Gazette, WTOP x3, Seeking Alpha, Chesapeake Climate Action Network, CBS Baltimore x2, GPO Federal Register CP17-80) all belong to the TC Energy transmission project, not to Mountaineer's own distribution Segment 1 -- I did not use them as support for this row's values and future researchers should not either. Of the 19 wiki-harvested citations, I opened/read 2 in full (Herald-Mail via Wayback; the rest of the detail came from an independent open-web search per the source ladder), verified 1 more resolves without full-reading (mountaineergasonline/about-us.html, a generic bio page), and could not extract content from 1 (oilandgaswatch.org/pipeline/3288 -- a client-rendered SPA; both the live page and its 2023-03-30 Wayback snapshot returned an empty rendered shell with no embedded JSON, so I cannot confirm what it states). The remaining 15 wiki citations were read as belonging to the TC Energy transmission project (see above) and were not opened in full since standing rule scopes them out of this row.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/",
+        "http://web.archive.org/web/20190104030948/https://www.heraldmailmedia.com/news/tri_state/west_virginia/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/article_c6509dc8-f482-5da6-9969-1cda44d9f6c4.html"
+      ],
+      "verifications": [
+        {"url": "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/", "ok": true, "contains_value": true, "name_found": true, "note": "Names Segment 1 explicitly and states PSC Case No. 15-1256; establishes the project."},
+        {"url": "http://web.archive.org/web/20190104030948/https://www.heraldmailmedia.com/news/tri_state/west_virginia/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/article_c6509dc8-f482-5da6-9969-1cda44d9f6c4.html", "ok": true, "contains_value": true, "name_found": true, "note": "Headline states the first segment of the distribution line project is 'nearly complete' as of Jan 2019; status inferred as operating by context per verifier guidance (status is inferable, not literal)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (trade press citing the PSC docket; a Maryland/WV regional daily) both consistent with an operating segment; no report since 2019 suggests reversal or cancellation."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["http://www.mountaineergasonline.com/news.html"],
+      "verifications": [
+        {"url": "http://www.mountaineergasonline.com/news.html", "ok": true, "contains_value": true, "name_found": true, "note": "Operator's own page: 'Eastern Panhandle Pipeline Project...Distribution line: 10-inch diameter steel pipe...TransCanada will provide gas supply to this distribution line' -- a natural-gas distribution line."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivial commodity confirmation from the operator's own page plus every other source in this trail (all describe a natural-gas distribution line)."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2019"},
+      "primary_value": "2019",
+      "proposed_refs": ["http://web.archive.org/web/20190104030948/https://www.heraldmailmedia.com/news/tri_state/west_virginia/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/article_c6509dc8-f482-5da6-9969-1cda44d9f6c4.html"],
+      "verifications": [
+        {"url": "http://web.archive.org/web/20190104030948/https://www.heraldmailmedia.com/news/tri_state/west_virginia/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/article_c6509dc8-f482-5da6-9969-1cda44d9f6c4.html", "ok": true, "contains_value": true, "name_found": true, "note": "Article dated 2019-01-03, headline 'Mountaineer Gas: First segment of distribution line project nearly complete.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source supports 2019 -- it says 'nearly complete' as of Jan 3 2019, not an explicit in-service date, so the existing StartYear1=2019 is plausible but not pinned to the month. I searched for a second, more precise source (WV PSC docket completion filing, a Mountaineer Gas press release, or a later news item confirming in-service) via web search and the operator's own news page, but found none stating an exact completion/in-service date -- the operator's page describes the project in present/future tense ('Construction expected in 2018') without a completion date. Leaving StartMonth1 blank rather than guessing."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched NGI, WVPB, WVPress/State Journal, WVDEP, Marcellus Drilling News, Nuttall Legal, and Mountaineer Gas's own site -- none states a throughput/capacity figure (MMcf/d or similar) for this specific distribution segment. As an intrastate LDC trunk line it is not FERC-jurisdictional and has no public FERC certificate stating added capacity; PSC filings that might contain a design-capacity figure are not available online in full text (Case No. 15-1256 exists only as a docket reference in secondary reporting, not as a directly fetchable PDF). Leaving blank rather than inferring from system-wide figures (Mountaineer serves ~220,000 accounts statewide -- an aggregate figure, not this segment's capacity)."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "One source (nuttalllegal.com, 2016, pre-segmentation project overview) describes the whole EPME project's operating pressure only qualitatively: 'about half the pressure of a typical transmission line, or several hundred PSI.' That is too vague and not segment-specific to stage as a numeric Pressure value for Phase I; no other source gives a number. Leaving blank rather than fabricating a PSI figure."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "44.30", "LengthKnownUnits": "km"},
+      "primary_value": "44.30",
+      "proposed_refs": [
+        "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/",
+        "https://wvpublic.org/post/regulators-hear-mountaineer-gas-pipeline-expansion-plan"
+      ],
+      "verifications": [
+        {"url": "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/", "ok": true, "contains_value": true, "name_found": true, "note": "'The first calls for building a 27.5-mile distribution trunk line...' -- 27.5 mi = 44.26 km, matching the sheet's 44.30 km almost exactly."},
+        {"url": "https://wvpublic.org/post/regulators-hear-mountaineer-gas-pipeline-expansion-plan", "ok": true, "contains_value": true, "name_found": true, "note": "Independently reports the same segment as '27 miles.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Strong, near-exact confirmation: 27.5 mi (NGI, citing the PSC filing directly) converts to 44.26 km, essentially identical to the sheet's 44.30 km. WVPB's rounder '27 miles' is consistent. No change needed."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "10", "DiameterUnits": "in"},
+      "primary_value": "10",
+      "proposed_refs": [
+        "http://www.mountaineergasonline.com/news.html",
+        "https://wvpress.org/breaking-news/mountaineer-gas-plan-extend-distribution-lines-moving-ahead-slowly/",
+        "https://marcellusdrilling.com/2018/06/mountaineer-plans-pipe-expansions-in-wv-panhandle-every-year/"
+      ],
+      "verifications": [
+        {"url": "http://www.mountaineergasonline.com/news.html", "ok": true, "contains_value": true, "name_found": true, "note": "Operator's own page: 'Distribution line: 10-inch diameter steel pipe.'"},
+        {"url": "https://wvpress.org/breaking-news/mountaineer-gas-plan-extend-distribution-lines-moving-ahead-slowly/", "ok": true, "contains_value": true, "name_found": true, "note": "VP Moses Skaff, on the record: '10-inch steel pipe buried at least three to four feet underground.'"},
+        {"url": "https://marcellusdrilling.com/2018/06/mountaineer-plans-pipe-expansions-in-wv-panhandle-every-year/", "ok": true, "contains_value": true, "name_found": true, "note": "'Phase One runs a 22.5-mile, 10-inch-diameter steel pipeline from Morgan County to Martinsburg.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fill: 10-inch steel pipe, corroborated by the operator's own site, an on-the-record VP interview (State Journal/WV Press), and an independent trade-press summary (Marcellus Drilling News)."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per gem_schema.md's gotcha, FuelSource wants a named upstream field/plant, not a company or commodity. All sources agree the line's gas comes from 'a new interconnection in Morgan County, WV, with a new transmission line from Columbia Gas Transmission LLC (CGT)' (NGI) / 'TransCanada will provide gas supply' (mountaineergasonline.com) -- i.e., the upstream source is an interconnection with an interstate transmission PIPELINE COMPANY (TC Energy/Columbia Gas Transmission), not a named producing field or plant. No source names a specific field (e.g., a Marcellus pad or processing plant) feeding that interconnect. Leaving blank per the schema's instruction not to default to a company/commodity name; noting the interconnect fact here so a researcher chasing this further knows where to look (TC Energy's Eastern Panhandle Expansion Project / 'Potomac Pipeline', FERC CP17-80)."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "30000000", "SegmentCostUnits": "USD", "SegmentCostYear": "2016"},
+      "primary_value": "30000000",
+      "proposed_refs": [
+        "http://www.mountaineergasonline.com/news.html",
+        "https://wvpress.org/breaking-news/mountaineer-gas-plan-extend-distribution-lines-moving-ahead-slowly/"
+      ],
+      "verifications": [
+        {"url": "http://www.mountaineergasonline.com/news.html", "ok": true, "contains_value": true, "name_found": true, "note": "Operator's own page: 'Investment: $30 million for Segment 1.'"},
+        {"url": "https://wvpress.org/breaking-news/mountaineer-gas-plan-extend-distribution-lines-moving-ahead-slowly/", "ok": true, "contains_value": true, "name_found": true, "note": "VP Skaff, on the record: 'Segment 1...will cost Mountaineer Gas about $30 million.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fill: $30,000,000 USD for Segment 1 specifically (not the $45M three-segment total that NGI reports for the whole EPME). Flag for whoever reads this: the WVPress/State Journal article that supplies the $30M-for-Segment-1 figure ALSO contains an internally inconsistent later sentence -- 'The total cost of all three extensions is projected at $30 million' -- which contradicts both its own earlier per-segment breakdown and NGI's $45M total. I did not rely on that inconsistent 'total' sentence; the $30M-for-Segment-1 figure I staged is corroborated independently by the operator's own site, which does not carry the same error. SegmentCostYear=2016 reflects when this estimate was filed/reported (PSC Case No. 15-1256, filed ~March 2016); the operator's page is undated but consistent with the same pre-construction estimate."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2018", "ConstructionMonth": "3"},
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://dep.wv.gov/news/Pages/WVDEP-Approves-Construction-Stormwater-Permit-for-Mountaineer-Gas-Company-Eastern-Panhandle-Expansion-Project.aspx",
+        "https://marcellusdrilling.com/2018/06/mountaineer-plans-pipe-expansions-in-wv-panhandle-every-year/"
+      ],
+      "verifications": [
+        {"url": "https://dep.wv.gov/news/Pages/WVDEP-Approves-Construction-Stormwater-Permit-for-Mountaineer-Gas-Company-Eastern-Panhandle-Expansion-Project.aspx", "ok": true, "contains_value": true, "name_found": true, "note": "WVDEP approved the construction stormwater permit for the Eastern Panhandle Expansion Project (~23 mi, Morgan and Berkeley Counties), the regulatory trigger for construction to begin."},
+        {"url": "https://marcellusdrilling.com/2018/06/mountaineer-plans-pipe-expansions-in-wv-panhandle-every-year/", "ok": true, "contains_value": true, "name_found": true, "note": "'Approval: February 2018 (WV Department of Environmental Protection); Work began: March 2018.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fill: construction began March 2018, per the WV environmental regulator's own permit action and independent trade-press reporting of the same milestone; the operator's own site also says 'Construction expected in 2018,' consistent."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2016", "ProposalMonth": "3"},
+      "primary_value": "2016",
+      "proposed_refs": [
+        "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/",
+        "https://wvpublic.org/post/regulators-hear-mountaineer-gas-pipeline-expansion-plan"
+      ],
+      "verifications": [
+        {"url": "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/", "ok": true, "contains_value": true, "name_found": true, "note": "'Mountaineer Gas Co. has asked West Virginia regulators...According to documents filed Thursday [Case No. 15-1256]...' Article published Mon 2026-...2016-04-04; the preceding Thursday is 2016-03-31."},
+        {"url": "https://wvpublic.org/post/regulators-hear-mountaineer-gas-pipeline-expansion-plan", "ok": true, "contains_value": true, "name_found": true, "note": "Confirms the PSC held hearings on this same expansion case later in 2016 (Oct 5)."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fill: proposal (PSC filing, Case No. 15-1256) dated ~2016-03-31, reported by NGI two independent trade/public-media outlets corroborate the same 2016 filing/hearing timeline."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Mountaineer Gas Co"},
+      "primary_value": "Mountaineer Gas Co",
+      "proposed_refs": [
+        "https://mountaineergasonline.com/about-us.html",
+        "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/"
+      ],
+      "verifications": [
+        {"url": "https://mountaineergasonline.com/about-us.html", "ok": true, "contains_value": true, "name_found": true, "note": "Company's own about-us page identifying itself as Mountaineer Gas Company."},
+        {"url": "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/", "ok": true, "contains_value": true, "name_found": true, "note": "'Mountaineer Gas Co. has asked West Virginia regulators...' -- named as the applicant/builder/operator of this distribution project."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Mountaineer Gas Company builds, owns, and operates this distribution line as its own LDC infrastructure -- same entity as Owner1, spelled consistently ('Mountaineer Gas Co')."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 157,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Mountaineer Gas Co", "Owner1%": "100.00%"},
+      "primary_value": "Mountaineer Gas Co",
+      "proposed_refs": [
+        "https://mountaineergasonline.com/about-us.html",
+        "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/"
+      ],
+      "verifications": [
+        {"url": "https://mountaineergasonline.com/about-us.html", "ok": true, "contains_value": true, "name_found": true, "note": "Company's own about-us page."},
+        {"url": "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/", "ok": true, "contains_value": true, "name_found": true, "note": "Names Mountaineer Gas Co. as the PSC applicant building this project as its own IREP-eligible infrastructure -- consistent with 100% ownership."}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No indication anywhere in this trail of any co-owner or joint venture; Mountaineer Gas Co. is uniformly described as building and financing this segment itself under its own IREP program. 100% consistent."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P2040",
+      "url": "https://www.naturalgasintel.com/mountaineer-planning-45m-expansion-in-west-virginias-eastern-panhandle/",
+      "facts": "Segment 2 of the same EPME (PSC Case No. 15-1256), the 'Charles Town Loop': a 24.5-mile distribution trunk line originating southeast of Martinsburg, WV, running to Charles Town, WV, then west to serve a single commercial customer in Middleway, WV, then northeast to Kearneysville, WV. GEM's P2040 (Mountaineer Gas Pipeline, Charlestown->West Virginia, LengthKnown 39.4 km = 24.48 mi) matches this almost exactly -- a strong length fill/confirmation for P2040's Length [ref]. The same article also describes a Segment 3 (~4.4 mi, east side of Martinsburg to Shepherdstown, WV) that does not appear to correspond to any row in this 46-pipeline roster -- worth flagging to Discovery if it isn't tracked elsewhere in GEM."
+    }
+  ],
+  "summary": "P0307 (Mountaineer Gas Co.'s EPME Segment 1, WV PSC Case No. 15-1256) is real, correctly classified, not a duplicate -- confirmed by 7 independent sources (NGI/PSC filing, WVPB, WVPress/State Journal, WVDEP, Marcellus Drilling News, Herald-Mail, operator's own site); Length (44.3 km) and Diameter (10 in, filled) both match precisely. One attribution concern: StartState/Province='Virginia' is wrong and should be 'West Virginia'. Filled refs for Status/Fuel/Length/Diameter/Construction/Proposal/Owner/Operator/SegmentCost (all REFS_ADDED, mostly tier=high); Capacity, Pressure, and FuelSource left UNRESOLVED (not publicly disclosed for this segment)."
+}

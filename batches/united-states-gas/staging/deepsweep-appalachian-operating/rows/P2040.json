@@ -1,0 +1,318 @@
+{
+  "project_id": "P2040",
+  "pipeline_name": "Mountaineer Gas Pipeline",
+  "sheet_row": 1071,
+  "wiki": "https://www.gem.wiki/Mountaineer_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Row is real and correctly classified; no change needed to existence/classification. Confirm Length/Location refs staged in fills[] and treat the 'irregular' same-start/end flag as expected for a loop segment, not a defect.",
+      "contested": {},
+      "researcher_notes": "P2040/Phase II is a genuine, currently-tracked segment of Mountaineer Gas Company's (a West Virginia LDC, WV-PSC-regulated, NOT FERC-jurisdictional) multi-phase 'Eastern Panhandle' distribution-line buildout under its PSC-approved Infrastructure Replacement and Expansion Plan (IREP, approved 2016-11-18). Four independent-origin sources corroborate: (1) Mountaineer Gas Co's own 2016-11-18 press release (PSC approves IREP; 'Segments two and three are planned for future expansion in Jefferson County'); (2) Pipeline & Gas Journal's Oct-2018 'Planned Projects' trade-press listing, which explicitly lists 'Project: Mountaineer Gas Pipeline Phase II / Segment: Charlestown Loop / Length: 24.5 miles / Status: Project is awaiting WV PSC approval' under a 'MOUNTAINEER GAS CO.' operator header; (3) dcmediagroup.us (Oct 25, 2018), reporting a WV PSC public hearing on 'the proposed extension of the Mountaineer Gas Pipeline [that] would cut through Jefferson County to supply a new industrial park near Charles Town' (the Rockwool plant); (4) heraldmailmedia.com (Jan 3, 2019), describing 'a second segment of the expansion project [that] includes extending natural-gas service from near the Berkeley-Jefferson County line ... to the Rockwool ... plant ... in Ranson, W.Va.' Ranson and Charles Town are adjacent twin towns in Jefferson County, WV, consistent with the PGJ segment name 'Charlestown Loop.' This confirms the segment both EXISTS and is correctly attributed to Mountaineer Gas Co's own LDC buildout, not to any FERC project. Per explicit task guidance, this is NOT the same pipeline as P0221 'Mountaineer XPress Gas Pipeline' (TC Energy/Columbia Gas Transmission, FERC docket CP16-357, confirmed via EIA's own Natural Gas Pipeline Projects workbooks as a wholly separate interstate project feeding the 'TCO pool') — a name collision only, correctly not merged. It is also distinct from TC Energy/Columbia Gas Transmission's separate interstate 'Eastern Panhandle Expansion Project' (FERC docket CP17-80; EIA workbooks show this project 'On Hold' 2019-2021 after 'Maryland rejected easement for project in January 2019', intended to 'Deliver to Mountaineer Gas in Morgan County, WV' as a wholesale supply lateral) -- that TC Energy project is not present as any PID in this 46-row roster and is noted here only as corroborating context for the classification call, not as a cross_row_lead. CAVEAT: the worklist's 'irregular' flag on the Location cluster (StartLocation=EndLocation=Charlestown, WV) is CORRECT, not a defect -- 'Charlestown Loop' is a loop-configuration distribution segment that begins and ends at/near the same reference point in Jefferson County; see the Location fill for full sourcing. SEPARATE DISCOVERY NOTE (not a cross_row_lead -- no matching PID in this roster): the same PGJ Oct-2018 document also lists a 'Mountaineer Gas Pipeline Phase III' (Length 4.4 miles, Status 'awaiting WV PSC approval' as of Oct 2018, matching Herald-Mail's 'a third segment project ... considered for the Shepherdstown area') that does not correspond to any ProjectID in the given 46-row roster -- flagging this as a possible GEM tracking gap for Baird's attention; no fabricated cross_row_leads entry created since the schema requires a roster PID.",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/",
+        "https://www.heraldmailmedia.com/story/news/local/2019/01/03/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/44268567/",
+        "https://mountaineergasonline.com/assets/press_release_161118-eastern_panhandle_expansion.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Update Owner1 from 'Mountaineer Gas Co' to 'UGI Corporation' (ultimate parent; immediate holding-company parent is 'Mountaintop Energy Holdings LLC'). Operator should remain 'Mountaineer Gas Co' -- the LDC continues to operate under its own name post-acquisition; only OWNERSHIP changed.",
+      "contested": {"Owner1": "UGI Corporation"},
+      "researcher_notes": "The current Owner1='Mountaineer Gas Co' (100%) is stale as of the row's LastUpdated=2022-10-06. Mountaineer Gas Company was ACQUIRED by UGI Corporation on 2021-10-01 (via an intermediate holding company, Mountaintop Energy Holdings LLC), confirmed by TWO independent-origin sources: (1) rngcoalition.com (RNG Coalition), news article dated 2021-10-01, 'UGI Corp. Completes Acquisition of Mountaineer Gas' -- a trade/industry-association news source; (2) UGI Corporation's own SEC Form 10-K for FY2022 (filed 2022-11-21), Exhibit 21 (List of Subsidiaries), which lists 'MOUNTAINTOP ENERGY HOLDINGS LLC 100% DE' and, nested under it, 'MOUNTAINEER GAS COMPANY 100% WV' as UGI subsidiaries -- a US federal regulatory filing, an independent origin from the trade-press article. Both sources post-date the row's LastUpdated field, meaning the sheet's Owner1 value was not updated to reflect the 2021 acquisition. The Operator field is separately confirmed (see Operator fill) as correctly remaining 'Mountaineer Gas Co' since the LDC continues operating under its pre-acquisition name/brand (mountaineergasonline.com is still live and branded 'Mountaineer Gas Company' as of this research).",
+      "proposed_refs": [
+        "https://www.rngcoalition.com/news/2021/10/1/ugi-corp-completes-acquisition-of-mountaineer-gas",
+        "https://www.sec.gov/Archives/edgar/data/884614/000088461422000061/a2022ugicorp10kex21.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase II",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Verify StartYear1=2019 against a primary source naming Phase II/'Charlestown Loop' specifically (a WV PSC final order for the segment, or a post-2019 news item confirming in-service). Do not assume it is correct merely because it matches the general timeframe of the OTHER (Phase I) segment's completion.",
+      "contested": {"StartYear1": ""},
+      "researcher_notes": "The sheet's StartYear1=2019 for Phase II could not be independently confirmed against a source that names Phase II / 'Charlestown Loop' specifically. The two most detailed dated sources found both describe an EARLIER stage: Pipeline & Gas Journal's Oct-2018 listing states Phase II's status as 'awaiting WV PSC approval' (i.e., not yet approved to build, as of Oct 2018); dcmediagroup.us (Oct 25, 2018) covers the WV PSC public hearing on the permit itself. Herald-Mail's Jan-3-2019 update focuses on Segment 1/Phase I's near-completion and describes Segment 2 (Phase II) only prospectively ('includes extending... to the Rockwool... plant... in Ranson'), without a construction or in-service date for Segment 2 itself. It is plausible Phase II broke ground and/or entered service in 2019 (matching the sheet's Phase-I-adjacent timeline and the Rockwool plant's then-targeted 2020 opening, which needed the gas supply), but no primary source pins an explicit 2019 start/in-service date for Phase II specifically -- a real risk that 2019 was carried over/assumed from Phase I's confirmed 2Q-2019 completion (per PGJ) rather than independently established for Phase II. Searched: WV PSC's own case-docket search interface (psc.state.wv.us/scripts/) -- returns only a generic form/nav shell via curl, no accessible per-case document without an interactive session; WV PSC docket number for Phase II specifically was not found in either PGJ (which gives a docket number ONLY for Phase I: 15-1256-G-390P) or any other source gathered. Recommend a human researcher pull the actual WV PSC docket/order for Segment 2/'Charlestown Loop' (likely a follow-on case number to 15-1256-G-390P) to pin the exact approval/construction/in-service dates.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/",
+        "https://www.heraldmailmedia.com/story/news/local/2019/01/03/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/44268567/"
+      ],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "lists 'Mountaineer Gas Pipeline Phase II / Segment: Charlestown Loop' under Pipeline & Gas Journal's natural-gas planned-projects table"},
+        {"url": "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/", "ok": true, "contains_value": true, "name_found": true, "note": "'the proposed extension of the Mountaineer Gas Pipeline' -- a natural-gas distribution-line permit before the WV PSC"},
+        {"url": "https://www.heraldmailmedia.com/story/news/local/2019/01/03/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/44268567/", "ok": true, "contains_value": true, "name_found": true, "note": "'the 24-mile natural-gas distribution-line project that Mountaineer Gas Co. is constructing' -- describes the same Eastern Panhandle multi-segment buildout Phase II belongs to"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "All three sources independently and unambiguously describe this as a natural-gas distribution pipeline project; two of the three (PGJ, dcmediagroup) name 'Mountaineer Gas Pipeline' directly."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not independently confirm current 'operating' status for Phase II specifically. Every dated source found (PGJ Oct-2018, dcmediagroup.us Oct-2018, heraldmailmedia.com Jan-2019) describes Phase II at the PERMITTING/pre-construction stage ('awaiting WV PSC approval'), not as already in service -- per url_verifier's own guidance, these do NOT support inferring 'operating' by context since the described state is the opposite (pre-completion). No later source (2020+) confirming Phase II's completion/in-service date was located: WebSearch was unavailable (session budget exhausted); WV PSC's docket-search page (psc.state.wv.us) returns only a generic nav/form shell via curl, no accessible per-case order; Bing and DuckDuckGo scraping returned bot-challenge pages or irrelevant results; mountaineergasonline.com's dedicated project pages (EP_map.html, EP_FAQ.html, EP_contact.html) all 404 (stale internal links on an otherwise-live site copyrighted through 2020, suggesting the site was not updated after the project's construction era). The current 'operating' value is plausible (the Rockwool plant this segment was built to supply has since opened) but unconfirmed against a primary source naming the segment. Recommend a human researcher pull the WV PSC docket order for the Charlestown Loop/Segment 2 case, or search post-2020 local WV news for Rockwool-plant-opening coverage that might confirm gas delivery via this line."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2018", "ProposalMonth": "10"},
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {"url": "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/", "ok": true, "contains_value": true, "name_found": true, "note": "reports the WV PSC public hearing on the Mountaineer Gas Pipeline extension permit held Oct 24, 2018 (article published Oct 25, 2018)"},
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline & Gas Journal's Oct-2018 issue lists Phase II's status as 'Project is awaiting WV PSC approval'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent-origin sources (activist news outlet dcmediagroup.us; trade-press journal PGJ) both place the formal PSC permitting/proposal process for Phase II squarely in October 2018 -- an active public hearing that month, and a trade-press listing that same month describing the project as still pending approval. ProposalMonth=10 reflects the dated Oct-25-2018 hearing coverage."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found pins a construction-start year for Phase II specifically. As of Oct 2018 (PGJ, dcmediagroup.us) the segment was still awaiting PSC approval, i.e. construction had not yet begun; as of Jan 2019 (heraldmailmedia.com) the article's focus is Segment 1/Phase I's near-completion, describing Segment 2/Phase II only as a planned extension 'to the Rockwool ... plant' without a construction timeline for that segment. Same search exhaustion as the Status and Start fills above (WV PSC docket portal inaccessible via curl; WebSearch budget exhausted; search-engine scraping unproductive). Recommend pulling the WV PSC order approving Segment 2/Charlestown Loop (a case number likely following 15-1256-G-390P, Phase I's docket) for an exact construction-start date."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See the paired validity concern (concern_type=spec, contested StartYear1): the existing StartYear1=2019 could not be confirmed against a source naming Phase II/'Charlestown Loop' specifically. All dated sources found describe Phase II at the pre-construction/permitting stage as of Oct 2018-Jan 2019, not an in-service date. Same search exhaustion as the Status/Construction fills above."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No capacity figure for Phase II found anywhere searched. PGJ's planned-projects table gives a 'Capacity' field for several OTHER listed projects in the same Oct-2018 issue (e.g. El Paso Natural Gas Co, Kinder Morgan Texas Pipeline) but the Mountaineer Gas Co block (Phase I/II/III) has no Capacity entry at all -- the trade press itself did not report one. Checked EIA's Natural Gas Pipeline Projects historical workbooks (Jan2019/Jan2020/Jan2021 editions) for a 'Mountaineer Gas' distribution-line row: none exists (EIA tracks only the unrelated FERC-jurisdictional 'Mountaineer XPress Pipeline' and 'Eastern Panhandle Expansion Project', both TC Energy/Columbia Gas Transmission projects, not Mountaineer Gas Co's own LDC buildout). WV PSC docket portal inaccessible via curl (form/nav shell only). No capacity value locatable within the available toolset."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No operating-pressure figure for Phase II (or any Mountaineer Gas Pipeline phase) found in any source gathered -- distribution-line pressure specs of this kind are typically found only in the WV PSC docket/engineering exhibits, which were not accessible via curl (the WV PSC site's docket-search tool is a JS/form-only interface with no fetchable per-case document endpoint found)."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "39.40", "LengthKnownUnits": "km"},
+      "primary_value": "39.40",
+      "proposed_refs": ["https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Project: Mountaineer Gas Pipeline Phase II / Segment: Charlestown Loop / Length: 24.5 miles' -- 24.5 mi = 39.42 km, an exact match (rounding) to the sheet's 39.40 km"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Pipeline & Gas Journal's Oct-2018 planned-projects table gives 24.5 miles for 'Mountaineer Gas Pipeline Phase II / Charlestown Loop', matching the sheet's current 39.40 km value almost exactly (24.5 mi = 39.42 km). This is a credible trade-press primary/near-primary source, independent of GEM (fetched and verified directly, not via gem.wiki). Searched for a second independent confirmation of this exact mileage: dcmediagroup.us and heraldmailmedia.com both describe the Phase II/Segment-2 extension qualitatively (route, counties, customer) but neither states a specific mileage for this segment; the WV PSC docket for Phase II (which would carry an authoritative length figure) was not locatable via curl. Single-source support -- tier=medium, independent=false -- until a second source naming the segment's exact length is found."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "IMPORTANT -- do not backfill from Phase I: Phase I/Segment 1's diameter (10-inch steel) IS documented (mountaineergasonline.com/news.html: 'Distribution line: 10-inch diameter steel pipe' -- but this text describes 'Segment 1' explicitly, i.e. Phase I, not Phase II). No source found states a diameter for Phase II/'Charlestown Loop' specifically, and per the aggregate-vs-segment/wrong-scope rule, Phase I's diameter must not be assumed to apply to Phase II without direct confirmation -- a second distribution segment serving a different (smaller, single-customer/Rockwool) load could plausibly use a different pipe diameter. Left UNRESOLVED rather than risk a misattributed spec."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Genuinely unresolved and non-trivial: mountaineergasonline.com/news.html states 'TransCanada will provide gas supply to this distribution line' but that sentence is under the 'Segment 1' heading (Phase I), not stated for Phase II/Charlestown Loop. Complicating matters, EIA's own Natural Gas Pipeline Projects workbooks (Jan2020/Jan2021 editions) show the actual TC Energy/Columbia Gas Transmission interstate supply lateral intended to bring that gas into Mountaineer's system -- 'Eastern Panhandle Expansion Project', FERC docket CP17-80 -- as 'On Hold' as of 2019-2021 ('Maryland rejected easement for project in January 2019'). Since Phase II serves a different county (Jefferson) via an extension of Mountaineer's EXISTING distribution system rather than solely depending on that stalled new supply point, it is unclear whether/how much of Phase II's gas is Marcellus/Utica-shale-sourced via the stalled TransCanada lateral versus supplied through Mountaineer's pre-existing upstream contracts. No primary source specifies a FuelSource for Phase II specifically; left UNRESOLVED rather than guess."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Charlestown", "StartState/Province": "West Virginia", "StartCountryOrArea": "United States", "EndLocation": "Charlestown", "EndState/Province": "West Virginia", "EndCountryOrArea": "United States"},
+      "primary_value": "Charlestown",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/",
+        "https://www.heraldmailmedia.com/story/news/local/2019/01/03/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/44268567/",
+        "https://mountaineergasonline.com/assets/press_release_161118-eastern_panhandle_expansion.pdf"
+      ],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Segment: Charlestown Loop' -- the segment's own name places it at Charles Town/Charlestown, WV"},
+        {"url": "https://dcmediagroup.us/2018/10/25/mountaineer-gas-pipeline-rockwool-foes-zero/", "ok": true, "contains_value": true, "name_found": true, "note": "'would cut through Jefferson County to supply a new industrial park near Charles Town'"},
+        {"url": "https://www.heraldmailmedia.com/story/news/local/2019/01/03/mountaineer-gas-first-segment-of-distribution-line-project-nearly-complete/44268567/", "ok": true, "contains_value": true, "name_found": true, "note": "'extending natural-gas service from near the Berkeley-Jefferson County line ... to the Rockwool ... plant ... in Ranson, W.Va.' -- Ranson is immediately adjacent to Charles Town, Jefferson County"},
+        {"url": "https://mountaineergasonline.com/assets/press_release_161118-eastern_panhandle_expansion.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Segments two and three are planned for future expansion in Jefferson County'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Four independent-origin sources (trade press PGJ, activist news dcmediagroup.us, USA Today Network's heraldmailmedia.com, and Mountaineer Gas Co's own 2016 press release) all place this segment in Jefferson County, WV, at/near Charles Town -- consistent with the sheet's 'Charlestown' Start/End location and West Virginia/United States fields. On the worklist's 'irregular' flag (Start=End=Charlestown): this is CORRECT, not a data defect. PGJ names the segment itself 'Charlestown Loop' -- a loop configuration around the Charles Town/Ranson area rather than a linear point-A-to-point-B route, so an identical start and end location is the expected shape for this kind of distribution loop, not a duplicate-endpoint error."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No segment-specific cost figure for Phase II found. heraldmailmedia.com (Jan 2019) states Mountaineer Gas 'proposed more than $119 million in infrastructure and system enhancements through 2023, including about $16.5 million in the Eastern Panhandle that includes the extension of gas service to the Rockwool plant site off Charles Town Road' AND 'another extension to the U.S. Silica Co. plant north of Berkeley Springs' -- per the SegmentCost rule (only a primary source stating THAT figure for THAT specific project scope counts), this $16.5M figure explicitly BUNDLES at least two separate extensions (the Rockwool/Jefferson-County work that is Phase II, plus the Berkeley Springs/U.S. Silica work), so it is a system/aggregate figure, not a valid Phase-II-specific SegmentCost citation -- correctly left unfilled rather than mis-cited. PGJmountaineergasonline.com's own Segment-1 cost ($30 million, per news.html) and PGJ's Phase-I cost ($45 million) are both explicitly for Phase I, not Phase II (see the P0307 cross-row lead). No Phase-II-specific cost figure located."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Mountaineer Gas Co"},
+      "primary_value": "Mountaineer Gas Co",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://mountaineergasonline.com/news.html"
+      ],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'MOUNTAINEER GAS CO. ... Operator: Mountaineer Gas Co.' heading the same table entry that lists Phase I/II/III as its projects"},
+        {"url": "https://mountaineergasonline.com/news.html", "ok": true, "contains_value": true, "name_found": true, "note": "Mountaineer Gas Company's own site describes itself as the party executing the 'Eastern Panhandle Pipeline Project' (the Phase I/II/III buildout)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PGJ's Oct-2018 table entry is headed 'MOUNTAINEER GAS CO.' with 'Operator: Mountaineer Gas Co.' and lists Phase I, II, and III as sub-projects of that one operator entry -- this operator attribution applies across all three phases per the 'read to exhaustion' rule (one document sourcing the operator field for every sibling segment at once). Corroborated independently by Mountaineer Gas Co's own site describing itself as the entity carrying out the Eastern Panhandle buildout. Note this is UNCHANGED by the ownership concern above -- the LDC continues operating under its own name post-acquisition by UGI Corp (see the Owner1 concern in validity[])."
+    },
+    {
+      "segment_name": "Phase II",
+      "sheet_row": 1071,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source supporting the CURRENT sheet value (Owner1='Mountaineer Gas Co', 100%) as the present-day owner was found -- to the contrary, the evidence gathered indicates it is stale (see the paired validity concern, concern_type=attribution, contested Owner1='UGI Corporation'). Left this fill UNRESOLVED rather than manufacture a REFS_ADDED entry for a value believed incorrect; the recommended corrected value and its two independent supporting sources (rngcoalition.com; UGI Corp's SEC 10-K Exhibit 21) are staged on the validity[] concern object instead."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0307",
+      "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+      "facts": "Pipeline & Gas Journal's Oct-2018 planned-projects table lists 'Project: Mountaineer Gas Pipeline Phase I / Type: Project includes pipeline construction / Length: 27.5 miles / Diameter: 10 inches / Location: Berkley[sic], WV - Martinsburg, WV / Cost: $45 million / Docket: 15-1256-G-390P / Completion: 2Q 2019 / Operator: Mountaineer Gas Co.' -- this conflicts with the roster's recorded P0307 (Phase I) length of 44.3 miles, a genuine spec discrepancy worth checking against the WV PSC docket (15-1256-G-390P) directly. Separately, Mountaineer Gas Co's own site (mountaineergasonline.com/news.html) describes the same Segment 1 with a DIFFERENT cost figure ($30 million investment, vs PGJ's $45 million) and confirms the 10-inch diameter -- likely an early cost estimate (company site, pre-2018) vs. a later/final trade-press figure (PGJ, Oct 2018), but worth reconciling when P0307 is next worked."
+    }
+  ],
+  "summary": "P2040/Phase II confirmed real, correctly classified (WV-PSC-regulated Mountaineer Gas Co LDC distribution segment, not the FERC-jurisdictional P0221 'Mountaineer XPress' name-collision), with Length/Location refs staged (REFS_ADDED) and the same-start/end 'irregular' flag explained as expected loop geometry; one attribution concern staged (Owner1 stale post-2021 UGI Corp acquisition -> contested 'UGI Corporation') plus one spec concern (StartYear1=2019 unconfirmed for this specific segment) and a P0307 cross-row length/cost discrepancy lead. UNRESOLVED (nobody-looked, not correct-terminus): Status, Construction, Start, Capacity, Pressure, Diameter, FuelSource, SegmentCost, and Owner refs -- all with researcher_notes on what was searched (WV PSC docket portal inaccessible via curl; WebSearch budget exhausted for the session)."
+}

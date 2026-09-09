@@ -469,7 +469,10 @@ Schema extensions to `staged_resolutions.json` (and to each subagent shard):
     pastes straight over it. With it, the builder tints that cell **orange** — the
     anti-tier, outside green/yellow/red/blue — and hangs the finding, candidate and
     sources on it as a comment. Name the exact column (`LengthKnownUnits`, not "units").
-    Backfill legacy staging with `scripts/backfill_contested.py`.
+    An owner/operator column (`Owner1`, `Owner2%`, `Operator`) tints on the
+    `_OperatorsOwners` tab the same way — name it too, not the row. A concern that names no
+    column, or only blank ones, still marks the row (`SheetRow` on the mirror, `ProjectID`
+    on the paste tabs). Backfill legacy staging with `scripts/backfill_contested.py`.
   - `researcher_notes` — the full finding (authoritative); `proposed_refs` + `verifications`
     — the independent sources backing the judgment (encouraged, even though it is not a ref edit).
 - **`ref_col="__STATUS__"` (the `status-review` leg / `in-dev` preset)** — a per-segment-row

@@ -31,7 +31,9 @@ any country — use it for both attributes and routes.
 
 US gas is **529 rows / 4,935 ref units**, ~12x the largest pass this repo has run, so it
 is being worked in slices, not as one country sweep. Slice 1 = the **217 operating rows
-last touched <=2023** ("stale operating cohort"), sub-sliced by region.
+last touched <=2023** ("stale operating cohort"), sub-sliced by region. **141 of them are
+swept** (batch 1 Texas 45, batch 2 Gulf Coast 50, batch 3 Appalachian/Mid-Atlantic 46) —
+77 of the cohort remain, and 434 US gas rows have never been swept at all.
 
 **Scope the slice by region, and audit the column you slice on first.**
 `StartState/Province` is wrong on at least 2 of the 45 rows in batch 1 — P2613 Sierrita
@@ -60,6 +62,31 @@ whole-country.
 therefore never appear in FERC eLibrary. Check the **Texas RRC** (T-4/T-4A permits) before
 treating a FERC gap as a signal — P0268's operator name was settled by an RRC permit.
 
+- **Staged, NOT applied (gas):** batch 3, `batches/united-states-gas/staging/deepsweep-appalachian-operating/`
+  (46 operating Appalachian Basin + Mid-Atlantic rows — OH/PA/WV/NY/MI/NJ/MD/DE/VA/IN, sliced by
+  the state audit's `derived` state; deliverable
+  `pipelines_batch_20260908_2103_ET_united-states-gas_deepsweep-appalachian.xlsx`). 861 records over
+  the 663-unit worklist -> REFS_ADDED 384, REVERIFIED 6, DEAD_LINK 3, UNRESOLVED 318, 296 fills
+  (248 folded to ref-only), 150 validity findings (83 `concern` — spec 45, attribution 33,
+  classification 3, duplicate 2). 119 orange contested cells across 43 of the 46 rows on
+  `Gas_Backend`, plus 43 on `Gas_OperatorsOwners`. **Gate J passes** — every owed blank was
+  reported on, unlike batch 2. Citation base was the thinnest of the three slices (11 filled refs
+  against 663 owed units, 1.7%), so the brief calibrated it as India/Ukraine: a blank means nobody
+  looked.
+  Headline findings: **P0176 `Dominion Gas Pipeline` and P3220 `Eastern Gas Transmission and
+  Storage System` flag each other as duplicates** (both agents independently; adjudicate before
+  editing either, and P3220 may belong as a SYSTEM/NETWORK row like P0169). P0176's
+  `New United Kingdom` scar resolves to **New York** with a ref, and its Owner1 moves off Dominion
+  Energy to Berkshire Hathaway Energy on the documented 2020 transaction. **Three Rover rows
+  (P2438/P2604/P2635) carry a stale Owner2 = Blackstone; the 32.4% stake is Ares Management's.**
+  P3202 Blue Water Compressor's `EndState/Province = Wisconsin` is wrong (Michigan — the station is
+  entirely in-state). P2531 Empire North Expansion is compression-only -> `LengthKnown = 0`,
+  Diameter blank. P0307 Mountaineer Phase I starts in **West Virginia**, not Virginia. P0221
+  Diameter `29, 36` should read `24, 36`. P5830 REX Zone 3 East-to-West Capacity 1800 -> 1200 MMcf/d.
+  P0169 Columbia Gas Transmission LengthKnown 19,312 -> 18,768 km.
+  **P0182 Eastern Shore's 732 is stored in KM, not miles** (the batch brief's shorthand said miles —
+  the agent caught the mismatch); it and Capacity 100 MMcf/d are both contested with no replacement
+  value found, so they carry a row-level flag for human review, not a candidate.
 - **Staged, NOT applied (gas):** batch 2, `batches/united-states-gas/staging/deepsweep-gulf-operating/`
   (50 operating Gulf Coast rows — LA/MS/AL/FL + offshore GoM; deliverable
   `pipelines_batch_20260908_1712_ET_united-states-gas_deepsweep-gulf.xlsx`). 926 records over

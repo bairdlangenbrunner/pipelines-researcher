@@ -1,0 +1,609 @@
+{
+  "project_id": "P2505",
+  "pipeline_name": "Vector Gas Pipeline",
+  "sheet_row": 1290,
+  "wiki": "https://www.gem.wiki/Vector_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no change to existence/classification/duplicate status",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all confirmed independently of GEM. The row is a real, FERC-jurisdictional delivery lateral: Vector Pipeline, L.P. filed an Oct 15, 2019 prior-notice request under its blanket certificate (Docket CP98-135) for a 1.24-mile, 24-inch lateral in St. Clair County, MI, connecting to DTE Electric's new 1,100 MW Blue Water Energy Center (Federal Register 2019-23841, https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp, mirrored at govinfo.gov). The U.S. EIA's own 'Natural Gas Pipeline Projects' historical workbook (https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx, tab 'Historical Projects (1996-2024)') carries a line item named exactly 'Blue Water Energy Center (BWEC) Pipeline', operator 'Vector Pipeline', Docket CP20-4 (the follow-on formal certificate proceeding), Completed 2021-12-15, Miles=1.25, Diameter=24, Additional Capacity=180 MMcf/d, Cost=$21.5M, State=MI/MI/MI (no state border crossed) -- an exact or near-exact match on every physical spec against the GEM row. This EIA line is almost certainly the true source underlying the sheet's own (unusable) [4] citation to the EIA naturalgas/data.php homepage -- that URL is a generic data portal and fails url_verifier's name check (does not mention 'Blue Water' or 'Vector' anywhere), so the sheet's own citation for this segment was effectively broken even though the underlying fact (this EIA workbook entry) is real and independently verifiable once you go find the actual document. CLASSIFICATION: PipelineType='transmission' is the best fit of GEM's three allowed values (transmission / gathering / distribution) for a FERC Natural-Gas-Act-jurisdictional, large-diameter (24-in) delivery lateral off Vector's interstate transmission mainline (42-in, 1,745 MMcf/d) to a single industrial/power customer -- it is not a gathering line (no wellhead collection) and not a distribution main (not an LDC network); the Mountaineer Gas Company rows elsewhere in this batch are the correct contrast case for actual distribution. DUPLICATE CHECK against the roster: P3202 'Vector Gas Pipeline / Blue Water Compressor' (len 0, cap 380, recorded end state Wisconsin) is NOT the same project as P2505 and is not a duplicate/relabel. It is a completely different underlying entity that GEM's own wiki page conflates by name only: P3202 is the 'Bluewater Compression Project' (FERC Docket CP19-471) built by BLUEWATER GAS STORAGE, LLC -- an unrelated gas-storage company with a compressor station in Macomb County, Michigan restoring 500,000 Mcf/d of firm delivery capacity at its own interconnect with Vector, serving Wisconsin LDC customers (Wisconsin Gas, Wisconsin Public Service, Wisconsin Electric) who hold storage capacity there -- see cross_row_leads. 'Blue Water Energy Center' (DTE's power plant, St. Clair County) and 'Bluewater Gas Storage' (a storage operator, Macomb County) are two different 'Blue(w)ater' entities roughly 30 miles apart, not one pipeline recorded twice; P3202's Wisconsin endpoint is real and explained, not an attribution error. Opened 6 of the row's 7 harvested wiki citations (bit.ly resolved to en.wikipedia.org/wiki/Vector_Pipeline and read; Enbridge factsheet, offshore-technology.com, and the EIA homepage all read but are about the Vector MAIN LINE only and do not name BWEC; freep.com 2015 and ogj.com 2014 are pre-2019 Vector system news about a since-shelved unrelated expansion/bidirectional-flow proposal, read via their citation context since freep.com itself blocked live fetch -- neither is about this lateral). gascompressionmagazine.com (403, Cloudflare-style block, not a confirmed 404 -- not retired) is about the P3202 compressor project, not this row.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct SegmentCost from $22,000,000 to $21,500,000 (USD)",
+      "contested": {
+        "SegmentCost": "21500000.00"
+      },
+      "researcher_notes": "Two independent federal sources agree with each other and disagree with the sheet: (1) the Federal Register notice of Vector's Oct 2019 prior-notice filing states 'The total cost of this Project is approximately $21.5 million' (https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp); (2) EIA's Natural Gas Pipeline Projects workbook independently records Cost (millions)=21.5 for the same named line item (Docket CP20-4). Neither figure is $22,000,000. The $0.5M / ~2.3% gap is not huge, but it is a real, reproducible number in two independent primary documents, so I'm not staging a REFS_ADDED ref against the current $22M value -- that would pair a verified citation with a figure the citation itself contradicts. Recommend pasting $21,500,000 instead.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "re-verify Delayed/DelayType; no source found supports an actual delay -- consider blanking Delayed rather than leaving 'yes'/'inferred' unsupported",
+      "contested": {
+        "Delayed": ""
+      },
+      "researcher_notes": "The sheet carries Delayed='yes', DelayType='inferred' for this row, but every timeline anchor I found describes an ordinary, on-schedule FERC project cycle with no reported holdup: prior notice filed Oct 15, 2019 (Federal Register 2019-23841) -> formal certificate docket CP20-4 (per EIA, implying filing in early 2020) -> construction completed and in service Dec 15, 2021 (EIA workbook) -- about 2 years from filing to service, unremarkable for an NGA Section 7/blanket-certificate lateral of this size, including through the 2020 COVID-affected construction season. I found no FERC notice of schedule change, no trade-press report of a slip, and no operator statement describing a delay. Per the controlled-vocab notes, 'inferred' means a GEM-rule dormancy/date-mismatch inference rather than a sourced claim, and ProposalYear/ProposalMonth were BLANK on the sheet before this pass (I've now filled ProposalYear=2019 as a fill[] object) -- it's plausible the 'inferred' delay flag is a stale artifact of that blank ProposalYear rather than a real finding. I can't positively prove a negative, so I'm flagging this as a validity concern rather than silently deleting the flag; contested value is left blank because I have no evidence for what (if anything) the correct value should be, only that 'yes' is unsupported by anything I could find.",
+      "proposed_refs": [],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "keep Capacity=180 MMcf/d as-is; note one conflicting weaker source for the record",
+      "contested": {},
+      "researcher_notes": "Capacity=180 MMcf/d is corroborated by two independent primary sources: Vector Pipeline's own 2018 customer meeting presentation slide lists 'DTEE Interconnect ... DTE Electric - Bluewater Energy Center (DTEE-BWEC) ... near St. Clair, Michigan ... 180 MDth/d load' (vector-pipeline.com), and EIA's Natural Gas Pipeline Projects workbook independently records Additional Capacity (MMcf/d)=180 for the same named project. Both also agree the lateral is DESIGNED to expand to 525 MMcf/d / 525,000 Dth/d with future compression/equipment upgrades (stated in both the Federal Register notice and the wiki's own EIA-derived prose) -- that 525 figure is a different, forward-looking design-max number and is not itself in conflict with the sheet's 180. CAVEAT: one industry trade source, nsenergybusiness.com's Blue Water Energy Centre project profile, states the power plant 'will receive up to 80 million dekatherm (Mdth) of feed gas a day from the Vector gas pipeline' -- a materially different, lower figure. Given it conflicts with two more specific, dated primary documents (the operator's own engineering slide and EIA's project-tracking dataset), I'm treating 180 as the correct, better-supported value and not contesting it, but flagging the conflicting number here per the read-everything-to-exhaustion rule rather than silently dropping it.",
+      "proposed_refs": [
+        "https://www.vector-pipeline.com/~/media/EepEeqMep/Site%20Documents/Vector/News%20Releases/Customer%20Meeting%202018.pdf?la=en",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects tab: 'Blue Water Energy Center (BWEC) Pipeline', operator 'Vector Pipeline', Status='Completed', Year In Service Date=2021."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Notice confirms the lateral was authorized/constructed to connect Vector's system to the new DTE St. Clair plant; combined with EIA's completed/in-service record this confirms operating status."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed via EIA's independent project-tracking dataset (Status=Completed, in service 2021) plus the FERC prior-notice filing describing the authorized/built facility."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook; Additional Capacity given in MMcf/d, a natural-gas unit."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Filed under the Natural Gas Act / Vector's natural-gas blanket certificate CP98-135."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both the FERC filing (Natural Gas Act jurisdiction) and EIA's natural-gas-specific dataset confirm this is a gas pipeline."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Type field='Interstate', Authority='FERC' -- an interstate-jurisdictional facility off Vector's transmission mainline, not a gathering or LDC-distribution project."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Delivery lateral built under Vector's NGA transmission blanket certificate to serve a single large industrial (power-plant) customer."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No source uses the literal word 'transmission', but the functional/regulatory classification (FERC NGA interstate delivery lateral off a 42-in transmission mainline, single large customer, not an LDC network and not wellhead gathering) fits GEM's 'transmission' bucket best of the three allowed values; kept as-is rather than reclassified."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2019",
+        "ProposalMonth": "10"
+      },
+      "primary_value": "2019",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'On October 15, 2019, Vector Pipeline, L.P. ... filed a prior notice request ... for authorization to construct and operate a delivery lateral ... in St. Clair County, Michigan.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Single-source fill: the Oct 15, 2019 FERC prior-notice filing date is the clearest documented 'proposal' milestone. Searched for a second, independent date: EIA's workbook has no proposal/filing-date field (only Completed Date); the formal certificate docket number CP20-4 implies a distinct, later (~early 2020) filing that I could not pin to an exact date without FERC eLibrary docket access; no trade-press announcement of the lateral proposal (as opposed to the plant) turned up. Flagging that CP20-4's filing date, if found, might be the more precise 'ProposalYear/Month' rather than the Oct 2019 blanket-authority prior notice -- a researcher with eLibrary access should double check."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the Federal Register notice (gives filing date and cost, not a construction-start date), the EIA workbook (gives only a 'Completed Date' of 2021-12-15, not construction start), and Vector's 2018 customer-meeting slides (predate construction). Could not locate a document stating when ground was broken on the lateral itself (as distinct from the Aug 2018 groundbreaking on the power PLANT, which is a different structure/owner). Leaving blank rather than inferring a start date from the ~2-year filing-to-service gap."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2021",
+        "StartMonth1": "12"
+      },
+      "primary_value": "2021",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Completed Date' = 2021-12-15; 'Year In Service Date' = 2021, for the line item named 'Blue Water Energy Center (BWEC) Pipeline'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2021 confirmed and StartMonth1=12 added from EIA's precise completed/in-service date. Single explicit-date source; second-source search: DTE's own press release confirms the POWER PLANT reached commercial operation June 6, 2022 (a later, separate milestone -- the gas lateral being in service by Dec 2021 is consistent with pipeline completion preceding plant startup, but that press release never names Vector or states a pipeline in-service date itself, so it doesn't independently corroborate the December 2021 figure -- noted rather than cited)."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Delay [ref]",
+      "value_cols": [
+        "Delayed",
+        "DelayType"
+      ],
+      "primary_value_col": "Delayed",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not find any source supporting Delayed='yes' for this project -- see the paired validity concern (concern_type=attribution) recommending this be re-verified rather than pasted as sourced."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "180.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "180.00",
+      "proposed_refs": [
+        "https://www.vector-pipeline.com/~/media/EepEeqMep/Site%20Documents/Vector/News%20Releases/Customer%20Meeting%202018.pdf?la=en",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.vector-pipeline.com/~/media/EepEeqMep/Site%20Documents/Vector/News%20Releases/Customer%20Meeting%202018.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Slide: 'DTE Electric - Bluewater Energy Center (DTEE-BWEC) ... near St. Clair, Michigan ... 180 MDth/d load'."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Additional Capacity (MMcf/d)' = 180 for the named BWEC Pipeline line item."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources (Vector's own engineering presentation; EIA's federal project-tracking dataset) both state 180. See the paired 'confirmed (caveat)' validity note flagging one conflicting weaker trade-press figure (80 MDth/d) that I'm not treating as controlling."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found states an operating pressure or MAOP for this lateral. Checked the Federal Register notice, the EIA workbook (no pressure field), and Vector's customer-meeting slides. A PHMSA NPMS pull or the underlying FERC CP20-4 certificate order (not retrieved this pass -- eLibrary requires an accession number/interactive search) would be the next place to look."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "1.25",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "1.25",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Miles' = 1.25 for 'Blue Water Energy Center (BWEC) Pipeline'."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...approximately 1.24 miles of 24-inch diameter pipeline located in St. Clair County, Michigan.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA's 1.25 mi matches the sheet exactly; FERC's own filing rounds to 1.24 mi -- a trivial (~50 ft) rounding difference between an as-filed estimate and the as-built EIA record, not a material discrepancy."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Pipeline Diameter (Inches)' = 24 for 'Blue Water Energy Center (BWEC) Pipeline'."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...approximately 1.24 miles of 24-inch diameter pipeline...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "24-inch confirmed identically by both sources."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per the schema gotcha, FuelSource wants a named upstream field/plant, not a fuel type. This is a short delivery lateral off Vector's long-haul interstate mainline; Enbridge's own factsheet describes Vector's supply broadly as 'natural gas produced in the Appalachian region and Western Canada' with no single named field/facility, and that is a Vector-system-level claim, not something specific to this 1.25-mile lateral. Leaving blank rather than defaulting to a generic answer."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "St. Clair County",
+        "StartState/Province": "Michigan",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "St. Clair",
+        "EndPrefecture/District": "Blue Water Energy Center",
+        "EndState/Province": "Michigan",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "St. Clair County",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...pipeline located in St. Clair County, Michigan ... to connect its existing system to a new ... electric generating facility being constructed by DTE Electric Company in St. Clair County, Michigan.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "State(s)=MI, Beg_State=MI, End_State=MI, Crosses State Border=No."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing StartState/Province, StartCountryOrArea, EndPrefecture/District (already 'Blue Water Energy Center'), EndState/Province, EndCountryOrArea all confirmed correct as-is. Added StartLocation and EndLocation (both previously blank) using the same two sources: the lateral originates on Vector's mainline in St. Clair County and terminates at the Blue Water Energy Center in the city of St. Clair, MI."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Not staging a ref against the current $22,000,000 value -- both independent sources found (FERC Federal Register notice and EIA's workbook) state $21.5 million, not $22 million. See the paired validity concern (concern_type=spec) recommending the correction to $21,500,000."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "oo_sheet_row": 1912,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Vector Pipeline L.P."
+      },
+      "primary_value": "Vector Pipeline L.P.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+        "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Pipeline Operator Name' = 'Vector Pipeline' for the BWEC line item."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/11/01/2019-23841/notice-of-request-under-blanket-authorization-vector-pipeline-lp",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Vector Pipeline, L.P. (Vector) ... filed a prior notice request...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Filled from two independent federal sources naming the operator identically (Vector Pipeline L.P.)."
+    },
+    {
+      "segment_name": "Blue Water Energy Center (BWEC) Pipeline",
+      "sheet_row": 1290,
+      "oo_sheet_row": 1912,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Enbridge",
+        "Owner1%": "60.00%",
+        "Owner2": "DTE Energy",
+        "Owner2%": "40.00%"
+      },
+      "primary_value": "Enbridge",
+      "proposed_refs": [
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+        "https://en.wikipedia.org/wiki/Vector_Pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Enbridge has a 60% ownership in Vector.'"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Vector_Pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Joint venture between Enbridge (60%) and DTE Energy (40%, after Duke Energy sold its 30% interest in 2003)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "60%/40% Enbridge/DTE Energy split confirmed by the operator's own factsheet and independently by Wikipedia (which also explains the ownership history via Duke Energy's 2003 exit); offshore-technology.com corroborates the two-owner structure without giving percentages."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P3202",
+      "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-471-EA.pdf",
+      "facts": "P3202 ('Vector Gas Pipeline / Blue Water Compressor', recorded Michigan->Wisconsin, len=0, cap=380) is the 'Bluewater Compression Project', FERC Docket CP19-471, filed by BLUEWATER GAS STORAGE, LLC (not DTE, not the Blue Water Energy Center power plant) -- a new compressor station in Macomb County, Michigan (single 11,150-hp gas turbine/centrifugal compressor unit) at Bluewater's existing 20-inch interconnect with Vector Pipeline, restoring the originally authorized 500,000 Mcf/d firm delivery capacity (from a pressure-limited ~120,000 Mcf/d). Bluewater has long-term service agreements with Wisconsin Gas LLC, Wisconsin Public Service Corp, and Wisconsin Electric Co, who by 2021 held >95% of Bluewater's storage capacity -- this is exactly why the row's EndState/Province is Wisconsin: the customers, not the physical compressor, are in Wisconsin. Explains the roster's odd Michigan->Wisconsin endpoint; not an error. EIA's workbook independently carries this as a separate line item ('Bluewater Compressor Project', operator 'Bluewater Gas Storage', Completed 2021-11-19, Cost $40M, Capacity 380 MMcf/d, Docket CP19-471) -- matches the roster's cap=380 and completion timing exactly, and confirms it is unrelated to Blue Water Energy Center."
+    }
+  ],
+  "summary": "P2505 confirmed real/correctly classified (FERC CP20-4 lateral + EIA workbook, exact match on length/diameter/capacity); not a duplicate of P3202 (different company/project entirely -- Bluewater Gas Storage's Wisconsin-serving compressor, see cross_row_leads). Flagged SegmentCost ($22M should be $21.5M per FERC+EIA) and an unsupported Delayed='yes' as concerns; filled Operator, Owner refs, Proposal, Start month, Location detail; Construction date, Pressure, and FuelSource left UNRESOLVED (no source found)."
+}

@@ -1,0 +1,474 @@
+{
+  "project_id": "P0172",
+  "pipeline_name": "Crossroads Gas Pipeline",
+  "sheet_row": 33,
+  "wiki": "https://www.gem.wiki/Crossroads_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action -- existence, classification and route all independently corroborated; keep as-is",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE all clean. Crossroads Pipeline Company is a real, long-standing FERC-jurisdictional interstate gas transmission line, confirmed independently of the wiki page and of GEM: (1) TC Energy's own current operations page (tcenergy.com/operations/natural-gas/crossroads-pipeline/) states '202 miles (365 km)' operating in Indiana and Ohio, FERC-regulated, operator TC Energy. (2) SEC EDGAR full-text search turns up 'Crossroads Pipeline Company' (Indiana incorporation) as a named consolidated subsidiary in NiSource Inc.'s Exhibit 21 subsidiary lists every year 2001-2015 (checked the 2014 filing directly: listed under 'COLUMBIA PIPELINE GROUP OPERATIONS' alongside Columbia Gas Transmission and Columbia Gulf Transmission) -- an origin fully independent of TC Energy. (3) Columbia Pipeline Group, Inc.'s own FY2016 10-K (CIK 1629995, filed 2017-02-17, a distinct SEC filer from TC Energy) lists Crossroads as one of its consolidated subsidiaries and gives annual throughput of 16.7 / 15.5 / 15.5 MMDth for 2014/2015/2016 -- i.e. gas was actually moving through the line every one of those years, which is itself direct, dated, independent evidence of 'operating' status (context-based per the status-inference rule), not merely a name check. (4) The gem.wiki page's own harvested citation pool led to a contemporary 1993 Northwest Indiana Times article ('NIPSCO to convert pipeline', Sep 3 1993) -- read in full (the site ROT47-obfuscates article body text server-side; decoded by hand, confirmed live at 200 -- url_verifier's substring screen misses the value because the raw response is still encoded, so name_found is hand-confirmed here, not automated). It independently states: 'The 202-mile pipeline, formerly owned by Tecumseh Pipe Line Co., has been used since it was built in 1957 to transport crude oil to Indiana and Ohio refineries. The pipeline, now called Crossroads, runs from Schererville to [northwest Ohio].' This predates GEM/gem.wiki by decades and independently corroborates the 202-mile length, the Schererville origin, and the Indiana-to-northwest-Ohio route (consistent with the sheet's Cygnet, OH endpoint -- Cygnet is in Wood County, in northwest Ohio). Classification as a gas TRANSMISSION trunk (not gathering/local) is correct -- it is FERC-jurisdictional interstate pipe per TC Energy's own page. No duplicate: checked the full 46-row roster: no other row shares Schererville, Cygnet, or a Crossroads-adjacent corridor; Rover/NEXUS/Columbia Gas Transmission/etc. all run different corridors. Open item (not a concern, just unverified): Capacity=300 MMcf/d appears on gem.wiki but I could not find an independent primary source stating that number -- TC Energy's page gives length only, not capacity; CPG's 10-K gives actual throughput (15.5 MMDth/yr =~ 42 MMcf/d average), which is well below a 300 MMcf/d nameplate and does not contradict it, but doesn't confirm the exact figure either. Diameter and Pressure remain genuinely unsourced (see fills, both UNRESOLVED) -- FERC eLibrary's docket search is a JS app that does not respond to scripted GET, EIA's 1998 report link (webapp1.dlib.indiana.edu) now serves a Cloudflare human-verification challenge and its retrieval path resolves only to a library catalog card, not the actual PDF, and the harvested naturalgasintel.com article 404s (page removed/renumbered, not found via Wayback either) -- these would be the next things to chase for diameter/pressure.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify StartYear1 against a FERC in-service filing or PHMSA record; current 1995 may be a year late",
+      "contested": {
+        "StartYear1": "1994"
+      },
+      "researcher_notes": "The sheet's StartYear1=1995 (unsourced, MISSING_REF) is in tension with the contemporary primary account. The 1993 NWI Times article (see above; hand-decoded, live, names the pipeline) lays out the conversion in two phases: Phase 1 (140 mi within Indiana) 'will begin Tuesday' (the article ran Sep 3, 1993) and 'By Nov. 1 it will be helping [NIPSCO] supply gas' -- i.e. Phase 1 targeted for the 1993-94 winter heating season. Phase 2 (the remaining 62 mi in Ohio) 'will begin in the first quarter of 1994; it will be completed by the 1994 winter heating season' -- i.e. full completion targeted for roughly Oct/Nov 1994, not 1995. gem.wiki (read for leads only, not cited) states 1995, which is presumably where the sheet's value originated, but that is a retrospective claim with no citation of its own on the wiki page for that specific year. I could not resolve the ~1-year gap with a second source in the time available: FERC eLibrary's docket search does not respond to a scripted GET (JS app), the EIA 1998 report link that might carry an as-built in-service date is blocked by a Cloudflare challenge, and naturalgasintel.com's 1998 sign-up article 404s. Flagging as a spec concern rather than silently accepting 1995: the 1994-completion account is contemporaneous trade/local reporting (arguably more reliable on execution timing than a source-less retrospective wiki claim), but 'winter heating season' language could plausibly stretch into early 1995, so this is not a slam-dunk -- recommend Baird or a follow-up pull the FERC docket (this is FERC-jurisdictional per TC Energy) for the actual in-service order/certificate date before changing the cell.",
+      "proposed_refs": [
+        "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+        "https://www.sec.gov/Archives/edgar/data/1629995/000162999517000003/cpgx-20161231x10k.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TC Energy's current operations page for Crossroads Pipeline describes it as an active, FERC-regulated interstate gas pipeline in Indiana/Ohio (status inferred from ongoing-operations context per the status-inference rule, not a literal 'operating' token)."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1629995/000162999517000003/cpgx-20161231x10k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Columbia Pipeline Group's FY2016 10-K throughput table lists 'Crossroads 15.5 15.5 16.7' MMDth for 2016/2015/2014 -- non-zero throughput in every year is direct dated evidence gas was actively moving through the line."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two fully independent origins (current operator's own page; a distinct SEC filer's 10-K throughput table) both support ongoing operation."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+        "https://www.sec.gov/Archives/edgar/data/1629995/000162999517000003/cpgx-20161231x10k.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'supplies American and Canadian natural gas ... through numerous other interstate pipeline systems' -- explicitly a natural gas pipeline."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1629995/000162999517000003/cpgx-20161231x10k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed among CPG's natural gas transmission subsidiaries (Columbia Gas Transmission, Columbia Gulf, Crossroads) with throughput reported in MMDth (gas units)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivially confirmed gas, not oil/NGL, by two independent primary documents."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "1993",
+        "ProposalMonth": "2"
+      },
+      "primary_value": "1993",
+      "proposed_refs": [
+        "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NIPSCO agreed in February to buy the pipeline from partners Atlantic Richfield Co., Union Oil Co. of California and Ashland Oil Inc.' -- the Feb 1993 purchase agreement is the point at which the conversion project was proposed/committed to."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source (the 1993 NWI Times article, hand-decoded ROT47 as noted above -- url_verifier's automated substring check fails on this domain's obfuscated markup, so name_found is a manual read, not automated). Treating the Feb 1993 purchase agreement as the proposal date since that is when NIPSCO's conversion project was committed to publicly. Searched for a second source: FERC eLibrary search is JS-only and unreachable by script, EIA's 1998 report link is now Cloudflare-gated, naturalgasintel.com's contemporaneous piece 404s and has no Wayback capture -- none of the leads in this row's harvested pool corroborate a specific proposal date independently. ProposalMonth=2 is a light inference from 'agreed in February' and should be treated as medium confidence."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1993",
+        "ConstructionMonth": "9"
+      },
+      "primary_value": "1993",
+      "proposed_refs": [
+        "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NIPSCO Industries Inc. next week will begin converting a pipeline it purchased earlier this year to natural gas ... The first phase of the $30 million conversion project ... will begin Tuesday; it involves conversion of 140 miles of pipeline within Indiana to gas service.' Article dated Sep 3, 1993, so conversion (construction) began the week of Sep 7, 1993."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source, same caveat as ProposalYear above re: manual ROT47 decode. This is Phase 1 (Indiana leg) start; Phase 2 (the Ohio leg) is reported to start 'in the first quarter of 1994' -- worth noting for a StartYear/Phase discussion but GEM's single ConstructionYear field takes the overall project start, 1993. Searched for a second source without success (see Proposal fill notes -- same dead ends)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "300.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "300.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Could not independently corroborate the 300 MMcf/d nameplate figure. TC Energy's own current page gives length but not a capacity number. CPG's FY2016 10-K gives actual throughput (15.5 MMDth/yr for 2016, ~42 MMcf/d average) which is consistent with -- but far below, as expected for average vs. nameplate -- a 300 MMcf/d design capacity; it neither confirms nor contradicts the specific figure. EIA's 1998 'Deliverability on the Interstate Natural Gas Pipeline System' report (the harvested lead most likely to carry a contemporaneous capacity number) is now blocked by a Cloudflare human-check at webapp1.dlib.indiana.edu and its direct PDF path resolves only to a library catalog card, not the document; FERC eLibrary's docket search does not respond to a scripted GET. Leaving the existing 300.00 value in place (not disputing it -- no contradicting evidence found) but flagging that it is still an unverified figure pending the FERC docket or a readable EIA copy."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "202.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "202.00",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+        "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Length: 202 miles (365 km)' stated directly on TC Energy's current Crossroads Pipeline page."
+        },
+        {
+          "url": "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The 202-mile pipeline, formerly owned by Tecumseh Pipe Line Co. ... The pipeline, now called Crossroads, runs from Schererville to [northwest Ohio].' Independent 1993 account, decades before TC Energy owned it, giving the identical 202-mile figure."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two genuinely independent origins (current operator's own site; a pre-TC-Energy 1993 local newspaper account) agree on exactly 202 miles -- strong corroboration, not merely a repeated figure."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source in the harvested pool or on TC Energy's page states an operating pressure. FERC eLibrary (would carry MAOP in a certificate order) is unreachable by scripted GET; PHMSA/NPMS carries route/operator GIS data, not per-line pressure ratings retrievable this way. Left blank rather than guess."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found states pipe diameter. TC Energy's page omits it; the 1993 NWI Times article covers the conversion decision/cost/mileage but not diameter; the FERC certificate order (which would state this) is not reachable via scripted eLibrary search in this pass. Left blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "United States and Canada"
+      },
+      "primary_value": "United States and Canada",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'supplies American and Canadian natural gas safely and securely to communities' -- the page's own description of the gas supply origin."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source (TC Energy's own page); phrased at the 'American and Canadian' level rather than naming specific basins. Searched CPG's 10-K and the NWI article for a more specific supply-basin statement; neither names one for Crossroads specifically (the NWI article discusses interconnects with 'five other natural gas lines owned by other utilities' generically, not named supply basins)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "30",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "1993"
+      },
+      "primary_value": "30",
+      "proposed_refs": [
+        "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The first phase of the $30 million conversion project -- which includes the undisclosed purchase price -- will begin Tuesday.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "IMPORTANT CAVEAT: the $30 million figure explicitly BUNDLES the (undisclosed) purchase price NIPSCO paid Atlantic Richfield/Unocal/Ashland Oil for the pipeline together with Phase 1 conversion capex -- it is not a clean construction-only cost, and it may not even cover Phase 2 (the Ohio leg, described as a separate phase starting Q1 1994). Staging it as the best available primary figure but flagging the scope ambiguity rather than presenting it as a precise segment-conversion cost. Single source; same dead ends as the other 1993-article-sourced fills when searching for a second source (FERC docket, EIA report both currently unreachable by script)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Schererville",
+        "StartState/Province": "Indiana",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Cygnet",
+        "EndState/Province": "Ohio",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Schererville",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+        "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Operating in Indiana and Ohio' -- confirms both states."
+        },
+        {
+          "url": "https://www.nwitimes.com/uncategorized/nipsco-to-convert-pipeline/article_adbc48c0-701f-5fd8-8969-cfa4c73bd9cf.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline, now called Crossroads, runs from Schererville to [northwest Ohio].' Names Schererville explicitly; Cygnet, OH (Wood County) is in northwest Ohio, consistent with but not independently named by this source."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both states and the Schererville start point are independently confirmed by two sources. The specific end town 'Cygnet' is not itself named by either citable source (only 'northwest Ohio' / 'Ohio' generally) -- geographically consistent (Cygnet is in Wood County, northwest Ohio) but this is a location-corroboration at the state/region level, not a name-level confirmation of Cygnet specifically. Tier medium to reflect that partial coverage."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "oo_sheet_row": 162,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "TC Energy"
+      },
+      "primary_value": "TC Energy",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TC Energy's own operations page for Crossroads Pipeline, listing it among 'TC Energy' natural gas assets and directing operational inquiries to TC Energy commercial channels."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source (the operator's own page). Searched CPG's 10-K and SEC filings for a named third-party operator distinct from the owner; found none -- Crossroads appears to be operated directly, not by a separate named operating company."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 33,
+      "oo_sheet_row": 162,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "TC Energy",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "TC Energy",
+      "proposed_refs": [
+        "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+        "https://www.sec.gov/Archives/edgar/data/1111711/000111171115000008/ni-20141231xex21.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/operations/natural-gas/crossroads-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TC Energy's own page lists Crossroads Pipeline among its current operations."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1111711/000111171115000008/ni-20141231xex21.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NiSource Inc.'s FY2014 10-K Exhibit 21 lists 'Crossroads Pipeline Company' (Indiana) under 'COLUMBIA PIPELINE GROUP OPERATIONS' -- corroborates the pre-2016 ownership chain (NiSource/Columbia Pipeline Group) that TC Energy acquired via the 2016 $10.2B Columbia Pipeline Group purchase, consistent with TC Energy's current 100% ownership."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "TC Energy's own page is the only source directly stating CURRENT 100% ownership; the SEC filing is independent but establishes the pre-2016 ownership chain (NiSource/Columbia Pipeline Group) rather than today's ownership directly -- included because it corroborates the acquisition history rather than as a second direct statement of '100% TC Energy' today, so tier is medium not high. Also checked Columbia Pipeline Group's own FY2016 10-K (cpgx-20161231x10k.htm), which still lists Crossroads as a consolidated CPG subsidiary as of the TC Energy acquisition close -- consistent, not contradictory."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0169",
+      "url": "https://www.sec.gov/Archives/edgar/data/1629995/000162999517000003/cpgx-20161231x10k.htm",
+      "facts": "Columbia Pipeline Group's FY2016 10-K throughput table gives Columbia Gas Transmission system throughput of 1,759.5 MMDth (2016), 1,460.1 MMDth (2015), 1,379.4 MMDth (2014) -- system-level operational data, appropriate for P0169 since its SegmentName is 'SYSTEM/NETWORK INFO' (a network row, not a segment)."
+    }
+  ],
+  "summary": "P0172 Crossroads: existence/classification/duplicate all clean (TC Energy site + NiSource/CPG SEC filings + independent 1993 NWI Times account all corroborate a real 202-mi Schererville-IN-to-northwest-Ohio interstate line); staged length/status/fuel/location/owner/operator refs plus Proposal/Construction/SegmentCost/FuelSource fills, one spec concern on StartYear1 (1995 vs. a contemporaneous account implying ~1994 completion). UNRESOLVED: Diameter, Pressure, Capacity (unverified, not contradicted)."
+}

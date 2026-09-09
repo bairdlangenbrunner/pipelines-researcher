@@ -1,0 +1,193 @@
+{
+  "project_id": "P3220",
+  "pipeline_name": "Eastern Gas Transmission and Storage System (EGTS)",
+  "sheet_row": 1705,
+  "wiki": "https://www.gem.wiki/Eastern_Gas_Transmission_and_Storage_System_(EGTS)",
+  "validity": [
+    {
+      "segment_name": "Main Line",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "Adjudicate against P0176 'Dominion Gas Pipeline' (6,059 mi, cap 7,200 MMcf/d, 'Dominion LNG in Maryland, gas from Ohio and Virginia -> New United Kingdom'). Both rows describe the same corporate lineage of Appalachian/Mid-Atlantic FERC-regulated gas transmission assets under different names: the entity now called Eastern Gas Transmission and Storage, Inc. (EGTS) is the direct rename of Dominion Energy Transmission -- Berkshire Hathaway Energy acquired Dominion's gas transmission/storage business Nov. 1, 2020 and renamed the former CNG/Dominion operations 'Eastern Gas Transmission and Storage' (operator's own history page). P0176's segment description ('gas from Ohio and Virginia', feeding Dominion's Cove Point LNG in Maryland) matches EGTS's confirmed footprint (Ohio, Virginia, Maryland among its six states of operation). The two rows' capacities (7,200 vs 9,500 MMcf/d) and lengths (6,059 mi vs ~4,000 mi/6,437.38 km) do not match exactly, which could reflect different measurement vintages/scopes (P0176 last updated 2023-08-11 vs P3220 2022-10-07) or could mean P0176 bundles additional assets (e.g. the Cove Point feeder/LNG-adjacent capacity) that EGTS's core transmission-and-storage figure does not. Not resolved without reading P0176's own sources directly -- flagging for human adjudication rather than asserting identity.",
+      "contested": {},
+      "researcher_notes": "Checked the operator's own corporate-history page (bhegts.com/our-businesses/EGTS): 'The companies that would become Eastern Gas Transmission and Storage are born of an important by-product of ... Standard Oil' -> Hope Natural Gas (1898) -> Consolidated Natural Gas / CNG Transmission -> Dominion Resources merger (2000) -> 'On November 1, 2020, Berkshire Hathaway Energy acquires a number of Dominion Energy gas transmission, storage, and LNG assets ... The company is now called BHE GT&S, and the former CNG operations are known as Eastern Gas Transmission and Storage.' This directly documents that EGTS = the renamed former Dominion Energy Transmission network. Given P0176 in the roster is literally named 'Dominion Gas Pipeline' and its segment text references Ohio/Virginia gas feeding a Maryland LNG facility (Cove Point, also a BHE GT&S business line), the two rows plausibly encode the same underlying network pre- and post-rename. This is a roster-level comparison only (I did not have direct access to P0176's own worklist unit/sources in this pass) -- naming the concern rather than merging anything.",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS"],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Main Line",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Consider treating this row as a SYSTEM/NETWORK entry (like P0169 Columbia Gas Transmission's 'SYSTEM/NETWORK INFO' SegmentName with blank start state) rather than a discrete 'Main Line' segment with fixed Ohio->Virginia termini. Both the operator's own materials and its SEC 10-K describe EGTS as a six-state transmission and storage network, not a single corridor.",
+      "contested": {"SegmentName": "", "EndState/Province": ""},
+      "researcher_notes": "Two independent sources agree the network spans six states, not two: bhegts.com ('EGTS safely operates nearly 4,000 miles of pipeline ... in six states: Maryland, New York, Ohio, Pennsylvania, Virginia, and West Virginia') and BHE's SEC 10-K for FY2025 (CIK 0001936737, filer 'Eastern Gas Transmission and Storage, Inc.'): 'EGTS' operations include transmission assets located in Maryland, New York, Ohio, Pennsylvania, Virginia and West Virginia. EGTS also operates one of the nation's largest underground natural gas storage systems located in New York, Pennsylvania and West Virginia.' The current row states StartState=Ohio, EndState=Virginia only -- true as far as it goes (both states are in the operating footprint) but it omits Maryland, New York, Pennsylvania and West Virginia, framing a six-state network as a two-point corridor. This is the same aggregate-vs-segment issue the SOP calls out for P0169/Columbia; I'm not proposing a specific replacement StartState/EndState pair (there isn't one single corridor to name), just flagging that the current framing understates scope -- a human call on whether to re-key this row as network-level or leave as-is with a caveat.",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Main Line",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change needed to Status/Fuel/Owner; Length and Capacity are corroborated within a plausible growth range -- no action needed beyond adding the refs staged in fills[].",
+      "contested": {},
+      "researcher_notes": "Existence, classification-as-gas-transmission, and ownership all confirm cleanly: EGTS is a real, FERC-regulated, currently operating interstate natural gas transmission and storage system, and is a distinct SEC registrant (CIK 0001936737, 'Eastern Gas Transmission and Storage, Inc.') wholly owned by Eastern Energy Gas Holdings, LLC, an indirect subsidiary of Berkshire Hathaway Energy -- confirming Owner1 = 'Eastern Gas Transmission and Storage Inc' at 100%. GEM's recorded LengthKnown (6,437.38 km = ~4,000 mi) and Capacity (9,500 MMcf/d) match the operator's own current-site figures almost exactly ('nearly 4,000 miles', '9.5 bcf of natural gas delivered daily'). The FY2025 SEC 10-K states a slightly larger system (~3,900 mi -- rounds to the same ballpark -- and 10.1 Bcf/d design capacity), consistent with organic network growth/expansion between GEM's 2022-10-07 LastUpdated snapshot and the FY2025 filing rather than a factual conflict. Caveat: as noted in the classification concern above, both sourced figures describe the FULL six-state EGTS network, so Length/Capacity here are legitimately network-level totals -- fine for a system-level row, but they should not be read as a single Ohio-to-Virginia segment's stats.",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "'Eastern Gas Transmission and Storage (EGTS) is the interstate gas transmission subsidiary of BHE GT&S ... 9.5 bcf of natural gas delivered daily' -- describes an active, currently operating system"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2025 10-K: 'EGTS operates approximately 3,900 miles of natural gas transmission and storage pipelines with a design capacity of 10.1 Bcf per day' -- current-tense, active operations"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent origins (operator site; SEC 10-K as a distinct registrant) both describe EGTS as a presently operating interstate system."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "'provides natural gas transportation and storage services'"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'FERC-regulated interstate natural gas transmission systems and underground storage'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Unambiguous -- natural gas transmission/storage system, both sources agree."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "9500.00", "CapacityUnits": "MMcf/d"}, "primary_value": "9500.00",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "'9.5 bcf of natural gas delivered daily' = 9,500 MMcf/d, matches GEM's value exactly"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2025 10-K: 'design capacity of 10.1 Bcf per day' -- a later-year figure, consistent with expansion since GEM's 2022 LastUpdated rather than conflicting"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Operator site figure matches GEM's 9,500 MMcf/d exactly; SEC 10-K's newer 10.1 Bcf/d is plausibly a later expansion, not a contradiction -- both describe the whole six-state system's design capacity, so this is a network-level total (see classification concern)."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "6437.38", "LengthKnownUnits": "km"}, "primary_value": "6437.38",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "'nearly 4,000 miles of pipeline' -- 4,000 mi = 6,437.4 km, matches GEM's 6,437.38 km to 2 decimals"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2025 10-K: 'approximately 3,900 miles of natural gas transmission and storage pipelines' -- same order of magnitude, slightly smaller (earlier operator-site figure is likely a rounder/newer number than the FY2025 filing, or vice versa; not a material conflict)"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "GEM's km figure is an exact mi->km conversion of the operator's stated ~4,000 mi (confirms the unit conversion was done correctly, not a units bug). Both sources agree the network is a ~3,900-4,000 mi system. This is a network total (see classification concern), not a single-corridor length."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "Ohio", "StartCountryOrArea": "United States", "EndState/Province": "Virginia", "EndCountryOrArea": "United States"},
+      "primary_value": "Ohio",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "'six states of operation ... Maryland, New York, Ohio, Pennsylvania, Virginia, and West Virginia' -- confirms Ohio and Virginia are both in-footprint"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'EGTS' operations include transmission assets located in Maryland, New York, Ohio, Pennsylvania, Virginia and West Virginia' -- same six states, independently"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Ohio and Virginia are both confirmed as within EGTS's footprint, so the existing StartState/EndState values are not wrong -- but they are incomplete (Maryland, New York, Pennsylvania, West Virginia are also in-footprint and unrepresented). See the classification concern in validity[] for the fuller finding; refs staged here support the two values as-is."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Eastern Gas Transmission and Storage, Inc."},
+      "primary_value": "Eastern Gas Transmission and Storage, Inc.",
+      "proposed_refs": ["https://www.bhegts.com/our-businesses/EGTS", "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "'BHE GT&S, through its local operating company Eastern Gas Transmission and Storage (EGTS), provides natural gas transportation and storage services'"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "SEC registrant name 'Eastern Gas Transmission and Storage, Inc. and its subsidiaries (\"EGTS\")'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Filled from blank. Operator = the same entity already recorded as Owner1 (Eastern Gas Transmission and Storage Inc), which is internally consistent -- EGTS is a wholly owned, self-operated subsidiary, not operated by a separate company."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1",
+      "values": {"Owner1": "Eastern Gas Transmission and Storage Inc", "Owner1%": "100.00%"},
+      "primary_value": "Eastern Gas Transmission and Storage Inc",
+      "proposed_refs": ["https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "https://www.bhegts.com/our-businesses/EGTS"],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/71180/000108131626000003/bhe-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'All shares of outstanding common stock of Eastern Gas Transmission and Storage, Inc. are held by its parent company, Eastern Energy Gas Holdings, LLC, which is an indirect, wholly owned subsidiary of Berkshire Hathaway Energy Company' -- confirms 100% single-entity ownership chain up to BHE"},
+        {"url": "https://www.bhegts.com/our-businesses/EGTS", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Eastern Gas Transmission and Storage (EGTS)' as the operating company under BHE GT&S"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "GEM's existing Owner1 value is exactly right; sourced from the SEC filing's corporate-structure disclosure, independent of the operator's own marketing page."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {}, "primary_value": "", "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "EGTS is a consolidated legacy asset base (predecessor history traces to Hope Natural Gas, 1898, per bhegts.com's own history page) that has absorbed CNG/Consolidated Natural Gas and Dominion Energy Transmission over a century-plus of mergers -- there is no single 'proposal year' for the system as a whole; a discrete FERC-certificated expansion project would have one, but this row is coded as a network-level entry (see classification concern), not a single project. Searched bhegts.com's history section and the SEC 10-K's business description; neither states a proposal/announcement date for 'the system' as such. Leaving blank rather than picking an arbitrary corporate-history milestone (e.g. the 2020 BHE acquisition, which is a rename/ownership event, not a proposal to build pipe)."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {}, "primary_value": "", "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Same reasoning as Proposal: no single construction date exists for a network built up over 100+ years through multiple corporate predecessors. Checked bhegts.com's history timeline (1898-2020) and the SEC 10-K; neither gives a single 'system construction' date. Not filling -- would need per-segment FERC dockets (out of scope for a network-level row) to source individual construction years."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1", "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Same as Proposal/Construction. The one clean, sourceable date I found is Nov. 1, 2020 (Berkshire Hathaway Energy's acquisition and the 'Eastern Gas Transmission and Storage' rebrand, per bhegts.com's history page) -- but that is a corporate rename/ownership-transfer date, not a pipeline in-service date, and filling it as StartYear1 would misrepresent a 100+ year-old operating asset base as new. Leaving blank; flagging the 2020 rename date in researcher_notes only, not as a StartYear value."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "", "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched bhegts.com and the SEC 10-K's EGTS business/properties sections; neither states an operating pressure figure (pressure disclosures, where they exist, are typically per-segment FERC-tariff data, not a system-wide number). No FERC docket search run for this row specifically since Pressure is not a system-level disclosure item. Leaving blank."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {}, "primary_value": "", "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "A ~4,000-mile multi-decade network is built of many different pipe diameters segment-to-segment; neither bhegts.com nor the SEC 10-K states a single system diameter (and none would be meaningful for a network-level row). Leaving blank -- a per-segment diameter would need to attach to a specific FERC-docketed project, not this aggregate row."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
+      "values": {}, "primary_value": "", "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Per the schema gotcha, FuelSource wants a named upstream field/facility, not 'Natural Gas'. bhegts.com describes gathering from many unnamed producers ('Producers annually deliver more than 175 Bcf of gas into EGTS systems') across its Appalachian footprint rather than a single named source field -- the network aggregates gas from many Marcellus/Utica-area producers, with no single attributable origin field found in operator disclosures or the SEC 10-K. Leaving blank rather than defaulting to a fuel-type label."
+    },
+    {
+      "segment_name": "Main Line", "sheet_row": 1705, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {}, "primary_value": "", "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No discrete project cost applies to a legacy, century-plus network with no single build event. The SEC 10-K carries a net-property-plant-and-equipment balance-sheet figure for EGTS, but that is an accumulated asset book value, not a 'SegmentCost' (construction cost of a defined project) in GEM's sense, so it is not staged here. Leaving blank."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0176",
+      "url": "https://www.bhegts.com/our-businesses/EGTS",
+      "facts": "Possible duplicate/relabel lead: EGTS is the direct corporate rename of the former Dominion Energy Transmission network (renamed by Berkshire Hathaway Energy Nov. 1, 2020). If P0176 'Dominion Gas Pipeline' predates that rename and describes the same underlying Ohio/Virginia-area FERC-regulated transmission system feeding Dominion's Cove Point LNG in Maryland, the two rows may need to be reconciled (merge, relabel, or an explicit note distinguishing their scopes). EGTS's confirmed current stats: ~3,900-4,000 mi, 9.5-10.1 Bcf/d design capacity, six states (Maryland, New York, Ohio, Pennsylvania, Virginia, West Virginia)."
+    }
+  ],
+  "summary": "P3220 (EGTS) is a real, currently operating FERC-regulated system (confirmed via the operator's own site + its own SEC 10-K filing as CIK 0001936737); Length/Capacity/Owner/Status/Fuel now sourced at high tier. Flagged two concerns: a possible duplicate with P0176 'Dominion Gas Pipeline' (same corporate lineage, pre/post BHE's 2020 rename), and a classification issue where a six-state network is coded as a single Ohio->Virginia segment. UNRESOLVED: ProposalYear/Month, ConstructionYear/Month, StartYear1-3, Pressure, Diameter, FuelSource, SegmentCost -- no system-wide figures exist for a network this old and this aggregated; each has a researcher_notes explanation."
+}

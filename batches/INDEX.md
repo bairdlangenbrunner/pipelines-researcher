@@ -247,11 +247,13 @@ applied). See docs/workflows.md "Batch artifacts".
 
 ## united-states-gas
 
+- `staging/deepsweep-appalachian-operating` — rows=46 fills=149 updates=0 status-pending=0 refs(DEAD_LINK=3, REFS_ADDED=235, REVERIFIED=6, UNRESOLVED=171) routes=0 new(none)
 - `staging/deepsweep-gulf-operating` — rows=50 fills=160 updates=0 status-pending=0 refs(DEAD_LINK=10, REFS_ADDED=244, REVERIFIED=9, UNRESOLVED=184) routes=0 new(none)
 - `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=325, REVERIFIED=14, UNRESOLVED=42) routes=0 new(none)
 - `staging/state-audit-20260904` — no store — invisible to discovery
 - `deliverables/pipelines_batch_20260904_1354_ET_united-states-gas_deepsweep.xlsx`
 - `deliverables/pipelines_batch_20260908_1712_ET_united-states-gas_deepsweep-gulf.xlsx`
+- `deliverables/pipelines_batch_20260908_2103_ET_united-states-gas_deepsweep-appalachian.xlsx`
 - `archive/` — 1 superseded/applied file(s)
 
 ## united-states-oil

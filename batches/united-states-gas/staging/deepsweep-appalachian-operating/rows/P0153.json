@@ -1,0 +1,493 @@
+{
+  "project_id": "P0153",
+  "pipeline_name": "Appalachian Connector Pipeline",
+  "sheet_row": 14,
+  "wiki": "https://www.gem.wiki/Appalachian_Connector_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartState/Province and EndState/Province to West Virginia (Marshall & Wetzel counties); the current values are a location field mix-up, not just missing refs.",
+      "contested": {
+        "StartState/Province": "West Virginia",
+        "EndLocation": "",
+        "EndState/Province": "West Virginia"
+      },
+      "researcher_notes": "Sheet currently carries StartState/Province='Clarington' (a village name, not a state), EndLocation='Ohio' (a state name sitting in the Location field), EndState/Province='Chatham' (not a recognized WV or OH place near this project). None of these three fields hold a valid US state except by accident. Both independent sources that discuss the project's geography place it entirely in West Virginia: XcL Midstream's own operations page states 'XcL ... operates in the premier region of the Appalachia basin in Marshall and Wetzel Counties, West Virginia' and that the Appalachia Connector Pipeline sits '...in Southwest Appalachia'; Kallanish Energy (independent trade press, 2017-06-15) reports XcL 'intends to build roughly 100 miles of pipelines in Marshall and Wetzel counties' and titles the piece 'Appalachia Connector Pipeline under construction in W.Va.' Neither source mentions Ohio at all. 'Clarington, Ohio' is a real village directly across the Ohio River from Marshall County, WV, so it's plausible someone conflated a nearby Ohio place-name with the pipeline's actual West Virginia location, but no source supports an Ohio endpoint for this specific project. I could not find independent confirmation of exact start/end towns within WV (XcL describes a county-level gathering footprint, not two fixed termini), so I'm proposing state-level corrections only and leaving StartLocation/EndLocation blank rather than inventing towns.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "Set PipelineType = 'gathering' (currently blank). All independent sources describe this as a gas-gathering system, not a long-haul transmission trunk.",
+      "contested": {
+        "PipelineType": "gathering"
+      },
+      "researcher_notes": "PipelineType is blank on the sheet. Kallanish Energy (2017) describes it plainly as 'natural gas-gathering pipelines' that 'collect dry natural gas and wet or liquids-rich natural gas and move it to five connections on interstate pipelines' -- i.e. a gathering system feeding transmission lines, not a transmission line itself. S&P Global Platts (2017-06-12) independently corroborates: XcL received a shipper commitment 'for its gathering and transport system.' XcL's own current operations page also frames the asset as two gathering sub-systems ('Lean System' dry gas, 'Rich System' rich/wet gas) with named interstate interconnects, consistent with a gathering classification. Recommend PipelineType='gathering' per controlled_vocab.md.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Capacity=2000 MMcf/d is not corroborated by any source found; verify against a more current operator disclosure before treating it as sourced.",
+      "contested": {
+        "Capacity": "",
+        "CapacityUnits": ""
+      },
+      "researcher_notes": "No source I found states 2000 MMcf/d for this project. At launch (S&P Global Platts, 2017-06-12), XcL described a '1-Bcf/d dry gas header system' plus a '200 MMcf/d wet gas system' (1,200 MMcf/d combined design, with THQ Appalachia I initially committing to 600 MMcf/d dry + 200 MMcf/d wet). XcL's own current operations page (Wayback capture 2025-06-21) describes the mature system differently again: Lean (dry) System '3+ billion cubic feet of deliverability' (3,000+ MMcf/d) and Rich (wet) System '600+ MMCF/d of processing deliverability with potential to expand to 1 BCF/d.' None of these figures is 2000 MMcf/d on its own, and combining sub-systems gives either ~1,200 (2017 design) or ~3,600-4,000+ (current, if lean+rich are summed, which may not even be the right way to combine them since one is gathering deliverability and the other is processing deliverability). This is a genuine, material disagreement across two independent snapshots in time, not a corroboration -- flagging rather than proposing a replacement number, since I can't determine which (if any) figure the sheet's 2000 is derived from. Searched both citations in the harvested pool plus the operator's current site; did not find a discrete 2000 MMcf/d statement anywhere.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper",
+        "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action beyond the attribution/classification/spec items above; note the naming variant and the unconfirmed length figure for the next researcher.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: confirmed real, independent of GEM. Three independent, non-GEM sources -- XcL Midstream's own corporate site, Kallanish Energy (trade press), and S&P Global Platts (trade press) -- all name and describe the 'Appalachia Connector Pipeline' as a real XcL Midstream gas-gathering project in Marshall/Wetzel Counties, WV, with a signed anchor-shipper contract (THQ Appalachia I, a Tug Hill affiliate) and a 2018 target in-service date, matching the sheet's StartYear1=2018. This is not a GEM-only/hallucinated entity. NAMING: every independent source spells it 'Appalachia Connector Pipeline' (no 'n'); the sheet's title is 'Appalachian Connector Pipeline.' Worth adding 'Appalachia Connector Pipeline' to OtherEnglishNames as the operator's/press's actual spelling, though I'm not treating this as a hard error since GEM may deliberately normalize to 'Appalachian.' LENGTH CAVEAT: LengthKnown=52 mi is not directly stated by any source I found (Kallanish 2017: 'roughly 100 miles' planned system-wide; XcL's current site: ~35 mi lean + ~27 mi rich = ~62 mi in-service, with 60+/45+ mi planned per sub-system). 52 mi sits plausibly on the growth trajectory between the 2017 estimate and the 2025 in-service total, so I'm not flagging it as wrong, just unconfirmed -- a future pass with a dated XcL disclosure close to the sheet's 2022-10-14 LastUpdated could pin this down. DUPLICATE CHECK: compared against all 45 other rows in the batch 3 roster (Rover, NEXUS, Rockies Express, Eastern Shore, Mountaineer [both clusters], Empire, Vector, Algonquin, Columbia Gas Transmission, Dominion/EGTS, etc.) -- none describe XcL Midstream, Marshall/Wetzel Counties WV, or an Appalachia/Appalachian Connector system; no duplicate found. OPERATOR SITE NOW DEAD: xclmidstream.com no longer resolves (DNS NXDOMAIN as of 2026-09-08); last live Wayback capture is 2025-06-21, with regular captures 2020-2025 before that. This could mean a rebrand, acquisition, or a simple domain lapse -- not by itself an existence or status concern (the pipeline's own operating status doesn't depend on the company having a live website), but worth a corporate-ownership check on a future pass. Opened and read to exhaustion: all 3 citations in the row's harvested pool (xclmidstream.com/operations, Kallanish, S&P Global Platts); could not read the Platts article on Kallanish/Marcellus Drilling News beyond what these three gave (web-search budget for this session was exhausted mid-task; no further search engines/PHMSA/WV DEP/FERC lookups were attempted for this row).",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Operator's current site describes the Appalachia Connector Pipeline in present-tense in-service terms ('Approximately 35 miles of in service pipeline' / 'Approximately 27 miles of in service pipeline')."
+        },
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent trade press corroborates the project reaching construction with a 2018 target in-service date, supporting the operating trajectory (does not itself state current operating status)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator's own current site is the only source stating present-tense in-service status; Kallanish/S&P Global (2017) only confirm construction + 2018 target, not current status. Searched for an independent current-status confirmation (PHMSA NPMS, WV DEP) but did not pursue given web-search budget exhaustion mid-task -- a second, fully independent 'currently operating' source is still owed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'natural gas-gathering pipelines ... would collect dry natural gas and wet or liquids-rich natural gas'"
+        },
+        {
+          "url": "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Article commodity tag 'Natural Gas'; describes a 'dry gas header system' and 'wet gas system' on the Appalachia Connector Pipeline."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent trade-press sources both confirm natural gas commodity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source in the harvested pool or the operator's current site states an explicit proposal/announcement date. Kallanish (2017-06-15) reports construction already underway and S&P Global (2017-06-12) reports a signed anchor-shipper contract, meaning the project was proposed at least months earlier, but neither article gives that date. Marcellus Drilling News is cited by Kallanish as a contemporaneous source but was not independently located within this session's web-search budget. Leaving blank rather than estimating."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2017"
+      },
+      "primary_value": "2017",
+      "proposed_refs": [
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'A Pennsylvania-based private midstream company has started construction on natural gas-gathering pipelines in northern West Virginia' (dated 2017-06-15; 'The dry gas system currently is under construction')."
+        },
+        {
+          "url": "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...for its gathering and transport system currently under construction' (dated 2017-06-12, three days before Kallanish, independent publisher)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent trade-press sources, three days apart in June 2017, both state construction was already underway by that date -- fills ConstructionYear=2017. Neither gives a specific month for construction start (only that it was ongoing by mid-June), so ConstructionMonth is left blank rather than guessed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2018"
+      },
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline could begin operations in second quarter 2018, the company says on its website.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...hopes the XcL Appalachia Connector system will be online in time to access ... new gas takeaway capacity expected to enter service in the southwestern Appalachian region ... by the end of 2018.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent trade-press sources corroborate a 2018 target in-service year, matching the sheet's existing StartYear1=2018. Kallanish gives Q2 2018 specifically; S&P Global gives 'by end of 2018' in the context of regional takeaway capacity, a slightly looser framing -- leaving StartMonth1 blank since the two sources don't agree to month precision."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "2000.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "2000.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "See validity (spec) finding: no source states 2000 MMcf/d. 2017 design was 1,000 MMcf/d dry header + 200 MMcf/d wet system; current operator site states 3,000+ MMcf/d lean deliverability and 600+ MMcf/d (potential 1,000) rich processing capacity. Not staging a ref for the existing value since none of my sources support it, and not proposing a replacement number since the sourced figures disagree with each other across time/sub-system rather than converging on one number."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "None of the three sources in the harvested pool (XcL operations page, Kallanish, S&P Global) state an operating pressure. This is an intrastate gathering system with no public FERC docket to check for engineering specs; a WV PSC/DEP permit record might carry it but was not located within this session's search budget."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "52.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "52.00",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states exactly 52 miles. Kallanish (2017) reports XcL 'intends to build roughly 100 miles' system-wide; the operator's current site (2025) states ~35 mi lean (dry) + ~27 mi rich (wet) in service = ~62 mi combined, with 60+/45+ mi planned per sub-system. 52 mi is plausible as an intermediate point given the sheet's 2022-10-14 LastUpdated falls between these two snapshots, but I found no document stating that figure directly -- see validity caveat. Not proposing a replacement number."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source in the harvested pool or the operator's current site states pipe diameter for either the lean or rich system."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per gem_schema.md, FuelSource must name a specific upstream field/facility, not a commodity or shale-play generality. Sources describe the system serving 'Marcellus and Utica shales wells' generally and THQ Appalachia I's 'extensive upstream lease position' in Marshall/Wetzel Counties, but none names a specific well pad, lease, or gas field precisely enough to qualify as a named FuelSource -- leaving blank rather than defaulting to a shale-play name (the exact mistake gem_schema.md warns the Saudi gas sweep made)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartState/Province",
+        "EndState/Province"
+      ],
+      "primary_value_col": "StartState/Province",
+      "values": {
+        "StartState/Province": "West Virginia",
+        "EndState/Province": "West Virginia"
+      },
+      "primary_value": "West Virginia",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'XcL ... operates in the premier region of the Appalachia basin in Marshall and Wetzel Counties, West Virginia. XcL Midstream's Appalachia Connector Pipeline is strategically located...'"
+        },
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'XcL Midstream ... intends to build roughly 100 miles of pipelines in Marshall and Wetzel counties' (article title: '...under construction in W.Va.')."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "See validity (attribution) finding -- the sheet's current StartState/Province='Clarington', EndLocation='Ohio', EndState/Province='Chatham' is a location field mix-up; two independent sources place the whole project in Marshall/Wetzel Counties, West Virginia. I'm filling both state fields as West Virginia and leaving StartLocation/EndLocation blank since no source gives fixed start/end towns for this gathering footprint (it's described at the county level, not point-to-point)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 14,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a project or segment cost figure for this gathering system."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 143,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "XcL Midstream LLC"
+      },
+      "primary_value": "XcL Midstream LLC",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20250621202141/https://www.xclmidstream.com/operations/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'XcL Midstream (\"XcL\") operates in the premier region of the Appalachia basin ... XcL Midstream's Appalachia Connector Pipeline...'"
+        },
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'XcL Midstream with offices in Canonsburg, south of Pittsburgh, intends to build ... what is being called the Appalachia Connector Pipeline.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operators/owners tab row (oo_sheet_row=143). XcL Midstream LLC confirmed as operator/developer by both the operator's own site and independent trade press (Kallanish)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 143,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "XcL Midstream LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "XcL Midstream LLC",
+      "proposed_refs": [
+        "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+        "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20180620173724/http://www.kallanishenergy.com/2017/06/15/appalachia-connector-pipeline-under-construction-in-w-va/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'XcL Midstream with offices in Canonsburg ... intends to build roughly 100 miles of pipelines ... what is being called the Appalachia Connector Pipeline.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20190901005738/https://www.spglobal.com/platts/en/market-insights/latest-news/natural-gas/061217-appalachian-midstream-gas-play-gains-anchor-shipper",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'XcL Midstream received the commitment from THQ Appalachia I ... for the XcL[...] Appalachia Connector Pipeline dry gas system' -- names XcL as the developer/owner of the system; also notes XcL is backed by Quantum Energy Partners (private equity), consistent with 100% XcL ownership at the project level rather than a joint venture."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operators/owners tab row (oo_sheet_row=143). Two independent trade-press sources confirm XcL Midstream LLC as sole developer/owner; no source suggests a co-owner, consistent with the sheet's 100% figure."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P0153 (Appalachia/Appalachian Connector Pipeline, XcL Midstream) confirmed real via 3 independent non-GEM sources; staged fixes for a location field mix-up (Ohio/Clarington/Chatham -> West Virginia) and a classification gap (blank -> gathering), flagged Capacity=2000 MMcf/d as unsupported/inconsistent across sources, filled Status/Fuel/Construction/Start/Operator/Owner refs, left Proposal/Pressure/Diameter/FuelSource/SegmentCost/Length UNRESOLVED (not sourced)."
+}
