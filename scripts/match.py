@@ -23,7 +23,8 @@ def load_gem_df(path: str) -> pd.DataFrame:
     """Load a GEM tracker CSV (header at row index 2), drop buffer/blank rows.
     fillna('') is essential: NaN floats are truthy, so `cell or ''` would yield the
     string 'nan' and collapse all blank-grouping segments into one fake network."""
-    df = pd.read_csv(path, header=2, low_memory=False, dtype=str).fillna("")
+    df = pd.read_csv(path, header=2, low_memory=False,
+                     keep_default_na=False, na_values=[], dtype=str).fillna("")
     if "PipelineName" in df.columns:
         df = df[df["PipelineName"].str.strip() != ""]
     return df.reset_index(drop=True)

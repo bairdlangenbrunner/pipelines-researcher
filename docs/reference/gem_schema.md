@@ -18,6 +18,15 @@ engine in `../gem-db-ops` (`goit/pull.py`, `ggit/pull.py`).
 
 - The two **tracker** tabs: **header at CSV row index 2** (rows 0–1 are metadata);
   load with `pd.read_csv(path, header=2, low_memory=False)`. `SheetRow = CSV index + 4`.
+- **Always pass `keep_default_na=False, na_values=[]`.** pandas' default NA list eats
+  literal strings this tracker uses as data, and the damage is silent (2026-09-10):
+  `Status = "N/A"` — the do-not-research exclusion marker (`controlled_vocab.md`) — read
+  back as a blank status on 11 rows, and **`Researcher = "NA"`, Nagwa's initials, read
+  back as unattributed on 765 rows across the two tabs** (416 gas + 349 oil), plus 302
+  `RouteCreator` cells. A blanked initials cell is exactly the published false
+  attribution the initials rule exists to prevent. The core loaders
+  (`match.load_gem_df`, `build_ref_worklist._load_indexed`/`_load_owners`,
+  `build_qc_staging`, `entity_lookup`) all pass it; so must any new reader.
 - **`SheetRow` is positional, so it goes stale whenever the sheet is re-sorted — never
   trust a staged one.** GGIT gas was re-ordered between the 2026-07-04 and 2026-07-05
   pulls (pre-07-05 exports are ProjectID-ascending, starting `P0061`; from 07-05 on they

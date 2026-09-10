@@ -217,7 +217,8 @@ def _build_staged_actions(ctx, df, args, flags, wiki_records) -> dict:
 
 def _load_scope(csv: str, country: str, pids: str | None):
     import pandas as pd
-    df = pd.read_csv(csv, header=2, low_memory=False, dtype=str).fillna("")
+    df = pd.read_csv(csv, header=2, low_memory=False,
+                     keep_default_na=False, na_values=[], dtype=str).fillna("")
     df = df[df["PipelineName"].str.strip() != ""].copy()
     df["SheetRow"] = df.index + 4          # before any reset — CSV index + 4
     want = N.normalize_country(country)

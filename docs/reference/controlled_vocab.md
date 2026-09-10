@@ -13,9 +13,26 @@ status/type strings are mapped *into* these via its manifest `status_map`.
 
 | Field | Allowed values |
 |---|---|
-| `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idle`, `mothballed`, `retired` |
+| `Status` | `operating`, `proposed`, `construction`, `shelved`, `cancelled`, `idle`, `mothballed`, `retired` — **plus `N/A`, which is an EXCLUSION MARKER, not a status** (see below) |
 | `RouteAccuracy` | `high`, `medium`, `low`, `no route` — **plus** two parenthetical values written exactly like that: `very high (within meters)` and `very low (straight line/schematic)`. **Unbuilt rows cap at `medium`** — see below |
 | `PipelineType` | `transmission`, `gathering`, `distribution` |
+
+### `Status = N/A` means "do not research this row"
+
+`N/A` (capitalized exactly like that) is Baird's marker for a row that should not be
+researched and does not belong in the database — 8 gas / 3 oil rows today. It is **not**
+the same as a blank `Status`, which is simply an unfilled cell.
+
+- **Every research scope excludes it.** `build_ref_worklist.py` drops `N/A` rows before
+  any other filter, including before the `--include-pids` union, so no sweep leg can pick
+  one up. If you scope a batch by hand, exclude them yourself.
+- **Discovery and reconciliation must KEEP them in the match roster.** The row is still a
+  recorded pipeline; drop it from the roster and the same line comes back as a false
+  Addition or discovery candidate.
+- **The loader used to destroy this value.** `pd.read_csv` parses the literal string
+  `N/A` as NaN by default, so an `N/A` row read as blank-status and fell silently into
+  every status-filtered slice. Read tracker CSVs with **`keep_default_na=False,
+  na_values=[]`** — see `gem_schema.md`.
 
 ## The remaining vocab fields
 

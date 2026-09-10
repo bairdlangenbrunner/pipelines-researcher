@@ -29,7 +29,8 @@ def lookup(name: str, tracker: str = "oil", threshold: int = 85) -> list[tuple[s
     csv = _latest(tracker)
     if not csv:
         return []
-    df = pd.read_csv(csv, header=2, low_memory=False, dtype=str).fillna("")
+    df = pd.read_csv(csv, header=2, low_memory=False,
+                     keep_default_na=False, na_values=[], dtype=str).fillna("")
     seen: dict[str, str] = {}
     for col in ("Owner", "Parent", "OwnerEntityIDs"):
         if col not in df.columns or col == "OwnerEntityIDs":

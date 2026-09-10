@@ -305,6 +305,12 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   docs asserted it for months and `merge_qc` staged it. `Delayed` = `yes` (blank if not).
 - **Only `FIDStatus` is capitalized:** `Pre-FID`, `FID`.
 - `very high (within meters)` is a valid `RouteAccuracy`.
+- **`Status = N/A` is an exclusion marker, not a status** — the row is not to be
+  researched and does not belong in the database. Every research scope drops it
+  (`build_ref_worklist.py`); discovery/recon keep it in the match roster so it does not
+  return as a false Addition. Read tracker CSVs with `keep_default_na=False,
+  na_values=[]` or pandas silently blanks it — and blanks `Researcher = NA` (Nagwa) on
+  765 rows too.
 - **`*CostUnits` = bare currency code** (`USD`, `EGP`, …) — never `EGP million` /
   `USD (millions)`; the magnitude goes in the cost number itself.
 - When in doubt, pull a real row from the sheet and copy the exact casing.

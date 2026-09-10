@@ -80,7 +80,8 @@ def _ref_stem(ref_col: str) -> str:
 def _load_indexed(csv: str) -> pd.DataFrame:
     """Load a GEM tracker (header at row index 2), drop buffer/blank rows, but KEEP the
     original index so SheetRow = index + 4 holds."""
-    df = pd.read_csv(csv, header=2, low_memory=False, dtype=str).fillna("")
+    df = pd.read_csv(csv, header=2, low_memory=False,
+                     keep_default_na=False, na_values=[], dtype=str).fillna("")
     if "PipelineName" in df.columns:
         df = df[df["PipelineName"].str.strip() != ""]
     return df
@@ -89,7 +90,8 @@ def _load_indexed(csv: str) -> pd.DataFrame:
 def _load_owners(csv: str) -> tuple[pd.DataFrame, dict]:
     """Load the operators/owners tab (header at row index 1), keep the original index
     (OO sheet row = index + 3), and return (df, {ProjectID -> df-index})."""
-    df = pd.read_csv(csv, header=OO_HEADER_INDEX, low_memory=False, dtype=str).fillna("")
+    df = pd.read_csv(csv, header=OO_HEADER_INDEX, low_memory=False,
+                     keep_default_na=False, na_values=[], dtype=str).fillna("")
     by_pid: dict[str, int] = {}
     if "ProjectID" in df.columns:
         for idx, pid in df["ProjectID"].items():
@@ -244,6 +246,22 @@ def build(csv: str, country: str | None, statuses: set[str] | None,
     fill_pairs = frozenset(fill_pairs if fill_pairs is not None else FILL_PAIRS_DEFAULT) \
         if owe_fills else frozenset()
     df = _load_indexed(csv)
+    # `Status = "N/A"` is an explicit EXCLUSION marker, not a missing value (Baird
+    # 2026-09-10): it means the row should not be researched and does not belong in the
+    # database. Drop it before every other filter — including before `df_all`, so an
+    # `--include-pids` union cannot resurrect one — and note it is NOT the same as a blank
+    # Status, which is just an unfilled cell. Read the CSV with `keep_default_na=False` to
+    # see these at all: pandas parses the literal string "N/A" as NaN by default, which is
+    # how P3162 was reported as a blank-status row. 8 gas / 3 oil rows tracker-wide today
+    # (US: gas P3162, oil P3681 + P7378). The exclusion is about RESEARCH TARGETS only —
+    # discovery and reconciliation must keep N/A rows in their match roster, or a recorded
+    # pipeline comes back as a false Addition.
+    if "Status" in df.columns:
+        na_mask = df["Status"].map(lambda s: str(s).strip().upper() == "N/A")
+        if int(na_mask.sum()):
+            print(f"  excluded {int(na_mask.sum())} row(s) tracker-wide with Status = N/A "
+                  f"(marked not-for-research)")
+            df = df[~na_mask]
     df_all = df
     cols = set(df.columns)
     if country:
