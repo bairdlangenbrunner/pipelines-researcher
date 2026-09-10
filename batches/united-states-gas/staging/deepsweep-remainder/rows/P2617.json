@@ -1,0 +1,718 @@
+{
+  "project_id": "P2617",
+  "pipeline_name": "El Paso Gas Pipeline",
+  "sheet_row": 1351,
+  "wiki": "https://www.gem.wiki/El_Paso_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "keep as operating; no existence/classification/duplicate issue -- see the two spec concerns and one attribution concern below",
+      "contested": {},
+      "researcher_notes": "EXISTENCE CONFIRMED independent of GEM/wiki, via FERC's own docket record. FERC Docket No. CP18-332-000 (El Paso Natural Gas Company, L.L.C.) runs through five Federal Register notices I pulled directly from govinfo.gov PDF mirrors (bypassing federalregister.gov's bot-wall): Notice of Intent (2018-06-13, doc 2018-12667), Notice of Application (2018-05-15, doc 2018-10291), Notice of Schedule for Environmental Review (2018-08-15, doc 2018-17542), Notice of Availability of the EA (2018-11-20, doc 2018-25285), and a Sunshine Act Meeting Notice (2019-11-19, doc 2019-25127) whose agenda item C-4 lists CP18-332-000/El Paso Natural Gas Company L.L.C. for the Commission's November 21, 2019 open meeting -- independently corroborating the certificate-issuance date KMI's own SEC filings report. Kinder Morgan Inc.'s own SEC EDGAR 8-K exhibits (Q2-2018, Q4-2019, Q2-2020 earnings-release exhibits) track the same project end-to-end: filed April 26, 2018 (~$130M); FERC certificate issued Nov 21, 2019, construction began early December 2019 (~$140M); placed in service July 9, 2020 (~$140M). EIA's Natural Gas Pipeline Projects workbook (Historical Projects 1996-2024 sheet, Docket CP18-332) independently matches Length=17mi/Diameter=30in/Capacity=321 MMcf/d exactly. No duplicate found against the 45-row US-gas roster -- P0184 (bare 'El Paso Gas Pipeline', no segment) is the parent/network row, and P2577 (Northern Delaware Basin Expansion) and P3190 (Carlsbad South Project) are other, clearly distinct segment-specific expansions on the same PipelineName; none overlaps this project's docket or facilities. Classification (Gas / transmission / operating) is correct and well-evidenced. Two spec concerns (Capacity's KMI-vs-FERC/EIA figure conflict; SegmentCost's four-way figure conflict) and one attribution/geometry concern (the routes-repo geometry mapped to this PID spans the whole multi-state EPNG South Mainline corridor, not the specific 17-mile Texas-only segment this row's facilities actually describe) are recorded separately below and left for a human decision rather than silently resolved.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "flag the Capacity figure for human review -- two independent official sources (FERC/EIA) say 321,000 Dth-MMcf/d, matching the sheet, but the operator's own SEC disclosures consistently say 203,000 Dth/d",
+      "contested": {
+        "Capacity": "321.00 MMcf/d (sheet/FERC/EIA) vs. ~203,000 Dth/d (Kinder Morgan's own SEC 8-K exhibits, Q2-2018/Q4-2019/Q2-2020, all three repeating the identical figure)"
+      },
+      "researcher_notes": "A genuine, materially large (321 vs 203 MMcf/d-equivalent, ~58% different) capacity conflict exists between two source families for the SAME project. FERC's own Notice of Schedule (Aug 15, 2018): 'would increase the design capacity on El Paso's South Mainline system by 321,000 dekatherms of natural gas per day to Arizona and California delivery points.' EIA's Historical Projects workbook (Docket CP18-332): Additional Capacity = 321 MMcf/d. EIA's own 'Today in Energy' analysis (2020-08, id=44856): 'Providing 0.32 Bcf/d of additional westbound capacity out of the Waha Hub' -- a third, independently-drafted EIA product landing on the same ~320-321 figure. Against this: Kinder Morgan Inc.'s own SEC EDGAR 8-K exhibits for THREE separate quarters (2018-07-18 filing announcement, 2020-01-22 construction-start announcement, 2020-07-22 in-service announcement) all state 'approximately 203,000 Dth/d' verbatim -- internally consistent across 2+ years but a single reporting entity/origin repeated three times, not three independent confirmations. Not overwriting the sheet's recorded 321.00 (it is the better-corroborated figure -- FERC's own regulatory notice plus two independently-produced EIA products, none of which trace to each other or to KMI), but flagging the operator's own repeated, internally-consistent 203,000 Dth/d as a real discrepancy worth a human decision rather than silently discarding it. Possible explanation not confirmed by any source: KMI may be citing INCREMENTAL system throughput net of some offsetting factor, vs. FERC/EIA citing gross authorized design capacity -- but this is speculation, not something any source states.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630718000037/kmiq220188-kexh991.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct SegmentCost from 128,000,000 USD -- no source found matches that figure; propose 140,000,000 USD (KMI's own final/actual-cost figure, stated twice at construction-start and in-service) but flag EIA's conflicting 122,000,000 USD",
+      "contested": {
+        "SegmentCost": "128000000.00 (sheet, unmatched) vs. 140000000 (KMI 8-Ks, construction-start + in-service) vs. 130000000 (KMI 8-K, initial filing estimate) vs. 122000000 (EIA workbook)"
+      },
+      "researcher_notes": "Four different cost figures exist across the sources found, and NONE matches the sheet's recorded $128,000,000 exactly. Kinder Morgan's own SEC 8-K exhibits show the estimate evolving over the project's life: ~$130 million at the April 2018 FERC filing; ~$140 million at both the December 2019 construction start AND the July 2020 in-service announcement (same figure, stated twice, 7 months apart, by the same company -- one origin, not two). Independently, EIA's Historical Projects workbook (compiled from FERC docket filings, last updated 2020-07-06 -- i.e. AFTER the project's completion) records Cost (millions) = 122, a genuinely different, independently-compiled figure that does not trace to KMI's own disclosures. Recommending 140,000,000 USD as the best-supported figure (it is KMI's own actual/near-final cost, reported consistently at two different milestones rather than the earlier ~$130M pre-construction ESTIMATE), but this is a single-origin figure (KMI) and conflicts with EIA's independently-sourced $122M -- neither reaches the 2-independent-agreeing bar, so recording this as a spec CONCERN for human adjudication rather than confidently overwriting the sheet.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000002/kmi2019q48-kex991.htm",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "flag the routes-repo geometry for this PID (aggregate EPNG South Mainline system corridor, TX through southern NM/AZ toward the CA border) as a system-vs-segment mismatch against this row's actual, FERC-described facilities -- no route action taken here (route work is out of scope for this leg; a routes-repo fix needs a separate human-reviewed branch/PR)",
+      "contested": {
+        "RouteType/RouteAccuracy (routes repo)": "mapped geometry spans the whole multi-state EPNG South Mainline corridor; this project's actual physical facilities are a 17-mile Texas-only loop line plus two out-of-state compressor stations with no linear mileage of their own"
+      },
+      "researcher_notes": "FERC's Notice of Availability of the EA (Nov 20, 2018) itemizes the project's ACTUAL facilities precisely: a new 13,220-hp compressor station in Luna County, New Mexico ('Red Mountain'); a new 13,220-hp compressor station in Cochise County, Arizona ('Dragoon'); and 'approximately 17-miles of 30-inch-outside diameter loop line extension of existing Line 1110 between milepost (MP) 174.5 and MP 191.5 in Hudspeth and El Paso counties, Texas.' So the only LINEAR pipe this project actually built is entirely within Texas -- the NM/AZ facilities are compressor stations only, adding horsepower to the existing mainline without any new pipe mileage there. I inspected data/individual-routes/gas-pipelines/P2617.geojson in the sibling GOIT-GGIT-pipeline-routes repo (read-only, per standing rules) and its mapped route spans the ENTIRE EPNG South Mainline corridor (roughly longitude -105.9 to beyond -114.5, i.e. El Paso TX through southern NM/AZ toward the CA border) -- this is the SYSTEM-level route, not this segment's specific facilities, and it is the same corridor P0184 (the bare parent 'El Paso Gas Pipeline' row, no segment) would also plausibly need to represent. This matters directly for the StartState/EndState fill: the batch brief's working assumption that this project's route runs 'Texas -> Arizona' appears to conflate the mapped SYSTEM geometry with the SEGMENT-specific facts -- I filled Location below with Texas/Texas (El Paso and Hudspeth Counties) per the FERC EA's specific facility description, not Texas/Arizona. Not proposing any route-repo edit (route creation/replacement is out of scope for this leg and requires a human-reviewed branch+PR per the routes-repo hard requirement) -- flagging only.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf"
+      ],
+      "tier": "high",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The approximately $140 million El Paso Natural Gas (EPNG) South Mainline Expansion Project was placed in service on July 9, 2020.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects sheet, Docket CP18-332 row: Status = 'Completed', Year In Service Date = 2020"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources (operator's own SEC filing + EIA's independently compiled government dataset) confirm the project entered service in 2020 and no source since suggests any subsequent outage/decommissioning -- 'operating' is correct and current. See status_reviews below."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630718000037/kmiq220188-kexh991.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'to construct and operate certain natural gas pipeline facilities' under NGA Section 7(c)"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630718000037/kmiq220188-kexh991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'increase EPNG's South Mainline system by approximately 203,000 Dth/d ... natural gas from Arizona electric utility providers'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both sources unambiguously describe an interstate natural gas pipeline expansion; no ambiguity."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Certificate of Public Convenience and Necessity under NGA Section 7(c) -- the interstate-transmission authorization mechanism"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects sheet: Pipeline Type = 'Interstate', Authority = 'FERC'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "FERC-jurisdictional interstate certificate + EIA's own 'Interstate' classification both independently support 'transmission'."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2018",
+        "ProposalMonth": "4"
+      },
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630718000037/kmiq220188-kexh991.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'On April 26, 2018, El Paso Natural Gas Company L.L.C. (El Paso) filed an application in Docket No. CP18-332-000 requesting a Certificate of Public Convenience and Necessity'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630718000037/kmiq220188-kexh991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'On April 26, EPNG filed a Certificate Application with the FERC for its approximately $130 million South Mainline Expansion Project.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fills a previously-blank ProposalYear/Month. FERC's own regulatory notice and the applicant's own SEC 8-K independently agree on the exact filing date (April 26, 2018) -- true independence (regulator vs. self-reported financial disclosure, not the same document type or origin)."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2019",
+        "ConstructionMonth": "12"
+      },
+      "primary_value": "2019",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000002/kmi2019q48-kex991.htm",
+        "https://www.govinfo.gov/content/pkg/FR-2019-11-19/pdf/2019-25127.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000002/kmi2019q48-kex991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'On November 21, 2019, FERC issued a certificate authorizing EPNG to construct the South Mainline Expansion Project. Construction on the approximately $140 million project began in early December.'"
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2019-11-19/pdf/2019-25127.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Sunshine Act Meeting Notice, agenda item C-4: docket CP18-332-000 / El Paso Natural Gas Company, L.L.C., on the Commission's November 21, 2019 open-meeting agenda -- independently corroborates the certificate-issuance date"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The YEAR (2019) is doubly confirmed: KMI's own 8-K states the Nov 21, 2019 certificate date, and FERC's own Sunshine Act meeting agenda (published two days before the meeting, independent of KMI) shows this exact docket on that exact date's open-meeting agenda. The MONTH ('early December' construction start) is single-sourced to KMI's 8-K -- no independent source states an exact construction-start date, so recording ConstructionMonth=12 at medium rather than high tier."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2020",
+        "StartMonth1": "7"
+      },
+      "primary_value": "2020",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+        "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'placed in service on July 9, 2020'"
+        },
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'entered service in early July 2020'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent sources (operator's own SEC filing citing an exact date; EIA's independently-drafted analysis piece citing 'early July') agree the project entered service in July 2020. EIA's compiled workbook gives Completed Date=2020-07-02, a ~1-week variance from KMI's stated July 9 in-service date -- both comfortably support StartYear1=2020/StartMonth1=7; not treating a same-month week-level variance as a conflict."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "321.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "321.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'would increase the design capacity on El Paso's South Mainline system by 321,000 dekatherms of natural gas per day to Arizona and California delivery points'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects sheet, Docket CP18-332: Additional Capacity (MMcf/d) = 321"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match confirmed by FERC's own regulatory notice AND EIA's independently compiled workbook -- 2 genuinely independent sources agreeing exactly with the sheet's recorded 321.00. HOWEVER, see the spec concern in validity[]: Kinder Morgan's own SEC 8-K exhibits (3 separate quarters) consistently state a materially different 203,000 Dth/d for this same project -- flagged there rather than here since the sheet's own recorded value is the better-supported one."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/operating-pressure figure found in any source reviewed (5 Federal Register notices on this docket, 3 KMI SEC 8-K exhibits, EIA workbook, EIA Today-in-Energy article, kindermorgan.com's EPNG system page). FERC certificate proceedings for looping/compression projects like this one do not typically disclose a design pressure figure in the public notices themselves (it would be in the certificate application's engineering exhibits, which were not accessible this session -- elibrary.ferc.gov requires an account). Leaving blank rather than guessing."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "17.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "17.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'approximately 17-miles of 30-inch-outside diameter loop line extension of existing Line 1110 between milepost (MP) 174.5 and MP 191.5 in Hudspeth and El Paso counties, Texas'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects sheet, Docket CP18-332: Miles = 17"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match, 2 independent sources (FERC's own EA notice + EIA's independently compiled workbook)."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'17-miles of 30-inch-outside diameter loop line'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects sheet, Docket CP18-332: Pipeline Diameter (Inches) = 30"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Exact match, 2 independent sources."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Waha Hub, Permian Basin"
+      },
+      "primary_value": "Waha Hub, Permian Basin",
+      "proposed_refs": [
+        "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Providing 0.32 Bcf/d of additional westbound capacity out of the Waha Hub, the South Mainline Expansion delivers additional supplies to Arizona and Southern California markets.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single-sourced to EIA's Today-in-Energy analysis, which names the specific upstream supply hub (Waha, the major Permian Basin gas-trading point in Reeves/Pecos Counties, West Texas) rather than a generic fuel type -- matches the FuelSource-field convention (named field/facility, not 'Natural Gas'). Searched for a second independent source: KMI's own 8-K exhibits mention 'Waha' three times but always in reference to TWO DIFFERENT, unrelated KMI projects (the Permian Highway Pipeline and NGPL's separate 'Lockridge to Waha' project) -- never in connection with the South Mainline Expansion specifically -- so those hits do not corroborate this value and are not cited here. FERC's own Federal Register notices on this docket do not name an upstream supply source at all (they describe delivery points, not receipt points). No second source found; recording as REFS_ADDED (a real, specific, non-default value from a reputable government source) at medium tier rather than UNRESOLVED, per rule 4(e) (a discrepancy/single-source finding is still a finding, not a non-answer) -- but flagging the independence gap explicitly rather than overclaiming corroboration."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "El Paso County",
+        "StartState/Province": "Texas",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Hudspeth County",
+        "EndState/Province": "Texas",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "El Paso County",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-11-20/pdf/2018-25285.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'approximately 17-miles of 30-inch-outside diameter loop line extension of existing Line 1110 between milepost (MP) 174.5 and MP 191.5 in Hudspeth and El Paso counties, Texas'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "IMPORTANT CORRECTION to an assumption in the batch guidance: this project's actual physical linear pipe is entirely within TEXAS (Hudspeth and El Paso Counties) -- NOT Texas-to-Arizona. The project's only out-of-Texas facilities (Red Mountain Compressor Station, Luna County NM; Dragoon Compressor Station, Cochise County AZ) are compressor stations, which add horsepower to the existing mainline but contribute no new linear pipe mileage of their own -- so they are not endpoints of THIS row's Length/Diameter-described facility. See the attribution concern in validity[] for the full reasoning (including the mapped routes-repo geometry, which spans the whole multi-state system and should not be read as this segment's specific route). Filling StartCountryOrArea/EndCountryOrArea (already 'United States' on the sheet, so those two are unchanged/reconfirmed) plus the previously-blank StartLocation/StartState-Province/EndLocation/EndState-Province. CAVEAT ON ORDERING: FERC's Aug-2018 notice lists the counties as 'El Paso and Hudspeth' while its Nov-2018 EA notice lists them as 'Hudspeth and El Paso' -- the two FERC documents themselves are NOT consistent on order, and neither states a flow direction or which county is the true 'start' vs. 'end.' I am recording El Paso County as Start / Hudspeth County as End for schema completeness, but this ordering is NOT independently confirmed and should not be read as an assertion of physical flow direction. Only one origin (FERC/this docket) names county-level detail at all -- KMI's own disclosures describe the project only at the state level ('Texas, New Mexico and Arizona'), and EIA's workbook Beg_State/End_State (TX/MX) describes the WHOLE multi-facility project's downstream effect (exports reaching Mexico), not this specific segment's physical location -- so that EIA field is deliberately NOT used here (using it would wrongly imply this linear segment reaches Mexico)."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "140000000",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2020"
+      },
+      "primary_value": "140000000",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000002/kmi2019q48-kex991.htm",
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000002/kmi2019q48-kex991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Construction on the approximately $140 million project began in early December.'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The approximately $140 million El Paso Natural Gas (EPNG) South Mainline Expansion Project was placed in service on July 9, 2020.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "CORRECTS the sheet's unmatched $128,000,000 to $140,000,000 -- see the spec concern in validity[] for the full four-way conflict (sheet's $128M, KMI's own $130M pre-construction estimate, KMI's own $140M actual/near-final figure x2, and EIA's independently-compiled $122M). $140M is KMI's own actual-cost figure (not a pre-construction estimate), stated identically at both the construction-start and in-service announcements 7 months apart -- but this is one company/origin repeated twice, not two independent sources, and it directly conflicts with EIA's $122M. Recording this as REFS_ADDED (best-supported single figure, per rule 4(e) rather than leaving the field UNRESOLVED) while the validity[] concern flags the conflict for human adjudication rather than treating this as settled."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "oo_sheet_row": 2012,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(\u4e1a\u4e3b\u5355\u4f4d)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "El Paso Natural Gas Company, L.L.C."
+      },
+      "primary_value": "El Paso Natural Gas Company, L.L.C.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2018-08-15/pdf/2018-17542.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'El Paso Natural Gas Company, L.L.C.; Notice of Schedule for Environmental Review of the South Mainline Expansion Project' -- FERC names El Paso Natural Gas Company, L.L.C. as the certificate applicant/operator throughout"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects sheet, Docket CP18-332: Pipeline Operator Name = 'El Paso Natural Gas'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fills a previously-blank Operator. FERC (the regulator, naming the exact legal entity 'El Paso Natural Gas Company, L.L.C.' as applicant/certificate-holder throughout the docket) and EIA's independently compiled workbook (Pipeline Operator Name field) agree -- 2 independent sources."
+    },
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "oo_sheet_row": 2012,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Kinder Morgan",
+      "proposed_refs": [
+        "https://en.wikipedia.org/wiki/El_Paso_Natural_Gas",
+        "https://www.kindermorgan.com/business/gas_pipelines/west/EPNG_MP"
+      ],
+      "verifications": [
+        {
+          "url": "https://en.wikipedia.org/wiki/El_Paso_Natural_Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'El Paso Natural Gas is based in Colorado Springs, Colorado and is owned by Kinder Morgan, Inc. of Houston, Texas.'"
+        },
+        {
+          "url": "https://www.kindermorgan.com/business/gas_pipelines/west/EPNG_MP",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's own corporate site lists El Paso Natural Gas (EPNG) among its West Region natural gas pipeline systems, describing its supply basins and service area"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirms the sheet's existing Owner1=Kinder Morgan/100%. Two different-publisher sources agree (Wikipedia, an independent secondary source, and Kinder Morgan's own corporate site, a primary self-disclosure) -- also consistent with Kinder Morgan's own SEC 8-K exhibits, which report the South Mainline Expansion Project as part of KMI's own consolidated 'Natural Gas Pipelines' segment throughout 2018-2020 (i.e. KMI reports EPNG's capital projects as its own, financial-statement-level evidence of control/ownership, though that is the same corporate origin as the kindermorgan.com page rather than a fully separate source). No source gives a more granular ownership percentage than 100% wholly owned; not disturbing the recorded 100.00%."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "target_project_id": "P0184",
+      "note": "P0184 (bare 'El Paso Gas Pipeline', no SegmentName) is the parent/network row for the whole EPNG system and is the most likely intended target for the full multi-state corridor geometry currently mapped to THIS row's PID (P2617) in the routes repo -- see the attribution concern in validity[] above. If P0184's own RouteType/RouteAccuracy currently reads as unmapped/low-accuracy while P2617's mapped geometry actually represents the system P0184 describes, that would be a routes-repo misattribution worth a dedicated look (not confirmed here -- P0184 itself was not researched this session).",
+      "source_url": ""
+    },
+    {
+      "target_project_id": "P2577",
+      "note": "P2577 ('Northern Delaware Basin Expansion Project') and P3190 ('Carlsbad South Project') are two OTHER segment-specific expansions on the same 'El Paso Gas Pipeline' PipelineName, sheet rows near P2617's. If either was swept without checking whether its own routes-repo geometry is similarly a whole-system corridor rather than segment-specific facilities, it may share this same system-vs-segment mismatch -- worth a quick check when either is worked directly.",
+      "source_url": ""
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "South Mainline Expansion Project",
+      "sheet_row": 1351,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "operating",
+      "proposed_changes": {},
+      "evidence_date": "2020-07-09",
+      "staleness_rule": "not applicable -- in-service date is well within normal operating-pipeline lifespan and no source suggests any subsequent outage, sale, or decommissioning",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+        "https://www.eia.gov/todayinenergy/detail.php?id=44856"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630720000058/kmi2020q28-kex991.htm",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=44856",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Placed in service July 9, 2020 per the operator's own SEC 8-K, independently corroborated by EIA's 'early July 2020' Today-in-Energy analysis and EIA's compiled workbook (Completed Date 2020-07-02, Status=Completed). No news, FERC filing, SEC disclosure, or corporate announcement found (searched KMI's more recent 10-Ks/8-Ks, FERC Federal Register for this docket, general SEC EDGAR full-text search) indicating any subsequent abandonment, sale, or outage of this specific expansion or the broader South Mainline system through 2026. 'Operating' is current and well-evidenced -- no change proposed."
+    }
+  ],
+  "summary": "P2617 (El Paso Gas Pipeline / South Mainline Expansion Project, FERC Docket CP18-332) is a real, well-documented 2018-2020 EPNG expansion (Kinder Morgan/EPNG) confirmed via 5 Federal Register notices, 3 KMI SEC 8-Ks, and EIA's pipeline-projects workbook + Today-in-Energy article; staged REFS_ADDED on 14 of 15 units (Status, Fuel, PipelineType, Proposal=2018-04, Construction=2019-12, Start=2020-07, Capacity=321 MMcf/d, Length=17mi, Diameter=30in, FuelSource=Waha Hub [single-sourced], Location=Texas/Texas [corrects an assumed TX->AZ], SegmentCost corrected 128M->140M, Operator=El Paso Natural Gas Company LLC, Owner=Kinder Morgan 100% confirmed); Pressure is the sole UNRESOLVED unit (no source found). Flagged for human review: (1) a materially large Capacity conflict (FERC/EIA's 321,000 vs. KMI's own repeated 203,000 Dth/d), (2) a 4-way SegmentCost conflict (M sheet / M KMI-estimate / M KMI-actual / M EIA), and (3) a system-vs-segment route-geometry mismatch (P2617's mapped route spans the whole multi-state EPNG corridor while this project's actual linear pipe is a 17-mile Texas-only loop line, with NM/AZ getting compressor stations only) -- cross-referenced to parent row P0184."
+}

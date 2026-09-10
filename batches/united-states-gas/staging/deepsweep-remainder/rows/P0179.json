@@ -1,0 +1,351 @@
+{
+  "project_id": "P0179",
+  "pipeline_name": "East Tennessee Gas Pipeline",
+  "sheet_row": 40,
+  "wiki": "https://www.gem.wiki/East_Tennessee_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Main Line",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct or blank StartYear1 (1996 is not supported and is contradicted by independent evidence the system predates it by decades)",
+      "contested": {"StartYear1": ""},
+      "researcher_notes": "StartYear1=1996 does not survive scrutiny. Independent, dated evidence places the East Tennessee Natural Gas (ETNG) system's origin far earlier than 1996: (1) Rice University's ArchivesSpace catalog holds records titled 'East Tennessee Natural Gas Company; 1951-1959' (archives.library.rice.edu/repositories/2/archival_objects/57826), i.e. the company was operating and generating records in the early 1950s; (2) Natural Gas Intelligence, 'East Tennessee, Transco Natural Gas Pipes Approved by FERC' (naturalgasintel.com, 2024-03-26), reporting FERC's summary of the System Alignment docket, states ETNG has 'legacy shippers that have steadily received gas since the 1950s'; (3) FERC Federal Register notices from 1996 itself (govinfo.gov FR-1996-07-26/96-19022 and FR-1996-08-27/96-21752) show East Tennessee Natural Gas Company already operating in 1996 under a pre-existing 'blanket certificate issued in Docket No. CP82-412-000' -- i.e. it held FERC certification since at least 1982, fourteen years before the sheet's start year; (4) FTC's 1999 clearance of the El Paso-Sonat merger required El Paso to divest ETNG (a Sonat subsidiary) as an established pipeline system 'serving customers in eastern Tennessee and northern Georgia,' completed to Duke Energy Gas Transmission in January 2000 for $386.3 million -- again describing a mature, already-built system, not one about to enter service. None of these sources state a single crisp founding/in-service year, so I am not fabricating a replacement value, but 1996 is affirmatively wrong -- it most likely reflects El Paso's 1996 acquisition of Tenneco (a different, though related, pipeline family) being miscoded onto this row, or a legacy GEM data-entry artifact. Recommend blanking StartYear1 pending a firmer date, or replacing with a pre-1982 placeholder once one is sourced. This is the Start [ref] unit's UNRESOLVED disposition below.",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/",
+        "https://www.govinfo.gov/content/pkg/FR-1996-07-26/pdf/96-19022.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Main Line",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no structural change; retain as the sole GEM row for the legacy ETNG mainline",
+      "contested": {},
+      "researcher_notes": "Existence, classification, ownership and attribution all confirmed independently. ETNG is a real, FERC-jurisdictional interstate natural-gas transmission pipeline (NGA Section 7 certificate holder since at least 1982, Docket CP82-412-000), currently a wholly owned Enbridge subsidiary operating under the legal name 'East Tennessee Natural Gas, LLC' -- confirmed by Natural Gas Intelligence (2024-03-26, naming 'Enbridge Inc.'s East Tennessee Natural Gas LLC (ETNG)') and by Rextag Corporation's independent pipeline-data page (rextag.com/pages/east-tennessee-natural-gas, listing operator 'East Tennessee Natural Gas Company,' owner 'Enbridge, Inc.'). No duplicate: the roster's other 44 rows are unrelated systems; ETNG's two active FERC expansion projects (Ridgeline Expansion Project and System Alignment Project) are already recorded as separate GEM ProjectIDs P5627 and P7809 respectively (confirmed via the live GGIT snapshot) -- neither is in this batch's 45-row roster, so no cross-row lead is filed, but flagging so the orchestrator knows they are not missing/duplicated. Caveat 1 (row type): P0179 'Main Line' functions as a SYSTEM row for the whole ~1,526-mile legacy mainline (like P3221 Carolina Gas Transmission and P0186 KPC elsewhere in this batch) rather than a discrete constructed segment -- this is why Diameter, FuelSource, Pressure, ProposalYear/Month, ConstructionYear/Month and SegmentCost cannot be sourced to single values (see each unit's UNRESOLVED note) and should stay blank rather than be forced. Caveat 2 (geometry orientation): the batch brief flagged that the row's StartState/Province='Tennessee' disagrees with the route geometry, which starts in North Carolina. Every independent source checked (Enbridge's own infopost, Rextag, and GEM's own wiki text) affirms the pipeline runs FROM Tennessee TO Roanoke, Virginia -- so the sheet's Location cells are correct and the route geometry is the reversed/orientation artifact, not the state cells; no attribution concern filed. Caveat 3 (length, immaterial): Wikipedia's 'East Tennessee Natural Gas Pipeline' article states 1,510 mi (2,430 km) versus the sheet's 2,456 km (1,526 mi per two independent current sources, Enbridge infopost and Rextag) -- a ~1% difference. Wikipedia's own reference for this figure is SourceWatch, a sister/predecessor wiki to GEM's own wiki with likely-shared lineage, so I did not treat it as an independent corroborating source and did not use it as a ref; noting the discrepancy here for the record only, not as a spec concern, since two independent, current, non-GEM-lineage sources agree exactly with the sheet's value.",
+      "proposed_refs": [],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://insideclimatenews.org/news/25062026/enbridge-tennessee-ridgeline-expansion-project/",
+        "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/"
+      ],
+      "verifications": [
+        {"url": "https://insideclimatenews.org/news/25062026/enbridge-tennessee-ridgeline-expansion-project/", "ok": true, "contains_value": true, "name_found": true, "note": "2026-06 Inside Climate News report on active Ridgeline construction on the East Tennessee Natural Gas system, describing it as an operating pipeline undergoing expansion"},
+        {"url": "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/", "ok": true, "contains_value": true, "name_found": true, "note": "2024-03-26: 'Enbridge Inc.'s East Tennessee Natural Gas LLC (ETNG)' operating system undergoing FERC-approved System Alignment work"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status=operating confirmed current as of mid-2026 (most recent evidence: Inside Climate News, 2026-06-25, on active Ridgeline construction along the operating mainline). Two independent presses, distinct from Enbridge and from each other."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://infopost.enbridge.com/infopost/Body_ET.htm",
+        "https://rextag.com/pages/east-tennessee-natural-gas"
+      ],
+      "verifications": [
+        {"url": "https://infopost.enbridge.com/infopost/Body_ET.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Enbridge's own informational posting page for 'East Tennessee Natural Gas': explicitly a natural gas pipeline"},
+        {"url": "https://rextag.com/pages/east-tennessee-natural-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'East Tennessee Natural Gas, LLC, a 1,526-mile...pipeline'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Trivially confirmed natural gas pipeline; no ambiguity."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-1996-07-26/pdf/96-19022.pdf",
+        "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-1996-07-26/pdf/96-19022.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC Federal Register notice: East Tennessee Natural Gas Company authorized under NGA Section 7 blanket certificate CP82-412-000 to provide 'firm natural gas transportation service' -- the statutory definition of an interstate transmission pipeline"},
+        {"url": "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/", "ok": true, "contains_value": true, "name_found": true, "note": "trade press describing ETNG as an interstate natural gas pipeline with FERC-regulated firm transportation service"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "FERC NGA Section 7 interstate certificate holder = transmission, not gathering/processing. Confirmed."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched Rice University archives (records from 1951-1959), FERC docket history, FTC's 1999-2000 El Paso/Sonat divestiture record, Natural Gas Intelligence, and Wikipedia. This is a legacy mainline that predates modern FERC e-library dockets and predates GEM's typical proposal-year sourcing window -- no source states when the original East Tennessee system was first proposed. Leaving blank rather than guessing; see the linked spec concern on StartYear1 for the same underlying gap."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same gap as ProposalYear/Month: sources place the system in operation 'since the 1950s' (Natural Gas Intelligence, 2024-03-26, quoting FERC's summary of 'legacy shippers') and existing under FERC certification by at least 1982, but no source gives a specific original construction year/month for the mainline as built. Leaving blank rather than guessing."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1996"},
+      "primary_value": "1996",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source supports 1996 as the mainline's start/in-service year -- I could not find a source that states it, and multiple independent sources affirmatively contradict it (see the spec concern filed in validity[]: Rice University archival records of the company from 1951-1959; Natural Gas Intelligence 2024-03-26 quoting FERC that ETNG has shippers receiving gas 'since the 1950s'; FERC's own 1996 Federal Register notices showing the company already operating under a 1982 blanket certificate). This is UNRESOLVED as a confirmation of the recorded value (it is not confirmed and should not be treated as sourced), while the disputing evidence is filed as a spec concern with contested={\"StartYear1\":\"\"} since no source gives a crisp replacement year."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "1860.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "1860.00",
+      "proposed_refs": [
+        "https://infopost.enbridge.com/infopost/Body_ET.htm",
+        "https://rextag.com/pages/east-tennessee-natural-gas"
+      ],
+      "verifications": [
+        {"url": "https://infopost.enbridge.com/infopost/Body_ET.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'Capacity: 1.86 billion cubic feet per day (Bcf/d)' = 1,860 MMcf/d, exact match"},
+        {"url": "https://rextag.com/pages/east-tennessee-natural-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'System Capacity: 1.86 Bcf/d', independent commercial pipeline-data vendor, exact match"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "1,860 MMcf/d = 1.86 Bcf/d confirmed by two independent, current sources (Enbridge's own operator disclosure and Rextag's independent commercial pipeline database), exact agreement, no rounding needed."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched for a system-wide MAOP: PHMSA/NTSB material on the December 2018 Pleasant Shade, TN rupture (news coverage only, no MAOP figure surfaced), FERC tariff-sheet leads, and Enbridge's public disclosures. No single system-wide operating pressure is stated anywhere found -- unsurprising for a 1,526-mile system with 21 compressor stations (per Rextag) and pressure that necessarily varies by segment/station. Leaving blank rather than forcing a station-specific figure onto a system-level row."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "2456.00", "LengthKnownUnits": "km"},
+      "primary_value": "2456.00",
+      "proposed_refs": [
+        "https://infopost.enbridge.com/infopost/Body_ET.htm",
+        "https://rextag.com/pages/east-tennessee-natural-gas"
+      ],
+      "verifications": [
+        {"url": "https://infopost.enbridge.com/infopost/Body_ET.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'Length: 1,526 miles' -> 1,526 x 1.609344 = 2,456.06 km, matches the recorded 2,456.00 km"},
+        {"url": "https://rextag.com/pages/east-tennessee-natural-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'Miles of Pipeline: 1526', independent source, same figure"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "2,456 km = 1,526 mi confirmed exactly by two independent, current sources. Note for the record: Wikipedia's article states 1,510 mi (2,430 km), about 1% lower, but its cited source is SourceWatch (a wiki with likely-shared lineage to GEM's own wiki), so I treated it as non-independent and did not cite it or treat the ~1% gap as material against two clean, current, non-GEM-lineage matches."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "P0179 'Main Line' is a system-level row covering the whole ~1,526-mile legacy mainline (see validity caveat), not a single constructed segment, and pipe diameter varies along it: FERC/press material on the newer System Alignment project alone describes both a 24-inch pipe next to an existing 16-inch pipe in Tennessee AND an 8-inch-to-24-inch replacement in Virginia on this same system (naturalgasintel.com, 2024-03-26). No single diameter value is truthful for the row as scoped; leaving blank, consistent with how other system rows in this batch (e.g. P3221 Carolina Gas Transmission) are treated."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource requires a single named upstream field/plant/facility, not a region or commodity (per docs/reference/gem_schema.md). As a system-level mainline, ETNG draws gas from numerous named interconnects (Texas Eastern Transmission, Tennessee Gas Pipeline, Columbia Gulf Transmission, Southern Natural Gas, Midwestern Gas Transmission -- per Enbridge's infopost) plus direct Appalachian-Basin producer connections via its Nora and Jewell Ridge laterals, with Natural Gas Intelligence (2024-03-26) noting a recent shift toward gas 'sourced from the Marcellus and Utica Shales.' No single named field or facility is 'the' source for the whole system, so I left this blank rather than picking one arbitrarily; naming the leads here (Nora, Jewell Ridge, Marcellus/Utica) for whoever revisits this at the segment level."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "Tennessee", "StartCountryOrArea": "United States", "EndLocation": "Roanoke", "EndState/Province": "Virginia", "EndCountryOrArea": "United States"},
+      "primary_value": "Tennessee",
+      "proposed_refs": [
+        "https://infopost.enbridge.com/infopost/Body_ET.htm",
+        "https://rextag.com/pages/east-tennessee-natural-gas"
+      ],
+      "verifications": [
+        {"url": "https://infopost.enbridge.com/infopost/Body_ET.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'The system begins in Tennessee and extends to an area just south of Roanoke, Virginia'"},
+        {"url": "https://rextag.com/pages/east-tennessee-natural-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'starts in Tennessee and extends just south of Roanoke, Virginia', independent source, same termini"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Start Tennessee / End Roanoke, Virginia confirmed by two independent current sources. Also resolves the batch brief's geometry-orientation flag: the route geometry starting in North Carolina is the artefact, not these state cells -- every source (including GEM's own wiki text) has the pipeline running FROM Tennessee TO Virginia, never the reverse. No attribution concern filed."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No original construction cost is discoverable for a mainline this old (in service since at least the 1950s, predating the FERC docket/EIA-workbook era this batch's newer projects rely on). Not to be confused with the separately-tracked Ridgeline Expansion ($1.105B, P5627) or System Alignment ($390M, P7809) project costs, which belong to those other ProjectIDs, not this system row."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "East Tennessee Natural Gas LLC"},
+      "primary_value": "East Tennessee Natural Gas LLC",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/",
+        "https://rextag.com/pages/east-tennessee-natural-gas"
+      ],
+      "verifications": [
+        {"url": "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/", "ok": true, "contains_value": true, "name_found": true, "note": "'Enbridge Inc.'s East Tennessee Natural Gas LLC (ETNG)'"},
+        {"url": "https://rextag.com/pages/east-tennessee-natural-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'Operator: East Tennessee Natural Gas Company' -- names the same operating entity (informal 'Company' vs the legal 'LLC' suffix)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator = East Tennessee Natural Gas LLC confirmed by two independent sources naming the entity (one uses the informal 'Company' form rather than 'LLC' -- same entity, current FERC filings and Federal Register notices consistently use the legal name 'East Tennessee Natural Gas, LLC')."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Enbridge", "Owner1%": "100.00%"},
+      "primary_value": "Enbridge",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/",
+        "https://rextag.com/pages/east-tennessee-natural-gas"
+      ],
+      "verifications": [
+        {"url": "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/", "ok": true, "contains_value": true, "name_found": true, "note": "'Enbridge Inc.'s East Tennessee Natural Gas LLC'"},
+        {"url": "https://rextag.com/pages/east-tennessee-natural-gas", "ok": true, "contains_value": true, "name_found": true, "note": "'Owned by Enbridge, Inc.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner1=Enbridge 100% confirmed current by two independent sources (trade press + independent pipeline-data vendor), consistent with Enbridge's 2017 merger with Spectra Energy (ETNG's prior parent). No percentage is stated by either independent source, but neither hints at any co-ownership, consistent with the sheet's 100%."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 40,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-06",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://insideclimatenews.org/news/25062026/enbridge-tennessee-ridgeline-expansion-project/",
+        "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/"
+      ],
+      "verifications": [
+        {"url": "https://insideclimatenews.org/news/25062026/enbridge-tennessee-ridgeline-expansion-project/", "ok": true, "contains_value": true},
+        {"url": "https://naturalgasintel.com/news/east-tennessee-transco-natural-gas-pipes-approved-by-ferc/", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed operating with evidence far newer than the 2023-08-11 LastUpdated: Inside Climate News (2026-06-25) reports active construction along the ETNG corridor for the Ridgeline Expansion (targeting November 2026 in-service per other 2025-10 coverage of the same project), and FERC's 2025-04-02 certificate for Ridgeline plus its 2024-2025 System Alignment approval both presuppose an actively operating mainline receiving ongoing capital investment. No indication of idling, conversion, or partial abandonment anywhere in the record -- the opposite: the system is under active expansion."
+    }
+  ],
+  "summary": "P0179 East Tennessee Gas Pipeline (Main Line): existence/classification/attribution all confirmed (real, FERC-certificated Enbridge interstate transmission mainline; Length/Capacity/Location/Operator/Owner/Status all REFS_ADDED at high tier via Enbridge infopost + Rextag + Natural Gas Intelligence + Inside Climate News); one spec concern -- StartYear1=1996 is unsupported and contradicted by independent evidence the system predates it by decades (operating since the 1950s per NGI/FERC, certificated since 1982). UNRESOLVED: ProposalYear/Month, ConstructionYear/Month, Pressure, Diameter, FuelSource, SegmentCost, and the Start [ref] confirmation itself -- all honestly unfound for this legacy system-level row, each with notes on what was searched."
+}

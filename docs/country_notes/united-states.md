@@ -31,24 +31,36 @@ any country — use it for both attributes and routes.
 
 US gas is **529 rows / 4,935 ref units**, ~12x the largest pass this repo has run, so it
 is being worked in slices, not as one country sweep. Slice 1 = the **217 operating rows
-last touched <=2023** ("stale operating cohort"), sub-sliced by region. **187 of them are
+last touched <=2023** ("stale operating cohort"), sub-sliced by region. **Slice 1 is fully
 swept** (batch 1 Texas 45, batch 2 Gulf Coast 50, batch 3 Appalachian/Mid-Atlantic 46,
-batch 4 West 46). The 76 left after batch 3 split cleanly 46 West / 30 East; batch 4 took the
-West, and **batch 5 (East, 30 rows) closes the cohort** — Illinois 8, Oklahoma 6, NH 4, SC 4,
-MA 2, AR/NC/TN/TX/GA/VT 1 each. Batch 5 will be the first slice to run on the fixed subagent
-contract (standing rule 4(e) — an uncited value is owed a ref). Outside the cohort, **312 US gas rows
-have never been swept**: 109 operating (LastUpdated >= 2024), 97 proposed, 66 cancelled,
-26 construction, 11 shelved, 2 idle, and **1 with a blank `Status`** — P3162 North Bakken
-Expansion (SheetRow 1664), which falls out of every status-filtered slice silently and must be
-placed by hand. That remainder is slice 2 and has not been scoped.
+batch 4 West 46, batch 5 45). **Batch 5 (`deepsweep-remainder`, 45 rows) closed slice 1**: the 30-row
+cohort remainder (scattered Midcontinent / Southeast / New England — "East" was a misnomer) plus,
+by Baird's ruling 2026-09-10, **every US gas row with a blank `LastUpdated`** — 14 cancelled rows
+and P2041 Taproot Baja / Rattlesnake Extension (operating; a segment of batch 4's P0386, and it
+reads `Fuel = Oil` on the gas tab). It ran with `--status-review` so the 14 cancelled rows got
+verdicts there, the first batch start-to-finish on the fixed rule-4(e) contract — delivered
+2026-09-10 `_1526_ET`, gates E/F/I/I'/J/L 0, staged not applied. Headlines: four "cancelled"
+rows were built (P0376, P0380, P2008 — re-scoped into Texas Eastern's TEAM projects — and P0317);
+P0171 Constitution cancelled -> proposed on its 2025 revival; **P2649 and P4381 are one pipe**
+(FERC CP15-504) on two rows; P2041 is crude/water gathering (classification flag only, oil is out
+of scope); ownership moved on PNGTS (BlackRock + MSIP, 2024-08), Black Bear (Enstor, 2025-11) and
+Guardian/Midwestern (DT Midstream, 2024-12). P2588/P2631 end in Maine, not Quebec.
+P3162 North Bakken Expansion is now `Status = N/A` (was blank) and is out of scope.
+**Slice 2 = 296 rows, never swept** (recounted 2026-09-10 against batches 1-5): 108 operating
+(LastUpdated 2024-25), 97 proposed, 52 cancelled, 26 construction, 11 shelved, 2 idle. Not yet
+scoped; re-derive its unit count at scoping.
+State-column typos outside slice 1, for slice 2's audit: `Kentuky`, `Tennesse`, `North Carolna`,
+`North Caolina`, `West Virgina` (end). Batch 5's own: P2495 `Inidiana` (sourced to Indiana,
+Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried as `Location [ref]` fills on its shards.
 
 **Order of work — Baird's ruling 2026-09-10, this is the campaign plan.**
-1. **Gas batch 5** (East, 30 rows / ~432 units) — closes slice 1.
-2. **Gas slice 2** (312 rows / ~4,767 units) — needs scoping before research; audit the
-   slicing column first (the 2026-09-04 state audit covered ONLY the 217 stale-operating
-   rows, so slice 2's states are unverified).
+1. **Gas batch 5** (cohort remainder 30 + blank-LastUpdated 15 = 45 rows / 666 units) — DONE
+   2026-09-10 (`_1526_ET`, staged not applied); slice 1 closed.
+2. **Gas slice 2** (296 rows) — needs scoping before research; audit the slicing column first
+   (the 2026-09-04 state audit covered ONLY the 217 stale-operating rows, so slice 2's states
+   are unverified).
 3. **In-dev / status-review leg** — 134 gas proposed/construction/shelved rows, plus the
-   66 cancelled for a cancelled review.
+   52 cancelled for a cancelled review (the other 14 cancelled were reviewed in batch 5).
 4. **Discovery (§4)** — never run for the US. Must be sliced like the sweep; whole-country
    trips the >5-candidate-cluster escalation gate immediately.
 5. **Then, maybe:** route creation (§8 — 85 gas rows are `Not mapped (but could be)` or
@@ -120,6 +132,17 @@ whole-country.
 therefore never appear in FERC eLibrary. Check the **Texas RRC** (T-4/T-4A permits) before
 treating a FERC gap as a signal — P0268's operator name was settled by an RRC permit.
 
+- **Staged, NOT applied (gas):** batch 5, `batches/united-states-gas/staging/deepsweep-remainder/`
+  (45 rows: cohort remainder 30 + the 15 blank-`LastUpdated` rows; deliverable
+  `pipelines_batch_20260910_1526_ET_united-states-gas_deepsweep-remainder.xlsx`). 379 fills,
+  136 validity records (83 concerns: spec 44, attribution 34, classification 3, duplicate 2),
+  43 status reviews (10 change, 32 confirm, 1 unclear); refs leg REFS_ADDED 280, UNRESOLVED 113.
+  No ref-gap/recovery leg was needed — coverage reported 0 gaps across all 45 shards. Two shards
+  were hand-normalized before merge (originals in `rows_orig/`): P0186 wrote `refs:[{url,...}]`
+  instead of `proposed_refs` + `verifications`, which the merge silently dropped (all 6 URLs
+  re-verified with `--name KPC`); P2565's Location fill used `StartState`/`EndState`. P3295 stalled
+  6x on the workflow's 180 s no-progress watchdog and was re-run as one agent with hard fetch
+  timeouts.
 - **Staged, NOT applied (gas):** batch 4, `batches/united-states-gas/staging/deepsweep-west-operating/`
   (46 operating West rows — the Rockies, Northern Plains, Pacific Northwest, Southwest and
   Upper Midwest remainder, sliced by the state audit's `derived` state; deliverable

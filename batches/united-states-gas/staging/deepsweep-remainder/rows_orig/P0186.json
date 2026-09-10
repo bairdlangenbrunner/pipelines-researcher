@@ -1,0 +1,192 @@
+{
+ "project_id": "P0186",
+ "pipeline_name": "KPC Gas Pipeline",
+ "sheet_row": 45,
+ "wiki": "https://www.gem.wiki/KPC_Gas_Pipeline",
+ "validity": [
+  {
+   "concern_type": "confirmed",
+   "summary": "Existence, classification, and duplicate status all check out clean; two real defects were found instead, on attribution and spec (below).",
+   "contested": "",
+   "candidate": "",
+   "evidence": "EXISTENCE: a 30+ year, multi-owner paper trail confirms this is a real, currently operating pipeline — FERC Docket RP95-212-000 (govinfo.gov, 1995, predecessor entities KansOk/Riverside/Kansas Natural/Kansas Pipeline, all operated by Kansas Pipeline Operating Co.), two SEC filings from two different corporate owners a decade apart (Enbridge Inc. 2002 Form F-3, https://www.sec.gov/Archives/edgar/data/895728/000091205702022692/a2081445zf-3.htm; Enbridge Energy Partners LP FY2008 10-K, https://www.sec.gov/Archives/edgar/data/880285/000119312509033100/d10k.htm, describing the Nov-2007 sale of 'our Kansas pipeline system, or KPC' for $133M), current PHMSA public-awareness filings for both Kansas and Oklahoma (pipelinesafetyinfo.com), the current operator's own site (mvpurchasing.com/kpcpipeline/), and an operator-authored EBB informational posting (gasnom.com/ip/kpc/). CLASSIFICATION: every source independently calls this an interstate natural gas transmission system — Fuel=Gas and PipelineType=transmission are both correct. DUPLICATE: P0186 is the only KPC-related row in the 45-row batch roster; no relabel/duplicate found.",
+   "confidence": "high",
+   "researcher_notes": "No change recommended on Status, Fuel, PipelineType, or existence/duplicate flags."
+  },
+  {
+   "concern_type": "attribution",
+   "summary": "EndLocation records only 'Wichita' but every independent source describes the system's actual downstream terminus as Kansas City — Wichita is a market stop mid-route, not the end of the line.",
+   "contested": "EndLocation",
+   "candidate": "Kansas City",
+   "evidence": "Three independent sources converge on Kansas City as the true terminus, not merely Wichita: (1) current operator site mvpurchasing.com/kpcpipeline/ — 'Our interstate natural gas pipeline runs 1,129 miles from Oklahoma City to Kansas City, including through Wichita'; (2) operator-authored gasnom.com/ip/kpc/ posting and both current PHMSA filings (pipelinesafetyinfo.com Kansas + Oklahoma) — 'transports natural gas from Oklahoma and Kansas to metropolitan Wichita, Kansas City and various other interconnecting pipeline markets'; (3) Enbridge Energy Partners LP FY2008 10-K (SEC, independent of the current MVP-era operator) — states plainly KPC 'serves the Wichita, Kansas and Kansas City, Kansas markets,' pinning the state as Kansas specifically. The current PHMSA Kansas counties-of-operation list also names Wyandotte and Johnson counties, both in the Kansas City, KS metro, confirming physical reach there (alongside Sedgwick County, where Wichita sits). A 1995 FERC Order to Show Cause about this system's direct predecessor network (KansOk/Riverside/Kansas Natural/Kansas Pipeline, operated by Kansas Pipeline Operating Co.) — govinfo.gov, https://www.govinfo.gov/content/pkg/FR-1995-06-06/html/95-13770.htm, Docket RP95-212-000 — described the network as completing 'in Kansas City, Missouri' via a FERC-authorized 2-mile Riverside segment; that document predates and never uses the 'KPC' name, so it does not pass this project's pipeline-naming citation gate and is offered here as historical background only, not as a citable ref. Every source from the current KPC/MVP era (2008 onward) specifies Kansas, not Missouri, so the recommended candidate is 'Kansas City' with EndState/Province left as the sheet's existing 'Kansas' — no state-column change proposed.",
+   "confidence": "high",
+   "researcher_notes": "StartLocation=Laverne/Oklahoma and both CountryOrArea=United States cells are independently confirmed and NOT contested (see the Location [ref] fill below). Only EndLocation is disputed."
+  },
+  {
+   "concern_type": "spec",
+   "summary": "StartYear1=1995 is not stated by any source found, and the one document that discusses this system's origin timeline points to gas already flowing well before 1995.",
+   "contested": "StartYear1",
+   "candidate": "",
+   "evidence": "No source found states 1995 as an in-service/start year for KPC or its predecessors. The 1995 FERC Order to Show Cause (govinfo.gov, Docket RP95-212-000 — background only; does not name 'KPC,' see the naming-gate caveat in the attribution concern above) instead shows the predecessor network was already operating years earlier: it cites KansOk's actual 1990 transportation volumes (2.6% intrastate / 97.4% NGPA section 311 that year, per KansOk's own 1991 filing) and states the Riverside Kansas-Missouri border segment 'was authorized under NGA section 7 in 1989' (Riverside Pipeline Co., L.P., 48 FERC para. 61,309 (1989)), with two further Riverside Oklahoma-Kansas segments built in 1992. This 1990-1992 activity window contradicts a 1995 start date for the system as a whole. No single precise replacement year could be attributed with confidence given the multi-entity predecessor consolidation (KansOk + Riverside + Kansas Natural + Kansas Pipeline, later merged, sold to Enbridge in Nov 1999, and sold again to the current KPC Pipeline LLC/MVP ownership in Nov 2007) landing on one un-segmented tracker row, so no specific candidate year is proposed here — flagging only that 1995 is very likely wrong.",
+   "confidence": "medium",
+   "researcher_notes": "Recommend UNRESOLVED on the Start [ref] fill rather than a false REFS_ADDED confirmation of 1995 — see fills[] below."
+  }
+ ],
+ "fills": [
+  {
+   "ref_col": "Status [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"Status": "operating"},
+   "refs": [
+    {"url": "https://mvpurchasing.com/kpcpipeline/", "tier": "high", "note": "Current operator site, present tense: 'Our interstate natural gas pipeline runs 1,129 miles...we're pushing energy into businesses and homes.'"},
+    {"url": "http://www.gasnom.com/ip/kpc/body.cfm", "tier": "high", "note": "Live operator-authored EBB informational posting describing ongoing operations."},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Kansas%20(KPA)/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "Current PHMSA public-awareness filing describing active 24-hour-monitored operations."}
+   ],
+   "researcher_notes": "Multiple current, present-tense operator and regulatory sources confirm ongoing operation. No change."
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"Fuel": "Gas"},
+   "refs": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/880285/000119312509033100/d10k.htm", "tier": "high", "note": "Enbridge Energy Partners LP FY2008 10-K: 'KPC is an interstate natural gas transmission system.'"},
+    {"url": "http://www.gasnom.com/ip/kpc/body.cfm", "tier": "high", "note": "'...owns and operates a 1,000 mile (approximate) interstate gas pipeline which transports natural gas...'"}
+   ],
+   "researcher_notes": "Confirmed by an SEC filing independent of the current operator plus the operator's own posting. No change."
+  },
+  {
+   "ref_col": "PipelineType [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"PipelineType": "transmission"},
+   "refs": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/880285/000119312509033100/d10k.htm", "tier": "high", "note": "'KPC is an interstate natural gas transmission system...'"},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Kansas%20(KPA)/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "'...owns and operates a 1,120 mile interstate gas pipeline...' — FERC-jurisdictional per the Enbridge SEC rate-case discussion of Enbridge Pipelines (KPC)."}
+   ],
+   "researcher_notes": "Confirmed. No change."
+  },
+  {
+   "ref_col": "Proposal [ref]",
+   "class_out": "UNRESOLVED",
+   "values": {},
+   "refs": [],
+   "researcher_notes": "Searched FERC eLibrary/govinfo.gov, both SEC filings, the current operator's site, gasnom.com, and both PHMSA filings. No source states a ProposalYear for the consolidated KPC system. The system is a multi-entity predecessor consolidation (KansOk, Riverside, Kansas Natural, Kansas Pipeline — see the 1995 FERC Order to Show Cause, govinfo.gov Docket RP95-212-000) collapsed onto one un-segmented tracker row, which precludes attributing a single proposal date. Leaving blank rather than guessing."
+  },
+  {
+   "ref_col": "Construction [ref]",
+   "class_out": "UNRESOLVED",
+   "values": {},
+   "refs": [],
+   "researcher_notes": "Same predecessor-complexity problem as ProposalYear. The 1995 FERC Order to Show Cause (govinfo.gov, Docket RP95-212-000 — does not name 'KPC,' offered as background only) documents predecessor construction/authorization activity in 1989 (Riverside's Kansas-Missouri border segment, 48 FERC para. 61,309) and 1992 (Riverside's two Oklahoma-Kansas segments), but no source ties a single ConstructionYear to the row as it is currently structured. See the related StartYear1 spec concern in validity[]. Leaving blank rather than guessing."
+  },
+  {
+   "ref_col": "Start [ref]",
+   "class_out": "UNRESOLVED",
+   "values": {},
+   "refs": [],
+   "researcher_notes": "No source found states 1995 specifically as a start-of-service year. The 1995 FERC Order to Show Cause about this system's direct predecessor network (govinfo.gov, Docket RP95-212-000 — background only, does not name 'KPC') instead documents gas already flowing in 1990 (KansOk's cited 1990 actual transportation volumes) and a component segment authorized in 1989 — evidence that contradicts, rather than confirms, the recorded 1995 value. See the StartYear1 spec concern in validity[] for the full evidentiary detail and the reason no replacement year is proposed. This is filed as UNRESOLVED (nothing confirms 1995) rather than REFS_ADDED, since a source disagreeing on the underlying fact is not the same as agreement within rounding."
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"Capacity": "160.00", "CapacityUnits": "MMcf/d"},
+   "refs": [
+    {"url": "http://www.gasnom.com/ip/kpc/body.cfm", "tier": "medium", "note": "'...has a capacity of approximately 160 MMcf/day.'"},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Kansas%20(KPA)/KPC%20Pipeline%20LLC.pdf", "tier": "medium", "note": "Same '160 MMcf/day' figure."},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Oklahoma/KPC%20Pipeline%20LLC.pdf", "tier": "medium", "note": "Same '160 MMcf/day' figure."}
+   ],
+   "researcher_notes": "Confirmed at 160 MMcf/d exactly, but flagging a tier caveat: gasnom.com and both PHMSA filings share identical operator-authored boilerplate text word-for-word, so they function as ONE effectively-independent source for this figure, not three — tiered medium rather than high accordingly. Neither SEC filing nor mvpurchasing.com restates a design-capacity number; no fully independent second source was found despite searching."
+  },
+  {
+   "ref_col": "Pressure [ref]",
+   "class_out": "UNRESOLVED",
+   "values": {},
+   "refs": [],
+   "researcher_notes": "Searched the operator's site, gasnom.com, both PHMSA public-awareness filings, and both SEC filings — none states an operating or design pressure (psig) for the system. Leaving blank."
+  },
+  {
+   "ref_col": "Length [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"LengthKnown": "1817.00", "LengthKnownUnits": "km"},
+   "refs": [
+    {"url": "https://mvpurchasing.com/kpcpipeline/", "tier": "high", "note": "'Our interstate natural gas pipeline runs 1,129 miles from Oklahoma City to Kansas City, including through Wichita.' 1,129 mi = 1,817 km exactly."},
+    {"url": "https://www.sec.gov/Archives/edgar/data/880285/000119312509033100/d10k.htm", "tier": "high", "note": "Enbridge Energy Partners LP FY2008 10-K (a different, prior corporate owner, independent of the current MVP-era operator): 'approximately 1,120 miles of pipeline.'"},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Kansas%20(KPA)/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "'...a 1,120 mile interstate gas pipeline...'"}
+   ],
+   "researcher_notes": "Two genuinely independent corporate eras (Enbridge pre-2007 vs. the current MVP/KPC operator) both put the system at approximately 1,120-1,129 miles — the current operator's figure (1,129 mi) matches the sheet's 1,817 km exactly; the ~9-mile (0.8%) variance against the older 1,120-mile figure is treated as agreement within rounding per standing rule 4(e), not a discrepancy. Important scope note: this length covers the FULL system described by every source as running from the Oklahoma gathering area through Wichita to Kansas City — see the EndLocation attribution concern in validity[] for why the sheet's recorded endpoints (Laverne, OK to Wichita, KS only) understate the system's actual extent even though the length figure itself is correct."
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"Diameter": "4 to 12", "DiameterUnits": "in"},
+   "refs": [
+    {"url": "https://www.sec.gov/Archives/edgar/data/880285/000119312509033100/d10k.htm", "tier": "medium", "note": "'...approximately 1,120 miles of pipeline ranging in diameter from 4 to 12 inches, along with three compressor stations.'"}
+   ],
+   "researcher_notes": "Only one source found (Enbridge Energy Partners LP FY2008 10-K, an SEC filing — independent of the current operator, though single-sourced). Searched the current operator's site, gasnom.com, and both PHMSA filings; none of them state a diameter figure. Tiered medium per standing rule 4 (single source) rather than left UNRESOLVED, since the source is an authoritative regulatory filing, not marketing copy."
+  },
+  {
+   "ref_col": "FuelSource [ref]",
+   "class_out": "UNRESOLVED",
+   "values": {},
+   "refs": [],
+   "researcher_notes": "Per docs/reference/gem_schema.md's FuelSource gotcha, this column names a specific upstream field/plant/facility, not a fuel type or a broad geological region. Every source found (gasnom.com, both PHMSA filings) says only that KPC is 'capable of distributing Anadarko and Arkoma basin gas' — these are broad multi-state geological basins, not a named field or plant on the level of the schema's own examples (Abqaiq, Hasbah Gas Field). No specific named source facility was found; leaving blank per the schema's explicit 'do not default it' instruction rather than filling with a basin name or 'Natural Gas.'"
+  },
+  {
+   "ref_col": "Location [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {
+    "StartLocation": "Laverne",
+    "StartState/Province": "Oklahoma",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Wichita",
+    "EndState/Province": "Kansas",
+    "EndCountryOrArea": "United States"
+   },
+   "refs": [
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Oklahoma/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "Oklahoma counties of operation list Harper County — Laverne is the Harper County seat — confirming Laverne is genuinely on-route."},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Kansas%20(KPA)/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "Kansas counties of operation list Sedgwick County, where Wichita sits, confirming Wichita is genuinely on-route."},
+    {"url": "https://mvpurchasing.com/kpcpipeline/", "tier": "high", "note": "'...runs 1,129 miles from Oklahoma City to Kansas City, including through Wichita' — corroborates Oklahoma origin and Wichita as an intermediate point."}
+   ],
+   "researcher_notes": "StartLocation=Laverne/Oklahoma, EndLocation=Wichita/Kansas (as an intermediate/on-route point, not necessarily the true terminus), and both CountryOrArea=United States cells are independently corroborated and confirmed as-is. HOWEVER: see the attribution concern in validity[] — every source describes the system's actual downstream terminus as Kansas City, not Wichita, so EndLocation is separately flagged as incomplete even though 'Wichita' itself is a genuine point on the route."
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "class_out": "UNRESOLVED",
+   "values": {},
+   "refs": [],
+   "researcher_notes": "Searched both SEC filings, the 1995 FERC order, and operator/PHMSA materials. Only transaction (M&A) values were found, not a construction/segment cost: Enbridge Energy Partners LP sold the system in November 2007 for $133 million in cash (net asset value ~$100.4 million, including $9.2 million of goodwill — FY2008 10-K), and Enbridge Midcoast Energy had itself acquired 'the Kansas pipeline system' in November 1999 (Enbridge Inc. 2002 Form F-3). Both are sale/acquisition prices, not a build cost, so neither is an honest fill for SegmentCost. Leaving blank."
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"Operator": "KPC Pipeline"},
+   "refs": [
+    {"url": "http://mvpurchasing.com/mvpipelines/about-us/", "tier": "high", "note": "'MV Pipelines, LLC is a holding company operating through its subsidiaries, MVP Logistics, LLC, KPC Pipelines, LLC, and Beaumont Pipeline, LLC.'"},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Kansas%20(KPA)/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "Filed by and describing 'KPC Pipeline, LLC,' 19970 West 161st Street, Olathe, KS."}
+   ],
+   "researcher_notes": "Confirmed as-is. The direct parent is MV Pipelines, LLC (a holding company, itself part of the MV Purchasing/MVP Holdings family based in Wichita, KS, formed 2012) — noted for context only, not contested, consistent with this batch's established convention (cf. Black Bear Transmission) of listing the operating subsidiary itself rather than the parent holding company."
+  },
+  {
+   "ref_col": "Owner [ref]",
+   "class_out": "REFS_ADDED",
+   "values": {"Owner1": "KPC Pipeline", "Owner1%": "100.00%"},
+   "refs": [
+    {"url": "http://mvpurchasing.com/mvpipelines/about-us/", "tier": "high", "note": "Same 'MV Pipelines, LLC is a holding company operating through its subsidiaries...KPC Pipelines, LLC' language."},
+    {"url": "https://www.pipelinesafetyinfo.com/user/file/Oklahoma/KPC%20Pipeline%20LLC.pdf", "tier": "high", "note": "Same operator/owner identification, Oklahoma filing."}
+   ],
+   "researcher_notes": "Confirmed as-is (100% KPC Pipeline). Same parent-company context note as the Operator fill above — not contested."
+  }
+ ],
+ "cross_row_leads": [],
+ "status_reviews": [
+  {
+   "sheet_row": 45,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "evidence_date": "2026-09-10",
+   "evidence": "Confirmed via the current operator's own site (mvpurchasing.com/kpcpipeline/, present-tense description of ongoing operations, copyright-dated 2026), a live operator-authored gasnom.com informational posting describing active service, and current PHMSA public-awareness filings for both Kansas and Oklahoma describing an actively monitored, in-service pipeline (24-hour control centers, emergency contact numbers). All three are dateless-but-live/current sources; no indication of any shutdown, sale interruption, or status change since the 2007 Enbridge-to-MVP-era sale.",
+   "dormancy_applicable": false,
+   "notes": "Operating status well-supported by contemporaneous, present-tense sources. No stale or unclear signal."
+  }
+ ],
+ "summary": "P0186 KPC Gas Pipeline: existence/classification/duplicate all confirmed clean; 9 MISSING_REF units re-cited as REFS_ADDED (Status, Fuel, PipelineType, Capacity, Length, Diameter, Location, Operator, Owner) and 6 MISSING_VALUE units resolved (Diameter filled) or left UNRESOLVED with notes (Proposal, Construction, Start, Pressure, FuelSource, SegmentCost); two validity concerns staged — an attribution concern on EndLocation (system's true terminus is Kansas City, not Wichita) and a spec concern on StartYear1 (1995 is unsupported and likely wrong per 1989-1990 predecessor evidence)."
+}

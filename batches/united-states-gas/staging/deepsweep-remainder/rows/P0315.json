@@ -1,0 +1,273 @@
+{
+  "project_id": "P0315",
+  "pipeline_name": "Sooner Trails Pipeline",
+  "sheet_row": 165,
+  "wiki": "https://www.gem.wiki/Sooner_Trails_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "Existence and gas-transmission classification are solid; three independent origins (Southern Star Central Corp's own SEC 10-Q, Pipeline News trade-press directory, EIA's Historical Projects workbook) all describe the same cancelled 250-mile/36-inch interstate expansion tied to FERC pre-filing docket PF15-30. No action needed on existence/classification/duplicate.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: confirmed via three independent origins. (1) Southern Star Central Corp's own SEC 10-Q (period 6/30/2014, filed 2014-08-08) states: 'on June 25, 2014 Central announced a non-binding open season for the \"Sooner Trails\" project to transport gas to the Bennington, OK area for interconnects with downstream pipelines' (Bennington is the Bryan County, OK seat area matching the sheet's StartPrefecture). (2) Pipeline News' Oct-2018 'Planned Pipelines' directory (a trade-press compilation, entry dated 11/17) lists 'Sooner Trails Pipeline Project,' Owner Southern Star Central Corp, Owner 2 NextEra US Gas Assets LLC, Length 250 miles, Diameter 36 in, Location Bryan County OK - Lamar County TX, Capacity 1.2 MMDth/d, Status 'Project has withdrawn its pre-filing application.' (3) EIA's own Natural Gas Pipeline Projects workbook (Historical Projects 1996-2024 tab, downloaded from eia.gov, row 'Sooner Trails Project') independently lists Operator Southern Star Central Gas Pipeline, Type Expansion, Status Cancelled, Last-Updated 2018-01-24, 247 miles, $300M cost, 1400 MMcf/d additional capacity, 36-inch diameter, Interstate/FERC, Docket PF15-30. CLASSIFICATION: correctly gas transmission (EIA's own natural-gas-pipeline-projects tracking, an interstate FERC pre-filing docket) -- not a gathering/process line. DUPLICATE: checked the 45-row roster; no other PID matches Southern Star Central / NextEra / Bryan-Lamar County -- not a duplicate. Two real, material concerns are filed separately below: an attribution (owner) concern and a spec (cost + shelved/cancelled year + endpoint-state) concern -- see those records; this record covers only existence/classification/duplicate, which are clean.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct Owner1 on the operators/owners tab from 'NextEra Energy 100%' to a two-party structure led by Southern Star Central Corp, with NextEra US Gas Assets LLC as the minority/JV partner; confirm exact percentage split against the FERC docket or IJGlobal before finalizing.",
+      "contested": {"Owner1": "Southern Star Central Corp"},
+      "researcher_notes": "The sheet's sole Owner1 = 'NextEra Energy' at 100% is contradicted by two independent sources. Pipeline News' Oct-2018 directory entry is headed 'SOUTHERN STAR CENTRAL CORP. - (11/17)' with an explicit 'Owner 2: NextEra US Gas Assets LLC' line -- i.e., Southern Star Central Corp is the lead/Owner-1 entity and NextEra US Gas Assets LLC (not the NextEra Energy parent) is the second owner. EIA's Historical Projects workbook independently lists 'Pipeline Operator Name: Southern Star Central Gas Pipeline' -- consistent with Southern Star, not NextEra, being the lead party. The project also traces directly to Southern Star Central Gas Pipeline, Inc.'s own June 2014 open-season announcement in its parent's (Southern Star Central Corp) SEC 10-Q -- a company only sponsors and files an open season for a pipeline it holds an ownership/operating stake in. gem.wiki's own citation of IJGlobal (not usable as a ref per standing rules, read for leads only) states 'NextEra Energy (50.00%), Southern Star Central Corp (50.00%)' -- consistent in substance (two owners) though I could not independently verify the exact 50/50 split from a citable source (ijglobal.com's public page is a generic paywalled search interface with no route-specific content). I'm proposing Owner1/Owner2 as a corrected fill (see fills[]) but leaving percentages out of the fill since I cannot independently confirm the exact split -- flagging that gap here rather than pasting an unverified 50/50.",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct SegmentCost from $3.5 billion to ~$300 million per EIA (or flag as unresolved pending a second cost source); correct ShelvedYear (2020) / CancelledYear (2022) to reflect that both EIA and Pipeline News already show the project cancelled/withdrawn by 2017-2018; and verify EndState/Province (Texas) against EIA's classification of the project as wholly within Oklahoma (Crosses State Border = No).",
+      "contested": {"SegmentCost": "300000000.00", "CancelledYear": "2017", "ShelvedYear": "", "EndState/Province": ""},
+      "researcher_notes": "THREE separate numeric conflicts surfaced against independent sources: (1) SegmentCost: the sheet records $3,500,000,000 (3.5 BILLION USD) with no ref. EIA's Historical Projects workbook states 'Cost (millions): 300' for this exact project -- i.e. $300 million, off by a factor of ~11.7x from the sheet. I could not find any source stating $3.5B for this project (searched the harvested wiki citations, the Pipeline News PDF -- no cost field given there -- and general web/SEC EDGAR full-text search); $3.5B looks like a data-entry error, possibly copied from a much larger unrelated project. Proposing the EIA-sourced $300M as the corrected value (single independent source; a second source stating cost was not found -- FERC's PF15-30 docket, which is blocked to scripted access, is the logical second source and should be checked before finalizing). (2) ShelvedYear=2020 / CancelledYear=2022: both EIA (Last Updated Date 2018-01-24, Status=Cancelled) and Pipeline News (entry revision date 11/17, i.e. Nov 2017, Status='withdrawn its pre-filing application') show the project was ALREADY cancelled/withdrawn by late 2017/early 2018 -- four to five years before the sheet's recorded dates. This looks like GEM's dormancy-inference heuristic (2y->shelved, 4y->cancelled) applied from a stale 'last touched' date rather than the actual withdrawal date, now contradicted by hard primary evidence. I'm proposing CancelledYear=2017 as the best-evidenced estimate (last date before which cancellation was already recorded); I could not pin an exact month/day, and recommend checking FERC docket PF15-30 (elibrary.ferc.gov, JS-only interface, not fetchable by curl/WebFetch from this session) for the precise withdrawal order date. I found no evidence of a distinct intervening 'shelved' phase separate from the cancellation itself (a FERC pre-filing withdrawal is typically a single step), so I'm not proposing a replacement ShelvedYear -- flagging that the field may not belong on this row at all, for a human to decide. See the companion status_reviews record for the ShelvedCancelledType=inferred->confirmed change this evidence supports. (3) EndState/Province: the sheet (and Pipeline News, which names 'Bryan County, OK - Lamar County, TX' matching the sheet exactly) both put the pipeline crossing into Texas. But EIA's workbook row for this same project lists Beg_State=OK, End_State=OK, and explicitly 'Crosses State Border: No' -- i.e. EIA's own tracking treats this as an all-Oklahoma project, not one crossing into Texas. This is a genuine, unresolved conflict between two independent, reputable sources (a government dataset vs. a trade-press directory that otherwise matches the sheet exactly on length and diameter). EIA's own project note ('Very little details on project that proposes similar route to other proposed pipeline projects') suggests EIA itself was working from incomplete information, so I am NOT overriding the sheet/Pipeline-News endpoint with EIA's state flag, but this needs a human check against the actual FERC PF15-30 filing before the endpoint state is treated as fully confirmed -- leaving EndState/Province contested with no candidate replacement (evidence only shows the current value is in dispute, not what the correct value is).",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status",
+      "values": {"Status": "cancelled"}, "primary_value": "cancelled",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PDF entry for 'Sooner Trails Pipeline Project' states 'Status: Project has withdrawn its pre-filing application'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab, 'Sooner Trails Project' row, Status='Cancelled'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent sources (trade-press directory + EIA government dataset) agree the project was withdrawn/cancelled. Confirms recorded value; no change."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Southern Star Central Corp 10-Q: 'Sooner Trails' project would 'transport gas' -- a natural-gas pipeline company's own natural-gas pipeline expansion"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Listed in EIA's Natural Gas Pipeline Projects workbook"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed natural gas; no change."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2014", "ProposalMonth": "6"}, "primary_value": "2014",
+      "proposed_refs": ["https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm"],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'on June 25, 2014 Central announced a non-binding open season for the \"Sooner Trails\" project'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "First public step found: Southern Star Central's own June 25, 2014 non-binding open season announcement, stated in its 10-Q. This is a single primary source; searched Pipeline News PDF (no proposal date given, only status), EIA workbook (no separate proposed-date column populated for this row -- only a 2018-01-24 'Last Updated' date), and SEC EDGAR full-text search (only the one 10-Q mentions 'Sooner Trails' at all -- Southern Star Central Corp stopped filing with the SEC after August 2014). No second source for the exact announcement date was found; FERC docket PF15-30 (see EIA row) would likely carry the formal 2015 pre-filing request date as a related but distinct milestone -- noted for a human follow-up, not fabricated here."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No construction ever occurred -- the project was withdrawn at the FERC pre-filing stage (per Pipeline News and EIA) before any certificate application, let alone construction, was filed. Leaving blank is the correct outcome, not a search failure; confirmed by both sources describing withdrawal at pre-filing, and by SEC filings showing no subsequent progress reports."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"], "primary_value_col": "StartYear1",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "The project never entered service -- cancelled/withdrawn at pre-filing (EIA Status='Cancelled', Pipeline News 'withdrawn its pre-filing application'). Blank is correct; not a search failure."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Shelved [ref]",
+      "value_cols": ["ShelvedYear"], "primary_value_col": "ShelvedYear",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": false, "name_found": true, "note": "EIA shows Status jumping straight to 'Cancelled' (last updated 2018-01-24) with no intervening 'shelved'/on-hold status recorded for this project"}
+      ],
+      "class_out": "UNRESOLVED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Could not corroborate the recorded ShelvedYear=2020 -- and could not source ANY distinct shelved year, sourced or otherwise. Both independent sources (EIA, Pipeline News) show the project already recorded as cancelled/withdrawn by 2017-2018, i.e. well before 2020, with no sign of an intermediate 'shelved' phase distinct from the cancellation itself (a FERC pre-filing withdrawal is typically one step). See the companion spec concern in validity[] recommending a human decide whether ShelvedYear should be blanked entirely rather than corrected to a new value I can't source."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Cancelled [ref]",
+      "value_cols": ["CancelledYear"], "primary_value_col": "CancelledYear",
+      "values": {"CancelledYear": "2017"}, "primary_value": "2017",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Last Updated Date' 2018-01-24, Status='Cancelled' -- already cancelled as of that date"},
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Entry header 'SOUTHERN STAR CENTRAL CORP. - (11/17)' (i.e. last revised Nov 2017) already shows Status='Project has withdrawn its pre-filing application'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "DISAGREES with the recorded CancelledYear=2022. Both independent sources show the project already cancelled by Nov 2017 (Pipeline News revision date) / Jan 2018 (EIA last-updated date) -- 4-5 years earlier than recorded. Proposing 2017 as the best-evidenced year (the latest date before which cancellation was already on record), but this is a 'last known as of' bound, not a docket-confirmed withdrawal date -- FERC docket PF15-30 (blocked to scripted access this session) would give the exact order/withdrawal date and should be checked to firm this up."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "1400.00", "CapacityUnits": "MMcf/d"}, "primary_value": "1400.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab, 'Sooner Trails Project' row, 'Additional Capacity (MMcf/d)' = 1400"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "EIA states 1,400 MMcf/d of additional capacity. Pipeline News' PDF gives a DIFFERENT figure for the same project -- 'Capacity: 1.2 MMDth/d' (~1,200 MMcf/d treating a dekatherm as approximately one Mcf of pipeline-quality gas, the standard industry rule of thumb) -- about 14% lower than EIA's number, not simple rounding. Filling EIA's 1,400 MMcf/d as the more specific, purpose-built figure (EIA's own 'additional capacity' field vs. Pipeline News' general-purpose directory entry) but flagging the ~14% disagreement rather than silently picking one; a human should weigh both before finalizing."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No MAOP/design-pressure figure found in the SEC 10-Q, the Pipeline News PDF, or the EIA workbook -- none of the three sources carry a pressure field for this project, and no FERC certificate (which would normally state MAOP) was ever issued since the project withdrew at pre-filing. Leaving blank rather than estimating."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "402.30", "LengthKnownUnits": "km"}, "primary_value": "402.30",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Length: 250 miles' = 402.34 km, matching the recorded 402.30 km almost exactly"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Miles' = 247 = 397.5 km, within ~1.2% of the recorded value (an earlier/differently-rounded estimate)"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent sources corroborate: Pipeline News' 250 miles converts to 402.3 km, an exact match to the recorded 402.30 km; EIA's 247 miles (397.5 km) is within rounding of a pre-construction estimate. Confirms recorded value; no change."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "36.00", "DiameterUnits": "in"}, "primary_value": "36.00",
+      "proposed_refs": [
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Diameter: 36 inches'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Pipeline Diameter (Inches)' = 36"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent sources agree exactly on 36 inches."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "None of the three sources specify a gas-supply basin/source (e.g. SCOOP/STACK shale vs. conventional). Southern Star Central Gas Pipeline's mainline draws from multiple Kansas/Oklahoma supply areas; nothing specific enough to Sooner Trails to fill with confidence. Left blank rather than guessed."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"], "primary_value_col": "StartLocation",
+      "values": {"StartPrefecture/District": "Bryan County", "StartState/Province": "Oklahoma", "StartCountryOrArea": "United States", "EndPrefecture/District": "Lamar County", "EndState/Province": "Texas", "EndCountryOrArea": "United States"},
+      "primary_value": "Bryan County",
+      "proposed_refs": ["https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Location: Bryan County, OK - Lamar County, TX' -- exact match to the recorded values"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Pipeline News names the exact counties recorded on the sheet. HOWEVER, EIA's Historical Projects workbook row for this same project lists Beg_State=OK, End_State=OK, and 'Crosses State Border: No' -- i.e. EIA classifies this as an all-Oklahoma project, contradicting a Texas endpoint entirely. I'm filling/confirming per the more specific, name-matching source (Pipeline News), but flagging the EIA conflict as a separate spec concern in validity[] rather than silently resolving it -- a human should check the actual FERC PF15-30 filing for the true endpoints before treating Texas as fully confirmed."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "300000000.00", "SegmentCostUnits": "USD"}, "primary_value": "300000000.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab, 'Sooner Trails Project' row, 'Cost (millions)' = 300"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "DISAGREES SHARPLY with the recorded $3,500,000,000 -- EIA states $300 million, off by a factor of ~11.7x. I could not find any source stating $3.5B (checked the harvested wiki citations, the Pipeline News PDF -- which gives no cost field at all -- and SEC EDGAR full-text search, which returns only Southern Star Central's one 2014 10-Q, no cost figure given there either). Proposing the EIA-sourced $300M as the corrected value; this is a single independent source for the cost specifically, so a second source (ideally the FERC PF15-30 docket's cost estimate, blocked to scripted access this session) is still owed before treating $300M as fully locked in -- but $3.5B should not remain on the sheet unsupported and contradicted."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "oo_sheet_row": 294, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"], "primary_value_col": "Operator",
+      "values": {"Operator": "Southern Star Central Gas Pipeline"}, "primary_value": "Southern Star Central Gas Pipeline",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Pipeline Operator Name' = Southern Star Central Gas Pipeline"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/1260349/000126034914000020/southernstar10q6302014doc.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Southern Star Central Corp's own 10-Q describes its subsidiary ('Central') as the sponsor of the Sooner Trails open season"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two independent sources (EIA government dataset + the sponsoring company's own SEC filing) agree the operator is Southern Star Central Gas Pipeline, consistent with the operators/owners cluster note that Owner1 as recorded (sole NextEra Energy) looks wrong -- see the attribution concern in validity[]."
+    },
+    {
+      "segment_name": "", "sheet_row": 165, "oo_sheet_row": 294, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Southern Star Central Corp", "Owner2": "NextEra US Gas Assets LLC"},
+      "primary_value": "Southern Star Central Corp",
+      "proposed_refs": ["https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"],
+      "verifications": [
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Entry headed 'SOUTHERN STAR CENTRAL CORP. - (11/17)' with 'Owner 2: NextEra US Gas Assets LLC'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "DISAGREES with the recorded Owner1='NextEra Energy' at 100%. Pipeline News names Southern Star Central Corp as the lead entity and NextEra US Gas Assets LLC (a NextEra subsidiary, not the parent 'NextEra Energy' itself) as a second owner -- a two-party structure, not a NextEra-only 100% holding. EIA's operator field (Southern Star Central Gas Pipeline) is consistent with Southern Star being the lead party. I have NOT filled percentage splits -- gem.wiki's own citation of IJGlobal claims 50/50, but I can't cite gem.wiki and could not independently verify the split from a citable source (ijglobal.com's public page is a generic paywalled search interface). See the companion attribution concern in validity[]."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "", "sheet_row": 165,
+      "current_status": "cancelled",
+      "verdict": "change",
+      "proposed_status": "cancelled",
+      "proposed_changes": {"ShelvedCancelledType": "confirmed", "CancelledYear": "2017"},
+      "evidence_date": "2018-01",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true},
+        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true}
+      ],
+      "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Status itself (cancelled) is right and now dated/sourced, not merely inferred -- EIA's Historical Projects workbook independently records this project's FERC pre-filing docket (PF15-30) as Cancelled (last updated 2018-01-24), and Pipeline News' Oct-2018 directory (entry revision 11/17) independently states the pre-filing application was withdrawn. Both trace to the actual regulatory/industry record of the withdrawal, not to GEM's own dormancy heuristic -- so ShelvedCancelledType should move from 'inferred' to 'confirmed'. Recommending CancelledYear=2017 (the latest point before which both sources already show it cancelled) in place of the recorded 2022, which is contradicted by both sources by 4-5 years. Exact month/day of the FERC withdrawal order was not accessible this session (elibrary.ferc.gov is a JS-only SPA that returns an empty shell to scripted fetches); docket PF15-30 is the next step for a precise date. No evidence supports the recorded ShelvedYear=2020 as a distinct milestone -- see the spec concern in validity[]."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "Existence/classification confirmed via 3 independent sources (SEC 10-Q, Pipeline News, EIA/FERC docket PF15-30); filed attribution concern (owner should be Southern Star Central Corp + NextEra US Gas Assets LLC, not sole NextEra Energy 100%) and spec concerns (SegmentCost $3.5B unsupported/likely ~$300M per EIA; ShelvedYear 2020/CancelledYear 2022 contradicted by evidence of cancellation by 2017-2018; EndState=Texas conflicts with EIA's 'no state border crossed' flag). No UNRESOLVED beyond genuinely unrecoverable fields (Construction/Start -- never built; Pressure/FuelSource -- not stated anywhere; Shelved -- no distinct shelved date exists)."
+}

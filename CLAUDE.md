@@ -359,8 +359,8 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
 - **Egypt (gas + oil: deep sweep + recon + routes 2026-08-27, staged not applied; 7 files to work):**
   `docs/country_notes/egypt.md`. Gas researched only 40 of 127 rows — the other 87 carry unapplied
   July/August staged work (`--exclude-pids`); the deep sweeps do NOT subsume the four recon workbooks.
-- **United States (gas: slice 1 batches 1-4 staged not applied, 4 files to work — the rule-4(e)
-  recovery pass is done and all four deliverables rebuilt on it (`_1906_ET`). Campaign order fixed
+- **United States (gas: slice 1 batches 1-5 staged not applied, 5 files to work — batches 1-4
+  rebuilt on the rule-4(e) recovery pass (`_1906_ET`), batch 5 closed slice 1 (`20260910_1526_ET`). Campaign order fixed
   2026-09-10: batch 5 -> slice 2 -> in-dev/status-review -> discovery -> maybe routes/recon.
   **OIL IS OUT OF SCOPE for this cycle** — don't fold it in or propose it; its two staged update
   batches and the deepwater-export item just wait):** `docs/country_notes/united-states.md`.

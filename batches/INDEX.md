@@ -249,6 +249,7 @@ applied). See docs/workflows.md "Batch artifacts".
 
 - `staging/deepsweep-appalachian-operating` — rows=46 fills=144 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=3, UNRESOLVED=74) routes=0 new(none)
 - `staging/deepsweep-gulf-operating` — rows=50 fills=161 updates=0 status-pending=0 refs(DEAD_LINK=3, REFS_ADDED=352, REVERIFIED=5, UNRESOLVED=87) routes=0 new(none)
+- `staging/deepsweep-remainder` — rows=45 fills=199 updates=0 status-pending=10 refs(REFS_ADDED=280, UNRESOLVED=113) routes=0 new(none)
 - `staging/deepsweep-tx-operating` — rows=45 fills=23 updates=0 status-pending=0 refs(REFS_ADDED=338, REVERIFIED=1, UNRESOLVED=42) routes=0 new(none)
 - `staging/deepsweep-west-operating` — rows=46 fills=161 updates=0 status-pending=0 refs(REFS_ADDED=301, UNRESOLVED=98) routes=0 new(none)
 - `staging/recovery-20260909` — no store — invisible to discovery
@@ -257,6 +258,7 @@ applied). See docs/workflows.md "Batch artifacts".
 - `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-gulf.xlsx`
 - `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-tx.xlsx`
 - `deliverables/pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-west.xlsx`
+- `deliverables/pipelines_batch_20260910_1526_ET_united-states-gas_deepsweep-remainder.xlsx`
 - `archive/` — 5 superseded/applied file(s)
 
 ## united-states-oil
