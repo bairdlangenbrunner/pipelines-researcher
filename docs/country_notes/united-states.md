@@ -42,12 +42,26 @@ have never been swept**: 109 operating (LastUpdated >= 2024), 97 proposed, 66 ca
 Expansion (SheetRow 1664), which falls out of every status-filtered slice silently and must be
 placed by hand. That remainder is slice 2 and has not been scoped.
 
-**Order of work (2026-09-09).** 1. ~~rule-4(e) recovery pass over batches 1-4~~ and
-2. ~~rebuild all four slice-1 deliverables~~ — both **DONE** (see below). 3. Batch 5, closing
-slice 1. 4. **Then** slice 2, which needs scoping before it needs research. Discovery (§4) is a
-peer of the sweep, not its successor — it consumes recon Additions, and recon is off for US gas —
-so it is sequenced separately and, like the sweep, must be cut into slices rather than run
-whole-country (>5 candidate clusters escalates).
+**Order of work — Baird's ruling 2026-09-10, this is the campaign plan.**
+1. **Gas batch 5** (East, 30 rows / ~432 units) — closes slice 1.
+2. **Gas slice 2** (312 rows / ~4,767 units) — needs scoping before research; audit the
+   slicing column first (the 2026-09-04 state audit covered ONLY the 217 stale-operating
+   rows, so slice 2's states are unverified).
+3. **In-dev / status-review leg** — 134 gas proposed/construction/shelved rows, plus the
+   66 cancelled for a cancelled review.
+4. **Discovery (§4)** — never run for the US. Must be sliced like the sweep; whole-country
+   trips the >5-candidate-cluster escalation gate immediately.
+5. **Then, maybe:** route creation (§8 — 85 gas rows are `Not mapped (but could be)` or
+   `Unavailable`) and reconciliation.
+
+**OIL IS OUT OF SCOPE for this whole cycle** (Baird 2026-09-10). The 448 GOIT US rows /
+6,140 units are not being worked, and neither are their legs. The two staged oil update
+batches (Delaware Express, Permian Express) stay staged. Do not fold oil into a US pass,
+and do not propose it as a next step.
+
+**Reconciliation is dead for the US on GulfPub** — the extract holds 10 US gas features
+and **0 US oil features**. There is nothing to diff. OSM is the opposite failure (62,221
+US gas ways vs 529 rows); treat it as a route source for §8, not a recon input.
 
 **The rule-4(e) recovery pass is COMPLETE (2026-09-09), and all four deliverables were rebuilt on
 top of it** (`_1906_ET` stamps; every earlier US gas workbook is superseded and predates the
