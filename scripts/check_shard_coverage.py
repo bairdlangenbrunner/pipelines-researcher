@@ -107,6 +107,18 @@ def check(units: list[dict], fills: list[dict]) -> tuple[list[dict], list[dict],
             why.append("class_out is sourced but `values` is empty — put the value the refs "
                        "state in `values` (the SAME value, when they agree with the sheet); "
                        "notes-only leaves an orphan [ref]")
+        # ...and must carry its refs where the merge reads them: `proposed_refs` (URLs) plus
+        # `verifications`. Any other shape is invisible to merge_deepsweep_shards.py, which
+        # stages the record with no refs at all (2026-09-10: us-gas P0186 wrote
+        # `refs: [{url, tier, note}]` on 10 sourced units and passed this check; the merge
+        # dropped every ref and only gate E caught one of them). A column with no [ref] pair
+        # (OtherEnglishNames; `ref_col` empty) has nowhere to put a ref, so it is exempt.
+        if f.get("_leg") != "refs" and (f.get("class_out") or "").upper() in SOURCED_OUT \
+                and f.get("ref_col") and not f.get("proposed_refs"):
+            why.append("class_out is sourced but `proposed_refs` is empty"
+                       + (" (refs are under `refs` — use `proposed_refs` + `verifications`)"
+                          if f.get("refs") else "")
+                       + " — the merge stages it with no ref")
         if why:
             malformed.append({"ref_col": f.get("ref_col"), "why": "; ".join(why)})
     return unreported, silent, malformed
