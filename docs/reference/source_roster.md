@@ -30,7 +30,7 @@ link to original sources — use those.
 | US — offshore | BOEM `data.boem.gov`, BSEE |
 | US — Texas | Texas RRC GIS viewer |
 | US — Alaska | Alaska DNR State Pipeline Coordinator |
-| US — data | EIA petroleum/natural-gas |
+| US — data | EIA petroleum/natural-gas; **gas project workbooks archived locally** — see note below |
 | Iran | Shana (MOP outlet) `shana.ir` |
 | India — gas | PNGRB `pngrb.gov.in` — monthly **NGPL MIS report** (see note below) |
 | Pakistan — gas | OGRA `ogra.org.pk`; and SNGPL's own audited asset register (see the Pakistan country note) |
@@ -207,6 +207,19 @@ snapshots: `data/PHMSA_pipeline_operators_opids_20260508.csv` (OpID master list,
 liquid — operator-level mileage by state, commodity, decade of install).
 Upstream index: phmsa.dot.gov → Data & Statistics → "Pipeline Operators - OpIDs"
 and "Distribution, Transmission & Gathering, LNG, and Liquid Annual Data".
+
+**EIA Natural Gas Pipeline Projects (every release, tracked):** EIA's quarterly
+project workbook is the single best public table of US gas project cost, capacity,
+miles, diameter, in-service year, status and FERC docket. **Every release from May
+2018 on is checked into `sources/eia_pipeline_projects/raw/`** — don't re-download
+the undated `EIA-NaturalGasPipelineProjects.xlsx` per row; read the local file and
+cite the *dated* release URL that states the value, with sheet + Excel row in the
+note. `prepare.py` builds a long table plus a latest-with-history table (the release
+a project first shows `Completed`/`Cancelled` bounds its year), and
+`scripts/eia_crosswalk.py` pre-matches GEM US gas rows to EIA projects and lists the
+value disagreements — run it at the start of each US gas batch. **All releases are
+ONE origin**, so EIA never supplies rule 4's second source on its own. Quirks,
+file-name irregularities and the EIA→GEM status map: `sources/eia_pipeline_projects/NOTES.md`.
 
 ### Wayback Machine — how to reach it, and the `/save/` trap
 

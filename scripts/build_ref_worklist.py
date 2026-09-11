@@ -556,6 +556,12 @@ def main() -> None:
         fill_pairs = frozenset(_ref_stem(p["ref_col"]) for p in discover_ref_pairs(list(_probe.columns))
                                if p["ref_col"]) | {"Operator", "Owner"}
 
+    if args.verify_existing:
+        # verify_many runs once per HAS_REF unit, so a row whose 20 cells cite one document
+        # would download it 20 times (US gas slice 2: 40+ min per batch). Cache the RESPONSE
+        # for this run only; each unit still runs its own value/name check against it.
+        import url_verifier
+        url_verifier.RESPONSE_CACHE = {}
     wl = build(csv, args.country, statuses, args.verify_existing, owners_csv=owners_csv,
                province=args.province, exclude_network_regex=args.exclude_network_regex,
                exclude_pids=exclude_pids, include_pids=include_pids,

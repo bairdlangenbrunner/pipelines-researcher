@@ -10,7 +10,12 @@ any country — use it for both attributes and routes.
 - **MARAD** — deepwater ports (export terminals).
 - **BOEM** (`data.boem.gov`) / **BSEE** — offshore/OCS pipelines + permits.
 - **Texas RRC** GIS viewer; **Alaska DNR** State Pipeline Coordinator.
-- **EIA** — petroleum & natural-gas project tracking.
+- **EIA** Natural Gas Pipeline Projects workbook — project-level cost, miles, added capacity,
+  diameter, in-service year, status, docket. **Every release since May 2018 is tracked** in
+  `sources/eia_pipeline_projects/` (NOTES.md there: file-name quirks, citing a dated release,
+  one-origin rule). `scripts/eia_crosswalk.py` pre-matches every US gas row to EIA projects and
+  diffs the values; sweep prompts carry its per-PID block (from slice 2 onward — refresh the
+  releases and re-run it at the start of each US gas batch).
 
 ## Routing / GIS tips
 - NPMS, Texas RRC, and BOEM give traceable routes (`high`/`medium`).
@@ -47,8 +52,13 @@ of scope); ownership moved on PNGTS (BlackRock + MSIP, 2024-08), Black Bear (Ens
 Guardian/Midwestern (DT Midstream, 2024-12). P2588/P2631 end in Maine, not Quebec.
 P3162 North Bakken Expansion is now `Status = N/A` (was blank) and is out of scope.
 **Slice 2 = 296 rows, never swept** (recounted 2026-09-10 against batches 1-5): 108 operating
-(LastUpdated 2024-25), 97 proposed, 52 cancelled, 26 construction, 11 shelved, 2 idle. Not yet
-scoped; re-derive its unit count at scoping.
+(LastUpdated 2024-25), 97 proposed, 52 cancelled, 26 construction, 11 shelved, 2 idle —
+**confirmed at scoping 2026-09-10 against the fresh snapshot: 4,520 units** (`--owe-fills`:
+HAS_REF 1,832 / MISSING_REF 1,060 / MISSING_VALUE 1,628; 592 of them operator/owner). Its
+citation base is ~63% (HAS_REF over ref-bearing units), so re-verifying existing refs is a large
+share of the work. State audit + batch plan: `staging/state-audit-20260910/`
+(`slice2_state_audit.csv`, `slice2_duplicate_candidates.csv`); 19 no-route blank-state rows carry
+a name-based `region_src = name (provisional)`.
 State-column typos outside slice 1, for slice 2's audit: `Kentuky`, `Tennesse`, `North Carolna`,
 `North Caolina`, `West Virgina` (end). Batch 5's own: P2495 `Inidiana` (sourced to Indiana,
 Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried as `Location [ref]` fills on its shards.
@@ -56,11 +66,15 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
 **Order of work — Baird's ruling 2026-09-10, this is the campaign plan.**
 1. **Gas batch 5** (cohort remainder 30 + blank-LastUpdated 15 = 45 rows / 666 units) — DONE
    2026-09-10 (`_1526_ET`, staged not applied); slice 1 closed.
-2. **Gas slice 2** (296 rows) — needs scoping before research; audit the slicing column first
-   (the 2026-09-04 state audit covered ONLY the 217 stale-operating rows, so slice 2's states
-   are unverified).
-3. **In-dev / status-review leg** — 134 gas proposed/construction/shelved rows, plus the
-   52 cancelled for a cancelled review (the other 14 cancelled were reviewed in batch 5).
+2. **Gas slice 2** (296 rows) — scoped 2026-09-10. **Baird chose Option A: deep sweep ALL 296
+   with `--status-review` on**, in 7 batches `staging/deepsweep-s2-*` (the `planA` column of
+   `state-audit-20260910/slice2_state_audit.csv`). This absorbs step 3. Batches A1-A7 =
+   `gulf-indev`, `gulf-se-operating`, `tx-indev`, `tx-midcon-operating`, `appalachian-indev`,
+   `northeast-alaska`, `west`; each dir's `BRIEF.md` carries its route-first cases, duplicate
+   families and status leads (passed as `extra_brief`).
+3. ~~In-dev / status-review leg~~ — **retired for US gas**: slice 2's deep + `--status-review`
+   covers the 134 proposed/construction/shelved and 52 cancelled rows (the other 14 cancelled
+   were reviewed in batch 5). Do not stage a second pass over the same cells.
 4. **Discovery (§4)** — never run for the US. Must be sliced like the sweep; whole-country
    trips the >5-candidate-cluster escalation gate immediately.
 5. **Then, maybe:** route creation (§8 — 85 gas rows are `Not mapped (but could be)` or
@@ -116,7 +130,13 @@ leaves the right ones out.
 **The state columns were audited before batch 2** (2026-09-04,
 `notes/audit-2026-09-04-us-gas-startstate-column.md`; data in
 `batches/united-states-gas/staging/state-audit-20260904/`): every stale-operating row's
-`Start/EndState/Province` was spatial-joined against its routes-repo geometry. Of the 172
+`Start/EndState/Province` was spatial-joined against its routes-repo geometry. **A sheet-vs-route
+state mismatch is a research task on the pipeline, route FIRST (Baird 2026-09-10):** open the
+geometry and judge whether it is an accurate trace of this pipeline (right corridor, right
+termini, not the parent system or a sibling phase) against sourced maps/county lists; only then
+decide whether the start/end cells or the route is wrong. A wrong route is a validity concern
+(`contested: {"RouteAccuracy": ...}`, route-candidate recommendation for §8), never an edit to
+the state cells to match it. Of the 172
 non-Texas rows, 98 agree, 15 disagree (8 start / 7 end), 9 are blank on a routed row, and 50
 have no route at all — 18 of those blank in the start column (14 FGT expansion phases,
 P0251 Sea Robin, P2497, P2614, P5401). **Slice by the audit's `derived` state, never by

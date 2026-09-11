@@ -1,0 +1,421 @@
+{
+  "project_id": "P3197",
+  "pipeline_name": "Port Arthur Gas Pipeline",
+  "sheet_row": 1687,
+  "wiki": "https://www.gem.wiki/Port_Arthur_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action on existence/classification/duplicate/attribution; see the separate spec/status-review entries for the stale Start/Status values",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, independently regulated FERC project, not a GEM-only entity. FERC's own order in Docket CP20-21-000 (172 FERC P 61,073, issued 2020-10-15, https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf) formally defines the 'Amendment Project' as relocating the previously-approved compressor station from Allen Parish (MP 96.2) to a new site 14 miles west at MP 72.3 in Beauregard Parish ('Beauregard Parish Compressor Station'), and increasing its design horsepower from 89,900 hp to 93,880 hp (four Solar Titan 130E units), plus adding three new interconnects (Cameron Interstate Pipeline, Transcontinental Gas Pipe Line, LA Storage). A follow-on amendment, Docket CP23-513-000 (filed 2023-07-14; Federal Register notices 2023-10-13 and EA availability 2024-02-08), made 38 additional route/construction-method modifications to the same facilities. EIA's Natural Gas Pipeline Projects workbook independently tracks this exact bundle as one line item ('Louisiana Connector Amendment Project', operator 'Port Arthur Pipeline LLC', Docket/Permit Number 'CP20-21 / CP23-513-000 (amendment, 2023)', Cost $88.897M, Miles 0, Additional Capacity 70 MMcf/d, Year In Service 2027) -- confirming GEM's row is tracking a real, correctly-scoped FERC amendment docket family, not a duplicate or a misfiled placeholder. CLASSIFICATION: 'transmission' is correct -- this is an NGA Section 7(c) FERC-jurisdictional interstate facility (EIA's own 'Pipeline Type' field records 'Interstate'; the FERC order is issued under the same certificate authority, Docket CP18-7, as the mainline Louisiana Connector), not a gathering/lateral line. DUPLICATE: checked against the full Port Arthur family on this same gem.wiki page -- P0241 (Louisiana Connector, the 72-mile/42-inch mainline itself) and P3198 (Texas Connector, the separate 31-mile Orange County TX lateral to Port Arthur LNG Phase 2, EIA Docket CP17-21/CP24-512) are both swept separately in batch A3; P3590 (Louisiana Connector Extension, PF19-6-000, shelved) is staged separately within this same batch. P3197 is distinct from all three: it is specifically the compressor-station relocation/upgrade amendment (CP20-21 + CP23-513), never a length of new pipe, which is exactly why LengthKnown=0/Diameter=blank on this row is correct (see spec note below) rather than a sign of a misclassified or duplicate row. ATTRIBUTION: Owner1/Operator = 'Port Arthur Pipeline, LLC' is confirmed as both the FERC certificate holder/applicant in CP20-21-000 and EIA's recorded 'Pipeline Operator Name' -- correct, no relabeling needed.",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct StartYear1/StartMonth1 from 2027 to 2026/6 -- the compressor-station facility this row tracks is already in service, well ahead of the recorded target date (see paired status_reviews entry for the Status change itself)",
+      "contested": {
+        "StartYear1": "2026"
+      },
+      "researcher_notes": "The sheet's StartYear1=2027 traces to the current ref (eia.gov/naturalgas/data.php#pipelines), which the worklist's own existing_ref_checks already flagged as NOT actually containing the token '2027' or '2,027' on the live page -- i.e. this value was effectively uncited even before this pass. Independently, Sempra Infrastructure's own 2026-06-09 press release ('Sempra Infrastructure Announces In-Service of Port Arthur Pipeline Louisiana Connector', https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/) states the full Port Arthur Pipeline Louisiana Connector system -- explicitly including 'a compressor station in Beauregard Parish, Louisiana' as one of the named project components -- was placed in-service 'ahead of schedule and under budget.' Oil & Gas Journal (2026-06-xx, independently reported, not merely reprinting the release) corroborates: 'Sempra Infrastructure places Port Arthur Pipeline Louisiana Connector online.' Two independent origins (operator release + trade press) both post-date and contradict the recorded 2027 target. Recommend correcting StartYear1/Month to 2026/6.",
+      "proposed_refs": [
+        "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online",
+        "https://constructionfront.com/2026-06-10-sempra-infrastructure-places-2bcfd-port-arthur-pipeline-louisiana-connector-in-service/"
+      ],
+      "verifications": [
+        {"url": "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/", "ok": true, "contains_value": true, "name_found": true, "note": "Sempra Infrastructure's own 2026-06-09 release: the Port Arthur Pipeline Louisiana Connector project, including the Beauregard Parish compressor station, 'has been placed in-service'"},
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online", "ok": true, "contains_value": true, "name_found": true, "note": "Oil & Gas Journal, independent trade-press confirmation: 'Sempra Infrastructure places Port Arthur Pipeline Louisiana Connector online'"},
+        {"url": "https://constructionfront.com/2026-06-10-sempra-infrastructure-places-2bcfd-port-arthur-pipeline-louisiana-connector-in-service/", "ok": true, "contains_value": true, "name_found": true, "note": "trade press, 2026-06-10, corroborates the June 9, 2026 in-service milestone"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The current ref (EIA's general data.php landing page) does not literally state a status for this row (existing_ref_checks flagged the status token as absent -- expected, since status there is only inferable from prose). The recorded 'proposed' is now materially stale: the compressor-station facility this row tracks was placed in-service on 2026-06-09 per Sempra Infrastructure's own press release, independently corroborated by Oil & Gas Journal and constructionfront.com (trade press, not merely re-syndicating the release). See the paired status_reviews entry for the full evidentiary discussion."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC order under the Natural Gas Act authorizing the Port Arthur Pipeline's compressor-station amendment"},
+        {"url": "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector", "ok": true, "contains_value": true, "name_found": true, "note": "Sempra's own project page: 'up to 2 billion cubic feet per day (Bcfd) of U.S. natural gas'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (EIA data.php) re-verified live and value-present but did not name the pipeline; replaced/supplemented with two independent, name-confirmed sources: FERC's NGA-jurisdiction order (natural gas pipeline certificate authority) and Sempra's own project page stating natural gas volumes explicitly."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC Natural Gas Act Section 7(c) certificate-amendment order -- interstate transmission-class jurisdiction, not gathering"},
+        {"url": "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector", "ok": true, "contains_value": true, "name_found": true, "note": "describes an interstate pipeline delivering gas to an LNG export terminal via long-haul interconnects"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No source uses the literal word 'transmission', but this is unambiguous: an NGA Section 7(c)-certificated, FERC-jurisdictional interstate compressor/pipeline facility interconnecting with three other interstate pipelines (Cameron Interstate Pipeline, Transco, LA Storage) is transmission-class by definition, not gathering/lateral. EIA's own workbook records 'Pipeline Type: Interstate' for this exact line item, consistent."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2023", "ProposalMonth": "7"},
+      "primary_value": "2023",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2023/10/13/2023-22693/port-arthur-pipeline-llc-notice-of-schedule-for-the-preparation-of-an-environmental-assessment-for",
+        "https://www.govinfo.gov/content/pkg/FR-2023-10-13/pdf/2023-22693.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2023/10/13/2023-22693/port-arthur-pipeline-llc-notice-of-schedule-for-the-preparation-of-an-environmental-assessment-for", "ok": true, "contains_value": true, "name_found": true, "note": "Federal Register notice: 'On July 14, 2023, Port Arthur Pipeline, LLC ... filed an application in Docket No. CP23-513-000'"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2023-10-13/pdf/2023-22693.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "govinfo.gov's official PDF mirror of the same Federal Register notice, full 'Project Description' text confirms the July 14, 2023 filing date and the 38 route/construction-method modification locations"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Current ref (already the Oct 2023 Federal Register notice) re-verified live, names the pipeline, and states the July 14, 2023 filing date verbatim -- the correct docket is CP23-513-000, the 2023 follow-on amendment to the 2020 CP20-21-000 compressor-relocation order (this row's proposal date tracks the more recent of the two amendment filings, consistent with GEM convention of using the latest active docket action). The govinfo.gov PDF is technically a second host but the same underlying Federal Register document, so treated as one origin (independent=false) per the standing 'wire story reprinted across outlets' rule; searched FERC eLibrary's public docket sheet and Sempra's regulatory-filings page for a distinct second confirmation of the specific July 14, 2023 filing date and found none beyond documents that themselves cite this same notice."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source gives a discrete construction-start date specific to the Beauregard Parish Compressor Station relocation/upgrade. FERC's CP20-21-000 order (issued 2020-10-15) authorized construction to proceed subject to conditions and a Notice to Proceed, but the order and subsequent CP23-513-000 filings/EA (2024-02-08 FONSI) do not state an actual physical construction-start date; Sempra's press releases and project page discuss only the 2026-06-09 in-service milestone, not when compressor-station groundbreaking occurred. Searched FERC eLibrary for a Notice to Proceed filing, Sempra Infrastructure investor presentations/10-K filings (2021-2026), and general trade press; found only general references to the pipeline 'under construction alongside Port Arthur LNG Phase 1' without a compressor-station-specific date. Left UNRESOLVED rather than fabricating a date."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2026", "StartMonth1": "6"},
+      "primary_value": "2026",
+      "proposed_refs": [
+        "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online"
+      ],
+      "verifications": [
+        {"url": "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/", "ok": true, "contains_value": true, "name_found": true, "note": "press release dated June 9, 2026, announcing in-service, naming the Beauregard Parish compressor station as part of the completed system"},
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online", "ok": true, "contains_value": true, "name_found": true, "note": "independent trade-press confirmation of the same June 2026 in-service date"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The current recorded StartYear1=2027 is not supported by the current ref (existing_ref_checks already found the literal token '2027'/'2,027' absent from the live EIA page). The compressor station this row tracks entered service June 9, 2026 as part of the whole Port Arthur Pipeline Louisiana Connector system going in-service (Sempra press release, independently corroborated by Oil & Gas Journal) -- earlier than, not later than, the previously recorded 2027 target. Corrected to 2026/6."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Delay [ref]",
+      "value_cols": ["Delayed", "DelayType"],
+      "primary_value_col": "Delayed",
+      "values": {"Delayed": "yes", "DelayType": "confirmed"},
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "order recounts a January 2020 supplemental filing, a March 2020 staff data request/response, and an EA process that pushed the amendment order to October 2020, 18 months after the original April 2019 certificate"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": false, "note": "workbook notes a second, later amendment (CP23-513, filed 2023, EA issued 2024-02-08) further extending the permitting timeline for the same facilities"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Delayed=yes/DelayType=confirmed holds up: this is a well-documented, multi-year, multi-filing regulatory delay (2019 original certificate -> Jan/Mar 2020 supplements -> Oct 2020 amendment order -> a further 2023 amendment -> Feb 2024 EA/FONSI), not a dormancy inference. Both the FERC order and EIA's independently-compiled workbook corroborate the extended timeline."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "70.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "70.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Louisiana Connector Amendment Project' row: Additional Capacity (MMcf/d) = 70, exact match"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's workbook records exactly 70 MMcf/d as the 'Additional Capacity' attributable to this amendment -- this is the incremental throughput gained from the compressor horsepower increase (89,900 hp -> 93,880 hp), not the mainline's total 2.0 Bcf/d design capacity (which belongs on the separate P0241 Louisiana Connector row). Read the full FERC CP20-21-000 order text for a matching '70 MMcf/d' figure and did not find one stated verbatim -- the order gives HP figures and an overall design capacity of 2,050,000 Dth/d for the whole Louisiana Connector Project, but does not itself break out the amendment's specific incremental Mcf/d contribution. Treated as single-origin (EIA-derived estimate); no independent second source found restating this specific 70 MMcf/d figure, so tier is medium rather than high despite the exact-match confidence."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source gives an operating/MAOP pressure specific to the Beauregard Parish Compressor Station or this amendment's facilities. The only pressure-adjacent figure found in searches (a ~1,440 psi MAOP cited by a trade-press piece) is stated for the whole 72-mile Louisiana Connector mainline system, not confirmed as this compressor-only amendment row's own attribute -- applying a system-wide aggregate figure to a segment/amendment-only row risks misattribution (aggregate-vs-segment rule). FERC's CP20-21-000 order and the CP23-513-000 Federal Register notices, both read in full, discuss horsepower and route/construction-method changes but state no MAOP or discharge-pressure figure. Left UNRESOLVED rather than borrowing the aggregate mainline figure."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "0.00", "LengthKnownUnits": "km"},
+      "primary_value": "0.00",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "order: 'Port Arthur Pipeline does not propose to modify the number, make, or model of compressors and only proposes to relocate the facility' -- no new mainline pipe is authorized by this amendment"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Louisiana Connector Amendment Project' row: Miles = 0, exact match"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This is the standing 'expansion with no new physical pipe -> LengthKnown = 0' rule applied correctly: the amendment relocates and upgrades an existing compressor station and adds three interconnects at that site, but authorizes no new mainline pipeline segment (confirmed directly in the FERC order's own text and independently in EIA's Miles=0 entry for the same docket family)."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Correctly blank per the standing rule paired with LengthKnown=0: no new pipe diameter applies to a compressor-station relocation/HP-upgrade with no new mainline segment. EIA's workbook likewise records no value in its 'Pipeline Diameter (Inches)' field for this exact line item, consistent. Left UNRESOLVED (not fillable) rather than borrowing the mainline's 42-inch diameter, which belongs to the separate P0241 row."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source (FERC order, Federal Register notices, EIA workbook, Sempra materials) identifies a specific upstream gas-supply field/basin attributable to this compressor-station amendment specifically, as distinct from the mainline's general feed-gas sourcing (the amendment's own new interconnects -- Cameron Interstate Pipeline, Transco, LA Storage -- are delivery/receipt points, not named production sources). Left UNRESOLVED."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartPrefecture/District": "Beauregard Parish",
+        "StartState/Province": "Louisiana",
+        "StartCountryOrArea": "United States",
+        "EndPrefecture/District": "Beauregard Parish",
+        "EndState/Province": "Louisiana",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Beauregard Parish",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "order: relocating the compressor station 'to a new site, 14 miles west, at MP 72.3 in Beauregard Parish, Louisiana (Beauregard Parish Compressor Station)'"},
+        {"url": "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector", "ok": true, "contains_value": true, "name_found": true, "note": "Sempra's project page names 'a compressor station in Beauregard Parish, Louisiana' as a distinct project component"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Start=End=Beauregard Parish, LA correctly reflects that this row's own physical facility is a single-site compressor station, not a line spanning two termini -- distinct from the mainline's broader multi-parish/multi-county footprint (Cameron, Calcasieu, Beauregard Parishes LA; Orange, Jefferson Counties TX), which belongs on the separate P0241 row. Both a FERC order and Sempra's own project page independently confirm Beauregard Parish as the specific site."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "88897000.00", "SegmentCostUnits": "USD"},
+      "primary_value": "88897000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Louisiana Connector Amendment Project' row: Cost (millions) = 88.897, exact match to the recorded $88,897,000"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's workbook is the only source found stating a dollar cost for this amendment specifically. Read the FERC CP20-21-000 order and the CP23-513-000 Federal Register notices in full -- neither states a project cost (amendment orders of this kind typically address routing/design, not cost). Checked Sempra Infrastructure's press materials and investor presentations; these give only a combined capex figure ('under $1 billion') for the whole Louisiana Connector project (mainline + amendment), not a standalone figure for the compressor-relocation piece. Single-source (EIA); tier set to medium accordingly despite the exact match."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Port Arthur Pipeline LLC"},
+      "primary_value": "Port Arthur Pipeline LLC",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC order names 'Port Arthur Pipeline, LLC' throughout as the certificate holder/applicant undertaking the amendment"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Pipeline Operator Name: Port Arthur Pipeline LLC' for this exact line item"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Blank Operator cell filled with 'Port Arthur Pipeline LLC', matching both the FERC certificate holder (which operates its own certificated interstate facilities under NGA authority) and EIA's independently-compiled operator field for this line item."
+    },
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Port Arthur Pipeline LLC", "Owner1%": "100.00%"},
+      "primary_value": "Port Arthur Pipeline LLC",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.ferc.gov/sites/default/files/2020-10/cp20-21-000.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC order: 'Port Arthur Pipeline, LLC' is the certificate holder for the facilities this amendment modifies"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA's operator field independently agrees: Port Arthur Pipeline LLC"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The recorded Owner1='Port Arthur Pipeline LLC' 100% is correct and unchanged -- adding refs only. Confirmed via the FERC certificate holder of record and EIA's independently-compiled owner/operator field. Did not find a public parent-company ownership breakdown (e.g., Sempra Infrastructure's own percentage stake in the Port Arthur Pipeline LLC project entity) in FERC or EIA materials; Sempra's own materials describe it only as 'its' project without a stated ownership percentage, so no additional owner tiers are added."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Louisiana Connector Amendment Project",
+      "sheet_row": 1687,
+      "current_status": "proposed",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {"Status": "operating", "StartYear1": "2026", "StartMonth1": "6"},
+      "evidence_date": "2026-06",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online",
+        "https://constructionfront.com/2026-06-10-sempra-infrastructure-places-2bcfd-port-arthur-pipeline-louisiana-connector-in-service/",
+        "https://www.enr.com/articles/63270-1b-louisiana-to-texas-gas-pipeline-reaches-finish"
+      ],
+      "verifications": [
+        {"url": "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/", "ok": true, "contains_value": true},
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55383112/sempra-infrastructure-places-port-arthur-pipeline-louisiana-connector-online", "ok": true, "contains_value": true},
+        {"url": "https://constructionfront.com/2026-06-10-sempra-infrastructure-places-2bcfd-port-arthur-pipeline-louisiana-connector-in-service/", "ok": true, "contains_value": true},
+        {"url": "https://www.enr.com/articles/63270-1b-louisiana-to-texas-gas-pipeline-reaches-finish", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status=proposed is stale. On 2026-06-09, Sempra Infrastructure announced (own press release, dateline Houston) that 'its Port Arthur Pipeline Louisiana Connector project has been placed in-service,' explicitly naming the Beauregard Parish compressor station -- this row's own facility -- as one of the completed components (alongside the 72-mile/42-inch mainline). CEO Justin Bird's quote frames it as completed 'ahead of schedule and under budget.' This is independently corroborated by at least three separate trade-press outlets that did their own reporting rather than merely re-syndicating the release: Oil & Gas Journal ('Sempra Infrastructure places Port Arthur Pipeline Louisiana Connector online'), Engineering News-Record ('$1B Louisiana-to-Texas Gas Pipeline Reaches Finish'), and constructionfront.com (2026-06-10). EIA's Natural Gas Pipeline Projects workbook (last updated 2026-07-06 for the related P0241 mainline row) separately shows 'Part Completed' status with a note that 'a portion was approved for in service by FERC 5/29/26' -- consistent with a partial-in-service authorization preceding the full June 9 in-service announcement. Recommend Status -> operating and StartYear1/Month -> 2026/6 (correcting the previously uncited/unsupported 2027 target). No staleness-rule dormancy issue applies here (this is an affirmative status upgrade, not a shelved/cancelled inference)."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0241",
+      "url": "https://semprainfrastructure.com/news-and-events/news-releases/sempra-infrastructure-announces-in-service-of-port-arthur-pipeline-louisiana-connector/",
+      "facts": "The mainline Louisiana Connector (72 miles of 42-inch pipeline, Cameron/Calcasieu/Beauregard Parishes LA + Orange/Jefferson Counties TX) was placed in-service 2026-06-09 per Sempra Infrastructure's own press release, 'ahead of schedule and under budget,' feeding Port Arthur LNG Phase 1. Independently corroborated by Oil & Gas Journal and Engineering News-Record trade-press coverage (both June 2026)."
+    },
+    {
+      "project_id": "P0241",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's workbook (row 'Louisiana Connector- Port Arthur Pipeline', last updated 2026-07-06) records Status='Part Completed', Cost $1,207M, Miles 77, Additional Capacity 2,000 MMcf/d, Diameter 42in, Docket/Permit Numbers CP18-7 / CP20-21 / CP23-513, and a note that 'a portion was approved for in service by FERC 5/29/26' -- consistent with, and slightly predating, the full 2026-06-09 in-service announcement."
+    },
+    {
+      "project_id": "P3198",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+      "facts": "EIA's workbook (row 'Texas Connector-Port Arthur Pipeline') records this as a separate 31-mile, 42-inch intrastate lateral from a new Orangefield Compressor Station in Orange County, TX to the proposed Port Arthur LNG Phase 2 facility in Jefferson County, TX -- FERC Docket CP17-21 (original, April 2019) plus CP24-512 (amendment approved June 2025) -- targeting Phase 2 FID in 2025 and construction beginning Q2 2026, distinct from and not to be confused with P3197's Beauregard Parish compressor-station amendment."
+    }
+  ],
+  "summary": "P3197 Louisiana Connector Amendment Project (FERC CP20-21-000 + CP23-513-000, Beauregard Parish compressor-station relocation/HP-upgrade): real, correctly-classified, non-duplicate FERC amendment, all 16 worklist units carry a record; major finding -- Status is stale (recorded 'proposed', actually placed in-service 2026-06-09 per Sempra's own release + 3 independent trade-press outlets) and StartYear1 should move from an unsupported 2027 to 2026/6; UNRESOLVED: Construction date, Pressure, FuelSource, Diameter (the last two correctly blank per the no-new-pipe rule, not missing research)."
+}

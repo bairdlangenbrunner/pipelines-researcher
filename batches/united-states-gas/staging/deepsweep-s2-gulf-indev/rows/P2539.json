@@ -1,0 +1,679 @@
+{
+  "project_id": "P2539",
+  "pipeline_name": "Golden Pass Gas Pipeline",
+  "sheet_row": 1308,
+  "wiki": "https://www.gem.wiki/Golden_Pass_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate/location change needed. See the separate spec concern (SegmentCost) below and the status_reviews entry recommending Status construction -> operating.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, FERC-certificated project, independently confirmed via DOE/FE compliance filings (semi-annual report dated 04/01/2025; bi-weekly Report No. 136, 07/2024), EIA's Natural Gas Pipeline Projects workbook, the operator's own site (goldenpasspipeline.com), an EIA 'Today in Energy' analyst article, an Engineering News-Record trade-press article on the 2024 Zachry Holdings bankruptcy, and ExxonMobil's own SEC Form 10-K (Exhibit 21). Not a GEM-only or hallucinated entity -- multiple independent primary/government sources describe the same project under Docket Nos. CP14-517-000/CP14-518-000. CLASSIFICATION: correct -- an NGA Section 7(c) interstate transmission pipeline expansion (compression + looping + bidirectional interconnects) of GPPL's existing pipeline; EIA workbook: Pipeline Type='Interstate', Authority='FERC'. DUPLICATE: checked against the 44-pipeline roster for this batch; no duplicate or relabeling found -- P2539 is a singleton, distinct from the Driftwood/Port Arthur/Plaquemines/Haynesville-egress families discussed elsewhere in the roster guidance. LOCATION: StartState=Louisiana / EndState=Texas confirmed independently (see the Location fill); the routes-repo geometry for P2539 (single LineString, approx. (-93.67,30.36) to (-93.93,29.77)) runs Louisiana-to-Texas and is geographically consistent with the recorded states and the ~69-mile recorded length (straight-segment distance ~63 mi undercounts due to sparse vertices, not a mismatch). Not one of this batch's flagged route-mismatch cases.",
+      "proposed_refs": [
+        "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf",
+        "https://www.energy.gov/sites/default/files/2024-08/Public_GPLNG%20Request%20for%20Extension,%20Exhibit%202.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+        "https://www.goldenpasspipeline.com/",
+        "https://www.enr.com/articles/59015-update-zachry-exits-big-texas-lng-project-in-deal-with-exxon-qatar-energy",
+        "https://www.sec.gov/Archives/edgar/data/34088/000003408822000011/xomexhibit21123121.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "No value change proposed at this time (the recorded $383,000,000 exactly matches EIA's single-source figure), but a researcher with FERC eLibrary access should check whether SegmentCost should instead reflect the operator's current $500+ million total-investment figure for the compression/interconnect expansion, or whether the two figures describe different cost scopes (original 2014 application estimate vs. current actual/updated investment).",
+      "contested": {
+        "SegmentCost": ""
+      },
+      "researcher_notes": "The recorded $383,000,000 matches EIA's workbook exactly (single source, medium tier -- see the SegmentCost fill). However, the operator's own current site (goldenpasspipeline.com) describes the compression-station expansion (MP33 + MP69) alone as a '$500+ Million TOTAL INVESTMENT' -- a materially larger and more recent figure. The FERC December 21, 2016 order (167 FERC-series, Docket Nos. CP14-517/CP14-518), which I read directly via a third-party-hosted copy, footnotes a $383 million figure to the original 2014 application's Exhibit K, which is consistent with the recorded value being the ORIGINAL cost estimate rather than the current actual cost -- but I could not cite that order here because the only copy I located fails scripts/url_verifier.py with a persistent SSLError (both the default and insecure-retry TLS attempts fail, despite curl fetching it fine at HTTP 200; a Wayback Machine lookup to substitute a citable snapshot hit a 429 rate limit and could not be resolved in the time available). Recommend a follow-up check against the certificate's own cost table or a current sponsor cost disclosure before treating $383M as still current.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "construction"
+      },
+      "primary_value": "construction",
+      "proposed_refs": [
+        "https://www.energy.gov/sites/default/files/2024-08/Public_GPLNG%20Request%20for%20Extension,%20Exhibit%202.pdf",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.energy.gov/sites/default/files/2024-08/Public_GPLNG%20Request%20for%20Extension,%20Exhibit%202.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "DOE/FE bi-weekly Export Terminal Project Status Report No. 136 (period 7/16-7/31/2024), section '3.0 Pipeline Expansion': describes active civil, pipe-fabrication, building-erection and hydrostatic-testing work at the MP33/MP69 compressor stations, Sabine Spur, and NGPL/Transco interconnects -- construction actively underway as of mid-2024, tied to Docket Nos. CP14-517-000/CP14-518-000."
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Operator's own site (goldenpasspipeline.com), 'Pipeline Compression Project' section, describes the MP33 (Orange, TX) and MP69 (Starks, LA) compressor-station projects as under construction, with completion 'targeted for the first half of 2025' -- confirming construction-phase status as of the site's current content."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (eia.gov/naturalgas/data.php, a navigation page that does not name this pipeline) replaced. This unit sources the CURRENTLY RECORDED value 'construction' with independent, dated evidence that the value was accurate at the time (DOE compliance report, mid-2024; operator site, current). See status_reviews below for the separate, sourced finding that construction has since concluded and Status should move to 'operating' -- that determination is NOT merged into this fill, per the established fills-vs-status_reviews split."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row is on EIA's 'Natural Gas Pipeline Projects' sheet (project name 'Golden Pass LNG Bidirectional Pipeline', operator 'Golden Pass Pipeline LLC') -- this is by definition a natural-gas pipeline dataset."
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...transporting imported natural gas to connected interstate pipeline systems...' / safety section: 'Natural gas is an odorless, colorless, non-toxic substance...' -- operator's own site describes the commodity as natural gas throughout."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (eia data.php navigation page) replaced with two independent, on-point sources naming the pipeline and its commodity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA workbook row: Pipeline Type='Interstate', Authority='FERC', Docket 'CP14-518' -- an FERC-jurisdictional interstate mainline expansion, i.e. transmission-class, not gathering/distribution."
+        },
+        {
+          "url": "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Describes GPPL's July 7, 2014 application under 'Section 7 of the NGA...and Parts 157 and 284 of the Commission's regulations' to add compression/looping/bidirectional facilities 'on its existing interstate pipeline' -- an NGA Section 7 interstate transmission certificate."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent government-sourced documents (EIA database; DOE/FE compliance report quoting the FERC docket) agree this is an interstate transmission pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2014",
+        "ProposalMonth": "7"
+      },
+      "primary_value": "2014",
+      "proposed_refs": [
+        "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'On July 7, 2014, Golden Pass Products LLC (\"GPP\") and Golden Pass Pipeline LLC (\"GPPL\") ... filed applications with the FERC ... Docket Nos. CP14-517-000 and CP14-518-000, respectively, to construct and operate LNG export facilities near Sabine Pass, Texas.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled: ProposalYear=2014, ProposalMonth=7 (July 7, 2014 FERC filing date for Docket CP14-518-000, GPPL's Section 7 application). Single-source (medium tier): I searched for a second independent confirmation of the exact filing date -- a 2014 naturalgasintel.com article that appeared in search results (articles/98930, headlined 'Golden Pass Seeks FERC Authority...2014-07-07') now serves unrelated, re-indexed content when fetched (its JSON-LD reports an unrelated 2017 Transco article; the old article ID/URL mapping appears to have broken on NGI's site), so it could not be used. A Federal Register notice of GPP/GPPL's application would restate the applicants' own filing date and would not count as a second independent origin per the standing independence rule. No conflicting date found anywhere searched."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2022"
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Milepost 33 in Orange, Texas ... Site clearing activities began in 2022 with completion targeted for the first half of 2025.' / 'Milepost 69 in Starks, Louisiana ... Construction activities began in 2022 with completion targeted for the first half of 2025.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled: ConstructionYear=2022, sourced to the operator's own site giving explicit 2022 start dates for both compressor-station sites (MP33 Orange TX, MP69 Starks LA) that make up this expansion. Single-source (medium tier): I attempted to independently re-verify this date via the FERC December 21, 2016 certificate order (a scanned copy is mirrored at aglaw.psu.edu -- content read directly and consistent with the project, but the URL fails scripts/url_verifier.py with a persistent SSLError on both the standard and insecure-retry attempts despite the page returning HTTP 200 to curl, so it is not cited here) and via a Wayback Machine snapshot lookup (archive.org's availability API returned HTTP 429 rate-limiting on repeated attempts and could not be resolved in the time available). DOE's July 2024 bi-weekly compliance report (Report No. 136, Exhibit 2) independently corroborates that MP33/MP69 civil, pipe-fabrication and hydrostatic-testing work was actively underway by mid-2024, consistent with (but not itself dating) a 2022 start."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2025"
+      },
+      "primary_value": "2025",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline': Year In Service Date=2025, Completed Date=2026-01-27; description notes 'FERC approved MP 33 Compressor Station in service 9/5/2025 and the Sabine Spur facilities in service October 2025.'"
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Both the MP33 (Orange, TX) and MP69 (Starks, LA) compressor-station projects list 'completion targeted for the first half of 2025.'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2025 confirmed by two independent sources: EIA's government database (Year In Service Date=2025, with the MP33 compressor station's own in-service date of 9/5/2025 as the most specific milestone) and the operator's own site (H1 2025 completion target for both compressor stations). See status_reviews below, which recommends adding StartMonth1=9 (September 2025, the MP33 compressor station's FERC-approved in-service date, the first major facility placed in service) as part of the broader Status=operating recommendation."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Delay [ref]",
+      "value_cols": [
+        "Delayed",
+        "DelayType"
+      ],
+      "primary_value_col": "Delayed",
+      "values": {
+        "Delayed": "yes",
+        "DelayType": "confirmed"
+      },
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.enr.com/articles/59015-update-zachry-exits-big-texas-lng-project-in-deal-with-exxon-qatar-energy"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Original lead construction contractor (Zachry) declared bankruptcy 5/21/2024, triggering delays.'"
+        },
+        {
+          "url": "https://www.enr.com/articles/59015-update-zachry-exits-big-texas-lng-project-in-deal-with-exxon-qatar-energy",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Zachry Holdings Inc. no longer is lead contractor for the facility, which it had been since 2019, under an interim agreement with ExxonMobil and co-owner Qatar Energy...approved July 24 by a federal bankruptcy court judge in Houston' -- reporting Zachry's May 2024 Chapter 11 filing and its consequences for the project's schedule and contractor lineup."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (EIA's government database; Engineering News-Record trade press) confirm the May 21, 2024 Zachry Holdings Chapter 11 bankruptcy filing caused a confirmed construction delay, consistent with recorded Delayed=yes / DelayType=confirmed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "2500.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "2500.00",
+      "proposed_refs": [
+        "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Golden Pass Pipeline, LLC, is expanding the existing 69-mile pipeline...to enable deliveries of 2.5 Bcf/d of natural gas to the Golden Pass LNG terminal...' (2.5 Bcf/d = 2,500 MMcf/d)."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline': Additional Capacity (MMcf/d) = 2500."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both sources are EIA publications -- one a narrative 'Today in Energy' analysis article, the other EIA's raw project-tracking workbook -- so while they are separately authored/compiled EIA products (not a copy-paste republish of one wire story), they share one institutional origin and are not treated as two fully independent origins; tier set to medium rather than high on that basis. I searched DOE/FE compliance reports (semiannual report, bi-weekly Report No. 136) and the operator's own site for a restated 2.5 Bcf/d or 2,500 MMcf/d figure and found none -- they describe the bidirectional expansion qualitatively without quantifying capacity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/design-pressure figure for this specific pipeline found. Searched: the DOE/FE semi-annual report (04/01/2025) and bi-weekly Report No. 136 (07/2024) -- neither states a pipeline design/operating pressure; the EIA workbook (no Pressure column); the operator's own site (goldenpasspipeline.com -- general safety-marker content only, no MAOP figure); WebSearch for 'Golden Pass Pipeline' + MAOP/psig/design pressure. One candidate document, the Magnolia LNG/Lake Charles Expansion FEIS, does contain detailed MAOP/psig tables, but on inspection those tables describe Kinder Morgan Louisiana Pipeline (KMLP) header facilities for a DIFFERENT project entirely -- not Golden Pass -- so it was correctly excluded rather than mis-cited. Leaving Pressure UNRESOLVED; a FERC eLibrary copy of the original CP14-518 application/certificate (Exhibit F/design data) would likely resolve this if accessible."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "69.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "69.00",
+      "proposed_refs": [
+        "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...is expanding the existing 69-mile pipeline that originates northeast of Starks, Louisiana...'"
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The 70-mile Golden Pass Pipeline began service in 2010...' -- agrees within normal rounding (70 vs. recorded 69)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (EIA analyst article; operator's own site) agree on ~69-70 miles -- the operator's rounder '70-mile' figure is within normal rounding of the recorded 69.00 and is treated as agreement, not a discrepancy, per the ref-support equivalence rule. EIA's workbook (Miles=69) independently agrees exactly."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "42.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "42.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline': Pipeline Diameter (Inches) = 42."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single-source (medium tier): EIA's government workbook records Diameter=42in for this exact project/docket (CP14-518). DOE compliance reports and the operator's site describe pipe-fabrication/compression work without stating a diameter figure; no second independent numeric-match source found in the time available."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per docs/reference/gem_schema.md, FuelSource must name a specific upstream field/plant/facility, never the commodity 'Natural Gas' itself. This pipeline is not fed by one named upstream field -- it interconnects with multiple interstate/intrastate systems for bidirectional, multi-sourced supply: DOE's bi-weekly Report No. 136 (07/2024) names 'NGPL Interconnect' improvements and a 'Transco meter station' upgrade for bidirectional operation; the operator's own site states GPPL 'connect[s] to multiple intrastate and interstate pipeline systems providing access to a variety of supply sources.' No single field/plant is attributable, so per the schema's explicit instruction this is left blank/UNRESOLVED rather than defaulted."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Louisiana",
+        "StartCountryOrArea": "United States",
+        "EndState/Province": "Texas",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Louisiana",
+      "proposed_refs": [
+        "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=61062",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...the existing 69-mile pipeline that originates northeast of Starks, Louisiana, to enable deliveries...to the Golden Pass LNG terminal in Jefferson County, Texas.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline': Beg_State=LA, End_State=TX, Crosses State Border=Yes."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Sheet's Start=Louisiana / End=Texas confirmed by EIA's narrative article and its workbook (both EIA -- tier set medium rather than high on shared-institutional-origin grounds, per the same caveat noted on Capacity). Both states are correct regardless of which end a given source calls the 'origin': EIA's Today-in-Energy article describes the pipeline as originating in Louisiana and delivering to the Texas terminal, while the operator's own site (in different marketing copy found via search, not independently re-verified by direct fetch of that specific page) frames it the opposite way (originating at the Texas terminal, terminating at the Louisiana interconnect) -- a common direction-of-narrative difference in pipeline literature (gas-flow direction vs. facility numbering), not a location error. The routes-repo geometry (P2539.geojson, a single LineString from approx. (-93.67,30.36) to (-93.93,29.77)) runs from the Louisiana side to the Texas side and is consistent with both states; no route-vs-sheet mismatch to flag."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "383000000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "383000000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline': Cost (millions) = 383."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single-source (medium tier): EIA's workbook matches the recorded $383,000,000 exactly. NOTE (see validity concern below): the operator's own current site (goldenpasspipeline.com) states the ongoing compression/interconnect expansion represents a '$500+ Million TOTAL INVESTMENT' -- a materially larger, more recent figure than the recorded/EIA $383M. I could not confirm whether $383M is the original 2014 FERC-application cost estimate later superseded by $500M+, or a different cost scope, because the FERC order itself (which I read directly and which footnotes a $383 million figure to the application's Exhibit K) could not be cited here (url_verifier SSLError on the only copy located). Flagging as a spec concern rather than proposing a value change."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Golden Pass Pipeline LLC"
+      },
+      "primary_value": "Golden Pass Pipeline LLC",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline': Pipeline Operator Name = 'Golden Pass Pipeline LLC'."
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "The site IS Golden Pass Pipeline's own operator site: corporate office '811 Louisiana Suite 1450, Houston, TX'; named commercial/nominations contacts (e.g. 'Katherine Medrano, Director, Commercial Pipeline Operations'); 24-hour emergency line answered as 'Golden Pass Pipeline'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled: Operator='Golden Pass Pipeline LLC' (self-operated), confirmed by EIA's independent database field and by the operator's own official site."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Golden Pass Pipeline LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Golden Pass Pipeline LLC",
+      "proposed_refs": [
+        "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.energy.gov/documents/gplng-do-fe-semi-annual-report-0401202512-88-lng-12-156-lngpdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Names 'Golden Pass Pipeline LLC (\"GPPL\")' throughout as the FERC-certificated holder/applicant for the pipeline facilities (Docket CP14-518-000)."
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "The operator's own site identifies 'Golden Pass Pipeline (GPPL)' as the entity undergoing the expansion and owning the compressor-station properties ('property owned by GPPL')."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled with the SAME recorded value: Owner1='Golden Pass Pipeline LLC' at 100%, confirmed as the direct legal owner/certificate-holder of the pipeline by two independent sources (DOE/FE compliance report; operator's own site). Additional context (not a proposed change): ExxonMobil's FY2021 Form 10-K, Exhibit 21 (List of Subsidiaries) -- a SEC filing, fetched directly -- lists 'Golden Pass Pipeline LLC' with 'Percentage of Voting Securities Owned Directly or Indirectly by Registrant' = 30, Delaware, footnoted (5). This confirms ExxonMobil holds a 30% equity interest in the GPPL entity itself (not just in the Golden Pass LNG terminal generally), implying the balance is held by a QatarEnergy affiliate (consistent with the well-documented 70%/30% QatarEnergy/ExxonMobil structure of the broader Golden Pass LNG joint venture, e.g. as described in EIA's workbook notes and multiple trade-press articles on the 2024 Zachry dispute). GEM's recorded Owner1=100% 'Golden Pass Pipeline LLC' reflects the direct pipeline-owning entity, which is a defensible and internally-consistent convention (the pipeline itself is wholly owned by GPPL; GPPL in turn has upstream equity holders) -- I am not proposing a change to Owner1/Owner1%, but flagging this SEC-sourced 70/30 equity detail as a possible Owner2/Owner3 addition for a future ownership-structure pass, should GEM want to record the ultimate parents rather than (or in addition to) the direct pipeline entity."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 1308,
+      "current_status": "construction",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {
+        "Status": "operating",
+        "StartYear1": "2025",
+        "StartMonth1": "9"
+      },
+      "evidence_date": "2026-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.goldenpasspipeline.com/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row 'Golden Pass LNG Bidirectional Pipeline' (last updated 2026-04-21): Status='Completed', Completed Date=2026-01-27, Year In Service Date=2025. Description: 'FERC approved MP 33 Compressor Station in service 9/5/2025 and the Sabine Spur facilities in service October 2025. First LNG production achieved 3/30/2026 from Train 1... FERC extension for pipeline operations through 11/30/2029.'"
+        },
+        {
+          "url": "https://www.goldenpasspipeline.com/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Both compressor-station projects (MP33 Orange TX; MP69 Starks LA) list 'completion targeted for the first half of 2025', consistent with the EIA in-service dates."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's recorded Status='construction' is stale: EIA's Natural Gas Pipeline Projects workbook -- an independent government database, most recently updated for this exact row on 2026-04-21 -- now lists the project as Status='Completed', with the MP33 Compressor Station placed in FERC-approved service on 9/5/2025 and the Sabine Spur facilities in service in October 2025, and full project completion recorded 2026-01-27. This is corroborated by the operator's own site targeting first-half-2025 completion for both compressor stations, and is consistent with the broader Golden Pass LNG terminal's well-documented commissioning progress (DOE's April 2025 semi-annual report was still describing pre-commissioning activities and a Train 1 target of 'end of 2025', i.e. written before these pipeline-side in-service dates occurred). Recommending Status: construction -> operating, with StartYear1=2025 (unchanged/confirmed) and StartMonth1=9 added (September 2025, the MP33 compressor station's FERC-approved in-service date -- the first major facility of this expansion placed in service, and the standard GEM convention of dating StartYear1/Month to the first operational milestone). This is one of the batch's explicitly flagged 'construction' rows (P2539) where the operative question was whether the project is now in service; EIA's dated, government-sourced in-service data answers it affirmatively. Today's date for this sweep is 2026-09-10, roughly a year after the MP33 in-service date, so this is not a marginal/recent call."
+    }
+  ],
+  "summary": "P2539 (Golden Pass Gas Pipeline) confirmed real/correctly classified/not a duplicate; all 16 worklist units carry a fills[] object (12 REFS_ADDED/REVERIFIED, 3 UNRESOLVED: ConstructionYear sourced medium-tier single-source is REFS_ADDED not UNRESOLVED -- true UNRESOLVED units are Pressure and FuelSource only, plus SegmentCost carrying a spec concern). status_reviews recommends Status construction->operating (StartYear1=2025/StartMonth1=9) per EIA's 2026-04-21 in-service data; a second validity concern flags a SegmentCost ($383M sheet/EIA vs. operator's current $500M+ total-investment figure) needing a researcher with FERC eLibrary access."
+}

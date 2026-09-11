@@ -1,0 +1,638 @@
+{
+  "project_id": "P2542",
+  "pipeline_name": "Gulfstream Natural Gas Pipeline",
+  "sheet_row": 1310,
+  "wiki": "https://www.gem.wiki/Gulfstream_Natural_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/duplicate change needed; see the separate route-vs-sheet mismatch concern (RouteAccuracy) and the status_reviews entry recommending Status -> operating.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, FERC-certificated project (Docket CP19-475-000; application filed June 3, 2019; certificated by FERC order 170 FERC P61,199, March 19, 2020; completed and in-service July 2022 per gulfstreamgas.com + EIA). CLASSIFICATION: correct -- an interstate NGA-regulated expansion of Gulfstream's existing mainline (EIA: Pipeline Type=Interstate, Authority=FERC), specifically a ~4-mile/36-inch new-pipe replacement + compressor/meter-station modifications, not a gathering or lateral-only project. DUPLICATE: not a duplicate -- Gulfstream's prior phases (1-5, completed 2002-2011 per EIA's Historical Projects tab) are separate historical projects, not this row; this row is uniquely Phase VI (docket CP19-475, separately EIA-listed as 'Gulfstream Phase VI Expansion Project'). ATTRIBUTION: Operator (Gulfstream Natural Gas System, L.L.C.) and Owner (Enbridge 50% / Williams Companies 50%) sourced and confirmed above by both parent companies' own SEC filings plus FERC/EIA records -- no attribution conflict found.",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://www.ferc.gov/sites/default/files/2020-06/20200319141749-CP19-475-000.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://gulfstreamgas.com/phase-vi/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "verdict": "concern",
+      "concern_type": "validity",
+      "recommendation": "Do not treat the current GOIT-GGIT-pipeline-routes geometry as an accurate trace of this segment's new pipe. Route candidate for a routes-repo PR/§8 process: replace or supplement with a corridor anchored at Compressor Station 410, Coden, Mobile County, AL (approx. MP0.0) running ~3.9-4 mi to the MP3.9 tie-in point (still Mobile County, AL), per FERC EA Figure 1 (CP19-475-EA.pdf). The Length/Diameter/Location cells in this shard are sourced independently from FERC/EIA/gulfstreamgas.com, NOT from this route, and should not be edited to match it.",
+      "contested": {
+        "RouteAccuracy": "very low (straight line/schematic) -- current 2-point geometry is not just imprecise, it depicts the wrong location for this segment's new pipe"
+      },
+      "researcher_notes": "The routes-repo geojson for P2542 (GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P2542.geojson) is a 2-point straight line from approx. (-82.404, 27.794) to (-82.417, 27.746) -- the Apollo Beach/Big Bend Power Station area of Hillsborough County, FL, near Tampa Bay. That is NOT where the actual new pipe for this Phase VI segment was built: FERC's docket CP19-475 places the ~4-mile, 36-inch new pipeline entirely in Mobile County, Alabama (Coden, at Compressor Station 410, MP0.0-3.9), roughly 500 miles from the digitized route's location. The Florida-area geometry likely reflects the delivery/metering side of the broader Gulfstream system (Big Bend Power Station is the ultimate offtaker, and CS420 metering equipment is in nearby Manatee County) rather than this segment's own new-pipe route. Per the route-vs-sheet mismatch protocol, this is a ROUTE-IS-WRONG case (not just cells wrong against a correct route): the cells above (Length, Diameter, Location, etc.) are filled from independent FERC/EIA/gulfstreamgas.com documentary evidence, not from this route, and the route itself is flagged as a §8 candidate for correction rather than edited to match the cells.",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://gulfstreamgas.com/phase-vi/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "construction"
+      },
+      "primary_value": "construction",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The sheet's Status=construction is stale: gulfstreamgas.com's own Phase VI project page states 'The project was completed and went in-service in July of 2022,' independently corroborated by EIA's Natural Gas Pipeline Projects workbook (exact-match row for docket CP19-475: Status=Completed, Completed Date=2022-07-12, Year In Service Date=2022). See status_reviews below for the sourced verdict=change recommendation (Status -> operating, StartYear1=2022/StartMonth1=7). Leaving this fills[] unit UNRESOLVED rather than asserting a value here, to avoid a second, possibly conflicting, place declaring the Status column."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook; exact-match row for docket CP19-475."
+        },
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EA describes 'natural gas transmission facilities' delivering 78,000 Dth/d of natural gas."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled with the value already on the sheet. FERC's EA (CP19-475) repeatedly describes the Project as natural gas transmission facilities; EIA's independent federal Natural Gas Pipeline Projects workbook separately lists this exact project (matching docket, cost, miles, diameter, capacity) in its natural-gas-only project registry. Two independent origins agree Fuel=Gas."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2019",
+        "ProposalMonth": "6"
+      },
+      "primary_value": "2019",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://www.federalregister.gov/documents/2019/06/21/2019-13234/gulfstream-natural-gas-system-llc-notice-of-application"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Gulfstream filed an application on June 3, 2019 in Docket No. CP19-475-000... pursuant to section 7(c) of the Natural Gas Act.'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/06/21/2019-13234/gulfstream-natural-gas-system-llc-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Federal Register Notice of Application, June 21, 2019, restates the same June 3, 2019 filing."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. FERC's EA states the June 3, 2019 application filing date; the Federal Register's own Notice of Application restates the same date. Per the independence rule, a Federal Register notice of an application is the same origin as the applicant, so this is one origin (not two independent sources) -- tier kept at medium. No independent (non-regulatory) source discussing the original 2019 filing was found."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2021",
+        "ConstructionMonth": "11"
+      },
+      "primary_value": "2021",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://www.ferc.gov/sites/default/files/2020-06/20200319141749-CP19-475-000.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'construction of the Project facilities to begin on November 1, 2021 and continue until the Project in-service date on December 1, 2022.'"
+        },
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-06/20200319141749-CP19-475-000.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Ordering paragraph requires construction 'by November 1, 2021, to meet the scheduled in-service date of December 1, 2022.' (verifier's substring check passed on 'November 1, 2021' and 'CP19-475'.)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. Both the EA and FERC's March 19, 2020 order (170 FERC P61,199) state Gulfstream's anticipated construction schedule (mobilization/clearing/construction beginning November 1, 2021). Both documents restate Gulfstream's own schedule (one origin per the independence rule), so kept at medium tier. Consistent with the actual July 2022 completion found elsewhere in this shard (an ~8-month build, plausible for a 4-mile pipeline plus compressor/meter modifications)."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2022",
+        "StartMonth1": "7"
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://gulfstreamgas.com/phase-vi/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://gulfstreamgas.com/phase-vi/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The project was completed and went in-service in July of 2022.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Exact-match row for docket CP19-475: Completed Date=2022-07-12, Year In Service Date=2022."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled (StartYear1 already on the sheet) plus StartMonth1 added. gulfstreamgas.com's own Phase VI page states the project went in-service in July 2022; EIA's independent federal workbook corroborates with an exact-match row (docket CP19-475, matching cost/miles/diameter/capacity): Completed Date=2022-07-12. Two independent origins agree on July 2022 -- see also the status_reviews entry recommending Status -> operating on this same evidence."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "78.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "78.00",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'an additional 78,000 Dekatherms per day of natural gas' under firm transportation agreements."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Additional Capacity (MMcf/d) = 78' for this exact project/docket."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled with the sheet's recorded value. FERC's EA states 78,000 Dth/d (~1:1 with MMcf/d for pipeline-quality gas); EIA's independent federal workbook lists Additional Capacity (MMcf/d)=78 for this exact project/docket. Applicant-origin figure and independent EIA figure agree."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE, left UNRESOLVED. The EA discusses a PHMSA special-permit MAOP increase (2,180 psig -> 2,296 psig) for 'approximately 59 miles of its 36-inch-diameter pipeline from milepost (MP) 3.9 in Mobile County, Alabama, to MP 59.0' in the Gulf of Mexico -- explicitly the EXISTING pipe starting at MP3.9, not the new MP0.0-3.9 segment this row's Length/Diameter describe. Applying that 59-mile system figure to this specific 4-mile new-pipe segment would be an aggregate-vs-segment error, so it is not used. No source found stating a design/operating pressure specific to the new MP0.0-3.9 segment itself; not forcing a number."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "6.40",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "6.40",
+      "proposed_refs": [
+        "https://gulfstreamgas.com/phase-vi/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://gulfstreamgas.com/phase-vi/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'installation of a 3.9-mile, 36-inch diameter pipeline in Coden, Ala.' (=6.28 km)."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Miles=4 for this exact project/docket (independent federal figure)."
+        },
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'approximately 4 miles of new 36-inch-diameter pipeline' replacing an equal length of abandoned existing pipe."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled. gulfstreamgas.com states 3.9 miles (=6.28 km); FERC's EA states approximately 4 miles; EIA's independent federal workbook records Miles=4 for this exact project/docket. The recorded 6.40 km (=3.98 mi) agrees with all three within normal rounding of an 'approximately 4 mile' / '3.9-mile' description -- not a discrepancy."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36.00",
+      "proposed_refs": [
+        "https://gulfstreamgas.com/phase-vi/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://gulfstreamgas.com/phase-vi/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'installation of a 3.9-mile, 36-inch diameter pipeline in Coden, Ala.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Diameter (Inches)=36 for this exact project/docket."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled. gulfstreamgas.com and FERC's EA both describe the new pipe as 36-inch diameter; EIA's independent federal workbook records Pipeline Diameter (Inches)=36 for this exact project/docket. Agreement across Gulfstream-origin and independent-federal sources."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE, left UNRESOLVED. Searched the FERC EA, FERC order, gulfstreamgas.com, and EIA's workbook (no upstream supply-basin/fuel-source field) for a segment-specific gas supply source; found only the DELIVERY side (78,000 Dth/d firm service to Tampa Electric's Big Bend Power Station, Hillsborough County, FL), not an upstream basin/source attributable specifically to this 4-mile Alabama tie-in segment. Not forcing a value."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Compressor Station 410, Coden",
+        "StartPrefecture/District": "Mobile County",
+        "StartState/Province": "Alabama",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "MP 3.9 tie-in",
+        "EndPrefecture/District": "Mobile County",
+        "EndState/Province": "Alabama",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Compressor Station 410, Coden",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "New pipe + CS410 modifications 'in Mobile County, Alabama'; MP0.0-3.9 tie-in sites both in Mobile County."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Records Beg_State=AL, End_State=FL for the whole named project (whole-project convention; see notes)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled (country, unchanged) plus MISSING_VALUE filled (state/county/location). FERC's EA places the new ~4-mile, 36-inch pipe (the physical asset Length/Diameter above describe) entirely within Mobile County, Alabama -- from Compressor Station 410 (Coden) to the MP3.9 tie-in. Filling StartState/Province=Alabama and EndState/Province=Alabama accordingly. Per this sweep's own guidance on multi-state projects ('a compression-only or multi-state project can legitimately touch states the new pipe does not -- say which facilities are where'): the broader Phase VI Expansion Project ALSO constructs new metering equipment at Compressor Station 420 in Manatee County, Florida (the delivery point toward Tampa Electric's Big Bend Power Station) -- but that is metering-only, with zero new pipe mileage in Florida, so it is documented here rather than reflected in the Start/End state cells (which track the new pipe this row's Length/Diameter represent). EIA's independent federal workbook frames this same named project with Beg_State=AL/End_State=FL, which uses the whole-project convention rather than the new-pipe convention -- consistent with, not contradictory to, this reading. See the ROUTE-VS-SHEET MISMATCH validity concern below: the current GOIT-GGIT-pipeline-routes geometry for P2542 traces the Florida delivery/metering area, not this Alabama new-pipe segment, and should not be used to override these cells."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "161957344.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2019"
+      },
+      "primary_value": "161957344.00",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-06/20200319141749-CP19-475-000.pdf",
+        "https://www.thompsonenergyexpert.com/news/ferc-authorizes-gulfstreams-proposed-phase-vi-expansion-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-06/20200319141749-CP19-475-000.pdf",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "'Gulfstream estimates that the project will cost approximately $161,957,344.' url_verifier's substring check FAILED on this large PDF (documented false-negative class); manually confirmed present via `pdftotext -layout` -- 'grep -n \"161,957,344\"' hit at line 80 of the extracted text. Verifier passed on simpler substrings from the same URL ('November 1, 2021', 'CP19-475')."
+        },
+        {
+          "url": "https://www.thompsonenergyexpert.com/news/ferc-authorizes-gulfstreams-proposed-phase-vi-expansion-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent trade-press meta description: 'FERC authorized Gulfstream Natural Gas System L.L.C.'s (Gulfstream) $162 million Phase VI Expansion Project in Mobile County, Alabama, and Manatee County, Florida,' dated to the March 19, 2020 order."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. FERC's order states the $161,957,344 estimate. Thompson Energy Compliance, an independent FERC-practice trade publication, independently reports the same figure rounded to $162 million. Per the independence rule, trade press independently reporting on a regulatory action is a separate origin from the regulator/applicant, so this is 2 independent sources at high tier. NOTE: EIA's federal workbook separately records a lower COMPLETED-project cost of $154.6 million for this same docket -- plausibly the actual final cost vs. the $161,957,344 pre-construction estimate certificated in 2020 (a ~5% difference, not treated as a conflict requiring UNRESOLVED). SegmentCostYear set to 2019, the year Gulfstream's estimate was filed with its application (restated in the 2020 order)."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "oo_sheet_row": 1943,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Gulfstream Natural Gas System, L.L.C."
+      },
+      "primary_value": "Gulfstream Natural Gas System, L.L.C.",
+      "proposed_refs": [
+        "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-475-EA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Names the applicant/operating entity as 'Gulfstream Natural Gas System, L.L.C.' throughout."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Pipeline Operator Name = Gulfstream Natural Gas System LLC' for this exact project/docket."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. FERC's EA names the applicant/operating entity as Gulfstream Natural Gas System, L.L.C.; EIA's independent federal workbook lists the same as Pipeline Operator Name for this exact project/docket. gulfstreamgas.com states the system is 'jointly owned and operated by Williams and Enbridge and its affiliates' -- i.e., the two owners jointly staff/manage the single operating company named in FERC and EIA records."
+    },
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "oo_sheet_row": 1943,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Enbridge",
+        "Owner1%": "50.00%",
+        "Owner2": "Williams Companies",
+        "Owner2%": "50.00%"
+      },
+      "primary_value": "Enbridge",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/895728/000089572824000007/enb-20231231.htm",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726324000019/wmb-20231231.htm",
+        "https://gulfstreamgas.com/about/sponsors/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/895728/000089572824000007/enb-20231231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge Inc. FY2023 10-K: 'Enbridge has a 50% interest in Gulfstream' (~1,199 km interstate system to markets in central/southern Florida)."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726324000019/wmb-20231231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "The Williams Companies FY2023 10-K: 'We own a 50 percent equity-method investment in Gulfstream... We share operating responsibilities for Gulfstream with the other 50 percent owner.'"
+        },
+        {
+          "url": "https://gulfstreamgas.com/about/sponsors/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Gulfstream Natural Gas System, LLC is jointly owned and operated by Williams and Enbridge and its affiliates.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled with the sheet's recorded values, confirmed by BOTH parent companies' own SEC filings independently: Enbridge Inc.'s FY2023 10-K states its own 50% interest in Gulfstream; The Williams Companies' FY2023 10-K states its own 50 percent equity-method investment and shared operating responsibility with 'the other 50 percent owner.' gulfstreamgas.com's own Ownership page corroborates that the system is jointly owned by Williams and Enbridge. Two independent parent-company SEC filings, each confirming their own 50% stake, is about as independent as ownership corroboration gets."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "Phase VI Expansion Project",
+      "sheet_row": 1310,
+      "current_status": "construction",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {
+        "Status": "operating",
+        "StartYear1": "2022",
+        "StartMonth1": "7"
+      },
+      "evidence_date": "2022-07",
+      "staleness_rule": "not applicable -- directly evidenced by dated completion sources (gulfstreamgas.com + EIA), not a dormancy inference",
+      "proposed_refs": [
+        "https://gulfstreamgas.com/phase-vi/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://gulfstreamgas.com/phase-vi/",
+          "ok": true,
+          "contains_value": true,
+          "note": "'The project was completed and went in-service in July of 2022.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "Historical Projects tab, exact-match row for docket CP19-475 ('Gulfstream Phase VI Expansion Project'): Status=Completed, Completed Date=2022-07-12, Year In Service Date=2022."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's recorded Status=construction (last updated 2022-10 per this batch's prompt) is stale: two independent origins confirm the Phase VI Expansion Project was completed and placed in-service in July 2022 -- BEFORE the sheet's own October 2022 last-update date, meaning the sheet was already out of date at the time it was last touched. gulfstreamgas.com's own project page states this directly; EIA's independently-compiled federal Natural Gas Pipeline Projects workbook corroborates with an exact-match row (docket CP19-475, matching cost/miles/diameter/capacity) recording Completed Date=2022-07-12 and Status=Completed. Recommend Status: construction -> operating, and StartYear1/StartMonth1 = 2022/7 (July 2022, ~5 months ahead of the December 2022 in-service date FERC's order originally scheduled). This is a directly-evidenced completion, not a dormancy-based staleness inference, so ShelvedCancelledType does not apply."
+    }
+  ],
+  "summary": "P2542 (Gulfstream Phase VI) confirmed real/correctly classified/not a duplicate; 11 of 14 worklist units sourced (REFS_ADDED), 3 UNRESOLVED (Status deferred to status_reviews, Pressure, FuelSource). Two concerns staged: a route-vs-sheet mismatch (routes-repo geometry sits in Tampa Bay/FL near Big Bend, ~500mi from the actual Mobile County, AL new-pipe location -- flagged as a §8 route candidate) and a status_reviews change recommending Status construction->operating (StartYear1/Month=2022/7), evidenced by gulfstreamgas.com + EIA's independent federal dataset both showing completion in July 2022."
+}
