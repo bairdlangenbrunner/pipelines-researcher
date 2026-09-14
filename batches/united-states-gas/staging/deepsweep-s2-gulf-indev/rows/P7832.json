@@ -1,0 +1,672 @@
+{
+  "project_id": "P7832",
+  "pipeline_name": "Natural Gas Pipeline Company of America System",
+  "sheet_row": 4212,
+  "wiki": "https://www.gem.wiki/Natural_Gas_Pipeline_Company_of_America_System",
+  "validity": [
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action on existence/classification -- keep as a real, correctly classified gas transmission expansion project.",
+      "contested": {},
+      "researcher_notes": "Real, FERC-certificated project: Docket No. CP24-8-000, 189 FERC P 61,131, 'ORDER ISSUING CERTIFICATE' (issued Nov 21, 2024), authorizing Natural Gas Pipeline Company of America LLC to modify two existing compressor stations (CS 302, Montgomery County TX; CS 343, Liberty County TX) on its Louisiana Line to add 300,000 Dth/d of new eastbound firm transportation service. Corroborated by Kinder Morgan's own project page, the EIA Natural Gas Pipeline Projects dataset (28 releases 2018-2026, tracking this project under docket CP24-8 from Applied(2024)->Approved(2025)->Construction(2026)->Completed(2026-08)), and the Federal Register notice of the application. Correctly classified: natural gas (Fuel=Gas), interstate transmission (PipelineType=transmission) under NGA section 7(c). Not a duplicate of any other roster row -- no other P####  in the 44-row roster describes CS 302/CS 343 modifications or this docket. Two data-quality caveats found and staged separately below (Location/StartState attribution, Owner/ownership-split attribution), plus a recommended Status change (see status_reviews).",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Change StartState/Province from Louisiana to Texas -- the project's physical work (both modified compressor stations) is in Texas.",
+      "contested": {
+        "StartState/Province": "Texas"
+      },
+      "researcher_notes": "Sheet records BOTH StartState/Province and EndState/Province as Louisiana. FERC order (189 FERC P 61,131) is explicit: Compressor Station 302 is in Montgomery County, Texas, and Compressor Station 343 is in Liberty County, Texas -- both are TEXAS facilities, and all of the project's physical construction/modification work takes place there. The Louisiana Line itself runs east from CS 302 (Montgomery Co., TX) and terminates in Vermilion Parish, Louisiana -- so EndState/Province=Louisiana is correct, but the start point (where the modified facilities actually are) is Texas, not Louisiana. EIA's own dataset independently corroborates this: Beg_State=TX, End_State=LA (Aug-2026 release, row 122). Two independent government sources (FERC order + EIA dataset) agree.",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Change Owner1% from 100.00% (sole Kinder Morgan ownership) to the confirmed three-way split: Kinder Morgan 37.5%, ArcLight Capital Partners 37.5%, Brookfield Infrastructure Partners 25%.",
+      "contested": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "37.50%",
+        "Owner2": "ArcLight Capital Partners",
+        "Owner2%": "37.50%",
+        "Owner3": "Brookfield Infrastructure Partners",
+        "Owner3%": "25.00%"
+      },
+      "researcher_notes": "Sheet records Owner1=Kinder Morgan at 100.00%, cited to a now-dead kindermorgan.com project page. This is very likely wrong: NGPL has been jointly owned by Kinder Morgan, ArcLight Capital Partners, and Brookfield Infrastructure since at least 2023. PRNewswire (2023-06-15, independent of GEM, verified) states the exact post-transaction split: ArcLight 37.5%, Brookfield Infrastructure 25%, Kinder Morgan 37.5% (operator). EIA's Aug-2026 release corroborates all three parties remain current owners (Pipeline Operator Name field literally reads 'NGPL (Kinder Morgan / Brookfield / ArcLight)'), with no evidence of a change since 2023. A 2021 Reuters story (surfaced via gem.wiki's citation list) describing an earlier Kinder Morgan/Brookfield stake sale could not be verified (HTTP 401) and is not relied on here; the PRNewswire release + EIA dataset (2 independent, verified origins) are sufficient to establish the current value is wrong and to name the corrected split.",
+      "proposed_refs": [
+        "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "proposed"
+      },
+      "primary_value": "proposed",
+      "proposed_refs": [
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's own project page (Wayback capture, 2026-01-16, replacing the dead live kindermorgan.com URL which now 404s) names 'Texas-Louisiana Expansion Project' and describes it as FERC-approved (Nov 21, 2024) and targeted in service July 1, 2026 -- i.e. still in the proposed/pre-completion phase as of that capture."
+        }
+      ],
+      "class_out": "DEAD_LINK",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Sheet's current ref (kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project, live) 404s -- confirmed dead, replaced with the exact-timestamp Wayback snapshot (2026-01-16T22:18:32Z; verified via CDX API against a fuzzy year-only Wayback URL that silently resolved to an UNRELATED KM project, 'Texas-Arkansas Power Project' CP26-46 -- do not use the fuzzy /web/2026/ form for this URL). This record documents ref hygiene for the 'proposed' value as currently recorded; see status_reviews below for the recommended change to 'operating' based on newer EIA/operator evidence (in-service 2026-07-10)."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM project page describes NGPL capacity in dekatherms per day of natural gas transportation."
+        },
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC order: 'Natural...is a natural gas company as defined by section 2(6) of the NGA...engaged in the transportation of natural gas in interstate commerce.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref dead (404); replaced with two independent origins (operator + FERC order) both confirming this is a natural gas transmission project. Value 'Gas' confirmed correct."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM page describes an interstate capacity expansion on NGPL's Louisiana Line."
+        },
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC order: application under NGA section 7(c) and Part 157 for 'a certificate of public convenience and necessity' -- the interstate transmission certificate framework."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref dead (404); replaced. NGA section 7(c) certificated interstate service on NGPL's mainline (Louisiana Line) confirms 'transmission' (not gathering/lateral/distribution)."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2023",
+        "ProposalMonth": "10"
+      },
+      "primary_value": "2023",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+        "https://www.federalregister.gov/documents/2023/11/06/2023-24463/natural-gas-pipeline-company-of-america-llc-notice-of-application-and-establishing-intervention"
+      ],
+      "verifications": [
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'On October 18, 2023, Natural Gas Pipeline Company of America LLC (Natural) filed an application pursuant to section 7(c) of the Natural Gas Act...(Texas-Louisiana Expansion Project).'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2023/11/06/2023-24463/natural-gas-pipeline-company-of-america-llc-notice-of-application-and-establishing-intervention",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Federal Register notice of the same application (docket CP24-8-000), published 2023-11-06, establishing the intervention deadline -- restates the Oct 18, 2023 filing date."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "oilandgaswatch.org/pipeline/6195 (current ref) is a client-rendered Vue SPA -- curl/static fetch returns only an empty shell; could not verify it states the value, so treated as effectively uncited. FERC's own order states the exact filing date (Oct 18, 2023 = 2023-10), matching the sheet exactly. The Federal Register notice is FERC's own public notice of the application (same regulatory record, so independence is partial per the 'FERC order vs FR notice of the same docket' caveat) -- cited as a second document, not a fully independent second origin; tier held at high because the FERC order itself is authoritative and unambiguous on this date."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "oilandgaswatch.org/pipeline/6195 (current ref) is an unverifiable Vue SPA (see Proposal note). Could not find any source stating a specific construction-start month. Bounding evidence only: FERC order issuing the certificate is dated November 21, 2024 (construction could not lawfully start before this); Kinder Morgan's project page (Wayback 2026-01-16) and EIA's Aug-2026 release both point to a July 2026 in-service target/actual (7/1/26 target, 7/10/26 actual per EIA notes), consistent with a 2025 construction window but not pinning a month. Searched: 'NGPL notice to proceed Texas-Louisiana', 'Texas-Louisiana Expansion Project construction began', FERC eLibrary compliance-filing listings for CP24-8 -- none surfaced an exact start month. Sheet's recorded ConstructionYear=2025/Month=2 (February) is plausible (within the Nov2024-Apr2025ish window implied by the schedule) but neither confirmed nor refuted by any source found -- leaving UNRESOLVED rather than asserting an unconfirmed month."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2026",
+        "StartMonth1": "7"
+      },
+      "primary_value": "2026",
+      "proposed_refs": [
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...is targeted to be in service by July 1, 2026.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, 'Natural Gas Pipeline Projects' sheet, row 122 (Texas-Louisiana Expansion Project / NGPL): Status=Completed; Notes field states 'FERC approved 11/21/2024; In-service7/10/26'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (operator + government/EIA) agree on a July 2026 in-service date: KM's own target (July 1) and EIA's recorded actual (July 10) are 9 days apart -- immaterial, both round to 2026-07, matching the sheet's StartYear1=2026/StartMonth1=7 exactly. Note: the SAME EIA release also carries a stale 'Year In Service Date'=2028 field that contradicts its own Notes text (7/10/26) -- an EIA internal data-quality defect, not evidence for a 2028 date; the Notes field (dated, specific) is the more reliable EIA field here and is what's cited."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "300000.00",
+        "CapacityUnits": "Dth/d"
+      },
+      "primary_value": "300000.00",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project"
+      ],
+      "verifications": [
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...300,000 Dth/d of new eastbound firm transportation service on Natural's Louisiana Line...' (incremental capacity created by the project)."
+        },
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The project will increase NGPL's capacity by approximately 300,000 dekatherms per day.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (FERC order + operator page) agree exactly on 300,000 Dth/d as the project's NEW incremental capacity, matching the sheet. MMcf/d equivalent (per instructions): ~289.3 MMcf/d at ~1,037 Btu/scf, matching GEM's own internal auto-converted comparison value (289.296...). The EIA pre-matched candidate's 467,000 Dth/d / 467 MMcf/d figure is a DIFFERENT, larger scope -- FERC order footnote 6 explains it is the combined total (300,000 Dth/d new + existing reserved unsubscribed capacity: 160,000 Dth/d Iowa-Illinois + 65,000 Dth/d Texas-Oklahoma + 242,000 Dth/d South Texas receipt zones, netting to up to 467,000 Dth/d of TOTAL eastbound service). This is the aggregate-vs-segment/scope distinction, not a conflict -- the sheet correctly records the project's incremental capacity, so no spec concern is filed."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/pressure figure found. Read the full FERC order (189 FERC P 61,131, CP24-8-000) end to end -- it discusses horsepower, cost, rates, environmental impacts, but states no MAOP/psig figure for the modified compressor stations or the Louisiana Line segment. Checked EIA workbook (no pressure column) and the KM project page (no pressure stated). This is a compression-only modification order, not a new-pipe certificate, which is likely why no MAOP is discussed. Leaving blank rather than forcing a number."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "0.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "0.00",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Texas-Louisiana Expansion Project does not involve the construction of any new pipeline facilities or compressor stations. Rather, it comprises modifications at two existing compressor stations...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirms the compression-only-expansion rule (LengthKnown=0, Diameter blank) applies here: FERC order explicitly states no new pipe or compressor stations are built -- only re-wheeling/uprating at existing CS 302 (Montgomery Co., TX) and CS 343 (Liberty Co., TX). Sheet's LengthKnown=0.00 mi is correct. Single source (FERC order) is authoritative and unambiguous on this scope question; did not find a second source that addresses scope as explicitly, but Underground-Infrastructure/PGJ-style trade coverage of the same docket (found via search, not independently re-verified this pass) describes the same compressor-only scope, consistent with no new pipe."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Deliberately blank, not a search failure: per the compression-only-expansion rule (LengthKnown=0 => Diameter blank), and confirmed by the FERC order (no new pipeline facilities built -- only compressor re-wheeling/uprating at 2 existing stations), there is no new-pipe diameter to report for this project. Recorded as UNRESOLVED (rather than a fabricated REFS_ADDED with empty values, which would fail the shard's sourced-record check) with this note explaining the blank is correct as-is."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Haynesville Shale (TexOk basin); Permian Basin and Eagle Ford Shale (South Texas basin)"
+      },
+      "primary_value": "Haynesville Shale (TexOk basin); Permian Basin and Eagle Ford Shale (South Texas basin)",
+      "proposed_refs": [
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...additional compression to increase natural gas deliveries from existing system receipts, the growing basin supply in TexOk (Haynesville) and South Texas (Permian and Eagle Ford) to growing LNG markets.'"
+        },
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC order footnote 6: reserved unsubscribed capacity from 'various receipt points in its Texas Oklahoma Receipt Zone' and 'various receipt points in its South Texas Receipt Zone' feeding the eastbound Louisiana Line service."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent origins (operator + FERC order) agree the project moves gas sourced from the TexOk (Haynesville) and South Texas (Permian, Eagle Ford) supply basins/receipt zones onto the Louisiana Line. Per the gem_schema.md gotcha, FuelSource wants a named field/plant, not a fuel type -- these are basin/receipt-zone names rather than a single named field or facility (no single well/plant is identifiable at this compressor-station-modification scale), so tier held at medium for the granularity gap rather than high. Not defaulted to 'Natural Gas'."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Texas",
+        "StartCountryOrArea": "United States",
+        "EndState/Province": "Louisiana",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Texas",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...modify existing Compressor Station 302, located in Montgomery County, Texas...' / '...modify existing Compressor Station 343, located in Liberty County, Texas...' / Louisiana Line 'extend[s] east from Compressor Station 302 in Montgomery County, Texas, and terminate[s] at the end of Natural's system in Vermilion Parish, Louisiana.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release row 122: Beg_State=TX, End_State=LA, State(s)=TX,LA."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Replaced the old ref (eia.gov/naturalgas/data.php#pipelines) with the dated EIA xlsx (data.php is a banned navigation-page citation per standing rules) plus the FERC order. Both modified facilities (CS 302, CS 343) and the physical work of this project are in TEXAS (Montgomery and Liberty Counties); the Louisiana Line's eastern terminus (Vermilion Parish) is in Louisiana. Sheet currently records BOTH StartState/Province and EndState/Province as Louisiana -- StartState/Province is very likely wrong and should be Texas. Filed as a validity[] attribution concern below (contested StartState/Province) since this is a value correction, not just ref hygiene. Route geojson for P7832 has null geometry, so no route-vs-sheet mismatch to adjudicate. StartLocation/EndLocation/Prefecture left unfilled -- sources give county/parish-level detail (Montgomery Co./Liberty Co., TX; Vermilion Parish, LA) but I did not assert a specific city/place-name format without a clearer GEM convention."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "72000000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "72000000.00",
+      "proposed_refs": [
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The estimated cost of the Texas-Louisiana Expansion Project is approximately $71,981,853.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release row 122: Cost (millions) = 72."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Replaced the banned navigation-page ref (eia.gov/naturalgas/data.php) with the FERC order (exact figure $71,981,853, rounds to $72,000,000) and the dated EIA xlsx (independently states $72M) -- two independent origins (government order + government dataset, separately compiled) agreeing within rounding. SegmentCostYear not filled -- no source stated the dollar-year basis of the cost estimate."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(\u4e1a\u4e3b\u5355\u4f4d)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Kinder Morgan"
+      },
+      "primary_value": "Kinder Morgan",
+      "tab": "operators_owners",
+      "proposed_refs": [
+        "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Kinder Morgan, Inc. (NYSE: KMI) continues to operate the pipeline and holds a 37.5% interest in NGPL.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release row 122, Pipeline Operator Name = 'NGPL (Kinder Morgan / Brookfield / ArcLight)' -- Kinder Morgan named first / as operator."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. Two independent origins (PRNewswire explicitly naming Kinder Morgan as operator, and EIA's government dataset) agree Kinder Morgan operates NGPL, distinct from the three co-owners (see Owner [ref] below)."
+    },
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "37.50%",
+        "Owner2": "ArcLight Capital Partners",
+        "Owner2%": "37.50%",
+        "Owner3": "Brookfield Infrastructure Partners",
+        "Owner3%": "25.00%"
+      },
+      "primary_value": "Kinder Morgan",
+      "tab": "operators_owners",
+      "proposed_refs": [
+        "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.prnewswire.com/news-releases/arclight-acquires-an-incremental-interest-in-natural-gas-pipeline-company-of-america-llc-from-brookfield-infrastructure-301852235.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'As a result of this transaction, ArcLight's ownership in NGPL increased to 37.5% while Brookfield Infrastructure retains a 25% interest. Kinder Morgan, Inc. (NYSE: KMI) continues to operate the pipeline and holds a 37.5% interest in NGPL.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release row 122, Pipeline Operator Name = 'NGPL (Kinder Morgan / Brookfield / ArcLight)' -- names all three current owners, consistent with the three-way split (no evidence of ownership change since the 2023-06-15 PRNewswire release)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's dead ref (kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project, 404) replaced. Sheet's recorded Owner1=Kinder Morgan/100.00% is very likely WRONG -- NGPL has been jointly owned since at least 2023: PRNewswire (2023-06-15, verified, independent of GEM) states the exact three-way split after ArcLight's incremental acquisition from Brookfield: Kinder Morgan 37.5%, ArcLight Capital Partners 37.5%, Brookfield Infrastructure Partners 25%. EIA's Aug-2026 release corroborates all three parties are still current owners (operator field literally reads 'NGPL (Kinder Morgan / Brookfield / ArcLight)'), with no indication of a change since 2023. A Reuters article referenced in gem.wiki's citation list describing an earlier (2021) Kinder Morgan/Brookfield stake sale could NOT be verified (url_verifier: HTTP 401) and is not cited. Filed as a validity[] attribution concern below (contested Owner1/Owner1%/Owner2/Owner2%/Owner3/Owner3%) since this is a value correction, not just ref hygiene."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0173",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA's Aug-2026 Natural Gas Pipeline Projects release (row 122, Texas-Louisiana Expansion Project / NGPL, docket CP24-8) lists shipper allocations for the project's new 300,000 Dth/d of firm transportation capacity, including 80,000 Dth/d to 'Delfin Midstream' -- the sponsor of the Delfin Offshore Pipeline / Delfin LNG project (P0173 on this batch's roster). Worth checking whether Delfin's current capacity/offtake plans reference NGPL's Texas-Louisiana Expansion as a supply source."
+    },
+    {
+      "project_id": "P2539",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "Same EIA release/row: shipper allocations for the Texas-Louisiana Expansion Project's new capacity include 50,000 Dth/d to 'Golden Pass LNG' -- relevant to the Golden Pass Gas Pipeline (P2539 on this batch's roster) as a demand-side/supply-source cross-reference."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Texas-Louisiana Expansion Project",
+      "sheet_row": 4212,
+      "current_status": "proposed",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {
+        "Status": "operating",
+        "StartYear1": "2026",
+        "StartMonth1": "7"
+      },
+      "evidence_date": "2026-08",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+        "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://web.archive.org/web/20260116221832/https://www.kindermorgan.com/Operations/Projects/Texas-Louisiana-Expansion-Project",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://aglaw.psu.edu/wp-content/uploads/2024/12/NGPL-FERC-Authorization-12.09.24.pdf",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Newest dated evidence: EIA's Aug-2026 release (Last Updated Date 2026-07-10) records Status=Completed for this project, with its Notes field stating 'FERC approved 11/21/2024; In-service7/10/26' -- an actual in-service date roughly two months before today (2026-09-11). This is consistent with Kinder Morgan's own project page (Wayback capture 2026-01-16) targeting in-service by July 1, 2026, and with the FERC order (issued Nov 21, 2024) that authorized construction. Tracking the EIA project across all 28 dated releases (2018-05..2026-08) via sources/eia_pipeline_projects/data/eia_projects_long.csv shows a clean progression under docket CP24-8: Applied (2024-04/07) -> Approved (2025-01) -> Construction (2026-01/05) -> Completed (2026-08), with cost ($72M) and capacity (467/300 MMcf-equiv Dth/d) stable throughout -- no sign of a stalled or reversed project. Two independent origins (government/EIA + operator/Kinder Morgan), both dated within the last 8 months, support moving Status from 'proposed' to 'operating' and setting StartYear1=2026/StartMonth1=7 (already the sheet's recorded value, now corroborated rather than changed). Note: the same EIA release's 'Year In Service Date' column reads 2028, contradicting its own Notes text (7/10/26) -- treated as an EIA internal data-quality defect (the generic in-service-year column appears not to have been updated for this row), not evidence against the July 2026 in-service date."
+    }
+  ],
+  "summary": "P7832 NGPL Texas-Louisiana Expansion Project: real FERC-certificated compression-only expansion (CP24-8-000, 189 FERC P 61,131); all 15 worklist units reported (12 REFS_ADDED/DEAD_LINK-with-replacement, 3 UNRESOLVED -- Pressure, Diameter [deliberately blank], Construction month); two attribution concerns staged (StartState/Province Louisiana->Texas; Owner1% 100% Kinder Morgan -> 37.5/37.5/25 KM/ArcLight/Brookfield split); status_reviews recommends changing Status proposed->operating (EIA in-service 2026-07-10)."
+}

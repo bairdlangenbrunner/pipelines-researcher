@@ -18,7 +18,14 @@
       "concern_type": "spec",
       "recommendation": "update StartYear1 from 2026 to 2028 (Line 200 target in-service); the sheet's cited ref (oilandgaswatch.org/pipeline/4199) does not state 2026 and is otherwise unreadable (JS-only SPA shell, access-blocked from this environment, not confirmed dead)",
       "contested": {"StartYear1": "2028"},
-      "researcher_notes": "Two independent, recent, dated sources both give an in-service target materially later than the recorded StartYear1=2026: (1) EIA's Natural Gas Pipeline Projects workbook (downloaded 2026-09-10, row last updated 2026-01-16) lists 'Year In Service Date' = 2028 for 'Driftwood Line 200 and 300 Project Phase 1' and its Notes field states 'Line 200 in-service 2Q 2028'. (2) Williams' own Driftwood Line 200 project fact sheet PDF gives a Project Timeline ending '1Q 2028 Target In-Service' (preceded by '4Q 2026 Construction Start'). The two sources disagree on the exact quarter (1Q vs 2Q 2028) but agree on the year, so I propose StartYear1=2028 without a specific StartMonth1 (leave blank pending which quarter is confirmed). The cited ref for the current 2026 value, oilandgaswatch.org/pipeline/4199, could not be read at all -- it is a client-rendered Vue.js single-page app with an empty server-rendered shell; curl with a browser UA and four guessed API paths all returned only the SPA shell, never JSON. Per standing rule, a blocked/unreadable source is not evidence it stated 2026, and it is not deleted -- it stays noted as inconclusive-access on the Start [ref] fill below."
+      "researcher_notes": "EIA FOLLOW-UP PASS (2026-09-10): this row was researched before the EIA archive existed, so this is a delta pass adding the EIA crosswalk finding, not a redo. Two independent, recent, dated sources both give an in-service target materially later than the recorded StartYear1=2026: (1) the EIA Natural Gas Pipeline Projects release for May 2026 (https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx, sheet 'Natural Gas Pipeline Projects', row 41 -- 'Driftwood Line 200 and 300 Project Phase 1', row last updated 2026-01-16) lists 'Year In Service Date' = 2028 and its Notes field states 'Line 200 in-service 2Q 2028'. (2) Williams' own Driftwood Line 200 project fact sheet PDF gives a Project Timeline ending '1Q 2028 Target In-Service' (preceded by '4Q 2026 Construction Start') -- the second, non-EIA independent source rule 4 requires (every EIA release is one origin). The two sources disagree on the exact quarter (1Q vs 2Q 2028) but agree on the year, so I propose StartYear1=2028 without a specific StartMonth1 (leave blank pending which quarter is confirmed). The cited ref for the current 2026 value, oilandgaswatch.org/pipeline/4199, could not be read at all -- it is a client-rendered Vue.js single-page app with an empty server-rendered shell; curl with a browser UA and four guessed API paths all returned only the SPA shell, never JSON. Per standing rule, a blocked/unreadable source is not evidence it stated 2026, and it is not deleted -- it stays noted as inconclusive-access on the Start [ref] fill below.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
+        "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
     },
     {
       "segment_name": "Line 200 and Line 300 Expansion (Phase 1)",
@@ -26,8 +33,8 @@
       "concern_type": "attribution",
       "recommendation": "verify whether Owner1/Owner2 should be restructured to reflect the Williams-Woodside JV, or whether 'Driftwood Pipeline LLC' correctly remains the SPV/owner-of-record with Williams and Woodside as its (new) parent equity holders",
       "contested": {"Owner2": "Williams", "Owner2%": "80.00%"},
-      "researcher_notes": "The sheet's recorded Owner1='Driftwood Pipeline LLC' 100% is still accurate as the direct legal/certificate-holding entity: Driftwood Pipeline, LLC is still named as the docket party in FERC's Federal Register notice of extension request dated 2024-11-27 (Docket CP21-465-004), and EIA's workbook (updated 2026-01-16) still lists 'Driftwood LNG Pipeline LLC' as the Pipeline Operator Name of record. However, as of the Williams-Woodside joint venture (effective 2025-01-01 per Williams' own materials), Williams' Driftwood Line 200 Project Fact Sheet states plainly: 'Williams will hold 80% ownership and serve as the operator of this fully permitted greenfield pipeline' -- referring specifically to Line 200 (this row's physical scope). EIA's own Notes field for this exact Phase 1 row independently corroborates the JV: 'Williams joined as a partner on Line 200.' I did not overwrite Owner1 because it is unclear from public sources whether Williams' 80%/Woodside's 20% stake is held (a) directly as Owner1/Owner2 of 'Driftwood Pipeline LLC' itself, or (b) one level up, at a parent holding company, with Driftwood Pipeline LLC remaining the sheet-appropriate Owner1 exactly as recorded. Flagging for a human decision rather than guessing at cell structure. This applies identically to the sibling phase rows P7770 and P7769 (see cross_row_leads) and likely to the mainline P0177 as well, once Louisiana LNG's post-JV corporate structure is confirmed there too.",
-      "proposed_refs": ["https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf", "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "researcher_notes": "The sheet's recorded Owner1='Driftwood Pipeline LLC' 100% is still accurate as the direct legal/certificate-holding entity: Driftwood Pipeline, LLC is still named as the docket party in FERC's Federal Register notice of extension request dated 2024-11-27 (Docket CP21-465-004), and EIA's workbook (updated 2026-01-16) still lists 'Driftwood LNG Pipeline LLC' as the Pipeline Operator Name of record. However, as of the Williams-Woodside joint venture (effective 2025-01-01 per Williams' own materials), Williams' Driftwood Line 200 Project Fact Sheet states plainly: 'Williams will hold 80% ownership and serve as the operator of this fully permitted greenfield pipeline' -- referring specifically to Line 200 (this row's physical scope). EIA's own Notes field for this exact Phase 1 row independently corroborates the JV: 'Williams joined as a partner on Line 200.' I did not overwrite Owner1 because it is unclear from public sources whether Williams' 80%/Woodside's 20% stake is held (a) directly as Owner1/Owner2 of 'Driftwood Pipeline LLC' itself, or (b) one level up, at a parent holding company, with Driftwood Pipeline LLC remaining the sheet-appropriate Owner1 exactly as recorded. Flagging for a human decision rather than guessing at cell structure. This applies identically to the sibling phase rows P7770 and P7769 (see cross_row_leads) and likely to the mainline P0177 as well, once Louisiana LNG's post-JV corporate structure is confirmed there too. EIA FOLLOW-UP PASS (2026-09-11): repointed the EIA citation from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43 -- verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True); no change to the finding.",
+      "proposed_refs": ["https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf", "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"],
       "tier": "medium",
       "independent": true,
       "source_language": "en"
@@ -55,11 +62,11 @@
       "values": {"Status": "construction"},
       "primary_value": "construction",
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.federalregister.gov/documents/2024/11/27/2024-27777/driftwood-pipeline-llc-notice-of-request-for-extension-of-time"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Downloaded and read locally (openpyxl): row 'Driftwood Line 200 and 300 Project Phase 1', Status = 'Construction', Authority=FERC, Docket=CP21-465, Miles=36.9, matching this row's scope exactly"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. Downloaded and read locally (openpyxl): row 'Driftwood Line 200 and 300 Project Phase 1', Status = 'Construction', Authority=FERC, Docket=CP21-465, Miles=36.9, matching this row's scope exactly; also verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"},
         {"url": "https://www.federalregister.gov/documents/2024/11/27/2024-27777/driftwood-pipeline-llc-notice-of-request-for-extension-of-time", "ok": true, "contains_value": true, "name_found": true, "note": "FERC Federal Register notice, Docket No. CP21-465-004, 'Driftwood Pipeline, LLC; Notice of Request for Extension of Time', 89 FR 93569, published 2024-11-27 -- an active docket seeking to extend the construction/in-service deadline is consistent with an active construction-stage project (not shelved/withdrawn)"}
       ],
       "class_out": "REFS_ADDED",
@@ -77,11 +84,11 @@
       "values": {"Fuel": "Gas"},
       "primary_value": "Gas",
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook -- a natural gas pipeline by definition of the dataset"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. Listed in EIA's 'Natural Gas Pipeline Projects' workbook -- a natural gas pipeline by definition of the dataset; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"},
         {"url": "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline", "ok": true, "contains_value": true, "name_found": true, "note": "'...natural gas pipelines totaling approximately 67.7 miles... to transport approximately 4.6 billion cubic feet of natural gas per day...'"}
       ],
       "class_out": "REFS_ADDED",
@@ -100,11 +107,11 @@
       "primary_value": "transmission",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
         {"url": "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline", "ok": true, "contains_value": true, "name_found": true, "note": "Application filed 'pursuant to section 7(c) of the NGA' -- NGA section 7(c) certificates are specifically for interstate transmission/transportation facilities, not gathering or distribution"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA workbook: Pipeline Type = 'Interstate', Authority = 'FERC' -- an interstate FERC-jurisdictional transmission pipeline"}
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. EIA workbook: Pipeline Type = 'Interstate', Authority = 'FERC' -- an interstate FERC-jurisdictional transmission pipeline; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -143,11 +150,11 @@
       "values": {"ConstructionYear": "2026"},
       "primary_value": "2026",
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Notes field: 'Construction start targeted 4Q 2026; Line 200 in-service 2Q 2028.'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. Notes field: 'Construction start targeted 4Q 2026; Line 200 in-service 2Q 2028.' Verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"},
         {"url": "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Project Timeline: '4Q 2026 -- Construction Start'"}
       ],
       "class_out": "REFS_ADDED",
@@ -165,18 +172,18 @@
       "values": {"StartYear1": "2028"},
       "primary_value": "2028",
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
         "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Year In Service Date' = 2028; Notes: 'Line 200 in-service 2Q 2028'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "May 2026 release, sheet 'Natural Gas Pipeline Projects', row 41: 'Driftwood Line 200 and 300 Project Phase 1' (Operator 'Driftwood LNG Pipeline', Docket CP21-465) -- 'Year In Service Date' = 2028; Notes: 'Line 200 in-service 2Q 2028'"},
         {"url": "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Project Timeline: '1Q 2028 -- Target In-Service'"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
       "independent": true,
       "source_language": "en",
-      "researcher_notes": "DISAGREES with the recorded StartYear1=2026 -- see the paired spec concern in validity[]. The old ref, oilandgaswatch.org/pipeline/4199, could not be read: it is a client-rendered Vue.js single-page app (confirmed via curl -- the server response is only an empty <div id=\"app\"></div> shell plus a JS bundle; the JS bundle was downloaded and grepped for API endpoints with no results, and four guessed REST paths all returned the same empty shell). This is an access failure, not a dead link, so it is not deleted, just superseded here by two readable sources. EIA and Williams disagree on the exact quarter (2Q vs 1Q 2028) so StartMonth1 is left blank pending which is confirmed."
+      "researcher_notes": "EIA FOLLOW-UP PASS (2026-09-10): supersedes the shard's earlier citation of the undated EIA-NaturalGasPipelineProjects.xlsx (which changes every quarter and is never citable) with the dated May 2026 release, sheet 'Natural Gas Pipeline Projects' row 41 -- verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True, contains '2028'). DISAGREES with the recorded StartYear1=2026 -- see the paired spec concern in validity[]. The old ref, oilandgaswatch.org/pipeline/4199, could not be read: it is a client-rendered Vue.js single-page app (confirmed via curl -- the server response is only an empty <div id=\"app\"></div> shell plus a JS bundle; the JS bundle was downloaded and grepped for API endpoints with no results, and four guessed REST paths all returned the same empty shell). This is an access failure, not a dead link, so it is not deleted, just superseded here by two readable sources. EIA and Williams disagree on the exact quarter (2Q vs 1Q 2028) so StartMonth1 is left blank pending which is confirmed. Per rule 4d, the second source (Williams' fact sheet) is a non-EIA origin, satisfying the EIA-follow-up requirement that the second source come from FERC, a state regulator, or the operator."
     },
     {
       "segment_name": "Line 200 and Line 300 Expansion (Phase 1)",
@@ -188,11 +195,11 @@
       "primary_value": "yes",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2024/11/27/2024-27777/driftwood-pipeline-llc-notice-of-request-for-extension-of-time",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
         {"url": "https://www.federalregister.gov/documents/2024/11/27/2024-27777/driftwood-pipeline-llc-notice-of-request-for-extension-of-time", "ok": true, "contains_value": true, "name_found": true, "note": "FERC Federal Register notice: 'Driftwood Pipeline, LLC; Notice of Request for Extension of Time', Docket No. CP21-465-004, published 2024-11-27 -- a formal FERC filing requesting more time to complete construction/in-service than the original certificate allowed (2 years from the 2023-04-21 order, i.e. originally due ~2025-04-21)"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Notes: 'Applicants filed 5/13/2025 FERC extension request pushing deadline to 12/31/2029 (prior extension was to 4/18/2029).' -- documents at least two separate extension requests moving the in-service deadline roughly four years past the original 2025 requirement"}
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. Notes: 'Applicants filed 5/13/2025 FERC extension request pushing deadline to 12/31/2029 (prior extension was to 4/18/2029).' -- documents at least two separate extension requests moving the in-service deadline roughly four years past the original 2025 requirement; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -208,9 +215,9 @@
       "primary_value_col": "Capacity",
       "values": {"Capacity": "2400.00", "CapacityUnits": "MMcf/d"},
       "primary_value": "2400.00",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Additional Capacity (MMcf/d)' = 2400 for 'Driftwood Line 200 and 300 Project Phase 1' -- exact match"}
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. 'Additional Capacity (MMcf/d)' = 2400 for 'Driftwood Line 200 and 300 Project Phase 1' -- exact match; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -243,11 +250,11 @@
       "values": {"LengthKnown": "36.90", "LengthKnownUnits": "mi"},
       "primary_value": "36.90",
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Miles' = 36.9; Notes: '~36.9 miles of Line 200 from Ragley (Beauregard Parish) south to a receiver facility near Carlyss (Calcasieu Parish)' -- exact match"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. 'Miles' = 36.9; Notes: '~36.9 miles of Line 200 from Ragley (Beauregard Parish) south to a receiver facility near Carlyss (Calcasieu Parish)' -- exact match; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"},
         {"url": "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'~37 Mi Natural Gas Pipeline' -- agrees within rounding"}
       ],
       "class_out": "REFS_ADDED",
@@ -266,12 +273,12 @@
       "primary_value": "42",
       "proposed_refs": [
         "https://cdxapps.epa.gov/cdx-enepa-II/public/action/eis/details?eisId=378210",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline"
       ],
       "verifications": [
         {"url": "https://cdxapps.epa.gov/cdx-enepa-II/public/action/eis/details?eisId=378210", "ok": true, "contains_value": true, "name_found": false, "note": "Worklist's own automated check: 200, live, value ('42') present on the page; the pipeline-name fuzzy match failed (the EIS record's title format does not match cleanly), but the record is for this exact EIS (eisId 378210 = the Line 200/300 project FEIS)"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Pipeline Diameter (Inches)' = 42"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. 'Pipeline Diameter (Inches)' = 42; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"},
         {"url": "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline", "ok": true, "contains_value": true, "name_found": true, "note": "'...dual 42-inch-diameter natural gas pipelines...'"}
       ],
       "class_out": "REVERIFIED",
@@ -310,11 +317,11 @@
       },
       "primary_value": "Ragley",
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Notes: '~36.9 miles of Line 200 from Ragley (Beauregard Parish) south to a receiver facility near Carlyss (Calcasieu Parish)' -- exact match on both endpoint cities and parishes"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. Notes: '~36.9 miles of Line 200 from Ragley (Beauregard Parish) south to a receiver facility near Carlyss (Calcasieu Parish)' -- exact match on both endpoint cities and parishes; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"},
         {"url": "https://www.federalregister.gov/documents/2021/07/07/2021-14468/driftwood-pipeline-llc-notice-of-application-and-establishing-intervention-deadline", "ok": true, "contains_value": true, "name_found": true, "note": "'...to be located in Beauregard and Calcasieu Parishes, Louisiana' -- confirms both parishes (does not name the specific cities)"}
       ],
       "class_out": "REFS_ADDED",
@@ -331,9 +338,9 @@
       "primary_value_col": "SegmentCost",
       "values": {"SegmentCost": "426666000.00", "SegmentCostUnits": "USD"},
       "primary_value": "426666000.00",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Cost (millions)' = 426 for the Phase 1 row -- matches the recorded $426,666,000 within rounding. EIA's Phase 2 row explains the figure: 'Total Line 200 + Line 300 system cost ~$1.28 billion,' and $1.28B / 3 = ~$426.67M, i.e. the system total is split evenly across the three phase rows (Phase 1, 2 and 3 all carry the identical $426 million figure in EIA's own workbook too) -- this is a legitimate even 3-way split, not a data-entry duplication error"}
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43 (Phase 2 explanatory figure at row 44). 'Cost (millions)' = 426 for the Phase 1 row -- matches the recorded $426,666,000 within rounding. EIA's Phase 2 row explains the figure: 'Total Line 200 + Line 300 system cost ~$1.28 billion,' and $1.28B / 3 = ~$426.67M, i.e. the system total is split evenly across the three phase rows (Phase 1, 2 and 3 all carry the identical $426 million figure in EIA's own workbook too) -- this is a legitimate even 3-way split, not a data-entry duplication error; verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -352,11 +359,11 @@
       "primary_value": "Williams",
       "proposed_refs": [
         "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
         {"url": "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Williams will hold 80% ownership and serve as the operator of this fully permitted greenfield pipeline' (referring to Driftwood Line 200)"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Notes for this exact Phase 1 row: 'Williams joined as a partner on Line 200.'"}
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. Notes for this exact Phase 1 row: 'Williams joined as a partner on Line 200.' Verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -375,11 +382,11 @@
       "primary_value": "Driftwood Pipeline LLC",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2024/11/27/2024-27777/driftwood-pipeline-llc-notice-of-request-for-extension-of-time",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
         {"url": "https://www.federalregister.gov/documents/2024/11/27/2024-27777/driftwood-pipeline-llc-notice-of-request-for-extension-of-time", "ok": true, "contains_value": true, "name_found": true, "note": "Docket party named 'Driftwood Pipeline, LLC' as of the 2024-11-27 notice"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Pipeline Operator Name' = 'Driftwood LNG Pipeline LLC' as of the 2026-01-16 update"}
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43. 'Pipeline Operator Name' = 'Driftwood LNG Pipeline LLC' (row last updated 2026-01-16); verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True)"}
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -391,21 +398,21 @@
   "cross_row_leads": [
     {
       "project_id": "P0177",
-      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
-      "facts": "EIA workbook row 'Driftwood LNG Pipeline' (mainline): Status=Construction, Year In Service Date=2029, Miles=96, Diameter=36/42/48 in, Capacity=4000 MMcf/d, Docket=CP17-117/CP17-118 (separate, earlier certificate from CP21-465 -- confirms P0177 and P3282/P7770/P7769 are genuinely distinct certificated projects, not duplicates). Notes: 'Approximately 96-mile feed gas pipeline extending westward from an interconnect with Columbia Gulf Transmission ~4.5 miles south of Ville Platte, LA, traversing Evangeline, Acadia, Jefferson Davis, and Calcasieu Parishes to the Woodside Louisiana LNG terminal near Carlyss, LA... FERC issued original certificate April 2019 (CP17-117/CP17-118); 2024 Extension Order allowed completion by 4/18/2029. On 5/13/2025, Louisiana LNG Infrastructure and Driftwood Pipeline filed a further extension request to 12/31/2029 and stated the project is actively under construction. Woodside reached positive final investment decision on the foundation development (Phase 1, first three liquefaction trains and common infrastructure) on 4/29/2025.' Also relevant: the LNG terminal itself is now named 'Woodside Louisiana LNG' (renamed from Tellurian's 'Driftwood LNG' after Woodside's 2024 acquisition of Tellurian)."
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 46 (verified live via url_verifier with --name 'Driftwood LNG Pipeline', ok=True, name_found=True; same facts, no change). EIA workbook row 'Driftwood LNG Pipeline' (mainline): Status=Construction, Year In Service Date=2029, Miles=96, Diameter=36/42/48 in, Capacity=4000 MMcf/d, Docket=CP17-117/CP17-118 (separate, earlier certificate from CP21-465 -- confirms P0177 and P3282/P7770/P7769 are genuinely distinct certificated projects, not duplicates). Notes: 'Approximately 96-mile feed gas pipeline extending westward from an interconnect with Columbia Gulf Transmission ~4.5 miles south of Ville Platte, LA, traversing Evangeline, Acadia, Jefferson Davis, and Calcasieu Parishes to the Woodside Louisiana LNG terminal near Carlyss, LA... FERC issued original certificate April 2019 (CP17-117/CP17-118); 2024 Extension Order allowed completion by 4/18/2029. On 5/13/2025, Louisiana LNG Infrastructure and Driftwood Pipeline filed a further extension request to 12/31/2029 and stated the project is actively under construction. Woodside reached positive final investment decision on the foundation development (Phase 1, first three liquefaction trains and common infrastructure) on 4/29/2025.' Also relevant: the LNG terminal itself is now named 'Woodside Louisiana LNG' (renamed from Tellurian's 'Driftwood LNG' after Woodside's 2024 acquisition of Tellurian)."
     },
     {
       "project_id": "P7770",
-      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
-      "facts": "EIA workbook row 'Driftwood Line 200 and 300 Project Phase 2': Status=Approved, Year In Service Date=2029, Miles=32.4 (matches P7770's recorded len=32.4 exactly), Cost=$426M, Additional Capacity=2200 MMcf/d (the sheet currently records P7770's Capacity as 4600 -- worth checking against this EIA figure), Diameter=42in. Notes: 'Phase 2 scope: remainder of Line 300 (~31.3 miles of 42-inch pipeline adjacent to Line 200, Beauregard and Calcasieu Parishes); three additional compressor units at the Indian Bayou Compressor Station... Applicants filed 5/13/2025 FERC extension request pushing construction/in-service deadline to 12/31/2029.'"
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 44 (verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 2', ok=True, name_found=True; same facts, no change). EIA workbook row 'Driftwood Line 200 and 300 Project Phase 2': Status=Approved, Year In Service Date=2029, Miles=32.4 (matches P7770's recorded len=32.4 exactly), Cost=$426M, Additional Capacity=2200 MMcf/d (the sheet currently records P7770's Capacity as 4600 -- worth checking against this EIA figure), Diameter=42in. Notes: 'Phase 2 scope: remainder of Line 300 (~31.3 miles of 42-inch pipeline adjacent to Line 200, Beauregard and Calcasieu Parishes); three additional compressor units at the Indian Bayou Compressor Station... Applicants filed 5/13/2025 FERC extension request pushing construction/in-service deadline to 12/31/2029.'"
     },
     {
       "project_id": "P7769",
-      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
-      "facts": "EIA workbook row 'Driftwood Line 200 and 300 Project Phase 3': Status=Approved, Year In Service Date=2029, Cost=$426M, Additional Capacity=1000 MMcf/d (matches P7769's recorded cap=1000 exactly). Notes: 'Phase 3 (final operational phase) places the remaining compressor units at Indian Bayou Compressor Station in service, bringing total system transportation capacity to 5.4 Bcf/d (5.7 Bcf/d max seasonal). Line 200 is ~36.9 miles and Line 300 is ~32.4 miles.' -- this is a compression-only phase adding no new pipe (all the physical Line 200/300 pipe is built out in Phases 1-2), consistent with P7769's recorded LengthKnown=0.0; the '69.3' figure that appears in EIA's own Miles column for this row looks like a cumulative Line200+Line300 system-total artifact, not new Phase 3 mileage -- worth confirming before treating it as a fill candidate for P7769's Length."
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA FOLLOW-UP PASS (2026-09-11): repointed from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 45 (verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 3', ok=True, name_found=True; same facts, no change). EIA workbook row 'Driftwood Line 200 and 300 Project Phase 3': Status=Approved, Year In Service Date=2029, Cost=$426M, Additional Capacity=1000 MMcf/d (matches P7769's recorded cap=1000 exactly). Notes: 'Phase 3 (final operational phase) places the remaining compressor units at Indian Bayou Compressor Station in service, bringing total system transportation capacity to 5.4 Bcf/d (5.7 Bcf/d max seasonal). Line 200 is ~36.9 miles and Line 300 is ~32.4 miles.' -- this is a compression-only phase adding no new pipe (all the physical Line 200/300 pipe is built out in Phases 1-2), consistent with P7769's recorded LengthKnown=0.0; the '69.3' figure that appears in EIA's own Miles column for this row looks like a cumulative Line200+Line300 system-total artifact, not new Phase 3 mileage -- worth confirming before treating it as a fill candidate for P7769's Length."
     }
   ],
-  "summary": "Driftwood LNG Pipeline / Line 200 and Line 300 Expansion (Phase 1) (P3282): existence, classification, and the 4-row Driftwood family (P0177 mainline vs P3282/P7770/P7769 phases) all confirmed correct -- not duplicates. All 16 worklist units filed. Material finding: StartYear1 should move from 2026 to 2028 (EIA + Williams both target 1Q/2Q 2028 in-service), flagged as a spec concern. Attribution concern flagged (not applied): Williams now holds 80% ownership/operatorship of this line per its 2025 JV with Woodside, while Owner1 still correctly reads 'Driftwood Pipeline LLC' 100% at the legal-entity level. FuelSource's 7-basin claim is UNRESOLVED -- no independent document states it, though EIA's own notes describe the gas source as simply Haynesville production. Pressure (1,440 psig, from the FERC order) is UNRESOLVED for lack of a verifiable primary URL.",
+  "summary": "Driftwood LNG Pipeline / Line 200 and Line 300 Expansion (Phase 1) (P3282): existence, classification, and the 4-row Driftwood family (P0177 mainline vs P3282/P7770/P7769 phases) all confirmed correct -- not duplicates. All 16 worklist units filed. Material finding: StartYear1 should move from 2026 to 2028 (EIA + Williams both target 1Q/2Q 2028 in-service), flagged as a spec concern. Attribution concern flagged (not applied): Williams now holds 80% ownership/operatorship of this line per its 2025 JV with Woodside, while Owner1 still correctly reads 'Driftwood Pipeline LLC' 100% at the legal-entity level. FuelSource's 7-basin claim is UNRESOLVED -- no independent document states it, though EIA's own notes describe the gas source as simply Haynesville production. Pressure (1,440 psig, from the FERC order) is UNRESOLVED for lack of a verifiable primary URL. EIA FOLLOW-UP PASS (2026-09-10): re-cited the StartYear1=2028 finding's EIA support from the undated, non-citable EIA-NaturalGasPipelineProjects.xlsx to the dated May 2026 release (sheet 'Natural Gas Pipeline Projects', row 41), verified live and name-matched via url_verifier -- no change to the proposed value or verdict, only the citation. UNDATED-URL REPOINT PASS (2026-09-11): repointed all remaining bare EIA-NaturalGasPipelineProjects.xlsx citations (17 occurrences: 1 validity proposed_ref, 13 fills proposed_refs/verifications pairs, 3 cross_row_leads, 1 status_review proposed_ref) to the August 2026 release (sheet 'Natural Gas Pipeline Projects' -- row 43 for this Phase 1 row, row 44 for the P7770 Phase 2 cross-reference, row 45 for P7769 Phase 3, row 46 for the P0177 mainline), each re-verified live via url_verifier with --name matching the cited project (all ok=True, name_found=True); no values or verdicts changed, citations only. The already-dated Start [ref] citation (May 2026 release) was left untouched per the pass instructions.",
   "status_reviews": [
     {
       "segment_name": "Line 200 and Line 300 Expansion (Phase 1)",
@@ -416,10 +423,10 @@
       "tier": "high",
       "independent": true,
       "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
         "https://www.williams.com/wp-content/uploads/sites/14/2026/03/Driftwood-Line-200-Project-Fact-Sheet.pdf"
       ],
-      "researcher_notes": "NOT yet in service, and NOT literally under physical construction either: Williams' own project fact sheet timeline (dated with a Jan-2026 print code) still shows '4Q 2026 Construction Start' as a FUTURE target, with '1Q 2028 Target In-Service.' EIA's workbook (updated 2026-01-16, the most current data available) nonetheless classifies this project's Status as 'Construction,' consistent with the project being fully FERC-certificated (CP21-465, order issued 2023-04-21) and actively progressing through pre-construction/permitting-extension activity toward an imminent, dated construction start -- this is GEM's/EIA's broader convention for 'construction' status (certificated + actively moving forward), not a claim that ground has broken. Two active FERC extension-of-time filings (to 4/18/2029, then to 12/31/2029, per EIA's notes and the FR 2024-11-27 notice) evidence a real schedule slip but not a change in project status/viability -- the applicants affirmatively state the project remains under active development, not shelved or cancelled. Verdict: CONFIRM 'construction' as still correct; it is not yet 'operating' and there is no basis to change it to anything else. Re-check after 4Q 2026 for an actual construction-start confirmation, and again near 1Q/2Q 2028 for in-service."
+      "researcher_notes": "EIA FOLLOW-UP PASS (2026-09-11): repointed the EIA citation from the undated workbook to the August 2026 release, sheet 'Natural Gas Pipeline Projects', row 43 -- verified live via url_verifier with --name 'Driftwood Line 200 and 300 Project Phase 1' (ok=True, name_found=True); no change to the verdict. NOT yet in service, and NOT literally under physical construction either: Williams' own project fact sheet timeline (dated with a Jan-2026 print code) still shows '4Q 2026 Construction Start' as a FUTURE target, with '1Q 2028 Target In-Service.' EIA's workbook (updated 2026-01-16, the most current data available) nonetheless classifies this project's Status as 'Construction,' consistent with the project being fully FERC-certificated (CP21-465, order issued 2023-04-21) and actively progressing through pre-construction/permitting-extension activity toward an imminent, dated construction start -- this is GEM's/EIA's broader convention for 'construction' status (certificated + actively moving forward), not a claim that ground has broken. Two active FERC extension-of-time filings (to 4/18/2029, then to 12/31/2029, per EIA's notes and the FR 2024-11-27 notice) evidence a real schedule slip but not a change in project status/viability -- the applicants affirmatively state the project remains under active development, not shelved or cancelled. Verdict: CONFIRM 'construction' as still correct; it is not yet 'operating' and there is no basis to change it to anything else. Re-check after 4Q 2026 for an actual construction-start confirmation, and again near 1Q/2Q 2028 for in-service."
     }
   ]
 }

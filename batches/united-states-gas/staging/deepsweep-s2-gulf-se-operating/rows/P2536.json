@@ -1,0 +1,651 @@
+{
+  "project_id": "P2536",
+  "pipeline_name": "Evangeline Pass Gas Pipeline",
+  "sheet_row": 1305,
+  "wiki": "https://www.gem.wiki/Evangeline_Pass_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct Owner1 on the operators/owners tab: Venture Global LNG is the pipeline's LNG-terminal CUSTOMER (buyer of the incremental gas capacity at Plaquemines), not an owner/equity holder of this transmission pipeline. Kinder Morgan's own February 2020 fact sheet states the physical pipe this row's Length/Diameter describe (9.1 mi looping along TGP's Yscloskey Toca Lateral in St. Bernard Parish + 4 mi looping along TGP's 500 Line in Plaquemines Parish = 13.1 mi total, both explicitly identified as existing Tennessee Gas Pipeline Company, L.L.C. facilities) belongs to TGP, a wholly owned Kinder Morgan subsidiary -- so Owner1 should be Kinder Morgan (100%, via TGP).",
+      "contested": {
+        "Owner1": "Kinder Morgan (100%, via Tennessee Gas Pipeline Company, L.L.C.)"
+      },
+      "researcher_notes": "The sheet's operators/owners tab records Owner1=\"Venture Global LNG\" at 100%, with no ref. Every independent source found (Kinder Morgan's own February 2020 Evangeline Pass Expansion Project fact sheet PDF, Natural Gas Intelligence, Coeus Energy) describes Venture Global LNG only as the customer/off-taker buying incremental firm transportation capacity for its Plaquemines LNG terminal -- never as an equity owner of the Evangeline Pass pipeline facilities. Kinder Morgan's own fact sheet is explicit and primary: 'Tennessee Gas Pipeline Company, L.L.C. (\"TGP\"), a Kinder Morgan subsidiary, and Southern Natural Gas Company, L.L.C. (\"SNG\"), a Delaware limited liability company equally owned by subsidiaries of Kinder Morgan, Inc. and Southern Company, are proposing the Evangeline Pass Expansion Project.' It then lists the specific new/modified facilities: the two loop segments that sum to this row's 13.1-mile length are BOTH explicitly along existing TGP lines (Yscloskey Toca Lateral in St. Bernard Parish; the 500 Line in Plaquemines Parish), and Coeus Energy's June 3, 2025 article confirms Tennessee Gas Pipeline Company, L.L.C. itself filed for and received FERC's final in-service authorization (May 29, 2025) for the last of these segments (the 4-mile Plaquemines Parish loop). SNG's own facilities under this same joint project (a new Rose Hill compressor station and new meter stations, all in Mississippi, funded in part via SNG leasing the new capacity to TGP) are physically separate from the linear pipe this row describes. So while SNG/Southern Company is a genuine joint participant in the broader two-company Evangeline Pass Expansion Project (relevant to the SegmentCost spec concern below, since EIA's cost split attributes $672M of docket-recorded cost to SNG's side of the joint financing/lease arrangement), the specific 13.1-mile, 36-inch PIPE this row's Length/Diameter/Location fields describe is TGP's own facility -- so Owner1 should read Kinder Morgan (100%, via TGP), not a 50/50 Kinder Morgan/Southern Company split and certainly not Venture Global LNG.",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+        "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Flag that SegmentCost ($672,000,000, matching Southern Natural Gas Co.'s EIA-recorded docket cost for its side of the joint Evangeline Pass Expansion Project) may not be the cost of THIS specific 13.1-mile pipe segment, which Kinder Morgan's own fact sheet identifies as Tennessee Gas Pipeline Company, L.L.C.'s facility. TGP's own EIA-recorded docket cost is $261.7M. The $672M SNG figure appears to include SNG's compressor-station and meter-station construction in Mississippi plus its lease/cost-sharing arrangement with TGP for this project, not solely the linear pipe. Recommend Baird review whether SegmentCost should be TGP's $261.7M (matching the physical pipe this row describes), the combined $933.7M, or the current $672M (SNG's docket share) -- this is a scope/attribution question the sheet does not currently resolve, not a simple data-entry error.",
+      "contested": {
+        "SegmentCost": "261700000.00 (TGP docket cost, matches the physical pipe) or 933700000.00 (TGP+SNG combined) -- current 672000000.00 is SNG's docket-recorded cost share of the joint project, not necessarily this specific pipe segment's cost"
+      },
+      "researcher_notes": "The EIA Natural Gas Pipeline Projects dataset originally tracked this project as a single undivided record (Tennessee Gas Pipeline Co, Evangeline Pass Expansion Project, $261.7M, docket CP20-50) in releases 2020-03 through 2024-01. Starting with the 2024-04 release, EIA re-split it into two sub-projects reflecting the two FERC dockets: 'Evangeline Pass Expansion Project (Phase 1)' -- Tennessee Gas Pipeline Co, $261.7M, docket CP20-50, in service 2024 -- and 'Evangeline Pass Expansion Project (Phase 2)' -- Southern Natural Gas Co., $672M, docket CP20-51, in service 2025. This row's own recorded SegmentCost ($672,000,000) and StartYear1 (2025) line up precisely with the SNG/CP20-51 record, which is why the prompt's own EIA comparison flagged SegmentCost and Status as 'differs' against the WRONG (superseded, undivided) pre-split EIA vintage -- against the correct post-split SNG record the sheet's cost, capacity, length, diameter and StartYear1 all match closely. HOWEVER, Kinder Morgan's own February 2020 fact sheet shows the physical facilities are NOT split the same way EIA splits the cost/docket: BOTH of the linear pipe loop segments that sum to this row's 13.1 miles are explicitly TGP facilities (Yscloskey Toca Lateral, St. Bernard Parish; 500 Line, Plaquemines Parish), while SNG's side of the project (per EIA's own Phase 2 project_notes) consists of a new Rose Hill compressor station and new meter stations in Mississippi, plus a like-for-like unit replacement at TGP's existing CS 527 -- none of which is the linear pipe. So the $672M SNG-docket cost this row currently carries almost certainly funds more than (and possibly does not even cleanly include) the 13.1-mile pipe itself; TGP's own $261.7M docket cost is arguably the better match for 'this segment's cost' specifically, given the row's Length/Diameter are TGP's facility. Flagging the mismatch rather than silently picking one -- this is a genuine attribution/scope ambiguity in how EIA's docket-based cost split maps onto GEM's segment-based schema, not a simple sourcing gap.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, 'Historical Projects (1996-2024)' sheet, rows 1172/1192: both TGP Phase 1 and SNG Phase 2 sub-projects show status 'Completed' (Phase 1 completed 2024-07 / re-flagged construction then completed 2025-07; Phase 2 completed 2025-07), i.e. fully in service -- consistent with 'operating'."
+        },
+        {
+          "url": "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "June 2025 article on Evangeline Pass / Plaquemines ramp describes the expansion as completed and gas flowing to the Plaquemines LNG terminal."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet already cites EIA's generic pipeline-data landing page (data.php#pipelines) for Status; that page itself does not name this line, so I re-sourced the dated EIA release row directly plus an independent trade-press confirmation that both phases are complete and flowing gas. In-service dates (Phase 1: 7/1/2024; Phase 2: 5/29/2025) are both now in the past as of this review (2026-09), so 'operating' is correct and current."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed under EIA's 'Natural Gas Pipeline Projects' dataset; project_notes describe natural gas transportation capacity (Bcf/d, Dth/d) throughout."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Uncontroversial -- this is a natural gas transmission pipeline throughout every source consulted (EIA, Kinder Morgan, NGI, East Daley, PGJ, Federal Register FERC filings). No dispute found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2020",
+        "ProposalMonth": "2"
+      },
+      "primary_value": "2020",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Federal Register Notice of Application states Tennessee Gas Pipeline Company, L.L.C. filed its FERC application for the Evangeline Pass Expansion Project on February 7, 2020 (docket CP20-50)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Blank cell (MISSING_VALUE). EIA's own project-tracking data shows this project first appearing in the 2020-03 release with status 'Applied', consistent with the Feb 2020 FERC filing date documented in the Federal Register notice -- two independent sources (EIA release timing + the primary FERC filing itself) agree on early 2020. Used the Federal Register mirror rather than ferc.gov directly since www.ferc.gov's root path 403s scripted clients (confirmed via curl with a browser UA) while the Federal Register carries the same notice content."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2024",
+        "ConstructionMonth": ""
+      },
+      "primary_value": "2024",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/01/26/2024-02378/tennessee-gas-pipeline-company-llc-southern-natural-gas-company-llc-notice-of-requests-for"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/01/26/2024-02378/tennessee-gas-pipeline-company-llc-southern-natural-gas-company-llc-notice-of-requests-for",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TGP and SNG's own Jan 26, 2024 filing states they 'anticipate beginning construction activities during the first quarter of 2024,' citing permitting delays, contractor procurement, land acquisition and permit delays."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Blank cell (MISSING_VALUE). coeus-energy.com's June 2025 article states construction began September 2023, but the companies' own January 2024 FERC extension-of-time filing states construction was still only ANTICIPATED to begin in Q1 2024, and separately documents that they had NOT yet secured construction contractors or completed land acquisition as of that filing -- directly contradicting a September 2023 construction start. EIA's own project-status history also shows this project first entering 'Construction' status in its 2024-01 release for the undivided record, and 2024-04 for both split-out sub-projects, not earlier. Trusting the primary regulatory filing + EIA's own status-history timeline over the secondary aggregator blog; flagging the discrepancy rather than silently picking a value. Tier medium because the single strongest source (the FERC filing) is a primary company admission but I could not find a second fully independent source stating a specific 2024 construction-start month; EIA's status transition supports the year only, not a month, hence ConstructionMonth left blank rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2025",
+        "StartMonth1": "5",
+        "StartYear2": "2024",
+        "StartYear2Month": "7"
+      },
+      "primary_value": "2025",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release: SNG Phase 2 sub-project (row 1192) shows Construction@2024-04 > Completed@2025-07; TGP Phase 1 sub-project (row 1172) shows Complete@2024-07. Kinder Morgan's own fact sheet PDF states Phase 1 in service 7/1/2024 and Phase 2 in service 5/29/2025."
+        },
+        {
+          "url": "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "June 2025 article corroborates the full system reaching complete in-service status around Phase 2's May 2025 date."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's StartYear1=2025 is confirmed and kept (matches SNG Phase 2's 5/29/2025 in-service date, per the Kinder Morgan fact sheet PDF and EIA's Aug2026 release). Added StartMonth1=5 (May) for precision, and added StartYear2=2024/StartYear2Month=7 to capture Phase 1's earlier partial in-service date (7/1/2024, 900,000 Dth/d) as a documented two-phase in-service history -- this is a genuinely two-stage project and both dates are independently well-sourced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Delay [ref]",
+      "value_cols": [
+        "Delayed",
+        "DelayType"
+      ],
+      "values": {
+        "Delayed": "yes",
+        "DelayType": "confirmed"
+      },
+      "primary_value": "yes",
+      "primary_value_col": "Delayed",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/01/26/2024-02378/tennessee-gas-pipeline-company-llc-southern-natural-gas-company-llc-notice-of-requests-for"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/01/26/2024-02378/tennessee-gas-pipeline-company-llc-southern-natural-gas-company-llc-notice-of-requests-for",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TGP and SNG's own Notice of Requests for Extension of Time (filed with FERC, published in the Federal Register Jan 26 2024) explicitly cites 'permitting delays' and 'delays in securing construction contractors, finalizing land acquisition, and obtaining state and local permits' as reasons for requesting more time to complete the project."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet already records Delayed=yes / DelayType=inferred with no ref (MISSING_REF). Found a primary regulatory filing in which the companies THEMSELVES admit to permitting, contracting and land-acquisition delays and formally request more time from FERC -- this upgrades DelayType from 'inferred' (a GEM-side guess) to 'confirmed' (documented by the parties' own filing), while Delayed=yes is unchanged. Single strong primary source; noted honestly as such (tier high reflects the primary/regulatory nature of the one source, not source count)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "values": {
+        "Capacity": "1100.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "1100.00",
+      "primary_value_col": "Capacity",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Both split sub-projects (rows 1172, 1192) list additional_capacity_mmcf_d = 1100, exact match."
+        },
+        {
+          "url": "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM fact sheet states up to 1,100,000 Dth/d of incremental firm transportation capacity -- equivalent to 1,100 MMcf/d within normal Dth/Mcf rounding."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's cited ref (EIA data.php landing page) does not itself contain the figure in machine-checkable form (the existing_ref_checks flagged the value absent from that page verbatim), so this is a genuine re-verification against the actual dated EIA release row plus the KM fact sheet -- both agree exactly (1,100 MMcf/d / 1,100,000 Dth/d). Value unchanged."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Blank cell (MISSING_VALUE). Searched the Kinder Morgan fact sheet PDF, NGI, East Daley, PGJ Online, coeus-energy, the Federal Register Notice of Application and extension-of-time filing, and the FERC eLibrary-derived materials referenced in the routes-repo geojson metadata -- none state a maximum allowable operating pressure (MAOP) or design pressure figure for this specific pipeline. Also checked general MAOP background sources (Wikipedia, gem.wiki -- not citable -- lawinsider.com boilerplate, CPUC documents) which are generic, not pipeline-specific. No number found; leaving blank rather than forcing a value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "values": {
+        "LengthKnown": "13.10",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "13.10",
+      "primary_value_col": "LengthKnown",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Notice of Application describes 9.1 miles of pipeline looping in St. Bernard Parish plus 4.0 miles in Plaquemines Parish = 13.1 miles total, matching the sheet exactly."
+        },
+        {
+          "url": "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM fact sheet states approximately 13 miles of new pipeline looping."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed against the primary FERC filing's own mileage breakdown (9.1 + 4.0 = 13.1 mi exact match) plus the KM fact sheet and EIA release data; also cross-checked against the routes-repo geojson (P2536.geojson: Miles=13.1, sourced to the same FERC application, accession 20200306-5036) -- geometry and sheet agree, no route-vs-sheet mismatch. Value unchanged."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "values": {
+        "Diameter": "36.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36.00",
+      "primary_value_col": "Diameter",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Notice of Application describes the looping as 36-inch-diameter pipe."
+        },
+        {
+          "url": "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM fact sheet states 36-inch pipeline looping."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed against the FERC filing and KM fact sheet; also matches the routes-repo geojson attribute PipelineDi=36. Value unchanged."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Haynesville Shale"
+      },
+      "primary_value": "Haynesville Shale",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "SNG Phase 2 project_notes (row 1192) state the project supplies 'up to 2 Bcf/d of Haynesville-sourced gas to Venture Global's Plaquemines LNG terminal.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Blank cell (MISSING_VALUE). FuelSource names the upstream gas field/plant feeding the line, not the commodity type (per docs/reference/gem_schema.md) -- filling 'Haynesville Shale' rather than 'Natural Gas'. This matches the convention already used on sibling Gulf Coast Haynesville-fed rows in this batch (P5416, P1294, P5417). Only one independent-enough source explicitly states the Haynesville origin (the EIA Aug2026 release's project notes); East Daley Analytics' coverage of the region's Haynesville supply build-out provides supporting regional context but does not name this specific pipeline, so I am not counting it as a fully independent second source -- tier medium, noted honestly rather than inflated to high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Toca",
+        "StartPrefecture/District": "St. Bernard Parish",
+        "StartState/Province": "Louisiana",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Grand Bayou",
+        "EndPrefecture/District": "Plaquemines Parish",
+        "EndState/Province": "Louisiana",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Toca",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/23/2020-04023/tennessee-gas-pipeline-company-llc-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Notice of Application describes looping in St. Bernard Parish and Plaquemines Parish, Louisiana."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "SNG Phase 2 project_notes name the 'Yscloskey-Toca Lateral Loop in St. Bernard Parish, LA' and 'Grand Bayou Loop in Plaquemines Parish, LA' as the two constructed segments."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "State/country values (Louisiana / United States, both ends) already on the sheet are confirmed unchanged. Added StartPrefecture/District='St. Bernard Parish' (sheet already had EndPrefecture/District='Plaquemines Parish' from the worklist, which is confirmed and kept) plus StartLocation='Toca' and EndLocation='Grand Bayou', naming the two specific loop segments (Yscloskey-Toca Lateral Loop; Grand Bayou Loop) per the FERC filing and the EIA Aug2026 project notes. Cross-checked against the routes-repo geojson (P2536.geojson, two MultiLineString segments matching these two parish locations, AffectedSt='LA, MS') -- geometry and sheet/location fields are consistent, no route-vs-sheet mismatch found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "values": {
+        "SegmentCost": "672000000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2025"
+      },
+      "primary_value": "672000000.00",
+      "primary_value_col": "SegmentCost",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, 'Historical Projects (1996-2024)' sheet row 1192: Southern Natural Gas Co.'s Evangeline Pass Expansion Project (Phase 2) lists cost_millions = 672, exact match, in-service 2025."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's own cited ref (EIA data.php landing page) is a generic index page that does not itself contain this figure. Traced the value to the specific dated EIA release row: it exactly matches the SNG/Phase 2 sub-project's cost ($672M), NOT the originally-flagged 'differs' comparison against the now-superseded undivided pre-2024-split EIA record ($261.7M). See the companion spec validity concern above regarding whether this row is meant to represent the SNG-only cost or the combined TGP+SNG project cost (~$933.7M) -- SegmentCost as currently recorded is a precise, well-sourced match for the SNG/Phase-2 portion specifically, so it is staged unchanged (REVERIFIED) rather than altered unilaterally."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Tennessee Gas Pipeline Company, L.L.C."
+      },
+      "primary_value": "Tennessee Gas Pipeline Company, L.L.C.",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+        "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM fact sheet: the two new pipeline loop segments summing to this row's 13.1 miles are both built 'along TGP's existing' lines (Yscloskey Toca Lateral; the 500 Line) -- TGP is the operating entity for the physical pipe."
+        },
+        {
+          "url": "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Coeus Energy, June 3, 2025: 'Tennessee Gas Pipeline Company, L.L.C. (TGP) has completed its Evangeline Pass Expansion Project, following final authorization from [FERC] to place the project's last segment -- the 4-mile loop pipeline in Plaquemines Parish, Louisiana -- into service' (May 29, 2025)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Blank on the operators/owners tab (MISSING_VALUE). Filled with Tennessee Gas Pipeline Company, L.L.C. (TGP) since Kinder Morgan's own fact sheet identifies both loop segments comprising this row's 13.1-mile length as TGP facilities, and Coeus Energy independently confirms TGP itself filed for and received the final FERC in-service authorization (matching this row's StartYear1=2025). Southern Natural Gas Company, L.L.C. (SNG) is a genuine joint participant in the broader two-company Evangeline Pass Expansion Project (its own facilities -- a compressor station and meter stations -- are in Mississippi, outside this row's Louisiana pipe), relevant context noted here and in the companion spec concern regarding SegmentCost, but not the operator of the specific pipe this row describes."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Kinder Morgan",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+        "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/getattachment/0fc83099-ad42-432d-b68e-1de01e899a26/evangeline_fact_sheet.pdf?lang=en-us",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM fact sheet identifies Tennessee Gas Pipeline Company, L.L.C., 'a Kinder Morgan subsidiary,' as builder/owner of both loop segments comprising this row's 13.1-mile length."
+        },
+        {
+          "url": "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Coeus Energy confirms TGP itself completed and placed the final segment (the Plaquemines Parish loop) into service."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet currently records Owner1='Venture Global LNG' 100% with no ref (MISSING_REF) -- this is a value CORRECTION, not a confirmation; see the companion attribution validity concern above for full reasoning. Venture Global LNG is the LNG-terminal customer, not an owner of this pipeline. Replaced with Kinder Morgan 100%, reflecting that the specific 13.1-mile pipe this row's Length/Diameter describe is entirely along existing Tennessee Gas Pipeline Company, L.L.C. (a wholly owned Kinder Morgan subsidiary) lines, per Kinder Morgan's own primary fact sheet. Southern Natural Gas Company, L.L.C. (a 50/50 Kinder Morgan / Southern Company joint venture) is a real co-participant in the broader Evangeline Pass Expansion Project via separate Mississippi compressor/meter facilities and a cost-sharing/lease arrangement with TGP (see the SegmentCost spec concern) but does not appear to hold equity in the specific pipe segment this row represents, so it is not added as a second owner here without clearer evidence of a direct ownership stake in the linear pipe itself."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P3193",
+      "url": "https://naturalgasintel.com",
+      "facts": "Multiple independent sources (NGI, East Daley, Kinder Morgan fact sheet) confirm the Gator Express interconnect is the physical delivery point connecting Evangeline Pass's incremental Haynesville-sourced gas capacity to Venture Global's Plaquemines LNG terminal -- corroborating the batch note that Gator Express (P3193/P5415) and Plaquemines are interconnects/terminals for this line, not duplicates of it."
+    }
+  ],
+  "summary": "Evangeline Pass Gas Pipeline (P2536) confirmed real, correctly classified, operating; sourced/reverified all 13 tracker-tab fills plus Operator/Owner on the operators-owners tab (15 of 15 worklist units), with one UNRESOLVED (Pressure/MAOP, not found anywhere) and two validity concerns: an attribution error (Owner1 wrongly lists Venture Global LNG, the terminal customer -- corrected to Kinder Morgan 100% via Tennessee Gas Pipeline Co., whose own fact sheet identifies this row's 13.1-mile pipe as its facility) and a spec/scope concern (SegmentCost $672M matches Southern Natural Gas Co.'s EIA docket cost for its share of the joint project, not necessarily the TGP pipe this row describes -- TGP's own docket cost is $261.7M). The prompt's own EIA 'differs' flags on SegmentCost and Status were resolved as false alarms from comparing against a since-superseded pre-2024-split EIA vintage.",
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 1305,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "operating",
+      "proposed_changes": {},
+      "evidence_date": "2025-07",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "Both TGP Phase 1 and SNG Phase 2 sub-projects show Completed status as of the 2025-07 / 2026-08 releases, with in-service dates of 7/1/2024 and 5/29/2025 respectively -- fully in service, no open construction."
+        },
+        {
+          "url": "https://coeus-energy.com/tennessee-gas-pipeline-completes-evangeline-pass-expansion-project",
+          "ok": true,
+          "contains_value": true,
+          "note": "June 2025 article confirms the expansion is complete and gas is flowing to the Plaquemines LNG terminal."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both phases of the Evangeline Pass Expansion (TGP Phase 1, SNG Phase 2) are fully in service as of mid-2025 per EIA's own dated release history and independent trade press; nothing indicates a status change, dormancy, or new delay since. 'operating' is confirmed current as of this 2026-09 review."
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "project_id": "P5115",
+  "pipeline_name": "Louisiana Energy Gateway",
+  "sheet_row": 2969,
+  "wiki": "https://www.gem.wiki/Louisiana_Energy_Gateway",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action beyond the PipelineType reclassification filed separately below",
+      "contested": {},
+      "researcher_notes": "EXISTENCE strongly confirmed and NOT a duplicate. Independent corroboration across four origin classes: (1) EIA Natural Gas Pipeline Projects workbook, Aug2026 release, 'Historical Projects' sheet row 1195 (operator Transcontinental Gas Pipe Line Company LLC entry) -- Completed, in-service 2025, LA, 174 mi, 30/36/42 in, 1800 MMcf/d, docket CP24-122-000; (2) two independent secondary write-ups of FERC's Sept 27 2024 order (Van Ness Feldman via natlawreview.com, and naturalgasintel.com) describing a 1.8 Bcf/d, 174-mile, 30-42in system with ~775 wellpad receipt points on the Haynesville Spine + Juniper South segments; (3) Williams' own SEC 10-Q filings for Q3 2025 (filed 2025-11-03) and Q2 2026 (filed 2026-08-03), which report LEG revenue inside the West segment and state it 'was placed into service in the third quarter of 2025' / 'in July and August 2025'; (4) trade press (pgjonline.com, ogj.com x2) on FID (Jun 2022), construction resumption (Aug 2024) and startup (Jul 23-25 2025, initial flows into Transco at Beauregard Parish LA). Not a duplicate of P6843 LEAP Expansion Phase 4 (different owner/operator -- DT Midstream, not Williams; different system, EIA's own adjacent row 1194) nor of P0285 Haynesville Global Access (cancelled, different sponsor) -- they are separate egress systems that happen to share the Haynesville-to-Gillis corridor and Gillis Hub delivery point; EIA lists LEG, LEAP Phase 4, and a third unrelated system (Momentum Midstream's NG3, not a GEM row) as three distinct completed 2025 projects in the same corridor. Route geometry at ../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P5115.geojson (15-point single LineString) runs from about (-93.95, 32.15) near Logansport/Haynesville-shale far-north LA down to about (-93.20, 30.46) in the Gillis-hub area of southwest LA (Calcasieu/Beauregard Parish) -- an accurate trace of the sourced Haynesville-to-Gillis corridor; no route-vs-sheet mismatch. Capacity (1800 MMcf/d), Diameter (30/36/42 in) as recorded agree with EIA and the FERC-order write-ups (see fills). Only open items: PipelineType is misclassified (separate concern below); ProposalYear/Pressure/SegmentCost could not be sourced (UNRESOLVED, see fills, with what was searched).",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "reclassify PipelineType from 'transmission' to 'gathering' -- FERC's own jurisdictional ruling on this exact system",
+      "contested": {"PipelineType": "gathering"},
+      "researcher_notes": "The sheet's current PipelineType='transmission' is supported only by a citation to eia.gov/naturalgas/data.php#pipelines, a navigation page that does not name this pipeline (builder's own relevance check: name_found=false) -- so the value was effectively uncited, not merely under-cited. Independent, on-point evidence says the opposite: on 2024-09-27 FERC issued an Order on Petition for Order to Show Cause (Energy Transfer LP's petition, docket proceedings around CP24-122) applying the 'primary function test' and finding the LEG System -- despite its large 30-42in diameter and high operating pressure, both typical of transmission -- is legally and functionally a GATHERING system: a spine-like configuration gathering unprocessed gas from ~775 wellhead receipt points along its length, with no FERC NGA jurisdiction. Reported independently by a law firm (Van Ness Feldman, via natlawreview.com) and by trade press (naturalgasintel.com, 'Williams Prevails as FERC Rules Louisiana LEG System a Natural Gas Gathering Pipe'), both describing the same primary document with matching specifics (174 mi, 1.8 Bcf/d, 775 receipt points). Williams' own SEC 10-Qs likewise describe LEG only as 'natural gas gathering assets' / 'gathering system', never as an interstate transmission line. `gathering` is a valid value in the repo's controlled vocabulary (docs/reference/controlled_vocab.md). This is a genuine misclassification, not a close call -- FERC's order is a formal jurisdictional determination on this exact system.",
+      "proposed_refs": [
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional",
+        "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status",
+      "values": {"Status": "operating"}, "primary_value": "operating",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says", "ok": true, "contains_value": true, "name_found": true, "note": "'LEG posted initial flows of 75 MMcf/d ... July 23 ... into the Transcontinental (Transco) system in Beauregard Parish, Louisiana'"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'Louisiana Energy Gateway ... was placed into service in July and August 2025'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Status review verdict is 'change' (see status_reviews below): the sheet's 'construction' is now stale. Initial flows began 2025-07-23 into Transco at Beauregard Parish LA, ramping to full 1.8 Bcf/d capacity through 2025-2026 per Williams' own 10-Qs. Old current_ref (Reuters/S&P Global, both blocked 401/403 to this crawler but not confirmed dead) covered the pre-startup 'resume construction' story; replaced with post-startup sources."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726326000026/wmb-20260630.htm"
+      ],
+      "verifications": [
+        {"url": "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/", "ok": true, "contains_value": true, "name_found": true, "note": "describes LEG gathering natural gas from the Haynesville Shale"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000026/wmb-20260630.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'Louisiana Energy Gateway expansion project' within Williams' natural gas gathering operations"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Old current_ref (eia.gov/naturalgas/data.php#pipelines) is EIA's navigation landing page, never citable per standing rules, and the builder's own check found the pipeline name absent from it -- effectively uncited. Replaced with two sources that name the pipeline and confirm it is a natural gas line."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"], "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "gathering"}, "primary_value": "gathering",
+      "proposed_refs": [
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional",
+        "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/"
+      ],
+      "verifications": [
+        {"url": "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional", "ok": true, "contains_value": true, "name_found": true, "note": "FERC 'determined the LEG System is a gathering system, not subject to FERC jurisdiction'"},
+        {"url": "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/", "ok": true, "contains_value": true, "name_found": true, "note": "headline + body: FERC rules LEG a natural gas gathering pipe"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "DISAGREES with the sheet's recorded 'transmission' -- see the paired classification concern in validity[]. Old ref (eia.gov data.php) never named this pipeline. Staging the corrected value here per the disagreement-handling rule; the sourced value is 'gathering', not 'transmission'."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched for a distinct 'proposed/announced' date separate from the 2022-06-29 FID (which is already recorded under FID [ref]). Found only that Williams executives referenced progress 'toward' LEG in earlier, undated earnings-call commentary ('we are close to commercializing the Louisiana Energy Gateway project') before the FID announcement -- no specific dated public proposal/open-season announcement distinct from the FID press release. Leaving blank rather than guessing a year."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2024", "ConstructionMonth": "8"}, "primary_value": "2024",
+      "proposed_refs": [
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/55128023/williams-to-start-work-on-louisiana-natural-gas-pipeline-despite-ongoing-dispute",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/55128023/williams-to-start-work-on-louisiana-natural-gas-pipeline-despite-ongoing-dispute", "ok": true, "contains_value": true, "name_found": true, "note": "reports Williams resuming/starting construction work in Aug 2024 amid the Energy Transfer dispute"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'In August 2024, Williams began construction activities on new natural gas gathering assets in the Haynesville Shale basin'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed AND upgraded: added ConstructionMonth=8 (August), sourced directly from Williams' own 10-Q, which the recorded value did not carry. Old current_ref (Reuters 401, Bloomberg 403) blocked but not confirmed dead; replaced/supplemented."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2025", "StartMonth1": "7"}, "primary_value": "2025",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says", "ok": true, "contains_value": true, "name_found": true, "note": "initial flows 75 MMcf/d on 2025-07-23, rising to ~145 MMcf/d by 2025-07-25"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'placed into service in July and August 2025'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "StartYear1=2025 already recorded correctly; added StartMonth1=7 from the July 23 2025 first-flow date. Note a small internal EIA inconsistency: the Aug2026 EIA release lists 'Completed Date' as 2025-10-01 for full ramp-to-capacity, while Williams' own 10-Q says 'placed into service in July and August 2025' and press reports first flows 2025-07-23 -- treating the earliest sourced in-service date (July) as StartMonth1, consistent with 'commercial operation begins at first flow' convention used elsewhere in the tracker; the October date reflects later full-capacity ramp, not first service."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Delay [ref]",
+      "value_cols": ["Delayed", "DelayType"], "primary_value_col": "Delayed",
+      "values": {"Delayed": "yes", "DelayType": "confirmed"}, "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/55128023/williams-to-start-work-on-louisiana-natural-gas-pipeline-despite-ongoing-dispute",
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/55128023/williams-to-start-work-on-louisiana-natural-gas-pipeline-despite-ongoing-dispute", "ok": true, "contains_value": true, "name_found": true, "note": "construction paused/contested amid Energy Transfer's show-cause petition, resumed Aug 2024"},
+        {"url": "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional", "ok": true, "contains_value": true, "name_found": true, "note": "describes the Energy Transfer jurisdictional dispute that held up construction until FERC's 2024-09-27 order"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Delayed=yes confirmed. Upgrading DelayType from 'inferred' to 'confirmed': the delay's cause is not merely presumed dormancy -- it is a well-documented, specifically-sourced cause (Energy Transfer LP's April 2024 FERC show-cause petition disputing LEG's non-jurisdictional gathering status, which held up construction until Williams resumed in Aug 2024 and FERC ruled in Williams' favor Sept 2024). 'inferred' is the controlled-vocab word for presumed/dormancy-rule delays with no known cause; this delay's cause is documented, so 'confirmed' is the correct value."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "1800.00", "CapacityUnits": "MMcf/d"}, "primary_value": "1800.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Historical Projects (1996-2024)' sheet row 1195: Louisiana Energy Gateway (LEG), Additional Capacity (MMcf/d) = 1800"},
+        {"url": "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional", "ok": true, "contains_value": true, "name_found": true, "note": "'1.8 Bcf/d' system capacity"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Recorded value (1800 MMcf/d = 1.8 Bcf/d) confirmed by both EIA's dated workbook and the independent FERC-order write-up. Was previously MISSING_REF -- an uncited value, now sourced."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched the FERC order write-ups (natlawreview, naturalgasintel, vnf.com), the EIA workbook (no pressure/MAOP field populated for this project), PHMSA/NPMS, and general press. One contractor marketing page (jonespower.com) calls it 'high-pressure' with no PSIG figure -- not sufficient to fill a number. No primary source (FERC order text itself, tariff, or PHMSA filing) with a stated MAOP was found. Leaving blank rather than forcing a number."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "174", "LengthKnownUnits": "mi"}, "primary_value": "174",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "'Historical Projects' row 1195, Miles = 174"},
+        {"url": "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional", "ok": true, "contains_value": true, "name_found": true, "note": "'approximately 174 miles total (Haynesville Spine ~64 mi + Juniper South ~110 mi)'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE -- blank on the sheet. Two independent sources agree on 174 mi total (64 mi Haynesville Spine, 30-42in, + 110 mi Juniper South, 42in). Note: one non-independent contractor marketing page (jonespower.com) states 176 mi -- a ~1% rounding-level discrepancy against a weaker source; not adopted, EIA+FERC's 174 mi is the value staged."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "30, 36, 42", "DiameterUnits": "in"}, "primary_value": "30, 36, 42",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 1195, Pipeline Diameter (Inches) = '30,36,42'"},
+        {"url": "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional", "ok": true, "contains_value": true, "name_found": true, "note": "'30- to 42-inch' diameter range across the two segments"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Recorded 30/36/42 in confirmed. Old ref (eia.gov data.php navigation page) replaced -- the builder's own check found the pipeline name absent from it."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Haynesville Shale"}, "primary_value": "Haynesville Shale",
+      "proposed_refs": [
+        "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm"
+      ],
+      "verifications": [
+        {"url": "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/", "ok": true, "contains_value": true, "name_found": true, "note": "'gather up to 1.8 Bcf/d of natural gas from the prolific Haynesville Shale formation'"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'new natural gas gathering assets in the Haynesville Shale basin'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Was blank. Per gem_schema.md, FuelSource is the upstream field/facility, not the commodity -- filled with the named upstream play, Haynesville Shale (~775 wellpad receipt points along the Spine), not 'Natural Gas'."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartLocation": "Haynesville", "StartState/Province": "Louisiana", "StartCountryOrArea": "United States", "EndLocation": "Transcontinental Gas Pipeline", "EndState/Province": "Louisiana", "EndCountryOrArea": "United States"},
+      "primary_value": "Haynesville",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says",
+        "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says", "ok": true, "contains_value": true, "name_found": true, "note": "gas flows into 'the Transcontinental (Transco) system in Beauregard Parish, Louisiana'"},
+        {"url": "https://natlawreview.com/article/ferc-finds-williams-louisiana-energy-gateway-system-will-not-be-jurisdictional", "ok": true, "contains_value": true, "name_found": true, "note": "gathers Haynesville Shale gas along the LA/TX border area, delivering south to Transco/Gillis Hub, all within Louisiana"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed. Route geojson checked against these sources: 15-point trace runs from ~(-93.95,32.15) near the Haynesville-shale far-north-LA/TX border area down to ~(-93.20,30.46) near the Gillis Hub in southwest LA (Calcasieu/Beauregard Parish) -- consistent with 'Haynesville -> Transco interconnect, Louisiana' as recorded, and with the delivery point named in the startup press coverage (Beauregard Parish). Sources also note the system gathers gas from production areas in both TX and LA via feeder lines not shown in the mapped mainline geometry -- doesn't change the recorded start/end, which describe the mainline termini, not every gathering-radius wellpad."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched the FID press release, the FERC-order write-ups, EIA's workbook (Cost (millions) field is blank for this project row), and general press for a capital-cost figure specific to LEG. The commonly-cited '$1.9 billion' figure in recent coverage applies to Williams' separate Louisiana LNG/Woodside partnership investment, not to the LEG pipeline itself -- explicitly a different project/scope, so not used here (aggregate-vs-wrong-project rule). No LEG-specific cost figure found; leaving blank."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "ref_col": "FID [ref]",
+      "value_cols": ["FIDStatus", "FIDYear"], "primary_value_col": "FIDStatus",
+      "values": {"FIDStatus": "FID", "FIDYear": "2022"}, "primary_value": "FID",
+      "proposed_refs": [
+        "https://web.archive.org/web/20220720141439/https://www.businesswire.com/news/home/20220629005249/en/Williams-Reaches-Final-Investment-Decision-on-Louisiana-Energy-Gateway-Project/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/14278897/williams-makes-fid-on-louisiana-energy-gateway-project"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20220720141439/https://www.businesswire.com/news/home/20220629005249/en/Williams-Reaches-Final-Investment-Decision-on-Louisiana-Energy-Gateway-Project/", "ok": true, "contains_value": true, "name_found": true, "note": "'Williams ... today announced that it has reached a final investment decision on ... the Louisiana Energy Gateway (LEG)' dated 2022-06-29"},
+        {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/14278897/williams-makes-fid-on-louisiana-energy-gateway-project", "ok": true, "contains_value": true, "name_found": true, "note": "independent trade-press report of the same 2022 FID"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "FIDStatus=FID, FIDYear=2022 confirmed. The live businesswire.com URL currently 403s/timeouts to this crawler (access failure, not a deletion, so not retired) -- added its live Wayback capture (2022-07-20, confirmed 200 and content-matching) alongside a second, independent trade-press confirmation (Oil & Gas Journal) per the 'add Wayback alongside, don't swap' rule."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "oo_sheet_row": 3934, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Williams Companies"}, "primary_value": "Williams Companies",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm",
+        "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Williams reports LEG as its own project within its West segment, operating it directly"},
+        {"url": "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/", "ok": true, "contains_value": true, "name_found": true, "note": "consistently 'Williams' LEG System' throughout"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Was blank on the operators/owners tab. Williams operates LEG directly (per its own 10-Q segment reporting and consistent trade-press attribution). Note: the specific FERC-docket intervenor/party name is 'Louisiana Energy Gateway LLC' -- a wholly-owned Williams special-purpose subsidiary -- per a Federal Register notice referencing 'Louisiana Energy Gateway LLC and The Williams Companies, Inc.' jointly intervening; staging the parent-company name 'Williams Companies' for consistency with the Owner1 convention already used elsewhere on this row, with the subsidiary name noted here for the record."
+    },
+    {
+      "segment_name": "", "sheet_row": 2969, "oo_sheet_row": 3934, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Williams Companies", "Owner1%": "100.00%"}, "primary_value": "Williams Companies",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726326000026/wmb-20260630.htm",
+        "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000026/wmb-20260630.htm", "ok": true, "contains_value": true, "name_found": true, "note": "LEG's revenue/EBITDA is fully consolidated into Williams' West segment with no minority-interest disclosure for the project"},
+        {"url": "https://naturalgasintel.com/news/williams-prevails-as-ferc-rules-louisiana-leg-system-a-natural-gas-gathering-pipe/", "ok": true, "contains_value": true, "name_found": true, "note": "system referred to throughout as Williams' own"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Was MISSING_REF -- value already recorded (Williams Companies 100%), now sourced. IMPORTANT CHECKED LEAD: Williams' 2022-06-29 FID press release states it 'signed a Memorandum of Understanding with Quantum Energy Partners to form a joint venture that will enable Quantum to become an equity investor and partner in the project' -- a potential co-owner. Checked whether this closed: SEC EDGAR full-text search for 'Louisiana Energy Gateway' + 'Quantum' across all forms returns ZERO hits, and Williams' subsequent 10-Qs (Q3 2025, Q2 2026) report LEG's full revenue/EBITDA inside Williams' own West segment with no minority-interest line, describing it only as 'Williams'' project. No later source (press, SEC filing, or FERC docket) mentions Quantum in connection with LEG. Conclusion: the 2022 MOU either did not convert into equity in this specific asset or was abandoned -- current evidence supports Williams Companies 100% as recorded, not a revision. Flagging the MOU here rather than silently dropping it, per standing rule on documenting leads that don't pan out."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P6843",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA 'Historical Projects' sheet row 1194: 'Louisiana Energy Access Project (LEAP) Expansion Phase 4', operator DTE (DT Midstream), Expansion, Completed, in-service 2025-09; 150 mi total system / 36 in, +200 MMcf/d incremental capacity (raising LEAP total from 1.9 to 2.1 Bcf/d); FID October 2024; FERC affirmed LEAP's gathering status September 2024 (same primary-function-test finding as LEG, separate docket); delivers Haynesville supply to the Gillis Hub and Gulf Coast LNG markets. Distinct system from P5115 LEG -- different owner/operator (DT Midstream vs Williams) -- not a duplicate, but the two systems are close analogues (both FERC-affirmed Haynesville-to-Gillis gathering spines that went in service within weeks of each other in 2025)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "", "sheet_row": 2969,
+      "current_status": "construction",
+      "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {"Status": "operating", "StartYear1": "2025", "StartMonth1": "7"},
+      "evidence_date": "2025-07",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/107263/000010726326000026/wmb-20260630.htm"
+      ],
+      "verifications": [
+        {"url": "https://pgjonline.com/news/2025/july/williams-leg-pipeline-starts-up-boosting-haynesville-gas-flows-report-says", "ok": true, "contains_value": true},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726325000145/wmb-20250930.htm", "ok": true, "contains_value": true},
+        {"url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000026/wmb-20260630.htm", "ok": true, "contains_value": true}
+      ],
+      "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "The sheet's 'construction' (updated=2025-10-15, presumably still reflecting the pre-startup Reuters/S&P Global sources) is now stale by at least three months. Independent evidence: (1) trade press reports initial flows of 75 MMcf/d on 2025-07-23 into Transco at Beauregard Parish LA, rising to ~145 MMcf/d by 2025-07-25; (2) Williams' own Q3 2025 10-Q (filed 2025-11-03) states LEG 'was placed into service in July and August 2025'; (3) Williams' Q2 2026 10-Q (filed 2026-08-03) confirms 'a full year of the Louisiana Energy Gateway expansion project' contributing to 2026 growth and states it 'was placed into service in the third quarter of 2025'. EIA's Aug2026 workbook lists 'Completed' with a 2025-10-01 completed-date (likely full-capacity ramp rather than first service). Recommending Status=operating, StartYear1=2025, StartMonth1=7 (first flows). Note the FERC ruling (Sept 2024) also means this system is a non-jurisdictional intrastate/gathering line, not a certificated interstate project -- consistent with why there is no FERC in-service notice to cite; the operator disclosures (10-Qs) and press substitute for that in the source ladder as expected for an intrastate/gathering line."
+    }
+  ],
+  "summary": "P5115 Louisiana Energy Gateway: confirmed real (EIA+FERC+2x SEC 10-Q+press), NOT a duplicate of P6843/P0285; status STALE -> change to operating (in service Jul-Sep 2025, StartMonth1=7); classification concern -- PipelineType should be 'gathering' not 'transmission' per FERC's 2024-09-27 jurisdictional ruling. All 17 worklist units sourced; UNRESOLVED: ProposalYear/Month, Pressure, SegmentCost (nothing found stating these for LEG specifically)."
+}

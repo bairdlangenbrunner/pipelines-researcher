@@ -1,0 +1,423 @@
+{
+  "project_id": "P0188",
+  "pipeline_name": "UTOS Gas Pipeline",
+  "sheet_row": 47,
+  "wiki": "https://www.gem.wiki/UTOS_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no edit needed beyond the classification/date fixes below; existence, ownership, and duplicate-status are solidly documented",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: solidly real, extensively documented across 3 decades of primary sources. UTOS (\"U-T Offshore System\") is a 42-inch, ~29-30 mile natural gas pipeline built in 1978 running from the Gulf of Mexico (West Cameron Block 167) to Johnson's Bayou, Cameron Parish, Louisiana -- confirmed by a 2011 PHMSA Part 192.3 interpretation letter (then-operator Enbridge Offshore Pipelines (UTOS) L.L.C.), a Feb 2026 PHMSA Corrective Action Order (CPF 4-2026-028-CAO) issued to current operator Delfin Offshore Pipeline LLC after a real 2026 rupture/explosion on this exact line, Oil & Gas Journal, naturalgasworld.com, and offshore-technology.com. DUPLICATE: NOT a duplicate of any other row in the 41-row roster -- P0200 HIOS is a physically distinct, upstream, interconnecting system (the 2011 PHMSA letter and the 2026 CAO both independently describe HIOS and UTOS as two separate pipelines joined at WC-167); P6584 ANR Offshore Grand Chenier is a third, separate 30-inch line (see cross_row_leads). ATTRIBUTION: current owner Delfin LNG LLC (100%, per delfinmidstream.com) and current operator Delfin Offshore Pipeline LLC (per the 2026 PHMSA CAO, addressed to CEO Dudley Poston) both check out -- Delfin acquired the pipeline from Enbridge in 2014 (3 independent sources: lnglawblog.com, offshore-technology.com, naturalgasworld.com all state the 2014 Enbridge->Delfin sale). CAVEAT: this row's classification (see companion 'classification' concern) and two date fields (StopYear, Proposal/Construction) needed correction -- see the concern + fills below."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "change PipelineType from 'both transmission and gathering' to 'transmission' -- the current value is neither valid controlled vocabulary nor supported by the row's own cited source",
+      "contested": {
+        "PipelineType": "transmission"
+      },
+      "researcher_notes": "TWO separate problems with the recorded PipelineType='both transmission and gathering': (1) it is not valid controlled vocabulary -- docs/reference/controlled_vocab.md lists only 'transmission', 'gathering', 'distribution' for PipelineType; 'both transmission and gathering' does not appear as an option (unlike, e.g., P0200 HIOS in this same batch, whose 'both transmission and gathering' value IS directly supported by its own cited PHMSA letter -- see that row's shard). (2) It is directly contradicted by the very document already cited in this row's own PipelineType [ref] cell: the March 8, 2011 PHMSA Part 192.3 interpretation letter to Enbridge Offshore Pipelines (UTOS) L.L.C. states verbatim: 'We agree with [FERC] that certain portions of the HIOS are used for the gathering of gas, but that the pipeline segment that interconnects with the UTOS is a transmission line... For that reason, we further conclude that the UTOS cannot be a gathering line under 49 CFR Sec. 192.3.' PHMSA's own regulatory determination is that UTOS is transmission only -- gathering classification applies to portions of the upstream HIOS system (P0200), not to UTOS itself. Recommend PipelineType='transmission'. Single-source (this letter is the only document found that directly addresses UTOS's regulatory classification), so tier is medium per this project's single-regulator-filing convention, but it is dispositive: a federal regulator's own determination, already cited by the sheet, that the sheet's classification is simply wrong."
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "change StopYear from 2011 to 2012, sourced to the Feb 2026 PHMSA Corrective Action Order; flag the 1-year discrepancy against two older trade-press sources for reviewer awareness",
+      "contested": {
+        "StopYear": "2012"
+      },
+      "researcher_notes": "The recorded StopYear=2011 is NOT actually supported by either URL in its current [ref] cell (per the worklist's own existing_ref_checks: the energy.gov PDF has no extractable text/scanned image, and naturalgasworld.com does not contain the literal value '2011' -- it says 'abandoned in 2011' in different phrasing that the automated screen missed, so the human read below supersedes that screen artifact). Two 2019/2020-era trade-press sources (naturalgasworld.com's LNG Condensed project spotlight, and offshore-technology.com's project page) DO independently state 'abandoned in 2011 due to decrease in flow volumes' -- matching the sheet. However, PHMSA's own Feb 6, 2026 Corrective Action Order (CPF 4-2026-028-CAO, issued directly to operator Delfin Offshore Pipeline LLC after a real Feb 3, 2026 rupture on this exact pipeline during pigging operations) states with operational specificity: 'In 2012, a prior operator purged, isolated, and filled the Delfin Offshore Gas Pipeline with nitrogen. The pipeline has remained out of service since that time.' NaturalGasIntel's Feb 12, 2026 reporting on the same CAO independently states 'The pipeline, which has been out of service since 2012...' I am recommending 2012 (contradicting the two older press pieces) because: (a) it is a primary federal regulatory investigative finding, ranking above trade press per source_roster.md; (b) it carries specific operational detail (nitrogen purge/isolation procedure) rather than a generic 'abandoned' description; (c) it is the most recent and most directly-informed source (issued in direct response to inspecting this pipeline). This is a close call and a genuinely material 1-year discrepancy -- flagging explicitly rather than silently overriding."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "idle"},
+      "primary_value": "idle",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/",
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/", "ok": true, "contains_value": true, "name_found": true, "note": "describes UTOS as abandoned/idle, awaiting Delfin's reactivation -- status by inference, re-verified live"},
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Feb 2026 PHMSA order states outright: 'The pipeline is currently shut-in and not operating' -- direct, current, dispositive confirmation that idle remains correct even after the Feb 3 2026 rupture during a reactivation attempt"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Still idle as of the most current evidence (Feb 2026 PHMSA order, post-dating a rupture that occurred DURING Delfin's reactivation/pigging attempt). See status_reviews for full narrative."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/",
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/", "ok": true, "contains_value": true, "name_found": true, "note": "re-verified live, 200"},
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "re-verified live, 200 -- 'UTOS...a natural gas pipeline system'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both existing refs re-verified live and still on point."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'we further conclude that the UTOS cannot be a gathering line under 49 CFR Sec. 192.3' -- explicit regulatory determination that UTOS is transmission, not gathering"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The recorded value 'both transmission and gathering' is invalid vocabulary AND contradicted by this same already-cited source. Corrected to 'transmission'. See companion classification concern in validity[]. Single source (a PHMSA determination letter) so tier=medium per project convention, but it is a dispositive federal regulatory finding directly on point."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2014", "ProposalMonth": "11"},
+      "primary_value": "2014",
+      "proposed_refs": [
+        "https://www.lnglawblog.com/2014/11/delfin-lng-completes-acquisition-of-pipeline-system-for-deepwater-lng-port/",
+        "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/",
+        "https://www.naturalgasworld.com/project-spotlight-delfin-lng-an-innovative-approach-to-flng-lng-condensed-70028"
+      ],
+      "verifications": [
+        {"url": "https://www.lnglawblog.com/2014/11/delfin-lng-completes-acquisition-of-pipeline-system-for-deepwater-lng-port/", "ok": true, "contains_value": true, "name_found": true, "note": "Delfin LNG LLC completed acquisition of the UTOS pipeline system from Enbridge Nov 11, 2014, filed notice with FERC of intent to repurpose it as part of the Deepwater LNG Port"},
+        {"url": "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/", "ok": true, "contains_value": true, "name_found": true, "note": "'Delfin subsequently acquired the pipeline system from Enbridge in 2014'"},
+        {"url": "https://www.naturalgasworld.com/project-spotlight-delfin-lng-an-innovative-approach-to-flng-lng-condensed-70028", "ok": true, "contains_value": true, "name_found": true, "note": "'Delfin LNG bought UTOS from Enbridge in 2014'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled with an interpretive caveat: the pipeline itself was physically built in 1978 (predates GEM's tracking granularity for this repurposing project), but the CURRENT 'proposal' on this row is Delfin's 2014 acquisition + FERC filing to repurpose UTOS as feedgas infrastructure for the Delfin LNG deepwater port -- that is the event 3 independent sources date to Nov 2014 (LOI signed Feb 20 2014 per one additional source not independently re-verified here; acquisition COMPLETED and FERC-notified Nov 11 2014, which is the date I filled). ProposalMonth=11 rests on lnglawblog.com alone (the other two sources give only the year) -- flagging that the month component is single-sourced even though the year is triple-sourced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "1978"},
+      "primary_value": "1978",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf",
+        "https://www.naturalgasworld.com/project-spotlight-delfin-lng-an-innovative-approach-to-flng-lng-condensed-70028"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Delfin's Offshore Gas Pipeline was constructed in 1978 with double submerged arc weld (DSAW) seam pipe'"},
+        {"url": "https://www.naturalgasworld.com/project-spotlight-delfin-lng-an-innovative-approach-to-flng-lng-condensed-70028", "ok": true, "contains_value": true, "name_found": true, "note": "'UTOS was built in 1978'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled -- ConstructionYear matches StartYear1 (original 1978 build, same year construction and initial operation). ConstructionMonth not stated in any source found; left unfilled. No construction-start date found for Delfin's ongoing repurposing/reactivation work despite the June 2026 FID reporting for the broader Delfin FLNG project -- that would be a separate/future ConstructionYear entry if GEM tracks a repurposing phase distinctly, which I did not attempt to add given the ambiguity (this row appears to track the single physical asset since 1978, not a phase-by-phase repurposing history)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1978"},
+      "primary_value": "1978",
+      "proposed_refs": [
+        "https://www.naturalgasworld.com/project-spotlight-delfin-lng-an-innovative-approach-to-flng-lng-condensed-70028",
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.naturalgasworld.com/project-spotlight-delfin-lng-an-innovative-approach-to-flng-lng-condensed-70028", "ok": true, "contains_value": true, "name_found": true, "note": "re-verified live; 'UTOS was built in 1978'"},
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "new independent source added: 'constructed in 1978'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref energy.gov/sites/prod/files/2014/06/f16/ord3393_2.pdf could not be read (scanned image, no extractable text via pypdf or pdftotext) -- kept as a candidate in the sheet's history but not relied on; replaced with two readable, on-point sources both stating 1978 explicitly. Old ref not silently dropped -- noting it here per standing rule."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Stop [ref]",
+      "value_cols": ["StopYear"],
+      "primary_value_col": "StopYear",
+      "values": {"StopYear": "2012"},
+      "primary_value": "2012",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf",
+        "https://www.naturalgasintel.com/news/delfin-lng-potentially-facing-delays-as-regulatory-hurdles-mount-lawsuit-filed-after-pipeline-failure/"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'In 2012, a prior operator purged, isolated, and filled the Delfin Offshore Gas Pipeline with nitrogen. The pipeline has remained out of service since that time.'"},
+        {"url": "https://www.naturalgasintel.com/news/delfin-lng-potentially-facing-delays-as-regulatory-hurdles-mount-lawsuit-filed-after-pipeline-failure/", "ok": true, "contains_value": true, "name_found": true, "note": "'The pipeline, which has been out of service since 2012, ruptured near Mae's Beach and Johnson Bayou during cleaning operations'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Corrected from the recorded 2011 (which, per the worklist's own existing_ref_checks, was not actually supported by either currently-cited URL). Two 2019-era trade sources (naturalgasworld.com, offshore-technology.com) DO say 'abandoned in 2011' -- I am recommending 2012 instead per the primary federal regulatory finding (see companion spec concern for the full discrepancy writeup). Tier held at medium rather than high given the genuine, unresolved 1-year conflict against two other real sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "2000.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "2000.00",
+      "proposed_refs": [
+        "https://www.ogj.com/pipelines-transportation/lng/article/14185153/delfin-completes-gulf-of-mexico-flng-feed"
+      ],
+      "verifications": [
+        {"url": "https://www.ogj.com/pipelines-transportation/lng/article/14185153/delfin-completes-gulf-of-mexico-flng-feed", "ok": true, "contains_value": true, "name_found": true, "note": "'The Delfin-owned UTOS (42 in.-OD, 30 miles, 2 bcfd) and Grand Chenier (30-in. OD, 700 MMcfd) natural gas pipelines would supply the FLNG project' -- 2 bcfd = 2000 MMcf/d, exact match"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The recorded value now verifiably stated on the page (the worklist's automated screen had flagged 'data value not found' because it searched for the literal string '2000'/'2,000' rather than the '2 bcfd' phrasing actually used -- confirmed by direct human read). Second-source hunt: checked naturalgasworld.com (no capacity figure), the 2011 and 2026 PHMSA documents (neither states capacity, only diameter/length/pressure) -- no second independent capacity source found; tier held at medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {"Pressure": "1250", "PressureUnits": "psig"},
+      "primary_value": "1250",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'The pipeline has a maximum allowable operating pressure (MAOP) of 1250 psig.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled from PHMSA's Feb 2026 Corrective Action Order, the only document found that states an MAOP figure for this line. Attempted the Final EIS main volume (energy.gov, 28MB) as a second source but the download repeatedly failed (ChunkedEncodingError/IncompleteRead); the 2011 PHMSA letter and all press sources do not state a pressure figure. Single-sourced -- tier medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "29.00", "LengthKnownUnits": "mi"},
+      "primary_value": "29.00",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf",
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'The UTOS is a 29-mile, 42-inch-diameter natural gas pipeline'"},
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Approximately 29 miles of the pipeline are offshore, with an approximately one-mile onshore portion' (total ~30 mi)"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "29 mi matches exactly as the OFFSHORE-only segment length in both PHMSA documents (15 years apart); the 2026 CAO clarifies there is also a further ~1-mile onshore portion (total pipeline ~30 mi, matching ogj.com's rounded '30 miles' and offshore-technology.com's '30mi'). Recorded 29.00 is the offshore-segment figure -- accurate for the OCS-to-shore portion; noting the onshore-mile nuance rather than treating it as a discrepancy (rounding/scope difference, not disagreement)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "42", "DiameterUnits": "in"},
+      "primary_value": "42",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf",
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf",
+        "https://www.ogj.com/pipelines-transportation/lng/article/14185153/delfin-completes-gulf-of-mexico-flng-feed"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "re-verified live"},
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'a 42-inch diameter natural gas pipeline'"},
+        {"url": "https://www.ogj.com/pipelines-transportation/lng/article/14185153/delfin-completes-gulf-of-mexico-flng-feed", "ok": true, "contains_value": true, "name_found": true, "note": "'UTOS (42 in.-OD...)'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Triple-confirmed across 3 independent publishers spanning 2011-2026."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "High Island Offshore Gas Pipeline and WC Blocks 130B, 116, and 61"},
+      "primary_value": "High Island Offshore Gas Pipeline and WC Blocks 130B, 116, and 61",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/legacy/interpretations/Interpretation%20Files/Pipeline/2011/Embridge-PI-10-0008-03-08-2011-Part%20192.3.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "re-verified live -- 'the UTOS receives \"wet gas\" from four different sources on the OCS: the HIOS, which interconnects with the UTOS at West Cameron (WC) Block 167...and three other pipeline systems associated with current production facilities located in WC Block 130B, WC Block 116, and WC Block 61' -- word-for-word match"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Exact word-for-word match to this precise, unusual list of source blocks -- clearly this letter is the sheet's original source. Single-sourced (no other document repeats this specific 4-source list), so tier=medium despite the very high confidence in the match itself; the 2026 CAO independently corroborates the WC-167/HIOS interconnect but names only WC-167, not the other 3 blocks."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Gulf of Mexico",
+        "StartState/Province": "Gulf of Mexico",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Johnson's Bayou",
+        "EndState/Province": "Louisiana",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Gulf of Mexico",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf",
+        "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'begins at the Genesis Energy junction platform located at West Cameron Block 167 (WC-167) in the Gulf of America...runs approximately 30 miles to a termination point at Williams/Transco Station 44 located onshore near Johnson Bayou, Cameron Parish, Louisiana'"},
+        {"url": "https://www.offshore-technology.com/projects/delfin-floating-lng-project-gulf-mexico/", "ok": true, "contains_value": true, "name_found": true, "note": "Cameron Parish, Louisiana; Gulf of Mexico"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_REF (values present, no citation) -- now sourced. Note the 2026 PHMSA document uses the 2025-era US administrative renaming 'Gulf of America'; keeping the sheet's existing 'Gulf of Mexico' as the geographic name is a naming-convention choice, not a factual conflict -- both documents describe the identical location."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No cost figure found specific to the UTOS reactivation/repurposing (as distinct from the ~$5B FID reported June 2026 for the entire multi-vessel Delfin FLNG project, which is a different, much larger scope and not a per-segment pipeline cost). Searched: ogj.com, naturalgasworld.com, naturalgasintel.com, the 2026 PHMSA CAO, gaselectricpartnership.com/kDelfin.pdf, jpt.spe.org -- none state a pipeline-specific dollar figure. Attempted the Final EIS main volume and Appendix P/M PDFs (energy.gov) as the likeliest candidates for a cost estimate but the large main-volume PDF (28MB) failed to download (repeated ChunkedEncodingError) and the appendices did not load in the time available. UNRESOLVED, not a non-answer -- the EIS documents remain an open lead for a future pass."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "oo_sheet_row": 176,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Delfin Offshore Pipeline LLC"},
+      "primary_value": "Delfin Offshore Pipeline LLC",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA's Feb 6 2026 Corrective Action Order is addressed to 'Mr. Dudley Poston, Chief Executive Officer, Delfin Offshore Pipeline LLC' and directs 'Delfin Offshore Pipeline, LLC (Delfin)' to take corrective action -- this is the specific legal operating entity"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. Note the corporate-family layering found during this sweep: 'Delfin Offshore Pipeline LLC' is the specific pipeline-operating entity (per this PHMSA filing, officers Poston/Daughdrill/Werner); 'Delfin LNG LLC' is the entity already recorded as Owner1 (100%, per delfinmidstream.com); 'Delfin Midstream' is the umbrella corporate brand under which both operate. NaturalGasIntel's Feb 12 2026 reporting refers to the parent loosely as 'Delfin Midstream Inc.' -- a related but not identical name, so not counted as a second independent confirmation of this precise entity string. Single-sourced at the entity-name level; tier medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "oo_sheet_row": 176,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Delfin LNG LLC", "Owner1%": "100.00%"},
+      "primary_value": "Delfin LNG LLC",
+      "proposed_refs": [
+        "https://delfinmidstream.com/assets/",
+        "https://www.ogj.com/pipelines-transportation/lng/article/14185153/delfin-completes-gulf-of-mexico-flng-feed"
+      ],
+      "verifications": [
+        {"url": "https://delfinmidstream.com/assets/", "ok": true, "contains_value": true, "name_found": true, "note": "re-verified live: 'UTOS...was formerly owned and operated by Enbridge. The UTOS pipeline is being repurposed...' under Delfin Midstream's own Assets page"},
+        {"url": "https://www.ogj.com/pipelines-transportation/lng/article/14185153/delfin-completes-gulf-of-mexico-flng-feed", "ok": true, "contains_value": true, "name_found": true, "note": "'The Delfin-owned UTOS...pipeline' -- independent second-source confirmation of Delfin ownership"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref re-verified live; added OGJ as a second, independent confirmation of Delfin ownership (delfinmidstream.com is the company's own site, so an outside second source materially strengthens this)."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 47,
+      "current_status": "idle",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-02",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf",
+        "https://www.naturalgasintel.com/news/delfin-lng-potentially-facing-delays-as-regulatory-hurdles-mount-lawsuit-filed-after-pipeline-failure/",
+        "https://www.theadvocate.com/baton_rouge/news/louisiana-delfin-lng-explosion-natural-gas-pipeline/article_1c41e8f8-1daa-4611-81c5-a7682c1ba1c2.html",
+        "https://www.kplctv.com/2026/02/11/worker-sues-pipeline-company-after-cameron-parish-explosion-alleging-catastrophic-injuries/"
+      ],
+      "verifications": [
+        {"url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/2026-02/PHMSA%20CAO%20-%20Delfin%20Offshore%2042026028.pdf", "ok": true, "contains_value": true},
+        {"url": "https://www.naturalgasintel.com/news/delfin-lng-potentially-facing-delays-as-regulatory-hurdles-mount-lawsuit-filed-after-pipeline-failure/", "ok": true, "contains_value": true},
+        {"url": "https://www.theadvocate.com/baton_rouge/news/louisiana-delfin-lng-explosion-natural-gas-pipeline/article_1c41e8f8-1daa-4611-81c5-a7682c1ba1c2.html", "ok": true, "contains_value": true},
+        {"url": "https://www.kplctv.com/2026/02/11/worker-sues-pipeline-company-after-cameron-parish-explosion-alleging-catastrophic-injuries/", "ok": true, "contains_value": true}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Much more current evidence than LastUpdated (2024-07-16) found and it CONFIRMS idle, though the story is more dramatic than the sheet reflects. Timeline reconstructed from the PHMSA CAO and press: the pipeline had been shut-in and nitrogen-filled since 2012 (see the Stop fill/concern re: 2011-vs-2012). Delfin, working toward reactivating it as feedgas infrastructure for its Delfin FLNG deepwater export project (which reached a reported ~$5B FID around June 2026 per press coverage not independently re-verified in this pass), was running a cleaning pig with an in-line inspection tool through the line on Feb 3, 2026 when the pig struck a closed valve, gas was re-injected/ignited, and the line RUPTURED near Mae's Beach/Johnson Bayou -- a fire 50-80 ft wide burned for hours, ~56 MMcf of gas was released, one worker was injured (later suing Delfin, Genesis and others -- Kherkher Garcia LLP suit, Harris County), and Johnson Bayou High School (6 mi away) briefly sheltered in place. PHMSA issued Corrective Action Order CPF 4-2026-028-CAO on Feb 6, 2026 (case status OPEN per primis.phmsa.dot.gov), confirming as of that date: 'The pipeline is currently shut-in and not operating' and capping any eventual restart at 20% of MAOP pending a third-party investigation, remedial work plan, and hydrostatic testing (first progress report due April 1, 2026; case remains open as of this Sept 2026 review with no restart confirmed in any source found). NET: the pipeline never actually returned to service during this incident -- it ruptured WHILE being prepared for reactivation, and remains shut-in. 'idle' is therefore still the correct Status, now with dramatically fresher and more detailed evidence than the sheet had. Recommend also watching for a status change to 'construction' or 'operating' once/if PHMSA authorizes restart -- no evidence of that as of the most recent sources found (Feb 2026)."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P6584",
+      "url": "https://delfinmidstream.com/assets/",
+      "facts": "Delfin Midstream's own Assets page states verbatim: 'Grand Chenier -- Delfin Midstream owns (through its subsidiary Avocet LNG) the Grand Chenier pipeline, a 30\" pipeline that runs from the Grand Chenier site, adjacent to the Mermentau river, to WC-171 and to WC-167.' This directly names P6584 (ANR Offshore Grand Chenier, the batch's other idle row) and asserts CURRENT ownership by Delfin Midstream via subsidiary Avocet LNG -- worth checking against P6584's recorded owner (presumed ANR/TC Energy legacy ownership) since this suggests a same-pattern acquisition to UTOS's 2014 Enbridge->Delfin sale. Corroborated on diameter/capacity by ogj.com: 'Grand Chenier (30-in. OD, 700 MMcfd)'."
+    }
+  ],
+  "summary": "P0188 UTOS: existence/duplicate/ownership confirmed (caveat); 16/16 units filed. 1 classification concern (PipelineType invalid vocab + contradicted by its own cited PHMSA letter -> corrected to 'transmission') and 1 spec concern (StopYear 2011->2012 per a 2026 PHMSA Corrective Action Order following a real Feb 3 2026 rupture on this line, vs. two older press sources still saying 2011). Status confirmed idle with much fresher evidence (still shut-in post-rupture, PHMSA case open). UNRESOLVED: SegmentCost (no reactivation-specific cost found)."
+}

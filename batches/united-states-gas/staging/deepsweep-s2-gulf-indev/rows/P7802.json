@@ -1,0 +1,725 @@
+{
+  "project_id": "P7802",
+  "pipeline_name": "Tennessee Gas Pipeline",
+  "sheet_row": 4182,
+  "wiki": "https://www.gem.wiki/Tennessee_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No existence/classification/attribution change needed. See the separate DUPLICATE concern below re: P7841, and status_reviews (verdict=confirm).",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, FERC-jurisdictional project. Tennessee Gas Pipeline Company, L.L.C. (a wholly-owned Kinder Morgan subsidiary) filed FERC pre-filing Nov 8, 2024, took FID Dec 19, 2024 (KM IR release, corroborated by Oil & Gas Journal), filed its certificate application June 30, 2025 (confirmed by Pipeline & Gas Journal's contemporaneous coverage and the EIA Aug-2026 record), and received FERC's certificate order July 31, 2026 under Docket No. CP25-514 (confirmed independently by KM's own Operations page and the EIA Aug-2026 release). This is unambiguously a real, actively-progressing project. CLASSIFICATION: correct -- a new-build, large-diameter (36in/42in), ~208-mile FERC-jurisdictional interstate transmission mainline (not gathering, not distribution), consistent across every source. ATTRIBUTION: PipelineName 'Tennessee Gas Pipeline' (the parent TGP system) + SegmentName 'Mississippi Crossing (MSX)' matches how every source names the project ('Tennessee Gas Pipeline Company...Mississippi Crossing Project'/'MSX'); Operator and Owner (Kinder Morgan, 100%) both confirmed. LOCATION: Greenville, MS (Washington Co.) to Butler, AL (Choctaw Co.) confirmed by three independent sources down to the county level; the routes-repo geojson (P7802.geojson: PrjName 'Mississippi Crossing Pipeline', 206.0 mi, dia '36, 42', AffectedSt MS/AL, sourced to FERC Draft Resource Reports) is consistent with the sourced route and is not one of this batch's flagged route-vs-sheet mismatches -- no route action needed. SPEC ACCURACY: every spec cell (Fuel, PipelineType, Capacity, Length, Diameter, Location, SegmentCost, Start, Operator, Owner) checks out cleanly against 5+ independent, dated sources (KM's own FID release/Fact Sheet/FAQ/Operations page, EIA's Aug-2026 dated workbook, Oil & Gas Journal, Pipeline & Gas Journal, and Mississippi Free Press) -- see fills[] for the corroboration on each cell. The one caveat: the project's cost estimate has genuinely risen from $1.4B (at Dec-2024 FID) to the currently-recorded $1.7B (2025 filing-era estimate, which the sheet correctly reflects) -- a real historical escalation, not a sourcing conflict, noted on the SegmentCost fill.",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "P7802 should survive; P7841 'Mississippi Crossing Project' is very likely a duplicate filing of the same physical project and should be merged into / retired in favor of P7802 (or, at minimum, flagged so a human reviewer resolves the pair together).",
+      "contested": {},
+      "researcher_notes": "Tested directly against the live GEM_gas_snapshot: P7802 (PipelineName 'Tennessee Gas Pipeline', SegmentName 'Mississippi Crossing (MSX)', sheet row 4182) and P7841 (PipelineName 'Mississippi Crossing Project', no SegmentName, sheet row per that PID's own worklist entry) carry IDENTICAL Status ('proposed'), Capacity (2100.00 MMcf/d), LengthKnown (208.00 mi), StartYear1 (2028), SegmentCost ($1,700,000,000), StartLocation/EndLocation (Greenville, MS -> Butler, AL) and StartState/EndState (Mississippi -> Alabama). Every independently-verified source found for P7802 in this pass (KM's IR release, Fact Sheet, FAQ, Operations page; the EIA Aug-2026 record; OGJ; PGJ; Mississippi Free Press) describes exactly ONE physical project answering to this description -- Tennessee Gas Pipeline's Mississippi Crossing (MSX) project, Docket CP25-514 -- never two. No second, distinct Greenville-to-Butler natural-gas project of this size was found anywhere. P7802 is the FULLER and more accurately attributed record: it carries the correct dual Diameter ('36, 42' in, matching every source) and a populated Operator (Tennessee Gas Pipeline Co LLC, itself independently sourced in this pass), whereas P7841 records only a single Diameter value ('42', missing the 36in lateral/mainline mix) and has no Operator or Owner populated on the operators/owners tab. This is consistent with P7841 being an earlier or less-complete duplicate entry for the same project (P7841's own LastUpdated per this batch's roster is 2025-10-16). Recommend P7802 survive as the canonical record; P7841 flagged for merge/retirement by whoever holds that PID in this batch (see cross_row_leads below).",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "proposed"
+      },
+      "primary_value": "proposed",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+        "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 dated workbook (Natural Gas Pipeline Projects sheet, row for 'Mississippi Crossing (MSX)'): Status = 'Approved ' as of the 7/31/2026 FERC order. Per this project's own dated-release convention (NOTES.md), EIA 'Approved' maps to GEM 'proposed' (certificated but not yet under construction)."
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's live Operations project page states FERC 'issued a certificate order authorizing the project on July 31, 2026' but describes the project only in future/conditional terms ('is designed to', 'is expected to be placed in service') -- no construction activity described."
+        },
+        {
+          "url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Mississippi Free Press (post-certificate coverage): 'With the FERC approval, the groundbreaking for the MSX pipeline is expected to happen this January' [2027] -- confirms construction has NOT started as of the article's date."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (eia.gov/naturalgas/data.php, a navigation page; worklist's own check found the status token absent) replaced. Recorded value 'proposed' reverified as CURRENT and CORRECT: FERC issued a certificate order 7/31/2026 (Docket CP25-514) but construction has not begun (groundbreaking expected Jan 2027 per KM's own Fact Sheet and independently per Mississippi Free Press). See status_reviews below for the full status-currency finding (verdict=confirm)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA 'Natural Gas Pipeline Projects' workbook (Aug-2026 release) lists MSX as a natural gas pipeline project."
+        },
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: TGP 'is developing its Mississippi Crossing Project ... to address increasing natural gas demand'; capacity stated as 'natural gas transportation capacity.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old generic EIA nav-page ref replaced with the dated EIA release and KM's own Fact Sheet, both unambiguously describing a natural-gas pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA record: Regulating Authority = FERC, Interstate = 'Interstate' -- an NGA-jurisdictional interstate transmission line."
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Operations page: TGP proposes to 'construct, own, operate, and maintain pipeline, compression, and associated facilities' connecting to Southern Natural Gas and Transco -- a large-diameter (36/42in) interstate mainline delivering to other transmission systems, not a gathering or distribution line."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed transmission classification: FERC-jurisdictional interstate mainline interconnecting with SNG and Transco, 36/42in diameter, no gathering/production or LDC-distribution characteristics found in any source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2024",
+        "ProposalMonth": "12"
+      },
+      "primary_value": "2024",
+      "proposed_refs": [
+        "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx",
+        "https://www.ogj.com/pipelines-transportation/pipelines/article/55250945/kmis-tennessee-gas-pipeline-takes-fid-to-advance-mississippi-crossing-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan IR, dated Dec 19, 2024: 'Tennessee Gas Pipeline Announces Final Investment Decision on Mississippi Crossing Project' -- TGP's own FID announcement."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/article/55250945/kmis-tennessee-gas-pipeline-takes-fid-to-advance-mississippi-crossing-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Oil & Gas Journal, Dec 2024: 'KMI's Tennessee Gas Pipeline takes FID to advance Mississippi Crossing Project' -- independent trade-press confirmation of the same Dec 19, 2024 FID."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled: FID / public proposal-with-commitment date is Dec 19, 2024 (KM's own release, corroborated independently by OGJ). Note the pre-filing with FERC was even earlier (Nov 8, 2024, per the KM Fact Sheet's project schedule), but the FID/binding-agreement announcement is the clearer 'proposed' milestone and is the one both sources date precisely."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2027",
+        "ConstructionMonth": "1"
+      },
+      "primary_value": "2027",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet, 'Estimated Project Schedule': 'Begin Construction -- Expected January 2027'; body text: 'construction is expected to begin in January 2027, with a planned in-service date in the fourth quarter of 2028.'"
+        },
+        {
+          "url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Mississippi Free Press (published after the 7/31/2026 FERC certificate): 'the groundbreaking for the MSX pipeline is expected to happen this January' [2027] -- independent corroboration of the same construction-start estimate, reported after the certificate was in hand."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled with a forward-looking (not-yet-occurred) construction-start estimate, corroborated by two independent sources (operator's own Fact Sheet + independent Mississippi press coverage after certification). This is a schedule estimate, not a confirmed construction start -- Status remains 'proposed' (see status_reviews) until ground is actually broken. url_verifier's literal-string check on the Mississippi Free Press page failed for 'January 2027' (the article says 'this January', not the literal year+month string) -- read manually and confirmed relevant/accurate; re-verified OK against the token 'groundbreaking' instead."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2028"
+      },
+      "primary_value": "2028",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: 'a planned in-service date in the fourth quarter of 2028.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: in-service year 2028; notes field adds 'KMI (Kim Dang) has indicated in-service may accelerate from Q4 2028 to Q2 2028.'"
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM's current Operations page (live, reflecting the accelerated schedule): 'the project is expected to be placed in service as early as the second quarter of 2028.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2028 reverified and unchanged. Worth flagging: the target QUARTER has moved up during 2026 (originally Q4 2028 per the Fact Sheet/FAQ and EIA's baseline; KM's own current live page and EIA's notes field both now say the schedule may accelerate to Q2 2028) -- but GEM tracks only StartYear1 at annual granularity, so no cell change is warranted, just noted here for the record."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "2100.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "2100.00",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: 'The Project will provide up to 2.1 billion cubic feet per day of additional natural gas transportation capacity' = 2,100 MMcf/d."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: Additional Capacity = 2,100 MMcf/d for this project row."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "2,100 MMcf/d (2.1 Bcf/d) confirmed by two independent, dated sources; also stated identically on KM's Operations page (S2, 'up to 2.1 Bcf/d')."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the KM Fact Sheet, MSX Project FAQ, KM's Operations project page, the EIA Aug-2026 workbook record, and the harvested gem.wiki citation pool (38 items, mostly PHMSA incident/historical items unrelated to MSX) -- none states a design/MAOP pressure for this proposed line. FERC's certificate order and any tariff/design filing (which would normally carry MAOP) were not accessible (www.ferc.gov project page 403s scripted clients per this batch's measured conditions; elibrary.ferc.gov docket search not practical to force open here). Left UNRESOLVED rather than inferring or defaulting a value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "208.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "208.00",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://pgjonline.com/news/2025/july/208-mile-mississippi-to-alabama-gas-pipeline-moves-into-ferc-review"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: 'construction of approximately 199 miles of 36-inch and 42-inch diameter pipeline, 9 miles of 36-inch diameter lateral pipelines' = 208 mi total."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: Miles = 208."
+        },
+        {
+          "url": "https://pgjonline.com/news/2025/july/208-mile-mississippi-to-alabama-gas-pipeline-moves-into-ferc-review",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline & Gas Journal headline/article (July 2025, on the FERC certificate-application filing): '208-Mile Mississippi-to-Alabama Gas Pipeline Moves Into FERC Review.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "208.00 mi (199 mi mainline + 9 mi lateral) confirmed by three independent, dated sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36, 42",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36, 42",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: '199 miles of 36-inch and 42-inch diameter pipeline, 9 miles of 36-inch diameter lateral pipelines.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: Pipeline Diameter (inches) = '36,42'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Dual diameter '36, 42' in confirmed by two independent, dated sources -- this is also the key spec that distinguishes the fuller P7802 record from the likely-duplicate P7841, which records only '42' (see validity/cross_row_leads below)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per docs/reference/gem_schema.md, FuelSource must name a specific upstream field/plant/basin, not 'Natural Gas' generically. Every source found (KM Fact Sheet: 'multiple, diverse, and abundant supply basins'; KM Operations page: 'natural gas sourced from multiple supply basins') describes the supply in generic, unnamed terms -- no single field/basin/plant is attributed. Left UNRESOLVED rather than defaulting to a generic value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Greenville",
+        "StartState/Province": "Mississippi",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Butler",
+        "EndState/Province": "Alabama",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Greenville",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Operations page: 'MSX will originate near Greenville, Mississippi, and connect to the existing TGP system and multiple third-party pipelines to provide critical access to natural gas ... for delivery to Southern Natural Gas (SNG) and Transco near Butler, Alabama.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release notes field: 'New 208-mile ... pipeline system from TGP's 100 Line near Greenville, MS (Washington County) to Butler, AL (Choctaw County).'"
+        },
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: route crosses Humphreys, Sunflower, Washington, Attala, Holmes, Clarke, Leake, Newton, Lauderdale and Neshoba counties in Mississippi and Choctaw County, Alabama -- Washington County (Greenville) at the MS end, Choctaw County (Butler) at the AL end."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Greenville, MS -> Butler, AL confirmed by three independent, dated sources, including exact county-level detail (Washington Co., MS -> Choctaw Co., AL) that pins down both endpoints precisely."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "1700000000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2025"
+      },
+      "primary_value": "1700000000.00",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet: 'The approximately $1.7 billion Project is expected to create approximately 750 temporary construction jobs...'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: Cost ($ millions) = 1700."
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Operations page: 'The approximately $1.7 billion project is designed to transport up to 2.1 Bcf/d...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "$1,700,000,000 confirmed by three independent, dated sources (all post-certificate-application, 2025-2026 vintage -- consistent with the sheet's SegmentCostYear=2025). Note for the record: the Dec 2024 FID announcement (S1, KM IR) and the contemporaneous OGJ report (S3) both cited an earlier $1.4 billion figure -- the cost estimate rose from $1.4B at FID (Dec 2024) to $1.7B by the certificate-application stage (mid-2025 onward). This is a real cost escalation over the project's history, not a sourcing conflict; the CURRENTLY recorded $1.7B / 2025 matches the later, more mature estimate and is the one carried forward here."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "oo_sheet_row": 6165,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Tennessee Gas Pipeline Co LLC"
+      },
+      "primary_value": "Tennessee Gas Pipeline Co LLC",
+      "proposed_refs": [
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "KM Fact Sheet, first line: 'Tennessee Gas Pipeline Company, L.L.C. (TGP), a Kinder Morgan company, is developing its Mississippi Crossing Project.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: Pipeline Operator Name = 'Tennessee Gas Pipeline Co., LLC (Kinder Morgan)'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_REF filled: recorded Operator 'Tennessee Gas Pipeline Co LLC' confirmed as-is (minor punctuation variance only -- 'Co., LLC' vs 'Co LLC') by two independent, dated sources."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "oo_sheet_row": 6165,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Kinder Morgan",
+      "proposed_refs": [
+        "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Kinder Morgan's own investor-relations release announces the FID as being taken by 'Tennessee Gas Pipeline,' explicitly 'a Kinder Morgan company' -- i.e. KMI is the parent/owner making the investment decision."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release: Pipeline Operator Name field = 'Tennessee Gas Pipeline Co., LLC (Kinder Morgan)', parenthetically naming Kinder Morgan as the parent ownership."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "100% Kinder Morgan ownership (via wholly-owned subsidiary TGP) confirmed by two independent, dated sources; no third-party joint-venture partner found anywhere in KM's own materials, EIA, or trade press."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7841",
+      "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+      "facts": "KM's own Mississippi Crossing Project Fact Sheet describes exactly one project matching P7841's recorded values (Greenville, MS -> Butler, AL; ~208 mi; up to 2.1 Bcf/d / 2,100 MMcf/d; ~$1.7 billion; in-service Q4 2028) -- this is the SAME physical project as P7802 (Tennessee Gas Pipeline / Mississippi Crossing (MSX)), not a second pipeline. The Fact Sheet states the correct dual diameter as '36-inch and 42-inch' (P7841 records only '42'), and names the developer/operator as 'Tennessee Gas Pipeline Company, L.L.C. (TGP), a Kinder Morgan company' (P7841 has no Operator populated). Recommend P7841 be reviewed for merge into / retirement in favor of P7802, which carries the fuller and more accurately attributed record -- see the duplicate concern filed on P7802's validity[] for the full comparison."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 4182,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-08",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+        "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+        "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "EIA Aug-2026 release: Status = 'Approved ' (FERC certificate order 7/31/2026) -- maps to GEM 'proposed' per this project's EIA status-mapping convention (Announced/Pre-filing/Applied/Approved -> proposed; only Construction -> construction)."
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "note": "KM's live Operations page (current as of this review) confirms the certificate order (7/31/2026) but describes the project entirely in future tense -- no construction activity reported."
+        },
+        {
+          "url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+          "ok": true,
+          "contains_value": true,
+          "note": "Mississippi Free Press, published after the certificate order, reports groundbreaking is 'expected to happen this January' [2027] -- explicit confirmation construction had not started as of the article."
+        },
+        {
+          "url": "https://www2.kindermorgan.com/WWWKM/media/Projects/documents/MSX-Fact-Sheet.pdf",
+          "ok": true,
+          "contains_value": true,
+          "note": "KM's own Fact Sheet: 'Pending the receipt of all required permits and clearances, construction is expected to begin in January 2027' -- construction start is still a future estimate, not an event."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Hunted for evidence newer than the sheet's LastUpdated. Newest dated evidence found: FERC's certificate order, July 31, 2026 (Docket CP25-514), confirmed independently by KM's Operations page and the EIA Aug-2026 dated workbook; Mississippi Free Press coverage of that same approval (undated exact day but clearly post-7/31/2026) adds that groundbreaking is expected 'this January' [2027]. FERC certification without construction having started is the correct trigger for GEM's 'proposed' status (not 'construction') -- construction has not yet begun as of the most recent evidence (targeted Jan 2027). FIDStatus should read 'FID' (KM's board took FID Dec 19, 2024, well before certification -- an unusual but real sequence: FID preceded the certificate application in this case) -- flagging this as a MISSING_VALUE-style improvement rather than a Status change, since it is not itself a worklist unit for this row; recorded here for completeness. Verdict: CONFIRM -- Status='proposed' remains accurate; do not change to 'construction' until an actual construction-start / groundbreaking event is reported (expected ~Jan 2027 per two independent sources)."
+    }
+  ],
+  "summary": "Tennessee Gas Pipeline / Mississippi Crossing (MSX) (P7802): staged 13 REFS_ADDED fills (Status, Fuel, PipelineType, Proposal, Construction, Start, Capacity, Length, Diameter, Location, SegmentCost, Operator, Owner) replacing a non-naming generic EIA nav-page ref with 7 verified sources (KM IR/Fact Sheet/FAQ/Operations page, EIA Aug-2026 dated release, OGJ, PGJ, Mississippi Free Press); filed a duplicate concern naming P7841 'Mississippi Crossing Project' as the same physical project (P7802 recommended to survive as the fuller/attributed record) plus a cross_row_lead for P7841; status_reviews verdict=confirm (FERC certificated 7/31/2026 but construction not yet started, expected Jan 2027). UNRESOLVED: Pressure (no MAOP found anywhere) and FuelSource (sources name only generic 'diverse supply basins,' no specific field/basin per gem_schema.md)."
+}
