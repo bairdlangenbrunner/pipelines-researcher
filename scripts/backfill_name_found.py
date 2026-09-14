@@ -20,6 +20,8 @@ Usage:
     python scripts/backfill_name_found.py --staging batches/<scope>/staging/<dir>/ \
         --csv data/GGIT_gas_snapshot_<date>.csv
     python scripts/backfill_name_found.py --staging <dir> --shards rows      # deep-sweep shards
+    python scripts/backfill_name_found.py --staging <dir> --shards store     # after a merge:
+        the CARRIED ref records (reverified at worklist build, before this field existed)
 """
 import argparse, glob, json, os, sys, time
 from pathlib import Path
@@ -89,25 +91,34 @@ def alias_map(csv_path):
 
 
 def units(doc, kind):
-    """Both shard contracts, one iterator: the ref-gap shards keep units in
-    `resolutions[]`, the deep-sweep shards in `fills[]`."""
-    return doc.get("resolutions" if kind == "ref_shards" else "fills", []) or []
+    """Every contract, one iterator: the ref-gap shards and the merged store keep units
+    in `resolutions[]`, the deep-sweep shards in `fills[]`."""
+    return doc.get("fills" if kind == "rows" else "resolutions", []) or []
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--staging", required=True)
-    ap.add_argument("--shards", default="ref_shards", choices=["ref_shards", "rows"])
+    ap.add_argument("--shards", default="ref_shards",
+                    choices=["ref_shards", "rows", "store"],
+                    help="ref_shards/rows = per-PID shards; store = the merged "
+                         "staged_resolutions.json, whose CARRIED ref records predate the "
+                         "field and are what gate I' flags after a merge")
     ap.add_argument("--apply", action="store_true", help="write (default: dry-run)")
     ap.add_argument("--sleep", type=float, default=1.0, help="pause between fetches")
     ap.add_argument("--csv", help="tracker snapshot, to pick up OtherEnglishNames aliases")
     args = ap.parse_args()
 
     S = args.staging.rstrip("/")
-    paths = [p for p in sorted(glob.glob(os.path.join(S, args.shards, "*.json")))
-             if not os.path.basename(p).startswith("_")]
-    if not paths:
-        raise SystemExit(f"no shards in {os.path.join(S, args.shards)}")
+    if args.shards == "store":
+        paths = [os.path.join(S, "staged_resolutions.json")]
+        if not os.path.exists(paths[0]):
+            raise SystemExit(f"no staged store at {paths[0]}")
+    else:
+        paths = [p for p in sorted(glob.glob(os.path.join(S, args.shards, "*.json")))
+                 if not os.path.basename(p).startswith("_")]
+        if not paths:
+            raise SystemExit(f"no shards in {os.path.join(S, args.shards)}")
 
     aliases = alias_map(args.csv)
     cache, stamped, named, unnamed, skipped, noname = {}, 0, 0, 0, 0, 0
@@ -115,9 +126,13 @@ def main():
     for p in paths:
         doc = json.load(open(p))
         nm = doc.get("pipeline_name") or ""
-        variants = name_variants(nm, aliases.get(doc.get("project_id") or "", ()))
+        doc_variants = name_variants(nm, aliases.get(doc.get("project_id") or "", ()))
         changed = False
         for u in units(doc, args.shards):
+            variants = doc_variants
+            if u.get("pipeline_name"):
+                variants = name_variants(u["pipeline_name"],
+                                         aliases.get(u.get("project_id") or "", ()))
             for v in u.get("verifications", []) or []:
                 if "name_found" in v or not v.get("ok"):
                     skipped += 1

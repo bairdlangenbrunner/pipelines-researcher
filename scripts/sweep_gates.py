@@ -101,6 +101,16 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             url_units[u] += 1
     dominant = {u for u, n in url_units.items() if n >= dominant_min}
 
+    # A sourced FILL replaces the value in its ref cell, so its refs ARE that unit's refs; the
+    # carried HAS_REF/MISSING_REF record for the same cell documents the value being replaced.
+    # Gate I judges the replacement, never the superseded sheet ref (US gas A1, 2026-09-11:
+    # 21 carried EIA `data.php` refs failed I though every one had a FILL whose refs named
+    # the pipeline).
+    superseded = {(r.get("project_id"), str(r.get("sheet_row", "")), r.get("ref_col"))
+                  for r in res if r.get("class_in") == "FILL"
+                  and r.get("class_out") in SOURCED and verified(r)}
+
+
     A, B, C, D, E, F, G, H = [], [], [], [], [], [], [], []
     I_false, I_unchecked, J, K, L = [], [], [], [], []
     for pid, recs in sorted(by_pid.items()):
@@ -139,7 +149,9 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             for u in (r.get("proposed_refs") or []):
                 if any(b in u.lower() for b in BANNED):
                     F.append((pid, col, u))
-            if vr and not sentinel and r.get("class_out") in SOURCED:
+            replaced = (r.get("class_in") in ("HAS_REF", "MISSING_REF") and
+                        (pid, str(r.get("sheet_row", "")), col) in superseded)
+            if vr and not sentinel and r.get("class_out") in SOURCED and not replaced:
                 okv = [v for v in (r.get("verifications") or []) if v.get("ok")]
                 named = [v for v in okv if "name_found" in v]
                 if named and not any(v.get("name_found") for v in named):

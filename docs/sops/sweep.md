@@ -280,6 +280,30 @@ never swapped in as a replacement:
   writes "Transco", never "Transcontinental Gas Pipeline", and EIA lists P2499 as "Carlsbad Gateway
   Pipeline", not "Agua Blanca". Checking the GEM name alone reads both as pages about some other
   pipeline. `backfill_name_found.py --csv <snapshot>` joins the column automatically.
+- **In US gas the row's real identity is often its `SegmentName`, not its `PipelineName`** — and a
+  name check run against `PipelineName` alone then misses every page about the actual segment.
+  P6584 is filed as "ANR Gas Pipeline" with `SegmentName` "Offshore Grand Chenier System"; NGI
+  ("the Grand Chenier System is composed of four pipeline segments totaling 39.74 miles") and OGJ
+  ("Grand Chenier (30-in. OD, 700 MMcfd)") both name it outright, and the subagent reported both
+  as the wrong pipeline (2026-09-11). Same failure class as the missing-alias bullet above, one
+  column over. **A page that names the row by its `SegmentName`, its acronym, or a former name DOES
+  name it** — stamp `name_found: true` with the matched string in `note`, and say which name
+  matched. The deep-sweep dispatch prompt carries this clause verbatim; keep it there.
+- **After a merge, re-run the backfill over the merged store, not just the shards.** The CARRIED ref
+  records (`class_in` `HAS_REF`/`MISSING_REF`, reverified when the worklist was built, before
+  `name_found` existed) live only in `staged_resolutions.json`, so a `--shards rows` pass never sees
+  them and gate I' flags them at delivery. `backfill_name_found.py --staging <dir> --shards store
+  --csv <snapshot> --apply` is the merge-chain step that closes them; it also reads each unit's own
+  `pipeline_name` where the store carries one, so a multi-row PID gets the right variants per unit.
+- **A `name_found: False` on a page that is plainly the right pipeline means the ALIAS is missing
+  from GEM — fix the data, never the gate.** P0257 is filed as "Sur de Texas-Tuxpan Gas Pipeline"
+  with a blank `OtherEnglishNames`, so seven refs to offshore-technology.com's profile of the same
+  line came back `False`: the page publishes the English translation, "South Texas-Tuxpan"
+  (2026-09-04). The tempting repair — let the check match a distinctive token like "Tuxpan" — is
+  the one repair you must not make: matching a single endpoint proper noun re-admits precisely the
+  failure the gate exists to catch (a page about endpoint A cited for the "A–B" row, MZ on Jiangxi
+  v2). Correct the verification from re-verified evidence, and stage the alias into
+  `OtherEnglishNames` so the next sweep never asks the question again.
 - **A `name_found: False` on a page that is plainly the right pipeline means the ALIAS is missing
   from GEM — fix the data, never the gate.** P0257 is filed as "Sur de Texas-Tuxpan Gas Pipeline"
   with a blank `OtherEnglishNames`, so seven refs to offshore-technology.com's profile of the same
@@ -380,6 +404,17 @@ long — a dropped blank leaves no record, so gate J catches it by absence, but
 `seed_resolutions_from_worklist.py` seeds every `MISSING_REF` unit, so a dropped one survives
 as an empty `UNRESOLVED` that reads exactly like honest failure. Gate L splits it by whether
 `researcher_notes` is empty: notes = somebody looked, no notes = silence.
+
+**A sourced FILL supersedes the carried record for the same cell, and gate I judges the
+replacement.** When a fill re-sources a ref cell, its refs ARE that unit's refs; the carried
+`HAS_REF`/`MISSING_REF` record documents only the ref being replaced, so failing the fill's cell
+on the superseded ref is a false positive. US gas A1 (2026-09-11) opened with gate I at 25, of
+which 21 were carried EIA `data.php` refs whose cells already had a fill with pipeline-naming
+refs. `sweep_gates.py` now builds a `superseded` key set from every verified sourced FILL
+(`project_id`, `sheet_row`, `ref_col`) and skips the carried record for that key. The other four
+were real and were closed the only honest way — the fills went to `UNRESOLVED` with a note saying
+what was searched (P0173: every ref named the Delfin project, never the bypass segment itself).
+
 
 **A source that agrees within rounding is a ref, not a non-answer.** 51.97 mi + 0.5 mi against
 a recorded 52 mi, 38.5 against 39, $10.7M against $11M: `REFS_ADDED` at medium/high with the
