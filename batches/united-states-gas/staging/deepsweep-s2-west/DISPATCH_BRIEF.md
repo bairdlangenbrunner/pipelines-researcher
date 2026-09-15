@@ -27,8 +27,34 @@ that actually verify the value (`ok: true` AND `contains_value: true`). These ea
 - our own geojson measurement — which never counts as a publisher at all.
 
 If nothing verifies, the record is `tier: "low"`, `independent: false`, `proposed_refs: []`.
-A `validity` record carries no `verifications` by convention, so its tier is counted over
-`proposed_refs` — do not stage a URL there that your own finding is rejecting.
+
+### A `validity` record's tier is counted over its OWN `proposed_refs`
+
+This is the single most-repeated defect in the slice, so it gets its own heading. A `validity`
+record carries **no `verifications`** by repo convention — the schema block has no place for
+them. So there is nothing else its tier can be counted over: **the publishers behind its
+`proposed_refs` list ARE its evidence.** Which means:
+
+| what you wrote | what it says | verdict |
+|---|---|---|
+| `tier: "high"`, `proposed_refs: []` | "two independent publishers agree", backed by zero URLs | **contradiction — always wrong** |
+| `independent: true`, `proposed_refs: []` | "independent of" nothing | **contradiction — always wrong** |
+| `tier: "high"`, one publisher (or two URLs from one origin) | overclaimed by one publisher | wrong — it is `medium` |
+| `tier: "low"`, `independent: false`, `proposed_refs: []` | "I found nothing; here is what I searched" | **correct**, and a perfectly good finding |
+
+A validity record with an empty `proposed_refs` list is **normal and often right** — an existence
+concern, a duplicate suspicion, or a negative finding legitimately proposes no URL. What is never
+right is pairing that empty list with a tier that claims corroboration. The strength of the
+*writing* is not the tier; the tier is an arithmetic fact about the list directly above it. Count
+the distinct publishers in `proposed_refs`, apply the one-origin table above, and write that
+number's tier — 0 or 1 → `medium` at best and `independent: false`, 2+ → `high` is available.
+
+Hit four times in slice 2 (P7863, P5101, P7782 and one earlier) and invisible to the coverage
+gate, which is why the finish gate below now runs a second script.
+
+Corollary, same root: **do not stage a URL in `proposed_refs` that your own finding is
+rejecting.** A negative finding ("this page supports nothing") proposes nothing — name the URL
+in the prose and leave the list empty.
 
 ## OTHER STANDING RULES
 
@@ -83,11 +109,20 @@ A `validity` record carries no `verifications` by convention, so its tier is cou
   supports nothing, with that URL sitting in `proposed_refs` at `tier: "high"`. A negative
   finding proposes nothing: name the URL in the prose, leave `proposed_refs` empty.
 
-## FINISH GATE (blocking — do not report done until it prints OK)
+## FINISH GATE (blocking — do not report done until BOTH print clean)
 
 ```
 python3 scripts/check_shard_coverage.py --staging <this staging dir> --pid <PID>
+python3 scripts/audit_shard.py <this staging dir>/rows/<PID>.json
 ```
 
-Run it from the repo root. If it names an `[UNMERGEABLE]` record, the research is done — re-key
-the record, do not redo the research.
+Run both from the repo root. They check different things and neither subsumes the other:
+
+- `check_shard_coverage.py` — "is every owed unit accounted for, and will it merge?" If it names
+  an `[UNMERGEABLE]` record, the research is done — re-key the record, do not redo the research.
+- `audit_shard.py` — "is what you wrote true to your own evidence?" Tier vs distinct publishers
+  (the section above), standing rule 1, banned hosts, the EIA URL convention, `UNRESOLVED`
+  discipline, lowercase controlled vocab. It exits non-zero on findings and prints nothing but
+  findings under `--quiet`. Every line it prints is a defect in the shard, not a false positive
+  to argue with — the two carve-outs it already knows about are that a Wayback capture counts as
+  its origin's publisher and that two EDGAR filings by two different registrants are two origins.

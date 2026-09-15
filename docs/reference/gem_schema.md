@@ -60,6 +60,14 @@ tracker tabs; one tab covers both oil and gas). The tracker tabs carry the `Owne
 - So a Ref-Sweep owner/operator candidate for ProjectID *P* is pasted into `Owner [ref]` /
   `Operator [ref]` on **this** tab's *P* row — not a tracker-tab cell, not `ResearcherNotes`.
   Because it's ProjectID-keyed, the ref is per-pipeline (no entity-level de-dup).
+- **`Owner1` holds the SPV, not the parent** (Baird ruling 2026-09-15, tracker-wide). When a
+  project is sponsored through a joint venture or project company — `Trail West Pipeline, LLC`,
+  `Mountain Valley Pipeline, LLC`, a 50/50 JV vehicle — that **named entity** is what goes in
+  `Owner1`, even when the sheet currently carries a parent (`Williams Companies`, `TC Energy`)
+  and even when the parent is the name in the headlines. The parent relationship is not lost:
+  the ownership team builds the parent tree **from** that SPV, which is exactly why the SPV has
+  to be the thing recorded. Research stages the SPV and names the parents it found in
+  `researcher_notes`; it never flattens the SPV up to its parent, and never invents a tree.
 - **Columns A–E are FORMULAS, not data** — `PipelineNetworkContainer`, `PipelineName`,
   `SegmentName`, `Countries`, `Wiki` are each an `iferror(xlookup(F<row>, 'Gas pipelines'!F:F,
   …), xlookup(F<row>, 'Oil/NGL pipelines'!F:F, …))` keyed on `ProjectID` in column **F**, so

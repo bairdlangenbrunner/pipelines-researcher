@@ -126,3 +126,36 @@ visible without being applied.
 - Item 7(a), the "not in EIA" defect: closed.
 - Item 7(b), status flips: all four rows patched, all pass `check_shard_coverage`.
 - Item 2, the EIA Owner/Operator correction: closed (P0302 was its last open row).
+
+---
+
+## RULED — Baird, 2026-09-15. This memo is closed.
+
+**§1 batch 5 — rebuild it.** "Go ahead and rebuild batch 5, yes." The rebuild re-grounds
+the 165 undated-EIA refs across 19 rows to the dated release + sheet name + Excel row,
+re-merges, re-gates, and rebuilds the workbook so it also carries the two post-delivery
+status-flip clearings (P0171 Constitution, P2008 TETCO/TEMAX) and the P2008 TEMAX/TEAM
+identity flag. The `20260910_1526_ET` workbook is superseded on delivery and moves to
+`archive/`.
+
+**§2 `Owner1` — the SPV, not the parent.** "Owner1 should hold SPVs. The ownership team
+then builds parent trees with that SPV." So the staged behaviour was already right:
+`Trail West Pipeline, LLC` (not Williams), the project company (not Kinder Morgan) —
+and the equity reading stays in `contested`/`researcher_notes` where the ownership team
+can see it. There is no sweep owed across the operators/owners tab, because the
+convention matches what was staged. Recorded in `docs/reference/gem_schema.md` under the
+operators/owners tab, and in the slice-2 `ADDENDUM.md`.
+
+Two related rulings given in the same message, recorded here because they came off this
+pass's findings:
+
+- **P7455 / P7830 Fuel → Oil: hold as-is for now.** Oil is out of scope for the cycle, so
+  the reclassification does not reach the paste surface. P7455's fill is re-keyed
+  `UNRESOLVED` (the only sources that speak to its fuel service contradict the recorded
+  `Gas`, and a contradicting source is not a ref) and its validity `contested` cleared to
+  `{}`; the finding itself survives on the evidence tab. P7830 needed no change — the
+  sheet already records `Fuel = 'Oil'`, so its fill confirms the recorded value rather
+  than proposing a flip.
+- **P7823 distribution: approved as staged.** "Distribution is OK in GGIT for now, as long
+  as `PipelineType` is distribution." The staged `PipelineType = 'distribution'` correction
+  is the fix; no existence or scope action is owed on the row.

@@ -410,6 +410,40 @@ The contrast that draws the line: a FERC order that enumerates a phase's facilit
 exhaustively and lists no new pipe **does** state `LengthKnown = 0`, because the encoding
 follows with no added assumption. EIA's blank cell does not.
 
+## A `validity` record's tier is an arithmetic fact about its own `proposed_refs`
+
+`validity` records carry **no `verifications`** — the schema has no field for them. So the only
+evidence a validity record has is the list of URLs in its own `proposed_refs`, and its `tier` /
+`independent` are counted over the distinct **publishers** behind that list (all EIA releases =
+one origin; two EDGAR filings by two different registrants = two; a Wayback capture counts as
+its origin's publisher, not archive.org's).
+
+That makes `tier: "high"` with `proposed_refs: []` a **self-contradiction**: a claim that two
+independent publishers agree, backed by zero URLs. Same for `independent: true` on an empty or
+single-publisher list. It is not a strong finding written modestly — it is an unsupported number.
+
+An empty `proposed_refs` on a validity record is normal and often correct: an existence concern,
+a duplicate suspicion, and any negative finding all legitimately propose no URL. The fix is never
+to invent a ref to justify the tier; it is to write the tier the list actually supports —
+0 or 1 publisher → `medium` at best, `independent: false`; 2+ → `high` is available.
+
+This shape reached delivery four times in slice 2 (P7863, P5101, P7782 and one earlier) because
+`check_shard_coverage.py` does not look at tiers at all — it answers "will this merge?", not "is
+this true to its own evidence?". As of 2026-09-15 the second question has a script:
+**`scripts/audit_shard.py`** (previously orchestrator-only, now in the repo), and it is part of
+the per-row finish gate in `DISPATCH_BRIEF.md`, not an orchestrator afterthought:
+
+```
+python3 scripts/audit_shard.py <staging>/rows/<PID>.json     # one shard, blocking
+python3 scripts/audit_shard.py --quiet <staging>/rows        # whole batch, findings only
+```
+
+It exits non-zero on findings and also checks standing rule 1, banned hosts, the undated-EIA /
+`data.php` ban, `UNRESOLVED` discipline (no refs, tier `low`, no `ok`+`contains_value`
+verification), `contested` being a dict of column→value, and lowercase controlled vocab. Never
+pipe it through `tail` — the summary is the last line and the findings scroll past it; use
+`--quiet`.
+
 ## Gate artifacts and known-spurious firings
 
 `sweep_gates.py` gates are **advisory** (the script exits 0 regardless). At delivery this
