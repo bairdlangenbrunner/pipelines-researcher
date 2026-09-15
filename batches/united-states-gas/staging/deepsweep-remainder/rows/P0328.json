@@ -47,12 +47,12 @@
         "ShelvedYear": "",
         "CancelledYear": ""
       },
-      "researcher_notes": "Two independent problems. (1) Evidence contradiction: ShelvedYear=2017 implies the project had already gone dormant by 2017, but the independent Pipeline & Gas Journal trade listing, published October 2018, still describes it as an ACTIVE proposal 'preparing to start the pre-filing process with FERC' with a targeted 4Q2020 completion -- i.e. still being pursued more than a year after the sheet's claimed shelving. Williams' own project site was also still live and unchanged (per Wayback) through at least September 2017, and only began redirecting to Williams' corporate site from 2018-08-09 -- itself not a dated cancellation notice, just a site retirement, and even that postdates 2017. So 2017 cannot be right as a 'no more progress' cutoff. (2) Internal inconsistency: this batch's own dormancy convention is '2y no progress -> shelved; shelved +4y -> cancelled'. Proposed 2015 + 2y = 2017 shelved is at least formula-consistent, but shelved 2017 + 4y = 2021, not the sheet's CancelledYear=2019 -- the two recorded years don't satisfy the sheet's own inference rule, suggesting they were entered without applying it consistently (or without dated evidence at all). I could not find ANY document -- FERC docket, NEB/CER filing, company statement, or press -- that states a specific shelving or cancellation date; the islandgasconnector.com redirect (Aug 2018) is the only dated signal of inactivity I found, and it only sets a floor (project was not yet abandoned as of the PGJ Oct-2018 listing) not a firm shelved/cancelled year. Recommend leaving ShelvedCancelledType='inferred' (not 'confirmed' -- no dated, sourced cancellation exists) and treating both year fields as needing revision rather than pasting them forward as fact. Both Shelved [ref] and Cancelled [ref] fills below are UNRESOLVED for the same reason.",
+      "researcher_notes": "Two independent problems. (1) Evidence contradiction: ShelvedYear=2017 implies the project had already gone dormant by 2017, but the independent Pipeline & Gas Journal trade listing, published October 2018, still describes it as an ACTIVE proposal 'preparing to start the pre-filing process with FERC' with a targeted 4Q2020 completion -- i.e. still being pursued more than a year after the sheet's claimed shelving. Williams' own project site was also still live and unchanged (per Wayback) through at least September 2017, and only began redirecting to Williams' corporate site from 2018-08-09 -- itself not a dated cancellation notice, just a site retirement, and even that postdates 2017. So 2017 cannot be right as a 'no more progress' cutoff. (2) Internal inconsistency: this batch's own dormancy convention is '2y no progress -> shelved; shelved +4y -> cancelled'. Proposed 2015 + 2y = 2017 shelved is at least formula-consistent, but shelved 2017 + 4y = 2021, not the sheet's CancelledYear=2019 -- the two recorded years don't satisfy the sheet's own inference rule, suggesting they were entered without applying it consistently (or without dated evidence at all). I could not find ANY document -- FERC docket, NEB/CER filing, company statement, or press -- that states a specific shelving or cancellation date; the islandgasconnector.com redirect (Aug 2018) is the only dated signal of inactivity I found, and it only sets a floor (project was not yet abandoned as of the PGJ Oct-2018 listing) not a firm shelved/cancelled year. Recommend leaving ShelvedCancelledType='inferred' (not 'confirmed' -- no dated, sourced cancellation exists) and treating both year fields as needing revision rather than pasting them forward as fact. Both Shelved [ref] and Cancelled [ref] fills below are UNRESOLVED for the same reason. | ORCHESTRATOR 2026-09-15: tier/independent corrected (independent). Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's proposed_refs resolve to 1 publisher (s3.amazonaws.com). One publisher restated -- and every dated EIA release together -- is still ONE origin..",
       "proposed_refs": [
         "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
       ],
       "tier": "medium",
-      "independent": true,
+      "independent": false,
       "source_language": "en"
     },
     {
@@ -78,7 +78,9 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Status [ref]",
-      "value_cols": ["Status"],
+      "value_cols": [
+        "Status"
+      ],
       "primary_value_col": "Status",
       "values": {},
       "primary_value": "",
@@ -94,17 +96,33 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"],
+      "value_cols": [
+        "Fuel"
+      ],
       "primary_value_col": "Fuel",
-      "values": {"Fuel": "Gas"},
+      "values": {
+        "Fuel": "Gas"
+      },
       "primary_value": "Gas",
       "proposed_refs": [
         "https://douglasmagazine.com/steelhead-lng-announces-gas-connector-project-for-its-proposed-malahat-facility/",
         "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
       ],
       "verifications": [
-        {"url": "https://douglasmagazine.com/steelhead-lng-announces-gas-connector-project-for-its-proposed-malahat-facility/", "ok": true, "contains_value": true, "name_found": true, "note": "'a proposed natural gas pipeline which will transport natural gas to Vancouver Island' naming the Island Gas Connector Project"},
-        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline News's natural-gas 'Planned Projects' table lists 'Project: Island Gas Connector' under Operator: Steelhead LNG Corp."}
+        {
+          "url": "https://douglasmagazine.com/steelhead-lng-announces-gas-connector-project-for-its-proposed-malahat-facility/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a proposed natural gas pipeline which will transport natural gas to Vancouver Island' naming the Island Gas Connector Project"
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline News's natural-gas 'Planned Projects' table lists 'Project: Island Gas Connector' under Operator: Steelhead LNG Corp."
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -116,15 +134,27 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
       "primary_value_col": "ProposalYear",
-      "values": {"ProposalYear": "2015", "ProposalMonth": "9"},
+      "values": {
+        "ProposalYear": "2015",
+        "ProposalMonth": "9"
+      },
       "primary_value": "2015",
       "proposed_refs": [
         "https://douglasmagazine.com/steelhead-lng-announces-gas-connector-project-for-its-proposed-malahat-facility/"
       ],
       "verifications": [
-        {"url": "https://douglasmagazine.com/steelhead-lng-announces-gas-connector-project-for-its-proposed-malahat-facility/", "ok": true, "contains_value": true, "name_found": true, "note": "'VANCOUVER, BC, September 1, 2015 -- Steelhead LNG Corp. ... today announced a pre-construction agreement with pipeline developer Williams ... to commence with the design and regulatory approvals for the Island Gas Connector Project'"}
+        {
+          "url": "https://douglasmagazine.com/steelhead-lng-announces-gas-connector-project-for-its-proposed-malahat-facility/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'VANCOUVER, BC, September 1, 2015 -- Steelhead LNG Corp. ... today announced a pre-construction agreement with pipeline developer Williams ... to commence with the design and regulatory approvals for the Island Gas Connector Project'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -136,7 +166,10 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
       "primary_value_col": "ConstructionYear",
       "values": {},
       "primary_value": "",
@@ -152,17 +185,39 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
       "primary_value_col": "StartYear1",
-      "values": {"StartYear1": "2020", "StartMonth1": "11"},
+      "values": {
+        "StartYear1": "2020",
+        "StartMonth1": "11"
+      },
       "primary_value": "2020",
       "proposed_refs": [
         "https://web.archive.org/web/20170627140620/http://islandgasconnector.com/about-the-project/timeline/",
         "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/20170627140620/http://islandgasconnector.com/about-the-project/timeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'The anticipated pipeline in-service date is November 2020, subject to approvals.'"},
-        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Project: Island Gas Connector ... Completion: 4Q 2020' -- 4Q2020 matches November 2020"}
+        {
+          "url": "https://web.archive.org/web/20170627140620/http://islandgasconnector.com/about-the-project/timeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The anticipated pipeline in-service date is November 2020, subject to approvals.'"
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Project: Island Gas Connector ... Completion: 4Q 2020' -- 4Q2020 matches November 2020"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -174,7 +229,9 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Shelved [ref]",
-      "value_cols": ["ShelvedYear"],
+      "value_cols": [
+        "ShelvedYear"
+      ],
       "primary_value_col": "ShelvedYear",
       "values": {},
       "primary_value": "",
@@ -190,7 +247,9 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Cancelled [ref]",
-      "value_cols": ["CancelledYear"],
+      "value_cols": [
+        "CancelledYear"
+      ],
       "primary_value_col": "CancelledYear",
       "values": {},
       "primary_value": "",
@@ -206,7 +265,10 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"],
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
       "primary_value_col": "Capacity",
       "values": {},
       "primary_value": "",
@@ -222,7 +284,10 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"],
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
       "primary_value_col": "Pressure",
       "values": {},
       "primary_value": "",
@@ -238,9 +303,15 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
       "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "128.70", "LengthKnownUnits": "km"},
+      "values": {
+        "LengthKnown": "128.70",
+        "LengthKnownUnits": "km"
+      },
       "primary_value": "128.70",
       "proposed_refs": [
         "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
@@ -248,9 +319,27 @@
         "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline"
       ],
       "verifications": [
-        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Project: Island Gas Connector ... Length: 80 miles' -- 80 mi = 128.7 km, matching the recorded value almost exactly"},
-        {"url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/", "ok": true, "contains_value": true, "name_found": true, "note": "'an estimated 81-mile (129-kilometre) natural gas pipeline' -- 34 mi (Sumas-Birch Bay/Custer) + 47 mi subsea, agrees within rounding"},
-        {"url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline", "ok": true, "contains_value": true, "name_found": true, "note": "independent NGO page: 'an estimated 81-mile underground and underwater pipeline system ... approximately 34 miles ... Approximately 47 miles'"}
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Project: Island Gas Connector ... Length: 80 miles' -- 80 mi = 128.7 km, matching the recorded value almost exactly"
+        },
+        {
+          "url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'an estimated 81-mile (129-kilometre) natural gas pipeline' -- 34 mi (Sumas-Birch Bay/Custer) + 47 mi subsea, agrees within rounding"
+        },
+        {
+          "url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "independent NGO page: 'an estimated 81-mile underground and underwater pipeline system ... approximately 34 miles ... Approximately 47 miles'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -262,17 +351,35 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"],
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
       "primary_value_col": "Diameter",
-      "values": {"Diameter": "36", "DiameterUnits": "in"},
+      "values": {
+        "Diameter": "36",
+        "DiameterUnits": "in"
+      },
       "primary_value": "36",
       "proposed_refs": [
         "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
         "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/"
       ],
       "verifications": [
-        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Project: Island Gas Connector ... Diameter: 36 inches'"},
-        {"url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/", "ok": true, "contains_value": true, "name_found": true, "note": "'With an expected diameter of 36 inches, the pipeline would run approximately 34 miles ... in Washington'"}
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Project: Island Gas Connector ... Diameter: 36 inches'"
+        },
+        {
+          "url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'With an expected diameter of 36 inches, the pipeline would run approximately 34 miles ... in Washington'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -284,7 +391,9 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"],
+      "value_cols": [
+        "FuelSource"
+      ],
       "primary_value_col": "FuelSource",
       "values": {},
       "primary_value": "",
@@ -300,7 +409,16 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
       "primary_value_col": "StartLocation",
       "values": {
         "StartLocation": "Sumas",
@@ -317,9 +435,27 @@
         "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/", "ok": true, "contains_value": true, "name_found": true, "note": "'run approximately 34 miles ... in Washington from Sumas to the Birch Bay/Custer area' then subsea 'to ... Malahat Nation-owned land, approximately five miles ... south of Mill Bay, BC ... Vancouver Island. The pipeline would begin in the United States and end in Canada.'"},
-        {"url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline", "ok": true, "contains_value": true, "name_found": true, "note": "'The pipeline would begin in the United States and end in Canada.' -- independent confirmation of the cross-border direction"},
-        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'Location: Sumas, WA - Vancouver Island, B.C.'"}
+        {
+          "url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'run approximately 34 miles ... in Washington from Sumas to the Birch Bay/Custer area' then subsea 'to ... Malahat Nation-owned land, approximately five miles ... south of Mill Bay, BC ... Vancouver Island. The pipeline would begin in the United States and end in Canada.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline would begin in the United States and end in Canada.' -- independent confirmation of the cross-border direction"
+        },
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Location: Sumas, WA - Vancouver Island, B.C.'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -331,7 +467,11 @@
       "segment_name": "",
       "sheet_row": 176,
       "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
       "primary_value_col": "SegmentCost",
       "values": {},
       "primary_value": "",
@@ -348,7 +488,11 @@
       "sheet_row": 176,
       "oo_sheet_row": 305,
       "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
       "primary_value_col": "Operator",
       "values": {},
       "primary_value": "",
@@ -365,9 +509,35 @@
       "sheet_row": 176,
       "oo_sheet_row": 305,
       "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
       "primary_value_col": "Owner1",
-      "values": {"Owner1": "Williams Companies", "Owner1%": "100.00%"},
+      "values": {
+        "Owner1": "Williams Companies",
+        "Owner1%": "100.00%"
+      },
       "primary_value": "Williams Companies",
       "proposed_refs": [
         "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/",
@@ -375,9 +545,27 @@
         "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/", "ok": true, "contains_value": true, "name_found": true, "note": "'Oklahoma-based Williams, the owner and operator of Northwest Pipeline, is working with ... Steelhead LNG ... to explore building and operating the proposed Island Gas Connector'"},
-        {"url": "https://web.archive.org/web/20170302184001/http://islandgasconnector.com/regulatory/", "ok": true, "contains_value": true, "name_found": true, "note": "'Williams would design, construct, operate and maintain the proposed Island Gas Connector Project.'"},
-        {"url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline", "ok": true, "contains_value": true, "name_found": true, "note": "independent NGO page: 'Oklahoma-based Williams is working with Vancouver-based Steelhead LNG to explore building and operating the proposed Island Gas Connector'"}
+        {
+          "url": "https://web.archive.org/web/20170302192148/http://islandgasconnector.com/about-the-project/overview/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Oklahoma-based Williams, the owner and operator of Northwest Pipeline, is working with ... Steelhead LNG ... to explore building and operating the proposed Island Gas Connector'"
+        },
+        {
+          "url": "https://web.archive.org/web/20170302184001/http://islandgasconnector.com/regulatory/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Williams would design, construct, operate and maintain the proposed Island Gas Connector Project.'"
+        },
+        {
+          "url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "independent NGO page: 'Oklahoma-based Williams is working with Vancouver-based Steelhead LNG to explore building and operating the proposed Island Gas Connector'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -402,8 +590,16 @@
         "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline"
       ],
       "verifications": [
-        {"url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf", "ok": true, "contains_value": true},
-        {"url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline", "ok": true, "contains_value": true}
+        {
+          "url": "https://s3.amazonaws.com/pgj-wp-media/wp-content/uploads/2018/10/PN1018-Planned-Projects.pdf",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://web.archive.org/web/20191021153923/https://www.waterislifemovement.com/island-gas-connector-pipeline",
+          "ok": true,
+          "contains_value": true
+        }
       ],
       "tier": "medium",
       "independent": true,
