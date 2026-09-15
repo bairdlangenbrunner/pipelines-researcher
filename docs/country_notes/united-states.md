@@ -44,7 +44,8 @@ by Baird's ruling 2026-09-10, **every US gas row with a blank `LastUpdated`** �
 and P2041 Taproot Baja / Rattlesnake Extension (operating; a segment of batch 4's P0386, and it
 reads `Fuel = Oil` on the gas tab). It ran with `--status-review` so the 14 cancelled rows got
 verdicts there, the first batch start-to-finish on the fixed rule-4(e) contract — delivered
-2026-09-10 `_1526_ET`, gates E/F/I/I'/J/L 0, staged not applied. Headlines: four "cancelled"
+2026-09-10 `_1526_ET`, **rebuilt 2026-09-15 `_1231_ET`** (the 09-10 file is in `archive/`), gates
+E/F/I/I'/J/L 0, staged not applied. Headlines: four "cancelled"
 rows were built (P0376, P0380, P2008 — re-scoped into Texas Eastern's TEAM projects — and P0317);
 P0171 Constitution cancelled -> proposed on its 2025 revival; **P2649 and P4381 are one pipe**
 (FERC CP15-504) on two rows; P2041 is crude/water gathering (classification flag only, oil is out
@@ -65,7 +66,7 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
 
 **Order of work — Baird's ruling 2026-09-10, this is the campaign plan.**
 1. **Gas batch 5** (cohort remainder 30 + blank-LastUpdated 15 = 45 rows / 666 units) — DONE
-   2026-09-10 (`_1526_ET`, staged not applied); slice 1 closed.
+   2026-09-10, rebuilt 2026-09-15 (`_1231_ET`, staged not applied); slice 1 closed.
 2. **Gas slice 2** (296 rows) — scoped 2026-09-10. **Baird chose Option A: deep sweep ALL 296
    with `--status-review` on**, in 7 batches `staging/deepsweep-s2-*` (the `planA` column of
    `state-audit-20260910/slice2_state_audit.csv`). This absorbs step 3. Batches A1-A7 =
@@ -186,9 +187,19 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 
 - **Staged, NOT applied (gas):** batch 5, `batches/united-states-gas/staging/deepsweep-remainder/`
   (45 rows: cohort remainder 30 + the 15 blank-`LastUpdated` rows; deliverable
-  `pipelines_batch_20260910_1526_ET_united-states-gas_deepsweep-remainder.xlsx`). 379 fills,
+  `pipelines_batch_20260915_1231_ET_united-states-gas_deepsweep-remainder.xlsx`). 380 fills,
   136 validity records (83 concerns: spec 44, attribution 34, classification 3, duplicate 2),
-  43 status reviews (10 change, 32 confirm, 1 unclear); refs leg REFS_ADDED 280, UNRESOLVED 113.
+  43 status reviews (10 change, 33 confirm); refs leg REFS_ADDED 279, UNRESOLVED 114.
+  **Rebuilt 2026-09-15** after a post-delivery audit of the shards found defects the per-shard
+  finish gate of the time did not look for; `ADDENDUM.md` in the staging dir is the full writeup.
+  In short: 165 records cited the undated `EIA-NaturalGasPipelineProjects.xlsx` and were
+  re-grounded onto `…Aug2026.xlsx` with a `[file / sheet / Excel row / project]` citation
+  (watch the duplicate — EIA carries `Columbia to Eastover Pipeline` at BOTH row 833 and a
+  stale row 838); 103 records overclaimed `tier`/`independent` against their own publisher
+  count; 6 `UNRESOLVED` records staged refs they had not verified; 12 `contested` maps held
+  prose where a pasteable candidate belongs; P0292's ref-less `ShelvedCancelledType` status
+  change was re-keyed to the validity record that already carried it. `audit_shard.py` (added
+  2026-09-14) now reports 0 findings across all 45 shards.
   No ref-gap/recovery leg was needed — coverage reported 0 gaps across all 45 shards. Two shards
   were hand-normalized before merge (originals in `rows_orig/`): P0186 wrote `refs:[{url,...}]`
   instead of `proposed_refs` + `verifications`, which the merge silently dropped (all 6 URLs
