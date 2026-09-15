@@ -64,10 +64,10 @@
       "segment_name": "",
       "verdict": "concern",
       "concern_type": "spec",
-      "recommendation": "flag Capacity=200 MMcf/d as likely understated -- BBT's own current disclosure states 292 MDth/d (290 MDth/d under firm-transportation contracts)",
+      "recommendation": "flag Capacity=200 MMcf/d as likely understated -- BBT's own current disclosure states 292 MDth/d (290 MDth/d under firm-transportation contracts) | ORCHESTRATOR 2026-09-15: CapacityUnits candidate is MMcf/d, not the source's own 'MDth/d': the live column holds no such unit (bcm/y, MMcf/d, MMSCMD, TJ/d, mill.Sm3/day, GWh/d, Mcf/d, m3/d, mtpa), and 292 MDth/d is ~292 MMcf/d only at a ~1,000 Btu/cf heat content -- close, not an exact conversion. Adjudicate the unit with the number.",
       "contested": {
         "Capacity": "292",
-        "CapacityUnits": "MDth/d (source's own unit; ~MMcf/d, not an exact 1:1 conversion)"
+        "CapacityUnits": "MMcf/d"
       },
       "researcher_notes": "The sheet's Capacity=200 MMcf/d is not confirmed by any source found; BBT's own current operator page (blackbearllc.com/natural-gas-transmission) instead states '292 MDth/d capacity, 290 MDth/d FT contracts.' A dekatherm (Dth) is a heat-content unit (1 Dth = 1 MMBtu) commonly treated as approximately equal to 1 Mcf of pipeline-quality gas, but the two are not identical, so 292 MDth/d is not a precise substitute for an MMcf/d figure -- flagging as a spec concern rather than a clean like-for-like correction. Two FERC dockets independently confirm capacity has grown since the row's 2023-08-24 LastUpdated and since whenever 200 MMcf/d was originally set: CP19-476-000 (2019, Decatur Compression Station -- abandoning four compressors totaling 1,455 hp and installing two new ones totaling 3,550 hp, a net increase, cost $5,415,200, 'to provide additional firm transportation service to the City of Huntsville... and improve system reliability') and CP24-524-000 (2024, 'AlaTenn Pride Loop Project' -- new pipe plus the acquired 37-mile Trigas Line, 'to provide its customers with enhanced gas supply access and increased operational flexibility'). No single source states a directly comparable MMcf/d total, so the corrected value is staged as a caveat here rather than a clean fills[] overwrite -- see the Capacity [ref] fill below for the single-source REFS_ADDED disposition.",
       "proposed_refs": [
@@ -121,17 +121,33 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Status [ref]",
-      "value_cols": ["Status"],
+      "value_cols": [
+        "Status"
+      ],
       "primary_value_col": "Status",
-      "values": {"Status": "operating"},
+      "values": {
+        "Status": "operating"
+      },
       "primary_value": "operating",
       "proposed_refs": [
         "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines",
         "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
       ],
       "verifications": [
-        {"url": "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines", "ok": true, "contains_value": true, "name_found": true, "note": "reports the AlaTenn-carrying Black Bear system as a live, operating 1,700-mile/2.6 Bcf/d asset as of the 2025-11-12 acquisition close"},
-        {"url": "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and", "ok": true, "contains_value": true, "name_found": true, "note": "2024-09-24 filing describing an active expansion project (AlaTenn Pride Loop) on the operating system"}
+        {
+          "url": "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "reports the AlaTenn-carrying Black Bear system as a live, operating 1,700-mile/2.6 Bcf/d asset as of the 2025-11-12 acquisition close"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2024-09-24 filing describing an active expansion project (AlaTenn Pride Loop) on the operating system"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -143,17 +159,33 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"],
+      "value_cols": [
+        "Fuel"
+      ],
       "primary_value_col": "Fuel",
-      "values": {"Fuel": "Gas"},
+      "values": {
+        "Fuel": "Gas"
+      },
       "primary_value": "Gas",
       "proposed_refs": [
         "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf",
         "https://www.federalregister.gov/documents/2019/06/18/2019-12814/american-midstream-alatenn-llc-notice-of-request-under-blanket-authorization"
       ],
       "verifications": [
-        {"url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA-sourced safety brochure lists 'PRODUCTS/DOT GUIDEBOOK ID#/GUIDE#: Natural Gas 1971 115'"},
-        {"url": "https://www.federalregister.gov/documents/2019/06/18/2019-12814/american-midstream-alatenn-llc-notice-of-request-under-blanket-authorization", "ok": true, "contains_value": true, "name_found": true, "note": "FERC notice under the Natural Gas Act describing AlaTenn's compressor-station facilities"}
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA-sourced safety brochure lists 'PRODUCTS/DOT GUIDEBOOK ID#/GUIDE#: Natural Gas 1971 115'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/06/18/2019-12814/american-midstream-alatenn-llc-notice-of-request-under-blanket-authorization",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC notice under the Natural Gas Act describing AlaTenn's compressor-station facilities"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -165,17 +197,33 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "PipelineType [ref]",
-      "value_cols": ["PipelineType"],
+      "value_cols": [
+        "PipelineType"
+      ],
       "primary_value_col": "PipelineType",
-      "values": {"PipelineType": "transmission"},
+      "values": {
+        "PipelineType": "transmission"
+      },
       "primary_value": "transmission",
       "proposed_refs": [
         "https://www.blackbearllc.com/natural-gas-transmission",
         "https://www.pscpublicaccess.alabama.gov/pscpublicaccess/ViewFile.aspx?Id=4e1108a8-c4e3-4932-ad81-a2c073a5b77a"
       ],
       "verifications": [
-        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "current operator page lists AlaTenn under 'Natural Gas Transmission,' described as 'FERC-Regulated Interstate'"},
-        {"url": "https://www.pscpublicaccess.alabama.gov/pscpublicaccess/ViewFile.aspx?Id=4e1108a8-c4e3-4932-ad81-a2c073a5b77a", "ok": true, "contains_value": true, "name_found": true, "note": "2009 Alabama PSC filing describes 'Enbridge Pipelines (AlaTenn) L.L.C., an interstate natural gas pipeline'"}
+        {
+          "url": "https://www.blackbearllc.com/natural-gas-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "current operator page lists AlaTenn under 'Natural Gas Transmission,' described as 'FERC-Regulated Interstate'"
+        },
+        {
+          "url": "https://www.pscpublicaccess.alabama.gov/pscpublicaccess/ViewFile.aspx?Id=4e1108a8-c4e3-4932-ad81-a2c073a5b77a",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2009 Alabama PSC filing describes 'Enbridge Pipelines (AlaTenn) L.L.C., an interstate natural gas pipeline'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -187,7 +235,10 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
       "primary_value_col": "ProposalYear",
       "values": {},
       "primary_value": "",
@@ -203,7 +254,10 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
       "primary_value_col": "ConstructionYear",
       "values": {},
       "primary_value": "",
@@ -219,15 +273,30 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
       "primary_value_col": "StartYear1",
-      "values": {"StartYear1": "1950"},
+      "values": {
+        "StartYear1": "1950"
+      },
       "primary_value": "1950",
       "proposed_refs": [
         "https://www.hsvutil.org/about_hu/history.php"
       ],
       "verifications": [
-        {"url": "https://www.hsvutil.org/about_hu/history.php", "ok": true, "contains_value": true, "name_found": true, "note": "'1950 -- The City of Huntsville purchased the gas system and contracted with the Alabama-Tennessee National Gas Company to pipe natural gas into Huntsville'"}
+        {
+          "url": "https://www.hsvutil.org/about_hu/history.php",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'1950 -- The City of Huntsville purchased the gas system and contracted with the Alabama-Tennessee National Gas Company to pipe natural gas into Huntsville'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -239,15 +308,27 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"],
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
       "primary_value_col": "Capacity",
-      "values": {"Capacity": "292.00", "CapacityUnits": "MDth/d"},
+      "values": {
+        "Capacity": "292.00",
+        "CapacityUnits": "MDth/d"
+      },
       "primary_value": "292.00",
       "proposed_refs": [
         "https://www.blackbearllc.com/natural-gas-transmission"
       ],
       "verifications": [
-        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'292 MDth/d capacity, 290 MDth/d FT contracts' listed for AlaTenn"}
+        {
+          "url": "https://www.blackbearllc.com/natural-gas-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'292 MDth/d capacity, 290 MDth/d FT contracts' listed for AlaTenn"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -259,15 +340,27 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"],
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
       "primary_value_col": "Pressure",
-      "values": {"Pressure": "550-977", "PressureUnits": "psig"},
+      "values": {
+        "Pressure": "550-977",
+        "PressureUnits": "psig"
+      },
       "primary_value": "550-977",
       "proposed_refs": [
         "https://www.blackbearllc.com/natural-gas-transmission"
       ],
       "verifications": [
-        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'325 miles, 2-20 inch, 550-977# MAOP' listed for AlaTenn -- '#' is the industry shorthand for psig MAOP"}
+        {
+          "url": "https://www.blackbearllc.com/natural-gas-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'325 miles, 2-20 inch, 550-977# MAOP' listed for AlaTenn -- '#' is the industry shorthand for psig MAOP"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -279,15 +372,27 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
       "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "475.00", "LengthKnownUnits": "km"},
+      "values": {
+        "LengthKnown": "475.00",
+        "LengthKnownUnits": "km"
+      },
       "primary_value": "475.00",
       "proposed_refs": [
         "https://rextag.com/pages/bbt-alatenn"
       ],
       "verifications": [
-        {"url": "https://rextag.com/pages/bbt-alatenn", "ok": true, "contains_value": true, "name_found": true, "note": "'Miles of Pipeline: 294' / 'a 294-mile pipeline running from Selmer, Tennessee to Huntsville, Alabama' -- 294 mi = 473.2 km, within rounding of the sheet's 475 km"}
+        {
+          "url": "https://rextag.com/pages/bbt-alatenn",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Miles of Pipeline: 294' / 'a 294-mile pipeline running from Selmer, Tennessee to Huntsville, Alabama' -- 294 mi = 473.2 km, within rounding of the sheet's 475 km"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "medium",
@@ -299,17 +404,35 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"],
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
       "primary_value_col": "Diameter",
-      "values": {"Diameter": "16", "DiameterUnits": "in"},
+      "values": {
+        "Diameter": "16",
+        "DiameterUnits": "in"
+      },
       "primary_value": "16",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
         "https://www.blackbearllc.com/natural-gas-transmission"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and", "ok": true, "contains_value": true, "name_found": true, "note": "'construct approximately 3,800 feet of 16-inch-diameter pipeline... (AlaTenn Pride Loop Project)'"},
-        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "AlaTenn listed as '325 miles, 2-20 inch, 550-977# MAOP' -- 16 falls within the stated 2-20 inch system range"}
+        {
+          "url": "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'construct approximately 3,800 feet of 16-inch-diameter pipeline... (AlaTenn Pride Loop Project)'"
+        },
+        {
+          "url": "https://www.blackbearllc.com/natural-gas-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "AlaTenn listed as '325 miles, 2-20 inch, 550-977# MAOP' -- 16 falls within the stated 2-20 inch system range"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -321,7 +444,9 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"],
+      "value_cols": [
+        "FuelSource"
+      ],
       "primary_value_col": "FuelSource",
       "values": {},
       "primary_value": "",
@@ -337,7 +462,16 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
       "primary_value_col": "StartLocation",
       "values": {
         "StartLocation": "Selmer, Tennessee",
@@ -353,8 +487,20 @@
         "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf"
       ],
       "verifications": [
-        {"url": "https://rextag.com/pages/bbt-alatenn", "ok": true, "contains_value": true, "name_found": true, "note": "'a 294-mile pipeline running from Selmer, Tennessee to Huntsville, Alabama'; 'extends through northeast Mississippi and northern Alabama' (Mississippi as pass-through)"},
-        {"url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "'ALABAMA COUNTIES OF OPERATION: Colbert, Madison, Lawrence, Morgan, Limestone' -- Madison County contains Huntsville"}
+        {
+          "url": "https://rextag.com/pages/bbt-alatenn",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a 294-mile pipeline running from Selmer, Tennessee to Huntsville, Alabama'; 'extends through northeast Mississippi and northern Alabama' (Mississippi as pass-through)"
+        },
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'ALABAMA COUNTIES OF OPERATION: Colbert, Madison, Lawrence, Morgan, Limestone' -- Madison County contains Huntsville"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -366,7 +512,11 @@
       "segment_name": "",
       "sheet_row": 44,
       "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
       "primary_value_col": "SegmentCost",
       "values": {},
       "primary_value": "",
@@ -383,17 +533,35 @@
       "sheet_row": 44,
       "oo_sheet_row": 173,
       "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
       "primary_value_col": "Operator",
-      "values": {"Operator": "BBT AlaTenn LLC"},
+      "values": {
+        "Operator": "BBT AlaTenn LLC"
+      },
       "primary_value": "BBT AlaTenn LLC",
       "proposed_refs": [
         "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf",
         "https://rextag.com/pages/bbt-alatenn"
       ],
       "verifications": [
-        {"url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "PHMSA-sourced brochure headed 'BBT AlaTenn, LLC'"},
-        {"url": "https://rextag.com/pages/bbt-alatenn", "ok": true, "contains_value": true, "name_found": true, "note": "'Operator: BBT (Alatenn), LLC' -- same entity, informal parenthetical form"}
+        {
+          "url": "https://www.pipelinesafetyinfo.com/user/file/Alabama/BBT%20AlaTenn%20LLC.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA-sourced brochure headed 'BBT AlaTenn, LLC'"
+        },
+        {
+          "url": "https://rextag.com/pages/bbt-alatenn",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Operator: BBT (Alatenn), LLC' -- same entity, informal parenthetical form"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -406,9 +574,35 @@
       "sheet_row": 44,
       "oo_sheet_row": 173,
       "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
       "primary_value_col": "Owner1",
-      "values": {"Owner1": "Enstor Pipeline Holdings, LLC", "Owner1%": "100.00%"},
+      "values": {
+        "Owner1": "Enstor Pipeline Holdings, LLC",
+        "Owner1%": "100.00%"
+      },
       "primary_value": "Enstor Pipeline Holdings, LLC",
       "proposed_refs": [
         "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines",
@@ -416,9 +610,27 @@
         "https://www.blackbearllc.com/natural-gas-transmission"
       ],
       "verifications": [
-        {"url": "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines", "ok": true, "contains_value": true, "name_found": true, "note": "'Enstor Pipeline Holdings, LLC... has closed on its previously announced acquisition of Black Bear Transmission Opco, LLC' (2025-11-12)"},
-        {"url": "https://www.enstorinc.com/news/enstor-completes-purchase-black-bear-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "buyer's own press release confirming the same closing and asset description"},
-        {"url": "https://www.blackbearllc.com/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "seller-branded site banner: 'Black Bear is now owned by Enstor Gas'"}
+        {
+          "url": "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Enstor Pipeline Holdings, LLC... has closed on its previously announced acquisition of Black Bear Transmission Opco, LLC' (2025-11-12)"
+        },
+        {
+          "url": "https://www.enstorinc.com/news/enstor-completes-purchase-black-bear-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "buyer's own press release confirming the same closing and asset description"
+        },
+        {
+          "url": "https://www.blackbearllc.com/natural-gas-transmission",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "seller-branded site banner: 'Black Bear is now owned by Enstor Gas'"
+        }
       ],
       "class_out": "REFS_ADDED",
       "tier": "high",
@@ -449,8 +661,16 @@
         "https://www.blackbearllc.com/natural-gas-transmission"
       ],
       "verifications": [
-        {"url": "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines", "ok": true, "contains_value": true},
-        {"url": "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and", "ok": true, "contains_value": true}
+        {
+          "url": "https://pgjonline.com/news/2025/november/enstor-completes-acquisition-of-black-bear-transmission-adding-1-700-miles-of-pipelines",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2024/10/15/2024-23674/bbt-alatenn-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true
+        }
       ],
       "tier": "high",
       "independent": true,
