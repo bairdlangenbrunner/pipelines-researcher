@@ -1,0 +1,754 @@
+{
+  "project_id": "P7782",
+  "pipeline_name": "Intensity Gas Pipeline",
+  "sheet_row": 4162,
+  "wiki": "https://www.gem.wiki/Intensity_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Phase I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, independently confirmed project. Pipeline & Gas Journal (2025-06-26, independent trade press) reported the Intensity Infrastructure Partners / Rainbow Energy Center JV to build a 344-mile ND gas pipeline in two phases; Intensity's own site carries the matching JV release (2025-06-26), the original Feb 2025 open-season notice, the Apr 2025 Phase II open-season notice, and a Jan 2026 FID announcement; EIA's Natural Gas Pipeline Projects workbook independently tracks 'Intensity Pipeline Project' (operator Intensity Infrastructure Partners, ND, intrastate, status Approved as of the 2026-05/08 releases) across 5 releases 2025-07 through 2026-08. Three independent origins (PGJ trade press, the company's own releases, EIA govt dataset) all agree the project exists and is moving forward. CLASSIFICATION: PipelineType=transmission is correct -- Intensity's own open-season/JV releases explicitly call it a 'natural gas transmission pipeline' (large-diameter, long-haul takeaway from the Williston Basin to in-state markets), not a gathering/lateral line; EIA's project_type is 'New Pipeline' (does not contradict). DUPLICATE CHECK vs P7783 (also 'Intensity Gas Pipeline', Washburn->North Dakota, 208 mi, 30in, 430 MMcf/d): P7782 and P7783 are NOT duplicates -- they are the two distinct, physically separate phases of one announced 344-mile project. The JV release (B) and the Phase II open-season notice (D) both state the project explicitly: 'Phase I includes construction of 136 miles of 36-inch natural gas transmission pipeline ... originating near Watford City, ND, and terminating near Washburn, ND. Phase II extends the pipeline 208 miles from Washburn to Casselton, ND, with a 30-inch segment.' P7782's recorded specs (Watford City->Washburn, 136 mi, 36in, 1100 MMcf/d) match Phase I exactly; P7783's roster line (Washburn->North Dakota, 208 mi, 30in, 430 MMcf/d) matches Phase II exactly. They interconnect at Washburn (which sits in southern McLean County, ND -- the interconnection point D names) rather than overlapping. This is the correct two-row modeling of a phased project, not a double-count; no merge recommended. See cross_row_leads for P7783's corroborating facts from these same documents.",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-launches-open-season-phase-ii-extension-following",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "do not use EIA 'Miles'=344 as a Length comparator for this segment row",
+      "contested": {},
+      "researcher_notes": "EIA's own Natural Gas Pipeline Projects workbook (local file sources/eia_pipeline_projects/raw/, releases 2026-01 through 2026-08; Aug2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 67) carries ONE 'Intensity Pipeline Project' row for the whole two-phase project, not one row per phase. From 2026-01 onward its Miles field is 344 (Phase I + Phase II combined), while its Additional Capacity and Diameter fields (1100 MMcf/d, 36in in the 2026-05/08 releases) actually describe Phase I alone -- an internal EIA inconsistency (aggregate length paired with a per-phase capacity/diameter), not a defect in this GEM row. GEM's segment-level modeling (P7782=Phase I 136 mi, P7783=Phase II 208 mi; 136+208=344, matching EIA's total) is correct and is the aggregate-vs-segment case the sweep instructions warn about. Recorded LengthKnown=136 mi stands, sourced instead from PGJ (A) and the company's own JV release (B), both of which state Phase I's mileage directly ('136 miles of 36-inch ... pipeline ... from near Watford City to Washburn'). Not proposing a Length change; flagging so a future pass does not 'correct' 136 to 344 off the EIA workbook. [Orchestrator 2026-09-15: this record originally carried tier=high/independent=true with an EMPTY proposed_refs list, which is self-contradicting because validity records carry no verifications[] by repo convention and the tier is therefore counted over proposed_refs. Staged the three publishers the note above already rests on and which were verified elsewhere on this shard: the EIA Aug2026 release (sheet 'Natural Gas Pipeline Projects', Excel row 67) for the 344-mile aggregate and the internally inconsistent per-phase capacity/diameter; Pipeline & Gas Journal 2025-06-26 and Intensity's own 2025-06-26 JV release, both of which state Phase I's 136 miles directly. Three distinct origins, so high/independent stands on evidence rather than on assertion.]",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Phase I",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "set FIDStatus=FID for Phase I; verify StartMonth1 (in-service target softened from 'July 2029' to 'early 2029')",
+      "contested": {
+        "FIDStatus": "FID",
+        "StartMonth1": ""
+      },
+      "researcher_notes": "Material update since the sheet's 2025-09-18 LastUpdated: on 2026-01-06 Intensity and Rainbow jointly announced that 'the firm transportation commitments contained in executed precedent agreements are sufficient to underpin the decision to advance Phase I' of the 36-inch pipeline -- an FID event for Phase I specifically (E, company release, 2026-01-06). EIA's Aug2026 workbook independently corroborates this: status moved from 'Announced' (2025-07/10 releases) to 'Approved' (2026-05/08 releases), and its notes field states 'Advanced to FID on Phase I on 1/6/2026 based on executed precedent agreements' (F, EIA Aug2026 release, sheet 'Natural Gas Pipeline Projects', row 67). Two independent origins (company + EIA) agree, high tier. This is a milestone update (FID reached), not evidence physical construction has started -- no source gives a ConstructionYear or a mobilization date, so I am NOT proposing a Status change to 'construction' (status_reviews verdict below is 'confirm'); recommending FIDStatus=FID as the accurate reflection of this development, which is not a worklist unit for this row (not in the owed cells) so it is recorded here for a researcher to apply. Separately, the Jan 2026 release now targets in-service 'early 2029' rather than the originally announced 'July 2029' (both A and B, 2025-06-26); 'early' 2029 is imprecise but reads earlier than July, so the recorded StartMonth1=7 may be stale. I am not proposing a replacement month (no source states one), just flagging the cell as worth a second look; StartYear1=2029 itself is unchanged and confirmed by three sources (see the Start [ref] fill).",
+      "proposed_refs": [
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "proposed"
+      },
+      "primary_value": "proposed",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2025-06-26 PGJ article describes the JV as newly announced, pre-construction: 'The planned pipeline...' / 'target in-service date is July 2029' -- a still-proposed project"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug2026 release (sheet 'Natural Gas Pipeline Projects', row 67) lists status 'Approved' -- pre-construction stage, consistent with GEM's 'proposed'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Recorded value re-verified against the existing ref plus EIA as an independent second origin; both agree the project has not begun construction. See status_reviews for the full status-currency analysis (verdict: confirm, with the Jan 2026 FID development noted)."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "headline/lede: '...344-Mile Gas Pipeline...' / 'natural gas pipeline'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a natural gas pipeline from the resource-rich Bakken to eastern North Dakota'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PGJ (independent trade press) and the company's own JV release both explicitly describe it as a natural gas pipeline."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase I includes construction of 136 miles of 36-inch natural gas transmission pipeline' -- literal 'transmission pipeline'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-launches-open-season-new-natural-gas-transmission-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Feb 2025 open-season notice: '...natural gas transmission pipeline with the capacity of approximately 1.5 billion cubic feet per day (Bcf/d)...' -- same literal term, earlier stage of the same company origin"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Two company documents (open season notice + JV release) both use the literal term 'natural gas transmission pipeline'; per the one-company-one-origin rule these count as a single origin, so this stays medium/not independent. PGJ and EIA describe a large-diameter, long-haul Bakken takeaway line consistent with transmission (not a gathering/lateral line) but neither uses the literal word, so I did not count them as a second independent 'transmission' citation. Second-source search: checked PGJ (A) and EIA's project_type field ('New Pipeline') -- neither states 'transmission' literally, so this stays medium pending a regulator or PHMSA classification."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2025"
+      },
+      "primary_value": "2025",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-launches-open-season-new-natural-gas-transmission-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "dated 2025-06-26; 'have announced a joint venture to build a new natural gas pipeline'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-launches-open-season-new-natural-gas-transmission-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "dated 2025-02-03; 'announced today the launch of an open season ... to determine if there is support for the construction of the Intensity Pipeline'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "ProposalYear=2025 confirmed twice over: the company's own Feb 2025 open-season launch (the earliest public proposal of this project) and PGJ's independent June 2025 report of the finalized JV. ProposalMonth is not a worklist unit on this row; the earliest public proposal is 2025-02, the JV/finalized-phases announcement is 2025-06 -- left to the researcher's judgment which month anchors ProposalMonth if that cell is populated elsewhere."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "2026-01-06 release announces FID/advance-to-construct-Phase-I decision but states no mobilization or construction-start date, only a target in-service of 'early 2029'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: completed_date is blank; no construction-start field populated"
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the Jan 2026 FID release, the EIA workbook (all 5 Intensity releases), and PGJ/company open-season notices for a construction start/mobilization date -- none give one. FID (financial go-ahead) is documented (see validity), but that is not a construction start date. Leaving blank rather than inferring one from the 'early 2029' in-service target."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2029",
+        "StartMonth1": "7"
+      },
+      "primary_value": "2029",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The target in-service date is July 2029, with potential acceleration based on market interest and permitting.'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The target in-service date is July 2029, though the timeline may be accelerated based on market demand and permitting progress.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: year_in_service_date = 2029"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2029 confirmed by three origins (PGJ, the company's own JV release, EIA). StartMonth1=7 (July) is stated verbatim in both A and B (2025-06-26). NOTE: the Jan 2026 FID release (E) now targets 'early 2029' rather than repeating 'July 2029' -- see validity concern flagging StartMonth1 for a second look; I kept the recorded month here since it is explicitly sourced and 'early' is too vague to assign a replacement number."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "1100.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "1100.00",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase I: 136 miles of 36-inch pipe from near Watford City to Washburn, ND, with a capacity of 1.1 million Dth/d.'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase I of the pipeline will be constructed with a design capacity of approximately 1,100,000 Dth/d'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: additional_capacity_mmcf_d = 1100"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PGJ and the company (Jan 2026 FID release) both state Phase I's capacity as approximately 1,100,000 Dth/d, not MMcf/d as recorded -- but EIA's own workbook independently converts this same project to 1100 MMcf/d in its Additional Capacity (MMcf/d) field, i.e. EIA treats 1 Dth/d ~= 1 Mcf/d here (a standard industry approximation for pipeline-quality gas, ~1,000-1,050 Btu/scf), matching the sheet's recorded 1100 MMcf/d exactly. Three independent origins (PGJ, company, EIA) agree once the Dth/MMcf convention is applied; recorded value and units both confirmed."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "no pressure/MAOP figure in the article"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "no pressure/MAOP figure in the article"
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found (PGJ, all five company releases, EIA workbook) states an operating pressure or MAOP for Phase I -- expected, since this is still a pre-construction, no-docket intrastate project with no tariff or FERC/PHMSA filing yet public. Leaving blank."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "136.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "136.00",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase I: 136 miles of 36-inch pipe from near Watford City to Washburn, ND'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase I includes construction of 136 miles of 36-inch natural gas transmission pipeline'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "136 mi confirmed by PGJ (independent trade press) and the company's own JV release. Do NOT use EIA's workbook as a Length comparator here -- its Miles=344 is the two-phase aggregate, not this segment; see the validity concern explaining that scope mismatch."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'136 miles of 36-inch pipe'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'136 miles of 36-inch natural gas transmission pipeline'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: pipeline_diameter_inches = 36"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "36 in confirmed by PGJ, the company's June 2025 JV release, and EIA's 2026-05/08 releases (three independent origins). NOTE: the company's earlier Feb 2025 open-season notice (C) described a larger, 42-inch concept ('136-mile, 42-inch diameter...pipeline with the capacity of approximately 1.5 Bcf/d') and EIA's 2025-07/10 and 2026-01 releases carried that 42-inch figure too -- this was the pre-open-season maximum scope, superseded once the project was finalized with Rainbow in June 2025 at 36-inch/1.1 MMcf/d. Not a conflict with the current recorded value; it is the project's documented evolution, noted here so the 42-inch figure is not mistaken for a live disagreement."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Bakken Formation"
+      },
+      "primary_value": "Bakken Formation",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...enabling greater in-state processing and delivery... The planned pipeline will increase takeaway capacity for associated natural gas in the Williston Basin' / Bakken region framing throughout"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a natural gas pipeline from the resource-rich Bakken to eastern North Dakota' / 'takeaway capacity for associated natural gas produced in the Williston Basin'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both PGJ and the company's JV release ground the gas supply in the Bakken/Williston Basin; recorded 'Bakken Formation' confirmed."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Watford City",
+        "StartState/Province": "North Dakota",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Washburn",
+        "EndState/Province": "North Dakota",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Watford City",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase I: 136 miles of 36-inch pipe from near Watford City to Washburn, ND'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'originating near Watford City, ND, and terminating near Washburn, ND'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Watford City -> Washburn, both North Dakota, confirmed verbatim by PGJ and the company's JV release. The Apr 2025 Phase II open-season notice (D) independently corroborates Washburn as the Phase I/Phase II interconnection point, describing it as 'southern McLean County, North Dakota' (Washburn is the McLean County seat) -- consistent, not a conflict."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "no cost figure for the pipeline in the article"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: cost_millions is blank"
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source (PGJ, all five company releases, EIA workbook -- cost_millions blank in every one of the 5 Intensity rows 2025-07 through 2026-08) states a project or segment cost. Also checked Intensity's EIV Capital equity-commitment release (2023) for a figure -- it is a general growth-equity announcement, not pipeline-specific. Leaving blank."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Intensity Infrastructure Partners"
+      },
+      "primary_value": "Intensity Infrastructure Partners",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Intensity Infrastructure and Rainbow Energy plan a 344-mile natural gas pipeline...' -- Intensity is the midstream developer/operator partner"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Intensity Infrastructure Partners, LLC (“Intensity”)... today announced a partnership to develop a natural gas pipeline'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: pipeline_operator_name = 'Intensity Infrastructure Partners' (exact match)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This [ref] cell was blank (MISSING_REF). Operator=Intensity Infrastructure Partners is confirmed by PGJ, the company's own release, and EIA's pipeline_operator_name field (an exact-name independent government record) -- three origins."
+    },
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Intensity Infrastructure Partners LLC",
+        "Owner2": "Rainbow Energy Center LLC"
+      },
+      "primary_value": "Intensity Infrastructure Partners LLC",
+      "proposed_refs": [
+        "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic"
+      ],
+      "verifications": [
+        {
+          "url": "https://pgjonline.com/news/2025/june/intensity-rainbow-energy-to-build-344-mile-gas-pipeline-across-north-dakota",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Intensity Infrastructure Partners and Rainbow Energy Center have announced a joint venture to build a new natural gas pipeline'"
+        },
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Intensity Infrastructure Partners, LLC (“Intensity”)... and Rainbow Energy Center, LLC (“Rainbow”)... today announced a partnership to develop a natural gas pipeline'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both JV partners (Intensity Infrastructure Partners LLC, Rainbow Energy Center LLC) named explicitly and identically in PGJ and the company's own release. No ownership percentages are stated anywhere I found (a JV, not necessarily an equal split) -- Owner1%/Owner2% left as recorded (blank), not fabricated."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7783",
+      "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-llc-and-rainbow-energy-center-llc-announce-strategic",
+      "facts": "Phase II: 'Phase II extends the pipeline 208 miles from Washburn to Casselton, ND, with a 30-inch segment capable of transporting 430,000 Dth/d and providing access to numerous delivery points along the route.' Same JV (Intensity Infrastructure Partners LLC / Rainbow Energy Center LLC), same 2025-06-26 announcement, target in-service 'July 2029' stated for the overall project in this release."
+    },
+    {
+      "project_id": "P7783",
+      "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-launches-open-season-phase-ii-extension-following",
+      "facts": "2025-04-17 Phase II open-season notice: 208 miles of 30-inch pipe, interconnects with Phase I 'in southern McLean County, North Dakota' (i.e. at Washburn), terminates 'near Casselton, North Dakota', estimated in-service date 'January 1, 2030' (Phase II-specific target, distinct from Phase I's July 2029/early-2029 target)."
+    },
+    {
+      "project_id": "P7783",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA's 'Intensity Pipeline Project' row (Aug2026 release, row 67) is a combined two-phase entry (344 mi total, no per-phase breakdown in Miles) whose notes explicitly state the 2026-01-06 FID covered Phase I only -- Phase II has not (per this record) separately reached FID. Do not treat EIA's 'Approved' status or FID note as applying to Phase II without its own confirmation."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Phase I",
+      "sheet_row": 4162,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-01",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.intensityinfra.com/news/intensity-infrastructure-partners-and-rainbow-energy-center-advance-36-inch-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2026-01-06: 'confirmed that the firm transportation commitments contained in executed precedent agreements are sufficient to underpin the decision to advance Phase I' -- FID reached, project active, still pre-construction, target in-service 'early 2029'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug2026 row 67: status 'Approved' (up from 'Announced' in the 2025-07/10 releases); notes: 'Advanced to FID on Phase I on 1/6/2026 based on executed precedent agreements'"
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status=proposed is still correct: no source states construction has begun (no ConstructionYear found anywhere -- see the Construction [ref] fill), and EIA's own vocabulary places this at 'Approved', a pre-construction stage. But this is a live, actively advancing project, not a dormant one -- Phase I reached FID on 2026-01-06 (company release + independently corroborated by EIA's notes field), the newest dated evidence found. See the validity concern recommending FIDStatus=FID be set on this row (not itself a worklist unit) and flagging StartMonth1 for a second look (target softened from 'July 2029' to 'early 2029' post-FID)."
+    }
+  ],
+  "summary": "P7782 Intensity Gas Pipeline Phase I: real, independently confirmed (PGJ + company + EIA), correctly classified as transmission, and NOT a duplicate of P7783 (its Phase II sibling) -- confirmed via the JV/open-season releases naming both phases and their Watford City->Washburn / Washburn->Casselton split. All 15 worklist units resolved: 11 REVERIFIED/REFS_ADDED at high tier, 1 PipelineType at medium/single-origin, 3 UNRESOLVED (Construction, Pressure, SegmentCost -- nothing found). Status confirmed proposed (verdict: confirm); flagged FID reached 2026-01-06 (FIDStatus=FID recommended) and a possible stale StartMonth1 as validity concerns."
+}

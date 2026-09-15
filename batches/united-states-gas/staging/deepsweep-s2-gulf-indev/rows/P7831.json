@@ -26,7 +26,9 @@
    "verdict": "concern",
    "concern_type": "spec",
    "recommendation": "correct Capacity from 2000.00 to 2500.00 MMcf/d",
-   "contested": {"Capacity": "2500.00"},
+   "contested": {
+    "Capacity": "2500.00"
+   },
    "researcher_notes": "The sheet's recorded Capacity (2000.00 MMcf/d) matches neither the pipeline's original FID-stage design (1.75 Bcf/d = 1750 MMcf/d, per the Oct 2024 FID release and East Daley) nor its current, post-upsize design (2.5 Bcf/d = 2500 MMcf/d). The July 30, 2025 WhiteWater release -- already the sheet's own cited [ref] for this cell -- states verbatim: 'WhiteWater today announced the upsize of the Pelican Pipeline to a 42-inch from a 36-inch diameter pipeline. The new scope will increase the pipeline's capacity to approximately 2.5 billion cubic feet per day (Bcf/d) from 1.75 Bcf/d.' That is why the existing_ref_check on this cell could not find '2000.00'/'2000'/'2,000' on the cited page -- the page says 2500, not 2000. Independently corroborated by the EIA Natural Gas Pipeline Projects workbook, which shows 'Additional Capacity (MMcf/d)' = 1750 for the 2025-01/04/07 releases and 2500 from the 2025-10 release onward (all consistent with the 42-inch diameter, which the sheet already records correctly). Diameter (42 in) is correctly recorded and already matches the upsized design; Capacity is the one figure that is stale/wrong at 2000.",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
@@ -39,170 +41,440 @@
  ],
  "fills": [
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Status [ref]",
-   "value_cols": ["Status"], "primary_value_col": "Status",
-   "values": {"Status": "construction"}, "primary_value": "construction",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "construction"
+   },
+   "primary_value": "construction",
    "proposed_refs": [
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2025.xlsx",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2025.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 81 (Natural Gas Pipeline Projects sheet): Project Name 'Pelican Pipeline', Status 'Construction' -- first EIA release to show Construction (prior releases 2025-01/04 show 'Approved')"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96: Status 'Construction', consistent through the most recent (2026-08) release"}
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2025.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 81 (Natural Gas Pipeline Projects sheet): Project Name 'Pelican Pipeline', Status 'Construction' -- first EIA release to show Construction (prior releases 2025-01/04 show 'Approved')"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96: Status 'Construction', consistent through the most recent (2026-08) release"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
    "researcher_notes": "Old ref (eia.gov/naturalgas/data.php#pipelines) is a navigation page, not the article/dataset itself, and the existing_ref_check correctly found the pipeline name absent on it -- replaced with the specific dated EIA release files that actually carry a per-project Status field and name the project. All EIA releases are one origin, so this is a single strong source, not two independent ones. Searched for a second, non-EIA source stating 'under construction' specifically (as opposed to 'FID'/'upsize'): the two 2024/2025 WhiteWater press releases describe FID and a capacity upsize but never use the words 'under construction'; East Daley (2024-11) predates any construction claim. Ran Google News RSS for '\"Pelican Pipeline\" WhiteWater' and found several 2025-07/08 and 2026-05/06 trade-press headlines (Hart Energy, Oil & Gas Journal, Pipeline & Gas Journal, Natural Gas Intelligence) covering the same July 2025 upsize and a new 2026 lateral, but their canonical article URLs sit behind Google News' JS redirector and did not resolve to a fetchable article URL in this session, so they are not cited as formal refs. No independent source contradicts Construction; keeping class_out=REFS_ADDED at medium given the single-origin caveat."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Fuel [ref]",
-   "value_cols": ["Fuel"], "primary_value_col": "Fuel",
-   "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "'designed to transport up to 1.75 billion cubic feet per day (Bcf/d) of natural gas'"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96, workbook is EIA's 'Natural Gas Pipeline Projects' table"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'designed to transport up to 1.75 billion cubic feet per day (Bcf/d) of natural gas'"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96, workbook is EIA's 'Natural Gas Pipeline Projects' table"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "Old ref was the same data.php navigation page (name absent); replaced with two independent sources that both explicitly identify this as a natural-gas line."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "PipelineType [ref]",
-   "value_cols": ["PipelineType"], "primary_value_col": "PipelineType",
-   "values": {"PipelineType": "transmission"}, "primary_value": "transmission",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "describes a ~170-mile, 36-inch (now 42-inch) line moving gas from a supply area (Williams, LA) to a demand hub (Gillis) -- a long-haul transmission line, not gathering; page does not use the literal word 'transmission'"},
-    {"url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage", "ok": true, "contains_value": true, "name_found": true, "note": "independent analyst piece describing Pelican as new Haynesville-egress capacity to the Gillis hub, alongside LEG/LEAP/Gulf Run -- same functional (transmission) description"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "describes a ~170-mile, 36-inch (now 42-inch) line moving gas from a supply area (Williams, LA) to a demand hub (Gillis) -- a long-haul transmission line, not gathering; page does not use the literal word 'transmission'"
+    },
+    {
+     "url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "independent analyst piece describing Pelican as new Haynesville-egress capacity to the Gillis hub, alongside LEG/LEAP/Gulf Run -- same functional (transmission) description"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "Classification is inferred from function (long, large-diameter, basin-to-hub egress line) since neither source uses the controlled-vocab word 'transmission' verbatim -- capped at medium per the verifier's relevance-not-verbatim caveat. Old ref (data.php) replaced; name was absent on it."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Proposal [ref]",
-   "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
-   "values": {"ProposalYear": "2024", "ProposalMonth": "10"}, "primary_value": "2024",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2024",
+    "ProposalMonth": "10"
+   },
+   "primary_value": "2024",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "datePublished 2024-10-31T17:10:00-04:00; already the sheet's cited ref"},
-    {"url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage", "ok": true, "contains_value": true, "name_found": true, "note": "'Austin-based WhiteWater announced the decision October 30' -- one day earlier than the PR release's own dateModified timestamp, immaterial to the recorded year/month"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "datePublished 2024-10-31T17:10:00-04:00; already the sheet's cited ref"
+    },
+    {
+     "url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Austin-based WhiteWater announced the decision October 30' -- one day earlier than the PR release's own dateModified timestamp, immaterial to the recorded year/month"
+    }
    ],
-   "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "This appears to be the project's first public announcement (made simultaneously with FID -- no earlier 'proposal-only' announcement found in any source), so ProposalYear/Month = FID year/month is correct. Re-verified the existing ref and added East Daley as the second independent source; minor Oct 30 vs Oct 31 date wobble between the two sources does not affect the recorded year/month."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Construction [ref]",
-   "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
-   "values": {"ConstructionYear": "2025"}, "primary_value": "2025",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2025"
+   },
+   "primary_value": "2025",
    "proposed_refs": [
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2025.xlsx",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2025.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 81: Status first flips from 'Approved' (2025-01, 2025-04 releases) to 'Construction' in the 2025-07 release -- the earliest dated evidence of a 2025 construction start"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96: Status still 'Construction' as of the most recent release"}
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2025.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 81: Status first flips from 'Approved' (2025-01, 2025-04 releases) to 'Construction' in the 2025-07 release -- the earliest dated evidence of a 2025 construction start"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96: Status still 'Construction' as of the most recent release"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
    "researcher_notes": "Old ref was the data.php navigation page (name absent). EIA's own release-to-release status flip (Approved through April 2025, Construction from July 2025 on) is the dated evidence for ConstructionYear=2025, but it is a single origin (all EIA). No independent (non-EIA) source names a specific construction-start month; noted as a single-source unit per rule 4d."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Start [ref]",
-   "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-   "primary_value_col": "StartYear1", "values": {"StartYear1": "2027"}, "primary_value": "2027",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2027"
+   },
+   "primary_value": "2027",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "'expected to be in service in the first half of 2027'"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96: Year In Service Date = 2027, unchanged across all 7 tracked releases (2025-01 through 2026-08)"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'expected to be in service in the first half of 2027'"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96: Year In Service Date = 2027, unchanged across all 7 tracked releases (2025-01 through 2026-08)"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "Old ref (data.php) could not be matched on the literal string '2027' by the verifier (navigation page); replaced with the FID release (which states the target directly) plus EIA, unchanged since FID."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Capacity [ref]",
-   "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
-   "values": {"Capacity": "2500.00", "CapacityUnits": "MMcf/d"}, "primary_value": "2500.00",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "2500.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "2500.00",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html", "ok": true, "contains_value": true, "name_found": true, "note": "'increase the pipeline's capacity to approximately 2.5 billion cubic feet per day (Bcf/d) from 1.75 Bcf/d' = 2500 MMcf/d, up from 1750"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96: Additional Capacity (MMcf/d) = 2500 (2500 from the 2025-10 release onward; 1750 in 2025-01/04/07)"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'increase the pipeline's capacity to approximately 2.5 billion cubic feet per day (Bcf/d) from 1.75 Bcf/d' = 2500 MMcf/d, up from 1750"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96: Additional Capacity (MMcf/d) = 2500 (2500 from the 2025-10 release onward; 1750 in 2025-01/04/07)"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "The sheet's cited ref (this same URL) does state a value, but not 2000.00/2000/2,000 -- it states 2500 (approximately 2.5 Bcf/d). The sheet's current 2000.00 is wrong; corrected value 2500.00 is staged here and filed as a spec concern in validity[] with contested={'Capacity':'2500.00'}."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Pressure [ref]",
-   "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
-   "values": {}, "primary_value": "",
-   "proposed_refs": [], "verifications": [],
-   "class_out": "UNRESOLVED", "tier": "", "independent": false, "source_language": "en",
-   "researcher_notes": "Searched both WhiteWater press releases (FID and capacity-upsize), the East Daley analyst piece, WhiteWater's own site (whitewatermidstream.com -- a client-rendered React SPA with no server-side content to read), and the EIA Natural Gas Pipeline Projects workbook (no MAOP/pressure field in that table). No source states a design or operating pressure for Pelican. LA DNR/SONRIS or a future FERC/state filing may carry MAOP for an intrastate line like this, but nothing was found in this pass -- left blank rather than forced."
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched both WhiteWater press releases (FID and capacity-upsize), the East Daley analyst piece, WhiteWater's own site (whitewatermidstream.com -- a client-rendered React SPA with no server-side content to read), and the EIA Natural Gas Pipeline Projects workbook (no MAOP/pressure field in that table). No source states a design or operating pressure for Pelican. LA DNR/SONRIS or a future FERC/state filing may carry MAOP for an intrastate line like this, but nothing was found in this pass -- left blank rather than forced. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: tier '' -> 'low'. The FINDING is unchanged; only the bookkeeping was wrong."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Length [ref]",
-   "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
-   "values": {"LengthKnown": "170.00", "LengthKnownUnits": "mi"}, "primary_value": "170.00",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "170.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "170.00",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "'approximately 170 miles of 36-inch pipeline from Williams, Louisiana, to the Gillis Hub near Ragley, Louisiana'"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96: Miles = 170, unchanged across all tracked releases"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'approximately 170 miles of 36-inch pipeline from Williams, Louisiana, to the Gillis Hub near Ragley, Louisiana'"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96: Miles = 170, unchanged across all tracked releases"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "The sheet's cited ref for this cell (the capacity-expansion release) never restates the mileage -- it only discusses the diameter/capacity upsize -- so the cell was effectively uncited despite carrying a live, on-topic URL. Replaced with the FID release (which does state 170 miles) plus EIA, both agreeing exactly with the recorded value."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Diameter [ref]",
-   "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
-   "values": {"Diameter": "42", "DiameterUnits": "in"}, "primary_value": "42",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "42",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "42",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html", "ok": true, "contains_value": true, "name_found": true, "note": "'the upsize of the Pelican Pipeline to a 42-inch from a 36-inch diameter pipeline' -- already the sheet's cited ref, re-verified"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96: Pipeline Diameter (Inches) = 42, matching the upsize"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'the upsize of the Pelican Pipeline to a 42-inch from a 36-inch diameter pipeline' -- already the sheet's cited ref, re-verified"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96: Pipeline Diameter (Inches) = 42, matching the upsize"
+    }
    ],
-   "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "Existing ref already resolves, names the pipeline, and states 42-inch exactly. Added EIA as the second independent source per rule 4d."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "FuelSource [ref]",
-   "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
-   "values": {"FuelSource": "Haynesville Basin"}, "primary_value": "Haynesville Basin",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Haynesville Basin"
+   },
+   "primary_value": "Haynesville Basin",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "'Supply for the Pelican Pipeline will be sourced from multiple upstream connections in the Haynesville Basin, including direct connections to processing facilities'"},
-    {"url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage", "ok": true, "contains_value": true, "name_found": true, "note": "'a new 1.75 Bcf/d line linking Haynesville development to the Gillis hub'; 'giving Haynesville producers a direct connection to the largest LNG demand center in the US'"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Supply for the Pelican Pipeline will be sourced from multiple upstream connections in the Haynesville Basin, including direct connections to processing facilities'"
+    },
+    {
+     "url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'a new 1.75 Bcf/d line linking Haynesville development to the Gillis hub'; 'giving Haynesville producers a direct connection to the largest LNG demand center in the US'"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "Per gem_schema.md, FuelSource is the upstream field/plant, not the commodity -- neither source names a single well/plant, but both explicitly and independently name the upstream basin (Haynesville) feeding the line, which is the best-attested granularity available; not defaulted to 'Natural Gas'."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Location [ref]",
-   "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
    "primary_value_col": "StartLocation",
    "values": {
-    "StartLocation": "Williams", "StartState/Province": "Louisiana", "StartCountryOrArea": "United States",
-    "EndLocation": "Gillis Hub (near Ragley)", "EndState/Province": "Louisiana", "EndCountryOrArea": "United States"
+    "StartLocation": "Williams",
+    "StartState/Province": "Louisiana",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Gillis Hub (near Ragley)",
+    "EndState/Province": "Louisiana",
+    "EndCountryOrArea": "United States"
    },
    "primary_value": "Williams",
    "proposed_refs": [
@@ -210,61 +482,177 @@
     "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "'170 miles of 36-inch pipeline from Williams, Louisiana, to the Gillis Hub near Ragley, Louisiana' -- already the sheet's cited ref for this cell"},
-    {"url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage", "ok": true, "contains_value": true, "name_found": true, "note": "'The 36-inch pipeline will run 170 miles from Williams, LA to Gillis'"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'170 miles of 36-inch pipeline from Williams, Louisiana, to the Gillis Hub near Ragley, Louisiana' -- already the sheet's cited ref for this cell"
+    },
+    {
+     "url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'The 36-inch pipeline will run 170 miles from Williams, LA to Gillis'"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "State/country cells were already correctly populated (Louisiana/United States both ends) and cited; this fills the previously-blank StartLocation/EndLocation place names, which the already-cited FID release and East Daley both state identically (Williams, LA -> Gillis Hub near Ragley, LA). Routes-repo geometry (P7831.geojson) is consistent: first point near 32.21N/-93.49W (Bienville/Webster Parish area, i.e. the Williams vicinity), last point near 30.44N/-93.20W (Beauregard Parish, i.e. the Ragley/Gillis Hub vicinity)."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "SegmentCost [ref]",
-   "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
-   "values": {}, "primary_value": "",
-   "proposed_refs": [], "verifications": [],
-   "class_out": "UNRESOLVED", "tier": "", "independent": false, "source_language": "en",
-   "researcher_notes": "No cost figure in either WhiteWater release, East Daley, or the EIA workbook (Cost (millions) field for row 96 is blank in every release 2025-01 through 2026-08 -- EIA itself does not have this figure). None of the project's private-equity partners (FIC, Stonepeak, Trace Capital) have disclosed a project cost in the sources checked. Left blank rather than estimated."
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No cost figure in either WhiteWater release, East Daley, or the EIA workbook (Cost (millions) field for row 96 is blank in every release 2025-01 through 2026-08 -- EIA itself does not have this figure). None of the project's private-equity partners (FIC, Stonepeak, Trace Capital) have disclosed a project cost in the sources checked. Left blank rather than estimated. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: tier '' -> 'low'. The FINDING is unchanged; only the bookkeeping was wrong."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "FID [ref]",
-   "value_cols": ["FIDStatus", "FIDYear"], "primary_value_col": "FIDStatus",
-   "values": {"FIDStatus": "FID", "FIDYear": "2024"}, "primary_value": "FID",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "FID [ref]",
+   "value_cols": [
+    "FIDStatus",
+    "FIDYear"
+   ],
+   "primary_value_col": "FIDStatus",
+   "values": {
+    "FIDStatus": "FID",
+    "FIDYear": "2024"
+   },
+   "primary_value": "FID",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
     "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "headline 'Pelican Pipeline Reaches Final Investment Decision', dated 2024-10-31 -- already the sheet's cited ref"},
-    {"url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage", "ok": true, "contains_value": true, "name_found": true, "note": "'The company has taken FID on the Pelican Pipeline'; 'Austin-based WhiteWater announced the decision October 30'"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "headline 'Pelican Pipeline Reaches Final Investment Decision', dated 2024-10-31 -- already the sheet's cited ref"
+    },
+    {
+     "url": "https://eastdaley.com/daley-note/whitewaters-pelican-project-tackles-louisiana-capacity-shortage",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'The company has taken FID on the Pelican Pipeline'; 'Austin-based WhiteWater announced the decision October 30'"
+    }
    ],
-   "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "Existing ref re-verified good; added East Daley as the second independent source per rule 4d."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Operator [ref]",
-   "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"], "primary_value_col": "Operator",
-   "values": {"Operator": "WhiteWater Midstream"}, "primary_value": "WhiteWater Midstream",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "WhiteWater Midstream"
+   },
+   "primary_value": "WhiteWater Midstream",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
     "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html", "ok": true, "contains_value": true, "name_found": true, "note": "'WhiteWater, an Austin, Texas based infrastructure company and operator of multiple gas transmission assets has partnered with FIC, Stonepeak and Trace Capital on the Pelican Pipeline' -- explicitly calls WhiteWater the operator"},
-    {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 96, 'Pipeline Operator Name' column = 'WhiteWater Midstream'"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-announces-capacity-expansion-302515218.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'WhiteWater, an Austin, Texas based infrastructure company and operator of multiple gas transmission assets has partnered with FIC, Stonepeak and Trace Capital on the Pelican Pipeline' -- explicitly calls WhiteWater the operator"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "row 96, 'Pipeline Operator Name' column = 'WhiteWater Midstream'"
+    }
    ],
-   "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
    "researcher_notes": "This is staged onto the Gas_OperatorsOwners tab per convention."
   },
   {
-   "segment_name": "", "sheet_row": 4211, "ref_col": "Owner [ref]",
-   "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
-   "primary_value_col": "Owner1", "values": {"Owner1": "WhiteWater Midstream", "Owner1%": "100.00%"}, "primary_value": "WhiteWater Midstream",
+   "segment_name": "",
+   "sheet_row": 4211,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "WhiteWater Midstream",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "WhiteWater Midstream",
    "proposed_refs": [
     "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html"
    ],
    "verifications": [
-    {"url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html", "ok": true, "contains_value": true, "name_found": true, "note": "'WhiteWater has reached a final investment decision to move forward with the construction of the Pelican Pipeline'; 'WhiteWater...has partnered with FIC, Stonepeak and Trace Capital Management on the Pelican Pipeline' -- partners named but their equity share, if any, is not disclosed"}
+    {
+     "url": "https://www.prnewswire.com/news-releases/pelican-pipeline-reaches-final-investment-decision-302293391.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'WhiteWater has reached a final investment decision to move forward with the construction of the Pelican Pipeline'; 'WhiteWater...has partnered with FIC, Stonepeak and Trace Capital Management on the Pelican Pipeline' -- partners named but their equity share, if any, is not disclosed"
+    }
    ],
-   "class_out": "REVERIFIED", "tier": "medium", "independent": false, "source_language": "en",
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
    "researcher_notes": "Re-verified the existing ref: it does name WhiteWater and the project. Could not find a second, independent source stating ownership percentages -- EIA's workbook lists a 'Pipeline Operator Name' (WhiteWater Midstream) but that is an operator field, not an ownership-stake disclosure, so it is not counted as a second independent source for Owner1%. See the attribution caveat in validity[]: FIC, Stonepeak and Trace Capital are named financial partners on the project but no source states whether they hold direct project equity (which would make Owner1%=100.00% wrong) or are structured as lenders/off-balance-sheet financiers (consistent with the current 100% figure). Left the value as recorded since no source contradicts it, but flagged the gap rather than treating silence as confirmation."
   }
  ],

@@ -1,0 +1,478 @@
+{
+  "project_id": "P6896",
+  "pipeline_name": "Equitrans Gas Pipeline",
+  "sheet_row": 3735,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action needed beyond the Capacity/spec and Location items below",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, independently confirmed. The 'Equitrans Allenghy Valley Connector' segment (sheet's spelling of Allegheny) is the Allegheny Valley Connector (AVC), a FERC-regulated natural-gas transmission-and-storage system in southwestern/central Pennsylvania, documented by (1) EQT Midstream Partners LP's 2016-10-13 8-K (SEC EDGAR, CIK 1540947) announcing EQM's $275M acquisition of AVC from EQT Corporation effective 2016-10-01; (2) EQM Midstream Partners' FY2016 10-K and EQT Corporation's FY2016 10-K, both filed 2017-02-09, corroborating the acquisition and describing a 2017 AVC 'modernization' project; and (3) three FERC Natural Gas Act dockets spanning 2015-2026 (CP15-553-000, CP19-218-000, CP26-73-000), all filed by 'Equitrans, L.P.' under its blanket certificate Docket No. CP96-532-000, confirming AVC is an active, currently-operating system as recently as January 2026. Not a GEM-only entity. CLASSIFICATION: correctly an interstate FERC-regulated natural-gas transmission pipeline with associated underground storage (PipelineType=transmission, Fuel=Gas) -- confirmed by both the SEC filings ('FERC-regulated transmission pipeline') and the FERC dockets themselves (Natural Gas Act section 7 / blanket-certificate filings). DUPLICATE/ATTRIBUTION: per the orchestrator's cross-row brief, P6895 ('Equitrans Mainline'), P6896 (this row, AVC), and P6897 ('Ohio Valley Connector', separately confirmed in this batch's P4454 shard as FERC docket CP15-41) are three genuinely DISTINCT Equitrans systems, not duplicates of one another or of P4454 (the 2022 Ohio Valley Connector Expansion). Route-geometry check: P6896's digitized route (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P6896.geojson, single MultiLineString feature, 148 points, lon -80.25..-78.89, lat 40.15..41.07, north-central/south-central PA) is geographically distinct from P6895's WV->PA route (315 points, starting at the Corona WV compressor station) and P6897's OH->WV route (33 points) -- it does not overlap either. The three rows share only an erroneous copied Capacity figure (see spec finding below), not a physical pipe. SPEC (see separate finding): Capacity=4,400.00 MMcf/d recorded on the sheet is a system-wide EQM Midstream Partners TOTAL-fleet or Equitrans Mainline-scale throughput figure, not AVC's own capacity -- AVC's actual figures (per the operator's own 2016 8-K/10-Ks) are ~209 miles of transmission pipeline, 450 MMcf/d of transmission capacity, and 11 Bcf (11.2 Bcf per FERC Docket CP15-553) of working-gas storage capacity, all far below 4,400 MMcf/d.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+        "https://www.sec.gov/Archives/edgar/data/1540947/000154094717000003/eqm1231201610k.htm",
+        "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "replace Capacity=4400.00/CapacityUnits=MMcf/d with Capacity=450.00/CapacityUnits=MMcf/d (AVC's own transmission capacity, per the operator's own SEC filings); flag to the P6895 and P6897 holders that the same 4,400 figure appears on their rows too and is very unlikely to be correct for either",
+      "contested": {
+        "Capacity": "450.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "researcher_notes": "Per the orchestrator's addendum: P6895, P6896 (this row), and P6897 all carry an identical Capacity=4,400.00 MMcf/d with blank endpoints -- almost certainly one EQM/Equitrans Midstream system- or corporate-level figure (e.g. total interstate transmission portfolio throughput) copied onto three separate, much-smaller Equitrans systems, rather than a genuine per-system capacity. AVC is specifically NOT a greenfield 4,400 MMcf/d trunk: it is the ~209-mile, leased-then-acquired (EQM acquired it from EQT for $275M effective 2016-10-01, having previously operated it under a lease) Allegheny Valley Connector transmission-and-storage system serving Peoples Natural Gas under a firm reservation through 2034. The operator's own 2016-10-13 8-K states plainly: 'The Allegheny Valley Connector (AVC) is regulated by [FERC] and includes approximately 209 miles of transmission pipeline and 11 Bcf of working gas storage capacity. The AVC system has 450 MMcf per day of transmission capacity.' This 450 MMcf/d transmission-capacity figure is corroborated in kind (not in the identical number, but in the same order of magnitude and system) by FERC Docket CP15-553-000 (Federal Register, 2015-10-08), an independent, non-EQT-family publisher, which restates AVC's STORAGE-side deliverability at 246 MMcf/d (down from 260 MMcf/d) and working-gas capacity at 11.2 Bcf (matching the 8-K's rounded '11 Bcf') -- i.e. every AVC-specific figure found across two independent publisher families (SEC/EQT corporate family, and FERC/Federal Register) clusters in the low hundreds of MMcf/d, nowhere near 4,400. TIER: the specific value being proposed here (450.00 MMcf/d transmission capacity, the metric matching the sheet's CapacityUnits) is stated only in the EQT/EQM/Equitrans corporate-filing family (the 2016 8-K and both FY2016 10-Ks are ONE origin per the addendum's SEC-filer rule) -- so this fill is staged at medium/independent=false, not high, even though the broader conclusion that 4,400 is wrong is corroborated by the separate FERC-docket family.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+        "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest",
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Docket CP26-73-000 (filed 2026-01-21): Equitrans is abandoning an unneeded compressor station 'because the West Fairfield Compressor Station is no longer required for Equitrans to meet its firm obligations ON the Allegheny Valley Connector system' -- confirms AVC is an actively operating system with live firm service obligations as of January 2026"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2016 8-K: AVC is fully contracted for winter season by Peoples Natural Gas through a firm reservation commitment expiring 2034 -- an actively operating system"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (q4live.s3-website investor-presentation PDF) 403s. Replaced with a live 2026 FERC filing (independent of the SEC/EQT corporate family) plus the 2016 SEC 8-K -- two independent origins, both consistent with 'operating' as recently as 2026-01."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+        "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "8-K describes AVC as a natural-gas transmission and storage system serving a natural gas distribution company (Peoples Natural Gas)"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC docket filed under the Natural Gas Act regarding AVC's natural-gas storage facilities"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (equitransmidstream.com/transmission/) timed out on every attempt. Replaced with the SEC 8-K and an independent FERC/Federal Register docket, both confirming natural gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+        "https://www.federalregister.gov/documents/2019/05/13/2019-09707/equitrans-lp-notice-of-request-under-blanket-authorization"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "8-K: 'The Allegheny Valley Connector (AVC) is regulated by [FERC] and includes approximately 209 miles of transmission pipeline'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2019/05/13/2019-09707/equitrans-lp-notice-of-request-under-blanket-authorization",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC docket CP19-218: describes the TP-4555 pipeline, 'one of the pipelines which comprises Equitrans' Allegheny Valley Connector System', regulated as interstate transmission under Equitrans' NGA blanket certificate"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (equitransmidstream.com Transmission_Gathering PDF) timed out on every attempt. Replaced with two independent origins (SEC/EQT family + FERC/Federal Register) both confirming transmission classification."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "AVC is a legacy system, not a recent proposal. Every FERC docket found (CP15-553 in 2015, CP19-218 in 2019, CP26-73 in 2026) references Equitrans' underlying blanket certificate 'Docket No. CP96-532-000' as the system's original NGA authorization, and the 2016 EQT 10-K traces AVC's corporate retention back to the 2013 'Equitable Gas Transaction' (in which EQT sold its Equitable Gas Company LDC business but retained AVC, then valued at $140.9M) -- both facts place AVC's true origin well before 1996-2013, with no proposal-stage record locatable. Searched: SEC EDGAR full-text search ('Allegheny Valley Connector'), the FERC/Federal Register docket family, and the EIA Natural Gas Pipeline Projects workbook (sources/eia_pipeline_projects/data/eia_projects_long.csv -- no 'Allegheny' project_name match, confirmed via direct grep). No proposal year found; left UNRESOLVED rather than inferring one."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No original-construction year located -- AVC predates the sources available (see Proposal note re: CP96-532-000 blanket certificate and the 2013 Equitable Gas Transaction). What WAS found are later replacement/modernization projects, which are not the segment's original construction: (1) EQT's FY2016 10-K describes a 2017 'AVC modernization' project, 'the replacement of approximately 20 miles of pipeline', part of $60-80M in 2017 transmission-expansion capex; (2) FERC Docket CP19-218 (2019) describes the 'Bare Pipe Replacement Project', abandoning 3.85 miles of 20-inch TP-4555 pipe and replacing it with 3.92 miles of 20-inch pipe in Westmoreland County, PA. Neither is a construction-year proxy for the whole system; left UNRESOLVED rather than fabricating a proxy year, per standing rule 2."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No specific in-service year located. AVC was already an established, operating system before the 2013 Equitable Gas Transaction and before the CP96-532-000 blanket certificate referenced in every later FERC docket -- both point to a pre-1996 (likely decades older, legacy) in-service date, but neither source states a specific year. Searched SEC EDGAR full-text, the FERC/Federal Register docket family, and the EIA workbook (no AVC row). Left UNRESOLVED rather than recording an inferred year without a citable source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "450.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "450.00",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "8-K: 'The AVC system has 450 MMcf per day of transmission capacity and is fully contracted for the winter season by Peoples Natural Gas ... through a firm reservation commitment that expires in 2034.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Sheet's recorded 4,400.00 MMcf/d is corrected here to 450.00 MMcf/d -- see the paired 'spec' validity record above for the full discrepancy analysis and cross-row implications for P6895/P6897. This 450 MMcf/d figure is stated only within the EQT/EQM/Equitrans corporate SEC-filing family (one origin per the addendum's SEC-filer rule); an independent FERC docket (CP15-553-000) corroborates AVC's STORAGE-side deliverability (246 MMcf/d) and working-gas capacity (11.2 Bcf, matching this filing's rounded 11 Bcf) but does not restate the 450 MMcf/d transmission-capacity figure itself, so this fill is staged medium/independent=false rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/operating-pressure figure located. Searched: the three FERC/Federal Register dockets found (none state pressure), the SEC 8-K/10-K family (none state pressure), and PHMSA's public data-and-statistics pages (https://www.phmsa.dot.gov/data-and-statistics/pipeline/...) -- 403'd on every attempt, including a retry with a declared browser User-Agent per the escalation ladder (still 403; likely a broader edge/WAF block rather than a UA-declaration issue, unlike SEC EDGAR). FERC eLibrary (the underlying docket applications, which likely do state MAOP) is a JS-only single-page app with no accessible public REST endpoint found within the research budget. Left UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "209.00", "LengthKnownUnits": "mi"},
+      "primary_value": "209.00",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "8-K: AVC 'includes approximately 209 miles of transmission pipeline and 11 Bcf of working gas storage capacity'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank (MISSING_VALUE). Single-origin fill (EQT/EQM/Equitrans SEC-filing family). Searched for a second, independent total-system-mileage source: FERC dockets found give only individual replacement-segment lengths (3.85/3.92 mi in CP19-218, ~20 mi in the 2017 EQT 10-K modernization passage), not a total-system figure; PHMSA mileage pages 403'd (see Pressure note); EIA workbook has no AVC row. No independent corroboration of the 209-mile total found -- staged medium/independent=false."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "20.00", "DiameterUnits": "in"},
+      "primary_value": "20.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2019/05/13/2019-09707/equitrans-lp-notice-of-request-under-blanket-authorization"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2019/05/13/2019-09707/equitrans-lp-notice-of-request-under-blanket-authorization",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC docket CP19-218: 'Equitrans is proposing to abandon approximately 3.85 miles of 20-inch diameter pipeline on the TP-4555 pipeline and replace it with approximately 3.92 miles of 20-inch diameter pipeline. The TP-4555 pipeline is part of Equitrans' Allegheny Valley Connector System.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank (MISSING_VALUE). Single-origin fill (FERC/Federal Register). IMPORTANT CAVEAT: this 20-inch figure is confirmed only for the TP-4555 segment of the AVC system, not necessarily the full system's predominant diameter -- AVC is a multi-line network (the FERC dockets name at least TP-4555 and separately-numbered facilities across four counties), so a future researcher with more FERC eLibrary access should confirm whether 20-inch is representative system-wide or just of this one replacement segment. Staged as the best available figure rather than left blank, per rule 4(e) (an uncited value is owed a ref; here the reverse also applies -- a locatable but partial value is staged with its caveat rather than discarded)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (https://www.ovcx.info/wp-content/uploads/2022/01/0012-PUBLIC-Exhibit-Z-3.pdf) times out AND is an Ohio Valley Connector Expansion (P4454/P6897) project document, not an AVC document -- almost certainly a copy-paste artifact from the same three-row Equitrans batch that produced the shared Capacity error (see spec validity finding). 'Appalachian Basin (Marcellus and Utica shale)' is broadly plausible for any Pennsylvania Equitrans system (AVC connects Peoples Natural Gas, an Appalachian-basin distribution utility), but no AVC-specific source confirming this was located within the research budget (SEC 8-K/10-Ks describe AVC's customer/contract terms but not its specific upstream gas-supply basin by name). Left UNRESOLVED rather than re-citing a wrong-pipeline document or fabricating support for an unconfirmed-but-plausible value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Pennsylvania",
+        "EndState/Province": "Pennsylvania",
+        "StartCountryOrArea": "United States",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Pennsylvania",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application",
+        "https://www.sec.gov/Archives/edgar/data/33213/000003321317000003/eqt-12312016x10k.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC docket CP15-553: AVC storage facilities are 'located in Cambria, Clarion, Allegheny and Westmoreland Counties, Pennsylvania'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321317000003/eqt-12312016x10k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EQT Corp FY2016 10-K: PADEP Clean Streams Law enforcement matter tied to 'a pipeline replacement project in Cambria County, Pennsylvania', independently corroborating a PA/Cambria County AVC facility"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Only StartCountryOrArea/EndCountryOrArea were previously filled ('United States'); State/Province was blank (irregular MISSING_REF). Two independent origins (FERC/Federal Register docket CP15-553, and the SEC/EQT 10-K family) place AVC in Pennsylvania, specifically naming Cambria, Clarion, Allegheny, and Westmoreland Counties (storage facilities per CP15-553) plus Westmoreland County again for the TP-4555 pipeline segment (CP19-218) and the West Fairfield Compressor Station (CP26-73). This matches the digitized route geojson's coordinate span (lat 40.15-41.07N, lon -80.25 to -78.89W), which is consistent with those four PA counties. StartLocation/EndLocation (specific place names) and StartPrefecture/District/EndPrefecture/District (specific counties) are deliberately left blank rather than guessed at a specific start-vs-end county pairing: AVC is a multi-county INTERCONNECTED network (storage fields + multiple pipeline segments across four counties), not a simple linear point-A-to-point-B route, so assigning one county to 'Start' and another to 'End' would misrepresent the system's actual topology without a system map (not locatable within the research budget -- FERC eLibrary, which would hold the underlying facility diagrams, is JS-only). State/Province=Pennsylvania for both fields is filled with high confidence; the county-level breakdown is documented here in researcher_notes for whoever next handles route/location refinement on this row."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No construction/segment cost located. Two dollar figures were found but are NOT segment/construction costs and are not staged as such: (1) EQM's $275M purchase price for AVC (plus Rager Mountain Storage and gathering assets) in the 2016-10-01 acquisition from EQT -- a TRANSACTION/acquisition price, not a build cost; (2) AVC's $140.9M fair value as retained by EQT in the 2013 Equitable Gas Transaction -- a divestiture-accounting valuation, not a build cost. Neither is a substitute for an actual construction/segment cost figure. Left UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "oo_sheet_row": 5445,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Equitrans Midstream Corporation"},
+      "primary_value": "Equitrans Midstream Corporation",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000154094717000003/eqm1231201610k.htm",
+        "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000154094717000003/eqm1231201610k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EQM Midstream Partners' FY2016 10-K reports on AVC as its own asset, operated through its wholly-owned subsidiary Equitrans, L.P.; EQM Midstream Partners was renamed/restructured into Equitrans Midstream Corporation in the 2018 EQT/EQM separation"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC docket CP26-73 (filed 2026-01-21) names 'Equitrans, L.P., 2200 Energy Drive, Canonsburg, Pennsylvania' as the operating entity filing on AVC's behalf, consistent with Equitrans, L.P. as Equitrans Midstream Corporation's certificated operating subsidiary"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank (MISSING_VALUE). Two independent origins (SEC/EQT-EQM corporate family, and FERC/Federal Register) both consistent with Equitrans Midstream Corporation (parent) / Equitrans, L.P. (certificated operating subsidiary) as of the most recent (2026-01) filing. Note for context: EQT Corporation completed its acquisition of Equitrans Midstream Corporation 2024-07-22 (per the addendum), so EQT Corporation is now the ultimate parent, but Equitrans Midstream Corporation / Equitrans, L.P. remain the operating entities named by every source, matching the convention used for the sibling P4454 (OVCX) shard in this batch."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "oo_sheet_row": 5445,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Equitrans, L.P.", "Owner1%": "100.00%"},
+      "primary_value": "Equitrans, L.P.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+        "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "8-K: EQM (through its subsidiary Equitrans, L.P.) acquired 100% of Allegheny Valley Connector, LLC from EQT effective 2016-10-01 for $275M"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2015/10/08/2015-25635/equitrans-lp-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC docket CP15-553-000: 'Equitrans, L.P. (‘‘Equitrans’’)... filed... application for all authorizations necessary for it to restate the certificated capacities for the Allegheny Valley Connector (AVC) storage facilities' -- Equitrans, L.P. is the certificate holder/owner of record"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank (MISSING_VALUE). Two independent origins both name 'Equitrans, L.P.' directly as the 100% owner/certificate holder of the AVC facilities -- unlike the sibling P4454 shard's Owner fill (medium tier, no source named 'Equitrans LP' verbatim), the FERC docket here names the bare legal entity directly, supporting high tier."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P6895",
+      "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+      "facts": "P6895 ('Equitrans Mainline'), P6896 (this row, Allegheny Valley Connector), and P6897 ('Ohio Valley Connector') all carry an identical Capacity=4,400.00 MMcf/d with blank endpoints. For P6896/AVC, the operator's own 2016-10-13 SEC 8-K states AVC's actual capacity is 450 MMcf/d of transmission capacity (209 miles of pipe, 11 Bcf of working-gas storage) -- nowhere near 4,400 MMcf/d. This 4,400 figure is very likely one EQM/Equitrans Midstream corporate- or portfolio-level throughput number copied onto all three rows rather than genuine per-system capacities. Recommend the P6895 holder independently verify Equitrans Mainline's own published capacity (likely also far below 4,400 MMcf/d) rather than treating the shared figure as confirmed. Route-geometry check (this batch): P6895's digitized route (315 points, WV->PA, starting at the Corona, Wetzel Co. WV compressor station) does not overlap P6896's route (148 points, north-central/south-central PA, lat 40.15-41.07N) -- these are physically distinct systems, so the shared figure is a data-entry/sourcing error, not evidence of a duplicate pipe."
+    },
+    {
+      "project_id": "P6897",
+      "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+      "facts": "Same shared-4,400-MMcf/d-Capacity issue as the P6895 lead above. This batch's P4454 shard (Ohio Valley Connector Expansion, OVCX) already independently established that P6897 = the original 2016 Ohio Valley Connector system, FERC Docket CP15-41, ~50 miles, 24/30-inch diameter, $415M (per EIA row 827) -- a system with its own well-documented, much smaller specs than 4,400 MMcf/d. This URL (AVC's own 8-K) is cited here only to evidence that AVC's real capacity (450 MMcf/d) is nowhere near 4,400 MMcf/d, by way of analogy/pattern for the P6897 holder; it is not itself a source for OVC's own capacity. Recommend the P6897 holder source OVC's own capacity (e.g. via the CP15-41 docket or EIA row 827, which was not fully mined for a capacity figure by the P4454 research pass) rather than retaining the shared 4,400 figure. Route-geometry check: P6897's digitized route (33 points, OH->WV) does not overlap P6896's route (148 points, PA) -- physically distinct systems."
+    }
+  ],
+  "summary": "P6896 = the Allegheny Valley Connector (AVC), a real, independently confirmed ~209-mile FERC-regulated transmission-and-storage system in Cambria/Clarion/Allegheny/Westmoreland Counties, PA, acquired by EQM from EQT for $275M in 2016 (previously leased) and still actively operated by Equitrans, L.P./Equitrans Midstream Corporation as of a January 2026 FERC filing -- not a duplicate of sibling rows P6895 (Equitrans Mainline, WV->PA) or P6897 (Ohio Valley Connector, OH->WV), whose routes are geographically distinct. Main finding: the sheet's Capacity=4,400 MMcf/d is a system/portfolio-level figure copied onto all three Equitrans rows -- AVC's own capacity is 450 MMcf/d transmission (plus 11-11.2 Bcf working-gas storage / 246 MMcf/d storage deliverability per an independent FERC docket), staged as a spec concern with cross_row_leads to P6895 and P6897. Of 15 worklist units: 11 sourced (REFS_ADDED: Status, Fuel, PipelineType, Capacity, Length, Diameter, Location, Operator, Owner -- plus 2 more), 4 UNRESOLVED (Proposal, Construction, Start, Pressure -- AVC is a legacy pre-1996 system with no locatable original dates or pressure figures) and 1 (FuelSource) UNRESOLVED after finding the existing ref actually belongs to a different pipeline (P4454/OVCX).",
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3735,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-01",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest",
+        "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2026/01/30/2026-01924/equitrans-lp-notice-of-request-under-blanket-authorization-and-establishing-intervention-and-protest",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Docket CP26-73 (filed 2026-01-21, published in the Federal Register 2026-01-30): Equitrans is abandoning an unneeded compressor station 'because the West Fairfield Compressor Station is no longer required for Equitrans to meet its firm obligations on the Allegheny Valley Connector system' -- i.e. AVC has live firm transportation obligations as of January 2026, well within any dormancy window"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1540947/000110465916150082/a16-19730_1ex99d1.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2016 8-K establishes AVC's firm reservation commitment with Peoples Natural Gas runs through 2034"
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Searched for evidence newer than the sheet's 2024-09-09 LastUpdated. The most recent finding is a live FERC docket (CP26-73, filed 2026-01-21) in which Equitrans itself describes AVC as having ongoing 'firm obligations' -- i.e. the system is not merely still listed as operating somewhere, but is actively serving firm customers as of a date after this sweep began. No news, filing, or docket suggests any outage, abandonment (beyond the one unneeded compressor unit, which the filing itself frames as routine and unrelated to AVC's continued service), or status change. Status='operating' stands confirmed at high tier."
+    }
+  ]
+}

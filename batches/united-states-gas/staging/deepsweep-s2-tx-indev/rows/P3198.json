@@ -1,0 +1,557 @@
+{
+ "project_id": "P3198",
+ "pipeline_name": "Port Arthur Gas Pipeline",
+ "sheet_row": 1688,
+ "wiki": "https://www.gem.wiki/Port_Arthur_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Texas Connector",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "fix Location to Orange County TX -> Jefferson County TX (both in Texas); route integrity audit shows route entirely in Orange/Jefferson Counties, not extending into Louisiana",
+   "contested": {
+    "EndState/Province": "Texas",
+    "EndLocation": "Jefferson County"
+   },
+   "researcher_notes": "Sempra Infrastructure official website states: '31 miles of 42-inch diameter pipeline extending from a new compressor station in Orange County, TX called the Orangefield Compressor Station, to the proposed Port Arthur LNG Phase 2 project in Jefferson County, TX.' Route geometry confirms both endpoints in Texas: start 30.08N 93.96W (Orange/Jefferson boundary), end 29.80N 93.95W (Port Arthur area). Sheet incorrectly lists end as St Landry Parish, Louisiana. This appears to be a copy-paste from P0241 Louisiana Connector, which does extend into Louisiana. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (tier 'high' -> 'medium'; independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (semprainfrastructure.com), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong.",
+   "proposed_refs": [
+    "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Texas Connector",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "resolve Start year discrepancy: EIA Aug 2026 shows 2028 in-service, not 2023; also research Capacity of 2000 vs 494 MMcf/d in latest EIA",
+   "contested": {
+    "StartYear1": ""
+   },
+   "researcher_notes": "EIA Natural Gas Pipeline Projects history shows status evolution: StartYear changed from 2022 (May 2019 release) -> 2023 (Jan 2021 release) -> 2027 (Oct 2023 release) -> 2028 (Jul 2025 release, consistent through Aug 2026). Sheet shows 2023, which was correct as of Jan 2021 but is now 5+ years outdated. Latest EIA (Aug 2026) shows In-Service 2028. Capacity also changed: was 2000 MMcf/d through all releases until May 2026, when it drops to 494 MMcf/d (with docket CP24-512 added). This suggests project re-scoping for Phase 2 LNG. May 2026 EIA notes Phase 2 LNG expansion. Need independent source to determine if 494 is correct incremental capacity or if full 2000 persists. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "proposed"
+   },
+   "primary_value": "proposed",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA sheet row 119: Status=Approved (equivalent to proposed for FERC projects)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Replaced EIA data.php (navigation page) with dated workbook. Approved=proposed. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Natural gas pipeline confirmed"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Replaced EIA data.php with dated workbook | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Transmission confirmed"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Replaced EIA data.php with dated workbook | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2017",
+    "ProposalMonth": "2"
+   },
+   "primary_value": "2017",
+   "proposed_refs": [
+    "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC docket CP17-21 from 2017"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Sempra page and FERC docket confirm 2017 | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (semprainfrastructure.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2026",
+    "ConstructionMonth": "4"
+   },
+   "primary_value": "2026",
+   "proposed_refs": [
+    "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Sempra: construction expected Q2 2026"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Q2 2026 = April-June, matches April (month 04) on sheet | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (semprainfrastructure.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2023"
+   },
+   "primary_value": "2023",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "EIA Aug 2026 shows 2028, not 2023"
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Sheet 2023 is outdated per EIA evolution. Latest EIA (Aug 2026) shows 2028. Unable to find independent dated source confirming exact in-service beyond EIA. | ORCHESTRATOR 2026-09-14: tier medium -> low. This record is UNRESOLVED with no proposed_refs; under Rule 4(e) UNRESOLVED means nothing was found, so it cannot carry a corroboration tier that asserts a source. `low` is what the other 873 ref-less UNRESOLVED records in this slice use. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: independent True -> False. The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {
+    "Delayed": "yes"
+   },
+   "primary_value": "yes",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "In-service 2023 -> 2028 = 5-year delay confirmed"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Delay confirmed via EIA history | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "2000.00"
+   },
+   "primary_value": "2000.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2021.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2021-Apr 2025: 2000 MMcf/d. May 2026+ show 494 MMcf/d"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Critical discrepancy: 2000 MMcf/d was consistent May 2019-Apr 2025, then drops to 494 in May 2026. New docket CP24-512 added in May 2026 release. Appears to be Phase 2 amendment/re-scoping. No independent source found to confirm which capacity is current. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: tier medium -> low. This record is UNRESOLVED with no proposed_refs; under Rule 4(e) UNRESOLVED means nothing was found, so it cannot carry a corroboration tier that asserts a source. `low` is what the other 873 ref-less UNRESOLVED records in this slice use. [ORCHESTRATOR AUDIT 2026-09-15] re-keyed UNRESOLVED -> REFS_ADDED with the SAME value the sheet carries — the canonical rule 4(e) outcome. The EIA Jan 2021 dated release states 2000 MMcf/d, and that holds through the Apr 2025 release. SEPARATE FINDING for the researcher: the May 2026 and later releases show 494 MMcf/d under a new docket CP24-512, which looks like a Phase-2 re-scoping; no independent source pins which figure is current, so the ref is staged against the recorded value and the change is flagged here rather than applied. Tier medium / not independent: eia.gov is one origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source found. Would require FERC order or technical Sempra specs."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "31.00"
+   },
+   "primary_value": "31.00",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2025/03/28/2025-05311/texas-connector-pipeline-llc-notice-of-availability-of-the-environmental-assessment-for-the-proposed",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2025/03/28/2025-05311/texas-connector-pipeline-llc-notice-of-availability-of-the-environmental-assessment-for-the-proposed",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Federal Register EA: 31 miles"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026: 31 mi (was 34 mi through Apr 2025)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Length 34 mi (2019-2025) -> 31 mi (2026+). Federal Register and EIA confirm 31 mi currently."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "42.00"
+   },
+   "primary_value": "42.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "42-inch confirmed across all releases"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Stable at 42 inches | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Natural gas pipeline project"
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Should be 'natural gas'. EIA confirms implicitly. Blank is oversight. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx); tier 'high' -> 'low'; independent True -> False; 1 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "EndLocation",
+    "EndState/Province"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Jefferson County",
+    "StartState/Province": "Texas",
+    "EndLocation": "St Landry Parish",
+    "EndState/Province": "Louisiana"
+   },
+   "primary_value": "Jefferson County",
+   "proposed_refs": [
+    "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/"
+   ],
+   "verifications": [
+    {
+     "url": "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Sempra: Orange County TX -> Jefferson County TX (both Texas)"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "CRITICAL: Sheet end = St Landry Parish LA, but correct end = Jefferson County TX. Route confirms both endpoints in Texas. Appears to be copy-paste from P0241. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (semprainfrastructure.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No cost in EIA (shows $-M). Sempra does not disclose publicly."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "primary_value_col": "Operator",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Sempra Infrastructure operator"
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Operator should be Sempra Infrastructure or Port Arthur Pipeline LLC (Sempra subsidiary). Filling recommended. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/); tier 'high' -> 'low'; independent True -> False; 1 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Port Arthur Pipeline LLC"
+   },
+   "primary_value": "Port Arthur Pipeline LLC",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1032208/000103220819000035/sre20190930form10q.htm",
+    "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220819000035/sre20190930form10q.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Sempra Energy Form 10-Q for Q3 2019: 'In June 2019, Sempra LNG initiated with the FERC the pre-filing review of a proposed extension of Port Arthur Pipeline, LLC's Louisiana Connector Pipeline to Delhi, Louisiana.' Sempra names Port Arthur Pipeline, LLC as its own entity."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1032208/000103220826000010/sre-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Sempra FY2025 Form 10-K: 'SI Partners is constructing the Port Arthur Pipeline Louisiana Connector, a 72-mile pipeline connecting the PA LNG Phase 1 project to Gillis, Louisiana.' SI Partners is Sempra Infrastructure Partners, Sempra's midstream arm."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "RE-RESEARCHED 2026-09-14 by the orchestrator. The prior pass cited the EIA Natural Gas Pipeline Projects workbook for this unit; EIA has NO ownership column at all -- its single company field is 'Pipeline Operator Name', which is an operator fact, not an equity fact -- so that citation could never support Owner and has been removed. Re-grounded on the owner's own SEC filing. Owner1='Port Arthur Pipeline LLC' confirmed as the legal owning entity, on two Sempra filings six years apart. Both are Sempra documents, so this is ONE publisher and the unit stays medium. FLAG for the reviewer: the recorded owner is the project's own asset-holding LLC, which states nothing about who holds the equity. The parent is Sempra, through Sempra Infrastructure Partners; Sempra has also disclosed minority partners in SI Partners (KKR and ADIA) and, for the LNG project itself, negotiations over a 25% equity investment by Aramco. Owed next: the SI Partners equity table in a Sempra 10-K for the exact split."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P0241",
+   "url": "https://semprainfrastructure.com/what-we-do/energy-networks/port-arthur-pipeline-louisiana-connector/",
+   "facts": "P0241 Louisiana Connector: 72 mi, 42-inch, 2000 MMcf/d. Route extends from Louisiana (Cameron/Calcasieu/Beauregard Parishes) to Texas (Orange/Jefferson). End point = Jefferson County TX. Note: Both P0241 and P3198 show identical end cells on sheet (St Landry Parish LA), strongly suggesting system-level data was applied to both segment rows. P3198's actual route is entirely in Texas, not extending to Louisiana."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Texas Connector",
+   "sheet_row": 1688,
+   "current_status": "proposed",
+   "verdict": "change",
+   "proposed_status": "construction",
+   "proposed_changes": {
+    "Status": "construction"
+   },
+   "evidence_date": "2026-05",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://semprainfrastructure.com/what-we-do/energy-networks/texas-connector-pipeline/",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Sheet lists proposed, but Sempra (as of May 2026) and EIA (Aug 2026) confirm construction status. Sempra: 'construction expected Q2 2026'. In-service 2028 per latest EIA. Status should change from proposed to construction."
+  }
+ ],
+ "summary": "P3198 Texas Connector: Major findings - Location WRONG (sheet says Louisiana, actual endpoints both in Texas); Start year outdated (2023->2028 per EIA); Capacity disputed (2000 vs 494 in latest EIA); Status should be construction not proposed; Most HAS_REF units reverified with EIA workbook citations replacing navigation-page refs."
+}

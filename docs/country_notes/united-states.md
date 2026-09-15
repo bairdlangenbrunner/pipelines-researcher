@@ -72,6 +72,38 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    `gulf-indev`, `gulf-se-operating`, `tx-indev`, `tx-midcon-operating`, `appalachian-indev`,
    `northeast-alaska`, `west`; each dir's `BRIEF.md` carries its route-first cases, duplicate
    families and status leads (passed as `extra_brief`).
+   **Progress: ALL SEVEN BATCHES DELIVERED, slice 2 research closed 2026-09-15** (staged not
+   applied — seven workbooks to work). A5 `appalachian-indev` `_0656_ET`, A6 `northeast-alaska`
+   `_0629_ET`, A7 `west` `_0648_ET`; A1 `gulf-indev`, A2 `gulf-se-operating`, A3 `tx-indev` and
+   A4 `tx-midcon-operating` all rebuilt together at `20260915_1116_ET` (the `_1712_ET`,
+   `_0952_ET` and `_1022_ET` A1/A2/A3 workbooks are superseded and moved to `archive/`).
+   Every batch closes the required gates **E, F, I', J, L at 0**, is coverage-clean
+   (0 unmergeable records, 0 silent UNRESOLVED) and recalc-clean; the advisory gates
+   (A single-host, B/C/D/K, and gate I where a source supports the value without naming the
+   segment) stay open by design — gate B's `__VALIDITY__` hits in particular are a repo
+   convention artifact, not a defect.
+
+   A1-A4 needed a repair pass first (2026-09-15): 41 finished records were silently
+   unmergeable because `merge_qc.verified_refs` keeps a ref only when a verification is `ok`
+   AND `contains_value` AND its URL is byte-identical to the staged `proposed_refs` entry —
+   26 were missing `contains_value` outright, 8 had a URL mismatch or an unstaged ref, and 11
+   were never actually supported (a contradicting figure, a system total standing in for a
+   per-segment cell, or "adds zero pipe" inferred from a blank EIA cell) and are now
+   `UNRESOLVED`-with-notes. Nine validity/status verdict-vocabulary variances were repaired at
+   the same time. All seven `ADDENDUM.md` files are synced to one canonical version carrying
+   those rules; the full account is in `notes/handoff-us-gas-slice2-20260914.md`.
+
+   Open leads for the reviewer: A2 — P6584's operator is Kinetica Deepwater Express (not ANR)
+   and OGJ suggests Delfin ownership; P7809 is in construction per EIA against an Aug-2025
+   target, operator East Tennessee Natural Gas, spanning TN-VA-NC; P7106 Cumberland went
+   proposed -> operating 2026-05-26; P0311's owner moves SCANA -> Enbridge Inc. A3 — P3969 is
+   keyed `spec` but also carries an **existence** signal (no independent mention of a distinct
+   "Texas LNG Lateral Extension" in any EIA vintage, FERC docket or Enbridge release). A1 —
+   P7769 cites an opaque `storage.xata.sh` mirror for FERC order 183 FERC 61,049 because
+   ferc.gov 403s; substitute the eLibrary accession, never fabricate one. Groups to adjudicate
+   together at review (A6/A7): P7455/P7461/P7454, P7830, P7820/P7821, P7790/P7812, P3942,
+   P7863, P2626, P0230, the slice-wide "Northwest Pipeline Co" -> "Northwest Pipeline LLC"
+   rename, P3171, P7860, P7823, and P7109's possible identity with Targa's Bull Run Extension.
 3. ~~In-dev / status-review leg~~ — **retired for US gas**: slice 2's deep + `--status-review`
    covers the 134 proposed/construction/shelved and 52 cancelled rows (the other 14 cancelled
    were reviewed in batch 5). Do not stage a second pass over the same cells.

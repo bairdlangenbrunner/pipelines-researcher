@@ -1,232 +1,598 @@
 {
-  "project_id": "P5548",
-  "pipeline_name": "Florida Gas Transmission Pipeline",
-  "sheet_row": 3065,
-  "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
-  "validity": [
+ "project_id": "P5548",
+ "pipeline_name": "Florida Gas Transmission Pipeline",
+ "sheet_row": 3065,
+ "wiki": "https://www.gem.wiki/Florida_Gas_Transmission_Pipeline",
+ "validity": [
+  {
+   "segment_name": "South Louisiana Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no action on existence/classification; see the separate attribution and spec concerns below for two data points that need updating",
+   "contested": {},
+   "researcher_notes": "EXISTENCE/CLASSIFICATION CONFIRMED, independent of GEM. This is a real, FERC-authorized compressor-station uprate on Florida Gas Transmission Company, LLC's (FGT) interstate transmission system, docket CP23-492-000: FGT filed the NGA Sec. 7(c) certificate application on 2023-06-02 (confirmed verbatim by the Federal Register notice at federalregister.gov/documents/2023/08/16/2023-17612, which names the docket and 'South Louisiana Project' by name) and FERC authorized construction in an order issued April 2024 (per web search of ferc.gov meeting summaries; the order PDF itself 403s to scripted fetches -- ferc.gov's root and /news-events/ paths are Cloudflare-gated, consistent with this batch's MEASURED CONDITIONS note). Independently, EIP's Oil & Gas Watch nonprofit database (oilandgaswatch.org/pipeline/6491, id 6491) carries a detailed record for 'South Louisiana Project' matching FGT/CP23-492: same project description (uprate CS7.5 St. Landry Parish LA, add cooling at CS8 East Baton Rouge LA, new unit at CS9 Washington Parish LA, new unit at CS10 Perry County MS), AdditionalCapacity 96.5 MMscf/d, OperatingStatus 'Operating', last QAQC'd 2025-12-17. The two sources are independent origins (FERC/Federal Register vs. EIP, an environmental-advocacy nonprofit unaffiliated with FERC or FGT) and agree. NOTE ON THE REF: oilandgaswatch.org/pipeline/6491 is a JS single-page app -- curl/url_verifier only sees an empty shell, which is why the worklist's existing_ref_checks show 'value not found' / 'name not found' on every HAS_REF unit citing it. The page's own client-side code calls a public JSON endpoint (https://oilandgaswatch.org/api/01-01_PIPELINES/data/6491) to render itself; I fetched that endpoint directly and it returns the full record verbatim (pipeline_name, capacity, cost, dates, status, states all present as plain JSON). I am treating the human page as correctly cited (hand-confirmed per the verifier's own script-block caveat) rather than dropping a ref that a JS-blind check couldn't read. CLASSIFICATION: PipelineType=transmission and Fuel=Gas both confirmed -- FGT is an NGA-certificated interstate gas transmission system; this project only adds compression capacity (no new pipe: EIP Miles=0, PipelineDiameterinches=null), which is why GEM correctly carries LengthKnown=0/Diameter blank for this row (P5548 is one of the ten LengthKnown=0 compression-scope rows the orchestrator already flagged -- confirmed, not a defect). DUPLICATE CHECK: not the same project as the EIA-tracked 'South Central Louisiana' expansion (docket CP25-30, $43.4M, 75 MMcf/d, in-service 2027, still in Construction as of the Aug-2026 EIA release) that this row's prompt pre-matched from the EIA workbook -- that is a SEPARATE, later FGT compressor project, filed 2025-01, per a second Federal Register search (federalregister.gov/documents/2025/01/07/2025-00090 and 2025/02/06/2025-02279) and per this batch's own duplicate note that P7824 'FGT South Central Louisiana' (proposed, batch A1) is a different project with a similar name -- P7824 is that EIA row, not this one. See cross_row_leads. Also not the same as sibling P4059 (FGT Mobile County Project, Alabama) -- different docket/scope."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "add Mississippi to the project's location -- the project is not Louisiana-only",
+   "contested": {
+    "EndState/Province": "Mississippi (Perry County -- CS10 new-unit install); the project also spans Louisiana (CS7.5 St. Landry Parish, CS8 East Baton Rouge Parish, CS9 Washington Parish)"
+   },
+   "researcher_notes": "The sheet records StartState/Province=Louisiana and EndState/Province=Louisiana (both, with country=United States) for a project that FERC's own Federal Register notice describes as facilities 'in Louisiana and Mississippi': three compressor stations in Louisiana (St. Landry, East Baton Rouge, Washington parishes) and one, CS10, in Perry County, Mississippi (new 15,900 hp turbine). EIP's database independently carries AffectedStates='LA, MS' for the same project. This is a compression-only expansion (no route/geometry -- P5548.geojson in the routes repo is an empty placeholder, correctly so), so there is no directional start/end to draw on; I'm not confident which state GEM's schema intends as 'End' for a multi-site compressor project like this, so I have not proposed a specific value swap, only flagged that 'Louisiana' alone under-states the project's footprint. tier: high (2 independent sources -- federalregister.gov 2023-17612 and oilandgaswatch.org/pipeline/6491 -- both name the Mississippi facility). independent: true.",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "update SegmentCost to the revised $77.5M figure (with the discrepancy noted, not silently overwritten)",
+   "contested": {
+    "SegmentCost": "77500000.00"
+   },
+   "researcher_notes": "The sheet's SegmentCost is 74,900,000 USD. EIP's database (oilandgaswatch.org/pipeline/6491) shows Costmillions=77.5 as of a 2025-12-17 QAQC pass, with its own ResearchNotes stating the figure was 'updated to $77.5M (pg 4 of 10/1/25 cost comparison statement)' -- i.e., FGT filed a compliance cost-comparison statement at FERC on 2025-10-01 that revised the project cost upward from the original application estimate. GEM's $74,900,000 is very likely that original 2023 application estimate (application PDF pg. 10, per EIP's notes), now superseded. I could not independently pull the FERC cost-comparison filing itself this session (elibrary.ferc.gov requires a docket-level query interface I did not navigate for a single filing, and ferc.gov's other paths 403/Cloudflare-gate scripted fetches), so this is single-sourced at the more recent figure -- tier medium. Flagging as a spec concern rather than silently changing the value, per the standing rule that a reconciliation/spec finding is a candidate, not an applied edit.",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
     {
-      "segment_name": "South Louisiana Project",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "no action on existence/classification; see the separate attribution and spec concerns below for two data points that need updating",
-      "contested": {},
-      "researcher_notes": "EXISTENCE/CLASSIFICATION CONFIRMED, independent of GEM. This is a real, FERC-authorized compressor-station uprate on Florida Gas Transmission Company, LLC's (FGT) interstate transmission system, docket CP23-492-000: FGT filed the NGA Sec. 7(c) certificate application on 2023-06-02 (confirmed verbatim by the Federal Register notice at federalregister.gov/documents/2023/08/16/2023-17612, which names the docket and 'South Louisiana Project' by name) and FERC authorized construction in an order issued April 2024 (per web search of ferc.gov meeting summaries; the order PDF itself 403s to scripted fetches -- ferc.gov's root and /news-events/ paths are Cloudflare-gated, consistent with this batch's MEASURED CONDITIONS note). Independently, EIP's Oil & Gas Watch nonprofit database (oilandgaswatch.org/pipeline/6491, id 6491) carries a detailed record for 'South Louisiana Project' matching FGT/CP23-492: same project description (uprate CS7.5 St. Landry Parish LA, add cooling at CS8 East Baton Rouge LA, new unit at CS9 Washington Parish LA, new unit at CS10 Perry County MS), AdditionalCapacity 96.5 MMscf/d, OperatingStatus 'Operating', last QAQC'd 2025-12-17. The two sources are independent origins (FERC/Federal Register vs. EIP, an environmental-advocacy nonprofit unaffiliated with FERC or FGT) and agree. NOTE ON THE REF: oilandgaswatch.org/pipeline/6491 is a JS single-page app -- curl/url_verifier only sees an empty shell, which is why the worklist's existing_ref_checks show 'value not found' / 'name not found' on every HAS_REF unit citing it. The page's own client-side code calls a public JSON endpoint (https://oilandgaswatch.org/api/01-01_PIPELINES/data/6491) to render itself; I fetched that endpoint directly and it returns the full record verbatim (pipeline_name, capacity, cost, dates, status, states all present as plain JSON). I am treating the human page as correctly cited (hand-confirmed per the verifier's own script-block caveat) rather than dropping a ref that a JS-blind check couldn't read. CLASSIFICATION: PipelineType=transmission and Fuel=Gas both confirmed -- FGT is an NGA-certificated interstate gas transmission system; this project only adds compression capacity (no new pipe: EIP Miles=0, PipelineDiameterinches=null), which is why GEM correctly carries LengthKnown=0/Diameter blank for this row (P5548 is one of the ten LengthKnown=0 compression-scope rows the orchestrator already flagged -- confirmed, not a defect). DUPLICATE CHECK: not the same project as the EIA-tracked 'South Central Louisiana' expansion (docket CP25-30, $43.4M, 75 MMcf/d, in-service 2027, still in Construction as of the Aug-2026 EIA release) that this row's prompt pre-matched from the EIA workbook -- that is a SEPARATE, later FGT compressor project, filed 2025-01, per a second Federal Register search (federalregister.gov/documents/2025/01/07/2025-00090 and 2025/02/06/2025-02279) and per this batch's own duplicate note that P7824 'FGT South Central Louisiana' (proposed, batch A1) is a different project with a similar name -- P7824 is that EIA row, not this one. See cross_row_leads. Also not the same as sibling P4059 (FGT Mobile County Project, Alabama) -- different docket/scope."
-    },
-    {
-      "segment_name": "South Louisiana Project",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "add Mississippi to the project's location -- the project is not Louisiana-only",
-      "contested": {"EndState/Province": "Mississippi (Perry County -- CS10 new-unit install); the project also spans Louisiana (CS7.5 St. Landry Parish, CS8 East Baton Rouge Parish, CS9 Washington Parish)"},
-      "researcher_notes": "The sheet records StartState/Province=Louisiana and EndState/Province=Louisiana (both, with country=United States) for a project that FERC's own Federal Register notice describes as facilities 'in Louisiana and Mississippi': three compressor stations in Louisiana (St. Landry, East Baton Rouge, Washington parishes) and one, CS10, in Perry County, Mississippi (new 15,900 hp turbine). EIP's database independently carries AffectedStates='LA, MS' for the same project. This is a compression-only expansion (no route/geometry -- P5548.geojson in the routes repo is an empty placeholder, correctly so), so there is no directional start/end to draw on; I'm not confident which state GEM's schema intends as 'End' for a multi-site compressor project like this, so I have not proposed a specific value swap, only flagged that 'Louisiana' alone under-states the project's footprint. tier: high (2 independent sources -- federalregister.gov 2023-17612 and oilandgaswatch.org/pipeline/6491 -- both name the Mississippi facility). independent: true.",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "https://oilandgaswatch.org/pipeline/6491"],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "South Louisiana Project",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "update SegmentCost to the revised $77.5M figure (with the discrepancy noted, not silently overwritten)",
-      "contested": {"SegmentCost": "77500000.00"},
-      "researcher_notes": "The sheet's SegmentCost is 74,900,000 USD. EIP's database (oilandgaswatch.org/pipeline/6491) shows Costmillions=77.5 as of a 2025-12-17 QAQC pass, with its own ResearchNotes stating the figure was 'updated to $77.5M (pg 4 of 10/1/25 cost comparison statement)' -- i.e., FGT filed a compliance cost-comparison statement at FERC on 2025-10-01 that revised the project cost upward from the original application estimate. GEM's $74,900,000 is very likely that original 2023 application estimate (application PDF pg. 10, per EIP's notes), now superseded. I could not independently pull the FERC cost-comparison filing itself this session (elibrary.ferc.gov requires a docket-level query interface I did not navigate for a single filing, and ferc.gov's other paths 403/Cloudflare-gate scripted fetches), so this is single-sourced at the more recent figure -- tier medium. Flagging as a spec concern rather than silently changing the value, per the standing rule that a reconciliation/spec finding is a candidate, not an applied edit.",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491"],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Page is a JS SPA (curl sees only an empty shell); its backing API https://oilandgaswatch.org/api/01-01_PIPELINES/data/6491 returns pipeline_name='South Louisiana Project', OperatingStatus='Operating', ConstructionStatusLastCheckedorUpdatedbyEIP=2025-12-17 (newer than the sheet's 2025-10-14 LastUpdated) -- hand-confirmed since the automated substring check can't see JS-rendered content."
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIP's 2025-12-17 QAQC pass confirms Operating, consistent with the sheet. Second source searched: FERC's own April-2024-order/news pages (ferc.gov/news-events/news/...) 403 to scripted fetches (Cloudflare), and a Federal Register search for a subsequent commencement-of-service or abandonment notice under CP23-492 found none -- absence is expected for a project that simply went into service without further FERC notice-and-comment action. Single strong source, so tier medium."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491",
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"
+   ],
+   "verifications": [
     {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Status [ref]",
-      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"},
-      "primary_value": "operating",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [{"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-        "note": "Page is a JS SPA (curl sees only an empty shell); its backing API https://oilandgaswatch.org/api/01-01_PIPELINES/data/6491 returns pipeline_name='South Louisiana Project', OperatingStatus='Operating', ConstructionStatusLastCheckedorUpdatedbyEIP=2025-12-17 (newer than the sheet's 2025-10-14 LastUpdated) -- hand-confirmed since the automated substring check can't see JS-rendered content."}],
-      "class_out": "REVERIFIED", "tier": "medium", "independent": false, "source_language": "en",
-      "researcher_notes": "EIP's 2025-12-17 QAQC pass confirms Operating, consistent with the sheet. Second source searched: FERC's own April-2024-order/news pages (ferc.gov/news-events/news/...) 403 to scripted fetches (Cloudflare), and a Federal Register search for a subsequent commencement-of-service or abandonment notice under CP23-492 found none -- absence is expected for a project that simply went into service without further FERC notice-and-comment action. Single strong source, so tier medium."
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API record: ProductType='Natural Gas', IndustrySector='Natural Gas'."
     },
     {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"},
-      "primary_value": "Gas",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491", "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"],
-      "verifications": [
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-         "note": "API record: ProductType='Natural Gas', IndustrySector='Natural Gas'."},
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "url_verifier OK; text describes 'natural gas pipeline facilities' and 'natural gas firm transportation capacity' for the South Louisiana Project."}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Two independent origins (FERC/Federal Register vs. EIP nonprofit database) both confirm natural gas."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "PipelineType [ref]",
-      "value_cols": ["PipelineType"], "primary_value_col": "PipelineType", "values": {"PipelineType": "transmission"},
-      "primary_value": "transmission",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491", "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"],
-      "verifications": [
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-         "note": "API record classifies this as an Expansion project on FGT's certificated system."},
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "Notice is issued under FGT's NGA Sec. 7(c) certificate -- the interstate-transmission authority; this project raises certificated capacity/throughput at existing compressor stations on that transmission system, not a gathering or distribution line."}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Correctly classified as transmission (compression uprate on FGT's interstate mainline, not gathering/process/feeder)."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
-      "values": {"ProposalYear": "2023", "ProposalMonth": "6"}, "primary_value": "2023",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "'On June 2, 2023, Florida Gas Transmission Company, LLC (FGT) filed an application in Docket No. CP23-492-000...' -- states the exact filing date."},
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-         "note": "EIP ResearchNotes independently states 'On June 2, 2023, Florida Gas Transmission Company submitted an application to the Federal Energy Regulatory Commission...'"}
-      ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Blank ProposalYear/Month filled from the certificate-application filing date, corroborated by two independent origins."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
-      "values": {"ConstructionYear": "2024"}, "primary_value": "2024",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [{"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-        "note": "API: ActualConstructionStartDate=2024-06-27; EIP ResearchNotes cite 'Construction began on 6/21/2024 (FERC 6/20/2024 notice to proceed with construction)'."}],
-      "class_out": "REVERIFIED", "tier": "medium", "independent": false, "source_language": "en",
-      "researcher_notes": "ConstructionYear=2024 confirmed at the month level (late June 2024) by EIP, consistent with a FERC order authorizing construction issued April 2024 (found via web search of ferc.gov meeting summaries, but the order text itself 403s to scripted fetches this session, so I could not cite it directly). Second source searched and not found citable; single strong source, tier medium."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-      "primary_value_col": "StartYear1", "values": {"StartYear1": "2025"}, "primary_value": "2025",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [{"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-        "note": "API: ActualOperatingYear=2025, ActualIn_ServiceDate=2025-03-07 (final compressor station, CS8, in service). Two compressor stations (CS9, CS10) reached partial in-service in Dec 2024, and CS7.5 in Feb 2025, per EIP's ResearchNotes -- the sheet's single StartYear1=2025 is the final full-project in-service year and is correct."}],
-      "class_out": "REVERIFIED", "tier": "medium", "independent": false, "source_language": "en",
-      "researcher_notes": "StartYear1=2025 confirmed (final in-service 2025-03-07). Second source searched (FERC commencement-of-service notice) not found citable this session; single strong source, tier medium."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
-      "values": {"Capacity": "96.50", "CapacityUnits": "MMcf/d"}, "primary_value": "96.50",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491", "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"],
-      "verifications": [
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-         "note": "API: AdditionalCapacity=96.5, ProductUnits='MMscf/d' -- exact match."},
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "States the project 'would provide 100 billion British thermal units per day of additional natural gas firm transportation capacity' (100,000 Dth/d); at typical pipeline-gas heat content (~1,030-1,035 Btu/scf) that converts to roughly 96,600-97,100 Mcf/d -- agrees with the sheet's 96.5 MMcf/d within normal Btu/Mcf rounding, not a conflict."}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "IMPORTANT: this row's prompt pre-matched EIA 'South Central Louisiana' (75 MMcf/d, docket CP25-30) as a capacity comparator and flagged 96.5 vs 75 as 'differs'. That EIA row is a DIFFERENT, later FGT project (see cross_row_leads / validity note 1) -- it is not evidence against this row's 96.5 MMcf/d, which is independently confirmed by EIP and by unit-converting FERC's own 100,000 Dth/d figure for THIS docket (CP23-492)."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
-      "researcher_notes": "Searched the Federal Register scoping notice and EIP's database record; neither states an MAOP/operating pressure for this compression-only uprate. The full 33 MB FERC application PDF (hosted by EIP at supabase.co, linked from the pipeline_name record) was not opened to search for a pressure figure -- out of scope for this pass given its size; flagging as unresolved rather than guessing."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "0.00", "LengthKnownUnits": "mi"}, "primary_value": "0.00",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491", "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"],
-      "verifications": [
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true, "note": "API: Miles=0."},
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "Project consists only of turbine/cooling-unit modifications at four existing compressor stations -- no new pipeline segment described."}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "LengthKnown=0 confirmed correct -- this is a compression-only expansion (no new pipe), matching the batch guidance that P5548 is one of the LengthKnown=0 compression/meter-scope rows; not a defect to fix."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter", "values": {}, "primary_value": "",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [{"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-        "note": "API: PipelineDiameterinches=null -- EIP itself carries no diameter for this project."}],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
-      "researcher_notes": "Blank Diameter is CORRECT, not unresearched -- this is a compression-only expansion with no new pipe segment (LengthKnown=0), so there is no diameter to record. Leaving UNRESOLVED per the fill taxonomy since I'm not proposing a value, but this is a confirmed-blank, not a gap."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
-      "researcher_notes": "No source states an upstream gas-source/basin attribution for this compressor uprate on an existing interstate transmission system (as opposed to a new gathering line tied to specific wells/fields); checked the Federal Register notice and EIP's record. Leaving blank rather than guessing."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea",
-                     "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
-      "primary_value_col": "StartLocation",
-      "values": {"StartState/Province": "Louisiana", "StartCountryOrArea": "United States",
-                 "EndState/Province": "Louisiana", "EndCountryOrArea": "United States"},
-      "primary_value": "Louisiana",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491", "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"],
-      "verifications": [
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-         "note": "API: AffectedStates='LA, MS' -- confirms Louisiana as recorded, but also names Mississippi (see the attribution concern in validity[])."},
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "Facilities in St. Landry, East Baton Rouge and Washington Parishes, Louisiana, and Perry County, Mississippi."}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Louisiana is confirmed correct for both cells (3 of 4 compressor stations, and the applicant's primary jurisdiction), but the project is not Louisiana-only -- see the attribution concern in validity[] recommending Mississippi be added rather than a value swap, since there's no clear GEM convention for which end of a compression-only, no-route project should carry the out-of-state site."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
-      "values": {"SegmentCost": "77500000.00", "SegmentCostUnits": "USD"}, "primary_value": "77500000.00",
-      "proposed_refs": ["https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [{"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-        "note": "API: Costmillions=77.5; EIP ResearchNotes: 'Cost updated to $77.5M (pg 4 of 10/1/25 cost comparison statement)', filed at FERC."}],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
-      "researcher_notes": "Sheet's recorded 74,900,000 does not match the current, more recent figure -- see the spec concern in validity[]. Proposing the updated $77.5M value here rather than leaving the stale $74.9M uncontested; single source (EIP, citing a FERC compliance filing I could not pull directly this session), tier medium."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "oo_sheet_row": 4336, "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value_col": "Operator", "values": {"Operator": "Florida Gas Transmission Co LLC"},
-      "primary_value": "Florida Gas Transmission Co LLC",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "'Florida Gas Transmission Company, LLC (FGT)' is the certificate applicant/operator of the pipeline facilities."},
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true,
-         "note": "EIP's record is for FGT's system throughout."}
-      ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Blank Operator filled with the entity name already used for Owner1 on this row (Florida Gas Transmission Co LLC), matching entity_lookup convention rather than introducing a second spelling of the same company."
-    },
-    {
-      "segment_name": "South Louisiana Project", "sheet_row": 3065, "oo_sheet_row": 4336, "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%",
-                     "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%",
-                     "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
-      "primary_value_col": "Owner1",
-      "values": {"Owner1": "Florida Gas Transmission Co LLC", "Owner1%": "100.00%"},
-      "primary_value": "Florida Gas Transmission Co LLC",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "https://oilandgaswatch.org/pipeline/6491"],
-      "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental", "ok": true, "contains_value": true, "name_found": true,
-         "note": "FGT is the certificate holder/asset owner of the pipeline facilities being modified."},
-        {"url": "https://oilandgaswatch.org/pipeline/6491", "ok": true, "contains_value": true, "name_found": true, "note": "EIP's record is for FGT's system."}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Owner1=Florida Gas Transmission Co LLC 100% confirmed as the direct asset-owning/certificate-holder entity. Context (not a correction): FGT LLC is itself a 100%-owned subsidiary of Citrus Corp, a 50/50 joint venture of Kinder Morgan and Energy Transfer (per a web search of Energy Transfer's investor-relations press releases -- I was not able to load that URL live this session, ReadTimeout, so I am not citing it as a ref, only noting it as background); GEM's convention of recording the direct asset-holding operating company as Owner1 is consistent with how the rest of the FGT system rows in this tracker are modeled, so I am not flagging this as an attribution concern."
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK; text describes 'natural gas pipeline facilities' and 'natural gas firm transportation capacity' for the South Louisiana Project."
     }
-  ],
-  "cross_row_leads": [
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent origins (FERC/Federal Register vs. EIP nonprofit database) both confirm natural gas."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491",
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"
+   ],
+   "verifications": [
     {
-      "project_id": "P7824",
-      "url": "https://www.federalregister.gov/documents/2025/01/07/2025-00090/florida-gas-transmission-llc-notice-of-application-and-establishing-intervention-deadline",
-      "facts": "This row's prompt pre-matched EIA's 'South Central Louisiana' project (docket CP25-30, $43.4M, 75 MMcf/d additional capacity, in-service 2027, status progressing Applied(2025-01)->Approved(2026-05)->Construction(2026-08)) as an EIA candidate for P5548. It is NOT P5548 -- it is a separate, later FGT compressor project (filed 2025-01-07, uprating CS7.5 St. Landry Parish and adding a new unit at CS8 East Baton Rouge Parish) that this batch's own duplicate note identifies as P7824 'FGT South Central Louisiana' (proposed, batch A1). Route the EIA capacity/cost/status/in-service figures to P7824, not to this row."
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API record classifies this as an Expansion project on FGT's certificated system."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Notice is issued under FGT's NGA Sec. 7(c) certificate -- the interstate-transmission authority; this project raises certificated capacity/throughput at existing compressor stations on that transmission system, not a gathering or distribution line."
     }
-  ],
-  "summary": "P5548 confirmed real, correctly classified, and matched to FERC docket CP23-492 (South Louisiana Project) via 2 independent sources; staged REVERIFIED/REFS_ADDED on all 15 units (2 UNRESOLVED: Pressure, FuelSource -- both confirmed-appropriately-blank or genuinely not found, not skipped). Flagged 2 concerns: attribution (project also spans Perry County, MS, not Louisiana-only) and spec (SegmentCost stale at $74.9M vs a FERC-filed $77.5M revision). Also flagged that this row's EIA pre-match belongs to sibling P7824, not P5548."
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Correctly classified as transmission (compression uprate on FGT's interstate mainline, not gathering/process/feeder)."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2023",
+    "ProposalMonth": "6"
+   },
+   "primary_value": "2023",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'On June 2, 2023, Florida Gas Transmission Company, LLC (FGT) filed an application in Docket No. CP23-492-000...' -- states the exact filing date."
+    },
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIP ResearchNotes independently states 'On June 2, 2023, Florida Gas Transmission Company submitted an application to the Federal Energy Regulatory Commission...'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Blank ProposalYear/Month filled from the certificate-application filing date, corroborated by two independent origins."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2024"
+   },
+   "primary_value": "2024",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API: ActualConstructionStartDate=2024-06-27; EIP ResearchNotes cite 'Construction began on 6/21/2024 (FERC 6/20/2024 notice to proceed with construction)'."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "ConstructionYear=2024 confirmed at the month level (late June 2024) by EIP, consistent with a FERC order authorizing construction issued April 2024 (found via web search of ferc.gov meeting summaries, but the order text itself 403s to scripted fetches this session, so I could not cite it directly). Second source searched and not found citable; single strong source, tier medium."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2025"
+   },
+   "primary_value": "2025",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API: ActualOperatingYear=2025, ActualIn_ServiceDate=2025-03-07 (final compressor station, CS8, in service). Two compressor stations (CS9, CS10) reached partial in-service in Dec 2024, and CS7.5 in Feb 2025, per EIP's ResearchNotes -- the sheet's single StartYear1=2025 is the final full-project in-service year and is correct."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "StartYear1=2025 confirmed (final in-service 2025-03-07). Second source searched (FERC commencement-of-service notice) not found citable this session; single strong source, tier medium."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "96.50",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "96.50",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491",
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"
+   ],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API: AdditionalCapacity=96.5, ProductUnits='MMscf/d' -- exact match."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "States the project 'would provide 100 billion British thermal units per day of additional natural gas firm transportation capacity' (100,000 Dth/d); at typical pipeline-gas heat content (~1,030-1,035 Btu/scf) that converts to roughly 96,600-97,100 Mcf/d -- agrees with the sheet's 96.5 MMcf/d within normal Btu/Mcf rounding, not a conflict."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "IMPORTANT: this row's prompt pre-matched EIA 'South Central Louisiana' (75 MMcf/d, docket CP25-30) as a capacity comparator and flagged 96.5 vs 75 as 'differs'. That EIA row is a DIFFERENT, later FGT project (see cross_row_leads / validity note 1) -- it is not evidence against this row's 96.5 MMcf/d, which is independently confirmed by EIP and by unit-converting FERC's own 100,000 Dth/d figure for THIS docket (CP23-492)."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched the Federal Register scoping notice and EIP's database record; neither states an MAOP/operating pressure for this compression-only uprate. The full 33 MB FERC application PDF (hosted by EIP at supabase.co, linked from the pipeline_name record) was not opened to search for a pressure figure -- out of scope for this pass given its size; flagging as unresolved rather than guessing."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "0.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "0.00",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491",
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"
+   ],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API: Miles=0."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project consists only of turbine/cooling-unit modifications at four existing compressor stations -- no new pipeline segment described."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "LengthKnown=0 confirmed correct -- this is a compression-only expansion (no new pipe), matching the batch guidance that P5548 is one of the LengthKnown=0 compression/meter-scope rows; not a defect to fix."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "API: PipelineDiameterinches=null -- EIP itself carries no diameter for this project."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Blank Diameter is CORRECT, not unresearched -- this is a compression-only expansion with no new pipe segment (LengthKnown=0), so there is no diameter to record. Leaving UNRESOLVED per the fill taxonomy since I'm not proposing a value, but this is a confirmed-blank, not a gap. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://oilandgaswatch.org/pipeline/6491); 1 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source states an upstream gas-source/basin attribution for this compressor uprate on an existing interstate transmission system (as opposed to a new gathering line tied to specific wells/fields); checked the Federal Register notice and EIP's record. Leaving blank rather than guessing."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartState/Province": "Louisiana",
+    "StartCountryOrArea": "United States",
+    "EndState/Province": "Louisiana",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Louisiana",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491",
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental"
+   ],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API: AffectedStates='LA, MS' -- confirms Louisiana as recorded, but also names Mississippi (see the attribution concern in validity[])."
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Facilities in St. Landry, East Baton Rouge and Washington Parishes, Louisiana, and Perry County, Mississippi."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Louisiana is confirmed correct for both cells (3 of 4 compressor stations, and the applicant's primary jurisdiction), but the project is not Louisiana-only -- see the attribution concern in validity[] recommending Mississippi be added rather than a value swap, since there's no clear GEM convention for which end of a compression-only, no-route project should carry the out-of-state site."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "77500000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "77500000.00",
+   "proposed_refs": [
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "API: Costmillions=77.5; EIP ResearchNotes: 'Cost updated to $77.5M (pg 4 of 10/1/25 cost comparison statement)', filed at FERC."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Sheet's recorded 74,900,000 does not match the current, more recent figure -- see the spec concern in validity[]. Proposing the updated $77.5M value here rather than leaving the stale $74.9M uncontested; single source (EIP, citing a FERC compliance filing I could not pull directly this session), tier medium."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "oo_sheet_row": 4336,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Florida Gas Transmission Co LLC"
+   },
+   "primary_value": "Florida Gas Transmission Co LLC",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Florida Gas Transmission Company, LLC (FGT)' is the certificate applicant/operator of the pipeline facilities."
+    },
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIP's record is for FGT's system throughout."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Blank Operator filled with the entity name already used for Owner1 on this row (Florida Gas Transmission Co LLC), matching entity_lookup convention rather than introducing a second spelling of the same company."
+  },
+  {
+   "segment_name": "South Louisiana Project",
+   "sheet_row": 3065,
+   "oo_sheet_row": 4336,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Florida Gas Transmission Co LLC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Florida Gas Transmission Co LLC",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+    "https://oilandgaswatch.org/pipeline/6491"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2023/08/16/2023-17612/florida-gas-transmission-company-llc-notice-of-schedule-for-the-preparation-of-an-environmental",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FGT is the certificate holder/asset owner of the pipeline facilities being modified."
+    },
+    {
+     "url": "https://oilandgaswatch.org/pipeline/6491",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIP's record is for FGT's system."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Owner1=Florida Gas Transmission Co LLC 100% confirmed as the direct asset-owning/certificate-holder entity. Context (not a correction): FGT LLC is itself a 100%-owned subsidiary of Citrus Corp, a 50/50 joint venture of Kinder Morgan and Energy Transfer (per a web search of Energy Transfer's investor-relations press releases -- I was not able to load that URL live this session, ReadTimeout, so I am not citing it as a ref, only noting it as background); GEM's convention of recording the direct asset-holding operating company as Owner1 is consistent with how the rest of the FGT system rows in this tracker are modeled, so I am not flagging this as an attribution concern."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P7824",
+   "url": "https://www.federalregister.gov/documents/2025/01/07/2025-00090/florida-gas-transmission-llc-notice-of-application-and-establishing-intervention-deadline",
+   "facts": "This row's prompt pre-matched EIA's 'South Central Louisiana' project (docket CP25-30, $43.4M, 75 MMcf/d additional capacity, in-service 2027, status progressing Applied(2025-01)->Approved(2026-05)->Construction(2026-08)) as an EIA candidate for P5548. It is NOT P5548 -- it is a separate, later FGT compressor project (filed 2025-01-07, uprating CS7.5 St. Landry Parish and adding a new unit at CS8 East Baton Rouge Parish) that this batch's own duplicate note identifies as P7824 'FGT South Central Louisiana' (proposed, batch A1). Route the EIA capacity/cost/status/in-service figures to P7824, not to this row."
+  }
+ ],
+ "summary": "P5548 confirmed real, correctly classified, and matched to FERC docket CP23-492 (South Louisiana Project) via 2 independent sources; staged REVERIFIED/REFS_ADDED on all 15 units (2 UNRESOLVED: Pressure, FuelSource -- both confirmed-appropriately-blank or genuinely not found, not skipped). Flagged 2 concerns: attribution (project also spans Perry County, MS, not Louisiana-only) and spec (SegmentCost stale at $74.9M vs a FERC-filed $77.5M revision). Also flagged that this row's EIA pre-match belongs to sibling P7824, not P5548."
 }

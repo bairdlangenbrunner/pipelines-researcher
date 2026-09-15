@@ -1,0 +1,683 @@
+{
+  "project_id": "P0212",
+  "pipeline_name": "Maritimes and Northeast Gas Pipeline",
+  "sheet_row": 70,
+  "wiki": "https://www.gem.wiki/Maritimes_and_Northeast_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no edit needed; add the cross-border scope + flow-reversal context to ResearcherNotes",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: real, operating interstate gas transmission pipeline, corroborated across CER (Canada Energy Regulator pipeline profile, apps.cer-rec.gc.ca, section updated Oct 2024), Enbridge's own 'Energy Infrastructure Assets' factsheet PDF, the operator's mnpp.com/US site + FAQ page, offshore-technology.com (GlobalData market-data page), and three Federal Register / PHMSA documents (1996 FERC NOI, 1996 FERC order notice, 2006 PHMSA waiver-request notice). PipelineType=transmission confirmed independently by mnpp.com ('684-mile transmission pipeline system') and offshore-technology.com ('owns and operates transmission pipeline system'). No duplicate risk: no other PID in the US gas roster covers this system. CAVEAT 1 -- CROSS-BORDER SCOPE (orchestrator framing correction): the task brief characterized this row as 'the US portion' of a cross-border system. That is NOT what the sheet records: GEM's own StartLocation/StartCountryOrArea = Goldboro, Nova Scotia, Canada and EndLocation/EndCountryOrArea = Dracut, Massachusetts, United States (confirmed via the live GEM CSV, sheet row 70), and LengthKnown=1432 km / Capacity=830 MMcf/d are WHOLE-SYSTEM figures (Enbridge's factsheet states the identical 1,432 km / '889 miles' total, split as US 552 km + Canada 880 km). So P0212 is the ENTIRE binational M&NP system in one row, not a US-only segment -- there is no companion Canada-only PID on this roster. This is not a data defect (the recorded endpoints and totals are internally consistent and well-sourced), just a correction to how the row should be read; every fill below states explicitly which country/segment each individual source describes so a reviewer is never left assuming a Canada-only or US-only figure covers the whole row. CAVEAT 2 -- FLOW REVERSAL: CER states offshore Nova Scotia gas (ExxonMobil's Sable Offshore Energy Project from late 1999, Encana's Deep Panuke from 2013) supplied the line until production ended in 2018; 'Since 2019, the Maritimes & Northeast Pipeline (M&NP) transports natural gas imported from the U.S. Production may include U.S. basins such as Appalachia or Canada's W[estern Canada]' -- i.e. the physical flow direction reversed (now south-to-north into the Maritimes) even though the pipeline's physical start/end points are unchanged, consistent with mnpp.com/US's own statement that flow 'currently...from south to north as the offshore Nova Scotia gas supply is permanently shut-in.' Per the brief's specific guidance for this row, the start location (Goldboro) is NOT moved despite the reversal -- confirmed correct as recorded. CAVEAT 3 -- minor scope-defined length discrepancy: mnpp.com/US states a '684-mile transmission pipeline system' total, while Enbridge's factsheet states 889 miles (1,432 km) total -- exactly matching the sheet's recorded 1432 km. mnpp.com separately describes a jointly-owned 101-mile 'Joint Facilities' segment (co-owned with Portland Natural Gas Transmission System) and a separate Methuen-to-Beverly MA extension, which are plausibly excluded from the 684-mile figure but included in Enbridge's 889-mile system total; this is treated as a definitional-scope difference, not a material conflict, because the more precise Enbridge figure is independently corroborated component-by-component (CER: Canada-only 878-880 km; offshore-technology.com: US-only 552 km; 878+552=1430, within rounding of 1432). CAPACITY: no source states '830' literally (checked via full-text grep of the Enbridge factsheet PDF); Enbridge states 'approximately 0.8 Bcf/d' aggregate (US 0.8 Bcf/d + Canada 0.5 Bcf/d, which are NOT simply additive since Canada's throughput is now bidirectional/reduced post-2018) -- 830 MMcf/d is within rounding of 0.8 Bcf/d and is treated as REFS_ADDED at medium tier per rule 7 (agreement within rounding), not a material spec concern.",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+        "https://www.mnpp.com/US",
+        "https://www.mnpp.com/US/faqs"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+        "https://www.mnpp.com/US/faqs",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (Python requests/url_verifier get ConnectionError against apps.cer-rec.gc.ca -- a TLS-fingerprint/WAF block, not a dead link; curl with a browser UA returns HTTP 200, 102KB). Page states 'The Maritimes & Northeast Pipeline (M&NP) started operating in 1999' and, in the section updated October 2024, describes current (post-2019) operation transporting imported gas -- status 'operating' as of Oct 2024."
+        },
+        {
+          "url": "https://www.mnpp.com/US/faqs",
+          "ok": false,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier FAILs this URL on a '1999' substring check even though the literal phrase is on the page (hand-confirmed via curl with a browser UA: 'Maritimes & Northeast Pipeline has been operating safely, efficiently, and without incident since being placed into service in 1999'). Page carries a 2026 copyright notice, i.e. dated current."
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge factsheet lists Maritimes & Northeast Pipeline status as 'Operational'."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (CER) re-verified live via curl (Python-based tooling connection-blocked, see verification note) and corroborated by two independent operator/company sources (mnpp.com/faqs, Enbridge factsheet), all dated current (2024-2026)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (see Status unit for the connection-block explanation). Page's pipeline-attributes table lists 'Transported commodity: Natural gas'."
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factsheet lists 'Products transported: Natural gas' for Maritimes & Northeast Pipeline."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref re-verified plus one independent corroborating source; both name the commodity as natural gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.mnpp.com/US",
+        "https://www.offshore-technology.com/marketdata/maritimes-northeast-the-us-section-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.mnpp.com/US",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page states 'Maritimes & Northeast Pipeline...is a 684-mile transmission pipeline system.'"
+        },
+        {
+          "url": "https://www.offshore-technology.com/marketdata/maritimes-northeast-the-us-section-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent GlobalData market-data page: 'The company owns and operates transmission pipeline system to transport natural gas' re Maritimes & Northeast (the US Section)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (mnpp.com) re-verified with an exact 'transmission' match, plus one independent second source (offshore-technology.com) making the same classification."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "1996"
+      },
+      "primary_value": "1996",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-1996-05-30/html/96-13485.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-1996-05-30/html/96-13485.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Notice of Intent to Prepare an EIS, Docket CP96-178-000, dated May 23, 1996 (Federal Register Vol. 61 No. 105): 'Maritimes & Northeast Pipeline, L.L.C.'s application was filed with the Commission under Section 7 of the Natural Gas Act...M&NP wants to build a new natural gas transmission system in Massachusetts, New Hampshire, and southern Maine.' Confirms the project's FERC application/proposal was on file by May 1996 (Phase I docket)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ProposalYear=1996 sourced to the earliest-dated FERC filing found for the Maritimes Project (Phase I, docket CP96-178). ProposalMonth left blank -- the NOI (May 1996) post-dates the actual application filing by an unstated interval and I could not pin an exact application month; searched FERC eLibrary docket search and Federal Register archive for an earlier CP96-178 filing notice without finding one. Note the companion Phase II docket (CP96-809/810) was filed later in 1996 (see Construction unit) -- both are part of the same overall 1996 proposal wave for this system, so a single ProposalYear=1996 is defensible for the whole row. TIER: single origin (U.S. GPO/Federal Register) -- medium, not high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1998"
+      },
+      "primary_value": "1998",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-1996-10-18/html/96-26768.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-1996-10-18/html/96-26768.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC notice, Docket Nos. CP96-809-000/CP96-810-000, filed Sept 23, 1996 (Federal Register Vol. 61 No. 202): describes a staged construction schedule for the mainline/laterals -- '42.1 miles...would be constructed in 1998 (cost about $63 million), and the remainder...in 1999 (cost about $341 million)'. Consistent with the system's actual Nov-1998 (Phase I) and Dec-1999 (Phase II/full system) in-service dates (see Start unit)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ConstructionYear=1998 sourced to FERC's 1996 filing describing the first construction stage (42.1 mi) as scheduled for 1998, corroborated indirectly by the Phase I facilities' certificated in-service date of November 1, 1998 (Federal Register, Sept. 4, 1998 notice, docket CP96-178-007) which implies construction was largely complete by then. Single primary-source year (no second document independently states a construction-START year); searched FERC eLibrary and Federal Register archive for a separate notice-to-proceed or construction-commencement notice without finding one. ConstructionMonth left blank -- not stated in any source found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1999"
+      },
+      "primary_value": "1999",
+      "proposed_refs": [
+        "https://www.mnpp.com/US",
+        "https://www.oilandgasonline.com/doc/nova-scotia-gets-natural-gas-0002",
+        "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.mnpp.com/US",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page states 'In December 1999, a major energy project...' re the pipeline entering service."
+        },
+        {
+          "url": "https://www.oilandgasonline.com/doc/nova-scotia-gets-natural-gas-0002",
+          "ok": false,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier FAILs on a '1999' substring check even though the phrase is present (hand-confirmed via curl with a browser UA): 'M&NP has been delivering Sable gas to US markets since Dec. 31, 1999.' Article dated Dec 18, 2000, by C. Stevenson. NOTE: the article's separate mention of construction beginning Oct. 9, 2000 refers to an UNRELATED Sempra local-distribution project in Nova Scotia, not M&NP's own transmission pipeline -- not conflated here."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA notice (Docket PHMSA-2006-23448, Federal Register Vol. 71 No. 55, March 22, 2006): 'M&N placed its pipeline in service on December 1, 1999.'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (mnpp.com) re-verified ('December 1999') plus two independent corroborating sources: a contemporaneous trade-press article (Dec. 31, 1999 delivery start) and a PHMSA/DOT federal notice (December 1, 1999 in-service date). All three agree on month=December, year=1999; the day varies by one (Dec. 1 per PHMSA vs Dec. 31 per the press article) but this is plausibly the difference between 'placed in service' (pipeline commissioning) and 'first delivery to US markets' -- not a material conflict. Separately, CER states M&NP 'started operating in 1999' (Status unit) as a fourth corroborating source. Note the Phase I facilities (Dracut MA-Wells ME) had an earlier certificated in-service date of November 1, 1998 (FR notice, Sept. 4, 1998, docket CP96-178-007) -- this is a staged sub-facility date, not the recorded StartYear1, which correctly reflects the full system's Sable-gas in-service date."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "830.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "830.00",
+      "proposed_refs": [
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factsheet (existing ref) states capacity 'Approx. 0.8 Bcf/d' for the US portion (separately '0.5 Bcf/d' for the Canada portion). No page states '830' literally (checked via full-text grep of the extracted PDF text)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref re-verified; recorded 830 MMcf/d agrees WITHIN ROUNDING with Enbridge's stated '0.8 Bcf/d' (US-side capacity) per rule 7 -- not a material conflict, since 830 MMcf/d rounds to 0.8 Bcf/d at one significant figure. This appears to be a US-segment-specific figure (Enbridge separately states Canada capacity as ~0.5 Bcf/d, and CER independently states Canada capacity as 'Approximately 0.5 Bcf/d' -- so the recorded 830 MMcf/d describes the US portion's capacity, not a whole-system aggregate, even though the row spans the whole system; flagged here per the brief's cross-border instruction). Searched for a second, independent source stating a precise MMcf/d figure (CER page, offshore-technology.com, mnpp.com, EIA pipeline-projects related entries) and found none stating a system capacity more precise than CER's own rounded '0.5 Bcf/d' Canada figure -- so this fill is single-origin (Enbridge) and held at medium tier rather than high."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {
+        "Pressure": "1440",
+        "PressureUnits": "psig"
+      },
+      "primary_value": "1440",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA notice (Docket PHMSA-2006-23448, FR Vol. 71 No. 55, March 22, 2006), describing the US mainline (Baileyville ME compressor station to Westbrook ME): 'The current maximum allowable operating pressure (MAOP) of the mainline system is 1440 pounds per square inch gauge (psig).'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MAOP=1440 psig sourced to a PHMSA/DOT federal notice explicitly describing the US mainline system. This is a US-segment-specific figure (PHMSA regulates only the US portion; the notice explicitly frames the waiver request as covering 'the U.S. portion of its pipeline system'). Searched CER's pipeline profile, Enbridge's factsheet, mnpp.com, and offshore-technology.com for a second, independently-stated MAOP/pressure figure and found none -- single-origin, held at medium tier. No Canada-side MAOP figure was found either, so no whole-system pressure conflict to reconcile."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "1432.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "1432.00",
+      "proposed_refs": [
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+        "https://www.offshore-technology.com/marketdata/maritimes-northeast-the-us-section-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factsheet states whole-system length '889 miles (1,432 km)' -- exact match to the recorded value -- split as US 343 mi/552 km, Canada 546 mi/880 km."
+        },
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (connection-block, see Status unit). Page states 'CER-regulated pipeline length (km): 878 km' for the Canada portion -- consistent (within rounding) with Enbridge's Canada-side 880 km component."
+        },
+        {
+          "url": "https://www.offshore-technology.com/marketdata/maritimes-northeast-the-us-section-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent source states 'The 552km-long Maritimes & Northeast (the US Section) gas pipeline' -- exact match to Enbridge's US-side 552 km component."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Whole-system LengthKnown=1432 km sourced to Enbridge's factsheet, exact match, and independently corroborated component-by-component: CER's Canada-only 878 km + offshore-technology.com's US-only 552 km = 1430 km, within rounding of 1432 km. Note mnpp.com/US separately describes a '684-mile transmission pipeline system' -- a smaller, differently-scoped total (likely mainline only, excluding the jointly-owned 101-mile 'Joint Facilities' segment with Portland Natural Gas Transmission System and a separate Methuen-Beverly MA extension that mnpp.com also describes); this is treated as a definitional-scope discrepancy rather than a conflicting value, since the recorded figure is independently corroborated at the component level as described above (see validity notes)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30, 24",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30, 24",
+      "proposed_refs": [
+        "https://www.mnpp.com/US",
+        "https://www.offshore-technology.com/marketdata/maritimes-northeast-the-us-section-gas-pipeline-the-us/",
+        "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.mnpp.com/US",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page states pipe diameter 'approximately 30″/24″' -- exact match to the recorded '30, 24'."
+        },
+        {
+          "url": "https://www.offshore-technology.com/marketdata/maritimes-northeast-the-us-section-gas-pipeline-the-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent source: 'onshore, gas pipeline with a maximum diameter of 30 inches' (US section) -- corroborates the 30-inch component."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA notice describes the Baileyville-Westbrook, Maine mainline segment as '24-inch diameter, Grade X-70 pipe' -- corroborates the 24-inch component."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (mnpp.com) re-verified with an exact match to both recorded diameters, each independently corroborated by a second source (30-in by offshore-technology.com, 24-in by the PHMSA notice)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Sable Offshore Energy Project"
+      },
+      "primary_value": "",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-1996-05-30/html/96-13485.htm",
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-1996-05-30/html/96-13485.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC NOI (1996): 'The proposed facilities are Phase I of the Maritimes Project, a new high-pressure natural gas pipeline delivery system for the Sable Offshore Energy Project.'"
+        },
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (connection-block, see Status unit). Page states 'ExxonMobil's Sable Offshore Energy Project started producing gas in late 1999...In 2018, Nova Scotia's offshore natural gas production ended...Since 2019, the Maritimes & Northeast Pipeline (M&NP) transports natural gas imported from the U.S.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Reclassified from UNRESOLVED by the orchestrator: rule 4(e) reserves UNRESOLVED for units where NOTHING was found, and two independent origins (the 1996 FERC application via the U.S. Federal Register, and the Canada Energy Regulator pipeline profile) both name the Sable Offshore Energy Project as this system's upstream supply. CURRENCY CAVEAT, which is why this is staged as CONTESTED rather than a clean fill and why the tier is medium: Sable ceased production in 2018 and CER states the line has run in reverse since 2019, importing gas with no single named upstream facility, so the sourced value is the original design source and not the present one. A reviewer should decide between recording the historical source with a note and leaving the cell blank; the flow-reversal finding is carried in this shard's validity record. Leaving this UNRESOLVED rather than filling it, despite finding two independent, well-corroborated sources for the ORIGINAL/design fuel source: both the 1996 FERC application (Sable Offshore Energy Project delivery system) and CER's pipeline profile name 'Sable Offshore Energy Project' (plus Encana's Deep Panuke, from 2013) as the historical upstream supply. The problem is currency, not sourcing: CER explicitly states that supply source stopped in 2018 and since 2019 the pipeline has been running in the reverse direction, importing gas with no single named upstream facility ('may include U.S. basins such as Appalachia or Canada's Western [Canada]'). A FuelSource field is understood on this tracker as naming a specific field/plant/facility feeding the line; entering 'Sable Offshore Energy Project' without heavy qualification would misrepresent the CURRENT (2019-present) supply arrangement, and there is no single current facility name to substitute. Recommend a human decision on whether FuelSource should carry the historical/original value with a caveat, or stay blank -- documenting both well-sourced options here rather than picking one unilaterally.",
+      "contested": {
+        "FuelSource": "Sable Offshore Energy Project"
+      }
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Goldboro",
+        "StartState/Province": "Nova Scotia",
+        "StartCountryOrArea": "Canada",
+        "EndLocation": "Dracut",
+        "EndState/Province": "Massachusetts",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Goldboro",
+      "proposed_refs": [
+        "https://www.mnpp.com/US",
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.mnpp.com/US",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page describes the system route as running from Goldboro, Nova Scotia (near the Sable gas onshore receipt point), through New Brunswick, across the Canada-US border near Baileyville, Maine, through Maine and New Hampshire, and terminating at Dracut, Massachusetts -- exact match to the recorded start/end locations, states, and countries."
+        },
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (connection-block, see Status unit). CER independently identifies Goldboro, Nova Scotia as a point on the M&NP system ('M&NP laterals extend to Point Tupper, Goldboro, Halifax and Saint John'), corroborating Goldboro's identity as part of this system, though CER frames it as a lateral terminus of the CER-regulated (Canada-only) mainline rather than the whole system's start -- consistent with mnpp.com's fuller, whole-system route description."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (mnpp.com) re-verified with an exact match on both endpoints, states/provinces, and countries; CER corroborates Goldboro's identity as a real point on the M&NP system. This confirms the row correctly spans the WHOLE binational system (see the validity entry's Caveat 1) -- the endpoints are NOT a 'US portion' as the task brief framed it."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No clean whole-system cost figure found. FERC's 1996 filing (docket CP96-809/810, Federal Register Vol. 61 No. 202) states a staged construction cost of 'about $63 million' (1998 stage, 42.1 mi) plus 'about $341 million' (1999 stage) = roughly $404 million total FOR THAT DOCKET ONLY (the Phase II mainline + laterals, ~229.6 mi of 24-in + 1.8 mi of 30-in mainline + 154 mi of laterals) -- this excludes the separate Phase I facilities (Dracut-Wells, 66 mi, docket CP96-178) and any of the later Phase III (2003)/Phase IV (2008) expansion costs (EIA-sourced: Phase III $133.99M, Phase IV $321.3M -- both separate expansion projects, not part of the original system's build cost). Since SegmentCost should describe the cost of the physical scope recorded on this row (the whole original 1999 system, Goldboro-Dracut), and I could not find a single source stating that whole-system total (as opposed to one docket's partial scope), this is left UNRESOLVED rather than reporting a partial figure as if it were the total. Searched: FERC eLibrary docket search, Federal Register archive (all 1996-1999 M&NP notices found), Enbridge factsheet (no cost figure), CER pipeline profile (states only an abandonment-cost estimate of $187M, not construction cost), mnpp.com, offshore-technology.com -- none state a whole-system construction cost."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "M&N Operating Company, LLC"
+      },
+      "primary_value": "M&N Operating Company, LLC",
+      "proposed_refs": [
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+        "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factsheet lists the US-side Operator as 'M&N Operating Company, LLC' (Canada-side operator listed separately as 'Westcoast Energy')."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2006-03-22/html/06-2829.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA notice (2006): 'The pipeline is operated by M&N Operating Company, LLC--a wholly owned subsidiary of Duke Energy Gas Transmission.' Independent government source naming the same operating entity (with a since-superseded 2006-era corporate parent, pre-dating the Spectra/Enbridge ownership chain)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator='M&N Operating Company, LLC' sourced to Enbridge's own factsheet AND independently to a 2006 PHMSA/DOT federal notice -- two independent origins (operator disclosure + federal regulator), satisfying the second-source rule despite the operating-entity name persisting across a 20-year corporate-parent change (Duke Energy Gas Transmission in 2006 -> ultimately Enbridge today). This is explicitly the US-side operator; per Enbridge's factsheet the Canada-side operator is a separate entity, 'Westcoast Energy' -- consistent with the cross-border framing note in validity[]."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Enbridge",
+        "Owner1%": "77.53%",
+        "Owner2": "Emera",
+        "Owner2%": "12.92%",
+        "Owner3": "ExxonMobil",
+        "Owner3%": "9.55%"
+      },
+      "primary_value": "Enbridge",
+      "proposed_refs": [
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factsheet states ownership 'Enbridge 77.53%, Emera 12.92%, ExxonMobil 9.55%' for BOTH the US and Canada portions -- exact match to all three recorded owners and percentages."
+        },
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (connection-block, see Status unit). CER's pipeline-ownership table (updated October 2024) independently lists 'Parent company: Enbridge Inc., Emera Inc., ExxonMobil' -- corroborates all three owner identities, though CER does not state ownership percentages."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This cell was MISSING_REF (values already recorded, no ref). Enbridge's factsheet is an exact match on both owner identities and percentages for the whole system; CER independently confirms all three owner identities (no percentages stated by CER) as of an October-2024 update, giving two independent sources and a recent evidence date for the ownership structure."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 70,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2024-10",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+        "https://www.mnpp.com/US/faqs",
+        "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en"
+      ],
+      "verifications": [
+        {
+          "url": "https://apps.cer-rec.gc.ca/PPS/en/pipeline-profiles/maritimes-northeast-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Hand-confirmed via curl -k (connection-block, see fills[] Status unit). Page's 'Details' section is explicitly dated 'Section updated: October 2024' and describes ongoing (post-2019, reversed-flow) operation."
+        },
+        {
+          "url": "https://www.mnpp.com/US/faqs",
+          "ok": false,
+          "contains_value": true,
+          "name_found": true,
+          "note": "url_verifier FAILs on a substring check but the page (hand-confirmed via curl, 2026 copyright) states the pipeline 'has been operating safely, efficiently, and without incident since being placed into service in 1999.'"
+        },
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Current Enbridge factsheet lists the pipeline as 'Operational.'"
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status confirmed as 'operating' with the most recent independent dated evidence being CER's pipeline profile (explicitly updated October 2024) plus the operator's own current-copyright FAQ page and factsheet. No news of an idling, sale to a new operator, or conversion was found. The one substantive change since the sheet was last updated is NOT a status change but a FLOW-DIRECTION reversal: CER states that since 2019 the pipeline transports gas imported from the US (Appalachia and/or western Canada basins) rather than Nova Scotia offshore production (Sable Offshore Energy Project 1999-2018, Deep Panuke from 2013 until Nova Scotia offshore production ended in 2018) -- i.e. net flow is now predominantly south-to-north into the Maritimes, the reverse of the pipeline's original design purpose, though the pipeline itself, its physical endpoints, and its 'operating' status are unchanged. Recorded per the task brief's specific instruction to capture this in researcher_notes without moving the recorded StartLocation."
+    }
+  ],
+  "summary": "Maritimes & Northeast Gas Pipeline (P0212) reverified as operating -- REFS_ADDED/REVERIFIED across all 13 sourced units (Status, Fuel, PipelineType, Proposal, Construction, Start, Capacity, Pressure, Length, Diameter, Location, Operator, Owner); SegmentCost and FuelSource left UNRESOLVED with detailed notes (no whole-system cost figure found; FuelSource's historical Sable-gas answer is stale post-2019 flow reversal with no current single-facility replacement). Key finding: the row records the WHOLE binational Goldboro NS-to-Dracut MA system, not 'the US portion' as briefed -- flagged as a caveat, not a data defect."
+}

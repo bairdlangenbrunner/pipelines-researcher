@@ -1,0 +1,597 @@
+{
+  "project_id": "P7454",
+  "pipeline_name": "Kenai Beluga Pipeline",
+  "sheet_row": 3840,
+  "wiki": "https://www.gem.wiki/Kenai_Beluga_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action -- existence, classification, and non-duplicate status all confirmed.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: the Kenai Kachemak Pipeline (KKPL) is a real, documented Alaska intrastate gas transmission pipeline, confirmed independently via (1) Alaska DNR Division of Oil & Gas's own pipeline-services record (dog.dnr.alaska.gov, a state land-management/ROW-lease agency), (2) the Regulatory Commission of Alaska's 2014 Docket P-14-025 consolidation notice, which names 'Kenai Kachemak Pipeline, LLC (KKPL)' explicitly as one of the four applicant entities, (3) Harvest Midstream's own corporate history page, and (4) EIA's Natural Gas Pipeline Projects register, which independently carries a 'Ninilchik Pipeline' project attributed to operator 'Kenai Kachemak Pipeline LLC' (EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293: Completed 2003-10-01, AK, Miles 33, Cost ($ millions) 25, 12-inch diameter, intrastate/State authority) -- four distinct origins (two AK state agencies, the current private operator, and a federal statistical agency), none tracing to GEM or to each other. CLASSIFICATION: correctly recorded as an operating (Status), gas (Fuel), transmission (PipelineType) intrastate pipeline -- DNR's page explicitly and repeatedly calls it a 'natural-gas transmission pipeline.' DUPLICATE: this row's segment ('Kenai Kachemak Pipeline') is geographically and corporately distinct from every other Cook Inlet sibling dispatched in this batch. Checked specifically against P7456 (Kenai-Anchorage Gas Pipeline, 70 mi) per the brief's explicit instruction: KKPL runs SOUTH from the Kenai area down the peninsula toward Kasilof/Anchor Point/Homer on Kachemak Bay (confirmed by DNR's route description -- parallels Kalifornsky Beach Road, the Sterling Highway, Cohoe Loop Road, and Oilwell Road, all on the southern Kenai Peninsula -- and by the routes-repo geojson, a single north-to-south trace from ~60.49N down to ~59.99N), whereas Kenai-Anchorage runs NORTH from the Kenai area toward Anchorage across Turnagain Arm -- opposite directions, serving different markets, not a duplicate or relabeling of the same asset. Also not a duplicate of P7450/P7458 (Beluga Pipeline, a separate historic line on the west/Beluga side of Cook Inlet and/or the post-2014 consolidated brand name for the whole four-pipeline system depending on which row), P7453 (Kenai Nikiski Pipeline/KNPL, a distinct certificate/CPCN 20-inch line), or P7455 (Cook Inlet Gas Gathering System/CIGGS, a gathering-class system) -- the 2014 RCA consolidation notice (Docket P-14-025) itself lists KBPL, Beluga Pipeline Company, KKPL, CIGGS, and KNPL as five SEPARATE pre-existing certificated entities being merged into one operating structure under KBPL/amended CPCN 668 (which, by elimination against the notice's list of CPCNs 'returned to the Commission' for CIGGS/KNPL/Beluga, appears to be KKPL's own pre-consolidation certificate) -- confirming these are five genuinely distinct historical pipeline systems now under common ownership/operation, not five records of the same pipe.",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+        "https://www.harvestmidstream.com/about-us/history/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Have a human check whether EndLocation should read 'Happy Valley' rather than (or in addition to) 'Kasilof'. DNR's own text names TWO named extensions built onto this system -- 'the Happy Valley and Kasilof Extensions' -- and this researcher's own measurement of the routes-repo geojson (P7454.geojson: a single LineString, ~46 points, running from ~60.492N/-151.276W in the north down to ~59.987N/-151.488W in the south) places the mapped southern terminus within the Happy Valley CDP footprint (per Nominatim/OSM geocoding, used here only for orientation, not as a citable source) rather than within Kasilof's -- Kasilof proper lies noticeably further north of that terminus coordinate. This may mean the geojson traces the mainline + Happy Valley Extension and stops short of the separate, smaller-diameter (6.625-inch) Kasilof Extension DNR describes as its own ~4.2-mile branch, in which case 'Kasilof' as EndLocation is defensible as the system's southernmost named component even if the mapped route itself does not reach it. Left unresolved deliberately: this is a single-origin (DNR text) finding plus this researcher's own unpublished geometry measurement, which per this campaign's origin-counting rule never contributes a second origin, so no confident replacement value is proposed.",
+      "contested": {
+        "EndLocation": ""
+      },
+      "researcher_notes": "Alaska DNR DOG's Kenai Kachemak page states the system 'was built in three phases during 2003, 2004, and 2006, which include the Happy Valley and Kasilof Extensions,' and separately describes 'The 6.625-inch diameter Kasilof Extension is approximately 4.2 miles long, of which 4.1 miles are located on State lands' as one distinct component of the whole system -- implying a second, un-named-in-the-cell 'Happy Valley Extension' also exists as part of the same pipeline. The sheet's EndLocation='Kasilof' is a real, DNR-documented place-name for this system (kept in the fills[] record above as an honest reflection of the source), but it is not obviously the pipeline's true southernmost or otherwise most representative named terminus given DNR names Happy Valley too. Single origin (DNR); flagged as a spec/attribution concern for human review rather than silently changed.",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://www.harvestmidstream.com/about-us/history/"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "DNR DOG pipeline-services page states 'Status: Active' and describes the line in the present tense as a currently operating high-pressure natural-gas transmission pipeline."
+        },
+        {
+          "url": "https://www.harvestmidstream.com/about-us/history/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Harvest Midstream's own 'Our History' page states 'Harvest acquired the Kenai Kachemak Pipeline, which transports natural gas on the Kenai Peninsula in Alaska' (2012) -- present-tense description of an active, currently-operated asset in Harvest's portfolio."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded, two distinct origins (Alaska DNR Division of Oil & Gas, a state land-management agency, and Harvest Midstream, the current operator, speaking about its own asset) -- no evidence anywhere in this pass of idling, sale, or abandonment (see status_reviews)."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://www.harvestmidstream.com/about-us/history/"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Kenai Kachemak Pipeline is a high-pressure, primarily buried, natural-gas transmission pipeline on Alaska's Kenai Peninsula.'"
+        },
+        {
+          "url": "https://www.harvestmidstream.com/about-us/history/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Harvest acquired the Kenai Kachemak Pipeline, which transports natural gas on the Kenai Peninsula in Alaska.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded across two distinct origins (state agency + current operator)."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://www.adn.com/energy/article/gas-companies-butt-heads-over-kenai-beluga-pipeline/2015/01/12/"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page explicitly and repeatedly labels the line a 'natural-gas transmission pipeline' / 'high-pressure ... transmission pipeline.'"
+        },
+        {
+          "url": "https://www.adn.com/energy/article/gas-companies-butt-heads-over-kenai-beluga-pipeline/2015/01/12/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Article body (re-fetched full text, not paywalled on this pass): 'Hilcorp recently created Kenai Beluga Pipeline to merge four regional transmission pipelines into a single system' -- names the PipelineName and labels the consolidated system's constituent lines (including this one) transmission."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded, two distinct origins (Alaska DNR + Anchorage Daily News). ADN's reference is at the PipelineName/family level ('four regional transmission pipelines' merged into Kenai Beluga Pipeline) rather than naming 'Kenai Kachemak' verbatim, but DNR's page independently and specifically classifies THIS segment as transmission, so the two together clear the two-independent-origin bar for this row."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source located states a proposal/announcement date distinct from construction. Searched: Alaska DNR DOG pipeline-services page (gives construction phase years only, no proposal date), the 2014 RCA consolidation notice (P-14-025, about the LATER corporate consolidation, not original proposal), Harvest Midstream's history page (acquisition-era history only), all 28 EIA Natural Gas Pipeline Projects releases (the 'Ninilchik Pipeline'/'Kenai Kachemak Pipeline LLC' record gives only a completed/in-service date of 2003, no separate announced/proposed date), and the RCA docket-search portal (blocked by a DataDome anti-bot challenge, HTTP 403, on every attempt -- a tooling failure, not evidence the record doesn't exist). This is a circa-2001-2003 intrastate Alaska pipeline built before FERC-style public proposal dockets were the norm for this class of asset; a proposal year may simply not be separately published anywhere accessible."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2003"
+      },
+      "primary_value": "2003",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'It was built in three phases during 2003, 2004, and 2006, which include the Happy Valley and Kasilof Extensions.' Structured 'Construction Dates' field also shows 01/01/2003 as the start."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293: project 'Ninilchik Pipeline', Pipeline Operator Name 'Kenai Kachemak Pipeline LLC', Project Type 'New Pipeline', Status 'Completed', Completed Date 2003-10-01, Year In Service 2003, State AK, Miles 33, Cost ($ millions) 25, Additional Capacity (MMcf/d) 120, Pipeline Diameter (in) 12, Intrastate/State authority -- an EIA-tracked construction record for this exact entity naming 2003, corroborating DNR's phase-1 year. (All EIA Natural Gas Pipeline Projects releases carrying this record, 2018-05 through 2026-08, are one origin per the campaign's origin-counting rule; this specific dated release is cited per the standing ban on the undated/current-rolling xlsx URL.)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded -- TWO distinct origins (Alaska DNR + EIA's federally-compiled pipeline-projects register), both independently naming 2003 as (at least the first phase of) construction. DNR's fuller prose additionally documents two LATER phases (2004 and 2006) not captured by EIA's single 'Ninilchik Pipeline' line item, which (EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293) states Miles=33, i.e. tracks only the initial 33-mile 2003 build (corrected from an earlier draft's mistaken '~25-mile' reading, which misread the sheet's Cost ($ millions)=25 column as a mileage figure) rather than the whole three-phase, 46-mile system -- consistent, not contradictory: ConstructionYear=2003 correctly records the system's origin/first phase."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2006"
+      },
+      "primary_value": "2006",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'It was built in three phases during 2003, 2004, and 2006, which include the Happy Valley and Kasilof Extensions.' Manually re-fetched and text-extracted (curl + tag-strip) to confirm '2006' appears verbatim in this exact sentence; the automated url_verifier substring screen returns a FALSE NEGATIVE on this token (FAIL, '2006' reported missing) even though the string is plainly present in the live page body -- documented per the tool's own caveat that a 'value not found' FAIL is not proof the page fails to support the data point."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single origin (Alaska DNR). The page's structured 'Construction Dates' field only shows 01/01/2003-01/01/2004, but its own prose text explicitly lists 2006 as the third of three named construction phases (alongside 2003 and 2004) -- StartYear1=2006 as recorded is supported, treating 2006 as the year the full three-phase system (mainline + Happy Valley + Kasilof Extensions) was completed and placed in service. No second, independent source naming 2006 specifically was found (EIA's only matching record covers the 2003 phase only)."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "120",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "120",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293: 'Additional Capacity (MMcf/d)' = 120 (row also states Miles=33, Cost ($ millions)=25, Pipeline Diameter (in)=12)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Previously blank cell -- genuine fill (rule 4(e)), single origin (EIA, dated Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 293). Caveat: EIA's 'Ninilchik Pipeline' line item states Miles=33 for this project -- i.e. it appears to specifically track the 33-mile, 2003-completed first-phase build (see Length note; corrected from an earlier draft's mistaken '~25-mile' reading, which misread the row's Cost ($ millions)=25 field as a mileage figure) rather than a stated whole-system capacity for the full 46-mile, three-phase KKPL as it exists today; 120 MMcf/d may therefore represent that phase's design/added capacity rather than current total system throughput capacity. No other source (DNR DOG, RCA notice, Harvest Midstream, PHMSA orders) states any capacity figure for this line, so this is the best available sourced value and is staged rather than left UNRESOLVED, with the scope caveat on record."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {
+        "Pressure": "1480",
+        "PressureUnits": "psig"
+      },
+      "primary_value": "1480",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The KKPL mainline was built with 12.75-inch pipe of 0.330 and 0.500-inch wall thickness, and is rated for a maximum allowable operating pressure of 1,480 psig.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Previously blank cell -- genuine fill (rule 4(e)), single origin (Alaska DNR). No second source found stating MAOP/operating pressure for this line."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "46.14",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "46.14",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'System Length (approx. miles): System Length: 46.20' (Length on State Lands: 37.30) -- within rounding of the sheet's recorded 46.14 mi (0.06 mi / ~0.13% delta)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed within rounding, single origin (Alaska DNR, 46.20 vs. recorded 46.14 mi). The existing NPMS ref does not state this value (existing_ref_check: '200 but data value not found'). EIA's 'Ninilchik Pipeline' record (EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293) separately gives Miles=33 (not 25 -- an earlier draft misread the row's Cost ($ millions)=25 field as a mileage figure; corrected), but that figure is for a DIFFERENT SCOPE -- the specific 2003-completed first-phase build captured under that one project line item, not the whole three-phase, 46-mile system as it exists today (DNR's own prose: the full system 'was built in three phases during 2003, 2004, and 2006, which include the Happy Valley and Kasilof Extensions') -- so EIA's 33 mi is not treated as disagreeing with, or corroborating, the 46.14/46.20 whole-system figure. Not cited in proposed_refs for this cell since it does not state this record's value."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "12",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "12",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The KKPL mainline was built with 12.75-inch pipe ...' and 'Diameters (in): 12.75' -- 12.75-inch actual outside diameter, i.e. nominal 12-inch pipe (standard nominal/actual-OD convention)."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293: Pipeline Diameter (in) = 12 -- states the nominal diameter directly (row also: Miles=33, Cost ($ millions)=25, Additional Capacity (MMcf/d)=120)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded, two distinct origins (Alaska DNR + EIA, dated Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 293). DNR gives the mainline's actual 12.75-inch OD (0.330/0.500-inch wall thickness); EIA states the nominal 12-inch diameter directly, matching the sheet exactly. DNR separately notes a smaller 6.625-inch-diameter 'Kasilof Extension' (~4.2 mi) as part of the same system -- a secondary lateral, not the mainline diameter recorded in this cell."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source located names a specific originating gas field/source for this segment. Searched: Alaska DNR DOG page (route/construction/spec detail only, no upstream source), the 2014 RCA consolidation notice, Harvest Midstream's history page, EIA's Natural Gas Pipeline Projects record for this entity, and the two PHMSA enforcement orders found for the wider Hilcorp/Harvest Cook Inlet system (neither names Kachemak/KKPL specifically, so not usable here even for general Cook Inlet field context per the naming-relevance rule). Cook Inlet gas broadly originates from multiple producing fields/units on both sides of the inlet feeding a shared gathering/transmission network, but no source ties a specific named field to THIS segment as opposed to the system generally."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Kenai",
+        "StartPrefecture/District": "Kenai Peninsula",
+        "StartState/Province": "Alaska",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Kasilof",
+        "EndPrefecture/District": "Kenai Peninsula",
+        "EndState/Province": "Alaska",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Kenai",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Throughout its route, the pipeline parallels Kalifornsky Beach Road, the Sterling Highway, Cohoe Loop Road, and Oilwell Road' on the Kenai Peninsula, and separately names a 'Kasilof Extension' (~4.2 mi, 4.1 mi on State lands) as one of the system's built components -- both Kenai and Kasilof are real, DNR-documented places along this system's route."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Kept as recorded -- both Kenai (start) and Kasilof (a named, DNR-documented extension of this system) are genuine, sourced places on this route; single origin (Alaska DNR). SEPARATE FLAG (see validity[]): DNR's own text names TWO extensions -- 'Happy Valley and Kasilof Extensions' -- and the routes-repo geojson's mapped southern terminus (~59.987N/-151.488W) falls within Happy Valley's footprint rather than Kasilof's, per this researcher's own measurement of that geometry (not a citable second origin, noted only as orientation). Recommend a human check of whether EndLocation should instead read Happy Valley, or whether the geojson simply does not extend all the way to the separate Kasilof Extension."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's 'Ninilchik Pipeline'/'Kenai Kachemak Pipeline LLC' record (EIA Natural Gas Pipeline Projects, Aug 2026 release (EIA-NaturalGasPipelineProjectsAug2026.xlsx), sheet 'Historical Projects (1996-2024)', Excel row 293) DOES state a cost: Cost ($ millions) = 25. Explicit scope call: that same row states Miles=33 for the project it costs, and per the Construction/Length notes above this line item tracks only the 2003-completed first-phase build (DNR: the full KKPL system 'was built in three phases during 2003, 2004, and 2006, which include the Happy Valley and Kasilof Extensions'), not the ~46-mile (DNR: 46.20 mi; sheet: 46.14 mi) three-phase system this GEM row (SegmentName Kenai Kachemak Pipeline, LengthKnown 46.14 mi) represents. A $25M figure for a 33-mile first-phase build is not a credible per-mile match for a $-cost record of the full 46-mile system (a genuinely different scope, not a rounding or reporting discrepancy), so it is NOT staged as this row's SegmentCost. Also searched and not used: Alaska DNR DOG page (no cost data), the 2014 RCA consolidation notice (states only the resulting postage-stamp TARIFF rate, $0.2912/Mcf, not a construction cost), Harvest Midstream's history page, and the Anchorage Daily News article (2015-01-12; 'expected to cost some $16 million', but for a LATER, separate cross-Cook-Inlet compressor EXPANSION project on the whole consolidated Kenai Beluga Pipeline system, not this segment's original construction). Correctly UNRESOLVED: no source states a cost for the ~46-mile KKPL system as recorded on this row."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "oo_sheet_row": 5822,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Harvest Alaska LLC"
+      },
+      "primary_value": "Harvest Alaska LLC",
+      "proposed_refs": [
+        "https://www.harvestmidstream.com/about-us/history/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.harvestmidstream.com/about-us/history/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Harvest Midstream 'Our History' page: 'Harvest acquired the Kenai Kachemak Pipeline, which transports natural gas on the Kenai Peninsula in Alaska' (2012), under Harvest's 'Harvest Alaska' branding for its Alaska operations."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single origin (Harvest Midstream's own corporate history page, naming this pipeline specifically). Alaska DNR's DOG page, though otherwise the richest single source for this row, explicitly states 'Operators: No operators found' in its structured data -- so it cannot corroborate Operator despite being usable for many other cells. The two PHMSA enforcement orders found in this pass (CPF Nos. 5-2021-023-NOPV and 5-2019-0026) both name 'Harvest Alaska, LLC' as operator, but for the Beluga Transmission Pipeline / CIGGS system specifically -- neither document names Kachemak/KKPL, so per the naming-relevance rule they are not usable as a second origin here (reserved instead as cross_row_leads for P7450/P7458/P7455). No second source specifically tying Harvest Alaska LLC to the Kachemak segment by name was found."
+    },
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "oo_sheet_row": 5822,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kenai Beluga Pipeline LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Kenai Beluga Pipeline LLC",
+      "proposed_refs": [
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak"
+      ],
+      "verifications": [
+        {
+          "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "RCA Docket P-14-025 notice: 'Kenai Beluga Pipeline, LLC (KBPL) ... Kenai Kachemak Pipeline, LLC (KKPL) ... filed a joint application to transfer [CPCN] Nos. 448, 711, 668, and 689 into a single CPCN ... The Applicants are all owned 100 percent, directly or indirectly, by Hilcorp Alaska, LLC. ... The Applicants propose that KBPL operate the consolidated pipeline system under amended CPCN No. 668' -- KKPL's own certificate (668, by elimination, since CIGGS/KNPL/Beluga's CPCNs are the ones 'returned to the Commission') becomes KBPL's operating certificate for the consolidated system, i.e. KBPL (100% Hilcorp Alaska LLC) is the entity that now holds/owns this segment."
+        },
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline is currently leased by Kenai Beluga Pipeline, LLC.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded, two distinct state-of-Alaska origins (Regulatory Commission of Alaska docket notice, 2014, and Alaska DNR Division of Oil & Gas's current pipeline-services record) -- different agencies with different regulatory functions, not one publisher speaking twice. The RCA notice documents the 2014 consolidation mechanism (KKPL's CPCN 668, amended, becomes KBPL's single operating certificate for the whole consolidated system); DNR's page confirms the CURRENT state (KBPL as lessee) independently. Owner1%=100.00% is consistent with the RCA notice's statement that KBPL (and its predecessor KKPL) is wholly owned, directly or indirectly, by Hilcorp Alaska, LLC."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Kenai Kachemak Pipeline",
+      "sheet_row": 3840,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-09",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+        "https://www.harvestmidstream.com/about-us/history/"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Kenai%20Kachemak",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.harvestmidstream.com/about-us/history/",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Alaska DNR's Division of Oil & Gas pipeline-services record for Kenai Kachemak -- a live, current-state administrative page (undated but reflecting the state's present lease/ROW records, checked during this research pass in September 2026) -- states 'Status: Active' and describes the pipeline as currently leased and operated. Harvest Midstream's own corporate history page independently corroborates an active, in-portfolio asset ('Harvest acquired the Kenai Kachemak Pipeline, which transports natural gas on the Kenai Peninsula in Alaska'). No evidence anywhere in this pass -- DNR, RCA's 2014 consolidation docket, Harvest Midstream, EIA's pipeline-projects register, or the two PHMSA enforcement orders found for the wider Hilcorp/Harvest Cook Inlet system -- suggests idling, sale, abandonment, or conversion of this segment. Status=operating is CONFIRMED."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7450",
+      "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+      "facts": "RCA Docket P-14-025 (2014 consolidation notice): 'Kenai Beluga Pipeline, LLC (KBPL), Beluga Pipeline Company (Beluga), Kenai Kachemak Pipeline, LLC (KKPL), Hilcorp Alaska, LLC d/b/a Cook Inlet Gas Gathering System (CIGGS), and Hilcorp Alaska, LLC d/b/a Kenai Nikiski Pipeline (KNPL)' jointly applied to merge CPCN Nos. 448, 711, 668, and 689 into one certificate; 'the Applicants are all owned 100 percent, directly or indirectly, by Hilcorp Alaska, LLC'; KBPL proposed to operate the consolidated system under amended CPCN No. 668 (apparently KKPL's own pre-consolidation certificate, by elimination against the CPCNs of CIGGS/KNPL/Beluga being 'returned to the Commission'), with a single postage-stamp tariff of $0.2912/Mcf, effective on/around November 1, 2014 (Docket P-13-014 settlement/tariff). One of 'Beluga's' CPCN numbers (448, 711, or 689) belongs to Beluga Pipeline Company -- useful for pinning down this row's own pre-2014 certificate number."
+    },
+    {
+      "project_id": "P7458",
+      "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+      "facts": "Same RCA Docket P-14-025 consolidation facts as the P7450 lead above -- 'Beluga Pipeline Company' is one of the five entities merged into KBPL under amended CPCN 668. Additionally, the 2022 PHMSA Final Order (CPF No. 5-2021-023-NOPV, $73,900 penalty) discusses the 'Beluga Transmission Pipeline' by name -- bi-directional, tied to the BRU (Beluga River Unit) compressor, receiving 'West CIGGS sources,' with 'Kaloa Junction' as a described overpressure-protection location and PSV-10056/PSV X-028 valve compliance findings under Harvest Alaska, LLC's operatorship -- directly relevant if this row is the Beluga Transmission Pipeline specifically."
+    },
+    {
+      "project_id": "P7453",
+      "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+      "facts": "Same RCA Docket P-14-025 consolidation facts -- 'Hilcorp Alaska, LLC d/b/a Kenai Nikiski Pipeline (KNPL)' is named explicitly as one of the five pre-consolidation entities, 100% owned by Hilcorp Alaska LLC, its CPCN (one of 448/711/689) surrendered/returned to the Commission upon the 2014 consolidation under KBPL/amended CPCN 668."
+    },
+    {
+      "project_id": "P7455",
+      "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/View.aspx?id=174074",
+      "facts": "Same RCA Docket P-14-025 consolidation facts -- 'Hilcorp Alaska, LLC d/b/a Cook Inlet Gas Gathering System (CIGGS)' is named explicitly as one of the five pre-consolidation entities, 100% owned by Hilcorp Alaska LLC, its CPCN (one of 448/711/689) surrendered upon the 2014 consolidation. Separately, the 2022 PHMSA Final Order (CPF No. 5-2021-023-NOPV) discusses 'West CIGGS sources' feeding the Beluga Transmission Pipeline and PSV compliance findings involving the CIGGS system under Harvest Alaska, LLC's operatorship -- both documents are reserved here since they never name Kachemak/KKPL specifically (so were not used as P7454 refs) but concern this sibling row directly."
+    }
+  ],
+  "summary": "P7454 (Kenai Beluga Pipeline / Kenai Kachemak Pipeline, KKPL) confirmed real, correctly classified (operating/Gas/transmission), and NOT a duplicate of sibling P7456 (Kenai-Anchorage, which runs north; KKPL runs south toward Kasilof/Homer) or of P7450/P7453/P7455/P7458 (five genuinely distinct pre-2014-consolidation certificated systems per RCA Docket P-14-025). Filled two previously-blank cells (Capacity=120 MMcf/d, Pressure=1,480 psig) and reverified/upgraded Status, Fuel, PipelineType, Construction (2003), Diameter (12 in), and Owner (Kenai Beluga Pipeline LLC, 100%) to two-independent-origin high tier using Alaska DNR DOG, RCA's 2014 docket, Harvest Midstream's own history page, and EIA's Natural Gas Pipeline Projects register (which independently carries this exact entity as 'Ninilchik Pipeline'/'Kenai Kachemak Pipeline LLC'). One spec concern flagged: DNR names both a 'Happy Valley' and a 'Kasilof' extension, and the mapped geojson terminus sits nearer Happy Valley -- EndLocation='Kasilof' may be incomplete or mis-attributed (contested left blank pending human review, single-origin). UNRESOLVED: ProposalYear/Month, FuelSource, SegmentCost -- no source found for any of the three despite checking DNR, RCA, Harvest Midstream, EIA, and both PHMSA Hilcorp/Harvest Cook Inlet enforcement orders (neither of which names Kachemak/KKPL, so reserved as cross_row_leads for P7450/P7458/P7455 instead)."
+}

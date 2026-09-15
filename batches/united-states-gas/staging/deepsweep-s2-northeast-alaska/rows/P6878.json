@@ -1,0 +1,540 @@
+{
+  "project_id": "P6878",
+  "pipeline_name": "National Fuel Gas Supply Corporation Gas Pipeline",
+  "sheet_row": 3720,
+  "wiki": "https://www.gem.wiki/National_Fuel_Gas_Supply_Corporation_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Main Line",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No action -- existence, classification, and non-duplicate status all confirmed.",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: National Fuel Gas Supply Corporation ('Supply Corporation') is a real, FERC-regulated interstate natural gas transmission operator, confirmed independently via National Fuel Gas Company's SEC 10-K filings (FY2020 and FY2025, EDGAR CIK 0000070145), the company's own corporate infrastructure page (nationalfuel.com), and Wikipedia's National Fuel Gas company profile, which names 'National Fuel Gas Supply Corporation' as the operator of the Pipeline and Storage segment. CLASSIFICATION: correctly recorded as an operating interstate gas transmission trunk (Fuel=Gas, PipelineType=transmission) -- the 10-K describes Supply Corporation's transmission pipeline as moving 'large volumes of gas throughout its service area,' distinct from gathering/distribution lines. DUPLICATE (the row's own SegmentName is 'Main Line' -- this is the parent/whole system trunk, NOT a duplicate of any other roster row): P2537 (FM 100 Project, 31.3 mi, docket CP19-491) is a SEPARATE, specific lateral/loop/extension project (new Line YM58/YM224 Loop/KL Extension) that TAPS INTO this Main Line trunk via the Marvindale/Tamarack compressor stations and the Leidy interconnect in Clinton County, PA -- P2537's own shard (rows/P2537.json) independently reached and recorded this same conclusion from its side (cross_row_leads entry naming P6878 as 'the parent trunk that P6878 records'). P6878 and P2537 are genuinely distinct physical assets (a whole legacy system vs. one 2021-built lateral/loop within it), not a relabel or double-count. No other roster row plausibly overlaps with this system-wide Supply Corp entry.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+        "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+        "https://en.wikipedia.org/wiki/National_Fuel_Gas"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Main Line",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Do not silently overwrite LengthKnown -- the ~1,800 mi Rextag figure and National Fuel's own ~2,200-2,800 mi figures may describe different scopes (the 'Main Line' trunk vs. the full Supply Corporation + Empire Pipeline transmission network including all named lateral/loop projects). Verify whether GEM intends this row to represent only the historic core trunk or the whole Supply Corp transmission system before changing the value; if a Supply-Corp-only (excluding Empire, excluding laterals already tracked as their own PIDs e.g. P2537) mileage figure can be sourced, use it.",
+      "contested": {
+        "LengthKnown": ""
+      },
+      "researcher_notes": "The sheet's LengthKnown=1,800 mi (sourced to rextag.com, a third-party GIS/pipeline-data vendor, re-verified this pass) is materially lower than THREE figures in National Fuel's own primary disclosures: (1) the corporate infrastructure page states 'we own and safely operate nearly 2,800 miles of interstate natural gas pipelines ... in New York and Pennsylvania'; (2) National Fuel Gas Company's FY2025 10-K (SEC EDGAR, filed 2025) states 'Transmission pipeline represents 35% of this segment's total net investment and includes 2,233 miles of pipeline utilized to move large volumes of gas throughout its service area' (Pipeline and Storage segment, Item 2 Properties); (3) the FY2020 10-K gives the equivalent figure as 2,265 miles -- a stable ~2,200-2,300 mi range across at least five fiscal years. HOWEVER, all three of these figures are for the 'Pipeline and Storage segment' or 'National Fuel' as a whole, which the same 10-K explicitly defines as BOTH National Fuel Gas Supply Corporation AND Empire Pipeline, Inc. combined ('Supply Corporation and Empire provide interstate natural gas transportation services ... through integrated natural gas transmission ... systems'). Empire is a separate National Fuel subsidiary/interstate pipeline (not itself tracked as a roster row in this batch) whose own mileage is not broken out in the filings reviewed. The 10-K/website figures therefore cannot be assumed to describe Supply Corporation's transmission system ALONE, let alone this row's specific 'Main Line' SegmentName as opposed to the many individually-tracked lateral/loop/extension projects built onto it (e.g. P2537 FM100, 31.3 mi, and others outside this batch such as P7827 Tioga Pathway) -- an aggregate system-plus-subsidiary figure is not automatically the correct value for a specific trunk-only segment row (aggregate-vs-segment principle, applied here in the opposite direction: the bigger number may be the wrong scope, not the sheet's smaller one). Per rule 4(e)/rule 7, this is filed as a spec concern with contested left blank (no confidently corrected value) rather than silently replacing 1,800 with 2,233-2,800, and rather than silently passing the disagreement. Recommend a follow-up search of FERC Form 2 (Supply Corporation's own annual report to FERC, filed separately from Empire's) for a Supply-Corp-only system mileage figure, which was not located in this pass (FERC's eLibrary full-text search and Form 2 index were not exhaustively searched for Supply Corporation's Form 2 XBRL/PDF within this session's time budget).",
+      "proposed_refs": [
+        "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014520000032/nfg-20200930.htm"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'We own and safely operate nearly 2,800 miles of interstate natural gas pipelines and more than 190 compressor units ... in New York and Pennsylvania' -- describes Supply Corporation's system, of which this row is 'Main Line', as currently operating"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Reverified: page names National Fuel's pipeline infrastructure and states current active operation in the present tense. Corroborated by SEC 10-K FY2025 (filed 2025), which lists Supply Corporation's transmission pipeline as an active, in-service asset generating segment revenue in the fiscal year just ended -- no indication of idling, sale, or abandonment found anywhere in this pass (see status_reviews)."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "page is titled 'Natural Gas Infrastructure' and describes National Fuel's pipelines throughout as carrying natural gas"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "describes the interstate pipeline network as 'interstate natural gas pipelines' moving gas across the service area"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Transmission pipeline represents 35% of this segment's total net investment and includes 2,233 miles of pipeline' -- explicitly labels Supply Corporation's system-level pipe as transmission, as opposed to the 401 mi of gathering lines and 382 mi of storage-field pipeline reported separately"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded across two National-Fuel-origin documents (counted as one origin per the independence rule, but both directly and explicitly label this asset class 'transmission')."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The 'Main Line' represents a legacy, more-than-century-old accumulated transmission trunk (Supply Corporation traces to the early 1900s Appalachian gas boom) built up over decades from many individually-proposed segments, several of which are separately tracked in GEM under their own ProjectIDs (e.g. P2537 FM100, proposed 2017). No single source states one 'proposal' event or year for the system-wide trunk as a whole -- searched National Fuel's corporate history/about pages (nationalfuel.com/about-national-fuel/company-history/ and /about/ both returned 404), the SEC 10-K FY2020 and FY2025 filings (no system-wide proposal date given), and Wikipedia's National Fuel Gas article (gives only the 1902 PARENT HOLDING COMPANY incorporation date, which per this campaign's addendum rule is a corporate event, not a pipeline ProposalYear/StartYear, and is explicitly not staged as such here). Left UNRESOLVED rather than force an inapplicable date onto a system that was never proposed as a single project."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same reasoning as Proposal: this is a system-wide trunk built up incrementally over a century-plus, not a single construction project with one start date. No source found states a single construction-commencement year for the 'Main Line' as a whole; individual expansion/lateral projects onto it (FM100, and others outside this batch) each carry their own ConstructionYear on their own PIDs. Searched the same sources listed under Proposal without finding a system-wide figure."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source gives a single in-service/StartYear1 for the 'Main Line' as a whole -- it is an accumulated system, not a discrete project with one start date. The only date found anywhere near this row's history is National Fuel Gas COMPANY's 1902 incorporation (the parent holding company's founding, per Wikipedia and both 10-Ks), which this campaign's addendum explicitly rules out as a StartYear1 substitute (a corporate-founding event is not a pipeline in-service date). Left UNRESOLVED with this reasoning rather than fabricating a start date from the parent's history."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "4400.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "4400.00",
+      "proposed_refs": [
+        "https://rextag.com/pipeline/national-fuel-gas-supply"
+      ],
+      "verifications": [
+        {
+          "url": "https://rextag.com/pipeline/national-fuel-gas-supply",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Rextag's National Fuel Gas Supply pipeline page states a system capacity of '4.4 Bcf/d' -- equivalent to 4,400 MMcf/d as recorded (the original existing_ref_check in worklist.json failed only because it searched for the literal substrings '4400'/'4400.00'/'4,400', which do not appear verbatim on a page that states the figure in Bcf/d form; re-run with the corrected expected substring '4.4 Bcf' and it verifies OK)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded, single strong source (Rextag). This is NOT the same '4,400 MMcf/d copied across rows' pattern flagged for the three Equitrans segments (P6895/P6896/P6897) -- National Fuel Gas Supply Corporation is an entirely separate company/system from Equitrans, and Rextag states 4.4 Bcf/d specifically on National Fuel's own pipeline page, not a generic/shared figure. Distinguished 'peak day sendout' (2,371 MMcf, an actual realized-throughput statistic for a specific date, stated in the FY2025 10-K) from this design/certificated CAPACITY figure -- the two are different metrics and the sendout number is not used to override Capacity here. A second, fully independent source stating a specific system-wide design-capacity MMcf/d figure was searched for (EIA's pipeline capacity data, FERC Form 2) but not found within this pass's time budget; single-source at medium tier."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No system-wide MAOP/operating-pressure figure found for the Main Line. National Fuel's infrastructure page describes the network generically as 'made up of high- and low-pressure pipelines' with no psig figure; the SEC 10-K filings (FY2020, FY2025) give no pressure specification anywhere (checked via full-text search of both filings for 'psig'/'pressure'/'diameter' -- none found in a pipeline-spec context). P2537's own shard (FM100, a specific certificated project with a full FERC EA) independently found no system- or project-level MAOP figure either, consistent with this being a genuinely unpublished/non-public specification at the system level, not a search failure. Left UNRESOLVED."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "1800.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "1800.00",
+      "proposed_refs": [
+        "https://rextag.com/pipeline/national-fuel-gas-supply"
+      ],
+      "verifications": [
+        {
+          "url": "https://rextag.com/pipeline/national-fuel-gas-supply",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Rextag's National Fuel Gas Supply pipeline page states '1800' miles for the system, matching LengthKnown=1,800 mi exactly (re-verified with corrected expected substrings '4.4 Bcf'/'1800' -- the original check used unit-mismatched substrings for the Capacity cell, which incidentally also affected confidence in this cell's own already-passing check)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded on the sheet's own cited source. HOWEVER, see the paired validity[] spec concern: National Fuel's own corporate site and SEC 10-K filings state materially larger mileage figures (2,233-2,800 mi) for the combined Supply Corporation + Empire Pipeline transmission network -- a different, broader scope than this row's 'Main Line' trunk alone, and one that also includes separately-PID'd lateral/loop projects (e.g. P2537 FM100's own 31.3 mi). Staged here as REFS_ADDED because Rextag genuinely states the recorded value and names the pipeline, per rule 6/7 -- the scope discrepancy is filed as a concern in validity[], not silently resolved by picking a different number."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single system-wide diameter is meaningful or stated anywhere: the Main Line is an accumulated network of pipe segments of many different diameters built over decades (P2537 FM100 alone mixes 20-in, 24-in and 12-in pipe within one 31.3-mi project). Checked National Fuel's infrastructure page and both 10-K filings -- neither states a diameter figure for the transmission system. Left UNRESOLVED rather than assign one segment's diameter to the whole system."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Marcellus Shale, Utica Shale"
+      },
+      "primary_value": "Marcellus Shale, Utica Shale",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Most of Supply Corporation's facilities are in or near areas overlying the Marcellus and Utica shale production areas in Pennsylvania, and it has established interconnections with producers and other pipelines that provide access to these supplies'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "National Fuel's FY2025 10-K explicitly ties Supply Corporation's own facilities to Marcellus/Utica shale gas production in Pennsylvania. The corporate infrastructure page corroborates only generically ('nearly 100 percent of the natural gas ... is produced from shale formations,' no named play) -- same National-Fuel origin, not a fully independent second source, so single-origin at medium tier. Consistent with P2537 FM100's own FuelSource fill (Marcellus Shale, Utica Shale), which is unsurprising since FM100 is a lateral built specifically to move Marcellus/Utica gas onto this Main Line."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Pennsylvania",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Niagara River",
+        "EndState/Province": "New York",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Pennsylvania",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+        "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Most of Supply Corporation's facilities are in or near areas overlying the Marcellus and Utica shale production areas in Pennsylvania ... Its facilities are also located adjacent to the Canadian border at the Niagara River providing access to markets in Canada and the northeastern and midwestern United States via the TC Energy pipeline system'"
+        },
+        {
+          "url": "https://www.nationalfuel.com/pipeline-storage/about-pipeline/natural-gas-infrastructure/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'National Fuel's natural gas pipeline and storage facilities in New York and Pennsylvania' -- confirms the system spans both states"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both sources are National Fuel's own disclosures (one origin per the independence rule), so staged at medium tier despite two documents. StartState/Province=Pennsylvania and EndState/Province=New York are consistent with this batch's own route-geometry review: the GOIT-GGIT routes repo's P6878.geojson (140 features) bounding box runs from 39.89 deg N (near the PA/WV line, likely Greene County PA) to 43.21 deg N (near the NY/Canada border), and the companion P6878-compressor-stations.geojson (40 points, attributed to EPA Envirofacts + FERC Form 2 + corporate-website sourcing) places stations in Pennsylvania counties (Erie, Elk, Jefferson, Venango, Forest, Potter, Warren, McKean) and New York counties (Cattaraugus, Allegany, Erie -- e.g. Limestone NY, Beech Hill NY, Derby NY, Zoar NY), with no West Virginia or Ohio stations -- this route/attribute data is internal (not a citable web [ref] per this project's route-scope rule) but corroborates the two-state span rather than contradicting it. StartLocation/StartPrefecture/District and EndPrefecture/District are left UNRESOLVED/blank: the network's multi-branch, non-linear topology (a century-old accumulated trunk with many receipt/delivery points across a dozen-plus counties) has no single defensible 'start' or 'end' point-place beyond the two states and the Niagara River interconnect area named in the 10-K."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single meaningful 'cost' figure exists for a century-old accumulated system built through many separate, individually-costed projects (several tracked as their own GEM PIDs, e.g. P2537 FM100 at $230 million). The 10-K's $2.2 billion 'net investment in property, plant and equipment' for the whole Pipeline and Storage segment (FY2025) is a balance-sheet net-of-depreciation figure covering Supply Corporation AND Empire Pipeline's storage plus transmission assets combined -- not a construction cost for this Main Line segment specifically, and not comparable to the SegmentCost field's intent (a per-project build cost). Left UNRESOLVED rather than stage a mismatched aggregate figure."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "oo_sheet_row": 5430,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "National Fuel Gas Supply Corp"
+      },
+      "primary_value": "National Fuel Gas Supply Corp",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+        "https://en.wikipedia.org/wiki/National_Fuel_Gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'operations are carried out by National Fuel Gas Supply Corporation, a Pennsylvania corporation, and Empire Pipeline, Inc. ... Supply Corporation ... provide[s] interstate natural gas transportation services'"
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/National_Fuel_Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Pipeline and Storage (National Fuel Gas Supply Corporation and Empire Pipeline, Inc.)' names Supply Corporation as the operating segment entity"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded across two independent origins (SEC EDGAR filing and Wikipedia, a separate publisher)."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "oo_sheet_row": 5430,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "National Fuel Gas Supply Corp",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "National Fuel Gas Supply Corp",
+      "proposed_refs": [
+        "https://www.nationalfuel.com/pipeline-storage/national-fuel-gas-supply-corp/maps-and-tables/",
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.nationalfuel.com/pipeline-storage/national-fuel-gas-supply-corp/maps-and-tables/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "National Fuel Gas Supply Corporation's own pipeline-and-storage maps-and-tables page, branded to this entity as the system owner"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "lists Supply Corporation as a wholly-owned National Fuel subsidiary that directly holds and operates the Pipeline and Storage segment's transmission facilities; no co-owners/joint-venture partners named for the transmission system"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded (100% Owner1=National Fuel Gas Supply Corp) across the operator's own maps-and-tables page and the SEC 10-K, which together establish sole/undivided ownership with no partners disclosed."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3720,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-11",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "National Fuel Gas Company's FY2025 10-K (fiscal year ended September 30, 2025, filed with SEC EDGAR in late 2025) reports the Pipeline and Storage segment -- Supply Corporation's transmission system, this row -- as an actively operating, revenue-generating segment ('contributed net income of $121.0 million in 2025'), with ongoing capital investment and expansion activity described ('Supply Corporation and Empire have completed and continue to pursue expansion projects designed to move anticipated Marcellus and Utica production'). The corporate infrastructure page (undated but current as of this pass) likewise describes the system in the present tense as actively operated. No evidence anywhere in this pass (10-K, corporate site, Wikipedia, Rextag, the routes-repo compressor-station attribute data) suggests idling, sale, abandonment, or conversion. Status=operating is CONFIRMED, newest evidence dated to the FY2025 10-K filing."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P2537",
+      "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+      "facts": "National Fuel's FY2025 10-K frames Supply Corporation's Marcellus/Utica-sourced gas as moving through the integrated Pipeline and Storage system to on-system and off-system markets (including via the Niagara River/Canada interconnect) -- consistent with, and not contradicting, P2537 FM100's own facility list (a 2021-completed 31.3 mi lateral/loop tying into this Main Line via the Marvindale/Tamarack compressor stations and the Leidy interconnect in Clinton County, PA, per P2537's own shard). Confirms from the P6878 side that the two rows describe a whole trunk system (P6878) and one specific, separately-built lateral project on it (P2537), not duplicate records of the same asset."
+    }
+  ],
+  "summary": "P6878 (National Fuel Gas Supply Corporation Gas Pipeline, 'Main Line') confirmed real, correctly classified, and NOT a duplicate of sibling row P2537 (FM100 Project, a distinct 2021-built 31.3 mi lateral tying into this trunk) -- one spec concern flagged (sheet's 1,800 mi vs. National Fuel's own 2,233-2,800 mi combined Supply Corp+Empire figures, likely a scope/subsidiary mismatch rather than an error, contested left blank pending a Supply-Corp-only mileage source). Status reconfirmed operating (FY2025 10-K). UNRESOLVED: Proposal, Construction, Start, Diameter, Pressure, SegmentCost -- no single meaningful figure exists for this century-old accumulated system-wide trunk, each documented with what was searched."
+}

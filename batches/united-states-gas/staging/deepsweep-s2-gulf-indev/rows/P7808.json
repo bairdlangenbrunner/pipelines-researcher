@@ -1,678 +1,678 @@
 {
-  "project_id": "P7808",
-  "pipeline_name": "Transcontinental Gas Pipeline",
-  "sheet_row": 4188,
-  "wiki": "https://www.gem.wiki/Transcontinental_Gas_Pipeline",
-  "validity": [
+ "project_id": "P7808",
+ "pipeline_name": "Transcontinental Gas Pipeline",
+ "sheet_row": 4188,
+ "wiki": "https://www.gem.wiki/Transcontinental_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Gillis West",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No existence/classification/duplicate change needed. See the two concerns below (stale schedule years; End location attribution) and the status_reviews entry.",
+   "contested": {},
+   "researcher_notes": "EXISTENCE: real, active FERC filing. Independently confirmed by (1) FERC's own Federal Register notice, Docket No. CP26-218-000 (published 2026-04-30, filed 2026-04-15), 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization', naming the project 'Gillis West Expansion Project'; and (2) EIA's Natural Gas Pipeline Projects workbook, which has tracked a 'Gillis West' project (Transcontinental Gas Pipe Line Co) continuously since its 2024-10 release, renamed 'Gillis West Expansion' from the 2026-08 release onward, status progressing Announced -> Applied. Not a GEM-only or hallucinated entity. CLASSIFICATION: correctly classified as an NGA interstate gas transmission expansion. The FERC filing is specifically a section 157.205 'prior notice' request under Transco's existing blanket certificate (Docket No. CP82-426-000) -- a smaller/faster authorization type than a full section 7(c) certificate application, consistent with the project's small footprint (three delivery meter stations + one compressor-station/valve-site expansion, no new mainline pipe). DUPLICATE: checked against the batch roster's other Transco/Gillis-adjacent rows. P7807 'Gillis Access Project' is a genuinely DIFFERENT, unrelated project by a different operator (TC Energy, per EIA's pipeline_operator_name field) despite the similarly named receipt point -- not a duplicate of P7808. No other roster row (P7802, P7841, or the Haynesville-egress family) names 'Gillis West' or the CP26-218/CP82-426 dockets. LOCATION: the sheet's StartState/Province=Louisiana is confirmed (existing Transco mainline receipt point and the Louisiana Southwest LW269 Valve Site expansion are both in Beauregard/Allen Parishes, LA). EndState/Province is NOT confirmed as Louisiana -- see the attribution concern below. No routes-repo geometry exists for this PID (P7808.geojson has null geometry, a placeholder), which is expected for a project adding no new mainline pipe (LengthKnown=0) -- not a route-vs-sheet mismatch case.",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Gillis West",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Correct ConstructionYear and StartYear1 from 2025 to 2026.",
+   "contested": {
+    "ConstructionYear": "2026",
+    "StartYear1": "2026"
+   },
+   "researcher_notes": "The sheet's ConstructionYear=2025 and StartYear1=2025 (LastUpdated 2025-09-24) are stale. Two independent origins now disagree with 2025: (1) EIA's own dated Natural Gas Pipeline Projects releases -- the project first appeared in the 2024-10 release with year_in_service_date=2025, but every release from 2025-10 onward (2025-10, 2026-01, 2026-05, 2026-08, all independently verified) revised year_in_service_date to 2026; and (2) FERC's Federal Register notice (Docket CP26-218-000), filed 2026-04-15 and published 2026-04-30, with a protest/intervention deadline of June 26, 2026 for a still-pending prior-notice request -- inherently inconsistent with an already-completed or already-underway 2025 in-service/construction date. Per the prompt's EIA pre-matched-candidates comparison for this row, Capacity agrees (115.0 MMcf/d) but StartYear1 differs (sheet 2025 vs EIA 2026) -- this is the flagged, owed finding, now corroborated by the FERC filing as a second, non-EIA origin. NOTE ON UNVERIFIED SUPPORTING COLOR: a Gas Compression Magazine article (gascompressionmagazine.com, 2026-04-30, 'Transco project adds Houston-bound gas capacity') states construction beginning Q2 2026 and an in-service target of November 1, 2026 -- I read this manually (it 403s to both a default curl UA and to `url_verifier.py`'s own UA; no usable Wayback snapshot exists, only 503-status captures were found in the CDX index), so it is NOT included among the proposed/verified refs per the citation rules, but its specific schedule figures are consistent with, and slightly more precise than, the '2026' shown by the two verified origins above.",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "Gillis West",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "Correct EndState/Province from Louisiana to Texas (EndCountryOrArea remains United States).",
+   "contested": {
+    "EndState/Province": "Texas"
+   },
+   "researcher_notes": "The sheet records both StartState/Province and EndState/Province as Louisiana. The FERC Federal Register notice (Docket CP26-218-000) states the project's new delivery capacity runs FROM the existing Transco mainline in Beauregard Parish, Louisiana TO three new delivery meter stations (plus Station 35 modifications) in Harris County, TEXAS -- a Louisiana-to-Texas backhaul serving the Houston area. Only the receipt-side facility work (the Louisiana Southwest LW269 Valve Site expansion) is in Louisiana; none of the described new/modified facilities are at the Louisiana end alone. This is corroborated, in unverified supporting reading only, by the Gas Compression Magazine article's description of the project serving CenterPoint Energy's Houston-area system (not included as a formal ref -- see the spec concern above for why). EIA's own workbook records only a single 'state_s' field ('LA') for this project, which the FERC filing shows is incomplete/receipt-side-only, not a genuine second-origin contradiction -- EIA's schema does not appear to separately track start vs. end state. Recommending EndState/Province=Texas, sourced to the FERC notice alone (single origin for this specific attribution) -- flagging for human review rather than treating as fully corroborated.",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "proposed"
+   },
+   "primary_value": "proposed",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
     {
-      "segment_name": "Gillis West",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No existence/classification/duplicate change needed. See the two concerns below (stale schedule years; End location attribution) and the status_reviews entry.",
-      "contested": {},
-      "researcher_notes": "EXISTENCE: real, active FERC filing. Independently confirmed by (1) FERC's own Federal Register notice, Docket No. CP26-218-000 (published 2026-04-30, filed 2026-04-15), 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization', naming the project 'Gillis West Expansion Project'; and (2) EIA's Natural Gas Pipeline Projects workbook, which has tracked a 'Gillis West' project (Transcontinental Gas Pipe Line Co) continuously since its 2024-10 release, renamed 'Gillis West Expansion' from the 2026-08 release onward, status progressing Announced -> Applied. Not a GEM-only or hallucinated entity. CLASSIFICATION: correctly classified as an NGA interstate gas transmission expansion. The FERC filing is specifically a section 157.205 'prior notice' request under Transco's existing blanket certificate (Docket No. CP82-426-000) -- a smaller/faster authorization type than a full section 7(c) certificate application, consistent with the project's small footprint (three delivery meter stations + one compressor-station/valve-site expansion, no new mainline pipe). DUPLICATE: checked against the batch roster's other Transco/Gillis-adjacent rows. P7807 'Gillis Access Project' is a genuinely DIFFERENT, unrelated project by a different operator (TC Energy, per EIA's pipeline_operator_name field) despite the similarly named receipt point -- not a duplicate of P7808. No other roster row (P7802, P7841, or the Haynesville-egress family) names 'Gillis West' or the CP26-218/CP82-426 dockets. LOCATION: the sheet's StartState/Province=Louisiana is confirmed (existing Transco mainline receipt point and the Louisiana Southwest LW269 Valve Site expansion are both in Beauregard/Allen Parishes, LA). EndState/Province is NOT confirmed as Louisiana -- see the attribution concern below. No routes-repo geometry exists for this PID (P7808.geojson has null geometry, a placeholder), which is expected for a project adding no new mainline pipe (LengthKnown=0) -- not a route-vs-sheet mismatch case.",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
     },
     {
-      "segment_name": "Gillis West",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Correct ConstructionYear and StartYear1 from 2025 to 2026.",
-      "contested": {
-        "ConstructionYear": "2026",
-        "StartYear1": "2026"
-      },
-      "researcher_notes": "The sheet's ConstructionYear=2025 and StartYear1=2025 (LastUpdated 2025-09-24) are stale. Two independent origins now disagree with 2025: (1) EIA's own dated Natural Gas Pipeline Projects releases -- the project first appeared in the 2024-10 release with year_in_service_date=2025, but every release from 2025-10 onward (2025-10, 2026-01, 2026-05, 2026-08, all independently verified) revised year_in_service_date to 2026; and (2) FERC's Federal Register notice (Docket CP26-218-000), filed 2026-04-15 and published 2026-04-30, with a protest/intervention deadline of June 26, 2026 for a still-pending prior-notice request -- inherently inconsistent with an already-completed or already-underway 2025 in-service/construction date. Per the prompt's EIA pre-matched-candidates comparison for this row, Capacity agrees (115.0 MMcf/d) but StartYear1 differs (sheet 2025 vs EIA 2026) -- this is the flagged, owed finding, now corroborated by the FERC filing as a second, non-EIA origin. NOTE ON UNVERIFIED SUPPORTING COLOR: a Gas Compression Magazine article (gascompressionmagazine.com, 2026-04-30, 'Transco project adds Houston-bound gas capacity') states construction beginning Q2 2026 and an in-service target of November 1, 2026 -- I read this manually (it 403s to both a default curl UA and to `url_verifier.py`'s own UA; no usable Wayback snapshot exists, only 503-status captures were found in the CDX index), so it is NOT included among the proposed/verified refs per the citation rules, but its specific schedule figures are consistent with, and slightly more precise than, the '2026' shown by the two verified origins above.",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "Gillis West",
-      "verdict": "concern",
-      "concern_type": "attribution",
-      "recommendation": "Correct EndState/Province from Louisiana to Texas (EndCountryOrArea remains United States).",
-      "contested": {
-        "EndState/Province": "Texas"
-      },
-      "researcher_notes": "The sheet records both StartState/Province and EndState/Province as Louisiana. The FERC Federal Register notice (Docket CP26-218-000) states the project's new delivery capacity runs FROM the existing Transco mainline in Beauregard Parish, Louisiana TO three new delivery meter stations (plus Station 35 modifications) in Harris County, TEXAS -- a Louisiana-to-Texas backhaul serving the Houston area. Only the receipt-side facility work (the Louisiana Southwest LW269 Valve Site expansion) is in Louisiana; none of the described new/modified facilities are at the Louisiana end alone. This is corroborated, in unverified supporting reading only, by the Gas Compression Magazine article's description of the project serving CenterPoint Energy's Houston-area system (not included as a formal ref -- see the spec concern above for why). EIA's own workbook records only a single 'state_s' field ('LA') for this project, which the FERC filing shows is incomplete/receipt-side-only, not a genuine second-origin contradiction -- EIA's schema does not appear to separately track start vs. end state. Recommending EndState/Province=Texas, sourced to the FERC notice alone (single origin for this specific attribution) -- flagging for human review rather than treating as fully corroborated.",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and"
-      ],
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en"
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status='proposed' is confirmed current and correct: FERC's prior-notice request (Docket CP26-218-000) is still pending as of this search (protest deadline June 26, 2026; no order found), and EIA's 2026-08 release status is 'Applied' (not yet under construction or completed). Old ref (eia data.php, an undated navigation page) replaced with the specific dated FERC and EIA documents."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
     {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Status [ref]",
-      "value_cols": [
-        "Status"
-      ],
-      "primary_value_col": "Status",
-      "values": {
-        "Status": "proposed"
-      },
-      "primary_value": "proposed",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Status='proposed' is confirmed current and correct: FERC's prior-notice request (Docket CP26-218-000) is still pending as of this search (protest deadline June 26, 2026; no order found), and EIA's 2026-08 release status is 'Applied' (not yet under construction or completed). Old ref (eia data.php, an undated navigation page) replaced with the specific dated FERC and EIA documents."
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
     },
     {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Fuel [ref]",
-      "value_cols": [
-        "Fuel"
-      ],
-      "primary_value_col": "Fuel",
-      "values": {
-        "Fuel": "Gas"
-      },
-      "primary_value": "Gas",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Trivial but owed confirmation: an NGA-regulated natural gas transmission facility, per both the FERC notice (firm transportation capacity, dekatherms/day) and EIA's gas-pipeline-projects workbook."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "PipelineType [ref]",
-      "value_cols": [
-        "PipelineType"
-      ],
-      "primary_value_col": "PipelineType",
-      "values": {
-        "PipelineType": "transmission"
-      },
-      "primary_value": "transmission",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Confirmed interstate transmission-system expansion: a section 157.205 prior-notice request under Transco's blanket certificate for delivery-meter and valve-site facilities on the existing Transco Mainline -- not gathering/processing/distribution."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Proposal [ref]",
-      "value_cols": [
-        "ProposalYear",
-        "ProposalMonth"
-      ],
-      "primary_value_col": "ProposalYear",
-      "values": {
-        "ProposalYear": "2024"
-      },
-      "primary_value": "2024",
-      "proposed_refs": [
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Earliest EIA listing found for this project: 'Gillis West' / Transcontinental Gas Pipeline, Announced, Louisiana, +115 MMcf/d, year_in_service_date=2025, last_updated_date=2024-10-11."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Single-source, capped at medium tier: the earliest confirmed public listing of this project is EIA's 2024-10 dated release (last_updated_date=2024-10-11), so ProposalYear=2024 is filled as an inferred lower bound, not a confirmed announcement date. Second-source search: Williams' customer open-season notices for this capacity live behind a login-gated portal (1line.williams.com), which could not be independently fetched/verified; no press release, FERC filing, or news article naming a specific 2024 open-season or proposal date was found in this pass. ProposalMonth left blank -- EIA's release cadence only bounds the year, not the month."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Construction [ref]",
-      "value_cols": [
-        "ConstructionYear",
-        "ConstructionMonth"
-      ],
-      "primary_value_col": "ConstructionYear",
-      "values": {
-        "ConstructionYear": "2026"
-      },
-      "primary_value": "2026",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "'Gillis West' / Transcontinental Gas Pipe Line Company LLC, Announced, LA, miles=0, +115 MMcf/d, year_in_service_date revised to 2026 (last_updated_date=2025-10-15) -- first release to show the 2026 in-service year."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Same project, year_in_service_date=2026, now carrying docket_number='CP26-33, CP25-521' (last_updated_date=2026-01-20)."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Corrected from the sheet's recorded 2025 to 2026 -- see the spec concern in validity[] for the full two-origin corroboration (EIA's own release-history revision + the still-pending FERC filing with a June 2026 protest deadline). ConstructionMonth left blank: the Gas Compression Magazine article's 'Q2 2026' claim could not be formally verified (403 to url_verifier; no usable Wayback snapshot) and is not cited as a ref."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Start [ref]",
-      "value_cols": [
-        "StartYear1",
-        "StartMonth1",
-        "StartYear2",
-        "StartYear2Month",
-        "StartYear3",
-        "StartYear3Month"
-      ],
-      "primary_value_col": "StartYear1",
-      "values": {
-        "StartYear1": "2026"
-      },
-      "primary_value": "2026",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "'Gillis West' / Transcontinental Gas Pipe Line Company LLC, Announced, LA, miles=0, +115 MMcf/d, year_in_service_date revised to 2026 (last_updated_date=2025-10-15) -- first release to show the 2026 in-service year."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Same project, year_in_service_date=2026, now carrying docket_number='CP26-33, CP25-521' (last_updated_date=2026-01-20)."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Corrected from the sheet's recorded 2025 to 2026, same two-origin basis as Construction above (EIA's own revision across dated releases + the FERC filing's still-pending status/protest deadline). StartMonth1 left blank: the specific 'November 1, 2026' in-service date appears only in the unverifiable Gas Compression Magazine article (403 to url_verifier, no usable Wayback snapshot), so it is not cited as a sourced month."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Capacity [ref]",
-      "value_cols": [
-        "Capacity",
-        "CapacityUnits"
-      ],
-      "primary_value_col": "Capacity",
-      "values": {
-        "Capacity": "115.00",
-        "CapacityUnits": "MMcf/d"
-      },
-      "primary_value": "115.00",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Confirmed by two independent origins: FERC's notice states 115,000 dekatherms/day (Dth/d) of incremental firm transportation capacity -- 1 Dth/d approx. 1 Mcf/d, so this converts almost exactly to the sheet's recorded 115.00 MMcf/d -- and EIA's workbook independently lists additional_capacity_mmcf_d=115 for the same project across every dated release from 2024-10 onward. The old ref (eia data.php) failed its own existing-ref check ('200 but data value not found') because it is an undated navigation page, not a data table; replaced with the dated FERC notice and EIA release."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Pressure [ref]",
-      "value_cols": [
-        "Pressure",
-        "PressureUnits"
-      ],
-      "primary_value_col": "Pressure",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Searched the FERC Federal Register notice (no MAOP/pressure figure given -- prior-notice filings of this size typically omit it from the public notice), EIA's Natural Gas Pipeline Projects workbook (no pressure field populated for this project), and open web search for 'Gillis West Expansion MAOP psig' / 'Transco Station 35 pressure' (no hit specific to this project). The full FERC application/exhibit package (filed under CP26-218-000) likely states MAOP for the modified facilities, but FERC eLibrary is a search interface rather than a directly fetchable document URL and was not reached in this pass. Left blank rather than forced."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Length [ref]",
-      "value_cols": [
-        "LengthKnown",
-        "LengthKnownUnits"
-      ],
-      "primary_value_col": "LengthKnown",
-      "values": {
-        "LengthKnown": "0.00",
-        "LengthKnownUnits": "mi"
-      },
-      "primary_value": "0.00",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Confirmed 0.00 mi of new mainline pipe: the FERC notice describes only delivery meter stations, a compressor-station (Station 35) modification, and a valve-site expansion -- no new pipeline segment -- and EIA's workbook records miles=0 for this project in every release since 2025-10. Consistent with the project's scope and with the batch's 'expansion with no new physical pipe -> LengthKnown=0, Diameter=blank' convention."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Diameter [ref]",
-      "value_cols": [
-        "Diameter",
-        "DiameterUnits"
-      ],
-      "primary_value_col": "Diameter",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Blank is the correct state, not a gap: per the 'expansion with no new physical pipe -> Diameter blank' rule (LengthKnown=0.00, confirmed above), this delivery-meter/valve-site/compressor-modification project builds no new mainline pipe segment to have a diameter. The FERC notice does mention component pipe/valve sizes for individual meter stations in its facilities description, but these are facility-component sizes, not a mainline segment diameter, and are not used to fill this cell per gem_schema.md's convention. EIA's workbook carries no pipeline_diameter_inches value for this project either. Left blank rather than fabricated."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "FuelSource [ref]",
-      "value_cols": [
-        "FuelSource"
-      ],
-      "primary_value_col": "FuelSource",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Per gem_schema.md, FuelSource must name the specific upstream field/plant/facility feeding the line, not the commodity. The FERC notice states the incremental capacity is delivered 'from the existing Transco mainline in Beauregard Parish, Louisiana' -- an existing trunk-line receipt point drawing on gas aggregated from Transco's broader system (including Haynesville-basin supply generally, per gem.wiki's uncited prose and a general Williams regional web page), not one named field, plant, or facility. Searched the FERC notice, EIA's workbook, and Williams' general Southwest Louisiana web page; none attributes this specific capacity to a single named upstream source. Left blank rather than defaulting to 'Natural Gas' or guessing a basin/facility name."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Location [ref]",
-      "value_cols": [
-        "StartLocation",
-        "StartPrefecture/District",
-        "StartState/Province",
-        "StartCountryOrArea",
-        "EndLocation",
-        "EndPrefecture/District",
-        "EndState/Province",
-        "EndCountryOrArea"
-      ],
-      "primary_value_col": "StartLocation",
-      "values": {
-        "StartState/Province": "Louisiana",
-        "StartCountryOrArea": "United States",
-        "EndState/Province": "Texas",
-        "EndCountryOrArea": "United States"
-      },
-      "primary_value": "Louisiana",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "StartState/Province=Louisiana is confirmed (existing Transco mainline receipt point and the Louisiana Southwest LW269 Valve Site expansion, both in Beauregard/Allen Parishes, LA). EndState/Province is corrected from the sheet's recorded Louisiana to Texas -- see the attribution concern in validity[] for full sourcing (FERC notice: three new delivery meter stations + Station 35 modifications, all in Harris County, TEXAS). This end-location correction is single-origin (FERC notice only; EIA's workbook does not separately track start/end state), so filed at medium tier pending a second independent source. No routes-repo geometry exists for this PID to cross-check (P7808.geojson has null geometry)."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "SegmentCost [ref]",
-      "value_cols": [
-        "SegmentCost",
-        "SegmentCostUnits",
-        "SegmentCostYear"
-      ],
-      "primary_value_col": "SegmentCost",
-      "values": {
-        "SegmentCost": "28.70",
-        "SegmentCostUnits": "USD",
-        "SegmentCostYear": "2026"
-      },
-      "primary_value": "28.70",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "FERC's Federal Register notice states an estimated project cost of $28,697,634 (= $28.70 million), filed/estimated as of the 2026-04-15 request. Single-origin (FERC notice only) -- no second independent source stating a cost figure was found (EIA's workbook does not populate cost_millions for this project in any release); filed at medium tier. SegmentCostUnits=USD per the controlled-vocabulary rule (bare currency code, magnitude in the number)."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Operator [ref]",
-      "value_cols": [
-        "Operator",
-        "OperatorLocalLanguage",
-        "QCCOwner(业主单位)"
-      ],
-      "primary_value_col": "Operator",
-      "values": {
-        "Operator": "Trancontinental Gas Pipe Line Co LLC"
-      },
-      "primary_value": "Trancontinental Gas Pipe Line Co LLC",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Value kept as recorded (a ref was missing, not a value) and confirmed by two independent origins naming the operator: FERC's notice ('Transcontinental Gas Pipe Line Company, LLC') and EIA's workbook (pipeline_operator_name='Transcontinental Gas Pipe Line Company, LLC'). NOTE: the sheet's string is a typo relative to both confirmed sources -- missing the 's' in 'Transcontinental' and abbreviated 'Co' instead of 'Company, LLC'. Per this batch's convention (see the P7805 precedent), the value is not silently rewritten here; flagging the spelling issue is left to a separate attribution note if Baird wants the string corrected -- not raised as a formal validity concern in this shard since it does not affect the underlying entity identity (same company, sourced consistently)."
-    },
-    {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "ref_col": "Owner [ref]",
-      "value_cols": [
-        "Owner1",
-        "Owner1%",
-        "Owner2",
-        "Owner2%",
-        "Owner3",
-        "Owner3%",
-        "Owner4",
-        "Owner4%",
-        "Owner5",
-        "Owner5%",
-        "Owner6",
-        "Owner6%",
-        "Owner7",
-        "Owner7%",
-        "Owner8",
-        "Owner8%",
-        "Owner9",
-        "Owner9%",
-        "Owner10",
-        "Owner10%",
-        "Owner11",
-        "Owner11%"
-      ],
-      "primary_value_col": "Owner1",
-      "values": {
-        "Owner1": "Transco",
-        "Owner1%": "100.00%"
-      },
-      "primary_value": "Transco",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Confirmed 100% Transco ownership: FERC's notice is filed by Transco itself under its own blanket certificate, and EIA's workbook lists Transcontinental Gas Pipe Line Company, LLC as sole operator with no other owner entities. Old ref (eia data.php navigation page) replaced with the specific dated FERC and EIA documents."
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
     }
-  ],
-  "cross_row_leads": [
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Trivial but owed confirmation: an NGA-regulated natural gas transmission facility, per both the FERC notice (firm transportation capacity, dekatherms/day) and EIA's gas-pipeline-projects workbook."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
     {
-      "project_id": "P7807",
-      "finding": "P7807 'Gillis Access Project' is a genuinely distinct project from P7808 'Gillis West' despite the similar name -- EIA's workbook attributes it to a different operator (TC Energy, not Transcontinental Gas Pipe Line Company/Williams). Not a duplicate; no change recommended to P7807 from this shard's research.",
-      "confidence": "high"
-    }
-  ],
-  "status_reviews": [
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
     {
-      "segment_name": "Gillis West",
-      "sheet_row": 4188,
-      "current_status": "proposed",
-      "verdict": "confirm",
-      "proposed_status": "",
-      "proposed_changes": {},
-      "evidence_date": "2026-04",
-      "staleness_rule": "",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
-        },
-        {
-          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
-        }
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Status='proposed' remains correct. Most recent independent evidence: FERC's Federal Register notice, Docket No. CP26-218-000 (filed 2026-04-15, published 2026-04-30), a still-pending section 157.205 prior-notice request under Transco's blanket certificate, with a protest/intervention/comment deadline of June 26, 2026 -- no FERC order or authorization outcome was found as of this search (2026-09), so the request may already be deemed authorized by operation of the regulation (if unprotested) or still be under review; either way the project has not begun construction or entered service, consistent with 'proposed'. EIA's 2026-08 release independently shows status='Applied' for the renamed 'Gillis West Expansion' project, agreeing with 'proposed'. Do not confuse this NGA section 157.205 prior-notice process (Transco's own blanket certificate, Docket CP82-426-000) with a full section 7(c) certificate proceeding -- it is a smaller/faster authorization type, and 'deemed authorized' can happen without a formal order if no protest is filed and not withdrawn."
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
     }
-  ],
-  "summary": "confirmed (caveat), no existence/duplicate/classification issue; two concerns staged -- spec (ConstructionYear/StartYear1 2025->2026, high tier, FERC+EIA) and attribution (EndState/Province Louisiana->Texas, medium tier, FERC notice only); status_reviews verdict=confirm (proposed). UNRESOLVED: Pressure, FuelSource (not found, searched); Diameter UNRESOLVED but correctly blank (no-new-pipe scope)."
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirmed interstate transmission-system expansion: a section 157.205 prior-notice request under Transco's blanket certificate for delivery-meter and valve-site facilities on the existing Transco Mainline -- not gathering/processing/distribution."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2024"
+   },
+   "primary_value": "2024",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Earliest EIA listing found for this project: 'Gillis West' / Transcontinental Gas Pipeline, Announced, Louisiana, +115 MMcf/d, year_in_service_date=2025, last_updated_date=2024-10-11."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Single-source, capped at medium tier: the earliest confirmed public listing of this project is EIA's 2024-10 dated release (last_updated_date=2024-10-11), so ProposalYear=2024 is filled as an inferred lower bound, not a confirmed announcement date. Second-source search: Williams' customer open-season notices for this capacity live behind a login-gated portal (1line.williams.com), which could not be independently fetched/verified; no press release, FERC filing, or news article naming a specific 2024 open-season or proposal date was found in this pass. ProposalMonth left blank -- EIA's release cadence only bounds the year, not the month."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2026"
+   },
+   "primary_value": "2026",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Gillis West' / Transcontinental Gas Pipe Line Company LLC, Announced, LA, miles=0, +115 MMcf/d, year_in_service_date revised to 2026 (last_updated_date=2025-10-15) -- first release to show the 2026 in-service year."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same project, year_in_service_date=2026, now carrying docket_number='CP26-33, CP25-521' (last_updated_date=2026-01-20)."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Corrected from the sheet's recorded 2025 to 2026 -- see the spec concern in validity[] for the full two-origin corroboration (EIA's own release-history revision + the still-pending FERC filing with a June 2026 protest deadline). ConstructionMonth left blank: the Gas Compression Magazine article's 'Q2 2026' claim could not be formally verified (403 to url_verifier; no usable Wayback snapshot) and is not cited as a ref."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2026"
+   },
+   "primary_value": "2026",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Gillis West' / Transcontinental Gas Pipe Line Company LLC, Announced, LA, miles=0, +115 MMcf/d, year_in_service_date revised to 2026 (last_updated_date=2025-10-15) -- first release to show the 2026 in-service year."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same project, year_in_service_date=2026, now carrying docket_number='CP26-33, CP25-521' (last_updated_date=2026-01-20)."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Corrected from the sheet's recorded 2025 to 2026, same two-origin basis as Construction above (EIA's own revision across dated releases + the FERC filing's still-pending status/protest deadline). StartMonth1 left blank: the specific 'November 1, 2026' in-service date appears only in the unverifiable Gas Compression Magazine article (403 to url_verifier, no usable Wayback snapshot), so it is not cited as a sourced month."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "115.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "115.00",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirmed by two independent origins: FERC's notice states 115,000 dekatherms/day (Dth/d) of incremental firm transportation capacity -- 1 Dth/d approx. 1 Mcf/d, so this converts almost exactly to the sheet's recorded 115.00 MMcf/d -- and EIA's workbook independently lists additional_capacity_mmcf_d=115 for the same project across every dated release from 2024-10 onward. The old ref (eia data.php) failed its own existing-ref check ('200 but data value not found') because it is an undated navigation page, not a data table; replaced with the dated FERC notice and EIA release."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched the FERC Federal Register notice (no MAOP/pressure figure given -- prior-notice filings of this size typically omit it from the public notice), EIA's Natural Gas Pipeline Projects workbook (no pressure field populated for this project), and open web search for 'Gillis West Expansion MAOP psig' / 'Transco Station 35 pressure' (no hit specific to this project). The full FERC application/exhibit package (filed under CP26-218-000) likely states MAOP for the modified facilities, but FERC eLibrary is a search interface rather than a directly fetchable document URL and was not reached in this pass. Left blank rather than forced. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: tier '' -> 'low'. The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "0.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "0.00",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirmed 0.00 mi of new mainline pipe: the FERC notice describes only delivery meter stations, a compressor-station (Station 35) modification, and a valve-site expansion -- no new pipeline segment -- and EIA's workbook records miles=0 for this project in every release since 2025-10. Consistent with the project's scope and with the batch's 'expansion with no new physical pipe -> LengthKnown=0, Diameter=blank' convention."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Blank is the correct state, not a gap: per the 'expansion with no new physical pipe -> Diameter blank' rule (LengthKnown=0.00, confirmed above), this delivery-meter/valve-site/compressor-modification project builds no new mainline pipe segment to have a diameter. The FERC notice does mention component pipe/valve sizes for individual meter stations in its facilities description, but these are facility-component sizes, not a mainline segment diameter, and are not used to fill this cell per gem_schema.md's convention. EIA's workbook carries no pipeline_diameter_inches value for this project either. Left blank rather than fabricated. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: tier '' -> 'low'. The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Per gem_schema.md, FuelSource must name the specific upstream field/plant/facility feeding the line, not the commodity. The FERC notice states the incremental capacity is delivered 'from the existing Transco mainline in Beauregard Parish, Louisiana' -- an existing trunk-line receipt point drawing on gas aggregated from Transco's broader system (including Haynesville-basin supply generally, per gem.wiki's uncited prose and a general Williams regional web page), not one named field, plant, or facility. Searched the FERC notice, EIA's workbook, and Williams' general Southwest Louisiana web page; none attributes this specific capacity to a single named upstream source. Left blank rather than defaulting to 'Natural Gas' or guessing a basin/facility name. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: tier '' -> 'low'. The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartState/Province": "Louisiana",
+    "StartCountryOrArea": "United States",
+    "EndState/Province": "Texas",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Louisiana",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "StartState/Province=Louisiana is confirmed (existing Transco mainline receipt point and the Louisiana Southwest LW269 Valve Site expansion, both in Beauregard/Allen Parishes, LA). EndState/Province is corrected from the sheet's recorded Louisiana to Texas -- see the attribution concern in validity[] for full sourcing (FERC notice: three new delivery meter stations + Station 35 modifications, all in Harris County, TEXAS). This end-location correction is single-origin (FERC notice only; EIA's workbook does not separately track start/end state), so filed at medium tier pending a second independent source. No routes-repo geometry exists for this PID to cross-check (P7808.geojson has null geometry)."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "28.70",
+    "SegmentCostUnits": "USD",
+    "SegmentCostYear": "2026"
+   },
+   "primary_value": "28.70",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FERC's Federal Register notice states an estimated project cost of $28,697,634 (= $28.70 million), filed/estimated as of the 2026-04-15 request. Single-origin (FERC notice only) -- no second independent source stating a cost figure was found (EIA's workbook does not populate cost_millions for this project in any release); filed at medium tier. SegmentCostUnits=USD per the controlled-vocabulary rule (bare currency code, magnitude in the number)."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Trancontinental Gas Pipe Line Co LLC"
+   },
+   "primary_value": "Trancontinental Gas Pipe Line Co LLC",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Value kept as recorded (a ref was missing, not a value) and confirmed by two independent origins naming the operator: FERC's notice ('Transcontinental Gas Pipe Line Company, LLC') and EIA's workbook (pipeline_operator_name='Transcontinental Gas Pipe Line Company, LLC'). NOTE: the sheet's string is a typo relative to both confirmed sources -- missing the 's' in 'Transcontinental' and abbreviated 'Co' instead of 'Company, LLC'. Per this batch's convention (see the P7805 precedent), the value is not silently rewritten here; flagging the spelling issue is left to a separate attribution note if Baird wants the string corrected -- not raised as a formal validity concern in this shard since it does not affect the underlying entity identity (same company, sourced consistently)."
+  },
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Transco",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Transco",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirmed 100% Transco ownership: FERC's notice is filed by Transco itself under its own blanket certificate, and EIA's workbook lists Transcontinental Gas Pipe Line Company, LLC as sole operator with no other owner entities. Old ref (eia data.php navigation page) replaced with the specific dated FERC and EIA documents."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P7807",
+   "finding": "P7807 'Gillis Access Project' is a genuinely distinct project from P7808 'Gillis West' despite the similar name -- EIA's workbook attributes it to a different operator (TC Energy, not Transcontinental Gas Pipe Line Company/Williams). Not a duplicate; no change recommended to P7807 from this shard's research.",
+   "confidence": "high"
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Gillis West",
+   "sheet_row": 4188,
+   "current_status": "proposed",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-04",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2026/04/30/2026-08457/transcontinental-gas-pipe-line-company-llc-notice-of-request-under-blanket-authorization-and",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC Docket No. CP26-218-000, 'Transcontinental Gas Pipe Line Company, LLC; Notice of Request Under Blanket Authorization' (91 FR 23260, published 2026-04-30). States Transco requested prior-notice authorization (NGA section 157.205, under its existing blanket certificate, Docket No. CP82-426-000) for the 'Gillis West Expansion Project': (1) construct three new delivery meter stations and modify Station 35 in Harris County, Texas, and (2) expand the existing Louisiana Southwest LW269 Valve Site in Beauregard and Allen Parishes, Louisiana. Capacity: 115,000 Dth/d incremental firm transportation from the existing Transco mainline in Beauregard Parish, LA to the three delivery points in Harris County, TX. Estimated cost: $28,697,634. Protest/intervention/comment deadline: June 26, 2026. No prior order or protest outcome found as of this search."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Project renamed 'Gillis West Expansion' / Transcontinental Gas Pipe Line Company LLC, status='Applied', LA, miles=0, +115 MMcf/d, year_in_service_date=2026 (last_updated_date=2026-07-06) -- consistent with the FERC CP26-218 filing of 2026-04-15."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status='proposed' remains correct. Most recent independent evidence: FERC's Federal Register notice, Docket No. CP26-218-000 (filed 2026-04-15, published 2026-04-30), a still-pending section 157.205 prior-notice request under Transco's blanket certificate, with a protest/intervention/comment deadline of June 26, 2026 -- no FERC order or authorization outcome was found as of this search (2026-09), so the request may already be deemed authorized by operation of the regulation (if unprotested) or still be under review; either way the project has not begun construction or entered service, consistent with 'proposed'. EIA's 2026-08 release independently shows status='Applied' for the renamed 'Gillis West Expansion' project, agreeing with 'proposed'. Do not confuse this NGA section 157.205 prior-notice process (Transco's own blanket certificate, Docket CP82-426-000) with a full section 7(c) certificate proceeding -- it is a smaller/faster authorization type, and 'deemed authorized' can happen without a formal order if no protest is filed and not withdrawn."
+  }
+ ],
+ "summary": "confirmed (caveat), no existence/duplicate/classification issue; two concerns staged -- spec (ConstructionYear/StartYear1 2025->2026, high tier, FERC+EIA) and attribution (EndState/Province Louisiana->Texas, medium tier, FERC notice only); status_reviews verdict=confirm (proposed). UNRESOLVED: Pressure, FuelSource (not found, searched); Diameter UNRESOLVED but correctly blank (no-new-pipe scope)."
 }

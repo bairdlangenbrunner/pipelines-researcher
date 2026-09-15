@@ -1,0 +1,503 @@
+{
+  "project_id": "P7464",
+  "pipeline_name": "Anchorage System Gas Pipeline",
+  "sheet_row": 3850,
+  "wiki": "https://www.gem.wiki/Anchorage_System_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No fabrication risk — the underlying transmission network and its operator/owner are well documented in an independent SEC 10-K and the current parent-company's operations page. But no independent source anywhere (SEC filing, TriSummit/ENSTAR materials, NPMS) uses the specific name 'Anchorage System' or attests a discrete 50-mile segment boundary — treat LengthKnown (50.00 mi) as unverified at the segment level until a PHMSA NPMS county-map export or an RCA/DNR filing that actually names this segment is located.",
+      "contested": {
+        "LengthKnown": ""
+      },
+      "researcher_notes": "EXISTENCE/ATTRIBUTION checked independently of GEM. The sheet's current [ref] for Status/Fuel/PipelineType/Length/Location is the bare NPMS root (https://www.npms.phmsa.dot.gov/) — confirmed by direct fetch (HTTP 200, 17KB landing page: PIMMA login, Public Map Viewer link, About/FAQ) to contain zero pipeline-specific content; it is a navigation surface, not a citation (matches this batch's addendum finding — same defect on 44 units across 11 rows in this slice). The Owner [ref] (ENSTAR March-2022 PDF) was independently re-extracted with pdftotext -layout: it describes ENSTAR owning/operating 'over 400 miles of high-pressure natural gas transmission pipelines in Southcentral Alaska' ranging 2-20in diameter at 270-1000+ PSI, but the literal phrase 'Anchorage System' does not appear anywhere in it (0 hits on grep) — the worklist's own existing_ref_checks flag of name_found=true/name_matched='Anchorage System Gas Pipeline' on this ref is a FALSE POSITIVE from the builder's fuzzy matcher (it is loosely matching the generic tokens 'Anchorage' and 'System' rather than the phrase); corrected to name_found=false in this shard's Owner fill. Independent corroboration found instead: SEC EDGAR full-text search located SEMCO Energy Inc's FY2005 10-K (CIK 0000277158, filed 2006-03-14, https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm), which describes 'Alaska Pipeline Company' (APC) as a real subsidiary whose 'transmission system delivers natural gas from producing fields in South Central Alaska to ENSTAR's Anchorage-area gas distribution system... APC's only customer is ENSTAR', with the network at ~393 miles of gas transmission pipeline in 2005 — this directly confirms the sheet's Operator value 'Alaska Pipeline Co LLC' as a genuine, historically documented entity feeding gas specifically into Anchorage, and confirms Fuel=Gas, PipelineType=transmission, and general Location=Anchorage/Alaska as categorical facts about the shared network. TriSummit's current ENSTAR operations page (https://trisummit.ca/operations/enstar-natural-gas, verified live) independently confirms ENSTAR Natural Gas Co as the current owner/operator, 'headquartered in Anchorage, Alaska', '711 kilometers of high-pressure transmission lines... two subsea pipelines that deliver gas from the Kenai Gas Fields to Anchorage and beyond' — i.e. a present-day, larger (711km/442mi) version of the same network. NONE of these three sources uses the phrase 'Anchorage System' or gives a 50-mile figure for a segment of that name. CROSS-CHECK: summing the LengthKnown values of the other APC/ENSTAR-affiliated Alaska rows on this roster (P7450, P7453, P7454, P7455, P7456, P7458, P7461 — excluding P7462 Nuiqsut/Alpine and P7465 Trans-Alaska/TAPS fuel-gas, which are different operators/systems) plus this row's 50 mi gives ~378.55 mi, remarkably close to the SEC 10-K's 2005 total (~393 mi) and TriSummit's current total (~442 mi/711 km) — strong circumstantial evidence that GEM's Alaska roster is a legitimate, if internally-drawn, decomposition of one real, continuously-documented transmission network into individually named system/segment rows, not a fabricated entity. Net call: real infrastructure, correctly classified and attributed; the caveat is narrowly that the specific 'Anchorage System' segment identity/boundary/length is GEM's own decomposition, unattested by any outside source found. CITATION POOL: wiki_citations.json carries only 3 harvested citations for this PID (NPMS home, the ENSTAR PDF, the TriSummit page) — an unusually thin pool versus this batch's calibration (harvested-pool median much higher); all 3 were opened and read to exhaustion. WebSearch was unavailable this session (quota already exhausted at dispatch); DuckDuckGo/Bing HTML scraping via curl was attempted for RCA/PHMSA/Alaska-press leads and returned only bot-challenge pages or unparsed JS shells -- documented, not treated as evidence nothing exists. ACCESS CORRECTION (2026-09-15 re-audit): PHMSA's data-and-statistics page does genuinely 403 live (reproduced: HTTP/2 403, Akamai) -- that part of the original claim was correct. RCA Alaska (rca.alaska.gov) also genuinely 403s live behind DataDome (reproduced: 403, 'Server: DataDome', 773 bytes) -- also correct. But the original note's 'Wayback CDX returned zero snapshots for both' was FALSE for both hosts: PHMSA's mileage-and-facilities page has a real, substantive 2025-01-02 Wayback capture (60KB, real PHMSA page chrome, not a shell) -- it is a national data-and-statistics landing page with no Alaska/ENSTAR/segment-specific figures, so it still supports nothing for this row, but 'no snapshot exists' is not why. RCA's Wayback history runs into the thousands of captures back to 2004, including a real 2005 'Company: ENSTAR' record (CPCN #4, docket history) -- see the per-unit notes below for what it does and doesn't establish. Separately, Alaska DNR's own pipeline registry (dog.dnr.alaska.gov/Services/Pipelines) is NOT blocked -- confirmed reachable at HTTP 200 -- and was read in full: it carries no entry for this network (a jurisdiction gap, not an access failure; see fills[] notes).",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+        "https://trisummit.ca/operations/enstar-natural-gas",
+        "https://www.enstarnaturalgas.com/wp-content/uploads/March-2022-web.pdf"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://trisummit.ca/operations/enstar-natural-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://trisummit.ca/operations/enstar-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "Live TriSummit operations page describes ENSTAR as currently, actively serving customers ('Alaskans have relied on ENSTAR to serve their homes and businesses with cleaner burning, economical and efficient natural gas for over 60 years'), listing 711 km of high-pressure transmission lines including 'two subsea pipelines that deliver gas from the Kenai Gas Fields to Anchorage and beyond' — status='operating' is inferred from this current, active-operations prose (per convention, status is inferred, not a literal substring match). Does not name 'Anchorage System' specifically; the old current_ref (bare NPMS root, https://www.npms.phmsa.dot.gov/) was confirmed to carry zero pipeline-specific content and is dropped per this batch's addendum finding."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (NPMS root) is a navigation landing page with no pipeline-specific content (confirmed by direct fetch) — never a citation, per this batch's addendum. Replaced with TriSummit's current ENSTAR operations page, which supports 'operating' by context (current, dated-as-live description of the network actively delivering gas to Anchorage) but does not name this specific 50-mile segment, so tier is capped at low. No evidence of idling, sale, or conversion was found for this specific segment; see status_reviews for the formal review."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+        "https://trisummit.ca/operations/enstar-natural-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "SEMCO Energy FY2005 10-K: 'APC's transmission system delivers natural gas from producing fields in South Central Alaska to ENSTAR's Anchorage-area gas distribution system' — states the commodity is natural gas for this exact network; does not use the phrase 'Anchorage System'."
+        },
+        {
+          "url": "https://trisummit.ca/operations/enstar-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "'ENSTAR to serve their homes and businesses with cleaner burning, economical and efficient natural gas... deliver gas from the Kenai Gas Fields to Anchorage' — confirms natural gas as the commodity for the same network; does not name the segment."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (NPMS root) carries no content and is dropped. Two distinct-origin sources (SEMCO Energy's 2006 SEC filing, and the current ENSTAR/TriSummit family) both state the commodity is natural gas for this network, but neither names this specific segment (only the wider APC/ENSTAR system), so tier is capped at low per this campaign's naming rule rather than raised for the 2-origin count."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+        "https://trisummit.ca/operations/enstar-natural-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "'included approximately 393 miles of gas transmission pipelines and 2,650 miles of gas distribution mains' and 'APC's transmission system delivers natural gas...' — explicitly classifies this network as transmission (as distinct from distribution mains). Does not name this specific segment."
+        },
+        {
+          "url": "https://trisummit.ca/operations/enstar-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "'711 kilometers of high-pressure transmission lines and 5,000 kilometers of distribution pipelines' — same transmission-vs-distribution classification for the current network. Does not name this specific segment."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (NPMS root) carries no content and is dropped. Both replacement sources explicitly distinguish 'transmission' pipelines/lines from 'distribution' mains for this exact network, confirming the recorded classification; capped at tier=low because neither names this specific segment (aggregate/system-level statement)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. No EIA match either (checked sources/eia_pipeline_projects/data/eia_projects_long.csv directly for 'anchorage'/'alaska pipeline'/'enstar'; all 28 hits are the unrelated ASAP project, P0293's row). No FERC docket applies (state-regulated utility, not FERC-jurisdictional). Genuinely nothing states a proposal year for this specific 50-mile segment -- left blank rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. Same EIA/FERC checks as Proposal, same result (no match). The RCA ENSTAR company record shows dockets back to the mid-1970s and a 1982 name change from 'Alaska Gas & Service Co' to ENSTAR under CPCN #4 -- company-level history, not a construction date for this specific named segment as opposed to the wider network. Genuinely nothing found -- left blank rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. Same searches as Proposal/Construction, same result. The network was already certificated and operating under RCA's predecessor by the mid-1970s (earliest docket found: U-75-025, 1975) and is described as serving Anchorage 'for over 60 years' per TriSummit, but no source ties an in-service year to this specific named 50-mile segment as opposed to the wider ENSTAR/APC network. Left blank rather than forced with an inferred network-wide date."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. RCA's tariff records (TA-prefixed dockets, which would carry design capacity/rate-base detail) are indexed for ENSTAR in the 2005 company-record capture (e.g. TA69-4, TA61-4, TA58-4/TA59-4) but the tariff documents themselves were not captured by Wayback (only the docket index entries were) and the live site 403s. No capacity figure for this specific segment was found anywhere -- left blank rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. No RCA tariff document (as opposed to its docket index entry) was recoverable via Wayback, and the live site 403s. The ENSTAR March-2022 PDF's system-wide PSI range still cannot be assigned to one segment (aggregate-vs-segment rule). Left blank rather than assign the network-wide range to one segment."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "50.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "50.00",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://www.npms.phmsa.dot.gov/",
+          "ok": true,
+          "contains_value": false,
+          "name_found": false,
+          "note": "Bare NPMS landing page (PIMMA login / Public Map Viewer / About-FAQ) — HTTP 200 but zero pipeline-specific content; cannot state or confirm any segment length. Dropped as a ref per this batch's addendum finding (same defect on 44 units/11 rows in this slice)."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. No RCA tariff/certificate document carrying a segment-specific length was recoverable via Wayback (the 2005 ENSTAR company-record capture is a docket index, not a tariff filing; certificateDetail.html?CPCN=4 itself was never archived), and the live site 403s. The SEC 10-K's ~393-mile (2005) and TriSummit's ~442-mile/711km (current) figures remain SYSTEM TOTALS and, per the aggregate-vs-segment rule, cannot be used as a ref for this one segment's individual length. Cross-check only (not a citation): summing this row's 50 mi with the other APC/ENSTAR Alaska rows on the roster (P7450, P7453, P7454, P7455, P7456, P7458, P7461) gives ~378.55 mi, close to both system totals -- circumstantial support for the decomposition, not independent verification of 50.00 mi for THIS row. Filed as a caveat in validity[] (contested.LengthKnown)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. No RCA tariff/certificate document carrying a segment-specific diameter was recoverable via Wayback, and the live site 403s; no DNR entry exists for this network (jurisdiction gap, not a block); no EIA match. The ENSTAR PDF's system-wide diameter range ('2 inch to 20 inch') still cannot be assigned to one segment. Left blank rather than assign a network-wide range to one segment."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource requires the named upstream field/plant, not the commodity (per docs/reference/gem_schema.md). SEC 10-K: gas from 'producing fields in South Central Alaska'; TriSummit: 'Kenai Gas Fields'; ENSTAR PDF: 'Cook Inlet gas fields' — all describe the shared regional feedstock for the WHOLE ENSTAR/APC network (multiple Cook Inlet fields feed a shared transmission grid), not a single named field attributable to this one 50-mile segment specifically. Per the schema note ('if you can't attribute one, leave it blank and note why — do not default it'), declined to assign one specific field name to this segment given the ambiguity; a fill risking a wrong specific-field attribution is worse than leaving it blank. ADDENDUM (2026-09-15): Alaska DNR's pipeline registry (dog.dnr.alaska.gov/Services/Pipelines, confirmed reachable, HTTP 200) and the RCA ENSTAR company/docket record (Wayback 2005 capture, real content) were both checked directly for this unit too -- neither names a specific upstream field for this 50-mile segment (DNR has no entry for this network at all; RCA's record is a docket index, not a field-attribution document). Conclusion unchanged."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Anchorage",
+        "StartPrefecture/District": "Municipality of Anchorage",
+        "StartState/Province": "Alaska",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Anchorage",
+        "EndPrefecture/District": "Municipality of Anchorage",
+        "EndState/Province": "Alaska",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Anchorage",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+        "https://trisummit.ca/operations/enstar-natural-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "'APC's transmission system delivers natural gas from producing fields in South Central Alaska to ENSTAR's Anchorage-area gas distribution system... ENSTAR's pipelines, mains and service lines are located in Anchorage and the Cook Inlet area' — confirms Anchorage, Alaska, US as the operating area for this network."
+        },
+        {
+          "url": "https://trisummit.ca/operations/enstar-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "'ENSTAR Natural Gas Company, headquartered in Anchorage, Alaska... two subsea pipelines that deliver gas from the Kenai Gas Fields to Anchorage and beyond' — confirms Anchorage, Alaska as the delivery point."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (NPMS root) carries no content and is dropped. Both replacements confirm Anchorage, Alaska, United States as the operating area; capped at tier=low since neither names this specific segment (system-level statement). Note: Start and End location are identical (Anchorage/Anchorage) per the sheet — worklist flags this as 'irregular'. Consistent with this being an in-city distribution-feeding transmission loop/system rather than a point-A-to-point-B long-haul trunk; not treated as a classification error since PipelineType=transmission is independently confirmed (see Fuel/PipelineType fills), but noted here for the record."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ACCESS CORRECTION (2026-09-15 re-audit): the prior pass's blocked-source claims were partly false and are restated here. rca.alaska.gov LIVE genuinely 403s: reproduced with curl (browser UA, --compressed) -> HTTP 403, 'Server: DataDome' / 'X-DataDome: protected', 773-byte challenge page. But Wayback is NOT empty for this host -- the prior claim of 'zero snapshots' was false: CDX lists thousands of captures back to 2004. The 2026-08-14 capture of the site root (web.archive.org/web/20260814171212/https://rca.alaska.gov/) redirects to the pre-2020 RCAWeb/home.aspx template and returns real page content (menus, docket/meeting links), not a JS shell. A 2005 capture of rca.alaska.gov/data/companyDetail.html?acronym=ENSTAR (200, real content) is an actual RCA 'Company: ENSTAR' record: CPCN #4 ('ENSTAR NATURAL GAS COMPANY, A DIVISION OF SEMCO', Gas) plus a docket history including U-01-007 'ALASKA PIPELINE COMPANY AND UNION OIL COMPANY OF CALIFORNIA, GAS SALES AGMT' (2001) and U-00-088 'ENSTAR NATURAL GAS CO. & ALASKA PIPELINE CO., INVE[STIGATION]' (2000) -- independent state-regulator confirmation of the APC/ENSTAR relationship already established via the SEC 10-K. It is a company/docket index, though, not a segment record: no mileage, diameter, capacity, pressure, or construction/proposal/start date for any specific segment, and it does not name 'Anchorage System.' Not every RCA capture is usable, and that cuts the other way too: a same-day (2026-08-14) capture of a different current-site page (ForConsumers/NaturalGas.aspx) IS a DataDome JS-challenge shell (403, ~2.4KB) -- captures on this domain are page/timestamp-dependent, so neither 'no snapshots exist' nor 'everything is a JS shell' is accurate. A direct lookup of ENSTAR's own certificate detail page (data/certificateDetail.html?CPCN=4, the record most likely to carry system extent) returns Wayback 404 -- genuinely not archived, not a block.\nAlaska DNR (dog.dnr.alaska.gov) is NOT blocked -- the prior note's '403 behind a DataDome bot-challenge' claim was false. Reproduced live 2026-09-15: the site root and /Services/Pipelines both return HTTP 200 with real content; only the guessed singular path /Services/Pipeline (no trailing pipeline name) 404s -- a bad URL, not a block. The correct listing (dog.dnr.alaska.gov/Services/Pipelines) was read in full: it names every DNR/State Pipeline Coordinator-regulated line (TAPS, Alaska Stand Alone Pipeline, Alpine Diesel/Oil/Utility, Badami, CIGGS, Donlin, Endicott, Kenai Kachemak, Kuparuk, Liberty, Milne Point, Nikiski Alaska, North Fork, Northstar Gas/Oil, Nuiqsut Natural Gas, Oliktok Natural Gas, Pebble, Pikka, Point Thomson, Tyonek W 10 Gas, Willow, WNS Products/Utility) -- none named 'Anchorage System,' 'ENSTAR,' or 'Alaska Pipeline Company.' This is a genuine, reproducible negative finding, not an access failure: DNR's State Pipeline Coordinator's Section leases rights-of-way to common/contract-carrier pipelines on state land (overwhelmingly North Slope oil/gas + TAPS + a few Cook Inlet industrial lines) -- a different regulatory track from the RCA-certificated public gas utility (ENSTAR/APC) that serves this segment. This network falls outside DNR's registry by jurisdiction, not by blockage. RCA rate-base filings that could carry a per-segment cost are indexed only as docket entries in the 2005 company-record capture, not archived as documents, and the live site 403s. SEC 10-K discusses SEMCO/ENSTAR consolidated financials but not a per-segment capital cost. Genuinely nothing found -- left blank rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Alaska Pipeline Co LLC"
+      },
+      "primary_value": "Alaska Pipeline Co LLC",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "SEMCO Energy Inc FY2005 10-K (CIK 0000277158, filed 2006-03-14): 'APC is a subsidiary of the Company... APC's transmission system delivers natural gas from producing fields in South Central Alaska to ENSTAR's Anchorage-area gas distribution system. APC's only customer is ENSTAR.' Directly names 'Alaska Pipeline Company' (APC) as the operating entity, matching the sheet's recorded Operator value 'Alaska Pipeline Co LLC'. Does not use the pipeline's sheet name 'Anchorage System Gas Pipeline' — name_found is honestly recorded false against the pipeline name, though the OPERATOR entity itself is directly and unambiguously named."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This was a MISSING_REF unit (value present, ref cell empty). Confirmed via an independent, dated SEC filing (single origin — no second source found naming 'Alaska Pipeline Company'/APC specifically; TriSummit and the ENSTAR PDF were both checked by direct grep and neither mentions APC by name). Note the EDGAR entity-name collision risk found during research: a broader EDGAR full-text search for 'Alaska Pipeline Company' also surfaces an unrelated company, 'Tesoro Alaska Pipeline Co LLC' (CIK 0000911614, a Nikiski refinery crude-oil pipeline operator) — confirmed this citation is SEMCO Energy's filing (CIK 277158), not Tesoro's, and is the correct match for this row's Operator field."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "ENSTAR Natural Gas Co",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "ENSTAR Natural Gas Co",
+      "proposed_refs": [
+        "https://www.enstarnaturalgas.com/wp-content/uploads/March-2022-web.pdf",
+        "https://trisummit.ca/operations/enstar-natural-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.enstarnaturalgas.com/wp-content/uploads/March-2022-web.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "'ENSTAR owns and operates over 400 miles of high-pressure natural gas transmission pipelines in Southcentral Alaska' — directly states ENSTAR Natural Gas Co as owner/operator of the transmission network this segment belongs to. CORRECTING the worklist's existing_ref_checks flag: it recorded name_found=true / name_matched='Anchorage System Gas Pipeline' for this URL, but a direct pdftotext -layout extraction and grep confirm the phrase 'Anchorage System' does not appear anywhere in this document (0 hits) — that was a false positive from the builder's fuzzy name-matcher loosely matching the generic words 'Anchorage' and 'System' separately. Recorded honestly here as name_found=false."
+        },
+        {
+          "url": "https://trisummit.ca/operations/enstar-natural-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "TriSummit (ENSTAR's current parent) operations page for ENSTAR Natural Gas Company confirms current ownership/operation of the same Southcentral Alaska transmission network. Same corporate family as the ENSTAR PDF, not a second independent origin."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Value unchanged (Owner1=ENSTAR Natural Gas Co, 100%). Both proposed refs are the same corporate family (ENSTAR's own document + its parent TriSummit's page) = one origin, so independent stays false. Capped at tier=low because neither document names this specific 'Anchorage System' segment (system-wide ownership statement only) — see the name_found correction above, which is the most consequential single finding in this shard: the sheet's only pre-existing 'name_found=true' citation on this row does not actually survive a direct read of the document."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3850,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-09",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://trisummit.ca/operations/enstar-natural-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://trisummit.ca/operations/enstar-natural-gas",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Checked TriSummit's current (live, accessed 2026-09) ENSTAR operations page: describes ENSTAR actively serving 150,000+ residential/commercial customers in 26 Southcentral Alaska communities via 711 km of high-pressure transmission lines including two subsea lines delivering gas from the Kenai Gas Fields 'to Anchorage and beyond' — no indication of idling, abandonment, sale, or conversion of any part of the network. No source specifically confirms this exact 50-mile named segment is still in service (as opposed to the network generally), and no source suggests otherwise either. RCA Alaska tariff/certificate records (which would show the most direct current-status evidence for this specific segment) were re-checked 2026-09-15: the live RCA site genuinely 403s behind DataDome (confirmed), but Wayback holds a real, substantive 2005 capture of RCA's ENSTAR company/docket record (CPCN #4, docket history) -- it establishes the certificate is long-standing and shows no docket indicating sale, abandonment, or conversion of the network, but it is a 2005 snapshot and a company-level index, not a live segment-status document, so it does not itself confirm current status for this specific 50-mile segment. Verdict: confirm, at tier=low given the segment-vs-system gap; this is consistent with the class_out=REFS_ADDED/tier=low staged on the Status fill above (no contradiction between this status_reviews record and the fill)."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7450",
+      "url": "https://trisummit.ca/operations/enstar-natural-gas",
+      "facts": "TriSummit's current ENSTAR operations page: '711 kilometers of high-pressure transmission lines and 5,000 kilometers of distribution pipelines... two subsea pipelines that deliver gas from the Kenai Gas Fields to Anchorage and beyond' — a system-wide total/description relevant to every APC/ENSTAR Alaska segment row on this roster (P7450, P7453, P7454, P7455, P7456, P7458, P7461, P7464), useful for their Status/Fuel/PipelineType/Location fills but NOT for any individual segment's Length/Diameter/Capacity (aggregate-vs-segment rule)."
+    },
+    {
+      "project_id": "P7453",
+      "url": "https://www.sec.gov/Archives/edgar/data/277158/000095012406001183/k02906e10vk.htm",
+      "facts": "SEMCO Energy Inc FY2005 10-K (CIK 277158, filed 2006-03-14): 'Alaska Pipeline Company' (APC) subsidiary description, ~393 miles of gas transmission pipeline network-wide in 2005, sole customer ENSTAR, gas sourced from 'producing fields in South Central Alaska' — same applicability and same caveat (system total, not segment-specific) as above; also names Alaska Pipeline Company as the Operator for the whole APC-affiliated cluster of rows."
+    }
+  ],
+  "summary": "Anchorage System Gas Pipeline (APC/ENSTAR, Southcentral Alaska): verdict confirmed (caveat) — real, well-documented network (SEC 10-K + current TriSummit/ENSTAR materials) correctly attributed to Operator Alaska Pipeline Co LLC / Owner ENSTAR Natural Gas Co, but no independent source names the specific 'Anchorage System' 50-mile segment or its length; the sheet's prior NPMS refs were non-probative navigation surfaces and the Owner unit's pre-existing name_found=true flag was a confirmed false positive. All 15 worklist units filed: 6 REFS_ADDED (Status, Fuel, PipelineType, Location, Operator, Owner), 9 UNRESOLVED (Length — segment vs. system-total gap — plus Proposal, Construction, Start, Capacity, Pressure, Diameter, FuelSource, SegmentCost: no EIA/FERC match, and while RCA's live site genuinely 403s and no RCA tariff *document* for this segment was Wayback-archived, Alaska DNR is reachable and simply has no entry for this RCA-regulated utility network — a jurisdiction gap, not an access failure — corrected 2026-09-15 from a prior note that wrongly called DNR blocked and wrongly claimed zero Wayback snapshots for RCA)."
+}

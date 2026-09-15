@@ -1,0 +1,827 @@
+{
+ "project_id": "P0220",
+ "pipeline_name": "Mountain Valley Gas Pipeline (MVP)",
+ "sheet_row": 77,
+ "wiki": "https://www.gem.wiki/Mountain_Valley_Gas_Pipeline_(MVP)",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed",
+   "concern_type": "none",
+   "recommendation": "keep P0220 as the MVP MAINLINE row; it is NOT a duplicate of P4456",
+   "contested": {},
+   "researcher_notes": "EXISTENCE + CLASSIFICATION + DUPLICATE audit. P0220 exists and is correctly classified. IDENTITY: P0220 is the Mountain Valley Pipeline MAINLINE - the 303-mile, 42-inch greenfield interstate transmission line from Wetzel County, West Virginia (MP 0.0, at Equitrans' H-302 near MarkWest's Mobley plant) to Transco's Zone 5 Compressor Station 165 in Pittsylvania County, Virginia (MP 303.5), 2,000 MMcf/d, FERC Docket CP16-10, certificated 2017-10-13, in service 2024-06-11. Discriminators used, all from the sheet's own cells: blank SegmentName (the parent/mainline row), LengthKnown 303.00 mi, Diameter 42 in, Capacity 2000 MMcf/d, StartYear1 2024 / StartMonth1 6, SegmentCost $7.85B, and the Wetzel->Pittsylvania endpoint pair. It is NOT the Southgate extension (that is 31 mi, 30 in, 550 MMcf/d, VA->NC, in construction for 2028 - a separate tracker row), NOT a compression/expansion phase, and NOT a loop. DUPLICATE RULING vs P4456: NO DUPLICATE. P4456 carries SegmentName 'Greene Interconnect Project', LengthKnown 0.00 mi, Capacity 1000 MMcf/d, SegmentCost $28,000,000, RouteType 'Capacity expansion only', RouteAccuracy 'no route', and every location cell blank. In the EIA Aug 2026 workbook the two are separate rows with separate federal dockets: Excel row 1111 'Mountain Valley Pipeline', docket CP16-10, 303.5 mi, 42 in, 2000 MMcf/d, $6,600M, completed 2024-06-11; Excel row 1112 'Greene Interconnect Project', docket CP19-477, $28M, completed 2024-06-14. Greene Interconnect is a zero-new-pipe interconnect that moves up to 1 Bcf/d off MVP into Columbia Gas Transmission's KA System - it is downstream of and dependent on P0220, not the same asset. The shared tracker name 'Mountain Valley Gas Pipeline (MVP)' is a naming collision, not an entity collision; the fix (if GEM wants one) is to give P0220 an explicit SegmentName such as 'MVP Mainline', NOT to merge the rows. I made no edit of any kind to P4456.",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "SegmentCost 7,850,000,000 USD is stale - a Nov 30 2024 FERC filing puts the completed cost at 9,600,000,000 USD; pull the docket filing before changing the cell",
+   "contested": {
+    "SegmentCost": "9600000000.00",
+    "SegmentCostUnits": "USD",
+    "SegmentCostYear": "2024"
+   },
+   "researcher_notes": "SPEC CONCERN, cost only. The recorded $7.85B is Equitrans Midstream's April 2024 estimate (Cardinal News, Apr 30 2024) and is correctly cited, but it was superseded seven months later: VPM News (Dec 3 2024) reports a Nov 30 2024 FERC filing giving a completed cost of $9.6 billion, an additional $1.5 billion (including $1.2 billion of extra construction cost) over the prior estimate. I could not reach a second independent origin for $9.6B - NextEra Energy's FY2024 10-K does not carry it, and an EDGAR full-text search for 'Mountain Valley' with '$9.6 billion' returns only NextEra documents whose hits are FPL nuclear-decommissioning figures - so this is a one-origin finding reported from a primary document, which is why it is staged as a CONTESTED value and not as a fill. The reviewer's next step is FERC eLibrary, docket CP16-10, filings dated 2024-11-30. SEPARATE, SMALLER POINT: the EIA Aug 2026 workbook still shows $6,600M for this project. That is the pre-construction certificated vintage EIA has never revised (EIA's own cost column for historical projects is not updated to as-built), so it is NOT evidence against $7.85B or $9.6B and must not be used to lower the cell. Every other spec agrees across sources: capacity 2000 MMcf/d, length 303 mi (303.5 certificated), diameter 42 in, start June 2024, status operating.",
+   "proposed_refs": [
+    "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/",
+    "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+    "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Today in Energy #62323, June 14 2024, 'New Mountain Valley Pipeline to begin operations': 'On June 11, the Federal Energy Regulatory Commission (FERC) authorized the Mountain Valley Pipeline (MVP) to begin operations.' Confirms operating."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: describes MVP Mainline in the present tense as an in-service 303-mile, 42-inch, 2.0 Bcf/d interstate pipeline as of FY2025 (balance date 2025-12-31) - the newest evidence that the line is still operating."
+    },
+    {
+     "url": "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Rigzone, June 20 2024, 'Mountain Valley Gas Pipeline Starts Operation': 'Equitrans Midstream Corp. has put onstream a 303-mile pipeline from West Virginia to southern Virginia'. Carried ref, re-verified live (HTTP 200)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (Rigzone) re-verified live and retained. Added EIA Today in Energy 62323 (federal, June 2024 in-service authorization) and EQT's FY2025 10-K (still operating as of 2025-12-31) so the status rests on a federal source plus an SEC filing, not one trade story. Status 'operating' confirmed as recorded; no change proposed."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'A 303.5-mile-long, 42-inch-diameter greenfield natural gas pipeline (the Mountain Valley pipeline)'. Confirms Fuel = Gas."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'MVP Mainline, a 303-mile long, 42-inch diameter natural gas interstate pipeline'. Confirms Fuel = Gas."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The carried ref was https://www.eia.gov/naturalgas/data.php#pipelines - an EIA NAVIGATION page with no MVP content (url_verifier: 200 but name not found). Per the brief that page must never be cited, so this unit was effectively uncited. Old ref preserved here for the record and replaced with the FERC certificate order and EQT's 10-K, both of which name the pipeline and state it carries natural gas. Value unchanged."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: certificate issued under NGA section 7(c) for interstate transmission; 'Mountain Valley proposes to construct and operate its project to provide up to 2,000,000 Dth per day of firm transportation service from Wetzel County, West Virginia to Transco's Compressor Station 165 in Pittsylvania, Virginia'. A FERC section 7(c) open-access firm transportation certificate = transmission, not gathering or distribution."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'a 303-mile long, 42-inch diameter natural gas interstate pipeline with a total capacity of 2.0 Bcf per day'. Interstate trunk line = transmission."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Same banned-nav-page problem as Fuel: carried ref was https://www.eia.gov/naturalgas/data.php#pipelines. Replaced. PipelineType = transmission is confirmed twice over: a FERC NGA 7(c) certificate with Part 284 Subpart G open-access blanket authority is by definition interstate transmission, and EQT calls it an 'interstate pipeline'. Also independently corroborated by the EIA projects workbook, whose 'pipeline_type' field for Excel row 1111 reads 'Interstate'. Value unchanged."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2014"
+   },
+   "primary_value": "2014",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'Mountain Valley conducted a non-binding open season for firm transportation service from June 12, 2014 through July 10, 2014 and a binding open season from September 2, 2014 through October 21, 2014, resulting in the execution of binding precedent agreements on October 21, 2014' and 'On October 31, 2014, Commission staff granted Mountain Valley's request to use the pre-filing process in Docket No. PF15-3-000.' Both put the project's public proposal in 2014."
+    },
+    {
+     "url": "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Cardinal News, April 30 2024, 'Mountain Valley Pipeline final cost revised up to $7.85 billion': 'contributed to its cost more than doubling since it was first announced in 2014 with an anticipated completion date of 2018 at a price of $3.5 billion'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed. ProposalYear 2014 confirmed as recorded from two independent origins: the FERC certificate order (2014 open seasons, Oct 31 2014 pre-filing grant in PF15-3) and Cardinal News ('first announced in 2014'). ProposalMonth is blank on the sheet and stays blank - the 2014 record supports a year but not one unambiguous month (non-binding open season opened June 12, the JV was announced in October, pre-filing was granted October 31). I did not invent a month. Note the FERC APPLICATION was filed Oct 23 2015 (CP16-10); that is the filing year, not the proposal year, so it does not contradict 2014."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2018"
+   },
+   "primary_value": "2018",
+   "proposed_refs": [
+    "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+    "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Rigzone, June 20 2024, 'Mountain Valley Gas Pipeline Starts Operation': 'The Mountain Valley Pipeline (MVP), which began construction 2018'. (url_verifier's extractor does not reach that sentence - it passes on '303-mile', '42-inch', 'Marcellus and Utica', 'began construction'; I read the full page body and the year 2018 is present verbatim.)"
+    },
+    {
+     "url": "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "VPM News, Dec 3 2024, 'Mountain Valley Pipeline's final cost close to $10 billion': 'When it first broke ground in 2018, MVP was estimated to cost $3.5 billion.'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed. ConstructionYear 2018 confirmed as recorded by two independent publishers (Rigzone trade wire; VPM public media). ConstructionMonth blank on the sheet and left blank - neither source gives a month. Consistent with the FERC certificate being issued Oct 13 2017 and notices to proceed following in early 2018."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2024",
+    "StartMonth1": "6"
+   },
+   "primary_value": "2024",
+   "proposed_refs": [
+    "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Today in Energy #62323, June 14 2024, 'New Mountain Valley Pipeline to begin operations': 'On June 11, the Federal Energy Regulatory Commission (FERC) authorized the Mountain Valley Pipeline (MVP) to begin operations.' Gives both year 2024 and month 6."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Natural Gas Pipeline Projects, Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1111: 'Mountain Valley Pipeline', operator 'Mountain Valley Pipeline, LLC', docket CP16-10, Completed 2024-06-11, 303.5 mi, 42 in, 2000 MMcf/d, $6,600M, WV->VA - the completed_date cell is 2024-06-11 and year_in_service_date is 2024, matching StartYear1=2024 / StartMonth1=6."
+    },
+    {
+     "url": "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Rigzone, June 20 2024, 'Mountain Valley Gas Pipeline Starts Operation' (June 20 2024): reports MVP 'put onstream', with interruptible/short-term firm service until long-term firm obligations commence July 1 2024. Carried ref, re-verified live."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (Rigzone) re-verified and kept; added two EIA sources that state the June 11 2024 date explicitly rather than by inference. StartYear1=2024 and StartMonth1=6 confirmed as recorded."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {
+    "Delayed": "yes",
+    "DelayType": "confirmed"
+   },
+   "primary_value": "yes",
+   "proposed_refs": [
+    "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/",
+    "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+    "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/"
+   ],
+   "verifications": [
+    {
+     "url": "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Cardinal News, April 30 2024, 'Mountain Valley Pipeline final cost revised up to $7.85 billion': 'Legal and permitting battles have delayed the project for years and contributed to its cost more than doubling since it was first announced in 2014 with an anticipated completion date of 2018'. An announced 2018 completion that slipped to 2024 is a documented (not inferred) delay."
+    },
+    {
+     "url": "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Rigzone, June 20 2024, 'Mountain Valley Gas Pipeline Starts Operation': subhead 'Equitrans put onstream the 303-mile MVP ... after delays from environmental and land rights lawsuits'."
+    },
+    {
+     "url": "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "VPM News, Dec 3 2024, 'Mountain Valley Pipeline's final cost close to $10 billion': 'The pipeline was finished in June, six years later' - six years past the 2018 ground-breaking/target."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed. Delayed=yes and DelayType=confirmed are both supported: the delay is documented in contemporaneous reporting (target completion 2018, actual in-service June 2024, cause stated as litigation and permitting), so 'confirmed' rather than 'inferred' is the correct DelayType per the controlled vocabulary. Values unchanged."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "2000.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "2000.00",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'The project is designed to provide up to 2,000,000 dekatherms (Dth) per day of firm transportation service'. 2,000,000 Dth/d ~ 2,000 MMcf/d at ~1.0 MMBtu/Mcf pipeline-quality gas."
+    },
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Today in Energy #62323, June 14 2024, 'New Mountain Valley Pipeline to begin operations': 'MVP, 303 miles long, can move up to 2.0 billion cubic feet per day (Bcf/d) of natural gas'. 2.0 Bcf/d = 2,000 MMcf/d exactly."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'a total capacity of 2.0 Bcf per day'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed. Capacity 2000.00 MMcf/d confirmed as recorded from three independent origins (FERC, EIA, EQT SEC filing), plus the EIA projects workbook's additional_capacity_mmcf_d = 2000. The FERC figure is in Dth/d and converts 1:1 to MMcf/d for pipeline-quality gas, which is the same number the other two state directly in Bcf/d. Values unchanged."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {
+    "Pressure": "1480.00",
+    "PressureUnits": "psig"
+   },
+   "primary_value": "1480.00",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'A 303.5-mile-long, 42-inch-diameter greenfield natural gas pipeline (the Mountain Valley pipeline) with a maximum allowable operating pressure (MAOP) of 1,480 pounds per square inch gauge (psig)'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled. Pressure was blank; the FERC certificate order states the MAOP of the certificated mainline explicitly as 1,480 psig. Single origin, so tier=medium/independent=false - I searched EIA's Today in Energy piece, the EIA pipeline-projects workbook, Rigzone, Cardinal News and EQT's FY2025 10-K and none of them state an operating pressure, which is normal (MAOP is a regulatory figure that generally appears only in FERC/PHMSA documents). 'psig' is an in-use PressureUnits value on the Gas tab (4 rows). If the reviewer prefers the tab's dominant metric units, 1,480 psig = 102.0 bar = 10.20 MPa; I am proposing the source's own units rather than converting."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "303.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "303.00",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'A 303.5-mile-long, 42-inch-diameter greenfield natural gas pipeline ... extending from Equitrans' existing H-302 pipeline near MarkWest's Mobley processing facility in Wetzel County, West Virginia at milepost (MP) 0.0 ... to an interconnection with Transco's mainline system near Transco's existing Zone 5 Compressor Station 165 at MP 303.5 in Pittsylvania County, Virginia'. Certificated length 303.5 mi."
+    },
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Today in Energy #62323, June 14 2024, 'New Mountain Valley Pipeline to begin operations': 'MVP, 303 miles long'. Matches the sheet's 303.00 exactly."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'MVP Mainline, a 303-mile long, 42-inch diameter natural gas interstate pipeline'. Matches 303.00 exactly."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Natural Gas Pipeline Projects, Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1111: 'Mountain Valley Pipeline', operator 'Mountain Valley Pipeline, LLC', docket CP16-10, Completed 2024-06-11, 303.5 mi, 42 in, 2000 MMcf/d, $6,600M, WV->VA - miles = 303.5."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The carried ref was the banned EIA navigation page https://www.eia.gov/naturalgas/data.php#pipelines (the worklist's own check returned '200 but data value not found'), so this unit was effectively uncited. Replaced with four real sources. LengthKnown 303.00 mi is CONFIRMED as recorded, not contested: FERC's 303.5 is the certificated milepost length and EIA's workbook carries the same 303.5, while EIA Today in Energy, EQT's 10-K and Rigzone all round to 303. That is agreement within rounding (0.5 mi on 303 = 0.17%), which per rule 4(e) is a ref at high tier with the discrepancy noted - NOT an UNRESOLVED and not a proposed change. A reviewer who prefers the certificated figure could set 303.50; I am not proposing it because three post-construction sources say 303."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "42",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "42",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+    "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'A 303.5-mile-long, 42-inch-diameter greenfield natural gas pipeline'."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'a 303-mile long, 42-inch diameter natural gas interstate pipeline'."
+    },
+    {
+     "url": "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Rigzone, June 20 2024, 'Mountain Valley Gas Pipeline Starts Operation': 'The 42-inch underground interstate conduit targets gas produced in the Marcellus and Utica shale plays'. Carried ref, re-verified live."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (Rigzone) re-verified and kept; added the FERC certificate and EQT's 10-K. Also corroborated by the EIA projects workbook (pipeline_diameter_inches = 42) and Cardinal News ('the 303-mile, 42-inch-diameter natural gas pipeline'). Diameter 42 in confirmed as recorded; single uniform diameter over the whole mainline, so no multi-value diameter issue."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Marcellus and Utica shale fields"
+   },
+   "primary_value": "Marcellus and Utica shale fields",
+   "proposed_refs": [
+    "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.rigzone.com/news/mountain_valley_gas_pipeline_starts_operation-20-jun-2024-177154-article/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Rigzone, June 20 2024, 'Mountain Valley Gas Pipeline Starts Operation': 'The 42-inch underground interstate conduit targets gas produced in the Marcellus and Utica shale plays, which sit in the United States' top gas producing region of Appalachia'."
+    },
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: repeatedly identifies the supply basin, e.g. 'the Marcellus and Utica production area ... to Transco's mainline system' and 'the Marcellus and Utica supply areas to markets in the Northeast, Mid-Atlantic, and Southeast'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed. The sheet's 'Marcellus and Utica shale fields' matches both sources' wording ('shale plays' / 'production area' / 'supply areas'); this is a wording difference, not a value difference, so the value is confirmed as recorded. Physically consistent with the sheet's start point: MP 0.0 is at Equitrans' H-302 near MarkWest's Mobley plant in Wetzel County WV, in the wet Marcellus."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Wetzel County",
+    "StartState/Province": "West Virginia",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Pittsylvania County",
+    "EndState/Province": "Virginia",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Wetzel County",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: 'extending from Equitrans' existing H-302 pipeline near MarkWest ... Mobley processing facility in Wetzel County, West Virginia at milepost (MP) 0.0 ... to an interconnection with Transco's mainline system near Transco's existing Zone 5 Compressor Station 165 at MP 303.5 in Pittsylvania County, Virginia'. Both endpoints verbatim."
+    },
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Today in Energy #62323, June 14 2024, 'New Mountain Valley Pipeline to begin operations': 'from Wetzel County, West Virginia, to an interconnection with Transcontinental Gas Pipeline's (Transco) compressor station 165 in Pittsylvania County, Virginia'."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'spans from our transmission and storage system in Wetzel County, West Virginia to Pittsylvania County, Virginia'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed; the unit was flagged irregular:true (prefecture/district cells blank) but that is correct for a US row - GEM's US convention puts the county in StartLocation/EndLocation and leaves Prefecture/District blank, and no source supplies a separate district. Endpoints confirmed as recorded by three independent origins. ROUTE CROSS-CHECK: the routes repo geojson ../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P0220.geojson holds 1 feature / 5,068 vertices whose first vertex is [-80.549888, 39.557175] (Wetzel County WV) and last is [-79.342876, 36.832109] (Pittsylvania County VA), extent lon -80.762..-79.341 / lat 36.825..39.558. Geometry and sheet agree, and the sheet's RouteType='Mapped route (at any accuracy)' / RouteAccuracy='very high (within meters)' are consistent with a merged 5k-point route, so the three-way sync holds. No route-vs-sheet defect to adjudicate. The geojson is corroboration only, never a [ref]."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "7850000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "7850000000.00",
+   "proposed_refs": [
+    "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/",
+    "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/"
+   ],
+   "verifications": [
+    {
+     "url": "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Cardinal News, April 30 2024, 'Mountain Valley Pipeline final cost revised up to $7.85 billion': 'a final price tag of approximately $7.85 billion ... around $220 million more than the upper end of the range of $7.57 billion to $7.63 billion that the company announced in February', attributed to Equitrans Midstream. This IS the source of the sheet's 7,850,000,000 USD - the worklist's automated check said '200 but data value not found' only because the page writes '$7.85 billion' and not the digit string."
+    },
+    {
+     "url": "https://www.vpm.org/news/2024-12-03/mountain-valley-pipelines-cost-10-billion/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "VPM News, Dec 3 2024, 'Mountain Valley Pipeline's final cost close to $10 billion': 'The pipeline was finished in June, six years later, at a cost of $9.6 billion, according to a Nov. 30 filing to the Federal Energy Regulatory Commission. The document cites an additional $1.5 billion in costs, including an extra $1.2 billion in construction costs, over the previous estimate.' This POST-DATES the $7.85B figure by seven months and supersedes it."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (Cardinal News) RE-VERIFIED - it does support 7.85 billion USD; the worklist's ok:false was a substring false-negative, not a dead or unsupporting page. But the value is now STALE: $7.85B was Equitrans' April 2024 estimate, and a Nov 30 2024 FERC filing put the completed cost at $9.6B (VPM/West Virginia Public Broadcasting, Dec 3 2024). I am NOT overwriting the cell - I am carrying the ref that supports the recorded value and raising a spec concern in validity[] with contested SegmentCost = 9600000000.00 USD (SegmentCostYear 2024). Second-origin search for the $9.6B figure: NextEra Energy's FY2024 10-K was checked and does not carry it (its '$9.6 billion' hits are FPL nuclear-decommissioning figures), and EDGAR full-text search for 'Mountain Valley' + '$9.6 billion' returns only those NextEra documents - so the $9.6B rests on the VPM/WVPB report of the FERC filing, one origin. The underlying FERC document (a Nov 30 2024 filing in the CP16-10 docket) is the primary source a reviewer should pull from eLibrary before changing the cell. Also note the sheet disagrees with EIA here: the EIA Aug 2026 workbook still carries $6,600M for row 1111, which is the older certificated/estimated vintage EIA has never revised - it is NOT a competing measurement of final cost and should not be used to move the cell down."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "oo_sheet_row": 206,
+   "tab": "operators_owners",
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Mountain Valley Pipeline LLC"
+   },
+   "primary_value": "Mountain Valley Pipeline LLC",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project: the certificate is issued to 'Mountain Valley Pipeline, LLC (Mountain Valley)', which 'proposes to construct and operate its project'. The NGA section 7(c) certificate holder is the operator of record."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Natural Gas Pipeline Projects, Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1111: 'Mountain Valley Pipeline', operator 'Mountain Valley Pipeline, LLC', docket CP16-10, Completed 2024-06-11, 303.5 mi, 42 in, 2000 MMcf/d, $6,600M, WV->VA - the 'Pipeline Operator Name' cell for the Mountain Valley Pipeline row reads 'Mountain Valley Pipeline, LLC'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled on the operators/owners tab (row 206). Operator was blank; both a federal certificate and EIA's operator field name Mountain Valley Pipeline, LLC. Spelled without the comma to match the Owner1 value already on the tab ('Mountain Valley Pipeline LLC') and GEM's house style; entity_lookup terms: the name already exists on the tab as Owner1 for this PID, so this is not a new entity. CAVEAT the reviewer should see: MVP LLC is a joint venture with no employees of its own - day-to-day operation is performed by EQT Corporation (which completed its acquisition of Equitrans Midstream in July 2024); EIA Today in Energy 62323 calls Equitrans Midstream 'operator of MVP' and EQT's FY2025 10-K accounts for MVP through an equity-method investment in MVP A. If GEM prefers the operating parent over the certificate holder, 'EQT Corporation' is the defensible alternative. I proposed the certificate holder because that is what both the federal certificate and EIA record."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "oo_sheet_row": 206,
+   "tab": "operators_owners",
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Mountain Valley Pipeline LLC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Mountain Valley Pipeline LLC",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC order 161 FERC para 61,043 (issued Oct 13 2017), Docket Nos. CP16-10-000/CP16-13-000, certificate for the Mountain Valley Pipeline Project, footnote 4: 'Five companies own Mountain Valley: (1) MVP Holdco, LLC, a subsidiary of EQT Corporation; (2) US Marcellus Gas Infrastructure, LLC, a subsidiary of NextEra Energy Capital Holdings, Inc.; (3) WGL Midstream, Inc., a subsidiary of WGL Holdings, Inc.; (4) RGC Midstream, LLC, a subsidiary of RGC Resources, Inc.; and (5) Con Edison Gas Midstream, LLC, a subsidiary of Consolidated Edison, Inc.' Confirms the asset is 100% held by the Mountain Valley Pipeline, LLC joint venture."
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description: 'We own an equity method investment in MVP A, which owns MVP Mainline' - EQT holds its stake through the JV rather than owning pipe directly, which is exactly the Owner1 = the JV at 100% structure the sheet records."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF closed on the operators/owners tab (row 206). Owner1 = Mountain Valley Pipeline LLC at 100.00% is CONFIRMED as recorded: the pipeline is owned by the JV entity, and the JV's five members (FERC fn.4, as of 2017) hold the JV, not the pipe. NOT proposing a change, but flagging for the reviewer that the member roster has moved since 2017 - EQT Corporation completed its acquisition of Equitrans Midstream in July 2024 and its FY2025 10-K reports the interest as an equity-method investment in 'MVP A'; WGL/AltaGas and Con Edison's stakes have also changed hands in the intervening years. If GEM ever wants members rather than the JV in Owner1..OwnerN, that is a separate sourcing job against the current EQT/NextEra/RGC filings, and the percentages would need a current source - I found no single document stating today's full member split, so I did not stage one."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 77,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-02",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+    "https://www.eia.gov/todayinenergy/detail.php?id=62323"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EQT Corporation FY2025 Form 10-K (filed 2026-02-18), MVP A / MVP Mainline description (filed 2026-02-18, as of 2025-12-31): 'MVP A. We own an equity method investment in MVP A, which owns MVP Mainline, a 303-mile long, 42-inch diameter natural gas interstate pipeline with a total capacity of 2.0 Bcf per day that spans from our transmission and storage system in Wetzel County, West Virginia to Pittsylvania County, Virginia and has 3 interconnect points to other interstate pipelines.' Present tense, in an audited SEC filing - the newest evidence the line is in service."
+    },
+    {
+     "url": "https://www.eia.gov/todayinenergy/detail.php?id=62323",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Today in Energy #62323, June 14 2024, 'New Mountain Valley Pipeline to begin operations': FERC authorized MVP to begin operations on June 11, 2024."
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Annual-update status review. Status stays 'operating'. The sheet's LastUpdated is 2024-08-20 (researcher AL), so the row is ~2 years stale, but the status itself is still right: EQT's FY2025 10-K, filed 2026-02-18, describes MVP Mainline in the present tense as an operating 2.0 Bcf/d interstate line, and nothing in the 2024-2026 record suggests an outage, abandonment or reclassification. No staleness rule triggers - operating rows are only re-dated, not re-classed, and the in-service date is federally documented. Forward-looking items that belong to OTHER rows, not to this one: MVP Southgate (31 mi, 30 in, 0.55 Bcf/d, targeted mid-2028, $370-430M per the 10-K; EIA Aug 2026 row 82 'Mountain Valley Pipeline Southgate Amendment', 31.3 mi, 550 MMcf/d, $524M, 2028, status Construction), and MVP Boost, a compression-only expansion of the mainline for which Mountain Valley filed a FERC application on October 23, 2025 seeking about +0.6 Bcf/d for mid-2028 at $400-540M. MVP Boost adds no new pipe to P0220 and must not be folded into this row's capacity; per the expansion rule it would be its own row with LengthKnown 0 and blank Diameter if GEM decides to track it."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P4456",
+   "pipeline_name": "Mountain Valley Gas Pipeline (MVP)",
+   "segment_name": "Greene Interconnect Project",
+   "lead_type": "duplicate_cleared",
+   "note": "NOT a duplicate of P0220, evidence attached. P4456 = Greene Interconnect Project, FERC Docket CP19-477, EIA Aug 2026 workbook Excel row 1112, $28M, completed 2024-06-14, zero new pipe (sheet LengthKnown 0.00, RouteType 'Capacity expansion only', RouteAccuracy 'no route', all location cells blank), up to 1 Bcf/d delivered from MVP into Columbia Gas Transmission's KA System. P0220 = the MVP mainline, FERC Docket CP16-10, EIA Excel row 1111, 303.5 mi / 42 in / 2000 MMcf/d / completed 2024-06-11. Different docket, different scope, different cost, different physical asset - the rows share only the tracker name. Suggested non-destructive fix for the naming collision: set P0220's SegmentName to something explicit like 'MVP Mainline'. I did not merge, delete or edit P4456 in any way.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://www.ferc.gov/sites/default/files/2020-08/CP16-10.pdf"
+   ],
+   "tier": "high",
+   "independent": true
+  },
+  {
+   "project_id": "P2567",
+   "pipeline_name": "Mountain Valley Pipeline Southgate",
+   "segment_name": "",
+   "lead_type": "spec_update",
+   "note": "Free corroboration for the Southgate row, found while sourcing P0220 (rule 4(b) - read every document to exhaustion for sibling rows). EQT FY2025 10-K (filed 2026-02-18): MVP Southgate is ~31 miles of 30-inch pipe, 0.55 Bcf/d, targeted in service mid-2028, estimated cost $370-430 million. EIA Aug 2026 workbook, sheet 'Historical Projects (1996-2024)'/current-projects roster, Excel row 82 'Mountain Valley Pipeline Southgate  Amendment': operator Mountain Valley Pipeline, LLC, status Construction, 31.3 mi, 30 in, 550 MMcf/d, $524M, in service 2028, VA->NC. Note the two cost figures differ ($370-430M vs $524M) and the amended route is shorter than the originally certificated ~75 miles - Cardinal News reports opponents challenging FERC's approval over the shortened route and the dropped Pittsylvania County compressor station. Whoever sweeps P2567 should reconcile those, not assume either number.",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://cardinalnews.org/2024/04/30/mountain-valley-pipeline-final-cost-revised-up-to-7-85-billion/"
+   ],
+   "tier": "high",
+   "independent": true
+  },
+  {
+   "project_id": "",
+   "pipeline_name": "MVP Boost",
+   "segment_name": "",
+   "lead_type": "possible_missing_row",
+   "note": "NOT in this batch's roster and I could not find it in the tracker under this name - flagging as a possible discovery candidate, not staging anything. EQT FY2025 10-K (filed 2026-02-18) reports that Mountain Valley filed a FERC application on October 23, 2025 for 'MVP Boost', a compression-only expansion of the MVP mainline adding roughly 0.6 Bcf/d, targeted for mid-2028, estimated $400-540 million. Because it adds compression and no new pipe, per the expansion rule it would be its own row with LengthKnown = 0 and Diameter blank - it must NOT be added to P0220's 2000 MMcf/d capacity. Someone should check whether GEM already carries it under another name before treating it as a discovery.",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/33213/000003321326000018/eqt-20251231.htm"
+   ],
+   "tier": "medium",
+   "independent": false
+  }
+ ],
+ "summary": "P0220 is the MVP MAINLINE (blank SegmentName, 303 mi, 42 in, 2,000 MMcf/d, Wetzel County WV -> Pittsylvania County VA, FERC Docket CP16-10, in service 2024-06-11) and is NOT a duplicate of P4456, which is the Greene Interconnect Project (FERC Docket CP19-477, 0 mi, $28M, in service 2024-06-14). All 16 worklist units are closed with verified refs; nothing was edited on P4456. Three carried refs pointed at https://www.eia.gov/naturalgas/data.php#pipelines, an EIA navigation page with no MVP content that the brief bans from citation - Fuel, PipelineType and Length were therefore effectively uncited and have been re-sourced to the FERC certificate order, EQT's FY2025 10-K and EIA's Today in Energy / pipeline-projects workbook. Two carried refs whose automated checks had returned ok:false were re-read and BOTH are good: Cardinal News does support $7.85B and the EIA workbook does support 303.5 mi - those were substring false-negatives, not dead or unsupporting pages. One value fill (Pressure = 1,480 psig MAOP, from the FERC order) and one operator fill (Mountain Valley Pipeline LLC, from the FERC certificate plus EIA's operator field). One spec concern: SegmentCost $7.85B is Equitrans' April 2024 estimate and is superseded by a Nov 30 2024 FERC filing reporting a completed cost of $9.6B - staged as contested, not overwritten, because I could reach only one origin for it. Status confirmed 'operating' on evidence dated 2026-02. Route geometry (5,068 vertices, Wetzel -> Pittsylvania) matches the sheet's endpoints and RouteType/RouteAccuracy, so the three-way sync holds."
+}

@@ -1,0 +1,704 @@
+{
+  "project_id": "P4447",
+  "pipeline_name": "Northern Loop Project",
+  "sheet_row": 2359,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "existence",
+      "recommendation": "Existence, project identity, and general classification confirmed; two material concerns require adjudication (attribution, spec).",
+      "contested": {},
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Northern Loop Project is a real, actively-tracked (though currently on-hold) Columbia Gas of Ohio intrastate distribution-loop project in Delaware/Union Counties, Ohio, corresponding to OPSB Case No. 20-1236-GA-BTX ('Northern Columbus Loop - Phase VII'), approved 2021-09-16. It is unambiguously the same project EIA tracks as 'Northern Loop Project' (Jan 2026 release row 90; Aug 2026 release row 91) and the same project Columbia Gas of Ohio's own site describes as 'the final phase' of its long-term Northern Columbus Loop program -- confirmed by matching route (Delaware Co. to Union Co.), matching cost ($104.5M), and the 'final phase' framing appearing in both the operator's page and the OPSB press release. No duplicate risk identified against sibling PIDs reviewed (P3189, P4446, P7999 are separate Columbia-family projects at different locations/phases). Classification (Gas, transmission-pressure pipe, intrastate) is correct.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project",
+        "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties"
+      ]
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Change Owner1 from 'Columbia Gas Transmission LLC' to 'Columbia Gas of Ohio, Inc.' (100%).",
+      "contested": {
+        "Owner1": "sheet currently reads 'Columbia Gas Transmission LLC'; should read 'Columbia Gas of Ohio, Inc.'"
+      },
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Columbia Gas Transmission LLC and Columbia Gas of Ohio, Inc. are two entirely separate corporate entities that happen to share a legacy 'Columbia Gas' brand name. Columbia Gas Transmission LLC is the FERC-regulated INTERSTATE pipeline company NiSource sold to TransCanada in 2016 (TC Energy sold 40% of it to Global Infrastructure Partners in 2023) -- it plays no role in this intrastate Ohio distribution project. Columbia Gas of Ohio, Inc. is the LDC NiSource retained. NiSource's own FY2025 10-K Exhibit 21 lists 'Columbia Gas of Ohio, Inc.' as a current subsidiary and does not list 'Columbia Gas Transmission LLC' at all. See the Owner fill for full sourcing. This is likely a taxonomy confusion applied to other 'Columbia'-named rows in the batch; flagged as a cross-row lead below.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/ni-ex21x20251231.htm",
+        "https://www.columbiagasohio.com/our-company/about-us"
+      ]
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Review Length (14.00 mi) and Diameter (24 in only) against OPSB's own approval record, which documents ~16 total miles across two diameters (12 mi @ 24-in, 4 mi @ 16-in).",
+      "contested": {
+        "LengthKnown": "sheet/EIA = 14.00 mi; OPSB approval order for the same case (20-1236-GA-BTX) describes ~16 mi total",
+        "Diameter": "sheet/EIA = 24 in only; OPSB describes a second, undocumented 4-mi segment of 16-in pipe alongside ~12 mi of 24-in pipe"
+      },
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA's Miles/Diameter fields (14 mi / 24 in, unchanged across every release Oct2021-Aug2026) disagree with the Ohio Power Siting Board's own official approval press release for this exact case, which states: 'approximately 12 miles of 24-inch pipe with a maximum allowable operating pressure (MAOP) of 720 psig and approximately 4 miles of 16-inch pipe with a MAOP of 190 psig' (~16 mi total). OPSB is the certificating authority for this specific project, arguably a higher-authority source than EIA's project-tracking spreadsheet, and its figure is ~14% longer with a wholly separate diameter segment EIA does not carry at all. Kept EIA's numbers as primary_value in the Length/Diameter fills since that is what the sheet currently reflects and what the pre-existing ref pointed to, but flagging the disagreement for the orchestrator to adjudicate rather than silently picking one source. Also filled the corresponding Pressure unit (720, 190 psig) from the same OPSB source.",
+      "proposed_refs": [
+        "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ]
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "StartYear1 = 2023 is a lapsed EIA projection, not an actual/current in-service year; the project has been on-hold since (at latest) the Jan 2025 EIA release. Consider clearing StartYear1 or replacing it with a new target once one is announced.",
+      "contested": {
+        "StartYear1": "2023 (a since-superseded target; project has not entered service, and status has been 'Approved/On Hold' or 'On Hold' in every EIA release since Jan 2025)"
+      },
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Kept the value in the Start fill as REVERIFIED, sourced to what EIA's record actually stated, but the year itself is stale -- it reflects a projection first entered in EIA's Oct 2021 release, before the project's later on-hold status emerged. Presenting it unqualified alongside Status=shelved is internally inconsistent (a shelved/on-hold project cannot also carry a firm past in-service year that did not occur). No replacement target date was found in any source read.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+      ]
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "shelved"
+      },
+      "primary_value": "shelved",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91: 'Northern Loop Project', operator 'Columbia Gas of Ohio', Status = 'On Hold' (per project convention On Hold -> shelved). LastUpdated field in the underlying record = 2026-04-27."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the banned eia.gov/naturalgas/data.php navigation page onto the dated Aug 2026 release. EIA's own release history confirms the status trajectory: Approved (Oct2021-Jan2025 releases) -> 'Approved/On Hold' (Jan2025-Jan2026 releases, LastUpdated 2024-12-30) -> 'On Hold' (May2026, Aug2026 releases, LastUpdated 2026-04-27). All releases are one origin (EIA), so tier stays medium pending a second independent confirmation that the project is currently paused (OPSB's own case list still shows only the original 2021 approval order, no subsequent order lifting or advancing the hold)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91 lists this in the Natural Gas Pipeline Projects workbook (gas by definition)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the nav page. Also corroborated qualitatively by the OPSB press release and Columbia Gas of Ohio's own project page, both describing a natural gas pipeline."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91."
+        },
+        {
+          "url": "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "OPSB press release states the approved pipe is high-pressure steel main (MAOP 720 psig on the 24-in segment, 190 psig on the 16-in segment) -- transmission-class pressure under 49 CFR 192, even though the operator is an LDC."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "'Transmission' is defensible: this is a high-pressure feeder/loop main built by an LDC (Columbia Gas of Ohio) to move supply into its distribution system, not a small distribution main -- OPSB's MAOP figures (720/190 psig) are transmission-grade. Flagging only as a borderline classification since the operator itself is an intrastate LDC, not an interstate transmission company; no change recommended."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2020",
+        "ProposalMonth": "1"
+      },
+      "primary_value": "2020",
+      "proposed_refs": [
+        "https://www.ohiogasassoc.org/2020/01/02/columbia-gas-planning-135-million-pipeline-project-for-central-ohio/",
+        "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.ohiogasassoc.org/2020/01/02/columbia-gas-planning-135-million-pipeline-project-for-central-ohio/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Ohio Gas Association article dated 2020-01-02 (article metadata datePublished: 2020-01-02T21:20:38+00:00): 'Columbia Gas is proposing construction on a new $135 million pipeline...called the Columbus Northern Loop project.'"
+        },
+        {
+          "url": "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Columbia Gas of Ohio's own Northern Loop Project page corroborates an early public-engagement phase (public meeting Aug 2020) consistent with a proposal made public in Jan 2020."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. Public proposal date is Jan 2020 per the Ohio Gas Association trade article. Note: that article cites a $135 million total program cost, materially higher than the $104.5M SegmentCost EIA later carries for the final phase alone -- consistent with $135M being the multi-phase Columbus Northern Loop program estimate and $104.5M being only this final-phase segment (see SegmentCost note); not staged as a contradiction for that reason."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched: Columbia Gas of Ohio's own project page (originally targeted construction around 2022, tied to the since-lapsed 2023 in-service target), the OPSB case record, and every EIA release May2018-Aug2026. No confirmed/actual construction start exists: the project has been in 'Approved/On Hold' or 'On Hold' status since EIA's Jan2025 release and remains On Hold as of the Aug2026 release, i.e. construction has not begun. Staging the lapsed 2022 target as ConstructionYear would misrepresent an on-hold project as under construction (rule: never stage a value your own note contradicts), so left UNRESOLVED rather than filled with a stale target. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2023"
+      },
+      "primary_value": "2023",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+        "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Jan 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 90: Year In Service Date field = 2023 (a projection carried in the EIA record, first appearing in the Oct 2021 release)."
+        },
+        {
+          "url": "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Columbia Gas of Ohio's own project page describes an original construction/in-service target in this timeframe."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the nav page onto the dated Jan 2026 EIA release (the CGO project-page ref in current_ref was already a real document, kept). IMPORTANT CAVEAT for orchestrator: 2023 is a lapsed projection, not an actual in-service year -- the project has carried 'Approved/On Hold' or 'On Hold' status in every EIA release since Jan 2025, i.e. it did not enter service in 2023 and has not since. See paired validity concern recommending StartYear1 be cleared or re-flagged as a stale target rather than presented as a firm in-service year."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Delay [ref]",
+      "value_cols": [
+        "Delayed",
+        "DelayType"
+      ],
+      "primary_value_col": "Delayed",
+      "values": {
+        "Delayed": "yes",
+        "DelayType": "confirmed"
+      },
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91: Status = 'On Hold', down from 'Approved' in releases through Jan2025 -- an explicitly stated status change, so DelayType = confirmed (not inferred) is correct."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the nav page. EIA explicitly states the on-hold status across 8 dated releases (Jan2025-Aug2026), which supports 'confirmed' rather than 'inferred'."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Shelved [ref]",
+      "value_cols": [
+        "ShelvedYear"
+      ],
+      "primary_value_col": "ShelvedYear",
+      "values": {
+        "ShelvedYear": "2025"
+      },
+      "primary_value": "2025",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Jan 2025 release (first to show 'Approved/On Hold') carries LastUpdated = 2024-12-30 for this record; the compound status first fully resolves to plain 'On Hold' by the May 2026 release."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ShelvedYear=2025 is defensible (first named EIA release to carry the on-hold status is Jan2025) but note the underlying record's own LastUpdated stamp reads 2024-12-30, which would put the actual shelving decision in late 2024 rather than 2025. Not material enough on its own to force a change (a 2024/2025 boundary case, and EIA's LastUpdated field lags the true decision date by an unknown margin), but flagged for the orchestrator's judgment call."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched: every EIA release's 'Additional Capacity' field for this row (blank/not populated across all releases read -- consistent with this being a distribution-loop project rather than a capacity-rated transmission expansion), the OPSB press release and case filing description (states pipe diameter/MAOP but no throughput capacity figure), and Columbia Gas of Ohio's own project page (no capacity figure). No FERC Form 2 filing exists because this is an intrastate LDC project, not FERC-jurisdictional. Nothing found; UNRESOLVED. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {
+        "Pressure": "720, 190",
+        "PressureUnits": "psig"
+      },
+      "primary_value": "720, 190",
+      "proposed_refs": [
+        "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties"
+      ],
+      "verifications": [
+        {
+          "url": "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "OPSB press release (Case No. 20-1236-GA-BTX, approved 2021-09-16): '...approximately 12 miles of 24-inch pipe with a maximum allowable operating pressure (MAOP) of 720 psig and approximately 4 miles of 16-inch pipe with a MAOP of 190 psig.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled from the OPSB's own approval press release (the state siting authority for this case), which documents two pipe segments at two different MAOPs. Multi-value format mirrors the sheet's existing multi-value Diameter convention. See paired spec validity concern: this same source shows the approved pipe as ~16 mi across 24-in + 16-in segments, materially different from the sheet's current single-diameter 14.00 mi/24-in EIA-sourced figures."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "14.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "14.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91: Miles = 14."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the nav page; EIA still states 14 miles as of the Aug 2026 release, matching the sheet. MATERIAL DISAGREEMENT vs. a higher-authority source: OPSB's own approval press release for this exact case (20-1236-GA-BTX) states the approved route is ~16 total miles (~12 mi of 24-in pipe + ~4 mi of 16-in pipe), not 14 mi of 24-in pipe only. Kept the EIA-sourced value as primary (matches the sheet and is what the current ref traces to) but see paired validity concern flagging this ~14% length/route discrepancy and the undocumented second diameter for orchestrator review."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91: Diameter = 24 in."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the nav page; EIA states 24-in only. Same material disagreement as Length: OPSB's press release for this case documents a SECOND diameter segment (~4 mi of 16-in pipe at 190 psig) in addition to the 24-in segment (~12 mi at 720 psig) that EIA/the sheet do not carry. See paired spec validity concern."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched: EIA (no fuel-source/basin field in the Natural Gas Pipeline Projects workbook), Columbia Gas of Ohio's project page ('bring a new supply of gas...from pipelines east of where supplies are plentiful' -- describes route/direction, not a named basin), the OPSB press release, and the 2020 Ohio Gas Association article (also no named upstream basin/source). While an Appalachian-basin (Utica/Marcellus) supply source would be a reasonable inference for an eastern-Ohio-fed loop, none of the read sources name it explicitly, so left UNRESOLVED rather than inferred. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "EndLocation",
+      "values": {
+        "StartLocation": "Liberty Township",
+        "StartPrefecture/District": "Delaware County",
+        "StartState/Province": "Ohio",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Jerome Township",
+        "EndPrefecture/District": "Union County",
+        "EndState/Province": "Ohio",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Jerome Township",
+      "proposed_refs": [
+        "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties",
+        "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "OPSB press release: case approved 'a pipeline through Liberty Township in Delaware County and Jerome Township in Union County'."
+        },
+        {
+          "url": "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Columbia Gas of Ohio's project page describes the same southern Delaware County to southeastern Union County route, serving growth in Dublin, Jerome Township and Marysville."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "State/country level was already correct (Ohio/United States on both ends, matching EIA's Aug 2026 release which also narrowed to OH-only, superseding an older EIA vintage that had listed PA/WV/OH). Filled the blank granular StartLocation/EndLocation/District fields from two independent, named, dated sources (the state siting regulator's own approval notice and the operator's project page) that agree on Liberty Township (Delaware Co.) -> Jerome Township (Union Co.)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "104500000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "104500000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91: Cost ($) = 104,500,000."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-grounded off the banned data.php#pipelines nav page onto the dated Aug 2026 release, which still carries $104.5M. Note for context, not staged as a contradiction: the Jan 2020 Ohio Gas Association article quotes a $135 million total cost for the broader 'Columbus Northern Loop project' at announcement -- plausibly the full multi-phase program estimate, of which this EIA-tracked row is described (per the operator's own page) as only 'the final phase'. Different scopes, not necessarily different facts about the same segment; left as informational."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Columbia Gas of Ohio, Inc."
+      },
+      "primary_value": "Columbia Gas of Ohio, Inc.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 91: Pipeline Operator Name = 'Columbia Gas of Ohio' (note: earlier EIA vintages, e.g. Jan 2026, carried the operator field simply as 'Columbia Gas')."
+        },
+        {
+          "url": "https://www.columbiagasohio.com/services/work-in-your-neighborhood/northern-loop-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Project is published on columbiagasohio.com under 'Work in your neighborhood', naming Columbia Gas of Ohio as the utility building it."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISSING_VALUE filled. Two independent sources agree the operator is Columbia Gas of Ohio, Inc., the NiSource-owned local distribution company -- NOT 'Columbia Gas Transmission LLC' (the unrelated, formerly-TransCanada/TC Energy-owned FERC-regulated interstate pipeline company). Per the addendum, EIA's 'Pipeline Operator Name' field supports Operator only, never Owner."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Columbia Gas of Ohio, Inc.",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Columbia Gas of Ohio, Inc.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/ni-ex21x20251231.htm",
+        "https://www.columbiagasohio.com/our-company/about-us"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/ni-ex21x20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NiSource Inc. FY2025 Form 10-K, Exhibit 21 ('Subsidiaries of NiSource Inc. as of December 31, 2025'): lists 'Columbia Gas of Ohio, Inc.' (Ohio) under Columbia Operations. 'Columbia Gas Transmission LLC' does NOT appear anywhere in NiSource's current subsidiary list."
+        },
+        {
+          "url": "https://www.columbiagasohio.com/our-company/about-us",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Columbia Gas of Ohio's own 'About Us' page: 'We're one of the six energy delivery companies of NiSource, who together provide essential natural gas and electric service to nearly 4 million customers.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "MISFILL FOUND AND CORRECTED. The sheet's current Owner1 = 'Columbia Gas Transmission LLC' is WRONG for this project. Columbia Gas Transmission LLC is a wholly separate, FERC-regulated INTERSTATE pipeline company -- formerly a TransCanada/TC Energy subsidiary (NiSource sold/spun off its interstate transmission business to TransCanada in 2016; TC Energy sold 40% of Columbia Gas Transmission to Global Infrastructure Partners in 2023). It has no relationship to this project. The Northern Loop Project is built and owned by Columbia Gas of Ohio, Inc., an INTRASTATE local distribution company that NiSource retained in the 2016 divestiture. Corrected value sourced to NiSource's own current SEC 10-K Exhibit 21 (which affirmatively omits Columbia Gas Transmission LLC from NiSource's subsidiary list) and Columbia Gas of Ohio's own corporate 'About Us' page (self-identifying as a NiSource company). Note this pattern likely affects other 'Columbia' rows in this batch's roster (see cross_row_leads)."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "target_pids": [
+        "P3189",
+        "P4446",
+        "P7999"
+      ],
+      "lead_type": "attribution",
+      "description": "Same Owner-attribution pattern found and corrected on P4447 (Owner1 wrongly set to 'Columbia Gas Transmission LLC', the unrelated FERC-regulated interstate pipeline company, instead of the actual NiSource-owned intrastate LDC that operates the project) may recur on these sibling 'Columbia'-family rows in the batch roster. NiSource's FY2025 10-K Exhibit 21 (https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/ni-ex21x20251231.htm) is a ready-made check: it lists every current NiSource LDC subsidiary (Columbia Gas of Ohio, Kentucky, Maryland, Pennsylvania, Virginia) and affirmatively does NOT list Columbia Gas Transmission LLC, which stopped being a NiSource entity in the 2016 TransCanada divestiture.",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1111711/000111171126000027/ni-ex21x20251231.htm"
+      ]
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 2359,
+      "current_status": "shelved",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://opsb.ohio.gov/news/opsb-approves-solar-energy-projects-in-defiance-erie-and-hardin-counties-natural-gas-pipeline-in-delaware-and-union-counties",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Status=shelved is current and correct as of the most recent EIA release (Aug 2026, LastUpdated 2026-04-27, Status='On Hold', which per convention maps to shelved). The project reached 'Approved/On Hold' by EIA's Jan 2025 release and has stayed there or moved fully to 'On Hold' through every subsequent release (Jan2026, May2026, Aug2026) -- an 8+ release, ~18-month pattern, not a one-off blip. No news, OPSB docket update, or Columbia Gas of Ohio announcement found reviving or re-advancing the project (checked the operator's regulatory-information case list, which shows no order beyond the original 2021 approval for Case 20-1236-GA-BTX). Confirm, with the caveat noted in the paired validity concern that ShelvedYear/StartYear1 carry some internal date tension worth a light cleanup."
+    }
+  ],
+  "summary": "Northern Loop Project (P4447, Columbia Gas of Ohio's Delaware-to-Union County distribution loop, OPSB Case 20-1236-GA-BTX) is a real, correctly-classified, currently on-hold project. Two material findings for adjudication: (1) Owner1 is wrong -- 'Columbia Gas Transmission LLC' (a separate, TC Energy-lineage interstate pipeline company) should be 'Columbia Gas of Ohio, Inc.' (the actual NiSource LDC), sourced to NiSource's own SEC 10-K Exhibit 21; (2) Length/Diameter (14.00 mi/24-in, from EIA) materially disagree with the state regulator's own approval record (~16 mi across 24-in + 16-in segments, 720/190 psig) -- flagged as a spec concern, not silently overwritten. All 17 worklist units carry a fills[] record (9 REVERIFIED re-grounded off the banned EIA nav page, 5 REFS_ADDED, 3 UNRESOLVED for Capacity/FuelSource/Construction after an exhausted search)."
+}

@@ -1,0 +1,713 @@
+{
+ "project_id": "P2562",
+ "pipeline_name": "Texas Eastern Transmission (TETCO) Gas Pipeline",
+ "sheet_row": 1322,
+ "wiki": "https://www.gem.wiki/Texas_Eastern_Transmission_(TETCO)_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "correct StartYear1 to 2021 (project entered service September 2021, not 2022) and clear Delayed / DelayType, which were inferred from the wrong year",
+   "contested": {
+    "StartYear1": "2021",
+    "Delayed": "",
+    "DelayType": ""
+   },
+   "researcher_notes": "IDENTITY FIRST (the orchestrator's question - which named TETCO project is this row?). This row is the MIDDLESEX EXTENSION PROJECT, FERC docket CP20-30-000, certificated by order 173 FERC para 61,072 on 15 October 2020: 1.55 mi of 20-inch pipe off Texas Eastern's existing 36-inch Line 20, a new metering and regulating station, and 0.20 mi of 16-inch interconnecting piping to Transco's Mainline E and Woodbridge Lateral, all inside Metuchen Borough and Edison Township, Middlesex County, New Jersey, delivering up to 264,000 Dth/d to CPV Shore Holdings' 725 MW Woodbridge Energy Center. Every recorded spec on the row matches that project exactly (1.75 mi = 1.55 + 0.20; '16, 20' in; 264 MMcf/d; ~$52-53M; NJ->NJ), so the identification is certain, not inferred. It is NOT confusable with any of the five sibling TETCO segment rows in scope: P0235 is Ohio Pipeline Energy Network (OPEN, Ohio, 76 mi), P0260 is TEAM 2014 (Uniontown PA -> NJ, 34 mi), P0261 is TEAL, the Texas Eastern Appalachian Lease (Ohio, 5 mi), P5832 is TEAM 2012 (PA/WV, 17.3 mi) and P5835 is TEAM 2021 (PA, 1 mi) - different dockets, states, scopes and years. The only near-miss on size is P5835 (1 mi, 30-inch, 18 MMcf/d in Pennsylvania), which is a different diameter, a different state and a 15x smaller capacity. NO duplicate, NO existence doubt, NO misclassification: the project is documented end to end in FERC's public docket and in 22 consecutive EIA releases. NAME DEFECT: the sheet's SegmentName is 'Middlesex EXPANSION Project'. FERC's docket, order, EA and all four Federal Register notices call it the 'Middlesex EXTENSION Project', and Enbridge's own (now 404) project page was /projects/middlesex-extension-project. EIA propagates the same 'Expansion' error, which is very likely where GEM took it from. SegmentName is not a worklist unit and is NOT staged in `contested` here so as not to displace the two staged values, but it should be corrected to 'Middlesex Extension Project'. SPEC DEFECT (the staged finding): StartYear1=2022 is wrong by a year. Texas Eastern's in-service compliance filing in RP21-1021-000 took effect 9/15/2021 (86 FR 45718, filed 8/6/21) and EIA has carried Completed Date 2021-09-28 / Year In Service 2021 in all 17 releases since October 2021. StartMonth1=9 is right; only the year is wrong. CONSEQUENTIAL DEFECT: with the true in-service month equal to the September 2021 date Texas Eastern proposed in December 2019 and FERC restated in the May 2020 EA, the project was never delayed - so Delayed='yes' and DelayType='inferred' are artifacts of the wrong StartYear1 and should both be CLEARED, together with the Delay [ref] cell so no orphan ref is left behind. That clearing is a recommendation, not a fill, so it lives here as contested values rather than in fills[] (the Delay unit is staged UNRESOLVED). OTHER CELLS ALL CONFIRMED - see fills[]: status, fuel, pipeline type, capacity, length, diameter, cost, location, operator and owner each now carry two independent verified refs. Caveat on the harvested citation pool: all 23 gem.wiki citations for this row belong to the shared TETCO SYSTEM page and NOT ONE of them names the Middlesex project; I opened or tested them all, and the one the sheet leaned on for this row's data is EIA's https://www.eia.gov/naturalgas/data.php navigation page (23 backlinks), which states nothing about any pipeline and is not citable. That is why every ref staged here is newly found rather than re-verified.",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "86 FR 45718, Combined Notice of Filings: 'Docket Numbers: RP21-1021-000. Applicants: Texas Eastern Transmission, LP. Description: Compliance filing: Middlesex Extension Project (CP20-30) In-Service Compliance Filing to be effective 9/15/2021. Filed Date: 8/6/21.' An in-service compliance filing is made only when the certificated facilities are placed in service."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Status 'Completed' = operating."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status=operating confirmed by two independent hosts: FERC (via the Federal Register's publication of FERC's Combined Notice of Filings, 86 FR 45718, listing Texas Eastern's RP21-1021-000 'Middlesex Extension Project (CP20-30) In-Service Compliance Filing to be effective 9/15/2021') and EIA's Natural Gas Pipeline Projects workbook, which has carried the project as Completed with completed date 2021-09-28 in every release from Oct 2021 through Aug 2026. The sheet's Status [ref] was empty. No evidence of idling, abandonment, sale or conversion since; see status_reviews."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "173 FERC para 61,072, Order Issuing Certificate, Docket CP20-30-000 (Oct 15, 2020): the Middlesex Extension Project is certificated under NGA section 7(c) to provide 'up to 264,000 dekatherms (Dth) per day of firm natural gas transportation service'."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. The workbook is EIA's Natural Gas Pipeline Projects series; every row in it is a natural gas project."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Fuel=Gas. FERC's certificate order and EIA's natural-gas-only project series both state the commodity is natural gas; the delivery point is CPV Shore Holdings' gas-fired Woodbridge Energy Center. The Fuel [ref] cell was empty. Two independent hosts (FERC, EIA)."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order Issuing Certificate CP20-30-000: Texas Eastern filed 'pursuant to section 7(c) of the Natural Gas Act ... for authorization to construct and operate pipeline facilities, a new metering and regulating (M&R) station, and associated facilities'; NGA s.7 certificates cover interstate natural gas TRANSMISSION facilities, and the line is an extension off Texas Eastern's 36-inch Line 20 to Transco's Mainline E."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Pipeline Type field = 'Interstate', Authority = 'FERC'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "PipelineType=transmission. FERC certificated the facilities under NGA s.7(c) as interstate natural gas transmission (the EA's cover letter states FERC 'is the lead federal agency for authorizing interstate natural gas transmission facilities'); EIA classes the project 'Interstate' under FERC authority. Not a gathering or distribution line: it connects Texas Eastern's Line 20 to Transco's Mainline E and Woodbridge Lateral. PipelineType [ref] was empty."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2019",
+    "ProposalMonth": "12"
+   },
+   "primary_value": "2019",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2020/01/10/2020-00220/texas-eastern-transmission-lp-notice-of-application",
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2020/01/10/2020-00220/texas-eastern-transmission-lp-notice-of-application",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "85 FR 1311, Notice of Application, Docket CP20-30-000: 'On December 19, 2019, Texas Eastern Transmission, LP (Texas Eastern) ... filed an application pursuant to section 7(c) of the Natural Gas Act ... for its proposed Middlesex Extension Project (Project).'"
+    },
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order Issuing Certificate, para 1: 'On December 19, 2019, Texas Eastern Transmission, LP (Texas Eastern) filed an application pursuant to section 7(c) of the Natural Gas Act'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FILL: ProposalYear and ProposalMonth were blank. The FERC section 7(c) application was filed 19 December 2019, stated identically in the Federal Register Notice of Application (85 FR 1311) and in FERC's certificate order. Tier held at medium and independent=false because both documents are FERC's own record of the same filing (one origin). Searched for a second, non-FERC origin: EIA's Jan 2020 release is the first to carry the project and shows status 'Applied' with Last Updated 2020-01-08, which corroborates a late-2019 filing but does not itself state the December 2019 date; S&P Global Market Intelligence's contemporaneous story ('Texas Eastern applies for pipeline extension for NJ power plant') is paywalled and returned 403 to every fetch attempt (browser UA, curl, Wayback), so it is not cited. Precedent agreement with CPV Shore Holdings predates the filing but its date is not stated in the public order."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-06/CP20-30-EA.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-06/CP20-30-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC EA for the Middlesex Extension Project, CP20-30-000 (May 2020), section 5.0 CONSTRUCTION SCHEDULE: 'Texas Eastern anticipates commencing construction of the Project in January 2021 and placing all Project facilities into service in September 2021.'"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jul2021.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jul 2021 release, sheet 'Natural Gas Pipeline Projects', Excel row 83: 'Middlesex Expansion Project', Texas Eastern Transmission, status 'Construction', Last Updated 2021-02-12 - i.e. EIA recorded the project as under construction as of February 2021."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "FILL: ConstructionYear was blank. FERC's EA states construction was to commence January 2021; EIA independently moved the project to status 'Construction' with a 2021-02-12 update stamp, and the facilities were in service in September 2021 - so construction was executed in 2021. ConstructionMonth deliberately left BLANK rather than set to 1: January 2021 is the applicant's planned start restated by FERC, and no document found states the actual month construction began (searched the FERC order's implementation conditions, EIA's release-by-release history, and NJDEP/Middlesex County permit coverage). Year is high-tier on two independent hosts; month is not sourced."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2021",
+    "StartMonth1": "9"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "86 FR 45718: 'Texas Eastern Transmission, LP. Description: Compliance filing: Middlesex Extension Project (CP20-30) In-Service Compliance Filing to be effective 9/15/2021. Filed Date: 8/6/21.' FERC's certificate order directs Texas Eastern to file actual tariff records 'at least 30 days, but no more than 60 days, before the proposed the in-service date of the project', so the 9/15/2021 effective date is the project's in-service date."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Completed Date 2021-09-28, Year In Service 2021."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "CORRECTION, not a confirmation. The sheet records StartYear1=2022 with StartMonth1=9; the correct year is 2021. Two independent hosts agree the project entered service in September 2021: FERC's in-service compliance filing in RP21-1021-000 (tariff records effective 9/15/2021, published at 86 FR 45718) and EIA (Completed Date 2021-09-28, Year In Service 2021, carried unchanged in all 17 releases from Oct 2021 to Aug 2026). That is also exactly the September 2021 in-service date Texas Eastern proposed in its application and FERC restated in the May 2020 EA. StartMonth1=9 is correct and is retained. See validity[] for the spec concern; the computed StartYearEarliest cell (2022) is a formula column and will follow once StartYear1 is corrected - do not paste over the formula."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-06/CP20-30-EA.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "FERC EA section 5.0: planned in-service September 2021 - the month the project actually entered service. The EA states no delay."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. EIA's Year In Service stayed 2021 in every release from Jan 2020 (when the project was first listed, status Applied) onward - the target never slipped."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "NOT a confirmation - the evidence CONTRADICTS the recorded values, so per ADDENDUM failure mode 4 this unit is UNRESOLVED and the finding is filed in validity[]. The sheet records Delayed='yes' with DelayType='inferred' and no ref. Nothing was delayed: Texas Eastern proposed a September 2021 in-service date in its December 2019 application, FERC's May 2020 EA restated 'placing all Project facilities into service in September 2021', EIA's Year In Service field read 2021 in every release from Jan 2020 to Aug 2026 without ever slipping, and the project went into service in September 2021 (RP21-1021 compliance filing effective 9/15/2021; EIA completed 2021-09-28). The 'delay' appears to be an artifact of the sheet's own wrong StartYear1=2022 - remove the cause and the inference disappears. RECOMMENDED CLEARING of both Delayed and DelayType (and of the Delay [ref] cell, which must not be left orphaned); the recommendation is staged as values in validity[].contested. Searched FERC eLibrary docket CP20-30 activity, the Federal Register docket-related document list (4 documents, all 2020, none an extension-of-time request), and EIA's full release history for any schedule slip: none exists. Not independent: nothing was found for this cell, so there is no verified publisher to count."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "264.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "264.00",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order Issuing Certificate CP20-30-000 para 1: 'The project is designed to provide up to 264,000 dekatherms (Dth) per day of firm natural gas transportation service to interconnections with Transcontinental Gas Pipe Line Company, LLC's (Transco) mainline system and Transco's existing Woodbridge Lateral'. The EA states the same figure in volumetric units: '264 million cubic feet per day'."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Additional Capacity (MMcf/d) = 264."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Capacity=264.00 MMcf/d confirmed at high tier on two independent hosts. FERC states 264,000 Dth/d (order) and 264 MMcf/d (EA cover letter and section 2.0) - for pipeline-quality gas ~1.0 Dth/Mcf, so the two are the same number. EIA's Additional Capacity is 264 MMcf/d. This is the PROJECT's incremental firm capacity, not the Texas Eastern system's throughput, so it is correctly a segment-row value. Capacity [ref] was empty."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-06/CP20-30-EA.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "FERC EA CP20-30 (5,001 lines of extracted text) searched for 'MAOP', 'psig', 'psi', 'design pressure' and 'operating pressure': no design or maximum allowable operating pressure is stated anywhere in the document."
+    },
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "173 FERC para 61,072 searched for the same tokens: the order states facilities, capacity, cost and rates but no pressure."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FILL ATTEMPTED, NOTHING FOUND. Pressure and PressureUnits are blank on the sheet. Searched, token by token, the full text of FERC's EA for CP20-30 and of the certificate order 173 FERC para 61,072 for MAOP / psig / psi / design pressure / operating pressure - neither document states one (unusually, since many FERC EAs do; this EA's facility description is confined to lengths, diameters and construction method). Also checked the EA's hydrostatic-testing passage, which says only that Texas Eastern 'would hydrostatically pressure test the facilities prior to placing them into service' without a number. EIA's workbook has no pressure field. Texas Eastern's tariff (RP21-1021) sets rates, not MAOP. A value is NOT forced. Not independent: nothing was found for this cell, so there is no verified publisher to count."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "1.75",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "1.75",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order Issuing Certificate CP20-30-000 para 5: 'Texas Eastern proposes to construct and operate: (1) 1.55 miles of 20-inch-diameter pipeline; (2) a new M&R receipt station in Middlesex, New Jersey (Transco M&R station); (3) 0.20 mile of 16-inch-diameter pipeline connecting the Transco M&R station to Transco's Woodbridge Lateral tie-in and to its Mainline E tie-in'. 1.55 + 0.20 = 1.75 miles."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Miles = 1.75."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "LengthKnown=1.75 mi confirmed at high tier. FERC's certificate order and the Federal Register Notice of Application both itemise 1.55 mi of 20-inch plus 0.20 mi of 16-inch = 1.75 mi; EIA states 1.75 miles directly. LengthKnownUnits='mi' is correct - do not read this row in km. Minor internal note: FERC's May 2020 EA, written before the July 2020 design update, gives 1.54 mi of 20-inch plus 0.20 mi (631 ft Woodbridge Lateral tie-in + 494 ft Mainline E tie-in) of 16-inch = 1.74 mi; the certificated 1.55 + 0.20 = 1.75 supersedes it and matches the sheet exactly. Length [ref] was empty."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "16, 20",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "16, 20",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order para 5: '1.55 miles of 20-inch-diameter pipeline' and '0.20 mile of 16-inch-diameter pipeline connecting the Transco M&R station to Transco's Woodbridge Lateral tie-in and to its Mainline E tie-in'."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Pipeline Diameter (inches) = '16,20'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Diameter='16, 20' in confirmed at high tier: two diameters, 20-inch for the 1.55-mi Line 20 Extension and 16-inch for the 0.20 mi of interconnecting piping, stated as such by FERC's order, FERC's EA and the Federal Register Notice of Application, and carried as '16,20' by EIA. Not a decimal artifact. Note the 36-inch figure that appears in the FERC order is Texas Eastern's EXISTING Line 20, the tie-in point, not this project's pipe. Diameter [ref] was empty."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Order CP20-30-000 describes the project's supply only as interconnections - 'will extend from an interconnection with Texas Eastern's existing 36-inch-diameter Line 20 to interconnections with Transco's existing Mainline E and Woodbridge Lateral' - and names no producing field or basin."
+    },
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-06/CP20-30-EA.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "FERC EA section 2.0 says the purpose is 'providing an alternate access of supply during periods of constraint' and 'an alternate means of accessing natural gas supplies from Transco's existing system'; no field or basin is named."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FILL ATTEMPTED, NOTHING STAGEABLE. FuelSource is blank. The column's convention in GGIT is a named producing field or basin (e.g. 'Permian Basin', 'Marcellus and Utica shale'), and no document states one for this 1.75-mile interconnect. Both FERC documents describe the supply only as pipeline interconnections, and they describe them in opposite directions in different passages - the order calls the new station a 'receipt' station on Transco, while the EA calls the project an alternate means of accessing supplies 'from Transco's existing system' for a plant already on Transco's Woodbridge Lateral. Because I could not establish from the record whether the physical source is Texas Eastern's Line 20 or Transco's mainline, and because neither is a field/basin in this column's sense, no value is forced. EIA has no equivalent field. Not independent: nothing was found for this cell, so there is no verified publisher to count."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartPrefecture/District": "Middlesex County",
+    "StartState/Province": "New Jersey",
+    "StartCountryOrArea": "United States",
+    "EndPrefecture/District": "Middlesex County",
+    "EndState/Province": "New Jersey",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "New Jersey",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order para 5: 'The proposed Middlesex Extension Project will be located in the Metuchen Borough and Edison Township in Middlesex County, New Jersey, and will extend from an interconnection with Texas Eastern's existing 36-inch-diameter Line 20 to interconnections with Transco's existing Mainline E and Woodbridge Lateral.' Para 1: facilities 'in Middlesex County, New Jersey'."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. State(s) = NJ, Beginning State = NJ, Ending State = NJ, Crosses State Border = No."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Recorded StartState/Province and EndState/Province ('New Jersey') and both CountryOrArea cells ('United States') CONFIRMED at high tier by FERC's certificate order and EIA (both ends NJ, does not cross a state line). ALSO A FILL: StartPrefecture/District and EndPrefecture/District were blank and are staged as 'Middlesex County' - FERC states the whole project lies in Metuchen Borough and Edison Township, Middlesex County, New Jersey, so both termini are in that county (US rows on this tracker use the 'X County' form, e.g. 'Columbiana County', 'Bucks County'). StartLocation and EndLocation left BLANK: the order names the two municipalities but does not say which end is in which, and I will not infer a terminus municipality from the route geometry. ROUTE CHECK (route-first, per the batch rule): ../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P2562.geojson is a single MultiLineString of 5 vertices running from 40.5331 N, 74.3470 W north to 40.5528 N, 74.3461 W - i.e. it begins in Edison Township and ends at the Edison/Metuchen boundary, wholly inside Middlesex County, New Jersey, exactly the corridor FERC describes. Measured great-circle length 2.33 km (1.45 mi), which tracks the 1.55-mi 20-inch Line 20 Extension and omits the 0.20 mi of 16-inch tie-in piping; that is a reasonable trace of the certificated scope, not a stretch of the TETCO mainline (contrast the P0260 and P5832 route problems in this batch). The route agrees with the sheet's NJ->NJ cells, so no RouteAccuracy concern is raised and no coordinates are proposed."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "52000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "52000000.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Cost (Millions) = 52, i.e. USD 52,000,000 - the sheet's exact value."
+    },
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order para 5: 'The estimated cost of the project is approximately $53 million.'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "SegmentCost=52,000,000 USD kept, with the delta stated. EIA's workbook carries Cost (Millions) = 52 in every release from Jan 2020 to Aug 2026 - an exact match to the sheet - and FERC's certificate order states 'approximately $53 million'. A ~2% difference between EIA's figure and FERC's rounded 'approximately' figure is agreement within rounding, so this is REFS_ADDED with the recorded value retained, not an UNRESOLVED and not a spec concern. SegmentCostUnits='USD' (bare currency code) is correct. SegmentCostYear left BLANK: neither source dates the estimate, though it necessarily predates the December 2019 application; not forced. SegmentCost [ref] was empty."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1961,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Texas Eastern Transmission LP"
+   },
+   "primary_value": "Texas Eastern Transmission LP",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "173 FERC para 61,072, caption 'Texas Eastern Transmission, LP  Docket No. CP20-30-000', ORDER ISSUING CERTIFICATE - Texas Eastern Transmission, LP is the applicant and the certificate holder authorised to 'construct, operate, and maintain' the Middlesex Extension Project."
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1037: project 'Middlesex Expansion Project', Pipeline Operator Name 'Texas Eastern Transmission', docket CP20-30, NJ->NJ, 1.75 miles, 16,20 inches, 264 MMcf/d additional capacity, $52 million, status Completed, completed date 2021-09-28, year in service 2021. Pipeline Operator Name = 'Texas Eastern Transmission'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "FILL: Operator was blank on the Pipeline operators/owners tab (row 1961). Staged as 'Texas Eastern Transmission LP', matching the spelling the tab already uses on the sibling TETCO rows P0260 (TEAM 2014) and P0262 (Main Line). Two independent hosts: FERC's certificate order names Texas Eastern Transmission, LP as the entity authorised to construct, operate and maintain the facilities, and EIA's Pipeline Operator Name field reads 'Texas Eastern Transmission'. Still operator today - Enbridge's 10-K filed 2026-02-13 lists Texas Eastern Transmission, LP as a subsidiary, and no sale or transfer of the system was found."
+  },
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1961,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Enbridge",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Enbridge",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-ex21_1.htm",
+    "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-ex21_1.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Enbridge Inc. Form 10-K for FY2025, filed 2026-02-13, Exhibit 21.1 'Subsidiaries of the Registrant': the list of Enbridge Inc. subsidiaries includes 'Texas Eastern Transmission, LP  Delaware' (page 9 of 11). An unqualified entry on this exhibit is a wholly-owned subsidiary."
+    },
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-10/10-2020-C-1_0.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Order CP20-30-000 names Texas Eastern Transmission, LP as the certificate holder and owner of the authorised facilities ('construct, install, own, operate and maintain' in the corresponding Notice of Application); the Federal Register Notice of Application gives Texas Eastern's own regulatory contact as berk.donaldson@enbridge.com, i.e. the applicant is an Enbridge company."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Owner1='Enbridge' at 100.00% CONFIRMED at high tier; the Owner [ref] cell was empty. Enbridge's own SEC disclosure (10-K Ex. 21.1, filed 2026-02-13 - current as of this sweep) lists Texas Eastern Transmission, LP among its subsidiaries, and FERC's record for CP20-30 shows Texas Eastern Transmission, LP as the owner-operator of the certificated facilities with an @enbridge.com regulatory contact. Two independent origins (Enbridge/SEC and FERC). Single-owner row, so no Owner2+ or equity split is owed; searched FERC's order and EIA for any joint-venture or shipper equity in the project (CPV Shore Holdings is the project SHIPPER under a precedent agreement, not an owner) and found none. EIA's Pipeline Operator Name is 'Texas Eastern Transmission', which per the batch rule refs Owner1 as well - it names the Enbridge subsidiary rather than the parent, so it is noted rather than cited as the Owner1='Enbridge' ref."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "Middlesex Expansion Project",
+   "sheet_row": 1322,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026-08",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2021/08/16/2021-17489/combined-notice-of-filings",
+     "ok": true,
+     "contains_value": true
+    }
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Status 'operating' CONFIRMED; no change proposed, so no date column moves. Newest independent evidence is EIA's August 2026 Natural Gas Pipeline Projects release (sheet 'Historical Projects (1996-2024)', Excel row 1037), which still carries the Middlesex project as Completed, in service 2021, under operator Texas Eastern Transmission - a 2026-08 dated statement that the facility exists and is in service. The in-service event itself is documented by FERC: Texas Eastern's RP21-1021-000 in-service compliance filing effective 9/15/2021 (86 FR 45718). Checked for idling, abandonment, sale, conversion or rename: Enbridge's 10-K filed 2026-02-13 still lists Texas Eastern Transmission, LP as a subsidiary; FERC's docket CP20-30 shows no post-2021 activity and no abandonment application; the Federal Register lists only four CP20-30 documents, all from 2020. The row's LastUpdated is 2024-05-29 and nothing newer changes the status. The one correction this review carries is not a status change but the in-service YEAR: StartYear1 should be 2021, not 2022 - staged in fills[Start [ref]] and in validity[].contested, deliberately consistent with a 'confirm' verdict here (the row is and was operating; only the date it started is wrong)."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "P2562 is definitively the Middlesex Extension Project (FERC CP20-30, 1.55 mi 20-in + 0.20 mi 16-in in Middlesex County NJ, 264,000 Dth/d to the Woodbridge Energy Center) - real, correctly classified, not a duplicate of any sibling TETCO row; all 16 units now reported, with StartYear1 corrected 2022->2021, Delayed/DelayType recommended cleared, and SegmentName flagged as 'Extension' not 'Expansion'."
+}

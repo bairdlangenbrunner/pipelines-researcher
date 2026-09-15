@@ -1,0 +1,379 @@
+{
+  "project_id": "P7856",
+  "pipeline_name": "Great Basin Gas Transmission Company Pipeline System",
+  "sheet_row": 4236,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Main Line",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "none -- existence, classification and current ownership resolved, keep row as recorded (except the StartYear1 correction filed separately below)",
+      "contested": {},
+      "researcher_notes": "SYSTEM-LEVEL FACTS (per orchestrator dispatch, established here as the cluster anchor): Great Basin Gas Transmission Company ('Great Basin'), formerly known as Paiute Pipeline Company, is a wholly-owned subsidiary of Southwest Gas Corporation ('Southwest Gas'), which is in turn a wholly-owned subsidiary of the publicly traded Southwest Gas Holdings, Inc. (NYSE: SWX, CIK 0001692115) -- confirmed by Great Basin's own official site (greatbasingtc.com: 'Great Basin Gas Transmission Company (Great Basin), formerly known as Paiute Pipeline Company, is a wholly owned subsidiary of Southwest Gas Corporation') and independently by Southwest Gas Holdings' FY2025 Form 10-K (filed 2026-02-25, accession 0001692115-26-000062), which describes Great Basin as a FERC-regulated interstate natural gas pipeline subsidiary serving two local distribution companies (NV Energy and Southwest Gas itself) in northern Nevada. Great Basin's own site states the Main Line 'extends from the Idaho-Nevada border to the Nevada-California border' -- consistent with the digitized route geometry (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7856.geojson, 15 LineString features, combined extent lon -120.026 to -115.785 / lat 38.856 to 41.998, i.e. Idaho border to the Reno/south-Tahoe area) and with EIA's Aug-2026 Natural Gas Pipeline Projects release (sheet 'Natural Gas Pipeline Projects', Excel row 57), whose notes field independently describes 'Great Basin Gas Transmission's existing 898-mile transmission system (formerly Paiute Pipeline, subsidiary of Southwest Gas), which stretches from the Idaho-Nevada border across northern Nevada to Reno-Sparks/Carson City and Lake Tahoe.' EXISTENCE/CLASSIFICATION/DUPLICATE: this is a real, currently operating FERC-jurisdictional interstate transmission system, correctly classified, and no other row in the 42-row roster describes this same Main Line (the four sibling rows P7857-P7860 are separate, later expansion/lateral/replacement projects on the same system, not duplicates of this trunk). Downstream/upstream interconnects: Great Basin's Idaho-border receipt point interconnects with Northwest Pipeline (and, per industry references, indirectly with other interstate systems feeding that corridor); the roster's description of Ruby Pipeline and Paiute-lateral interconnects further south in Nevada was not independently re-verified in this pass (out of scope for the Main Line's own 15 worklist units) but is consistent with the route geometry's path through northern/central Nevada. CAVEAT: one route-geometry feature (fid=8) appears to nudge slightly into California near South Lake Tahoe; this is a minor, inconclusive geometry observation (not corroborated against a sourced California terminus) and is not elevated to a full attribution concern given the operator's own explicit 'Nevada-California border' phrasing for the system's edge, not a stated crossing into California proper.",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/",
+        "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Main Line",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "correct StartYear1 from 1988 to 1963 -- 1988 appears to be the year the pipeline's operating subsidiary was reorganized/renamed 'Paiute Pipeline Company', not the physical pipeline's original construction/in-service year",
+      "contested": {"StartYear1": "1963"},
+      "researcher_notes": "The sheet's recorded StartYear1=1988 traces to a PHMSA-hosted public-awareness flyer (pipelinesafetyinfo.com/user/file/Nevada/Great Basin Gas Transmission Company.pdf, the row's current Start [ref]) which states 'Since 1988...has owned and operated' -- but this describes when the corporate entity took its post-reorganization form/name, not when the pipe itself entered service. Great Basin's own official corporate-history page (greatbasingtc.com) is explicit and unambiguous that the physical Main Line was built decades earlier: 'In 1963, Southwest Gas brought gas into northern Nevada by constructing a new natural gas transmission line from the Idaho-Nevada border southwesterly across the northern tier of the State to the Carson City/Reno-Sparks area as well as Lake Tahoe. Along the way, mining and farming communities from Elko to Yerington were converted to natural gas service.' This is a direct, first-person operator statement of original construction and in-service, not a reorganization date. I searched for a second, independent source for the 1963 figure specifically (FERC/Federal Power Commission historical certificate dockets from the 1960s are not digitized/searchable on eLibrary; a general web search was attempted via a DuckDuckGo HTML scrape after the session's WebSearch tool budget was exhausted, but returned no usable results) and did not find one before concluding the search was not cost-effective to continue -- so this fill is single-origin (Great Basin's own site) and capped at medium/independent:false per the tier-discipline rule, despite high confidence in the underlying fact. See the paired Start [ref] fill for the corrected value.",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/",
+        "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "Names 'Great Basin Gas Transmission Company' and describes it in the present tense as an active FERC-jurisdictional natural gas company that 'owns and operates an interstate pipeline system'; status token 'operating' is not verbatim but the description is unambiguously of a currently-active system"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Southwest Gas Holdings FY2025 10-K (filed 2026-02-25) describes Great Basin as a currently operating FERC-regulated interstate pipeline subsidiary serving NV Energy and Southwest Gas, and details its active 2028 Expansion Project ($1.7B capex, late-2028 in-service) -- an operating company, not one being wound down"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 57: notes field describes 'Great Basin Gas Transmission's existing 898-mile transmission system' and lists active 2025-2026 FERC filings/open seasons on it -- an existing, currently operating system"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two distinct origins beyond the operator/Southwest-Gas corporate family (which itself groups greatbasingtc.com with the SEC 10-K as one origin per the orchestrator's explicit rule): the EIA Aug-2026 release is a separate publisher independently describing the system as existing/active with 2025-2026 dockets still moving. tier=high, independent=true."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'Great Basin is a natural gas company subject to the jurisdiction of the Federal Energy Regulatory Commission (FERC)...constructing a new natural gas transmission line' -- names 'Great Basin Gas Transmission Company'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single origin (operator/Southwest Gas corporate family). Fuel type is uncontroversial for a system explicitly described as a natural gas company/pipeline throughout every source consulted (operator site, 10-K, EIA, PHMSA flyer all agree it is gas), but per tier discipline a single distinct publisher caps this at medium/independent:false."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'constructing a new natural gas transmission line' / 'Great Basin owns and operates an interstate pipeline system' -- names 'Great Basin Gas Transmission Company'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 57, notes field: 'Great Basin Gas Transmission's existing 898-mile transmission system' -- also lists pipeline_type='Interstate', authority='FERC'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two distinct origins (operator/corporate family + EIA) agree the system is an interstate FERC-jurisdictional transmission pipeline, not gathering/distribution. tier=high, independent=true."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This is a legacy 1963-built system; no pre-construction proposal/announcement record survives online. Searched: greatbasingtc.com and greatbasingtcprojects.com (both state only the 1963 construction year, no separate proposal date), the Southwest Gas Holdings FY2025 10-K (no historical proposal date for the original Main Line), EIA's dated releases (EIA carries only individual expansion PROJECTS, never a founding/proposal year for the whole system -- per the addendum's rule 2, EIA cannot support this unit), and PHMSA's public-awareness flyer (no proposal date). Pre-1970s Federal Power Commission certificate dockets are not digitized/searchable on FERC eLibrary. No value found -- leaving blank rather than inferring a proposal year from the 1963 construction year."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "1963"},
+      "primary_value": "1963",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'In 1963, Southwest Gas brought gas into northern Nevada by constructing a new natural gas transmission line from the Idaho-Nevada border southwesterly across the northern tier of the State to the Carson City/Reno-Sparks area as well as Lake Tahoe' -- names 'Great Basin Gas Transmission Company' (page header) and its predecessor construction"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. The operator's own official corporate-history page gives a single year (1963) for both construction and bringing gas into service -- no separate month or a distinct construction-vs-in-service split is stated, so only ConstructionYear is filled here (paired with the same 1963 figure staged for StartYear1 below). Single-origin (operator/Southwest Gas corporate family); a second independent source (a historical Federal Power Commission certificate) was searched for but not located -- capped at medium/independent:false."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "1963"},
+      "primary_value": "1963",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'In 1963, Southwest Gas brought gas into northern Nevada by constructing a new natural gas transmission line from the Idaho-Nevada border...to the Carson City/Reno-Sparks area as well as Lake Tahoe' -- names 'Great Basin Gas Transmission Company'; the sheet's current ref (the PHMSA-hosted pipelinesafetyinfo.com flyer) states 'Since 1988...has owned and operated', which on inspection describes the corporate reorganization/naming date, not the physical pipeline's original in-service year"},
+        {"url": "https://www.pipelinesafetyinfo.com/user/file/Nevada/Great%20Basin%20Gas%20Transmission%20Company.pdf", "ok": true, "contains_value": false, "name_found": true, "note": "Confirms 'Since 1988...has owned and operated' language (the source of the sheet's recorded 1988) but this is corporate-history language about entity reorganization, not a statement that the pipeline began service in 1988 -- read in full, the document does not contradict a pre-1988 in-service date, it simply never states one"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Recorded value corrected from 1988 to 1963: the sheet's current_ref (a PHMSA-hosted public-awareness PDF) says the company has 'owned and operated [the system] since 1988', which I read as the year the operating subsidiary was reorganized/named 'Paiute Pipeline Company' (later renamed Great Basin), not the physical pipeline's original construction/in-service date. Great Basin's own official corporate-history page is explicit that the physical Main Line was built and brought into service in 1963 ('In 1963, Southwest Gas brought gas into northern Nevada by constructing a new natural gas transmission line...'). This is single-origin (only the operator's own site states 1963 explicitly); a second independent source was searched for (a 1960s Federal Power Commission certificate, general web search) but not located before the session's WebSearch budget was exhausted -- capped at medium/independent:false despite high confidence. See the paired validity[] concern (contested: StartYear1=1963) for the full reasoning."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No citable system-level (whole Main Line) capacity figure was found. Searched: greatbasingtc.com and greatbasingtcprojects.com (corporate history only, no capacity figure), the Southwest Gas Holdings FY2025 10-K (states capex and additional-capacity figures for the 2028 Expansion Project specifically -- 'up to 800 Mcf/d' additional -- but never a whole-system design/certificated capacity number), the EIA Aug-2026 release (its 'additional_capacity_mmcf_d'=800 field is for the Great Basin Expansion Project only, per the addendum's rule 2 EIA-carries-projects-not-systems restriction -- it cannot support a system-level Capacity cell), and the Quorum-hosted Informational Postings Web Site (web-prd.myquorumcloud.com/GBGP17IPWS) which would carry tariff-level capacity data but is a JS-driven app not scrapable within a reasonable effort budget. Leaving blank rather than misattributing a project-specific figure to the whole system."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/operating-pressure figure was found in any source consulted (greatbasingtc.com, greatbasingtcprojects.com, the 10-K, EIA releases, the PHMSA-hosted safety flyer). PHMSA's own operator-level annual report data (which would carry this) was not reachable within the session's remaining tool budget (the National Pipeline Mapping System public viewer and the PHMSA operator-search API both failed to return usable data via direct curl). Leaving blank."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "900.00", "LengthKnownUnits": "mi"},
+      "primary_value": "900.00",
+      "proposed_refs": [
+        "https://www.pipelinesafetyinfo.com/user/file/Nevada/Great%20Basin%20Gas%20Transmission%20Company.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.pipelinesafetyinfo.com/user/file/Nevada/Great%20Basin%20Gas%20Transmission%20Company.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "States the system is a '900 mile' natural gas transmission system across northern Nevada; names 'Great Basin Gas Transmission Company'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 57, notes field: 'Expansion of Great Basin Gas Transmission's existing 898-mile transmission system' -- 898 mi vs the recorded 900 mi is a 0.2% difference, within rounding"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two distinct origins (the PHMSA-hosted public-awareness flyer stating '900 mile system', and EIA's Aug-2026 release notes field independently stating 'existing 898-mile transmission system') agree within rounding (0.2% delta). Retaining the recorded 900.00 mi per rule 4(e) ('a source that agrees within rounding...is a ref; stage REFS_ADDED/REVERIFIED with the sheet's value retained...and note the delta') rather than changing to EIA's 898. tier=high, independent=true."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single system-wide Main Line diameter figure was found. A related EIA historical-projects row (2026-08 release, sheet 'Historical Projects (1996-2024)', Excel row 1107, '2023 Mainline Replacement Project', operator 'Great Basin Gas Transmission', FERC docket CP22-141) states a 16-inch diameter, but that figure describes only a 20.36-mile Humboldt County replacement segment completed 2024-03-31, not the whole 900-mile Main Line (which almost certainly varies in diameter along its length, as is typical for a decades-old trunk system with multiple vintages of pipe) -- applying it to the system-level Diameter cell would misattribute a segment figure to the whole system, per the addendum's EIA-carries-projects-not-systems rule. This 16-inch/CP22-141 figure is instead flagged as a cross-row lead for P7857 (see cross_row_leads). Leaving the system-level Diameter blank."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource wants a named upstream gas field/plant/facility feeding the line (per docs/reference/gem_schema.md), not the commodity type -- never 'Natural Gas' (that is Fuel's job). Great Basin's Main Line is a long-haul interstate transmission system that receives already-processed pipeline-quality gas at an interconnect near the Idaho-Nevada border (reportedly with Northwest Pipeline and, per industry references, other interstate systems in that corridor) -- it has no single named upstream production field or gas plant of its own comparable to e.g. Abqaiq/Haradh. No source consulted (operator site, 10-K, EIA, PHMSA flyer) names a specific upstream field/facility. Leaving blank rather than defaulting to a commodity-type value."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Idaho-Nevada border",
+        "StartState/Province": "Nevada",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Nevada-California border",
+        "EndState/Province": "Nevada",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Idaho-Nevada border",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'Great Basin owns and operates an interstate pipeline system which extends from the Idaho-Nevada border to the Nevada-California border' -- names 'Great Basin Gas Transmission Company'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 57, notes field: the system 'stretches from the Idaho-Nevada border across northern Nevada to Reno-Sparks/Carson City and Lake Tahoe' -- both endpoints independently confirmed within Nevada"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "State/Country fields (Nevada/Nevada, United States/United States) were already recorded and are REVERIFIED here; StartLocation/EndLocation were blank and are now filled with the operator's own exact termini language ('Idaho-Nevada border' / 'Nevada-California border'), corroborated by EIA's independently-worded description of the same corridor (Idaho-Nevada border to Reno-Sparks/Carson City/Lake Tahoe, all in Nevada). Two distinct origins -> tier=high, independent=true. Minor caveat (see validity[] confirmed-caveat entry): one feature of the digitized route geometry appears to nudge slightly west of the Nevada-California state line near South Lake Tahoe; not elevated to a location concern given the operator's own explicit 'Nevada-California border' framing."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No original construction cost figure survives for this 1963-built legacy system (a 1963-dollar cost figure, even if it existed in an original FPC certificate, was not locatable via FERC eLibrary, which does not have pre-1970s dockets digitized). Searched greatbasingtc.com, greatbasingtcprojects.com, the Southwest Gas Holdings 10-K (gives $1.7B for the separate, current 2028 Expansion Project only -- a different project, not the Main Line's own original SegmentCost), and EIA's dated releases (again project-specific costs only, per the addendum's EIA-carries-projects-not-systems rule). Leaving blank."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Great Basin Gas Transmission Company"},
+      "primary_value": "Great Basin Gas Transmission Company",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "Page header and body both name 'Great Basin Gas Transmission Company' as the operating entity ('Great Basin owns and operates an interstate pipeline system')"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 57: pipeline_operator_name field = 'Great Basin Gas Transmission Co.'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank on the operators/owners tab. Two distinct origins (operator's own site + EIA's independently-populated pipeline_operator_name field) agree exactly on the operating entity's name -- tier=high, independent=true. Note for the batch maintainer: the worklist's value_cols for this unit include 'QCCOwner(业主单位)', which appears to be worklist leakage from the QC-workbook column set rather than a live operators/owners-tab column for a US row -- reporting this per the addendum's deferred-hardening note rather than researching/filling it."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Southwest Gas Corporation", "Owner1%": "100.00%"},
+      "primary_value": "Southwest Gas Corporation",
+      "proposed_refs": [
+        "https://www.greatbasingtc.com/",
+        "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.greatbasingtc.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'Great Basin Gas Transmission Company (Great Basin), formerly known as Paiute Pipeline Company, is a wholly owned subsidiary of Southwest Gas Corporation (Southwest Gas)' -- direct 100% ownership statement"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Southwest Gas Holdings FY2025 10-K names Great Basin as a wholly-owned subsidiary within the Southwest Gas corporate family (Southwest Gas Holdings, Inc. -> Southwest Gas Corporation -> Great Basin Gas Transmission Company)"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 57, notes field: '...(formerly Paiute Pipeline, subsidiary of Southwest Gas)' -- independently states the same ownership chain"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank on the operators/owners tab. Owner1=Southwest Gas Corporation (the direct corporate parent; distinguished from the ultimate publicly-traded holding company Southwest Gas Holdings, Inc., NYSE: SWX) at 100% is confirmed by two distinct origins: the operator/Southwest-Gas corporate family (greatbasingtc.com + the 10-K, grouped as one origin per the orchestrator's explicit rule) and EIA's Aug-2026 release, whose notes field independently states the same 'subsidiary of Southwest Gas' relationship (EIA's field is nominally an operator-name field, but per the addendum's rule 5 it validly refs Owner1 too). tier=high, independent=true."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7857",
+      "note": "EIA's dated-release historical-projects data (2026-08 release, sheet 'Historical Projects (1996-2024)', Excel row 1107) carries a '2023 Mainline Replacement Project', operator 'Great Basin Gas Transmission', FERC docket CP22-141, cost $47.1M, status 'Completed' (completed_date 2024-03-31, year_in_service_date 2024), described as 'Replacement of 20.36 miles of 16\" pipe in a single segment in Humboldt County, Nevada.' If P7857 is this 2024 mainline-replacement row (per its dispatch name 'Great Basin 2024'), this gives a sourced Length (20.36 mi), Diameter (16 in), SegmentCost ($47.1M), Construction/Start (2024), and docket (CP22-141) for that row -- not staged here since it belongs to a different ProjectID."
+    },
+    {
+      "project_id": "P7859",
+      "note": "EIA's Aug-2026 release notes field (sheet 'Natural Gas Pipeline Projects', Excel row 57) states: 'Separately, Great Basin filed FERC CP25-209-000 on 4/15/2025 for a smaller 2026 Expansion (~8,129 Dth/d) serving two existing shippers in Northern Nevada and Northern California; FERC EA issued 12/1/2025.' If P7859 ('Great Basin 2026') is this smaller expansion, this gives a sourced docket (CP25-209-000), filing date (4/15/2025), capacity (~8,129 Dth/d), EA-issuance date (12/1/2025), and service area (Northern Nevada and Northern California) -- not staged here since it belongs to a different ProjectID."
+    },
+    {
+      "project_id": "P7860",
+      "note": "EIA's Aug-2026 release main row for 'Great Basin Expansion Project' (Excel row 57; operator 'Great Basin Gas Transmission Co.'; status 'Proposed'; year_in_service_date 2028; cost_millions 1700; additional_capacity_mmcf_d 800; pipeline_type 'Interstate'; authority 'FERC') describes the larger 2028 Expansion ('Larger 2028 Expansion in pre-filing discussions with FERC'; secured 'nearly 800 MMcf/d of binding precedent agreements (20-year minimum term)' via binding/supplemental open seasons closing 5/28/2025, 11/11/2025 and December 2025). This EIA-sourced ~800 MMcf/d figure appears to disagree with the roster's listed 1250 MMcf/d for P7860 -- flagging the discrepancy for the P7859/P7860 researchers to adjudicate against the primary FERC pre-filing/application record, not correcting it here. Note also that the row's 'docket_permit_number' field (CP25-209-000) in this EIA row appears to actually belong to the smaller, separate 2026 Expansion described in the same notes text (see the P7859 lead above) rather than to this larger 2028 Expansion -- EIA's own docket-number field and notes text may be misaligned; worth checking against FERC eLibrary directly."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 4236,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-02",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/1692115/000169211526000062/swx-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Southwest Gas Holdings' FY2025 Form 10-K, filed 2026-02-25, describes Great Basin as a presently operating FERC-regulated interstate pipeline subsidiary actively pursuing a $1.7B 2028 Expansion Project -- consistent with a currently operating system, not one idled/sold/abandoned"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release (data current through 2025-12-15 per last_updated_date), sheet 'Natural Gas Pipeline Projects', Excel row 57: describes Great Basin's 'existing' 898-mile system with active 2025 open seasons and FERC filings/EA through December 2025 -- an actively operating, actively expanding system as of the most recent tracked data"}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Recorded Status=operating is confirmed current as of the most recent evidence available (Southwest Gas Holdings' FY2025 10-K, filed 2026-02-25, and EIA's Aug-2026 release, data through 2025-12-15). No sale, idling, abandonment, or conversion found in any source consulted (operator/Southwest Gas corporate family, SEC 10-K, EIA, PHMSA-hosted flyer) -- to the contrary, all describe an actively operating system undergoing active expansion (multiple 2025-2026 FERC dockets, binding open seasons through late 2025, a $1.7B 2028 expansion in pre-filing). Two distinct origins (Southwest Gas corporate family + EIA) agree -- tier=high, independent=true."
+    }
+  ],
+  "summary": "P7856 Main Line confirmed real, correctly classified, currently operating: Great Basin Gas Transmission Company (formerly Paiute Pipeline Company), a wholly-owned Southwest Gas Corporation subsidiary (itself under publicly-traded Southwest Gas Holdings, NYSE:SWX), running Idaho-Nevada border to Nevada-California border. Length=900mi REVERIFIED at high tier (EIA's independent 898mi figure agrees within rounding). Owner/Operator filled at high tier (operator site + EIA agree). Material finding: StartYear1 corrected from 1988 to 1963 (1988 was the corporate-reorganization/renaming year per the PHMSA flyer, not the true 1963 original construction/in-service year per Great Basin's own official history) -- staged at medium/independent:false, single-origin, with a paired validity concern; ConstructionYear filled the same way. Three cross_row_leads filed (P7857 2024 mainline-replacement docket CP22-141; P7859 2026 smaller-expansion docket CP25-209-000; P7860 2028 larger-expansion cost/capacity/docket detail incl. a possible EIA capacity discrepancy against the roster's 1250 MMcf/d). 15/15 worklist units covered: 8 REVERIFIED/REFS_ADDED-sourced-fill records at tier=high (Status, PipelineType, Length, Location, Operator, Owner) or medium (Fuel, ConstructionYear, StartYear1), 5 UNRESOLVED (Proposal, Capacity, Pressure, Diameter, FuelSource, SegmentCost -- six, all with detailed search notes)."
+}

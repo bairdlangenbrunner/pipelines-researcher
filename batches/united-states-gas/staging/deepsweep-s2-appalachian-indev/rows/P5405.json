@@ -1,0 +1,511 @@
+{
+  "project_id": "P5405",
+  "pipeline_name": "North Brooklyn Gas Pipeline",
+  "sheet_row": 2995,
+  "wiki": "https://www.gem.wiki/North_Brooklyn_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "duplicate",
+      "recommendation": "ADJUDICATED: same project as P4070; P4070 is the keeper. Retire/merge THIS row (P5405) into P4070. P4070 holds the route geometry, the Capacity, the refs and the newer LastUpdated; P5405's route geojson is null geometry and its Capacity is empty. Everything P5405 researched that P4070 lacked has been staged onto P4070 (FuelSource='Marcellus Shale' from Vice; the NYSDEC withdrawal ref; the NY DPS identification of the legal operating entity), so this row can be dropped without losing research.",
+      "contested": {},
+      "researcher_notes": "Cross-checked both PIDs' gem.wiki pages (leads only, not cited) plus the routes-repo geojsons: ../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P4070.geojson has 5 MultiLineString/LineString features properties Company='National Grid', States='NY', phase statuses (Construction/Announced/blank); P5405.geojson geometry is null. External sourcing (In These Times 2023-07-06, Grist 2020-06-12, Vice, BKReader 2023-04-07, National Grid's own project page via Wayback) all describe one single Brownsville-to-Greenpoint 7-mile/30-inch line, not two separate pipelines. This is an existence/duplicate concern about the row as a whole, not a single-cell value error.\n\nORCHESTRATOR ADJUDICATION 2026-09-14 — duplicate pair P5405 <-> P4070, decided across both shards.\nSAME PROJECT, CONFIRMED. Both row agents reached this independently and the evidence is unambiguous: one Brownsville-to-Greenpoint, 7 mi, 30 in National Grid transmission main (the Metropolitan Reliability Infrastructure / Metropolitan Natural Gas Reliability Project), construction from spring 2017, final phase withdrawn 2023. Identical endpoints, length, diameter and construction year on both rows.\nKEEPER: P4070. It carries the geometry (routes repo P4070.geojson holds 5 real features, Company='National Grid', States='NY', with per-phase status attributes; P5405.geojson geometry is null), it carries Capacity (250 MMcf/d) which P5405 lacks entirely, it carries the row's refs, and its LastUpdated is 2025-08-07 against P5405's 2023-07-12. Retiring the geometry-bearing row to keep the empty one would also break the three-way route sync. RECOMMEND: retire/merge P5405 into P4070, carrying across the three things P5405 researched that P4070 did not (FuelSource, the legal operating entity, and the NYSDEC permit-withdrawal ref) - all three are now staged on P4070 itself, so nothing is lost if P5405 is dropped.\nCONSIDERED AND REJECTED: re-scoping the two rows as two segments (built phases 1-4 on one, cancelled phase 5 on the other). Nothing in either row's data describes phase 5 alone - both carry the FULL 7 mi / 30 in / Brownsville-Greenpoint line - and no source gives phase 5's own length or endpoints, so the split would have to be invented. The pipe is one row.\nSTATUS RULED: OPERATING, StartYear1=2020. This is the substantive finding of the pair, and it reverses what the sheet records on BOTH rows. National Grid's own project page states portions were 'placed into service prior to the 2020-2021 heating season' and that the project 'is in service'; the sheet's own existing Earthjustice ref, read in full, credits activists with stopping only phase 5 and describes phases 1-4 as built; In These Times (2023-07) corroborates that the completed sections were physically connected by mid-2023. What was cancelled in 2023 was the fifth phase - the LNG-vaporizer connection at Greenpoint - not the pipeline. Roughly 5.5-6 of the 7 recorded miles exist and carry gas.\nCANCELLATION FIELDS RULED: CLEAR CancelledYear (2023) and ShelvedCancelledType ('confirmed') on P4070 when Status moves to operating. Both row agents correctly refused to decide this alone and escalated it. A row cannot be operating and carry a cancellation year: that pairing is exactly the defect class this slice is sweeping for, and it would misreport a built, in-service main as a cancelled project in every downstream count. The 2023 event is real and must not be lost - it is preserved in the Status ref set, in this shard's notes, and in ResearcherNotes, where a partial-scope cancellation belongs. Delayed='yes' / DelayType='confirmed' STAY: the line was proposed to run to Greenpoint and never got there.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221227135328/https://nationalgridgasprojectsny.com/brooklynmetro/",
+        "https://earthjustice.org/press/2023/while-national-grid-scrambles-to-tear-down-new-yorks-climate-law-no-north-brooklyn-pipeline-alliance-celebrates-another-defeat-of-national-grid-in-the-north-brooklyn-fracked-gas-pipeline-fig",
+        "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "classification",
+      "recommendation": "RESOLVED by the orchestrator: Status = 'operating', StartYear1 = 2020. This shard was right to flag the mismatch and right not to force it alone. The In These Times caveat it raised (the built sections tie into the Greenpoint facility through an older, smaller line and do not distribute gas directly to households) describes what the pipe CONNECTS TO, not whether it exists and carries gas - National Grid's own page says it is in service. It does not hold the status at 'cancelled'. If this row is retired per the duplicate concern above, the correction applies on P4070, where it is staged.",
+      "contested": {},
+      "researcher_notes": "Status left at the recorded 'cancelled' value for this fill pass (see Status fill below) rather than forced to 'operating', since the built segments' service status is not itself independently confirmed to GEM's PipelineType/segment-status precedent, and this row has no separate segment for the built vs. unbuilt portions.\n\nORCHESTRATOR ADJUDICATION 2026-09-14 — duplicate pair P5405 <-> P4070, decided across both shards.\nSAME PROJECT, CONFIRMED. Both row agents reached this independently and the evidence is unambiguous: one Brownsville-to-Greenpoint, 7 mi, 30 in National Grid transmission main (the Metropolitan Reliability Infrastructure / Metropolitan Natural Gas Reliability Project), construction from spring 2017, final phase withdrawn 2023. Identical endpoints, length, diameter and construction year on both rows.\nKEEPER: P4070. It carries the geometry (routes repo P4070.geojson holds 5 real features, Company='National Grid', States='NY', with per-phase status attributes; P5405.geojson geometry is null), it carries Capacity (250 MMcf/d) which P5405 lacks entirely, it carries the row's refs, and its LastUpdated is 2025-08-07 against P5405's 2023-07-12. Retiring the geometry-bearing row to keep the empty one would also break the three-way route sync. RECOMMEND: retire/merge P5405 into P4070, carrying across the three things P5405 researched that P4070 did not (FuelSource, the legal operating entity, and the NYSDEC permit-withdrawal ref) - all three are now staged on P4070 itself, so nothing is lost if P5405 is dropped.\nCONSIDERED AND REJECTED: re-scoping the two rows as two segments (built phases 1-4 on one, cancelled phase 5 on the other). Nothing in either row's data describes phase 5 alone - both carry the FULL 7 mi / 30 in / Brownsville-Greenpoint line - and no source gives phase 5's own length or endpoints, so the split would have to be invented. The pipe is one row.\nSTATUS RULED: OPERATING, StartYear1=2020. This is the substantive finding of the pair, and it reverses what the sheet records on BOTH rows. National Grid's own project page states portions were 'placed into service prior to the 2020-2021 heating season' and that the project 'is in service'; the sheet's own existing Earthjustice ref, read in full, credits activists with stopping only phase 5 and describes phases 1-4 as built; In These Times (2023-07) corroborates that the completed sections were physically connected by mid-2023. What was cancelled in 2023 was the fifth phase - the LNG-vaporizer connection at Greenpoint - not the pipeline. Roughly 5.5-6 of the 7 recorded miles exist and carry gas.\nCANCELLATION FIELDS RULED: CLEAR CancelledYear (2023) and ShelvedCancelledType ('confirmed') on P4070 when Status moves to operating. Both row agents correctly refused to decide this alone and escalated it. A row cannot be operating and carry a cancellation year: that pairing is exactly the defect class this slice is sweeping for, and it would misreport a built, in-service main as a cancelled project in every downstream count. The 2023 event is real and must not be lost - it is preserved in the Status ref set, in this shard's notes, and in ResearcherNotes, where a partial-scope cancellation belongs. Delayed='yes' / DelayType='confirmed' STAY: the line was proposed to run to Greenpoint and never got there.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221227135328/https://nationalgridgasprojectsny.com/brooklynmetro/",
+        "https://earthjustice.org/press/2023/while-national-grid-scrambles-to-tear-down-new-yorks-climate-law-no-north-brooklyn-pipeline-alliance-celebrates-another-defeat-of-national-grid-in-the-north-brooklyn-fracked-gas-pipeline-fig",
+        "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20221227135328/https://nationalgridgasprojectsny.com/brooklynmetro/",
+        "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution",
+        "https://www.bkreader.com/news/keeping-greenpoint-green-national-grid-officially-abandons-fracked-gas-pipeline-plans-in-north-bk-6822102",
+        "https://dec.ny.gov/news/press-releases/2023/4/statement-from-new-york-state-department-of-environmental-conservation-on-national-grids-withdrawal-of-the-air-state-facility-permit-application-for-greenpoint-energy-center"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20221227135328/https://nationalgridgasprojectsny.com/brooklynmetro/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Re-verified by the orchestrator 2026-09-14 (200, name_found=True on 'Metropolitan Natural Gas Reliability Project'). The operator's own project page states 'Portions of this important infrastructure project were successfully installed and placed into service prior to the 2020-2021 heating season' and, separately, 'Now that the Metropolitan Reliability Infrastructure project is in service...'. An earlier verifier miss on this page was a bad expected-string, not an unsupported value."
+        },
+        {
+          "url": "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2023-07-06 article confirms National Grid abandoned the final leg of the pipeline after PSC denial"
+        },
+        {
+          "url": "https://www.bkreader.com/news/keeping-greenpoint-green-national-grid-officially-abandons-fracked-gas-pipeline-plans-in-north-bk-6822102",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2023-04-07 confirms March 16 2023 PSC denial and National Grid abandoning plans"
+        },
+        {
+          "url": "https://dec.ny.gov/news/press-releases/2023/4/statement-from-new-york-state-department-of-environmental-conservation-on-national-grids-withdrawal-of-the-air-state-facility-permit-application-for-greenpoint-energy-center",
+          "ok": true,
+          "contains_value": true,
+          "name_found": null,
+          "note": "NYSDEC 2023-04-04 statement confirms National Grid's withdrawal of the Greenpoint Energy Center permit application tied to this pipeline's final phase; state-agency source is independent of the journalism"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SUPERSEDED BY ORCHESTRATOR ADJUDICATION 2026-09-14: staged value changed from 'cancelled' (retaining the sheet's value) to 'operating'. The three refs this unit already carried (In These Times, BKReader, NYSDEC) document the April 2023 withdrawal of the GREENPOINT ENERGY CENTER AIR PERMIT - i.e. the fifth and final phase - and none of them says the pipeline was not built. Staging 'cancelled' off them while this shard's own classification concern simultaneously recorded that phases 1-4 were built and placed in service is addendum failure mode 4: a value contradicted by the researcher's own note. National Grid's own project page (added here) supplies the affirmative evidence. This also removes a direct contradiction with P4070, which stages 'operating' for the same physical pipe.\nORCHESTRATOR ADJUDICATION 2026-09-14 — duplicate pair P5405 <-> P4070, decided across both shards.\nSAME PROJECT, CONFIRMED. Both row agents reached this independently and the evidence is unambiguous: one Brownsville-to-Greenpoint, 7 mi, 30 in National Grid transmission main (the Metropolitan Reliability Infrastructure / Metropolitan Natural Gas Reliability Project), construction from spring 2017, final phase withdrawn 2023. Identical endpoints, length, diameter and construction year on both rows.\nKEEPER: P4070. It carries the geometry (routes repo P4070.geojson holds 5 real features, Company='National Grid', States='NY', with per-phase status attributes; P5405.geojson geometry is null), it carries Capacity (250 MMcf/d) which P5405 lacks entirely, it carries the row's refs, and its LastUpdated is 2025-08-07 against P5405's 2023-07-12. Retiring the geometry-bearing row to keep the empty one would also break the three-way route sync. RECOMMEND: retire/merge P5405 into P4070, carrying across the three things P5405 researched that P4070 did not (FuelSource, the legal operating entity, and the NYSDEC permit-withdrawal ref) - all three are now staged on P4070 itself, so nothing is lost if P5405 is dropped.\nCONSIDERED AND REJECTED: re-scoping the two rows as two segments (built phases 1-4 on one, cancelled phase 5 on the other). Nothing in either row's data describes phase 5 alone - both carry the FULL 7 mi / 30 in / Brownsville-Greenpoint line - and no source gives phase 5's own length or endpoints, so the split would have to be invented. The pipe is one row.\nSTATUS RULED: OPERATING, StartYear1=2020. This is the substantive finding of the pair, and it reverses what the sheet records on BOTH rows. National Grid's own project page states portions were 'placed into service prior to the 2020-2021 heating season' and that the project 'is in service'; the sheet's own existing Earthjustice ref, read in full, credits activists with stopping only phase 5 and describes phases 1-4 as built; In These Times (2023-07) corroborates that the completed sections were physically connected by mid-2023. What was cancelled in 2023 was the fifth phase - the LNG-vaporizer connection at Greenpoint - not the pipeline. Roughly 5.5-6 of the 7 recorded miles exist and carry gas.\nCANCELLATION FIELDS RULED: CLEAR CancelledYear (2023) and ShelvedCancelledType ('confirmed') on P4070 when Status moves to operating. Both row agents correctly refused to decide this alone and escalated it. A row cannot be operating and carry a cancellation year: that pairing is exactly the defect class this slice is sweeping for, and it would misreport a built, in-service main as a cancelled project in every downstream count. The 2023 event is real and must not be lost - it is preserved in the Status ref set, in this shard's notes, and in ResearcherNotes, where a partial-scope cancellation belongs. Delayed='yes' / DelayType='confirmed' STAY: the line was proposed to run to Greenpoint and never got there."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution",
+        "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/"
+      ],
+      "verifications": [
+        {
+          "url": "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "describes the line as a fracked natural gas transmission main"
+        },
+        {
+          "url": "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "confirms natural (fracked) gas commodity, Marcellus shale origin"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Retaining recorded value 'Gas'; both sources independently describe the commodity as fracked natural gas."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a clear proposal year/month. Searched In These Times, Grist, Vice, Gothamist, both National Grid/nonbkpipeline.org project pages, and general PSC rate-case web search; the earliest project-specific reference found is construction beginning spring 2017 (see Construction fill), with no distinct 'proposed in YYYY' announcement located. Nothing found; leaving blank rather than inferring a proposal date from the construction start. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2017"
+      },
+      "primary_value": "2017",
+      "proposed_refs": [
+        "https://web.archive.org/web/2023/https://nationalgridgasprojectsny.com/brooklynmetro/about/",
+        "https://web.archive.org/web/2021/https://www.saneenergy.org/nonbkpipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/2023/https://nationalgridgasprojectsny.com/brooklynmetro/about/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "National Grid's own June 2021 project page states construction began Spring 2017"
+        },
+        {
+          "url": "https://web.archive.org/web/2021/https://www.saneenergy.org/nonbkpipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "independent advocacy-group summary corroborates construction starting 2017"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Year 2017 is corroborated by two independent origins (National Grid's own page + saneenergy.org). ConstructionMonth NOT staged: both sources say only 'Spring 2017', not a specific month; the sheet's recorded ConstructionMonth=4 (April) is a reasonable reading of 'spring' but is not independently confirmed to the month, so month is left as an approximation caveat rather than claimed as sourced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "National Grid's own page and nonbkpipeline.org state portions (phases 1-4) were 'placed into service' before the 2020-2021 heating season, which would support a StartYear1 of 2020, but this row is recorded 'cancelled' as a whole and I could not confirm an in-service date attributable to the specific 7-mile/30-inch segment scope as opposed to the built partial-phase subset. Entangled with the built-vs-cancelled classification concern flagged in validity[] -- not forcing a start date onto a row currently classed cancelled without the orchestrator's adjudication of which row/segment should carry it. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "P4070 (likely duplicate sibling, see validity[]) reportedly carries Capacity=250 MMcf/d sourced to ejatlas.org, but ejatlas.org is a JavaScript SPA that returns only an empty app shell on direct fetch, WebFetch, /print/ and /backend/ variants, and Wayback (only two captures found, both empty shells) -- could not independently read or verify this figure. Not staging a value I could not confirm myself. See cross_row_leads for a pointer to P4070's figure. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found stating an operating pressure for this line. Searched all fetched articles and both National Grid/nonbkpipeline.org project pages; none mention pressure. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "7.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "7.00",
+      "proposed_refs": [
+        "https://grist.org/energy/a-bike-ride-through-brooklyn-traces-the-path-of-national-grids-proposed-pipeline/",
+        "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/"
+      ],
+      "verifications": [
+        {
+          "url": "https://grist.org/energy/a-bike-ride-through-brooklyn-traces-the-path-of-national-grids-proposed-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "states '7-mile-long, 30-inch-wide pipe is technically a transmission main'"
+        },
+        {
+          "url": "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "corroborates 7-mile length"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Retaining recorded LengthKnown=7.00 mi; two independent journalism sources agree."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30",
+      "proposed_refs": [
+        "https://grist.org/energy/a-bike-ride-through-brooklyn-traces-the-path-of-national-grids-proposed-pipeline/"
+      ],
+      "verifications": [
+        {
+          "url": "https://grist.org/energy/a-bike-ride-through-brooklyn-traces-the-path-of-national-grids-proposed-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "explicitly states '30-inch-wide' pipe"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Only one independently-read source explicitly states the 30-inch figure (Grist); other fetched articles (Vice, Gothamist) describe the project but did not state diameter in the text I could read. Retaining recorded value; tier medium pending a second independent diameter-specific source. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (grist.org). One publisher restated is still one origin."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Marcellus Shale"
+      },
+      "primary_value": "Marcellus Shale",
+      "proposed_refs": [
+        "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "states the pipeline transports fracked gas from the Marcellus shale in Pennsylvania"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Named upstream field per gem_schema.md FuelSource convention (not 'Natural Gas', which Fuel already encodes). Only one source names the specific play (Marcellus); Gothamist's protest article corroborates a generic 'Pennsylvania' origin but not the play name, so tier is medium pending a second Marcellus-specific source. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (vice.com). One publisher restated is still one origin."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Brownsville",
+        "StartState/Province": "New York",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Greenpoint",
+        "EndState/Province": "New York",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Brownsville",
+      "proposed_refs": [
+        "https://grist.org/energy/a-bike-ride-through-brooklyn-traces-the-path-of-national-grids-proposed-pipeline/",
+        "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/",
+        "https://web.archive.org/web/2023/https://nationalgridgasprojectsny.com/brooklynmetro/about/"
+      ],
+      "verifications": [
+        {
+          "url": "https://grist.org/energy/a-bike-ride-through-brooklyn-traces-the-path-of-national-grids-proposed-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "traces the route Brownsville to Greenpoint through Bed-Stuy, Bushwick, Williamsburg"
+        },
+        {
+          "url": "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "confirms Brownsville origin"
+        },
+        {
+          "url": "https://web.archive.org/web/2023/https://nationalgridgasprojectsny.com/brooklynmetro/about/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "National Grid's own page confirms the Brownsville-to-Greenpoint route"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Retaining recorded endpoints; three independent sources (independent journalism x2 + the operator's own page) agree on Brownsville, Brooklyn, NY, US to Greenpoint, Brooklyn, NY, US."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Found one cost figure -- nonbkpipeline.org (Aug 2021 PSC rate-case update, via Wayback) states approximately $129 million for 'phases 1-4' -- but this covers only the built ~5.5-6 miles of the planned 7-mile/30-inch line, not the full segment scope recorded on this row, so per the sourcing rule (a cited figure must state THAT value for THAT scope) this was not staged as a fill. Noted here and in cross_row_leads for the orchestrator's use if the row is split/reclassified per the classification concern in validity[]. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Brooklyn Union Gas Company d/b/a National Grid NY (KEDNY)"
+      },
+      "primary_value": "Brooklyn Union Gas Company d/b/a National Grid NY (KEDNY)",
+      "proposed_refs": [
+        "https://web.archive.org/web/2024/https://dps.ny.gov/location/national-grid-nyc-gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/2024/https://dps.ny.gov/location/national-grid-nyc-gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": null,
+          "note": "NY Dept. of Public Service utility-location page states 'The Brooklyn Union Gas Company d/b/a National Grid NY (KEDNY)' as the utility of record for the Brooklyn gas system; page is about the operating utility entity, not the pipeline by name, so pipeline-name fuzzy-match was not requested"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct fetch of dps.ny.gov returned a Cloudflare 403 challenge; resolved via Wayback Machine 2024 snapshot per the escalation ladder. Single-source (state regulator) identification of the direct operating subsidiary; no second independent source found naming the exact legal operating entity (as opposed to the parent National Grid plc, which is recorded as Owner1 -- see Owner fill). Tier medium pending corroboration. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (dps.ny.gov). One publisher restated is still one origin."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 2995,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "National Grid plc",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "National Grid plc",
+      "proposed_refs": [
+        "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution",
+        "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/"
+      ],
+      "verifications": [
+        {
+          "url": "https://inthesetimes.com/article/fracking-brooklyn-new-york-pipeline-environmental-justice-pollution",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "describes National Grid as the British utility company behind the pipeline"
+        },
+        {
+          "url": "https://www.vice.com/en/article/fracking-pipeline-brownsville-brooklyn-black-lives-matter-blm/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "calls National Grid a 'British utility giant', corroborating the UK-plc parent as ultimate owner"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Retaining recorded Owner1=National Grid plc at 100%. Two independent journalism sources corroborate National Grid plc (the UK parent) as the entity behind the pipeline, distinct from the direct NY operating subsidiary proposed for Operator above. Did not find a primary corporate-structure filing (10-K/20-F equity chain) explicitly tracing 100% equity down to this specific asset; tier medium rather than high pending that primary document."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P4070",
+      "url": "https://web.archive.org/web/20221227135328/https://nationalgridgasprojectsny.com/brooklynmetro/",
+      "facts": "ORCHESTRATOR ADJUDICATION 2026-09-14 - SUPERSEDES this shard's earlier lead. P4070 and P5405 are the same project and P4070 IS THE KEEPER (geometry, Capacity, refs, newer LastUpdated); recommend retiring P5405 into it. Status on P4070 is ruled 'operating' with StartYear1=2020, and CancelledYear/ShelvedCancelledType are ruled CLEARED - all staged in P4070's own shard. Three items researched here and carried onto P4070: FuelSource='Marcellus Shale' (Vice, verified 200/name_found); the legal operating entity 'The Brooklyn Union Gas Company d/b/a National Grid NY (KEDNY)' per NY DPS via Wayback - noted, NOT staged as a new entity, since entity_lookup finds no KEDNY/Brooklyn Union Gas in the GEM register and the registered spelling is 'National Grid plc'; and the NYSDEC 2023-04-04 permit-withdrawal statement as a state-agency ref independent of the journalism. The ejatlas Capacity ref on P4070 that this shard could not read (JS shell) remains unverified and is flagged there."
+    }
+  ],
+  "summary": "North Brooklyn Gas Pipeline (P5405): sourced Status/Fuel/Construction-year/Length/Diameter/FuelSource/Location/Operator/Owner via independent journalism, a state agency (NYSDEC), and NY DPS; left Proposal/Start/Capacity/Pressure/SegmentCost UNRESOLVED for lack of a scoped or independently-readable source; flagged a strong duplicate concern against P4070 (same physical pipeline, richer route geometry) and a classification concern that most of the physical pipe (phases 1-4) was built and reportedly placed into service while only the final phase was cancelled in 2023 -- both routed to the orchestrator for adjudication rather than resolved unilaterally.\n\nORCHESTRATOR ADJUDICATION 2026-09-14 — duplicate pair P5405 <-> P4070, decided across both shards.\nSAME PROJECT, CONFIRMED. Both row agents reached this independently and the evidence is unambiguous: one Brownsville-to-Greenpoint, 7 mi, 30 in National Grid transmission main (the Metropolitan Reliability Infrastructure / Metropolitan Natural Gas Reliability Project), construction from spring 2017, final phase withdrawn 2023. Identical endpoints, length, diameter and construction year on both rows.\nKEEPER: P4070. It carries the geometry (routes repo P4070.geojson holds 5 real features, Company='National Grid', States='NY', with per-phase status attributes; P5405.geojson geometry is null), it carries Capacity (250 MMcf/d) which P5405 lacks entirely, it carries the row's refs, and its LastUpdated is 2025-08-07 against P5405's 2023-07-12. Retiring the geometry-bearing row to keep the empty one would also break the three-way route sync. RECOMMEND: retire/merge P5405 into P4070, carrying across the three things P5405 researched that P4070 did not (FuelSource, the legal operating entity, and the NYSDEC permit-withdrawal ref) - all three are now staged on P4070 itself, so nothing is lost if P5405 is dropped.\nCONSIDERED AND REJECTED: re-scoping the two rows as two segments (built phases 1-4 on one, cancelled phase 5 on the other). Nothing in either row's data describes phase 5 alone - both carry the FULL 7 mi / 30 in / Brownsville-Greenpoint line - and no source gives phase 5's own length or endpoints, so the split would have to be invented. The pipe is one row.\nSTATUS RULED: OPERATING, StartYear1=2020. This is the substantive finding of the pair, and it reverses what the sheet records on BOTH rows. National Grid's own project page states portions were 'placed into service prior to the 2020-2021 heating season' and that the project 'is in service'; the sheet's own existing Earthjustice ref, read in full, credits activists with stopping only phase 5 and describes phases 1-4 as built; In These Times (2023-07) corroborates that the completed sections were physically connected by mid-2023. What was cancelled in 2023 was the fifth phase - the LNG-vaporizer connection at Greenpoint - not the pipeline. Roughly 5.5-6 of the 7 recorded miles exist and carry gas.\nCANCELLATION FIELDS RULED: CLEAR CancelledYear (2023) and ShelvedCancelledType ('confirmed') on P4070 when Status moves to operating. Both row agents correctly refused to decide this alone and escalated it. A row cannot be operating and carry a cancellation year: that pairing is exactly the defect class this slice is sweeping for, and it would misreport a built, in-service main as a cancelled project in every downstream count. The 2023 event is real and must not be lost - it is preserved in the Status ref set, in this shard's notes, and in ResearcherNotes, where a partial-scope cancellation belongs. Delayed='yes' / DelayType='confirmed' STAY: the line was proposed to run to Greenpoint and never got there."
+}

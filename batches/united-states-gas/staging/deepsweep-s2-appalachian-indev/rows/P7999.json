@@ -1,0 +1,585 @@
+{
+  "project_id": "P7999",
+  "pipeline_name": "Columbia Gas Transmission",
+  "sheet_row": 4254,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Appalachia Supply Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real and current. TC Energy Corp.'s own May 1, 2026 Q1-2026 results release (tcenergy.com / GlobeNewswire, dateline CALGARY) states verbatim: 'Approved the Appalachia Supply Project with an expected build multiple of 7.3x: an expansion project of our Columbia Gas system designed to provide up to 0.8 Bcf/d of capacity to facilitate expanded new natural gas-fired power generation. The project has an anticipated in-service date of 2030 and an estimated project cost of approximately US$1.5 billion.' Independently corroborated (separate origin, separate reporter) by Oil & Gas Journal ('TC Energy expanding Columbia Gas system with 800-MMcfd Appalachia Supply project', Christopher E. Smith, 2026-05-05) and Pipeline & Gas Journal ('TC Energy Approves $1.5 Billion Columbia Gas Expansion to Boost U.S. Power Demand'). Also picked up by Natural Gas Intelligence, Marcellus Drilling News (paywalled beyond teaser) and BNN Bloomberg. Not a GEM-only entity; this is not a hallucination. COLUMBIA FAMILY DISCRIMINATOR: this is the INTERSTATE Columbia Gas Transmission LLC (TC Energy/GIP), not the NiSource LDC Columbia Gas of Ohio -- TC Energy's own release names it as 'our Columbia Gas system' in a Q1 TC Energy Corp. earnings release; no FERC docket or LDC/OPSB filing found for this project at all yet (see Construction/spec units -- still pre-filing). CLASSIFICATION: Fuel=Gas and PipelineType=transmission are both correct -- this is an expansion (added mainline capacity + compression) of the FERC-jurisdictional interstate Columbia Gas Transmission system, not a gathering/distribution line. DUPLICATE: checked against the full 46-row roster and specifically the other three Columbia Gas Transmission rows (P3189 Marysville Connector, P4446 Virginia Electrification, P4447 Northern Loop) -- all are separate, distinctly named, already-existing proposed/shelved projects on the same parent system; Appalachia Supply Project is a distinct, newly announced (May 2026) scope with its own $1.5B/800 MMcf/d/2030 profile. No overlap. OWNERSHIP: entity match to the existing Columbia Gas Transmission LLC entity used by P3189/P4446/P4447 (100% Owner1, ParentEntityIDs E100001014494, Parent = TC Energy Corp 60% / Global Infrastructure Partners 40%) -- staged onto the Owner/Operator tab as REFS_ADDED with the same entity spelling per entity_lookup convention. STATUS: proposed is correct as recorded -- TC Energy's own language is 'Approved' at the internal capital-allocation/board level (a positive FID-type signal) but no FERC certificate application, notice of intent, or pre-filing docket for 'Appalachia Supply Project' by that name could be found (checked Federal Register 2026 Columbia Gas Transmission notices and general FERC-docket web search); no construction start reported. This matches GEM's 'proposed' tier, not 'construction'. See status_reviews[] and fills[] for full sourcing of each unit."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct RouteType to reflect the null-geometry route -- it currently contradicts RouteAccuracy and the routes-repo file (three-way sync rule).",
+      "contested": {
+        "RouteType": "Unavailable (cannot find route)"
+      },
+      "researcher_notes": "Database defect, not a research finding about the pipeline: the tracker row reads RouteType='Mapped route (at any accuracy)' while RouteAccuracy='no route', and the routes repo's own P7999.geojson (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7999.geojson) is a FeatureCollection with a single feature whose geometry is null -- there is no merged geometry at all. This is exactly the three-way-sync violation the CARDINAL RULE (RouteType/RouteAccuracy/routes-repo must always agree) exists to catch: a null-geometry file cannot support 'Mapped route (at any accuracy)'. I did not set RouteType to 'Capacity expansion only' (the value used on this batch's other LengthKnown=0 compression-only rows, e.g. P2538/P2651/P3169/P7825/P7813/P7829) because I could not confirm from any source whether Appalachia Supply Project involves new looped pipe or is compression-only -- TC Energy's language ('additional compression and minor modifications') describes the PATH to the 2.0 Bcf/d future phases, not necessarily the scope of the initial 0.8 Bcf/d phase this row records, and Length/Diameter are both genuinely unresolved (see fills[]), not confirmed zero. 'Unavailable (cannot find route)' is the accurate, non-committal correction; RouteAccuracy='no route' already reads correctly and needs no change."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-05",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Today, I'm pleased to announce the Appalachia Supply Project, a US$1.5 billion, low-risk, strategic expansion on our Columbia Gas system' -- CEO Francois Poirier, dateline May 01, 2026. Project Highlights section: 'Approved the Appalachia Supply Project ... anticipated in-service date of 2030'."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'TC Energy Corp. will expand its Columbia Gas pipeline system via the 800-MMcfd Appalachia Supply Project ... has a 2030 anticipated in-service date.' Published 2026-05-05, reporting the same May 1 announcement independently."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Newest dated evidence found is the May 1, 2026 announcement itself (matches LastUpdated 2026-05-08 -- this row was already updated off this same news). Searched Federal Register 2026 notices for Columbia Gas Transmission and general web/FERC-docket search for 'Appalachia Supply Project' docket/pre-filing -- found none; also checked EIA's Aug 2026 Natural Gas Pipeline Projects release (latest available, sources/eia_pipeline_projects/raw/) which does not carry this project (too new / not yet certificated). No construction start, FID/certificate filing, or in-service news postdates the May 2026 announcement. Company-level 'Approved' (board/capital-allocation sign-off backed by a 20-year take-or-pay contract) is not the same as a FERC certificate or construction start, so 'proposed' remains the correct GEM status; nothing supports moving to 'construction'."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "proposed"
+      },
+      "primary_value": "proposed",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TC Energy's own Q1-2026 release: 'Approved the Appalachia Supply Project ... anticipated in-service date of 2030' -- an approved-for-development/pre-FERC project, matching GEM's 'proposed' tier."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent trade-press confirmation of the same announcement, same 2030 in-service target, no construction/FERC filing reported."
+        }
+      ],
+      "class_out": "DEAD_LINK",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (ca.finance.yahoo.com/news/tc-energy-appalachia-supply-project-112249874.html) confirmed dead: builder's existing_ref_checks recorded HTTP 404, re-checked live and still 404. No Wayback capture exists (checked both ca.finance.yahoo.com and finance.yahoo.com forms via the CDX availability API -- archived_snapshots empty for both). Replaced with TC Energy's own May 1, 2026 announcement plus an independent OGJ report; both verified live and name the project. Value 'proposed' is unchanged and confirmed current -- see status_reviews[]."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'expanded new natural gas-fired power generation' on 'our Columbia Gas system' -- a natural gas pipeline expansion."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Headline: '800-MMcfd Appalachia Supply project' expanding the 'Columbia Gas pipeline system' -- natural gas."
+        }
+      ],
+      "class_out": "DEAD_LINK",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same dead old ref as Status (confirmed 404, no Wayback capture). Replaced with the same two verified sources. Fuel=Gas confirmed -- Columbia Gas Transmission is an all-gas interstate system."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Describes the project as 'an expansion project of our Columbia Gas system' -- Columbia Gas Transmission LLC is a FERC-regulated interstate transmission pipeline, not a gathering or distribution system."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'TC Energy Corp. will expand its Columbia Gas pipeline system' -- same classification."
+        }
+      ],
+      "class_out": "DEAD_LINK",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same dead old ref (404, no Wayback capture). transmission is the correct classification -- this is capacity added to the interstate Columbia Gas Transmission trunk, matching the three sibling rows on this same system (P3189/P4446/P4447), all also classed transmission."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2026",
+        "ProposalMonth": "5"
+      },
+      "primary_value": "2026",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Dateline 'CALGARY, Alberta, May 01, 2026'; CEO quote: 'Today, I'm pleased to announce the Appalachia Supply Project.' This is the operator's own announcement date."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent report (published 2026-05-05) of the same May 1, 2026 announcement."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. TC Energy's own release is dated (dateline) May 1, 2026, and states this was the announcement of the project ('Today, I'm pleased to announce'). ProposalYear=2026, ProposalMonth=5."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a construction-start date. Checked TC Energy's own release, OGJ, PGJ, NGI, Marcellus Drilling News, BNN Bloomberg, a general web search for a FERC docket/pre-filing, and the Federal Register's 2026 Columbia Gas Transmission notices -- none names a construction start for Appalachia Supply Project specifically (the project is still pre-FERC-filing as of the newest evidence, May 2026). Genuinely unresolved, not forced. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2030"
+      },
+      "primary_value": "2030",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The project has an anticipated in-service date of 2030.'"
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'... has a 2030 anticipated in-service date.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. Both sources agree on 2030 as the anticipated in-service (StartYear1) date; no month given anywhere, so StartMonth1 stays blank rather than guessed. StartYear2/3 not applicable -- only one in-service phase (0.8 Bcf/d by 2030) is dated; the further expansion to 2.0 Bcf/d has no target date in any source."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "800",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "800",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'designed to provide up to 0.8 Bcf/d of capacity' = 800 MMcf/d."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Headline and body state '800-MMcfd Appalachia Supply project' directly in those units."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. Both sources agree: initial phase capacity is 800 MMcf/d (0.8 Bcf/d), matching the tracker's CapacityUnits convention used elsewhere on this system. Noted for completeness, not staged: the project is described as further expandable to 2.0 Bcf/d 'through future phases' via additional compression -- that is a distinct future scope, not this row's current capacity."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source (TC Energy release, OGJ, PGJ, NGI, Marcellus Drilling News, BNN Bloomberg) states an operating/design pressure or MAOP for this project. No FERC certificate/tariff filing found yet to check (see Construction unit). Genuinely unresolved. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a pipeline mileage for this project, and I could not confirm whether it involves new looped pipe at all (vs. compression-only): TC Energy's language is 'additional compression and minor modifications' for the path TO 2.0 Bcf/d, which is ambiguous about whether the initial 0.8 Bcf/d phase (this row) includes new pipe. Left blank rather than assumed 0 -- see the RouteType validity concern, which explains why I did not set this row's RouteType to 'Capacity expansion only' either. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source states a pipe diameter. Consistent with Length being unresolved (no engineering-level detail has been publicly disclosed for this project as of the newest evidence, May 2026). [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource names the specific upstream field/plant/facility, not the commodity (gem_schema.md gotcha) -- sources say the project is 'designed to supply new natural gas-fired power generation using additional Marcellus shale production', but 'Marcellus' is the shale play/region, not a single named field or processing facility. No specific named upstream facility was disclosed. Left blank per the schema note rather than defaulted to a play name or 'Natural Gas'. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartCountryOrArea": "United States",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "United States",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Project is entirely on TC Energy's US Columbia Gas system, serving US power/industrial demand -- a wholly domestic US expansion."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Same -- a US interstate system expansion, Marcellus (Appalachian Basin, US) supply to US PJM-area power demand."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This unit was MISSING_REF -- the sheet already carries StartCountryOrArea/EndCountryOrArea = United States/United States with no ref. Both are confirmed by both sources (wholly domestic US project). Could not source a specific state or city terminus: no document ties Appalachia Supply Project to named facilities, counties, or states -- it is described only as an expansion of the whole Columbia Gas system 'footprint' driven by PJM-area (Virginia/Pennsylvania/Ohio/New Jersey) power demand, and no FERC pre-filing (which would normally list facility locations) has been found yet. StartLocation/StartState/EndLocation/EndState left blank rather than guessed from the general PJM/Appalachian-Basin framing -- an aggregate-vs-segment inference, not a sourced terminus."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "1500000000",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2026"
+      },
+      "primary_value": "1500000000",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'an estimated project cost of approximately US$1.5 billion.'"
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The US$1.5-billion project ...' -- headline and body both state the figure."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. Both sources state 'approximately US$1.5 billion' -- staged as 1,500,000,000 with SegmentCostUnits=USD (bare code, magnitude in the number per the tracker convention) and SegmentCostYear=2026 (the year of this cost estimate/announcement, per TC Energy's Q1 2026 release)."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Columbia Gas Transmission LLC"
+      },
+      "primary_value": "Columbia Gas Transmission LLC",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'an expansion project of our Columbia Gas system' -- TC Energy's Columbia Gas Transmission LLC is the operating entity for the whole system this project expands."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'TC Energy Corp. will expand its Columbia Gas pipeline system' -- same operating entity."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "No EIA entry exists for this project (checked all 28 releases including the newest, Aug 2026 -- not certificated yet, so EIA's 'Pipeline Operator Name' field, which the ADDENDUM treats as a valid Operator/Owner ref, is not available here). GEM uses operator and owner interchangeably (per standing project guidance); staged the same entity as Owner1 below -- 'Columbia Gas Transmission LLC', the existing GEM entity used identically on sibling rows P3189/P4446/P4447 on this same system. Note for consistency: those three sibling rows leave Operator blank while filling Owner1 with this same entity -- I filled Operator here per the sourced material (both sources describe the system operator directly) and the operator=owner convention; if the orchestrator prefers to match sibling convention exactly (Operator left blank), that is a one-line merge decision, not a sourcing gap."
+    },
+    {
+      "segment_name": "Appalachia Supply Project",
+      "sheet_row": 4254,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Columbia Gas Transmission LLC",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Columbia Gas Transmission LLC",
+      "proposed_refs": [
+        "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+        "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.tcenergy.com/announcements/2026/2026-05-01-tc-energy-reports-strong-first-quarter-2026-operating-and-financial-results/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'an expansion project of our Columbia Gas system' in TC Energy's own Q1 release names the system this project belongs to."
+        },
+        {
+          "url": "https://www.ogj.com/pipelines-transportation/pipelines/news/55375587/tc-energy-expanding-columbia-gas-system-with-800-mmcfd-appalachia-supply-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent confirmation: TC Energy Corp. expanding its Columbia Gas pipeline system."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank (AggregateOwners/Owner all '--'/'unknown'). Matched to the existing GEM entity 'Columbia Gas Transmission LLC' (ParentEntityIDs E100001014494; Parent = TC Energy Corp 60% / Global Infrastructure Partners 40%) already used at 100% Owner1 on the three sibling Columbia Gas Transmission rows on this same system (P3189, P4446, P4447) -- same spelling, same convention, per entity_lookup practice (no new owner entity created). Two independent sources (TC Energy's own release + OGJ) confirm the project is on this system; medium tier because both essentially restate the same identity fact (which entity the system belongs to) rather than an independently-researched ownership percentage split -- the underlying 60/40 TC Energy/GIP parent split is inherited from the existing entity record, not re-derived here."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P7999 Appalachia Supply Project confirmed real and correctly classified (gas/transmission) via TC Energy's own May 1 2026 announcement + independent OGJ/PGJ reporting; staged fills for all 15 units (3 DEAD_LINK re-refs on Status/Fuel/PipelineType, 8 REFS_ADDED fills incl. Proposal/Start/Capacity/SegmentCost/Location/Operator/Owner, 4 genuinely UNRESOLVED: Construction, Pressure, Length, Diameter, FuelSource) plus a status_reviews confirm and a validity concern flagging a RouteType/RouteAccuracy three-way-sync defect (RouteType wrongly reads 'Mapped route' against a null-geometry routes-repo file)."
+}

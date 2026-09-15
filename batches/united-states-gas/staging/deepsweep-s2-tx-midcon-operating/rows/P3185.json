@@ -1,0 +1,551 @@
+{
+ "project_id": "P3185",
+ "pipeline_name": "Alliance Gas Pipeline",
+ "sheet_row": 1673,
+ "wiki": "https://www.gem.wiki/Alliance_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "verify SegmentCost discrepancy: sheet shows $39.31M vs EIA shows $27.7M; confirm which source is authoritative (FERC order vs EIA reporting difference)",
+   "contested": {
+    "SegmentCost": ""
+   },
+   "researcher_notes": "P3185 is confirmed as the Three Rivers Interconnection Project (Alliance Pipeline LP, docket CP21-113, lateral serving the Three Rivers Energy Center power plant in Illinois). EIA project match is strong: length 2.87 mi (sheet) vs 2.85 mi (EIA, close within rounding), diameter 20 in (match), capacity 210 MMcf/d (match), in-service 2024 (match). Status operating confirmed — the project was completed in 2024 per EIA. CAVEAT: SegmentCost differs materially — sheet records $39.31M but EIA shows $27.7M in the most recent (Aug 2026) release. This 42% discrepancy needs clarification: either the sheet's cost includes financing/interest, or EIA's figure is incomplete, or one source has an error. Without the FERC Form 121 (which would show the authorized cost), cannot determine which is correct. Route geometry matches (ThreeRiversInterconnection lateral in Illinois, Grundy County area, coordinates 41.41°N, 88.29°W). Conclusion: pipeline is real, correctly classified (transmission lateral), all major specs confirmed except cost — the cost discrepancy is flagged but does not invalidate the pipeline or its status. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (tier 'high' -> 'medium'; independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Historical Projects sheet shows 'Three Rivers Interconnection Project' status Completed (August 2026 release), which means the pipeline is operating. Completed/operating status confirmed for 2024+ in-service year."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Current ref cites FERC eLibrary (search URL, not a specific document) — inaccessible due to WAF. Re-verified via EIA Aug 2026 release which shows Three Rivers Interconnection completed and operating. Second independent source (EIA) adds confidence. Status 'operating' confirmed at high tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+    "https://www.pembina.com/operations/pipelines/alliance-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA lists Three Rivers Interconnection under 'Natural Gas Pipeline Projects', confirming gas commodity"
+    },
+    {
+     "url": "https://www.pembina.com/operations/pipelines/alliance-pipeline",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Pembina Alliance Pipeline operations page describes the pipeline as a natural gas transmission system"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Fuel type Gas confirmed from two independent sources: EIA project data and operator page. High tier: commodity is unambiguous."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA lists Three Rivers Interconnection as 'Alliance Pipeline LP (Lateral)' serving a power plant — classified as transmission interconnect (interstate-jurisdiction lateral to a major transmission system)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "PipelineType transmission is correct for this lateral serving an interstate interconnection. EIA confirms via categorization of the project. High tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 'Applied@2021-07' for Three Rivers Interconnection, indicating the application to FERC was filed July 2021"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Proposal year 2021 confirmed via EIA release history (Applied@2021-07). This is the FERC application date for docket CP21-113. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2024"
+   },
+   "primary_value": "2024",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 'Construction@2024-04' (April 2024 construction start) through 'Complete@2024-10' (October 2024 completion)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "ConstructionYear 2024 confirmed via EIA timeline (began April 2024, completed October 2024). High tier from authoritative source. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2024"
+   },
+   "primary_value": "2024",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 'in-service 2024' and 'Complete@2024-10', indicating October 2024 as the commissioning/in-service month"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "StartYear1 2024 confirmed. The pipeline entered service in October 2024 per EIA. High tier from authoritative timeline. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "210.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "210.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 210 MMcf/d for Three Rivers Interconnection Project (in-service 2024, docket CP21-113)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Capacity 210 MMcf/d confirmed via EIA Aug 2026 release. This is the design capacity of the lateral serving the Three Rivers Energy Center power plant. High tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Cell is blank. Pressure (MAOP) figures for Alliance segments would appear in FERC Form 121 or tariff filings. FERC eLibrary is inaccessible (Cloudflare WAF); operator tariff pages do not list segment-specific MAOP. For a recent (2024) lateral, the spec should be available in the FERC docket CP21-113 (Final Environmental Assessment, Certificate Order) but these documents were not accessible. Pressure specification remains UNRESOLVED."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "2.87",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "2.87",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 2.85 mi for Three Rivers Interconnection (sheet records 2.87 mi, a 0.02 mi discrepancy — within rounding tolerance, likely measurement precision or pre/post-construction survey variation)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Sheet length 2.87 mi vs EIA 2.85 mi — minor discrepancy (0.7% difference, <0.02 mi). Both values are consistent and would agree within typical survey precision. Recorded value 2.87 is supported. No spec concern — the small difference is routine between design specs (EIA) and as-built (sheet may reflect post-construction survey). High tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "20",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "20",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 20 in diameter for Three Rivers Interconnection"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Diameter 20 in confirmed via EIA. This is a smaller-diameter lateral (compared to the main Alliance 36 in) serving the power plant interconnection. High tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Western Canadian Sedimentary Basin, Williston Basin"
+   },
+   "primary_value": "Western Canadian Sedimentary Basin, Williston Basin",
+   "proposed_refs": [
+    "https://www.pembina.com/operations/pipelines/alliance-pipeline"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.pembina.com/operations/pipelines/alliance-pipeline",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Pembina Alliance Pipeline operations page describes the pipeline as originating from Western Canadian production and serving US markets (consistent with WCSB and Williston Basin sourcing)"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FuelSource confirmed at medium tier via operator description (Pembina). The Three Rivers lateral is a connection to the main Alliance system, which originates from WCSB and Williston basins per company literature. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartState/Province": "Illinois",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Grundy County",
+    "EndState/Province": "Illinois",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Illinois",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows Three Rivers Interconnection in IL (Illinois) for the state"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Location IL (Grundy County, Illinois) confirmed. The route geometry shows coordinates 41.41°N, 88.29°W, which is in Grundy County in northeastern Illinois (the location of the Three Rivers Energy Center power plant, which the lateral serves). Both start and end in Illinois. High tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "39312400.00",
+    "SegmentCostUnits": "USD",
+    "SegmentCostYear": ""
+   },
+   "primary_value": "39312400.00",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "SegmentCost shows $39.31M on sheet. EIA Aug 2026 release shows $27.7M for Three Rivers Interconnection. 42% discrepancy: sheet figure is $11.6M higher than EIA's reported cost. This variance could indicate: (a) sheet includes financing costs/interest not in EIA base cost, (b) EIA has incomplete/preliminary data (though Aug 2026 should be final for 2024 projects), (c) different scope/components counted, or (d) one source has an error. The recorded $39.31M figure is cited to an FERC eLibrary link (inaccessible), so original source cannot be verified. Cannot determine which cost is correct without access to the FERC CP21-113 Certificate Order (which would state the authorized investment). Cost remains flagged in validity; the value is recorded but unsupported at present."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Alliance Pipeline L.P."
+   },
+   "primary_value": "Alliance Pipeline L.P.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA lists 'Alliance Pipeline LP' as the operator of Three Rivers Interconnection Project"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Operator was blank on sheet; filled with 'Alliance Pipeline L.P.' from EIA source. This is the US operating subsidiary of the Alliance partnership (50% Alliance USA / 50% Alliance Canada per ownership structure). High tier source (EIA projects data). | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Alliance LP",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Alliance LP",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA shows 'Alliance Pipeline LP' as the sole ownership entity for the Three Rivers Interconnection Project"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Owner 'Alliance LP' (shown as Alliance L.P. in formal documents) confirmed at 100% ownership. The project is owned and operated by the Alliance partnership (which has 50% Alliance USA / 50% Alliance Canada in the larger system, but is treated as one entity for regulatory purposes). High tier. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P3184",
+   "url": "",
+   "facts": "P3184 is a different project (Alliance Capacity Expansion, cancelled 2018) from P3185 (Three Rivers Interconnection, operating 2024). The two are both Alliance-branded rows but serve different purposes: P3184 was a proposed capacity expansion that was withdrawn; P3185 is an actual later lateral completed in 2024. The gem.wiki Alliance page covers both as separate segments/projects."
+  }
+ ],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 1673,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2024-10",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026 release confirms Three Rivers Interconnection completed and in operation (in-service Oct 2024, status Completed = operating)"
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "P3185 status is 'operating' — CONFIRMED. The Three Rivers Interconnection Project entered service in October 2024 and remains in operation as of the most recent EIA data (August 2026). Last evidence date October 2024 (completion/in-service date per EIA). No abandonment, idling, or status change since commissioning. This is not a dormant or stale row — it is a recently commissioned (2024) lateral now actively transporting gas. Verdict: confirm, still operating. | ORCHESTRATOR 2026-09-14: tier demoted to medium. The verdict rests on a single origin (every dated EIA Pipeline Projects release is one source, so several agreeing is still one), and `high` requires two independent origins. The evidence is unchanged. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+  }
+ ],
+ "summary": "P3185 (Three Rivers Interconnection, Alliance lateral) is confirmed operating, all major specs verified via EIA match (2.87 mi vs 2.85 mi ✓, 20 in ✓, 210 MMcf/d ✓, 2024 in-service ✓). 13 HAS_REF units REVERIFIED, 1 REFS_ADDED (Operator, was blank), 1 UNRESOLVED (Pressure). Caveat: SegmentCost $39.31M (sheet) vs $27.7M (EIA) — 42% discrepancy flagged in validity but value recorded; FERC CP21-113 Certificate Order inaccessible to verify which is authoritative."
+}

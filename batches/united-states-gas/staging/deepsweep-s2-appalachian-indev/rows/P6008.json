@@ -1,0 +1,677 @@
+{
+  "project_id": "P6008",
+  "pipeline_name": "Empire Pipeline",
+  "sheet_row": 3460,
+  "wiki": "https://www.gem.wiki/Empire_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "duplicate",
+      "recommendation": "Do not merge with P2575. P6008 and P2575 are two distinct physical scopes of ONE FERC docket (CP15-115): P6008 = the ~97-99 mile, 24-inch, 497 MMcf/d McKean County PA -> Erie County NY mainline (matches the EIA 'Northern Access 2016 Project (PA to NY)' row exactly); P2575 = a separate ~2.1 mile, 24-inch, 350 MMcf/d Niagara County NY lateral to the Ontario border (matches EIA's 'Northern Access 2016 Project (NY to ON)' row). The 2017 National Fuel investor press release (SegmentCost ref, this shard) explains both scopes in one document without conflating them: ~490,000 Dth/day on Supply Corp's mainline, split 140,000 Dth/day to Tennessee Gas Pipeline and 350,000 Dth/day 'delivered to Empire's system' -- the latter figure is P2575's Capacity, not P6008's. Keep both rows separate; this note documents the family relationship for future researchers so specs are never cross-cited between the two scopes.",
+      "contested": {},
+      "researcher_notes": "Confirmed via EIA Aug2026 workbook (two separate project rows sharing docket CP15-115) and the FR-2016-08-05 FERC Environmental Assessment (docket CP15-115-000/-001), which describes both the ~97-mile PA-to-NY mainline AND the small Niagara County NY-to-ON lateral within one combined facilities list. [ORCHESTRATOR AUDIT 2026-09-15] Tier corrected high/independent=True -> medium/independent=False: this record's proposed_refs resolve to 1 distinct publisher(s) (govinfo.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin. The FINDING is unchanged; only the confidence claim was wrong.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Adjudicate whether Owner1/Operator/PipelineName for this specific 101-mile PA-to-NY project scope should read 'National Fuel Gas Supply Corporation' rather than 'Empire Pipeline'. Do not change without adjudication -- the sheet's PipelineName may deliberately be a project-brand umbrella covering both Supply Corp and Empire Pipeline scopes.",
+      "contested": {
+        "Owner1": "Empire Pipeline (sheet, 100%) vs National Fuel Gas Supply Corporation (EIA Pipeline Operator Name field + SEC 10-K FY2025 segment description, for this exact project row)",
+        "Operator": "blank on sheet vs National Fuel Gas Supply Corporation per EIA + SEC"
+      },
+      "researcher_notes": "The EIA Aug2026 workbook's 'Pipeline Operator Name' for the exact matching row (497 MMcf/d, 101 mi, 24 in, docket CP15-115, 'Northern Access 2016 Project (PA to NY)') is 'National Fuel Gas Supply Corp', NOT Empire Pipeline. National Fuel Gas Company's FY2025 10-K (sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm) states: 'The Pipeline and Storage segment operations are carried out by National Fuel Gas Supply Corporation, a Pennsylvania corporation, and Empire Pipeline, Inc., a New York corporation' -- i.e. two distinct operating subsidiaries, and the certificate applicant/operator of record for the ~97-99 mile PA-to-NY mainline segment (per the FERC EA, docket CP15-115) is National Fuel Gas Supply Corporation, while Empire Pipeline Inc. is a separate NY subsidiary tied to the much smaller Niagara County lateral (P2575's scope). Exhibit 21 of the same 10-K (sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-9302025xexhibit21.htm) confirms Empire Pipeline, Inc. is a wholly-owned subsidiary of National Fuel Gas Company (the parent), listed separately from National Fuel Gas Supply Corporation. Per rule 4 of the batch addendum ('if the source says something different from the sheet, that is a concern, never a confirmation'), I did not force a change to Owner1 or stage Owner as REFS_ADDED -- see fills[] for Owner (UNRESOLVED) and Operator (REFS_ADDED to National Fuel Gas Supply Corp, the value the primary sources actually support).",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-9302025xexhibit21.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "No sheet change needed. Flag the prompt-builder script: its 'Comparison against the best docket/strong candidate' section for P6008 compared this row against the WRONG sibling EIA entry (the NY-to-ON / P2575-scope row, 350 MMcf/d, 2.1 mi), producing false 'differs' flags on Capacity (497 vs 350) and Length (101 vs 2.1). The correct EIA row for P6008 ('Northern Access 2016 Project (PA to NY)', National Fuel Gas Supply Corp, docket CP15-115) confirms all four GEM values (Capacity 497, Length 101, Diameter 24, Status Cancelled) exactly. This is a matching-logic defect in the builder, not a data discrepancy in GEM.",
+      "contested": {},
+      "researcher_notes": "See EIA Aug2026 workbook, sheet 'Historical Projects (1996-2024)', Excel row 1178: ['2024-04-02', 'Northern Access 2016 Project (PA to NY)', 'National Fuel Gas Supply Corp', 'Expansion', 'Cancelled', ..., 455 (cost $M), 101 (miles), 497 (MMcf/d), 24 (in), ..., 'CP15-115', ...] -- an exact match on Capacity, Length, Diameter, and Status for P6008. [ORCHESTRATOR AUDIT 2026-09-15] Tier corrected high/independent=True -> medium/independent=False: this record's proposed_refs resolve to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin. The FINDING is unchanged; only the confidence claim was wrong.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "cancelled"
+      },
+      "primary_value": "cancelled",
+      "proposed_refs": [
+        "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Article dated 2024-11-07; National Fuel confirms it is 'no longer pursuing' the project."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Sheet 'Historical Projects (1996-2024)', Excel row 1178, Status='Cancelled'; the flattened release history (eia_projects_long.csv) shows Status flipped from 'Approved/On Hold' to 'Cancelled' starting with the 2025-07 release and has remained Cancelled through the 2026-08 release (14 consecutive releases)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed cancelled via a dated news source (WKBW, Nov 2024) and the EIA dated-release history (independent government dataset, cancellation reflected starting the 2025-07 release). Kept the existing wkbw ref and added EIA as a second independent origin. See status_reviews[] for the full status-review verdict."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC EA text: 'National Fuel requests authorization to construct, operate, and maintain about 99 miles of natural gas transmission pipeline...'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Row is carried in EIA's Natural Gas Pipeline Projects workbook by definition (natural gas)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Replaced the previous ref (oilandgaswatch.org/pipeline/3341) which is an unreadable client-rendered React SPA shell -- multiple fetch attempts (raw curl, guessed API endpoints, WebFetch) all returned an empty/JS-only shell with no server-rendered content, and the worklist's own existing_ref_checks already flagged name_found=false there. Treated per the addendum's rule for a HAS_REF unit whose cited URL resolves but doesn't state/name the value: replaced with a document that does state it, old ref not silently dropped (noted here)."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC EA text explicitly: '...natural gas transmission pipeline and related facilities...' and '96.9 miles of 24-inch-diameter pipeline'."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Excel row 1178 carries 'Interstate' in the pipeline-scope column, consistent with FERC-jurisdictional transmission classification."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Same replacement rationale as Fuel -- the prior oilandgaswatch.org ref is an unreadable JS SPA. FERC's own EA text is an explicit, unambiguous statement of transmission-type pipeline."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2015"
+      },
+      "primary_value": "2015",
+      "proposed_refs": [
+        "https://marcellusdrilling.com/2017/02/nfgs-northern-access-pipe-in-nypa-gets-ferc-approval/",
+        "https://www.govinfo.gov/content/pkg/FR-2015-12-01/pdf/2015-30472.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://marcellusdrilling.com/2017/02/nfgs-northern-access-pipe-in-nypa-gets-ferc-approval/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Existing ref, reverified."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2015-12-01/pdf/2015-30472.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Federal Register notice dated Dec 1, 2015 for docket CP15-115-000/-001 -- confirms the application was on file in 2015."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Kept the existing verified ref (marcellusdrilling.com) and added a genuinely independent FERC docket document (govinfo.gov FR notice, Dec 2015) confirming ProposalYear=2015, upgrading the unit from a single trade-press source to two independent origins."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No ConstructionYear exists to find: the project never broke ground. New York DEC repeatedly denied Clean Water Act Section 401 water-quality certification (2017 and again on remand), FERC granted National Fuel a 35-month construction-extension (to Dec 31, 2024) that the project needed only because construction had not started, and National Fuel announced in Nov 2024 (WKBW, Buffalo News) that it was abandoning the plan without ever having built it. Searched EIA workbook (no construction-start field populated for this row), the two FERC Federal Register documents, and the WKBW/Buffalo News cancellation coverage -- none report a construction start. Legitimately UNRESOLVED, not a gap in sourcing. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same basis as Construction: the pipeline never entered service. Cancelled in Nov 2024 before construction began, so there is no in-service date to source. Searched EIA workbook and both cancellation news articles -- no start date reported anywhere. Legitimately UNRESOLVED. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Cancelled [ref]",
+      "value_cols": [
+        "CancelledYear"
+      ],
+      "primary_value_col": "CancelledYear",
+      "values": {
+        "CancelledYear": "2024"
+      },
+      "primary_value": "2024",
+      "proposed_refs": [
+        "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "JSON-LD datePublished/dateModified = 2024-11-07."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA's own release-history flip to 'Cancelled' begins with the 2025-07 release, consistent with a late-2024 real-world cancellation reaching the EIA's dataset with a normal reporting lag."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CancelledYear=2024 confirmed exactly by the dated WKBW article; EIA's dated-release history is a second, independent government-data confirmation of the same cancellation."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "497.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "497.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://investor.nationalfuelgas.com/news-and-events/press-releases/press-releases-details/2017/Federal-Energy-Regulatory-Commission-Approves-National-Fuels-455-Million-Northern-Access-Project/default.aspx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Sheet 'Historical Projects (1996-2024)', Excel row 1178, Additional Capacity = 497 (MMcf/d); this value is constant across all 28 dated EIA releases (2018-05 through 2026-08) that carry this docket."
+        },
+        {
+          "url": "https://investor.nationalfuelgas.com/news-and-events/press-releases/press-releases-details/2017/Federal-Energy-Regulatory-Commission-Approves-National-Fuels-455-Million-Northern-Access-Project/default.aspx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Press release states 'approximately 490,000 dekatherms per day' on Supply Corporation's system -- ~490 MMcf/d, within ~1.4% of GEM's 497, a rounding-level agreement per the addendum's tolerance rule."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The existing ref (eia.gov/naturalgas/data.php) is the banned undated navigation page (addendum sourcing failure #1) and was replaced with the dated Aug 2026 release URL, cited with sheet name and Excel row. Added National Fuel's own 2017 investor press release as a genuinely independent second origin (operator disclosure vs. EIA government dataset); the ~490k vs 497 delta (~1.4%) is noted, not treated as a discrepancy."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No operating pressure was ever established because the line was never built. The EIA Pipeline Projects workbook carries no pressure field; the two FERC Federal Register documents reviewed (FR-2015-12-01 and FR-2016-08-05) do not state a MAOP for this project. Legitimately UNRESOLVED. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "101.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "101.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Excel row 1178, Miles = 101; constant across all 28 EIA releases carrying this docket."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC EA states 'about 99 miles' total for the whole docket (96.9 mi of 24-in pipeline in PA/Allegany/Cattaraugus/Erie Counties NY, plus 0.9 mi of 16-in and 1.2 mi of 24-in pipeline in Niagara County NY, i.e. including the small P2575-scope lateral)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Replaced the banned data.php navigation-page ref with the dated EIA release plus the FERC EA as a second independent origin. Noted delta: EIA's 101 mi is specific to the PA-to-NY project row; FERC's 'about 99 miles' is the combined docket total (mainline + small Niagara lateral covered separately by P2575) -- a small, explainable difference in scope, not a contradiction."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Excel row 1178, Diameter = 24 (in)."
+        },
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC EA: '96.9 miles of 24-inch-diameter pipeline in McKean County, Pennsylvania and Allegany, Cattaraugus, and Erie Counties, New York' -- exact match."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Replaced the banned data.php navigation-page ref. FERC's EA gives an exact, explicit 24-inch confirmation for the PA-to-NY mainline specifically."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched for the producing formation/gas source (e.g. Marcellus/Utica Shale) in: naturalgasintel.com's 2014 article on this project (live fetch 403; Wayback snapshot captured only page chrome, article body paywalled/unreadable), the two FERC Federal Register documents (neither states a source formation in the sections reviewed), and the EIA workbook (carries no FuelSource-equivalent field). Not forcing a value without adequate verification -- legitimately UNRESOLVED. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Sergeant Township",
+        "StartPrefecture/District": "McKean County",
+        "StartState/Province": "Pennsylvania",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Elma",
+        "EndPrefecture/District": "Erie County",
+        "EndState/Province": "New York",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Sergeant Township",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+        "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC EA: pipeline runs 'in McKean County, Pennsylvania and Allegany, Cattaraugus, Erie, and Niagara Counties, New York' -- confirms start/end counties and states at county-level."
+        },
+        {
+          "url": "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Article independently states the line runs 'from McKean County, Pennsylvania... through Western New York into Erie County' -- corroborates the FERC EA's county-level facts from a second, independent origin."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Replaced the unreadable oilandgaswatch.org JS-SPA ref. Both new sources confirm the county/state-level route (McKean County PA -> Erie County NY) with two independent origins. Neither source names the town-level granularity GEM records (StartLocation='Sergeant Township', EndLocation='Elma') -- these specific place names were not independently found in the sources reviewed, so tier is medium (county/state level corroborated at high confidence; town-level not independently confirmed, not contradicted either)."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "455000000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2017"
+      },
+      "primary_value": "455000000.00",
+      "proposed_refs": [
+        "https://investor.nationalfuelgas.com/news-and-events/press-releases/press-releases-details/2017/Federal-Energy-Regulatory-Commission-Approves-National-Fuels-455-Million-Northern-Access-Project/default.aspx",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://investor.nationalfuelgas.com/news-and-events/press-releases/press-releases-details/2017/Federal-Energy-Regulatory-Commission-Approves-National-Fuels-455-Million-Northern-Access-Project/default.aspx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Live URL verified with url_verifier using the substrings '490,000' and '455' (the earlier failure recorded in the worklist used the un-comma-formatted digit string '455000000', which never appears verbatim in the prose -- a bad expected-string per addendum rule 7, not a bad ref). Press release title itself: '...Approves National Fuel's $455 Million Northern Access Project'; body: 'invest nearly a half billion dollars'."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Excel row 1178, Cost column = 455 ($ millions), SegmentCostYear consistent with the 2017 FERC approval / press release."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Kept the existing ref (it works fine; the prior verification failure was a substring artifact, not a dead or wrong link) and added the EIA workbook as a second, independent origin for the same $455M figure."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "National Fuel Gas Supply Corporation"
+      },
+      "primary_value": "National Fuel Gas Supply Corporation",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Excel row 1178, 'Pipeline Operator Name' = 'National Fuel Gas Supply Corp'."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/70145/000007014525000039/nfg-20250930.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2025 10-K: 'The Pipeline and Storage segment operations are carried out by National Fuel Gas Supply Corporation, a Pennsylvania corporation, and Empire Pipeline, Inc., a New York corporation.' Names Supply Corp as an operating entity distinct from Empire Pipeline."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA's Operator column can support this fill per the addendum (it is never a valid Owner source, but is a valid Operator source). Note the discrepancy with the sheet's current PipelineName ('Empire Pipeline'): see the attribution concern in validity[] -- this Operator value (National Fuel Gas Supply Corporation) is the entity EIA and the operator's own 10-K attribute to THIS specific project scope, not Empire Pipeline."
+    },
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "REVIEWED 2026-09-14 (orchestrator) under the CORRECTED EIA rule -- EIA's `Pipeline Operator Name` IS a valid Owner1 ref (Baird 2026-09-14), so this unit was re-examined to see whether EIA closes it. IT DOES NOT, and the reason is rule 5's own exception: where EIA's operator names a DIFFERENT company from the sheet's Owner1, that is a concern, never a confirmation. This unit stays UNRESOLVED on purpose; it is not an oversight and should not be re-opened as one.\n\nTHIS ONE WAS MISFILED IN THE HANDOFF as 'sheet Owner1 matches EIA operator'. It does not, and the reason is scope. GEM splits Northern Access 2016 into two rows -- P6008 is the (PA to NY) leg and P2575 is the (NY to ON) leg -- and EIA splits it the same way, with DIFFERENT operators: 'Northern Access 2016 Project (PA to NY)' carries Pipeline Operator Name = 'National Fuel Gas Supply Corp' (Aug 2026, sheet 'Historical Projects (1996-2024)', Excel row 1178; 101 mi, 497 MMcf/d, Cancelled -- matching this row's length and status), while 'Northern Access 2016 Project (NY to ON)' is the one that carries 'Empire Pipeline' (e.g. Oct 2025, sheet 'Natural Gas Pipeline Projects', Excel row 89). The pairing is stable across every release back to 2018-05. Matching on PipelineName instead of SegmentName is what makes 'Empire Pipeline' look like a hit -- addendum failure mode 3.\n\nSo for THIS row's scope, EIA names a different company from the sheet's Owner1 ('Empire Pipeline', 100.00%), which is a concern under rule 5, not a ref. It is corroborated independently: National Fuel Gas Company's FY2025 10-K Exhibit 21 lists Empire Pipeline, Inc. and National Fuel Gas Supply Corporation as DISTINCT sibling subsidiaries, so the two are not interchangeable spellings of one entity. See the attribution concern in validity[]. [ORCHESTRATOR AUDIT 2026-09-15] Hygiene: tier -> low."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P2575",
+      "url": "https://investor.nationalfuelgas.com/news-and-events/press-releases/press-releases-details/2017/Federal-Energy-Regulatory-Commission-Approves-National-Fuels-455-Million-Northern-Access-Project/default.aspx",
+      "facts": "This 2017 National Fuel investor press release (already cited above for P6008's SegmentCost) states the combined Northern Access 2016 Project provided about 490,000 Dth/day of capacity on Supply Corporation's system, split 140,000 Dth/day to Tennessee Gas Pipeline and 350,000 Dth/day 'delivered to Empire's system' -- the 350,000 figure exactly matches P2575's GEM Capacity value (350.00 MMcf/d). Useful as a second independent source for P2575's Capacity if P2575 is later re-swept; do not cross-cite it onto P2575's row without re-verifying scope there."
+    },
+    {
+      "project_id": "P2575",
+      "url": "https://www.govinfo.gov/content/pkg/FR-2016-08-05/pdf/2016-18572.pdf",
+      "facts": "The same FERC EA (docket CP15-115) lists the Niagara County NY facilities separately: '0.9 mile of 16-inch-diameter pipeline and 1.2 miles of 24-inch-diameter pipeline in Niagara County, New York' plus a new 22,000 hp compressor station in Niagara County -- this is the physical scope matching P2575 (2.1 mi total, matching 0.9+1.2), distinct from P6008's 96.9-mile PA-to-NY mainline."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Northern Access 2016 (PA to NY) Expansion Project",
+      "sheet_row": 3460,
+      "current_status": "cancelled",
+      "verdict": "confirm",
+      "proposed_status": "cancelled",
+      "proposed_changes": {},
+      "evidence_date": "2026-08",
+      "staleness_rule": "Cancelled statuses are reviewed for a possible revival; here the cancellation is corroborated as recently as the EIA Aug 2026 release (the most current dated EIA workbook available) and no revival reporting was found as of the research date.",
+      "proposed_refs": [
+        "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+        "https://buffalonews.com/news/local/business/national-fuel-northern-access-pipeline-allegany-cattaraugus-erie-counties/article_e6b24182-9d1e-11ef-83a9-73decec068fe.html",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.wkbw.com/news/local-news/national-fuel-no-longer-pursuing-its-plan-for-the-northern-access-pipeline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "National Fuel confirms abandonment, dated 2024-11-07."
+        },
+        {
+          "url": "https://buffalonews.com/news/local/business/national-fuel-northern-access-pipeline-allegany-cattaraugus-erie-counties/article_e6b24182-9d1e-11ef-83a9-73decec068fe.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent second outlet, same Nov 2024 cancellation, cites rising costs and New York regulatory denials (Clean Water Act Section 401 certification) as the reasons."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA's dated-release history (sources/eia_pipeline_projects/data/eia_projects_long.csv) shows Status='Cancelled' continuously from the 2025-07 release through the 2026-08 release (14 consecutive dated releases), i.e. cancellation is not a one-time report that later reversed."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Checked specifically for a revival per the batch addendum's instruction to check P2575/P6008 Northern Access 2016 for the same pattern seen elsewhere in this batch. Web search for 'Northern Access pipeline revive/revived/reconsider 2025/2026' turned up only a Dec 2024 letter from 11 Republican US House members urging NY Gov. Hochul to 'reconsider opposition to Northern Access Pipeline' (spectrumlocalnews.com / naturalgasintel.com coverage) -- political pressure, not a project restart. No National Fuel announcement, FERC filing, or trade-press report of the project being revived, re-filed, or re-certificated was found as of 2026-09-14. Combined with 14 consecutive EIA releases still showing 'Cancelled' through Aug 2026, the cancelled status is confirmed current, not stale."
+    }
+  ],
+  "summary": "P6008 (Empire Pipeline / Northern Access 2016 PA-to-NY, cancelled) is confirmed correct on Status, Cancelled, Proposal, Capacity, Length, Diameter, Location, and SegmentCost across 2+ independent sources each (EIA Aug2026 + FERC Federal Register EA/notice + WKBW/Buffalo News + National Fuel's own 2017 investor release); Construction, Start, Pressure, and FuelSource are legitimately UNRESOLVED because the project was cancelled before construction ever began. No revival evidence found (checked per addendum instruction) -- only a Dec 2024 political-pressure letter, no project restart. Two material findings for the orchestrator: (1) the prompt's own auto-generated EIA comparison section compared P6008 against the wrong sibling row (P2575's NY-to-Ontario EIA entry), producing false 'differs' flags on Capacity/Length that are a builder-tooling bug, not a data problem -- the correct EIA row matches GEM exactly on all four specs; (2) an attribution concern -- EIA's Operator field and National Fuel Gas Company's FY2025 10-K both attribute this specific 101-mile PA-to-NY project to National Fuel Gas Supply Corporation, a distinct sibling subsidiary from Empire Pipeline, Inc. (the sheet's current PipelineName/Owner1), so Owner is staged UNRESOLVED rather than confirmed, and Operator is filled as National Fuel Gas Supply Corporation -- needs adjudication."
+}

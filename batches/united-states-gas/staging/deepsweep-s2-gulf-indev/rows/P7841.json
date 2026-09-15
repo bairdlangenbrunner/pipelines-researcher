@@ -26,12 +26,12 @@
       "concern_type": "duplicate",
       "recommendation": "merge into P7802 (Tennessee Gas Pipeline | Mississippi Crossing (MSX)); retire this standalone P7841 row, or vice versa, but do not keep both",
       "contested": {},
-      "researcher_notes": "P7841 'Mississippi Crossing Project' and P7802 'Tennessee Gas Pipeline / Mississippi Crossing (MSX)' are the SAME physical project filed twice. Verified against the fresh 2026-09-10 GGIT snapshot: both rows carry Greenville MS -> Butler AL, LengthKnown 208.00 mi, Capacity 2100.00 MMcf/d, SegmentCost 1,700,000,000 USD, StartYear1 2028, Status proposed, Owner1 Kinder Morgan 100%. P7802 is the more complete row: it is structured correctly as a named segment ('Mississippi Crossing (MSX)') under the parent 'Tennessee Gas Pipeline' system entity, carries a gem.wiki page (https://www.gem.wiki/Tennessee_Gas_Pipeline, read for leads only, never cited), has the correct multi-value Diameter '36, 42' (P7841 is missing the 36in value -- see spec concern below), and has Operator populated ('Tennessee Gas Pipeline Co LLC'). P7841 appears to be a later, independently-created standalone row for the same FERC-filed project (no Wiki, ProposalYear 2024 populated where P7802's is blank, LastUpdated 2025-10-16 vs P7802's 2025-09-23) -- consistent with an EIA/FERC-docket-driven ingestion that was never matched against the existing P7802 segment. Recommend P7802 survive (parent-system segment structure, more complete Diameter/Operator, has Wiki) and P7841's ProposalYear (2024-11, sourced to KM's pre-filing start date) be carried over to P7802 during the merge since P7802's ProposalYear is currently blank. Note for the orchestrator: both P7841 and P7802 also carry separate route geojson files in the routes repo (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7841.geojson and P7802.geojson) -- these likely need deduping too as part of any merge (not touched here; routes repo is out of scope without authorization).",
+      "researcher_notes": "P7841 'Mississippi Crossing Project' and P7802 'Tennessee Gas Pipeline / Mississippi Crossing (MSX)' are the SAME physical project filed twice. Verified against the fresh 2026-09-10 GGIT snapshot: both rows carry Greenville MS -> Butler AL, LengthKnown 208.00 mi, Capacity 2100.00 MMcf/d, SegmentCost 1,700,000,000 USD, StartYear1 2028, Status proposed, Owner1 Kinder Morgan 100%. P7802 is the more complete row: it is structured correctly as a named segment ('Mississippi Crossing (MSX)') under the parent 'Tennessee Gas Pipeline' system entity, carries a gem.wiki page (https://www.gem.wiki/Tennessee_Gas_Pipeline, read for leads only, never cited), has the correct multi-value Diameter '36, 42' (P7841 is missing the 36in value -- see spec concern below), and has Operator populated ('Tennessee Gas Pipeline Co LLC'). P7841 appears to be a later, independently-created standalone row for the same FERC-filed project (no Wiki, ProposalYear 2024 populated where P7802's is blank, LastUpdated 2025-10-16 vs P7802's 2025-09-23) -- consistent with an EIA/FERC-docket-driven ingestion that was never matched against the existing P7802 segment. Recommend P7802 survive (parent-system segment structure, more complete Diameter/Operator, has Wiki) and P7841's ProposalYear (2024-11, sourced to KM's pre-filing start date) be carried over to P7802 during the merge since P7802's ProposalYear is currently blank. Note for the orchestrator: both P7841 and P7802 also carry separate route geojson files in the routes repo (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7841.geojson and P7802.geojson) -- these likely need deduping too as part of any merge (not touched here; routes repo is out of scope without authorization). [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (tier 'high' -> 'medium'; independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (kindermorgan.com), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong.",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
       ],
-      "tier": "high",
-      "independent": true,
+      "tier": "medium",
+      "independent": false,
       "source_language": "en"
     },
     {
@@ -39,7 +39,9 @@
       "verdict": "concern",
       "concern_type": "spec",
       "recommendation": "add the missing 36-inch value to Diameter (currently records only '42'; the project is mixed 36- and 42-inch pipe)",
-      "contested": {"Diameter": "36, 42"},
+      "contested": {
+        "Diameter": "36, 42"
+      },
       "researcher_notes": "Sheet records Diameter='42' only. Every independent source describing the pipe's diameter names BOTH 36-inch and 42-inch pipe: kindermorgan.com project page ('42- and 36-inch pipeline and laterals'), pgjonline.com/globalflowcontrol.com ('a 199-mile, 42- and 36-inch mainline'), and the EIA Aug-2026 Natural Gas Pipeline Projects workbook (pipeline_diameter_inches = '36,42', sheet 'Natural Gas Pipeline Projects' row 80). This is a completeness gap, not a disagreement on the 42in figure itself (which stays correct) -- see the paired REFS_ADDED fill on Diameter [ref].",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
@@ -53,8 +55,16 @@
   ],
   "fills": [
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Status [ref]",
-      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "proposed"},
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "proposed"
+      },
       "primary_value": "proposed",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
@@ -62,156 +72,438 @@
         "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "project page describes FERC certificate application, EIS, and July 31 2026 certificate order -- not yet in service or under construction, so 'proposed' remains accurate"},
-        {"url": "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply", "ok": true, "contains_value": true, "name_found": true, "note": "'FERC issued an order on July 31 approving certificates of public convenience and necessity for the Mississippi Crossing Project (MSX)'"},
-        {"url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/", "ok": true, "contains_value": true, "name_found": true, "note": "'the groundbreaking for the MSX pipeline is expected to happen this January' -- construction not yet begun as of 2026-08"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "project page describes FERC certificate application, EIS, and July 31 2026 certificate order -- not yet in service or under construction, so 'proposed' remains accurate"
+        },
+        {
+          "url": "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'FERC issued an order on July 31 approving certificates of public convenience and necessity for the Mississippi Crossing Project (MSX)'"
+        },
+        {
+          "url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'the groundbreaking for the MSX pipeline is expected to happen this January' -- construction not yet begun as of 2026-08"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Existing refs re-checked: kindermorgan.com live and names the pipeline (kept). ferc.gov/mississippi-crossing-pipeline-project returned HTTP 403 (WAF against scripted clients, matches this batch's measured conditions -- not confirmed dead) and archive.ph/B9Z0t returned HTTP 429 (rate-limited, not confirmed dead); both retained on the cell per standing rule 3, not deleted. Added two independent trade/local-press sources confirming the project is still pre-construction as of Aug-Sept 2026."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"},
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
       "primary_value": "Gas",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "'natural gas pipeline, compression, and associated facilities'"},
-        {"url": "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply", "ok": true, "contains_value": true, "name_found": true, "note": "natural gas transportation capacity throughout"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'natural gas pipeline, compression, and associated facilities'"
+        },
+        {
+          "url": "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "natural gas transportation capacity throughout"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Straightforward natural-gas transmission project; both sources confirm."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "PipelineType [ref]",
-      "value_cols": ["PipelineType"], "primary_value_col": "PipelineType", "values": {"PipelineType": "transmission"},
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
       "primary_value": "transmission",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "NGA section 7 certificate for a large-diameter interstate mainline connecting to TGP, SNG and Transco -- textbook transmission, not gathering/distribution"},
-        {"url": "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply", "ok": true, "contains_value": true, "name_found": true, "note": "'incremental firm transportation capacity' on an interstate system"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NGA section 7 certificate for a large-diameter interstate mainline connecting to TGP, SNG and Transco -- textbook transmission, not gathering/distribution"
+        },
+        {
+          "url": "https://pgjonline.com/news/2026/august/ferc-approves-5-b-kinder-morgan-pipeline-expansion-to-boost-southeast-gas-supply",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'incremental firm transportation capacity' on an interstate system"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "No classification concern -- correctly transmission."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
-      "values": {"ProposalYear": "2024", "ProposalMonth": "11"}, "primary_value": "2024",
-      "proposed_refs": ["https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"],
-      "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "'Following the successful pre-filing process that began in November 2024 (Docket No. PF25-2-000)'"}
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "ProposalYear/Month=2024-11 matches the PF25-2 pre-filing start date exactly, as stated on KM's own project page. EIA's release history (sources/eia_pipeline_projects) shows the project first appearing 'Announced' in the 2025-01 release under docket PF25-2, consistent with a Nov-2024 proposal."
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2024",
+        "ProposalMonth": "11"
+      },
+      "primary_value": "2024",
+      "proposed_refs": [
+        "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Following the successful pre-filing process that began in November 2024 (Docket No. PF25-2-000)'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ProposalYear/Month=2024-11 matches the PF25-2 pre-filing start date exactly, as stated on KM's own project page. EIA's release history (sources/eia_pipeline_projects) shows the project first appearing 'Announced' in the 2025-01 release under docket PF25-2, consistent with a Nov-2024 proposal. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (kindermorgan.com). One publisher restated is still one origin."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
-      "values": {"ConstructionYear": "2027", "ConstructionMonth": "1"}, "primary_value": "2027",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2027",
+        "ConstructionMonth": "1"
+      },
+      "primary_value": "2027",
       "proposed_refs": [
         "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/"
       ],
       "verifications": [
-        {"url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/", "ok": true, "contains_value": true, "name_found": true, "note": "'With the FERC approval, the groundbreaking for the MSX pipeline is expected to happen this January' (article dated 2026-08-06, i.e. January 2027)"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'construction planned to begin in January 2027 and the pipeline entering service by November 2028' (syndicated trade-press report on the CP25-514 filing)"}
+        {
+          "url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'With the FERC approval, the groundbreaking for the MSX pipeline is expected to happen this January' (article dated 2026-08-06, i.e. January 2027)"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'construction planned to begin in January 2027 and the pipeline entering service by November 2028' (syndicated trade-press report on the CP25-514 filing)"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Cell was blank (MISSING_VALUE). Two independent sources -- local Mississippi press and trade press reporting on the FERC filing -- agree construction is planned/expected to start January 2027. This is a forward-looking company target, not yet realized (as of the 2026-08 article, groundbreaking had not yet occurred), so Status correctly stays 'proposed' for now; see status_reviews."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-      "primary_value_col": "StartYear1", "values": {"StartYear1": "2028", "StartMonth1": "11"}, "primary_value": "2028",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2028",
+        "StartMonth1": "11"
+      },
+      "primary_value": "2028",
       "proposed_refs": [
         "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project"
       ],
       "verifications": [
-        {"url": "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx", "ok": true, "contains_value": true, "name_found": true, "note": "2024-12-19 FID release: 'expected to be placed in service November 2028'"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'the pipeline entering service by November 2028'"},
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": false, "contains_value": true, "name_found": true, "note": "current page says 'placed in service as early as the second quarter of 2028' -- an optimistic upside scenario stated alongside, not a replacement for, the Nov-2028 target in the two sources above; the literal digits '2028' are present on the page (manual read; the automated substring check with comma-formatted '2,028' produced a false-negative FAIL per url_verifier's documented content false-negative class)"}
+        {
+          "url": "https://ir.kindermorgan.com/news/news-details/2024/Tennessee-Gas-Pipeline-Announces-Final-Investment-Decision-on-Mississippi-Crossing-Project/default.aspx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2024-12-19 FID release: 'expected to be placed in service November 2028'"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'the pipeline entering service by November 2028'"
+        },
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": false,
+          "contains_value": true,
+          "name_found": true,
+          "note": "current page says 'placed in service as early as the second quarter of 2028' -- an optimistic upside scenario stated alongside, not a replacement for, the Nov-2028 target in the two sources above; the literal digits '2028' are present on the page (manual read; the automated substring check with comma-formatted '2,028' produced a false-negative FAIL per url_verifier's documented content false-negative class)"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "StartYear1=2028 / StartMonth1=11 (November) confirmed by two independent origins (KM's own Dec-2024 FID press release, and trade press reporting on the June-2025 FERC filing) that both explicitly say November 2028. KM's current project webpage instead advertises 'as early as the second quarter of 2028' -- read as an optimistic best-case framing on top of the firmer, twice-independently-sourced November 2028 target, not a contradiction requiring a value change."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
-      "values": {"Capacity": "2100.00", "CapacityUnits": "MMcf/d"}, "primary_value": "2100.00",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "2100.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "2100.00",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": false, "contains_value": true, "name_found": true, "note": "'designed to transport up to 2.1 Bcf/d of natural gas' -- prose Bcf/d form equals 2,100 MMcf/d exactly; the plain '2,100'/'2100' substring check fails on this prose phrasing (documented url_verifier content false-negative), confirmed manually"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'delivering 2.1 billion cubic feet per day (Bcf/d) of firm transportation capacity'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects' row 80: additional_capacity_mmcf_d = 2100 for 'Mississippi Crossing (MSX)'"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": false,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'designed to transport up to 2.1 Bcf/d of natural gas' -- prose Bcf/d form equals 2,100 MMcf/d exactly; the plain '2,100'/'2100' substring check fails on this prose phrasing (documented url_verifier content false-negative), confirmed manually"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'delivering 2.1 billion cubic feet per day (Bcf/d) of firm transportation capacity'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug-2026 release, sheet 'Natural Gas Pipeline Projects' row 80: additional_capacity_mmcf_d = 2100 for 'Mississippi Crossing (MSX)'"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "2,100 MMcf/d (=2.1 Bcf/d) confirmed by 3 sources. Note the pgjonline.com article (already cited on Status/spec above) separately describes MSX as designed 'to deliver 2.06 million dekatherms per day' -- a slightly different framing (Dth/d vs Bcf/d, ~2% off) from the same reporting family; the syndicated globalflowcontrol.com version of the same underlying story instead states '2.1 Bcf/d' matching the sheet exactly, so treated as the controlling figure, not a material disagreement. Also note the original Dec-2024 FID scope was smaller (1.5 Bcf/d, $1.4B, 206 mi per the KM IR release) -- current 2.1 Bcf/d / $1.7B / 208 mi figures reflect a later capacity expansion (KM's 'Trident' sanction referenced in trade press), and match the sheet's CURRENT recorded values, which are up to date with the expanded scope."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "Searched kindermorgan.com project page, MSX Fact Sheet/FAQ references, and open web for a stated MAOP/design pressure; none of the public-facing project materials disclose it. The FERC CP25-514 certificate application's resource reports (elibrary.ferc.gov) likely state MAOP but were not opened in this pass (docket-document-level reading, not reached). Leaving blank rather than forcing a number."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "208.00", "LengthKnownUnits": "mi"}, "primary_value": "208.00",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "208.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "208.00",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "'nearly 208 miles of 42-inch and 36-inch pipeline'"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'The project entails 208 miles of new pipeline infrastructure, including a 199-mile, 42- and 36-inch mainline'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release row 80: miles = 208"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'nearly 208 miles of 42-inch and 36-inch pipeline'"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The project entails 208 miles of new pipeline infrastructure, including a 199-mile, 42- and 36-inch mainline'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug-2026 release row 80: miles = 208"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "208 mi confirmed by 3 independent sources; the 208 total is the mainline (199 mi) plus laterals per KM/globalflowcontrol -- consistent with a network-level LengthKnown figure. Earlier EIA releases (2025-01/04) showed 206 mi before the scope grew; current sheet value matches the latest scope."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
-      "values": {"Diameter": "36, 42", "DiameterUnits": "in"}, "primary_value": "36, 42",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36, 42",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36, 42",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "'42- and 36-inch pipeline and laterals'"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'a 199-mile, 42- and 36-inch mainline'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release row 80: pipeline_diameter_inches = '36,42'"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'42- and 36-inch pipeline and laterals'"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a 199-mile, 42- and 36-inch mainline'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug-2026 release row 80: pipeline_diameter_inches = '36,42'"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Sheet currently records only '42'. All 3 sources name both 36in and 42in pipe on this project; corrected value '36, 42' (ascending, matching gem_schema.md's multi-diameter convention). See paired spec concern in validity[]."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "Searched kindermorgan.com project page/fact sheet and trade press for a named supply basin. All sources describe the gas source only generically -- 'natural gas sourced from multiple supply basins' / 'abundant shale production across the eastern half of the United States' (kindermorgan.com) -- without naming a specific basin (e.g. Haynesville). Leaving blank rather than guessing."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
       "primary_value_col": "StartLocation",
-      "values": {"StartLocation": "Greenville", "StartState/Province": "Mississippi", "StartCountryOrArea": "United States", "EndLocation": "Butler", "EndState/Province": "Alabama", "EndCountryOrArea": "United States"},
+      "values": {
+        "StartLocation": "Greenville",
+        "StartState/Province": "Mississippi",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Butler",
+        "EndState/Province": "Alabama",
+        "EndCountryOrArea": "United States"
+      },
       "primary_value": "Greenville",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
@@ -219,58 +511,181 @@
         "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "'MSX will originate near Greenville, Mississippi ... for delivery to Southern Natural Gas (SNG) and Transco near Butler, Alabama'"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'a 199-mile, 42- and 36-inch mainline running from Greenville, Mississippi, to Butler, Alabama'"},
-        {"url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/", "ok": true, "contains_value": true, "name_found": true, "note": "route spans 10 counties from the Mississippi Delta (Washington County, Greenville) into Alabama"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'MSX will originate near Greenville, Mississippi ... for delivery to Southern Natural Gas (SNG) and Transco near Butler, Alabama'"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a 199-mile, 42- and 36-inch mainline running from Greenville, Mississippi, to Butler, Alabama'"
+        },
+        {
+          "url": "https://www.mississippifreepress.org/mississippi-crossing-pipeline-spanning-10-counties-approved-for-construction/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "route spans 10 counties from the Mississippi Delta (Washington County, Greenville) into Alabama"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Greenville MS -> Butler AL confirmed by 3 independent sources. Finer detail (from other search hits): interconnect with TGP's 100 Line in Washington County, MS, terminus in Choctaw County, AL. No route-vs-sheet mismatch flagged for this row in the batch's scope-specific guidance, and the route geojson exists at ../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7841.geojson (not opened in detail here since no mismatch was raised for it; flag to the orchestrator only insofar as it overlaps with P7802's route per the duplicate concern above)."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
-      "values": {"SegmentCost": "1700000000.00", "SegmentCostUnits": "USD"}, "primary_value": "1700000000.00",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "1700000000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "1700000000.00",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": false, "contains_value": true, "name_found": true, "note": "'The approximately $1.7 billion project' -- prose form equals 1,700,000,000 USD exactly; plain-digit substring check fails on this prose phrasing (documented content false-negative), confirmed manually"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'a $1.7 billion natural gas pipeline expansion'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Aug-2026 release row 80: cost_millions = 1700"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": false,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The approximately $1.7 billion project' -- prose form equals 1,700,000,000 USD exactly; plain-digit substring check fails on this prose phrasing (documented content false-negative), confirmed manually"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a $1.7 billion natural gas pipeline expansion'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug-2026 release row 80: cost_millions = 1700"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "$1.7B confirmed by 3 sources against the current expanded scope. The original Dec-2024 FID estimate was $1.4B (smaller 1.5 Bcf/d / 206 mi scope) -- cost escalated alongside the scope increase to 2.1 Bcf/d / 208 mi by the time of the June-2025 FERC filing; current sheet value ($1.7B) matches the up-to-date figure, not the superseded FID-era one."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value_col": "Operator", "values": {"Operator": "Tennessee Gas Pipeline Co LLC"}, "primary_value": "Tennessee Gas Pipeline Co LLC",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Tennessee Gas Pipeline Co LLC"
+      },
+      "primary_value": "Tennessee Gas Pipeline Co LLC",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": false, "name_found": true, "note": "'Tennessee Gas Pipeline Company, L.L.C. (TGP), a Kinder Morgan, Inc. company, submitted an application to FERC ... for TGP's proposed Mississippi Crossing Project'"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": false, "name_found": true, "note": "'Kinder Morgan's Tennessee Gas Pipeline Company, L.L.C. (TGP) has officially submitted its application'"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Tennessee Gas Pipeline Company, L.L.C. (TGP), a Kinder Morgan, Inc. company, submitted an application to FERC ... for TGP's proposed Mississippi Crossing Project'"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Kinder Morgan's Tennessee Gas Pipeline Company, L.L.C. (TGP) has officially submitted its application'"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Cell was blank (MISSING_VALUE). Filed as 'Tennessee Gas Pipeline Co LLC' to match the exact spelling already used for Operator on the duplicate/sibling row P7802 (same project), avoiding creating a second variant entity for the same operator per entity_lookup convention. Both sources spell out 'Tennessee Gas Pipeline Company, L.L.C. (TGP)'."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank (MISSING_VALUE). Filed as 'Tennessee Gas Pipeline Co LLC' to match the exact spelling already used for Operator on the duplicate/sibling row P7802 (same project), avoiding creating a second variant entity for the same operator per entity_lookup convention. Both sources spell out 'Tennessee Gas Pipeline Company, L.L.C. (TGP)'. | ORCHESTRATOR 2026-09-14: tier demoted to low and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 0 publisher(s) (none verified). No ref passed ok+contains_value, so nothing is verified-corroborated. | [ORCHESTRATOR AUDIT 2026-09-15] contains_value repaired -- both sources spell out 'Tennessee Gas Pipeline Company, L.L.C. (TGP)'; the staged value is the same entity in the GEM spelling already used on sibling row P7802, so this is a substring miss, not an unsupported value."
     },
     {
-      "segment_name": "", "sheet_row": 4221, "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
-      "primary_value_col": "Owner1", "values": {"Owner1": "Kinder Morgan", "Owner1%": "100.00%"}, "primary_value": "Kinder Morgan",
+      "segment_name": "",
+      "sheet_row": 4221,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Kinder Morgan",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Kinder Morgan",
       "proposed_refs": [
         "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
         "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/"
       ],
       "verifications": [
-        {"url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project", "ok": true, "contains_value": true, "name_found": true, "note": "published on kindermorgan.com as a KM project, filed by TGP 'a Kinder Morgan, Inc. company'"},
-        {"url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'Kinder Morgan's Tennessee Gas Pipeline Company, L.L.C. (TGP)'"}
+        {
+          "url": "https://www.kindermorgan.com/Operations/Projects/Mississippi-Crossing-Project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "published on kindermorgan.com as a KM project, filed by TGP 'a Kinder Morgan, Inc. company'"
+        },
+        {
+          "url": "https://globalflowcontrol.com/newsroom/ferc-reviews-208-mile-mississippi-to-alabama-gas-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Kinder Morgan's Tennessee Gas Pipeline Company, L.L.C. (TGP)'"
+        }
       ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Owner1=Kinder Morgan 100% confirmed by 2 independent sources; no evidence of any other equity owner (TGP is a wholly-owned KM subsidiary, no partner announced for this project)."
     }
   ],

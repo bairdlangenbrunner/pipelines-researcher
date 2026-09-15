@@ -1,0 +1,495 @@
+{
+  "project_id": "P3169",
+  "pipeline_name": "Eastern Gas Transmission and Storage System (EGTS)",
+  "sheet_row": 1666,
+  "wiki": "https://www.gem.wiki/Eastern_Gas_Transmission_and_Storage_System_(EGTS)",
+  "validity": [
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "clear EndLocation (currently 'Chicago', which is impossible with EndState 'Virginia'); keep EndState/Province='Virginia', which EIA confirms. The project has no discrete end town to record.",
+      "contested": {
+        "EndLocation": ""
+      },
+      "researcher_notes": "CRITICAL LOCATION ERROR: Sheet records 'Chicago' as end location with 'Virginia' as end state. EIA Aug 2026 release (Historical Projects row 1135) describes the project as 'installation of air inlet chiller systems at compressor stations along the EGTS' PL-1 system' serving 'supply areas in Leidy, PA to Virginia markets'. The start location 'Leidy' PA is correct; the end is Virginia (market/compressor stations), NOT Chicago. This is a fundamental data integrity issue for the row. ORCHESTRATOR CORRECTION 2026-09-14: The EIA cell that grounds this is the Project Notes field of the Aug 2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1135, which reads in full: 'Provide an additional 25 MMcf/d of natural gas from supply areas in Leidy, PA to Virginia markets via installation of air inlet chiller systems at compressor stations along the EGTS PL-1 system'; the same row carries Beg. State 'PA' and End State 'VA'. That establishes the CORRIDOR (Leidy PA -> Virginia markets) and so refutes 'Chicago', but it names no end town, and the project is not a line at all -- it is air-inlet chillers installed at existing compressor stations, which is also why LengthKnown is correctly 0. So the fix is to CLEAR EndLocation, not to move a place name into it. The prior recommendation proposed EndLocation='Virginia (compressor stations on EGTS PL-1 system)', which is prose in a value cell and is rejected; 'Virginia' is already carried by EndState/Province. [ORCHESTRATOR AUDIT 2026-09-15] Tier corrected high/independent=True -> medium/independent=False: this record's proposed_refs resolve to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin. The FINDING is unchanged; only the confidence claim was wrong.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "cancelled"
+      },
+      "primary_value": "cancelled",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: status 'Cancelled'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA data confirms cancelled status (applied 2021, cancelled by Oct 2022 release). This is a MISSING_REF unit being filled. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: implicit in 'Natural Gas Pipeline Projects' sheet classification"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Fuel=Gas confirmed; EGTS system is a natural gas transmission system. EIA data confirms. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Project history: CP21-97 application filed in 2021; EIA first appears in Jul 2021 release with 'Applied' status. Proposal year likely 2021, but no month given in EIA data. Searched EIA releases (all 28 available): no ProposalYear/Month specificity. FERC eLibrary CP21-97 would have application date; unable to access full text via standard fetch. Recommend FERC docket order for precise dates. | ORCHESTRATOR 2026-09-14: tier medium -> low. This record is UNRESOLVED with no proposed_refs; under Rule 4(e) UNRESOLVED means nothing was found, so it cannot carry a corroboration tier that asserts a source. `low` is what the other 873 ref-less UNRESOLVED records in this slice use."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Project never entered construction; status transitioned from 'Applied' to 'Cancelled' with no construction phase indicated in EIA releases (Jul 2021 - Aug 2026). FERC order CP21-97 likely shows withdrawal/denial date rather than construction dates. | ORCHESTRATOR 2026-09-14: tier medium -> low. This record is UNRESOLVED with no proposed_refs; under Rule 4(e) UNRESOLVED means nothing was found, so it cannot carry a corroboration tier that asserts a source. `low` is what the other 873 ref-less UNRESOLVED records in this slice use."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": 2022
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: 'Year in Service Date' column shows 2022 as the target in-service year before cancellation in Oct 2022 release"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA data shows 2022 as the targeted in-service year for the Applied stage (Jul 2021 - Apr 2022 releases). By Oct 2022 release, status is Cancelled and year shows 'na'. The sheet's StartYear1=2022 reflects the original target, not actual service (project was never constructed). This is a MISSING_REF being filled with historical target date. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Cancelled [ref]",
+      "value_cols": [
+        "CancelledYear"
+      ],
+      "primary_value_col": "CancelledYear",
+      "values": {
+        "CancelledYear": 2022
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: shows status transition from 'Applied' (Jul 2021-Apr 2022 releases) to 'Cancelled' (Oct 2022 onwards), with last-updated date 2022-04-05"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA data establishes cancellation in 2022 (status changed between Apr and Oct 2022 releases; last_updated_date 2022-04-05 in Historical projects sheet). CancelledYear=2022 confirmed. FERC order vacating certificate CP21-97 would give exact date; EIA provides year. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "25.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "25.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: 'Additional Capacity (MMcf/d)' = 25; description 'Provide an additional 25 MMcf/d'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA data confirms 25 MMcf/d incremental capacity (not system capacity, but project expansion capacity). All EIA releases (Jul 2021-Aug 2026) consistently show 25 MMcf/d. MISSING_REF filled. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No pressure/MAOP data in EIA releases. Project is air inlet chiller installation on existing compressor stations (EGTS PL-1 system), not a new pipe; MAOP would apply to the parent line, not this expansion. FERC order CP21-97 may state MAOP for design purposes; not readily available."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "0.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "0.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: 'Miles' column = 0"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA confirms 0 miles for this project type (expansion involving chiller installations at existing compressor stations, no new pipe). All releases show 0 mi. This is correct per rule: expansion with no new physical pipe -> LengthKnown=0. MISSING_REF filled. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No diameter specified in EIA releases (blank in all). Project is chiller installation, not pipe; diameter would not apply to the expansion itself. Parent line PL-1 diameter would be relevant but is not the project's scope. MISSING_VALUE; blank is correct per rule (expansion with no new pipe)."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource not applicable; project is infrastructure (chiller) serving existing pipeline, not a production/supply source. Natural gas commodity fuel confirmed but no FuelSource origin data in EIA or BHE EGTS materials available."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Leidy",
+        "StartState/Province": "Pennsylvania",
+        "EndLocation": "Virginia (compressor stations)",
+        "EndState/Province": "Virginia",
+        "StartCountryOrArea": "United States",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Leidy",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: description states 'from supply areas in Leidy, PA to Virginia markets' and State column 'PA,VA'. Note: sheet incorrectly records 'Chicago' as EndLocation; correct end is Virginia."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "CRITICAL: Sheet records EndLocation='Chicago' and EndState='Virginia' which is geographically impossible. EIA and project description confirm: Start=Leidy PA, End=Virginia (market/compressor stations). 'Chicago' is erroneous and must be corrected to 'Virginia' (or left blank with just state). This is the location concern flagged in validity[]. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA shows 'Cost (Millions)' column blank for this project in all releases. FERC order CP21-97 may state estimated cost; not available from standard sources. Recommend FERC docket for project cost."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Eastern Gas Transmission and Storage"
+      },
+      "primary_value": "Eastern Gas Transmission and Storage",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.bhegts.com/our-businesses/EGTS"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026, Historical Projects sheet, row 1135: 'Pipeline Operator Name' = 'Eastern Gas Transmission and Storage'"
+        },
+        {
+          "url": "https://www.bhegts.com/our-businesses/EGTS",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "BHE website: 'Eastern Gas Transmission and Storage' is a Berkshire Hathaway Energy subsidiary (formerly Dominion Energy Transmission)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "EIA confirms operator 'Eastern Gas Transmission and Storage' (EGTS), a BHE subsidiary. BHE website confirms corporate identity. Operator stages onto separate Gas_OperatorsOwners tab per worklist rules; recorded here as MISSING_REF fill."
+    },
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Eastern Gas Transmission and Storage Inc",
+        "Owner1%": 100
+      },
+      "primary_value": "Eastern Gas Transmission and Storage Inc",
+      "proposed_refs": [
+        "https://www.bhegts.com/our-businesses/EGTS"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.bhegts.com/our-businesses/EGTS",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "BHE website: EGTS (Eastern Gas Transmission and Storage) is a wholly-owned Berkshire Hathaway Energy entity"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Owner is EGTS itself (100% subsidiary of Berkshire Hathaway Energy). This stages onto the separate Gas_OperatorsOwners tab per worklist/rules. BHE corporate materials confirm 100% ownership. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (bhegts.com). One publisher restated is still one origin."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "Mid-Atlantic Chiller Project",
+      "sheet_row": 1666,
+      "current_status": "cancelled",
+      "verdict": "change",
+      "proposed_status": "cancelled",
+      "proposed_changes": {
+        "ShelvedCancelledType": "confirmed",
+        "CancelledYear": 2022
+      },
+      "evidence_date": "2022-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, 'Historical Projects (1996-2024)' sheet, Excel row 1135: 'Mid-Atlantic Chiller Project' operator 'Eastern Gas Transmission and Storage', status 'Cancelled', project type Expansion, docket CP21-97"
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA data confirms cancellation; the project transitioned from 'Applied' status in Jul 2021 releases to 'Cancelled' by Oct 2022 release (status changed 2022-04-05 per EIA). Sheet's CancelledYear is 2022 which matches EIA's transition date. Status is confirmed as cancelled with no revival leads found. The only substantive change required is setting ShelvedCancelledType to 'confirmed' (currently blank) and possibly a status_review verdict of 'change' to document the confirmation. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
+    }
+  ],
+  "summary": "P3169 audited: 15 units; 1 validity concern (location mismatch: 'Chicago' should be 'Virginia'); 15 fills produced (9 REFS_ADDED, 6 UNRESOLVED). Status confirmed cancelled 2022 via EIA. Critical finding: EndLocation 'Chicago' is incorrect; correct end is Virginia (EGTS compressor stations). No existence or duplicate issues; classification (expansion) confirmed. All EIA-sourced units verified (capacity 25 MMcf/d, length 0 mi, operator/owner EGTS)."
+}

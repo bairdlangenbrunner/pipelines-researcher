@@ -1,0 +1,250 @@
+{
+  "project_id": "P4446",
+  "pipeline_name": "Columbia Gas Transmission",
+  "sheet_row": 2358,
+  "wiki": "https://www.gem.wiki/Columbia_Gas_Transmission",
+  "validity": [
+    {
+      "segment_name": "Virginia Electrification Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct Capacity from 350.00 MMcf/d to approximately 35 MMcf/d",
+      "contested": {"Capacity": "35.00"},
+      "researcher_notes": "MATERIAL 10x DISCREPANCY. The sheet's Capacity (350.00 MMcf/d) matches EIA's 'Additional Capacity (MMcf/d)' field for this docket (CP21-498) exactly, but FERC's own Federal Register notices for this project -- both the Notice of Availability of the Draft EIS (govinfo FR-2022-08-25, 2022-18332) and the Final EIS (govinfo FR-2022-12-22, 2022-27856) -- state the project 'is designed to provide about 35,000 dekatherms per day of incremental mainline capacity' (verified verbatim via pdftotext on both PDFs). 35,000 Dth/d converts to ~35 MMcf/d (1 Dth approx 1 Mcf by standard industry convention), not 350. Independently, Virginia Mercury (Dec 3 2021, archived) reports that the companion Virginia Reliability Project (P-number not this row) adds 100 MMcf/d and that the Reliability + Electrification projects TOGETHER add 135 MMcf/d -- arithmetic gives 135-100=35 MMcf/d for the Electrification Project alone, matching the FERC dekatherm figure almost exactly and confirming EIA's 350 (and the sheet's matching 350) is a 10x transcription error, most likely EIA's, inherited by the sheet. Recommend Capacity -> ~35 MMcf/d; flagging for orchestrator adjudication since it also affects the SegmentCost/Capacity-per-dollar sanity check and any downstream aggregate figures.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-08-25/pdf/2022-18332.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf",
+        "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Virginia Electrification Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "Existence, classification and scope confirmed independently of GEM: Columbia Gas Transmission, LLC (a TC Energy subsidiary, FERC docket CP21-498) filed and received NGA section 7 authorization (granted 2023-03-17, per FERC's Danly concurrence statement referenced in search results and the FR EIS notices) for a compressor-station-only expansion (new/replaced electric-drive units at Boswell Tavern, Goochland, and Petersburg Compressor Stations, all Virginia) -- no new pipeline segments, consistent with the sheet's LengthKnown=0/Diameter-blank convention for this row. Not a duplicate of any other roster row (distinct docket, distinct facility list, from the adjacent-but-separate 'Virginia Reliability Project', which is a ~50-mile pipe replacement south of Petersburg and is not a GEM row in this scope). Owner1 = 'Columbia Gas Transmission LLC' at 100% is accurate at the asset-holding-entity level (CGT is the sole named applicant/certificate holder for this project, no co-owners). Note for the orchestrator: the harvested citation pool (wiki_citations.json) contains a 2023 Reuters/LNG-Global report that TC Energy agreed to sell a 40% interest in the parent Columbia Gas Transmission and Columbia Gulf systems to GIC -- a corporate-parent-level equity question distinct from this project's asset ownership. I did not independently re-verify that transaction for this row (lngglobal.com link now 404s; spglobal.com and reuters.com blocked scripted fetches) -- flagging so it can be checked once across all Columbia rows (P3189, P4447, P7999) rather than piecemeal per row.",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-08-25/pdf/2022-18332.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf",
+        "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "sheet 'Historical Projects (1996-2024)', Excel row 1102: 'Virginia Electrification Project' / 'Columbia Gas' / status 'Completed' / Completed Date 2024-02-01 / docket CP21-498 (also read prior releases 2021-10..2026-08 locally: Applied -> Approved (2023-04) -> Construction (2024-01) -> Complete (2024-04 onward, Completed Date always 2024-02-01)"},
+        {"url": "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/", "ok": true, "contains_value": true, "name_found": true, "note": "TC Energy's own 2024-01-17 snapshot of the project page states the anticipated schedule: 'September 2021 File FERC application / Q1 2023 Begin construction / November 2023 Project In-service' -- corroborates the project moved from proposed to built"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Sheet reads Status=proposed with no ref; independent evidence shows the project is BUILT and OPERATING. EIA's own release history shows the docket progressing Applied (2021-10 thru 2023-01) -> Approved (2023-04 thru 2023-10) -> Construction (2024-01) -> Complete/Completed (2024-04 onward), with Completed Date fixed at 2024-02-01 across every release since. TC Energy's own (2024-01) project page targeted a November 2023 in-service date. Staging corrected value Status=operating; also see status_reviews below for the full proposed_changes set (Status + StartYear1 + StartMonth1)."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "carried in EIA's 'Natural Gas Pipeline Projects' workbook, Historical Projects sheet row 1102"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "FERC notice describes Columbia Gas Transmission, LLC's interstate natural gas pipeline system and the project's natural-gas mainline capacity"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Uncited but uncontested; both EIA and the FERC EIS notice unambiguously describe this as a natural gas project on Columbia's interstate gas system."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2021", "ProposalMonth": "9"}, "primary_value": "2021",
+      "proposed_refs": [
+        "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/",
+        "https://www.govinfo.gov/content/pkg/FR-2022-02-09/pdf/2022-02700.pdf"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/", "ok": true, "contains_value": true, "name_found": true, "note": "'The project is considered a complementary effort to Columbia Gas Transmission's planned Virginia Electrification Project. Announced in September, that project proposes to upgrade three compressor and meter stations...' (article dated 2021-12-03, so 'announced in September' = Sept 2021)"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-02-09/pdf/2022-02700.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "docket CP21-498 numbering and EIA's 2021-10 release already showing the project 'Applied' are consistent with a Sept 2021 filing"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Cell was blank (MISSING_VALUE). Virginia Mercury states the project was announced in September 2021; EIA's earliest tracked release (2021-10) already shows the docket 'Applied', consistent with a September 2021 FERC application."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2023"}, "primary_value": "2023",
+      "proposed_refs": [
+        "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/", "ok": true, "contains_value": true, "name_found": true, "note": "operator's own (subject-to-change) schedule: 'Q1 2023 Begin construction'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA's own release history only shows this docket move to status 'Construction' in the 2024-01 release (prior release 2023-10 still 'Approved') -- roughly a year later than TC's own Q1 2023 target"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "researcher_notes": "Cell was blank. TC Energy's own project schedule (explicitly 'subject to change') targeted construction starting Q1 2023, but EIA's quarterly survey did not record 'Construction' status until its 2024-01 release. Staging ConstructionYear=2023 on TC Energy's own targeted start (single clean source for the year), but flagging the ~9-12 month gap between TC's target and EIA's observed status change -- actual ground-breaking may have slipped into late 2023; not confident enough in an exact month to fill ConstructionMonth. Medium tier reflects that caveat."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1", "values": {"StartYear1": "2024", "StartMonth1": "2"}, "primary_value": "2024",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "row 1102, Completed Date 2024-02-01, Year In Service Date 2024, Status 'Completed' -- consistent across every EIA release from 2025-01 through 2026-08"},
+        {"url": "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/", "ok": true, "contains_value": true, "name_found": true, "note": "TC Energy's own (pre-completion) schedule targeted 'November 2023 Project In-service' -- close to, and independently corroborating, EIA's later-observed Feb 2024 completion"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Sheet's recorded StartYear1=2022 (uncited) does not match either independent source: EIA's completion record (2024-02-01) or TC Energy's own targeted in-service date (Nov 2023). 2022 appears to be an early/incorrect placeholder (possibly confused with the FERC application intake year on an earlier sheet pass). Correcting to StartYear1=2024, StartMonth1=2 per EIA's Completed Date; also reflected in status_reviews below."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "35.00", "CapacityUnits": "MMcf/d"}, "primary_value": "35.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-08-25/pdf/2022-18332.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf",
+        "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-08-25/pdf/2022-18332.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "pdftotext: 'about 35,000 dekatherms per day of incremental mainline capacity on' [Columbia's system, re: the Virginia Electrification Project]"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "same '35,000 dekatherms per day of incremental mainline capacity' language restated in the Final EIS notice"},
+        {"url": "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/", "ok": true, "contains_value": true, "name_found": true, "note": "'Together, the Virginia Reliability and Virginia Electrification Projects are expected to bring an additional 135 million cubic feet per day' and 'the 100 million cubic feet per day of gas capacity that will be added through the Virginia Reliability Project' -- 135-100=35 MMcf/d for the Electrification Project alone"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "MATERIAL CORRECTION, see validity[] spec concern above for full reasoning. Sheet's uncited 350.00 MMcf/d is a 10x error (it matches EIA's own erroneous 'Additional Capacity (MMcf/d)'=350 field exactly). Two independent primary/press sources -- FERC's own EIS notices (35,000 Dth/d incremental mainline capacity, ~35 MMcf/d) and Virginia Mercury's independent arithmetic (135 combined - 100 for the companion Reliability project = 35) -- agree on ~35 MMcf/d. Staging the corrected value."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure", "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched both Federal Register EIS notices (draft + final, full text via pdftotext) for MAOP/pressure figures -- neither states a system or facility pressure. Compressor-station-only projects of this kind typically don't publish MAOP in the NEPA notice (it would be in the full FERC application/resource reports, not fetched here). Not found in EIA, TC Energy's project page, or the Virginia Mercury piece either. Leaving blank rather than forcing a number."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "0.00", "LengthKnownUnits": "mi"}, "primary_value": "0.00",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf",
+        "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "facilities described are all compressor-unit replacements/additions at Boswell Tavern, Goochland, and Petersburg Compressor Stations plus a POR capacity upgrade -- no new pipeline mileage anywhere in the project description"},
+        {"url": "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/", "ok": true, "contains_value": true, "name_found": true, "note": "TC Energy's own page describes only compressor-unit replacement/electrification, 'no facility modifications or ground disturbance required' at Petersburg -- confirms no new pipe"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirms LengthKnown=0 is the RULE here, not an oversight -- this is a compressor-electrification expansion with zero new pipeline mileage, consistent with the standing convention for expansion-with-no-new-pipe rows."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter", "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Diameter is correctly blank: this project has LengthKnown=0 (no new pipe, see Length [ref] fill above) -- per the standing rule, an expansion with no new physical pipe carries LengthKnown=0 and Diameter blank. Confirming the blank is correct, not filling a fabricated number."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "Searched the FR EIS notices, EIA workbook, TC Energy's project page, and Virginia Mercury -- none states an upstream gas source/basin for this mainline capacity expansion (it is a delivery-capacity project for existing LDC customers, not a new supply hookup). Leaving blank."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "Virginia", "StartCountryOrArea": "United States", "EndState/Province": "Virginia", "EndCountryOrArea": "United States"},
+      "primary_value": "Virginia",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf",
+        "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "facilities located in Louisa County, Virginia; Goochland County, Virginia; and Prince George County, Virginia"},
+        {"url": "https://web.archive.org/web/20230204023518/https://www.virginiamercury.com/2021/12/03/gas-pipeline-upgrades-planned-to-increase-capacity-to-hampton-roads/", "ok": true, "contains_value": true, "name_found": true, "note": "'that project proposes to upgrade three compressor and meter stations on the company's pipeline north of Petersburg, including...the Goochland station' -- all Virginia"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Both start and end state = Virginia is correct and uncontested; this is a single-state compressor-station project entirely within Louisa, Goochland, and Prince George Counties, Virginia (no route geojson exists for this PID -- the on-disk file has null geometry, consistent with no new pipe to map)."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "142700000.00", "SegmentCostUnits": "USD"}, "primary_value": "142700000.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Cost (millions) = 142.7 for docket CP21-498, row 1102 -- identical value carried in EVERY EIA release from 2021-10 (the earliest, pre-approval, release) through 2026-08"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Sheet's 142.7M matches EIA exactly, but EIA is one origin (all releases), and I could not reach a second independent cost figure (spglobal.com and reuters.com both blocked scripted fetches with a browser UA; lngglobal.com's article 404s; naturalgasintel.com not fetched due to time). Flagging as medium rather than high, and noting the figure has been UNCHANGED from the original 2021 application estimate through the 2026 post-completion release -- it may be the filed estimate rather than a reconciled actual cost; searched for a second source and did not find one -- the second source is still owed."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "oo_sheet_row": 3321, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"], "primary_value_col": "Operator",
+      "values": {"Operator": "Columbia Gas Transmission, LLC"}, "primary_value": "Columbia Gas Transmission, LLC",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "sole named applicant/certificate holder throughout: 'Columbia Gas Transmission, LLC'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Operator Name field (short form 'Columbia Gas') -- EIA has no ownership column and is used here ONLY to corroborate the operating entity, not ownership (per addendum rule 5)"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Cell was blank. Columbia Gas Transmission, LLC is the FERC certificate holder and sole named applicant for this project's facilities -- filling the full legal name as Operator, corroborated (not sourced) by EIA's operator field."
+    },
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358, "oo_sheet_row": 3321, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Columbia Gas Transmission LLC", "Owner1%": "100.00%"}, "primary_value": "Columbia Gas Transmission LLC",
+      "proposed_refs": [
+        "https://www.govinfo.gov/content/pkg/FR-2022-08-25/pdf/2022-18332.pdf",
+        "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-08-25/pdf/2022-18332.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "Columbia Gas Transmission, LLC is the sole named applicant for this project; no co-owners or JV partners named for these specific facilities"},
+        {"url": "https://www.govinfo.gov/content/pkg/FR-2022-12-22/pdf/2022-27856.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "same, Final EIS notice"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Owner1=100% at the asset-holding-entity level (Columbia Gas Transmission LLC itself) is corroborated -- it is the sole named applicant/certificate holder, no co-owners for this specific project. NOT independently re-verified here: a separate, corporate-parent-level fact in the harvested citation pool (a 2023 Reuters/LNG Global report) states TC Energy agreed to sell a 40% interest in the parent Columbia Gas Transmission and Columbia Gulf systems to GIC -- that is about who owns the LLC, not what the LLC itself owns, so it does not contest this field, but I could not re-fetch either source (both blocked/404) to confirm the transaction closed or its exact terms. See validity[] note -- recommend checking once across all Columbia rows (P3189, P4447, P7999) rather than per-row. Medium tier because both refs are the same FERC-notice origin (draft + final EIS restate the same applicant filing)."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "Virginia Electrification Project", "sheet_row": 2358,
+      "current_status": "proposed", "verdict": "change",
+      "proposed_status": "operating",
+      "proposed_changes": {"Status": "operating", "StartYear1": "2024", "StartMonth1": "2"},
+      "evidence_date": "2026-08",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true},
+        {"url": "https://web.archive.org/web/20240117221105/https://www.tcenergy.com/operations/natural-gas/virginia-electrification-project/", "ok": true, "contains_value": true, "name_found": true}
+      ],
+      "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "LastUpdated on this row is 2022-10-06, well before the project's actual arc. FERC granted NGA section 7 authorization 2023-03-17 (Danly concurrence). EIA's tracked release history shows the docket move Applied (2021-10..2023-01) -> Approved (2023-04..2023-10) -> Construction (2024-01) -> Completed, with Completed Date fixed at 2024-02-01 across every release from 2024-04 through the latest, 2026-08. TC Energy's own (2024-01) schedule targeted a November 2023 in-service date, corroborating the project reached commercial operation in the 2023-2024 window. No evidence of cancellation, delay reversal, or scope change -- this is a straightforward proposed-to-built-and-operating update that is 4 years overdue on the sheet."
+    }
+  ],
+  "summary": "Confirmed real, correctly-classified, single-scope compressor-electrification project (Louisa/Goochland/Prince George Counties, VA; docket CP21-498); staged 12 REFS_ADDED fills, 2 UNRESOLVED (Pressure, FuelSource; Diameter confirmed-blank is its own UNRESOLVED), 1 status_reviews change (proposed->operating, StartYear1 2022->2024). MATERIAL FINDING for adjudication: Capacity is a 10x error -- sheet/EIA say 350 MMcf/d, but FERC's own EIS notices (35,000 Dth/d) and independent Virginia Mercury arithmetic (135 combined - 100 companion project = 35) both put it at ~35 MMcf/d."
+}

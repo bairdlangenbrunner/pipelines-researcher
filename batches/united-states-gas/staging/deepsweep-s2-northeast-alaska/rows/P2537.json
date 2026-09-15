@@ -1,0 +1,630 @@
+{
+ "project_id": "P2537",
+ "pipeline_name": "National Fuel Gas Supply Corporation Gas Pipeline",
+ "sheet_row": 1306,
+ "wiki": "https://www.gem.wiki/National_Fuel_Gas_Supply_Corporation_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "FM 100 Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "spec",
+   "recommendation": "Correct StartYear1 from 2022 to 2021 (in-service Dec 1, 2021 per FERC EA schedule, EIA's 2022-01-14 Completed record, and National Fuel's FY2022 annual report to shareholders). Also update Diameter to reflect the project's mixed pipe sizes.",
+   "contested": {
+    "StartYear1": "2021",
+    "Diameter": "20, 24, 12"
+   },
+   "researcher_notes": "The row (FM 100 Project, National Fuel Gas Supply Corp, docket CP19-491-000, pre-filing PF17-10-000) is REAL and correctly classified as an operating interstate gas transmission project. Existence/classification: confirmed via FERC's own EA (CP19-491-EA.pdf), the Federal Register application/EA-availability notices, PA DEP's Pipeline Portal FM100 page, National Fuel's FY2022 annual report to shareholders (SEC EDGAR), NGI trade press, and EIA's Natural Gas Pipeline Projects workbook (project_key 'fm 100 project|national fuel gas supply corp', tracked since the 2019-05 release). No duplicate: this is distinct from P6878 (NFG Supply Main Line, the parent trunk) -- FM100 built new lateral/loop/extension pipe (Line YM58, YM224 Loop, KL Extension) plus two new compressor stations tying into that mainline; it did not restate the mainline's own length/capacity. SPEC finding: the FERC EA's facility list gives exactly 29.5 mi (20-in, Line YM58) + 1.4 mi (24-in loop, Line YM224) + 0.4 mi (12-in extension, Line KL) = 31.3 mi total -- this matches the sheet's LengthKnown=31.3 mi EXACTLY and confirms Capacity=330 MMcf/d (=330,000 Dth/d per FERC/NGI) and the sheet's single Diameter=20in as the PREDOMINANT (not sole) pipe size; the loop and extension segments are 24-in and 12-in respectively, so the roster's other multi-diameter convention ('20, 24, 12') would be more complete, but 20in is not wrong as the majority figure -- flagging as a caveat, not an error, and giving the candidate multi-value string. SPEC concern (material): the sheet's StartYear1=2022 disagrees with FOUR converging independent sources that all place the in-service date at December 1, 2021: (1) FERC's EA (CP19-491-EA.pdf, section A.7 Construction Schedule): 'National Fuel proposes to begin pipeline and aboveground facility construction in early 2021 to place the FM100 Project into service by December 2021'; (2) EIA's Natural Gas Pipeline Projects workbook first shows the project 'Completed' with completed_date 2021-12-01 in its 2022-01 release (last_updated_date 2022-01-14); (3) National Fuel's FY2022 Annual Report to Shareholders (SEC EDGAR, d425145dars.pdf) states the company 'completed construction of the FM100 project' -- 'the largest in the Company's history, was completed on time and substantially under budget' at a final cost of '$230 million'; (4) NGI trade press corroborates the FERC-authorized Dec-2021 target. The route geojson's own LastUpdated (2022-07-22) and StartYear1 (2022) appear to have picked up the FY2022 annual-report PUBLICATION year rather than the calendar in-service date -- an easy mix-up given National Fuel's fiscal year runs Oct-Sep, so 'completed in fiscal 2022' spans a project that actually entered service in December 2021 (calendar). Recommend StartYear1=2021 with StartMonth1=12.",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+    "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "attribution",
+   "recommendation": "Clear Delayed/DelayType -- the project was completed on schedule, not delayed.",
+   "contested": {
+    "Delayed": "",
+    "DelayType": ""
+   },
+   "researcher_notes": "The sheet's uncited Delayed=yes / DelayType=inferred is contradicted by the record: FERC's EA (Feb 2020) scheduled construction for early 2021 and in-service by December 2021, and National Fuel's own FY2022 annual report to shareholders states the FM100 project 'was completed on time and substantially under budget.' EIA's workbook shows a clean Applied -> Construction (2021-07) -> Completed (2022-01, completed_date 2021-12-01) progression with no gap or stall recorded. Nothing found supports an actual delay; this reads as a stale/incorrect inferred flag rather than a sourced finding. No ref exists to REVERIFY the current 'yes', so the fill below is UNRESOLVED rather than a fabricated confirmation -- the correction belongs here in validity, per the ADDENDUM's clearing recipe.",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+    "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC's EA schedules the FM100 Project into service by December 2021 and describes the certificated facilities as built/operating"
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'completed construction of the FM100 project'; 'the $230 million FM100 project ... was completed on time'"
+    },
+    {
+     "url": "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC OKs FM100 to start construction; 330,000 Dth/d, 29.5 mi 20-in pipeline in McKean/Potter/Cameron/Clearfield/Clinton/Elk counties"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Current [ref] was https://www.eia.gov/naturalgas/data.php#pipelines -- a navigation page that does not name FM100 or state its status (addendum failure mode #1). Replaced with a FERC EA, an SEC-filed annual report confirming completion, and a trade-press article; the project has been in commercial service since Dec 2021 with no indication of idling/conversion since."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "FERC EA authorizes National Fuel 'to construct, operate, and maintain new natural gas facilities' for the FM100 Project"
+    },
+    {
+     "url": "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "describes FM100 throughout as a natural gas pipeline project"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Old ref (EIA data.php) did not name the pipeline. Replaced with FERC's EA and NGI, both of which name FM100 and describe it as a natural gas project."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2017",
+    "ProposalMonth": "9"
+   },
+   "primary_value": "2017",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'The FERC's Director of the Office of Energy Projects (OEP) granted National Fuel's ... request[] to utilize our Pre-filing Process on September 21, 2017 ... FERC assigned the FM100 Project pre-filing Docket No. PF17-10-000'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FERC's own EA dates National Fuel's FM100 pre-filing request to September 21, 2017 (docket PF17-10-000, consistent with EIA's docket_number field, itself first tracked in the EIA workbook's 2019-05 release as 'Pre-applied'). Single strong regulatory source; a second, fully independent confirmation of the exact month was not found (only FERC's own EA states the date) -- searched National Fuel investor materials and NGI/press archives from 2017 for an FM100 pre-filing announcement without success."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2021"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'National Fuel proposes to begin pipeline and aboveground facility construction in early 2021'"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "EIA Aug 2026 \"Historical Projects (1996-2024)\" row for FM 100 Project gives in-service 2021-12-01, not a construction start; does not state ConstructionYear."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FERC's EA schedules construction start in early 2021; EIA's workbook first shows the project's status as 'Construction' in its 2021-07 release (last_updated_date 2021-02-26, two business days after FERC's Feb 23, 2021 approval to commence construction -- a GlobeNewswire release of that date gives 'early March 2021' as the construction-start target, but globenewswire.com timed out on every fetch attempt (url_verifier and curl alike) so it is not cited here as a ref, only noted). No exact month is independently double-sourced, so ConstructionMonth is left blank rather than forced from the one unverifiable press release. EIA de-staged for this cell: the Aug 2026 release carries an in-service date, not a construction date. Single origin (FERC CP19-491 EA), so medium and not independent."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2021",
+    "StartMonth1": "12"
+   },
+   "primary_value": "2021",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'National Fuel proposes to begin pipeline and aboveground facility construction in early 2021 to place the FM100 Project into service by December 2021'"
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'completed construction of the FM100 project ... completed on time'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The sheet's uncited StartYear1=2022 disagrees with the record -- see the paired validity/spec concern. FERC's EA schedule, EIA's workbook (completed_date 2021-12-01 in the 2022-01 release), and National Fuel's own FY2022 annual report ('completed on time') all converge on a December 2021 in-service date. Staging the CORRECTED value here per rule 4(e); StartYear1 should move from 2022 to 2021, StartMonth1 to 12."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source supports the sheet's uncited Delayed=yes/DelayType=inferred -- to the contrary, FERC's EA schedule and National Fuel's FY2022 annual report ('completed on time and substantially under budget') both indicate the project was NOT delayed. Per the ADDENDUM's clearing procedure, the recommendation to clear Delayed/DelayType is filed in validity[] (attribution concern) rather than staged here as a fabricated confirmation of 'yes'."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "330.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "330.00",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'The FM100 Project would provide 330,000 Dth/d of firm natural gas transportation capacity from the Sergeant Township area to Transco at Leidy, Pennsylvania'"
+    },
+    {
+     "url": "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'create 330,000 Dth/d of incremental capacity'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "330,000 Dth/d (FERC EA, NGI) is the standard trade equivalent of the sheet's 330 MMcf/d; EIA's workbook independently carries 'additional_capacity_mmcf_d'=330 for every release since 2019-05 (project_key 'fm 100 project|national fuel gas supply corp', e.g. Aug 2026 release, sheet 'Historical Projects (1996-2024)', row 1048). Confirmed as recorded across three independent origins."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Read FERC's full EA (CP19-491-EA.pdf, 140+ pages) including its pipeline-safety/class-location section (B.10.3), which discusses MAOP only in generic regulatory terms (49 CFR 192, the potential-impact-radius formula) and gives no project-specific MAOP/psig figure for Line YM58, the YM224 loop, or the KL extension. Also checked the Federal Register application and EA-availability notices, PA DEP's FM100 portal page, and National Fuel's public FM100 project pages -- none states a design or operating pressure. No PHMSA/NPMS-sourced MAOP for this specific line was found either."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "31.30",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "31.30",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "facility list: 29.5 mi new 20-in pipeline (Line YM58) + 1.4 mi new 24-in loop (Line YM224) + 0.4 mi new 12-in extension (Line KL) = 31.3 mi of new pipe"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026, \"Historical Projects (1996-2024)\" sheet, Excel row 1048, FM 100 Project: LengthKnown 31.2999999999999970 mi (= 31.30). Checked against the local release cache and re-verified with url_verifier --name \"FM 100 Project\"."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "The sheet's 31.3 mi is the EXACT sum of FERC's three FM100 facility segments (29.5 + 1.4 + 0.4 = 31.3), confirmed against EIA's independently-tracked 31.299999999999997 mi. Confirmed as recorded -- this agreement is the deliverable per rule 6."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "20.00",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "20.00",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'approximately 29.5 miles of new 20-inch-diameter pipeline ... (Line YM58)'; the 24-in loop and 12-in extension are the project's other, smaller-mileage segments"
+    },
+    {
+     "url": "https://www.naturalgasintel.com/ferc-oks-fm100-natural-gas-project-in-pennsylvania-to-start-construction/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'FM100 includes installing 29.5 miles of 20-inch diameter pipeline'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "20-in is confirmed as the PREDOMINANT diameter (29.5 of 31.3 total new miles, ~94%), so the recorded single value is not wrong, but the project also includes a 1.4-mi 24-in loop and a 0.4-mi 12-in extension -- flagged as a spec caveat in validity[] with the candidate multi-value '20, 24, 12' (matching this roster's convention for other mixed-diameter rows) rather than silently overwritten here."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Marcellus Shale, Utica Shale"
+   },
+   "primary_value": "Marcellus Shale, Utica Shale",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "describes the FM100 Project's 330,000 Dth/d as firm natural gas transportation capacity for Marcellus and Utica Shale production moving to Transco's Leidy South Project"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "FERC's EA ties FM100's capacity directly to Marcellus/Utica Shale gas moving to Transco at Leidy. A second, fully independent statement of the gas source specifically for FM100 (as opposed to the companion Leidy South Project) was not found; National Fuel's FY2022 ARS discusses Seneca Resources' (NFG's E&P arm, itself a Marcellus/Utica producer) production growth in the same breath as FM100 but does not state FuelSource verbatim, so it is not cited as a second origin here."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartPrefecture/District": "McKean County",
+    "StartState/Province": "Pennsylvania",
+    "StartCountryOrArea": "United States",
+    "EndPrefecture/District": "Clinton County",
+    "EndState/Province": "Pennsylvania",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "McKean County",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.pa.gov/agencies/dep/programs-and-services/permitting-coordination/pennsylvania-pipeline-portal/fm100"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "facilities located in McKean and Potter Counties (Line YM58/YM224/KL Extension, Marvindale CS/Interconnect); Tamarack CS in Clinton County; Leidy Metering and Regulation Station (interconnect endpoint) modified in Clinton County -- 'provide ... capacity from the Sergeant Township area [McKean County] to Transco at Leidy, Pennsylvania [Clinton County]'"
+    },
+    {
+     "url": "https://www.pa.gov/agencies/dep/programs-and-services/permitting-coordination/pennsylvania-pipeline-portal/fm100",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PA DEP's FM100 portal page lists Cameron, Clearfield, Clinton, Elk, McKean and Potter Counties"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Start (McKean County, PA) confirmed as recorded by both FERC's EA and PA DEP. The sheet's End cell was blank on EndPrefecture/District; FERC's EA and PA DEP both put the project's interconnect endpoint (Transco's Leidy Metering and Regulation Station) in Clinton County, so that blank cell is filled here as well, per rule 5 (read to exhaustion)."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "230",
+    "SegmentCostUnits": "USD",
+    "SegmentCostYear": "2021"
+   },
+   "primary_value": "230",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'completed construction of the FM100 project ... This project, the largest in the Company's history, was completed on time and substantially under budget' -- 'the $230 million FM100 project'"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "$230 million is National Fuel's own confirmed FINAL/actual cost, stated in its FY2022 annual report to shareholders (filed with SEC EDGAR). Note the discrepancy against EIA's workbook, which carries a static $279 million figure across every 'Construction'/'Completed' release from 2021-07 onward -- that appears to be the pre-construction BUDGET estimate (also echoed in a Feb 2021 GlobeNewswire release citing ~$280 million, which could not be re-verified here because globenewswire.com timed out on every fetch attempt). The company's own annual report explicitly frames $230M as 'substantially under budget,' i.e. below that $279-280M estimate -- using the actual $230M as SegmentCost with the estimate noted, not merged in, since a single company disclosure is the only source stating a specific final number (single-source at medium tier; searched trade press and FERC Form 2 for a second confirmation of the final cost without success)."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "oo_sheet_row": 1939,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "National Fuel Gas Supply Corp"
+   },
+   "primary_value": "National Fuel Gas Supply Corp",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "National Fuel Gas Supply Corporation is the FM100 Project applicant/certificate holder, docket CP19-491-000"
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Aug 2026, \"Historical Projects (1996-2024)\" sheet, Excel row 1048, FM 100 Project: Operator \"National Fuel Gas Supply Corp\". Checked against the local release cache and re-verified with url_verifier --name \"FM 100 Project\"."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirmed as recorded: FERC's EA names National Fuel Gas Supply Corporation as the sole applicant/operator of the FM100 facilities; EIA's workbook independently carries 'Pipeline Operator Name'=National Fuel Gas Supply Corp for every release (this refs Operator per rule 5 of the ADDENDUM)."
+  },
+  {
+   "segment_name": "FM 100 Project",
+   "sheet_row": 1306,
+   "oo_sheet_row": 1939,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "National Fuel Gas Supply Corp",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "National Fuel Gas Supply Corp",
+   "proposed_refs": [
+    "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+    "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "sole applicant/certificate holder for the FM100 facilities, no co-owners named"
+    },
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/70145/000119312523011706/d425145dars.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "National Fuel Gas Supply Corporation reported as National Fuel Gas Company's wholly owned Pipeline & Storage subsidiary that built and owns the FM100 project"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Old ref (EIA data.php) did not name the pipeline; replaced with FERC's EA (sole applicant, no partners) and National Fuel's own SEC-filed annual report (100% owned subsidiary). Confirmed as recorded across two independent origins."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P6878",
+   "url": "https://www.ferc.gov/sites/default/files/2020-04/CP19-491-EA.pdf",
+   "facts": "FM100 (P2537) taps into National Fuel Gas Supply's mainline system (the parent trunk that P6878 records) via the Marvindale/Tamarack compressor stations and the Leidy interconnect in Clinton County, PA -- confirms P6878's route passes through/near McKean-Potter-Clinton Counties, PA, but the EA gives no mainline-level length/capacity figure usable for P6878's own blank state cells."
+  }
+ ],
+ "summary": "P2537 (FM 100 Project) confirmed real, correctly classified, no duplicate -- one spec concern (StartYear1 should be 2021, not 2022, per FERC's EA schedule/EIA's Completed record/NFG's FY2022 annual report) and one attribution concern (Delayed/DelayType should be cleared, project completed on time); all other units sourced (REFS_ADDED) except Pressure and Delay, UNRESOLVED with notes on what was searched."
+}

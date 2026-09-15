@@ -1,0 +1,619 @@
+{
+  "project_id": "P7465",
+  "pipeline_name": "Trans-Alaska Gas Pipeline",
+  "sheet_row": 3851,
+  "wiki": "https://www.gem.wiki/Trans-Alaska_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION confirmed independently of GEM. This is the TAPS fuel-gas SUPPLY pipeline (a small-diameter, high-pressure line that carries North Slope/Prudhoe Bay natural gas to fuel the northern TAPS crude-oil pump stations), NOT the large-diameter 1970s-80s proposed Alaska gas export project of a similar name (Alaska Pipeline Project P0146, Denali P0174, ASAP P0293, AKLNG P0147) -- confirmed by two independent documents: (1) Alyeska Pipeline Service Co.'s own 'FACTS' factbook (alyeska-pipe.com, web update dated Jan 2025), which carries a dedicated glossary entry 'FUEL GAS LINE: Carries natural gas received from the North Slope fields from PS 1 to PS 4. It fuels pump stations and cathodic protection systems north of the Brooks Range. In general, it parallels the Dalton Highway, from PS 1 to PS 4,' immediately followed by 'Diameter: 10 inches from PS 01 to MP 34 (34 miles); 8 inches from MP 34 to PS 04 (115 miles) / Length: 149 miles / Pressure: maximum design pressure of 1,440 psi (MAOP)'; and (2) a peer-reviewed engineering paper, Alto & McDevitt, 'Performance of the Trans-Alaska Pipeline System Fuel Gas Supply Pipeline' (Arctic Institute of North America / Univ. of Calgary Canadian Permafrost Conference proceedings, pubs.aina.ucalgary.ca), whose entire subject is this specific line: 'a gas pipeline which supplies natural gas to the four northern-most pump stations... extends south from Prudhoe Bay to Pump Station Four a distance of approximately 238 kilometers [=147.9 mi]... grades from 25.4 cm [10 in] to 20.3 cm [8 in]... commissioned in June of 1977.' Both documents are read to exhaustion below (fills[] for every column). PipelineType 'transmission' is also supported: the CPC paper states the line was designed to the requirements of 49 CFR Part 192 ('Transportation of Natural and Other Gas by Pipeline') and ASME B31.8 'Gas Transmission and Distribution Piping Systems' -- a captive, high-pressure utility line built to gas-transmission code, so 'transmission' is the closer of the three controlled-vocab options (never 'gathering' -- it does not collect from wellheads -- and never 'distribution' -- it serves industrial pump stations, not a local low-pressure customer network). No duplicate: checked against the full 42-row roster; the only other Alaska rows sharing 'Trans-Alaska'/TAPS-adjacent naming are the large-diameter proposed export lines listed above, which are a different commodity scope and diameter class entirely, and Point Thomson (P6534, a physically separate FERC-filed transmission line for a different field). CAVEAT: the Owner1 cell warrants a flag -- see the attribution finding below.",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartLocation from 'Kuparuk Operations Center' to Pump Station 1 (near Prudhoe Bay); review the routes-repo geojson's northern terminus, which is anchored near the Kuparuk River oil field rather than Pump Station 1 -- route candidate for a future §8 pass.",
+      "contested": {
+        "StartLocation": "Pump Station 1",
+        "RouteAccuracy": "low"
+      },
+      "researcher_notes": "Both independent sources place this pipeline's origin at Pump Station 1, not at Kuparuk. Alyeska's factbook: the FUEL GAS LINE runs 'from PS 1 to PS 4' and elsewhere in the same document, of the TAPS crude system, 'The pipeline begins at Pump Station 1 in Prudhoe Bay.' The CPC paper is explicit and detailed: 'the pipeline design consists of 25.4 cm nominal diameter... pipe from Pump Station One for a distance of 54.7 kilometers [=34.0 mi, matching the factbook's MP 34 transition point exactly] where it transitions to a 20.3 cm nominal diameter pipe for the remainder of its total length of 240 kilometers' and 'extends south from Prudhoe Bay to Pump Station Four.' Neither source mentions Kuparuk anywhere. Kuparuk River oil field (per public reference data, ~70.34N -149.85W) is a physically distinct North Slope unit about 20-25 miles west of Pump Station 1/Prudhoe Bay. The routes-repo geojson for this PID (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7465.geojson, 1 feature, 139 points) starts at (-149.606, 70.324) -- essentially at Kuparuk, not Prudhoe Bay/PS1 -- and ends at (-149.328, 68.417), which IS consistent with Pump Station 4 (documented 'just north of the Brooks Range' by the CPC paper). So: the route's SOUTHERN end (PS4) and the sheet's EndLocation are both right; the route's NORTHERN end and the sheet's StartLocation both appear to share the same Kuparuk-based error, most likely both digitized/entered from the same original mistaken assumption. EndLocation, StartPrefecture/District, Start/EndState/Province and Start/EndCountryOrArea are unaffected (Kuparuk and Pump Station 1 are both North Slope Borough, Alaska, US) -- only StartLocation is corrected in fills[]. Graded RouteAccuracy 'low' rather than 'no route' because the southern ~85% of the traced corridor (from roughly the Brooks Range foothills down to PS4) is plausible and the endpoint (PS4) is right; only the northernmost anchor is off.",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Owner1 currently reads 'Alyeska Pipeline Service Co' at 100% -- flag for a researcher to chase Alyeska's actual owner-company list (per Alyeska's own factbook, its owners are a consortium of oil companies, not Alyeska itself) if a firmer equity breakdown is wanted; not changed here for lack of a verified replacement.",
+      "contested": {
+        "Owner1": ""
+      },
+      "researcher_notes": "The cited source (Alyeska factbook) itself distinguishes operator from owner: 'ALYESKA, Owners: The consortium of companies that owns TAPS. For a complete list, see www.alyeskapipeline.com' -- i.e., per Alyeska's own reference, Alyeska Pipeline Service Co. is the OPERATOR (see 'ALYESKA, Responsibilities: Design, construct, operate and maintain TAPS'), while the pipeline's actual equity OWNERS are a consortium of companies (historically BP, ConocoPhillips/Phillips Alaska, ExxonMobil/Humble, Unocal/Chevron, Hilcorp and others per the same factbook's TAPS-owner chronology entries) that Alyeska operates on behalf of. I could not reach alyeska-pipe.com's dedicated owner-companies page (403 to a scripted client on every path tried) to pin down the current list/percentages, so I have not replaced Owner1 with a specific alternative -- 'Alyeska Pipeline Service Co 100%' is left in fills[] as an honest REVERIFIED record of what the cited source literally supports (Alyeska as the entity responsible for the line), while this record flags that the same source calls that characterization imprecise. Recording the operator as Owner matches an established GEM convention elsewhere in this tracker (Baird 2026-09-14), so this is a caveat, not a hard error, and contested is left blank rather than guessing a specific company/percentage split.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Dedicated 'FUEL GAS LINE' glossary entry, present tense, describing an active line fueling PS1-PS4; separately, factbook's 'PUMP STATIONS, Status as of 2024' confirms PS1, PS3, PS4 (this line's own endpoints/intermediate stations) remain operating pump stations -- status is inferred from this current (Jan 2025 update) prose per standing convention, not a literal 'operating' token."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (https://www.npms.phmsa.dot.gov/) is the NPMS public-viewer HOME PAGE -- a navigation surface that names no pipeline and states no status; effectively uncited (kept here, never silently dropped). Replaced with the Alyeska factbook, dated Jan 2025 (near the row's 2025-07-21 LastUpdated), which describes the fuel gas line in the present tense and confirms PS1/PS3/PS4 still operating as of 2024. See status_reviews[] for the formal annual-update verdict (confirm). Second-source search: no other dated, line-specific operating-status source found beyond Alyeska's own materials; PHMSA/NPMS's interactive map layer was not usable as a distinct citation (see above)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'FUEL GAS LINE: Carries natural gas received from the North Slope fields...'"
+        },
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Title: 'Performance of the Trans-Alaska Pipeline System FUEL GAS SUPPLY PIPELINE'; abstract: 'a gas pipeline which supplies natural gas to the four northern-most pump stations.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (npms.phmsa.dot.gov home page) named neither the pipeline nor the fuel; replaced with two sources that both explicitly and repeatedly describe this as a natural-gas line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline was designed to meet the requirements of... Part 192, Title 49, Code of Federal regulations, Transportation of Natural and Other Gas by Pipeline. ASME Guide for Gas Transmission and Distribution Piping Systems.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (npms home page) named neither the pipeline nor a type. CPC paper documents the design code basis (49 CFR 192 + ASME B31.8, both gas-transmission standards) for this high-pressure (1,440 psi MAOP) buried line -- 'transmission' is the correct one of the three controlled-vocab options (not gathering: it doesn't collect from wellheads; not distribution: it serves industrial pump stations, not a retail customer network). Single source; second-source search did not turn up an independent document using transmission-vs-gathering-vs-distribution terminology for this specific captive utility line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the CPC paper and Alyeska factbook (both read in full) for a proposal/announcement date distinct from the 1975 construction start -- neither states one; the paper's own references (e.g., Bock 1979, 'Arctic Winter Construction and Cost...') post-date construction rather than propose it. Also searched sources/eia_pipeline_projects/data/eia_projects_long.csv for Alyeska/Trans-Alaska/Kuparuk/fuel gas -- zero rows (expected: EIA's tracked releases begin 2018 and cover modern FERC-jurisdictional interstate projects, not this 1970s captive utility line). Genuinely nothing found; not forcing a value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "1975"
+      },
+      "primary_value": "1975",
+      "proposed_refs": [
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Construction of the gas pipeline was completed during the winters of 1975-1976 and 1976-1977... The gas pipeline was commissioned in June of 1977.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Construction ran across two winter seasons; 1975 (winter 1975-1976, the first season) is staged as ConstructionYear per convention (year construction began). ConstructionMonth left blank -- source says 'winter' only, no specific month. Single source; the Alyeska factbook gives only the whole-TAPS-system construction window (Apr 1974-Jun 1977, covering the crude pipeline, terminal and pump stations together), which is a SYSTEM figure, not specific to this fuel-gas segment, so it is not cited as a second origin here (aggregate-vs-segment rule)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1977"
+      },
+      "primary_value": "1977",
+      "proposed_refs": [
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The gas pipeline was commissioned in June of 1977'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-verified: resolves, names this specific line, and states June 1977 commissioning verbatim. Second-source search: the Alyeska factbook's 'Construction, Time: ... April 29, 1974 to June 20, 1977' is a SYSTEM-wide (crude pipeline + terminal + pump stations) figure, not specific to this fuel-gas segment, so it is not staged as a second origin (aggregate-vs-segment rule) even though the date is consistent. No other independent, line-specific commissioning date found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Table 1 ('Fuel gas pipeline transmission requirements') gives per-segment flow requirements in MSCMD (PS1-to-PS2 1,274; PS2-to-PS3 850; PS3-to-PS4 425), varying by segment rather than one design capacity for the whole 149-mile line; the scanned table is partly garbled (OCR) and I could not confidently resolve which figure -- or what MSCMD actually denotes here -- maps to a single Capacity value without risking a fabricated conversion."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Genuinely unresolved rather than silently skipped: the only capacity-shaped data found is CPC Table 1's per-segment MSCMD transmission-requirement figures, which vary along the line's length (it is a telescoping design, 10-in down to 8-in) and do not reduce to one clean 'Capacity' figure for the segment as GEM records it, and the OCR of that table is not fully reliable (values did not internally reconcile on a hand check). Rather than force a converted number I could not verify, left blank. Also searched sources/eia_pipeline_projects/data/eia_projects_long.csv (no hit, as expected for this 1970s captive line)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {
+        "Pressure": "1440.00",
+        "PressureUnits": "psi"
+      },
+      "primary_value": "1440.00",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Pressure: maximum design pressure of 1,440 psi (MAOP)'"
+        },
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Table 2 'Gas design properties': 'Design Pressure (kPa) 9929' = 1,440 psi exactly (9929 kPa / 6.89476 kPa per psi = 1440.0 psi)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Second source found and added: CPC paper's design pressure of 9929 kPa converts exactly to 1,440 psi, matching the factbook's MAOP to the pound. Both name this specific line."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "149.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "149.00",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Length: 149 miles'"
+        },
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'a distance of approximately 238 kilometers' = 147.9 mi, within 0.7% of the recorded 149 mi -- agreement within rounding (rule 4(e))."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Second source added: CPC's ~238 km converts to ~147.9 mi, a 0.7% delta from the recorded 149 mi -- agreement within rounding, not a material disagreement."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "8, 10",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "8, 10",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Diameter: 10 inches from PS 01 to MP 34 (34 miles); 8 inches from MP 34 to PS 04 (115 miles)'"
+        },
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'25.4 cm [10 in] nominal diameter... from Pump Station One for a distance of 54.7 kilometers [=34.0 mi, matching the factbook's MP 34 exactly] where it transitions to a 20.3 cm [8 in] nominal diameter pipe for the remainder'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Second source added: CPC's metric figures (25.4cm/20.3cm, transition at 54.7 km) convert exactly to the factbook's 10in/8in transition at MP 34 (34 mi) -- fully consistent, independently measured design description."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Prudhoe Bay"
+      },
+      "primary_value": "Prudhoe Bay",
+      "proposed_refs": [
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'these stations utilize natural gas from the Prudhoe Bay fields as their primary source of power'"
+        },
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Factbook says 'natural gas received from the North Slope fields' -- the broader region containing Prudhoe Bay, not the specific field name, so kept in verifications only, not counted toward the value-bearing ref count."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource records the upstream field feeding the line, per gem_schema.md (never the commodity type). CPC paper names Prudhoe Bay specifically and explicitly. Factbook corroborates in general terms only (North Slope fields, a region encompassing Prudhoe Bay) so it is not counted as a second value-bearing origin for tier purposes; single specific source -> medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Pump Station 1",
+        "StartPrefecture/District": "North Slope",
+        "StartState/Province": "Alaska",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Trans-Alaska Pipeline Pump Station 4",
+        "EndPrefecture/District": "North Slope",
+        "EndState/Province": "Alaska",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Pump Station 1",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+        "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'FUEL GAS LINE: ...from PS 1 to PS 4'; elsewhere, 'The pipeline begins at Pump Station 1 in Prudhoe Bay.'"
+        },
+        {
+          "url": "https://pubs.aina.ucalgary.ca/cpc/CPC5-389.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'extends south from Prudhoe Bay to Pump Station Four'; '...pipe from Pump Station One for a distance of 54.7 kilometers...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (npms home page) named neither pipeline nor location. Both independent sources agree the line runs Pump Station 1 (Prudhoe Bay) to Pump Station 4 -- EndLocation as recorded ('Trans-Alaska Pipeline Pump Station 4') is confirmed and kept; StartLocation as recorded ('Kuparuk Operations Center') disagrees with both sources and is corrected here to 'Pump Station 1' per rule 4(e) ('sources DISAGREE -> emit the corrected value AND file the spec concern in validity[]'). See the attribution concern in validity[] for the full reasoning, including the matching routes-repo geojson discrepancy at the same (northern) end."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": false,
+          "name_found": true,
+          "note": "Only a whole-TAPS-SYSTEM cost is stated ('Approximately $8 billion for entire system, including terminal and pump stations, at conclusion of initial construction period in 1977') -- an aggregate figure covering the crude pipeline, terminal and all pump stations, not this fuel-gas segment specifically; aggregate-vs-segment rule, not usable as a SegmentCost ref."
+        }
+      ],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No segment-specific cost figure found for the fuel gas line alone; only the whole-system $8B figure, which is an aggregate and not staged per the aggregate-vs-segment rule. Also checked EIA CSV (no hit, expected). Left blank rather than apportioning a guess."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Alyeska Pipeline Service Co"
+      },
+      "primary_value": "Alyeska Pipeline Service Co",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'ALYESKA, Responsibilities: Design, construct, operate and maintain TAPS.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single source (factbook) but unambiguous and explicit: Alyeska Pipeline Service Company is TAPS's designated operator. QCCOwner(业主单位) in value_cols is a QC-workbook column, not a tracker value column -- worklist leakage, not researched."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Alyeska Pipeline Service Co",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Alyeska Pipeline Service Co",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Factbook names Alyeska throughout as responsible for the line; see validity[] for the operator-vs-owner caveat this same source raises."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-verified against the cited source, which does name Alyeska in connection with this line -- kept as an honest REVERIFIED record. IMPORTANT CAVEAT (see validity[] attribution record): this SAME source distinguishes operator from owner ('ALYESKA, Owners: The consortium of companies that owns TAPS... see www.alyeskapipeline.com'), i.e., strictly read, Alyeska is the OPERATOR and the true equity owners are an undisclosed-here consortium of oil companies. I could not reach alyeska-pipe.com's owner-companies page (403 to every path tried with a declared UA) to name them, so I have not replaced Owner1 -- flagged, not corrected."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3851,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-01",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf"
+      ],
+      "verifications": [
+        {
+          "url": "https://alyeska-pipe.com/wp-content/uploads/2025/01/24-APSC-0352-FACTBOOK-UPDATE-FOR-WEB-FINAL1_AA.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Jan-2025-dated factbook describes the FUEL GAS LINE in the present tense as an active line, and separately confirms Pump Stations 1, 3 and 4 (this line's own termini/intermediate points) as still-operating pump stations as of 2024 ('PUMP STATIONS, Status as of 2024: PS 1, 3, 4 and 9 operating pumping stations'). Status is inferred from this current, line-specific and system context, not a literal 'operating' token."
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Recorded Status='operating' confirmed by dated evidence (Jan 2025) newer than / contemporaneous with the row's 2025-07-21 LastUpdated: Alyeska's current factbook still carries an active-tense 'FUEL GAS LINE' entry and confirms the pump stations this line serves (PS1, PS3, PS4) remain operating (PS2 was ramped down in 1997, but the buried gas line simply passes that inactive station en route to PS3/PS4, which are both still active -- doesn't change the line's own status). No news of abandonment, conversion, or sale found. No second, non-Alyeska dated source found confirming current operation of this specific captive utility line -- PHMSA/NPMS would be the natural second source but its public viewer doesn't name individual lines usably; single-source confirm."
+    }
+  ],
+  "summary": "P7465 confirmed as the real, distinct TAPS fuel-gas supply line (PS1-PS4), operating; corroborated Length/Diameter/Pressure/Start to high tier with a second independent source (CPC paper) and filled Construction/FuelSource/Operator/Location/PipelineType/Fuel/Status; flagged an attribution concern -- StartLocation and the routes-repo northern terminus both read 'Kuparuk' but two sources place the origin at Pump Station 1/Prudhoe Bay -- and a caveat that Owner1=Alyeska is really the operator per Alyeska's own factbook. UNRESOLVED: ProposalYear, Capacity (ambiguous per-segment MSCMD table, not forced), SegmentCost (only a system-wide figure exists)."
+}

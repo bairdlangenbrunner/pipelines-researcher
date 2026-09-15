@@ -1,0 +1,550 @@
+{
+ "project_id": "P0287",
+ "pipeline_name": "Gulf Coast Southbound Pipeline",
+ "sheet_row": 140,
+ "wiki": "https://www.gem.wiki/Gulf_Coast_Southbound_Pipeline",
+ "validity": [
+  {
+   "segment_name": "Phase III",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "verify endpoint states (Agua Dulce is in Texas, not Louisiana); confirm current status (EIA May 2026+ shows 'On Hold')",
+   "contested": {
+    "Status": "on hold",
+    "EndState/Province": "Texas"
+   },
+   "researcher_notes": "EIA Natural Gas Pipeline Projects May 2026 and Aug 2026 releases show status 'On Hold' (as of 2024-12-04), not 'construction'. The sheet's Oct 2025 status='construction' is now outdated. Agua Dulce Hub (terminus) is located in Nueces County, TEXAS, not Louisiana. The state cells show EndState/Province='Louisiana', which is incorrect. EIA consistently shows states as 'IA,IL,MO,AR,TX', not including Louisiana. The Southbound service area may extend to Louisiana markets, but the endpoint coordinates are in Texas. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (tier 'high' -> 'medium'; independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong.",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsMay2026.xlsx"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "construction"
+   },
+   "primary_value": "construction",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Natural Gas Pipeline Projects Jan 2026 release, 'Natural Gas Pipeline Projects' sheet, project name 'NGPL Gulf Coast Southbound Project (Phase III)' with status 'Construction'. Existing ref EIA data.php navigational page does not name the pipeline; this xlsx is the required primary source."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing ref EIA data.php is a navigation page and does not name this specific pipeline or state any value. The actual source is the EIA Natural Gas Pipeline Projects release workbooks. The sheet's recorded value 'construction' agrees with EIA Jan/Oct 2025, but EIA May 2026 changed status to 'On Hold'. Recording construction status with EIA Jan 2026 as ref; spec concern flags newer status. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PDF: 'Natural Gas Pipeline Company of America LLC (NGPL) is soliciting interest in Phase 3 of its Gulf Coast Expansion Project for Southbound Capacity'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing ref EIA data.php is a navigation page. OpenSeason PDF confirms fuel commodity. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, project type 'Reversal' (transmission class)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA and PDF classify as transmission reversal (compression-only addition to NGPL transmission). | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2018",
+    "ProposalMonth": "4"
+   },
+   "primary_value": "2018",
+   "proposed_refs": [
+    "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PDF dated 2018-04-25 (April 2018) non-binding open season."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Existing ref verified and confirmed. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Sheet has no ConstructionYear. EIA shows 'Construction' status from Jul 2025 release onward (last_updated 2024-12-04), suggesting late 2024. Specific construction month/year not found in EIA. FERC CP16-488 / CP19-99 notices of commencement would provide exact dates. | ORCHESTRATOR 2026-09-14: tier demoted to low and independent -> false. The unit carries no verified reference at all, so it cannot assert any confidence tier."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2026"
+   },
+   "primary_value": "2026",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, in-service year 2026."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA Jan 2026 shows 2026, but May 2026 shows na (reflecting On Hold status). Now potentially stale. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {
+    "Delayed": "yes",
+    "DelayType": "confirmed"
+   },
+   "primary_value": "yes",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA May 2026 shows 'On Hold' status, confirming delay beyond Jan 2026 target."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Delay confirmed by status change from Construction to On Hold. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "260.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "260.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+    "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, Capacity 260 MMcf/d."
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PDF: '260,000 Dth/day... incremental firm southbound transportation service'. 260,000 Dth/day = 260 MMcf/d."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources confirm 260 MMcf/d. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No pressure data. Compression-only; FERC order/tariff would state MAOP. Not searched."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "0.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "0.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+    "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, miles 0 (compression-only)."
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PDF: 'compression facilities... no new pipe miles'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Length 0 is correct: compression-only reversal. Matches rule 'expansion with no new physical pipe → LengthKnown = 0'. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No diameter (blank). Correct for compression-only scope. Diameter blank is the rule."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No FuelSource (blank). NGPL serves diverse suppliers (Canadian, Utica, Marcellus). Single FuelSource would be misleading."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "EndLocation",
+    "EndState/Province"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Chicago",
+    "StartState/Province": "Illinois",
+    "EndLocation": "Agua Dulce Hub",
+    "EndState/Province": "Texas"
+   },
+   "primary_value": "Chicago",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+    "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, states 'IA,IL,MO,AR,TX', not Louisiana. Start: Illinois/Iowa (Alliance, PEPL, REX, Northern Border)."
+    },
+    {
+     "url": "https://pipeline2.kindermorgan.com/Documents/NGPL/GCEP_Phase_3_Non_Binding_Open_Season_04_25_18-20180426092105.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "PDF: 'from... interconnects... in Illinois and Iowa... to... Texok and Louisiana Zones... Corpus Christi... Johnson Bayou'."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Start: Illinois/Iowa interconnects (Chicago area). End: Agua Dulce Hub (Nueces County, TEXAS) or Louisiana delivery points (Johnson Bayou). Sheet EndState='Louisiana' is incorrect if the geographic endpoint is Agua Dulce (Texas). EIA shows 'IA,IL,MO,AR,TX' for states. Spec concern filed above for endpoint state. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: reclassed UNRESOLVED -> REFS_ADDED with a CORRECTED EndState/Province: Louisiana -> Texas. The Agua Dulce Hub is in Nueces County, TEXAS; it is not in Louisiana, so the sheet's paired EndLocation/EndState values contradict each other. Two independent sources support the correction: the EIA Jan 2026 release lists this project's states as 'IA,IL,MO,AR,TX' (no Louisiana), and NGPL's own GCEP Phase 3 open-season notice describes delivery to the Texok and Louisiana Zones with Corpus Christi among the delivery points. The Louisiana Zone reference is to a TARIFF ZONE and to Johnson Bayou, neither of which is the Agua Dulce terminus this row records. Reviewer note: if GEM intends this row to cover the Johnson Bayou delivery as well, EndLocation is the cell to change, not EndState."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "145000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "145000000.00",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, Project Cost $145M."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA consistently $145M since 2019. Covers compressor stations and modifications. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "oo_sheet_row": 269,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Natural Gas Pipeline Company of America LLC"
+   },
+   "primary_value": "Natural Gas Pipeline Company of America LLC",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIA Jan 2026, Operator: Nat Gas P L Co of America (NGPL, Kinder Morgan subsidiary)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No Operator on sheet. EIA clearly shows NGPL. Recommend filling. Stages onto operators_owners tab. | ORCHESTRATOR 2026-09-14: EIA workbook URL canonicalized to the filename form that actually resolves (verified HTTP 200); the staged spelling 404'd. Every release uses an underscore before the month EXCEPT Aug 2026, which is the lone un-underscored file. | ORCHESTRATOR 2026-09-14: reclassed UNRESOLVED -> REFS_ADDED. The unit's own verification reads the operator off the EIA Jan 2026 release as 'Nat Gas P L Co of America' -- EIA's truncated rendering of Natural Gas Pipeline Company of America LLC (NGPL, a Kinder Morgan subsidiary). A sourced value for a blank Operator cell is a FILL. Expanded to the legal name; the operators/owners tab carries no prior NGPL spelling to match. Single origin (EIA), so medium."
+  },
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "oo_sheet_row": 269,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Kinder Morgan",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Kinder Morgan",
+   "proposed_refs": [
+    "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000011/kmi-20251231.htm"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1506307/000150630726000011/kmi-20251231.htm",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Kinder Morgan, Inc. FY2025 Form 10-K. Its equity-investments table gives KMI's 'Ownership Interest' in 'NGPL Holdings' as 37.5%, and its glossary defines 'NGPL = Natural Gas Pipeline Company of America LLC and certain affiliates'. NGPL is therefore an equity-method investee of KMI, not a consolidated wholly owned subsidiary."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "RE-RESEARCHED 2026-09-14 by the orchestrator. The prior pass cited the EIA Natural Gas Pipeline Projects workbook for this unit; EIA has NO ownership column at all -- its single company field is 'Pipeline Operator Name', which is an operator fact, not an equity fact -- so that citation could never support Owner and has been removed. Re-grounded on the owner's own SEC filing. ATTRIBUTION FINDING, not a clean confirmation. The Gulf Coast Southbound project is an NGPL project -- EIA titles it 'NGPL Gulf Coast Southbound Project' under FERC docket CP19-99 with the operator 'Nat Gas P L Co of America' -- and Kinder Morgan's own 10-K reports only a 37.5% interest in NGPL Holdings, held through an equity investment rather than consolidation. The recorded Owner1='Kinder Morgan' at Owner1%=100.00% therefore overstates the stake by a wide margin. RECOMMEND Owner1='Kinder Morgan' at 37.50%, with the remaining equity attributed once the co-owners are sourced (publicly reported as Brookfield Infrastructure and ArcLight, not yet verified here). Owed next: an NGPL Holdings FERC Form 2 or a Brookfield disclosure for the other side."
+  }
+ ],
+ "cross_row_leads": [],
+ "status_reviews": [
+  {
+   "segment_name": "Phase III",
+   "sheet_row": 140,
+   "current_status": "construction",
+   "verdict": "stale",
+   "proposed_status": "on hold",
+   "proposed_changes": {
+    "Status": "on hold",
+    "ShelvedCancelledType": "confirmed"
+   },
+   "evidence_date": "2026-05",
+   "staleness_rule": "confirmed delay (EIA May 2026 status change)",
+   "proposed_refs": [
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsMay2026.xlsx",
+    "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsMay2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    },
+    {
+     "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "EIA status timeline: Jan/Oct 2025 'Construction' (in-service 2026), May 2026 'On Hold' (in-service na), Aug 2026 'On Hold'. May 2026 release is earliest source showing the status change from construction to on hold. This is a confirmed delay. The sheet's LastUpdated 2025-10-16 predates the May 2026 change, making current 'construction' stale. | ORCHESTRATOR 2026-09-14: tier demoted to medium. The verdict rests on a single origin (every dated EIA Pipeline Projects release is one source, so several agreeing is still one), and `high` requires two independent origins. The evidence is unchanged. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong."
+  }
+ ],
+ "summary": "P0287 is real, correctly classified NGPL transmission reversal. Status stale: EIA May/Aug 2026 shows 'on hold', not 'construction'. Endpoint state wrong: Agua Dulce in Texas, not Louisiana. All key specs confirmed (capacity 260, cost $145M, length 0, operator NGPL). Operator/owner missing but fillable. Construction year not found."
+}

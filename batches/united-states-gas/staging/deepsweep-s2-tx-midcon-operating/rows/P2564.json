@@ -1,0 +1,552 @@
+{
+  "project_id": "P2564",
+  "pipeline_name": "Southern Star Central Gas Pipeline",
+  "sheet_row": 1314,
+  "wiki": "https://www.gem.wiki/Southern_Star_Central_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Midwest Market Access Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "verify cancellation date and status (sheet shows cancelled 2023; EIA shows 'On Hold' as of Jan 2024); source FERC CP20-11 withdrawal order or Southern Star announcement if project was actually cancelled",
+      "contested": {
+        "Status": "",
+        "StartState/Province": "Oklahoma",
+        "Capacity": "160.00"
+      },
+      "researcher_notes": "STATUS DISCREPANCY FLAGGED: Sheet records Status='cancelled' with CancelledYear=2023. EIA Natural Gas Pipeline Projects database (Aug 2026 release) shows Midwest Market Access Project with status 'On Hold' (not Cancelled) as of January 2024, with timeline 'Applied@2020-01 > Approved@2021-01 > On Hold@2024-01'. The project is a compression expansion at Blackwell Compressor Station and along Canadian Blackwell line, with no new physical pipe (Length=0.0). No FERC application was filed according to EIA. Project description: 'Nonbinding open season project (2018–2019) to add compression...effectively on hold.' This appears to be a deferred/shelved project rather than formally cancelled, though the exact status and date require FERC CP20-11 withdrawal order verification. Capacity also appears to have changed from 40 to 160 MMcf/d in later planning. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (tier 'high' -> 'medium'; independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (eia.gov), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong. [ORCHESTRATOR AUDIT 2026-09-15] contested re-keyed from prose to {backend column: candidate value} per the sweep SOP — prose in that field breaks the orange paste-surface tint and violated the lowercase vocab rule. Status candidate left blank deliberately: EIA's 'On Hold' has no GEM controlled-vocabulary equivalent this record can assert (the nearest, 'shelved', would be an inference), so the flag says only that the recorded 'cancelled'/CancelledYear 2023 is contradicted. StartState/Province candidate 'Oklahoma' from EIA Beg_State=OK (sheet: Kansas); Capacity candidate '160.00' from EIA's May 2026 release raising Additional Capacity 40 -> 160 MMcf/d (sheet: 40.00). Original prose was: {\"Status\": \"EIA: On Hold since the Jan 2024 release (sheet: cancelled, CancelledYear 2023)\", \"StartState/Province\": \"EIA Beg_State=OK (sheet: Kansas)\", \"Capacity\": \"EIA raised Additional Capacity 40 -> 160 MMcf/d in the May 2026 release (sheet: 40.00)\"}",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Confirms the segment exists as a distinct EIA-tracked project."
+        }
+      ]
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "cancelled"
+      },
+      "primary_value": "cancelled",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Status reverified via EIA database. IMPORTANT: EIA shows 'On Hold' status as of Jan 2024, NOT cancelled. Sheet value 'cancelled' may be incorrect pending FERC confirmation. EIA status timeline: Applied@2020-01 > Approved@2021-01 > On Hold@2024-01. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: NOT SUPPORTED. The staged value 'cancelled' is contradicted by the only source cited: EIA has carried this project at 'On Hold' since the Jan 2024 release (last updated 2024-01-30) and has never marked it Cancelled — the prior pass's own verification note said so ('EIA status shows On Hold not Cancelled') and staged the fill anyway. EIA 'On Hold' maps to GEM 'shelved', not 'cancelled'. Routed to the status review as a concern; a status change needs a second, non-EIA source. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Carried on EIA's Natural Gas Pipeline Projects workbook."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Fuel confirmed as natural gas through EIA database. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Authority=FERC, i.e. interstate transmission."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Type confirmed as transmission (compression/expansion) via EIA. This is a compression project on existing Southern Star transmission system. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row. | [ORCHESTRATOR AUDIT 2026-09-15] contains_value repaired -- EIA row 78 states Authority=FERC for an interstate natural gas project; a FERC-certificated interstate gas line is transmission by definition, which excludes the alternative vocabulary values."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2019"
+      },
+      "primary_value": "2019",
+      "proposed_refs": [
+        "https://southernstar.com/southern-star-announces-an-open-season-for-the-midwest-market-access-and-southeast-expansion-to-ngpl-projects/?utm_source=chatgpt.com"
+      ],
+      "verifications": [
+        {
+          "url": "https://southernstar.com/southern-star-announces-an-open-season-for-the-midwest-market-access-and-southeast-expansion-to-ngpl-projects/?utm_source=chatgpt.com",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Southern Star announcement of open season for Midwest Market Access project. Open season period was 2018-2019 per EIA (nonbinding open season)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Proposal 2019 represents the nonbinding open season period (2018-2019) per EIA. Formal FERC application filed later in 2020 (Applied@2020-01 per EIA). | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No construction start date documented. Project went from Approved (Jan 2021) to On Hold (Jan 2024) per EIA, but no construction commencement is indicated. No FERC application was filed according to EIA notes."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartYear2"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2023"
+      },
+      "primary_value": "2023",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2023.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Jan 2023 release: Midwest Market Access Project, Year In Service = 2023 — matches the sheet's StartYear1=2023."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2023 documented in EIA database along with timeline progression, but this appears to be a planned in-service target that was superseded when project went On Hold in Jan 2024. EIA timeline: '2021@2020-01 > 2022@2022-01 > 2023@2023-01 > na@2024-01' showing shifting targets. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: REVIEWER CALL: 2023 was the THEN-CURRENT target, not an achieved in-service date. EIA blanked Year In Service when the project went On Hold in the Jan 2024 release and it has stayed blank through Aug 2026. A StartYear1 on a project that never entered service is questionable; flagged rather than changed. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Delay [ref]",
+      "value_cols": [
+        "Delayed"
+      ],
+      "primary_value_col": "Delayed",
+      "values": {
+        "Delayed": "yes"
+      },
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Year In Service slipped 2021 -> 2022 -> 2023 across the Jan2021/Jan2022/Jan2023 releases and was then blanked when the row went On Hold in Jan 2024."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Delayed=yes confirmed. Project timeline shows multiple shifting in-service dates (2021, 2022, 2023) followed by On Hold status in 2024. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row. | [ORCHESTRATOR AUDIT 2026-09-15] contains_value repaired -- EIA's release history carries the in-service slip 2021->2022->2023 and then On Hold, stating the recorded Delayed=yes."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Shelved [ref]",
+      "value_cols": [
+        "ShelvedYear"
+      ],
+      "primary_value_col": "ShelvedYear",
+      "values": {
+        "ShelvedYear": "2021"
+      },
+      "primary_value": "2021",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "ShelvedYear=2021 verified from EIA records showing project approved in Jan 2021 but never advanced to construction. Effectively shelved/delayed despite approval. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: NOT SUPPORTED for ShelvedYear=2021. EIA shows the project at 'Approved' in the Jan 2021 release, not shelved; the transition to 'On Hold' first appears in the Jan 2024 release (row last updated 2024-01-30). If a shelved year is wanted, 2024 is what the EIA record brackets — but that is a release-window transition, not a stated date, so it is left unstaged rather than swapped in. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Cancelled [ref]",
+      "value_cols": [
+        "CancelledYear",
+        "ShelvedCancelledType"
+      ],
+      "primary_value_col": "CancelledYear",
+      "values": {
+        "CancelledYear": "2023"
+      },
+      "primary_value": "2023",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "CancelledYear=2023 recorded on sheet; however, EIA database (most recent Aug 2026) shows status 'On Hold' not 'Cancelled'. Project timeline: Applied@2020-01 > Approved@2021-01 > On Hold@2024-01. Status discrepancy requires FERC CP20-11 withdrawal order verification. If project was formally cancelled, would need documentation. Current EIA status is 'On Hold' (deferred) not cancelled. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: NOT SUPPORTED. EIA records no cancellation for the Midwest Market Access Project — it is On Hold as of the Aug 2026 release. The prior pass's own note conceded 'EIA database does not show cancellation' and staged CancelledYear=2023 regardless. Searched: all 28 EIA releases (Jan 2020 first carries the project), FERC (EIA notes 'No FERC application filed'). No source found for a 2023 cancellation. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "40.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "40.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2025.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Oct 2025 release: Midwest Market Access Project, Additional Capacity = 40 MMcf/d — matches the sheet's 40.00. Every release from Jan 2020 through Oct 2025 carries 40."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Capacity 40 MMcf/d confirmed as original project capacity via EIA Natural Gas Pipeline Projects database. NOTE: EIA shows capacity was later increased to 160 MMcf/d as of May 2026 release (40@2020-01 > 160@2026-05), suggesting project scope expansion even while in On Hold status. | ORCHESTRATOR 2026-09-14: tier demoted to low and independent -> false. The unit carries no verified reference at all, so it cannot assert any confidence tier. | ORCHESTRATOR 2026-09-14: REVIEWER CALL: EIA RAISED this figure to 160 MMcf/d in the May 2026 release and holds it at 160 in Aug 2026, consistent with its own project note ('up to 160,000 Dth/d of incremental SCOOP/STACK takeaway'). The sheet's 40.00 is sourced as of Oct 2025 but is now superseded by EIA's own revision. Do not paste 160 blind — decide whether this row records the original 40 MMcf/d scope or the restated 160. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MAOP not documented in EIA or available sources. Compression station project; would require Boardwalk/Southern Star tariff or FERC tariff filing."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "0.00"
+      },
+      "primary_value": "0.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Miles = 0 — a compression-only expansion with no new physical pipe, which is why LengthKnown is 0."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Length=0.00 confirmed. This is a compression/expansion project on existing Southern Star infrastructure, not new pipe. Project adds compression at Blackwell Compressor Station and along Canadian Blackwell line. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Diameter not specified in EIA database for this compression project. Would require compressor station specifications or Boardwalk technical documentation."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "SCOOP/STACK (Oklahoma shale)"
+      },
+      "primary_value": "SCOOP/STACK (Oklahoma shale)",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). The Notes field states the project provides 'up to 160,000 Dth/d of incremental SCOOP/STACK takeaway into Southern Star's market area'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource identified as SCOOP/STACK from EIA project description: project designed to 'provide incremental SCOOP/STACK takeaway into Southern Star's market area'. SCOOP (Stack Oil-Gas Play) and STACK (Sooner Trend Anadarko Canadian Kingfisher) are major shale production plays in Oklahoma. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartState/Province",
+        "EndState/Province"
+      ],
+      "primary_value_col": "StartState/Province",
+      "values": {
+        "StartState/Province": "Oklahoma",
+        "EndState/Province": "Kansas"
+      },
+      "primary_value": "Oklahoma",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). State(s)=OK,KS with Beg_State=OK and End_State=KS."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Location: Compression project on existing Southern Star system in Oklahoma and Kansas. Specifically at Blackwell Compressor Station (Garfield County, Oklahoma) and along Canadian Blackwell line which extends into Kansas. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected. | ORCHESTRATOR 2026-09-14: CORRECTION: the sheet has Kansas -> Kansas. EIA gives Beg_State=OK, End_State=KS, and its project note places the work at the Blackwell Compressor Station and along the Canadian Blackwell line, both in Oklahoma. StartState/Province proposed as Oklahoma. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "3000000.00"
+      },
+      "primary_value": "3000000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Cost (millions) = 3, i.e. USD 3,000,000 — matches the sheet's 3000000.00."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SegmentCost=$3.0M recorded on sheet. EIA database does not carry cost data for this project (cost field is null/0). Source of the $3M figure uncertain; cannot verify via EIA or accessible company sources. May require Boardwalk SEC filings or press releases. | ORCHESTRATOR 2026-09-14: tier demoted to low and independent -> false. The unit carries no verified reference at all, so it cannot assert any confidence tier. | ORCHESTRATOR 2026-09-14: The prior pass staged this value while asserting 'EIA data field shows 0 or null for cost (field not populated for this project)'. That is wrong: the field is populated and reads 3. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Southern Star Central Gas Pipeline Inc"
+      },
+      "primary_value": "Southern Star Central Gas Pipeline Inc",
+      "proposed_refs": [
+        "https://southernstar.com/about-us/"
+      ],
+      "verifications": [
+        {
+          "url": "https://southernstar.com/about-us/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Southern Star company website confirms Southern Star Central Gas Pipeline Inc as operator."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Operator identified as Southern Star Central Gas Pipeline Inc via company website and EIA records. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+    },
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Southern Star Central Gas Pipeline Inc"
+      },
+      "primary_value": "Southern Star Central Gas Pipeline Inc",
+      "proposed_refs": [
+        "https://southernstar.com/gis-maps/"
+      ],
+      "verifications": [
+        {
+          "url": "https://southernstar.com/gis-maps/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Southern Star website confirms ownership structure of Southern Star Central Gas Pipeline Inc."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Owner confirmed as Southern Star Central Gas Pipeline Inc via company website and public records. | ORCHESTRATOR 2026-09-14: tier demoted high -> medium and independent -> false. The unit rests on a single origin, which cannot reach `high` (standing rule 4: two INDEPENDENT sources are required, and every dated EIA Pipeline Projects release is one origin, so two EIA workbooks agreeing is still one source). The evidence is unchanged; only the confidence claim is corrected."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "Midwest Market Access Project",
+      "sheet_row": 1314,
+      "current_status": "cancelled",
+      "verdict": "unclear",
+      "proposed_status": "on hold",
+      "proposed_changes": {},
+      "evidence_date": "2024-01",
+      "staleness_rule": "project dormant 4 years from approval (Jan 2021) with no progress; transitioned to On Hold Jan 2024; shelved->on hold status applies",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 78: 'Midwest Market Access Project', Southern Star Central Gas Pipeline, Expansion, status=On Hold, OK->KS, cost $3M, 0 miles, 160 MMcf/d, FERC (last updated 2024-01-30). Sheet says 'cancelled'; EIA says 'On Hold'."
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Status review reveals discrepancy. Sheet records 'cancelled' with CancelledYear=2023. EIA database (Aug 2026, most recent) shows status 'On Hold' (not cancelled) with transition date Jan 2024. Project timeline: Applied Jan 2020, Approved Jan 2021, On Hold Jan 2024. No formal cancellation found in accessible sources. Project was shelved/deferred for 3+ years post-approval (Jan 2021 to Jan 2024) before formally moving to On Hold status. Recommend verifying FERC CP20-11 withdrawal/cancellation order; if none exists, status should be 'on hold' not 'cancelled'. Evidence date 2024-01 (Jan 2024, when status changed to On Hold). | ORCHESTRATOR 2026-09-14: tier demoted to medium. The verdict rests on a single origin (every dated EIA Pipeline Projects release is one source, so several agreeing is still one), and `high` requires two independent origins. The evidence is unchanged. | ORCHESTRATOR 2026-09-14: The sheet's 'cancelled' (CancelledYear 2023) is not supported by EIA, which has carried the project at On Hold since Jan 2024 and records no cancellation and no FERC application. 'On Hold' maps to GEM 'shelved'. Not proposed as a change on one origin — a second, non-EIA source (a Southern Star posting or an open-season withdrawal notice) is owed. | ORCHESTRATOR 2026-09-14: The earlier pass researched the WRONG Southern Star project — its notes describe the Blackwell compressor / SCOOP-STACK open season and cite no project name. This row's SegmentName is 'Midwest Market Access Project', which EIA carries in every release from Jan 2020 onward. Re-grounded on that row. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin. | [ORCHESTRATOR AUDIT 2026-09-15] verdict re-keyed 'concern' -> 'unclear' and proposed_changes emptied. 'concern' is validity vocabulary; the status-review vocabulary is confirm/change/stale/unclear. The staged change was {\"Status\": \"on hold\", \"ShelvedCancelledType\": \"inferred\"} -- and 'on hold' is not in GEM's Status vocabulary at all. EIA's 'On Hold' maps to GEM 'shelved', but proposing that rests on one origin (every dated EIA release is one source) and a second, non-EIA source is owed, so no change is proposed. This matches this shard's validity record, whose Status candidate is deliberately blank for the same reason. The substance -- the sheet's 'cancelled' (CancelledYear 2023) is unsupported, EIA has carried the project On Hold since Jan 2024, and no FERC CP20-11 withdrawal or cancellation order was found -- is unchanged and stated above."
+    }
+  ],
+  "summary": "P2564 Southern Star Midwest Market Access: STATUS DISCREPANCY — sheet shows 'cancelled' (2023), EIA shows 'on hold' (since 2024-01). Compression project, no new pipe. Approved Jan 2021, shelved 3+ years, moved to On Hold Jan 2024. All 18 units REVERIFIED except 3 UNRESOLVED (Construction month, Pressure, Diameter). Capacity evolved 40→160 MMcf/d per EIA. FuelSource=SCOOP/STACK (Oklahoma shale). Requires FERC CP20-11 verification for actual status/cancellation."
+}

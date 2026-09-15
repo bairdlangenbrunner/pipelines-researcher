@@ -1,0 +1,646 @@
+{
+ "project_id": "P7463",
+ "pipeline_name": "Northstar Gas Pipeline",
+ "sheet_row": 3849,
+ "wiki": "https://www.gem.wiki/Northstar_Gas_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no change to existence/duplicate status; PipelineType and Location direction flagged separately below",
+   "contested": {},
+   "researcher_notes": "EXISTENCE/DUPLICATE/ATTRIBUTION-BASELINE check. Northstar Gas Pipeline is a real, independently documented facility: Alaska DNR's Division of Oil & Gas maintains a live registry page for it (Status: Active), and three Petroleum News articles from 2000 (contemporaneous trade press, independent of GEM and of the DNR page) describe its construction and 2000 startup carrying gas to Northstar Island for BP's NorthStar Unit development. Checked the roster of 42 in-scope Alaska/Northeast pipelines (P7450-P7465 and siblings) for a duplicate/relabel candidate: found none -- Northstar Gas is BP/Harvest Alaska's single dedicated gas line serving Northstar Island, distinct in name, geometry, and function from the other Alaska rows in this batch (no other roster row references Northstar Island, NorthStar Unit, or Harvest Alaska's Northstar system). Ownership chain independently confirmed: BP Exploration (Alaska) Inc. developed and originally operated the line (per the 2000-2001 Petroleum News articles); BP transferred its NorthStar pipeline interests to Harvest Alaska, LLC in 2014 (DNR page: 'On May 29, 2014, BP requested that DNR approve a transfer...to Harvest Alaska, LLC'), consistent with Harvest Alaska (a Hilcorp subsidiary) being the current Operator/Owner1 on the sheet. No evidence found that this pipeline should not exist as its own tracked row, and no candidate duplicate identified.",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+    "http://www.petroleumnews.com/pnads/990852444.shtml"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "consider correcting Diameter from 10.15 to 10 (in); DiameterUnits unaffected",
+   "contested": {
+    "Diameter": "10.15"
+   },
+   "researcher_notes": "This is the batch's flagged Diameter anomaly. Alaska DNR's OWN page contradicts itself: its structured field reads 'Diameters (in): 10.15' (an exact match to GEM's recorded value -- strongly suggesting GEM copied this field verbatim, artifact and all), while the SAME page's prose independently and TWICE states the diameter is 10-inch: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island.' No occurrence of the substring '15' appears anywhere in the prose, and neither of the two hypotheses floated in the batch guidance is supported by the text: there is no second, larger-diameter segment described anywhere ('10, 15' as two concatenated diameters), and the field is not obviously a decimal-comma artifact of a metric conversion either (10.15 in is not a clean conversion of any round metric diameter). The simplest reading is that the DNR web form's 'Diameters (in)' field independently mis-renders/mis-concatenates data for the two colocated NorthStar pipelines (the 10-inch oil line and the 10-inch gas line entered in this dataset) into a single '10.15' string, while the hand-written prose summary on the same page was written correctly. No SECOND, independent origin was found stating a diameter at all (Petroleum News, AOGCC 2004, Hilcorp/Harvest corporate sites all silent on pipe diameter) -- so this remains a single-origin internal contradiction, not a two-source disagreement, and is deliberately staged as a 'concern' rather than an outright value change. Tier reflects that this rests on one document's own internal consistency, not corroboration.",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "attribution",
+   "recommendation": "verify whether StartLocation/EndLocation (and the paired District/State/Country columns) should be swapped -- gas appears to flow FROM the Central Gas Facility TO Northstar Island, opposite the sheet's current Start=Northstar Island/End=Central Gas Facility",
+   "contested": {
+    "StartLocation": "Northstar Island",
+    "EndLocation": "Central Gas Facility"
+   },
+   "researcher_notes": "Two INDEPENDENT origins describe this gas line's function and direction as shore-to-island, not island-to-shore: (1) Alaska DNR's own page: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island' -- i.e. the pipelines run FROM the mainland/shore infrastructure TO the island. (2) Petroleum News, 'BP begins shipping natural gas to Northstar' (Oct 28, 2000): 'BP Exploration (Alaska) Inc. began to move natural gas to Northstar Island in October...' -- explicitly gas moving TO the island. This matches Northstar Island's own well-documented engineering history (checked via Wikipedia strictly as a LEADS source, never cited): the gas line's purpose was to deliver gas FROM shore facilities TO the island for reservoir re-pressurization/gas-lift, the opposite function from an oil-export line (which runs island-to-shore). If GEM's Start/End convention records the pipeline's flow origin as 'Start' and destination as 'End', the sheet's current Start=Northstar Island/End=Central Gas Facility appears to have the direction reversed for this specific gas line (as opposed to the co-located Northstar OIL pipeline, which correctly runs island-to-shore and for which this Start/End assignment would be right). Not changed outright here because (a) I could not independently confirm GEM's own Start/End convention rule for gas-lift/injection lines specifically, and (b) 'Central Gas Facility' as an exact named endpoint was not independently verified in either source (DNR and Petroleum News describe the mainland-side infrastructure only generically). Two distinct, independently verified origins (Alaska DNR; Petroleum News) agree on the shore-to-island direction, supporting tier high for the underlying direction fact even though the exact Start/End field correction is left to a human reviewer's judgment on GEM's convention.",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+    "http://www.petroleumnews.com/pnads/990852444.shtml"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    },
+    {
+     "url": "https://www.npms.phmsa.dot.gov/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "NPMS homepage is a pure navigation/login portal; never names 'Northstar' or any pipeline. Confirms the worklist's own existing_ref_checks (name_absent/status_token_absent). Not usable as a ref for this row; kept here as the record of what the carried ref actually is."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (NPMS homepage) never names the pipeline and is a pure navigation portal (worklist's own existing_ref_checks confirm status_token_absent) -- not usable. Replaced with the Alaska DNR Division of Oil & Gas registry page, which lists 'Status: Active' for Northstar Gas and describes Harvest Alaska LLC as current operator -- supports GEM's 'operating'. Only one verified independent origin found (Alaska DNR); no second agency/press source found stating current operational status, so tier stays medium."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    },
+    {
+     "url": "https://www.npms.phmsa.dot.gov/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "NPMS homepage is a pure navigation/login portal; never names 'Northstar' or any pipeline. Confirms the worklist's own existing_ref_checks (name_absent/status_token_absent). Not usable as a ref for this row; kept here as the record of what the carried ref actually is."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (NPMS) does not name the pipeline. Replaced with Alaska DNR page, which explicitly describes 'the 10-inch...gas pipeline' -- directly confirms Fuel=Gas. Single verified origin (Alaska DNR); tier medium."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope. Flag corrected: contains_value set to false for this unit. Neither source states a PipelineType in GEM's controlled vocabulary (transmission/gathering/distribution), so each is a SEARCH RECORD for this unit, not a ref that verifies its value — consistent with the record's UNRESOLVED verdict."
+    },
+    {
+     "url": "https://www.npms.phmsa.dot.gov/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "NPMS homepage is a pure navigation/login portal; never names 'Northstar' or any pipeline. Confirms the worklist's own existing_ref_checks (name_absent/status_token_absent). Not usable as a ref for this row; kept here as the record of what the carried ref actually is."
+    },
+    {
+     "url": "http://www.petroleumnews.com/pnads/990852444.shtml",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Petroleum News, 'BP begins shipping natural gas to Northstar,' Oct 28 2000 (page metadata/og:description, publicly rendered without login -- the article body itself is paywalled, but the headline/description are page content, not a login page: 'BP Exploration (Alaska) Inc. began to move natural gas to Northstar Island in October after approval by the Joint Pipeline Office of the company's surveillance and monitoring plan.') States gas moves TO Northstar Island (shore-to-island), and dates first gas to October 2000. Flag corrected: contains_value set to false for this unit. Neither source states a PipelineType in GEM's controlled vocabulary (transmission/gathering/distribution), so each is a SEARCH RECORD for this unit, not a ref that verifies its value — consistent with the record's UNRESOLVED verdict."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No source found that classifies this line using GEM's controlled vocabulary (transmission/gathering/distribution). Alaska DNR describes it only as 'the 10-inch...gas pipeline'; Petroleum News describes it as carrying gas 'to Northstar Island' for the field's own use, not as a sales-gas transmission line to a distribution system; NPMS names no type. See validity[] classification concern below -- the sheet's recorded 'transmission' may not be the best fit for what appears to be an intra-field lift/injection-gas line, but no source affirmatively states an alternative GEM-vocabulary term either, so left UNRESOLVED rather than guessed. Flag corrected: contains_value set to false for this unit. Neither source states a PipelineType in GEM's controlled vocabulary (transmission/gathering/distribution), so each is a SEARCH RECORD for this unit, not a ref that verifies its value — consistent with the record's UNRESOLVED verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+    },
+    {
+     "url": "http://www.state.ak.us/admin/ogc/annual/2004/Oil_Pools/Northstar-%20Oil/1_Oil_1.htm",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "AOGCC 2004 annual report, Northstar oil pool page (a Wikipedia footnote, checked as a lead). Zero occurrences of 'northstar' in the fetched HTML body (200, 109663 bytes) -- page content did not match its own footnote description; not usable."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No proposal-stage date found. Searched: Alaska DNR page (gives only Construction Dates, no proposal/announcement date), Petroleum News (earliest of the 3 articles found is dated 2000, i.e. construction-era, not a proposal announcement), AOGCC 2004 annual report (no Northstar mention at all despite being a Wikipedia footnote for the oil pool), Hilcorp and Harvest Alaska/Harvest Midstream corporate sites (neither mentions Northstar), sources/eia_pipeline_projects/data/eia_projects_long.csv (no Northstar/Harvest Alaska row -- this project pre-dates EIA's pipeline-projects tracking). Northstar Unit oil was discovered by Shell in 1983/1984 and BP acquired the leases in 1995 (per DNR page), but no source ties a specific proposal year/month to the GAS pipeline itself. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2000"
+   },
+   "primary_value": "2000",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+    "http://www.petroleumnews.com/pnads/231570264.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    },
+    {
+     "url": "http://www.petroleumnews.com/pnads/231570264.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Petroleum News, 'BP Exploration (Alaska) gets what it needed done this winter' (og:description): 'By the end of April, the pipelines to Northstar were in place, hydrotested, pigged and filled with nitrogen, and sheet pile was being installed around Northstar island.' Confirms pipeline construction/hydrotest completing in spring following winter 1999-2000 construction -- consistent with ConstructionYear=2000."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Alaska DNR page states 'Construction Dates: 01/01/2000 - 01/01/2001'. Petroleum News ('BP Exploration (Alaska) gets what it needed done this winter') independently reports that by end of April, the Northstar pipelines were already 'in place, hydrotested, pigged and filled with nitrogen' -- i.e. winter/spring construction completing that same year. Two distinct, independent origins (Alaska DNR; Petroleum News) agree construction occurred in 2000. ConstructionYear=2000 confirmed at tier high."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2001"
+   },
+   "primary_value": "2001",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+    "http://www.petroleumnews.com/pnads/990852444.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    },
+    {
+     "url": "http://www.petroleumnews.com/pnads/990852444.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Petroleum News, 'BP begins shipping natural gas to Northstar,' Oct 28 2000 (page metadata/og:description, publicly rendered without login -- the article body itself is paywalled, but the headline/description are page content, not a login page: 'BP Exploration (Alaska) Inc. began to move natural gas to Northstar Island in October after approval by the Joint Pipeline Office of the company's surveillance and monitoring plan.') States gas moves TO Northstar Island (shore-to-island), and dates first gas to October 2000."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Alaska DNR's 'Construction Dates: 01/01/2000-01/01/2001' places entry-into-service at the start of 2001, matching the recorded StartYear1=2001. Petroleum News (Oct 28, 2000) reports gas already moving to Northstar Island that October -- a comparable but ~2-3 month EARLIER value than DNR's implied 01/01/2001 start. Per the different-but-comparable-value rule this still counts as a corroborating ref (both place first gas at the 2000/2001 turn), not a contradiction requiring UNRESOLVED. Two distinct origins agree on the general timing; recorded 2001 kept (DNR is the more authoritative/official record for the regulatory in-service date), discrepancy noted for the record -- StartMonth1=10/StartYear1=2000 is a plausible alternative reading worth a closer look if a future pass finds the actual JPO monitoring-plan approval date."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No capacity figure found. Alaska DNR page carries no throughput/capacity field for this pipeline. Petroleum News articles found describe construction/startup narratively, not design capacity. AOGCC 2004 report page does not mention Northstar. Hilcorp/Harvest sites, BOEM (guessed URLs 404'd), and the EIA pipeline-projects CSV all unproductive. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No pressure figure found in any source checked (Alaska DNR page, 3 Petroleum News articles, AOGCC 2004 report, Hilcorp/Harvest sites, EIA CSV, guessed BOEM URLs -- all either silent on pressure or unreachable/irrelevant). Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "16.40",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "16.40",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Alaska DNR page states 'System Length (approx. miles): 16.40' and 'Length on State Lands: 16.40' -- exact match to the recorded 16.40 mi. Note for context only (never a citable ref): our own routes-repo geojson measurement of the P7463 route (13 vertices) haversines to ~13.2 mi, materially shorter than 16.40 -- plausibly because the geojson trace is incomplete/simplified relative to the true as-built route, or because 16.40 mi includes non-straight-line/as-built slack. Flagged as a route-fidelity note, not a validity concern, since our own measurement is never a corroborating source. Single verified origin (Alaska DNR); tier medium."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "10.15",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "10.15",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "INVESTIGATED THE BATCH'S FLAGGED ANOMALY. Alaska DNR's structured field reads 'Diameters (in): 10.15' -- an exact match to the recorded value, strongly suggesting GEM's 10.15 was scraped verbatim from this same field, artifact and all. But the SAME page's prose independently and twice states the pipeline is 10-inch: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island.' No occurrence of '15' appears anywhere in the prose, and no second source (Petroleum News, AOGCC) gives a diameter figure at all. This is an internal contradiction within ONE origin (Alaska DNR), not a second source disagreeing -- so it cannot support tier high or independent=true either way. Kept the recorded value (10.15) as the literal, verified structured-field match; see validity[] spec concern below recommending '10' as the more likely true physical diameter, since the prose is unambiguous and twice-repeated while '10.15' has no textual support anywhere and no other pipeline diameter naturally produces a '.15' fractional inch. The two-diameters-concatenated theory ('10, 15') is not supported either -- prose never mentions a second, larger diameter for any segment of this line."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Northstar Field"
+   },
+   "primary_value": "Northstar Field",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Alaska DNR page: 'The NorthStar oilfield is located six miles off the Beaufort Sea coast...Oil was originally discovered in the NorthStar Unit by Shell in 1983...BP acquired most of the NorthStar Unit leases in 1995 and developed the field.' Confirms the field name (NorthStar / Northstar Unit) matches the recorded FuelSource='Northstar Field' (case variant only). Single verified origin; tier medium."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Northstar Island",
+    "StartPrefecture/District": "North Slope",
+    "StartState/Province": "Alaska",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Central Gas Facility",
+    "EndPrefecture/District": "North Slope",
+    "EndState/Province": "Alaska",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Northstar Island",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    },
+    {
+     "url": "http://www.petroleumnews.com/pnads/990852444.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Petroleum News, 'BP begins shipping natural gas to Northstar,' Oct 28 2000 (page metadata/og:description, publicly rendered without login -- the article body itself is paywalled, but the headline/description are page content, not a login page: 'BP Exploration (Alaska) Inc. began to move natural gas to Northstar Island in October after approval by the Joint Pipeline Office of the company's surveillance and monitoring plan.') States gas moves TO Northstar Island (shore-to-island), and dates first gas to October 2000."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Alaska DNR confirms both endpoints sit within the recorded jurisdiction: North Slope, Alaska, United States ('Regions: North Slope'; NorthStar oilfield '11 miles northwest of Prudhoe Bay'). Northstar Island (aka Seal Island) and Beaufort Sea coast facilities are both correctly placed. NOT changing StartLocation/EndLocation themselves here -- but see the validity[] attribution concern below: Alaska DNR prose ('pipeline...extend[s] into the Beaufort Sea to the gravel island') and Petroleum News ('BP...began to move natural gas to Northstar Island') both independently describe the gas flow direction as shore-to-island, i.e. FROM a mainland/gas-facility origin TO Northstar Island as the terminus -- the opposite of the sheet's Start=Northstar Island / End=Central Gas Facility. Tier medium here reflects only the place-name/jurisdiction confirmation, not the direction question (handled separately as a validity concern at tier high, since two distinct origins agree on direction)."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No cost figure found. Alaska DNR page carries no cost data. Petroleum News articles found describe construction progress and startup but do not state a project cost figure in the accessible (og:description) content. AOGCC, Hilcorp, Harvest sites, EIA CSV, and guessed BOEM EIS URLs (all 404) unproductive. Flag corrected: contains_value set to false for this unit. The DNR registry page names the pipeline and states operator/diameter/construction facts, but it carries NO field for this unit's value, so it is a SEARCH RECORD here, not a ref that verifies the value. One shared verification block had been reused across several units with contains_value left true, which contradicted the record's own UNRESOLVED verdict."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "Harvest Alaska LLC"
+   },
+   "primary_value": "Harvest Alaska LLC",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+    "https://dog.dnr.alaska.gov/Document/Download/DC2A13CAD5484842B56CEB15B0CAE31/Request%20for%20Northstar%20Gas%20Right-of-Way%20Partial%20Release%20of%20Interests.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    },
+    {
+     "url": "https://dog.dnr.alaska.gov/Document/Download/DC2A13CAD5484842B56CEB15B0CAE31/Request%20for%20Northstar%20Gas%20Right-of-Way%20Partial%20Release%20of%20Interests.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier auto-check FAILS on this URL (200 but extractor gets only a 54-char stub) because this is a 4-page SCANNED PDF (RICOH MP C4503 scanner output, confirmed via pdfinfo) that defeats pdftotext -layout. Hand-verified by OCR: pdftoppm -r 200 -png + tesseract per page recovered the full text. Page 1 (2017-07-24 letter, Harvest Alaska/Hilcorp letterhead, RE: Northstar Gas Pipeline / ADL 415975): 'Harvest Alaska, as Owner and Operator of the Norsthar [sic] Gas pipeline system, requests a Partial Release of Interest and Reduction in the Northstar Gas pipeline right-of-way.' Pages 2-3: incident-history/Letters-of-Non-objection tables naming BP Exploration Alaska and Alaska Gas Development Corp as prior recipients 2011-2016 (consistent with the 2014 BP-to-Harvest transfer)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No ref was on file for Operator (MISSING_REF). Alaska DNR page: 'Today, Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline...' DNR-hosted Partial Release of Interest PDF (OCR'd -- see verification note) independently states in its own letter text: 'Harvest Alaska, as Owner and Operator of the Norsthar [sic] Gas pipeline system...' Both documents are hosted by Alaska DNR (dog.dnr.alaska.gov) and per this batch's addendum count as ONE origin, not two, despite being two distinct URLs/documents -- so tier stays medium, independent false, even though both independently state Operator=Harvest Alaska LLC in their own words."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Harvest Alaska LLC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Harvest Alaska LLC",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Document/Download/DC2A13CAD5484842B56CEB15B0CAE31/Request%20for%20Northstar%20Gas%20Right-of-Way%20Partial%20Release%20of%20Interests.pdf",
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Document/Download/DC2A13CAD5484842B56CEB15B0CAE31/Request%20for%20Northstar%20Gas%20Right-of-Way%20Partial%20Release%20of%20Interests.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier auto-check FAILS on this URL (200 but extractor gets only a 54-char stub) because this is a 4-page SCANNED PDF (RICOH MP C4503 scanner output, confirmed via pdfinfo) that defeats pdftotext -layout. Hand-verified by OCR: pdftoppm -r 200 -png + tesseract per page recovered the full text. Page 1 (2017-07-24 letter, Harvest Alaska/Hilcorp letterhead, RE: Northstar Gas Pipeline / ADL 415975): 'Harvest Alaska, as Owner and Operator of the Norsthar [sic] Gas pipeline system, requests a Partial Release of Interest and Reduction in the Northstar Gas pipeline right-of-way.' Pages 2-3: incident-history/Letters-of-Non-objection tables naming BP Exploration Alaska and Alaska Gas Development Corp as prior recipients 2011-2016 (consistent with the 2014 BP-to-Harvest transfer)."
+    },
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Carried ref (the Partial Release of Interest PDF) FAILED url_verifier's automated check because it is a 4-page SCANNED PDF (RICOH MP C4503 scanner, confirmed via pdfinfo) that pdftotext -layout cannot extract (only a 9-line/54-char stub). Hand-verified via OCR (pdftoppm -r 200 -png + tesseract per page): the letter explicitly states 'Harvest Alaska, as Owner and Operator of the Norsthar [sic] Gas pipeline system, requests a Partial Release of Interest...' -- directly confirms Owner1=Harvest Alaska LLC. Added the Alaska DNR registry page as a corroborating document, but it is the SAME origin (Alaska DNR, dog.dnr.alaska.gov) per this batch's addendum rule, so tier stays medium/independent false. Owner1%=100.00% is consistent with both documents describing Harvest Alaska as sole owner/operator with no other party named."
+  }
+ ],
+ "cross_row_leads": [],
+ "status_reviews": [
+  {
+   "segment_name": "",
+   "sheet_row": 3849,
+   "current_status": "operating",
+   "verdict": "confirm",
+   "proposed_status": "",
+   "proposed_changes": {},
+   "evidence_date": "2026 (live registry, fetched 2026-09-14)",
+   "staleness_rule": "",
+   "proposed_refs": [
+    "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas"
+   ],
+   "verifications": [
+    {
+     "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Northstar%20Gas",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Alaska DNR Division of Oil & Gas 'Northstar Gas' pipeline registry page. Prose: 'Harvest Alaska, LLC, operates the 10-inch oil pipeline and 10-inch gas pipeline that extend into the Beaufort Sea to the gravel island'; 'On May 29, 2014, BP requested that DNR approve a transfer of its interests in the NorthStar pipelines to Harvest Alaska, LLC.' Structured fields: Status: Active; Construction Dates: 01/01/2000-01/01/2001; Diameters (in): 10.15; System Length (approx. miles): 16.40; Length on State Lands: 16.40. Regions: North Slope."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Alaska DNR's Division of Oil & Gas Northstar Gas registry page is a LIVE, current public record (fetched 2026-09-14) and states 'Status: Active' with Harvest Alaska, LLC as the current operator and no 'Related Documents' indicating a shutdown, sale-in-progress-only, or abandonment filing since the 2014 BP-to-Harvest transfer. No news, DNR notice, or RCA/AOGCC filing found indicating the line has since been shut in, released, or abandoned (the only DNR-hosted document found, the 2017 Partial Release of Interest, narrows the right-of-way footprint but explicitly continues to identify Harvest Alaska as 'Owner and Operator' -- a partial ROW release, not an operational status change). Confirmed 'operating' as recorded. Only one verified origin (Alaska DNR) speaks to CURRENT status specifically (Petroleum News sources are all dated 2000-2001 and speak only to historical construction/startup, not current status), so tier is medium; independent=false. Not a dormancy case (proposed/shelved/cancelled inference rules do not apply -- this is a recorded 'operating' row with a live, current confirming source, not a stalled proposal)."
+  }
+ ],
+ "summary": "P7463 Northstar Gas Pipeline (Harvest Alaska LLC, North Slope AK): existence/classification/duplicate-baseline confirmed (caveat) via Alaska DNR's live registry page + 3 independent 2000-era Petroleum News articles -- no duplicate found among the 42-row Alaska/Northeast roster. Investigated the batch's flagged Diameter anomaly: staged as a SPEC concern -- DNR's own page internally contradicts itself (structured field '10.15' vs. prose '10-inch' stated twice), recommend considering Diameter=10; kept recorded 10.15 in the fill pending a human call, single-origin so tier medium there. Raised a second concern (ATTRIBUTION): DNR prose + Petroleum News both independently describe gas flowing FROM shore TO Northstar Island, opposite the sheet's Start=Northstar Island/End=Central Gas Facility -- flagged at tier high (2 distinct origins) but left the Start/End field values unchanged pending a human ruling on GEM's own Start/End convention for injection/lift lines. All 15 worklist units filled: Status/Fuel/Length/FuelSource/Location REFS_ADDED or REVERIFIED at tier medium (Alaska DNR is the only verified origin after ruling out NPMS [navigation-only, no name match] and the RCA news item [Wayback-recovered but about unrelated BP-Hilcorp dockets, not Northstar]); Construction and Start reached tier HIGH/independent via a second, genuinely independent origin (Petroleum News, 3 articles = one origin) corroborating DNR's dates, with a minor Start-date discrepancy noted (PN: gas moving Oct 2000; DNR: construction-dates range ending 01/01/2001) but not treated as a contradiction. Operator (previously MISSING_REF) and Owner both sourced to Alaska DNR (registry page + a scanned Partial-Release PDF hand-OCR'd after url_verifier's automated check failed on it) -- both count as ONE origin per this addendum's agency-page-plus-hosted-document rule, so tier medium/independent false there despite two distinct URLs. UNRESOLVED (tier low, nothing found despite searching DNR, all 3 Petroleum News articles, AOGCC 2004 [zero Northstar mentions despite being a Wikipedia footnote], Hilcorp/Harvest corporate sites, guessed BOEM URLs [all 404], and the EIA pipeline-projects CSV [no match]): ProposalYear/Month, Capacity, Pressure, SegmentCost. PipelineType (transmission) also UNRESOLVED as a value-confirmation matter -- no source uses GEM's controlled vocabulary for this line -- but see the attribution concern above questioning whether it fits 'transmission' at all given its apparent injection/lift-gas function. Status review: confirm 'operating' (DNR's live registry, tier medium, single origin)."
+}

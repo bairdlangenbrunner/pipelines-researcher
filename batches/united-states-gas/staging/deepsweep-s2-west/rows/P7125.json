@@ -1,0 +1,374 @@
+{
+  "project_id": "P7125",
+  "pipeline_name": "Centra Pipeline",
+  "sheet_row": 3793,
+  "wiki": "https://www.gem.wiki/Centra_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "none — identity resolved, keep as recorded",
+      "contested": {},
+      "researcher_notes": "IDENTITY CHECK (per dispatch instructions): 'Centra' most commonly refers to Centra Gas Manitoba (a Manitoba Hydro local-distribution utility), but that is NOT what this row describes. P7125's sheet values (Owner1='Energy Fundamentals Group LP', StartLocation='Spruce Siding', StartState/Province='Manitoba', EndLocation='Fort Frances', EndState/Province='Ontario', 270 km, 12-inch) match a distinct entity: the 'Centra Gas Transmission System' / 'Centra Pipelines', a 270 km, NPS 12.75-inch interstate/international natural gas TRANSMISSION pipeline built in 1970, owned by Energy Fundamentals Group LP (EFGLP) and operated through two subsidiaries — Centra Transmission Holdings Inc. (CTHI, the Canadian portion, regulated by the Canada Energy Regulator/CER) and Centra Pipelines Minnesota Inc. (CPMI, the Minnesota portion, regulated by FERC). This is why the row correctly sits in the US gas tracker despite Canadian termini: CPMI is an active FERC-jurisdictional interstate pipeline (confirmed by a Federal Register combined notice of filings dated 2026-04-23 naming 'Centra Pipelines Minnesota Inc.', Docket RP26-765-000, filed 4/17/26, and by an earlier 1996 Federal Register notice, Docket RP97-33-000, naming 'Centra Pipelines Minnesota Inc. (Centra Minnesota)' — so CPMI has been a FERC-regulated entity since at least 1996) and by PHMSA, which lists 'CENTRA PIPELINE MINNESOTA INC.' as Operator ID 31024, 'Currently Active Operator ID'. The Canadian side (CTHI) is independently confirmed to exist and operate by a 2018 Canada Energy Regulator inspection-officer order (TC-001-2018) addressing construction of CTHI's 'Tribes Rock Replacement Project' near Emo, Ontario. EXISTENCE is therefore corroborated by 4 mutually-independent government records (US Federal Register x2, US PHMSA, Canadian CER) spanning 1996-2026, none of them GEM or centrapipelines.com/efgroupllc.com. CLASSIFICATION (transmission) is correct per both the operator's and EFG's own description ('natural gas transmission pipeline system'). DUPLICATE check against the 42-row roster: no other row describes this system (the nearest analog, P2625 Tioga to Emerson, is a different, separate Manitoba-North Dakota shelved project) — not a duplicate. Route geojson (1 feature, 89 points) runs from (-96.15,49.66) near Spruce Siding, MB to (-93.42,48.61) near Fort Frances, ON, consistent with the sourced corridor. Caveat: see the separate attribution concern on the true EndLocation.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2026/04/23/2026-07915/combined-notice-of-filings",
+        "https://www.govinfo.gov/content/pkg/FR-1996-10-24/html/96-27229.htm",
+        "https://primis.phmsa.dot.gov/enforcement-data/operator/31024",
+        "https://www.cer-rec.gc.ca/en/safety-environment/industry-performance/reports-compliance-enforcement/inspection-officer-order/2018/tc-001-2018/order-tc-001-2018-centra-transmission-holdings-inc-pursuant-section-51-1-national-energy-board-act.html"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "verify true system terminus — the pipeline reportedly loops back into Minnesota, terminating at International Falls, MN, USA, not at Fort Frances, ON, Canada",
+      "contested": {"EndLocation": "International Falls", "EndState/Province": "Minnesota", "EndCountryOrArea": "United States"},
+      "researcher_notes": "Both the operator's own about-us page (via Wayback capture 2025-05-03) and the CER-hosted company fact sheet describe the pipeline's route as: 'takes gas from the TC Energy pipeline at Spruce Siding, Manitoba south of Lake of the Woods through Minnesota into Ontario and back into Minnesota at International Falls' / '...travels south of Lake of the Woods, through northeastern Minnesota, into Ontario and back into Minnesota, terminating at International Falls.' Both sources are explicit that the single 270 km asset crosses the US-Canada border three times (Manitoba->Minnesota->Ontario->Minnesota) and that its far terminus is International Falls, MN, USA — not Fort Frances, ON, which is only the point where the line re-enters Ontario partway along the route (also named as a served Ontario community in the home page and fact sheet, alongside Rainy River, Stratton, Barwick, Emo, Devlin). The digitized route (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7125.geojson, 1 feature, 89 points) also stops at Fort Frances (-93.42234,48.61399) and does not extend to International Falls — so the geometry is a partial trace of the same asset, consistent with the sheet's shorter, plausibly-incomplete endpoint. This is single-origin (both text sources trace to the same company/EFG family; a second, independent source stating 'International Falls' specifically as the far terminus was searched for — FERC eLibrary docket text, NEB/CER historical orders, press — but not found before the session's web-search budget was exhausted), so I am flagging rather than correcting outright: recommend verifying against CPMI's FERC tariff (which would state the certificated end point) or a CER facilities application before changing EndLocation/EndState/EndCountryOrArea. If confirmed, the route geojson is also a candidate for extension under §8 (not fabricated here).",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250430155405/https://centrapipelines.com/",
+        "https://www.federalregister.gov/documents/2026/04/23/2026-07915/combined-notice-of-filings",
+        "https://primis.phmsa.dot.gov/enforcement-data/operator/31024"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250430155405/https://centrapipelines.com/", "ok": true, "contains_value": true, "name_found": true, "note": "Wayback capture of the direct current_ref (centrapipelines.com/, live site 403s scripted clients); page states 'A NATURAL GAS PIPELINE' operating in Manitoba/Minnesota/Ontario -- names 'Centra Pipelines'"},
+        {"url": "https://www.federalregister.gov/documents/2026/04/23/2026-07915/combined-notice-of-filings", "ok": true, "contains_value": true, "name_found": true, "note": "Combined Notice of Filings dated 2026-04-23 lists 'Docket Numbers: RP26-765-000. Applicants: Centra Pipelines Minnesota Inc.' filing a section 4(d) rate filing 'Updated Index of Shippers April 2026', filed 4/17/26 -- an active company still tariff-filing in 2026"},
+        {"url": "https://primis.phmsa.dot.gov/enforcement-data/operator/31024", "ok": true, "contains_value": true, "name_found": true, "note": "names 'CENTRA PIPELINE MINNESOTA INC. Operator ID 31024 Currently Active Operator ID'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's direct current_ref (https://centrapipelines.com/) 403s to scripted clients (confirmed via curl with a real browser UA -- a WAF/bot-block, not a 404/410, so not retired); its Wayback capture is added alongside per rule. Independent confirmation of CURRENT (2026) operating status comes from a Federal Register notice dated 2026-04-23 (CPMI still actively rate-filing) and PHMSA listing operator 31024 as 'Currently Active' -- two separate federal agencies, both independent of the operator's own site. tier=high on 2+ independent verified refs."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250430155405/https://centrapipelines.com/",
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250430155405/https://centrapipelines.com/", "ok": true, "contains_value": true, "name_found": true, "note": "home page banner reads 'A NATURAL GAS PIPELINE' -- names 'Centra Pipelines'"},
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "EFG's own page: 'a 270 km., NPS 12.75 inch diameter natural gas transmission pipeline system' -- names 'Centra Gas Transmission System'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct centrapipelines.com URL 403s scripted clients (WAF block, not a deletion); Wayback capture substituted. Both sources are the EFG corporate family (one origin) -- fuel type is not in dispute, no second independent host was needed to search for given how uncontroversial this value is, but tier is capped at medium under the one-origin rule."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/",
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'Centra Pipelines is owned and operated by ... operates a buried high pressure natural gas transmission pipeline' -- names 'Centra Pipelines'"},
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'a 270 km., NPS 12.75 inch diameter natural gas transmission pipeline system' -- names 'Centra Gas Transmission System'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct centrapipelines.com/about-us/ URL 403s scripted clients; Wayback capture substituted. Both refs are the EFG corporate family (one origin) -- classification is unambiguous (a certificated interstate/international transmission pipeline, not gathering/distribution), so single-origin medium is adequate here."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This is a legacy pipeline built in 1970; no pre-construction proposal/announcement record survives online. Searched: the operator's site and EFG's site (both only state the 1970 construction year, no proposal date), the Federal Register full text (1996 and 2026 notices found are rate filings, not the original certificate proceeding), govinfo.gov FR archive text search for earlier 1960s-70s Federal Power Commission notices (none surfaced), and general web search (budget exhausted mid-session before a targeted 1969/1970 FERC/NEB certificate search could be run). No value found -- leaving blank rather than inferring a proposal year from the construction year."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "1970"},
+      "primary_value": "1970",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'The pipeline was originally constructed in 1970' -- names 'Centra Pipeline'/'Centra Pipelines'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct URL 403s scripted clients; Wayback capture substituted. Single-origin (only the operator's own site states the year explicitly). A second, independent source (an original FERC/Federal Power Commission or National Energy Board certificate from ~1969-70) was searched for but not located before the session's web-search budget ran out -- capped at medium pending that."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The operator's site states the pipeline 'was originally constructed in 1970' (staged onto ConstructionYear above) but nowhere states a separate commercial in-service/start date. Rather than assume StartYear1=ConstructionYear (1970) without a source that actually says the pipeline entered service that year, I am leaving this UNRESOLVED -- searched centrapipelines.com, efgroupllc.com, the 1996 and 2026 Federal Register notices (rate filings, no in-service date), and PHMSA/CER pages (no in-service date); none state a distinct start-of-service year or month."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "65000.00", "CapacityUnits": "Mcf/d"},
+      "primary_value": "65000.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'a 270 km., NPS 12.75 inch diameter natural gas transmission pipeline system with a peak-day capacity of 65,000 MCF/day' -- names 'Centra Gas Transmission System'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct URL 403s scripted clients; Wayback capture substituted (same content is also on centrapipelines.com but without the numeric capacity figure, so efgroupllc.com is the actual value-bearing page). Single-origin (EFG family) -- a second independent numeric source (a FERC tariff Statement of Capacity, or CPMI's Form 2) was searched for but not located before the session's web-search budget ran out; capped at medium."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {"Pressure": "5.516", "PressureUnits": "MPa"},
+      "primary_value": "5.516",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'the MAOP for the pipe established at 5,516 kpa' -- names 'Centra Pipeline'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank; sourced MAOP = 5,516 kPa, converted to 5.516 MPa to match this tracker's dominant PressureUnits convention (MPa, per a sheet-wide check of GGIT_gas_snapshot). Single-origin (operator's own site); a second source was searched for (FERC tariff, PHMSA annual report) but not located before the session's web-search budget ran out."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "270.00", "LengthKnownUnits": "km"},
+      "primary_value": "270.00",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/",
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'They form a 270km, 12” pipeline' -- names 'Centra Pipelines'"},
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'a 270 km., NPS 12.75 inch diameter natural gas transmission pipeline system' -- names 'Centra Gas Transmission System'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct centrapipelines.com URL 403s scripted clients; Wayback capture substituted. Both refs agree exactly (270 km) but are the same EFG corporate family -- one origin, capped at medium. Note: the sourced route description (see attribution concern in validity[]) suggests the true end point may be International Falls, MN rather than Fort Frances, ON, which would not change the 270 km total (it is stated as one continuous figure for the whole system) but is flagged separately."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "12", "DiameterUnits": "in"},
+      "primary_value": "12",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/",
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'They form a 270km, 12” pipeline' -- names 'Centra Pipelines'"},
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'NPS 12.75 inch diameter' -- names 'Centra Gas Transmission System' (NPS 12 nominal pipe size has a 12.75in actual OD, consistent with the recorded 12in)"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct URL 403s scripted clients; Wayback capture substituted. Both refs are one origin (EFG family) -- recorded 12in matches NPS 12 (actual OD 12.75in) exactly as EFG states it; capped at medium for single origin."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource (e.g. conventional/associated/shale gas) is not a meaningful attribute for this asset: Centra is a pure long-haul transmission line that receives already-processed pipeline-quality gas off the TC Energy (TransCanada) mainline at an interconnect near Spruce Siding, MB -- it has no upstream production/gathering role of its own. Searched centrapipelines.com, efgroupllc.com and the FERC/PHMSA records found; none characterize a fuel source. Leaving UNRESOLVED rather than forcing a value."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Spruce Siding",
+        "StartState/Province": "Manitoba",
+        "StartCountryOrArea": "Canada",
+        "EndLocation": "Fort Frances",
+        "EndState/Province": "Ontario",
+        "EndCountryOrArea": "Canada"
+      },
+      "primary_value": "Spruce Siding",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/",
+        "https://web.archive.org/web/20250430155405/https://centrapipelines.com/"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'takes gas from the TC Energy pipeline at Spruce Siding, Manitoba south of Lake of the Woods through Minnesota into Ontario' -- names 'Centra Pipeline', confirms Spruce Siding, Manitoba as the Canadian intake point"},
+        {"url": "https://web.archive.org/web/20250430155405/https://centrapipelines.com/", "ok": true, "contains_value": true, "name_found": true, "note": "'Centra Pipelines operates ... in Ontario from Rainy River Ontario to Fort Frances Ontario' -- names 'Centra Pipelines', confirms Fort Frances as a served Ontario point along the route"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both recorded values are directly stated by the operator's own pages (StartLocation=Spruce Siding, MB is unambiguous; EndLocation=Fort Frances, ON is named as a served point but per the attribution concern filed in validity[], the sourced route text says the pipeline continues past Fort Frances and terminates at International Falls, Minnesota -- so Fort Frances may be a waypoint rather than the true terminus). Keeping the recorded values here as an honest REVERIFIED record (both values ARE stated on the cited page) and routing the disputed correction through validity[].contested per repo convention, rather than silently changing the cell."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No construction/replacement cost figure found for this 1970-built legacy system. Searched centrapipelines.com, efgroupllc.com, FERC Federal Register notices (rate filings only, no cost basis stated), and general web search before the session's budget ran out. Leaving blank."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Energy Fundamentals Group LP"},
+      "primary_value": "Energy Fundamentals Group LP",
+      "proposed_refs": [
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'Energy Fundamentals Group L.P. is the owner operator of the Centra Gas Transmission system ... EFGLP operates the system in Canada through Centra Transmission Holdings, Inc. and in the United States through Centra Pipelines Minnesota, Inc.' -- names 'Centra Gas Transmission System'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank; EFG's own page explicitly calls itself the 'owner operator' of the system (GEM uses Owner/Operator interchangeably per standing guidance), so staging Operator=Energy Fundamentals Group LP -- the same entity already recorded as Owner1 (see Owner [ref] below). Single-origin (EFG family); QCCOwner(业主单位) is worklist leakage from the open QC-workbook column set, not a tracker value column -- reporting, not researching it, per the addendum."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Energy Fundamentals Group LP", "Owner1%": "100.00%"},
+      "primary_value": "Energy Fundamentals Group LP",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/",
+        "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://web.archive.org/web/20250503063318/https://centrapipelines.com/about-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'Centra Transmission Holdings Inc. (“CTHI”) and Centra Pipelines Minnesota Inc. (“CPMI”) (together known as Centra Pipelines) are both subsidiaries of Energy Fundamentals Group LP' -- names 'Centra Pipelines'"},
+        {"url": "https://web.archive.org/web/2025/https://efgroupllc.com/our-business/investments/efg-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "'Energy Fundamentals Group L.P. is the owner operator of the Centra Gas Transmission system' -- names 'Centra Gas Transmission System'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Direct centrapipelines.com URL 403s scripted clients; Wayback capture substituted. Both refs are one origin (EFG family) -- 100% ownership by EFGLP (via its CTHI/CPMI subsidiaries) is unambiguous and uncontested; capped at medium for single origin. A second independent source (SEC-equivalent filing -- EFG is a private LP, no SEC filer) was not found; PHMSA/FERC records confirm CPMI's existence but do not restate the ownership chain."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3793,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2026/04/23/2026-07915/combined-notice-of-filings",
+        "https://primis.phmsa.dot.gov/enforcement-data/operator/31024"
+      ],
+      "verifications": [
+        {"url": "https://www.federalregister.gov/documents/2026/04/23/2026-07915/combined-notice-of-filings", "ok": true, "contains_value": true, "name_found": true, "note": "Federal Register combined notice of filings dated 2026-04-23: 'Docket Numbers: RP26-765-000. Applicants: Centra Pipelines Minnesota Inc. Description: § 4(d) Rate Filing: Updated Index of Shippers April 2026 to be effective 6/1/2026. Filed Date: 4/17/26' -- an active tariff filing barely 5 months before this sweep"},
+        {"url": "https://primis.phmsa.dot.gov/enforcement-data/operator/31024", "ok": true, "contains_value": true, "name_found": true, "note": "'CENTRA PIPELINE MINNESOTA INC. Operator ID 31024 Currently Active Operator ID'"}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Recorded Status=operating (LastUpdated 2025-06-13) is confirmed current: a FERC/Federal Register combined notice of filings dated 2026-04-23 shows Centra Pipelines Minnesota Inc. still actively filing a routine 4(d) rate/index-of-shippers update (Docket RP26-765-000, filed 4/17/26, effective 6/1/2026), and PHMSA's enforcement-data operator page lists operator 31024 (Centra Pipeline Minnesota Inc.) as 'Currently Active'. No sale, idling, abandonment, or conversion found in any source (operator/EFG sites, FERC Federal Register notices from 1996 and 2026, PHMSA, or the 2018 CER order, which addressed a construction replacement project, not a shutdown). Two independent federal agencies (FERC/GPO Federal Register and DOT/PHMSA) agree -- tier=high."
+    }
+  ],
+  "summary": "P7125 Centra Pipeline confirmed real and correctly classified: it is EFG-owned Centra Gas Transmission System (CTHI Canada + CPMI Minnesota/FERC), not Manitoba Hydro's Centra Gas utility -- existence/status high-tier on 4 independent federal records (2 US Federal Register, PHMSA, CER); one attribution concern filed (true terminus may be International Falls, MN, not Fort Frances, ON). 15/15 worklist units covered: 9 REVERIFIED, 2 REFS_ADDED (Pressure, Operator), 4 UNRESOLVED (Proposal, Start, FuelSource, SegmentCost)."
+}

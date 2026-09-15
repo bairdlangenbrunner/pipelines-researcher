@@ -1,675 +1,663 @@
 {
-  "project_id": "P0173",
-  "pipeline_name": "Delfin Offshore Pipeline",
-  "sheet_row": 34,
-  "wiki": "https://www.gem.wiki/Delfin_Offshore_Pipeline",
-  "validity": [
+ "project_id": "P0173",
+ "pipeline_name": "Delfin Offshore Pipeline",
+ "sheet_row": 34,
+ "wiki": "https://www.gem.wiki/Delfin_Offshore_Pipeline",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "No structural change needed; keep sourcing on Length/Diameter as single-origin (medium) and watch the FID-stage investor group for a future Owner update.",
+   "contested": {},
+   "researcher_notes": "EXISTENCE: confirmed via two federal-docket documents. (1) The 2016 MARAD/USCG Final EIS for Port Delfin (https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf) states: 'one 700-ft, 42-inch-diameter bypass around existing West Cameron block 167 (WC 167) offshore manifold platform' interconnecting the former UTOS and HIOS pipelines; its own summary table gives Length 700 feet/213 meters and Diameter 42 inches/107 cm for this exact bypass. (2) Delfin's own March 1, 2024 DOE/FECM extension-request filing (https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf, Docket Nos. 13-129-LNG/13-147-LNG) independently describes 'a new offshore pipeline to interconnect UTOS and HIOS, bypassing the platform where they currently connect,' citing the MARAD Record of Decision. Both documents ultimately trace to the same MARAD/NEPA review of Delfin's own project design (the 2024 filing cites the same ROD, and states no independent dimensions), so I treat Length/Diameter as ONE well-documented origin restated across two dockets, not two independent measurements -- see tier=medium on those fills. The July 29, 2015 Federal Register deepwater-port-license-application notice (2015-18594) and a contemporaneous May 11, 2015 oedigital.com article independently corroborate the original proposal and existence of the project this pipeline belongs to.\nCLASSIFICATION: correctly classified transmission -- an interconnection bypass between two historically FERC-jurisdictional interstate transmission systems (UTOS, HIOS), not a gathering/feeder line. Fuel=Gas confirmed by the EIS.\nDUPLICATE: not a duplicate of any of the other 43 roster rows. It is the unique 700-ft/0.21 km, 42-in WC167 bypass; distinct from the four ~30-in, ~6,400-ft laterals running from HIOS to each FLNGV and from the ~0.25-mile onshore supply-header pipeline described in the same EIS -- neither of those is a separate row in this batch, so no merge/relabel action is needed.\nROUTE (per orchestrator guidance to check the route against the project's own description): the routes-repo geojson (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P0173.geojson) is a 6-point MultiLineString, length property 0.501 km, running approximately (-93.4445, 29.4011) to (-93.4430, 29.3970) -- offshore Cameron Parish, LA. This is consistent with the EIS's WC167 bypass location (offshore, Fixed Seafloor Depth 46 ft/14 m, in the UTOS/HIOS corridor). The sheet's StartState/Province and EndState/Province = 'Gulf of Mexico' are CORRECT as recorded (a federal OCS location) -- the route's LA-coast digitized position is the offshore-snapping artifact the orchestrator flagged, not a real state-attribution error, so no Location cell edit is proposed. Minor caveat noted only: the digitized route length (0.501 km) is about 2.4x the EIS-stated physical pipe length (700 ft/0.213 km) -- most likely a simplified schematic trace of a very short offshore jumper rather than a wrong-corridor error; not material enough to recommend a route-candidate replacement.\nOWNERSHIP WATCH (not staged as an attribution concern, informational only): Delfin's June 3, 2026 FID press release states that Global Infrastructure Partners, Mitsui O.S.K. Lines, Vitol and Diameter Capital Partners 'have agreed to invest in the first phase of this critical energy infrastructure project' concurrent with FID. No source states specific equity percentages in Delfin LNG LLC itself (the recorded 100% Owner1 and FERC/MARAD permit holder), so Owner1 is left as recorded; a future sweep should check for a formal ownership-percentage filing.\nOverall: real, correctly classified, not a duplicate, route plausible for its stated corridor. Two clear sourcing/scope defects (Capacity, SegmentCost) and one status supersession (FID/construction/StartYear) are filed as separate concern records below.",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+    "https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf",
+    "https://www.federalregister.gov/documents/2015/07/29/2015-18594/deepwater-port-license-application-delfin-lng-llc-delfin-lng-deepwater-port",
+    "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng"
+   ],
+   "tier": "high",
+   "independent": true,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Blank or re-derive Capacity -- 657.50 MMcf/d is not stated by any source and looks like a unit/scope transcription of the project's annual Bscf/yr export-equivalent figure, not a segment daily throughput.",
+   "contested": {
+    "Capacity": ""
+   },
+   "researcher_notes": "The recorded Capacity=657.50 MMcf/d is not stated by any source found, including the current [ref] itself: oilandgaswatch.org/pipeline/4606 is a client-side-rendered SPA that returns only an empty shell to curl and to url_verifier (200, but neither '657.5' nor '657.50' is present in the fetched HTML; retried with a browser UA and probed likely API endpoints, all empty/unreachable). The number 657.5 IS in the project's own governing document but with a DIFFERENT unit and DIFFERENT scope: the 2016 Final EIS states the FLNGVs would together export LNG 'equivalent to 657.5 billion standard cubic feet per year (Bscf/yr)' -- 13.3 MMtpa for the ENTIRE 4-vessel project's annual export volume, not a daily MMcf/d throughput figure for this 700-ft segment. Recording '657.50 MMcf/d' looks like a straight transcription of that number with the wrong unit and the wrong scope (project-annual mistaken for segment-daily). A more defensible SEGMENT-relevant figure is inferable but not explicitly stated anywhere: the EIS gives each FLNGV a 'Designed Gas Flow' of 500 MMscf/d, and since gas to all 4 vessels transits the UTOS/HIOS grid this bypass enables, up to roughly 2,000 MMscf/d could pass through this interconnection -- but this is my own sum of per-vessel design-flow figures, not a number any source states for the segment itself, so I have not staged it as a sourced replacement value. Searched: both EIS volumes, the 2024 DOE extension filing, oedigital, lngprime, oilandgaswatch -- none state a segment-specific MMcf/d capacity for the WC167 bypass.",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
+   ],
+   "tier": "low",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Blank SegmentCost -- $8B is Delfin's 2023 Centrica LNG sales agreement value, not a construction/capital cost for this pipeline or the project.",
+   "contested": {
+    "SegmentCost": ""
+   },
+   "researcher_notes": "The recorded SegmentCost=$8,000,000,000 USD is not a construction/capital cost for this 700-ft segment (or for the Delfin project generally) in any source found. It is almost certainly Delfin's July 2023 LNG sales agreement with Centrica: a 15-year SPA for 1 MMtpa (14 cargoes/yr), explicitly reported as 'worth about $8 billion' -- confirmed via offshore-energy.biz's 'Centrica and Delfin Midstream sign $8 billion LNG supply deal' and corroborated by the same figure appearing across lngprime, PGJ, Upstream Online, gasworld and nsenergybusiness, all describing the SAME July 2023 Centrica SPA, not a construction cost. No source found states a capital/construction cost specific to the 700-ft WC167 bypass; the closest project-level cost figures found are unrelated to each other and to a segment cost (a roughly $2.5B Delfin port-facility cost estimate mentioned in a 2024 LNG Prime article, and the $5B first-FLNG-vessel FID investment announced June 2026) -- I have not proposed either as a replacement SegmentCost since neither is scoped to this segment. [ORCHESTRATOR AUDIT 2026-09-15] Tier arithmetic corrected (independent True -> False): this record's evidence resolves to 1 distinct publisher(s) (offshore-energy.biz), and rule 4 counts publishers, not URLs — every EIA release is ONE origin, as are multiple filings by one filer or multiple notices in one docket. The FINDING is unchanged; only the confidence claim was wrong.",
+   "proposed_refs": [
+    "https://www.offshore-energy.biz/centrica-and-delfin-midstream-sign-8-billion-lng-supply-deal/"
+   ],
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en"
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "Update Status to construction, FIDStatus to FID (2026), ConstructionYear to 2026, and StartYear1 to 2030 per Delfin's June 2026 FID -- mirrored in status_reviews below.",
+   "contested": {
+    "Status": "construction",
+    "FIDStatus": "FID",
+    "FIDYear": "2026",
+    "ConstructionYear": "2026",
+    "StartYear1": "2030"
+   },
+   "researcher_notes": "Delfin Midstream announced a $5 billion Final Investment Decision (FID) for its first FLNG vessel on June 3, 2026 (own press release: https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf -- 'has taken a Final Investment Decision...has secured all necessary permits and licenses required to begin construction'; construction contracts executed with Samsung Heavy Industries and Black & Veatch; 'first vessel scheduled to begin LNG production in 2030'), corroborated independently by offshore-energy.biz's 'World's largest FLNG crosses the FID finish line with $5 billion committed' (June 2026). This supersedes the sheet's Status=proposed / FIDStatus=Pre-FID (sourced to a 2024 lngprime article about a DOE extension request) and StartYear1=2027 (which traces to a FERC order extending the in-service deadline for Delfin's ONSHORE facilities ONLY -- Delfin LNG LLC, 185 FERC P61,009 (2023) -- not a production-start date for the offshore facilities or the project as a whole; note the March 2024 DOE filing that carries the current StartYear1=2027 ref is itself internally inconsistent about this same FERC order, stating both 'Sept. 28, 2027' and, elsewhere in the same document, 'until September 28, 2028' -- so 2027 was never a reliable production-start figure for this row even before the FID). CAVEAT (per the LNG-feed-pipelines-follow-their-terminal convention): all of this evidence names the Delfin LNG project / first FLNG VESSEL, not the 700-ft WC167 bypass pipeline (P0173) by name -- no source discusses a construction timeline for this specific interconnect segment. The status change is applied here because the bypass is licensed as part of the same MARAD deepwater-port scope and must be completed before first gas reaches the FLNGVs, consistent with how this batch treats terminal-level status evidence for its feed infrastructure; flagged so a reviewer can confirm that reading before merge.",
+   "proposed_refs": [
+    "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
+    "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/"
+   ],
+   "tier": "medium",
+   "independent": true,
+   "source_language": "en"
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "construction"
+   },
+   "primary_value": "construction",
+   "proposed_refs": [],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "No structural change needed; keep sourcing on Length/Diameter as single-origin (medium) and watch the FID-stage investor group for a future Owner update.",
-      "contested": {},
-      "researcher_notes": "EXISTENCE: confirmed via two federal-docket documents. (1) The 2016 MARAD/USCG Final EIS for Port Delfin (https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf) states: 'one 700-ft, 42-inch-diameter bypass around existing West Cameron block 167 (WC 167) offshore manifold platform' interconnecting the former UTOS and HIOS pipelines; its own summary table gives Length 700 feet/213 meters and Diameter 42 inches/107 cm for this exact bypass. (2) Delfin's own March 1, 2024 DOE/FECM extension-request filing (https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf, Docket Nos. 13-129-LNG/13-147-LNG) independently describes 'a new offshore pipeline to interconnect UTOS and HIOS, bypassing the platform where they currently connect,' citing the MARAD Record of Decision. Both documents ultimately trace to the same MARAD/NEPA review of Delfin's own project design (the 2024 filing cites the same ROD, and states no independent dimensions), so I treat Length/Diameter as ONE well-documented origin restated across two dockets, not two independent measurements -- see tier=medium on those fills. The July 29, 2015 Federal Register deepwater-port-license-application notice (2015-18594) and a contemporaneous May 11, 2015 oedigital.com article independently corroborate the original proposal and existence of the project this pipeline belongs to.\nCLASSIFICATION: correctly classified transmission -- an interconnection bypass between two historically FERC-jurisdictional interstate transmission systems (UTOS, HIOS), not a gathering/feeder line. Fuel=Gas confirmed by the EIS.\nDUPLICATE: not a duplicate of any of the other 43 roster rows. It is the unique 700-ft/0.21 km, 42-in WC167 bypass; distinct from the four ~30-in, ~6,400-ft laterals running from HIOS to each FLNGV and from the ~0.25-mile onshore supply-header pipeline described in the same EIS -- neither of those is a separate row in this batch, so no merge/relabel action is needed.\nROUTE (per orchestrator guidance to check the route against the project's own description): the routes-repo geojson (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P0173.geojson) is a 6-point MultiLineString, length property 0.501 km, running approximately (-93.4445, 29.4011) to (-93.4430, 29.3970) -- offshore Cameron Parish, LA. This is consistent with the EIS's WC167 bypass location (offshore, Fixed Seafloor Depth 46 ft/14 m, in the UTOS/HIOS corridor). The sheet's StartState/Province and EndState/Province = 'Gulf of Mexico' are CORRECT as recorded (a federal OCS location) -- the route's LA-coast digitized position is the offshore-snapping artifact the orchestrator flagged, not a real state-attribution error, so no Location cell edit is proposed. Minor caveat noted only: the digitized route length (0.501 km) is about 2.4x the EIS-stated physical pipe length (700 ft/0.213 km) -- most likely a simplified schematic trace of a very short offshore jumper rather than a wrong-corridor error; not material enough to recommend a route-candidate replacement.\nOWNERSHIP WATCH (not staged as an attribution concern, informational only): Delfin's June 3, 2026 FID press release states that Global Infrastructure Partners, Mitsui O.S.K. Lines, Vitol and Diameter Capital Partners 'have agreed to invest in the first phase of this critical energy infrastructure project' concurrent with FID. No source states specific equity percentages in Delfin LNG LLC itself (the recorded 100% Owner1 and FERC/MARAD permit holder), so Owner1 is left as recorded; a future sweep should check for a formal ownership-percentage filing.\nOverall: real, correctly classified, not a duplicate, route plausible for its stated corridor. Two clear sourcing/scope defects (Capacity, SegmentCost) and one status supersession (FID/construction/StartYear) are filed as separate concern records below.",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-        "https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf",
-        "https://www.federalregister.gov/documents/2015/07/29/2015-18594/deepwater-port-license-application-delfin-lng-llc-delfin-lng-deepwater-port",
-        "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng"
-      ],
-      "tier": "high",
-      "independent": true,
-      "source_language": "en"
+     "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Delfin's own June 3, 2026 press release: 'has taken a Final Investment Decision (FID)...has secured all necessary permits and licenses required to begin construction'; names the Delfin LNG project/parent, not this 700-ft segment specifically."
     },
     {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Blank or re-derive Capacity -- 657.50 MMcf/d is not stated by any source and looks like a unit/scope transcription of the project's annual Bscf/yr export-equivalent figure, not a segment daily throughput.",
-      "contested": {
-        "Capacity": ""
-      },
-      "researcher_notes": "The recorded Capacity=657.50 MMcf/d is not stated by any source found, including the current [ref] itself: oilandgaswatch.org/pipeline/4606 is a client-side-rendered SPA that returns only an empty shell to curl and to url_verifier (200, but neither '657.5' nor '657.50' is present in the fetched HTML; retried with a browser UA and probed likely API endpoints, all empty/unreachable). The number 657.5 IS in the project's own governing document but with a DIFFERENT unit and DIFFERENT scope: the 2016 Final EIS states the FLNGVs would together export LNG 'equivalent to 657.5 billion standard cubic feet per year (Bscf/yr)' -- 13.3 MMtpa for the ENTIRE 4-vessel project's annual export volume, not a daily MMcf/d throughput figure for this 700-ft segment. Recording '657.50 MMcf/d' looks like a straight transcription of that number with the wrong unit and the wrong scope (project-annual mistaken for segment-daily). A more defensible SEGMENT-relevant figure is inferable but not explicitly stated anywhere: the EIS gives each FLNGV a 'Designed Gas Flow' of 500 MMscf/d, and since gas to all 4 vessels transits the UTOS/HIOS grid this bypass enables, up to roughly 2,000 MMscf/d could pass through this interconnection -- but this is my own sum of per-vessel design-flow figures, not a number any source states for the segment itself, so I have not staged it as a sourced replacement value. Searched: both EIS volumes, the 2024 DOE extension filing, oedigital, lngprime, oilandgaswatch -- none state a segment-specific MMcf/d capacity for the WC167 bypass.",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
-      ],
-      "tier": "low",
-      "independent": false,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Blank SegmentCost -- $8B is Delfin's 2023 Centrica LNG sales agreement value, not a construction/capital cost for this pipeline or the project.",
-      "contested": {
-        "SegmentCost": ""
-      },
-      "researcher_notes": "The recorded SegmentCost=$8,000,000,000 USD is not a construction/capital cost for this 700-ft segment (or for the Delfin project generally) in any source found. It is almost certainly Delfin's July 2023 LNG sales agreement with Centrica: a 15-year SPA for 1 MMtpa (14 cargoes/yr), explicitly reported as 'worth about $8 billion' -- confirmed via offshore-energy.biz's 'Centrica and Delfin Midstream sign $8 billion LNG supply deal' and corroborated by the same figure appearing across lngprime, PGJ, Upstream Online, gasworld and nsenergybusiness, all describing the SAME July 2023 Centrica SPA, not a construction cost. No source found states a capital/construction cost specific to the 700-ft WC167 bypass; the closest project-level cost figures found are unrelated to each other and to a segment cost (a roughly $2.5B Delfin port-facility cost estimate mentioned in a 2024 LNG Prime article, and the $5B first-FLNG-vessel FID investment announced June 2026) -- I have not proposed either as a replacement SegmentCost since neither is scoped to this segment.",
-      "proposed_refs": [
-        "https://www.offshore-energy.biz/centrica-and-delfin-midstream-sign-8-billion-lng-supply-deal/"
-      ],
-      "tier": "medium",
-      "independent": true,
-      "source_language": "en"
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "Update Status to construction, FIDStatus to FID (2026), ConstructionYear to 2026, and StartYear1 to 2030 per Delfin's June 2026 FID -- mirrored in status_reviews below.",
-      "contested": {
-        "Status": "construction",
-        "FIDStatus": "FID",
-        "FIDYear": "2026",
-        "ConstructionYear": "2026",
-        "StartYear1": "2030"
-      },
-      "researcher_notes": "Delfin Midstream announced a $5 billion Final Investment Decision (FID) for its first FLNG vessel on June 3, 2026 (own press release: https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf -- 'has taken a Final Investment Decision...has secured all necessary permits and licenses required to begin construction'; construction contracts executed with Samsung Heavy Industries and Black & Veatch; 'first vessel scheduled to begin LNG production in 2030'), corroborated independently by offshore-energy.biz's 'World's largest FLNG crosses the FID finish line with $5 billion committed' (June 2026). This supersedes the sheet's Status=proposed / FIDStatus=Pre-FID (sourced to a 2024 lngprime article about a DOE extension request) and StartYear1=2027 (which traces to a FERC order extending the in-service deadline for Delfin's ONSHORE facilities ONLY -- Delfin LNG LLC, 185 FERC P61,009 (2023) -- not a production-start date for the offshore facilities or the project as a whole; note the March 2024 DOE filing that carries the current StartYear1=2027 ref is itself internally inconsistent about this same FERC order, stating both 'Sept. 28, 2027' and, elsewhere in the same document, 'until September 28, 2028' -- so 2027 was never a reliable production-start figure for this row even before the FID). CAVEAT (per the LNG-feed-pipelines-follow-their-terminal convention): all of this evidence names the Delfin LNG project / first FLNG VESSEL, not the 700-ft WC167 bypass pipeline (P0173) by name -- no source discusses a construction timeline for this specific interconnect segment. The status change is applied here because the bypass is licensed as part of the same MARAD deepwater-port scope and must be completed before first gas reaches the FLNGVs, consistent with how this batch treats terminal-level status evidence for its feed infrastructure; flagged so a reviewer can confirm that reading before merge.",
-      "proposed_refs": [
-        "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-        "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/"
-      ],
-      "tier": "medium",
-      "independent": true,
-      "source_language": "en"
+     "url": "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Independent trade press, June 2026, corroborates the FID/construction milestone at the terminal/vessel level."
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Old ref (lngprime, 2024 DOE-extension article) supported Status=proposed as of 2024; superseded by the June 2026 FID. Full reasoning and the terminal-vs-segment caveat in the linked validity 'spec' concern (Status/FIDStatus/ConstructionYear/StartYear1 cluster). [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf; https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/); independent True -> False; 2 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+    "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Status [ref]",
-      "value_cols": [
-        "Status"
-      ],
-      "primary_value_col": "Status",
-      "values": {
-        "Status": "construction"
-      },
-      "primary_value": "construction",
-      "proposed_refs": [
-        "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-        "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/"
-      ],
-      "verifications": [
-        {
-          "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "Delfin's own June 3, 2026 press release: 'has taken a Final Investment Decision (FID)...has secured all necessary permits and licenses required to begin construction'; names the Delfin LNG project/parent, not this 700-ft segment specifically."
-        },
-        {
-          "url": "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "Independent trade press, June 2026, corroborates the FID/construction milestone at the terminal/vessel level."
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Old ref (lngprime, 2024 DOE-extension article) supported Status=proposed as of 2024; superseded by the June 2026 FID. Full reasoning and the terminal-vs-segment caveat in the linked validity 'spec' concern (Status/FIDStatus/ConstructionYear/StartYear1 cluster)."
+     "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIS describes the pipeline as a natural gas interconnection (UTOS/HIOS natural gas pipeline systems)."
     },
     {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Fuel [ref]",
-      "value_cols": [
-        "Fuel"
-      ],
-      "primary_value_col": "Fuel",
-      "values": {
-        "Fuel": "Gas"
-      },
-      "primary_value": "Gas",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-        "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "EIS describes the pipeline as a natural gas interconnection (UTOS/HIOS natural gas pipeline systems)."
-        },
-        {
-          "url": "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Independent 2015 press article: Delfin proposes to 'transport natural gas to four moored FLNG vessels' via existing offshore pipeline infrastructure."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Reverified as recorded; both the governing EIS and an independent 2015 press account describe this infrastructure as natural gas pipeline."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "PipelineType [ref]",
-      "value_cols": [
-        "PipelineType"
-      ],
-      "primary_value_col": "PipelineType",
-      "values": {
-        "PipelineType": "transmission"
-      },
-      "primary_value": "transmission",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "EIS describes the bypass as interconnecting UTOS and HIOS, both historically FERC-certificated interstate transmission pipeline systems."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Single-origin re-verification (the EIS); searched oedigital, lngprime and the DOE extension filing for an explicit second 'transmission' classification statement and found none -- press coverage does not typically classify pipeline type. Classification itself is not in doubt (an interconnect between two interstate transmission systems is transmission, not gathering/feeder), so kept at medium per the single-source rule rather than left unfilled."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Proposal [ref]",
-      "value_cols": [
-        "ProposalYear",
-        "ProposalMonth"
-      ],
-      "primary_value_col": "ProposalYear",
-      "values": {
-        "ProposalYear": "2015",
-        "ProposalMonth": "July"
-      },
-      "primary_value": "2015",
-      "proposed_refs": [
-        "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
-        "https://www.federalregister.gov/documents/2015/07/29/2015-18594/deepwater-port-license-application-delfin-lng-llc-delfin-lng-deepwater-port"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Published May 11, 2015: 'Delfin LNG submitted an application...The submission was sent to MARAD and USCG on 8 May.'"
-        },
-        {
-          "url": "https://www.federalregister.gov/documents/2015/07/29/2015-18594/deepwater-port-license-application-delfin-lng-llc-delfin-lng-deepwater-port",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Federal Register notice of the deepwater port license application, published July 29, 2015."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Two independent origins both place the proposal in 2015. Minor nuance: the actual application was submitted to MARAD/USCG on May 8, 2015 per oedigital, while the Federal Register's formal notice of that application was published July 29, 2015 -- the recorded ProposalMonth=July matches the Federal Register notice date rather than the underlying May submission date. Kept as recorded (July 2015) since it is directly supported by the current_ref; flagging the month nuance rather than changing it."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Construction [ref]",
-      "value_cols": [
-        "ConstructionYear",
-        "ConstructionMonth"
-      ],
-      "primary_value_col": "ConstructionYear",
-      "values": {
-        "ConstructionYear": "2026",
-        "ConstructionMonth": "June"
-      },
-      "primary_value": "2026",
-      "proposed_refs": [
-        "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-        "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/"
-      ],
-      "verifications": [
-        {
-          "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "'has secured all necessary permits and licenses required to begin construction. Additionally, construction contracts...have been executed with...Samsung Heavy Industries...and Black & Veatch.' Dated June 3, 2026."
-        },
-        {
-          "url": "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "Independent trade press corroboration of the June 2026 FID/construction-start milestone."
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Was MISSING_VALUE. Sourced from the same June 2026 FID announcement as the Status/FID changes -- see the linked validity 'spec' concern for the terminal-vs-segment caveat: this dates the FLNG vessel's construction contracts, not a construction-start announcement for the WC167 bypass pipeline itself specifically."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Start [ref]",
-      "value_cols": [
-        "StartYear1",
-        "StartMonth1",
-        "StartYear2",
-        "StartYear2Month",
-        "StartYear3",
-        "StartYear3Month"
-      ],
-      "primary_value_col": "StartYear1",
-      "values": {
-        "StartYear1": "2030"
-      },
-      "primary_value": "2030",
-      "proposed_refs": [
-        "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-        "https://naturalgasintel.com/news/delfin-lng-seen-nearing-fid-after-samsung-heavy-reports-29b-flng-contract/"
-      ],
-      "verifications": [
-        {
-          "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "'With the first vessel scheduled to begin LNG production in 2030...'"
-        },
-        {
-          "url": "https://naturalgasintel.com/news/delfin-lng-seen-nearing-fid-after-samsung-heavy-reports-29b-flng-contract/",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "url_verifier confirms 'FID' and '2030' both present; page itself returned 403 to direct curl/manual inspection from this session, so treated as corroborating but not independently read -- flagged."
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Old ref (lngprime) supported StartYear1=2027 -- but that figure traces to a FERC order extending the in-service deadline for Delfin's ONSHORE facilities only (185 FERC P61,009 (2023)), not a production-start date, and the very document carrying that ref (the 2024 DOE extension filing) states the same FERC deadline inconsistently as both 2027 and 2028 elsewhere in its own text. The June 2026 FID press release states first-vessel LNG production is now targeted for 2030, which is the best current evidence for this row's actual start date. Downgraded to tier=medium (not high) because the second source could not be manually read this session and because, per the terminal-vs-segment caveat, no source names this 700-ft pipeline segment specifically."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Delay [ref]",
-      "value_cols": [
-        "Delayed",
-        "DelayType"
-      ],
-      "primary_value_col": "Delayed",
-      "values": {
-        "Delayed": "yes",
-        "DelayType": "confirmed"
-      },
-      "primary_value": "yes",
-      "proposed_refs": [
-        "https://lngprime.com/lng-terminals/delfin-seeks-doe-extension-for-flng-project/106901/",
-        "https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://lngprime.com/lng-terminals/delfin-seeks-doe-extension-for-flng-project/106901/",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "Reports Delfin's request for a DOE extension of its export authorizations, evidencing delay from original targets."
-        },
-        {
-          "url": "https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "The extension-request filing itself is Delfin's own documented explanation for the delay (COVID, trade war, FLNGV technology changes -- Section III of the filing)."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Reverified: delay is well-documented (project proposed 2015, original targets long passed, multiple DOE extension requests through 2024-2025). Delayed=yes/DelayType=confirmed stay correct even after the 2026 FID -- an eleven-year gap between initial proposal and FID is itself a confirmed delay, independent of the improved current outlook."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Capacity [ref]",
-      "value_cols": [
-        "Capacity",
-        "CapacityUnits"
-      ],
-      "primary_value_col": "Capacity",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [
-        {
-          "url": "https://oilandgaswatch.org/pipeline/4606",
-          "ok": false,
-          "contains_value": false,
-          "name_found": false,
-          "note": "Client-rendered SPA; curl and url_verifier both return only an empty page shell (~1.9KB) with no article content; '657.5'/'657.50' not present. Retried with a browser UA; no reachable underlying API endpoint found."
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Could not confirm 657.50 MMcf/d anywhere. Likely explanation for where the number came from (the EIS's project-wide 657.5 Bscf/yr LNG-export equivalent, misapplied as a segment MMcf/d figure) is written up in detail in the linked validity 'spec' concern on Capacity -- filed there rather than as a fabricated fill value here. Searched: EIS (draft + final), 2024 DOE extension filing, oedigital, lngprime, oilandgaswatch (unreadable) -- none state a segment-specific throughput for the WC167 bypass."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Pressure [ref]",
-      "value_cols": [
-        "Pressure",
-        "PressureUnits"
-      ],
-      "primary_value_col": "Pressure",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Searched the Final EIS in full for a MAOP specific to the WC167 bypass and found none. The EIS states MAOP for the ADJOINING systems individually -- UTOS MAOP 1,250 psig, HIOS MAOP 1,440 psig, the four HIOS-to-FLNGV laterals 1,250 psig each, and the ONSHORE 'DOF gas systems' (meter station/compressor/supply header) 1,250 psig -- but never gives a separate MAOP for the short bypass segment itself, which interconnects two systems rated differently (1,250 vs 1,440 psig). Assigning either adjoining figure to the bypass would be inference, not a stated fact, so left genuinely UNRESOLVED per the no-forced-numbers rule. Also checked the 2024 DOE extension filing and oilandgaswatch.org -- neither states a pressure figure."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Length [ref]",
-      "value_cols": [
-        "LengthKnown",
-        "LengthKnownUnits"
-      ],
-      "primary_value_col": "LengthKnown",
-      "values": {
-        "LengthKnown": "0.21",
-        "LengthKnownUnits": "km"
-      },
-      "primary_value": "0.21",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "EIS summary table (Table 2.2, WC167 Offshore Manifold Platform Bypass): 'Length 700 feet / 213 meters' -- 213 m = 0.213 km, matching the recorded 0.21 km within rounding."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Confirmed within rounding (213 m vs recorded 0.21 km / 210 m) by the EIS's own summary table. Searched for a fully independent second source stating this exact dimension (the 2024 DOE extension filing references the same bypass but does not restate its length/diameter, citing the MARAD ROD instead -- i.e. the same underlying origin) and none was found; kept at tier=medium (single well-documented origin) per the single-source rule rather than left unconfirmed. Note for awareness (not a value change): the routes-repo geojson for this PID digitizes to 0.501 km, about 2.4x this EIS figure -- discussed in the main validity entry, judged a schematic-trace effect, not evidence the EIS figure is wrong."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Diameter [ref]",
-      "value_cols": [
-        "Diameter",
-        "DiameterUnits"
-      ],
-      "primary_value_col": "Diameter",
-      "values": {
-        "Diameter": "42",
-        "DiameterUnits": "in"
-      },
-      "primary_value": "42",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "EIS summary table: 'Diameter 42 inches / 107 centimeters' for the WC167 bypass; also stated in the narrative as 'one 700-ft, 42-inch-diameter bypass.'"
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Confirmed exactly (42 in). Same single-origin caveat as Length above: the 2024 DOE extension filing discusses this bypass but does not independently restate the diameter, so kept at tier=medium pending a genuinely separate source."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "FuelSource [ref]",
-      "value_cols": [
-        "FuelSource"
-      ],
-      "primary_value_col": "FuelSource",
-      "values": {
-        "FuelSource": "Onshore interstate pipeline grid"
-      },
-      "primary_value": "Onshore interstate pipeline grid",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "EIS Section 2.2.8.1: gas is metered/received 'at the interconnection with existing natural gas pipelines at Transco Station 44,' with potential supply from ANR Pipeline, Natural Gas Pipeline Company of America, Tennessee Gas Pipeline, and Transco -- i.e. the onshore interstate pipeline grid, which is then routed to this offshore bypass via the UTOS/HIOS systems."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "medium",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Confirmed by the EIS's own description of the gas supply chain feeding this interconnection. Single-origin (same EIS); no independent second source found describing the upstream supply grid in this level of detail."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "Location [ref]",
-      "value_cols": [
-        "StartLocation",
-        "StartPrefecture/District",
-        "StartState/Province",
-        "StartCountryOrArea",
-        "EndLocation",
-        "EndPrefecture/District",
-        "EndState/Province",
-        "EndCountryOrArea"
-      ],
-      "primary_value_col": "StartLocation",
-      "values": {
-        "StartLocation": "UTOS Gas Pipeline",
-        "StartState/Province": "Gulf of Mexico",
-        "StartCountryOrArea": "United States",
-        "EndLocation": "High Island Offshore Gas Pipeline",
-        "EndState/Province": "Gulf of Mexico",
-        "EndCountryOrArea": "United States"
-      },
-      "primary_value": "UTOS Gas Pipeline",
-      "proposed_refs": [
-        "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "EIS: the bypass is 'constructed to bypass an existing offshore platform at West Cameron lease block 167 (WC 167)' to 'connect the former U-T Offshore System (UTOS)...and the High Island Offshore System (HIOS)' -- confirms both named endpoints; both are offshore Gulf of Mexico OCS facilities, United States."
-        }
-      ],
-      "class_out": "REFS_ADDED",
-      "tier": "high",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Was MISSING_REF (value present, cell empty). The EIS directly names both UTOS and HIOS as the two systems this bypass connects, and both are Outer Continental Shelf (Gulf of Mexico) facilities -- so both the endpoint names and the 'Gulf of Mexico' state/province values are confirmed as recorded. Per the route-vs-sheet check: the routes-repo geometry sits at ~29.40N/-93.44W (offshore Cameron Parish LA), which is the offshore-snapping artifact the orchestrator flagged for this row, not a real state error -- no cell change is proposed, consistent with that guidance."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "SegmentCost [ref]",
-      "value_cols": [
-        "SegmentCost",
-        "SegmentCostUnits",
-        "SegmentCostYear"
-      ],
-      "primary_value_col": "SegmentCost",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Could not confirm $8,000,000,000 as a construction/capital cost anywhere. Strong evidence (written up in the linked validity 'spec' concern) that this figure is actually Delfin's July 2023 Centrica LNG sales agreement value, not a construction cost -- so I have not carried it forward as a sourced fill, and I have no defensible replacement segment-cost figure to propose either. Searched: EIS (both volumes), 2024 DOE extension filing, oedigital, lngprime, offshore-energy.biz, gasworld, PGJ, Upstream Online -- no source ties a dollar figure specifically to constructing the 700-ft WC167 bypass."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "ref_col": "FID [ref]",
-      "value_cols": [
-        "FIDStatus",
-        "FIDYear"
-      ],
-      "primary_value_col": "FIDStatus",
-      "values": {
-        "FIDStatus": "FID",
-        "FIDYear": "2026"
-      },
-      "primary_value": "FID",
-      "proposed_refs": [
-        "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-        "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/"
-      ],
-      "verifications": [
-        {
-          "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "'Delfin Midstream Announces $5 Billion Final Investment Decision for First FLNG Vessel' -- June 3, 2026, Delfin's own release."
-        },
-        {
-          "url": "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "Independent trade press corroboration of the same FID, June 2026."
-        }
-      ],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Old ref (lngprime, 2024) supported FIDStatus=Pre-FID as of 2024 -- superseded by the June 2026 FID, sourced by Delfin's own press release plus an independent trade-press write-up (company-website-vs-press = two origins). Terminal-vs-segment caveat applies as noted in the linked validity concern."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "oo_sheet_row": 163,
-      "ref_col": "Operator [ref]",
-      "value_cols": [
-        "Operator",
-        "OperatorLocalLanguage",
-        "QCCOwner(业主单位)"
-      ],
-      "primary_value_col": "Operator",
-      "values": {},
-      "primary_value": "",
-      "proposed_refs": [],
-      "verifications": [],
-      "class_out": "UNRESOLVED",
-      "tier": "low",
-      "independent": false,
-      "source_language": "en",
-      "researcher_notes": "Searched the Final EIS, the 2024 DOE extension filing, the 2018 federalregister.gov change-in-control notice, oedigital.com and delfinmidstream.com for an explicit 'Operator' designation for this specific pipeline segment distinct from the recorded Owner (Delfin LNG LLC). All of them identify Delfin LNG LLC as the applicant/permit holder/owner, but none assigns a separate operator role for the bypass pipeline itself. The only distinct 'operator' language found is in oedigital's 2015 article, where Hoegh LNG is named as co-owner, owner's engineer, and OPERATOR of the FLNG VESSELS under a 2015 joint development agreement -- that is explicitly the vessels' operator, not this interconnecting pipeline's, so I have not applied it here. Left genuinely UNRESOLVED rather than assuming Operator=Owner without a source that says so."
-    },
-    {
-      "segment_name": "",
-      "sheet_row": 34,
-      "oo_sheet_row": 163,
-      "ref_col": "Owner [ref]",
-      "value_cols": [
-        "Owner1",
-        "Owner1%",
-        "Owner2",
-        "Owner2%",
-        "Owner3",
-        "Owner3%",
-        "Owner4",
-        "Owner4%",
-        "Owner5",
-        "Owner5%",
-        "Owner6",
-        "Owner6%",
-        "Owner7",
-        "Owner7%",
-        "Owner8",
-        "Owner8%",
-        "Owner9",
-        "Owner9%",
-        "Owner10",
-        "Owner10%",
-        "Owner11",
-        "Owner11%"
-      ],
-      "primary_value_col": "Owner1",
-      "values": {
-        "Owner1": "Delfin LNG LLC",
-        "Owner1%": "100.00%"
-      },
-      "primary_value": "Delfin LNG LLC",
-      "proposed_refs": [
-        "https://www.federalregister.gov/documents/2018/08/29/2018-18728/change-in-control-delfin-lng-llc",
-        "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng"
-      ],
-      "verifications": [
-        {
-          "url": "https://www.federalregister.gov/documents/2018/08/29/2018-18728/change-in-control-delfin-lng-llc",
-          "ok": true,
-          "contains_value": true,
-          "name_found": false,
-          "note": "Federal Register notice: 'An intermediary holding Co, Delfin...owning 100% of Delfin LNG' -- confirms Delfin LNG LLC as the 100%-owned licensee entity; page is about the applicant's corporate ownership structure, not the pipeline's own name."
-        },
-        {
-          "url": "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
-          "ok": true,
-          "contains_value": true,
-          "name_found": true,
-          "note": "'Delfin LNG submitted an application to construct, own and operate the Delfin LNG project...' -- names Delfin LNG as the applicant/owner of the project this pipeline is part of."
-        }
-      ],
-      "class_out": "REVERIFIED",
-      "tier": "high",
-      "independent": true,
-      "source_language": "en",
-      "researcher_notes": "Reverified: Delfin LNG LLC 100% is confirmed by the 2018 Federal Register change-in-control notice (a regulatory filing about the licensee's ownership) and independently by the 2015 oedigital article naming Delfin LNG as the project applicant/owner -- two distinct origins. Dropped the third existing ref (delfinmidstream.com/assets/, a generic asset-listing page with no ownership-percentage language) as not adding support. WATCH ITEM: Delfin's June 3, 2026 FID press release states that GIP, MOL, Vitol and Diameter Capital Partners 'have agreed to invest in the first phase' of the project concurrent with FID -- this may signal a future change to the ownership cap table, but no source gives specific equity percentages, so Owner1/Owner1% are kept as recorded rather than adding a speculative Owner2."
+     "url": "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Independent 2015 press article: Delfin proposes to 'transport natural gas to four moored FLNG vessels' via existing offshore pipeline infrastructure."
     }
-  ],
-  "cross_row_leads": [],
-  "summary": "P0173 Delfin Offshore Pipeline: confirmed (caveat) -- real 700-ft/42-in WC167 UTOS-HIOS bypass, correctly classified, not a duplicate, route judged plausible for its stated corridor; two spec concerns (Capacity misapplies the project's annual Bscf/yr export figure, SegmentCost is actually the unrelated Centrica LNG sales-contract value) and a status supersession (June 2026 FID -> Status=construction, FIDStatus=FID/2026, ConstructionYear=2026, StartYear1=2030, all terminal-level evidence per the linked caveat). UNRESOLVED: Capacity, Pressure, SegmentCost, Operator (all genuinely nothing found, notes detail what was searched)."
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Reverified as recorded; both the governing EIS and an independent 2015 press account describe this infrastructure as natural gas pipeline."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "primary_value": "transmission",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIS describes the bypass as interconnecting UTOS and HIOS, both historically FERC-certificated interstate transmission pipeline systems."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Single-origin re-verification (the EIS); searched oedigital, lngprime and the DOE extension filing for an explicit second 'transmission' classification statement and found none -- press coverage does not typically classify pipeline type. Classification itself is not in doubt (an interconnect between two interstate transmission systems is transmission, not gathering/feeder), so kept at medium per the single-source rule rather than left unfilled."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "2015",
+    "ProposalMonth": "July"
+   },
+   "primary_value": "2015",
+   "proposed_refs": [
+    "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
+    "https://www.federalregister.gov/documents/2015/07/29/2015-18594/deepwater-port-license-application-delfin-lng-llc-delfin-lng-deepwater-port"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Published May 11, 2015: 'Delfin LNG submitted an application...The submission was sent to MARAD and USCG on 8 May.'"
+    },
+    {
+     "url": "https://www.federalregister.gov/documents/2015/07/29/2015-18594/deepwater-port-license-application-delfin-lng-llc-delfin-lng-deepwater-port",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Federal Register notice of the deepwater port license application, published July 29, 2015."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent origins both place the proposal in 2015. Minor nuance: the actual application was submitted to MARAD/USCG on May 8, 2015 per oedigital, while the Federal Register's formal notice of that application was published July 29, 2015 -- the recorded ProposalMonth=July matches the Federal Register notice date rather than the underlying May submission date. Kept as recorded (July 2015) since it is directly supported by the current_ref; flagging the month nuance rather than changing it."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "2026",
+    "ConstructionMonth": "June"
+   },
+   "primary_value": "2026",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "'has secured all necessary permits and licenses required to begin construction. Additionally, construction contracts...have been executed with...Samsung Heavy Industries...and Black & Veatch.' Dated June 3, 2026."
+    },
+    {
+     "url": "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Independent trade press corroboration of the June 2026 FID/construction-start milestone."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Was MISSING_VALUE. Sourced from the same June 2026 FID announcement as the Status/FID changes -- see the linked validity 'spec' concern for the terminal-vs-segment caveat: this dates the FLNG vessel's construction contracts, not a construction-start announcement for the WC167 bypass pipeline itself specifically. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf; https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/); independent True -> False; 2 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "2030"
+   },
+   "primary_value": "2030",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "'With the first vessel scheduled to begin LNG production in 2030...'"
+    },
+    {
+     "url": "https://naturalgasintel.com/news/delfin-lng-seen-nearing-fid-after-samsung-heavy-reports-29b-flng-contract/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "url_verifier confirms 'FID' and '2030' both present; page itself returned 403 to direct curl/manual inspection from this session, so treated as corroborating but not independently read -- flagged."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Old ref (lngprime) supported StartYear1=2027 -- but that figure traces to a FERC order extending the in-service deadline for Delfin's ONSHORE facilities only (185 FERC P61,009 (2023)), not a production-start date, and the very document carrying that ref (the 2024 DOE extension filing) states the same FERC deadline inconsistently as both 2027 and 2028 elsewhere in its own text. The June 2026 FID press release states first-vessel LNG production is now targeted for 2030, which is the best current evidence for this row's actual start date. Downgraded to tier=medium (not high) because the second source could not be manually read this session and because, per the terminal-vs-segment caveat, no source names this 700-ft pipeline segment specifically. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf; https://naturalgasintel.com/news/delfin-lng-seen-nearing-fid-after-samsung-heavy-reports-29b-flng-contract/); independent True -> False; 2 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Delay [ref]",
+   "value_cols": [
+    "Delayed",
+    "DelayType"
+   ],
+   "primary_value_col": "Delayed",
+   "values": {
+    "Delayed": "yes",
+    "DelayType": "confirmed"
+   },
+   "primary_value": "yes",
+   "proposed_refs": [
+    "https://lngprime.com/lng-terminals/delfin-seeks-doe-extension-for-flng-project/106901/",
+    "https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://lngprime.com/lng-terminals/delfin-seeks-doe-extension-for-flng-project/106901/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Reports Delfin's request for a DOE extension of its export authorizations, evidencing delay from original targets."
+    },
+    {
+     "url": "https://www.energy.gov/sites/default/files/2024-03/Delfin%20DOE%20Extension%20request%20(030124%20FINAL).pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "The extension-request filing itself is Delfin's own documented explanation for the delay (COVID, trade war, FLNGV technology changes -- Section III of the filing)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Reverified: delay is well-documented (project proposed 2015, original targets long passed, multiple DOE extension requests through 2024-2025). Delayed=yes/DelayType=confirmed stay correct even after the 2026 FID -- an eleven-year gap between initial proposal and FID is itself a confirmed delay, independent of the improved current outlook."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://oilandgaswatch.org/pipeline/4606",
+     "ok": false,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Client-rendered SPA; curl and url_verifier both return only an empty page shell (~1.9KB) with no article content; '657.5'/'657.50' not present. Retried with a browser UA; no reachable underlying API endpoint found."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not confirm 657.50 MMcf/d anywhere. Likely explanation for where the number came from (the EIS's project-wide 657.5 Bscf/yr LNG-export equivalent, misapplied as a segment MMcf/d figure) is written up in detail in the linked validity 'spec' concern on Capacity -- filed there rather than as a fabricated fill value here. Searched: EIS (draft + final), 2024 DOE extension filing, oedigital, lngprime, oilandgaswatch (unreadable) -- none state a segment-specific throughput for the WC167 bypass."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched the Final EIS in full for a MAOP specific to the WC167 bypass and found none. The EIS states MAOP for the ADJOINING systems individually -- UTOS MAOP 1,250 psig, HIOS MAOP 1,440 psig, the four HIOS-to-FLNGV laterals 1,250 psig each, and the ONSHORE 'DOF gas systems' (meter station/compressor/supply header) 1,250 psig -- but never gives a separate MAOP for the short bypass segment itself, which interconnects two systems rated differently (1,250 vs 1,440 psig). Assigning either adjoining figure to the bypass would be inference, not a stated fact, so left genuinely UNRESOLVED per the no-forced-numbers rule. Also checked the 2024 DOE extension filing and oilandgaswatch.org -- neither states a pressure figure."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "0.21",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "0.21",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIS summary table (Table 2.2, WC167 Offshore Manifold Platform Bypass): 'Length 700 feet / 213 meters' -- 213 m = 0.213 km, matching the recorded 0.21 km within rounding."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Confirmed within rounding (213 m vs recorded 0.21 km / 210 m) by the EIS's own summary table. Searched for a fully independent second source stating this exact dimension (the 2024 DOE extension filing references the same bypass but does not restate its length/diameter, citing the MARAD ROD instead -- i.e. the same underlying origin) and none was found; kept at tier=medium (single well-documented origin) per the single-source rule rather than left unconfirmed. Note for awareness (not a value change): the routes-repo geojson for this PID digitizes to 0.501 km, about 2.4x this EIS figure -- discussed in the main validity entry, judged a schematic-trace effect, not evidence the EIS figure is wrong."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "42",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "42",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIS summary table: 'Diameter 42 inches / 107 centimeters' for the WC167 bypass; also stated in the narrative as 'one 700-ft, 42-inch-diameter bypass.'"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Confirmed exactly (42 in). Same single-origin caveat as Length above: the 2024 DOE extension filing discusses this bypass but does not independently restate the diameter, so kept at tier=medium pending a genuinely separate source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Onshore interstate pipeline grid"
+   },
+   "primary_value": "Onshore interstate pipeline grid",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIS Section 2.2.8.1: gas is metered/received 'at the interconnection with existing natural gas pipelines at Transco Station 44,' with potential supply from ANR Pipeline, Natural Gas Pipeline Company of America, Tennessee Gas Pipeline, and Transco -- i.e. the onshore interstate pipeline grid, which is then routed to this offshore bypass via the UTOS/HIOS systems."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Confirmed by the EIS's own description of the gas supply chain feeding this interconnection. Single-origin (same EIS); no independent second source found describing the upstream supply grid in this level of detail."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "UTOS Gas Pipeline",
+    "StartState/Province": "Gulf of Mexico",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "High Island Offshore Gas Pipeline",
+    "EndState/Province": "Gulf of Mexico",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "UTOS Gas Pipeline",
+   "proposed_refs": [
+    "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.energy.gov/sites/default/files/2018/11/f57/final-eis-0531-port-delfin-lng-main-volume-2016-11.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "EIS: the bypass is 'constructed to bypass an existing offshore platform at West Cameron lease block 167 (WC 167)' to 'connect the former U-T Offshore System (UTOS)...and the High Island Offshore System (HIOS)' -- confirms both named endpoints; both are offshore Gulf of Mexico OCS facilities, United States."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Was MISSING_REF (value present, cell empty). The EIS directly names both UTOS and HIOS as the two systems this bypass connects, and both are Outer Continental Shelf (Gulf of Mexico) facilities -- so both the endpoint names and the 'Gulf of Mexico' state/province values are confirmed as recorded. Per the route-vs-sheet check: the routes-repo geometry sits at ~29.40N/-93.44W (offshore Cameron Parish LA), which is the offshore-snapping artifact the orchestrator flagged for this row, not a real state error -- no cell change is proposed, consistent with that guidance. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (energy.gov). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Could not confirm $8,000,000,000 as a construction/capital cost anywhere. Strong evidence (written up in the linked validity 'spec' concern) that this figure is actually Delfin's July 2023 Centrica LNG sales agreement value, not a construction cost -- so I have not carried it forward as a sourced fill, and I have no defensible replacement segment-cost figure to propose either. Searched: EIS (both volumes), 2024 DOE extension filing, oedigital, lngprime, offshore-energy.biz, gasworld, PGJ, Upstream Online -- no source ties a dollar figure specifically to constructing the 700-ft WC167 bypass."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "ref_col": "FID [ref]",
+   "value_cols": [
+    "FIDStatus",
+    "FIDYear"
+   ],
+   "primary_value_col": "FIDStatus",
+   "values": {
+    "FIDStatus": "FID",
+    "FIDYear": "2026"
+   },
+   "primary_value": "FID",
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "'Delfin Midstream Announces $5 Billion Final Investment Decision for First FLNG Vessel' -- June 3, 2026, Delfin's own release."
+    },
+    {
+     "url": "https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "note": "Independent trade press corroboration of the same FID, June 2026."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "UNRESOLVED (rule 4(a), orchestrator 2026-09-11): every ref found names the Delfin LNG project / FLNG vessel 1, never this row — the new 700-ft 42-in bypass connecting UTOS and HIOS at WC 167. Project FID June 2026 is real (Delfin FID press release; offshore-energy.biz) and is kept here as project-level evidence, but no source states construction, FID scope, or a start date for the bypass segment itself. DOE FEIS-0531 (Port Delfin) describes the bypass as proposed; RBN's FID post returned 403. Status stays as recorded pending a segment-level source. Old ref (lngprime, 2024) supported FIDStatus=Pre-FID as of 2024 -- superseded by the June 2026 FID, sourced by Delfin's own press release plus an independent trade-press write-up (company-website-vs-press = two origins). Terminal-vs-segment caveat applies as noted in the linked validity concern. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: proposed_refs cleared (an UNRESOLVED unit carries no ref; the URLs searched and found NOT to state this unit's value were: https://delfinmidstream.com/wp-content/uploads/2026/06/Delfin_FID-Press-Release.pdf; https://www.offshore-energy.biz/worlds-largest-flng-crosses-the-fid-finish-line-with-5-billion-committed/); independent True -> False; 2 verification(s) corrected contains_value true -> false: the source was read but does not state THIS unit's value (different scope, an inference, or a vocabulary the source does not use). The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "oo_sheet_row": 163,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched the Final EIS, the 2024 DOE extension filing, the 2018 federalregister.gov change-in-control notice, oedigital.com and delfinmidstream.com for an explicit 'Operator' designation for this specific pipeline segment distinct from the recorded Owner (Delfin LNG LLC). All of them identify Delfin LNG LLC as the applicant/permit holder/owner, but none assigns a separate operator role for the bypass pipeline itself. The only distinct 'operator' language found is in oedigital's 2015 article, where Hoegh LNG is named as co-owner, owner's engineer, and OPERATOR of the FLNG VESSELS under a 2015 joint development agreement -- that is explicitly the vessels' operator, not this interconnecting pipeline's, so I have not applied it here. Left genuinely UNRESOLVED rather than assuming Operator=Owner without a source that says so."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 34,
+   "oo_sheet_row": 163,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Delfin LNG LLC",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Delfin LNG LLC",
+   "proposed_refs": [
+    "https://www.federalregister.gov/documents/2018/08/29/2018-18728/change-in-control-delfin-lng-llc",
+    "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.federalregister.gov/documents/2018/08/29/2018-18728/change-in-control-delfin-lng-llc",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "note": "Federal Register notice: 'An intermediary holding Co, Delfin...owning 100% of Delfin LNG' -- confirms Delfin LNG LLC as the 100%-owned licensee entity; page is about the applicant's corporate ownership structure, not the pipeline's own name."
+    },
+    {
+     "url": "https://www.oedigital.com/news/452668-delfin-proposes-first-gom-flng",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Delfin LNG submitted an application to construct, own and operate the Delfin LNG project...' -- names Delfin LNG as the applicant/owner of the project this pipeline is part of."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Reverified: Delfin LNG LLC 100% is confirmed by the 2018 Federal Register change-in-control notice (a regulatory filing about the licensee's ownership) and independently by the 2015 oedigital article naming Delfin LNG as the project applicant/owner -- two distinct origins. Dropped the third existing ref (delfinmidstream.com/assets/, a generic asset-listing page with no ownership-percentage language) as not adding support. WATCH ITEM: Delfin's June 3, 2026 FID press release states that GIP, MOL, Vitol and Diameter Capital Partners 'have agreed to invest in the first phase' of the project concurrent with FID -- this may signal a future change to the ownership cap table, but no source gives specific equity percentages, so Owner1/Owner1% are kept as recorded rather than adding a speculative Owner2."
+  }
+ ],
+ "cross_row_leads": [],
+ "summary": "P0173 Delfin Offshore Pipeline: confirmed (caveat) -- real 700-ft/42-in WC167 UTOS-HIOS bypass, correctly classified, not a duplicate, route judged plausible for its stated corridor; two spec concerns (Capacity misapplies the project's annual Bscf/yr export figure, SegmentCost is actually the unrelated Centrica LNG sales-contract value) and a status supersession (June 2026 FID -> Status=construction, FIDStatus=FID/2026, ConstructionYear=2026, StartYear1=2030, all terminal-level evidence per the linked caveat). UNRESOLVED: Capacity, Pressure, SegmentCost, Operator (all genuinely nothing found, notes detail what was searched)."
 }

@@ -1,256 +1,629 @@
 {
-  "project_id": "P0200",
-  "pipeline_name": "High Island Offshore Gas Pipeline System",
-  "sheet_row": 59,
-  "wiki": "https://www.gem.wiki/High_Island_Offshore_Gas_Pipeline_System",
-  "validity": [
+ "project_id": "P0200",
+ "pipeline_name": "High Island Offshore Gas Pipeline System",
+ "sheet_row": 59,
+ "wiki": "https://www.gem.wiki/High_Island_Offshore_Gas_Pipeline_System",
+ "validity": [
+  {
+   "segment_name": "",
+   "verdict": "confirmed (caveat)",
+   "concern_type": "none",
+   "recommendation": "no edit needed; existence, ownership, and classification are solidly documented",
+   "contested": {},
+   "researcher_notes": "EXISTENCE: solidly real. Proposed Sept 1975 by 5 partners (American Natural Gas, United Gas Pipe Line, Texas Gas Transmission, Natural Gas Pipeline Co. of America, Transco), construction began Aug 1 1976, in service early 1978 -- corroborated by two independent, decades-apart sources: offshore-mag.com (2018 retrospective) and Oil & Gas Journal via TRID/TRB abstract (Ewing, R.C., 'High Island Offshore System's Pipeline Network Under Way in Gulf,' OGJ 75(2), Jan 1977) -- the two agree on diameter breakdown (67mi 42in / 26mi 36in / 110.5mi 30in) and capacity (988 MMcf/d initial, expandable to 2 bcf/d). CLASSIFICATION: 'both transmission and gathering' is correct -- a 2009 PHMSA (DOT) pipeline-safety interpretation letter (reposted at viadata.wordpress.com) states FERC and PHMSA agree certain HIOS portions are gathering while the segment interconnecting with UTOS is transmission. DUPLICATE: NOT a duplicate of P0188 UTOS -- the same PHMSA letter independently states UTOS is a distinct 29-mile, 42-inch line that receives 'wet gas' from HIOS at West Cameron Block 167, matching P0188's own roster spec (len=29.0 dia=42) -- two interconnected but physically separate systems, not a double-count. OWNERSHIP: Genesis Energy, L.P., 100%, confirmed by TWO independent sources -- Genesis's own current operations page ('Genesis Ownership: 100%') and the third-party pipeline database Rextag ('Owner: Genesis Energy, LP'). Genesis's 2015 $1.5B acquisition of Enterprise's GOM offshore pipeline business is independently reported (Bloomberg, Maritime Executive, Offshore Technology, The Advocate) but those articles name only the OIL systems acquired (Poseidon, SEKCO, CHOPS) -- HIOS is not named in that coverage, so the acquisition articles do not independently corroborate HIOS specifically; ownership rests on Genesis's own site + Rextag's current listing. CAVEAT -- length migration over time: the ORIGINAL 1976-78 construction totaled 203.5 mi (67+26+110.5, per both historical sources); Genesis's CURRENT page instead describes a 152-mile 'core' HIOS plus an 86-mile East Breaks Gathering System addition, totaling 238 mi -- the SAME total the sheet already carries, but not the same physical inventory as the original 203.5 mi (implying some original mainline was retired/re-scoped while the East Breaks Gathering extension was added later). This is consistent with 'the likeliest to have partial abandonments' guidance for this row; I found no dedicated abandonment order for the ORIGINAL mainline itself (see the separate FERC-docket note in status_reviews)."
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "drop the BOEM 2008-038.pdf URL from PipelineType [ref] -- it documents an unrelated pipeline; keep only the viadata.wordpress.com PHMSA letter",
+   "contested": {
+    "PipelineType [ref]": ""
+   },
+   "researcher_notes": "The recorded PipelineType [ref] cites two URLs. https://www.boem.gov/sites/default/files/boem-newsroom/Library/Publications/2008/2008-038.pdf resolves (200) and even fuzzy-matches on 'High Island' via url_verifier's --name check, but reading the PDF shows it is a 2008 BOEM/MMS INVESTIGATION REPORT into a 2007 crude-OIL pipeline rupture on the 'High Island Pipeline System' (HIPS), operated at the time by Plains -- a different, oil-gathering system near the same field area, not this gas transmission/gathering row (HIOS). This is a false-positive relevance match (same 'High Island' place name, different pipeline entirely) -- it does not support this row's PipelineType and should not remain in the ref cell. The second URL, https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/, IS the correct, on-point source (a 2009 PHMSA pipeline-safety interpretation letter that names HIOS specifically and states FERC agrees parts of HIOS are gathering, parts are transmission) -- keep it alone."
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "reconcile against FERC's Part 284 Informational Postings for HIOS before treating either figure as final",
+   "contested": {
+    "LengthKnown": "",
+    "Capacity": ""
+   },
+   "researcher_notes": "Third-party pipeline database Rextag (rextag.com/pages/high-island-offshore-system, live 2026, sourced from FERC gas Informational Postings, labeled '(Unofficial)') lists 'Miles of Pipeline: 287' and 'System Capacity: 1.8 Bcf/d' for HIOS -- both DISAGREE with the sheet's recorded LengthKnown=238.00 mi and Capacity=2000.00 MMcf/d. The recorded values are directly supported by Genesis Energy's own current operations page (238 = 152 core + 86 East Breaks Gathering) and by the historical construction/nameplate figures (988 MMcf/d initial, expandable to 2 bcf/d ultimate, per offshore-mag and the 1977 Oil & Gas Journal/TRID article), so I am NOT overriding the recorded values -- Genesis's own direct statement outweighs a third-party aggregator explicitly labeled unofficial. But a 49-mile and 200-MMcf/d gap is material and unexplained; it could reflect additional laterals/platforms Genesis's summary page does not itemize, or a currently-authorized (vs. nameplate-ultimate) capacity. Flagging for a FERC Informational Postings pull (Part 284) as the decisive source, which I did not complete in the time available for this row."
+  },
+  {
+   "segment_name": "",
+   "verdict": "concern",
+   "concern_type": "spec",
+   "recommendation": "review the §8 route geometry against BOEM pipeline-segment records before treating it as an accurate HIOS trace",
+   "contested": {
+    "RouteAccuracy": ""
+   },
+   "researcher_notes": "The routes-repo geometry (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P0200.geojson) is a single feature (Operator='High Island Offshore', Count_=38) but its MultiLineString has 60 disconnected parts / 169 vertices spanning roughly 27.87N-29.40N, 94.43W-93.44W. Summing straight-line vertex-to-vertex distance gives ~326 mi, which is longer than BOTH the sheet's 238 mi and Rextag's 287 mi. I did not have per-segment status/size attributes for this dataset (unlike P0256 Stingray's route in this same batch, which carries BOEM STATUS_COD/PPL_SIZE_C fields), so I cannot tell whether some of the 60 parts are abandoned/removed segments folded into this operator-name filter, matching the pattern flagged for Stingray. Given HIOS is independently confirmed as one of the offshore rows most likely to carry partial abandonments (see status_reviews), this geometry is worth a closer BOEM-record check before relying on it for a §8 route candidate."
+  }
+ ],
+ "fills": [
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "primary_value_col": "Status",
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "proposed_refs": [
+    "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+    "https://rextag.com/pages/high-island-offshore-system"
+   ],
+   "verifications": [
     {
-      "segment_name": "",
-      "verdict": "confirmed (caveat)",
-      "concern_type": "none",
-      "recommendation": "no edit needed; existence, ownership, and classification are solidly documented",
-      "contested": {},
-      "researcher_notes": "EXISTENCE: solidly real. Proposed Sept 1975 by 5 partners (American Natural Gas, United Gas Pipe Line, Texas Gas Transmission, Natural Gas Pipeline Co. of America, Transco), construction began Aug 1 1976, in service early 1978 -- corroborated by two independent, decades-apart sources: offshore-mag.com (2018 retrospective) and Oil & Gas Journal via TRID/TRB abstract (Ewing, R.C., 'High Island Offshore System's Pipeline Network Under Way in Gulf,' OGJ 75(2), Jan 1977) -- the two agree on diameter breakdown (67mi 42in / 26mi 36in / 110.5mi 30in) and capacity (988 MMcf/d initial, expandable to 2 bcf/d). CLASSIFICATION: 'both transmission and gathering' is correct -- a 2009 PHMSA (DOT) pipeline-safety interpretation letter (reposted at viadata.wordpress.com) states FERC and PHMSA agree certain HIOS portions are gathering while the segment interconnecting with UTOS is transmission. DUPLICATE: NOT a duplicate of P0188 UTOS -- the same PHMSA letter independently states UTOS is a distinct 29-mile, 42-inch line that receives 'wet gas' from HIOS at West Cameron Block 167, matching P0188's own roster spec (len=29.0 dia=42) -- two interconnected but physically separate systems, not a double-count. OWNERSHIP: Genesis Energy, L.P., 100%, confirmed by TWO independent sources -- Genesis's own current operations page ('Genesis Ownership: 100%') and the third-party pipeline database Rextag ('Owner: Genesis Energy, LP'). Genesis's 2015 $1.5B acquisition of Enterprise's GOM offshore pipeline business is independently reported (Bloomberg, Maritime Executive, Offshore Technology, The Advocate) but those articles name only the OIL systems acquired (Poseidon, SEKCO, CHOPS) -- HIOS is not named in that coverage, so the acquisition articles do not independently corroborate HIOS specifically; ownership rests on Genesis's own site + Rextag's current listing. CAVEAT -- length migration over time: the ORIGINAL 1976-78 construction totaled 203.5 mi (67+26+110.5, per both historical sources); Genesis's CURRENT page instead describes a 152-mile 'core' HIOS plus an 86-mile East Breaks Gathering System addition, totaling 238 mi -- the SAME total the sheet already carries, but not the same physical inventory as the original 203.5 mi (implying some original mainline was retired/re-scoped while the East Breaks Gathering extension was added later). This is consistent with 'the likeliest to have partial abandonments' guidance for this row; I found no dedicated abandonment order for the ORIGINAL mainline itself (see the separate FERC-docket note in status_reviews)."
+     "url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "current (2026) Genesis Energy operations page describes HIOS in present tense transporting gas from GOM fields to Kinetica Energy Express interconnects -- status inferred from active-operations prose, not a literal 'operating' token"
     },
     {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "drop the BOEM 2008-038.pdf URL from PipelineType [ref] -- it documents an unrelated pipeline; keep only the viadata.wordpress.com PHMSA letter",
-      "contested": {"PipelineType [ref]": ""},
-      "researcher_notes": "The recorded PipelineType [ref] cites two URLs. https://www.boem.gov/sites/default/files/boem-newsroom/Library/Publications/2008/2008-038.pdf resolves (200) and even fuzzy-matches on 'High Island' via url_verifier's --name check, but reading the PDF shows it is a 2008 BOEM/MMS INVESTIGATION REPORT into a 2007 crude-OIL pipeline rupture on the 'High Island Pipeline System' (HIPS), operated at the time by Plains -- a different, oil-gathering system near the same field area, not this gas transmission/gathering row (HIOS). This is a false-positive relevance match (same 'High Island' place name, different pipeline entirely) -- it does not support this row's PipelineType and should not remain in the ref cell. The second URL, https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/, IS the correct, on-point source (a 2009 PHMSA pipeline-safety interpretation letter that names HIOS specifically and states FERC agrees parts of HIOS are gathering, parts are transmission) -- keep it alone."
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "reconcile against FERC's Part 284 Informational Postings for HIOS before treating either figure as final",
-      "contested": {"LengthKnown": "", "Capacity": ""},
-      "researcher_notes": "Third-party pipeline database Rextag (rextag.com/pages/high-island-offshore-system, live 2026, sourced from FERC gas Informational Postings, labeled '(Unofficial)') lists 'Miles of Pipeline: 287' and 'System Capacity: 1.8 Bcf/d' for HIOS -- both DISAGREE with the sheet's recorded LengthKnown=238.00 mi and Capacity=2000.00 MMcf/d. The recorded values are directly supported by Genesis Energy's own current operations page (238 = 152 core + 86 East Breaks Gathering) and by the historical construction/nameplate figures (988 MMcf/d initial, expandable to 2 bcf/d ultimate, per offshore-mag and the 1977 Oil & Gas Journal/TRID article), so I am NOT overriding the recorded values -- Genesis's own direct statement outweighs a third-party aggregator explicitly labeled unofficial. But a 49-mile and 200-MMcf/d gap is material and unexplained; it could reflect additional laterals/platforms Genesis's summary page does not itemize, or a currently-authorized (vs. nameplate-ultimate) capacity. Flagging for a FERC Informational Postings pull (Part 284) as the decisive source, which I did not complete in the time available for this row."
-    },
-    {
-      "segment_name": "",
-      "verdict": "concern",
-      "concern_type": "spec",
-      "recommendation": "review the §8 route geometry against BOEM pipeline-segment records before treating it as an accurate HIOS trace",
-      "contested": {"RouteAccuracy": ""},
-      "researcher_notes": "The routes-repo geometry (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P0200.geojson) is a single feature (Operator='High Island Offshore', Count_=38) but its MultiLineString has 60 disconnected parts / 169 vertices spanning roughly 27.87N-29.40N, 94.43W-93.44W. Summing straight-line vertex-to-vertex distance gives ~326 mi, which is longer than BOTH the sheet's 238 mi and Rextag's 287 mi. I did not have per-segment status/size attributes for this dataset (unlike P0256 Stingray's route in this same batch, which carries BOEM STATUS_COD/PPL_SIZE_C fields), so I cannot tell whether some of the 60 parts are abandoned/removed segments folded into this operator-name filter, matching the pattern flagged for Stingray. Given HIOS is independently confirmed as one of the offshore rows most likely to carry partial abandonments (see status_reviews), this geometry is worth a closer BOEM-record check before relying on it for a §8 route candidate."
+     "url": "https://rextag.com/pages/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "independent third-party pipeline database lists current owner/operator/miles/capacity for HIOS as an active system"
     }
-  ],
-  "fills": [
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Existing ref (Genesis's own page) re-verified live and re-confirmed; added Rextag as a second, independent, current source. See status_reviews for the dated evidence and the unresolved 2017 FERC abandonment-by-lease docket note."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "primary_value_col": "Fuel",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+    "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system"
+   ],
+   "verifications": [
     {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Status [ref]",
-      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "operating"},
-      "primary_value": "operating",
-      "proposed_refs": [
-        "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
-        "https://rextag.com/pages/high-island-offshore-system"
-      ],
-      "verifications": [
-        {"url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "current (2026) Genesis Energy operations page describes HIOS in present tense transporting gas from GOM fields to Kinetica Energy Express interconnects -- status inferred from active-operations prose, not a literal 'operating' token"},
-        {"url": "https://rextag.com/pages/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "independent third-party pipeline database lists current owner/operator/miles/capacity for HIOS as an active system"}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Existing ref (Genesis's own page) re-verified live and re-confirmed; added Rextag as a second, independent, current source. See status_reviews for the dated evidence and the unresolved 2017 FERC abandonment-by-lease docket note."
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'one of the largest new natural-gas pipelines' -- article throughout describes HIOS as a natural gas pipeline"
     },
     {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"},
-      "primary_value": "Gas",
-      "proposed_refs": [
-        "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
-        "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system"
-      ],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'one of the largest new natural-gas pipelines' -- article throughout describes HIOS as a natural gas pipeline"},
-        {"url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "'HIOS transports natural gas from producing fields...'"}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Existing ref re-verified live; added Genesis's own current page as a second, independent-of-vintage source."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "PipelineType [ref]",
-      "value_cols": ["PipelineType"], "primary_value_col": "PipelineType", "values": {"PipelineType": "both transmission and gathering"},
-      "primary_value": "both transmission and gathering",
-      "proposed_refs": ["https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/"],
-      "verifications": [
-        {"url": "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/", "ok": true, "contains_value": true, "name_found": true, "note": "2009 PHMSA interpretation letter: 'We agree with the Federal Energy Regulatory Commission (FERC) that certain portions of the HIOS are used for the gathering of gas, but that the pipeline segment that interconnects with the UTOS is a transmission line'"}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "This is a federal regulatory determination naming HIOS specifically -- treated as sufficient alone (tier high) despite being one document. The OTHER existing citation on this cell, boem.gov/.../2008-038.pdf, is about an unrelated pipeline (see validity concern) and should be dropped, not re-added here."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
-      "values": {"ProposalYear": "1975", "ProposalMonth": "September"}, "primary_value": "1975",
-      "proposed_refs": [
-        "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
-        "https://trid.trb.org/view/54235"
-      ],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'In 1975... That September, affiliates of American Natural Gas Co., United Gas Pipe Line Co., Texas Gas Transmission Co., Natural Gas Pipeline Co. of America, and Transco announced plans to build the High Island Offshore System (HIOS) pipeline' -- exact month+year match; the original url_verifier substring check missed this because the year appears as prose ('That September... 1975' split across a sentence), not as an adjacent '1975' token"},
-        {"url": "https://trid.trb.org/view/54235", "ok": true, "contains_value": true, "name_found": true, "note": "Oil & Gas Journal (Ewing, Jan 1977) corroborates the 5-company sponsor group and early history, consistent with the Sept 1975 announcement"}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Confirmed exactly as recorded; the prior check's FAIL was a content false-negative (value present as prose, not a bare substring), per url_verifier's own documented caveat."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
-      "values": {"ConstructionYear": "1976", "ConstructionMonth": "August"}, "primary_value": "1976",
-      "proposed_refs": [
-        "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
-        "https://trid.trb.org/view/54235"
-      ],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'Construction began on Aug. 1, 1976, one day after the FPC granted permission to build the line.'"},
-        {"url": "https://trid.trb.org/view/54235", "ok": true, "contains_value": true, "name_found": true, "note": "Oil & Gas Journal, published Jan 1977, reports the line 'now building' -- independently corroborates construction was already underway by early 1977, consistent with an Aug 1976 start"}
-      ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "MISSING_VALUE filled: construction began Aug 1, 1976 (day after FPC -- the pre-FERC Federal Power Commission -- granted permission); the 1976 season built 77 of the planned 203 miles, with the second season starting April 1977."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-      "primary_value_col": "StartYear1", "values": {"StartYear1": "1978"}, "primary_value": "1978",
-      "proposed_refs": ["https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico"],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'The HIOS pipeline was completed on schedule and placed in service in early 1978.'"}
-      ],
-      "class_out": "REVERIFIED", "tier": "medium", "independent": true, "source_language": "en",
-      "researcher_notes": "Confirmed as recorded. Searched for a second, date-specific independent source (FERC certificate/commencement-of-service notice, PHMSA in-service record) and did not find one accessible in the time available for this row -- single strong primary source, staying medium per the corollary."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
-      "values": {"Capacity": "2000.00", "CapacityUnits": "MMcf/d"}, "primary_value": "2000.00",
-      "proposed_refs": [
-        "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
-        "https://trid.trb.org/view/54235"
-      ],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'Through expansion and additional compressor facilities, the [system's] ultimate capacity [was] 2 billion cf/d' (988 MMcf/d initial)"},
-        {"url": "https://trid.trb.org/view/54235", "ok": true, "contains_value": true, "name_found": true, "note": "'Certificated capacity of the system is 988 MMcfd less fuel used. This capacity is expandable to 2 billion cfd.' -- independently matches the offshore-mag figures exactly"}
-      ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Two independent period/retrospective sources agree the ultimate/expandable design capacity is 2,000 MMcf/d, matching the recorded value. NOTE: Rextag's current listing states 'System Capacity: 1.8 Bcf/d' -- filed as a separate spec concern in validity[] rather than overriding this nameplate-design figure, since it may reflect currently-subscribed vs. ultimate design capacity."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure", "values": {},
-      "primary_value": "", "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "", "independent": false, "source_language": "en",
-      "researcher_notes": "Searched Genesis Energy's HIOS page, the offshore-mag retrospective, the TRID/OGJ 1977 abstract, and a targeted web search for HIOS MAOP/tariff pressure figures -- none state a pressure/MAOP value. A FERC tariff or Part 192 filing would be the right document but I could not locate one naming a pressure figure in the time available. Leaving blank rather than forcing a number."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "238.00", "LengthKnownUnits": "mi"}, "primary_value": "238.00",
-      "proposed_refs": ["https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system"],
-      "verifications": [
-        {"url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "'HIOS includes 152 miles of pipeline...In addition, this system included the 86-mile East Breaks Gathering System...' and a separate data field 'System Miles: 238' -- 152+86=238, matching the recorded value exactly"}
-      ],
-      "class_out": "REVERIFIED", "tier": "medium", "independent": true, "source_language": "en",
-      "researcher_notes": "Confirmed as recorded via Genesis's own current, direct statement (152 core + 86 East Breaks Gathering = 238). Held to medium, not high, because the only OTHER length figure I could find (Rextag, 287 mi) disagrees rather than agrees -- see the spec concern in validity[]. This is NOT the same 203.5-mi figure from the original 1976-78 construction (see validity caveat)."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
-      "values": {"Diameter": "42,36,30", "DiameterUnits": "in"}, "primary_value": "42,36,30",
-      "proposed_refs": [
-        "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
-        "https://trid.trb.org/view/54235"
-      ],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'HIOS called for 67 miles of 42-in., 26 miles of 36-in., and 110.5 miles of 30-in. pipe.'"},
-        {"url": "https://trid.trb.org/view/54235", "ok": true, "contains_value": true, "name_found": true, "note": "'HIOS will lay 67 miles of 42-in., 26 miles of 36-in., and 110.5 miles of 30-in.-diameter pipe' -- word-for-word match to offshore-mag from an independent 1977 source"}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Two independent sources, 41 years apart, agree exactly on the three diameters recorded."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {"FuelSource": "Gulf of Mexico"},
-      "primary_value": "Gulf of Mexico",
-      "proposed_refs": [
-        "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
-        "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico"
-      ],
-      "verifications": [
-        {"url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "'HIOS transports natural gas from producing fields located in the Galveston, Garden Banks, West Cameron, High Island and East Breaks areas of the Gulf of Mexico'"},
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "throughout: gas gathered from Gulf of Mexico OCS blocks"}
-      ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "MISSING_REF filled: two independent sources confirm the gas source areas are all Gulf of Mexico OCS fields, matching the recorded value exactly."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
-      "primary_value_col": "StartLocation",
-      "values": {"StartLocation": "Gulf of Mexico", "StartState/Province": "Gulf of Mexico", "StartCountryOrArea": "United States", "EndLocation": "Gulf of Mexico, UTOS Gas Pipeline", "EndState/Province": "Gulf of Mexico", "EndCountryOrArea": "United States"},
-      "primary_value": "Gulf of Mexico",
-      "proposed_refs": [
-        "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
-        "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/"
-      ],
-      "verifications": [
-        {"url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "gathers gas from GOM OCS fields; delivers to Kinetica Energy Express interconnects"},
-        {"url": "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/", "ok": true, "contains_value": true, "name_found": true, "note": "confirms HIOS interconnects with UTOS at West Cameron (WC) Block 167, offshore -- matches the recorded EndLocation naming UTOS"}
-      ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "MISSING_REF filled: the offshore start and the UTOS interconnect end-location are both independently confirmed (also confirmed independently for Stingray via offshore-mag's mention of the 'HIOS East Extension' connecting to Stingray). CAVEAT, not a proposed edit: Genesis's CURRENT page names 'Kinetica Energy Express Pipeline' as HIOS's delivery point, not UTOS -- HIOS is very likely a multi-connection hub (UTOS, Stingray, and now Kinetica Energy Express all independently documented at different points in its history), so I am not treating this as a contradiction, but a future pass could consider whether EndLocation should also list Kinetica Energy Express."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
-      "values": {"SegmentCost": "353000000.00", "SegmentCostUnits": "USD"}, "primary_value": "353000000.00",
-      "proposed_refs": ["https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico"],
-      "verifications": [
-        {"url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico", "ok": true, "contains_value": true, "name_found": true, "note": "'The project, estimated to cost $353 million...'"}
-      ],
-      "class_out": "REVERIFIED", "tier": "medium", "independent": true, "source_language": "en",
-      "researcher_notes": "Confirmed as recorded (project-inception cost estimate). Searched the TRID/OGJ 1977 abstract and FPC/FERC docket leads for a second cost figure and did not find one accessible in the time available -- single strong source, medium tier per the corollary."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "oo_sheet_row": 188, "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value_col": "Operator", "values": {"Operator": "High Island Offshore System, LLC"},
-      "primary_value": "High Island Offshore System, LLC",
-      "proposed_refs": ["https://rextag.com/pages/high-island-offshore-system"],
-      "verifications": [
-        {"url": "https://rextag.com/pages/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "'Owner: Genesis Energy, LP / Operator: High Island Offshore System, LLC' -- distinguishes owner (parent) from the operating entity"}
-      ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
-      "researcher_notes": "MISSING_VALUE filled at medium: Rextag's FERC-informational-postings-derived listing names the operator as the dedicated entity 'High Island Offshore System, LLC' (distinct from owner Genesis Energy, LP), consistent with how FERC-certificated systems are commonly structured. This is a single source; the 2009 PHMSA letter instead names the pre-2015 arrangement ('operated by Enterprise Products Partners L.P.'), which is superseded by the 2015 Genesis acquisition and not a live second confirmation. A FERC eLibrary pull for HIOS's current certificate holder would be the ideal second source; I did not complete that in the time available for this row."
-    },
-    {
-      "segment_name": "", "sheet_row": 59, "oo_sheet_row": 188, "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
-      "primary_value_col": "Owner1", "values": {"Owner1": "Genesis Energy", "Owner1%": "100.00%"},
-      "primary_value": "Genesis Energy",
-      "proposed_refs": [
-        "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
-        "https://rextag.com/pages/high-island-offshore-system"
-      ],
-      "verifications": [
-        {"url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "'Genesis Ownership: 100%'"},
-        {"url": "https://rextag.com/pages/high-island-offshore-system", "ok": true, "contains_value": true, "name_found": true, "note": "'Owner: Genesis Energy, LP' -- independent third-party database corroborates 100% Genesis ownership"}
-      ],
-      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Existing ref re-verified live; added Rextag as a genuinely independent (non-Genesis) second source confirming sole Genesis Energy ownership."
+     "url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'HIOS transports natural gas from producing fields...'"
     }
-  ],
-  "cross_row_leads": [
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Existing ref re-verified live; added Genesis's own current page as a second, independent-of-vintage source."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "primary_value_col": "PipelineType",
+   "values": {
+    "PipelineType": "both transmission and gathering"
+   },
+   "primary_value": "both transmission and gathering",
+   "proposed_refs": [
+    "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/"
+   ],
+   "verifications": [
     {
-      "project_id": "P0188",
-      "url": "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/",
-      "facts": "UTOS is confirmed as a 29-mile, 42-inch-diameter natural gas pipeline originating on the OCS, receiving wet gas from HIOS (among other sources) at West Cameron (WC) Block 167 -- matches the roster's P0188 spec (len=29.0 dia=42) exactly and confirms P0188/P0200 are distinct, interconnected systems, not a duplicate."
+     "url": "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "2009 PHMSA interpretation letter: 'We agree with the Federal Energy Regulatory Commission (FERC) that certain portions of the HIOS are used for the gathering of gas, but that the pipeline segment that interconnects with the UTOS is a transmission line'"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "This is a federal regulatory determination naming HIOS specifically -- treated as sufficient alone (tier high) despite being one document. The OTHER existing citation on this cell, boem.gov/.../2008-038.pdf, is about an unrelated pipeline (see validity concern) and should be dropped, not re-added here. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (viadata.wordpress.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "primary_value_col": "ProposalYear",
+   "values": {
+    "ProposalYear": "1975",
+    "ProposalMonth": "September"
+   },
+   "primary_value": "1975",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+    "https://trid.trb.org/view/54235"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'In 1975... That September, affiliates of American Natural Gas Co., United Gas Pipe Line Co., Texas Gas Transmission Co., Natural Gas Pipeline Co. of America, and Transco announced plans to build the High Island Offshore System (HIOS) pipeline' -- exact month+year match; the original url_verifier substring check missed this because the year appears as prose ('That September... 1975' split across a sentence), not as an adjacent '1975' token"
     },
     {
-      "project_id": "P0256",
-      "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
-      "facts": "HIOS is stated to be 'connected to the Stingray pipeline through the HIOS East Extension, a relatively short 30-in. pipeline that ran from east to west through the East [Breaks area]' -- an independent historical source for the HIOS-Stingray interconnect relevant to P0256's own abandonment/route review in this batch."
+     "url": "https://trid.trb.org/view/54235",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Oil & Gas Journal (Ewing, Jan 1977) corroborates the 5-company sponsor group and early history, consistent with the Sept 1975 announcement"
     }
-  ],
-  "summary": "P0200 HIOS: existence/classification/ownership/duplicate all confirmed (caveat) with fresh 2026 + independent-historical sourcing; 15/15 units filed. 2 spec concerns flagged: a wrong-pipeline citation on PipelineType [ref] (BOEM doc is about an unrelated oil system), and a length/capacity/route-geometry disagreement with a third-party (Rextag/FERC-postings) figure (287mi/1.8bcf/d vs recorded 238mi/2000MMcf/d) not resolved in the time available. UNRESOLVED: Pressure (no MAOP source found)."
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Confirmed exactly as recorded; the prior check's FAIL was a content false-negative (value present as prose, not a bare substring), per url_verifier's own documented caveat."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "primary_value_col": "ConstructionYear",
+   "values": {
+    "ConstructionYear": "1976",
+    "ConstructionMonth": "August"
+   },
+   "primary_value": "1976",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+    "https://trid.trb.org/view/54235"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Construction began on Aug. 1, 1976, one day after the FPC granted permission to build the line.'"
+    },
+    {
+     "url": "https://trid.trb.org/view/54235",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Oil & Gas Journal, published Jan 1977, reports the line 'now building' -- independently corroborates construction was already underway by early 1977, consistent with an Aug 1976 start"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled: construction began Aug 1, 1976 (day after FPC -- the pre-FERC Federal Power Commission -- granted permission); the 1976 season built 77 of the planned 203 miles, with the second season starting April 1977."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "primary_value_col": "StartYear1",
+   "values": {
+    "StartYear1": "1978"
+   },
+   "primary_value": "1978",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'The HIOS pipeline was completed on schedule and placed in service in early 1978.'"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Confirmed as recorded. Searched for a second, date-specific independent source (FERC certificate/commencement-of-service notice, PHMSA in-service record) and did not find one accessible in the time available for this row -- single strong primary source, staying medium per the corollary. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (offshore-mag.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "primary_value_col": "Capacity",
+   "values": {
+    "Capacity": "2000.00",
+    "CapacityUnits": "MMcf/d"
+   },
+   "primary_value": "2000.00",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+    "https://trid.trb.org/view/54235"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Through expansion and additional compressor facilities, the [system's] ultimate capacity [was] 2 billion cf/d' (988 MMcf/d initial)"
+    },
+    {
+     "url": "https://trid.trb.org/view/54235",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Certificated capacity of the system is 988 MMcfd less fuel used. This capacity is expandable to 2 billion cfd.' -- independently matches the offshore-mag figures exactly"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent period/retrospective sources agree the ultimate/expandable design capacity is 2,000 MMcf/d, matching the recorded value. NOTE: Rextag's current listing states 'System Capacity: 1.8 Bcf/d' -- filed as a separate spec concern in validity[] rather than overriding this nameplate-design figure, since it may reflect currently-subscribed vs. ultimate design capacity."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "primary_value_col": "Pressure",
+   "values": {},
+   "primary_value": "",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Searched Genesis Energy's HIOS page, the offshore-mag retrospective, the TRID/OGJ 1977 abstract, and a targeted web search for HIOS MAOP/tariff pressure figures -- none state a pressure/MAOP value. A FERC tariff or Part 192 filing would be the right document but I could not locate one naming a pressure figure in the time available. Leaving blank rather than forcing a number. [ORCHESTRATOR AUDIT 2026-09-15] UNRESOLVED hygiene: tier '' -> 'low'. The FINDING is unchanged; only the bookkeeping was wrong."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "primary_value_col": "LengthKnown",
+   "values": {
+    "LengthKnown": "238.00",
+    "LengthKnownUnits": "mi"
+   },
+   "primary_value": "238.00",
+   "proposed_refs": [
+    "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'HIOS includes 152 miles of pipeline...In addition, this system included the 86-mile East Breaks Gathering System...' and a separate data field 'System Miles: 238' -- 152+86=238, matching the recorded value exactly"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Confirmed as recorded via Genesis's own current, direct statement (152 core + 86 East Breaks Gathering = 238). Held to medium, not high, because the only OTHER length figure I could find (Rextag, 287 mi) disagrees rather than agrees -- see the spec concern in validity[]. This is NOT the same 203.5-mi figure from the original 1976-78 construction (see validity caveat). | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (genesisenergy.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "primary_value_col": "Diameter",
+   "values": {
+    "Diameter": "42,36,30",
+    "DiameterUnits": "in"
+   },
+   "primary_value": "42,36,30",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+    "https://trid.trb.org/view/54235"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'HIOS called for 67 miles of 42-in., 26 miles of 36-in., and 110.5 miles of 30-in. pipe.'"
+    },
+    {
+     "url": "https://trid.trb.org/view/54235",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'HIOS will lay 67 miles of 42-in., 26 miles of 36-in., and 110.5 miles of 30-in.-diameter pipe' -- word-for-word match to offshore-mag from an independent 1977 source"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Two independent sources, 41 years apart, agree exactly on the three diameters recorded."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "primary_value_col": "FuelSource",
+   "values": {
+    "FuelSource": "Gulf of Mexico"
+   },
+   "primary_value": "Gulf of Mexico",
+   "proposed_refs": [
+    "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'HIOS transports natural gas from producing fields located in the Galveston, Garden Banks, West Cameron, High Island and East Breaks areas of the Gulf of Mexico'"
+    },
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "throughout: gas gathered from Gulf of Mexico OCS blocks"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF filled: two independent sources confirm the gas source areas are all Gulf of Mexico OCS fields, matching the recorded value exactly."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "primary_value_col": "StartLocation",
+   "values": {
+    "StartLocation": "Gulf of Mexico",
+    "StartState/Province": "Gulf of Mexico",
+    "StartCountryOrArea": "United States",
+    "EndLocation": "Gulf of Mexico, UTOS Gas Pipeline",
+    "EndState/Province": "Gulf of Mexico",
+    "EndCountryOrArea": "United States"
+   },
+   "primary_value": "Gulf of Mexico",
+   "proposed_refs": [
+    "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+    "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "gathers gas from GOM OCS fields; delivers to Kinetica Energy Express interconnects"
+    },
+    {
+     "url": "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "confirms HIOS interconnects with UTOS at West Cameron (WC) Block 167, offshore -- matches the recorded EndLocation naming UTOS"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "MISSING_REF filled: the offshore start and the UTOS interconnect end-location are both independently confirmed (also confirmed independently for Stingray via offshore-mag's mention of the 'HIOS East Extension' connecting to Stingray). CAVEAT, not a proposed edit: Genesis's CURRENT page names 'Kinetica Energy Express Pipeline' as HIOS's delivery point, not UTOS -- HIOS is very likely a multi-connection hub (UTOS, Stingray, and now Kinetica Energy Express all independently documented at different points in its history), so I am not treating this as a contradiction, but a future pass could consider whether EndLocation should also list Kinetica Energy Express."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "primary_value_col": "SegmentCost",
+   "values": {
+    "SegmentCost": "353000000.00",
+    "SegmentCostUnits": "USD"
+   },
+   "primary_value": "353000000.00",
+   "proposed_refs": [
+    "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'The project, estimated to cost $353 million...'"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Confirmed as recorded (project-inception cost estimate). Searched the TRID/OGJ 1977 abstract and FPC/FERC docket leads for a second cost figure and did not find one accessible in the time available -- single strong source, medium tier per the corollary. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (offshore-mag.com). One publisher restated is still one origin."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "oo_sheet_row": 188,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "primary_value_col": "Operator",
+   "values": {
+    "Operator": "High Island Offshore System, LLC"
+   },
+   "primary_value": "High Island Offshore System, LLC",
+   "proposed_refs": [
+    "https://rextag.com/pages/high-island-offshore-system"
+   ],
+   "verifications": [
+    {
+     "url": "https://rextag.com/pages/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Owner: Genesis Energy, LP / Operator: High Island Offshore System, LLC' -- distinguishes owner (parent) from the operating entity"
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "MISSING_VALUE filled at medium: Rextag's FERC-informational-postings-derived listing names the operator as the dedicated entity 'High Island Offshore System, LLC' (distinct from owner Genesis Energy, LP), consistent with how FERC-certificated systems are commonly structured. This is a single source; the 2009 PHMSA letter instead names the pre-2015 arrangement ('operated by Enterprise Products Partners L.P.'), which is superseded by the 2015 Genesis acquisition and not a live second confirmation. A FERC eLibrary pull for HIOS's current certificate holder would be the ideal second source; I did not complete that in the time available for this row."
+  },
+  {
+   "segment_name": "",
+   "sheet_row": 59,
+   "oo_sheet_row": 188,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%",
+    "Owner3",
+    "Owner3%",
+    "Owner4",
+    "Owner4%",
+    "Owner5",
+    "Owner5%",
+    "Owner6",
+    "Owner6%",
+    "Owner7",
+    "Owner7%",
+    "Owner8",
+    "Owner8%",
+    "Owner9",
+    "Owner9%",
+    "Owner10",
+    "Owner10%",
+    "Owner11",
+    "Owner11%"
+   ],
+   "primary_value_col": "Owner1",
+   "values": {
+    "Owner1": "Genesis Energy",
+    "Owner1%": "100.00%"
+   },
+   "primary_value": "Genesis Energy",
+   "proposed_refs": [
+    "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+    "https://rextag.com/pages/high-island-offshore-system"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.genesisenergy.com/operations/offshore-pipelines/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Genesis Ownership: 100%'"
+    },
+    {
+     "url": "https://rextag.com/pages/high-island-offshore-system",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'Owner: Genesis Energy, LP' -- independent third-party database corroborates 100% Genesis ownership"
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "Existing ref re-verified live; added Rextag as a genuinely independent (non-Genesis) second source confirming sole Genesis Energy ownership."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P0188",
+   "url": "https://viadata.wordpress.com/2011/06/10/offshore-gathering-and-transmission-new-interpretation/",
+   "facts": "UTOS is confirmed as a 29-mile, 42-inch-diameter natural gas pipeline originating on the OCS, receiving wet gas from HIOS (among other sources) at West Cameron (WC) Block 167 -- matches the roster's P0188 spec (len=29.0 dia=42) exactly and confirms P0188/P0200 are distinct, interconnected systems, not a duplicate."
+  },
+  {
+   "project_id": "P0256",
+   "url": "https://www.offshore-mag.com/pipelines/article/16762219/high-island-offshore-system-brought-several-firsts-to-pipelining-in-the-gulf-of-mexico",
+   "facts": "HIOS is stated to be 'connected to the Stingray pipeline through the HIOS East Extension, a relatively short 30-in. pipeline that ran from east to west through the East [Breaks area]' -- an independent historical source for the HIOS-Stingray interconnect relevant to P0256's own abandonment/route review in this batch."
+  }
+ ],
+ "summary": "P0200 HIOS: existence/classification/ownership/duplicate all confirmed (caveat) with fresh 2026 + independent-historical sourcing; 15/15 units filed. 2 spec concerns flagged: a wrong-pipeline citation on PipelineType [ref] (BOEM doc is about an unrelated oil system), and a length/capacity/route-geometry disagreement with a third-party (Rextag/FERC-postings) figure (287mi/1.8bcf/d vs recorded 238mi/2000MMcf/d) not resolved in the time available. UNRESOLVED: Pressure (no MAOP source found)."
 }

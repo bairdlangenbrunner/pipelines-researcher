@@ -1,0 +1,491 @@
+{
+  "project_id": "P7462",
+  "pipeline_name": "Nuiqsut Natural Gas Pipeline",
+  "sheet_row": 3848,
+  "wiki": "https://www.gem.wiki/Nuiqsut_Natural_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "No change to existence/classification/duplicate status. Real, correctly classified, no overlap with any other roster row (nearest analogues are the Cook Inlet Kenai-Beluga family and the North Slope Northstar/Trans-Alaska Gas Pipeline rows, which are different corridors and different facilities entirely).",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: confirmed independently of GEM. The Alaska DNR Division of Oil & Gas 'Pipeline Services' record for this exact pipeline (dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas) describes it by name, gives Status: Active, Diameters (in): 3.50, System Length: 14.40, Construction Dates: 01/01/1998-01/01/2001. The Nuiqsut Natural Gas Pipeline's 2013 Annual Comprehensive Report (filed with the state under ROW Lease ADL 416202, dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf) gives full engineering detail (route, pipe spec, pressure, capacity, construction and start-up history). The State of Alaska Online Public Notices lease-renewal package (aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337, filed 2019-04-15) states 'NSB is 100% owner of the Nuiqsut Natural Gas Pipeline' and reviews ongoing O&M. This is a real, well-documented municipal pipeline, not a GEM-only entity. CLASSIFICATION: correct as 'transmission' - the 2013 Annual Report itself distinguishes the high-pressure 'Gas Transmission Pipeline' (1,440 psig, this GEM row) from the downstream low-pressure village 'Distribution System' (fed via a Pressure Reducing Valve station) - the two are NOT the same facility and GEM only tracks the transmission line, correctly. DUPLICATE: checked against all 41 other in-scope rows. The nearby North Slope entries (P7463 Northstar, P7465 Trans-Alaska/Kuparuk fuel-gas line, P6534 Point Thomson) and the Cook Inlet Kenai-Beluga family (P7450/53/54/55/56/58/61/64) are different facilities in different locations (Northstar Island, the TAPS pump-station fuel system, Point Thomson, and the Kenai Peninsula respectively) - none overlap the Alpine-to-Nuiqsut corridor. ROUTE CHECK: the routes-repo geometry (../GOIT-GGIT-pipeline-routes/data/individual-routes/gas-pipelines/P7462.geojson, 1 feature, 35 points) runs from approximately 70.344N/150.928W (at the Alpine production pad complex) to approximately 70.218N/150.989W (at the village of Nuiqsut) - this matches the sheet's Alpine Development Project -> Nuiqsut termini and the sourced route description exactly; no route-vs-sheet mismatch. Only open items are the ATTRIBUTION concern on Operator (see fills[] and below) and two genuinely unsourceable MISSING_VALUE cells (Proposal, SegmentCost - see fills[], both UNRESOLVED).",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "Verify or correct Operator. Confirm whether an 'NSB Energy Management' department/division exists and operates this pipeline; if not, correct Operator to 'North Slope Borough'.",
+      "contested": {"Operator": "North Slope Borough"},
+      "researcher_notes": "The sheet's Operator reads 'North Slope Borough Energy Management'. Every primary document found (2013 Annual Comprehensive Report; the 2019 lease-renewal package) confirms North Slope Borough (NSB) - the municipal government itself - as lessee, 100% owner, and the entity responsible for the pipeline's operations. But neither document names an 'Energy Management' department: the 2013 Annual Report's own organizational table assigns day-to-day Operations & Maintenance responsibility to the 'Director of Public Works' (NSB Public Works department), with design/construction under NSB's CIPM department and overall authority in the Mayor's Office - no 'Energy Management' unit appears anywhere in either document. I could not independently verify 'Energy Management' as the operating division (web search was unavailable this session - search budget exhausted; NSB's current public department directory at north-slope.org also does not list an Energy Management department). This does not mean the value is wrong - NSB's internal org chart may have created an Energy Management division since 2019 - but it is unconfirmed by any source I could reach. Staged the conservative, well-documented value (the parent entity, North Slope Borough) as the fill and flagged the more specific claim here for a researcher with search access to verify.",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Alaska DNR Pipeline Services record for 'Nuiqsut Natural Gas Pipeline (NNGP)' states 'Status: Active' directly under the pipeline's own name and description."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The sheet's cited ref for this cell, https://www.npms.phmsa.dot.gov/, is the PHMSA National Pipeline Mapping System HOME page - a map-viewer landing page that does not name this pipeline and states no status for it (existing_ref_checks flagged status_token_absent; url_verifier confirms 'name not found' for this exact page). That is a navigation-surface defect, the same family as citing EIA's data.php, so I am replacing it rather than re-verifying it. The Alaska DNR Division of Oil & Gas's own Pipeline Services record for THIS pipeline states 'Status: Active' outright, matching 'operating'. Single origin (State of Alaska DNR) so tier stays medium; I could not reach a second, non-state origin this session (web search budget was exhausted for this session before I could search for independent press/PHMSA confirmation - see status_reviews note)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page titled 'Nuiqsut Natural Gas' describes the 'Nuiqsut Natural Gas Pipeline (NNGP)' transporting 'natural gas' from the Alpine production pad to the village of Nuiqsut."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-verified live; the sheet's existing ref already correctly names the pipeline and states the commodity. No change."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2013 Annual Comprehensive Report for the Nuiqsut Natural Gas Pipeline: describes the Nuiqsut Pressure Reducing Valve Station as reducing 'the high gas pressure of the Gas Transmission Pipeline (450+ psig) to a lower pressure ... suitable for use in the Distribution System' - the document itself labels this line the 'Gas Transmission Pipeline' as distinct from the village distribution system downstream of the PRV."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Replacing the sheet's cited ref (npms.phmsa.dot.gov home page - a navigation/map-viewer landing page that url_verifier confirms does not name this pipeline, existing_ref_checks name_absent=true) with the pipeline's own Annual Comprehensive Report, which explicitly labels the line a 'Gas Transmission Pipeline' distinct from the downstream distribution system. Confirms 'transmission' is the correct classification, not a relabeling."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the 2013 Annual Comprehensive Report, the Alaska DNR Pipeline Services record, and the 2019 lease-renewal package for a proposal/announcement date. None states one. The earliest dated fact any document gives is the original ROW lease ADL 416202's execution date, 'March 15, 1999' (cited in both the 2013 report and the lease-renewal package), and construction is described as beginning in the '1998-1999 winter construction season' - i.e. construction had already started before the lease was formally executed. Neither is the same thing as a proposal/announcement year, and I found no NSB assembly resolution, budget item, or press announcement giving one. Left UNRESOLVED rather than guessing from the lease-execution date."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "1998"},
+      "primary_value": "1998",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The above-grade construction of the NNGP was completed during the 1998-1999 winter construction season. The buried portion was installed during the 2000-2001 winter construction season.'"
+        },
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "DNR Pipeline Services record: 'Construction Dates: 01/01/1998 - 01/01/2001'."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed: construction began in the 1998-1999 winter season (above-grade phase) and continued through the 2000-2001 winter season (buried river-crossing phase), matching the recorded ConstructionYear=1998 as the start year. Both refs are State of Alaska DNR documents (one origin), so tier stays medium. ConstructionMonth left as recorded (blank) - neither source gives a specific month within the 1998-1999 winter season."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2008", "StartMonth1": "9"},
+      "primary_value": "2008",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Start up and commissioning of the entire system was commenced in July 2008, and the system was put in service in September 2008 with the Nuiqsut Power Plant as the sole user of natural gas in the community.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-verified StartYear1=2008 (in service September 2008) against the recorded value - matches. Added StartMonth1=9 (September), which the sheet left blank and this same, already-cited document states precisely. Note the full construction/start-up timeline is more nuanced than a single year suggests: above-grade pipe built 1998-99, buried river crossing 2000-01, Alpine/Nuiqsut facility tie-ins and gas conditioning completed 2007, full start-up/commissioning July-September 2008. StartYear1=2008 (the in-service date) is the correct field for this column; not changed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "3.50", "CapacityUnits": "MMcf/d"},
+      "primary_value": "3.50",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline is designed to provide a maximum flow rate of 3,500,000 cu ft/day of natural gas from the ADP facilities to the village of Nuiqsut' = 3.5 MMcf/d, matching the recorded value exactly."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The existing_ref_checks marked this URL 'ok: false' because the automated substring check looked for the literal strings '3.50'/'3.5' - the document states the design capacity as '3,500,000 cu ft/day' instead. That is the same figure (3,500,000 cf/d = 3.5 MMcf/d), so this is a substring-format miss (rule per ADDENDUM #7), not an unsupported value. Reading the PDF confirms the recorded Capacity is correct."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {"Pressure": "1440.00", "PressureUnits": "psig"},
+      "primary_value": "1440.00",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The pipeline design is based on a maximum operating pressure of 1440 psig.' Exact match to the recorded Pressure value."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-verified exactly as recorded. No discrepancy."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "14.40", "LengthKnownUnits": "mi"},
+      "primary_value": "14.40",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The actual pipeline length is approximately 14.4 miles: 8.8 miles aboveground, 5.6 miles buried.'"
+        },
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "DNR Pipeline Services record: 'System Length: 14.40', 'Length on State Lands: 2.65'."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed exactly (14.4 mi = 8.8 mi above-ground + 5.6 mi buried). Both refs are State of Alaska DNR (one origin)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "3.5", "DiameterUnits": "in"},
+      "primary_value": "3.5",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The NNGP is constructed utilizing 3-1/2\" O.D. x 0.203\" continuous electric resistance welded coiled pipe' - 3-1/2 inch outer diameter = 3.5 in, matching the recorded value."
+        },
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "DNR Pipeline Services record: 'Diameters (in): 3.50'."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "existing_ref_checks marked the Annual Report 'ok: false' because it looked for the literal digit string '3.5', while the document writes the size as '3-1/2\"' - same value, different notation (rule per ADDENDUM #7). The DNR services page states it as a plain decimal ('3.50') and independently confirms it. Recorded Diameter is correct."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {"FuelSource": "Alpine Development Project"},
+      "primary_value": "Alpine Development Project",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Nuiqsut Natural Gas Pipeline (NNGP) is located ... [and] extends from the Alpine Development Project (ADP) oil and gas production facility to the village of Nuiqsut.' The pipeline transports 'conditioned natural gas from the ADP'."
+        },
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The North Slope Borough constructed Nuiqsut Natural Gas Pipeline (NNGP) to transport natural gas from the ConocoPhillips Alpine production pad to the village of Nuiqsut.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per gem_schema.md, FuelSource names the upstream field/facility feeding the line, not the commodity. Both sourced pages agree: the gas is drawn from ConocoPhillips's Alpine Development Project (ADP) oil and gas production facility on the North Slope. Filled as 'Alpine Development Project' (the named facility)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea",
+        "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Alpine Development Project",
+        "StartPrefecture/District": "North Slope",
+        "StartState/Province": "Alaska",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Nuiqsut",
+        "EndPrefecture/District": "North Slope",
+        "EndState/Province": "Alaska",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Alpine Development Project",
+      "proposed_refs": ["https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf"],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Nuiqsut Natural Gas Pipeline (NNGP) is located in the Colville River Delta on the North Slope of Alaska. It extends from the Alpine Development Project (ADP) oil and gas production facility to the village of Nuiqsut, located approximately 8 miles southwest of Alpine.'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed exactly: start at the Alpine Development Project (North Slope Borough, Alaska), end at Nuiqsut village (North Slope Borough, Alaska), both in the Colville River Delta. The routes-repo geometry (P7462.geojson, single feature, 35 points, running Alpine-area 70.344N/150.928W to Nuiqsut-area 70.218N/150.989W) is consistent with these termini - no route-vs-sheet mismatch."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the 2013 Annual Comprehensive Report (full text, all sections), the DNR Pipeline Services record, and the 2019 lease-renewal package for a construction cost figure. None states one - the Annual Report discusses the North Slope Borough's bond rating capacity generally but gives no project cost, and neither DNR record carries a cost field. No cost found; left UNRESOLVED rather than estimating."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "oo_sheet_row": 5830,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "North Slope Borough"},
+      "primary_value": "North Slope Borough",
+      "proposed_refs": [
+        "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337"
+      ],
+      "verifications": [
+        {
+          "url": "https://dog.dnr.alaska.gov/Documents/SPCS/Publications/LesseeAnnualReports/2013/2013AnnualReport-Nuiqsut.pdf",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "The Annual Comprehensive Report assigns day-to-day pipeline Operations responsibility to the 'Director of Public Works' within the North Slope Borough (organizational table, Section 8 - Operations), and refers throughout to 'the pipeline operator' as the North Slope Borough acting through this department; the Lessee of record throughout is 'North Slope Borough (NSB)'."
+        },
+        {
+          "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NSB is 100% owner of the Nuiqsut Natural Gas Pipeline' - lease renewal filed by the North Slope Borough as Lessee/operator."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The sheet's recorded value, 'North Slope Borough Energy Management', could not be confirmed as a distinct department name in either primary document I could reach: the 2013 Annual Report's own organizational chart names the 'Director of Public Works' (NSB Public Works department) as responsible for pipeline O&M, design/construction under NSB's CIPM department, and overall authority in the Mayor's Office - no 'Energy Management' unit appears. I could not run a web search this session (budget exhausted) to check whether NSB has since created an Energy Management division; NSB's current public department list at north-slope.org does not show one either. Staged the well-documented parent entity, 'North Slope Borough', as the sourced value, and flagged the more specific claim as an open attribution question in validity[] rather than silently keeping or silently dropping the sheet's existing wording."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "oo_sheet_row": 5830,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%",
+        "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%",
+        "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "North Slope Borough", "Owner1%": "100.00%"},
+      "primary_value": "North Slope Borough",
+      "proposed_refs": ["https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337"],
+      "verifications": [
+        {
+          "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Lease Renewal Package, ADL 416202, Section 2(d) Ownership Interest Diagram: 'NSB is 100% owner of the Nuiqsut Natural Gas Pipeline.'"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Re-verified exactly as recorded: North Slope Borough, 100%. No other owners of record; a sole-municipal-owner structure, consistent throughout every document reviewed."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3848,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2019-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337",
+        "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas"
+      ],
+      "verifications": [
+        {
+          "url": "https://aws.state.ak.us/OnlinePublicNotices/Notices/Attachment.aspx?id=120337",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2019-04-15 lease-renewal package: North Slope Borough seeks a 20-year renewal of ROW Lease ADL 416202 to continue operating the pipeline, and discusses ongoing operations, maintenance and useful-life planning - confirms the line was in active service as of April 2019 and NSB intended continued operation."
+        },
+        {
+          "url": "https://dog.dnr.alaska.gov/Services/Pipeline/Nuiqsut%20Natural%20Gas",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Alaska DNR's current, live Pipeline Services record (accessed 2026-09-14) states 'Status: Active' for this exact pipeline."
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "CONFIRM. Newest dated independent evidence is the 2019-04-15 NSB lease-renewal filing, which sought a further 20-year ROW term specifically to continue operating the pipeline and discusses its ongoing O&M program in detail - not a project in decline. The live Alaska DNR Pipeline Services record, checked today (2026-09-14), still shows 'Status: Active', consistent with continuous municipal operation of a small, essential community gas-supply line (it is Nuiqsut's only source of piped natural gas, per the 2013 report) - there is no plausible reason for this to have been abandoned and every document is consistent with continued operation. I was not able to run a web search this session (budget exhausted before I reached this row) to look for a 2020s news item confirming currency more precisely; both refs used here are State of Alaska origin (one publisher), so tier is medium/independent false rather than high. No evidence of any change, sale, idling, or conversion."
+    }
+  ],
+  "summary": "Confirmed (caveat): P7462 Nuiqsut Natural Gas Pipeline is real, correctly classified as transmission, no duplicate, status=operating confirmed (evidence 2019-04 + live DNR record); one attribution caveat flagged on Operator (sheet reads 'North Slope Borough Energy Management', only 'North Slope Borough' independently confirmed - staged as the sourced value). All 15 worklist units carry records (10 REFS_ADDED/REVERIFIED with new or re-verified state-of-Alaska sources, 2 REVERIFIED unchanged, 2 UNRESOLVED: Proposal and SegmentCost, neither documented anywhere I could reach). No web search was available this session (budget exhausted), so all sourcing is from documents reachable by direct fetch (Alaska DNR + State of Alaska Online Public Notices); tiers capped at medium throughout for that reason."
+}

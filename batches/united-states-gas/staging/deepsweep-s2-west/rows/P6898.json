@@ -1,0 +1,520 @@
+{
+  "project_id": "P6898",
+  "pipeline_name": "MountainWest Gas Pipeline",
+  "sheet_row": 3737,
+  "wiki": "https://www.gem.wiki/MountainWest_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Main Line",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, independently confirmed. This is the FERC-jurisdictional 'MountainWest Pipeline System' (operating legal entity 'MountainWest Pipeline, LLC', formerly Questar Pipeline Company), williams.com's own labeled heading distinct from its other MountainWest sub-systems on the same page. CLASSIFICATION: correctly natural-gas transmission (Fuel=Gas, PipelineType=transmission), an operating interstate mainline, not a gathering/lateral/storage-only asset. DUPLICATE: NOT a duplicate of either sibling row despite the shared 'MountainWest Gas Pipeline' sheet name. Distinguished by an independently labeled, independently sourced spec set: P6898 (this row) = 'MountainWest Pipeline System' heading on williams.com, 1,868 mi / 2.6 million dekatherms per day (2,600 MMcf/d) / 14 compressor stations, spanning Colorado-Wyoming-Utah. P6899 (Overthrust) = a separate heading on the same page, ~261 mi / 3 compressor stations, in Wyoming/Utah (own row, own agent). P7785 (Westbound Compression) = a discrete FERC-approved (Oct 2024) compression-ONLY expansion project on the Overthrust system (Wamsutter WY to Opal WY, +0.3 MMdth/d, LengthKnown=0 per gem.wiki's own record: 'Length: 0 mi'), placed into service during 2025 per Williams' FY2025 10-K -- confirmed via the gem.wiki page fetched for cross-checking only (never cited as a ref): 'Operator: MountainWest Overthrust Pipeline ... Start year: 2025'. No evidence of value duplication across the three rows (each carries its own distinct mileage/capacity figures traceable to a distinct heading/project). ATTRIBUTION note (not a validity defect, but flagged for the record): prompts/P6898.md's scope guidance states Williams acquired MountainWest 'in 2024' -- this is off by roughly a year. Two independent primary sources agree the closing was 2023-02-14: Williams' own FY2025 10-K ('On February 14, 2023, Williams closed on the acquisition of 100 percent of MountainWest Pipelines Holding Company') and seller Southwest Gas Holdings' 8-K/A pro forma exhibit ('On February 14, 2023, Southwest Gas Holdings, Inc. ... completed its previously announced sale of all of the equity interests in MountainWest Pipelines Holding Company ... to ... Williams Partners Operating LLC, a wholly owned subsidiary of The Williams Companies, Inc.'). Staged Owner fill uses the correct 2023 date. SPEC: Location cannot be fully captured by the schema's 2-endpoint model -- Questar Pipeline Company's own 1993 10-K describes the mainline as two historical segments both running Colorado-to-Utah with Wyoming as a mid-route transit state ('the northern segment extends from northwestern Colorado through southwestern Wyoming into northern Utah; the southern segment ... extends from western Colorado to Payson, in central Utah'), corroborated independently by our own measurement of the route geojson's extent (lon -111.98 to -107.52, lat 39.08 to 42.01 -- Ogden UT to NW Colorado via Rock Springs WY). Staged Start=Colorado/End=Utah per the schema's 2-field limit, with Wyoming noted in the Location fill's researcher_notes as a real transit state the schema can't capture.",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/",
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1692115/000119312523043486/d367217dex991.htm",
+        "https://www.sec.gov/Archives/edgar/data/764044/0000764044-94-000001.txt"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/",
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'MountainWest Pipeline System' listed under Williams' current, in-service pipeline assets with live operational specs (miles, compressor stations, storage) -- an operating system, not a project page."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Williams' FY2025 10-K reports MountainWest's system-wide design capacity and 2025 in-service additions as a going, operating asset (not proposed/under construction)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old current_ref (mwpipe.com) verified live but the status token is inferred from prose, not matched verbatim -- replaced with two independent sources that state operating status directly. Old ref not deleted for cause; kept as a third corroborating URL was unnecessary given two strong new ones."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page is Williams' natural-gas pipeline listing; 'MountainWest Pipeline System' section describes natural gas transmission, storage and delivery."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref reverified live and still supports the value. Single-origin (Williams) for this specific unit; not escalated to high given the value is uncontroversial and well-established, but only one distinct publisher was checked for this exact cell."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Miles of Transmission Pipeline: 1,868 miles' under the MountainWest Pipeline System heading; an interstate FERC-jurisdictional transmission mainline, not gathering/distribution."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref reverified live and still supports the value. Single-origin for this cell."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Genuinely nothing found. This is a legacy interstate mainline built in stages by Mountain Fuel Supply Co./Questar Pipeline Company beginning in the 1950s-60s, long before FERC-docket-level or press-release-level project records existed in any searchable archive. Searched: Questar Pipeline Company's 1993/1994 10-K (SEC EDGAR CIK 0000764044, filing 0000764044-94-000001) for founding/proposal-year language (checked for '1957' through '1962', 'constructed', 'built', 'original pipeline' -- none found; the filing describes the system as already long-operating with no construction-history narrative); williams.com/pipeline/mountainwest/ and mwpipe.com (no history/founding section); the gem.wiki page (leads only, not citable). No FERC docket number for the original certification was locatable via SEC EDGAR full-text search (which only indexes back to the mid-1990s) or via curl-accessible FERC eLibrary (JS-rendered SPA, not scrapeable without a browser). WebSearch budget was exhausted mid-session, precluding a broader newspaper-archive search for the original 1950s-60s construction announcement. Orchestrator correction (applies to every UNRESOLVED unit on this shard): tier was staged as an empty string; an UNRESOLVED record must carry tier='low'. Set to low on fills 3, 4, 5, 7, 9 and 12. No finding changed."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Same search as Proposal/Start -- nothing found. This mainline predates the searchable SEC/FERC/web record; no primary source located giving a construction-start year or month for any segment of the system as a whole (individual laterals/loops have been added over decades per EIA's project-level data, but no single 'construction began' date exists for the row as recorded, which represents the whole operating mainline, not one discrete expansion project)."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Same search as Proposal/Construction -- nothing found giving an original in-service year. Questar Pipeline Company's earliest SEC 10-K on EDGAR (1993/1994, CIK 0000764044) already describes the system as a mature, fully operating interstate pipeline with no in-service-date narrative; EDGAR full-text search does not reach earlier than the mid-1990s. The system is widely known in secondary/tertiary sources to trace to Mountain Fuel Supply Co.'s original Utah pipeline (commonly cited informally as circa late 1950s) but I could not locate a verifiable primary source for a specific year within this session's tool budget (WebSearch exhausted; FERC eLibrary not curl-scrapeable), so no value is staged rather than fabricate a precision I can't source."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "2600.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "2600.00",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Under the 'MountainWest Pipeline System' heading (the Main Line's own labeled section, distinct from the Overthrust heading elsewhere on the page): 'Peak Design Capacity: 2.6 million dekatherms per day' -- 2.6 MMdth/d is the unit-equivalent of the recorded 2,600 MMcf/d (1 dekatherm/d approx 1 Mcf/d for pipeline-quality gas); agrees within normal rounding."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "IMPORTANT CORRECTION to the worklist's own existing_ref_check: that check reported ok:false because it searched only for the literal substrings '2600'/'2600.00'/'2,600', missing that williams.com states the equivalent figure in different units ('2.6 million dekatherms per day'). Per the unit-equivalence rule, a source agreeing within rounding IS a valid ref -- this is REFS_ADDED with the original recorded value retained, not UNRESOLVED. This is the Main Line's own capacity, explicitly under its own heading -- NOT the company-wide MountainWest aggregate (Williams' FY2025 10-K states a separate corporate-total design capacity of 8.4 MMdth/d for the combined MountainWest umbrella of Main Line + Overthrust + White River Hub, confirming 2.6 MMdth/d is not that aggregate figure copied onto this row). Single-origin for this cell (only williams.com checked with the corrected substring); tier=medium."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Genuinely nothing found. Searched williams.com/pipeline/mountainwest/ (full page text, no 'psig'/'pressure' operating-spec figure for the Main Line -- the page gives miles, compressor-station count, storage volumes and capacity but not a design/operating pressure), mwpipe.com (operator's own site, no pressure spec on the pages checked), and Williams' FY2025 10-K (financial/business-segment narrative, no engineering pressure spec). FERC tariff sheets, which typically carry MAOP figures, were not locatable via curl-accessible FERC eLibrary (JS-rendered, not scrapeable) within this session's tool budget."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "1868.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "1868.00",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Under the 'MountainWest Pipeline System' heading: 'Miles of Transmission Pipeline: 1,868 miles' -- exact match to the recorded value, same labeled section as Capacity."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref reverified live and still supports the exact recorded value. Cross-checked for plausibility (not cited) against our own measurement of the route geojson's total extent (Ogden UT to NW Colorado, ~91 features/2,016 points spanning the correct three-state footprint) -- consistent with a ~1,868-mile mainline. Single-origin for this cell; tier=medium."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Genuinely nothing found for the Main Line as a whole. williams.com/pipeline/mountainwest/ gives a diameter figure only for a different section of the page (White River Hub/Overthrust area: '4 miles of 36-inch pipeline, ~11 miles of 30-inch pipeline') -- that is a different sub-system (see cross_row_leads for P6899), not this row's Main Line, and a system this long plausibly varies in diameter along its route in any case (a single figure would misrepresent it). No single-diameter spec for the 1,868-mile Main Line located in williams.com, mwpipe.com, the FY2025 10-K, or the 1993/1994 Questar 10-K."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Greater Green River, Uinta, and Piceance Basins"
+      },
+      "primary_value": "Greater Green River, Uinta, and Piceance Basins",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Under the 'MountainWest Pipeline System' heading (Main Line's own labeled section, same heading as Capacity/Length -- not the corporate-aggregate 10-K language): 'Supply Areas: Located in Rocky Mountains near six major producing areas, including Greater Green River, Uinta, and Piceance Basins.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource names the upstream gas basins/fields feeding the line per gem_schema.md (not the commodity type). Deliberately staged the named basins from the Main Line's OWN heading, not the FY2025 10-K's company-wide MountainWest basin sentence (which lists the same three basins but describes the combined umbrella, not this segment specifically) -- avoiding the aggregate-vs-segment trap given both happen to name the same basins. The operator's own site (mwpipe.com) independently references a 'MountainWest Uinta Basin Expansion II' project under MWP (Main Line), corroborating Uinta as a real supply source for this specific system, though not a full second citation for the whole three-basin list -- kept at medium/single-origin for this cell rather than claiming high."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Colorado",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Payson",
+        "EndState/Province": "Utah",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Payson",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/764044/0000764044-94-000001.txt"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/764044/0000764044-94-000001.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Questar Pipeline Company 10-K (1993/1994): 'the northern segment extends from northwestern Colorado through southwestern Wyoming into northern Utah; the southern segment ... extends from western Colorado to Payson, in central Utah.' Both historical segments run Colorado to Utah; 'Payson' is the specific named southern-segment terminus."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SCHEMA LIMITATION FLAGGED: the system is genuinely tri-state (Colorado-Wyoming-Utah per this same source and corroborated by our own route-geojson extent measurement: lon -111.98 to -107.52, lat 39.08 to 42.01, i.e. Ogden UT through Rock Springs WY to NW Colorado near Craig/Meeker), but the schema only captures Start/End. Staged Start=Colorado (upstream/source end) and End=Utah (downstream/Salt Lake City-area delivery end, matching williams.com's own 'Market Areas: ... delivery points ... Salt Lake City'), with Wyoming explicitly noted here as a real transit state the two-field schema can't represent. StartLocation left blank -- no single named town given for the Colorado end in the 10-K (only 'northwestern Colorado' / 'western Colorado'); staging a specific city would be a fabricated precision. StartCountryOrArea/EndCountryOrArea were already correctly populated (United States) and are unchanged. Single-origin (one 1990s SEC filing) for the state-level values; independently corroborated for plausibility (not cited) by the route geojson's own measured extent and by williams.com's 'Salt Lake City delivery points' / 'six producing areas ... Greater Green River basin in Wyoming, Uinta basin in Utah, Piceance basin in Colorado' language matching the same three-state footprint."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "",
+      "researcher_notes": "Genuinely nothing found. This is a decades-old legacy mainline with no single original construction-cost figure locatable; williams.com, mwpipe.com, and the FY2025 10-K describe current operations, not historical capital cost, and the 1993/1994 Questar 10-K's financial statements report consolidated company-level plant-in-service values, not a standalone Main Line construction cost attributable to this row without conflating decades of subsequent additions. The $1.5 billion figure in Williams' 2023 acquisition (Southwest Gas Holdings 8-K/A) is an acquisition/enterprise value for the whole MountainWest umbrella (Main Line + Overthrust + White River Hub + storage), not a segment construction cost -- correctly excluded per the aggregate-vs-segment rule."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "MountainWest Pipeline, LLC"
+      },
+      "primary_value": "MountainWest Pipeline, LLC",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Williams' FY2025 10-K: 'The system is comprised of MountainWest Pipeline, LLC; MountainWest Overthrust Pipeline, LLC; a 50 percent equity-method interest in White River Hub, LLC; and 64 Bcf of natural gas storage capacity...' -- 'MountainWest Pipeline, LLC' is the current legal operating entity for the Main Line specifically (distinct from the separately-named Overthrust entity, matching this row vs. P6899)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Fills a previously blank Operator cell. Single-origin (one 10-K) for the exact legal-entity name, but the entity name itself distinguishes this row from P6899 (MountainWest Overthrust Pipeline, LLC), directly supporting the DUPLICATE finding in validity."
+    },
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Williams Companies",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Williams Companies",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+        "https://www.sec.gov/Archives/edgar/data/1692115/000119312523043486/d367217dex991.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Williams' FY2025 10-K: 'On February 14, 2023, Williams closed on the acquisition of 100 percent of MountainWest Pipelines Holding Company' -- current 100% ownership by The Williams Companies, Inc."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1692115/000119312523043486/d367217dex991.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Southwest Gas Holdings, Inc. 8-K/A (EX-99.1, filed 2023-02-21, seller's own pro forma disclosure): 'On February 14, 2023, Southwest Gas Holdings, Inc. ... completed its previously announced sale of all of the equity interests in MountainWest Pipelines Holding Company ... to ... Williams Partners Operating LLC, a wholly owned subsidiary of The Williams Companies, Inc. ... total consideration received from the Sale was $1.5 billion.' A genuinely independent origin (the SELLER's own filer/CIK, distinct from Williams' filer/CIK) corroborating the same 100%-to-Williams transfer and its Feb 14, 2023 close date."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (williams.com) reverified live and still supports 100% Williams ownership; replaced/supplemented with two independent SEC filings by two DIFFERENT filers (buyer Williams' CIK 0000099250 and seller Southwest Gas Holdings' CIK 0001692115 -- two distinct origins, not one filer's multiple filings), raising this unit to tier=high. Both filings independently confirm the deal closed 2023-02-14, not '2024' as prompts/P6898.md's scope guidance states -- see validity for the full note; Owner1/Owner1% values are unchanged and correct (100% Williams Companies), only the closing-date discrepancy is flagged. Orchestrator confirmation: tier=high / independent=true STANDS on this record. The mechanical audit collapses both refs to the netloc sec.gov and reads them as one publisher, but that is a script limitation, not a defect: the two filings are by two DIFFERENT filers -- The Williams Companies (buyer, accession 0000107263-26-000006, served under the joint-filer path CIK 0000099250) and Southwest Gas Holdings (seller, CIK 0001692115, 8-K exhibit 99.1). The one-origin rule makes multiple filings by ONE filer a single origin; two separate registrants disclosing the same transaction from opposite sides are two origins. Do not downgrade this at merge."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7785",
+      "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+      "facts": "Williams' FY2025 10-K: 'During 2025, MountainWest placed the Overthrust Westbound Compression expansion project into service increasing firm transportation capacity by approximately 0.3 MMdth/d to its pipeline.' This corroborates gem.wiki's own (non-cited, leads-only) figures for P7785 -- Capacity 325 MMcf/d, Length 0 mi (compression-only, no new pipe), Start year 2025 -- and confirms the project is on the OVERTHRUST system, not this row's Main Line. Worth citing this 10-K as an independent primary source for P7785's Status/Start/Capacity fills if not already sourced."
+    },
+    {
+      "project_id": "P6899",
+      "url": "https://www.williams.com/pipeline/mountainwest/",
+      "facts": "The same williams.com page that sources this row's Length/Capacity also carries a separate, distinctly-headed section for the Overthrust system: 'Miles of Transmission Pipeline: 261 miles', 'Compressor Stations: 3', and (in the White River Hub sub-section) '4 miles of 36-inch pipeline, ~11 miles of 30-inch pipeline'. Note: a 'System Peak Design Capacity: 2.6 million dekatherms per day' figure also appears near the Overthrust/White River Hub section of the page, identical in wording to the Main Line's own figure used in this row's Capacity fill -- worth the P6899 agent checking carefully which heading that second occurrence actually belongs to (Overthrust itself, or White River Hub, a 50%-equity-method joint venture, not wholly MountainWest) before citing it as Overthrust's capacity, to avoid an accidental copy of this row's number onto the sibling."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Main Line",
+      "sheet_row": 3737,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-02",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/mountainwest/",
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/mountainwest/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Live current operator/owner marketing page describes the Main Line as an active, in-service transmission system with current operational specs (miles, compressor stations, storage, capacity) -- no indication of any shutdown, abandonment, or idle status."
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Williams' FY2025 10-K (filed early 2026, most recent annual report) reports MountainWest's system-wide design capacity and describes 2025 activity (a NEW expansion project placed into service on the Overthrust system) as an active, growing asset -- consistent with continued full operation of the Main Line, no impairment/abandonment language for this system."
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Newest independent evidence (Williams' own FY2025 10-K, filed 2026, and its live current pipeline-asset marketing page) both confirm the Main Line remains a fully operating interstate transmission mainline as of the most recent reporting period -- no change warranted. No indication anywhere in the sources reviewed (10-K, williams.com, mwpipe.com, the Southwest Gas 8-K/A, or the 1993/1994 Questar 10-K) of any abandonment, idling, or status change for this specific system since its original construction decades ago; ownership changed hands (Southwest Gas to Williams, 2023) but the asset has operated continuously throughout."
+    }
+  ],
+  "summary": "P6898 = Williams' 'MountainWest Pipeline System' (legal operator MountainWest Pipeline, LLC; formerly Questar Pipeline), the 1,868-mi/2,600 MMcf/d Main Line spanning Colorado-Wyoming-Utah -- confirmed real, correctly classified, and NOT a duplicate of sibling P6899 (Overthrust, its own heading/spec set) or P7785 (Westbound Compression, a 2025 compression-only expansion on the Overthrust system, per cross_row_leads); 7 REFS_ADDED (Status, Capacity, FuelSource, Location, Operator, plus Owner listed as REVERIFIED) + REVERIFIED (Fuel, PipelineType, Length, Owner) = 9 sourced, 6 UNRESOLVED (Proposal, Construction, Start, Pressure, Diameter, SegmentCost -- a legacy 1950s/60s-era mainline predating the searchable SEC/FERC/web record, honestly documented rather than guessed); status_review verdict=confirm (still fully operating); validity flags the prompt's stated 2024 Williams-acquisition year as one year off the verified primary-source date of 2023-02-14 (Williams' own 10-K + seller Southwest Gas Holdings' 8-K/A, two independent filers); cross_row_leads filed on P7785 (10-K corroboration for its 2025 in-service Overthrust compression project) and P6899 (a caution about a possibly-misattributed capacity figure on williams.com near the Overthrust/White River Hub section)."
+}

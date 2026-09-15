@@ -21,7 +21,9 @@
       "verdict": "concern",
       "concern_type": "classification",
       "recommendation": "Verify/reclassify PipelineType. SemGroup's own SEC disclosures call this a gathering line, not transmission -- confirm current PipelineType and consider whether a 200 MMcf/d firm-committed intrastate takeaway line still belongs in this bucket the way GGIT scopes gathering vs. transmission elsewhere (same question already flagged on P2041 Taproot Baja/Rattlesnake in this batch).",
-      "contested": {"PipelineType": "gathering"},
+      "contested": {
+        "PipelineType": "gathering"
+      },
       "researcher_notes": "SemGroup Corp's own SEC 10-K filings for BOTH FY2017 (filed 2018-02-26, https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm) and FY2018 (filed 2019-02-28, https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm) describe the asset identically, verbatim across both years: 'a 53-mile, high pressure gathering pipeline (the \"Canton pipeline\"), located in the STACK play with a capacity of 200 million cubic feet per day and backed by firm commitments from an investment-grade counterparty.' This is the pipeline's own owner/operator classifying it as a GATHERING line in an audited public filing, not transmission. Countervailing context: EIA's Natural Gas Pipeline Projects workbook labels it 'Intrastate' under 'Pipeline Type' (a jurisdictional category, not the gathering/transmission distinction) and notes it provides 'Takeaway capacity out of Anadarko basin' -- i.e. it functions as a basin egress/trunk line even if SemGroup's own accounting classifies the facility as gathering-grade. This is a genuine, sourced tension worth a human classification call, not a unilateral reclassification -- flagging rather than changing PipelineType outright.",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm",
@@ -36,7 +38,9 @@
       "verdict": "concern",
       "concern_type": "spec",
       "recommendation": "Verify LengthKnown -- SemGroup's own 10-K (both FY2017 and FY2018) states 53 miles, not the 50 miles recorded on the sheet (which traces to the original 2017 project announcement).",
-      "contested": {"LengthKnown": "53"},
+      "contested": {
+        "LengthKnown": "53"
+      },
       "researcher_notes": "The recorded LengthKnown=50 mi traces to SemGroup's 2017-05-03 project announcement ('approximately 50 miles' -- GlobeNewswire, and the same figure was picked up by the Oklahoma Minerals trade-press piece and, evidently, by EIA's workbook, which also cites a SemGroup investor deck as its source). But SemGroup's own AUDITED SEC 10-K filings -- for FY2017 (filed Feb 2018) AND independently restated in FY2018 (filed Feb 2019) -- both describe it as 'a 53-mile ... pipeline.' A consistent as-built figure in two consecutive audited annual reports from the pipeline's own owner is likely more authoritative than a pre-construction press estimate of 'approximately 50 miles.' Flagging as a material (6%) discrepancy rather than silently keeping 50 or silently overwriting to 53 -- see the paired Length [ref] fill below, which stages 53 mi as the corrected/proposed value with both 10-Ks as refs.",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm",
@@ -64,155 +68,403 @@
   ],
   "fills": [
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Status [ref]",
-      "value_cols": ["Status"], "primary_value_col": "Status",
-      "values": {"Status": "operating"}, "primary_value": "operating",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2018 10-K, present tense: 'We own and operate ... a 53-mile, high pressure gathering pipeline (the \"Canton pipeline\") ... with a capacity of 200 million cubic feet per day'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab: Project Name 'Canton Pipeline', Operator 'SemGroup Corp', Status 'Completed', Year In Service 2017, last updated 2019-01-03"}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2018 10-K, present tense: 'We own and operate ... a 53-mile, high pressure gathering pipeline (the \"Canton pipeline\") ... with a capacity of 200 million cubic feet per day'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects tab: Project Name 'Canton Pipeline', Operator 'SemGroup Corp', Status 'Completed', Year In Service 2017, last updated 2019-01-03"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Two independent, dated sources confirm the pipeline was built and is operating: SemGroup's own SEC 10-K (audited, FY2018) describing it in the present tense as an owned/operated asset, and EIA's independently compiled project workbook marking it 'Completed'/in-service 2017. No evidence of idling, sale-off, or decommissioning found (see status_reviews below for the currency caveat -- both sources are 2019-vintage, and no post-2023 news was found either confirming or contradicting continued operation)."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Fuel [ref]",
-      "value_cols": ["Fuel"], "primary_value_col": "Fuel",
-      "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
       "proposed_refs": [
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook as 'Canton Pipeline'"},
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "SemGroup 10-K describes it within its natural gas gathering/processing segment ('SemGas'), a 'high pressure gathering pipeline'"}
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook as 'Canton Pipeline'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "SemGroup 10-K describes it within its natural gas gathering/processing segment ('SemGas'), a 'high pressure gathering pipeline'"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Unambiguously a natural gas pipeline in every source consulted -- press release ('natural gas pipeline'), EIA (Natural Gas Pipeline Projects workbook), and SemGroup's own natural-gas-segment 10-K disclosure."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Proposal [ref]",
-      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
-      "values": {"ProposalYear": "2017", "ProposalMonth": "May"}, "primary_value": "2017",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2017",
+        "ProposalMonth": "May"
+      },
+      "primary_value": "2017",
       "proposed_refs": [
         "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html",
         "https://www.oklahomaminerals.com/oklahoma-pipelines"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html", "ok": true, "contains_value": true, "name_found": true, "note": "SemGroup's own announcement dated May 3, 2017: 'today announced plans to build a natural gas pipeline ... The Canton Pipeline is backed by firm commitments'"},
-        {"url": "https://www.oklahomaminerals.com/oklahoma-pipelines", "ok": true, "contains_value": true, "name_found": true, "note": "Independent trade-press piece (Julie Parker, dated per the wiki citation 28 June 2017) reporting the same May 2017 SemGroup Canton Pipeline announcement"}
+        {
+          "url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "SemGroup's own announcement dated May 3, 2017: 'today announced plans to build a natural gas pipeline ... The Canton Pipeline is backed by firm commitments'"
+        },
+        {
+          "url": "https://www.oklahomaminerals.com/oklahoma-pipelines",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independent trade-press piece (Julie Parker, dated per the wiki citation 28 June 2017) reporting the same May 2017 SemGroup Canton Pipeline announcement"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "The live globenewswire.com URL times out from this environment; verified via its Wayback capture instead (a live-page timeout, not a dead link). Both the original announcement and an independent trade publication corroborate May 2017."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Construction [ref]",
-      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
-      "values": {"ConstructionYear": "2017"}, "primary_value": "2017",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2017"
+      },
+      "primary_value": "2017",
       "proposed_refs": [
         "https://web.archive.org/web/2020/https://www.oklahoman.com/story/business/columns/2019/09/16/tulsas-semgroup-to-be-bought-by-energy-transfer-partners-companies-announced-monday/60434453007/",
         "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/2020/https://www.oklahoman.com/story/business/columns/2019/09/16/tulsas-semgroup-to-be-bought-by-energy-transfer-partners-companies-announced-monday/60434453007/", "ok": true, "contains_value": true, "name_found": true, "note": "Photo caption metadata: 'Contractors work in 2017 to build SemGroup's Canton Pipeline. The 50-mile-long line, which started operating the following year, extends south into the STACK play from a processing plant in Woods County.'"},
-        {"url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html", "ok": true, "contains_value": true, "name_found": true, "note": "Announced May 2017 with an expected in-service target of 'year-end 2017', implying construction within 2017"}
+        {
+          "url": "https://web.archive.org/web/2020/https://www.oklahoman.com/story/business/columns/2019/09/16/tulsas-semgroup-to-be-bought-by-energy-transfer-partners-companies-announced-monday/60434453007/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Photo caption metadata: 'Contractors work in 2017 to build SemGroup's Canton Pipeline. The 50-mile-long line, which started operating the following year, extends south into the STACK play from a processing plant in Woods County.'"
+        },
+        {
+          "url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Announced May 2017 with an expected in-service target of 'year-end 2017', implying construction within 2017"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "This was a blank cell (MISSING_VALUE). The Oklahoman's photo caption directly dates construction activity to 2017 ('Contractors work in 2017 to build...'); the May 2017 announcement targeting year-end-2017 service is consistent. Filled at medium tier since the Oklahoman source is a caption, not article body text (the article itself is paywalled)."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
       "primary_value_col": "StartYear1",
-      "values": {"StartYear1": "2017"}, "primary_value": "2017",
+      "values": {
+        "StartYear1": "2017"
+      },
+      "primary_value": "2017",
       "proposed_refs": [
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab: Completed Date 2017-12-01, Year In Service Date 2017"},
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "SemGroup's FY2017 10-K (period ending 2017-12-31, filed Feb 2018) already describes Canton in the present tense as an owned/operated asset"}
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects tab: Completed Date 2017-12-01, Year In Service Date 2017"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "SemGroup's FY2017 10-K (period ending 2017-12-31, filed Feb 2018) already describes Canton in the present tense as an owned/operated asset"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "EIA's official completion/in-service figure (2017) is corroborated by SemGroup's own FY2017 10-K already listing it as operating by year-end 2017. One minor conflicting note: the Oklahoman's 2019 photo caption says the line 'started operating the following year' after 2017 construction, i.e. 2018 -- a single-year discrepancy against a contemporaneous audited filing (weaker evidence than the 10-K, since the caption is informal wording written two years after the fact). Keeping StartYear1=2017 on the strength of the EIA + 10-K pairing; flagged in the general validity note rather than as a full spec concern given how thin the countervailing source is."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Capacity [ref]",
-      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
-      "values": {"Capacity": "200.00", "CapacityUnits": "MMcf/d"}, "primary_value": "200.00",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "200.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "200.00",
       "proposed_refs": [
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
         "https://www.oklahomaminerals.com/oklahoma-pipelines",
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Additional Capacity (MMcf/d) column = 200"},
-        {"url": "https://www.oklahomaminerals.com/oklahoma-pipelines", "ok": true, "contains_value": true, "name_found": true, "note": "'initially transporting up to 200 million cubic feet per day, with the ability of expanding to 400 million cubic feet per day'"},
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'...with a capacity of 200 million cubic feet per day...' -- restated identically in FY2017 and FY2018 10-Ks"}
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Additional Capacity (MMcf/d) column = 200"
+        },
+        {
+          "url": "https://www.oklahomaminerals.com/oklahoma-pipelines",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'initially transporting up to 200 million cubic feet per day, with the ability of expanding to 400 million cubic feet per day'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...with a capacity of 200 million cubic feet per day...' -- restated identically in FY2017 and FY2018 10-Ks"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Three independent sources (government data compilation, trade press, and the owner's own audited SEC filing) agree exactly on 200 MMcf/d initial capacity, with the possibility of expansion to 400 MMcf/d noted by the trade press (not staged, since it was never built out per any source)."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Pressure [ref]",
-      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
-      "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "", "independent": false, "source_language": "en",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "MISSING_VALUE, left unfilled. SemGroup's 10-K calls it a 'high pressure' gathering pipeline but states no PSI/MAOP figure. As an intrastate, state-jurisdiction line (EIA: Authority = 'State', Docket Number = 'na') there is no FERC certificate to check for a stated MAOP, and no Oklahoma Corporation Commission filing for this specific line was found within this session's search. Searched: SemGroup 10-K (FY2017, FY2018), EIA workbook (no Pressure column populated for this project), the GlobeNewswire/Oklahoma Minerals coverage (neither states a PSI value). Genuinely unresolved -- not forcing a number."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Length [ref]",
-      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
-      "values": {"LengthKnown": "53", "LengthKnownUnits": "mi"}, "primary_value": "53",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "53",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "53",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm",
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2017 10-K: 'a 53-mile, high pressure gathering pipeline (the \"Canton pipeline\")'"},
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2018 10-K restates the identical '53-mile' figure a year later"}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913618000004/semg1231201710-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2017 10-K: 'a 53-mile, high pressure gathering pipeline (the \"Canton pipeline\")'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2018 10-K restates the identical '53-mile' figure a year later"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "SOURCES DISAGREE with the recorded value (50 mi) -- see the paired spec concern in validity[] above. The recorded 50 mi comes from the original 2017 pre-construction press announcement (restated by EIA and trade press, all tracing to the same announcement/investor-deck origin). SemGroup's own AUDITED SEC 10-K states 53 miles consistently across two separate fiscal-year filings (FY2017 and FY2018), which is more likely to reflect the as-built length than a pre-construction press estimate. Proposing the correction to 53 mi per the DISAGREE branch of the fill instructions; flagged as a spec concern rather than silently applied."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SOURCES DISAGREE with the recorded value (50 mi) -- see the paired spec concern in validity[] above. The recorded 50 mi comes from the original 2017 pre-construction press announcement (restated by EIA and trade press, all tracing to the same announcement/investor-deck origin). SemGroup's own AUDITED SEC 10-K states 53 miles consistently across two separate fiscal-year filings (FY2017 and FY2018), which is more likely to reflect the as-built length than a pre-construction press estimate. Proposing the correction to 53 mi per the DISAGREE branch of the fill instructions; flagged as a spec concern rather than silently applied. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (sec.gov). One publisher restated is still one origin."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Diameter [ref]",
-      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
-      "values": {"Diameter": "24.00", "DiameterUnits": "in"}, "primary_value": "24.00",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24.00",
       "proposed_refs": [
         "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html", "ok": true, "contains_value": true, "name_found": true, "note": "'The 24-inch-diameter natural gas pipeline will extend approximately 50 miles from SemGroup's Rose Valley processing facility'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Diameter (Inches) column = 24"}
+        {
+          "url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The 24-inch-diameter natural gas pipeline will extend approximately 50 miles from SemGroup's Rose Valley processing facility'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Diameter (Inches) column = 24"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "24-inch diameter is consistent across the original announcement, the trade press restatement, and EIA's independently compiled workbook. No disagreement (unlike length)."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "FuelSource [ref]",
-      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource",
-      "values": {"FuelSource": "Anadarko Basin"}, "primary_value": "Anadarko Basin",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Project Notes column for the Canton Pipeline row: 'Takeaway capacity out of Anadarko basin'"}
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
-      "researcher_notes": "Single strong (government-compiled) source states 'Anadarko basin' verbatim tied to this project. Second-source search: the original announcement, trade press, and SemGroup's 10-K all describe the location as the 'STACK play' (a geologic play that sits within the Anadarko Basin) rather than using the basin name itself, so none independently corroborates the specific basin label. Staged at medium tier per the single-strong-source rule, with the gap noted rather than papered over."
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Anadarko Basin"
+      },
+      "primary_value": "Anadarko Basin",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Project Notes column for the Canton Pipeline row: 'Takeaway capacity out of Anadarko basin'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Single strong (government-compiled) source states 'Anadarko basin' verbatim tied to this project. Second-source search: the original announcement, trade press, and SemGroup's 10-K all describe the location as the 'STACK play' (a geologic play that sits within the Anadarko Basin) rather than using the basin name itself, so none independently corroborates the specific basin label. Staged at medium tier per the single-strong-source rule, with the gap noted rather than papered over. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
       "primary_value_col": "StartLocation",
       "values": {
-        "StartLocation": "Rose Valley Processing facility", "StartPrefecture/District": "Woods County",
-        "StartState/Province": "Oklahoma", "StartCountryOrArea": "United States",
-        "EndPrefecture/District": "Blaine County", "EndState/Province": "Oklahoma", "EndCountryOrArea": "United States"
+        "StartLocation": "Rose Valley Processing facility",
+        "StartPrefecture/District": "Woods County",
+        "StartState/Province": "Oklahoma",
+        "StartCountryOrArea": "United States",
+        "EndPrefecture/District": "Blaine County",
+        "EndState/Province": "Oklahoma",
+        "EndCountryOrArea": "United States"
       },
       "primary_value": "Rose Valley Processing facility",
       "proposed_refs": [
@@ -220,52 +472,148 @@
         "https://www.oklahomaminerals.com/oklahoma-pipelines"
       ],
       "verifications": [
-        {"url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html", "ok": true, "contains_value": true, "name_found": true, "note": "'extend approximately 50 miles from SemGroup's Rose Valley processing facility in Woods County to north central Blaine County'"},
-        {"url": "https://www.oklahomaminerals.com/oklahoma-pipelines", "ok": true, "contains_value": true, "name_found": true, "note": "'extend about 50 miles from the company's Rose Valley processing facility in Woods County to north central Blaine County'"}
+        {
+          "url": "https://web.archive.org/web/2020/https://www.globenewswire.com/news-release/2017/05/03/978184/0/en/SemGroup-Announces-Natural-Gas-Pipeline-Project-to-Serve-Active-STACK-Play.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'extend approximately 50 miles from SemGroup's Rose Valley processing facility in Woods County to north central Blaine County'"
+        },
+        {
+          "url": "https://www.oklahomaminerals.com/oklahoma-pipelines",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'extend about 50 miles from the company's Rose Valley processing facility in Woods County to north central Blaine County'"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Both endpoints (Rose Valley facility, Woods County -> Blaine County, both Oklahoma) confirmed verbatim by two independently published sources. No EndLocation is recorded on the sheet and neither source names a specific end-facility beyond 'north central Blaine County' -- left as-is rather than guessing a specific terminus."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "ref_col": "SegmentCost [ref]",
-      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
-      "values": {"SegmentCost": "60000000.00", "SegmentCostUnits": "USD"}, "primary_value": "60000000.00",
-      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"],
-      "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Historical Projects tab, Canton Pipeline row: Cost (millions) = 60 -- an exact match to the recorded $60,000,000"}
+      "segment_name": "",
+      "sheet_row": 1292,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
-      "researcher_notes": "This is one of the two SegmentCost units flagged in the batch brief where the current [ref] is a dead navigation page (eia.gov/naturalgas/data.php). Replaced with the actual EIA workbook document, which states the $60M figure exactly. Single-source (medium tier): searched SemGroup's FY2017 and FY2018 10-Ks for a Canton-specific capex figure (searched all '$60'/'60.0 million' hits in both filings) and found none tied to this project; the trade press and original announcement do not state a cost either. The website field on the EIA row itself (a SemGroup investor-presentation PDF) 404s live and Archive.org's availability API was rate-limited (429) during this session, so that potential second source could not be chased down further within budget."
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "60000000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "60000000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Historical Projects tab, Canton Pipeline row: Cost (millions) = 60 -- an exact match to the recorded $60,000,000"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This is one of the two SegmentCost units flagged in the batch brief where the current [ref] is a dead navigation page (eia.gov/naturalgas/data.php). Replaced with the actual EIA workbook document, which states the $60M figure exactly. Single-source (medium tier): searched SemGroup's FY2017 and FY2018 10-Ks for a Canton-specific capex figure (searched all '$60'/'60.0 million' hits in both filings) and found none tied to this project; the trade press and original announcement do not state a cost either. The website field on the EIA row itself (a SemGroup investor-presentation PDF) 404s live and Archive.org's availability API was rate-limited (429) during this session, so that potential second source could not be chased down further within budget. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (eia.gov). All EIA releases are ONE origin."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "oo_sheet_row": 1917, "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value_col": "Operator", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "", "independent": false, "source_language": "en",
+      "segment_name": "",
+      "sheet_row": 1292,
+      "oo_sheet_row": 1917,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "MISSING_VALUE, left unfilled. Pre-merger (through FY2018, per SemGroup's own 10-K: 'We own and operate ... the \"Canton pipeline\"'), the operator of record was SemGroup Corp. SemGroup Corp merged into Energy Transfer LP effective 2019-12-05 (Energy Transfer IR press release, verified via Wayback). No post-2019 source names a specific current operating entity for Canton by name (SEC EDGAR full-text search for 'Canton pipeline' across all forms since Dec 2019 returns nothing relevant; Energy Transfer's own major-projects page does not mention it). Given the tracker asks for the operating entity's specific name rather than the ultimate parent, and no source states that name post-merger, this stays UNRESOLVED rather than guessing 'Energy Transfer' as Operator (that value is staged for Owner1 below, where the sheet already carries it)."
     },
     {
-      "segment_name": "", "sheet_row": 1292, "oo_sheet_row": 1917, "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "segment_name": "",
+      "sheet_row": 1292,
+      "oo_sheet_row": 1917,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
       "primary_value_col": "Owner1",
-      "values": {"Owner1": "Energy Transfer", "Owner1%": "100.00%"}, "primary_value": "Energy Transfer",
+      "values": {
+        "Owner1": "Energy Transfer",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Energy Transfer",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
         "https://web.archive.org/web/2020/https://ir.energytransfer.com/news-releases/news-release-details/energy-transfer-and-semgroup-announce-successful-completion"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Establishes SemGroup Corp as the pre-merger owner/operator of the named 'Canton pipeline'"},
-        {"url": "https://web.archive.org/web/2020/https://ir.energytransfer.com/news-releases/news-release-details/energy-transfer-and-semgroup-announce-successful-completion", "ok": true, "contains_value": true, "name_found": false, "note": "Confirms completion of the Energy Transfer/SemGroup merger, 2019-12-05, covering SemGroup's Anadarko Basin (Oklahoma) gas gathering/processing assets -- does NOT name 'Canton' specifically"}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Establishes SemGroup Corp as the pre-merger owner/operator of the named 'Canton pipeline'"
+        },
+        {
+          "url": "https://web.archive.org/web/2020/https://ir.energytransfer.com/news-releases/news-release-details/energy-transfer-and-semgroup-announce-successful-completion",
+          "ok": true,
+          "contains_value": true,
+          "name_found": false,
+          "note": "Confirms completion of the Energy Transfer/SemGroup merger, 2019-12-05, covering SemGroup's Anadarko Basin (Oklahoma) gas gathering/processing assets -- does NOT name 'Canton' specifically"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "No single source names both 'Canton' and 'Energy Transfer' together -- the ownership conclusion is a two-step, well-documented chain rather than a direct statement, so this is staged at medium (not high) tier and the second ref is flagged name_found=false per the naming-relevance rule. Step 1: SemGroup Corp's own 10-K names Canton as its asset through FY2018. Step 2: Energy Transfer's own press release confirms it completed its acquisition of SemGroup Corp on 2019-12-05. Together these support Owner1=Energy Transfer, 100%, which matches what the sheet already carries -- but see the paired attribution/lineage validity note above: the batch brief's premise that this came via the 2021 Enable merger is wrong; it came via the 2019 SemGroup merger."
     }
   ],
   "cross_row_leads": [],
   "status_reviews": [
     {
-      "segment_name": "", "sheet_row": 1292,
+      "segment_name": "",
+      "sheet_row": 1292,
       "current_status": "operating",
       "verdict": "confirm",
       "evidence_date": "2019-12-05",
@@ -277,11 +625,25 @@
         "https://web.archive.org/web/2020/https://ir.energytransfer.com/news-releases/news-release-details/energy-transfer-and-semgroup-announce-successful-completion"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm", "ok": true, "contains_value": true, "name_found": true, "note": "FY2018 10-K (filed 2019-02-28) still describes Canton as an owned/operated 200 MMcf/d gathering pipeline"},
-        {"url": "https://web.archive.org/web/2020/https://ir.energytransfer.com/news-releases/news-release-details/energy-transfer-and-semgroup-announce-successful-completion", "ok": true, "contains_value": false, "name_found": false, "note": "Confirms the SemGroup business (including its Anadarko Basin Oklahoma gathering/processing assets) transferred intact to Energy Transfer on 2019-12-05 as a going concern, not a shutdown/divestiture -- does not name Canton specifically"}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1489136/000148913619000011/semg1231201810-k.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2018 10-K (filed 2019-02-28) still describes Canton as an owned/operated 200 MMcf/d gathering pipeline"
+        },
+        {
+          "url": "https://web.archive.org/web/2020/https://ir.energytransfer.com/news-releases/news-release-details/energy-transfer-and-semgroup-announce-successful-completion",
+          "ok": true,
+          "contains_value": false,
+          "name_found": false,
+          "note": "Confirms the SemGroup business (including its Anadarko Basin Oklahoma gathering/processing assets) transferred intact to Energy Transfer on 2019-12-05 as a going concern, not a shutdown/divestiture -- does not name Canton specifically"
+        }
       ],
-      "tier": "medium", "independent": true, "source_language": "en",
-      "researcher_notes": "The sheet's own LastUpdated is 2023-09-05; no source found in this session postdates that (the newest dated, on-topic evidence located -- the Energy Transfer/SemGroup merger completion release -- is from 2019-12-05, and SemGroup's FY2018 10-K from 2019-02-28). Search for 2023-2026 evidence: SEC EDGAR full-text search for 'Canton pipeline' across all forms since 2020 returns nothing; Energy Transfer's public asset/major-projects pages do not name it; Google News RSS search for 'Canton Pipeline Oklahoma SemGroup' surfaced only the same 2017 (RBN Energy) and 2019 (Oklahoman) pieces already used above, nothing newer. No news of an idling, sale, abandonment, or incident was found either. Given (a) it is a firm-committed 200 MMcf/d STACK-play takeaway line built at real capex, (b) it transferred as a going-concern asset in the SemGroup/Energy Transfer merger rather than being flagged for divestiture, and (c) no contrary signal exists anywhere searched, 'confirm operating' is the better-supported verdict than 'stale' or 'unclear' -- but tier is capped at medium because no post-2023 dated source could be produced within this session's budget; this is a documented gap, not a finding of change."
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The sheet's own LastUpdated is 2023-09-05; no source found in this session postdates that (the newest dated, on-topic evidence located -- the Energy Transfer/SemGroup merger completion release -- is from 2019-12-05, and SemGroup's FY2018 10-K from 2019-02-28). Search for 2023-2026 evidence: SEC EDGAR full-text search for 'Canton pipeline' across all forms since 2020 returns nothing; Energy Transfer's public asset/major-projects pages do not name it; Google News RSS search for 'Canton Pipeline Oklahoma SemGroup' surfaced only the same 2017 (RBN Energy) and 2019 (Oklahoman) pieces already used above, nothing newer. No news of an idling, sale, abandonment, or incident was found either. Given (a) it is a firm-committed 200 MMcf/d STACK-play takeaway line built at real capex, (b) it transferred as a going-concern asset in the SemGroup/Energy Transfer merger rather than being flagged for divestiture, and (c) no contrary signal exists anywhere searched, 'confirm operating' is the better-supported verdict than 'stale' or 'unclear' -- but tier is capped at medium because no post-2023 dated source could be produced within this session's budget; this is a documented gap, not a finding of change. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (sec.gov). One publisher restated is still one origin."
     }
   ],
   "summary": "P2510 Canton Gas Pipeline: real and well-sourced (SemGroup's own SEC 10-Ks x2 + EIA + press), not a duplicate; classification concern (SemGroup's own 10-K calls it a gathering pipeline, not transmission) and a spec concern (SemGroup's 10-K states 53 mi vs the recorded 50 mi) both staged; the batch brief's Enable/2021-merger lineage for this row is wrong (it was a SemGroup/2019-merger asset) though the resulting Owner=Energy Transfer value holds. Pressure and Operator left UNRESOLVED (nothing found)."

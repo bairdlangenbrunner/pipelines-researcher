@@ -1,0 +1,564 @@
+{
+  "project_id": "P6250",
+  "pipeline_name": "Pacific Gas & Electric Pipeline",
+  "sheet_row": 3508,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "no action -- existence, classification and duplicate status all confirmed",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real and heavily documented -- PG&E's own gas-system pages, PHMSA's PG&E system-overview safety page, PG&E Corp's 2023 10-K (SEC EDGAR) and 2025 Corporate Sustainability Report, and the NTSB/Pipeline Safety Trust record of the 2010 San Bruno rupture (Line 132) all independently describe this system. Not a GEM-only entity. CLASSIFICATION: correctly a gas TRANSMISSION system (PG&E's own page: 'PG&E's nearly 7,000 miles of gas transmission pipelines and 42,000 miles of distribution pipelines'; distribution is out of scope for this row). DUPLICATE: checked against the full 42-row roster -- P6233 SoCalGas Pipeline is the only other California utility-system row and covers a distinct, non-overlapping southern-California utility (Sempra/SoCalGas), so no overlap with PG&E's northern/central California system. No duplicate.",
+      "proposed_refs": [
+        "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "check LengthKnown -- two independent, more-current sources put PG&E's backbone/local gas transmission system materially below the recorded 7,000 mi",
+      "contested": {
+        "LengthKnown": "5650"
+      },
+      "researcher_notes": "The sheet's existing ref (pge.com/gas-systems/pipeline.html) DOES state the recorded value verbatim ('PG&E's nearly 7,000 miles of gas transmission pipelines') and names the pipeline, so that unit re-verifies clean on its own terms (see the Length fill below). But casting a wider net for the required second independent source surfaced a material disagreement: (1) PHMSA's own 'PG&E System Overview' safety page states PG&E 'operates nearly 5,700 miles of gas transmission pipelines' (Wayback capture 2025-01-02); (2) PG&E Corp's 2025 Corporate Sustainability Report 'About PG&E' page states '5,650 miles of backbone and local gas transmission pipelines' (current, dated 2025); (3) PG&E Corp's FY2023 10-K (SEC EDGAR, filed 2024, describing the system as of 2023-12-31) states 'over 6,400 miles of backbone and local transmission pipelines'. PHMSA (an independent federal regulator) and PG&E's own 2025 CSR agree within rounding at ~5,650-5,700 mi -- two independent origins pointing to a figure roughly 19-20% below the sheet's 7,000. The SEC 10-K's 6,400 (as of end-2023) sits between the two. The pge.com marketing page carrying the sheet's 7,000 figure is undated and may describe a broader definition (e.g. including some distribution-adjacent or historical mileage) or simply be stale copy. Recommend the researcher weigh 5,650-5,700 (PHMSA + 2025 CSR, the two most current, most precisely-dated, mutually-corroborating figures) against the sheet's 7,000 and update LengthKnown accordingly; candidate value given as 5650 (2025 CSR, most recent).",
+      "proposed_refs": [
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca",
+        "https://www.pgecorp.com/sustainability/corporate-sustainability/corporate_sustainability_report_2025/sustainability-2025/about_pge.html",
+        "https://www.sec.gov/Archives/edgar/data/1004980/000100498024000014/pcg-20231231.htm"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "note what the recorded Diameter represents -- one backbone line's pipe size, not a single system-wide figure",
+      "contested": {},
+      "researcher_notes": "Per the scope guidance for utility-system rows (P6233/P6250): a single Diameter value on a 7,000-mile, multi-line system is the largest/most-cited line at best, not a literal system-wide constant. The recorded 30 in traces to the NTSB investigation of the 2010 San Bruno rupture on PG&E's Line 132, a 30-inch-diameter intrastate transmission segment (confirmed via the Pipeline Safety Trust page, Wayback capture, since the live page 403s bot traffic -- see the Diameter fill). I did not find a documented larger backbone diameter to supersede it (no diameter figures surfaced in PG&E's SEC filings or CSR), so 30 in stands as the best-documented single figure, understood to represent one prominent line rather than a verified system-wide maximum.",
+      "proposed_refs": [
+        "https://web.archive.org/web/20240524045253/https://pstrust.org/map-of-major-incidents/sanbruno/"
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "trim trailing whitespace on PipelineName and StartState/Province, EndState/Province if present on the live sheet",
+      "contested": {
+        "PipelineName": "Pacific Gas & Electric Pipeline",
+        "StartState/Province": "California",
+        "EndState/Province": "California"
+      },
+      "researcher_notes": "Per the orchestrator's scope guidance, the live sheet's PipelineName and StartState cells for this row carry trailing whitespace ('Pacific Gas & Electric Pipeline ', 'California '). Note for the record: the worklist.json extract I worked from shows these fields clean (no trailing space, verified by exact character count), so I cannot independently reproduce the defect from what I was given -- but per instruction this is a formatting fix, not a research finding, so no citation is owed. Flagging per the guidance so the live-sheet cells get trimmed if the whitespace is still present there.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.pge.com/pipeline/en/operating-data/current-pipeline-status.html",
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pge.com/pipeline/en/operating-data/current-pipeline-status.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PG&E's live 'Pipe Ranger' operations dashboard, titled 'Operations | Current Pipeline Status | Pipe Ranger'; names 'Pacific Gas & Electric Pipeline' and exists to report current operating status."
+        },
+        {
+          "url": "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA 'PG&E System Overview' page (Wayback capture 2025-01-02) states 'Pacific Gas & Electric Company (PG&E) ... operates nearly 5,700 miles of gas transmission pipelines' -- independent confirmation the system is an operating one, not idled/abandoned."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Sheet's existing ref (pge.com Pipe Ranger status page) re-verified live and clean; added PHMSA's independent system-overview page as the second source. No sale, idling or conversion evidence found -- see status_reviews."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page states 'PG&E's nearly 7,000 miles of gas transmission pipelines'; names Pacific Gas and Electric Company and its gas system."
+        },
+        {
+          "url": "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA page names 'Pacific Gas and Electric Company (PG&E)' and describes its 'gas transmission pipelines' -- independent confirmation of natural gas as the commodity."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Re-verified the existing ref; added PHMSA as an independent second source for the commodity (natural gas)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page repeatedly calls the system 'gas transmission pipelines' as distinct from its 42,000 miles of distribution pipelines."
+        },
+        {
+          "url": "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PHMSA page also separately enumerates PG&E's 'gas transmission pipelines' vs its distribution pipelines, naming Pacific Gas and Electric Company."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as a transmission system (not gathering/distribution) by two independent sources; correctly classified."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This is a whole-system row (PG&E's backbone + local gas transmission network), not a single certificated project, so there is no one 'proposal' event/date to source -- the network was built up incrementally across decades (documented interstate interconnection expansions alone span at least 1998-2002 per the EIA workbook's historical sheet, and the intrastate backbone predates that by decades). Searched PG&E's gas-system pages, PG&E Corp's 2023 10-K and 2025 CSR, and the PHMSA system-overview page -- none give a founding/proposal date for the system as a whole. Leaving ProposalYear UNRESOLVED rather than force a single year onto a system built over a century."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same system-vs-project problem as Proposal: no single construction-start date applies to a network built and expanded continuously since the early-to-mid 20th century. Searched the same source set (pge.com, PG&E Corp SEC filings/CSR, PHMSA) with no system-wide construction-start date found. UNRESOLVED rather than fabricated."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same system-vs-project limitation: PG&E's gas transmission backbone has been in continuous operation and expansion for decades with no single in-service year. The EIA historical-projects sheet documents individual PG&E gas-transmission expansions going back to at least the 1990s-2000s (e.g. 'PG&E-NW Mainline Expansion', in service 1998; 'PG&E Redwood Path', in service 2002) but these are discrete expansion PROJECTS, not the system's founding date, and per the EIA system-vs-project rule (ADDENDUM failure mode 2) none of them can stand in for this system row's StartYear1. Searched pge.com, PG&E Corp SEC filings/CSR, and PHMSA for a system-wide start date; none given. UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single system-wide throughput/design-capacity figure found. Checked pge.com's gas-system pages, PG&E Corp's 2023 10-K and 2025 CSR (both give mileage, not capacity), the PHMSA system-overview page, and the EIA workbook (which -- per the EIA system-vs-project rule -- only carries per-project 'Additional Capacity' for discrete expansions, not an aggregate system figure, and this row is the system, not a project). Left blank rather than substituting a project-level or aggregated proxy number."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "MAOP varies line-by-line across a 7,000-mile system of many vintages and diameters (this is precisely the defect that caused the San Bruno rupture -- inconsistent, poorly documented pressure history on Line 132 alone). No single system-wide operating pressure is stated in PG&E's public materials, its SEC filings, or the PHMSA page I reviewed. Left blank rather than force a single-line figure onto the whole system."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "7000.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "7000.00",
+      "proposed_refs": [
+        "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Page states 'PG&E's nearly 7,000 miles of gas transmission pipelines and 42,000 miles of distribution pipelines' -- names Pacific Gas and Electric Company and matches the recorded LengthKnown."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The sheet's own cited ref does state 7,000 mi verbatim and names the system, so this unit re-verifies clean on its own terms. HOWEVER two independent, more precisely-dated sources (PHMSA's system-overview page and PG&E Corp's 2025 CSR) put the transmission system at ~5,650-5,700 mi, materially lower -- filed as a separate spec concern in validity[] with the discrepancy and candidate value, per rule 5/rule 7 (a disagreement is a concern, not a silent pass). Tier kept at medium (single confirming origin for THIS specific value) rather than high, since the second source I found for this unit disagrees rather than agrees."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "30",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "30",
+      "proposed_refs": [
+        "https://web.archive.org/web/20240524045253/https://pstrust.org/map-of-major-incidents/sanbruno/"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20240524045253/https://pstrust.org/map-of-major-incidents/sanbruno/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Pipeline Safety Trust page (Wayback capture, since the live pstrust.org page 403s automated fetches) quotes the NTSB report: 'a 30-inch-diameter segment of an intrastate natural gas transmission pipeline known as Line 132, owned and operated by the Pacific Gas and Electric Company (PG&E), ruptured...' -- names the pipeline/operator and states the diameter."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The sheet's cited pstrust.org URL 403s live (bot-block, not a confirmed 404/410), so per the never-delete-over-an-access-failure rule I added the Wayback capture alongside rather than dropping the ref; the archived page confirms the NTSB's 30-inch figure for Line 132 and names PG&E. See the validity caveat above: this figure documents one prominent backbone line (Line 132), not a verified system-wide diameter -- no larger diameter surfaced in the other sources checked."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource wants the named upstream field/plant/facility feeding the line (schema gotcha: not the commodity type). PG&E's system receives gas at multiple interconnections with interstate pipelines (Gas Transmission Northwest, El Paso Natural Gas/Line 300-401 receipts, Kern River, Mojave) plus historical in-state production and, at times, LNG -- there is no single named upstream field/facility for a 7,000-mile system fed from many points. Checked pge.com's gas-system pages and PG&E Corp's SEC filings/CSR for a single named source; none given. Left blank rather than defaulting to 'Natural Gas' (which the schema note explicitly warns against) or naming one interconnection as if it were the sole source."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "California",
+        "StartCountryOrArea": "United States",
+        "EndState/Province": "California",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "California",
+      "proposed_refs": [
+        "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pge.com/en/about/pge-systems/gas-systems/pipeline.html",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "States PG&E is 'working to enhance pipeline safety throughout northern and central California' -- names Pacific Gas and Electric Company and its territory."
+        },
+        {
+          "url": "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "States 'Pacific Gas & Electric Company (PG&E), headquartered in San Francisco, CA, operates ... pipeline systems ... in central and northern California' -- independent, names the company."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "This cell had a value (California/California, United States/United States) but no ref -- MISSING_REF. Two independent sources (PG&E's own site and PHMSA) agree the whole system lies within California, corroborating the recorded start/end state and country."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single system-wide construction/replacement cost figure exists for a network built and rebuilt piecemeal over a century (PG&E's rate-base capital spend on gas transmission is reported annually in CPUC/FERC-adjacent filings as an ongoing program, not a one-time project cost). Checked pge.com, the 2023 10-K and 2025 CSR; none give an aggregate historical cost figure for the system. Left blank rather than substituting an annual capex figure for a lifetime system cost."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "oo_sheet_row": 4929,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Pacific Gas and Electric Company"
+      },
+      "primary_value": "Pacific Gas and Electric Company",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1004980/000100498024000014/pcg-20231231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2018.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498024000014/pcg-20231231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PG&E Corp FY2023 10-K describes 'the Utility' (Pacific Gas and Electric Company) as operating the natural gas system with 'over 6,400 miles of backbone and local transmission pipelines'; names Pacific Gas and Electric Company as the registrant/operator."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_May2018.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Natural Gas Pipeline Projects, May 2018 release, sheet 'Historical Projects', Excel row 379: project 'Line 57C Lateral', Pipeline Operator Name 'Pacific Gas and Electric Co', CA, in service 2007 -- EIA independently names Pacific Gas and Electric Co as the operator of California gas-transmission pipeline projects."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator was blank (MISSING_VALUE) on the joined operators/owners tab. PG&E Corp's SEC 10-K identifies Pacific Gas and Electric Company (the Utility) as the entity that owns and operates the gas system; EIA's Pipeline Operator Name field independently names the same operator entity across its own California gas-pipeline-project records (a different origin from the SEC filing) -- two independent sources agreeing on the operator identity."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "oo_sheet_row": 4929,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "PG&E Corporation",
+        "Owner1%": "100"
+      },
+      "primary_value": "PG&E Corporation",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/1004980/000100498024000014/pcg-20231231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1004980/000100498024000014/pcg-20231231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PG&E Corp FY2023 10-K states: 'Shares of common stock of the Utility are wholly owned by PG&E Corporation and do not trade in the public market.' Names Pacific Gas and Electric Company as the Utility."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Owner was blank. PG&E Corp's 10-K (a combined PG&E Corporation / Pacific Gas and Electric Company SEC filing) establishes Pacific Gas and Electric Company as a wholly-owned (100%) subsidiary of PG&E Corporation. Single origin: I looked for an independent second source (checked a CPUC/PHMSA safety-data PDF for PG&E and the EIA workbook) but neither states the parent-ownership percentage -- EIA's operator field names the operating company, not its corporate parent, so it supports Operator (above) but not this specific ownership fact. Staged at medium pending a second, non-SEC-derived confirmation of the 100% parent stake."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3508,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-09",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.pge.com/pipeline/en/operating-data/current-pipeline-status.html",
+        "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.pge.com/pipeline/en/operating-data/current-pipeline-status.html",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://web.archive.org/web/20250102221145/https://www.phmsa.dot.gov/safety-awareness/pipeline/pacific-gas-electric-pipeline-rupture-san-bruno-ca",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed still operating. PG&E's live 'Pipe Ranger' current-pipeline-status dashboard (fetched 2026-09) is a real-time operations reporting page, which by its nature confirms an active, in-service system; PHMSA's independent system-overview page (Wayback capture 2025-01-02) separately describes PG&E as currently operating its gas transmission and distribution pipelines serving over 4 million people. No idling, sale, or conversion evidence found. This is a system row (not a single certificated project), so the usual proposed/construction/shelved/cancelled status-change vocabulary does not apply -- it has been a continuously operating utility system for decades."
+    }
+  ],
+  "summary": "PG&E gas transmission system (P6250): existence/classification/duplicate all confirmed; re-verified Status/Fuel/PipelineType/Length/Diameter refs (Diameter's dead-on-fetch pstrust.org ref replaced with its Wayback capture); added refs for Location, Operator (Pacific Gas and Electric Company) and Owner (PG&E Corporation, 100%); flagged a spec concern -- PHMSA and PG&E's own 2025 CSR both put system transmission mileage at ~5,650-5,700 mi vs the sheet's 7,000 -- plus a whitespace cleanup and a diameter-scope caveat. UNRESOLVED: ProposalYear, ConstructionYear, StartYear1, Capacity, Pressure, SegmentCost, FuelSource -- all system-vs-project cells with no single documented value for a century-old, incrementally-built utility network (source ladder exhausted: pge.com, PG&E Corp SEC 10-K/CSR, PHMSA, EIA)."
+}

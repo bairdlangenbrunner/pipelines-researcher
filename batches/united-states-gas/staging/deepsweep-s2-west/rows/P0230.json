@@ -1,0 +1,568 @@
+{
+  "project_id": "P0230",
+  "pipeline_name": "Northwest Gas Pipeline",
+  "sheet_row": 84,
+  "wiki": "https://www.gem.wiki/Northwest_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "This is Williams' Northwest Pipeline LLC interstate transmission SYSTEM row (not a single project/segment), and it is real, currently operating, and correctly classified. Existence + classification confirmed independently: Williams' own site (williams.com/pipeline/northwest-pipeline/) describes an approximately 3,900-mile bi-directional interstate transmission system; Rextag (third-party pipeline-data vendor, rextag.com/pages/northwest-pipeline) independently lists 'Miles of Pipeline: 3900' and 'System Capacity: 3.8 Bcf/d'; and Williams' FY2025 Form 10-K (SEC EDGAR, filed 2026-02-24, joint Williams/Transco/NWP annual report, CIK 0000110019 for Northwest Pipeline LLC) states in Item 1 Business: 'NWP owns and operates an approximately 3,900-mile natural gas pipeline system, extending from the San Juan basin in northwestern New Mexico and southwestern Colorado through Colorado, Utah, Wyoming, Idaho, Oregon, and Washington to a point on the Canadian border near Sumas, Washington... NWP's principal business is the interstate transportation of natural gas, which is regulated by the FERC' -- confirming both existence and the 'transmission' classification (FERC-regulated interstate transmission, not gathering/distribution). The 10-K also states NWP is a wholly owned subsidiary of Williams (confirming Owner1 = Williams Companies, 100%). No duplicate risk: P0230 is correctly the aggregate system row, distinct from the roster's other Northwest Pipeline entries, which are genuine sub-projects on this same system -- P2626 (Trail West/N-MAX, cancelled), P5101 (Kalama Lateral, cancelled), P7790 (Kelso-Beaver Reliability Project, proposed) and P7812 (Wild Trail project, proposed); EIA's Aug 2026 Natural Gas Pipeline Projects release independently corroborates both P7790 (capacity 183 MMcf/d, sheet 'Natural Gas Pipeline Projects', Excel row 69, docket CP25-89, status Approved) and P7812 (capacity ~83 MMcf/d [82.955], Excel row 136, docket CP25-497-000, status Approved) exactly against the roster's recorded capacities -- filed as cross_row_leads below. The same Aug 2026 EIA release also shows several very recent/ongoing NWP system expansions not present anywhere in this 42-row roster (Huntingdon Connector, CP26-94, Applied, Sumas WA receipt point, 87 MMcf/d, Excel row 66; Naughton Coal-to-Gas Conversion, WY, Construction/near-complete, Excel row 86; Ryckman Creek Lateral Loop, WY, Applied, Excel row 104; Stanfield South Project, OR-ID, placed in service 2025-09-30, Excel row 1200) -- these may be undiscovered rows for a future Discovery pass on this system; noted here for the orchestrator, not researched further (out of this row's scope). One caveat filed separately below: StartYear1 (1965) could not be corroborated by any source found and independent evidence suggests it may be a data error.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify StartYear1 (1965) against a primary source (FERC's original 1950s certificate for the system's predecessor, Pacific Northwest Pipeline Corporation) or clear it if none can be found.",
+      "contested": {
+        "StartYear1": ""
+      },
+      "researcher_notes": "The sheet's cited ref for Start (williams.com/pipeline/northwest-pipeline/) does not state 1965 or any other year anywhere on the page (confirmed by direct read; the builder's own existing_ref_check already flagged this as a value-not-found FAIL). Williams' FY2025 10-K likewise gives no founding/in-service year for NWP. Independent secondary evidence argues against 1965 being correct: Encyclopedia.com's International Directory of Company Histories entry on The Williams Companies, Inc. states Williams acquired the Great Lakes pipeline network (an unrelated, 6,228-mile system) in 1965, and separately acquired Northwest Pipeline (this system) only in 1983 -- 'that same year Williams acquired two natural gas pipelines: Northwest pipeline, which served the West Coast, and Northwest Central, which was located in the Midwest.' Since GEM's StartYear1 records when the pipeline began commercial operation (not when Williams bought it), and the system's actual construction/first-gas predates the 1983 Williams acquisition by decades (built by predecessor Pacific Northwest Pipeline Corporation in the 1950s per general industry history), 1965 fits neither the true founding date nor the Williams-acquisition date -- it plausibly is a conflation with the unrelated 1965 Great Lakes transaction. I could not locate a primary source (FERC docket, PHMSA record, or dated trade history) stating the system's actual in-service year within this pass's search budget (WebSearch quota was exhausted mid-sweep; DuckDuckGo HTML search and several guessed corporate-history URLs -- williams.com/about-us/our-history/, fundinguniverse.com, historylink.org -- 404'd or gave no date). Recommend a follow-up pass with FERC eLibrary docket search for the original 1950s certificate rather than treating 1965 as confirmed.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/northwest-pipeline/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/northwest-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "names 'Northwest Pipeline'; current-tense description of the operating system"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "names 'Northwest Pipeline, LLC' / 'Williams (Northwest Pipeline)'; Aug 2026 release, sheet 'Natural Gas Pipeline Projects', rows for Huntingdon Connector (Excel row 66, filed 2026-07-29) and Kelso-Beaver (Excel row 69) show the system actively taking FERC applications through mid-2026, confirming ongoing operation"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (williams.com) reverified live and on-topic. Added EIA's Aug 2026 release as a second, independent (federal-agency) origin showing the system is actively filing new FERC expansion projects through July 2026."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+        "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2025 10-K: 'NWP's principal business is the interstate transportation of natural gas'"
+        },
+        {
+          "url": "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "names 'Northwest Pipeline'; lists 'System Capacity: 3.8 Bcf/d' (natural gas units)"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (williams.com) reverified; added the SEC 10-K and Rextag as independent origins both confirming this is a natural gas system."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/northwest-pipeline/",
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/northwest-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "describes a 'nearly 4,000-mile bi-directional transmission system'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'NWP's principal business is the interstate transportation of natural gas, which is regulated by the FERC' -- FERC-regulated interstate transmission, not gathering/distribution"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both refs are Williams' own materials (website + its own SEC filing) -- one origin per the operator-is-one-origin rule, so tier stays medium despite two documents. Classification (interstate transmission, not gathering/process/feeder) is unambiguous given FERC jurisdiction."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched williams.com, Williams' FY2025 10-K, Rextag, and Encyclopedia.com's Williams company history for any date the original system (built by predecessor Pacific Northwest Pipeline Corporation) was proposed/certificated. None state a proposal year; the system predates the readily searchable online record (pre-1960s FERC/FPC dockets are not indexed on eLibrary in a way reachable without a known docket number). Genuinely nothing found."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same search as ProposalYear/Month (williams.com, 10-K, Rextag, Encyclopedia.com) turned up no construction-start date for the original 1950s-era system. Genuinely nothing found."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "1965"
+      },
+      "primary_value": "1965",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The existing ref (williams.com) does not state 1965 or any year (builder's own check already failed on this). No replacement source found either: Williams' 10-K, Rextag, and Encyclopedia.com's Williams history give no in-service year for NWP. Encyclopedia.com does show Williams acquired Northwest Pipeline in 1983 (not 1965) and separately acquired the unrelated Great Lakes system in 1965 -- suggesting 1965 may be a conflation, filed as a separate spec concern in validity[] with contested={\"StartYear1\": \"\"}. Keeping the sheet's current value here since I am not proposing a specific replacement year, only flagging doubt about the recorded one; old ref (williams.com) is kept in this note per the ADDENDUM's 'effectively uncited' handling, not silently dropped."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "3800.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "3800.00",
+      "proposed_refs": [
+        "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G",
+        "https://www.williams.com/pipeline/northwest-pipeline/"
+      ],
+      "verifications": [
+        {
+          "url": "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "names 'Northwest Pipeline'; states 'System Capacity: 3.8 Bcf/d', which converts exactly to 3,800 MMcf/d (1 Bcf = 1,000 MMcf) -- matches the recorded value exactly"
+        },
+        {
+          "url": "https://www.williams.com/pipeline/northwest-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Orchestrator re-check 2026-09-15: curl -sL with a browser UA returns 200 / 378,241 bytes and the page's 'Operational Details' block states 'System Peak Design Capacity: 3.8 million dekatherms per day'. Under the standard natural-gas equivalence of 1 dekatherm to 1 Mcf this IS the recorded 3,800 MMcf/d; per the repo rule that a ref is not unsupported merely because the value is not a verbatim substring (prose/unit equivalence), this source states the value. The original staging marked it ok=false on a literal '3,800'/'MMcf/d' substring miss."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The builder's existing_ref_check on williams.com correctly found no literal '3,800'/'MMcf/d' string (the page uses dekatherms). Rextag -- a distinct, independent pipeline-data vendor -- states the same capacity in Bcf/d, which converts exactly to the recorded 3,800 MMcf/d. Williams' FY2025 10-K corroborates with the same 3.8 MMdth/d figure (same origin as williams.com, not counted separately). Orchestrator correction: the williams.com verification was flipped to ok/contains_value=true -- the page states the capacity in dekatherms per day ('3.8 million dekatherms per day'), which is the same value in the operator's own units. tier=high / independent=true therefore rests on two genuine publishers, williams.com and rextag.com, not on Rextag alone."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/operating-pressure figure found for the system as a whole in williams.com, the FY2025 10-K, or Rextag. A FERC Form 2/2-A or system tariff would likely carry MAOP by segment, but pulling those requires a docket-specific search not completed within this pass's budget. Genuinely nothing found for a single system-wide pressure figure."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "3900.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "3900.00",
+      "proposed_refs": [
+        "https://www.williams.com/pipeline/northwest-pipeline/",
+        "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.williams.com/pipeline/northwest-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "states '3,900 miles of pipeline' -- exact match, already verified by the builder"
+        },
+        {
+          "url": "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "states 'Miles of Pipeline: 3900' -- exact match, independent third-party pipeline-data vendor"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (williams.com) reverified true; added Rextag (independent, non-Williams origin) as second confirming source. Williams' 10-K states 'approximately 3,900-mile' too but is the same origin as williams.com."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No single system-wide diameter is stated anywhere (williams.com, 10-K, Rextag are all silent on diameter). EIA's project history for this system shows a range of diameters across individual segments/expansions built over the decades (16, 20, 24, 26, 30, 34, 36 inches per various NWPL expansion projects, 1999-2010 releases) -- consistent with the SoCalGas/PG&E system-row guidance that a single diameter on a multi-decade utility system would be misleading, at best the largest line. No authoritative single figure found to fill this."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "FuelSource requires a single named upstream field/plant, not 'Natural Gas' itself (per gem_schema.md). Williams' FY2025 10-K states NWP draws supply from multiple basins/sources -- 'British Columbia, Alberta, Rocky Mountain and San Juan Basin gas supplies' -- so there is no single named field or facility to attribute; per the schema's own guidance ('if you can't attribute one, leave it blank and note why -- do not default it'), left blank rather than forcing any one of the several supply basins."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Sumas",
+        "StartState/Province": "Washington",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "La Plata County",
+        "EndState/Province": "Colorado",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Sumas",
+      "proposed_refs": [
+        "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G",
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://rextag.com/pages/northwest-pipeline?srsltid=AfmBOoocqYCYH-GTN35CdUx3Cod1eDFRxZtnQw6nC57500iLfiLQzW9G",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "already-verified existing ref; names 'Northwest Pipeline', route 'crosses Washington, Oregon, Idaho, Wyoming, Utah, and Colorado'"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2025 10-K: 'extending from the San Juan basin in northwestern New Mexico and southwestern Colorado ... to a point on the Canadian border near Sumas, Washington' -- La Plata County, CO (Durango) is the Colorado portion of the San Juan Basin, consistent with the sheet's EndLocation"
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (Rextag) reverified; added Williams' 10-K as an independent second origin. Cross-checked against the routes-repo geojson for P0230 (197 features, lon range -123.48 to -107.77, lat range 37.10-49.00N) which spans Sumas WA (~49.0N) to the La Plata County / San Juan Basin area of southwest Colorado (~37.1N) -- consistent with both cited sources (our own measurement of the geometry is not counted as a source, per convention, just noted as consistent)."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No original system construction cost found for this 1950s-era system in any source checked (williams.com, 10-K, Rextag, Encyclopedia.com). Genuinely nothing found."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Northwest Pipeline LLC"
+      },
+      "primary_value": "Northwest Pipeline LLC",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "SEC EDGAR's registrant (CIK 0000110019) conformed name is 'NORTHWEST PIPELINE LLC' (formerly Northwest Pipeline GP, formerly Northwest Pipeline Corp); the FY2025 10-K itself is filed jointly under that name as a Registrant"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 69 (Kelso-Beaver Reliability Project): Pipeline Operator Name = 'Northwest Pipeline, LLC'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two independent federal-record origins (SEC EDGAR registrant data and EIA's pipeline-projects dataset) both name the current legal operating entity as Northwest Pipeline LLC (formerly Northwest Pipeline Corp / Northwest Pipeline GP). QCCOwner(业主单位) is QC-workbook leakage in value_cols, not researched (per ADDENDUM item 7). Orchestrator correction: the proposed ref was an EDGAR full-text/company-search feed (cgi-bin/browse-edgar?action=getcompany...), which is a navigation surface, not a citation. Replaced with the actual filing that was verified and that states the operator name -- Williams' FY2025 10-K, wmb-20251231.htm. EIA's dated Aug2026 release remains the second, independent origin."
+    },
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Williams Companies",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Williams Companies",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/99250/000010726326000006/wmb-20251231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FY2025 10-K: 'Transcontinental Gas Pipe Line Company, LLC (Transco) and Northwest Pipeline LLC (NWP) ... both of which are wholly owned subsidiaries of Williams' -- direct 100% ownership statement"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 136 (Wild Trail project) and Excel row 86 (Naughton Coal-to-Gas Conversion): Pipeline Operator Name = 'Williams (Northwest Pipeline)', naming the parent alongside the system"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "SEC 10-K gives a direct, explicit 100%-ownership statement naming Williams as parent; EIA's federal dataset independently names 'Williams (Northwest Pipeline)' as operator on two 2026 projects, corroborating the parent-subsidiary relationship from a distinct origin. Owner1% = 100% is consistent with the 'wholly owned' language."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7790",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "Kelso-Beaver Reliability Project (matches P7790's 'Northwest Kelso-Beaver'): Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 69. Operator 'Northwest Pipeline, LLC'; status Approved; docket CP25-89; Additional Capacity 183 MMcf/d (exact match to P7790's recorded 183.00); states OR/WA; FERC EA issued 8/27/2025 (FONSI), conditional final order 11/20/2025; target Q3 2026 construction start, Q3 2028 in-service. Project acquires the EXISTING 18-mile FERC-regulated Kelso-Beaver pipeline from Portland General Electric/KB Pipeline Company/B-R Pipeline and converts it to a Northwest Pipeline lateral (companion abandonment docket CP25-90) -- this may explain why P7790's LengthKnown reads 0 (no NEW pipe being built, an existing line being acquired/converted)."
+    },
+    {
+      "project_id": "P7812",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "Wild Trail project (matches P7812's 'Northwest Wild Trail'): Aug 2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 136. Operator 'Williams (Northwest Pipeline)'; status Approved; docket CP25-497-000; Additional Capacity 82.955 MMcf/d (~83, matches P7812's recorded 83.00); state UT; new Daggett Compressor Station only (no new pipeline miles, consistent with P7812's LengthKnown = 0); application filed 5/21/2025, FERC EA 12/15/2025, target in-service late 2027."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "SYSTEM/NETWORK INFO",
+      "sheet_row": 84,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-08",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.williams.com/pipeline/northwest-pipeline/"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug 2026 release shows multiple active FERC dockets on this system through mid/late-2026 (Huntingdon Connector CP26-94 filed 2026-07-29; Kelso-Beaver CP25-89 conditional final order 2025-11-20; Wild Trail CP25-497 FERC EA 2025-12-15; Stanfield South placed in service 2025-09-30)"
+        },
+        {
+          "url": "https://www.williams.com/pipeline/northwest-pipeline/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "current, live description of the system as an active bi-directional transmission network"
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Well beyond confirmed operating: this FERC-regulated interstate system is actively expanding, with new dockets filed as recently as July 2026 (Huntingdon Connector, CP26-94) and a September 2025 in-service (Stanfield South Project). No basis whatsoever for idled/abandoned/sold status; ownership unchanged (Williams, per 10-K)."
+    }
+  ],
+  "summary": "Confirmed real, operating, correctly-classified NWP system row: Length (3,900 mi) and Capacity (3,800 MMcf/d, via Rextag's exact Bcf/d match) REFS_ADDED/REVERIFIED at high tier; Status, Fuel, PipelineType, Location REVIFIED; Operator and Owner (both MISSING) filled at high tier (SEC EDGAR + EIA). StartYear1 (1965) flagged as an unconfirmed/likely-erroneous spec concern (contested, no replacement found). ProposalYear/Month, ConstructionYear/Month, Pressure, Diameter, FuelSource, SegmentCost UNRESOLVED -- genuinely nothing found for this 1950s-era system's founding specifics or a single system-wide diameter/pressure. Cross-row leads filed for P7790 (Kelso-Beaver, capacity confirmed) and P7812 (Wild Trail, capacity confirmed); several newer NWP expansions (Huntingdon Connector, Naughton, Ryckman Creek) not on this roster, noted for a possible Discovery pass."
+}

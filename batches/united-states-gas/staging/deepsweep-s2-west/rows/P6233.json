@@ -1,0 +1,370 @@
+{
+  "project_id": "P6233",
+  "pipeline_name": "SoCalGas Pipeline",
+  "sheet_row": 3493,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "This is SoCalGas's whole intrastate gas transmission system (not a single certificated project) serving Southern California. Existence and classification confirmed independently: SoCalGas's own site (socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission) describes 'SoCalGas owns and operates an integrated gas transmission system' spanning from the Colorado River (east) to the Pacific Coast (west), Tulare County (north) to the US/Mexico border (south) -- entirely within California; the CPUC's own Summer 2021 Southern California Gas Reliability Assessment (state regulator, May 2021, independent of SoCalGas) corroborates the same system as a live, operating gas transmission network with three major transmission zones (Northern, Southern, Wheeler Ridge). SoCalGas's FY2025 Form 10-K (SEC EDGAR, filed 2026-02-26, as of 12/31/2025) confirms the entity is real, currently operating, and correctly classed a natural gas transmission (not distribution-only or gathering) system: 'SoCalGas' natural gas facilities included 52,765 miles of distribution pipelines, 3,030 miles of transmission and storage pipelines, 48,900 miles of service pipelines and seven transmission compressor stations.' No duplicate risk against the roster -- P6250 (PG&E) and (elsewhere) SDG&E are separate California utility systems with their own rows. Caveats filed separately below: (1) the recorded Capacity (3,725 MMcf/d) is a pipeline+storage COMBINED figure per its own cited source, not pipeline capacity alone; (2) the recorded Length (3,640 mi) is corroborated by its own 2013 cited source but conflicts with two more recent, independent mileage figures (a 2022 CPUC compliance filing and the FY2025 SEC 10-K), suggesting the sheet's mileage may be stale; (3) StartState/Province carries a trailing whitespace typo.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Verify whether Capacity should record pipeline-only deliverability rather than the combined pipeline+storage figure currently cited.",
+      "contested": {"Capacity": ""},
+      "researcher_notes": "The sheet's Capacity (3,725 MMcf/d) is stated verbatim in its own cited source (CPUC Summer 2021 Southern California Gas Reliability Assessment, p.2), but that document is explicit that the number is NOT pipeline capacity alone: 'Pipeline and storage capacity combined can provide 3,725 million cubic feet per day (MMcfd) of natural gas' (emphasis added -- executive summary). The same document's Table 4 (Transmission Zone Assumed Operational Capacities) sums the system's three named transmission zones (Northern 870 + Wheeler Ridge 765 + Southern 670 MMcfd, plus a minor Line 85 Zone of 60 MMcfd) to roughly 2,365 MMcfd of pipeline-only inbound capacity for summer 2021 -- materially less than 3,725. So the recorded number is real and correctly quoted from its ref, but it measures a different (broader) quantity than 'pipeline capacity' as the GEM Capacity field intends. Recommend a researcher confirm the pipeline-only transmission capacity (candidate figure ~2,365 MMcfd per Table 4, though that is a single reliability-assessment snapshot, not a nameplate/certificated rating) before treating 3,725 as the pipeline's own capacity. Not overriding the value here since no single authoritative pipeline-only nameplate capacity figure was found within this pass's search budget (WebSearch quota was exhausted mid-sweep).",
+      "proposed_refs": ["https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf"],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Re-verify current system transmission mileage; the recorded 3,640 mi traces to a 2013 SoCalGas fact sheet (data as of Summer 2011) and may be stale.",
+      "contested": {"LengthKnown": ""},
+      "researcher_notes": "The sheet's LengthKnown (3,640 mi) is stated verbatim in its own cited ref (SoCalGas 'Pipeline Classifications' fact sheet, dated January 2013, citing 'Summer 2011' data: 'our 3,640-mile transmission pipeline system'). Two more recent, independently-dated documents give different, lower mileage for the same system: (1) SoCalGas's 2022 CPUC compliance filing (Rulemaking R.15-01-008, June 2022 report, Appendix 1 -- transmission-pipeline leak data by pipe material) lists two pipe-material rows for 'SoCalGas Transmission Territory' totaling 3,440 mi (1 mi 'PB' + 3,439 mi 'PC') for 2021; (2) SoCalGas's FY2025 Form 10-K (SEC EDGAR, filed 2026-02-26, as of 12/31/2025) states 'SoCalGas' natural gas facilities included ... 3,030 miles of transmission and storage pipelines' (note: that figure bundles transmission with storage-field piping, so it is not a clean apples-to-apples comparison to the sheet's transmission-only 3,640 mi). All three figures name the same SoCalGas system and are dated (2011-vintage, 2021-vintage, 2025-vintage respectively) but disagree by hundreds of miles, and the trend is downward over time -- consistent with either genuine retirement/consolidation of transmission mileage or a reclassification of some transmission mileage into distribution/storage categories over the intervening decade. Not proposing a replacement value here because the three sources are not measuring identical scopes (transmission-only vs. transmission+storage) and a merge-time researcher should reconcile which of the CPUC 2022 (3,440 mi, transmission-only, closest in scope to the sheet's definition) or a newer regulatory filing is the best current figure.",
+      "proposed_refs": [
+        "https://www.socalgas.com/documents/news-room/fact-sheets/PipelineClassifications.pdf",
+        "https://www.socalgas.com/sites/default/files/R15-01-008-SCG-2022_Annual_Report_Appendix_1-Transmission_Pipeline.pdf",
+        "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm"
+      ],
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Trim trailing whitespace on StartState/Province.",
+      "contested": {"StartState/Province": "California"},
+      "researcher_notes": "The live sheet's StartState/Province for this row reads 'California ' with a trailing space (confirmed against the 2026-09-14 CSV snapshot); EndState/Province is clean 'California'. No new source needed for a whitespace-only correction.",
+      "proposed_refs": [],
+      "tier": "low",
+      "independent": false,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission",
+        "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas' and states 'SoCalGas owns and operates an integrated gas transmission system' (current tense, live page)"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company'; FY2025 10-K (as of 12/31/2025) describes SoCalGas' transmission/storage/distribution/service pipeline mileage in the present tense as active facilities"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Re-verified the existing ref (socalgas.com transmission page) and added the FY2025 SEC 10-K (filed 2026-02-26, the newest available evidence) as a second, genuinely independent-in-time confirmation that the system remains operating."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission",
+        "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas'; page is titled and devoted to natural gas transmission"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company'; describes SoCalGas as a 'regulated public natural gas distribution utility' operating natural gas pipeline facilities"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Both the operator's own page and its SEC 10-K confirm this is a natural gas (not NGL/oil) system."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission",
+        "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas'; states 'gas transmission system' and 'network of transmission pipelines'"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company'; distinguishes '3,030 miles of transmission and storage pipelines' from '52,765 miles of distribution pipelines' -- confirms this row is the transmission (not distribution) tier of the system"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as transmission-tier (as distinct from SoCalGas's much larger distribution and service-pipeline networks, which are out of scope for this row)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "This row is SoCalGas's whole intrastate transmission system, not one certificated project, so it has no single 'proposal' event. Searched SoCalGas's FY2025 10-K, the CPUC Summer 2021 Reliability Assessment, the 2022 CPUC compliance filing, and SoCalGas's public fact sheets -- none states a founding/proposal year for the system as a whole. SoCalGas's corporate history (predecessor Los Angeles Gas Co. 1867; incorporated as Southern California Gas Co. 1910) is a corporate event, not the pipeline system's ProposalYear, and in any case comes only from tertiary sources (company-history summaries), so it is not staged here per the standing rule against substituting corporate-founding dates for pipeline dates. No credible primary source found; leaving UNRESOLVED rather than force a date."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same system-vs-project limitation as ProposalYear: the transmission network (Lines 85, 235-2, 2000, 3000, 4000, etc.) was built up over many decades by many separate CPUC proceedings, not one construction event. Searched the same source set (SEC 10-K, CPUC filings, SoCalGas fact sheets); none gives one system-wide construction year. UNRESOLVED rather than forced."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Same system-vs-project limitation: no single in-service/StartYear applies to a multi-decade, multi-line transmission network. Tertiary sources describe SoCalGas beginning to build gas transmission pipelines 'in the 1940s' amid the discovery of natural gas in the region, but this is a corporate-history summary (not a primary source naming this pipeline system's start), so per the standing rule against substituting corporate events for pipeline StartYear it is not staged as a value. UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "3725.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "3725.00",
+      "proposed_refs": ["https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf"],
+      "verifications": [
+        {"url": "https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company's (SoCalGas)'; states 'Pipeline and storage capacity combined can provide 3,725 million cubic feet per day (MMcfd)'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The number is re-verified exactly as recorded, in a state-regulator document that names the pipeline. Re-verifying only, at medium/single-origin tier, because I could not find a second document restating the SAME 3,725 MMcfd figure (later CPUC reliability assessments give different peak-demand and zonal-capacity numbers for later years) -- and because, as flagged in validity[], the source itself defines 3,725 as pipeline+storage COMBINED capacity, not pipeline capacity alone. See the validity[] spec concern for the scope caveat; not correcting the value here since no clean pipeline-only replacement figure was found."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {"Pressure": "200-1,000", "PressureUnits": "psig"},
+      "primary_value": "200-1,000",
+      "proposed_refs": ["https://www.socalgas.com/sustainability/pipeline-and-storage-safety/pipeline-integrity"],
+      "verifications": [
+        {"url": "https://www.socalgas.com/sustainability/pipeline-and-storage-safety/pipeline-integrity", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas'; states 'Large transmission lines, some as large as 36 inches in diameter and ranging in pressure generally from 200 to 1,000 psig ... transport natural gas into the population centers'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SoCalGas states its large transmission lines generally operate at 200-1,000 psig -- a system-wide range, not a single MAOP value, since this is a system row with many lines at different pressures. Staged as a range rather than forced to one number. Single-origin (operator's own page); searched CPUC/PHMSA filings for a system-wide MAOP figure and found none within this pass's remaining search budget (WebSearch quota exhausted mid-sweep) -- a second, independent (e.g. PHMSA annual report or FERC-adjacent) pressure figure is still owed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "3640.00", "LengthKnownUnits": "mi"},
+      "primary_value": "3640.00",
+      "proposed_refs": ["https://www.socalgas.com/documents/news-room/fact-sheets/PipelineClassifications.pdf"],
+      "verifications": [
+        {"url": "https://www.socalgas.com/documents/news-room/fact-sheets/PipelineClassifications.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas'; states '... to replace approximately 246 miles of our 3,640-mile transmission pipeline system'"}
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref re-verified: it does state 3,640 mi exactly, and names SoCalGas. Downgraded to low/single-origin here (rather than corrected) because two later, independently-dated documents give materially different mileage for this same system -- see the validity[] spec concern for the full comparison (2022 CPUC filing: 3,440 mi transmission-only; FY2025 SEC 10-K: 3,030 mi transmission+storage). The 2013 fact sheet is kept as the cell's ref because it is the document that actually states the recorded number, but the value itself may be stale -- flagged for a researcher to reconcile, not silently passed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "36", "DiameterUnits": "in"},
+      "primary_value": "36",
+      "proposed_refs": ["https://www.socalgas.com/sustainability/pipeline-and-storage-safety/pipeline-integrity"],
+      "verifications": [
+        {"url": "https://www.socalgas.com/sustainability/pipeline-and-storage-safety/pipeline-integrity", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas'; states 'Large transmission lines, some as large as 36 inches in diameter'"}
+      ],
+      "class_out": "DEAD_LINK",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The existing ref (socalgas.com/stay-safe/pipeline-and-storage-safety/pipeline-integrity) confirmed 404/dead. The page has moved, not disappeared: SoCalGas's current site carries the same content, word-for-word ('large transmission lines, some as large as 36 inches in diameter'), at socalgas.com/sustainability/pipeline-and-storage-safety/pipeline-integrity -- staged as the replacement ref, keeping the recorded value (36 in, largest line in the system, consistent with a single-diameter figure on a utility system representing the largest line). Attempted a Wayback capture of the old dead URL for the record but the CDX availability API returned HTTP 429 (rate-limited) on three attempts during this pass; no snapshot added. Single-origin (same operator); a second independent diameter source is still owed."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Per gem_schema.md, FuelSource must name the specific upstream field/plant/facility feeding the line, never 'Natural Gas' (that's the Fuel column). SoCalGas's own FY2025 10-K states its transmission system 'interconnect[s] with four major interstate pipeline systems: El Paso Natural Gas, Transwestern Pipeline, Kern River Pipeline Company, and Mojave Pipeline Company, allowing customers to bring gas supplies into the SoCalGas gas transmission pipeline system from the various out-of-state gas producing basins' -- i.e. this system row receives gas from (at minimum) four distinct interstate pipelines / many out-of-state basins, not one attributable field or facility. Leaving blank rather than fabricating a single FuelSource for a multi-source system row, per the schema's own instruction ('if you can't attribute one, leave it blank and note why')."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "California", "StartCountryOrArea": "United States", "EndState/Province": "California", "EndCountryOrArea": "United States"},
+      "primary_value": "California",
+      "proposed_refs": [
+        "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission",
+        "https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "names 'SoCalGas'; states the system 'extends from the Colorado River on the east ... to the Pacific Coast on the west, and from Tulare County to the north, to the United States/Mexico border to the south' -- entirely within California"},
+        {"url": "https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company's (SoCalGas)'; assesses it as the 'Southern California' gas system throughout"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed the system's start and end are both within California (StartCountryOrArea/EndCountryOrArea = United States). The routes-repo geometry for P6233 (82 features, 2,589 points) is consistent: full extent runs -120.45 to -114.61 longitude, 32.67 to 36.30 latitude -- entirely within California's borders (no crossings into Arizona, Nevada, or Mexico visible in the trace)."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found stating a discrete capital cost for 'the transmission system' as a single figure. SoCalGas's 10-K reports capital expenditures at the whole-utility level (covering transmission, distribution, storage and general plant together), not isolated to the 3,640-mi transmission tier, so it cannot support a SegmentCost value for this row without fabricating an allocation. Not searched further: CPUC General Rate Case capital-additions exhibits might isolate a transmission-specific figure but were not reached in this pass's search budget. UNRESOLVED."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "oo_sheet_row": 4914,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Southern California Gas Company"},
+      "primary_value": "Southern California Gas Company",
+      "proposed_refs": [
+        "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission",
+        "https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf"
+      ],
+      "verifications": [
+        {"url": "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "self-published; states 'SoCalGas owns and operates an integrated gas transmission system'"},
+        {"url": "https://www.cpuc.ca.gov/-/media/cpuc-website/divisions/energy-division/documents/natural-gas/aliso-canyon/summer-2021-southern-california-reliability-assessment.pdf", "ok": true, "contains_value": true, "name_found": true, "note": "state regulator's (CPUC staff) own document; opens 'The Southern California Gas Company's (SoCalGas) gas system approaches summer with sufficient supplies...'"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The system is self-operated by Southern California Gas Company; confirmed by both the operator's own page and, independently, CPUC staff's own reliability assessment, which names SoCalGas as the operating entity throughout. Note: 'QCCOwner(业主单位)' in value_cols is an open QC-workbook column (Chinese-market QC label), not a tracker value column for a US row -- flagged per the campaign's known worklist-leakage issue, not researched."
+    },
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "oo_sheet_row": 4914,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Sempra", "Owner1%": "100"},
+      "primary_value": "Sempra",
+      "proposed_refs": ["https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm"],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company'; states 'SoCalGas' common stock is wholly owned by Pacific Enterprises, which is a wholly owned subsidiary of Sempra' (FY2025 Form 10-K, filed 2026-02-26)"}
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SoCalGas is 100% owned, via the intermediate holding company Pacific Enterprises, by Sempra -- staged Owner1 as Sempra (the market-recognized ultimate parent, consistent with this batch's own ownership-lead list) with Pacific Enterprises noted here as the direct intermediate holder. Single-origin: this is Sempra's own SEC filing, and SoCalGas's own website footer states the identical fact ('Southern California Gas Company is a subsidiary of Sempra'), but a company's own filings and its own website are one origin, not two. Searched for a second, genuinely independent statement of the ownership chain (a CPUC decision, a credit-rating report); the WebSearch budget was exhausted mid-sweep before a distinct source was found -- only an indirect corroboration turned up (the CPUC's own Reliability Assessment references SoCalGas's bulletin board at the sempra.com domain), which is too indirect to count as a second stated-fact origin. A second independent Owner source is still owed."
+    }
+  ],
+  "cross_row_leads": [],
+  "status_reviews": [
+    {
+      "segment_name": "",
+      "sheet_row": 3493,
+      "current_status": "operating",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2025-12",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm",
+        "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission"
+      ],
+      "verifications": [
+        {"url": "https://www.sec.gov/Archives/edgar/data/92108/000103220826000010/sre-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "names 'Southern California Gas Company'; FY2025 10-K, as of 12/31/2025, describes the transmission/storage/distribution facilities in the present tense as active"},
+        {"url": "https://www.socalgas.com/stay-safe/pipeline-and-storage-safety/natural-gas-transmission", "ok": true, "contains_value": true, "name_found": true, "note": "current live operator page: 'SoCalGas owns and operates an integrated gas transmission system'"}
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Confirmed still operating with evidence newer than the sheet's LastUpdated (2024-04-01): SoCalGas's FY2025 Form 10-K (SEC EDGAR, filed 2026-02-26, data as of 12/31/2025) describes an active, in-service transmission system (3,030 mi of transmission and storage pipelines, seven transmission compressor stations), and the operator's current live safety page confirms the same in the present tense. No sale, idling, abandonment, or conversion found -- SoCalGas remains a wholly owned Sempra subsidiary operating its own transmission system throughout. No status change warranted."
+    }
+  ],
+  "summary": "SoCalGas Pipeline (P6233) confirmed real, correctly classified, and still operating (FY2025 10-K + live operator page, newer than the 2024-04-01 LastUpdated); status/fuel/type/length/capacity refs re-verified, a dead Diameter ref replaced, and Operator/Owner/Location/Pressure fills added. Two spec concerns filed: Capacity (3,725 MMcf/d) is the CPUC source's pipeline+storage COMBINED figure, not pipeline-only; Length (3,640 mi) conflicts with two more recent, independent mileage figures (2022 CPUC: 3,440 mi transmission-only; FY2025 10-K: 3,030 mi transmission+storage), suggesting the sheet's figure may be stale. Proposal/Construction/Start/FuelSource/SegmentCost left UNRESOLVED as genuinely unanswerable for a whole-system (not single-project) row; a StartState/Province whitespace typo also flagged."
+}

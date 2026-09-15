@@ -24,7 +24,10 @@
       "verdict": "concern",
       "concern_type": "attribution",
       "recommendation": "correct Owner1/Owner1%/Owner2/Owner2% -- TC Energy/Northern New England Investment Co. sold PNGTS (including this project's facilities) to BlackRock (Diversified Infrastructure business) + Morgan Stanley Infrastructure Partners, closed Aug 15, 2024 -- same finding already staged on P0242 (the PNGTS mainline row), carried here because this row shares the same Owner/Operator entity",
-      "contested": {"Owner1": "BlackRock (fund managed by its Diversified Infrastructure business)", "Owner2": "investment funds managed by Morgan Stanley Infrastructure Partners"},
+      "contested": {
+        "Owner1": "BlackRock (fund managed by its Diversified Infrastructure business)",
+        "Owner2": "investment funds managed by Morgan Stanley Infrastructure Partners"
+      },
       "researcher_notes": "Identical ownership-staleness finding as P0242: the sheet's LastUpdated=2023-08-03 predates the sale. TC Energy (61.7%) and Northern New England Investment Co., Inc. (subsidiary of Energir L.P., 38.3%) agreed March 4, 2024 to sell 100% of PNGTS to BlackRock (through a fund managed by its Diversified Infrastructure business) and investment funds managed by Morgan Stanley Infrastructure Partners for a gross price of US$1.14 billion; sale closed August 15, 2024, and PNGTS became a standalone company (CEO Bill Yardley). Exact post-sale split between the BlackRock fund and the Morgan Stanley funds is not disclosed in any source found, so Owner1%/Owner2% are left blank rather than guessed.",
       "proposed_refs": [
         "https://www.tcenergy.com/announcements/2024/2024-03-04-tc-energy-announces-sale-of-portland-natural-gas-transmission-system/",
@@ -40,7 +43,12 @@
       "verdict": "concern",
       "concern_type": "attribution",
       "recommendation": "correct EndState/Province and EndCountryOrArea -- this project's physical facilities are entirely within Maine and Massachusetts; nothing about it is in Quebec/Canada, and the recorded StartState/Province='New Hampshire' does not describe where this specific compression project's equipment is either. Propose StartLocation='Eliot', StartState/Province='Maine', StartCountryOrArea='United States', EndLocation='Dracut', EndState/Province='Massachusetts', EndCountryOrArea='United States'",
-      "contested": {"StartState/Province": "Maine", "StartCountryOrArea": "United States", "EndState/Province": "Massachusetts", "EndCountryOrArea": "United States"},
+      "contested": {
+        "StartState/Province": "Maine",
+        "StartCountryOrArea": "United States",
+        "EndState/Province": "Massachusetts",
+        "EndCountryOrArea": "United States"
+      },
       "researcher_notes": "This directly resolves the batch guidance's flagged concern about P2588's questionable Quebec end-state. The July 9, 2018 FERC notice of application for this exact docket (CP18-506) states Portland Natural Gas 'requests authorization to install one new 6,300 horsepower compressor unit at the existing Eliot Compressor Station located in York County, Maine and modifications to the infrastructure at the existing Westbrook Compressor Station and Dracut Metering and Regulating Station located in Cumberland County, Maine and Middlesex County, Massachusetts respectively.' The Dec 10, 2018 FERC environmental-assessment notice for the same docket independently confirms: 'The Project includes modifications to existing facilities in Cumberland and York Counties, Maine, and Middlesex County, Massachusetts' -- no New Hampshire and no Quebec/Canada facilities are mentioned anywhere in either document. PNGTS's own wholly-owned mainline (the P0242 row) does run from Pittsburg, NH (at the Quebec-adjacent Canadian interconnect with TransCanada PipeLines Limited) to Westbrook, ME, and it is plausible the sheet's Start='New Hampshire'/End='Quebec' on this XPress row is a copy-forward of the mainline's border-interconnect framing rather than this specific compression project's own footprint -- but this project itself touches no NH or Quebec facilities. Recommend the correction above (Maine-to-Massachusetts, reflecting the actual compressor/M&R stations modified) rather than leaving the NH/Quebec framing uncorrected.",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
@@ -55,7 +63,9 @@
       "verdict": "concern",
       "concern_type": "spec",
       "recommendation": "correct SegmentCost from $80,000,000 to $90,300,000 (and set SegmentCostYear=2018) -- the sheet's figure does not match the applicant's own FERC-filed cost estimate for this exact project",
-      "contested": {"SegmentCost": "90300000.00"},
+      "contested": {
+        "SegmentCost": "90300000.00"
+      },
       "researcher_notes": "The July 9, 2018 FERC notice of application for Docket No. CP18-506-000 (this exact project, 'Phase III of the Portland Xpress Project') states verbatim: 'Portland Natural Gas estimates the total cost of the project to be $90.3 million.' This is a 12.9% discrepancy from the sheet's recorded $80,000,000 -- larger than a plausible rounding difference, and specific to this docket (not a system-wide or multi-phase combined figure, distinguishing it from the aggregate-vs-segment ambiguity flagged on P0242's Length/Capacity). Single source (the applicant's own FERC-filed cost estimate, not an independently audited actual construction cost), so proposing the correction at medium tier rather than high.",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications"
@@ -67,174 +77,509 @@
   ],
   "fills": [
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Status [ref]", "value_cols": ["Status"],
-      "primary_value_col": "Status", "values": {"Status": "operating"}, "primary_value": "operating",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm",
         "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm", "ok": true, "contains_value": true, "name_found": true, "note": "TC Pipelines LP Feb 24, 2021 earnings release: 'Phase III of PNGTS's Portland XPress project was placed into service on November 1 as planned'"},
-        {"url": "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and", "ok": true, "contains_value": true, "name_found": true, "note": "PNGTS actively filing to expand certificated capacity on the wholly-owned north system as of July 2026, confirming the system (including this project's compressor capacity) remains in active operation"}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TC Pipelines LP Feb 24, 2021 earnings release: 'Phase III of PNGTS's Portland XPress project was placed into service on November 1 as planned'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PNGTS actively filing to expand certificated capacity on the wholly-owned north system as of July 2026, confirming the system (including this project's compressor capacity) remains in active operation"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Placed in service Nov 1, 2020 per the then-co-owner's own SEC-filed earnings release, and the underlying system remains actively operating and expanding as of a July 2026 FERC filing; no abandonment or retirement of this compression capacity was found anywhere."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Fuel [ref]", "value_cols": ["Fuel"],
-      "primary_value_col": "Fuel", "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "capacity stated in million cubic feet per day (Mcf/d) of natural gas under an NGA Section 7(c) application"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA's own 'Natural Gas Pipeline Projects' workbook lists 'Portland Xpress Project Phase 3' with Additional Capacity 24.375 MMcf/d"}
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "capacity stated in million cubic feet per day (Mcf/d) of natural gas under an NGA Section 7(c) application"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA's own 'Natural Gas Pipeline Projects' workbook lists 'Portland Xpress Project Phase 3' with Additional Capacity 24.375 MMcf/d"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Unambiguous natural-gas capacity project, confirmed by both the FERC docket and an independent EIA compilation."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "PipelineType [ref]", "value_cols": ["PipelineType"],
-      "primary_value_col": "PipelineType", "values": {"PipelineType": "transmission"}, "primary_value": "transmission",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "NGA Section 7(c) interstate transmission certificate application"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA workbook records Pipeline Type='Interstate' for 'Portland Xpress Project Phase 3'"}
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NGA Section 7(c) interstate transmission certificate application"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA workbook records Pipeline Type='Interstate' for 'Portland Xpress Project Phase 3'"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "An interstate FERC-regulated capacity expansion on an existing transmission pipeline; 'transmission' correctly classifies it (distinct from a gathering/distribution line)."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Proposal [ref]", "value_cols": ["ProposalYear", "ProposalMonth"],
-      "primary_value_col": "ProposalYear", "values": {"ProposalYear": "2018", "ProposalMonth": "6"}, "primary_value": "2018",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications"],
-      "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "'Take notice that on June 19, 2018, Portland Natural Gas Transmission System... filed an application... for Phase III of the Portland Xpress Project'"}
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2018",
+        "ProposalMonth": "6"
+      },
+      "primary_value": "2018",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Take notice that on June 19, 2018, Portland Natural Gas Transmission System... filed an application... for Phase III of the Portland Xpress Project'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "Fills a previously-blank Proposal field: filed June 19, 2018 per the FERC notice (published July 9, 2018). Single source (the government notice of the filing itself, highly authoritative and precisely dated); a second, fully independent source restating this exact filing date was not found (WebSearch budget was exhausted this session; EIA's workbook records only the completion/in-service year, not a proposal/filing date)."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Construction [ref]", "value_cols": ["ConstructionYear", "ConstructionMonth"],
-      "primary_value_col": "ConstructionYear", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "No dated 'construction commenced' notice was found for this docket (CP18-506). The FERC application (filed June 2018), the environmental assessment notice (Dec 2018), and the in-service confirmation (placed in service Nov 1, 2020 per TC Pipelines LP's 8-K) bracket construction between those dates, but none of the documents reviewed states an actual construction-start date. Leaving blank rather than inferring one."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Start [ref]", "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-      "primary_value_col": "StartYear1", "values": {"StartYear1": "2020", "StartMonth1": "11"}, "primary_value": "2020",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2020",
+        "StartMonth1": "11"
+      },
+      "primary_value": "2020",
       "proposed_refs": [
         "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm", "ok": true, "contains_value": true, "name_found": true, "note": "'Phase III of PNGTS's Portland XPress project was placed into service on November 1 as planned' -- TC Pipelines LP earnings release, Feb 24, 2021, describing full-year/Q4 2020 results"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA workbook records 'Portland Xpress Project Phase 3' Completed Date 2020-10-28, Year In Service 2020 -- a few days earlier than the commercial in-service date, consistent with a construction-completion vs. commercial-start-of-service distinction"}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Phase III of PNGTS's Portland XPress project was placed into service on November 1 as planned' -- TC Pipelines LP earnings release, Feb 24, 2021, describing full-year/Q4 2020 results"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA workbook records 'Portland Xpress Project Phase 3' Completed Date 2020-10-28, Year In Service 2020 -- a few days earlier than the commercial in-service date, consistent with a construction-completion vs. commercial-start-of-service distinction"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Confirms and refines the sheet's existing StartYear1=2020 with a specific month (November), sourced from the then-co-owner's own SEC-filed earnings release -- independently corroborated (within days) by EIA's separately-compiled completion date of Oct 28, 2020. The small date discrepancy (Nov 1 commercial in-service vs. Oct 28 FERC/EIA completion) likely reflects the ordinary gap between construction completion and commercial start of service; using the company's own stated in-service date (Nov 1) as the primary StartMonth1 value."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Capacity [ref]", "value_cols": ["Capacity", "CapacityUnits"],
-      "primary_value_col": "Capacity", "values": {"Capacity": "24.00", "CapacityUnits": "MMcf/d"}, "primary_value": "24.00",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "24.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "24.00",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "'the project will increase the certificated capacity on Portland Natural Gas' wholly-owned north system from Pittsburg, New Hampshire, to Westbrook, Maine, by 24.375 MMcf/d'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA workbook independently records 'Portland Xpress Project Phase 3' Additional Capacity = 24.375 MMcf/d (EIA's figure appears sourced from the same underlying FERC filing, not a fully independent measurement)"}
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'the project will increase the certificated capacity on Portland Natural Gas' wholly-owned north system from Pittsburg, New Hampshire, to Westbrook, Maine, by 24.375 MMcf/d'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA workbook independently records 'Portland Xpress Project Phase 3' Additional Capacity = 24.375 MMcf/d (EIA's figure appears sourced from the same underlying FERC filing, not a fully independent measurement)"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": false, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "Sourced figure is 24.375 MMcf/d (the wholly-owned-system increase; a separate 22.339 MMcf/d increase applies to the jointly-owned-with-Maritimes segment and is not part of this row's recorded Capacity) -- the sheet's recorded 24.00 agrees within rounding (1.5% off), so kept as-is rather than 'corrected' to the more precise sourced figure. Both sources ultimately trace to the same underlying FERC filing (EIA's workbook restates the FERC-filed number rather than independently remeasuring it), so marked independent=false despite two distinct publishers."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Pressure [ref]", "value_cols": ["Pressure", "PressureUnits"],
-      "primary_value_col": "Pressure", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "No citable source states an operating/MAOP pressure for this compression project specifically. Searched the July 2018 application notice, the December 2018 EA notice, the TC Pipelines LP 8-K/10-K filings, and EIA's workbook (which does not carry a pressure field) -- none give a pressure figure for this or any PNGTS compressor-station project. Leaving blank rather than guessing or borrowing an unsourced system-wide figure."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Length [ref]", "value_cols": ["LengthKnown", "LengthKnownUnits"],
-      "primary_value_col": "LengthKnown", "values": {"LengthKnown": "0.00", "LengthKnownUnits": "km"}, "primary_value": "0.00",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "0.00",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "0.00",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
         "https://www.federalregister.gov/documents/2018/12/10/2018-26660/portland-natural-gas-transmission-system-notice-of-availability-of-the-environmental-assessment-for"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "authorization sought is to 'install one new... compressor unit' and make 'modifications to the infrastructure' at two existing stations -- no new pipeline segment described"},
-        {"url": "https://www.federalregister.gov/documents/2018/12/10/2018-26660/portland-natural-gas-transmission-system-notice-of-availability-of-the-environmental-assessment-for", "ok": true, "contains_value": true, "name_found": true, "note": "'The Project includes modifications to existing facilities in Cumberland and York Counties, Maine, and Middlesex County, Massachusetts' -- confirms no new pipe/right-of-way"}
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "authorization sought is to 'install one new... compressor unit' and make 'modifications to the infrastructure' at two existing stations -- no new pipeline segment described"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2018/12/10/2018-26660/portland-natural-gas-transmission-system-notice-of-availability-of-the-environmental-assessment-for",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Project includes modifications to existing facilities in Cumberland and York Counties, Maine, and Middlesex County, Massachusetts' -- confirms no new pipe/right-of-way"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": false, "source_language": "en",
-      "researcher_notes": "Confirms LengthKnown=0 as recorded: this is a compression-only capacity increment (new compressor unit + station modifications), not a new pipeline segment, per the standing convention that an expansion with no new physical pipe correctly carries LengthKnown=0."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirms LengthKnown=0 as recorded: this is a compression-only capacity increment (new compressor unit + station modifications), not a new pipeline segment, per the standing convention that an expansion with no new physical pipe correctly carries LengthKnown=0. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (federalregister.gov). One publisher restated is still one origin."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Diameter [ref]", "value_cols": ["Diameter", "DiameterUnits"],
-      "primary_value_col": "Diameter", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "Diameter is correctly blank per the same no-new-pipe convention noted on the Length fill above -- this project installs a compressor unit and modifies existing metering/regulating infrastructure, not new-diameter pipe, so there is no diameter value to source. Not treated as a gap."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "FuelSource [ref]", "value_cols": ["FuelSource"],
-      "primary_value_col": "FuelSource", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "No source specific to this compression project discusses an upstream gas source. The PNGTS mainline's own upstream interconnect (TransCanada PipeLines Limited at Pittsburg, NH) is separately sourced and staged on the P0242 mainline row; this compression-only capacity increment (occurring at compressor/M&R stations in Maine and Massachusetts, well downstream of the Pittsburg, NH interconnect per the Location fill above) does not itself introduce or change a fuel source, so no project-specific FuelSource citation exists. Leaving blank rather than restating the mainline-level fact under this row without a document naming it for this project."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
       "primary_value_col": "StartLocation",
-      "values": {"StartLocation": "Eliot", "StartState/Province": "Maine", "StartCountryOrArea": "United States", "EndLocation": "Dracut", "EndState/Province": "Massachusetts", "EndCountryOrArea": "United States"},
+      "values": {
+        "StartLocation": "Eliot",
+        "StartState/Province": "Maine",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Dracut",
+        "EndState/Province": "Massachusetts",
+        "EndCountryOrArea": "United States"
+      },
       "primary_value": "Eliot",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
         "https://www.federalregister.gov/documents/2018/12/10/2018-26660/portland-natural-gas-transmission-system-notice-of-availability-of-the-environmental-assessment-for"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "'install one new 6,300 horsepower compressor unit at the existing Eliot Compressor Station located in York County, Maine and modifications to the infrastructure at the existing Westbrook Compressor Station and Dracut Metering and Regulating Station located in Cumberland County, Maine and Middlesex County, Massachusetts respectively'"},
-        {"url": "https://www.federalregister.gov/documents/2018/12/10/2018-26660/portland-natural-gas-transmission-system-notice-of-availability-of-the-environmental-assessment-for", "ok": true, "contains_value": true, "name_found": true, "note": "confirms all modifications are in 'Cumberland and York Counties, Maine, and Middlesex County, Massachusetts' -- no New Hampshire or Canada/Quebec facilities"}
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'install one new 6,300 horsepower compressor unit at the existing Eliot Compressor Station located in York County, Maine and modifications to the infrastructure at the existing Westbrook Compressor Station and Dracut Metering and Regulating Station located in Cumberland County, Maine and Middlesex County, Massachusetts respectively'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2018/12/10/2018-26660/portland-natural-gas-transmission-system-notice-of-availability-of-the-environmental-assessment-for",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "confirms all modifications are in 'Cumberland and York Counties, Maine, and Middlesex County, Massachusetts' -- no New Hampshire or Canada/Quebec facilities"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": false, "source_language": "en",
-      "researcher_notes": "CORRECTS the sheet's StartState/Province='New Hampshire'/EndState/Province='Quebec'/EndCountryOrArea='Canada', none of which describe this specific project's physical facilities. This project's only facilities are the Eliot Compressor Station (York County, ME, where the new compressor is installed -- proposed as StartLocation) and the Dracut Metering and Regulating Station (Middlesex County, MA, the downstream end of the affected jointly-owned segment -- proposed as EndLocation); the Westbrook Compressor Station (Cumberland County, ME) also receives modifications but sits between these two. See the companion attribution concern in validity[] for full reasoning."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "CORRECTS the sheet's StartState/Province='New Hampshire'/EndState/Province='Quebec'/EndCountryOrArea='Canada', none of which describe this specific project's physical facilities. This project's only facilities are the Eliot Compressor Station (York County, ME, where the new compressor is installed -- proposed as StartLocation) and the Dracut Metering and Regulating Station (Middlesex County, MA, the downstream end of the affected jointly-owned segment -- proposed as EndLocation); the Westbrook Compressor Station (Cumberland County, ME) also receives modifications but sits between these two. See the companion attribution concern in validity[] for full reasoning. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (federalregister.gov). One publisher restated is still one origin."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "ref_col": "SegmentCost [ref]", "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
-      "primary_value_col": "SegmentCost", "values": {"SegmentCost": "90300000.00", "SegmentCostUnits": "USD", "SegmentCostYear": "2018"}, "primary_value": "90300000.00",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications"],
-      "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications", "ok": true, "contains_value": true, "name_found": true, "note": "'Portland Natural Gas estimates the total cost of the project to be $90.3 million'"}
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "90300000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2018"
+      },
+      "primary_value": "90300000.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2018/07/09/2018-14558/portland-natural-gas-transmission-system-notice-of-applications",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Portland Natural Gas estimates the total cost of the project to be $90.3 million'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "CORRECTS the sheet's SegmentCost=$80,000,000 -- the applicant's own FERC-filed cost estimate for this exact docket (CP18-506) is $90.3 million, a 12.9% discrepancy too large to be rounding. Single source (the applicant's own filed estimate, not an independently audited actual cost, and EIA's workbook does not record a cost figure for this particular phase), so tier medium. See the companion spec concern in validity[]."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "oo_sheet_row": 1983, "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value_col": "Operator", "values": {"Operator": "Portland Natural Gas Transmission System"}, "primary_value": "Portland Natural Gas Transmission System",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "oo_sheet_row": 1983,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Portland Natural Gas Transmission System"
+      },
+      "primary_value": "Portland Natural Gas Transmission System",
       "proposed_refs": [
         "https://www.pngts.com/press-insights/blog-post-title-one-xawhb",
         "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and"
       ],
       "verifications": [
-        {"url": "https://www.pngts.com/press-insights/blog-post-title-one-xawhb", "ok": true, "contains_value": true, "name_found": true, "note": "Aug 15, 2024: 'Portland Natural Gas Transmission System (\"PNGTS\") has completed its transition into a standalone company... Bill Yardley will lead PNGTS as chief executive officer'"},
-        {"url": "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and", "ok": true, "contains_value": true, "name_found": true, "note": "PNGTS is the direct FERC filer/applicant in its own name as of July 2026, no longer routed through a TC Energy contact"}
+        {
+          "url": "https://www.pngts.com/press-insights/blog-post-title-one-xawhb",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug 15, 2024: 'Portland Natural Gas Transmission System (\"PNGTS\") has completed its transition into a standalone company... Bill Yardley will lead PNGTS as chief executive officer'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "PNGTS is the direct FERC filer/applicant in its own name as of July 2026, no longer routed through a TC Energy contact"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Same finding as staged on the P0242 mainline row (this compression project is operated as part of the single PNGTS system, not separately): since becoming a standalone company (closed Aug 15, 2024), PNGTS operates itself under its own management rather than TC Energy or another parent."
     },
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "oo_sheet_row": 1983, "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "oo_sheet_row": 1983,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
       "primary_value_col": "Owner1",
-      "values": {"Owner1": "BlackRock (fund managed by its Diversified Infrastructure business)", "Owner2": "investment funds managed by Morgan Stanley Infrastructure Partners"},
+      "values": {
+        "Owner1": "BlackRock (fund managed by its Diversified Infrastructure business)",
+        "Owner2": "investment funds managed by Morgan Stanley Infrastructure Partners"
+      },
       "primary_value": "BlackRock (fund managed by its Diversified Infrastructure business)",
       "proposed_refs": [
         "https://www.tcenergy.com/announcements/2024/2024-03-04-tc-energy-announces-sale-of-portland-natural-gas-transmission-system/",
@@ -242,11 +587,32 @@
         "https://www.pngts.com/press-insights/blog-post-title-one-xawhb"
       ],
       "verifications": [
-        {"url": "https://www.tcenergy.com/announcements/2024/2024-03-04-tc-energy-announces-sale-of-portland-natural-gas-transmission-system/", "ok": true, "contains_value": true, "name_found": true, "note": "March 4, 2024: agreement to sell PNGTS to BlackRock (Diversified Infrastructure business fund) and Morgan Stanley Infrastructure Partners funds for US$1.14 billion gross"},
-        {"url": "https://www.tcenergy.com/announcements/2024/2024-08-15-tc-energy-completes-the-sale-of-portland-natural-gas-transmission-system/", "ok": true, "contains_value": true, "name_found": true, "note": "August 15, 2024: sale completed, same buyer identities and price confirmed"},
-        {"url": "https://www.pngts.com/press-insights/blog-post-title-one-xawhb", "ok": true, "contains_value": true, "name_found": true, "note": "buyer/company-side confirmation: PNGTS 'previously a subsidiary of TC Energy Corporation and Northern New England Investment Company, Inc.... will continue' as a standalone company"}
+        {
+          "url": "https://www.tcenergy.com/announcements/2024/2024-03-04-tc-energy-announces-sale-of-portland-natural-gas-transmission-system/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "March 4, 2024: agreement to sell PNGTS to BlackRock (Diversified Infrastructure business fund) and Morgan Stanley Infrastructure Partners funds for US$1.14 billion gross"
+        },
+        {
+          "url": "https://www.tcenergy.com/announcements/2024/2024-08-15-tc-energy-completes-the-sale-of-portland-natural-gas-transmission-system/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "August 15, 2024: sale completed, same buyer identities and price confirmed"
+        },
+        {
+          "url": "https://www.pngts.com/press-insights/blog-post-title-one-xawhb",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "buyer/company-side confirmation: PNGTS 'previously a subsidiary of TC Energy Corporation and Northern New England Investment Company, Inc.... will continue' as a standalone company"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Same finding as staged on P0242: CORRECTS the sheet's stale Owner1=TC Energy(61.7%)/Owner2=Northern New England Investment Co(38.3%), superseded by the sale that closed August 15, 2024. Owner%s left blank -- no source discloses the split between the BlackRock-managed fund and the Morgan Stanley Infrastructure Partners funds."
     }
   ],
@@ -269,7 +635,9 @@
   ],
   "status_reviews": [
     {
-      "segment_name": "Portland Xpress Expansion Project", "sheet_row": 1336, "current_status": "operating",
+      "segment_name": "Portland Xpress Expansion Project",
+      "sheet_row": 1336,
+      "current_status": "operating",
       "verdict": "confirm",
       "proposed_status": "operating",
       "proposed_changes": {
@@ -291,11 +659,25 @@
         "https://www.tcenergy.com/announcements/2024/2024-08-15-tc-energy-completes-the-sale-of-portland-natural-gas-transmission-system/"
       ],
       "verifications": [
-        {"url": "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm", "ok": true, "contains_value": true},
-        {"url": "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and", "ok": true, "contains_value": true},
-        {"url": "https://www.tcenergy.com/announcements/2024/2024-08-15-tc-energy-completes-the-sale-of-portland-natural-gas-transmission-system/", "ok": true, "contains_value": true}
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/1075607/000162828021002955/ex99newsrelease.htm",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2026/07/29/2026-15292/portland-natural-gas-transmission-system-notice-of-request-under-blanket-authorization-and",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.tcenergy.com/announcements/2024/2024-08-15-tc-energy-completes-the-sale-of-portland-natural-gas-transmission-system/",
+          "ok": true,
+          "contains_value": true
+        }
       ],
-      "tier": "high", "independent": true, "source_language": "en",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Operating status itself is correct and current. The material changes an annual-update pass should apply are: (1) ownership (same TC Energy -> BlackRock/Morgan Stanley correction as P0242), (2) Operator populated with PNGTS itself (standalone post-sale), (3) Location corrected from the mainline's NH/Quebec framing to this project's actual Maine/Massachusetts compressor-station facilities, and (4) SegmentCost corrected from $80M to the applicant's own filed $90.3M estimate. See validity[] and fills[] above for full sourcing."
     }
   ],

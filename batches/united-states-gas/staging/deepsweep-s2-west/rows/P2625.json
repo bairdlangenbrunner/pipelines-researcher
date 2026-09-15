@@ -1,0 +1,278 @@
+{
+  "project_id": "P2625",
+  "pipeline_name": "Tioga to Emerson Pipeline",
+  "sheet_row": 1353,
+  "wiki": "https://www.gem.wiki/Tioga_to_Emerson_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct EndState/Province and EndCountryOrArea to Minnesota / United States; the pipeline as proposed does not physically cross into Canada.",
+      "contested": {"EndState/Province": "Minnesota", "EndCountryOrArea": "United States", "EndPrefecture/District": ""},
+      "researcher_notes": "GEM records EndState/Province=Manitoba, EndCountryOrArea=Canada, EndPrefecture/District=Emerson-Franklin -- i.e. treats this as a US-Canada border-crossing line. Three independent, dated sources all place the physical terminus in northwestern Minnesota, US, not Canada: (1) WBI Energy's own spokesperson Laura Lueder, quoted on the record in the Pierce County Tribune (2020-02-21): 'Our proposal is to go from the Tioga area to northwestern Minnesota, which is near the Emerson natural gas hub. Our other large gas pipelines connect at that hub and then the gas moves from there to larger markets, such as Chicago.' -- i.e. WBI's own pipe ends in Minnesota near (not at/in) the Emerson hub; (2) EIA's Natural Gas Pipeline Projects workbook records State(s)=ND,MN, Beg_State=ND, End_State=MN, and Crosses State Border=Yes (a US interstate designation, not an international one) in every release 2020-03 through 2026-08; (3) offshore-technology.com's project profile states the pipeline 'will start in North Dakota (the US) and ends in Minnesota (the US).' A Federal Register full-text search for '\"Tioga to Emerson\"' returns zero documents (checked 2026-09-15 via the FederalRegister.gov API), consistent with no DOE/FECM Presidential Permit or FERC Section 3 export/import authorization ever having been sought for this project -- expected if it never crosses the international border. A Canada Energy Regulator site search for the same terms returned no usable results (client-rendered search page, inconclusive either way -- not relied on). The routes-repo geojson's easternmost vertex sits at (-97.208086, 49.005584), about 0.6 km north of the 49th parallel -- fractionally inside Manitoba -- which reads as an artifact of digitizing to the Emerson hub landmark itself rather than evidence the pipe crosses the border; 'Emerson' in the project's own name is the name of the interconnect hub it was designed to reach, not proof its pipe enters Canada. Recommend GEM's end-location cells be corrected to Minnesota/United States (EndPrefecture/District cleared, since 'Emerson-Franklin' is a Manitoba municipality that would no longer apply); no route-geometry replacement is proposed, only the attribute correction. Commodity classification is NOT in question: WBI's own spokesperson calls it 'a large interstate natural gas pipeline system,' EIA classifies it in the Natural Gas Pipeline Projects workbook, and offshore-technology.com calls it 'the onshore gas pipeline' -- this is correctly tracked as gas, not NGL/crude, despite sitting in Bakken oil country.",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Status [ref]",
+      "value_cols": ["Status"], "primary_value_col": "Status", "values": {"Status": "shelved"},
+      "primary_value": "shelved",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/data.php", "ok": true, "status": 200, "contains_value": false, "name_found": false, "note": "navigation page, not a citable ref; superseded below"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Natural Gas Pipeline Projects sheet, excel row 107: Tioga to Emerson Project, WBI Energy Transmission, status flips from 'Announced' to 'On Hold' with last_updated_date 2024-10-11 and year_in_service_date blank -- 'On Hold' maps to GEM's shelved."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Old ref was EIA's data.php navigation page -- never citable. Replaced with the dated Oct 2024 EIA release, whose status change to On Hold is the first appearance of dormancy in the 21-release EIA history for this project (Announced 2020-03 through 2024-01, On Hold every release 2024-10 onward through Aug 2026). Searched for a second, non-EIA source stating the current status explicitly: WBI Energy's live projects page (wbienergy.com/projects/, fetched 2026-09-15) lists only 'Bakken East Pipeline' and 'Line Section 32' with no mention of Tioga-Emerson, and MDU Resources' FY2025 10-K (filed 2026-02-20) likewise omits it in favor of the 'Potential Bakken East Pipeline Project' -- both corroborate abandonment/on-hold by omission but neither affirmatively states a status, so this stays single-origin (EIA) at medium tier."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"], "primary_value_col": "Fuel", "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {"url": "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "WBI spokesperson quoted: 'This is a large interstate natural gas pipeline system built so producers in the Bakken area would be able to ship their natural gas rather than flaring it.'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Tracked in EIA's Natural Gas Pipeline Projects workbook (row 125), which by scope only tracks gas projects."},
+        {"url": "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'The onshore gas pipeline, with a maximum diameter of 24 inches...'"}
+      ],
+      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Confirmed as natural gas, not oil/NGL, despite sitting in Bakken producing country. Three independent origins agree; existing ref (Pierce County Tribune) re-verified live and re-cited alongside the two added corroborators."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"], "primary_value_col": "PipelineType", "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/a2025ex21.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'a large interstate natural gas pipeline system' connecting to a hub that moves gas to 'larger markets, such as Chicago' -- describes an interstate transmission line, not a gathering/lateral line."},
+        {"url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/a2025ex21.htm", "ok": true, "contains_value": true, "name_found": true, "note": "MDU Resources Group FY2025 10-K Exhibit 21 lists the project sponsor's legal name as 'WBI Energy Transmission, Inc.'"}
+      ],
+      "class_out": "REVERIFIED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two distinct origins (news account of the interstate project + SEC filing naming the operating entity 'Transmission') support transmission classification."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"], "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2020", "ProposalMonth": "2"}, "primary_value": "2020",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_March2020.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "Published 2020-02-21, reports WBI's open season Jan 10 - Feb 28, 2020 -- the project's public announcement."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_March2020.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Natural Gas Pipeline Projects sheet, excel row 119: last_updated_date 2020-02-11, status Announced -- first EIA appearance."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Old ref was EIA's data.php navigation page. Two independent, dated origins (trade press account of the open season + EIA's first tracked appearance, both dated Feb 2020) pin ProposalYear/Month to Feb 2020."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"], "primary_value_col": "ConstructionYear",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No construction ever began. Checked: EIA's docket_number field is blank across all 21 releases (2020-03 through 2026-08) -- no FERC application ever advanced; a Federal Register full-text search for '\"Tioga to Emerson\"' returns zero documents; WBI's current (2026) projects page and MDU's FY2025 10-K carry no mention of groundbreaking. Blank is correct given the project went from Announced straight to On Hold without a construction phase."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1", "values": {"StartYear1": "2025"}, "primary_value": "2025",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2024.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2024.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Excel row 111: year_in_service_date updated from 2023 (2020 release) to 2025, last_updated_date 2024-01-30. This is the last dated in-service TARGET before the project went On Hold in the Oct 2024 release (year_in_service_date then blanked)."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Old ref was EIA's data.php navigation page; replaced with the specific dated release stating this target year. Single-origin: this is a target in-service date, not an actual start, and EIA is the only source carrying it -- Pierce County Tribune (2020) predates the retarget and does not state a year; no trade press update on the 2025 target was found. Kept as recorded since it reflects the last credible EIA-tracked target before shelving, not a fabricated actual start."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Delay [ref]",
+      "value_cols": ["Delayed", "DelayType"], "primary_value_col": "Delayed",
+      "values": {"Delayed": "yes", "DelayType": "confirmed"}, "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Year_in_service_date moved 2023 (2020-03 release) -> 2025 (2024-01 release) -> blank/On Hold (2024-10 release onward) -- a documented slip then indefinite hold."},
+        {"url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm", "ok": true, "contains_value": true, "name_found": true, "note": "MDU's FY2025 10-K describes WBI's current Bakken-takeaway focus as the separate 'Potential Bakken East Pipeline Project' (open season Feb-Mar 2026, phased 2029-2030), with no mention of Tioga-Emerson proceeding -- independent, dated confirmation the original project did not advance on its EIA-tracked schedule."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two distinct publishers (EIA's own historical record of the slipped target + MDU's own current 10-K silence/substitution) confirm a real, sustained delay -- DelayType=confirmed (not merely inferred) is supported."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Shelved [ref]",
+      "value_cols": ["ShelvedYear"], "primary_value_col": "ShelvedYear", "values": {"ShelvedYear": "2024"},
+      "primary_value": "2024",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx"],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Excel row 107: status flips Announced -> On Hold, last_updated_date 2024-10-11 -- the first release recording dormancy."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Single-origin (EIA); searched WBI's current site and MDU's FY2025 10-K for a dated 'on hold'/'suspended' announcement stating a year -- neither states one explicitly, they simply omit the project going forward, so 2024 rests on EIA's own dated release alone."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"], "primary_value_col": "Capacity",
+      "values": {"Capacity": "600.00", "CapacityUnits": "MMcf/d"}, "primary_value": "600.00",
+      "proposed_refs": ["https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"],
+      "verifications": [
+        {"url": "https://oilandgaswatch.org/pipeline/3364", "ok": false, "contains_value": false, "name_found": false, "note": "Confirmed by direct fetch to be an empty Vue.js SPA shell (819 bytes, <div id=\"app\"></div>, no server-rendered content); no discoverable JSON API endpoint. Uncitable -- replaced."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Excel row 125: Additional Capacity (MMcf/d) = 600, consistent across all 21 tracked releases 2020-03..2026-08."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "researcher_notes": "Old ref (oilandgaswatch.org) is an empty JS shell -- replaced. Single-origin: searched for a second source stating 600 MMcf/d -- Reuters factbox (idUSKBN2EI1FK) returned 401/paywalled and its Wayback capture request was rate-limited (429) twice; offshore-technology.com's retrievable static content states length/diameter/operator/endpoints but no capacity figure; Pierce County Tribune's article discusses the open season process ('who is interested in capacity on this proposed project') without stating a number. EIA remains the sole source for this figure."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"], "primary_value_col": "Pressure",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No MAOP/pressure figure found. This project never reached a FERC docket (docket_number blank in all 21 EIA releases) or a tariff filing where an operating pressure would normally be stated, and it never began construction -- no pressure spec exists to source."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"], "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "330.00", "LengthKnownUnits": "mi"}, "primary_value": "330.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {"url": "https://oilandgaswatch.org/pipeline/3364", "ok": false, "contains_value": false, "name_found": false, "note": "Empty SPA shell, uncitable -- replaced."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Excel row 125: Miles = 330, consistent across all 21 releases."},
+        {"url": "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'The 531km-long ... Tioga-Emerson Project pipeline' -- 531 km = 330.0 mi exactly."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two distinct publishers agree exactly (330 mi = 531 km)."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"], "primary_value_col": "Diameter",
+      "values": {"Diameter": "24.00", "DiameterUnits": "in"}, "primary_value": "24.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {"url": "https://oilandgaswatch.org/pipeline/3364", "ok": false, "contains_value": false, "name_found": false, "note": "Empty SPA shell, uncitable -- replaced."},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Excel row 125: Pipeline Diameter (Inches) = 24, consistent across all 21 releases."},
+        {"url": "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'...with a maximum diameter of 24 inches...'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two distinct publishers agree exactly."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"], "primary_value_col": "FuelSource", "values": {"FuelSource": "Bakken Formation"},
+      "primary_value": "Bakken Formation",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {"url": "https://oilandgaswatch.org/pipeline/3364", "ok": true, "contains_value": false, "name_found": false, "note": "200 but confirmed by direct fetch to be an empty SPA shell with no article text -- treat as a search record, not a verification; replaced."},
+        {"url": "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "WBI spokesperson quoted: 'producers in the Bakken area would be able to ship their natural gas rather than flaring it.'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "EIA's project notes field (row 125) reads 'Takeaway from Bakken to Emerson and interconnections' in every release."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Two distinct origins (WBI's own spokesperson + EIA's project notes) agree the gas source is the Bakken."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Tioga", "StartState/Province": "North Dakota", "StartCountryOrArea": "United States",
+        "EndLocation": "Emerson", "EndPrefecture/District": "", "EndState/Province": "Minnesota", "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Tioga",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/"
+      ],
+      "verifications": [
+        {"url": "https://oilandgaswatch.org/pipeline/3364", "ok": true, "contains_value": false, "name_found": false, "note": "Empty SPA shell -- replaced."},
+        {"url": "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "WBI: 'Our proposal is to go from the Tioga area to northwestern Minnesota, which is near the Emerson natural gas hub.'"},
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Beg_State=ND, End_State=MN, Crosses State Border=Yes (interstate, not international)."},
+        {"url": "https://www.offshore-technology.com/marketdata/tioga-emerson-project-gas-pipeline-the-us/", "ok": true, "contains_value": true, "name_found": true, "note": "'...starts in North Dakota (the US) and ends in Minnesota (the US).'"}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "StartLocation/StartState/StartCountryOrArea (Tioga, North Dakota, United States) are confirmed as recorded. EndState/Province and EndCountryOrArea are corrected from Manitoba/Canada to Minnesota/United States per the validity[] finding above -- WBI's own spokesperson, EIA (Crosses State Border=Yes), and offshore-technology.com all place the physical terminus in Minnesota; 'Emerson' names the interconnect hub the line was designed to reach, not a crossing into Canada. EndPrefecture/District ('Emerson-Franklin', a Manitoba municipality) is cleared since it no longer applies to a Minnesota terminus; EndLocation is kept as 'Emerson' since that is genuinely the named hub the project targets, now understood as a landmark near the US side of the line's end rather than the pipe's country of termination."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"], "primary_value_col": "SegmentCost",
+      "values": {}, "primary_value": "",
+      "proposed_refs": [], "verifications": [],
+      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "researcher_notes": "No cost figure found. EIA's Cost (millions) field is blank across all 21 tracked releases for this project -- consistent with a project that never reached a FERC-certificated cost estimate. No trade press, SEC filing, or state filing states a cost."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage"], "primary_value_col": "Operator",
+      "values": {"Operator": "WBI Energy Transmission"}, "primary_value": "WBI Energy Transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/a2025ex21.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx", "ok": true, "contains_value": true, "name_found": true, "note": "Pipeline Operator Name = 'WBI Energy Transmission' in every tracked release."},
+        {"url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/a2025ex21.htm", "ok": true, "contains_value": true, "name_found": true, "note": "MDU Resources Group FY2025 10-K Exhibit 21 (subsidiaries list) names 'WBI Energy Transmission, Inc.' (Delaware)."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Worklist leakage noted per ADDENDUM rule 7: this unit's value_cols include 'QCCOwner(业主单位)', which is an open QC-workbook column, not a tracker value column -- reported, not researched. The Operator value itself (WBI Energy Transmission) is sourced at high tier from EIA + SEC Exhibit 21, both agreeing precisely on the legal/operating name. Pierce County Tribune's shorthand 'WBI, Inc.' is not used as a corroborating source since it does not match the precise legal name the other two agree on."
+    },
+    {
+      "segment_name": "", "sheet_row": 1353, "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%"], "primary_value_col": "Owner1",
+      "values": {"Owner1": "MDU Resources Group", "Owner1%": "100.00%"}, "primary_value": "MDU Resources Group",
+      "proposed_refs": [
+        "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/",
+        "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/a2025ex21.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.thepiercecountytribune.com/news/local-news/2020/02/21/energy-group-gauges-interest-in-possible-pipeline/", "ok": true, "contains_value": true, "name_found": true, "note": "'WBI, Inc., a subsidiary of MDU Resources Group in Bismarck, announced the start of a \"non-binding open season\"...'"},
+        {"url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/a2025ex21.htm", "ok": true, "contains_value": true, "name_found": true, "note": "MDU Resources Group FY2025 10-K Exhibit 21 lists 'WBI Energy Transmission, Inc.' as a subsidiary of MDU Resources Group Inc."}
+      ],
+      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Cell was MISSING_REF (value present, ref blank). Two distinct origins (trade press naming the parent + SEC corporate-structure filing) support MDU Resources Group as 100% owner via its WBI Energy Transmission subsidiary."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "", "sheet_row": 1353, "current_status": "shelved", "verdict": "confirm",
+      "proposed_status": "", "proposed_changes": {},
+      "evidence_date": "2024-10", "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx",
+        "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm"
+      ],
+      "verifications": [
+        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Oct2024.xlsx", "ok": true, "contains_value": true, "note": "Status flips Announced -> On Hold, last_updated_date 2024-10-11; still On Hold through the Aug 2026 release, the newest one tracked."},
+        {"url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm", "ok": true, "contains_value": true, "note": "MDU's FY2025 10-K (filed 2026-02-20) has no mention of Tioga-Emerson; WBI's current Bakken-takeaway project is instead the separate 'Potential Bakken East Pipeline Project' (420-mile in-state ND route to Mapleton, ~1 Bcf/d, open season Feb-Mar 2026, phased 2029-2030)."}
+      ],
+      "tier": "high", "independent": true, "source_language": "en",
+      "researcher_notes": "Tested for revival first, per the dispatch brief's dormancy rule. Newest independent evidence: EIA's Oct 2024 release records the shift to On Hold (year_in_service_date blanked from the prior 2025 target); every EIA release since, through Aug 2026, keeps it On Hold -- no reversal. WBI's own current (2026) projects page (wbienergy.com/projects/, fetched 2026-09-15) lists only 'Bakken East Pipeline' and 'Line Section 32', with zero mention of Tioga-Emerson; MDU's FY2025 10-K corroborates by describing 'Bakken East' as WBI's current Bakken-takeaway project instead. A Federal Register full-text search for '\"Tioga to Emerson\"' (2026-09-15) returns zero documents -- no FERC application was ever filed. No news of formal cancellation or withdrawal was found either. ShelvedYear=2024 is only ~2 years dormant as of this review (2026-09-15), under the dispatch brief's 'shelved >=4y -> cancelled' threshold, so verdict is 'confirm' (dormant, not yet cancellable) rather than 'stale'/'change' -- consistent with the brief's own instruction to use confirm when dormant but under the threshold."
+    }
+  ],
+  "cross_row_leads": [],
+  "summary": "P2625 Tioga to Emerson Pipeline is a genuine, correctly-classified NATURAL GAS proposal (WBI Energy Transmission, Bakken-to-hub takeaway; not the NGL/crude projects common in this Bakken corridor) that stalled pre-FERC and is best read as shelved since Oct 2024, per EIA -- status_reviews verdict 'confirm' (evidence 2024-10; WBI's current site + MDU's FY2025 10-K corroborate by favoring a separate 'Bakken East Pipeline' instead; only ~2y dormant, below the 4y->cancelled threshold, so not yet 'stale'). Main finding: the sheet's EndState/Province=Manitoba/Canada is wrong -- WBI's own spokesperson, EIA (Crosses State Border=Yes), and offshore-technology.com all place the true terminus in northwestern Minnesota, US; staged as an attribution concern + corrected Location fill. 14 REFS_ADDED/REVERIFIED, 3 UNRESOLVED (Construction, Pressure, SegmentCost -- none of which this project ever reached), no cross-row leads on the 42-row roster."
+}

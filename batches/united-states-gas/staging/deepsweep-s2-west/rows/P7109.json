@@ -1,0 +1,496 @@
+{
+  "project_id": "P7109",
+  "pipeline_name": "Agua Blanca Pipeline",
+  "sheet_row": 3777,
+  "wiki": "",
+  "validity": [
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "attribution",
+      "recommendation": "keep as recorded; stage sourced fills below; treat Owner1 as medium-confidence pending direct ownership disclosure",
+      "contested": {
+        "Owner1": "WhiteWater Midstream, LLC"
+      },
+      "researcher_notes": "EXISTENCE/CLASSIFICATION: confirmed real and correctly classified. This segment is the 'Lea County Expansion Project,' a ~20-mile, 20-inch lateral built by Carlsbad Gateway, LLC (a WhiteWater Midstream affiliate) under a FERC NGA Section 7 prior-notice/blanket-certificate filing (Docket CP24-200-000, filed 2024-04-19, Federal Register notice 2024-09688, https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and; verified via url_verifier, name_matched='Agua Blanca Pipeline'). It runs from the tailgate of Targa Resources' Red Hills Processing Plant in Lea County, New Mexico to an interconnection with the Agua Blanca Pipeline in Loving County, Texas -- exactly matching the sheet's segment name 'Targa Red Hills Interconnect.' NOTE TO DISPATCH BRIEF: the row was flagged as intrastate with FERC records expected thin/absent -- that expectation does NOT hold for this specific segment: Carlsbad Gateway holds an interstate NGA blanket certificate (Docket CP18-538-000) and filed this prior-notice request under it, so a full FERC/Federal Register record exists and is the strongest available source for this row. ROUTE CHECK: the routes-repo geojson for P7109 is internally labeled RouteName='Lea County Expansion', LineName='Carlsbad Gateway Pipeline' (not 'Agua Blanca'/'Targa Red Hills Interconnect') -- initially looked like a possible route/sheet mismatch. Resolved as NOT a mismatch: the route's first vertex (-103.5268, 32.2113) sits in Lea County, NM (matches the FERC-stated Red Hills Plant tailgate origin); its last vertex (-103.7092, 31.9878) sits in Loving County, TX (matches the FERC-stated Agua Blanca interconnection terminus); and the digitized length (20.07 mi) matches the FERC notice's 'approximately 20 miles.' The internal labels are the builder/operator's own project name for the same physical pipe, not a different asset -- route geometry is accurate, kept as-is. DUPLICATE CHECK: cross-checked against P7850 (Targa Forza / Bull Run Pipeline) -- both originate near the same Red Hills Plant area, but EIA's Aug2026 release (sheet 'Natural Gas Pipeline Projects,' Excel row 53) lists Forza pipeline as a SEPARATE, larger project (Forza Pipeline LLC & Bull Run Pipeline LLC (Targa Resources), 36 mi, 36-inch, 750 MMcf/d, dockets CP26-34/CP26-35) with a different owner and a different docket than Carlsbad Gateway's 20-mile, 20-inch, 350,000 Dth/d CP24-200-000 project -- NOT a duplicate; see cross_row_leads. ATTRIBUTION CONCERN: the FERC notice names 'Carlsbad Gateway, LLC' as the filer/operator and gives its FERC contact as WhiteWater Midstream, LLC's own in-house senior counsel (Liza Evans) -- strong circumstantial evidence Carlsbad Gateway LLC is a WhiteWater Midstream affiliate, but this is an inference from corporate representation, not an explicit ownership disclosure. Checked Targa Resources' 10-Q (trgp-10q_20180630.htm) and MPLX's most recent 10-K Exhibit 21.1 subsidiary list for 'Carlsbad' -- zero hits in either, ruling OUT Carlsbad Gateway as a named Targa or MPLX subsidiary and as part of the 4-way Agua Blanca Joint Venture (WhiteWater/WPX-Devon/MPLX/Targa) that owns the mainline system. Staged Owner1='WhiteWater Midstream, LLC' at medium confidence/single-source with this caveat recorded in `contested`."
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Sheet records Status=operating with current_ref=https://whitewatermidstream.com/projects. Independently re-fetched that URL (curl): it is a bare client-rendered React/Vite SPA shell (1669 bytes, <div id=\"root\"></div>, no server-rendered content) -- it cannot verify anything and is kept (not deleted, per the never-delete-a-once-working-ref rule) but is effectively uncited. The only citable independent source found, the FERC Federal Register notice (Docket CP24-200-000, filed 2024-04-19), only proves the project was AUTHORIZED/under prior-notice review as of April 2024 -- it does not state the lateral is currently in service, and its protest/intervention deadline was June 28, 2024. The routes-repo geojson carries a non-citable internal property (inservicedate ~2024-12-31) suggesting later completion, but that is internal route metadata, not a public source, and is not usable as a ref. Searched further for a current operating-status confirmation: FERC eLibrary docketsheet (JS-rendered SPA, no static content), PHMSA NPMS AllPipelines (JS-rendered, no static content), Hart Energy and NGI site search (403 Forbidden), Businesswire (403/empty body), SEC EDGAR full-text search for \"Agua Blanca\"+\"Red Hills\" (zero hits), raw Google search via curl (no relevant hits), and WebSearch (session budget exhausted at 200/200 calls before this row). Leaving Status UNRESOLVED rather than confirming or changing it without a source that actually states current operating status -- see status_reviews for the parallel non-contradicting verdict."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): filed under the Natural Gas Act (NGA) sections 157.205/157.208; capacity stated in dekatherms/day -- a natural gas facility, confirming Fuel=Gas"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (whitewatermidstream.com/projects) is an unverifiable SPA shell (name_found=false, no server-rendered content) -- superseded here by the FERC notice, which independently confirms the commodity. Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): Carlsbad Gateway holds this line under an NGA Section 7 blanket certificate (Docket CP18-538-000) -- FERC's jurisdictional gas-transmission certificate program, confirming PipelineType=transmission (not gathering)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref is the same unverifiable SPA shell as Fuel/Status above; superseded by the FERC notice. Single origin -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2024",
+        "ProposalMonth": "4"
+      },
+      "primary_value": "2024",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'on April 19, 2024, Carlsbad Gateway...filed in the above referenced docket, a prior notice request' -- ProposalYear=2024, ProposalMonth=4"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE. Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The FERC notice states only the filing/protest-deadline dates (filed 2024-04-19, protest deadline 2024-06-28), not an actual construction start. No other citable source found (FERC eLibrary, PHMSA NPMS, NGI, Hart Energy, Businesswire, SEC EDGAR full-text search, and general web search all inaccessible/blocked/no-hit or budget-exhausted, per Status notes above). Leaving blank rather than inferring a construction date from the proposal date."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No citable public source states an in-service/start date. The routes-repo geojson carries a non-citable internal property (inservicedate ~2024-12-31) that is plausible but is route metadata, not a fetchable public source, and cannot be used as a ref per repo convention. Same search trail as Status/Construction above came up empty. Leaving blank."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "350000.00",
+        "CapacityUnits": "Dth/d"
+      },
+      "primary_value": "350000.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'The project will allow Carlsbad Gateway to transport 350,000 dekatherms per day' -- Capacity=350000, CapacityUnits=Dth/d (reported unit kept as-is; not converted to Mcf/d to avoid the Dth/Mcf heating-value imprecision noted elsewhere in this campaign)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE. Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The FERC notice does not state a design/operating pressure. No other citable source found. Leaving blank."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "20.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "20.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'authorization to construct and operate approximately 20 miles of 20-inch-diamter [sic] lateral pipeline' -- LengthKnown=20, LengthKnownUnits=mi; matches the routes-repo geojson's digitized length of 20.07 mi within rounding"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE. Corroborated within rounding by the route geojson's own digitized length (20.07 mi) -- route metadata is not itself a citable ref, but it is consistent, not contradictory. Single CITABLE origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "20.00",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "20.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'approximately 20 miles of 20-inch-diamter [sic] lateral pipeline' -- Diameter=20, DiameterUnits=in"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE. Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Red Hills Processing Plant"
+      },
+      "primary_value": "Red Hills Processing Plant",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'originating at the tailgate of Targa Resources' Red Hills Processing Plant in Lea County, New Mexico' -- names the upstream gas plant feeding the line, per gem_schema.md's FuelSource gotcha (the upstream field/plant/facility, not the commodity 'Gas')"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE. Staged the named upstream plant per the gem_schema.md gotcha (FuelSource != 'Natural Gas'). Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Red Hills Processing Plant",
+        "StartPrefecture/District": "Lea County",
+        "StartState/Province": "New Mexico",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Agua Blanca Pipeline interconnection",
+        "EndPrefecture/District": "Loving County",
+        "EndState/Province": "Texas",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Red Hills Processing Plant",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'originating at the tailgate of Targa Resources' Red Hills Processing Plant in Lea County, New Mexico, and terminating at an interconnection with the Agua Blanca Pipeline in Loving County, Texas' -- confirms the existing State/Country values and adds County/Location detail that was blank"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Existing ref (whitewatermidstream.com/projects) is the unverifiable SPA shell noted above; State/Country values (New Mexico/Texas, United States/United States) are reconfirmed and County + facility-level Location detail (Lea County / Loving County; Red Hills Processing Plant / Agua Blanca interconnection) is newly sourced from the FERC notice. Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "35000000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2024"
+      },
+      "primary_value": "35000000.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'The estimated cost for the project is $35 million' -- SegmentCost=35000000 (full-magnitude convention, matching how other GEM gas rows record *Cost in dollars, not millions), SegmentCostUnits=USD, SegmentCostYear=2024 (year of the FERC filing/estimate)"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE. Single origin (FERC/Federal Register) -- tier=medium, independent=false."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "oo_sheet_row": 5487,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(\u4e1a\u4e3b\u5355\u4f4d)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Carlsbad Gateway, LLC"
+      },
+      "primary_value": "Carlsbad Gateway, LLC",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): 'Carlsbad Gateway, LLC (Carlsbad Gateway)...filed...a prior notice request...for authorization to construct and operate' this lateral -- names Carlsbad Gateway, LLC as the constructing/operating entity"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE (operators/owners tab, oo_sheet_row=5487). Single origin (FERC/Federal Register) -- tier=medium, independent=false. Attempted a second/PHMSA operator-ID confirmation (PHMSA NPMS is JS-rendered, no static content reachable) -- not found; noted rather than blocking the fill."
+    },
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "oo_sheet_row": 5487,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "WhiteWater Midstream, LLC"
+      },
+      "primary_value": "WhiteWater Midstream, LLC",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): the FERC notice's designated contact for questions/protests on Carlsbad Gateway's filing is 'Liza Evans, Senior Counsel, WhiteWater Midstream, LLC' -- circumstantial evidence Carlsbad Gateway LLC is a WhiteWater Midstream affiliate, NOT an explicit ownership-percentage disclosure"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Was MISSING_VALUE (operators/owners tab, oo_sheet_row=5487). MEDIUM CONFIDENCE / INFERRED: the FERC filing's in-house-counsel contact points to WhiteWater Midstream, not to a direct ownership statement for Carlsbad Gateway LLC specifically -- flagged in validity[].contested. Checked Targa Resources' 10-Q (Agua Blanca JV section) and MPLX's most recent 10-K Exhibit 21.1 subsidiary list for 'Carlsbad' -- zero hits in either, ruling out Targa/MPLX/the 4-way Agua Blanca JV as the direct owner of this specific lateral. No Owner% found; left unpercented. Single origin -- tier=medium, independent=false."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P7850",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "EIA Aug2026 release, sheet 'Natural Gas Pipeline Projects', Excel row 53: 'Forza pipeline', operator 'Forza Pipeline LLC & Bull Run Pipeline LLC (Targa Resources)', states NM,TX, 36 miles, 36-inch diameter, 750 MMcf/d additional capacity (May2026 release, row 50, additionally names dockets CP26-34/CP26-35). Both P7850 and P7109 originate near the Red Hills Plant area, but this is a SEPARATE Targa-owned project (different owner, different docket, different specs) from P7109's WhiteWater-owned Carlsbad Gateway / Lea County Expansion (CP24-200-000, 20 mi, 20 in, 350,000 Dth/d) -- not a duplicate."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Targa Red Hills Interconnect",
+      "sheet_row": 3777,
+      "current_status": "operating",
+      "verdict": "unclear",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2024-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2024/05/03/2024-09688/carlsbad-gateway-llc-notice-of-request-under-blanket-authorization-and-establishing-intervention-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "name_matched='Agua Blanca Pipeline'; FR notice (Docket CP24-200-000, filed by Carlsbad Gateway, LLC, a WhiteWater Midstream affiliate, on 2024-04-19; blanket certificate under prior Docket CP18-538-000): confirms the project was filed for prior-notice authorization on 2024-04-19 with a protest deadline of 2024-06-28 -- proves the project was real and in an active regulatory-approval stage in April 2024, but does not itself state that construction finished or that the lateral is currently in service"
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cannot confirm OR contradict the recorded Status=operating with an independent, currently-dated, citable source. The only verified independent evidence (FERC Federal Register notice, filed 2024-04-19) shows only the AUTHORIZATION stage as of April 2024, over two years before this sweep (2026-09-14) -- plausible that construction has since completed and the line is now operating, but nothing citable confirms it. The sheet's own current_ref (whitewatermidstream.com/projects) is an unverifiable client-rendered SPA shell with no server-side content (curl-confirmed, 1669 bytes). The routes-repo geojson carries a non-citable internal property suggesting a ~2024-12-31 target in-service date, consistent with 'now operating' but not usable as a public ref. Search for a completion/in-service announcement (FERC eLibrary, PHMSA NPMS, NGI, Hart Energy, Businesswire, SEC EDGAR full-text, general web search) came up blocked/inaccessible/empty or budget-exhausted (see Status fill notes). Verdict left 'unclear' rather than 'confirm' or 'change' -- staging either would assert more than the evidence supports, and the fills[Status] record is deliberately left UNRESOLVED to avoid contradicting this verdict."
+    }
+  ],
+  "summary": "P7109 Agua Blanca Pipeline / Targa Red Hills Interconnect confirmed real and correctly located: it is Carlsbad Gateway LLC's (WhiteWater Midstream affiliate) 'Lea County Expansion Project,' a ~20 mi/20 in lateral from Targa's Red Hills Processing Plant (Lea County, NM) to the Agua Blanca Pipeline (Loving County, TX), sourced almost entirely to one strong primary record: FERC Docket CP24-200-000 / Federal Register notice 2024-09688 (filed 2024-04-19). Route geojson's internal 'Carlsbad Gateway'/'Lea County Expansion' labels initially looked like a mismatch but are confirmed the same physical pipe, geometry accurate. Ruled out as a duplicate of P7850 (Targa Forza/Bull Run, a separate, larger, Targa-owned project -- see cross_row_leads). One attribution concern staged (Owner1='WhiteWater Midstream, LLC' is a medium-confidence inference from the FERC filing's in-house-counsel contact, not an explicit ownership disclosure). 15/15 worklist units covered: 11 REFS_ADDED (Fuel, PipelineType, Proposal, Capacity, Length, Diameter, FuelSource, Location, SegmentCost, Operator, Owner), 4 UNRESOLVED (Construction, Start, Pressure, and Status -- Status intentionally left UNRESOLVED rather than confirmed, since the only verified source proves 2024-04 authorization-stage only, not current operating status; status_reviews verdict='unclear' for the same reason, not contradicting fills[Status])."
+}

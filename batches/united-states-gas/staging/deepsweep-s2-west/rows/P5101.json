@@ -1,0 +1,599 @@
+{
+  "project_id": "P5101",
+  "pipeline_name": "Northwest Gas Pipeline",
+  "sheet_row": 2966,
+  "wiki": "https://www.gem.wiki/Northwest_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Kalama Lateral Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "EXISTENCE/CLASSIFICATION/DUPLICATE cleared. P5101 is a specific, distinct FERC-certificated project -- the Kalama Lateral Project, docket CP15-8 (Northwest Pipeline LLC, a Williams subsidiary) -- not the Northwest Pipeline system as a whole and not a duplicate of any sibling row. Confirmed via a full FERC docket paper trail found through the Federal Register API (FERC's own eLibrary and oilandgaswatch.org are JS SPAs that could not be scraped; see notes on individual fills): pre-filing scoping (FR 2012-15837, Jun 2012), Section 7(c) application filed Oct 27 2014 naming 'Kalama Lateral Project' (FR 2014-26505), EA notices (FR 2014-29872, FR 2015-00735, FR 2015-17789), certificate authorized April 11 2016 (restated in FR 2020-06816), three construction-deadline extensions (2018, 2019, and a contested request in 2020 for a 2022 deadline -- FR 2020-06816), the docket listed on FERC's Oct 21 2021 Sunshine Act open-meeting agenda as item C-4 (FR 2021-22843), and EIA's own release history flipping the project's status from 'Approved/On Hold' (through the 2021-10 release) to 'Cancelled' (from the 2022-01 release onward, persisting through Aug2026 with the note 'Extended by FERC in 2019, but legal battles remain and construction has not started'). Roster check against the other four 'Northwest Gas Pipeline' rows in this batch (P0230 system row Sumas->Colorado 3,900 mi; P2626 Trail West/N-MAX Madras OR; P7790 Kelso-Beaver WA; P7812 Wild Trail UT) found no physical or docket overlap with Kalama (Cowlitz County WA short lateral to a proposed methanol plant at the Port of Kalama) -- distinct project, no cross_row duplicate. Caveat only: the original FERC application notice states 'approximately 3.1 miles' of pipeline vs. the sheet's recorded 3.00 mi; EIA's own workbook (all releases) independently states 3.0 mi exactly, matching the sheet -- an immaterial ~0.1 mi rounding difference between the applicant's approximate figure and the certificated/EIA figure, not staged as a spec concern. wiki_citations.json for this row was read in full (9 citations, all opened/tested): the co.williams.com and williams.com pages support Owner/Operator only (system-level, not Kalama-specific); the EIA data.php citation is a navigation page (never citable per standing rules) and was replaced throughout with dated EIA releases; the S&P Global 'gets 2 more years' article (previously cited on 4 units) is a real 403 bot-wall (confirmed by curl with a browser UA and by Wayback -- no snapshot exists for that URL, checked twice with a retry after a 429) and was replaced with primary FERC/Federal Register sources rather than deleted; oilandgaswatch.org/pipeline/3307 (the current Location ref) returns HTTP 200 but is a bare Vue SPA shell with no server-rendered content -- reproduced via both WebFetch and curl, and via url_verifier which confirms 200-but-missing-expected-content -- and was replaced with the FERC application notice's location statement; the Sightline Institute and Bark Out wiki citations concern other Northwest Pipeline family projects (PNW gas buildout generally, and Trail West/P2626 respectively) and were not used for P5101. The routes-repo geojson for P5101 exists but carries a null geometry (one Feature, no coordinates) -- no route to sanity-check against. Orchestrator note: proposed_refs were empty on this record while it claimed tier=high / independent=true. A validity record carries no verifications by repo convention, so its tier is counted over proposed_refs -- an empty list reads as zero publishers and contradicts the claimed tier. Staged the two distinct publishers the prose already relies on for existence: the Federal Register notice of application naming the 'Kalama Lateral Project' under docket CP15-8, and EIA's dated Aug2026 pipeline-projects release which carries the project. The several other Federal Register notices cited in the prose are the same origin and are deliberately not listed as separate publishers.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "cancelled"
+      },
+      "primary_value": "cancelled",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Historical Projects (1996-2024)' sheet, Excel row 1133: Kalama Lateral Project, Northwest Pipeline Co, Status = Cancelled, docket CP15-8"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (eia.gov/naturalgas/data.php#pipelines) is EIA's navigation page, never a valid citation per standing rules -- replaced with the dated Aug2026 release that actually states the value. EIA's own release history independently pins the transition: Status = 'Approved/On Hold' through the 2021-10 release, 'Cancelled' from 2022-01 onward -- see the Cancelled [ref] fill for the year-pinning source. All EIA releases count as one origin (standing rule), so tier stays medium; a second, distinct-origin source explicitly stating 'cancelled' (a FERC order vacating/dismissing the docket) was searched for via the Federal Register API (7 results for docket CP15-8) but none states the outcome -- the closest is the Oct 21 2021 Sunshine Act notice listing CP15-8 as agenda item C-4, which confirms the docket was before the Commission then but not the actual disposition (noted, not staged as a value-bearing ref)."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...construct and operate its Kalama Lateral Project...The Project is designed to provide 320,000 dekatherms per day of natural gas to a proposed Methanol Plant...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (data.php) does not name the pipeline (verifier: name_found=false). Replaced with FERC's original application notice, which both names 'Kalama Lateral Project' and explicitly states it moves 'natural gas'. Single origin (FERC/Federal Register); a second, independent statement of fuel type was not separately sought since this is definitionally a natural gas lateral in the gas tracker and every FERC filing in the docket (NGA Section 7(c)) is gas-specific by statute."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2016"
+      },
+      "primary_value": "2016",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...facilities for its Kalama Lateral Project authorized on April 11, 2016.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (spglobal.com) 403s (confirmed by curl with browser UA and by Wayback -- no capture exists); kept in prose, not deleted, per the 403-is-not-dead rule, but not usable as a proposed_ref since it currently fails url_verifier. Replaced with the FERC extension notice, which restates the Commission's own certificate-order date of April 11, 2016 -- this matches the sheet's recorded ProposalYear exactly, so 'ProposalYear' on this row tracks the certificate-authorization year (not the Oct 2014 application-filing date or the 2012 pre-filing scoping date, both of which are earlier and also documented via FR 2014-26505 / FR 2012-15837). Single origin (FERC/Federal Register); a second source restating the exact authorization date was not found outside the FERC docket itself."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the full FERC docket paper trail (application, EA notices, three extension-of-time notices spanning 2018-2020) and EIA's release history for a construction-start date. Found none -- and found affirmative evidence construction never began: EIA's own project-notes field (present on every release from 2023-01 through Aug2026) states verbatim 'Extended by FERC in 2019, but legal battles remain and construction has not started.' The project was cancelled (per EIA, effective by the 2022-01 release) before ever breaking ground, consistent with three consecutive deadline extensions driven by permitting delays at the downstream methanol plant the lateral was built to serve, not by pipeline construction itself. Leaving ConstructionYear blank is the correct, sourced outcome, not an unresearched gap."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2022"
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Northwest now requests a two-year extension of this deadline through April 11, 2022.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (spglobal.com) 403s, same as Proposal [ref] above -- kept in prose, replaced for staging. This is the last FERC-authorized construction/in-service deadline (April 11, 2022) before the project was cancelled; it was never an achieved in-service date since construction never started (see Construction [ref]). Matches the sheet's recorded StartYear1 exactly. Single origin; noted this represents a target/deadline date, not an actual start, so future researchers don't mistake it for a completed in-service milestone."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Delay [ref]",
+      "value_cols": [
+        "Delayed",
+        "DelayType"
+      ],
+      "primary_value_col": "Delayed",
+      "values": {
+        "Delayed": "yes",
+        "DelayType": "confirmed"
+      },
+      "primary_value": "yes",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "documents three deadline extensions: initial April 11 2018 -> delegated-order extension to April 11 2019 -> delegated-order extension to April 11 2020 -> a further, contested request to April 11 2022"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (spglobal.com) 403s, replaced for staging (kept in prose). The FERC notice directly documents three separate construction-deadline extensions and states the extension is contested -- this is FERC-confirmed delay (DelayType=confirmed is correct, not inferred). Single origin by the addendum's counting rule (all FERC/Federal Register docket documents = one origin); EIA's independent multi-year 'Approved/On Hold' status (2019-05 through 2021-10 releases) corroborates the same delay from a distinct publisher but doesn't literally state a 'Delayed' value, so it is not counted toward tier/independence here, only noted as context."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Cancelled [ref]",
+      "value_cols": [
+        "CancelledYear"
+      ],
+      "primary_value_col": "CancelledYear",
+      "values": {
+        "CancelledYear": "2022"
+      },
+      "primary_value": "2022",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2022.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects_Jan2022.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Natural Gas Pipeline Projects' sheet, Excel row 45: Kalama Lateral Project, Status = Cancelled -- the first EIA release to show this status (the immediately prior 2021-10 release still shows 'Approved/On Hold')"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (spglobal.com) 403s, replaced for staging (kept in prose). EIA's release cadence pins the status change to between the 2021-10 and 2022-01 releases, i.e. CancelledYear=2022 as recorded. Could not find a FERC order explicitly stating abandonment/withdrawal despite a full Federal Register search on docket CP15-8 (7 results, all read) -- the closest corroboration is CP15-8 appearing on FERC's Oct 21 2021 Sunshine Act open-meeting agenda (item C-4), consistent with Commission action on the docket in that window, but the notice format (agenda only, 'items may be deleted without notice') does not state the outcome, so it is not counted as a second value-bearing origin. Single origin (EIA) -> tier medium."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "320.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "320.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'The Project is designed to provide 320,000 dekatherms per day of natural gas...' -- 320,000 Dth/d converts to ~320,000 Mcf/d = 320 MMcf/d under the standard ~1 Dth : 1 Mcf natural-gas approximation, matching the sheet's recorded 320.00 MMcf/d"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "EIA's own workbook does NOT support this value -- checked directly in the local eia_projects_long.csv: the 'Additional Capacity (MMcf/d)' field is blank/NaN for Kalama Lateral Project across all 28 releases, so the old data.php ref (which also failed url_verifier's value check) is correctly replaced, not reused. The FERC application notice states the design capacity in dekatherms/day; the unit conversion (Dth/d -> MMcf/d, ~1:1 for pipeline-quality gas) is noted explicitly rather than silently assumed. Single origin; a second source (an operator open-season notice or investor deck) was searched for but not found."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Searched the FERC application notice, the three extension-of-time notices, and the EA-availability notices (none of the Federal Register abstracts state MAOP -- that level of detail would be in the underlying FERC order/EA itself on eLibrary, which is a JS SPA that could not be scraped in this pass) and the EIA workbook (no pressure field in the Historical Projects sheet). Nothing found. Genuinely UNRESOLVED, not unforced -- no pressure value fabricated."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "3.00",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "3.00",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...installation of approximately 3.1 miles of 24-inch diameter pipeline...'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Historical Projects (1996-2024)' sheet, Excel row 1133: Miles = 3, matches the sheet's 3.00 mi exactly"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (data.php) replaced -- does not name the pipeline (verifier: name_found=false). Two distinct origins: FERC's application notice ('approximately 3.1 miles', a ~3% rounding difference from the recorded 3.00, immaterial) and EIA's dated workbook (3.0 mi exactly). Independent=true, tier=high."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "24",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "24",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...approximately 3.1 miles of 24-inch diameter pipeline...'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Historical Projects (1996-2024)' sheet, Excel row 1133: Pipeline Diameter (Inches) = 24, exact match"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref (data.php) replaced -- does not name the pipeline. Two distinct origins (FERC/Federal Register and EIA) agree exactly on 24 inches. Independent=true, tier=high."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Natural Gas"
+      },
+      "primary_value": "Natural Gas",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...to provide 320,000 dekatherms per day of natural gas to a proposed Methanol Plant...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No source found distinguishing a more specific fuel-source characterization (e.g. associated/shale/conventional gas) beyond 'natural gas' generically, which is what the FERC application notice states -- filled at that level of generality rather than fabricating specificity. Single origin, medium tier."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartLocation": "Kalama",
+        "StartPrefecture/District": "Cowlitz County",
+        "StartState/Province": "Washington",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Kalama",
+        "EndPrefecture/District": "Cowlitz County",
+        "EndState/Province": "Washington",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "Kalama",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2014/11/07/2014-26505/notice-of-application-northwest-pipeline-company-llc",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'...construct and operate its Kalama Lateral Project (Project), located in Cowlitz County, Washington...a proposed Methanol Plant located within the north industrial area of the Port of Kalama, in Cowlitz County, Washington...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (oilandgaswatch.org/pipeline/3307) confirmed via url_verifier as HTTP 200 but content-empty: a Vue single-page-app shell (verified index.html carries only '<div id=\"app\"></div>' plus a JS bundle reference, no server-rendered text) -- the page never actually states 'Kalama' or anything else readable without executing client-side JS, which is not available in this pipeline; reproduced independently with curl and WebFetch. Replaced with the FERC application notice, which directly states the project's location in Cowlitz County, Washington, at the Port of Kalama -- matching all eight recorded Start/End location fields (the lateral both begins and ends within the same small area, consistent with its ~3 mi length). Single origin; a second source naming the exact location was not separately found."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "22800000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "22800000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Historical Projects (1996-2024)' sheet, Excel row 1133: Cost (millions) = 22.8, matching the sheet's 22,800,000 USD exactly"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Old ref (data.php) failed the verifier's value check (cost figure not present on the navigation page) -- replaced with the dated release that actually states it. None of the FERC Federal Register notices (application, EA notices, extension notices) state a project cost figure, so a second independent origin was not found despite reading every docket document to exhaustion. Single origin (EIA) -> tier medium."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "oo_sheet_row": 3930,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Northwest Pipeline LLC"
+      },
+      "primary_value": "Northwest Pipeline LLC",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/110019/000011001922000004/nwp-20211231.htm",
+        "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/110019/000011001922000004/nwp-20211231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "10-K cover/TOC: 'NORTHWEST PIPELINE LLC FORM 10-K' (registrant CIK 0000110019); does not name Kalama specifically -- a system-level operator disclosure, not a Kalama-specific ref, appropriate for the Operator unit but not for spec units"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2020/04/02/2020-06816/northwest-pipeline-llc-notice-of-extension-of-time-request",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Northwest Pipeline LLC (Northwest) requested...for its Kalama Lateral Project'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Two distinct origins (SEC EDGAR filer-of-record vs. FERC/Federal Register docket filer) agree on 'Northwest Pipeline LLC' as the entity that owns/operates this project and filed the docket -- independent=true, tier=high. Note the entity's name varies by document era: the 2014 application notice names 'Northwest Pipeline Company, LLC' and the 2012 scoping notice names 'Northwest Pipeline, GP' -- consistent with a corporate reorganization of the same operating entity over the docket's decade-long life (GP -> Company, LLC -> LLC); the current/most-recent form, matching the SEC registrant, is 'Northwest Pipeline LLC', used here. Also flagging per standing rule 7 (report, don't research): the worklist's value_cols for this unit include 'QCCOwner(业主单位)', a Chinese-language column header that appears to be worklist-builder leakage from a China-scope run onto this US row -- not filled, not researched, surfaced here for the orchestrator."
+    },
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "oo_sheet_row": 3930,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Williams Companies",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Williams Companies",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/110019/000011001922000004/nwp-20211231.htm"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/110019/000011001922000004/nwp-20211231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Northwest Pipeline LLC (Northwest) is indirectly owned by The Williams Companies, Inc. (Williams).'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Northwest Pipeline LLC's own FY2021 Form 10-K states plainly it is indirectly wholly owned by The Williams Companies, Inc., matching the sheet's Owner1=Williams Companies at 100%. williams.com/pipeline/northwest-pipeline/ (verified OK, also lists Northwest Pipeline under the Williams portfolio) is the same operator's own website -- per the source-ladder rule 'one operator is ONE origin across all its pages and press releases,' the SEC filing and the company website count as one origin together, not two, so tier stays medium rather than high despite two URLs checked. Cross-row note: this same 10-K states 'Our system includes approximately 3,900 miles of mainline and lateral transmission pipeline' -- an exact match to sibling row P0230's recorded LengthKnown=3900.0 mi; logged in cross_row_leads below for the orchestrator to route to P0230's own sweep."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0230",
+      "url": "https://www.sec.gov/Archives/edgar/data/110019/000011001922000004/nwp-20211231.htm",
+      "facts": "Northwest Pipeline LLC's FY2021 Form 10-K states: 'Our system includes approximately 3,900 miles of mainline and lateral transmission pipeline' -- an exact match to P0230's recorded LengthKnown=3900.0 mi (the Northwest Pipeline system row). This is a whole-system figure, appropriate as a ref for P0230's system-level Length, never for a segment/expansion row like P5101, P2626, P7790 or P7812."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Kalama Lateral Project",
+      "sheet_row": 2966,
+      "current_status": "cancelled",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-08",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true
+        }
+      ],
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Hunted for any news newer than the sheet's 2025-09-20 LastUpdated that might indicate revival (the most valuable possible finding for a cancelled row per the batch guidance): searched the Federal Register for any post-2022 notice on docket CP15-8 (none found beyond the 2021-10-19 Sunshine Act agenda item), checked EIA's most current release (Aug2026, still Cancelled, project-notes field unchanged since 2023-01 -- 'legal battles remain and construction has not started'), and re-checked oilandgaswatch.org and S&P Global for any update (both inaccessible -- SPA shell and 403 respectively, documented in the fills above). No evidence of revival. Status=cancelled stands confirmed, evidence current through the Aug2026 EIA release (the most recent of 29 dated releases on file, all consistent since 2022-01)."
+    }
+  ],
+  "summary": "P5101 is the FERC-certificated Kalama Lateral Project (docket CP15-8, Northwest Pipeline LLC/Williams), a distinct project from all four sibling 'Northwest Gas Pipeline' rows -- confirmed cancelled, no duplicate, no existence/classification concern."
+}

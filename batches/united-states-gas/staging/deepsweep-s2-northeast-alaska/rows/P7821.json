@@ -1,0 +1,499 @@
+{
+  "project_id": "P7821",
+  "pipeline_name": "Algonquin Gas Transmission Pipeline",
+  "sheet_row": 4201,
+  "wiki": "https://www.gem.wiki/Algonquin_Gas_Transmission_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "spec",
+      "recommendation": "change LengthKnown from 0.00 mi to 6.30 mi and Diameter from blank to 42 in (DiameterUnits='in'); keep the row as a distinct, real, completed project otherwise, and apply the other fills from fills[]",
+      "contested": {
+        "LengthKnown": "6.30",
+        "Diameter": "42.00"
+      },
+      "researcher_notes": "EXISTENCE: beyond doubt. Atlantic Bridge Project Phase II is the second tranche of the FERC-certificated Atlantic Bridge Project (Docket No. CP16-9-000; pre-filing docket PF15-12-000 opened January 30, 2015), completing the expansion of Algonquin Gas Transmission, LLC's system into New England with the Weymouth Compressor Station. CLASSIFICATION: 'transmission'/'Gas' is correct. DUPLICATE/CLUSTER CHECK (roster scan per the cluster warning): sibling P7820 'Atlantic Bridge Project Phase I' (40 MMcf/d, in-service Nov 2017) is a separate, distinct segment of the same certificated project - correctly a separate row, not a duplicate. P0144 (Access Northeast, cancelled) and P6011 (Project Maple, proposed 2023) are separate Algonquin/Enbridge New England expansion proposals, physically and temporally distinct from Atlantic Bridge. System rows P0149/P0150 (the whole Algonquin/Maritimes & Northeast system) are out of this row's scope. SPEC CONCERN (value swap with sibling P7820, independently confirmed from this row's own research and cross-checked against P7820's own shard, which flagged the mirror-image error and filed a cross_row_lead here): GEM records LengthKnown=0.00/Diameter=blank on P7821, but every source checked shows P7821 (Phase II) is the tranche that included 6.3 miles of new 42-inch pipe, while P7820 (Phase I) added zero new pipe. EIA's Natural Gas Pipeline Projects dataset is consistent across every dated release from 2019-01 through 2026-08 (Aug-2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1014): project_name='Atlantic Bridge Project Phase 2', operator='Algonquin Gas Transmission' (confirmed as a properly-scoped, non-aggregate row - EIA carries a SEPARATE 'Phase 2 (CAN)' row for the Maritimes & Northeast/Canadian portion, proving EIA itself splits this project by segment rather than reporting one portfolio total), miles=6.3, pipeline_diameter_inches=42, additional_capacity_mmcf_d=93, cost_millions=451.8. This independently and exactly matches the Federal Register's Notice of Availability of the Environmental Assessment (FR Doc. 2016-10674, docket CP16-9-000, published 2016-05-06 - itself a docket-specific primary document, not a portfolio total): '4.0 miles of 42-inch-diameter pipeline to replace existing 26-inch diameter pipeline in Westchester County, New York; 2.3 miles of 42-inch-diameter pipeline to replace existing 26-inch diameter pipeline in Fairfield County, Connecticut' = 4.0 + 2.3 = 6.3 miles of 42-inch pipe, EXACTLY matching EIA's Phase 2 figure via a completely independent document/publisher chain (FERC/Federal Register vs. EIA). This is corroborated operationally: P7821's own already-recorded SegmentCost=451,800,000 USD already matches EIA's Phase 2 cost_millions=451.8 exactly, and its own StartYear1=2021/StartMonth1=1 matches Enbridge's FY2020 10-K (SEC EDGAR accession 0000895728-21-000010): 'the third and final phase of Atlantic Bridge fully commenced service in January 2021 with the Weymouth compressor station being brought online' - i.e. this row already carries the correct cost and start date for the phase that included the 6.3 mi/42-inch pipe; only LengthKnown/Diameter are wrong, and they are wrong in the direction of P7820's own erroneous 6.00 mi (a clean two-row value swap, not two independent errors). Per rule 4(e) and the Equitrans-precedent scope warning: no portfolio/aggregate total has been used here as a per-segment source - EIA's Phase 2 row and the FERC EA's facility list are both scoped to this specific 6.3-mile construction, not to the combined ~133 mmcf/d project.",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/full_text/text/2016/05/06/2016-10674.txt"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Status [ref]",
+      "value_cols": ["Status"],
+      "primary_value_col": "Status",
+      "values": {"Status": "operating"},
+      "primary_value": "operating",
+      "proposed_refs": [
+        "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge's Atlantic Bridge project page (archived 2019-10-01) describes the project's phased in-service; the Weymouth/Phase II completion (Jan 2021) postdates this capture but the page confirms the project and system are operating, consistent with the current status (already ok/name_found=true in the worklist's existing_ref_checks for this row's Fuel/PipelineType units)."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, sheet 'Historical Projects (1996-2024)', Excel row 1014: project_name='Atlantic Bridge Project Phase 2', status='Completed' (EIA's completed/in-service state), stable in every release from 2021-07 (first 'Completed' release) through 2026-08."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Status='operating' reverified on two independent origins. Sheet's prior ref was EIA's undated data.php navigation page (banned per the ADDENDUM); replaced with a dated, citable EIA release plus the operator's own project page."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Fuel [ref]",
+      "value_cols": ["Fuel"],
+      "primary_value_col": "Fuel",
+      "values": {"Fuel": "Gas"},
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge project page: project overview describes moving natural gas on the Algonquin Gas Transmission and Maritimes & Northeast systems; already verified ok/name_found=true in the worklist's existing_ref_checks."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA's Natural Gas Pipeline Projects dataset is itself the US natural-gas pipeline projects tracker; capacity for this row is recorded in mmcf/d (natural-gas units)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fuel='Gas' reverified on two independent origins. Sheet's prior ref (Wayback Enbridge capture) kept and joined by the dated EIA release."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": ["PipelineType"],
+      "primary_value_col": "PipelineType",
+      "values": {"PipelineType": "transmission"},
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge project page describes an interstate mainline capacity expansion (new pipe replacement + Weymouth compressor station) on Algonquin's existing transmission system, not gathering or distribution; already verified ok/name_found=true in the worklist's existing_ref_checks."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA's Natural Gas Pipeline Projects dataset tracks interstate/intrastate transmission capacity-expansion projects; this row sits under FERC docket CP16-9, an NGA section 7 certificate (transmission authority)."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "PipelineType='transmission' reverified on two independent origins."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Proposal [ref]",
+      "value_cols": ["ProposalYear", "ProposalMonth"],
+      "primary_value_col": "ProposalYear",
+      "values": {"ProposalYear": "2015", "ProposalMonth": "1"},
+      "primary_value": "2015",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/full_text/text/2015/05/12/2015-11409.txt"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/full_text/text/2015/05/12/2015-11409.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Federal Register / FERC, 'Notice of Intent To Prepare an Environmental Assessment for the Planned Atlantic Bridge Project...' (FR Doc. 2015-11409, published 2015-05-12): 'the opening of this docket on January 30, 2015' - the pre-filing docket (PF15-12-000) for the whole Atlantic Bridge Project (both phases) opened January 30, 2015, matching ProposalYear=2015/ProposalMonth=1."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was HAS_REF but pointed at FERC's mutable eLibrary search page (not a document, banned per the ADDENDUM) - replaced with the Federal Register notice that states the pre-filing docket opened January 30, 2015, matching the recorded year/month exactly. This single pre-filing docket covers BOTH phases (this is a proposal date for the whole certificated project, not a phase-specific filing), so it is a properly-scoped source for this segment's proposal date, not an aggregate/portfolio figure being misapplied. Single origin - no second independent source dating the proposal specifically to January 2015 was found; tier stays medium rather than high."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Construction [ref]",
+      "value_cols": ["ConstructionYear", "ConstructionMonth"],
+      "primary_value_col": "ConstructionYear",
+      "values": {"ConstructionYear": "2017"},
+      "primary_value": "2017",
+      "proposed_refs": [
+        "https://web.archive.org/web/20190901005958/https://rtoinsider.com/ferc-atlantic-bridge-pipeline-project-37320/",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20190901005958/https://rtoinsider.com/ferc-atlantic-bridge-pipeline-project-37320/",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "RTO Insider, 'Atlantic Bridge Project Approved by FERC' (published 2017-01-30, Wayback capture): reports FERC's certificate order (dated 2017-01-27) authorizing construction of the whole Atlantic Bridge Project under docket CP16-9, which includes Phase II's facilities (the Westchester/Fairfield County pipe replacement and the Weymouth compressor station) - the certificate authorizing Phase II construction issued in 2017, even though Weymouth-related delays pushed completion to Jan 2021."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA's earliest available release for this project (2018-05) already shows 'Atlantic Bridge Project Phase 2' with status='Construction' underway - consistent with (not independent proof of, but corroborating) construction having begun in 2017, the year immediately preceding EIA's earliest snapshot. No pre-2018-05 EIA release exists to check directly."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell was HAS_REF but pointed at FERC's mutable eLibrary search page. No source found states a literal 'construction began in 2017' sentence for Phase II specifically; ConstructionYear=2017 is corroborated by bracketing (certificate issued Jan 2017; EIA's earliest snapshot, May 2018, already shows Construction underway) rather than a direct statement, so tier is kept medium/not independent rather than high. Consistent with sibling P7820's identical treatment of ConstructionYear=2017."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Start [ref]",
+      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
+      "primary_value_col": "StartYear1",
+      "values": {"StartYear1": "2021", "StartMonth1": "1"},
+      "primary_value": "2021",
+      "proposed_refs": [
+        "https://www.sec.gov/Archives/edgar/data/895728/000089572821000010/enb-20201231.htm",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/895728/000089572821000010/enb-20201231.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge Inc. FY2020 Form 10-K (SEC EDGAR accession 0000895728-21-000010): 'Atlantic Bridge Phase III - an expansion of the Algonquin natural gas transmission systems to transport 133 million cubic feet per day (mmcf/d) of natural gas to the New England region. The third and final phase of Atlantic Bridge fully commenced service in January 2021 with the Weymouth compressor station being brought online.' Exact year AND month match for this phase (GEM's Phase II)."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: completed_date=2021-01-25 for 'Atlantic Bridge Project Phase 2', first appearing in the 2021-07 'Completed' release following a 2021-01 'Part Completed' release (completed_date=2020-09-24 at that point) - year and month both match the recorded value."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartYear1=2021/StartMonth1=1 reverified on two independent origins (SEC 10-K; EIA), both naming January 2021 specifically and both tied to the Weymouth Compressor Station coming online. Sheet's prior ref was EIA's undated/unnamed data.php page (name_found=false in the worklist's existing_ref_checks); replaced. The 10-K's '133 mmcf/d' figure describing 'Atlantic Bridge Phase III' is the whole-project aggregate capacity (40 + 93 = 133), not this segment's own 93 MMcf/d - used here only for the date, not counted as a Capacity source (see Capacity fill, Equitrans-precedent scope rule). NOTE for whoever next works this row/cluster: the same 10-K separately states 'the second phase of the Atlantic Bridge project that were placed into service in the second and fourth quarters of 2019' - a third, distinct partial-service milestone GEM/EIA do not currently track as its own row; not staged as a change here since P7821's own 2021/Weymouth date is the one that matches every other source, but flagged as an open question (also flagged by P7820's shard as a secondary cross_row_lead)."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Capacity [ref]",
+      "value_cols": ["Capacity", "CapacityUnits"],
+      "primary_value_col": "Capacity",
+      "values": {"Capacity": "93.00", "CapacityUnits": "MMcf/d"},
+      "primary_value": "93.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: additional_capacity_mmcf_d=93 for 'Atlantic Bridge Project Phase 2', stable across every dated release from 2019-01 through 2026-08."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Capacity=93 MMcf/d sourced to EIA (single publisher origin - all EIA releases count as one origin). SCOPE CAUTION (Equitrans precedent, explicitly flagged in the dispatch brief): two other documents state combined/whole-project figures that are NOT usable as a second independent ref for this per-segment cell - FERC's 2016 EA Notice of Availability (FR Doc 2016-10674) states the whole project 'authorization to expand existing pipeline systems to deliver up to 132,705 dekatherms per day' (Phase I + Phase II combined: 40 + 93 = 133 approx = 132.7 Dth/d), and Enbridge's FY2020 10-K states 'Atlantic Bridge Phase III...to transport 133 million cubic feet per day (mmcf/d)' (same combined total). Both are a DIFFERENT SCOPE from this segment's own 93 MMcf/d and, per rule 4(e), do not count as refs for this per-segment unit - they are noted here only as non-counted derived-math corroboration (133 - 40 = 93, matching this row exactly) rather than inflating the tier. No independent per-segment-scoped second source for 93 MMcf/d specifically was located; tier stays medium/not independent."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Pressure [ref]",
+      "value_cols": ["Pressure", "PressureUnits"],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No MAOP/pressure figure found for this segment. Checked: FR Doc 2016-10674 (EA availability notice) and FR Doc 2015-11409 (pre-filing notice) grepped explicitly for 'psig|maop|operating pressure|pressure' with zero hits - they describe facility scope and horsepower additions but no pressure rating; Enbridge's project page gives capacity and dates only; EIA's Natural Gas Pipeline Projects schema has no pressure field. Cell currently carries an ORPHAN ref (EIA's data.php page cited against an empty value) - recommend clearing that ref per the no-orphan-cells rule rather than leaving it paired with nothing. Consistent with sibling P7820's identical UNRESOLVED finding."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Length [ref]",
+      "value_cols": ["LengthKnown", "LengthKnownUnits"],
+      "primary_value_col": "LengthKnown",
+      "values": {"LengthKnown": "6.30", "LengthKnownUnits": "mi"},
+      "primary_value": "6.30",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/full_text/text/2016/05/06/2016-10674.txt"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: miles=6.3 for 'Atlantic Bridge Project Phase 2' (operator='Algonquin Gas Transmission'), stable across every dated release from 2019-01 through 2026-08. Confirmed a properly-scoped row, not a portfolio total: EIA carries a SEPARATE 'Phase 2 (CAN)' row (operator='Maritimes & Northeast Pipeline', miles=0) for the Canadian portion, proving EIA itself distinguishes this segment from the rest of the project rather than reporting one combined figure."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/full_text/text/2016/05/06/2016-10674.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC Notice of Availability of the EA for the Atlantic Bridge Project (FR Doc. 2016-10674, docket CP16-9-000, published 2016-05-06): '4.0 miles of 42-inch-diameter pipeline to replace existing 26-inch diameter pipeline in Westchester County, New York; 2.3 miles of 42-inch-diameter pipeline to replace existing 26-inch diameter pipeline in Fairfield County, Connecticut' = 6.3 miles total - independently matches EIA's figure exactly via a completely separate publisher/document chain (FERC vs. EIA)."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "VALUE CHANGED: 0.00 mi -> 6.30 mi. See validity[] concern_type=spec for the full writeup: this is a value-swap with sibling P7820 (Phase I), which currently carries the 6.00 mi that belongs here, corroborated by P7820's own shard filing the mirror-image cross_row_lead. Two independent, properly-scoped (non-portfolio) origins agree exactly: EIA (6.3 mi) and FERC's EA notice (4.0 + 2.3 = 6.3 mi)."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Diameter [ref]",
+      "value_cols": ["Diameter", "DiameterUnits"],
+      "primary_value_col": "Diameter",
+      "values": {"Diameter": "42.00", "DiameterUnits": "in"},
+      "primary_value": "42.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/full_text/text/2016/05/06/2016-10674.txt"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: pipeline_diameter_inches=42 for 'Atlantic Bridge Project Phase 2', stable across every dated release from 2019-01 through 2026-08."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/full_text/text/2016/05/06/2016-10674.txt",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC EA availability notice: both new pipe segments (Westchester County NY, Fairfield County CT) are described as '42-inch-diameter pipeline', replacing existing 26-inch pipe - independently matches EIA's figure."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "VALUE ADDED: blank -> 42 in. Companion fill to the Length correction above; see validity[] concern_type=spec for the full writeup. Two independent, properly-scoped origins agree exactly (EIA; FERC's EA notice)."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": ["FuelSource"],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "No upstream gas-source/basin attribution found. Atlantic Bridge Phase II, like Phase I, is a capacity-expansion (new pipe replacement + Weymouth compressor uprate) project moving commingled, already-marketed pipeline-quality gas already on Algonquin's mainline system to New England delivery points, not a new lateral tied to a specific producing field or basin. Searched FR Docs 2015-11409 and 2016-10674, the Enbridge project page, the SEC 10-K, and the EIA dataset without finding an explicit upstream-source attribution. Consistent with sibling P7820's identical UNRESOLVED finding."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "Location [ref]",
+      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "primary_value_col": "StartLocation",
+      "values": {"StartState/Province": "New Jersey", "StartCountryOrArea": "United States", "EndState/Province": "Massachusetts", "EndCountryOrArea": "United States"},
+      "primary_value": "New Jersey",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: beg_state='NJ', end_state='MA' for 'Atlantic Bridge Project Phase 2' - identical across all dated releases from 2019-01 onward."
+        },
+        {
+          "url": "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge project page: '...we will have full project capacity available from New Jersey to Massachusetts' - names the same NJ-to-MA corridor directly in prose, describing exactly the completion this segment (Phase II/Weymouth) represents."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "StartState/Province='New Jersey'/EndState/Province='Massachusetts' added (StartCountryOrArea/EndCountryOrArea='United States' already correctly on the sheet) on two independent origins agreeing on the same NJ-to-MA corridor, consistent with sibling P7820's identical Location fill. SUPPLEMENTARY (not independently counted toward tier): FERC's EA notice (FR Doc 2016-10674) gives county-level facility detail specific to this segment's own construction - Westchester County NY and Fairfield County CT (the 6.3 mi of new pipe) and Norfolk County MA (the new Weymouth Compressor Station) - which corroborates the Massachusetts endpoint and the intermediate NY/CT construction sites, but the FR document never mentions New Jersey anywhere in its full text (confirmed via complete read), so it cannot independently confirm the New Jersey starting point on its own; EIA + Enbridge remain the two counted origins for the full NJ-to-MA statement."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
+      "primary_value_col": "SegmentCost",
+      "values": {"SegmentCost": "451800000.00", "SegmentCostUnits": "USD"},
+      "primary_value": "451800000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: cost_millions=451.8 for 'Atlantic Bridge Project Phase 2' = $451,800,000, exactly matching the recorded value; stable across every dated release from 2019-01 through 2026-08."
+        }
+      ],
+      "class_out": "REVERIFIED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "SegmentCost=$451,800,000 reverified against EIA (single publisher origin). Sheet's prior ref was EIA's undated data.php navigation page, whose existing_ref_check failed ('data value not found'); replaced with the dated, citable EIA release that does carry the exact figure. No second independent source specific to this segment's dollar cost was located - the SEC 10-K's cost disclosures for Atlantic Bridge are at the whole-project/portfolio level (e.g. 'US$0.1 Atlantic Bridge Phase III project' cost table entries reference an unrelated capital-tracking rounding, not a matching $451.8M figure), so it is not usable as a second origin for this exact number; tier stays medium/not independent."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "oo_sheet_row": 6184,
+      "ref_col": "Operator [ref]",
+      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
+      "primary_value_col": "Operator",
+      "values": {"Operator": "Algonquin Gas Transmission, LLC"},
+      "primary_value": "Algonquin Gas Transmission, LLC",
+      "kind": "operator",
+      "tab": "operators_owners",
+      "proposed_refs": [
+        "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge project page, overview table: 'Ownership: Algonquin Gas Transmission, LLC and Maritimes Northeast Pipeline, L.L.C. (U.S.); Maritimes Northeast Pipeline Limited Partnership (Canada).' Phase II's facilities (Westchester/Fairfield Counties NY/CT, Weymouth MA) are entirely on the Algonquin system, so Algonquin Gas Transmission, LLC is the operating entity for this row."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: pipeline_operator_name='Algonquin Gas Transmission', consistent across every dated release."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Operator='Algonquin Gas Transmission, LLC' sourced on two independent origins (EIA's operator-name field also supports Owner per standing convention). Spelling/entity matched to sibling row P7820's identical Operator fill for cluster consistency."
+    },
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "sheet_row": 4201,
+      "oo_sheet_row": 6184,
+      "ref_col": "Owner [ref]",
+      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "primary_value_col": "Owner1",
+      "values": {"Owner1": "Algonquin Gas Transmission, LLC", "Owner1%": "100.00%"},
+      "primary_value": "Algonquin Gas Transmission, LLC",
+      "kind": "owner",
+      "tab": "operators_owners",
+      "proposed_refs": [
+        "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://web.archive.org/web/20191001031829/https://www.enbridge.com/projects-and-infrastructure/projects/atlantic-bridge",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge project page: 'Ownership: Algonquin Gas Transmission, LLC and Maritimes Northeast Pipeline, L.L.C. (U.S.)...' - Phase II's facilities are on the Algonquin (not Maritimes & Northeast) system, so Owner1=Algonquin Gas Transmission, LLC at 100%."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA Aug-2026 release, Excel row 1014: pipeline_operator_name='Algonquin Gas Transmission' - EIA's operator field supports Owner as well as Operator per standing GEM/EIA convention."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Owner1='Algonquin Gas Transmission, LLC' at 100% sourced on two independent origins, matching sibling row P7820's identical Owner fill for cluster consistency. Algonquin Gas Transmission, LLC is itself a wholly-owned subsidiary within the Enbridge corporate family (confirmed separately via Enbridge Inc.'s FY2021 Exhibit 21.1 subsidiaries list, SEC EDGAR accession 0000895728-22-000011, which lists 'Algonquin Gas Transmission, LLC' (Delaware) among Enbridge's subsidiaries), but the FERC-certificate-holding entity - and the entity both Enbridge's own page and EIA name directly - is Algonquin Gas Transmission, LLC, not the ultimate parent Enbridge Inc., consistent with how GEM records other Enbridge-system US pipelines and with P7820's treatment."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "target_project_id": "P7820",
+      "note": "Confirms and cross-references the value-swap already identified and staged by P7820's own shard: this row's research independently reached the identical conclusion (P7820 Phase I should carry LengthKnown=0/Diameter=blank; P7821 Phase II - this row - should carry LengthKnown=6.30 mi/Diameter=42 in), via the same EIA Aug-2026 release (Phase 1 Excel row 871 = miles 0; Phase 2 Excel row 1014 = miles 6.3/diam 42) plus the Federal Register EA notice (FR Doc 2016-10674: 4.0 mi + 2.3 mi of 42-inch pipe = 6.3 mi, all in the counties tied to Phase II's construction, not Phase I's). No further action needed on P7820 beyond what its own shard already stages; recorded here only to confirm the two rows' shards agree rather than conflict."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Atlantic Bridge Project Phase II",
+      "verdict": "confirm",
+      "recommendation": "Keep Status='operating'. No evidence of any change since the sheet's last update - the segment remains a completed, in-service piece of the Algonquin/Maritimes & Northeast system.",
+      "researcher_notes": "Annual-update status review: Atlantic Bridge Phase II (the Weymouth Compressor Station tranche) has been in continuous commercial operation since January 2021 (SEC 10-K, SEC EDGAR accession 0000895728-21-000010; EIA completed_date=2021-01-25). EIA's Natural Gas Pipeline Projects dataset carries status='Completed' for this project in every release from 2021-07 through the most recent 2026-08 (over 5 years of stability, no gap or removal). No FERC abandonment docket, no news coverage of decommissioning, outage, or sale found. This is a mature, operating interstate transmission segment with no indication of any pending change; 'confirm' is the only defensible verdict."
+    }
+  ],
+  "summary": "P7821 = Atlantic Bridge Project Phase II (Algonquin Gas Transmission), FERC Docket CP16-9-000, in continuous operation since Jan 2021 (Weymouth Compressor Station coming online), delivering 93 MMcf/d NJ-to-MA. Confirmed distinct from siblings P0144 (Access Northeast, cancelled), P6011 (Project Maple, proposed), and P7820 (Phase I, its own operating project) - no duplicate/portfolio-total concern. MAJOR FINDING: LengthKnown corrected 0.00 mi -> 6.30 mi and Diameter added blank -> 42 in - GEM's recorded 0 mi/blank on this row belongs to sibling P7820, per two independent, properly-scoped (non-aggregate) origins: EIA's Aug-2026 release (miles=6.3/diam=42, stable 2019-2026, and confirmed non-portfolio via EIA's separate 'Phase 2 (CAN)' row) and FERC's 2016 EA Notice of Availability (4.0 mi + 2.3 mi of 42-inch pipe = 6.3 mi in Westchester Co NY + Fairfield Co CT). Staged as a validity[] spec concern and cross-referenced against P7820's own shard, which independently reached the identical conclusion and filed the mirror-image cross_row_lead. SCOPE DISCIPLINE (Equitrans precedent): the FERC EA's combined 132,705 Dth/d and Enbridge's 10-K '133 mmcf/d' figure were both identified as whole-project (Phase I + II) aggregates and deliberately NOT used as refs for this segment's own 93 MMcf/d Capacity cell - only EIA's per-segment figure counts, kept at tier=medium/single-origin rather than inflated. Status/Fuel/PipelineType/Start reverified (Start upgraded to tier=high/independent via a newly found SEC 10-K statement naming January 2021 and the Weymouth compressor exactly), Length/Diameter/Location/Operator/Owner newly sourced (REFS_ADDED, mostly tier=high), Proposal/Construction/SegmentCost resourced off a bad/failing data.php ref (tier=medium, single-origin, honestly flagged). 10 of 15 units REFS_ADDED or REVERIFIED at tier=high, 2 at tier=medium (Proposal, Construction) plus SegmentCost also at medium; Pressure/FuelSource UNRESOLVED (2 of 15) as genuinely undefined, not merely uncited - Pressure's cell carries an orphan ref recommended for clearing. Verdict: confirm (existing, real, correctly-scoped project; one spec correction staged)."
+}

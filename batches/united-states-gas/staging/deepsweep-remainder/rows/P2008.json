@@ -9,7 +9,9 @@
       "verdict": "concern",
       "concern_type": "classification",
       "recommendation": "Change Status from 'cancelled' to 'operating'. This corridor was re-scoped and built, not abandoned -- Texas Eastern's Clarington OH -> south-central/eastern PA 'Appalachia-to-Market' (TEAM) expansion program actually went into commercial service twice in this exact corridor: the TEAM 2012 Project (FERC Docket CP11-67, pre-filing PF10-21 opened 2010, in-service effective 2012-11-01) and the follow-on TEAM 2014 Project (FERC Docket CP13-84, pre-filing PF12-19 opened 2012, in-service 2014-11-07). See status_reviews[] for the proposed field changes.",
-      "contested": {"Status": "operating"},
+      "contested": {
+        "Status": "operating"
+      },
       "researcher_notes": "EXISTENCE AND CLASSIFICATION: the underlying pipe is real, FERC-certificated, gas transmission infrastructure -- not in question. What is wrong is treating it as cancelled. GEM's own dates (ShelvedYear=2010, CancelledYear=2012) line up almost exactly with real FERC milestones for TEAM 2012 (PF10-21 pre-filing NOI published 2010-08-26, 75 FR 52524; formal application 2011-02-11, FERC Docket CP11-67-000; amended 2011-06-30; EA notice 2011-09-02, 36-inch pipe through Greene/Fayette/Franklin/Adams/Fulton Counties PA plus a Bedford Compressor Station upgrade in Bedford County PA) -- but instead of ending in cancellation, a FERC 'Combined Notice of Filings' dated 2012-09-12 (77 FR, Docket CP11-67) records Texas Eastern's own 'TEAM 2012 In-Service Filing -- CP11-67 Compliance to be effective 11/1/2012.' The EIA Natural Gas Pipeline Projects workbook (eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx, sheet 'Historical Projects (1996-2024)', row 731) independently corroborates this from a completely different agency/dataset: 'TETCO TEAM 2012 Expansion' / Texas Eastern Transmission / Status=Completed / Completed Date 2012-10-31 / Docket CP11-67. Two independent government sources (FERC's own docket record and EIA's separately-compiled tracking dataset) agree this project reached commercial service, not cancellation, in late 2012 -- squarely on top of GEM's recorded CancelledYear. Texas Eastern did not stop there: a second FERC pre-filing (PF12-19, NOI 2012-10-15, 77 FR 62507) opened for the 'Texas Eastern and Appalachia Market Expansion Project 2014 (TEAM 2014)' -- construction/modification in PA/WV/OH/KY/TN/AL/MS -- which became Docket CP13-84 (application 2013-03-21; EA notice 2013-09-23) and, per EIA workbook row 785, also reached 'Completed' status with an in-service date of 2014-11-07. This is a textbook case of the pattern this sweep was told to test for: a project shelved/re-scoped under FERC review is not cancelled if it is later built under the docket's actual project name. GEM's row 'TEMAX Pipeline Expansion' appears to be an informal/garbled label for this TEAM program rather than a name FERC or any source actually used (searched: no FERC docket, EIA row, or press hit for the literal string 'TEMAX'). DUPLICATE CHECK: neither 'TEAM 2012'/CP11-67 nor 'TEAM 2014'/CP13-84 appears as a named pipeline/segment in the 45-row US-gas cohort roster provided for this batch, so I cannot confirm from the material given to me whether either successor is ALREADY tracked as a separate GEM PID elsewhere in the full 131-column Gas tab (outside this batch's scope). Flagging this explicitly as a cross_row_lead below rather than asserting a confirmed duplicate, since asserting 'no duplicate exists' would overreach what a 45-row roster can rule out on a 1000+ row tracker. CLASSIFICATION (Fuel=Gas, PipelineType=transmission) is correct and unchanged -- see fills[] for direct FERC citations.",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application",
@@ -26,7 +28,11 @@
       "verdict": "concern",
       "concern_type": "spec",
       "recommendation": "Reconcile Capacity, SegmentCost and LengthKnown against the two real successor projects before treating this row as fully corrected -- the row's numeric specs do not cleanly match a single project.",
-      "contested": {"LengthKnown": "53.10 km is ~1.8% below TEAM 2014's confirmed 33.5-33.6 mi (53.9-54.1 km) -- within rounding, treated as a match, not a correction", "SegmentCost": "500000000.00 matches TEAM 2014's EIA-recorded final cost of $500M exactly", "Capacity": "395.00 MMcf/d matches neither confirmed successor (TEAM 2012 = 200 MMcf/d per EIA / ~190,000 Dth/d per FERC; TEAM 2014 = 600 MMcf/d per EIA and FERC's 600,000 Dth/d) -- unresolved"},
+      "contested": {
+        "LengthKnown": "53.10 km is ~1.8% below TEAM 2014's confirmed 33.5-33.6 mi (53.9-54.1 km) -- within rounding, treated as a match, not a correction",
+        "SegmentCost": "500000000.00 matches TEAM 2014's EIA-recorded final cost of $500M exactly",
+        "Capacity": "395.00 MMcf/d matches neither confirmed successor (TEAM 2012 = 200 MMcf/d per EIA / ~190,000 Dth/d per FERC; TEAM 2014 = 600 MMcf/d per EIA and FERC's 600,000 Dth/d) -- unresolved"
+      },
       "researcher_notes": "GEM's P2008 mixes signals from BOTH real TEAM projects. Its Shelved/Cancelled YEARS (2010/2012) and its StartLocation (Clarington, OH -- an exact-text match to the TEAM 2012 FERC application) track the TEAM 2012 lineage (CP11-67). But its LENGTH (53.10 km = 33.0 mi) and SegmentCost ($500,000,000) track TEAM 2014 (CP13-84) almost exactly: FERC's own TEAM 2014 application (2013-03-21, Docket CP13-84) states 'approximately 33.6 miles of new 36-inch diameter pipeline loop ... The cost of the TEAM 2014 Project is approximately $519.7 million'; the EIA workbook's TEAM 2014 row (row 785) gives a final Cost of exactly $500 million and Miles of 33.5 -- both numbers GEM's row reproduces almost verbatim (53.10 km = 33.0 mi vs EIA's 33.5 mi, and an exact $500M cost match). Capacity is the one figure that matches NEITHER project: TEAM 2012 added 190,000 Dth/d (EIA: 200 MMcf/d); TEAM 2014 added 600,000 Dth/d (EIA: 600 MMcf/d); GEM's recorded 395 MMcf/d sits almost exactly halfway between the two, which may indicate GEM's row is itself an unlabeled conflation/average of the two TEAM projects rather than a record of either one individually, or is sourced to a since-unavailable capacity figure from an intermediate project phase (e.g. the original, larger-than-built TEAM Appalachia-to-Market open season). I could not locate any single document stating '395' for this corridor -- not treating that as UNRESOLVED-nothing-found, since real, conflicting, well-sourced capacity figures for the two live candidate projects WERE found; recording it as an open reconciliation question for a human researcher with sheet-wide visibility (who can decide whether P2008 should be split into two rows -- one per TEAM docket -- or normalized onto one of them).",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
@@ -40,220 +46,621 @@
   ],
   "fills": [
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Status [ref]", "value_cols": ["Status"],
-      "primary_value_col": "Status", "values": {"Status": "operating"}, "primary_value": "operating",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "operating"
+      },
+      "primary_value": "operating",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings", "ok": true, "contains_value": true, "name_found": true, "note": "'TEAM 2012 In-Service Filing -- CP11-67 Compliance to be effective 11/1/2012' -- Texas Eastern's own compliance filing confirming commercial service, not cancellation"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "note": "sheet 'Historical Projects (1996-2024)', row 731: 'TETCO TEAM 2012 Expansion' / Texas Eastern Transmission / Status=Completed / Completed Date 2012-10-31 / Docket CP11-67 -- independently (EIA, not FERC) confirms in-service completion"}
+        {
+          "url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'TEAM 2012 In-Service Filing -- CP11-67 Compliance to be effective 11/1/2012' -- Texas Eastern's own compliance filing confirming commercial service, not cancellation"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "sheet 'Historical Projects (1996-2024)', row 731: 'TETCO TEAM 2012 Expansion' / Texas Eastern Transmission / Status=Completed / Completed Date 2012-10-31 / Docket CP11-67 -- independently (EIA, not FERC) confirms in-service completion | names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)",
+          "name_found": true
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "CORRECTS the sheet's Status from 'cancelled' to 'operating' -- see the classification concern in validity[] and the status_reviews[] entry. The sheet's own 2010/2012 Shelved/Cancelled years are real FERC milestone years for this corridor, just for a project (TEAM 2012, CP11-67) that was completed, not cancelled."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Fuel [ref]", "value_cols": ["Fuel"],
-      "primary_value_col": "Fuel", "values": {"Fuel": "Gas"}, "primary_value": "Gas",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application",
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "application under NGA Sections 7(b)/7(c), natural gas pipeline capacity in Dth/d"},
-        {"url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and", "ok": true, "contains_value": true, "name_found": true, "note": "same, NGA gas-pipeline certificate application"}
+        {
+          "url": "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "application under NGA Sections 7(b)/7(c), natural gas pipeline capacity in Dth/d"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "same, NGA gas-pipeline certificate application"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Both FERC dockets are Natural Gas Act Section 7 filings for interstate natural gas pipeline capacity; unambiguous."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Both FERC dockets are Natural Gas Act Section 7 filings for interstate natural gas pipeline capacity; unambiguous. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (federalregister.gov). One publisher restated is still one origin."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "PipelineType [ref]", "value_cols": ["PipelineType"],
-      "primary_value_col": "PipelineType", "values": {"PipelineType": "transmission"}, "primary_value": "transmission",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the", "ok": true, "contains_value": true, "name_found": true, "note": "FERC-jurisdictional interstate transmission pipeline (NGA Section 7 certificate proceeding)"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "note": "row 731/785: 'Pipeline Type'='Interstate', 'Authority'='FERC'"}
+        {
+          "url": "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC-jurisdictional interstate transmission pipeline (NGA Section 7 certificate proceeding)"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "row 731/785: 'Pipeline Type'='Interstate', 'Authority'='FERC' | names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)",
+          "name_found": true
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Interstate FERC-certificated transmission capacity, confirmed by both agencies' own records."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Proposal [ref]", "value_cols": ["ProposalYear", "ProposalMonth"],
-      "primary_value_col": "ProposalYear", "values": {"ProposalYear": "2010", "ProposalMonth": "8"}, "primary_value": "2010",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the"],
-      "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the", "ok": true, "contains_value": true, "name_found": true, "note": "Docket No. PF10-21-000, published 2010-08-26 (75 FR 52524) -- the pre-filing NOI for what became the TEAM 2012 Project"}
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2010",
+        "ProposalMonth": "8"
+      },
+      "primary_value": "2010",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Docket No. PF10-21-000, published 2010-08-26 (75 FR 52524) -- the pre-filing NOI for what became the TEAM 2012 Project"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "Fills a previously-blank ProposalYear/Month. This is the earliest dated public FERC record for the docket that matches GEM's Clarington-OH starting point and its 2010 ShelvedYear; the underlying sponsor decision to pursue the project may predate this NOI's August 2010 publication, but no earlier independently-dated announcement was found (single primary-source date, hence medium/not-independent rather than high)."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Construction [ref]", "value_cols": ["ConstructionYear", "ConstructionMonth"],
-      "primary_value_col": "ConstructionYear", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "No source found stating an explicit construction-start date. Bounded by known milestones: the EA for TEAM 2012 (CP11-67) was noticed available 2011-09-02, and the project was in service by 2012-10-31/11-01 -- construction most plausibly occurred in the first three quarters of 2012, but I found no groundbreaking notice, contractor announcement, or FERC 'authorization to construct' order text (elibrary.ferc.gov's order documents were not fetchable as HTML from this session) to pin an exact month. Leaving blank rather than guessing."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Start [ref]",
-      "value_cols": ["StartYear1", "StartMonth1", "StartYear2", "StartYear2Month", "StartYear3", "StartYear3Month"],
-      "primary_value_col": "StartYear1", "values": {"StartYear1": "2012", "StartMonth1": "11"}, "primary_value": "2012",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2012",
+        "StartMonth1": "11"
+      },
+      "primary_value": "2012",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings", "ok": true, "contains_value": true, "name_found": true, "note": "'TEAM 2012 In-Service Filing -- CP11-67 Compliance to be effective 11/1/2012'"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "note": "row 731: Completed Date 2012-10-31, Year In Service Date 2012 -- independent one-day-earlier completion date, consistent with the 11/1/2012 effective in-service filing"}
+        {
+          "url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'TEAM 2012 In-Service Filing -- CP11-67 Compliance to be effective 11/1/2012'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "row 731: Completed Date 2012-10-31, Year In Service Date 2012 -- independent one-day-earlier completion date, consistent with the 11/1/2012 effective in-service filing | names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)",
+          "name_found": true
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Fills a previously-blank Start field. Not populating StartYear2/3 with TEAM 2014's 2014-11-07 in-service date -- see the spec concern in validity[] flagging that P2008's specs (length/cost) actually match TEAM 2014 rather than TEAM 2012, an unresolved identity question a human researcher should settle (possibly by splitting this row) before StartYear2 is populated as a second phase of the SAME project."
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Fills a previously-blank Start field. Not populating StartYear2/3 with TEAM 2014's 2014-11-07 in-service date -- see the spec concern in validity[] flagging that P2008's specs (length/cost) actually match TEAM 2014 rather than TEAM 2012, an unresolved identity question a human researcher should settle (possibly by splitting this row) before StartYear2 is populated as a second phase of the SAME project. | ORCHESTRATOR 2026-09-14 IDENTITY FLAG -- NOT a correction, a candidate this analysis did not weigh. The staged StartYear1=2012/StartMonth1=11 comes from the TEAM 2012 lineage, and validity[1] already documents that this row mixes TEAM 2012 and TEAM 2014 signals. But the SHEET'S OWN SegmentName for P2008 is `TEMAX Pipeline Expansion`, and TEMAX is a THIRD, distinct EIA project that was never considered: `TEMAX/TIME III`, operator Texas Eastern Transmission, FERC docket CP09-68, Completed 2011-08-26, in service 2011, 38.6 mi, 30/36 in, $472M, Pennsylvania (EIA Natural Gas Pipeline Projects, Aug 2026 release, sheet `Historical Projects (1996-2024)`, Excel row 694). If this row is TEMAX as its SegmentName says, the Start date is 2011-08, not 2012-11. Against that: the recorded 53.10 km (33.0 mi) and $500M match TEAM 2014, not TEMAX's 38.6 mi / $472M. CROSS-ROW: TEAM 2012 and TEAM 2021 are separately tracked as P5832 and P5835 in the northeast-alaska batch, so attributing P2008 to a TEAM phase risks a DUPLICATE with a row that already exists. Do not resolve the Start date until the row's identity is settled."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Shelved [ref]", "value_cols": ["ShelvedYear"],
-      "primary_value_col": "ShelvedYear", "values": {"ShelvedYear": "2010"}, "primary_value": "2010",
-      "proposed_refs": ["https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the"],
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Shelved [ref]",
+      "value_cols": [
+        "ShelvedYear"
+      ],
+      "primary_value_col": "ShelvedYear",
+      "values": {
+        "ShelvedYear": "2010"
+      },
+      "primary_value": "2010",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the"
+      ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the", "ok": true, "contains_value": true, "name_found": true, "note": "confirms 2010 is a real, dated FERC docket year (PF10-21 pre-filing NOI) for this exact corridor"}
+        {
+          "url": "https://www.federalregister.gov/documents/2010/08/26/2010-21171/texas-eastern-transmission-lp-notice-of-intent-to-prepare-an-environmental-assessment-for-the",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "confirms 2010 is a real, dated FERC docket year (PF10-21 pre-filing NOI) for this exact corridor"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": false, "source_language": "en",
-      "researcher_notes": "The year 2010 IS real and traceable to this project -- but as the year the pre-filing process BEGAN (see Proposal [ref]), not a year the project was shelved. No evidence of an actual dormancy/shelving event was found anywhere in the docket history (NOI Aug 2010 -> application Feb 2011 -> amendment Jun 2011 -> EA Sep 2011 -> in-service Nov 2012 is a continuous, uninterrupted regulatory timeline with no gap). Recommend clearing ShelvedYear/ShelvedMonth once Status is corrected to 'operating' per the status_reviews[] entry -- keeping this fill's `values` populated with the sheet's original number (per rule 4(e), confirming/re-explaining a value in place rather than leaving the unit unworked) while the validity concern and status_reviews carry the actual recommendation to drop the field."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "The year 2010 IS real and traceable to this project -- but as the year the pre-filing process BEGAN (see Proposal [ref]), not a year the project was shelved. No evidence of an actual dormancy/shelving event was found anywhere in the docket history (NOI Aug 2010 -> application Feb 2011 -> amendment Jun 2011 -> EA Sep 2011 -> in-service Nov 2012 is a continuous, uninterrupted regulatory timeline with no gap). Recommend clearing ShelvedYear/ShelvedMonth once Status is corrected to 'operating' per the status_reviews[] entry -- keeping this fill's `values` populated with the sheet's original number (per rule 4(e), confirming/re-explaining a value in place rather than leaving the unit unworked) while the validity concern and status_reviews carry the actual recommendation to drop the field. | ORCHESTRATOR 2026-09-14 CANCELLATION-FIELD CLEARING (slice-wide sweep 7(b), same ruling as P4070). A row cannot carry a live Status and a cancellation/shelving date at the same time: that pairing is the defect class this sweep exists to find, and it would misreport this project in every downstream count. This field is cleared on the row via status_reviews[].proposed_changes. The historical event is NOT lost -- this fill keeps its sourced value and refs, because check_shard_coverage rejects a sourced class_out with empty `values`, so the clearing rides on status_reviews[].proposed_changes (the mergeable surface) while the dated evidence stays here."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Cancelled [ref]", "value_cols": ["CancelledYear"],
-      "primary_value_col": "CancelledYear", "values": {"CancelledYear": "2012"}, "primary_value": "2012",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Cancelled [ref]",
+      "value_cols": [
+        "CancelledYear"
+      ],
+      "primary_value_col": "CancelledYear",
+      "values": {
+        "CancelledYear": "2012"
+      },
+      "primary_value": "2012",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings", "ok": true, "contains_value": true, "name_found": true, "note": "2012 is real and dated -- but it is the YEAR THE PROJECT WENT INTO SERVICE (11/1/2012), not a cancellation"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "note": "row 731 independently dates completion to 2012-10-31"}
+        {
+          "url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "2012 is real and dated -- but it is the YEAR THE PROJECT WENT INTO SERVICE (11/1/2012), not a cancellation"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "row 731 independently dates completion to 2012-10-31 | names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)",
+          "name_found": true
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "CORRECTS the meaning, not the number: 2012 is exactly right as a milestone year for this corridor, but it is the completion/in-service year (now recorded on Start [ref] as StartYear1=2012), not a cancellation year. Recommend clearing CancelledYear (and ShelvedCancelledType, currently 'inferred') once Status is corrected to 'operating' -- see status_reviews[]."
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "CORRECTS the meaning, not the number: 2012 is exactly right as a milestone year for this corridor, but it is the completion/in-service year (now recorded on Start [ref] as StartYear1=2012), not a cancellation year. Recommend clearing CancelledYear (and ShelvedCancelledType, currently 'inferred') once Status is corrected to 'operating' -- see status_reviews[]. | ORCHESTRATOR 2026-09-14 CANCELLATION-FIELD CLEARING (slice-wide sweep 7(b), same ruling as P4070). A row cannot carry a live Status and a cancellation/shelving date at the same time: that pairing is the defect class this sweep exists to find, and it would misreport this project in every downstream count. This field is cleared on the row via status_reviews[].proposed_changes. The historical event is NOT lost -- this fill keeps its sourced value and refs, because check_shard_coverage rejects a sourced class_out with empty `values`, so the clearing rides on status_reviews[].proposed_changes (the mergeable surface) while the dated evidence stays here."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Capacity [ref]", "value_cols": ["Capacity", "CapacityUnits"],
-      "primary_value_col": "Capacity", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "No source found stating 395 MMcf/d for this corridor. This is a genuine conflict, not a blank search: TEAM 2012 (CP11-67) added 190,000 Dth/d per its FERC application (EIA workbook: 200 MMcf/d); TEAM 2014 (CP13-84) added 600,000 Dth/d per its FERC application (EIA workbook: 600 MMcf/d). Neither matches 395, and 395 sits almost exactly midway between them -- flagged as a spec concern in validity[] rather than silently corrected, since I cannot determine which (if either) figure GEM intended, or whether 395 reflects an intermediate/uncaptured project phase. Leaving the sheet's existing 395.00 value untouched pending that human reconciliation (not overwriting a value I can't confidently replace)."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Pressure [ref]", "value_cols": ["Pressure", "PressureUnits"],
-      "primary_value_col": "Pressure", "values": {}, "primary_value": "",
-      "proposed_refs": [], "verifications": [],
-      "class_out": "UNRESOLVED", "tier": "low", "independent": false, "source_language": "en",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
       "researcher_notes": "No MAOP/operating-pressure figure found in any of the seven FERC notices read for this project, the EIA workbook (which does not carry a pressure field), or the Enbridge/press sources. FERC certificate-order documents (which sometimes state MAOP) were not retrievable as readable text from this session (elibrary.ferc.gov document viewer requires an interactive session)."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Length [ref]", "value_cols": ["LengthKnown", "LengthKnownUnits"],
-      "primary_value_col": "LengthKnown", "values": {"LengthKnown": "53.10", "LengthKnownUnits": "km"}, "primary_value": "53.10",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "53.10",
+        "LengthKnownUnits": "km"
+      },
+      "primary_value": "53.10",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and", "ok": true, "contains_value": true, "name_found": true, "note": "'approximately 33.6 miles of new 36-inch diameter pipeline loop' -- 33.6 mi = 54.07 km, ~1.8% above the recorded 53.10 km"},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "note": "row 785, TEAM 2014, Miles=33.5 (=53.9 km) -- independently close to the recorded 53.10 km/33.0 mi"}
+        {
+          "url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'approximately 33.6 miles of new 36-inch diameter pipeline loop' -- 33.6 mi = 54.07 km, ~1.8% above the recorded 53.10 km"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "row 785, TEAM 2014, Miles=33.5 (=53.9 km) -- independently close to the recorded 53.10 km/33.0 mi | names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)",
+          "name_found": true
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Two independent sources (FERC's application text and EIA's separately-compiled workbook) agree on ~33.5-33.6 miles for TEAM 2014 -- within rounding of the sheet's recorded 53.10 km (33.0 mi), so treated as a confirming match per standing rule 4 rather than a correction. Note this is TEAM 2014's mileage, not TEAM 2012's (17.3 mi per EIA row 731) -- see the spec concern in validity[] on the project-identity conflation."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Diameter [ref]", "value_cols": ["Diameter", "DiameterUnits"],
-      "primary_value_col": "Diameter", "values": {"Diameter": "36", "DiameterUnits": "in"}, "primary_value": "36",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the",
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the", "ok": true, "contains_value": true, "name_found": true, "note": "TEAM 2012 EA: 36-inch-diameter pipeline loop"},
-        {"url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and", "ok": true, "contains_value": true, "name_found": true, "note": "TEAM 2014 application: '33.6 miles of new 36-inch diameter pipeline loop'"}
+        {
+          "url": "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TEAM 2012 EA: 36-inch-diameter pipeline loop"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TEAM 2014 application: '33.6 miles of new 36-inch diameter pipeline loop'"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Fills a previously-blank Diameter. Both TEAM 2012 and TEAM 2014 used 36-inch pipe (also independently confirmed by EIA workbook rows 731 and 785, 'Pipeline Diameter (Inches)'=36 for both) -- the one spec value that agrees regardless of which successor project this row is ultimately normalized to."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Fills a previously-blank Diameter. Both TEAM 2012 and TEAM 2014 used 36-inch pipe (also independently confirmed by EIA workbook rows 731 and 785, 'Pipeline Diameter (Inches)'=36 for both) -- the one spec value that agrees regardless of which successor project this row is ultimately normalized to. | ORCHESTRATOR 2026-09-14: tier demoted to medium and independent -> false. Rule 4 sets `high`/independent at 2+ INDEPENDENT origins; this record's verified refs resolve to 1 publisher(s) (federalregister.gov). One publisher restated is still one origin."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "FuelSource [ref]", "value_cols": ["FuelSource"],
-      "primary_value_col": "FuelSource", "values": {"FuelSource": "Marcellus and Utica Shale, Appalachian Basin"}, "primary_value": "Marcellus and Utica Shale, Appalachian Basin",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {
+        "FuelSource": "Marcellus and Utica Shale, Appalachian Basin"
+      },
+      "primary_value": "Marcellus and Utica Shale, Appalachian Basin",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
         "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and", "ok": true, "contains_value": true, "name_found": true, "note": "TEAM 2014 application: capacity 'from supply points in the Marcellus Shale region'"},
-        {"url": "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "TEAM 2012 application: capacity 'from supply points in Clarington, Ohio and the Appalachian area' (the Ohio/WV Utica-Marcellus play)"}
+        {
+          "url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TEAM 2014 application: capacity 'from supply points in the Marcellus Shale region'"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TEAM 2012 application: capacity 'from supply points in Clarington, Ohio and the Appalachian area' (the Ohio/WV Utica-Marcellus play)"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Fills a previously-blank FuelSource. Both FERC applications independently describe Appalachian Basin (Marcellus/Utica) supply as the purpose of the expansion; wording differs (one names Marcellus explicitly, the other the general 'Appalachian area' around Clarington OH/Utica territory) so tier is medium rather than high."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "Location [ref]",
-      "value_cols": ["StartLocation", "StartPrefecture/District", "StartState/Province", "StartCountryOrArea", "EndLocation", "EndPrefecture/District", "EndState/Province", "EndCountryOrArea"],
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
       "primary_value_col": "StartLocation",
-      "values": {"StartLocation": "Clarington", "StartState/Province": "Ohio", "StartCountryOrArea": "United States", "EndLocation": "Delta", "EndState/Province": "Pennsylvania", "EndCountryOrArea": "United States"},
+      "values": {
+        "StartLocation": "Clarington",
+        "StartState/Province": "Ohio",
+        "StartCountryOrArea": "United States",
+        "EndLocation": "Delta",
+        "EndState/Province": "Pennsylvania",
+        "EndCountryOrArea": "United States"
+      },
       "primary_value": "Clarington",
       "proposed_refs": [
         "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application",
         "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application", "ok": true, "contains_value": true, "name_found": true, "note": "'from supply points in Clarington, Ohio and the Appalachian area to proposed interconnections in central and eastern Pennsylvania' -- exact match on StartLocation"},
-        {"url": "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the", "ok": true, "contains_value": true, "name_found": true, "note": "route runs through Greene, Fayette, Franklin, Adams and Fulton Counties, PA plus a Bedford County, PA compressor upgrade -- south-central PA near the MD border, geographically consistent with Delta, PA (York County, adjacent to Adams County) as a plausible terminus, though 'Delta' itself is not named in this or any other document read"}
+        {
+          "url": "https://www.federalregister.gov/documents/2011/02/11/2011-3160/texas-eastern-transmission-lp-notice-of-application",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'from supply points in Clarington, Ohio and the Appalachian area to proposed interconnections in central and eastern Pennsylvania' -- exact match on StartLocation"
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2011/09/02/2011-22517/texas-eastern-transmission-lp-notice-of-availability-of-the-environmental-assessment-for-the",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "route runs through Greene, Fayette, Franklin, Adams and Fulton Counties, PA plus a Bedford County, PA compressor upgrade -- south-central PA near the MD border, geographically consistent with Delta, PA (York County, adjacent to Adams County) as a plausible terminus, though 'Delta' itself is not named in this or any other document read"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "medium", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "StartLocation='Clarington, Ohio' is confirmed verbatim and exactly by the TEAM 2012 FERC application -- high confidence. EndLocation='Delta' (a York County, PA borough) is NOT independently confirmed by name in any source read: the EA notice places the route through Greene/Fayette/Franklin/Adams/Fulton Counties, PA (south-central PA, adjacent to York County where Delta sits), which is geographically consistent but not a direct confirmation of 'Delta' as the specific terminus. Searched the TEAM 2012/2014 FERC filings, the wiki-cited source pool, and general web search for 'Delta, PA' + 'Texas Eastern' / 'TETCO' specifically; found nothing naming that borough. Keeping the sheet's existing EndLocation value (not fabricating a replacement) but flagging the precise endpoint as caveat-level rather than fully corroborated."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "ref_col": "SegmentCost [ref]", "value_cols": ["SegmentCost", "SegmentCostUnits", "SegmentCostYear"],
-      "primary_value_col": "SegmentCost", "values": {"SegmentCost": "500000000.00", "SegmentCostUnits": "USD"}, "primary_value": "500000000.00",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "500000000.00",
+        "SegmentCostUnits": "USD"
+      },
+      "primary_value": "500000000.00",
       "proposed_refs": [
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and"
       ],
       "verifications": [
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true, "note": "row 785, TEAM 2014: 'Cost (millions)'=500 -- an EXACT match to the sheet's recorded $500,000,000"},
-        {"url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and", "ok": true, "contains_value": true, "name_found": true, "note": "TEAM 2014 application: 'The cost of the TEAM 2014 Project is approximately $519.7 million' -- the initial FILING estimate, ~4% above the EIA-recorded final $500M, consistent with normal cost refinement between application and completion"}
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "note": "row 785, TEAM 2014: 'Cost (millions)'=500 -- an EXACT match to the sheet's recorded $500,000,000 | names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)",
+          "name_found": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "TEAM 2014 application: 'The cost of the TEAM 2014 Project is approximately $519.7 million' -- the initial FILING estimate, ~4% above the EIA-recorded final $500M, consistent with normal cost refinement between application and completion"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "EIA's independently-compiled final project cost ($500M) is an EXACT match to the sheet's recorded SegmentCost. FERC's own 2013 filing-stage estimate ($519.7M) is a close, independent corroboration from the opposite end of the project timeline (initial application vs. final tally). This is TEAM 2014's cost, not TEAM 2012's ($197M per EIA row 731) -- see the spec concern in validity[] on which project this row's specs actually track."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "oo_sheet_row": 1536, "ref_col": "Operator [ref]",
-      "value_cols": ["Operator", "OperatorLocalLanguage", "QCCOwner(业主单位)"],
-      "primary_value_col": "Operator", "values": {"Operator": "Texas Eastern Transmission LP"}, "primary_value": "Texas Eastern Transmission LP",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "oo_sheet_row": 1536,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Texas Eastern Transmission LP"
+      },
+      "primary_value": "Texas Eastern Transmission LP",
       "proposed_refs": [
-        "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
-        "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=texas+eastern+transmission&type=10-K&dateb=&owner=include&count=40&output=atom"
+        "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and", "ok": true, "contains_value": true, "name_found": true, "note": "'Texas Eastern Transmission, LP (Texas Eastern), 5400 Westheimer Court, Houston, Texas' -- named applicant/certificate holder"},
-        {"url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&company=texas+eastern+transmission&type=10-K&dateb=&owner=include&count=40&output=atom", "ok": true, "contains_value": true, "note": "SEC EDGAR company record, CIK 0000097432, conformed-name 'TEXAS EASTERN TRANSMISSION LP', Houston TX -- independently (SEC, not FERC) confirms the legal operating entity"}
+        {
+          "url": "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Texas Eastern Transmission, LP (Texas Eastern), 5400 Westheimer Court, Houston, Texas' -- named applicant/certificate holder"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "Confirmed as recorded, independently by two different federal agencies (FERC docket filings across 2010-2013, and SEC EDGAR's company registry) that have no dependence on each other or on GEM."
+      "class_out": "REFS_ADDED",
+      "tier": "medium",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Confirmed as recorded, independently by two different federal agencies (FERC docket filings across 2010-2013, and SEC EDGAR's company registry) that have no dependence on each other or on GEM. | ORCHESTRATOR 2026-09-14: the SEC ref was REMOVED. `sec.gov/cgi-bin/browse-edgar?action=getcompany&...&output=atom` is an EDGAR COMPANY-SEARCH FEED, not a document -- it is a navigation surface whose contents change with EDGAR's index, so it cannot serve as a stable citation that a reviewer can re-open and read. If SEC support is wanted here, cite the specific filing (an accession-numbered document under /Archives/edgar/data/97432/...), not the search that finds it. With it gone this unit rests on the Federal Register notice alone, so tier high -> medium and independent -> false. The VALUE is unaffected: 'Texas Eastern Transmission LP' is the name in the FR notice title."
     },
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "oo_sheet_row": 1536, "ref_col": "Owner [ref]",
-      "value_cols": ["Owner1", "Owner1%", "Owner2", "Owner2%", "Owner3", "Owner3%", "Owner4", "Owner4%", "Owner5", "Owner5%", "Owner6", "Owner6%", "Owner7", "Owner7%", "Owner8", "Owner8%", "Owner9", "Owner9%", "Owner10", "Owner10%", "Owner11", "Owner11%"],
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "oo_sheet_row": 1536,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%",
+        "Owner2",
+        "Owner2%",
+        "Owner3",
+        "Owner3%",
+        "Owner4",
+        "Owner4%",
+        "Owner5",
+        "Owner5%",
+        "Owner6",
+        "Owner6%",
+        "Owner7",
+        "Owner7%",
+        "Owner8",
+        "Owner8%",
+        "Owner9",
+        "Owner9%",
+        "Owner10",
+        "Owner10%",
+        "Owner11",
+        "Owner11%"
+      ],
       "primary_value_col": "Owner1",
-      "values": {"Owner1": "Enbridge", "Owner1%": "100.00%"},
+      "values": {
+        "Owner1": "Enbridge",
+        "Owner1%": "100.00%"
+      },
       "primary_value": "Enbridge",
       "proposed_refs": [
         "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
         "https://www.sec.gov/Archives/edgar/data/895728/000089572820000009/a211subsidiariesofther.htm"
       ],
       "verifications": [
-        {"url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en", "ok": true, "contains_value": true, "name_found": true, "note": "Enbridge's own 2020 asset factsheet lists Texas Eastern Transmission as an Enbridge gas transmission asset"},
-        {"url": "https://www.sec.gov/Archives/edgar/data/895728/000089572820000009/a211subsidiariesofther.htm", "ok": true, "contains_value": true, "name_found": true, "note": "Enbridge Inc's FY2019 Form 10-K, Exhibit 21.1 (Subsidiaries of the Registrant, filed 2020-02-14, SEC CIK 0000895728): lists 'Texas Eastern Transmission, LP' (Delaware) as an Enbridge subsidiary -- independent of the company's own marketing factsheet"}
+        {
+          "url": "https://www.enbridge.com/~/media/Enb/Documents/Factsheets/FS_EnergyInfrastructureAssets.pdf?la=en",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge's own 2020 asset factsheet lists Texas Eastern Transmission as an Enbridge gas transmission asset"
+        },
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/895728/000089572820000009/a211subsidiariesofther.htm",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge Inc's FY2019 Form 10-K, Exhibit 21.1 (Subsidiaries of the Registrant, filed 2020-02-14, SEC CIK 0000895728): lists 'Texas Eastern Transmission, LP' (Delaware) as an Enbridge subsidiary -- independent of the company's own marketing factsheet"
+        }
       ],
-      "class_out": "REFS_ADDED", "tier": "high", "independent": true, "source_language": "en",
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
       "researcher_notes": "Confirmed as recorded (Enbridge 100%) via two independent sources: Enbridge's own asset factsheet AND, independently, Enbridge Inc's audited SEC 10-K subsidiary exhibit (a legal filing under penalty of perjury, not marketing material). Neither source states an exact ownership PERCENTAGE (the SEC exhibit lists Texas Eastern Transmission LP simply as a subsidiary without a %), so 100% reflects the standard wholly-owned-subsidiary reading rather than a document that states '100%' verbatim; this is consistent with Enbridge's post-2017 Spectra Energy acquisition structure (Texas Eastern Transmission was a wholly owned Spectra/Enbridge asset both before and after that merger)."
     }
   ],
@@ -267,10 +674,19 @@
   ],
   "status_reviews": [
     {
-      "segment_name": "TEMAX Pipeline Expansion", "sheet_row": 1060, "current_status": "cancelled",
+      "segment_name": "TEMAX Pipeline Expansion",
+      "sheet_row": 1060,
+      "current_status": "cancelled",
       "verdict": "change",
       "proposed_status": "operating",
-      "proposed_changes": {"Status": "operating", "StartYear1": "2012", "StartMonth1": "11"},
+      "proposed_changes": {
+        "Status": "operating",
+        "StartYear1": "2012",
+        "StartMonth1": "11",
+        "ShelvedYear": "",
+        "CancelledYear": "",
+        "ShelvedCancelledType": ""
+      },
       "evidence_date": "2012-11",
       "staleness_rule": "",
       "proposed_refs": [
@@ -279,11 +695,25 @@
         "https://www.federalregister.gov/documents/2013/03/21/2013-06465/texas-eastern-transmission-lp-notice-of-application-for-certificate-of-public-convenience-and"
       ],
       "verifications": [
-        {"url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings", "ok": true, "contains_value": true},
-        {"url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx", "ok": true, "contains_value": true}
+        {
+          "url": "https://www.federalregister.gov/documents/2012/09/12/2012-22402/combined-notice-of-filings",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "names 'Texas Eastern Transmission, LP' in the combined notice"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjects.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "names 'TETCO TEAM 2012 Expansion' / 'TETCO TEAM 2014 Expansion', operator 'Texas Eastern Transmission' -- matches this row's pipeline, though WHICH project this row is remains open (see fills[5] identity flag)"
+        }
       ],
-      "tier": "high", "independent": true, "source_language": "en",
-      "researcher_notes": "The sheet's LastUpdated is blank/unclear for this row but its recorded CancelledYear=2012 is itself now 14 years stale against dated evidence that the project entered commercial service in that same year (2012-11-01), not cancellation. This is a full status reversal, not a staleness refresh: recommend Status='operating', StartYear1=2012/StartMonth1=11 (see Start [ref] fill), and clearing ShelvedYear/CancelledYear/ShelvedCancelledType entirely once the change is applied, since the project was never actually shelved or cancelled -- it proceeded through FERC review without interruption from pre-filing (2010) to in-service (2012). A second, later TETCO expansion (TEAM 2014, CP13-84) also completed in this corridor in 2014 and appears to be the better match for this row's Length/SegmentCost fields -- see the spec concern in validity[] and the cross_row_leads[] entry: a human researcher with full-sheet visibility should decide whether to normalize this row onto TEAM 2012, onto TEAM 2014, or split it into two rows, before this status change is applied as-is."
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's LastUpdated is blank/unclear for this row but its recorded CancelledYear=2012 is itself now 14 years stale against dated evidence that the project entered commercial service in that same year (2012-11-01), not cancellation. This is a full status reversal, not a staleness refresh: recommend Status='operating', StartYear1=2012/StartMonth1=11 (see Start [ref] fill), and clearing ShelvedYear/CancelledYear/ShelvedCancelledType entirely once the change is applied, since the project was never actually shelved or cancelled -- it proceeded through FERC review without interruption from pre-filing (2010) to in-service (2012). A second, later TETCO expansion (TEAM 2014, CP13-84) also completed in this corridor in 2014 and appears to be the better match for this row's Length/SegmentCost fields -- see the spec concern in validity[] and the cross_row_leads[] entry: a human researcher with full-sheet visibility should decide whether to normalize this row onto TEAM 2012, onto TEAM 2014, or split it into two rows, before this status change is applied as-is. | ORCHESTRATOR 2026-09-14 CANCELLATION-FIELD CLEARING (slice-wide sweep 7(b), same ruling as P4070). A row cannot carry a live Status and a cancellation/shelving date at the same time: that pairing is the defect class this sweep exists to find, and it would misreport this project in every downstream count. All three of the sheet's dormancy fields (ShelvedYear=2010, CancelledYear=2012, ShelvedCancelledType='inferred') are now cleared in proposed_changes -- this row's own fills already recommended exactly that, but the recommendation was left in prose and never staged where a merge could act on it. The clearing is safe under EVERY identity reading of this row: no candidate project (TEAM 2012, TEAM 2014, or TEMAX/TIME III) was cancelled -- all three were completed and are in service. Only the Start date depends on which project this row is, and that question is left open below. NOTE ON DELIVERY: this row sits in `deepsweep-remainder`, which was already shipped as slice 1's CLOSED batch-5 workbook. The staged JSON is the canonical pending state, so the fix is applied here, but it does NOT reach a reviewer until that workbook is rebuilt. Rebuilding batch 5 is Baird's call and has been flagged, together with the 165 undated-EIA-workbook refs across 19 rows in this same staging dir."
     }
   ],
   "summary": "P2008 'TEMAX Pipeline Expansion' is NOT cancelled: Texas Eastern's Clarington OH -> south-central/eastern PA Appalachia-to-Market corridor was completed as TEAM 2012 (FERC CP11-67, in-service 2012-11-01, confirmed by FERC + EIA) and further expanded as TEAM 2014 (FERC CP13-84, in-service 2014-11-07) -- GEM's Shelved/Cancelled years (2010/2012) are real FERC milestone years misattributed to a cancellation that never happened. Staged REFS_ADDED on 13 units (Status corrected to operating, Fuel, PipelineType, Proposal, Start, Shelved, Cancelled, Length, Diameter, FuelSource, Location, SegmentCost, Operator, Owner) plus 1 classification concern (Status) and 1 spec concern (Capacity/Length/SegmentCost conflate TEAM 2012 and TEAM 2014's real, different figures); Construction, Pressure and Capacity are genuinely UNRESOLVED (no construction-start source found; no source matches the recorded 395 MMcf/d against either confirmed successor project's real capacity). Named the successor projects and dockets as the task requested (TEAM 2012/CP11-67, TEAM 2014/CP13-84); flagged via cross_row_leads that neither appears in the given 45-row roster, so a full-sheet duplicate check is still owed before this row is corrected in place."

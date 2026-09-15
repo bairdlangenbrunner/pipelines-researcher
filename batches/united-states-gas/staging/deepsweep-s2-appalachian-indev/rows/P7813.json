@@ -1,0 +1,689 @@
+{
+  "project_id": "P7813",
+  "pipeline_name": "Texas Eastern Transmission (TETCO) Gas Pipeline",
+  "sheet_row": 4193,
+  "wiki": "https://www.gem.wiki/Texas_Eastern_Transmission_(TETCO)_Gas_Pipeline",
+  "validity": [
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "verdict": "confirmed (caveat)",
+      "concern_type": "none",
+      "recommendation": "",
+      "contested": {},
+      "researcher_notes": "EXISTENCE: real, active FERC proceeding. Texas Eastern Transmission, LP (a subsidiary of Enbridge) filed FERC Docket No. CP25-491-000 on 5/15/2025 for the Appalachia to Market III Project (federalregister.gov 2025-09918, 90 FR 23327); FERC issued the Certificate of Public Convenience and Necessity 2/25/2026 (EIA Aug2026 release, sheet 'Natural Gas Pipeline Projects', row 9; Thompson Energy Expert trade report, headlined 'Texas Eastern Granted Authorization for A2M III Project'); construction begins March 2027, in-service August 2027 (EIA; Enbridge project page). CLASSIFICATION: correctly classed transmission/gas — an interstate NGA section 7(c) certificate for TETCO's Line 1 mainline, EIA Pipeline Type='Interstate'. DUPLICATE: not a duplicate of any of the other 45 rows in this batch's roster (none is a TETCO Appalachia-to-Market phase). It IS one of a family of three TETCO 'Appalachia to Market' FERC dockets that the orchestrator should cross-check against P0260/P5832/P5835/P0261 in the northeast-alaska batch — see cross_row_leads for the other two phases' dockets/specs, each independently verified. This row (A2M III, CP25-491-000) is textually and numerically distinct from A2M (conversion, CP20-436, completed 2021-2022) and A2M II (CP22-486, under construction, in-service 2027) — different dockets, different scopes, different costs. TWO GENUINE DEFECTS FOUND on this row: (1) LengthKnown reads 0 mi despite Diameter=36in being populated — the project is NOT a compression-only scope, it physically relays ~2 miles of pipe (see spec concern below); (2) StartState/Province reads 'Delaware', which is wrong — Delaware is one of two LDC customers the expansion SERVES, not a physical facility location; every physical facility (the Line 1 pipe replacement and the Bedford Compressor Station) is in Pennsylvania (see attribution concern below).",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "verdict": "concern",
+      "concern_type": "spec",
+      "recommendation": "Correct LengthKnown from 0 to approximately 2.0 mi (mi units, matching the already-populated Diameter=36in) — this project relays ~2 miles of pipe, it is not a compression/meter-only scope.",
+      "contested": {
+        "LengthKnown": "2.0"
+      },
+      "researcher_notes": "The sheet's LengthKnown=0 with LengthKnownUnits=mi is internally inconsistent with the already-populated Diameter=36 (the ADDENDUM's own compression/meter-scope list flags this pairing as wrong). FERC's Federal Register notice of application (federalregister.gov 2025-09918, Docket CP25-491-000) states the project will '(i) take-up approximately 1.95 miles of 24-inch-diameter idled Line 1 pipeline in Adams and York counties, Pennsylvania and relay approximately 2.0 miles of 36-inch-diameter pipeline (Line 1 Pipeline) adjacent to and south of Texas Eastern's existing Line 2 pipeline.' EIA's Aug2026 release (sheet 'Natural Gas Pipeline Projects', row 9) independently records Miles=2 for the same project. Enbridge's own project page also describes 'approximately 2 miles of 24-inch diameter pipeline' being replaced with 36-inch. This is a real, physical pipe-replacement (in the same corridor, larger diameter, not merely a compressor/meter upgrade), so LengthKnown=0 is wrong; it should read approximately 2.0 mi, consistent with the diameter already on the sheet.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "verdict": "concern",
+      "concern_type": "attribution",
+      "recommendation": "Correct StartState/Province from Delaware to Pennsylvania. EndState/Province (already Pennsylvania) is correct and unchanged.",
+      "contested": {
+        "StartState/Province": "Pennsylvania"
+      },
+      "researcher_notes": "Market-not-a-terminus defect (ADDENDUM route-vs-sheet guidance, rule 3). FERC's Federal Register notice of application states the Project 'will provide up to 32,000 dekatherms per day of additional firm natural gas transportation service from the Appalachian supply basin in southwest Pennsylvania to meet the needs of two existing local distribution company customers in Pennsylvania and Delaware' — Delaware names a DELIVERY CUSTOMER's state, not a physical facility. Every physical facility in the docket is in Pennsylvania: the ~2-mile Line 1 pipe replacement is in Adams and York counties, PA (western terminus at Texas Eastern's Bakers Watering Trough Valve Site, eastern terminus at a new receiver/crossover, both within the same Adams/York corridor per the notice), and the Bedford Compressor Station modification is in Bedford County, PA. Thompson Energy Expert's trade report independently paraphrases the same filing as 'facilities in Adams, York, and Bedford counties, Pennsylvania.' EIA's own Beg_State/End_State fields (DE, PA) appear to reflect the same customer-state conflation as the sheet — EIA is not treated as a corroborating source for the Delaware start-state here, precisely because the FERC filing it is compiled from contradicts it once read directly. I could not determine from the filing whether the Adams/York-county segment or the Bedford Compressor Station should map to GEM's 'Start' vs 'End' location fields specifically (the notice doesn't rank them geographically west-to-east beyond calling the pig-receiver ends of the Line 1 segment 'western' and 'eastern' termini within the Adams/York corridor itself) — leaving StartLocation/EndLocation county text unstaged rather than guess; a human editor should assign county-level detail from the docket exhibits. The state-level fix (both ends Pennsylvania, not Delaware) is solid.",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project"
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en"
+    }
+  ],
+  "fills": [
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Status [ref]",
+      "value_cols": [
+        "Status"
+      ],
+      "primary_value_col": "Status",
+      "values": {
+        "Status": "proposed"
+      },
+      "primary_value": "proposed",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, sheet 'Natural Gas Pipeline Projects', row 9: Status='Approved ' — FERC certificate issued 2/25/2026, pre-construction (construction begins March 2027) = GEM 'proposed'."
+        },
+        {
+          "url": "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Texas Eastern Granted Authorization for A2M III Project' — reports the FERC certificate grant; project remains pre-construction."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. EIA Aug2026 (row 9) and Thompson Energy Expert both confirm FERC certificated the project 2/25/2026 but construction has not started; GEM's vocabulary keeps this 'proposed' until ground is broken. See status_reviews."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Fuel [ref]",
+      "value_cols": [
+        "Fuel"
+      ],
+      "primary_value_col": "Fuel",
+      "values": {
+        "Fuel": "Gas"
+      },
+      "primary_value": "Gas",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Listed in EIA's 'Natural Gas Pipeline Projects' workbook, row 9."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "FERC application filed under the Natural Gas Act (NGA) section 7 for 'natural gas pipeline facilities.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. Both EIA's natural-gas-specific dataset and the NGA-section-7 filing confirm Fuel=Gas."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "PipelineType [ref]",
+      "value_cols": [
+        "PipelineType"
+      ],
+      "primary_value_col": "PipelineType",
+      "values": {
+        "PipelineType": "transmission"
+      },
+      "primary_value": "transmission",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "EIA row 9: Pipeline Type='Interstate', Authority='FERC' — only FERC-jurisdictional interstate transmission lines carry this designation."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "NGA section 7(c) certificate for interstate transmission pipeline facilities on TETCO's Line 1 mainline."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. Confirmed as an interstate transmission facility (TETCO mainline Line 1), not gathering/distribution."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Proposal [ref]",
+      "value_cols": [
+        "ProposalYear",
+        "ProposalMonth"
+      ],
+      "primary_value_col": "ProposalYear",
+      "values": {
+        "ProposalYear": "2025",
+        "ProposalMonth": "May"
+      },
+      "primary_value": "2025",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Take notice that on May 15, 2025, Texas Eastern Transmission, LP ... filed an application' in Docket No. CP25-491-000 requesting authorization for the Appalachia to Market III Project."
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Project first appears in EIA's 2025-07 release (last_updated 2025-07-29) with Status='Announced', corroborating a mid-2025 proposal."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. FERC's Federal Register notice gives the precise, dated filing (5/15/2025); EIA's dataset independently first captures the project two months later (2025-07 release) as 'Announced,' consistent with the same 2025 proposal. Using the FERC filing date as the more precise anchor for ProposalYear/Month."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Construction [ref]",
+      "value_cols": [
+        "ConstructionYear",
+        "ConstructionMonth"
+      ],
+      "primary_value_col": "ConstructionYear",
+      "values": {
+        "ConstructionYear": "2027",
+        "ConstructionMonth": "March"
+      },
+      "primary_value": "2027",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9 Notes: '...FERC approved 2/25/2026; construction begins March 2027; in-service August 2027.'"
+        },
+        {
+          "url": "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge's own project page states construction is targeted to start March 2027."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell was blank. EIA's dataset notes and the operator's (Enbridge/Texas Eastern) own project page both give March 2027 as the construction start; per the ADDENDUM's Owner-ref precedent, the operator's own page counts as a genuine second host alongside EIA."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Start [ref]",
+      "value_cols": [
+        "StartYear1",
+        "StartMonth1",
+        "StartYear2",
+        "StartYear2Month",
+        "StartYear3",
+        "StartYear3Month"
+      ],
+      "primary_value_col": "StartYear1",
+      "values": {
+        "StartYear1": "2027"
+      },
+      "primary_value": "2027",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Year In Service Date=2027."
+        },
+        {
+          "url": "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge's own project page: in-service target August 2027."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. EIA's Year In Service Date and Enbridge's own project page both confirm the sheet's StartYear1=2027 (targeted August 2027, not yet reached)."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Capacity [ref]",
+      "value_cols": [
+        "Capacity",
+        "CapacityUnits"
+      ],
+      "primary_value_col": "Capacity",
+      "values": {
+        "Capacity": "32.00",
+        "CapacityUnits": "MMcf/d"
+      },
+      "primary_value": "32.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Additional Capacity (MMcf/d)=32."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'up to 32,000 dekatherms per day of additional firm natural gas transportation service' — 32,000 Dth/d ≈ 32 MMcf/d."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. EIA's 32 MMcf/d and FERC's 32,000 Dth/d agree (Dth/MMBtu ≈ Mcf for pipeline-quality gas)."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Pressure [ref]",
+      "value_cols": [
+        "Pressure",
+        "PressureUnits"
+      ],
+      "primary_value_col": "Pressure",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell is blank. Searched FERC's application notices and EIA for a stated MAOP/design pressure for this specific ~2-mile Line 1 segment — none found. A PHMSA special-permit record for TETCO's broader Line 1/Line 2 system authorizes an alternative MAOP of 1,112 psig over 97.94 mi of 36-inch Line 1 and 169.54 mi of 36-inch Line 2 (phmsa.dot.gov, special permit 2008-0257), but I could not confirm this specific new 2-mile segment falls within that special permit's listed mileage/design-factor scope (aggregate-vs-segment risk — the ADDENDUM's own rule against attaching a system-wide figure to a segment cell). Leaving UNRESOLVED rather than fabricate a segment-level MAOP; a human reviewer with FERC eLibrary access to the full CP25-491 application (design/alignment sheets) could resolve this."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Length [ref]",
+      "value_cols": [
+        "LengthKnown",
+        "LengthKnownUnits"
+      ],
+      "primary_value_col": "LengthKnown",
+      "values": {
+        "LengthKnown": "2.0",
+        "LengthKnownUnits": "mi"
+      },
+      "primary_value": "2.0",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'take-up approximately 1.95 miles of 24-inch-diameter idled Line 1 pipeline ... and relay approximately 2.0 miles of 36-inch-diameter pipeline.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Miles=2."
+        },
+        {
+          "url": "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge project page: 'approximately 2 miles of 24-inch diameter pipeline' replaced with 36-inch."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's recorded value (0.00 mi) is WRONG — see the spec concern in validity[]. Three independent sources (FERC's own Federal Register notice of the application, EIA's dataset, and the operator's own project page) agree the project relays ~2.0 miles of 36-inch pipe. Staging the corrected value here per the fills[] convention for a sourced correction to an existing cell."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Diameter [ref]",
+      "value_cols": [
+        "Diameter",
+        "DiameterUnits"
+      ],
+      "primary_value_col": "Diameter",
+      "values": {
+        "Diameter": "36",
+        "DiameterUnits": "in"
+      },
+      "primary_value": "36",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'relay approximately 2.0 miles of 36-inch-diameter pipeline.'"
+        },
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Pipeline Diameter (Inches)=36."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. Both FERC's notice and EIA agree on 36-inch diameter for the new pipe."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "FuelSource [ref]",
+      "value_cols": [
+        "FuelSource"
+      ],
+      "primary_value_col": "FuelSource",
+      "values": {},
+      "primary_value": "",
+      "proposed_refs": [],
+      "verifications": [],
+      "class_out": "UNRESOLVED",
+      "tier": "low",
+      "independent": false,
+      "source_language": "en",
+      "researcher_notes": "Cell is blank. Per gem_schema.md, FuelSource must name a specific upstream field/plant, not a generic basin or 'Natural Gas' (that belongs in Fuel). FERC's notice only describes the supply origin generally as 'the Appalachian supply basin in southwest Pennsylvania' — no specific named gas field, processing plant, or receipt point is stated in the application notice, the EIA record, or Enbridge's project page. Leaving UNRESOLVED rather than default to a generic basin name."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Location [ref]",
+      "value_cols": [
+        "StartLocation",
+        "StartPrefecture/District",
+        "StartState/Province",
+        "StartCountryOrArea",
+        "EndLocation",
+        "EndPrefecture/District",
+        "EndState/Province",
+        "EndCountryOrArea"
+      ],
+      "primary_value_col": "StartLocation",
+      "values": {
+        "StartState/Province": "Pennsylvania",
+        "StartCountryOrArea": "United States",
+        "EndState/Province": "Pennsylvania",
+        "EndCountryOrArea": "United States"
+      },
+      "primary_value": "",
+      "proposed_refs": [
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+        "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Physical facilities are the Line 1 pipe replacement in Adams and York counties, PA, and the Bedford Compressor Station in Bedford County, PA; Delaware is named only as one of two customer states served."
+        },
+        {
+          "url": "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Independently paraphrases the same filing: 'facilities in Adams, York, and Bedford counties, Pennsylvania.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "The sheet's StartState/Province='Delaware' is WRONG — see the attribution concern in validity[]. Correcting StartState/Province to Pennsylvania; EndState/Province (already Pennsylvania) is unchanged and correct. StartLocation/EndLocation (county-level) left unstaged — I could not confidently map which physical terminus (Adams/York-county pipe segment vs. Bedford County compressor station) corresponds to GEM's Start vs End fields from the filing alone; flagging for a human editor with docket exhibits."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "SegmentCost [ref]",
+      "value_cols": [
+        "SegmentCost",
+        "SegmentCostUnits",
+        "SegmentCostYear"
+      ],
+      "primary_value_col": "SegmentCost",
+      "values": {
+        "SegmentCost": "42000000.00",
+        "SegmentCostUnits": "USD",
+        "SegmentCostYear": "2025"
+      },
+      "primary_value": "42000000.00",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Cost (millions)=42.2."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Texas Eastern estimates the total cost of the Project to be $42,211,930.'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. EIA's $42.2M and FERC's precise applicant estimate of $42,211,930 both agree with the sheet's $42.0M within rounding; retaining the sheet's value rather than restating to the exact cent, per the within-rounding rule."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Operator [ref]",
+      "value_cols": [
+        "Operator",
+        "OperatorLocalLanguage",
+        "QCCOwner(业主单位)"
+      ],
+      "primary_value_col": "Operator",
+      "values": {
+        "Operator": "Texas Eastern Transmission LP"
+      },
+      "primary_value": "Texas Eastern Transmission LP",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Pipeline Operator Name='Texas Eastern Transmission, LP'."
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "'Texas Eastern Transmission, LP (Texas Eastern), 915 N. Eldridge Pkwy, Suite 1100, Houston, Texas 77079-2703, filed an application...'"
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Cell had no ref (MISSING_REF). EIA's operator field and FERC's own applicant identification agree exactly on 'Texas Eastern Transmission, LP'."
+    },
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "ref_col": "Owner [ref]",
+      "value_cols": [
+        "Owner1",
+        "Owner1%"
+      ],
+      "primary_value_col": "Owner1",
+      "values": {
+        "Owner1": "Enbridge",
+        "Owner1%": "100.00%"
+      },
+      "primary_value": "Enbridge",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Aug2026 release, row 9: Pipeline Operator Name='Texas Eastern Transmission, LP' — per rule 5, EIA's operator name refs Owner1 too; Texas Eastern is Enbridge's wholly-owned interstate gas subsidiary."
+        },
+        {
+          "url": "https://www.enbridge.com/projects-and-infrastructure/projects/appalachia-to-market-iii-project",
+          "ok": true,
+          "contains_value": true,
+          "name_found": true,
+          "note": "Enbridge's own corporate project page presents the Appalachia to Market III Project as an Enbridge/Texas Eastern project — the operator's own page, sanctioned by the ADDENDUM as a valid second host for an EIA-sourced Owner ref."
+        }
+      ],
+      "class_out": "REFS_ADDED",
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Old ref https://www.eia.gov/naturalgas/data.php#pipelines is a navigation page that never names this pipeline (ADDENDUM failure mode 1) — re-grounded with the dated EIA release and a primary/operator document. EIA's operator name (rule 5) plus Enbridge's own project page corroborate Owner1=Enbridge 100%. No JV partners or equity splits found — 100% is consistent with a wholly-owned interstate subsidiary expansion."
+    }
+  ],
+  "cross_row_leads": [
+    {
+      "project_id": "P0260",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "CANDIDATE MATCH ONLY — could be P0260, P5832, P5835, or P0261 (the TETCO 'Appalachia to Market' family named in the row's dispatch caution; do not assume which). EIA Aug2026 release, sheet 'Historical Projects (1996-2024)', row 1043: 'Appalachia to Market Project' (Conversion), Texas Eastern Transmission, FERC docket CP20-436, status Completed (Approved 2021-01 > Construction 2021-07 > Requested in Service 2021-10 > Completed 2022-01), in-service 2021, PA (Westmoreland, Berks, Fayette counties), 0.8 mi, 30-inch, 18 MMcf/d, $21.5M. This is the ORIGINAL/first-phase A2M conversion project — a distinct FERC docket from A2M III (P7813, CP25-491-000). Confirm against each candidate PID's own recorded FERC docket/mileage before citing."
+    },
+    {
+      "project_id": "P5832",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "CANDIDATE MATCH ONLY — could be P0260, P5832, P5835, or P0261. EIA Aug2026 release, sheet 'Historical Projects (1996-2024)', row 1147: 'Appalachia to Market Project (A2M Project)' (Expansion), Texas Eastern Transmission, status Cancelled (2018-05), states OH, WV, PA, NJ, capacity 1000 MMcf/d, no docket number recorded. This is the ORIGINAL, much larger multi-state A2M expansion that was cancelled in 2018 — a distinct project from A2M III (P7813) and from the A2M conversion (CP20-436) and A2M II (CP22-486). Confirm against each candidate PID's own recorded scope/status before citing."
+    },
+    {
+      "project_id": "P5835",
+      "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+      "facts": "CANDIDATE MATCH ONLY — could be P0260, P5832, P5835, or P0261. EIA Aug2026 release, sheet 'Natural Gas Pipeline Projects', row 8: 'Appalachia to Market II & Armagh & Entriken HP Replacement Project' (Upgrade), Texas Eastern Transmission, FERC docket CP22-486, status Construction (Applied 2023-04 > Approved 2024-01 > Construction 2024-10), in-service 2027, PA/NJ, 2 mi, 36-inch, 55 MMcf/d, $368M. Certificate issued 10/23/2023; construction commenced early 2024; Armagh Compressor Station targeted back in service November 2025; on 9/22/2025 Texas Eastern filed an extension request to complete construction and place the project in service by 6/30/2027. This is 'Appalachia to Market II', a distinct, currently-under-construction FERC docket from A2M III (P7813, CP25-491-000, not yet under construction) — do not conflate the two despite both being ~2 mi / 36-inch / PA. Confirm against each candidate PID's own recorded docket before citing."
+    }
+  ],
+  "status_reviews": [
+    {
+      "segment_name": "Appalachia to Market III Project",
+      "sheet_row": 4193,
+      "current_status": "proposed",
+      "verdict": "confirm",
+      "proposed_status": "",
+      "proposed_changes": {},
+      "evidence_date": "2026-04",
+      "staleness_rule": "",
+      "proposed_refs": [
+        "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+        "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project",
+        "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline"
+      ],
+      "verifications": [
+        {
+          "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.thompsonenergyexpert.com/news/texas-eastern-granted-authorization-for-a2m-iii-project",
+          "ok": true,
+          "contains_value": true
+        },
+        {
+          "url": "https://www.federalregister.gov/documents/2025/06/02/2025-09918/texas-eastern-transmission-lp-notice-of-application-and-establishing-intervention-deadline",
+          "ok": true,
+          "contains_value": true
+        }
+      ],
+      "tier": "high",
+      "independent": true,
+      "source_language": "en",
+      "researcher_notes": "Still correctly 'proposed' — GEM's vocabulary has no intermediate 'approved/certificated' state. Texas Eastern filed the FERC application 5/15/2025 (Docket CP25-491-000); FERC granted the Certificate of Public Convenience and Necessity 2/25/2026 (EIA Aug2026 release, row 9, last updated 2026-04-27; Thompson Energy Expert trade report headlined the authorization grant); construction has not yet begun (targeted March 2027) and the project has not entered service (targeted August 2027, per EIA and Enbridge's own project page). No dormancy concern — this is an active docket moving on schedule, most recently updated within the last 5 months of EIA's data."
+    }
+  ],
+  "summary": "P7813 confirmed (caveat) — real, active FERC docket CP25-491-000 (Appalachia to Market III), not a duplicate of any roster row; 2 concerns staged (spec: LengthKnown should be ~2.0 mi not 0, matching Diameter=36in; attribution: StartState/Province should be Pennsylvania not Delaware — Delaware is a delivery customer's state, not a facility location). 13 of 15 units resolved REFS_ADDED; Pressure and FuelSource UNRESOLVED (no segment-level MAOP or named upstream field found). status_reviews: confirm 'proposed' (FERC-certificated 2/25/2026, pre-construction). 3 cross_row_leads filed on the TETCO Appalachia-to-Market family (P0260/P5832/P5835/P0261 candidates) for orchestrator adjudication."
+}
