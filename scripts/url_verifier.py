@@ -90,12 +90,45 @@ _MIN_INTERVAL = 1.0
 RESPONSE_CACHE: dict | None = None
 
 
+def _wall_fallback(url: str, r, timeout):
+    """A bot wall (Cloudflare firewall/JS challenge, AWS WAF, Imperva) is a
+    tooling failure, not a fact about the page. Re-fetch through the shared
+    ladder in scripts/fetch.py (curl → curl_cffi Chrome-TLS impersonation →
+    real-Chrome clearance cookie via cf_clearance.py; LNGCT_NO_BROWSER=1 stops
+    before the browser) and hand back a Response built from what it got, with
+    `fetch_notes` naming the route. The original response is returned when the
+    ladder cannot clear the wall either. Text is re-encoded as utf-8 (fetch.py
+    already decoded it charset-aware) and a PDF comes back as its extracted
+    text under text/plain, so the branches below need no special case."""
+    import os
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from fetch import _is_cf_wall, fetch_page
+    if not _is_cf_wall(str(r.status_code), r.content or b""):
+        return r
+    page = fetch_page(url, timeout=timeout)
+    if page.status == "000" or _is_cf_wall(page.status, page.text.encode("utf-8", "replace")):
+        return r
+    import requests
+    out = requests.Response()
+    out.status_code = int(page.status) if page.status.isdigit() else 0
+    out._content = page.text.encode("utf-8", "replace")
+    out.encoding = "utf-8"
+    base = "text/plain" if page.is_pdf else (page.content_type.split(";")[0].strip() or "text/html")
+    out.headers["Content-Type"] = f"{base}; charset=utf-8"
+    out.url = page.final_url or url
+    out.request = r.request
+    out.fetch_notes = list(page.notes)
+    return out
+
+
 def _http_get(url: str, timeout, headers, verify: bool = True):
     import requests
     key = (url, verify, headers.get("User-Agent", ""))
     if RESPONSE_CACHE is not None and key in RESPONSE_CACHE:
         return RESPONSE_CACHE[key]
     r = requests.get(url, timeout=timeout, headers=headers, verify=verify)
+    r = _wall_fallback(url, r, timeout)
     if RESPONSE_CACHE is not None:
         RESPONSE_CACHE[key] = r
     return r
@@ -456,6 +489,8 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
                            "page is live, identity not cryptographically confirmed]")
         if is_pdf:
             d["pdf"] = True
+        if getattr(r, "fetch_notes", None):
+            d["fetch_route"] = r.fetch_notes
         if sec_retry:
             d["sec_ua_retry"] = True
             d["reason"] = (d.get("reason", "") +

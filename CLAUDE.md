@@ -269,6 +269,11 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   from the fresh header (schema drifts; don't hard-code offsets).
 - **Every URL passes `scripts/url_verifier.py` before going in the xlsx** — even
   URLs that worked in prior batches. Reject GEM URLs.
+  A bot wall (Cloudflare, AWS WAF, Imperva) is not a verdict: the verifier falls back to
+  `scripts/fetch.py` (curl → `curl_cffi` TLS impersonation → real-Chrome clearance cookie via
+  `scripts/cf_clearance.py`; byte-identical with the two LNG repos, state in gitignored `work/`),
+  and `python scripts/fetch.py <url> --head 2000` is the ad-hoc route. `LNGCT_NO_BROWSER=1`
+  keeps unattended runs from opening Chrome.
 - **Never delete a once-working ref over an access failure.** Geo-blocks, anti-bot
   403s/WAFs, and timeouts are not deletions — only a page confirmed deleted (HTTP
   404/410) may drop out of a `[ref]` cell. A blocked origin gets its Wayback snapshot

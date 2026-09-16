@@ -50,6 +50,13 @@ def db_ops_repo() -> Path:
     return _sibling("gem-db-ops", "GEM_DB_OPS_REPO")
 
 
+def work_dir() -> Path:
+    """Gitignored scratch dir (fetch.py's cookie store and Chrome profile)."""
+    d = REPO_ROOT / "work"
+    d.mkdir(exist_ok=True)
+    return d
+
+
 def sources_dir() -> Path:
     return REPO_ROOT / "sources"
 
