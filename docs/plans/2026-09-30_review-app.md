@@ -379,6 +379,12 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
    concern (note "resolved by accepted <col> fill") so the other contested columns unlock too;
    first seen on P2227 StartYear1 (R7). Acceptance: Baird decides one real pending scope end to
    end and rebuilds its handoff actions workbook from the decisions.
+7. **One card per status call** (Baird 2026-09-30, built): a status-review line and the refs-leg
+   record that stages the SAME Status value onto `Status [ref]` are one decision. `review_data`
+   folds the ref record into the status line (`covers`), and `store` writes the line's call to
+   every covered key in the same transaction (`via` = the line's key), so the staged records
+   stay separate on disk and the consumers are unchanged. A ref record backing a different
+   status stays its own card. First seen on P2227 (R7); detail in `review_app/README.md`.
 
 **Phase 1b** (ruling 1 passed): `push.py` + tests + CLAUDE.md wording; first push on a scope with
 < 50 accepted cells, backups committed.

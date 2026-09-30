@@ -165,3 +165,54 @@ def test_exclude_pids_and_cli(tmp_path):
     data = json.loads(out.read_text())
     assert "P9001" not in {p["pid"] for p in data["pipelines"]}
     assert data["scope"]["snapshot"] == SNAP_NAME
+
+
+# ---- one card per status call: the agreeing Status [ref] record folds into the status line ----
+
+def _with_status_partner(tmp_path, status="construction", refs=("http://third.example/c",), ref_col="Status [ref]"):
+    import json
+    from review_fixture import _rec
+    s = make_scope(tmp_path)
+    f = s["deep"] / "staged_resolutions.json"
+    doc = json.loads(f.read_text())
+    doc["resolutions"].append(_rec(
+        "P9002", 5, ref_col, "FILL", "REFS_ADDED", value_cols=["Status"], primary_value_col="Status",
+        values={"Status": status}, proposed_refs=list(refs), tier="medium", independent=True,
+        researcher_notes="refs leg note",
+        verifications=[{"url": refs[0], "ok": True, "name_found": True, "note": "says it is being built"}]))
+    f.write_text(json.dumps(doc))
+    data, stats = rd.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    return data, stats, s
+
+
+def test_agreeing_status_ref_record_folds_into_the_status_line(tmp_path):
+    data, stats, _ = _with_status_partner(tmp_path)
+    (st,) = _find(data, "P9002", "status")
+    assert not _find(data, "P9002", "fill", ref_col="Status [ref]")          # no card of its own
+    assert stats["status_covers"] == 1 and len(st["covers"]) == 1
+    c = st["covers"][0]
+    assert c["key"].endswith("|5|Status") and c["key"] != st["key"]
+    assert (c["kind"], c["ref_col"], c["class_out"], c["notes"]) == ("fill", "Status [ref]", "REFS_ADDED", "refs leg note")
+    assert c["decision"] is None
+    assert st["proposed_refs"] == ["http://new.example/b", "http://other.example/z", "http://third.example/c"]
+    assert all(u in st["ref_cell_text"] for u in st["proposed_refs"])
+    assert st["publishers"] == 3
+    assert "http://third.example/c" in {v["url"] for v in st["verifications"]}
+    assert "folded into their status line: 1" in rd.summary(data, stats)
+
+
+def test_same_refs_partner_adds_no_refs(tmp_path):
+    data, _, _ = _with_status_partner(tmp_path, refs=("http://new.example/b",))
+    (st,) = _find(data, "P9002", "status")
+    assert len(st["covers"]) == 1
+    assert st["proposed_refs"] == ["http://new.example/b", "http://other.example/z"]
+
+
+def test_partner_with_another_status_or_another_cell_stays_its_own_card(tmp_path):
+    data, stats, _ = _with_status_partner(tmp_path, status="proposed")        # supports the CURRENT status
+    (st,) = _find(data, "P9002", "status")
+    assert "covers" not in st and stats["status_covers"] == 0
+    assert len(_find(data, "P9002", "fill", ref_col="Status [ref]")) == 1
+    (tmp_path / "b").mkdir()
+    data, stats, _ = _with_status_partner(tmp_path / "b", ref_col="StartYear1 [ref]")
+    assert stats["status_covers"] == 0 and "covers" not in _find(data, "P9002", "status")[0]

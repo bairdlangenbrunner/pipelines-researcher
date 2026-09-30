@@ -7,7 +7,9 @@ the two sidecars that live IN each staging dir and are committed with the batch:
 
 Record shape: {key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note,
 reviewer, ts, undecided}. An undo appends a record with `undecided: true`; nothing is ever
-deleted from the log. Nothing here touches the sheet, the routes repo or staged_*.json.
+deleted from the log. A line that `covers` other staged records (a status line and the
+`Status [ref]` record folded into it) writes one more record per covered key, same call, with
+`via` = the line's key. Nothing here touches the sheet, the routes repo or staged_*.json.
 """
 import json
 import os
@@ -119,6 +121,21 @@ def overlay(data, dirs=None, root=None):
                 if live and live.get("decision") == "suggest" and grp == "lines":
                     o["suggested_value"] = live.get("suggested_value", "")
                     o["decision_note"] = live.get("note", "")
+                if grp == "lines" and o.get("covers"):
+                    # a covered record (review_data._fold_status_covers) is decided with its
+                    # line; `uncovered` names the ones whose own record says something else
+                    # (the line was decided before the record was folded in, or the record
+                    # was decided as its own card) until the line is decided again.
+                    for c in o["covers"]:
+                        cd = c.get("dir")
+                        if cd not in logs:
+                            logs[cd] = latest(read_log(dirs[cd])) if cd in dirs else {}
+                        crec = logs[cd].get(c["key"])
+                        clive = crec if crec and not crec.get("undecided") else None
+                        c["decision"] = clive["decision"] if clive else None
+                        c["decided_by"] = clive.get("reviewer") if clive else None
+                        c["decided_at"] = clive.get("ts") if clive else None
+                    o["uncovered"] = [c["key"] for c in o["covers"] if c["decision"] != o["decision"]]
     return data
 
 
@@ -215,11 +232,22 @@ def validate(records, data, reviewer=None, enforce_lock=True):
             if held:
                 raise Contested(f"record {i}: {key!r} is held: a validity concern contests "
                                 f"{', '.join(held)} and has no call yet")
-        out.append({"key": key, "dir": obj["dir"], "pid": pipe["pid"], "sheet_row": obj.get("sheet_row"),
-                    "ref_col": obj.get("ref_col") or obj.get("column") or "", "kind": obj["kind"],
-                    "decision": decision, "suggested_value": sv, "note": note,
-                    "reviewer": reviewer, "ts": None, "undecided": undo})
+        rec = {"key": key, "dir": obj["dir"], "pid": pipe["pid"], "sheet_row": obj.get("sheet_row"),
+               "ref_col": obj.get("ref_col") or obj.get("column") or "", "kind": obj["kind"],
+               "decision": decision, "suggested_value": sv, "note": note,
+               "reviewer": reviewer, "ts": None, "undecided": undo}
+        out.append(rec)
+        out.extend(cover_records(obj, rec))
     return out
+
+
+def cover_records(line, rec):
+    """The same call on every record the line covers (a status line and the `Status [ref]`
+    record folded into it are one decision): one record per covered key, in that record's own
+    dir, carrying `via` = the line's key. Written in the same transaction as the line's."""
+    return [dict(rec, key=c["key"], dir=c["dir"], sheet_row=c.get("sheet_row"),
+                 ref_col=c.get("ref_col") or "", kind=c["kind"], via=rec["key"])
+            for c in line.get("covers") or []]
 
 
 # ---- writing ---------------------------------------------------------------------
@@ -312,7 +340,7 @@ def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
             idx = index(data)
             cols = {}          # concern key -> [columns resolved by accepted lines in this request]
             for r in recs:
-                if r["decision"] != "accept" or r["undecided"]:
+                if r["decision"] != "accept" or r["undecided"] or r.get("via"):
                     continue
                 pipe, line, _ = idx[r["key"]]
                 for c in open_concerns(pipe):
@@ -380,8 +408,15 @@ def sync_backend(data, dirs, snapshot=""):
                 rec = logs[d].get(l["key"])
                 if rec and not rec.get("undecided"):       # a person's call, or already synced
                     continue
-                recs.append({"key": l["key"], "dir": d, "pid": p["pid"], "sheet_row": l.get("sheet_row"),
-                             "ref_col": l.get("ref_col") or l.get("column") or "", "kind": l["kind"],
-                             "decision": "accept", "suggested_value": "", "note": note,
-                             "reviewer": SYNC_REVIEWER, "ts": None, "undecided": False})
+                mine = {"key": l["key"], "dir": d, "pid": p["pid"], "sheet_row": l.get("sheet_row"),
+                        "ref_col": l.get("ref_col") or l.get("column") or "", "kind": l["kind"],
+                        "decision": "accept", "suggested_value": "", "note": note,
+                        "reviewer": SYNC_REVIEWER, "ts": None, "undecided": False}
+                recs.append(mine)
+                for c in cover_records(l, mine):           # same rule per covered record
+                    if c["dir"] not in logs:
+                        logs[c["dir"]] = latest(read_log(dirs[c["dir"]])) if c["dir"] in dirs else {}
+                    crec = logs[c["dir"]].get(c["key"])
+                    if not (crec and not crec.get("undecided")):
+                        recs.append(c)
         return _write(recs, dirs) if recs else []

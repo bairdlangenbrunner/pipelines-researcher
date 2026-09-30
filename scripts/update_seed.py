@@ -131,6 +131,8 @@ def collect(dirs, label=None):
             r = dec.for_record(probe, kind)
             if not r:
                 continue
+            if r.get("via"):
+                continue        # a covered record repeats its status line's call: one suggestion, one unit
             if group == "line" and r.get("decision") == "suggest" and dec.person_decision(probe, kind) == "suggest":
                 units.append({
                     "unit_type": "update", "project_id": probe["project_id"],

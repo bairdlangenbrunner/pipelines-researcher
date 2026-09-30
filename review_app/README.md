@@ -43,7 +43,8 @@ reviewed call (same convention as the LNG carriers app). Tier colours are the wo
 Every staging dir gets two sidecars, committed with the batch:
 
 - `review_log.jsonl` is the truth: append-only, one record per decision
-  `{key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided}`.
+  `{key, dir, pid, sheet_row, ref_col, kind, decision, suggested_value, note, reviewer, ts, undecided}`
+  (plus `via` on a record written through the line that covers it, below).
   `decision` is `accept|hold|reject|suggest`; `ts` is ISO-8601 with timezone, stamped by the
   server along with `reviewer` (the client cannot set either).
 - `review_decisions.json` is derived: `{generated, decisions: {key: latest record}}`, rewritten
@@ -54,6 +55,19 @@ Latest record wins. **Undo** (`u`, or clicking the pressed button) appends a rec
 person (not `backend sync` / `push`) and not undecided. `suggest` needs a `suggested_value` or a
 note and applies to lines only; item keys are refused (use `/api/item`). `/api/data` re-overlays the
 sidecars on every request, so rebuilt datasets and reloads show decisions.
+
+**One card per status call.** A status-review line and the refs-leg record that stages the SAME
+Status value onto `Status [ref]` are two staged records for one decision, so the builder folds the
+ref record into the status line: no card of its own, its refs and verifications join the status
+card, and the line carries `covers` (one entry per folded record: key, dir, kind, classes, notes).
+Deciding the status line (accept / hold / reject / suggest, undo, backend sync) writes the same
+record to every covered key in the same transaction, with `via` = the status line's key, so each
+staged record still has its own decision and the consumers below need no special case
+(`update_seed.py` skips `via` records: one suggestion, one unit). Folded only when the partner
+agrees: same row, `Status [ref]`, a Status value equal to the proposed status. A ref record that
+backs the CURRENT status while the status leg proposes a change is contrary evidence and stays its
+own card. A call made before a record was folded in is never back-filled: `/api/data` reports the
+line's `uncovered` keys, the card stays bright and says to press the same call again.
 
 **Contested lock.** A line whose column (`column`, `value_cols`, or `Status` for status lines) is
 named in the `contested` map of an open concern item (no call yet) shows "held: concern open";

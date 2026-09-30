@@ -344,7 +344,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     root = Path(root or staged_store.BATCHES_ROOT)
     data_dir = Path(data_dir or ROOT / "data")
     exclude = set(exclude_pids)
-    stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "missing_cols": Counter(),
+    stats = {"dropped_na": 0, "not_in_snapshot": 0, "moved": 0, "status_covers": 0, "missing_cols": Counter(),
              "deduped": 0, "no_pid": 0, "excluded": 0, "cross_kind": 0, "line_over_item": 0, "warnings": []}
 
     ordered = sorted((Path(d) for d in dirs), key=_dir_rank)   # primary copy first
@@ -451,10 +451,12 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         if not segs:
             sr0 = next((e.sheet_row for e in card["entries"] if e.sheet_row), None)
             segs = [{"sheet_row": sr0, "segment": rec0.get("segment_name", "")}] if sr0 else []
-        lines, items = [], []
+        lines, items, recs = [], [], {}
         for e in card["entries"]:
             obj = _line(e, snap, own, stats) if e.group == "line" else _item(e)
             (lines if e.group == "line" else items).append(obj)
+            recs[obj["key"]] = e.rec
+        lines = _fold_status_covers(lines, recs, stats)
         lines.sort(key=lambda l: (l["_sort"], l["key"]))
         for l in lines:
             del l["_sort"]
@@ -590,6 +592,56 @@ def _line(e, snap, own, stats):
     return base
 
 
+def _norm(v):
+    return str(v or "").strip().lower()
+
+
+def _fold_status_covers(lines, recs, stats):
+    """One card per status call (Baird 2026-09-30): a status-review line and the refs-leg record
+    that stages the SAME Status value onto `Status [ref]` are two staged records for one
+    decision, so the ref record is folded into the status line instead of drawn as its own
+    card. The status line gains `covers` (one entry per folded record: its key, dir, kind,
+    classes, notes) and shows the union of both records' refs, composed the way the workbook
+    composes two records on one cell (`extra_refs` -> _ref_cell_text). store.validate writes
+    the status line's decision to every covered key in the same transaction, so each staged
+    record still has its own decision record and the consumers need no change.
+
+    Folded only when the partner AGREES: same row, tracker tab, `Status [ref]`, and a Status
+    value equal to the proposed status. A ref record supporting the CURRENT status while the
+    status leg proposes a change is contrary evidence and stays its own card."""
+    status = {}
+    for l in lines:
+        if l["kind"] == "status" and _norm(l.get("proposed_status")):
+            status.setdefault(l["sheet_row"], l)
+    out = []
+    for l in lines:
+        s = status.get(l["sheet_row"])
+        agrees = (s is not None and l is not s and l["kind"] in ("fill", "ref")
+                  and l.get("ref_col") == "Status [ref]"
+                  and _norm((l.get("proposed_values") or {}).get("Status")) == _norm(s["proposed_status"]))
+        if not agrees:
+            out.append(l)
+            continue
+        extra = [u for u in l.get("proposed_refs") or [] if u not in s["proposed_refs"]]
+        if extra:
+            s["proposed_refs"] = s["proposed_refs"] + extra
+            s["ref_cell_text"] = _ref_cell_text(dict(recs[s["key"]], extra_refs=s["proposed_refs"]))
+            s["publishers"] = len({_host(u) for u in s["proposed_refs"]})
+        have = {v.get("url") for v in s["verifications"]}
+        s["verifications"] = s["verifications"] + [v for v in l.get("verifications") or []
+                                                   if v.get("url") not in have]
+        s["in_backend"] = bool(s["in_backend"] and l["in_backend"])
+        s.setdefault("covers", []).append({
+            "key": l["key"], "dir": l["dir"], "kind": l["kind"], "sheet_row": l["sheet_row"],
+            "ref_col": l.get("ref_col") or "", "class_in": l["class_in"], "class_out": l["class_out"],
+            "tier": l["tier"], "independent": l["independent"], "notes": l["notes"],
+            "verifications": [v for v in l.get("verifications") or [] if v.get("note")],
+            "decision": None, "decided_by": None, "decided_at": None,
+        })
+        stats["status_covers"] += 1
+    return out
+
+
 def _item(e):
     r = e.rec
     obj = {k: v for k, v in r.items() if v not in ("", None, [], {}, False)}
@@ -619,7 +671,8 @@ def summary(data, stats):
            f"pipelines: {len(data['pipelines'])}",
            f"lines: {sum(lines.values())}  " + ", ".join(f"{k}={lines[k]}" for k in LINE_KINDS if lines[k]),
            f"items: {sum(items.values())}  " + ", ".join(f"{k}={items[k]}" for k in ITEM_KINDS if items[k]),
-           f"dropped N/A records: {stats['dropped_na']}   in_backend lines: {inb}",
+           f"dropped N/A records: {stats['dropped_na']}   in_backend lines: {inb}   "
+           f"Status [ref] records folded into their status line: {stats['status_covers']}",
            f"deduped copies folded into also_in: {stats['deduped']} (cross-kind {stats['cross_kind']}, line kept over item {stats['line_over_item']})   "
            f"sheet_row moved: {stats['moved']}   not in snapshot: {stats['not_in_snapshot']}"]
     if stats["excluded"]:

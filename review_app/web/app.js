@@ -90,7 +90,10 @@
   function cur(l) { return l.reviewed && l.decision ? l.decision : null; }
   // drawn grayed once a person has decided it (hold stays bright — still open) or it is already in the backend
   function settled(l) { var d = cur(l); return d === "accept" || d === "reject" || d === "suggest"; }
-  function dimmed(l) { return settled(l) || !!l.in_backend; }
+  // a status line covers the Status [ref] record folded into it; the call is incomplete while one
+  // of those records still says something else (decided before the fold: deciding again fixes it)
+  function gap(l) { return !!(cur(l) && l.uncovered && l.uncovered.length); }
+  function dimmed(l) { return (settled(l) && !gap(l)) || !!l.in_backend; }
   function dstate(o) {
     var d = o._item ? o.call : cur(o);
     return d ? d : "undecided";
@@ -101,7 +104,8 @@
       return "suggested: " + (blankv(l.suggested_value) ? "(note only)" : l.suggested_value) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at) +
         (blankv(l.decision_note) ? "" : " \u2014 " + l.decision_note);
     }
-    if (l.reviewed && l.decision) return (VERB[l.decision] || l.decision) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at);
+    if (l.reviewed && l.decision) return (VERB[l.decision] || l.decision) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at) +
+      (gap(l) ? " \u2014 made before the Status [ref] record joined this card: press " + l.decision + " again to cover it" : "");
     if (l.decision && l.decided_by === "backend sync") return "in backend (synced by backend sync, not reviewed)";
     if (l.decision && l.decided_by) return "pre-filled by " + l.decided_by + " (not reviewed)";
     return "";
@@ -523,7 +527,14 @@
     else facts.push(chip(l.publishers + " publishers"));
     h += '<div class="row1">' + facts.join(" ") + "</div>";
     if (l.staleness_rule) h += '<div class="faint" style="margin:4px 0">' + esc(l.staleness_rule) + "</div>";
-    return unitBox("status + [ref] together (decided as one)", changesHtml(l, p, "Status") + refBlock(l)) .replace('<div class="ulabel">', h + '<div class="ulabel">');
+    var cov = (l.covers || []).map(function (c) {
+      return '<div class="faint">also decides the refs-leg record for ' + esc(c.ref_col || "Status [ref]") + " (" + esc(KIND_LABEL[c.kind] || c.kind) + " \u00b7 " + esc(c.class_out || "?") +
+        (c.dir !== l.dir ? " \u00b7 " + esc(dirLabel(c.dir)) : "") + "): same value, its refs are shown here" +
+        ((c.tier || "") !== (l.tier || "") || !!c.independent !== !!l.independent
+          ? ". That record says tier " + esc(c.tier || "none") + ", independent " + (c.independent ? "yes" : "no") + "; this card shows the status review's"
+          : "") + "</div>";
+    }).join("");
+    return unitBox("status + [ref] together (decided as one)", changesHtml(l, p, "Status") + refBlock(l) + cov) .replace('<div class="ulabel">', h + '<div class="ulabel">');
   }
   function routeBody(l, p) {
     var geo = l.geometry_file ? '/geo/' + encodeURI(String(l.dir).replace(/^batches\//, "") + "/" + l.geometry_file) : "";
@@ -558,6 +569,12 @@
     if (l.notes) d.push('<div class="dtxt"><span class="k">researcher notes:</span> ' + esc(l.notes) + "</div>");
     (l.verifications || []).forEach(function (v) {
       if (v.note) d.push('<div class="dtxt"><span class="k">' + esc(v.url) + ":</span> " + esc(v.note) + "</div>");
+    });
+    (l.covers || []).forEach(function (c) {
+      if (c.notes) d.push('<div class="dtxt"><span class="k">researcher notes (' + esc(c.ref_col || "refs") + " record):</span> " + esc(c.notes) + "</div>");
+      (c.verifications || []).forEach(function (v) {
+        d.push('<div class="dtxt"><span class="k">' + esc(v.url) + " (" + esc(c.ref_col || "refs") + " record):</span> " + esc(v.note) + "</div>");
+      });
     });
     var misc = ["class " + (l.class_in || "?") + " → " + (l.class_out || "?"),
                 "link live: " + (l.link_live == null ? "unknown" : l.link_live)];
@@ -831,6 +848,10 @@
     l.decided_at = r.undecided ? null : r.ts;
     l.suggested_value = r.suggested_value || "";
     l.decision_note = r.note || "";
+    if (l.covers) {          // the server wrote the same call to every covered record
+      l.covers.forEach(function (c) { c.decision = l.decision; c.decided_by = l.decided_by; c.decided_at = l.decided_at; });
+      l.uncovered = [];
+    }
     noteSession(r, "decision");
   }
   function noteSession(r, field) {

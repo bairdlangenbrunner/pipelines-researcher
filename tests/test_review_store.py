@@ -623,3 +623,73 @@ def test_api_accept_self_resolving_line_returns_item_record_and_unlocks(scope, t
     assert post(base + "/api/decide", [{"key": owner["key"], "decision": "accept"}])[0] == 200
     got = next(i for p in get_json(base + "/api/data")["pipelines"] for i in p["items"] if i["kind"] == "concern")
     assert got["call"] == "dismissed" and got["call_note"] == "resolved by accepted Status fill"
+
+
+# ---- a status line covers the Status [ref] record folded into it: one call, both records ----
+
+@pytest.fixture
+def covered(tmp_path):
+    from review_fixture import _rec
+    s = review_fixture.make_scope(tmp_path)
+    f = s["deep"] / "staged_resolutions.json"
+    doc = json.loads(f.read_text())
+    doc["resolutions"].append(_rec(
+        "P9002", 5, "Status [ref]", "FILL", "REFS_ADDED", value_cols=["Status"], primary_value_col="Status",
+        values={"Status": "construction"}, proposed_refs=["http://third.example/c"], tier="medium"))
+    f.write_text(json.dumps(doc))
+    data, _ = review_data.build([s["qc"], s["deep"]], "Russia", "gas", data_dir=s["data"], root=s["root"])
+    s["dataset"], s["dirs"] = data, store.dir_paths(data, tmp_path)
+    return s
+
+
+def test_deciding_a_status_line_writes_the_covered_record_too(covered):
+    d = covered["dataset"]
+    st = line(d, "P9002", "status")
+    (c,) = st["covers"]
+    saved = dec(covered, [{"key": st["key"], "decision": "accept"}])
+    assert [r["key"] for r in saved] == [st["key"], c["key"]]
+    mine, cov = saved
+    assert tuple(mine) == KEYS and tuple(cov) == KEYS + ("via",)
+    assert (cov["via"], cov["kind"], cov["ref_col"], cov["decision"], cov["reviewer"], cov["ts"]) == \
+        (st["key"], "fill", "Status [ref]", "accept", "Baird", mine["ts"])
+    derived = json.loads(sidecars(covered, st)[1].read_text())["decisions"]
+    assert derived[st["key"]]["decision"] == derived[c["key"]]["decision"] == "accept"
+    store.overlay(d, covered["dirs"])
+    assert (c["decision"], c["decided_by"], st["uncovered"]) == ("accept", "Baird", [])
+    # the consumer-side reader sees a person's accept on BOTH staged records
+    import decisions
+    dx = decisions.Decisions(covered["dirs"][st["dir"]])
+    recs = json.loads((covered["deep"] / "staged_resolutions.json").read_text())["resolutions"]
+    both = [r for r in recs if r["project_id"] == "P9002" and r["primary_value_col"] == "Status"]
+    assert len(both) == 2 and all(dx.for_record(r)["decision"] == "accept" for r in both)
+    # undo fans out the same way
+    out = dec(covered, [{"key": st["key"], "undo": True}])
+    assert [r["undecided"] for r in out] == [True, True]
+    store.overlay(d, covered["dirs"])
+    assert (st["decision"], c["decision"], st["uncovered"]) == (None, None, [])
+
+
+def test_a_call_made_before_the_fold_shows_as_uncovered_until_repeated(covered):
+    d = covered["dataset"]
+    st = line(d, "P9002", "status")
+    (c,) = st["covers"]
+    # the record as it was written before the fold existed: the status key only
+    store._write([{"key": st["key"], "dir": st["dir"], "pid": "P9002", "sheet_row": 5, "ref_col": "__STATUS__",
+                   "kind": "status", "decision": "accept", "suggested_value": "", "note": "",
+                   "reviewer": "Baird", "ts": None, "undecided": False}], covered["dirs"])
+    store.overlay(d, covered["dirs"])
+    assert st["decision"] == "accept" and c["decision"] is None and st["uncovered"] == [c["key"]]
+    dec(covered, [{"key": st["key"], "decision": "accept"}])
+    store.overlay(d, covered["dirs"])
+    assert st["uncovered"] == [] and c["decision"] == "accept"
+
+
+def test_sync_backend_covers_the_folded_record(covered):
+    d = covered["dataset"]
+    st = line(d, "P9002", "status")
+    st["in_backend"] = True
+    out = store.sync_backend(d, covered["dirs"], "X.csv")
+    keys = [r["key"] for r in out]
+    assert st["key"] in keys and st["covers"][0]["key"] in keys
+    assert all(r["reviewer"] == "backend sync" for r in out)
+    assert store.sync_backend(d, covered["dirs"], "X.csv") == []

@@ -58,6 +58,11 @@ ref at `low`, and `sweep_gates.py` gates E (orphans), F (banned/GEM), I (relevan
 **and** an OGJ article reporting it independently). **NOT independent:** the same
 wire story (Reuters/BusinessWire/PRNewswire) republished; multiple outlets tracing
 to one original; anything citing GEM/gem.wiki (circular — see standing rule 1).
+**Common ownership alone does not defeat independence (Baird 2026-09-30, P2227):** two
+distinct organisations each publishing their own document are independent publishers even
+when both are bodies of the same state — BOTAS (the operator) and the Turkish Energy
+Ministry each describing the Russia–Turkey line on their own page count as two. It stops
+being two when one page republishes or quotes the other, or both restate one release.
 When sources conflict, prefer the one higher in `source_roster.md`, note the
 conflict, and lower the tier.
 
