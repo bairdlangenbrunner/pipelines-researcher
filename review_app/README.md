@@ -2,8 +2,9 @@
 
 Review app for staged pipeline research (plan: `docs/plans/2026-09-30_review-app.md`).
 
-**After milestone 4: data builder + server/UI with line decisions, item calls, bulk, session
-summary, and backend refresh.** `s` (suggest) in the UI is not wired yet.
+**After milestone 5b: data builder + server/UI with line decisions, suggest, item calls, bulk,
+session summary, and backend refresh; consumers `update_seed.py`, `staged_summary.py` decided
+counts and `apply_route_candidates.py --decisions`.**
 
 ```bash
 python review_app/server.py --country Russia --commodity gas        # builds the dataset, opens the browser
@@ -53,6 +54,37 @@ accept is refused with 409 server-side. Hold and reject stay allowed.
 Any call on the concern (including `needs research`) releases the lock, and the UI unlocks that
 card's lines in place. No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the
 Russia gas data.
+
+## Suggest
+
+`s` (or the "suggest (s)" button) opens an inline form on the current line: **Suggested value**
+(prefilled with the proposed value for fill / owners-tab lines, the proposed status for status
+lines, the proposed `[ref]` cell text for ref lines; empty for routes) and **Note**. Enter or
+"Save suggestion" posts `decision: suggest` with `suggested_value` + `note` to `/api/decide`;
+Esc cancels. Either field may be empty but not both (400). The line then reads
+"suggested: <value> by <reviewer> <time>", counts as decided (a person's call: `store.reviewed`,
+the progress bar, the Decision filter's `suggest` chip), is skipped by every bulk action, and
+shows in the session summary ("decided lines by call", "this session"). Clicking the pressed
+button or `u` undoes it. Re-opening the form on a suggested line prefills the earlier suggestion.
+Paste surfaces never carry a suggestion; `scripts/update_seed.py` routes it to an Update worklist.
+
+## Consumers
+
+- `python scripts/update_seed.py --country C --commodity gas [--dirs ...] [--out PATH]` reads each
+  staging dir's `review_decisions.json` and writes a §5 Update worklist seed
+  (`batches/<scope>/staging/update-seed-<YYYYMMDD>/staged_updates_seed.json`): an update unit per
+  `suggest` line (pid, sheet_row, column, ref_col, proposed_value, suggested_value, note,
+  reviewer, source dir) and a research unit per concern called `confirmed` or `needs_research`
+  (pid, concern_type, contested columns, text, note). Shape = `staged_updates.json` `rows` plus a
+  flat `units` list; `old` / `tier` / `refs` are left empty. No decision files: empty seed, exit 0.
+- `python scripts/staged_summary.py` prints `decided=12a/3h/1r/0s of 40` per dir (and
+  `batches/INDEX.md` a `decided` column via `--index`); a dir with no decision file shows `—`.
+  Counts are over that dir's LINE records only (resolution lines + discovery candidates), by
+  the person's latest call; a line carried into a handoff packet is decided in its primary dir,
+  so the packet dir shows it undecided.
+- `python scripts/apply_route_candidates.py --staging DIR ... --decisions` takes its PID list
+  from the accepted `route` lines instead of `--pids` (both together, or none accepted, is
+  refused). Plan / review / `--apply` are unchanged.
 
 ## Items and calls
 

@@ -1667,7 +1667,221 @@ def _split_readme(ws, meta, sheet_defs, actions_file: bool, companion: str):
     ws.freeze_panes = "A2"
 
 
-def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: dict) -> None:
+# --- review-app decisions (--decisions) ------------------------------------ #
+# With --decisions, the paste surfaces carry only lines a PERSON clicked accept in the review
+# app (docs/plans/2026-09-30_review-app.md §4). Decisions are read from each staging dir's
+# review_decisions.json (+ review_log.jsonl) through review_app/decisions.py, which matches a
+# staged record by (pid, colid) with sheet_row breaking ties. Everything below is inert
+# without the flag: every call site guards on `dx is not None`.
+
+_DECLINED = ("reject", "suggest")
+
+
+class _DecisionIndex:
+    """Decision lookup across every staging dir whose records land in the workbook: the
+    --staging dir itself (this packet's own records), plus — in handoff mode — every dir the
+    staged_actions.json sidecar names (meta.staged_dirs + each record's source_dir). A record
+    is looked up in its own dir first, then in the others (the review app folds identical
+    (pid, row, colid) copies across dirs into one line and records the call on the primary
+    copy's dir). A dir without a decision file contributes nothing."""
+
+    def __init__(self, staging: Path, actions: dict | None = None):
+        for p in (Path(__file__).resolve().parent.parent / "review_app",
+                  Path(__file__).resolve().parent):
+            if str(p) not in sys.path:
+                sys.path.insert(0, str(p))
+        # lazy: review_data imports this module, so a top-level import would be circular
+        from decisions import Decisions
+        from review_data import classify
+        from store import DERIVED_NAME, LOG_NAME, MACHINE_REVIEWERS
+        self._classify = classify
+        self._machine = MACHINE_REVIEWERS
+        self.home = Path(staging).resolve()
+        labels = list(((actions or {}).get("meta") or {}).get("staged_dirs") or [])
+        for key in ("concerns", "status_changes", "fills", "ref_work", "routes", "new_rows"):
+            for r in (actions or {}).get(key) or []:
+                if isinstance(r, dict) and r.get("source_dir"):
+                    labels.append(r["source_dir"])
+        dirs = [self.home]
+        for lab in labels:
+            d = self._resolve(lab)
+            if d is not None and d not in dirs:
+                dirs.append(d)
+        self.dirs = dirs
+        self.decs = {d: Decisions(d) for d in dirs}
+        self.with_file = [d for d in dirs
+                          if (d / DERIVED_NAME).exists() or (d / LOG_NAME).exists()]
+        self.tally: dict[tuple, str] = {}
+
+    def _resolve(self, label):
+        """A staged_actions source_dir label ('<scope>/<run>', batches-relative with the
+        'staging' level omitted) -> the staging dir Path, or None if it can't be found."""
+        s = str(label or "").strip()
+        if not s or s == _THIS_PACKET:
+            return self.home
+        p = Path(s)
+        if p.is_absolute():
+            return p.resolve() if p.is_dir() else None
+        batches = self.home.parents[2] if len(self.home.parents) > 2 else self.home.parent
+        cands = []
+        if len(p.parts) == 2:
+            cands.append(batches / p.parts[0] / "staging" / p.parts[1])
+        cands += [batches / p, batches.parent / p, Path.cwd() / p]
+        for c in cands:
+            if c.is_dir():
+                return c.resolve()
+        return None
+
+    def kind(self, r: dict) -> tuple:
+        if r.get("class") in ("new_row", "matched_existing", "monitor") and not r.get("ref_col"):
+            return ("item", "monitor") if r.get("class") == "monitor" else ("line", "new_row")
+        return self._classify(r)
+
+    def record(self, r: dict):
+        """The live decision record for a staged record (own dir first), or None."""
+        first = self._resolve(r.get("source_dir"))
+        order = ([first] if first in self.decs else []) + [d for d in self.dirs if d != first]
+        for d in order:
+            hit = self.decs[d].for_record(r) if self.decs[d] else None
+            if hit:
+                return hit
+        return None
+
+    def label(self, r: dict) -> str:
+        """accept | hold | reject | suggest | undecided for a line (a person's click only —
+        a machine `backend sync` record leaves the line undecided); an item shows its call
+        (confirmed / dismissed / needs_research / noted / todo) or undecided."""
+        group, _ = self.kind(r)
+        hit = self.record(r)
+        if group == "line":
+            d = hit.get("decision") if hit and hit.get("reviewer") not in self._machine else None
+            d = d or "undecided"
+            key = (str(self._resolve(r.get("source_dir"))),
+                   r.get("project_id", "") or r.get("slug", ""),
+                   str(r.get("sheet_row", "")), r.get("ref_col", ""), r.get("class_in", ""),
+                   r.get("primary_value_col") or "", r.get("class_out") or r.get("class", ""))
+            self.tally[key] = d
+            return d
+        return (hit.get("call") if hit else "") or "undecided"
+
+    def note(self, r: dict) -> str:
+        hit = self.record(r)
+        if not hit:
+            return ""
+        bits = []
+        if hit.get("reviewer"):
+            bits.append(str(hit["reviewer"]) + (f" {hit['ts']}" if hit.get("ts") else ""))
+        if hit.get("note"):
+            bits.append(str(hit["note"]))
+        if str(hit.get("suggested_value") or "").strip():
+            bits.append(f"suggested: {hit['suggested_value']}")
+        return " — ".join(bits)
+
+    def accepted(self, r: dict) -> bool:
+        return self.label(r) == "accept"
+
+    def declined(self, r: dict) -> bool:
+        return self.kind(r)[0] == "line" and self.label(r) in _DECLINED
+
+    def paste(self, rows):
+        """Accepted lines only (a paste surface)."""
+        return [r for r in rows if self.accepted(r)]
+
+    def keep(self, rows):
+        """Drop rejects/suggests (a change list); holds and undecided lines stay."""
+        return [r for r in rows if not self.declined(r)]
+
+    def summary(self) -> str:
+        c = {k: 0 for k in ("accept", "hold", "reject", "suggest", "undecided")}
+        for v in self.tally.values():
+            c[v] = c.get(v, 0) + 1
+        return (f"  decisions: {' '.join(f'{k}={v}' for k, v in c.items())} "
+                f"(lines); {len(self.with_file)} of {len(self.dirs)} staging dir(s) had a "
+                "decision file")
+
+
+def _dx_cols(columns, dx):
+    """Append the Decision + DecisionNote columns to a detail tab (no-op without --decisions).
+    Appended LAST so every styler's header->index map is unchanged."""
+    if dx is None:
+        return columns
+    return list(columns) + [("Decision", dx.label, 12), ("DecisionNote", dx.note, 44)]
+
+
+def _dx_stub(r: dict) -> dict:
+    """A non-accepted line on the sweep Backend mirror: keeps its segment row (current values,
+    untinted) but overlays nothing — no ref_col, no values."""
+    return {"project_id": r.get("project_id", ""), "sheet_row": r.get("sheet_row", ""),
+            "pipeline_name": r.get("pipeline_name", ""), "segment_name": r.get("segment_name", "")}
+
+
+def _dx_backend(rows, dx):
+    """Sweep Backend mirror under --decisions: accepted lines and validity concerns (orange
+    warnings, never content) pass through; everything else becomes a row-keeping stub."""
+    out = []
+    for r in rows:
+        if r.get("ref_col") == VALIDITY_REF or dx.accepted(r):
+            out.append(r)
+        else:
+            out.append(_dx_stub(r))
+    return out
+
+
+def _declined_columns(dx):
+    def proposed(r):
+        kind = dx.kind(r)[1]
+        if kind == "new_row":
+            return r.get("name", "")
+        if kind == "route":
+            return r.get("geometry_file", "")
+        if kind == "status":
+            return r.get("proposed_status") or (r.get("values") or {}).get("Status", "")
+        vals = r.get("values") or {}
+        v = vals.get(r.get("primary_value_col") or "", "") if kind in ("fill", "oo") else ""
+        ref = _ref_cell_text(r)
+        return " | ".join(x for x in (str(v or ""), ref) if x)
+
+    def column(r):
+        kind = dx.kind(r)[1]
+        if kind == "status":
+            return "Status"
+        if kind == "new_row":
+            return f"new:{r.get('slug', '')}"
+        if kind == "fill":
+            return r.get("primary_value_col") or r.get("ref_col", "")
+        return r.get("ref_col", "")
+
+    hit = lambda k: (lambda r: (dx.record(r) or {}).get(k, ""))  # noqa: E731
+    return [
+        ("Kind", lambda r: dx.kind(r)[1], 10),
+        ("ProjectID", lambda r: r.get("project_id") or r.get("matched_project_id", ""), 12),
+        ("SheetRow", lambda r: r.get("sheet_row", ""), 9),
+        ("Column", column, 22),
+        ("Proposed", proposed, 46),
+        ("Decision", dx.label, 10),
+        ("Reviewer", hit("reviewer"), 16),
+        ("Note", hit("note"), 50),
+        ("SuggestedValue", hit("suggested_value"), 24),
+        ("Dir", lambda r: r.get("source_dir") or _THIS_PACKET, 28),
+    ]
+
+
+def _declined_view(wb, title, rows, dx):
+    """Rejected + suggested lines, off every paste surface: the reason is the reviewer's note."""
+    seen, uniq = set(), []
+    for r in rows:
+        if id(r) in seen or not dx.declined(r):
+            continue
+        seen.add(id(r))
+        uniq.append(r)
+    if not uniq:
+        return 0
+    _write_sheet(wb, title, _declined_columns(dx), uniq)
+    return len(uniq)
+
+
+def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: dict,
+                   dx: _DecisionIndex | None = None) -> None:
     """Handoff mode (staged_actions.json present): write the two-workbook deliverable.
 
     <stem>-actions.xlsx   tab order = work order: Decisions → StatusChanges →
@@ -1709,6 +1923,9 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     status_rows = actions.get("status_changes", []) + \
         [dict(r, source_dir=r.get("source_dir") or _THIS_PACKET) for r in own_status_open]
     own_status_confirms = len(parts["status"]) - len(own_status_open)
+    status_rows_all = status_rows
+    if dx is not None:                      # rejects/suggests leave the change list
+        status_rows = dx.keep(status_rows)
 
     own_fills = [r for r in parts["fill"] if r.get("class_out") == "REFS_ADDED"]
     pending_fills = actions.get("fills", [])
@@ -1727,6 +1944,10 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                [r for r in paste_refs if is_oo(r)]
     unresolved_refs = [r for r in own_refunits + ref_work
                        if r.get("class_out") == "UNRESOLVED"]
+    if dx is not None:                      # paste surfaces: clicked accepts only
+        declined_pool = afb_res + oo_units
+        afb_res = dx.paste(afb_res)
+        oo_units = dx.paste(oo_units)
 
     wikidiff = parts["wikidiff"]
     is_action_wd = lambda r: (r.get("class_out") == "WIKI_UPDATE"
@@ -1754,9 +1975,14 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     nr_new = [c for c in new_rows_all if c.get("class") == "new_row"]
     nr_monitor = [c for c in new_rows_all if c.get("class") == "monitor"]
     nr_matched = [c for c in new_rows_all if c.get("class") == "matched_existing"]
+    if dx is not None:
+        declined_pool += status_rows_all + route_candidates + nr_new + nr_matched
+        route_candidates = dx.keep(route_candidates)
+        nr_new = dx.paste(nr_new)
+        nr_matched = dx.keep(nr_matched)
 
     # ---- ACTIONS workbook (tab order = work order) ----
-    c_cols = _concerns_columns()
+    c_cols = _dx_cols(_concerns_columns(), dx)
     if open_dec:
         t = f"{prefix}_Decisions"
         _write_sheet(wb_a, t, c_cols, open_dec, _concerns_styler(c_cols))
@@ -1769,7 +1995,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "Yellow = attribution/spec. Blue 'Also flagged' = this packet's own checks "
                        "hit the same issue. Source packet = the staging dir with the full finding."))
     if status_rows:
-        s_cols = _status_columns(with_source=True)
+        s_cols = _dx_cols(_status_columns(with_source=True), dx)
         t = f"{prefix}_StatusChanges"
         _write_sheet(wb_a, t, s_cols, status_rows, _status_styler(s_cols))
         defs_a.append((t,
@@ -1841,8 +2067,9 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
 
     _src_col = ("Source packet", lambda r: r.get("source_dir", ""), 28)
     if nr_matched:
-        x_cols = _compact_columns([("Matched ProjectID",
-                                    lambda r: r.get("matched_project_id", ""), 16)]) + [_src_col]
+        x_cols = _dx_cols(_compact_columns([("Matched ProjectID",
+                                             lambda r: r.get("matched_project_id", ""), 16)])
+                          + [_src_col], dx)
         t = f"{prefix}_MatchedExisting"
         _write_sheet(wb_a, t, x_cols, nr_matched, _flag_col2("green"))
         defs_a.append((t,
@@ -1871,7 +2098,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "2). These feed a SEPARATE human branch+PR against GOIT-GGIT-pipeline-routes "
                        "— a route is NEVER auto-replaced."))
     if route_candidates:
-        rc_cols = _route_candidate_columns()
+        rc_cols = _dx_cols(_route_candidate_columns(), dx)
         t = f"{prefix}_RouteCandidates"
         _write_sheet(wb_a, t, rc_cols, route_candidates, _route_candidate_styler(rc_cols))
         defs_a.append((t,
@@ -1903,7 +2130,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     fill_detail = pending_fills + \
         [dict(r, source_dir=r.get("source_dir") or _THIS_PACKET) for r in parts["fill"]]
     if fill_detail:
-        pf_cols = _fills_columns(with_source=True)
+        pf_cols = _dx_cols(_fills_columns(with_source=True), dx)
         t = f"{prefix}_FillDetail"
         _write_sheet(wb_b, t, pf_cols, fill_detail, _fills_styler(pf_cols))
         defs_b.append((t,
@@ -1916,6 +2143,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     if ref_detail:
         rw_cols = _ref_columns(with_source=True)
         rw_cols.insert(5, ("Bucket", lambda r: r.get("class_out", ""), 13))
+        rw_cols = _dx_cols(rw_cols, dx)
         t = f"{prefix}_RefWorkDetail"
         _write_sheet(wb_b, t, rw_cols, ref_detail, _refwork_styler(rw_cols))
         defs_b.append((t,
@@ -1923,6 +2151,16 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
                        "REFS_ADDED = blank [ref] filled; DEAD_LINK = red current ref with verified "
                        "replacement; UNRESOLVED = also listed on the actions OpenFlags tab. "
                        "REVERIFIED refs are counts-only in the README (no action)."))
+    declined_n = 0
+    if dx is not None:
+        t = f"{prefix}_Declined"
+        declined_n = _declined_view(wb_b, t, declined_pool, dx)
+        if declined_n:
+            defs_b.append((t,
+                           f"{declined_n} — lines the review app REJECTED or answered with a "
+                           "SUGGEST: kept off every paste surface and change list in the actions "
+                           "file. Note = the reviewer's reason; SuggestedValue = the reviewer's "
+                           "counter-proposal (a suggest is research to do, never a paste)."))
     if wiki_rest:
         wd_cols = _wikidiff_columns()
         t = f"{prefix}_WikiAlignment"
@@ -1994,6 +2232,8 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
         "route_covered": len(covered_routeqc), "monitor": len(nr_monitor),
         "recon_crosscompare": recon_n, "recon_actions": recon_act_n,
     }
+    if dx is not None:
+        counts["declined"] = declined_n
     meta = {**meta, "counts": counts}
     _split_readme(readme_a, meta, defs_a, actions_file=True, companion=out_b.name)
     _split_readme(readme_b, meta, defs_b, actions_file=False, companion=out_a.name)
@@ -2004,6 +2244,8 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     for p, wb in ((out_a, wb_a), (out_b, wb_b)):
         print(f"wrote {p}  ({len(wb.sheetnames)} sheets: {', '.join(wb.sheetnames)})")
     print(f"  counts: {counts}")
+    if dx is not None:
+        print(dx.summary())
     print(f"  next: python scripts/recalc.py {out_a} && python scripts/recalc.py {out_b}")
 
 
@@ -2131,6 +2373,11 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--staging", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--decisions", action="store_true",
+                    help="honour the review app's decisions (review_decisions.json in the staging "
+                         "dir and every carried source dir): paste surfaces carry only accepted "
+                         "lines, detail tabs gain Decision/DecisionNote, rejects+suggests move to "
+                         "a Declined tab")
     args = ap.parse_args()
 
     out = Path(args.output)
@@ -2183,6 +2430,8 @@ def main() -> None:
     actions_path = Path(args.staging) / "staged_actions.json"
     if actions_path.exists():
         actions = json.loads(actions_path.read_text())
+    dx = _DecisionIndex(Path(args.staging), actions) if args.decisions else None
+    declined_pool: list = []
 
     # Rebuild every SheetRow locator against the snapshot BEFORE anything is rendered or
     # partitioned. Staged locators from a leg built before a sheet re-sort are stale (see
@@ -2226,7 +2475,7 @@ def main() -> None:
         parts = {"wikidiff": wikidiff_res, "routeqc": routeqc_res,
                  "validity": validity_res, "status": status_res, "route": route_res,
                  "fill": fill_res, "oo": oo_res, "tracker": tracker_res}
-        _build_handoff(Path(args.staging), out, meta, parts, actions)
+        _build_handoff(Path(args.staging), out, meta, parts, actions, dx=dx)
         return
 
     # HANDOFF gatekeeper tab first (right after README): carried validity concerns of
@@ -2240,7 +2489,7 @@ def main() -> None:
         if legacy_path.exists():
             concerns = json.loads(legacy_path.read_text()).get("concerns", [])
     if concerns:
-        c_cols = _concerns_columns()
+        c_cols = _dx_cols(_concerns_columns(), dx)
         c_title = f"{prefix}_Concerns"
         _write_sheet(wb, c_title, c_cols, concerns, _concerns_styler(c_cols))
         sheet_defs.append((c_title,
@@ -2255,7 +2504,7 @@ def main() -> None:
     # Annual-update StatusReview tab leads the packet when present — the per-row status
     # verdict is what researchers act on first in an update cycle.
     if status_res:
-        s_cols = _status_columns()
+        s_cols = _dx_cols(_status_columns(), dx)
         s_title = f"{prefix}_StatusReview"
         _write_sheet(wb, s_title, s_cols, status_res, _status_styler(s_cols))
         sheet_defs.append((s_title,
@@ -2269,7 +2518,7 @@ def main() -> None:
     # confirms are counts-only in the README.
     pending_status = (actions or {}).get("status_changes", [])
     if pending_status:
-        ps_cols = _status_columns(with_source=True)
+        ps_cols = _dx_cols(_status_columns(with_source=True), dx)
         ps_title = f"{prefix}_PendingStatus"
         _write_sheet(wb, ps_title, ps_cols, pending_status, _status_styler(ps_cols))
         sheet_defs.append((ps_title,
@@ -2297,6 +2546,9 @@ def main() -> None:
             (f for f in own_fills + pending_fills
              if f.get("tab") != "operators_owners" and f.get("ref_col") not in OO_PRIMARY),
             key=lambda f: (_int_or_zero(f.get("sheet_row")), f.get("ref_col", "")))
+        if dx is not None:
+            declined_pool += afb_res
+            afb_res = dx.paste(afb_res)
         if afb_res:
             afb_title = f"{prefix}_AllFillsBackend"
             # carried validity concerns tint the rows this tab already renders (they never
@@ -2339,6 +2591,9 @@ def main() -> None:
         # paste over a cell the sweep has flagged as wrong.
         concerns = [r for r in validity_res if (r.get("verdict") or "").strip() == "concern"]
         backend_res = tracker_res + own_fills + status_changes + concerns
+        if dx is not None:
+            declined_pool += backend_res
+            backend_res = _dx_backend(backend_res, dx)
         if backend_res:
             backend_title = f"{prefix}_Backend"
             _backend_view(wb, backend_title, backend_res, backend_header, snapshot_rows)
@@ -2368,6 +2623,9 @@ def main() -> None:
     # gives the FILL the base slot when a ref-only twin exists for the same cell.
     oo_fills = [r for r in fill_res if r.get("class_out") == "REFS_ADDED" and _is_oo(r)]
     oo_view = oo_res + oo_fills
+    if dx is not None:
+        declined_pool += oo_view
+        oo_view = dx.paste(oo_view)
     if oo_view:
         oo_title = f"{prefix}_OperatorsOwners"
         oo_concerns = [r for r in validity_res
@@ -2384,7 +2642,7 @@ def main() -> None:
 
     # HANDOFF: corroborated fills + actionable ref work carried from prior packets.
     if pending_fills:
-        pf_cols = _fills_columns(with_source=True)
+        pf_cols = _dx_cols(_fills_columns(with_source=True), dx)
         pf_title = f"{prefix}_PendingFills"
         _write_sheet(wb, pf_title, pf_cols, pending_fills, _fills_styler(pf_cols))
         sheet_defs.append((pf_title,
@@ -2394,7 +2652,7 @@ def main() -> None:
                            "Source packet = where the fill is staged."))
     ref_work = (actions or {}).get("ref_work", [])
     if ref_work:
-        rw_cols = _ref_columns(with_source=True)
+        rw_cols = _dx_cols(_ref_columns(with_source=True), dx)
         rw_title = f"{prefix}_RefWork"
         _write_sheet(wb, rw_title, rw_cols, ref_work, _refwork_styler(rw_cols))
         rw_counts = {}
@@ -2459,7 +2717,7 @@ def main() -> None:
 
     # Fills tab (deep sweep): blank value fields researched + filled with a paired ref.
     if fill_res:
-        f_cols = _fills_columns()
+        f_cols = _dx_cols(_fills_columns(), dx)
         f_title = f"{prefix}_Fills"
         _write_sheet(wb, f_title, f_cols, fill_res, _fills_styler(f_cols))
         sheet_defs.append((f_title,
@@ -2477,6 +2735,8 @@ def main() -> None:
     is_route_candidate = lambda r: r.get("class_out") == "ROUTE_CANDIDATE"
     all_routes = [r for r in all_routes_raw if not is_route_candidate(r)]
     route_candidates = [r for r in all_routes_raw if is_route_candidate(r)]
+    if dx is not None:
+        declined_pool += route_candidates
     if all_routes:
         rt_cols = _route_columns(with_source=bool(carried_routes))
         rt_title = f"{prefix}_RouteSuggestions"
@@ -2490,7 +2750,7 @@ def main() -> None:
                            "standing rule 2). These feed a SEPARATE human branch+PR against the "
                            f"GOIT-GGIT-pipeline-routes repo — a route is NEVER auto-replaced.{carried_txt}"))
     if route_candidates:
-        rc_cols = _route_candidate_columns()
+        rc_cols = _dx_cols(_route_candidate_columns(), dx)
         rc_title = f"{prefix}_RouteCandidates"
         _write_sheet(wb, rc_title, rc_cols, route_candidates, _route_candidate_styler(rc_cols))
         sheet_defs.append((rc_title,
@@ -2518,6 +2778,10 @@ def main() -> None:
     nr_new = [c for c in new_rows_all if c.get("class") == "new_row"]
     nr_monitor = [c for c in new_rows_all if c.get("class") == "monitor"]
     nr_matched = [c for c in new_rows_all if c.get("class") == "matched_existing"]
+    if dx is not None:
+        declined_pool += nr_new + nr_matched
+        nr_new = dx.paste(nr_new)
+        nr_matched = dx.keep(nr_matched)
     if nr_new and backend_header:
         nr_title = f"{prefix}_NewRows"
         _, oo_rows = _new_rows_view(wb, nr_title, backend_header, nr_new)
@@ -2551,8 +2815,9 @@ def main() -> None:
                            f"{len(nr_monitor)} — DISCOVERY candidates below the add-threshold: watch for "
                            "the concrete step, do NOT add yet."))
     if nr_matched:
-        x_cols = _compact_columns([("Matched ProjectID",
-                                    lambda r: r.get("matched_project_id", ""), 16)]) + [_src_col]
+        x_cols = _dx_cols(_compact_columns([("Matched ProjectID",
+                                             lambda r: r.get("matched_project_id", ""), 16)])
+                          + [_src_col], dx)
         x_title = f"{prefix}_MatchedExisting"
         _write_sheet(wb, x_title, x_cols, nr_matched, _flag_col2("green"))
         sheet_defs.append((x_title,
@@ -2588,8 +2853,18 @@ def main() -> None:
             continue
         suffix, blurb = _BUCKETS[bucket]
         title = f"{prefix}_{suffix}"
-        _write_sheet(wb, title, columns, rows, _make_styler(columns, bucket))
+        b_cols = _dx_cols(columns, dx)
+        _write_sheet(wb, title, b_cols, rows, _make_styler(b_cols, bucket))
         sheet_defs.append((title, f"{len(rows)} — {blurb}"))
+
+    if dx is not None:
+        d_title = f"{prefix}_Declined"
+        counts["declined"] = _declined_view(wb, d_title, declined_pool, dx)
+        if counts["declined"]:
+            sheet_defs.append((d_title,
+                               f"{counts['declined']} — lines the review app REJECTED or answered "
+                               "with a SUGGEST: kept off every paste surface. Note = the reviewer's "
+                               "reason; SuggestedValue = the reviewer's counter-proposal."))
 
     meta.setdefault("counts", counts)
     _fill_readme(readme, meta, sheet_defs, handoff=bool(actions))
@@ -2598,6 +2873,8 @@ def main() -> None:
     wb.save(out)
     print(f"wrote {out}  ({len(wb.sheetnames)} sheets: {', '.join(wb.sheetnames)})")
     print(f"  counts: {counts}")
+    if dx is not None:
+        print(dx.summary())
     print("  next: python scripts/recalc.py " + str(out))
 
 

@@ -70,7 +70,7 @@
                     concern: "concern", wikidiff: "wiki diff", routeqc: "route QC", route_suggestion: "route suggestion",
                     monitor: "monitor", flag: "flag", escalation: "escalation", unresolved: "unresolved",
                     confirmed: "confirmed", other: "other"};
-  var DEC = ["undecided", "accept", "hold", "reject"];
+  var DEC = ["undecided", "accept", "hold", "reject", "suggest"];
 
   function defaults() {
     return {decision: "undecided", kind: "", tier: "", class_out: "", dir: "", column: "", q: "", row: "",
@@ -94,6 +94,10 @@
   }
   function timeOf(iso) { return String(iso || "").replace("T", " ").slice(11, 16); }
   function decisionText(l) {
+    if (l.reviewed && l.decision === "suggest") {
+      return "suggested: " + (blankv(l.suggested_value) ? "(note only)" : l.suggested_value) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at) +
+        (blankv(l.decision_note) ? "" : " \u2014 " + l.decision_note);
+    }
     if (l.reviewed && l.decision) return (VERB[l.decision] || l.decision) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at);
     if (l.decision && l.decided_by === "backend sync") return "in backend (synced by backend sync, not reviewed)";
     if (l.decision && l.decided_by) return "pre-filled by " + l.decided_by + " (not reviewed)";
@@ -563,7 +567,8 @@
       return '<button type="button" class="b-' + b[0] + '" data-decide="' + b[0] + '"' +
         (off ? ' aria-disabled="true" title="' + esc(dis ? NOT_YET : "held: a concern on " + lock.join(", ") + " is open") + '"' : "") +
         ' aria-pressed="' + (cur(l) === b[0]) + '">' + b[0] + " (" + b[1] + ")</button>";
-    }).join("") + '<button type="button" class="ghost" data-undo="1"' + (cur(l) ? "" : " disabled") + ' title="back to undecided (u)">undo (u)</button>' +
+    }).join("") + '<button type="button" class="b-suggest" data-suggest="1"' + (dis ? ' aria-disabled="true" title="' + esc(NOT_YET) + '"' : ' title="suggest a different value, with a note (s)"') +
+      ' aria-pressed="' + (cur(l) === "suggest") + '">suggest (s)</button><button type="button" class="ghost" data-undo="1"' + (cur(l) ? "" : " disabled") + ' title="back to undecided (u)">undo (u)</button>' +
       '<span class="dstat" id="dstat-' + l._i + '" role="status">' + esc(decisionText(l)) + "</span></div>";
     return h;
   }
@@ -871,7 +876,70 @@
     }
     stepPipe(1);
   }
-  function suggestKey() { toast(Store.caps.decide ? "suggest arrives in milestone 5" : NOT_YET); }
+  // Suggest: an inline form on the current line. Prefill = the proposed value (fill / oo / status) or the
+  // proposed [ref] cell text (ref lines). Enter saves decision "suggest" with suggested_value + note; Esc cancels.
+  function suggestPrefill(l) {
+    if (l.kind === "ref") return l.ref_cell_text || (l.proposed_refs || []).join(", ");
+    if (l.kind === "status") return l.proposed_status || "";
+    if (l.kind === "fill" || l.kind === "oo") {
+      var pv = l.proposed_values || {}, v = pv[l.column];
+      if (blankv(v)) { var ks = Object.keys(pv).filter(function (k) { return !blankv(pv[k]); }); v = ks.length ? pv[ks[0]] : ""; }
+      return blankv(v) ? "" : String(v);
+    }
+    if (l.kind === "new_row") return l.name || "";
+    return "";
+  }
+  function closeSuggest() {
+    var f = document.querySelector("#card .sform");
+    if (f) f.parentNode.removeChild(f);
+  }
+  function openSuggest(l) {
+    if (!Store.caps.decide) return notYet();
+    if (!l) return;
+    var el = $("line-" + l._i);
+    if (!el) return;
+    closeSuggest();
+    setLine(l._i, true);
+    var prior = l.reviewed && l.decision === "suggest";
+    var f = document.createElement("form");
+    f.className = "sform";
+    f.innerHTML = '<label>Suggested value <input type="text" class="sv" autocomplete="off"></label>' +
+      '<label>Note <input type="text" class="sn" autocomplete="off" placeholder="why"></label>' +
+      '<button type="submit" class="sv-save">Save suggestion</button><button type="button" class="ghost sv-cancel">Cancel (Esc)</button>' +
+      '<span class="faint sv-err" role="alert"></span>';
+    var sv = f.querySelector(".sv"), sn = f.querySelector(".sn"), err = f.querySelector(".sv-err");
+    sv.value = prior ? (l.suggested_value || "") : suggestPrefill(l);
+    sn.value = prior ? (l.decision_note || "") : "";
+    f.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeSuggest(); }
+    });
+    f.querySelector(".sv-cancel").onclick = closeSuggest;
+    f.onsubmit = function (e) {
+      e.preventDefault();
+      if (blankv(sv.value) && blankv(sn.value)) { err.textContent = "give a suggested value or a note"; return; }
+      var b = f.querySelector(".sv-save"); b.disabled = true;
+      if (S.saving[l.key]) return;
+      S.saving[l.key] = true;
+      Store.decide([{key: l.key, decision: "suggest", suggested_value: sv.value, note: sn.value}]).then(function (saved) {
+        saved.forEach(applyRecord);
+        S.stay[l.key] = true;
+        banner("");
+        var keepLine = S.line;
+        refilter(true);
+        if (keepLine >= 0 && $("line-" + keepLine)) setLine(keepLine, true);
+        toast("suggestion saved");
+      }).catch(function (e2) {
+        b.disabled = false; err.textContent = "Not saved: " + e2.message;
+      }).then(function () { delete S.saving[l.key]; });
+    };
+    var ctl = el.querySelector(".controls");
+    ctl.parentNode.insertBefore(f, ctl.nextSibling);
+    sv.focus(); sv.select();
+  }
+  function suggestKey() {
+    if (S.tab === "items") return toast("the Items tab takes calls, not suggestions: press i to go back to the lines");
+    openSuggest(LINES[S.line]);
+  }
   var KEYS = {
     j: function () { stepLine(1); }, k: function () { stepLine(-1); },
     J: function () { stepPipe(1); }, K: function () { stepPipe(-1); },
@@ -895,7 +963,7 @@
     if (S.tab === "items") { var s1 = document.querySelector("#card select[data-icall]"); if (s1) s1.focus(); }
   }
   var HELP = [["j / k", "next / previous line (runs on into the next pipeline)"], ["J / K", "next / previous pipeline"],
-              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value (milestone 5)"],
+              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value: inline form on the line (value + note; Enter saves, Esc cancels); routed to an Update worklist by update_seed.py"],
               ["A", "accept every default-accept line in view (asks first, with the count)"], ["i", "switch the card between Lines and Items; calls save on change"],
               ["S", "session summary (counts, this session, copy as markdown)"],
               ["u", "undo: the line goes back to undecided"], ["o", "open the line's first ref (new tab)"], ["d", "show / hide the line's details"],
@@ -942,11 +1010,16 @@
       if (S.tab !== tb.getAttribute("data-tab")) { S.tab = tb.getAttribute("data-tab"); renderCard(); }
       return;
     }
+    var sb = e.target.closest("button[data-suggest]");
     var b = e.target.closest("button[data-decide]");
     var ub = e.target.closest("button[data-undo]");
     var ln = e.target.closest(".line");
     if (ln) setLine(+ln.getAttribute("data-i"), true);
     if (ub && !ub.disabled) return undoCurrent();
+    if (sb) {
+      if (!Store.caps.decide) return notYet();
+      return openSuggest(LINES[S.line]);
+    }
     if (!b) return;
     if (!Store.caps.decide) return notYet();
     // a click on the pressed button takes the call back (the same record an undo writes)
@@ -1017,8 +1090,11 @@
     ITEMS.forEach(function (it) { bump(ik, it.kind, it.call ? "decided" : "open"); });
     var sess = Object.keys(S.session).map(function (k) { return S.session[k]; }), sw = {}, sd = {};
     sess.forEach(function (r) { sw[r.what] = (sw[r.what] || 0) + 1; sd[r.dir] = (sd[r.dir] || 0) + 1; });
-    return {kinds: kinds, tiers: tiers, dirs: dirs, itemKinds: ik, sessWhat: sw, sessDirs: sd, sessN: sess.length};
+    var calls = {accept: 0, hold: 0, reject: 0, suggest: 0};
+    LINES.forEach(function (l) { if (cur(l) && cur(l) in calls) calls[cur(l)]++; });
+    return {calls: calls, kinds: kinds, tiers: tiers, dirs: dirs, itemKinds: ik, sessWhat: sw, sessDirs: sd, sessN: sess.length};
   }
+  function callsText(c) { return c.accept + " accepted, " + c.hold + " held, " + c.reject + " rejected, " + c.suggest + " suggested"; }
   function sumRows(m, order, labels) {
     return order.filter(function (k) { return m[k]; }).map(function (k) { return [labels && labels[k] || k, m[k].decided, m[k].open, m[k].backend]; });
   }
@@ -1035,7 +1111,7 @@
     var dirs = Object.keys(m.dirs).sort().map(function (d) { return [dirLabel(d), m.dirs[d].decided, m.dirs[d].open, m.dirs[d].backend, m.sessDirs[d] || 0]; });
     var items = ITEM_KINDS.filter(function (k) { return m.itemKinds[k]; }).map(function (k) { return [KIND_LABEL[k], m.itemKinds[k].decided, m.itemKinds[k].open]; });
     var out = "## Review summary: " + D.scope.country + " " + D.scope.commodity + " (snapshot " + D.scope.snapshot + ")\n\nReviewer: " + ME +
-      "  \nThis session: " + m.sessN + " saved (" + (Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + k; }).join(", ") || "none") + ")\n\n" +
+      "  \nThis session: " + m.sessN + " saved (" + (Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + k; }).join(", ") || "none") + ")  \nDecided lines by call: " + callsText(m.calls) + "\n\n" +
       "### Lines by kind\n\n" + tab(["kind"].concat(H.slice(1)), kinds) + "\n### Lines by tier\n\n" + tab(["tier"].concat(H.slice(1)), tiers) +
       "\n### Items\n\n" + tab(["kind", "with a call", "without"], items) + "\n### By staging dir\n\n" + tab(["dir", "decided", "open", "in backend", "this session"], dirs);
     return out;
@@ -1063,7 +1139,7 @@
     var dirs = Object.keys(m.dirs).sort().map(function (d) { return [dirLabel(d), m.dirs[d].decided, m.dirs[d].open, m.dirs[d].backend, m.sessDirs[d] || 0]; });
     dlg.setAttribute("data-kind", "summary");
     dlg.innerHTML = "<h3>Session summary</h3><p>" + dec + " of " + tot + " lines decided &middot; " + bk + " in the backend &middot; " + (tot - dec - bk) + " open. " +
-      "<b>This session (" + esc(ME) + "):</b> " + m.sessN + " saved" + (m.sessN ? " (" + Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + esc(k); }).join(", ") + ")" : "") + ".</p>" +
+      "<b>This session (" + esc(ME) + "):</b> " + m.sessN + " saved" + (m.sessN ? " (" + Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + esc(k); }).join(", ") + ")" : "") + ".<br>Decided lines by call: " + callsText(m.calls) + ".</p>" +
       "<h4>Lines by kind</h4>" + sumTable(["kind"].concat(L), sumRows(m.kinds, LINE_KINDS, KIND_LABEL)) +
       "<h4>Lines by tier</h4>" + sumTable(["tier"].concat(L), sumRows(m.tiers, ["high", "medium", "low", "untiered"])) +
       "<h4>Items</h4>" + sumTable(["kind", "with a call", "without"], items) +

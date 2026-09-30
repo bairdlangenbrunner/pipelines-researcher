@@ -37,6 +37,17 @@ def parse_key(key):
     return d, pid, row, colid.split("#", 1)[0]
 
 
+def _new_key(rec):
+    """(pid, colid) of a staged_new.json discovery candidate (review_data._load_dir keys them
+    by slug, not by ref_col), or None for a staged_resolutions record."""
+    if rec.get("ref_col") or rec.get("class") not in ("new_row", "matched_existing", "monitor"):
+        return None
+    slug = rec.get("slug") or (rec.get("name") or "").lower().replace(" ", "-")
+    if not slug:
+        return None
+    return (rec.get("matched_project_id") or rec.get("project_id") or f"new:{slug}", f"new:{slug}")
+
+
 class Decisions:
     def __init__(self, staging_dir):
         self.dir = Path(staging_dir)
@@ -54,6 +65,9 @@ class Decisions:
         return bool(self.records)
 
     def _candidates(self, rec, kind=None):
+        nk = _new_key(rec)
+        if nk:                                 # a staged_new.json candidate, keyed as review_data does
+            return self.by_pid_col.get(nk, [])
         pid = rec.get("project_id") or ""
         if kind is None:
             _, kind = classify(rec)

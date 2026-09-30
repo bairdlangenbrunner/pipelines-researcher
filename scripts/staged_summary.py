@@ -31,12 +31,39 @@ from staged_store import (  # noqa: E402
 )
 
 
+def _decided(d: Path) -> dict | None:
+    """Review-app decision counts over the dir's LINE records (resolution lines + staged_new
+    candidates): {accept, hold, reject, suggest, undecided, total}, or None when the dir has no
+    review_decisions.json / review_log.jsonl. Imports the review app lazily, only when a dir has
+    decisions, so the no-decisions path stays cheap."""
+    if not ((d / "review_decisions.json").exists() or (d / "review_log.jsonl").exists()):
+        return None
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "review_app"))
+    from decisions import Decisions
+    from update_seed import dir_records
+    dec = Decisions(d)
+    c = {"accept": 0, "hold": 0, "reject": 0, "suggest": 0, "undecided": 0}
+    for group, kind, _rec, probe in dir_records(d):
+        if group == "line":
+            c[dec.person_decision(probe, kind) or "undecided"] += 1
+    c["total"] = sum(c.values())
+    return c
+
+
+def _decided_text(c: dict | None) -> str:
+    """`12a/3h/1r/0s of 40`, or an em dash when the dir has no decision file."""
+    if c is None:
+        return "—"
+    return f"{c['accept']}a/{c['hold']}h/{c['reject']}r/{c['suggest']}s of {c['total']}"
+
+
 def _dir_summary(d: Path) -> dict:
     ctx = load_staged_context([d])
     concerns = [c for cs in ctx["concerns"].values() for c in cs]
     status = [r for rs in ctx["status_changes"].values() for r in rs]
     return {
         "dir": dir_label(d),
+        "decided": _decided(d),
         "researched_pids": len(ctx["researched_pids"]),
         "concerns_by_type": dict(Counter(c["concern_type"] for c in concerns)),
         "status_verdicts": dict(Counter(r.get("verdict", "") for r in status)),
@@ -92,7 +119,8 @@ def _text_block(scope_label: str, per_dir: list[dict], roll: dict,
                      f"fills={s['fills']} updates={s['updates']} "
                      f"refs({_fmt_counts(s['ref_work_by_class'])}) "
                      f"routes={s['route_suggestions']} "
-                     f"new({_fmt_counts(s['new_rows_by_class'])})")
+                     f"new({_fmt_counts(s['new_rows_by_class'])}) "
+                     f"decided={_decided_text(s['decided'])}")
     return lines
 
 
@@ -144,7 +172,8 @@ def _index_lines(root: Path) -> list[str]:
                           f"status-pending={s['status_changes_pending']} "
                           f"refs({_fmt_counts(s['ref_work_by_class'])}) "
                           f"routes={s['route_suggestions']} "
-                          f"new({_fmt_counts(s['new_rows_by_class'])})")
+                          f"new({_fmt_counts(s['new_rows_by_class'])}) "
+                          f"decided {_decided_text(s['decided'])}")
                 tag = f" [assembled packet: {mode}]" if mode in ("qc", "handoff") \
                     else (f" [{mode}]" if mode else "")
                 lines.append(f"- `{rel}`{tag} — {counts}")

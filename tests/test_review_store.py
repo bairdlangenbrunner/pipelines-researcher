@@ -507,3 +507,27 @@ def test_refresh_failure_and_no_build(tmp_path):
     with pytest.raises(server.Refusal) as e:
         nb.refresh()
     assert e.value.status == 409
+
+
+# ---- milestone 5: suggest --------------------------------------------------------------
+
+def test_api_suggest_roundtrip_counts_as_reviewed_and_undoes(live):
+    base, s = live
+    l = line(s["dataset"], "P9002", "fill")
+    st, body = post(base + "/api/decide", [{"key": l["key"], "decision": "suggest",
+                                            "suggested_value": "8.25", "note": "2025 annual report"}])
+    assert st == 200
+    r = body["saved"][0]
+    assert (r["decision"], r["suggested_value"], r["note"], r["undecided"]) == ("suggest", "8.25", "2025 annual report", False)
+    assert r["reviewer"] and r["ts"] and set(KEYS) <= set(r)
+    # on reload the line carries the suggestion and is reviewed (a person's call)
+    got = line(get_json(base + "/api/data"), "P9002", "fill")
+    assert (got["decision"], got["reviewed"], got["suggested_value"], got["decision_note"]) == \
+        ("suggest", True, "8.25", "2025 annual report")
+    assert store.reviewed(r)
+    # a note-only suggestion is valid; a bare one is a 400
+    assert post(base + "/api/decide", [{"key": l["key"], "decision": "suggest", "note": "look again"}])[0] == 200
+    assert post(base + "/api/decide", [{"key": l["key"], "decision": "suggest"}])[0] == 400
+    # undo takes it back
+    assert post(base + "/api/decide", [{"key": l["key"], "undo": True}])[0] == 200
+    assert line(get_json(base + "/api/data"), "P9002", "fill")["reviewed"] is False

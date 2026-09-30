@@ -52,8 +52,12 @@ Protocol (all mechanical, all pre-verified):
 Usage:
   python scripts/apply_route_candidates.py --staging batches/<scope>/staging/route-creation \
       --commodity gas --csv data/GGIT_gas_snapshot_<date>.csv --scope-slug egypt-gas \
-      [--pids P8013,P8014,P8021]        # plan phase; then, after reviewing:
+      [--pids P8013,P8014,P8021 | --decisions]   # plan phase; then, after reviewing:
   python scripts/apply_route_candidates.py ... --apply
+
+--decisions sources the PID list from the staging dir's review-app decisions (review_decisions.json):
+every ROUTE_CANDIDATE line a person ACCEPTED. It is an alternative to --pids (both together, or no
+accepted route lines, is refused); the plan / review / apply phases are unchanged.
 """
 import argparse
 import csv
@@ -170,6 +174,34 @@ def stamp_of(proposed_notes: str) -> str:
     i = proposed_notes.rfind("CB: route")
     assert i >= 0, f"no CB stamp in {proposed_notes!r}"
     return proposed_notes[i:].strip()
+
+
+def pids_from_decisions(staging, replace: bool = False) -> list[str]:
+    """ProjectIDs of the staging dir's ROUTE_CANDIDATE lines (ref_col __ROUTE__) that a person
+    accepted in the review app (`Decisions.person_decision`; machine records do not count).
+    `replace` selects replacement candidates like build_plan. Exits non-zero when none."""
+    sys.path.insert(0, str(REPO / "review_app"))
+    from decisions import Decisions
+    staging = Path(staging)
+    dec = Decisions(staging)
+    staged = json.loads((staging / "staged_resolutions.json").read_text())
+    pids = sorted({r["project_id"] for r in staged["resolutions"]
+                   if r.get("class_out") == "ROUTE_CANDIDATE" and r.get("ref_col") == "__ROUTE__"
+                   and bool(r.get("replacement")) == replace
+                   and dec.person_decision(r, "route") == "accept"})
+    if not pids:
+        sys.exit(f"--decisions: no accepted route lines in {staging} "
+                 "(no review_decisions.json, or no ROUTE_CANDIDATE line has an accept)")
+    return pids
+
+
+def resolve_pid_source(args) -> None:
+    """--pids and --decisions are alternatives; --decisions fills args.pids."""
+    if args.decisions:
+        if args.pids:
+            sys.exit("give --pids or --decisions, not both")
+        args.pids = ",".join(pids_from_decisions(args.staging, args.replace))
+        print(f"--decisions: {len(args.pids.split(','))} accepted route line(s): {args.pids}")
 
 
 def build_plan(args, tab: str, col_letter: dict, pid_letter: str) -> list[dict]:
@@ -334,6 +366,9 @@ def main() -> None:
     ap.add_argument("--scope-slug", required=True,
                     help="e.g. egypt-gas — names the notes/ backup CSV")
     ap.add_argument("--pids", help="comma-separated subset (default: all staged ROUTE_CANDIDATEs)")
+    ap.add_argument("--decisions", action="store_true",
+                    help="source the PID list from the staging dir's review_decisions.json: every "
+                         "ROUTE_CANDIDATE line a person accepted (alternative to --pids)")
     ap.add_argument("--replace", action="store_true",
                     help="replacement mode: apply staged replacement=true candidates "
                          "to rows that ALREADY have a route (live RouteAccuracy must "
@@ -345,6 +380,7 @@ def main() -> None:
     ap.add_argument("--apply", action="store_true",
                     help="write the sheet (plan JSON must exist from a plan run)")
     args = ap.parse_args()
+    resolve_pid_source(args)
 
     import pandas as pd
     tab = TABS[args.commodity]
