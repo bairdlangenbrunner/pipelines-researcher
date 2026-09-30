@@ -2,12 +2,18 @@ export const meta = {
   name: 'critical-deep-sweep',
   description: 'Critical re-audit of an in-scope pipeline set: confirm each data point against independent sources and flag phantom / duplicate / misclassified / mis-attributed entries (existence+classification first). One skeptical subagent per pipeline; read-and-stage only, never auto-applies.',
   phases: [
-    { title: 'Audit', detail: 'one subagent per pipeline — existence+classification, then attribution+spec' },
+    { title: 'Audit', detail: 'one subagent per pipeline (or per family group) — existence+classification, then attribution+spec' },
   ],
 }
 
 // args (from `python scripts/build_deepsweep_args.py --staging <dir>`):
-//   { repo, staging, commodity, country, pids:[...], roster:[...], status_review?: true }
+//   { repo, staging, commodity, country, pids:[...], roster:[...], status_review?: true,
+//     groups?: [[pid,...],...], lean?: true, model?, extra_brief? }
+// groups: one agent per GROUP instead of per PID — sibling segments / strings / hub branches
+// that share their documents (docs/sops/lean_pass.md). Every PID must appear in exactly one
+// group; a singleton group is the classic one-agent-per-row contract, word for word.
+// lean: the worklist was cut by scripts/lean_worklist.py — the agent works the owed set only,
+// and the deferred units are recorded, not skipped.
 // status_review: true = annual-update mode — each subagent ALSO stages a per-segment-row
 // status verdict (confirm / change / stale / unclear) as `status_reviews` in its shard.
 // tolerate a JSON-encoded string (some invocation paths stringify `args`)
@@ -24,11 +30,35 @@ const STAGING = A.staging
 const COMMODITY = A.commodity || 'gas'
 const COUNTRY = A.country || ''
 const PIDS = A.pids
+const GROUPS = Array.isArray(A.groups) && A.groups.length ? A.groups : PIDS.map(p => [p])
+{
+  const seen = GROUPS.flat()
+  const missing = PIDS.filter(p => !seen.includes(p))
+  const dup = seen.filter((p, i) => seen.indexOf(p) !== i)
+  if (missing.length || dup.length || seen.length !== PIDS.length) {
+    throw new Error(`args.groups must cover every pid exactly once (missing: ${missing.join(',')}; duplicated: ${dup.join(',')})`)
+  }
+}
+const LEAN = !!A.lean
 const ROSTER = (A.roster || []).join("\n")
 const STATUS_REVIEW = !!A.status_review
 // optional scope-specific guidance (e.g. China: research in Chinese, geo-blocked-site
-// workarounds) appended verbatim to every subagent contract
-const EXTRA = A.extra_brief ? `\n\n## Scope-specific guidance (from the orchestrator)\n${A.extra_brief}` : ''
+// workarounds) appended verbatim to every subagent contract.
+// INLINE IT. `args.extra_brief_path` (hand the agent the run dir's BRIEF.md and tell it to
+// read the file first) was tried on Russia R2, 2026-09-15, to keep ~30KB out of the
+// orchestrator's context: 8 of 8 agents skipped the file completely — zero reads — and went
+// straight to Step 0. An agent reliably runs the Step 0 COMMANDS it is given and reliably
+// reads text already in its prompt; it does not reliably go fetch a document it was told to
+// read. The brief carries the scope's source ladder, language rules and blocked hosts, so a
+// skip is silent research damage. The path form is kept only as a fallback, never the default.
+const EXTRA = A.extra_brief
+  ? `\n\n## Scope-specific guidance (from the orchestrator)\n${A.extra_brief}`
+  : (A.extra_brief_path
+     ? `\n\n## Scope-specific guidance (from the orchestrator) — READ THE FILE FIRST\n` +
+       `\`${A.extra_brief_path}\` is part of this contract, not background reading. Read it IN FULL\n` +
+       `before Step 0 — it carries the scope's source ladder, language rules, known-blocked hosts and\n` +
+       `per-country gotchas, and research done without it will be wrong in ways the gates do catch.`
+     : '')
 
 const statusInstr = STATUS_REVIEW ? `
 
@@ -61,8 +91,37 @@ Add to the shard: "status_reviews": [
     "researcher_notes": "<what you searched, the newest dated evidence, your reasoning>" }
 ]` : ''
 
-const contract = (pid) => `You are a meticulous, skeptical GEM pipeline researcher. Critically RE-AUDIT one ${COUNTRY}
-${COMMODITY} pipeline: ProjectID ${pid}. This is a deep-sweep validity pass — your job is to CONFIRM the
+const leanInstr = LEAN ? `
+
+## LEAN PASS (token-budgeted — read this before starting)
+The worklist was cut to the OWED set (scripts/lean_worklist.py): uncited values (MISSING_REF),
+cited values whose link is dead / missing the value / not about this pipeline, and — if listed —
+a few blank-value columns. Blank values and cited values whose links already check out were
+DEFERRED into deferred_units.json on purpose; they are not your job this pass. So:
+- Work ONLY the units \`shard_upsert.py --remaining\` lists, plus the status review and ONE
+  validity record per row. Do not go hunting for blank values. If a document you are already
+  reading states a blank value, you MAY stage it as a FILL (it is free) — never search for one.
+- Second source: ONE targeted search per data point (a different publisher and document class).
+  If it does not land, stage at medium with a note saying what you searched, and move on.
+- Validity: judge existence / duplicate / classification from the documents you already opened
+  and the roster. Open a dedicated search only when the row's own sources fail to name the
+  pipeline, or the scope guidance names this row as a duplicate/existence candidate.
+- Stop when coverage prints OK and the status + validity records are saved. Do not widen scope.` : ''
+
+const contract = (group) => group.length === 1 ? contractFor(group[0], '') : contractFor('<PID>', `
+## FAMILY GROUP — you own ${group.length} rows: ${group.join(', ')}
+These rows share their documents (sibling segments, strings of one corridor, or branches of one
+hub). Research the SHARED documents ONCE, then report per row. Everything below is written for
+one ProjectID: read every <PID> as EACH of ${group.join(', ')} in turn — each row gets its own shard
+(its own Step 0 --init/--remaining), its own fills, its own status review and validity record, and
+its own check_shard_coverage OK. A page that states a figure for one string is not a ref for its
+sibling unless it states that sibling's figure too. Save as you go; if you run low on context,
+finish the row you are on and return — a replacement agent resumes from --remaining.
+Do not finish until check_shard_coverage prints OK for EVERY row in the group.
+`)
+
+const contractFor = (pid, familyHeader) => `You are a meticulous, skeptical GEM pipeline researcher. Critically RE-AUDIT ${pid === '<PID>' ? 'a family of' : 'one'} ${COUNTRY}
+${COMMODITY} pipeline${pid === '<PID>' ? 's' : ''}: ${familyHeader ? 'ProjectIDs ' + familyHeader.match(/rows: (.*)/)[1] : 'ProjectID ' + pid}.${familyHeader} This is a deep-sweep validity pass — your job is to CONFIRM the
 existing data and EXPOSE anything wrong, not to rubber-stamp it. Baird expects some of this data to
 be wrong, some pipelines to not exist, and some to be duplicates or misclassified. Find those.
 
@@ -79,6 +138,33 @@ cd ${REPO} first.
 - Roster of ALL ${PIDS.length} in-scope pipelines (for duplicate/relabel detection — does ${pid} look
   like the same physical pipe as another row under a different name?):
 ${ROSTER}
+
+## Step 0 — open your shard BEFORE any research (save-as-you-go is mandatory)
+Run, in this order:
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --init
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --remaining
+\`--init\` creates \`${STAGING}/rows/${pid}.json\` from the worklist (idempotent; it never touches an
+existing shard's records). \`--remaining\` lists every worklist unit the shard does not yet report on.
+If some units are ALREADY reported, a previous agent ran out of context on this row: keep its
+records, do NOT redo them, and research ONLY the OWED units it lists (re-open a saved record only
+if \`--remaining\` flags it as FIX, or if your own research on a later unit contradicts it).
+
+FROM HERE ON, EVERY RECORD IS SAVED THE MOMENT IT IS FINISHED — never batched to the end:
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --fill '<one fills[] JSON object>'
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --validity @/tmp/${pid}_v.json
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --status-review @/tmp/${pid}_s.json
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --lead '<one cross_row_leads[] object>'
+  python scripts/shard_upsert.py --staging ${STAGING} --pid ${pid} --summary "<one line>"
+(\`--fill\` etc. take inline JSON, \`@file\`, or \`-\` for stdin, and accept a single object or a list.)
+A record is FINISHED when it is sourced (refs verified, values filled) or honestly UNRESOLVED with
+researcher_notes saying what you searched. Never save a placeholder to "reserve" a unit — an
+UNRESOLVED you meant to come back to reads downstream as "searched, found nothing". Upserting the
+same unit again REPLACES the earlier record (keyed on ref_col + sheet_row), so finding a source
+after an UNRESOLVED is one more --fill, not an edit. NEVER write the shard file yourself with a
+heredoc, Write, or json.dump — that overwrites everything saved so far; the helper is the only
+writer. Each call prints "N/M owed units reported": that is your progress meter. The point: if
+you hit your context limit on unit 12 of 15, units 1-11 are on disk and your replacement does
+only 12-15.
 
 ## Standing rules (NON-NEGOTIABLE)
 1. NEVER cite gem.wiki / globalenergymonitor.org, theodora.com, or A Barrel Full /
@@ -155,13 +241,14 @@ ${ROSTER}
    39, $10.7M against $11M — that is REFS_ADDED at medium/high tier with the small discrepancy
    stated in researcher_notes (and a validity spec concern if it is material). UNRESOLVED means you
    found NOTHING; it never means you found something slightly different. The limit stays the
-   aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell.${statusInstr}${EXTRA}
+   aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell.${statusInstr}${leanInstr}${EXTRA}
 
 A pipeline that is real and correctly classified but has a lesser caveat → verdict="confirmed (caveat)".
 Only open existence/duplicate/classification doubt → verdict="concern".
 
-## Output — write a shard, then return a summary
-Write \`${STAGING}/rows/${pid}.json\` = a single JSON object EXACTLY shaped like:
+## Output — the shard (built by your upserts), then a summary
+Your upserts produce \`${STAGING}/rows/${pid}.json\` = a single JSON object EXACTLY shaped like
+(each --fill / --validity / --status-review / --lead call supplies ONE element of the matching list):
 {
   "project_id": "${pid}",
   "pipeline_name": "<from worklist>",
@@ -205,15 +292,15 @@ A unit with no object is a defect the pre-delivery gates list. Before finishing,
 \`python scripts/check_shard_coverage.py --staging ${STAGING} --pid ${pid}\`
 and DO NOT FINISH UNTIL IT PRINTS OK -- it parses your shard and names every worklist unit you left
 without a record. If it lists units, go back and report on them (a sourced record, or UNRESOLVED
-with what you searched); do not delete the unit or hand back a shard it still rejects.
-Return ONLY a 2-line summary: the verdict/concern_types you staged, and any UNRESOLVED. Your shard
+with what you searched); do not delete the unit or hand back a shard it still rejects. Set the
+one-line \`--summary\` last. Return ONLY a 2-line summary: the verdict/concern_types you staged, and any UNRESOLVED. Your shard
 file is the deliverable, not your message.`
 
 phase('Audit')
-log(`Critically auditing ${PIDS.length} ${COUNTRY} ${COMMODITY} pipelines (existence+classification first), one subagent each.`)
-const results = await parallel(PIDS.map(pid => () =>
-  agent(contract(pid), { label: `audit:${pid}`, phase: 'Audit', agentType: 'general-purpose', model: MODEL })
+log(`Critically auditing ${PIDS.length} ${COUNTRY} ${COMMODITY} pipelines in ${GROUPS.length} agent(s)${LEAN ? ' (lean pass)' : ''} (existence+classification first).`)
+const results = await parallel(GROUPS.map(group => () =>
+  agent(contract(group), { label: `audit:${group.join('+')}`, phase: 'Audit', agentType: 'general-purpose', model: MODEL })
 ))
 const done = results.filter(Boolean).length
-log(`Audit complete: ${done}/${PIDS.length} subagents returned. Shards in ${STAGING}/rows/`)
-return { audited: done, total: PIDS.length }
+log(`Audit complete: ${done}/${GROUPS.length} agents returned (${PIDS.length} pipelines). Shards in ${STAGING}/rows/ — run check_shard_coverage --all.`)
+return { agents_returned: done, agents: GROUPS.length, pipelines: PIDS.length }

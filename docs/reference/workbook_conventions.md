@@ -146,7 +146,12 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
     131 cols) after Baird required an exact, full reproduction of the backend.
 - **`<Cmdty>_OperatorsOwners`** — mirror of the ProjectID-keyed operators/owners tab (GID
   `1489950650`); `[ref]` column **precedes** its values; paste back by ProjectID, not onto a
-  tracker row.
+  tracker row. It carries **both** ref-only work and owner/operator FILLs (a sourced
+  `Operator`/`Owner` value renders tier-colored beside its `[ref]`) — the tracker Backend mirror
+  deliberately drops them, so this is their only paste surface. A record counts as oo work on
+  **either** marker, `tab="operators_owners"` **or** `ref_col ∈ OO_PRIMARY` (`_is_oo`): worklist
+  ref units carry the first, subagent-authored FILLs usually only the second, and judging on
+  `tab` alone once sent a sourced Operator to no paste surface at all (Russia R2, 2026-09-15).
 - **Finding tabs (deep preset):** `<Cmdty>_Validity`, `<Cmdty>_Fills`, and (routes/recon legs)
   `<Cmdty>_RouteSuggestions` plus **one tab per reconciled reference dataset** —
   `<Cmdty>_GulfPub`, `<Cmdty>_OSM`, and any source registered later (discovered by glob over
@@ -154,8 +159,14 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   grouped **by disposition**, not as one "additions" block.
   The in-dev preset leads with `<Cmdty>_StatusReview`.
   The Fills tab's **`Target tab` column** says where each fill pastes: `tracker`, or
-  `operators/owners` for Operator/Owner fills (record `tab="operators_owners"`; the SheetRow
-  shown is the tracker locator, but the paste goes to the ProjectID-keyed oo tab).
+  `operators/owners` for Operator/Owner fills (`_is_oo` — either marker; the SheetRow shown is the
+  tracker locator, but the paste goes to the ProjectID-keyed oo tab).
+- **`<Cmdty>_Refs_Unresolved` / `_DeadLinks` never carry a superseded stub.** A seeded baseline
+  whose cell a sourced FILL has since resolved is dropped when it was `MISSING_REF` (empty `[ref]`
+  by definition) and kept-and-annotated `SUPERSEDED — …` when it was `HAS_REF` (the ref being
+  replaced is information that lives nowhere else). Without this the same cell read "resolved, two
+  high-tier refs" on the Fills tab and "could not reach 2 working sources" on the bucket tab
+  (`_resolve_superseded`, added 2026-09-15; see the Sweep SOP for the merge behaviour behind it).
 - **Tier → cell color** (on `[ref]` cells): green = ≥2 independent working sources · yellow =
   single · red = low/none (an empty red cell = "needs a source", **not an error**) · blue =
   existing ref re-verified live.

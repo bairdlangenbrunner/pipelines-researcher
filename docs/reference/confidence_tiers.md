@@ -37,6 +37,16 @@ tier `high`; a single source is `medium` at best. Enforced in
 it; `scripts/repair_independence.py` applies the same invariant to dirs merged before
 the fix.
 
+**The tier half of that invariant is unconditional — it does not depend on what the
+flag claims.** `<2` surviving publishers caps the tier at `medium` whether the record
+said `independent: true` or `false`. Enforcing it only on the `true` branch (as the
+code did until 2026-09-10) rewarded the wrong answer: an honest `false` kept its
+`high` on one publisher while an identical over-claiming record was demoted. That left
+72 records at `high` on a single publisher across the staged batches. Note this
+deliberately overrides the table's "or one primary/regulatory source" clause **for the
+staged tier**: a lone regulator filing is a strong `medium` here, because the flag and
+tier are read together as the paste/no-paste signal and the 2+ hunt stays owed.
+
 **Single-source-that-confirms is fillable, not blank.** The 2+ target governs when a
 value is *settled* (green); it does **not** mean a lone source is discarded. If exactly
 one source can be found but its page **verifiably contains the precise data point**

@@ -22,8 +22,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from merge_qc import independence_qc, verified_refs  # noqa: E402
 
 SENTINELS = ("__REDUNDANCY__", "__VALIDITY__")
 MARK = "harvested_from_shard"
@@ -46,6 +50,41 @@ def harvest(staging: Path) -> int:
         for r in sh.get("resolutions", []):
             if r.get("ref_col") not in SENTINELS:
                 continue
+            # This script is the LAST writer of a __VALIDITY__/__REDUNDANCY__ record:
+            # merge_deepsweep_shards applies independence_qc to sentinels, but its own
+            # is_old_deepsweep() then purges them and we re-append here, so whatever we
+            # copy is what ships. Copying `tier`/`independent`/`proposed_refs` verbatim
+            # (as this did until 2026-09-10) routed the batch's HIGHEST-value findings
+            # around the one invariant every merger enforces -- Jiangxi v3 delivered 11
+            # sentinels at tier `high` and 12 flagged `independent` on 0-1 verified refs,
+            # and sweep_gates B/D flag sentinels precisely because they are in scope.
+            #
+            # Two different ref bases, deliberately:
+            #   * `s_refs` keeps the EVIDENCE, host-filtered only (verifs=None -> scheme
+            #     + blocklist screen). A validity concern usually has no value to contain,
+            #     so screening it on `contains_value` would throw away the very document
+            #     the concern rests on -- but a banned host must never ride in on a
+            #     sentinel, which is the one hole this leaves open otherwise.
+            #   * independence/tier are judged on refs that actually VERIFIED, the same
+            #     ok && contains_value basis sweep_gates' verified() uses, so the store
+            #     and its own gate cannot disagree.
+            #     NB the strict basis is spelled out here rather than delegated to
+            #     verified_refs(refs, verifs): that helper treats "no verifications at
+            #     all" as "host-filter only and let the caller decide", so a record
+            #     carrying refs but ZERO verification objects comes back fully verified.
+            #     sweep_gates' verified() calls the same record 0-verified, and the two
+            #     disagreeing is what left 4 P5866 __VALIDITY__ records at `high` +
+            #     `independent` after the first pass of this fix. An unrecorded
+            #     verification is not a verification, so the gate's reading is the
+            #     correct one and this mirrors it exactly.
+            s_refs = verified_refs(r.get("proposed_refs", []), None)
+            _ok = {v.get("url") for v in (r.get("verifications") or [])
+                   if v.get("ok") and v.get("contains_value")}
+            s_tier, s_indep, s_notes = independence_qc(
+                [u for u in s_refs if u in _ok],
+                r.get("tier") or "n/a",
+                bool(r.get("independent") or False),
+                r.get("researcher_notes", ""))
             found.append({
                 "project_id": sh.get("project_id"),
                 "sheet_row": r.get("sheet_row", 0),
@@ -70,19 +109,26 @@ def harvest(staging: Path) -> int:
                 "verdict": "concern",
                 "concern_type": "redundancy"
                 if r.get("ref_col") == "__REDUNDANCY__" else "validity",
-                "recommendation": "Agent research verdict — see researcher_notes. "
+                # A per-record `recommendation` wins when the shard sets one. The
+                # boilerplate below is the right default for an agent's own verdict
+                # (read-and-flag), but it BURIES an orchestrator ruling: a reviewer
+                # scanning this column sees "see researcher_notes" where the actual
+                # actionable change should be. No shard set this field before 2026-09-10,
+                # so the default still fires everywhere it did and no committed run moves.
+                "recommendation": (r.get("recommendation") or "").strip()
+                or "Agent research verdict — see researcher_notes. "
                 "Cross-check against the cluster-level recommendation in "
                 "staging/redundancy/ before acting; where they differ, the cluster "
                 "file is the adjudicated one.",
-                "proposed_refs": r.get("proposed_refs", []),
+                "proposed_refs": s_refs,
                 "verifications": r.get("verifications", []),
                 # `or`, not a .get default: a shard that writes an explicit null tier
                 # (sentinels carry no tier -- there is no value being sourced) has the
                 # key present, so the default never fires and None reaches the store.
-                "tier": r.get("tier") or "n/a",
-                "independent": r.get("independent") or False,
+                "tier": s_tier,
+                "independent": s_indep,
                 "source_language": r.get("source_language", "en"),
-                "researcher_notes": r.get("researcher_notes", ""),
+                "researcher_notes": s_notes,
                 MARK: str(sf.name),
             })
 

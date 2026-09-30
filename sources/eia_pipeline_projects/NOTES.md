@@ -68,3 +68,8 @@ After downloading, re-run `python sources/eia_pipeline_projects/prepare.py`.
   - On Hold → shelved
   - Cancelled / Denied → cancelled
   - `Part Completed` is a per-segment read.
+  - **The status cell is not always one of those words.** Some rows carry a free-text status,
+    e.g. Jul/Oct-2025 give Delhi Connector Pipeline
+    `Shelved / Deferred (development suspended; not advancing toward construction as of 2025)`.
+    Read the cell, don't pattern-match the vocabulary — a verbose string like that is a
+    literal, citable EIA statement, and often a better ref than the terse word.

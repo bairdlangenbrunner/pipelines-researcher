@@ -262,6 +262,48 @@ Rudaw (Arabic), Shafaq, `attaqa.net`, `al-mirbad.com`, Wattan News (`wattaennews
 thenewregion, kurdistan24. Cross-border lines (Iran/Turkey/Jordan/Syria) usually need
 non-English search — seed from the row's `OtherLanguage*` names.
 
+## China (zh) — verified hosts, seeded from Guangxi 2026-07-29 + Jiangxi v3 2026-09-10
+
+**Search and cite in Chinese** — `OtherLanguagePrimaryPipelineName` is the search key.
+80 hosts verified live across the Jiangxi v3 sweep; these are the productive ones, and the
+tier is the usual test (who is making the statement), not the domain suffix.
+
+**Primary — approvals, filings, acceptance:**
+`mee.gov.cn` (环评/审批 announcements — the single most productive class),
+`ndrc.gov.cn` + `nea.gov.cn` (+ `zjb.nea.gov.cn`), `drc.jiangxi.gov.cn`, and the
+**county/prefecture portals**, which carry the documents nothing else does:
+`quannan.gov.cn`, `swj.jiujiang.gov.cn`, `wuning.gov.cn`, `sthjj.quanzhou.gov.cn`,
+`jxsggzy.cn` (public-resources tendering), `jxganan.com` (安全验收评价 filings).
+`static.sse.com.cn` (SSE bond disclosures) and `chinamoney.com.cn` are the best owner /
+capex / phase sources — a prospectus **enumerates** completions, so an omission there is
+evidence, not silence. `qxb-pdf-osscache.qixin.com` serves corporate-registry extracts
+(entity/ownership only).
+
+**Operators:** `pipechina.com.cn` (its 公平开放 inventories are exhaustive enough that an
+omission is a finding), `cnpc.com.cn`, `sinopec.com` / `trqi.sinopec.com`, `sasac.gov.cn`.
+
+**Press (corroborators):** `xinhuanet.com` / `news.cn`, `paper.people.com.cn`, `cnr.cn`,
+`chinanews.com.cn`, `thepaper.cn` (澎湃), `jxnews.com.cn`, `cpnn.com.cn` (中国电力报),
+`china5e.com`, `chndaqi.com`, `news.bjx.com.cn` (北极星), `sina`/`sohu` rehosts of official
+releases. Republications of ONE original are ONE source (standing rule 4).
+
+**Gotchas, all measured:**
+- **`quannan.gov.cn` 403s over IPv6 and 200s over IPv4** — `curl --ipv4` +
+  `pdftotext -layout`. `url_verifier` has no IPv4 retry, so its FAIL there is a tooling
+  artifact, never a deletion.
+- **`chinanews.com.cn` needs lenient decoding** — strict `gb18030` *and* `utf-8` both
+  reject its mixed bytes; `errors='replace'` reads cleanly.
+- **`fgw.gxzf.gov.cn` (Guangxi DRC) ConnectTimeouts on both schemes** (overseas
+  geo-blocking) — cite a Wayback snapshot, note the original, never drop the source.
+- Government hosts link-rot fast: Jiangxi's citable DRC plan (江西省天然气利用规划
+  2013–2020, 赣发改规划 2014 325号) survives only as `img9.qianzhan.com/policy/…pdf`,
+  a **rehosted primary** — citable, but a 2014 planning document is thin support for 2026
+  operating status.
+- **`fzggw.jiangsu.gov.cn` is Jiangsu, not Jiangxi.** The wiki harvest keeps offering it;
+  it is always a false lead.
+- **Banned:** `yingdodo.com` (see Forbidden below) — and it arrives via gem.wiki's own
+  citation list, so it is blocked in `BLOCKLIST_HOSTS` rather than left to recognition.
+
 ## Reference-dataset registry (scraped route DBs for reconciliation)
 
 Each entry is a `sources/<name>/` registry folder (manifest + optional adapter).
@@ -378,7 +420,11 @@ Kazakhstan 40 / Saudi gas 38 / Egypt 26 / India 19 / Pakistan 16). Treat it as a
 
 - **Tier it as one secondary source**, so it is medium alone and reaches green only
   paired with an independent second source. Two language editions of the same article
-  are ONE source, not two — the interwiki text is usually a translation.
+  are ONE source, not two — the interwiki text is usually a translation. This is now
+  *enforced*, not just stated: `normalize_independence.py` collapses every
+  `*.wikipedia.org` ref to a single `WIKIPEDIA-INTERWIKI` origin. It had to be, because
+  a P4947 recovery record counted en: and zh: as two independent sources for the same
+  9,102 km figure and its report said so in as many words (2026-09-10).
 - **Prefer the underlying citation when the article carries one** — it is nearly always
   the better `[ref]` and often primary. Citing Wikipedia is allowed, not preferred.
 - **A Wikipedia statement whose own footnote is GEM cannot corroborate anything.**
@@ -396,6 +442,18 @@ Kazakhstan 40 / Saudi gas 38 / Egypt 26 / India 19 / Pakistan 16). Treat it as a
   them. (They are NOT "the same class as Wikipedia" — that comparison is withdrawn
   along with the Wikipedia ban.)
 - **theodora.com** — never an acceptable reference (`url_verifier` rejects it).
+- **yingdodo.com (小柱工程)** — a commercial construction-**leads** database; banned
+  2026-09-10 off the Jiangxi v3 sweep, `url_verifier` rejects it. The page it keeps
+  serving for Jiangxi (`/html/news/201852592751.html`) is an explicit marketing
+  **sample**: `项目样例1类`, `备注：以下样例非最新项目，仅表示内容格式`, redacted owner
+  phone numbers, and no attribution line of any kind (来源/转载/出处/责任编辑/数据来源/
+  信息来源 all absent). Same class as A Barrel Full — it restates someone else's filing
+  without saying whose. **It reaches agents from GEM's own gem.wiki citation list** (27
+  Jiangxi PIDs, link text `乐平-德兴-婺源支线工程`), which is why the ban lives in
+  `BLOCKLIST_HOSTS`: `harvest_wiki_citations.py` imports that tuple and now drops it
+  before it is ever offered as a seed. Its figures (97 km, 德兴境内 9.9 km, DN200,
+  6.3 MPa, 投资2亿元, 开工 2018-06-13) are plainly lifted from a Jiangxi 立项备案
+  filing — chase that filing, cite it, never cite the aggregator.
 - **URL shorteners** (`bit.ly`, `tinyurl.com`, `goo.gl`, `t.co`, `ow.ly`, `buff.ly`,
   `is.gd`, `rebrand.ly`, `cutt.ly`, `shorturl.at`, `trib.al`) — never a citable address:
   an opaque, revocable indirection whose target can be repointed after we cite it.

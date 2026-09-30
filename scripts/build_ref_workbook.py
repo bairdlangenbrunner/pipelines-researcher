@@ -95,6 +95,19 @@ ROUTE_REF = "__ROUTE__"         # synthetic ref_col sentinel on deep-sweep route
 WIKIDIFF_REF = "__WIKIDIFF__"   # QC workflow: sheet↔wiki alignment diffs (wiki_alignment.py)
 ROUTEQC_REF = "__ROUTEQC__"     # QC workflow: route-integrity flags (route_integrity.py)
 
+
+def _is_oo(r: dict) -> bool:
+    """Does this record belong on the separate "Pipeline operators/owners" backend tab?
+
+    Two markers, because only one of them is reliable. Ref units staged off the worklist
+    carry `tab: "operators_owners"`; a FILL a subagent writes for the same cell usually
+    does NOT — it only names `ref_col: "Operator [ref]"`. Judging on `tab` alone sent
+    P5539's sourced Operator (Gazprom Transgaz Ukhta, two independent sources) to NO
+    paste surface at all in the Russia R2 packet: `own_fills` excluded it from the
+    tracker Backend mirror by `ref_col in OO_PRIMARY`, and the oo tab did not draw it in
+    because the `tab` key was absent. Found 2026-09-15."""
+    return r.get("tab") == "operators_owners" or r.get("ref_col") in OO_PRIMARY
+
 # class_out -> (sheet suffix, readme blurb)
 _BUCKETS = {
     "REFS_ADDED": ("Refs_Added", "blank [ref] filled. Tier cell green = ≥2 independent working "
@@ -174,6 +187,70 @@ def _make_styler(columns, bucket: str):
         elif bucket == "UNRESOLVED":
             ws.cell(rn, tier_c).fill = CONF_FILL["red"]
     return styler
+
+
+def _resolve_superseded(ref_res, fill_res, prefix):
+    """A sourced FILL supersedes the carried ref record for the same cell.
+
+    The rule is the Sweep SOP's ("A sourced FILL supersedes the carried record for the
+    same cell") and `sweep_gates.py` gate I already honours it. The workbook did not:
+    `seed_resolutions_from_worklist.py` gives every worklist unit a baseline record, the
+    merge only folds a shard fill onto that baseline when the fill is *ref-only* (same
+    values), and a fill that also proposes a NEW value — `StartYear1` unchanged but
+    `StartMonth1` added, say — is staged as its own FILL while the baseline stays behind
+    untouched. That leftover then reached the bucket tabs as a blank-note row, so a cell
+    the agent had resolved with two high-tier refs on the Fills tab ALSO appeared on
+    `*_Refs_Unresolved` reading "could not reach 2 working sources" — flatly contradicting
+    the Backend paste surface, where the fill's refs had (correctly) won. Found
+    2026-09-15 QC-ing the Russia R2 packet: 22 of its 28 Unresolved rows and all 27
+    DeadLinks rows were superseded baselines; R1 the same.
+
+    A MISSING_REF baseline is DROPPED — its `[ref]` cell was empty by definition, so the
+    FILL row carries everything it held. A HAS_REF baseline is KEPT, because the dead or
+    unreadable ref being replaced is information that lives nowhere else (standing rule:
+    only a confirmed 404/410 may drop out of a `[ref]` cell), and annotated so it can no
+    longer be misread as "nobody looked". A baseline carrying the agent's own notes is
+    left exactly as written.
+    """
+    by_cell = {}
+    for f in fill_res:
+        key = (f.get("project_id"), str(f.get("sheet_row", "")), f.get("ref_col", ""))
+        cur = by_cell.get(key)
+        # prefer a sourced fill when a cell somehow carries more than one
+        if cur is None or (f.get("proposed_refs") and not cur.get("proposed_refs")):
+            by_cell[key] = f
+
+    kept, n_dropped, n_noted = [], 0, 0
+    for r in ref_res:
+        f = by_cell.get((r.get("project_id"), str(r.get("sheet_row", "")), r.get("ref_col", "")))
+        if f is None or (r.get("researcher_notes") or "").strip():
+            kept.append(r)
+            continue
+        refs = f.get("proposed_refs") or []
+        if (r.get("class_in") == "MISSING_REF" and not (r.get("current_ref") or "").strip()
+                and refs):
+            n_dropped += 1
+            continue
+        field = f.get("primary_value_col") or f.get("ref_col") or ""
+        outcome = (f"{len(refs)} verified ref(s)" if refs
+                   else f"outcome {f.get('class_out', 'UNRESOLVED')}, no verified ref")
+        r = dict(r)
+        # With no verified replacement, nothing supersedes the existing ref: it STAYS in
+        # the cell (access failures are not deletions). Saying "being replaced" here read
+        # as a deletion instruction on geo-blocked refs (Russia R4b energybase, 2026-09-22).
+        fate = ("the existing [ref] being replaced" if refs else
+                "the existing [ref], which is KEPT in the cell — nothing verified replaces it")
+        r["researcher_notes"] = (
+            f"SUPERSEDED — this cell was researched on the {prefix}_Fills tab "
+            f"({field} = {f.get('primary_value', '')}): {outcome}. This row documents only "
+            f"{fate}; it is NOT a record that nobody looked.")
+        n_noted += 1
+        kept.append(r)
+
+    if n_dropped or n_noted:
+        print(f"  superseded by a sourced fill: dropped {n_dropped} MISSING_REF baseline(s), "
+              f"annotated {n_noted} carried record(s)")
+    return kept
 
 
 # --- validity + fills (deep-sweep extensions) ------------------------------ #
@@ -279,7 +356,7 @@ def _fills_columns(with_source=False):
         ("PipelineName", g("pipeline_name"), 30),
         ("SegmentName", g("segment_name"), 22),
         ("Field", lambda r: r.get("primary_value_col") or J(r.get("value_cols", [])), 18),
-        ("Target tab", lambda r: "operators/owners" if r.get("tab") == "operators_owners" else "tracker", 15),
+        ("Target tab", lambda r: "operators/owners" if _is_oo(r) else "tracker", 15),
         ("Proposed value", lambda r: r.get("primary_value") or J([f"{k}={v}" for k, v in r.get("values", {}).items()]), 24),
         ("Proposed ref(s)", lambda r: J(r.get("proposed_refs", [])), 52),
         ("Verification status", _verif_summary, 22),
@@ -1638,7 +1715,7 @@ def _build_handoff(staging: Path, out: Path, meta: dict, parts: dict, actions: d
     ref_work = actions.get("ref_work", [])
     own_refunits = parts["tracker"] + parts["oo"]
 
-    is_oo = lambda r: r.get("tab") == "operators_owners" or r.get("ref_col") in OO_PRIMARY
+    is_oo = _is_oo
     paste_refs = [r for r in own_refunits + ref_work
                   if r.get("class_out") in ("REFS_ADDED", "DEAD_LINK")]
     # one paste surface: fills first so a fill wins any same-cell tie with ref-only work
@@ -2135,6 +2212,7 @@ def main() -> None:
                 and not is_validity(r) and not is_status(r) and not is_route(r)]
     ref_res = [r for r in resolutions if r.get("class_in") not in ("VALIDITY", "FILL", "STATUS", "ROUTE")
                and not is_validity(r) and not is_status(r) and not is_route(r)]
+    ref_res = _resolve_superseded(ref_res, fill_res, prefix)
 
     # owner/operator refs land on the separate "Pipeline operators/owners" backend tab, so
     # they get their own paste-ready mirror; everything else mirrors the tracker tab.
@@ -2251,9 +2329,8 @@ def main() -> None:
         # leg's proposed changes (verdict change/stale — new Status + companion cells
         # tier-colored, corroborating ref(s) on Status [ref]). Confirmed/unclear status
         # verdicts and oo-tab fills stay off this tab (StatusReview / OperatorsOwners).
-        own_fills = [r for r in fill_res if r.get("class_out") == "REFS_ADDED"
-                     and r.get("tab") != "operators_owners"
-                     and r.get("ref_col") not in OO_PRIMARY]
+        own_fills = [r for r in fill_res
+                     if r.get("class_out") == "REFS_ADDED" and not _is_oo(r)]
         status_changes = [r for r in status_res
                           if r.get("class_out") in ("CHANGE_PROPOSED", "STALE")]
         # ...plus every open validity CONCERN, which contests a CURRENT value rather than
@@ -2283,13 +2360,20 @@ def main() -> None:
                                "Work from THIS tab; the StatusReview / *_Refs_* "
                                "tabs below hold the per-verdict and per-ref detail."))
 
-    # operators/owners paste-ready mirror (ProjectID-keyed, ref-precedes-values)
-    if oo_res:
+    # operators/owners paste-ready mirror (ProjectID-keyed, ref-precedes-values).
+    # Owner/operator FILLs ride along: the Backend mirror above deliberately drops them
+    # (they target a different tab), so this is their ONLY paste surface — without them
+    # a sourced Operator reaches no pasteable cell anywhere. `_operators_owners_view`
+    # already tier-colors a FILL's value cells beside its [ref], and `_merge_ref_unit`
+    # gives the FILL the base slot when a ref-only twin exists for the same cell.
+    oo_fills = [r for r in fill_res if r.get("class_out") == "REFS_ADDED" and _is_oo(r)]
+    oo_view = oo_res + oo_fills
+    if oo_view:
         oo_title = f"{prefix}_OperatorsOwners"
         oo_concerns = [r for r in validity_res
                        if (r.get("verdict") or "").strip() == "concern"
                        and (r.get("concern_type") or "") == "attribution"]
-        _operators_owners_view(wb, oo_title, oo_res, concerns=oo_concerns)
+        _operators_owners_view(wb, oo_title, oo_view, concerns=oo_concerns)
         sheet_defs.append((oo_title,
                            "PASTE-READY — mirror of the separate \"Pipeline operators/owners\" backend tab "
                            "(GID 1489950650), ProjectID-keyed, where the [ref] column PRECEDES its values. "

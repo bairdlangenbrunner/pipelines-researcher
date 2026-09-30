@@ -146,7 +146,7 @@ python scripts/build_ref_worklist.py --tracker gas --country "<Country>" \
   --verify-existing --out $STG/worklist.json
 # … research → merge → then, before building the workbook:
 python scripts/check_shard_coverage.py --staging $STG/ --all   # every worklist unit reported on? (blocking)
-python scripts/sweep_gates.py --staging $STG/   # gates A–L; quote the counts in the delivery note
+python scripts/sweep_gates.py --staging $STG/   # gates A–M; quote the counts in the delivery note
 python scripts/harvest_wiki_citations.py --worklist $STG/worklist.json \
   --out $STG/wiki_citations.json
 ```
@@ -171,6 +171,12 @@ independent working sources, assign tier; stage one resolution per unit into
 `$STG/staged_resolutions.json`. **Never auto-apply; no fabricated URLs.**
 
 ### deep / in-dev presets (subagent fan-out via `critical-deep-sweep`)
+
+**Token-budgeted? Run it as a lean pass** (`docs/sops/lean_pass.md`): build the worklist to
+`worklist_full.json`, cut it with `scripts/lean_worklist.py` (owed set → `worklist.json`, the rest →
+`deferred_units.json`), then `build_deepsweep_args.py --lean --groups auto --brief BRIEF.md
+--model <m>` and `node scripts/dryrun_deepsweep.mjs <args>` before dispatch. Everything after
+dispatch below is unchanged.
 
 ```bash
 python scripts/build_deepsweep_args.py --staging $STG/ [--status-review]  # JSON → Workflow args
@@ -203,6 +209,14 @@ python scripts/harvest_sentinel_findings.py --staging $STG/  # harvester LAST �
 The order is not cosmetic: the harvester rescues the sentinels `merge_ref_shards.py`
 drops with a WARN, and `merge_deepsweep_shards.py` purges them if it runs after —
 reconcile the WARN count before shipping (Sweep SOP §Sentinels).
+
+**A deep-sweep agent that died mid-row** (context limit, crash) leaves a PARTIAL shard —
+since 2026-09-14 the contract saves every finished record through
+`scripts/shard_upsert.py`, so the row is not lost. Before the merge, run
+`check_shard_coverage.py --all`, then re-dispatch just the listed PIDs (resume the same run:
+`Workflow({scriptPath, resumeFromRunId})` reuses every finished agent; or a follow-up
+`critical-deep-sweep` with `pids` = the gap list). The replacement agent runs
+`shard_upsert.py --remaining` and researches only the units still owed.
 
 **Recovery pass over an already-merged batch** (non-zero gate L, or gaps from
 `check_shard_coverage.py --all`): same recipe, but the subagents write

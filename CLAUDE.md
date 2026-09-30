@@ -22,6 +22,7 @@ Where things live — **read on demand as the workflow dictates, not all at once
 - **SOPs** (operational *how*): `docs/sops/` — `triage.md`, `reconciliation.md`
   (pluggable GEM↔dataset diff), `sweep.md` (Country Sweep — the research engine),
   `discovery.md`, `update.md` (targeted fixes), `qc.md` (QC + handoff packet),
+  `lean_pass.md` (token-budgeted sweep mode),
   `annual_update.md` (campaign recipe).
 - **Workflow recipes** (commands, in order): `docs/workflows.md`.
 - **Reference**: `docs/reference/` — `gem_schema.md`, `controlled_vocab.md`,
@@ -80,11 +81,15 @@ Where things live — **read on demand as the workflow dictates, not all at once
    never that something slightly different was found. Enforced by
    `scripts/check_shard_coverage.py` (per shard, blocking, before a subagent finishes) and
    `sweep_gates.py` gate L (per store, at delivery).
-5. **Banned sources: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`) **and theodora.com** (tertiary aggregator; `url_verifier` rejects both).
-   Never use it as a reference, ever — not even alongside corroborating sources, not
+5. **Banned sources: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`), **theodora.com**, and **yingdodo.com** (小柱工程, a construction-leads database — added 2026-09-10; the page it serves for Jiangxi is an explicit marketing sample, `项目样例…仅表示内容格式`, with no attribution). All tertiary aggregators; `url_verifier` rejects all three.
+   Never use them as a reference, ever — not even alongside corroborating sources, not
    in any output, note, or lane (Baird directive 2026-07-17, all GEM researcher
    projects). If it's the only place a value appears, treat the value as unsourced;
-   chase whatever primary source it footnotes and cite that.
+   chase whatever primary source it footnotes and cite that. **A banned host can arrive
+   via GEM's own gem.wiki citation list** (yingdodo is on it for 27 Jiangxi PIDs), so the
+   ban is enforced in `url_verifier.BLOCKLIST_HOSTS` — which `harvest_wiki_citations.py`,
+   `merge_qc.py` and `sweep_gates.py` all import, so it blocks at harvest, at merge, and
+   at the delivery gate rather than relying on each agent to recognize the site.
 
 ---
 
@@ -185,6 +190,11 @@ Routing notes:
   right legs. The sweep's `refs` leg researches & stages refs across all
   rows×ref-cells to the ≥2-independent target; both share one ref-pair model
   (`scripts/ref_pairs.py`).
+- **Lean pass = the token-budgeted deep/in-dev sweep** (`docs/sops/lean_pass.md`; "lean pass",
+  "save tokens", "cheaper sweep"): agents work only uncited values + refs the script could not
+  clear + one status/validity record per row, in family groups with a ≤20 k brief; blank-value
+  fills and second sources are DEFERRED into `deferred_units.json` — rule 4(c) debt recorded for a
+  later fills pass, never silently skipped. One batch per session.
 - QC/handoff legs never edit: they detect and route ("QC detects, Update fixes").
   The tracker-wide mechanical audit ("rebuild the QC workbook", "data-health
   audit" → `build_qc_workbook.py`) is a standalone artifact — see the note in
@@ -365,7 +375,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/egypt.md`. Gas researched only 40 of 127 rows — the other 87 carry unapplied
   July/August staged work (`--exclude-pids`); the deep sweeps do NOT subsume the four recon workbooks.
 - **United States (gas: slice 1 batches 1-5 staged not applied, 5 files to work — batches 1-4
-  rebuilt on the rule-4(e) recovery pass (`_1906_ET`), batch 5 closed slice 1 (`20260910_1526_ET`). Campaign order fixed
+  rebuilt on the rule-4(e) recovery pass (`_1906_ET`), batch 5 closed slice 1 (rebuilt 2026-09-15, `20260915_1231_ET`). Campaign order fixed
   2026-09-10: batch 5 -> slice 2 -> in-dev/status-review -> discovery -> maybe routes/recon.
   **OIL IS OUT OF SCOPE for this cycle** — don't fold it in or propose it; its two staged update
   batches and the deepwater-export item just wait):** `docs/country_notes/united-states.md`.
@@ -390,10 +400,24 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/uzbekistan.md`. 13 of its 31 gas rows ARE Kazakhstan's (research legs scoped to
   the 18 domestic rows, recon keeps all 31); recons standalone; work the 08-27 `0931_ET` handoff only.
 - **Nigeria (divestiture ownership sweep not started):** `docs/country_notes/nigeria.md`.
+- **Russia (gas: campaign running — 8 regional deep-sweep batches with status review; R1 Far Eastern,
+  R2 NW-operating and R3 NW in-dev delivered 2026-09-15 staged not applied; **R5 Volga delivered
+  2026-09-16 as the lean-pass pilot** (`docs/sops/lean_pass.md`; ~38 k tokens/row vs R3's ~184 k, findings
+  not thinned); **R4a Urals-YaNAO delivered 2026-09-21** (lean, ~45 k/row; 1 status change, P5404);
+  **R4b Urals-south delivered 2026-09-22** (lean, ~55 k/row; 1 status change, P3977); **R6 Siberia
+  delivered 2026-09-22** (lean, ~36 k/row; 4 status changes, 4 existence questions); **R7 Central+South
+  delivered 2026-09-30** (lean, ~34 k/row; 9 status changes, 2 duplicates) — regional pass complete; next is
+  the campaign-wide fills pass over the five lean `deferred_units.json` ledgers (R4a–R7);
+  GulfPub recon delivered standalone
+  `20260914_1648_ET`; 33 rows carried from Ukraine/Kazakhstan/Uzbekistan/Iran/China passes excluded
+  from research legs; oil out of scope this cycle; rulings + batch plan + R1/R2/R3 results in
+  `notes/triage-2026-09-14-russia-gas-campaign.md`):**
+  `docs/country_notes/russia.md`. Sliced by federal district from the state audit, never whole-country.
 - **Israel (gas: INGL/TMNG-map batch 2026-07-23 staged not applied; Ashdod-vs-Ashkelon landfall +
   P3620 open):** `docs/country_notes/israel.md`.
-- **China (gas: province-level program ahead of MZ's queue; Guangxi pilot 2026-07-30 + Jiangxi v2
-  2026-09-02 staged not applied, one file each; §8 routes applied; oil out of scope until post-cycle):**
+- **China (gas: province-level program ahead of MZ's queue; Guangxi pilot 2026-07-30 + Jiangxi v3
+  2026-09-10 staged not applied, one file each — v3 supersedes v2/v1; §8 routes applied; oil out of
+  scope until post-cycle):**
   `docs/country_notes/china.md`. Scope is per-PROVINCE via `--province`, never whole-country.
 - **Libya (gas: full pass 2026-07-28 staged not applied; 3 files to work):** `docs/country_notes/libya.md`.
   Recons standalone — ~100 gas rows are decided only there, and the GulfPub file's `Oil_*` tabs are

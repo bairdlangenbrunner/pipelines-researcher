@@ -34,7 +34,11 @@ import collections
 import itertools
 import json
 import sys
+from functools import lru_cache
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from merge_qc import BLOCK, is_ref_only, load_sheet, off_schema_keys, sheet_value  # noqa: E402
 
 
 def load_units(staging: Path) -> dict[str, list[dict]]:
@@ -45,10 +49,18 @@ def load_units(staging: Path) -> dict[str, list[dict]]:
     return by_pid
 
 
+@lru_cache(maxsize=None)
+def load_scope_sheet(staging: Path):
+    """The snapshot the worklist was built from (merge_qc.load_sheet), or None."""
+    wl = json.loads((staging / "worklist.json").read_text())
+    return load_sheet(wl.get("scope"))
+
+
 VALID_CLASS_OUT = {"REFS_ADDED", "REVERIFIED", "UNRESOLVED", "DEAD_LINK"}
 
 
-def check(units: list[dict], fills: list[dict]) -> tuple[list[dict], list[dict], list[dict]]:
+def check(units: list[dict], fills: list[dict], sheet=None, pid: str = ""
+          ) -> tuple[list[dict], list[dict], list[dict]]:
     """-> (unreported units, silent-UNRESOLVED records, unmergeable records).
 
     Matching is by ref_col, disambiguated by sheet_row ONLY where a pipeline carries several
@@ -84,6 +96,25 @@ def check(units: list[dict], fills: list[dict]) -> tuple[list[dict], list[dict],
     SOURCED_OUT = {"REFS_ADDED", "REVERIFIED", "CONFIRMED"}
     for f in fills:
         why = []
+        # SENTINELS (`__VALIDITY__` / `__REDUNDANCY__` / `__STATUS__`) are exempt from both
+        # class checks below, and `validate_shards.py` exempts them the same way on the same
+        # reasoning. A sentinel asserts a FINDING about a ROW -- a redundancy verdict, a
+        # route-length divergence, a status re-read -- not a value for a worklist unit. It
+        # carries `value_cols: []` and `values: {}` by construction, and its class comes from
+        # the sentinel vocabulary (CONFIRMED/CONCERN/OPEN/REFUTED/INFO), not the ref
+        # vocabulary. So it trips BOTH checks -- "not one of REFS_ADDED/..." and "sourced but
+        # `values` is empty" -- and both readings are wrong. Nor is it "dropped at workbook
+        # build": sentinels never travel the ref-fold path. split_shards.py routes them to
+        # `ref_shards/<PID>.json` for `harvest_sentinel_findings.py`, which rewrites
+        # `class_out` to UNRESOLVED itself, so whatever the shard wrote in that slot never
+        # reaches the builder at all.
+        # 2026-09-10: this cost 96 false class-trips + 87 false values-trips across four
+        # staged batches (jiangxi v2 + v3, libya cancelled-review + ref-sweep-operating) and
+        # hard-stopped the jiangxi v3 chain on 80 "unmergeable" records that were all fine.
+        # The `silent UNRESOLVED` check above deliberately still applies: a sentinel with no
+        # `researcher_notes` really does say nothing.
+        if (f.get("ref_col") or "").strip().startswith("__"):
+            continue
         # A handful of tracker value columns have no paired `[ref]` column at all
         # (OtherEnglishNames, the OtherLanguage* names). A fill on one of those is
         # legitimately ref-less and merges fine as a FILL carrying only values — it is
@@ -119,9 +150,140 @@ def check(units: list[dict], fills: list[dict]) -> tuple[list[dict], list[dict],
                        + (" (refs are under `refs` — use `proposed_refs` + `verifications`)"
                           if f.get("refs") else "")
                        + " — the merge stages it with no ref")
+        # ...and the verification objects the merge READS. `merge_qc.verified_refs` keeps a
+        # URL only when a verification says `ok` AND `contains_value`; a sourced record with
+        # no `verifications`, or with `ok` objects that omit `contains_value`, is stripped of
+        # every ref at merge and downgraded to UNRESOLVED with a [QC] note -- silently,
+        # because the downgrade is a safety net (Sweep SOP §Merge-time QC normalization).
+        # 2026-09-14, Russia R1 pilot: two shards wrote no verifications at all and eight
+        # omitted `contains_value` on every ok object; every one passed this check, the merge
+        # turned ~110 sourced records into UNRESOLVED, and gate E noticed 26 of them on two
+        # rows. `name_found` is the same failure one notch down: without it on any ok
+        # verification the record ships "relevance unrecorded" and gate I' flags it (128
+        # units, same run). DEAD_LINK is included because its replacement/Wayback refs walk
+        # the same path.
+        if f.get("_leg") != "refs" and (f.get("class_out") or "").upper() in (SOURCED_OUT | {"DEAD_LINK"}) \
+                and f.get("proposed_refs"):
+            vers = [v for v in (f.get("verifications") or []) if isinstance(v, dict)]
+            refs = {str(u or "").strip() for u in f["proposed_refs"]}
+            good = [v for v in vers if v.get("ok") and v.get("contains_value")
+                    and str(v.get("url") or "").strip() in refs]
+            if not vers:
+                why.append("sourced record with no `verifications` — the merge strips every "
+                           "ref and downgrades it to UNRESOLVED; write one {url, ok, "
+                           "contains_value, name_found, note} per proposed ref")
+            elif not good:
+                why.append("no verification says ok+contains_value for a proposed ref — the "
+                           "merge strips every ref and downgrades it to UNRESOLVED (a missing "
+                           "`contains_value` key reads as false)")
+            elif any("name_found" not in v for v in vers if v.get("ok")):
+                why.append("an ok verification lacks `name_found` — the record ships "
+                           "'relevance unrecorded' and gate I' flags it; encode true|false "
+                           "with the matched name in `note`")
+        # `values{}` keys land in real cells: a key that is no backend / owners-tab column
+        # (R6: `Owner`, `Start`, `Construction` -- ref-column stems) reaches no paste surface.
+        if sheet is not None and f.get("_leg") != "refs":
+            bad = off_schema_keys(sheet, f.get("ref_col"), f.get("values"))
+            if bad:
+                allowed = sorted(sheet.pairs.get(f.get("ref_col") or "") or [])
+                allowed = allowed[:6] + (["…"] if len(allowed) > 6 else [])
+                why.append(f"values key(s) {', '.join(map(repr, bad))} are not "
+                           + (f"{f.get('ref_col')} columns ({', '.join(allowed)})" if allowed
+                              else "sheet columns")
+                           + " — use the exact backend/owners-tab header")
+            # An UNRESOLVED record has no sourced value, so it carries the sheet's own; a
+            # proposal there is pasted as if researched (R6 P2705, P3604). Put it in notes.
+            if (f.get("class_out") or "").upper() == "UNRESOLVED":
+                row = f.get("sheet_row")
+                moved = [c for c, v in (f.get("values") or {}).items()
+                         if (cur := sheet_value(sheet, pid, row, c)) is not None
+                         and str(v or "").strip() != str(cur or "").strip()
+                         and not is_ref_only({c: v}, {c: cur})]
+                if moved:
+                    why.append(f"UNRESOLVED but `values` changes {', '.join(moved)} from the "
+                               "sheet — an unsourced proposal belongs in researcher_notes; "
+                               "set values to the sheet's")
         if why:
             malformed.append({"ref_col": f.get("ref_col"), "why": "; ".join(why)})
     return unreported, silent, malformed
+
+
+def check_findings(shard: dict) -> list[dict]:
+    """The same ref-encoding defect, in the records `check()` never sees.
+
+    `check()` walks `fills[]`. A deep-sweep shard also carries `status_reviews[]`, and the
+    merge runs the SAME `merge_qc.verified_refs` filter over its `proposed_refs`. (`validity[]`
+    is deliberately NOT checked here: `merge_deepsweep_shards.py` carries a concern's
+    `proposed_refs` through unfiltered, so an unverified validity ref is not dropped.)
+    2026-09-15, Russia R1 pilot: P1783 and P4111 each staged two live,
+    on-point status refs with `contains_value` left unset, and the merge stripped both and
+    rewrote the verdict to `unclear`; P6710 proposed Status operating <- construction off
+    four named outlets and staged no URL at all, same downgrade. None of it tripped the
+    fills[] checks, because none of it is a fill.
+    """
+    out: list[dict] = []
+    # validity[] shape (Russia R6 DEFECTS #2): the merge recovers these, but the agent is
+    # still running and can write the contract's shape in place.
+    for i, v in enumerate(shard.get("validity") or []):
+        if not isinstance(v, dict):
+            continue
+        label = f"validity[{i}] ({v.get('concern_type') or v.get('verdict') or 'no verdict'})"
+        why = []
+        # an extra key is harmless; one holding what the contract field lacks is lost
+        off = [k for k, want in (("summary", "recommendation"), ("evidence_refs", "proposed_refs"))
+               if v.get(k) and not v.get(want)]
+        if off:
+            why.append(f"off-schema key(s) {', '.join(off)} carry what "
+                       "recommendation / proposed_refs should — move them there")
+        if not (v.get("verdict") or "").strip():
+            why.append("no `verdict` (concern | confirmed)")
+        if (v.get("verdict") or "").strip() == "concern" and not (
+                v.get("recommendation") or "").strip():
+            why.append("concern with an empty `recommendation` — say what the researcher "
+                       "should do (the finding itself goes in researcher_notes)")
+        gem = [str(u.get("url") if isinstance(u, dict) else u)
+               for u in (v.get("proposed_refs") or []) + (v.get("evidence_refs") or [])
+               if any(h in str(u.get("url") if isinstance(u, dict) else u).lower() for h in BLOCK)]
+        if gem:
+            why.append(f"GEM/banned ref(s) {', '.join(gem)} — never cite GEM (standing rule 1)")
+        if why:
+            out.append({"ref_col": label, "why": "; ".join(why)})
+    for i, s in enumerate(shard.get("status_reviews") or []):
+        if not isinstance(s, dict):
+            continue
+        off = [k for k in ("recommended_status", "recommended_fields") if k in s]
+        if off:
+            out.append({"ref_col": f"status_reviews[{i}]",
+                        "why": f"off-schema key(s) {', '.join(off)} — use proposed_status / "
+                               "proposed_changes {column: value}"})
+        verdict = str(s.get("verdict") or "").strip().lower()
+        label = f"status_reviews[{i}] ({verdict or 'no verdict'})"
+        refs = [str(u or "").strip() for u in (s.get("proposed_refs") or []) if str(u or "").strip()]
+        vers = [v for v in (s.get("verifications") or []) if isinstance(v, dict)]
+        if not refs:
+            # A `confirm` may legitimately rest on the fills' own refs; a verdict that MOVES
+            # the sheet may not -- merge QC rewrites it to `unclear` and the change is lost.
+            if verdict in {"change", "stale"} or any(
+                    str(v).strip() for v in (s.get("values") or {}).values()):
+                out.append({"ref_col": label,
+                            "why": "a status verdict that changes the sheet with no "
+                                   "`proposed_refs` — merge QC rewrites it to `unclear` and "
+                                   "the proposed change never reaches the workbook; stage the "
+                                   "URLs the notes name, verified"})
+            continue
+        good = [v for v in vers if v.get("ok") and v.get("contains_value")
+                and str(v.get("url") or "").strip() in set(refs)]
+        if not vers:
+            out.append({"ref_col": label,
+                        "why": "status refs with no `verifications` — the merge strips every "
+                               "one and downgrades the verdict; write one {url, ok, "
+                               "contains_value, name_found, note} per proposed ref"})
+        elif not good:
+            out.append({"ref_col": label,
+                        "why": "no verification says ok+contains_value for a proposed status "
+                               "ref — the merge strips every ref and downgrades the verdict "
+                               "(a missing `contains_value` key reads as false)"})
+    return out
 
 
 def run_one(staging: Path, pid: str) -> dict:
@@ -152,7 +314,8 @@ def run_one(staging: Path, pid: str) -> dict:
         except json.JSONDecodeError as e:
             return {"pid": pid, "error": f"{sub}/{pid}.json does not parse: {e}",
                     "units": len(units)}
-    unreported, silent, malformed = check(units, records)
+    unreported, silent, malformed = check(units, records, load_scope_sheet(staging), pid)
+    malformed += check_findings(shard)
     return {
         "pid": pid, "units": len(units), "fills": len(records),
         "unreported": [{"ref_col": u.get("ref_col"), "class": u.get("class"),
@@ -200,7 +363,7 @@ def main() -> None:
                 parts.append(f"{len(r['unreported'])} of {r['units']} worklist unit(s) "
                              f"have NO fills[] object")
             if r["unmergeable"]:
-                parts.append(f"{len(r['unmergeable'])} fills[] object(s) cannot be merged")
+                parts.append(f"{len(r['unmergeable'])} record(s) cannot be merged")
             if r["silent_unresolved"]:
                 parts.append(f"{len(r['silent_unresolved'])} UNRESOLVED with no notes")
             print(f"FAIL {r['pid']}: " + "; ".join(parts) + ".")

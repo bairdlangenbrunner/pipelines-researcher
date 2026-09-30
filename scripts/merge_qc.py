@@ -11,6 +11,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from typing import NamedTuple
 from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -25,7 +26,15 @@ STATUS_VERDICT_CLASS = {"confirm": "CONFIRMED", "change": "CHANGE_PROPOSED",
 def verified_refs(urls, verifs):
     """Keep only http(s) URLs whose verification is ok && contains_value, minus
     blocklisted hosts; deduped, order-preserving. With no verifications at all,
-    clean/blocklist-filter only (the caller decides whether that's acceptable)."""
+    clean/blocklist-filter only (the caller decides whether that's acceptable).
+
+    THAT LAST CLAUSE IS AN ASYMMETRY WITH THE DELIVERY GATE, so mind it: with an empty
+    `verifs` this returns ALL the urls, while `sweep_gates.verified()` returns NONE (it
+    has no lenient branch). A writer that delegates here while a gate applies the strict
+    rule produces a store the gate disagrees with -- which is how
+    `harvest_sentinel_findings.py` shipped gate-B/D findings the store had already been
+    told to fix (2026-09-10). Across a store/gate boundary, spell the strict basis out:
+    `{v["url"] for v in verifications if v.get("ok") and v.get("contains_value")}`."""
     okset = {v.get("url") for v in (verifs or []) if v.get("ok") and v.get("contains_value")}
     out, seen = [], set()
     for u in urls or []:
@@ -62,28 +71,75 @@ def origin_host(url):
     return host.rsplit(":", 1)[0] if ":" in host else host
 
 
+# Hosts that REDISTRIBUTE third-party documents: an exchange disclosure portal, an
+# interbank-market filing site, a corporate-data aggregator. On these the host names
+# the VENUE, not the author, so it cannot answer origin_host's question ("would a
+# reader call these the same publisher?"). Found 2026-09-10 on China/Jiangxi gas: four
+# 中诚信国际 (CCXI) credit rating reports on one issuer, served from static.sse.com.cn,
+# qxb-pdf-osscache.qixin.com and chinamoney.com.cn, read as three publishers and
+# carried 22 records to independent=yes (6 of them tier high) on what is one author —
+# and two of those URLs were byte-identical PDFs (md5 a47195d52877446d4f6ccb49f5912a9f).
+# Collapsing every venue-hosted ref into ONE bucket is deliberately conservative: it
+# can under-credit two genuinely different publishers who happen to share a venue, but
+# it never manufactures independence, and the QC note says why so a researcher can
+# override with evidence of authorship.
+VENUE_HOSTS = (
+    "sse.com.cn", "szse.cn", "bse.cn", "neeq.com.cn", "cninfo.com.cn",  # exchanges
+    "chinamoney.com.cn",                                               # NAFMII/CFETS
+    "qixin.com", "qcc.com", "tianyancha.com",                          # aggregators
+)
+VENUE_BUCKET = "<venue-hosted: publisher unverified>"
+
+
+def publisher_key(url):
+    """Origin identity for independence counting. Same as `origin_host` except that
+    document-redistribution venues collapse to one bucket — see VENUE_HOSTS."""
+    h = origin_host(url)
+    if not h:
+        return ""
+    if any(h == v or h.endswith("." + v) for v in VENUE_HOSTS):
+        return VENUE_BUCKET
+    return h
+
+
 def independence_qc(refs, tier, independent, notes):
     """`independent` means the rubric's >=2 INDEPENDENT AGREEING sources — not
     "independent of GEM". Agents routinely set it True on a single-source unit whose
     own notes say "single source -> medium", and it renders as the yes/no column a
     researcher trusts when deciding to paste. Enforce it against the refs the record
     actually carries: a claim of independence needs >=2 surviving refs from >=2
-    distinct PUBLISHERS (two articles on one outlet, or a page and its own Wayback
-    snapshot, are one origin), and a unit that loses the claim cannot stay at tier
+    distinct PUBLISHERS (two articles on one outlet, a page and its own Wayback
+    snapshot, or two documents served from one redistribution VENUE, are one
+    origin), and a unit that loses the claim cannot stay at tier
     `high` (a single source is medium at best).
 
     Returns (tier, independent, notes).
     """
-    hosts = {h for h in (origin_host(u) for u in (refs or [])) if h}
-    if not independent or len(hosts) >= 2:
+    hosts = {h for h in (publisher_key(u) for u in (refs or [])) if h}
+    if len(hosts) >= 2:
         return tier, independent, notes
-    n = len(refs or [])
-    msg = (f"independent=yes claimed on {n} surviving ref(s) from "
-           f"{len(hosts)} publisher(s) -> no")
+    # Both halves of the invariant are enforced, and INDEPENDENTLY of each other. The
+    # tier half used to hang off `if not independent: return` -- so a record that
+    # honestly declared `independent: false` kept its `high` on one publisher, while an
+    # identical record that over-claimed `true` got demoted. That rewarded the wrong
+    # answer: measured 2026-09-10 across every staged batch, 84 records sat at `high` on
+    # <2 surviving publishers purely because they had not claimed independence (56 of
+    # them real ref columns, the rest __VALIDITY__/__ROUTE__ sentinels). The rubric's
+    # sentence is unconditional -- "a single source is `medium` at best" -- and says
+    # nothing about what the flag claims (docs/reference/confidence_tiers.md).
+    n, nh = len(refs or []), len(hosts)
+    msgs = []
+    if independent:
+        independent = False
+        msgs.append(f"independent=yes claimed on {n} surviving ref(s) from "
+                    f"{nh} publisher(s) -> no")
     if tier == "high":
         tier = "medium"
-        msg += "; tier high -> medium (single source)"
-    return tier, False, qc_note(notes, msg + ".")
+        msgs.append(f"tier high -> medium ({n} surviving ref(s) from {nh} publisher(s); "
+                    f"a single source is medium at best)")
+    if not msgs:
+        return tier, independent, notes
+    return tier, independent, qc_note(notes, "; ".join(msgs) + ".")
 
 
 def relevance_qc(verifs, tier, notes):
@@ -166,6 +222,105 @@ def bad_cost_units(values):
     return bad
 
 
+class Sheet(NamedTuple):
+    columns: set
+    backend: dict
+    owners: dict
+    single: dict
+    pairs: dict
+    primary: dict
+
+
+def load_sheet(scope):
+    """The snapshot a worklist was built from, as a `Sheet`, or None when `scope.csv` can't
+    be located.
+
+    `columns` is every backend header plus every operators/owners-tab header, and `pairs`
+    maps each `[ref]` column to its value columns (ref_pairs.py): a `values{}` key must be
+    one of its record's pair columns (or, off a pair, at least a sheet column), because each
+    one lands in a real cell on a paste surface. `backend_rows` is keyed (ProjectID, SheetRow) with SheetRow = data-row index + 4 (the
+    tracker header is at CSV row 2); `single_row` maps a ProjectID with exactly one backend
+    row to that row (the fallback when a staged sheet_row is stale); `owners_rows` is keyed by ProjectID (header at row 1,
+    first row wins). Used to reject off-schema value keys and to put the sheet's own values
+    back on an UNRESOLVED fill (Russia R6 DEFECTS #4/#5)."""
+    import csv
+    from ref_pairs import discover_owner_ref_pairs, discover_ref_pairs
+    scope = scope or {}
+    data = Path(__file__).resolve().parent.parent / "data"
+
+    def _read(name):
+        if not name:
+            return None
+        p = Path(name) if Path(name).exists() else data / Path(name).name
+        if not p.exists():
+            return None
+        with p.open(newline="") as f:
+            return list(csv.reader(f))
+
+    rows = _read(scope.get("csv"))
+    if not rows or len(rows) < 3:
+        return None
+    header = rows[2]
+    pid_i = header.index("ProjectID") if "ProjectID" in header else None
+    backend = {}
+    if pid_i is not None:
+        for di, raw in enumerate(rows[3:]):
+            pid = raw[pid_i] if pid_i < len(raw) else ""
+            backend[(pid, di + 4)] = {c: (raw[i] if i < len(raw) else "")
+                                      for i, c in enumerate(header)}
+    columns = set(header)
+    found = [p for p in discover_ref_pairs(header) if p.get("ref_col")]
+    owners = {}
+    oo = _read(scope.get("owners_csv"))
+    if oo and len(oo) > 2:
+        oh = oo[1]
+        columns |= set(oh)
+        found += discover_owner_ref_pairs(oh)
+        if "ProjectID" in oh:
+            oi = oh.index("ProjectID")
+            for raw in oo[2:]:
+                pid = raw[oi] if oi < len(raw) else ""
+                if pid and pid not in owners:
+                    owners[pid] = {c: (raw[i] if i < len(raw) else "") for i, c in enumerate(oh)}
+    columns.discard("")
+    per_pid = {}
+    for pid, _row in backend:
+        per_pid.setdefault(pid, []).append(backend[(pid, _row)])
+    single = {pid: rs[0] for pid, rs in per_pid.items() if pid and len(rs) == 1}
+    pairs = {p["ref_col"]: set(p["value_cols"]) for p in found}
+    primary = {p["ref_col"]: p["primary_value_col"] for p in found}
+    return Sheet(columns, backend, owners, single, pairs, primary)
+
+
+def off_schema_keys(sheet, ref_col, values):
+    """`values{}` keys that belong on no paste surface for this record: outside its `[ref]`
+    pair's value columns (R6: `Owner` under `Owner [ref]`, whose values are Owner1/Owner1%
+    on the owners tab), or — for a record keyed to no known pair — not a sheet column at
+    all (`Start`, `Construction`). [] when the snapshot is unavailable."""
+    if sheet is None or not isinstance(values, dict):
+        return []
+    allowed = sheet.pairs.get(ref_col or "") or sheet.columns
+    return [k for k in values if k not in allowed]
+
+
+def sheet_value(sheet, pid, sheet_row, col):
+    """The snapshot's current value for one cell, or None when it can't be located."""
+    if not sheet:
+        return None
+    try:
+        row = sheet.backend.get((pid, int(sheet_row)))
+    except (TypeError, ValueError):
+        row = None
+    if row is None:
+        row = sheet.single.get(pid)
+    if row is not None and col in row:
+        return row[col]
+    oo = sheet.owners.get(pid)
+    if oo is not None and col in oo:
+        return oo[col]
+    return None
+
+
 def _norm_value(v):
     """Normalize one cell for equality: numbers compare numerically (so '1814' ==
     '1814.00' == '1,814'), everything else case- and whitespace-insensitively."""
@@ -224,6 +379,12 @@ def status_qc(verdict, changes, refs, notes):
     if verdict == "change" and not refs:
         verdict = "unclear"
         notes = qc_note(notes, "change proposed without a verified ref -> unclear.")
+    if verdict == "change" and not changes:
+        # A `change` with an empty `values{}` tints nothing on the Backend paste surface:
+        # the researcher reads "this row changed" and has nothing to paste. Either the
+        # record states what the new value is or it is not yet a change (Russia R3).
+        verdict = "unclear"
+        notes = qc_note(notes, "change proposed with no pasteable value -> unclear.")
     if verdict == "stale":
         if (changes.get("Status") or "").lower() in ("shelved", "cancelled") \
                 and (changes.get("ShelvedCancelledType") or "").lower() != "inferred":

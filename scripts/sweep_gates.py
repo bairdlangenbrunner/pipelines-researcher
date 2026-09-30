@@ -15,7 +15,9 @@ blank value on an operating row is owed work, not a non-unit).
 
 Gates (all advisory; exit code is always 0 — they inform the delivery note):
   A  SOURCE DIVERSITY   -- a row whose sourced units all trace to <2 distinct hosts.
-  B  FALSE HIGH         -- a `high` unit whose verified refs share one host or number <2.
+  B  FALSE HIGH         -- a `high` unit whose verified refs share one host or number <2
+                           (a `__VALIDITY__` concern is counted over proposed_refs -- see
+                           `evidence()`).
   C  DOMINANT DOCUMENT  -- one URL carrying >= --dominant-min units cannot be the second
                            source for a `high`: one origin restated is still one origin.
   D  INDEPENDENCE FLAG  -- `independent: true` on a unit with <2 verified refs.
@@ -42,6 +44,15 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
                            an empty record that reads exactly like honest failure. The split
                            against UNRESOLVED-with-notes is the whole point: notes = the
                            researcher looked and said so; no notes = silence.
+  M  PROSE IN A PASTEABLE CELL -- a `values` (or validity `contested`) entry that is a RECOMMENDATION rather than the
+                           cell content: "downgrade from 'high' to 'low ...' pending
+                           redigitization -- staged geometry covers only ~14% ...". Every
+                           `values` entry lands in a tier-colored backend cell the
+                           researcher copies; prose there is pasted verbatim into the live
+                           tracker. The rationale belongs in `researcher_notes` /
+                           `recommendation`, which the cell comment already carries. First
+                           seen on US gas batch 5 (fixed by hand, commit 7e75f26), again on
+                           Russia R2 P5539 -- hence the gate.
 """
 from __future__ import annotations
 
@@ -50,34 +61,78 @@ import collections
 import json
 import sys
 from pathlib import Path
-from urllib.parse import urlparse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from url_verifier import BLOCKLIST_HOSTS, GEM_HOSTS  # noqa: E402
+from merge_qc import publisher_key  # noqa: E402
 
 BANNED = tuple(GEM_HOSTS + BLOCKLIST_HOSTS)
+
+# Columns whose content is legitimately narrative — never flagged by gate M.
+PROSE_OK_COLS = {"ResearcherNotes", "Wiki", "OtherEnglishNames", "OtherLanguageNames",
+                 "OtherLanguagePrimaryPipelineName", "ShelvedCancelledDescription"}
+# Markers of a recommendation ABOUT a cell rather than the cell's content. A bare long
+# value is fine (owner strings run long); it is the narrative that is the defect.
+PROSE_MARKERS = (" -- ", " — ", " see ", "pending ", "do not ", "was blank",
+                 "downgrade", "upgrade to", "instead of", "http://", "https://",
+                 "(add ", "(remove", "n/a --", "per sourced")
+
+
+def prose_value(col: str, val) -> str:
+    """Is this `values` entry a recommendation instead of a pasteable cell value?"""
+    if col in PROSE_OK_COLS or col.endswith(" [ref]") or col.endswith("Notes"):
+        return ""
+    v = str(val or "").strip()
+    if len(v) < 40:
+        return ""
+    low = v.lower()
+    for m in PROSE_MARKERS:
+        if m in low:
+            return m.strip()
+    return "over 120 chars" if len(v) > 120 else ""
+
 SOURCED = {"REFS_ADDED", "REVERIFIED", "CONFIRMED"}
 SENTINEL_PREFIX = "__"
 
 
 def host(u: str) -> str:
-    h = (urlparse(u).netloc or "").lower()
-    if h == "web.archive.org":
-        # a capture is the ORIGIN's bytes — count the origin (same rule as merge_qc.origin_host)
-        path = urlparse(u).path
-        parts = path.split("/", 3)
-        if len(parts) == 4 and parts[1] == "web":
-            h = (urlparse(parts[3]).netloc or "").lower()
-    return h[4:] if h.startswith("www.") else h
+    """Publisher identity for the independence gates — delegated to
+    `merge_qc.publisher_key` so the gates and the mergers can never drift. It
+    unwraps Wayback captures to the origin AND collapses document-redistribution
+    venues (exchange portals, corporate-data aggregators) into one bucket, since
+    on those the host names the venue rather than the author."""
+    return publisher_key(u)
 
 
 def verified(r: dict) -> list[str]:
     """Refs the merge would actually KEEP: ok && contains_value. Counting proposed_refs
     instead would credit a row for URLs that get dropped at merge — which is precisely
-    how a row ends up looking two-sourced in the workbook and single-sourced in fact."""
+    how a row ends up looking two-sourced in the workbook and single-sourced in fact.
+
+    Strict, with no lenient branch: absent verifications yield zero refs. That differs
+    deliberately from `merge_qc.verified_refs`, which host-filters only when handed no
+    verifications -- see the asymmetry note in its docstring before writing a new
+    consumer of either."""
     ok = {v.get("url") for v in (r.get("verifications") or [])
           if v.get("ok") and v.get("contains_value")}
     return [u for u in (r.get("proposed_refs") or []) if u in ok]
+
+
+def evidence(r: dict) -> list[str]:
+    """The refs a record's TIER and INDEPENDENCE claims are counted over (gates B/C/D).
+
+    Identical to `verified()` except for one documented repo convention: a
+    `__VALIDITY__` record carries NO `verifications` by convention (see the header
+    of `audit_shard.py`, which counts a validity record's tier over `proposed_refs`
+    for exactly this reason), and the merge carries a concern's `proposed_refs`
+    through UNFILTERED — so counting a validity concern over ok+contains_value
+    scores every one of them at zero and buries the real findings. Russia R1:
+    33 of 33 gate-B flags and 49 of 49 gate-D flags were validity records that each
+    carried 2+ proposed refs. A validity record that DOES carry verifications
+    (agents sometimes write them) is judged strictly, like everything else."""
+    if str(r.get("ref_col") or "") == "__VALIDITY__" and not (r.get("verifications") or []):
+        return [u for u in (r.get("proposed_refs") or []) if u]
+    return verified(r)
 
 
 def _load(path: Path):
@@ -110,7 +165,6 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
                   for r in res if r.get("class_in") == "FILL"
                   and r.get("class_out") in SOURCED and verified(r)}
 
-
     A, B, C, D, E, F, G, H = [], [], [], [], [], [], [], []
     I_false, I_unchecked, J, K, L = [], [], [], [], []
     for pid, recs in sorted(by_pid.items()):
@@ -121,17 +175,18 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             A.append((pid, sourced_n, sorted(hosts)))
         for r in recs:
             vr = verified(r)
-            vh = {host(u) for u in vr} - {""}
+            ev = evidence(r)          # == vr except for the validity convention
+            vh = {host(u) for u in ev} - {""}
             tier = (r.get("tier") or "").lower()
             col = r.get("ref_col")
             sentinel = str(col).startswith(SENTINEL_PREFIX)
-            if tier == "high" and (len(vr) < 2 or len(vh) < 2):
-                B.append((pid, col, len(vr), sorted(vh)))
-            if tier == "high" and len(vh) == 2 and dominant & set(vr) and \
-                    len([u for u in vr if u not in dominant]) < 2:
-                C.append((pid, col, sorted(set(vr) & dominant)))
-            if r.get("independent") and len(vr) < 2:
-                D.append((pid, col, len(vr)))
+            if tier == "high" and (len(ev) < 2 or len(vh) < 2):
+                B.append((pid, col, len(ev), sorted(vh)))
+            if tier == "high" and len(vh) == 2 and dominant & set(ev) and \
+                    len([u for u in ev if u not in dominant]) < 2:
+                C.append((pid, col, sorted(set(ev) & dominant)))
+            if r.get("independent") and len(ev) < 2:
+                D.append((pid, col, len(ev)))
             has_val = any(str(v).strip() for v in (r.get("values") or {}).values())
             # Only a SOURCED record's refs reach a `[ref]` cell (build_ref_workbook.py never
             # writes ref text for UNRESOLVED — see its "must never blank the prefilled current"
@@ -246,8 +301,21 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
                 continue
             L.append((u.get("project_id"), u.get("ref_col"), u.get("primary_value", "")))
 
+    # M -- prose where a pasteable value belongs (every `values` entry is a backend cell,
+    # and so is every `contested` entry on a validity concern: it is the candidate value
+    # the Backend tab marks orange -- R4b/R6 shipped prose there, fixed by hand)
+    M = []
+    for r in res:
+        for field in ("values", "contested"):
+            for col, val in (r.get(field) or {}).items():
+                why = prose_value(col, val)
+                if why:
+                    M.append((r.get("project_id"), f"{r.get('ref_col')}/{field}:{col}",
+                              str(val)[:110], why))
+
     return {
         "records": len(res), "rows": len(by_pid),
+        "M_prose_in_value_cell": M,
         "A_single_host_rows": A, "B_false_high": B, "C_dominant_document": C,
         "D_independence_flag": D, "E_orphan_refs": E, "F_banned_sources": F,
         "G_unopened_pool_on_unresolved_rows": G,
@@ -261,6 +329,8 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
         "uncited_unresolved_but_worked": L_looked,
         "fills_owed": len(owed),
         "fills_staged": sum(1 for r in res if r.get("class_in") == "FILL"),
+        "lean_fills_deferred": ((wl.get("summary") or {}).get("lean") or {}).get(
+            "deferred_by_reason", {}).get("fills_deferred") if (wl.get("scope") or {}).get("lean") else None,
         "pool_present": bool(pool),
         "dominant_documents": sorted(((n, u) for u, n in url_units.items()
                                       if n >= dominant_min), reverse=True),
@@ -314,6 +384,10 @@ def report(out: dict, dominant_min: int) -> None:
             f"FILL records staged {out['fills_staged']})", out["J_owed_blanks_unreported"],
             "every owed blank was reported on (filled or honest UNRESOLVED)",
             lambda r: f"{r[0]} {r[1]} [{r[2]}]")
+    elif out.get("lean_fills_deferred") is not None:
+        print(f"\nJ  skipped — lean pass: {out['lean_fills_deferred']} blank-value units deferred to "
+              f"deferred_units.json (owed to a later fills pass, docs/sops/lean_pass.md); "
+              f"FILL records staged: {out['fills_staged']}")
     else:
         print(f"\nJ  skipped — worklist has no MISSING_VALUE units (built without --owe-fills); "
               f"FILL records staged: {out['fills_staged']}")
@@ -325,6 +399,10 @@ def report(out: dict, dominant_min: int) -> None:
             lambda r: f"{r[0]} {r[1]} — sheet has {str(r[2])[:30]!r}, no ref, no notes")
     else:
         print("\nL  skipped — worklist has no MISSING_REF units")
+    sec("M  prose where a pasteable value belongs (values{} / contested{} entry)",
+        out["M_prose_in_value_cell"],
+        "every proposed value is cell content, not a recommendation",
+        lambda r: f"{r[0]} {r[1]} [{r[3]}]: {r[2]!r}", cap=20)
     sec("K  REFS_ADDED on exactly one verified ref (2-per-data-point target unmet)",
         out["K_single_source_refs_added"], "every added ref is two-sourced",
         lambda r: f"{r[0]} {r[1]}", cap=10)

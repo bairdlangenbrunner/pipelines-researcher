@@ -521,6 +521,68 @@ datasets:
     dedup_keys: [osm_id_key]
     ignore_garbage_fields: [attribution, source, license]
 
+  # --- Russia, gas (2026-09-14): 5,520 features / 7,877 ways, ~109,900 km, all
+  #     lifecycle=operating (the lifecycle keys were requested; OSM simply has no
+  #     proposed:/construction: gas ways in RU worth the name). The LARGEST extract in
+  #     the registry by an order of magnitude, and structurally the richest: 169
+  #     features exceed 100 km, 57 exceed 400 km, and the top eight alone carry
+  #     ~19,200 km — the Gazprom Unified Gas Supply System trunks are drawn end to end
+  #     (Уренгой — Ужгород 3,312.6 km DN1420, Ямбург — Тула 2 2,826.3, Уренгой —
+  #     Новопсков 2,715.8, Ямбург — Елец 2 2,088.5, Бованенково — Ухта 2 2,082.6,
+  #     Ямбург — Западная граница 2,082.6, Ямбург — Поволжье 1,981.5, СРТО — Урал
+  #     1,974.2, Уренгой — Центр 2 1,943.4, Нюксеница — Архангельск 1,893.5 DN720).
+  #     The other 3,435 (62%) are sub-1 km stubs (2,785 sub-0.5 km) — Ukraine's
+  #     scope-mismatch shape again, so expect an additions pile dominated by
+  #     distribution fragments and read `disposition` before `Addition`.
+  #
+  #     ATTRIBUTES ARE UNUSUALLY PRESENT: 1,816 named (1,798 Cyrillic; 138 carry a
+  #     name:en), 1,611 carry a diameter, 2,002 an operator (the Gazprom transgaz
+  #     subsidiaries by name — Югорск 394, Санкт-Петербург 270, Ухта 248, Нижний
+  #     Новгород 166, Москва 162, Чайковский 130, Екатеринбург 127, добыча Уренгой
+  #     120), 1,112 a pressure, 3 a start date. The 2026-08-14 translit_cyrillic fix is
+  #     load-bearing on 1,798 of 1,816 names. GEM names its Russian trunks in
+  #     English transliteration ("Urengoy–Pomary–Uzhgorod"), OSM in Cyrillic with an
+  #     em-dash between termini — the name axis matches on the transliterated
+  #     terminus tokens, so a miss is more likely a naming-convention gap than a
+  #     genuine absence: check OtherEnglishNames before bucketing.
+  #
+  #     No geoarea_weight override: the GEOMETRY axis is alive (most GEM Russia gas
+  #     rows carry a mapped route — the state audit of 2026-09-14 is the reference).
+  #     The Uzbekistan caveat applies with 2,785 sub-0.5 km stubs: a stub anywhere
+  #     inside a declared terminus oblast scores full geoarea marks, so an override
+  #     would manufacture overlaps. Read the health line, not the bucket sizes.
+  #     Recon for Russia is a LATER campaign step (after the regional deep sweeps);
+  #     this entry registers the extract so the routes leg and the eventual §2 run
+  #     read one fetch. Fetch log: batches/russia-gas/staging/osm_ru_fetch.log.
+  - name: gas_ru
+    scraped_date: "2026-09-14"
+    commodity_default: gas
+    format: geojson
+    path: data/osm-ru-gas.geojson
+    geometry: feature
+    column_map:
+      country_const: "Russia"      # the fetch is ISO-scoped; features carry no country tag
+      name: osm_name
+      status: lifecycle
+      operator: osm_operator
+      owners: osm_owner
+      diameter_raw: osm_diameter
+      start_year: osm_start_date
+      description: osm_usage
+      source_url: osm_website
+    units:
+      diameter_units: mm
+      length_units: km
+      length_commodity_quirk: false
+    status_map:
+      operating: operating
+      proposed: proposed
+      construction: construction
+      idle: idle
+      retired: retired
+    dedup_keys: [osm_id_key]
+    ignore_garbage_fields: [attribution, source, license]
+
 matching:
   # OSM pipelines are mostly UNNAMED (Libya: 74 of 545 features carry any name), so
   # the engine default name_weight 0.30 would sink real matches. Geometry is the

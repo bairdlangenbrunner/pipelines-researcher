@@ -271,10 +271,16 @@ def main() -> None:
                  f"(ne_50m_admin_0_countries.zip) into data/boundaries/")
 
     import pandas as pd
-    df = pd.read_csv(args.csv, header=2, low_memory=False)
-    df = df[df["PipelineName"].notna()].copy()
+    # keep_default_na=False: "N/A" is an explicit EXCLUSION marker in Status,
+    # and pandas would silently parse the literal string as NaN (CLAUDE.md).
+    df = pd.read_csv(args.csv, header=2, low_memory=False,
+                     keep_default_na=False, na_values=[])
+    df = df[df["PipelineName"].astype(str).str.strip() != ""].copy()
     df["SheetRow"] = df.index + 4
     scope = df[df["CountriesOrAreas"].fillna("").str.contains(args.country, case=False)]
+    # Status = "N/A" means the row is not to be researched and does not belong in
+    # the database — every research scope drops it (cf. build_ref_worklist.py).
+    scope = scope[scope["Status"].astype(str).str.strip().str.upper() != "N/A"]
     if args.pids:
         keep = {p.strip() for p in args.pids.split(",") if p.strip()}
         scope = scope[scope["ProjectID"].isin(keep)]

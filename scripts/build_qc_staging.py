@@ -223,6 +223,9 @@ def _load_scope(csv: str, country: str, pids: str | None):
     df["SheetRow"] = df.index + 4          # before any reset — CSV index + 4
     want = N.normalize_country(country)
     df = df[df["CountriesOrAreas"].map(lambda s: want in N.split_countries(s))]
+    # Status = "N/A" is an exclusion marker, not a status: the row is not to be
+    # researched and does not belong in the database (cf. build_ref_worklist.py).
+    df = df[df["Status"].str.strip().str.upper() != "N/A"]
     if pids:
         keep = {p.strip() for p in pids.split(",") if p.strip()}
         df = df[df["ProjectID"].isin(keep)]

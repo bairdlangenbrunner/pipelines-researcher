@@ -43,6 +43,7 @@ contains/supports the value by another route before keeping the ref.
 from __future__ import annotations
 
 import argparse
+import codecs
 import difflib
 import re
 import sys
@@ -54,7 +55,21 @@ GEM_HOSTS = ("gem.wiki", "globalenergymonitor")
 # blocklisted URL can never slip into a workbook by any path (harvest_wiki_citations.py
 # imports this tuple). A Barrel Full lives at abarrelfull.wikidot.com; "abarrellfull"
 # covers the common double-l misspelling, "wikidot.com" the wider free-wiki platform.
-BLOCKLIST_HOSTS = ("theodora.com", "theodora", "abarrelfull", "abarrellfull", "wikidot.com")
+# `yingdodo.com` is 小柱工程, a commercial construction-LEADS database, added 2026-09-10
+# off the Jiangxi v3 sweep. The page it kept offering
+# (`/html/news/201852592751.html`) is an explicit marketing SAMPLE -- it carries
+# `项目样例1类` and `备注：以下样例非最新项目，仅表示内容格式`, redacted owner phone
+# numbers, and zero attribution (来源/转载/出处/责任编辑/数据来源/信息来源 all absent).
+# Same class as A Barrel Full: it restates someone else's filing without saying whose.
+# It matters that this is enforced HERE rather than per-run, because the URL is on
+# GEM's OWN gem.wiki citation list for 27 Jiangxi PIDs, so harvest_wiki_citations.py
+# (which imports this tuple) re-offers it as a seed citation to every future agent --
+# 8 of 9 Jiangxi agents opened it and correctly declined to cite it, but one scored it
+# `independent: true` while its own note called it a "project-database listing". Its
+# figures (97 km / DN200 / 6.3 MPa) are a LEAD to the underlying 立项备案 filing, never
+# a citation.
+BLOCKLIST_HOSTS = ("theodora.com", "theodora", "abarrelfull", "abarrellfull", "wikidot.com",
+                   "yingdodo.com", "yingdodo")
 
 # URL shorteners. A shortener is never a citable reference — it is an opaque,
 # revocable indirection whose target can be repointed after we cite it — and worse, it
@@ -146,6 +161,15 @@ _MIN_BODY_CHARS = 1500
 # _MIN_BODY_CHARS, so the stub heuristic never fired. `<script>` is deliberately NOT
 # stripped: real values do live in JSON-LD blocks.
 _NOISE_MARKUP_RE = re.compile(r"<(svg|style|template)\b.*?</\1\s*>", re.S | re.I)
+
+# Script blocks are stripped ONLY for the block-phrase check, not for content matching:
+# JS-rendered pages carry their article text in <script> JSON (`__NEXT_DATA__`, ld+json),
+# so a value/name check must still see it. But a block phrase inside a script is never the
+# page's verdict — it is a widget's validation string. Found 2026-09-04 on the Jiangxi v3
+# sweep: jdzmc.com and chinanews.com.cn article pages ship a comment form whose JS says
+# `alert("请输入验证码！")`, and the verifier called every one of them a captcha
+# interstitial (false `blocked=True` on real, 40 KB articles).
+_SCRIPT_MARKUP_RE = re.compile(r"<(script|noscript)\b.*?</\1\s*>", re.S | re.I)
 
 # URL shapes that are navigation surfaces rather than documents — see the check in
 # `verify_url` for why these can never be a `[ref]`. Category/tag matching deliberately
@@ -243,16 +267,103 @@ def name_forms(name) -> list[str]:
 _NON_LATIN_RE = re.compile(r"[\u0370-\u03ff\u0400-\u052f\u0530-\u058f\u0590-\u05ff\u0600-\u06ff"
                            r"\u0900-\u0dff\u0e00-\u0e7f\u1100-\u11ff\u3040-\u30ff\u3400-\u4dbf"
                            r"\u4e00-\u9fff\uac00-\ud7af\uf900-\ufaff]")
+_META_CHARSET_RE = re.compile(
+    rb"""<meta[^>]+charset\s*=\s*["']?\s*([A-Za-z0-9_\-]+)""", re.I)
+
+# gb2312 and gbk are PROPER SUBSETS of gb18030, and Chinese pages routinely declare the
+# narrow one while serving characters outside it -- decoding such a page as gb2312 raises
+# or drops characters mid-document. Decoding as gb18030 is always safe for all three, so
+# widen rather than honor the narrow declaration literally. Same for the big5 family.
+_CHARSET_WIDEN = {"gb2312": "gb18030", "gbk": "gb18030", "gb_2312-80": "gb18030",
+                  "euc-cn": "gb18030", "big5": "big5hkscs", "big5-hkscs": "big5hkscs"}
+
+
+def _meta_charset(content: bytes):
+    """The charset the HTML DECLARES about itself, read from the raw bytes.
+
+    Used only when the server omitted a charset from Content-Type. A declaration beats
+    `requests.apparent_encoding`, which is a statistical guess that mistakes GB2312 for
+    the Cyrillic codepage `ptcp154` (see the call site). Returns None when no meta tag is
+    present or Python has no codec for it, so the caller falls back to the guess.
+    """
+    m = _META_CHARSET_RE.search((content or b"")[:4096])
+    if not m:
+        return None
+    name = m.group(1).decode("ascii", "ignore").strip().lower()
+    name = _CHARSET_WIDEN.get(name, name)
+    try:
+        codecs.lookup(name)
+    except (LookupError, ValueError):
+        return None
+    return name
+
+
 _DASHES_RE = re.compile(r"[\-\u2010-\u2015\u2212\uff0d~\uff5e]")
 
 
 def _cjk_norm(s: str) -> str:
     """Match surface for a non-Latin name: NFKC (full-width -> ASCII), lowercase, all
     whitespace removed (CJK prose is unspaced; extraction inserts spaces at random),
-    every dash variant -> '-' (丰城—抚州 / 丰城－抚州 / 丰城-抚州 are one name)."""
+    every dash variant -> '-' (丰城—抚州 / 丰城－抚州 / 丰城-抚州 are one name), a RUN of
+    dashes -> one (news prose writes 永修——武宁——修水 with doubled em-dashes; caught on
+    P4784 2026-09-09, where the verifier failed a page that names the row), and the
+    connector 至 -> '-' (丰城至抚州 IS the 丰城-抚州 name; 到 is left alone as prose)."""
     s = unicodedata.normalize("NFKC", str(s or "")).lower()
     s = _DASHES_RE.sub("-", s)
-    return re.sub(r"\s+", "", s)
+    s = re.sub(r"\s+", "", s)
+    s = s.replace("至", "-")
+    return re.sub(r"-{2,}", "-", s)
+
+
+_CYRILLIC_RE = re.compile(r"[\u0400-\u04ff]")
+
+
+def _cyr_lat(s: str) -> str:
+    """Romanize Cyrillic so a Latin name can be matched against a Cyrillic-language page.
+
+    Delegates to `normalize.translit_cyrillic` — the same table the reconciler's name axis
+    uses since the 2026-08-14 fix (`notes/escalation-2026-08-14-cyrillic-names-invisible-to-matcher.md`),
+    so the two matchers agree on what a Russian name looks like in Latin. The direction
+    matters: Cyrillic -> Latin is near-deterministic, while guessing which Cyrillic
+    spelling an English name was transliterated FROM is not (y -> ы/й/и, e -> е/э/ё);
+    the per-token fuzz then absorbs the residual scheme differences (-skoye/-skoe, -iy/-y, kh/h).
+    Returns the text unchanged if normalize is unimportable."""
+    try:
+        from normalize import translit_cyrillic
+    except Exception:
+        return str(s or "")
+    return translit_cyrillic(str(s or ""))
+
+
+# Descriptor words GEM appends to a name that a source in another language expresses with
+# one of its own (ГКМ for "gas condensate field", газопровод for "gas pipeline"). Local to
+# this module on purpose: `normalize._NAME_STOP` feeds the reconciler's name axis, and
+# widening a shared stoplist would move already-committed recon runs in other countries.
+_DESCRIPTOR_EXTRA = frozenset({
+    "condensate", "field", "fields", "terminal", "branch", "trunk", "spur", "main",
+    "mainline", "network", "segment", "section", "lateral", "extension", "loop",
+    "transmission", "distribution", "interconnector", "connector", "link", "route",
+})
+
+
+def _required_tokens(name: str) -> list[str]:
+    """The tokens of `name` a page must actually carry — the DISTINCTIVE ones.
+
+    GEM names carry a generic descriptor tail ("… Gas Pipeline", "… Gas Condensate
+    Field") that a source in another language renders as one of its own words
+    (газопровод, 输气管道), so requiring `gas` and `pipeline` verbatim fails every
+    non-English page that names the line perfectly well. Stoplist shared with the
+    reconciler (`normalize._NAME_STOP`) plus `_DESCRIPTOR_EXTRA` — kept local so widening
+    it here never moves a committed reconciliation run. If a name is ALL descriptor the
+    full token list stands, exactly as `normalize_name(drop_stopwords=True)` does."""
+    toks = _fold(name).split()
+    try:
+        from normalize import _NAME_STOP as _stop
+    except Exception:
+        _stop = frozenset()
+    stop = set(_stop) | _DESCRIPTOR_EXTRA
+    kept = [t for t in toks if t not in stop]
+    return kept or toks
 
 
 def _name_present(text: str, name: str, cutoff: float = 0.86) -> bool:
@@ -270,13 +381,23 @@ def _name_present(text: str, name: str, cutoff: float = 0.86) -> bool:
     # is no transliteration noise to tolerate in the page's own script.
     if _NON_LATIN_RE.search(str(name)) or not _fold(name):
         return _cjk_norm(name) in _cjk_norm(text)
+    if _match_latin(text, name, cutoff):
+        return True
+    # A Latin name against a Cyrillic page: romanize the PAGE and retry (see `_cyr_lat`).
+    if _CYRILLIC_RE.search(text or ""):
+        return _match_latin(_cyr_lat(text), name, cutoff)
+    return False
+
+
+def _match_latin(text: str, name: str, cutoff: float = 0.86) -> bool:
+    """The Latin-surface half of `_name_present`: folded substring, else per-token fuzz."""
     folded_text = _fold(text)
     if any(_fold(f) and _fold(f) in folded_text for f in name_forms(name)):
         return True
     words = folded_text.split()
     if not words:
         return False
-    for tok in _fold(name).split():
+    for tok in _required_tokens(name):
         if len(tok) < 4:
             if tok not in words:
                 return False
@@ -524,8 +645,19 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # mojibake and produces false "value not found" negatives on real, live pages (e.g.
     # ndrc.gov.cn). Only override the generic default, never a charset the server actually
     # declared, so a genuine non-utf-8 declaration (e.g. real GBK) is left alone.
-    if (r.encoding or "").lower() in ("iso-8859-1", "ascii") and r.apparent_encoding:
-        r.encoding = r.apparent_encoding
+    # Prefer the page's OWN <meta charset> over apparent_encoding: the meta is a
+    # declaration, apparent_encoding is a statistical guess, and the guess is wrong in a
+    # way that matters. Measured 2026-09-10 on the 9 chinanews.com.cn URLs cited by the
+    # Jiangxi v3 sweep: before this change 8 of the 9 failed a `name=` check on a name the
+    # page demonstrably contains; after it, all 9 pass against their own row's name. Two
+    # (cj/2016/12-12/8091414, ny/2012/10-22/4264426) had apparent_encoding=`ptcp154` -- a
+    # CYRILLIC codepage, picked because GB2312 Chinese and Cyrillic have similar byte
+    # statistics -- while declaring `gb2312` in their own meta tag. This produced false
+    # `name_found: false` on real, on-topic articles, and the P4934 agent had to
+    # hand-decode and work around it. (Watch the probe name when re-testing: P4657's two
+    # URLs are 川气东送, not 西气东输, and fail correctly against the wrong one.)
+    if (r.encoding or "").lower() in ("iso-8859-1", "ascii"):
+        r.encoding = _meta_charset(r.content) or r.apparent_encoding or r.encoding
     body = r.text or ""
     ctype = (r.headers.get("Content-Type") or "").lower()
     is_pdf = "pdf" in ctype or (r.content or b"")[:5] == b"%PDF-"
@@ -571,7 +703,7 @@ def verify_url(url: str, *expected: str, any_of=None, name=None, fuzzy: bool = T
     # energybase.ru, which serves «Доступ ограничен» (naming the caller's IP and ASN) under
     # HTTP 200 — the 2026-08-12 repair fixed the phrase list and the match surface but left
     # this gate in place, so the no-needle path stayed broken.
-    blocked = _blocked_as(text)
+    blocked = _blocked_as(_match_surface(_SCRIPT_MARKUP_RE.sub(" ", body or "")))
     if blocked:
         tail = ("anything 'found' on it is a false positive"
                 if checking else "the 200 says nothing about whether the page still exists")

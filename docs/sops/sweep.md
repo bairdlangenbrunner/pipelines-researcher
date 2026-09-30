@@ -304,15 +304,24 @@ never swapped in as a replacement:
   failure the gate exists to catch (a page about endpoint A cited for the "A–B" row, MZ on Jiangxi
   v2). Correct the verification from re-verified evidence, and stage the alias into
   `OtherEnglishNames` so the next sweep never asks the question again.
-- **A `name_found: False` on a page that is plainly the right pipeline means the ALIAS is missing
-  from GEM — fix the data, never the gate.** P0257 is filed as "Sur de Texas-Tuxpan Gas Pipeline"
-  with a blank `OtherEnglishNames`, so seven refs to offshore-technology.com's profile of the same
-  line came back `False`: the page publishes the English translation, "South Texas-Tuxpan"
-  (2026-09-04). The tempting repair — let the check match a distinctive token like "Tuxpan" — is
-  the one repair you must not make: matching a single endpoint proper noun re-admits precisely the
-  failure the gate exists to catch (a page about endpoint A cited for the "A–B" row, MZ on Jiangxi
-  v2). Correct the verification from re-verified evidence, and stage the alias into
-  `OtherEnglishNames` so the next sweep never asks the question again.
+- **A NON-ENGLISH page and an English GEM name never matched at all, and nothing said so**
+  (Russia R1, 2026-09-15). Two independent defects in `url_verifier._name_present`, both fixed:
+  the matcher folded the page to `[a-z0-9]`, so a Cyrillic page folded to nothing and no Russian
+  source could ever name its pipeline; and it required EVERY token of the GEM name, including the
+  descriptor tail ("… Gas Pipeline", "… Gas Condensate Field"), which a Russian page states as one
+  of its own words (`газопровод`, `ГКМ`). Now the page is romanized with the reconciler's own
+  `normalize.translit_cyrillic` and retried (Cyrillic→Latin is near-deterministic; guessing which
+  Cyrillic spelling an English name came FROM is not), and only the DISTINCTIVE tokens are required
+  — `normalize._NAME_STOP` plus `url_verifier._DESCRIPTOR_EXTRA`, local to the verifier so widening
+  it never moves a committed recon run. The endpoint proper nouns are still all required, so the
+  "page about endpoint A cited for the A–B row" failure the gate exists for is untouched.
+  **What this does NOT fix: a TRANSLATED name.** `Сила Сибири` romanizes to `sila sibiri`, which is
+  not `Power of Siberia` by any amount of fuzz — so for a non-English scope the agent must pass the
+  source-language name as a `name=` form (`verify_url` takes a LIST), and the tracker's
+  `OtherLanguage*` columns are where it comes from; `backfill_name_found.py --csv <snapshot>` joins
+  them automatically. **When the matcher itself changes, a stale `name_found: false` is not
+  evidence** — `backfill_name_found.py --recheck-false` re-evaluates only the falses (a true is
+  never re-checked) and reports how many flipped.
 - **CAPTCHA / bot / IP-block interstitials that return HTTP 200.** The response is a challenge or
   access-denied page, not the article, but nothing in the status code says so. Pair this with the
   stub-body flag below: a 200 whose body is short *or* reads as a challenge is an unread page, not
@@ -374,7 +383,14 @@ keeping the ref.
 ## Legs beyond refs: `fills` + `validity` (the `deep` preset)
 **Subagent brief:** start every fan-out from `docs/sops/templates/deep_sweep_brief.md` (copy to the
 run dir as `BRIEF.md`, fill the scope slots, delete no rules) — it carries the four review rules
-(relevance / exhaustion / owed blanks / second source) and the record contract.
+(relevance / exhaustion / owed blanks / second source) and the record contract. Hand it to
+`critical-deep-sweep` as **`args.extra_brief` — INLINE, the whole file**. It is ~30KB per batch and
+the temptation is to pass a path instead; that was tried on Russia R2 (2026-09-15) and **8 of 8
+agents never opened the file**, going straight to Step 0. An agent reliably runs the Step 0 commands
+it is handed and reliably reads what is already in its prompt; it does not reliably go fetch a
+document it was merely told to read, and the brief carries the scope's source ladder, language rules
+and blocked hosts — a skip is silent research damage, not a visible failure. `args.extra_brief_path`
+still exists as a fallback; don't reach for it to save orchestrator context.
 
 The combined mode (`workflows.md §3`, `deep` preset): in one pass per row, do the standard
 refs leg **plus** (a) research and fill **blank value fields** with paired refs, and (b)
@@ -405,6 +421,21 @@ long — a dropped blank leaves no record, so gate J catches it by absence, but
 as an empty `UNRESOLVED` that reads exactly like honest failure. Gate L splits it by whether
 `researcher_notes` is empty: notes = somebody looked, no notes = silence.
 
+**Shards are saved as they are researched, not at the end** (`scripts/shard_upsert.py`,
+2026-09-14). The Russia R1 pilot showed that "write your shard early" in a brief is read as
+optional — 7 of 9 running agents had nothing on disk after 30+ minutes — so an agent that hits
+its context limit on unit 12 of 15 lost the whole row and its replacement redid all 15. The
+deep-sweep contract now opens with `shard_upsert.py --init` + `--remaining` and requires every
+finished record (`--fill` / `--validity` / `--status-review` / `--lead`, `--summary` last) to be
+upserted the moment it is done; the helper is the shard's only writer (atomic temp+rename,
+replace-on-key: `ref_col` + `sheet_row` for fills, so a later source simply overwrites an
+earlier UNRESOLVED). Two consequences for the orchestrator: (1) a PID whose agent died keeps
+its partial shard, and re-dispatching that PID (resume the run, or a small follow-up
+workflow) researches only the units `--remaining` lists; (2) placeholders are still
+forbidden — an UNRESOLVED with notes reads downstream as "searched, found nothing", and one
+without notes fails coverage as silent — so a saved record is a finished record.
+`check_shard_coverage.py` stays the gate; the helper never validates content.
+
 **A sourced FILL supersedes the carried record for the same cell, and gate I judges the
 replacement.** When a fill re-sources a ref cell, its refs ARE that unit's refs; the carried
 `HAS_REF`/`MISSING_REF` record documents only the ref being replaced, so failing the fill's cell
@@ -415,6 +446,34 @@ refs. `sweep_gates.py` now builds a `superseded` key set from every verified sou
 were real and were closed the only honest way — the fills went to `UNRESOLVED` with a note saying
 what was searched (P0173: every ref named the Delfin project, never the bypass segment itself).
 
+The **workbook** honours the same rule as of 2026-09-15 (`_resolve_superseded` in
+`build_ref_workbook.py`). It did not before, and the gap was visible: the merge folds a shard fill
+onto its seeded baseline only when the fill is *ref-only*, so a fill that also proposes a new value
+(`StartYear1` unchanged, `StartMonth1` added) is staged as its own FILL and the baseline stays
+behind — reaching the bucket tabs as a blank-note row reading "could not reach 2 working sources"
+for a cell the Fills tab had resolved with two high-tier refs. A **MISSING_REF baseline is dropped**
+(its `[ref]` cell was empty by definition, so the FILL carries everything it held); a **HAS_REF
+baseline is kept and annotated** `SUPERSEDED — …`, because the dead or unreadable ref being replaced
+is information that lives nowhere else and only a confirmed 404/410 may drop out of a `[ref]` cell;
+a baseline carrying the agent's own notes is left exactly as written. Found QC-ing Russia R2:
+16 dropped / 37 annotated there, 21 / 43 on R1, and **31 staging dirs outside Russia carry the same
+stubs** — all staged-not-applied, so a rebuild is a scope decision, not an emergency.
+
+**A `values` entry is CELL CONTENT, never a recommendation about the cell** — gate M. Every entry
+in a record's `values` dict lands in a tier-colored backend cell whose only purpose is copy-paste,
+so `"downgrade from 'high' to 'low (…)' pending redigitization -- staged geometry covers only
+~14% …"` gets pasted verbatim into the live tracker. Write the bare vocabulary value
+(`low (subnational, imprecise, or unranked)`) and put the rationale in `researcher_notes` /
+`recommendation`, which the cell comment already renders. If the value belongs to a *different*
+tab, stage it there rather than narrating it here: an `Operator` correction is its own
+`Operator [ref]` FILL onto the operators/owners tab, not a sentence inside a status review.
+Hand-fixed once on US gas batch 5 (`7e75f26`), recurred on Russia R2 P5539, now gated.
+
+**An owner/operator record is recognised by EITHER marker.** Worklist ref units carry
+`tab: "operators_owners"`; a subagent-authored FILL for the same cell usually carries only
+`ref_col: "Operator [ref]"`. The workbook's `_is_oo()` accepts both, because judging on `tab`
+alone sent Russia R2's single headline finding to no paste surface at all — the tracker Backend
+mirror excluded it by `ref_col in OO_PRIMARY` and the operators/owners tab did not draw it in.
 
 **A source that agrees within rounding is a ref, not a non-answer.** 51.97 mi + 0.5 mi against
 a recorded 52 mi, 38.5 against 39, $10.7M against $11M: `REFS_ADDED` at medium/high with the
@@ -595,7 +654,9 @@ Two rules when you do:
   never something to "fix".
 
 ## At scale (subagent fan-out)
-A whole-country deep sweep is too large for one context. Fan out:
+A whole-country deep sweep is too large for one context. Fan out. On a token budget, fan out
+LEAN — owed-units-only worklist, family-group agents, ≤20 k inlined brief, deferred ledger:
+`docs/sops/lean_pass.md`.
 0. **Choose each subagent's model at dispatch time** (global standing rule — see
    CLAUDE.md). The saved workflows (`critical-deep-sweep.js`, `country-discovery.js`)
    fall back to `MODEL = A.model || 'sonnet'` — pass `args.model` to carry the
@@ -676,6 +737,35 @@ the prior run's locator. And reconcile the count across the two runs (`class_in 
 is a question, not a statistic): **a file written by one stage and read by none is a silent
 loss**, and the stage that wrote it will report success.
 
+### The refs leg CANNOT change a non-blank value (Jiangxi, 2026-09-10)
+
+`merge_ref_shards.py` writes `class_out`, `proposed_refs`, `verifications`, `tier`,
+`independent`, `source_language`, `researcher_notes` and `ref_researched` onto a seeded
+record and **never its `values`**. `values` are set only when an unseeded `MISSING_VALUE`
+unit is APPENDED as a FILL. That is by design, not a bug: **the refs leg carries a value
+only for an owed blank.**
+
+The consequence is a hard routing rule. **A non-blank cell that is simply wrong has exactly
+one channel that reaches the deliverable: the `__VALIDITY__` concern** ("QC detects, Update
+fixes"). Status changes have their own channel (`status_reviews`, which do carry values).
+Writing the corrected value onto the cell's `REFS_ADDED` record looks right, merges without
+a warning, and reaches `ref_shards/` and stops — the workbook still shows the old value.
+That is how Jiangxi's P4944 start-location correction was staged, chained and rebuilt before
+anyone noticed the Backend tab had not moved. When a shard's own prose says "staged as a
+`__VALIDITY__` concern rather than a silent change", that conservative choice is also the
+structurally correct one.
+
+**Put the ruling where a reviewer will see it: the record's `recommendation`.** A
+`__VALIDITY__` note runs 1,000–4,000 characters, so the workbook's `Recommendation` column
+is the only place an actionable change is legible. `harvest_sentinel_findings.py` honours a
+per-record `recommendation` and falls back to its read-and-flag boilerplate when the shard
+sets none — so match the record by its NOTE TEXT, never by list index, and state the change
+as cells: *"CHANGE 2 CELLS: StartLocation X → Y, StartPrefecture/District A → B"*. Two
+limits that are part of the rule: an orchestrator recommendation is **not** a licence to
+convert an open question into an instruction (leave the boilerplate on anything genuinely
+open — Jiangxi v3 set 7 of 99 on purpose), and a stager that writes one must print
+`MARKER NOT FOUND` loudly rather than silently no-op.
+
 ### Running a recovery pass over an already-merged batch
 
 A non-zero gate L (or a `check_shard_coverage.py --all` gap list) on a batch that is already
@@ -705,6 +795,25 @@ the US gas batches 1-4 recovery (2026-09-09, 70 shards, gate L 258 → 0):
 - **`OtherEnglishNames` and the `OtherLanguage*` name columns have no paired `[ref]` column**
   in either tracker schema, so a fill on one is legitimately ref-less. Both the coverage checker
   and gate E exempt them; do not "fix" such a record by inventing a ref cell for it.
+- **Sentinels are exempt from both class checks** (fixed 2026-09-10). A `__VALIDITY__` /
+  `__REDUNDANCY__` / `__STATUS__` record asserts a *finding about a row* — a redundancy verdict,
+  a route-length divergence, a status re-read — not a value for a worklist unit, so it carries
+  `value_cols: []` and `values: {}` by construction and takes its class from the sentinel
+  vocabulary (`CONFIRMED`/`CONCERN`/`OPEN`/`REFUTED`/`INFO`), not the ref vocabulary. It
+  therefore tripped both the `VALID_CLASS_OUT` check ("dropped at workbook build") and the
+  sourced-but-empty-`values` check, and both readings were wrong: sentinels never travel the
+  ref-fold path at all — `split_shards.py` routes them to `ref_shards/<PID>.json` and
+  `harvest_sentinel_findings.py` rewrites `class_out` itself. `validate_shards.py` had always
+  exempted them on the same reasoning; `check_shard_coverage.py` now does too. Cost before the
+  fix: 96 false class-trips + 87 false `values`-trips across four staged batches (jiangxi v2 and
+  v3, libya cancelled-review and ref-sweep-operating), and a hard stop on 80 "unmergeable"
+  jiangxi v3 records that were all well-formed. The `silent UNRESOLVED` check still applies to
+  sentinels — one with no `researcher_notes` really does say nothing.
+- **A run dir that adds its own normalizers must point them at `ref_shards_recovery/` too.**
+  `split_shards.py` regenerates `ref_shards/` and `rows/` but never touches the recovery dir —
+  which is why recovery output survives a re-split, and equally why a normalizer globbing
+  `shards/` never reaches it. Jiangxi v3 gives each normalizer a `--dir` flag and runs the pass
+  twice (chain step 1c).
 
 Rebuild the deliverable afterwards — a workbook built before the recovery pass carries none of
 the recovered refs, and `build_ref_workbook.py` refuses to overwrite, so take a fresh stamp.
@@ -730,6 +839,27 @@ Subagents are not perfectly consistent; normalize deterministically at merge:
   Jiangxi's batch 03 encoded 14 confirmations as `ok: false` where batches 01/04/05 encoded the
   same situations correctly, zeroing 11 of its records — 31 of 47 refs kept before the fix, 45
   after, on the highest-yield batch of the five.
+- **The same defect, one notch quieter: an `ok` object with no `contains_value` key at all.**
+  A missing key reads as false exactly as `ok: false` does, and `null` reads as false too — so a
+  record whose verifications are all `{url, ok: true, note}` loses every ref. Russia R1 (the
+  campaign's pilot, 2026-09-14) shipped **203 such records across 18 of 32 shards**: two wrote no
+  `verifications` array at all, eight omitted `contains_value` on every `ok` object, eleven
+  omitted `name_found`. The merge turned ~110 fully-researched sourced records into `UNRESOLVED`
+  and threw their refs away; gate E noticed 26 of them, on two rows. Repairing them downgraded
+  **nothing** — every proposed ref stated its value once actually read — which is the proof the
+  defect was purely encoding. `check_shard_coverage.py` now blocks all three shapes, so a shard
+  cannot leave a subagent carrying them; brief the rule explicitly as well (the R2 brief leads
+  with a "THE VERIFICATION OBJECT IS THE DELIVERABLE" section).
+- **`status_reviews[]` walks the same filter, and the coverage checker used to miss it.**
+  `merge_deepsweep_shards.py` runs `verified_refs()` over a status verdict's `proposed_refs`
+  exactly as it does over a fill's, then rewrites the verdict to `unclear` when nothing
+  survives — so an unkeyed status ref loses a proposed Status change, not just a citation. Same
+  pilot: P1783 and P4111 each staged two live, on-point refs with `contains_value` unset, and
+  P6710 proposed `operating` ← `construction` off four named outlets while staging **no URL at
+  all** (the agent named them only in prose). `check_shard_coverage.check_findings()` now covers
+  both shapes plus the no-refs-on-a-sheet-moving-verdict case. **`validity[]` is deliberately
+  NOT checked** — the merge carries a concern's `proposed_refs` through unfiltered, so an
+  unverified validity ref is not dropped and flagging it is a false alarm (72 of them on R1).
 - **Watch field semantics** — e.g. drop `FuelSource="Natural Gas"` fills (`FuelSource` is
   the upstream field/plant, not the fuel type; `gem_schema.md`).
 - Re-assert the pre-delivery invariants (below) on the merged file: 0 unverified refs,
@@ -752,7 +882,7 @@ pastes manually.
 
 ## Pre-delivery checks
 Run **`python scripts/sweep_gates.py --staging <run dir>`** on the merged store and quote its
-counts in the delivery note. It is read-only and advisory (gates A–L): A source diversity per
+counts in the delivery note. It is read-only and advisory (gates A–M): A source diversity per
 row · B false `high` · C `high` leaning on a dominant document · D `independent` flag vs
 verified refs · E orphans · F banned/GEM · G harvested pool URLs never opened on a still-
 `UNRESOLVED` row · H recovered Save-Page-Now origins unopened · **I relevance** (sourced
@@ -760,7 +890,9 @@ units whose refs do not name the pipeline, and units where nobody checked) · **
 with no record** · **K single-source `REFS_ADDED`** (the two-per-data-point target unmet) ·
 **L uncited values never worked** (`MISSING_REF` units whose record is still `UNRESOLVED`
 with no refs AND no notes — J's twin, the silent-skip counterpart for values the sheet
-already carries).
+already carries) · **M prose where a pasteable value belongs** (a `values` entry that is a
+recommendation about the cell rather than the cell's content — it would be pasted verbatim into
+the live tracker).
 A non-zero I/J/K/L is not a blocker but the count goes in the delivery note verbatim — it is
 what the researcher will find, so say it first. **L is the exception in spirit**: unlike the
 others it measures work not done rather than work done thinly, so a non-zero L means the
