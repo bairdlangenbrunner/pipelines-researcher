@@ -2,7 +2,20 @@
 
 Review app for staged pipeline research (plan: `docs/plans/2026-09-30_review-app.md`).
 
-**After milestone 1 this is only the data builder.** No server, no UI, no decision log yet.
+**After milestone 2: data builder + read-only server/UI.** No decision log yet (milestone 3):
+`a/h/r/s/u` show a toast, `POST /api/decide` returns 501.
+
+```bash
+python review_app/server.py --country Russia --commodity gas        # builds the dataset, opens the browser
+python review_app/server.py --no-build --data work/review_r7.json   # serve an existing dataset
+```
+
+Binds `127.0.0.1:8766` only (8765 is the LNG carriers app). `--dirs`, `--exclude-pids`,
+`--snapshot`, `--reviewer` (default `git config user.name`), `--port`, `--no-open`.
+Routes: `GET /`, `/api/data`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
+UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
+first ref, `d` toggle details, `/` search, `?` help. Filters combine; `in_backend` lines are
+hidden by default. Tier colours are the workbook's (`docs/reference/workbook_conventions.md`).
 
 - `review_data.py` turns one scope's pending staging dirs into `work/review_data.json`:
   one card per pipeline, with `lines` (ref / fill / status / oo / route / new_row: one

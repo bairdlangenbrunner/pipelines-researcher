@@ -297,7 +297,7 @@ Everything from the LNG UI, with these pipelines changes:
   value and ref are now on the sheet as `in_backend`, and writes a `backend sync` record for them.
 - Server: same routes as LNG (`/api/data`, `/api/whoami`, `/api/decide`, `/api/item`,
   `/api/refresh`; `/api/push/plan` and `/api/push` only exist when phase 1b is enabled).
-  `--country`, `--commodity`, `--reviewer`, `--port 8765`, `--no-open`, `ensure_loopback`.
+  `--country`, `--commodity`, `--reviewer`, `--port 8766` (8765 is the LNG app), `--no-open`, `ensure_loopback`.
 
 ### 4. Consumers — where decisions pay off
 
