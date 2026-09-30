@@ -687,8 +687,8 @@
     h += itemsHtml(p);
     card.innerHTML = h;
     if (S.line < 0 || S.shown.indexOf(S.line) < 0) S.line = S.shown.length ? S.shown[0] : -1;
-    var cur = S.line >= 0 && $("line-" + S.line);
-    if (cur) cur.classList.add("cur");
+    var el = S.line >= 0 && $("line-" + S.line);
+    if (el) el.classList.add("cur");
   }
   function setLine(i, noScroll) {
     var prev = S.line >= 0 && $("line-" + S.line);
