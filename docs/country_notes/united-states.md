@@ -84,6 +84,12 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    `20260930_1703_ET` after 20 gate-M narrative `contested`/`values` cells became bare candidates (original
    text kept in each record's `researcher_notes`, tagged `[gate M fix 2026-09-30]`). Older stamps are in
    `archive/`. Gate M is 0 on every US store.
+   **Second-publisher pass (2026-09-30, Update run):** `s2-tx-indev` rebuilt `20260930_1733_ET` (supersedes its
+   `_1703_ET`). Of its 19 not-green status changes, 9 lifted to green on a verified second publisher (P3885 P3886
+   P4379 P4453 P5664 P7779 P7796 P7811, and P0241 corrected to `operating` on Sempra's in-service release); P7853 and
+   P7854 are CONTRADICTED by Targa's Q2 2026 release (construction continues on Bull Run/Buffalo Run) and sit at
+   low; the rest found no second publisher and stay medium (notes list what was searched). The other 30 not-green
+   status changes are still to do.
    Every batch closes the required gates **E, F, I', J, L at 0**, is coverage-clean
    (0 unmergeable records, 0 silent UNRESOLVED) and recalc-clean; the advisory gates
    (A single-host, B/C/D/K, and gate I where a source supports the value without naming the
