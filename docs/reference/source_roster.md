@@ -418,8 +418,9 @@ prior roster line ("never cite directly") is withdrawn — it was never enforced
 permanent grey zone (mentions by scope, 2026-08-27: Ukraine 141 / Iran 72 / Libya 47 /
 Kazakhstan 40 / Saudi gas 38 / Egypt 26 / India 19 / Pakistan 16). Treat it as any other secondary source:
 
-- **Tier it as one secondary source**, so it is medium alone and reaches green only
-  paired with an independent second source. Two language editions of the same article
+- **Tier it as one secondary source** — one validated Wikipedia ref is green like any other
+  (rule 4, 2026-09-30), but it counts as ONE origin for the `independent` flag and for a
+  status change's 2+. Two language editions of the same article
   are ONE source, not two — the interwiki text is usually a translation. This is now
   *enforced*, not just stated: `normalize_independence.py` collapses every
   `*.wikipedia.org` ref to a single `WIKIPEDIA-INTERWIKI` origin. It had to be, because

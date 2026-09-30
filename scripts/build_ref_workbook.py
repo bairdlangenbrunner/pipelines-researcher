@@ -44,7 +44,7 @@ Sheets (commodity-prefixed; empty omitted; README first):
                            this packet's own) unified in the exact backend layout, values +
                            [ref] overlaid tier-colored (no SheetRow locator — columns align
                            1:1 with the sheet for copy-paste).
-  <Cmdty>_Refs_Added       MISSING_REF resolved — green ≥2 independent / yellow single
+  <Cmdty>_Refs_Added       MISSING_REF resolved — green validated / yellow caveat or 1-source status change
   <Cmdty>_Refs_Reverified  HAS_REF, links live + contain value (blue)
   <Cmdty>_Refs_DeadLinks   HAS_REF with a dead/value-missing link + proposed replacement
   <Cmdty>_Refs_Unresolved  couldn't reach 2 working corroborating links → manual review
@@ -110,10 +110,10 @@ def _is_oo(r: dict) -> bool:
 
 # class_out -> (sheet suffix, readme blurb)
 _BUCKETS = {
-    "REFS_ADDED": ("Refs_Added", "blank [ref] filled. Tier cell green = ≥2 independent working "
-                   "sources; yellow = single source (still needs a 2nd)."),
+    "REFS_ADDED": ("Refs_Added", "blank [ref] filled. Tier cell green = validated (one ref passing every check; "
+                   "a status change needs 2+ independent); yellow = a caveat, or a 1-source status change."),
     "REVERIFIED": ("Refs_Reverified", "existing [ref] re-checked: all links live AND still contain "
-                   "the value, ≥2 independent. Blue = verified, no action needed."),
+                   "the value and name the pipeline. Blue = verified, no action needed."),
     "DEAD_LINK": ("Refs_DeadLinks", "existing [ref] needs attention. RED current ref = a link that "
                   "did not load (only a confirmed 404/410 may be dropped). AMBER = every link LOADED "
                   "and only the value screen missed \u2014 re-read the page before touching the cell; "
@@ -684,7 +684,7 @@ def _backend_view(wb, title, resolutions, backend_header, snapshot_rows, color_v
     tracker's FULL column set in exact sheet order (every backend column, including computed
     ones), one row per in-scope segment, with current values prefilled from the snapshot.
     On each touched cluster the proposed ref(s) are overlaid on the `[ref]` cell — color-
-    coded by corroboration tier (same green ≥2-independent / yellow single / red low-or-none
+    coded by corroboration tier (same green validated / yellow caveat / red low-or-none
     / blue re-verified key as the bucket tabs) — and any PROPOSED value (a FILL unit's fill,
     a STATUS unit's verdict-change/stale edits) is overlaid tier-colored on its value cell;
     a non-proposed unit's values render untinted (sweep mirror) or not at all (color_values
@@ -1608,8 +1608,8 @@ def _split_readme(ws, meta, sheet_defs, actions_file: bool, companion: str):
             "Confirmed audits, per-fill/per-ref verification detail, and already-covered "
             "flags live in the companion evidence workbook.")
         color_key = (
-            "[ref]/value cell color = corroboration tier: green=≥2 independent working "
-            "sources / yellow=single / red=low or none / blue=re-verified existing ref. "
+            "[ref]/value cell color = corroboration tier: green=validated (1 ref suffices; a status "
+            "change needs 2+ independent) / yellow=caveat or 1-source status change / red=low or none / blue=re-verified existing ref. "
             "Decisions: red Concern = existence/duplicate/classification (settle before "
             "any other work on the row), yellow = attribution/spec. OpenFlags: red Detail "
             "= open, uncovered issue. On the backend paste tabs, NEVER paste the "
@@ -2100,16 +2100,16 @@ def _fill_readme(ws, meta, sheet_defs, handoff=False):
                       "(mirrors the tracker layout, value next to its [ref]) and the _OperatorsOwners tab "
                       "(owner/operator refs → the separate \"Pipeline operators/owners\" backend tab, "
                       "ProjectID-keyed); the *_Refs_* tabs are supporting detail."),
-        ("Color key", "[ref]-cell color = corroboration tier: green=≥2 independent working sources / "
-                      "yellow=single / red=low or none. Blue=re-verified existing ref (no action). On the "
+        ("Color key", "[ref]-cell color = corroboration tier: green=validated (1 ref suffices; a status change "
+                      "needs 2+ independent) / yellow=caveat or 1-source status change / red=low or none. Blue=re-verified existing ref (no action). On the "
                       "*_Refs_DeadLinks tab, a red Current-ref cell = dead/value-missing link."),
         ("Out of scope", "Route/geometry [ref] cells are NOT swept — pipeline geometry is reconciled against "
                          "the GOIT-GGIT-pipeline-routes repo (separate human branch+PR), not media [ref] URLs."),
         ("Standing rules", "Start from the row's gem.wiki page but NEVER cite gem.wiki/globalenergymonitor "
                            "(rule 1). Never theodora. Never fabricate a URL (rule 2). Every Proposed ref "
                            "passed url_verifier (HTTP 200 + value present). Nothing auto-applied — paste manually."),
-        ("Target", "Per data point: ≥2 links that both WORK and corroborate each other and contain the "
-                   "precise value. Searched in-country languages where needed (see Source language)."),
+        ("Target", "Per data point: one validated link (works, names the pipeline, contains the precise "
+                   "value) is sufficient; a 2nd independent corroborating link is preferred. Searched in-country languages where needed (see Source language)."),
         ("", ""),
         ("Sheets", ""),
     ]
@@ -2315,7 +2315,7 @@ def main() -> None:
                                "has a fill, current values prefilled. No extra locator column — every column "
                                "aligns 1:1 with the sheet (locate rows by ProjectID). Filled "
                                "values AND their paired [ref] cells are overlaid, colored by corroboration "
-                               "tier (green=≥2 independent / yellow=single / red=low or none / "
+                               "tier (green=validated; status change 2+ / yellow=caveat or 1-source status change / red=low or none / "
                                "blue=re-verified). ORANGE is the opposite of those four: the cell keeps "
                                "its CURRENT value and a carried validity concern disputes it — adjudicate "
                                "on the Concerns tab before touching it, never paste it. An orange "
@@ -2346,8 +2346,8 @@ def main() -> None:
                                "PRIMARY — 1:1 paste-ready mirror of the GEM tracker backend: the FULL backend "
                                "column set in exact sheet order, one row per in-scope segment, current values "
                                "prefilled (leading SheetRow = the tracker row locator). Touched [ref] cells carry "
-                               "the proposed ref(s), colored by corroboration tier (green=≥2 independent / "
-                               "yellow=single / red=low or none / blue=re-verified). Tier-COLORED value cells are "
+                               "the proposed ref(s), colored by corroboration tier (green=validated; status change 2+ / "
+                               "yellow=caveat or 1-source status change / red=low or none / blue=re-verified). Tier-COLORED value cells are "
                                "recommended EDITS: corroborated fills plus the StatusReview change/stale verdicts "
                                "(new Status + ShelvedCancelledType/start-year cells; a stale verdict with no ref "
                                "is dormancy-inferred — red, ShelvedCancelledType=inferred by design). Untinted "

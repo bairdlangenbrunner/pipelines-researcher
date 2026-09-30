@@ -10,6 +10,8 @@ You research ONE batch and write ONE shard. Read your payload at `batches/batch_
 (relative to this directory) and write `shards/batch_NN.json`. Repo root is `<N>` levels up.
 Verifier: `python3 <repo>/scripts/url_verifier.py <url> [expected…] --name "<pipeline name>"`,
 or `from url_verifier import verify_url, surface_forms`.
+Downloads (`curl -o`, saved PDFs, `pdftotext` output) go in `work/` under this directory
+(gitignored) — never the repo root or any tracked path; nothing depends on the local copy.
 
 ## Standing rules — these override any instinct to be helpful
 
@@ -20,9 +22,11 @@ or `from url_verifier import verify_url, surface_forms`.
    mark the unit `UNRESOLVED`. A plausible URL you did not fetch is the worst output.
 3. **BANNED: abarrelfull** (`abarrelfull.wikidot.com`, `abarrelfull.co.uk`) and **theodora.com** —
    never, in any output, not even alongside corroboration.
-4. **2+ independent sources** is the target for EVERY unit. Two outlets running one wire story,
-   or anything tracing back to GEM, is ONE source. `high` = 2+ independent; `medium`/`low` =
-   single; `inferred`/`presumed` = none verifiable. **`independent: true` means the rubric's
+4. **One validated source is SUFFICIENT; 2+ independent is PREFERRED.** A ref that loads,
+   names this pipeline and states the value closes the unit. Two outlets running one wire story,
+   or anything tracing back to GEM, is ONE source. `high` = one validated source or more (done);
+   a STATUS CHANGE is `high` only on 2+ independent, else `medium`; `medium` = usable with a
+   caveat you name; `low` = weak/partial; `inferred`/`presumed` = none verifiable. **`independent: true` means the rubric's
    ≥2-agreeing — NOT "independent of GEM".**
 5. **NEVER drop a once-working ref over an access failure.** Only a confirmed HTTP **404/410**
    may remove a ref. 403 / 412 / 567 / WAF / CAPTCHA / TLS error / timeout / geo-block = ACCESS
@@ -56,15 +60,17 @@ or `from url_verifier import verify_url, surface_forms`.
   the same as never checking it — the most common defect in this leg's history. A source agreeing
   within rounding (51.97 mi + 0.5 mi vs a recorded 52) IS a ref at medium/high with the gap noted;
   `UNRESOLVED` means you found NOTHING, never that you found something slightly different.
-* **THE SECOND SOURCE IS OWED.** After the first source lands, search for a second from a
-  different publisher AND a different document class (regulator approval ↔ operator disclosure ↔
-  press ↔ EIA / acceptance notice). A single-source unit is fillable at `medium`, but its notes
-  must say what you searched for the second and why none was found.
+* **A SECOND SOURCE IS PREFERRED, NOT OWED.** Once one source passes every check (loads, names
+  THIS pipeline, states the value, segment not aggregate), the unit is done at `high` — no
+  second-search note needed. Take a second when it is cheap (the document at hand, one quick
+  search; a different publisher AND document class) — it sets `independent`, and a status change
+  needs it for `high`. Don't spend
+  searches chasing one.
 
 ## The comprehensiveness bar
 
-* **Source-diversity floor: no row ships with fewer than 2 distinct origin HOSTS** unless your
-  notes say in prose why not.
+* **Source diversity is preferred:** aim for ≥2 distinct origin HOSTS per row where the sources
+  exist; one validated host is acceptable.
 * **A document already carrying much of this batch cannot be the second source** for a `high`.
   A plan and a restatement of the plan are ONE origin — `medium`, not `high`.
 * **The harvest pool is a WORKLIST, not a lookup table.** `harvest_pool_live` holds URLs already

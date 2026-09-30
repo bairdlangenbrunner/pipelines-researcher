@@ -102,44 +102,71 @@ def publisher_key(url):
     return h
 
 
-def independence_qc(refs, tier, independent, notes):
+def independence_qc(refs, tier, independent, notes, high_min=1):
     """`independent` means the rubric's >=2 INDEPENDENT AGREEING sources — not
     "independent of GEM". Agents routinely set it True on a single-source unit whose
-    own notes say "single source -> medium", and it renders as the yes/no column a
-    researcher trusts when deciding to paste. Enforce it against the refs the record
-    actually carries: a claim of independence needs >=2 surviving refs from >=2
-    distinct PUBLISHERS (two articles on one outlet, a page and its own Wayback
-    snapshot, or two documents served from one redistribution VENUE, are one
-    origin), and a unit that loses the claim cannot stay at tier
-    `high` (a single source is medium at best).
+    own notes say "single source", and it renders as the yes/no column a researcher
+    reads as "two origins agree". Enforce it against the refs the record actually
+    carries: a claim of independence needs >=2 surviving refs from >=2 distinct
+    PUBLISHERS (two articles on one outlet, a page and its own Wayback snapshot, or
+    two documents served from one redistribution VENUE, are one origin).
+
+    The TIER is a separate question (rule 4, Baird 2026-09-30): ONE validated ref is
+    sufficient and shows green, so `high` needs only `high_min` surviving publishers —
+    1 by default (a `high` with no surviving ref at all is capped), and 2 for a STATUS
+    CHANGE, which stays green only on 2+ independent publishers (pass
+    `high_min=STATUS_CHANGE_MIN_PUBLISHERS`). Both halves are enforced independently of
+    what the flag claims: until 2026-09-10 the tier half hung off `if not independent`,
+    which let an honest `false` keep a `high` the over-claiming record lost.
 
     Returns (tier, independent, notes).
     """
     hosts = {h for h in (publisher_key(u) for u in (refs or [])) if h}
-    if len(hosts) >= 2:
-        return tier, independent, notes
-    # Both halves of the invariant are enforced, and INDEPENDENTLY of each other. The
-    # tier half used to hang off `if not independent: return` -- so a record that
-    # honestly declared `independent: false` kept its `high` on one publisher, while an
-    # identical record that over-claimed `true` got demoted. That rewarded the wrong
-    # answer: measured 2026-09-10 across every staged batch, 84 records sat at `high` on
-    # <2 surviving publishers purely because they had not claimed independence (56 of
-    # them real ref columns, the rest __VALIDITY__/__ROUTE__ sentinels). The rubric's
-    # sentence is unconditional -- "a single source is `medium` at best" -- and says
-    # nothing about what the flag claims (docs/reference/confidence_tiers.md).
     n, nh = len(refs or []), len(hosts)
     msgs = []
-    if independent:
+    if independent and nh < 2:
         independent = False
         msgs.append(f"independent=yes claimed on {n} surviving ref(s) from "
                     f"{nh} publisher(s) -> no")
-    if tier == "high":
+    if tier == "high" and nh < high_min:
         tier = "medium"
-        msgs.append(f"tier high -> medium ({n} surviving ref(s) from {nh} publisher(s); "
-                    f"a single source is medium at best)")
+        why = ("a status change needs 2+ independent publishers for high"
+               if high_min >= 2 else "high needs at least one surviving ref")
+        msgs.append(f"tier high -> medium ({n} surviving ref(s) from {nh} publisher(s); {why})")
     if not msgs:
         return tier, independent, notes
     return tier, independent, qc_note(notes, "; ".join(msgs) + ".")
+
+
+STATUS_CHANGE_MIN_PUBLISHERS = 2
+
+
+def validated_tier(refs, verifs, tier, notes):
+    """Rule 4 as of 2026-09-30: one validated ref is SUFFICIENT and shows green. A record
+    the agent tiered `medium` (the old single-source label) is promoted to `high` when it
+    carries >=1 surviving ref AND a verification that loaded and names the pipeline
+    (`ok` + `name_found: True`) — the machine half of the validation checklist in
+    docs/reference/confidence_tiers.md. `low` (weak / partial / conflicting, the agent's
+    judgment) is never promoted, and neither is a status change: call this only where
+    `high_min` is 1. Run AFTER relevance_qc, which has already capped unnamed refs.
+
+    Returns (tier, notes)."""
+    if tier != "medium" or not refs:
+        return tier, notes
+    if not any(v.get("ok") and v.get("name_found") is True for v in (verifs or [])):
+        return tier, notes
+    return "high", qc_note(notes, "tier medium -> high (one validated ref is sufficient, rule 4).")
+
+
+def is_status_change(values, sheet, pid, sheet_row):
+    """True when a record's `values` propose a Status different from the snapshot's.
+    Unknown current status (no snapshot / row not found) counts as a change, so the
+    stricter 2+ rule applies when we cannot tell."""
+    new = str((values or {}).get("Status") or "").strip().lower()
+    if not new:
+        return False
+    cur = sheet_value(sheet, pid, sheet_row, "Status")
+    return cur is None or new != str(cur).strip().lower()
 
 
 def relevance_qc(verifs, tier, notes):

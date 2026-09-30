@@ -66,7 +66,7 @@ const statusInstr = STATUS_REVIEW ? `
 This is an in-development row being checked for the annual update. Beyond the audit above,
 determine the pipeline's CURRENT true status. Hunt for dated evidence NEWER than the sheet's
 (the roster line shows updated=LastUpdated). A status change is a claim like any other:
->=2 independent sources, every URL through url_verifier. Verdict vocabulary:
+one validated dated source makes it a change (tier medium); tier high needs >=2 independent publishers. Every URL through url_verifier. Verdict vocabulary:
 - "confirm" — the recorded Status is still right; say what confirms it, with the evidence date.
 - "change"  — evidence-based status change. Set proposed_status and proposed_changes as
   {column: value} pairs — Status (controlled vocab, lowercase) plus the matching date columns
@@ -101,8 +101,10 @@ DEFERRED into deferred_units.json on purpose; they are not your job this pass. S
 - Work ONLY the units \`shard_upsert.py --remaining\` lists, plus the status review and ONE
   validity record per row. Do not go hunting for blank values. If a document you are already
   reading states a blank value, you MAY stage it as a FILL (it is free) — never search for one.
-- Second source: ONE targeted search per data point (a different publisher and document class).
-  If it does not land, stage at medium with a note saying what you searched, and move on.
+- Second source: PREFERRED, NOT OWED. One validated ref closes the unit at medium. Add a second
+  only if the document at hand or one quick search offers it; never spend searches chasing one --
+  EXCEPT for a proposed status change, where a second independent source is worth one search (it is
+  what makes the change high).
 - Validity: judge existence / duplicate / classification from the documents you already opened
   and the roster. Open a dedicated search only when the row's own sources fail to name the
   pipeline, or the scope guidance names this row as a duplicate/existence candidate.
@@ -181,13 +183,16 @@ only 12-15.
    verifier misses it, read the page and encode the hand-confirmed match as name_found=true with
    the matched string in "note". A ref whose page never names the pipeline is capped at low at
    merge and listed by the pre-delivery gates -- do not stage it as if it were support.
-4. Corroborate with >=2 INDEPENDENT sources (separate origins; not one wire story reprinted, not two
-   pages both tracing to GEM). tier: high = >=2 independent working+value-present; medium = 1 strong;
-   low = 1 weak/partial/conflicting. TWO REFS PER DATA POINT IS THE TARGET FOR EVERY UNIT: after the
-   first source lands, the second search is owed -- a different publisher and a different document
-   class (regulator approval / operator disclosure / press / EIA or acceptance notice). A single-
-   source unit is fillable at medium, but its researcher_notes must say what you searched for the
-   second source and why none was found. Search in the country's languages too where English is thin.
+   DOWNLOADS: save any fetched file (curl -o, PDFs, pdftotext output) under \`${STAGING}/work/\`
+   (gitignored) -- never the repo root or a tracked path.
+4. ONE VALIDATED SOURCE IS SUFFICIENT; >=2 INDEPENDENT IS PREFERRED. A ref that passes url_verifier,
+   names THIS pipeline (name_found) and states the value (within rounding) closes the unit -- no
+   second-search note is owed. Independent = separate origins (not one wire story reprinted, not two
+   pages both tracing to GEM). tier: high = >=1 validated ref (sufficient, done) -- EXCEPT a status
+   change, which is high only on >=2 independent publishers; medium = usable with a caveat you name,
+   or a status change on one publisher; low = weak/partial/conflicting. Take a second source when it
+   is cheap -- the document at hand or one quick search, a different publisher and document class --
+   it sets independent=true (and a status change needs it); never hold a unit open for one. Search in the country's languages too where English is thin.
 5. Read every document you open TO EXHAUSTION, for every column and every sibling row. A source
    found for one cell is a source for every fact on its page: if the approval notice you found for
    Status also states length, diameter, investment, construction start and commissioning date, stage
@@ -208,7 +213,7 @@ only 12-15.
 3. DUPLICATE — Compare against the roster. If ${pid} is very likely the same physical pipe as another
    ProjectID (relabel / segment double-count), flag concern_type="duplicate" and NAME the other PID.
 4. ATTRIBUTION — owner/operator, FuelSource, province, endpoints. Wrong → concern_type="attribution".
-5. SPEC — length, diameter, capacity, dates. CRITICALLY confirm each against >=2 independent sources.
+5. SPEC — length, diameter, capacity, dates. CRITICALLY confirm each against a validated source (>=2 independent preferred).
    It is NOT enough that a page mentions the pipeline — the source must AGREE with the GEM number.
    Material disagreement → concern_type="spec", verdict="concern" (never silently pass it).
    AGREEMENT IS ALSO AN OUTPUT, NOT A NO-OP: when the source agrees, that source is the ref the

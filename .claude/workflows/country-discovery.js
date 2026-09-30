@@ -48,6 +48,8 @@ ${ROSTER}
    leads only). NEVER fabricate a URL.
 2. Verify every URL you emit: \`python scripts/url_verifier.py "<url>" "<expected substring>"\` —
    emit only OK/200 + token-present links.
+   Save any downloaded file (curl -o, PDFs, pdftotext output) under \`${STAGING}/work/\` (gitignored),
+   never the repo root.
 3. Transmission lines only — skip gathering/process/feeder lines and distribution networks.
 4. Pre-filter against the roster (names, other names, endpoints). Borderline match → still emit it,
    but say which PID it might match in why_maybe_new; the consolidator decides.
@@ -106,7 +108,9 @@ ${STAGING}/discovery/queue.json and the existing-row context in ${STAGING}/disco
 ## Rules (NON-NEGOTIABLE)
 1. NEVER cite gem.wiki / globalenergymonitor.org / theodora / wikidot. NEVER fabricate a URL.
 2. Every URL through \`python scripts/url_verifier.py "<url>" "<expected substring>"\` before citing.
-3. Corroborate with >=2 INDEPENDENT sources (not one wire story reprinted). Search in-country languages.
+   Save any downloaded file (curl -o, PDFs, pdftotext output) under \`${STAGING}/work/\` (gitignored),
+   never the repo root.
+3. One validated source (names the pipeline, states the value) suffices; >=2 INDEPENDENT preferred (not one wire story reprinted). Search in-country languages.
 4. RE-CHECK match-to-existing yourself before anything else — if this is really an existing GEM row
    under another name, class it matched_existing and STOP researching a new row.
 5. New owner/operator entities: \`python scripts/entity_lookup.py "<owner>" "${COUNTRY}"\` first.

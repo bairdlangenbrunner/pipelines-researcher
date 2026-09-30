@@ -26,7 +26,8 @@ import argparse, json, os, collections, sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from merge_qc import verified_refs, iter_shards, qc_note, independence_qc, relevance_qc  # noqa: E402
+from merge_qc import (verified_refs, iter_shards, qc_note, independence_qc,  # noqa: E402
+                      relevance_qc, validated_tier)
 
 _VALID_OUT = {"REFS_ADDED", "REVERIFIED", "DEAD_LINK", "UNRESOLVED"}
 
@@ -126,6 +127,7 @@ def main():
                 bool(u.get("independent", False)), notes)
             if refs:
                 tier, notes = relevance_qc(verifs, tier, notes)
+                tier, notes = validated_tier(refs, verifs, tier, notes)
             r["class_out"] = cls
             r["proposed_refs"] = refs
             r["verifications"] = verifs

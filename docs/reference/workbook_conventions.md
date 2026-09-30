@@ -167,8 +167,8 @@ Built by `scripts/build_ref_workbook.py`. Two paste-ready tabs lead; bucket/find
   replaced is information that lives nowhere else). Without this the same cell read "resolved, two
   high-tier refs" on the Fills tab and "could not reach 2 working sources" on the bucket tab
   (`_resolve_superseded`, added 2026-09-15; see the Sweep SOP for the merge behaviour behind it).
-- **Tier → cell color** (on `[ref]` cells): green = ≥2 independent working sources · yellow =
-  single · red = low/none (an empty red cell = "needs a source", **not an error**) · blue =
+- **Tier → cell color** (on `[ref]` cells): green = validated (one ref passing every check; a status change needs 2+ independent) · yellow =
+  a caveat, or a single-source status change · red = low/none (an empty red cell = "needs a source", **not an error**) · blue =
   existing ref re-verified live.
 
 ## Route-creation workbook (mode = `route-creation`)

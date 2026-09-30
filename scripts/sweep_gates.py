@@ -15,7 +15,9 @@ blank value on an operating row is owed work, not a non-unit).
 
 Gates (all advisory; exit code is always 0 — they inform the delivery note):
   A  SOURCE DIVERSITY   -- a row whose sourced units all trace to <2 distinct hosts.
-  B  FALSE HIGH         -- a `high` unit whose verified refs share one host or number <2
+  B  FALSE HIGH         -- a `high` unit with no verified ref, or a `high` STATUS CHANGE
+                           whose verified refs share one host or number <2 (rule 4,
+                           2026-09-30: one validated ref is green; status changes need 2)
                            (a `__VALIDITY__` concern is counted over proposed_refs -- see
                            `evidence()`).
   C  DOMINANT DOCUMENT  -- one URL carrying >= --dominant-min units cannot be the second
@@ -32,9 +34,9 @@ Gates (all advisory; exit code is always 0 — they inform the delivery note):
                            or nobody checked (field absent). Both are listed, separately.
   J  BLANKS COVERAGE    -- worklist MISSING_VALUE units (--owe-fills) with no FILL record
                            of any class in the store: an owed blank nobody reported on.
-  K  SINGLE-SOURCE UNITS -- REFS_ADDED units with exactly one verified ref (the 2-per-data-
-                           point target unmet). Not a defect (medium is fillable) but the
-                           count is the honest measure of how far the batch is from green.
+  K  SINGLE-SOURCE UNITS -- REFS_ADDED units with exactly one verified ref. Informational:
+                           one validated ref is sufficient and green (rule 4, 2026-09-30); a
+                           second is preferred -- the count is how many are not independent.
   L  UNCITED VALUES NEVER WORKED -- worklist MISSING_REF units (the sheet HAS a value, its
                            [ref] cell is EMPTY) whose store record is still UNRESOLVED with
                            NO refs and NO researcher_notes: nobody reported on it. J's twin,
@@ -180,7 +182,13 @@ def run(staging: Path, dominant_min: int = 15, pool_path: Path | None = None) ->
             tier = (r.get("tier") or "").lower()
             col = r.get("ref_col")
             sentinel = str(col).startswith(SENTINEL_PREFIX)
-            if tier == "high" and (len(ev) < 2 or len(vh) < 2):
+            # rule 4 (2026-09-30): one validated ref is green, so `high` needs >=1
+            # verified ref -- except a STATUS CHANGE, which needs 2 on 2 hosts
+            st_chg = (col == "__STATUS__" and (r.get("verdict") or "").lower() == "change") or \
+                (r.get("class_in") == "FILL" and col == "Status [ref]"
+                 and str((r.get("values") or {}).get("Status") or "").strip())
+            need = 2 if st_chg else 1
+            if tier == "high" and (len(ev) < need or len(vh) < need):
                 B.append((pid, col, len(ev), sorted(vh)))
             if tier == "high" and len(vh) == 2 and dominant & set(ev) and \
                     len([u for u in ev if u not in dominant]) < 2:
@@ -351,8 +359,8 @@ def report(out: dict, dominant_min: int) -> None:
     sec("A  source diversity (<2 distinct hosts on a sourced row)", out["A_single_host_rows"],
         "every sourced row rests on 2+ origins",
         lambda r: f"{r[0]}: {r[1]} sourced unit(s), hosts={r[2] or ['(none)']}")
-    sec("B  tier `high` without 2 verified refs on 2 hosts", out["B_false_high"],
-        "every high tier has 2+ independent origins",
+    sec("B  tier `high` without a verified ref (status changes: 2 refs on 2 hosts)", out["B_false_high"],
+        "every high tier is backed (status changes on 2+ independent origins)",
         lambda r: f"{r[0]} {r[1]}: {r[2]} verified ref(s), hosts={r[3]}")
     sec(f"C  `high` leaning on a dominant document (>={dominant_min} units)", out["C_dominant_document"],
         "no high tier rests on one restated origin",
@@ -403,7 +411,7 @@ def report(out: dict, dominant_min: int) -> None:
         out["M_prose_in_value_cell"],
         "every proposed value is cell content, not a recommendation",
         lambda r: f"{r[0]} {r[1]} [{r[3]}]: {r[2]!r}", cap=20)
-    sec("K  REFS_ADDED on exactly one verified ref (2-per-data-point target unmet)",
+    sec("K  REFS_ADDED on exactly one verified ref (informational: green, not yet independent)",
         out["K_single_source_refs_added"], "every added ref is two-sourced",
         lambda r: f"{r[0]} {r[1]}", cap=10)
     if out["dominant_documents"]:

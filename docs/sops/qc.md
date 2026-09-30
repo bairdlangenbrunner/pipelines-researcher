@@ -154,7 +154,7 @@ layout: `docs/reference/workbook_conventions.md` §Handoff packet.
 5. **Date consistency** — operating⇒StartYear; cancelled⇒CancelledYear/presumed.
 6. **ResearcherNotes** — every changed row explains what/why/caveats.
 7. **No GEM self-citation** — no `[ref]` is a gem.wiki/globalenergymonitor URL.
-8. **Corroboration** — confidence tier recorded; single-source flagged medium/low;
+8. **Corroboration** — confidence tier recorded; one validated source is high (a status change needs 2+ independent), weak single-source is low;
    "corroboration" isn't the same story republished or circling back to GEM.
 
 ## Escalate

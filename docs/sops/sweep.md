@@ -11,8 +11,9 @@ legs under "Legs beyond refs".
 ## The `refs` leg (fill & re-verify every `[ref]`)
 
 Crawl every row and every ref-bearing data point in scope and, for
-each one, reach the target: **≥2 links that both WORK (HTTP 200, no error) AND
-corroborate each other AND contain the precise data point** being referenced.
+each one, reach the target: **one link that passes every validation check (works, names
+the pipeline, contains the precise data point — checklist in `confidence_tiers.md`) is
+sufficient; a second independent one that corroborates it is preferred.**
 
 - **Blank `[ref]` + filled value** → research and add corroborating source URLs.
 - **Filled `[ref]`** → re-check the URLs still resolve *and* still contain the value.
@@ -43,8 +44,8 @@ operational sequence.
 ## Inputs
 - Scope: country + tracker (oil / gas). One tracker per batch.
 - Optional `--status` filter (default: **all** statuses, incl. operating).
-- Decision for the current program: **upgrade single-source data points to ≥2
-  corroborating links** (a lone working source still needs a second, independent one).
+- Decision for the current program (Baird 2026-09-30): **a single validated source is
+  sufficient**; a second is preferred, not owed, so don't spend a search chasing one.
 - **Transit countries share ROWS, so the second scope swept must exclude the first's.** A
   trunk crossing Uzbekistan and Kazakhstan is ONE row that both `--country` scopes select —
   Uzbekistan gas overlaps Kazakhstan gas on **13 of its 31 rows** (the CAC, CA–China,
@@ -159,8 +160,8 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
    Expect many harvested links to be dead — verify each before use.
 4. **Research loop (per ProjectID):**
    - **HAS_REF:** if `--verify-existing` shows all URLs live AND containing the value AND
-     there are ≥2 independent → **Re-verified (blue)**, done. A single live source still
-     needs a 2nd independent corroborating link.
+     the page names the pipeline → **Re-verified (blue)**, done — one validated source is
+     enough.
    - **MISSING_REF / degraded HAS_REF:** rank harvested candidates (link text/context vs
      the value + source tier in `source_roster.md`), `url_verifier.verify_url(url,
      any_of=surface_forms(value), name=<pipeline/entity name>)` each — **`name=` is
@@ -194,19 +195,21 @@ supporting detail (full verifications, current-ref, notes) but are not the prima
      (MZ 2026-09-03, finding #2). The one limit is the aggregate-vs-segment rule: a SYSTEM
      figure is not a ref for a SEGMENT cell — say so in notes and file `__VALIDITY__` rather
      than stage it. Record in `researcher_notes` which other cells/rows the document served.
-   - **Two refs per data point is the target for EVERY unit, not just the hard ones.** After
-     the first source lands, the second search is owed: different publisher, different
-     document class (regulator ↔ operator ↔ press ↔ EIA), never a restatement. A single-source
-     unit is fillable at `medium`, but its notes must say what was searched for the second and
-     why it was not found — a bare single ref with no second-search note is unfinished
-     (MZ 2026-09-03, finding #4: "limited range of sources"). `sweep_gates.py` gate K counts
-     the single-source `REFS_ADDED`; gates A/C catch a row or a batch resting on one origin.
+   - **One validated ref per data point is sufficient; two is preferred.** Once a source
+     passes every validation check the unit is done at `high` (green) — no second-search note owed
+     (Baird 2026-09-30, superseding MZ 2026-09-03 finding #4's "second search is owed"). Take
+     a second when it is cheap (the document at hand, one quick search; different publisher
+     and document class, never a restatement) — it sets `independent`, and a STATUS CHANGE needs
+     it to be green. `sweep_gates.py`
+     gate K counts the single-source `REFS_ADDED` (informational, not debt); gates A/C still
+     flag a row or a batch resting on one origin.
    - **Search in the country's language(s), not just English.** Seed from the row's
      `OtherLanguage*` name columns and transliterations (Saudi → Arabic: Aramco Arabic
      press, Argaam, SPA). Foreign pages still pass `url_verifier`; the "contains the value"
      check leans on language-agnostic tokens (numbers, years, diameters). Record the source
      language in `ResearcherNotes`.
-   - **Corroboration & tier:** seek ≥2 working, **independent** links and assign the tier
+   - **Corroboration & tier:** one validated link is enough; a second **independent** one is
+     preferred. Assign the tier
      per `confidence_tiers.md` (independence, the single-confirming-source-is-fillable rule,
      and the `independent` field are all defined there); none verifiable = `UNRESOLVED` +
      `ResearcherNotes`, never a fabricated URL (standing rule 2).
@@ -867,7 +870,7 @@ Subagents are not perfectly consistent; normalize deterministically at merge:
 
 ## Tier → color
 Applied to each `[ref]` cell on the `<Cmdty>_Backend` and `<Cmdty>_OperatorsOwners` tabs (and the tier cell on the bucket tabs):
-green = ≥2 independent working sources · yellow = single source · red = low/none ·
+green = validated (one ref passing every check; a status change needs 2+ independent) · yellow = a caveat, or a single-source status change · red = low/none ·
 **blue = re-verified existing ref (no action)** · red Current-ref cell (DeadLinks tab) = dead/value-missing.
 A residual red cell after the pass = no independent source supports the current GEM value
 (often a value disagreement), not merely unsearched.
@@ -887,7 +890,7 @@ row · B false `high` · C `high` leaning on a dominant document · D `independe
 verified refs · E orphans · F banned/GEM · G harvested pool URLs never opened on a still-
 `UNRESOLVED` row · H recovered Save-Page-Now origins unopened · **I relevance** (sourced
 units whose refs do not name the pipeline, and units where nobody checked) · **J owed blanks
-with no record** · **K single-source `REFS_ADDED`** (the two-per-data-point target unmet) ·
+with no record** · **K single-source `REFS_ADDED`** (informational — green, but not yet independent) ·
 **L uncited values never worked** (`MISSING_REF` units whose record is still `UNRESOLVED`
 with no refs AND no notes — J's twin, the silent-skip counterpart for values the sheet
 already carries) · **M prose where a pasteable value belongs** (a `values` entry that is a

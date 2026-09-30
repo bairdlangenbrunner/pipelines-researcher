@@ -28,6 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from merge_qc import (bad_cost_units, verified_refs, iter_shards, qc_note,  # noqa: E402
                       status_qc, is_ref_only, independence_qc, relevance_qc, BLOCK,
+                      validated_tier, is_status_change, STATUS_CHANGE_MIN_PUBLISHERS,
                       load_sheet, sheet_value, off_schema_keys)
 
 
@@ -297,10 +298,17 @@ def main():
             cls = f.get("class_out", "UNRESOLVED")
             if f.get("proposed_refs") and not refs:
                 cls = "UNRESOLVED"; notes = qc_note(notes, "dropped unverified ref(s).")
+            # a proposed Status change stays green only on 2+ independent publishers
+            f_stchg = is_status_change(f.get("values"), sheet, pid,
+                                       f.get("sheet_row", d.get("sheet_row", "")))
             f_tier, f_indep, notes = independence_qc(
-                refs, f.get("tier", ""), f.get("independent", False), notes)
+                refs, f.get("tier", ""), f.get("independent", False), notes,
+                high_min=STATUS_CHANGE_MIN_PUBLISHERS if f_stchg else 1)
             if refs:
                 f_tier, notes = relevance_qc(f.get("verifications", []), f_tier, notes)
+                if not f_stchg:
+                    f_tier, notes = validated_tier(refs, f.get("verifications", []),
+                                                   f_tier, notes)
             f_values, notes, bad = screen_value_keys(f.get("values") or {}, sheet, notes,
                                                      ref_col=f.get("ref_col"))
             n_badkeys += len(bad)
@@ -364,8 +372,12 @@ def main():
             n_badkeys += len(bad)
             verdict, changes, cls, notes = status_qc(
                 s.get("verdict"), changes, refs, notes)
+            s_chg = verdict == "change"
             s_tier, s_indep, notes = independence_qc(
-                refs, s.get("tier", ""), s.get("independent", False), notes)
+                refs, s.get("tier", ""), s.get("independent", False), notes,
+                high_min=STATUS_CHANGE_MIN_PUBLISHERS if s_chg else 1)
+            if refs and not s_chg:
+                s_tier, notes = validated_tier(refs, s.get("verifications", []), s_tier, notes)
             new_status.append({**ident,
                 "sheet_row": s.get("sheet_row", d.get("sheet_row", "")),
                 "segment_name": s.get("segment_name", ""),

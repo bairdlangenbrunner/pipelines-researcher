@@ -35,7 +35,7 @@ added, 22 open validity concerns on 17 rows and no thinning against R2's operati
 |---|---|---|
 | `MISSING_REF` (value on sheet, `[ref]` blank) | **owed** (rule 4e) | — |
 | `HAS_REF` the script could not clear (404/410, live page missing the value, index page, page doesn't name the pipeline) | **owed** | — |
-| `HAS_REF`, every link live and names the pipeline | deferred | `has_ref_cleared_by_script`: owes a second source only (4d) |
+| `HAS_REF`, every link live and names the pipeline | deferred | `has_ref_cleared_by_script`: numeric/year values are validated by the script and DONE (one validated ref suffices, 2026-09-30); non-numeric values (owner, place) owe a value read only |
 | `HAS_REF`, links fail only on access (timeout, 401/403/429/5xx) | deferred (`--work-blocked` keeps it) | `has_ref_access_blocked`: ref stays, Wayback add owed |
 | `MISSING_VALUE` (blank value) | deferred (`--owe-fill-cols` keeps named columns) | `fills_deferred`: rule 4(c) debt, recorded |
 | status review (`--status-review`), one per row | **owed** | — |
@@ -126,7 +126,7 @@ open validity concerns, refs added). A cheaper pass that finds nothing is not a 
 ## Paying the deferred ledger later
 
 `deferred_units.json` has the worklist-unit shape plus `defer_reason`. Build a follow-up pass from
-it into its own run dir: fills first, then second sources on the cleared refs, then Wayback adds
+it into its own run dir: fills first, then value reads on the non-numeric cleared refs, then Wayback adds
 for the blocked ones. That can be one cross-batch pass per campaign, sorted by the columns
 researchers care about. It does not have to be one pass per batch. Until that pass runs, the
 batch's delivery note and country note say **"lean pass: N units deferred"**, with the reason

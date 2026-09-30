@@ -33,8 +33,10 @@ This script then writes, into the same dir:
 - `deferred_units.json` — every unit left out, each with `defer_reason`:
     * `fills_deferred` — a blank value; owed to a later fills pass (rule 4(c) still holds,
       the debt is recorded here instead of paid now);
-    * `has_ref_cleared_by_script` — every existing ref is live and names the pipeline, so
-      the only work left is the SECOND source (rule 4(d)) plus a relevance read, deferred;
+    * `has_ref_cleared_by_script` — every existing ref is live and names the pipeline. For a
+      numeric/year value that is a fully validated ref and the unit is DONE (one validated ref
+      suffices, rule 4 as of 2026-09-30); for an owner/place value `ok` means only "live", so
+      a value read is deferred;
     * `has_ref_access_blocked` — the cited links fail only on access (timeout, 401/403,
       geo-block), never 404/410: the ref stays (standing rule) and the Wayback add is
       deferred. `--work-blocked` keeps these owed.
@@ -58,7 +60,7 @@ def cleared(u: dict, mode: str) -> bool:
     `live` (default): every cited link loads (`ok`) and none is flagged `name_absent`. For a
     numeric/year value `ok` already means the page states it; for an owner or a place name
     it means only "live" — the sheet already cites a working page there, and re-reading it
-    for relevance is the deferred second-source pass's job, not the lean pass's.
+    for the value is the deferred follow-up pass's job, not the lean pass's.
     `strict`: additionally require a machine-checked value (or a status unit, which the
     status-review leg re-judges on every row anyway)."""
     checks = u.get("existing_ref_checks") or []

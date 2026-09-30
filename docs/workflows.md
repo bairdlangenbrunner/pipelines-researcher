@@ -111,7 +111,7 @@ One scoped pass over **existing rows** (country + commodity + status filter) wit
 
 | Leg | What it stages |
 |---|---|
-| `refs` | fill blank `[ref]`s + re-verify filled ones to the ≥2-independent target (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK`/`UNRESOLVED`; incl. operators/owners-tab units). Every `MISSING_REF` unit is OWED a record — sources agreeing with the recorded value is a `REFS_ADDED` carrying that same value, never a no-op (standing rule 4e; gate L + `check_shard_coverage.py`) |
+| `refs` | fill blank `[ref]`s + re-verify filled ones (one validated ref per unit; a 2nd independent preferred) (`REFS_ADDED`/`REVERIFIED`/`DEAD_LINK`/`UNRESOLVED`; incl. operators/owners-tab units). Every `MISSING_REF` unit is OWED a record — sources agreeing with the recorded value is a `REFS_ADDED` carrying that same value, never a no-op (standing rule 4e; gate L + `check_shard_coverage.py`) |
 | `fills` | research blank *value* fields — the worklist's `MISSING_VALUE` units (`--owe-fills`), each owed a sourced `FILL` or an `UNRESOLVED` with a note; paired verified ref required (`class_in="FILL"`) |
 | `validity` | skeptical existence / duplicate / classification / attribution / spec check (`__VALIDITY__`, read-and-flag) |
 | `status-review` | per-segment-row status verdict confirm/change/stale/unclear (`__STATUS__`) |
@@ -166,8 +166,8 @@ Uzbekistan/Kazakhstan case: Sweep SOP → Inputs.
 ### refs-only preset (inline research loop)
 
 Research per ProjectID (Sweep SOP §Sequence-4): rank harvested candidates, verify
-each with `url_verifier` (pass `name=`; search in-country languages), reach ≥2
-independent working sources, assign tier; stage one resolution per unit into
+each with `url_verifier` (pass `name=`; search in-country languages), one
+validated source suffices (≥2 independent preferred), assign tier; stage one resolution per unit into
 `$STG/staged_resolutions.json`. **Never auto-apply; no fabricated URLs.**
 
 ### deep / in-dev presets (subagent fan-out via `critical-deep-sweep`)
@@ -192,7 +192,7 @@ python scripts/merge_deepsweep_shards.py --staging $STG/
 ```
 
 Optional **ref-gap pass** (the seed leaves blank/dead-link refs red because the
-in-dev preset does no ref hunting; to fill those cells to the ≥2-independent target
+in-dev preset does no ref hunting; to fill those cells (one validated ref each, a 2nd preferred)
 in the SAME workbook):
 
 ```bash

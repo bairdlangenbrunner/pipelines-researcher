@@ -89,7 +89,7 @@ never hand-edit.
 ## Standing rules
 
 - **Never cite GEM** (gem.wiki, globalenergymonitor.org) as a source unless approved.
-- **Corroborate with 2+ independent sources**; a scraped dataset is one source,
+- **One fully validated ref is sufficient; 2+ independent sources are preferred**; a scraped dataset is one source,
   never authoritative on its own.
 - The agent **never writes** the routes repo or the live Sheet to apply a batch **by
   default** — every batch is a reviewable file the user applies manually. Both systems

@@ -85,7 +85,7 @@ Nothing in either file is ever auto-applied. Every URL has passed
 | `class_out` | str | see per-type tables below |
 | `proposed_refs` | [url] | verified URLs to paste (never fabricated; may be empty) |
 | `verifications` | [{url, ok, contains_value}] | url_verifier results |
-| `tier` | str | `high` (≥2 independent) \| `medium` \| `low` |
+| `tier` | str | `high` (≥1 validated ref; status change ≥2 independent) \| `medium` \| `low` |
 | `independent` | bool | ≥2 independent sources reached |
 | `source_language` | str | e.g. `"en"`, `"ar"` |
 | `researcher_notes` | str | rationale; `[QC]`-prefixed notes were added at merge |

@@ -7,14 +7,43 @@ Both land on the same green/yellow/red/blue cell colors.
 ## Research-side rubric (corroboration-driven)
 
 For every material data point (status, capacity, length, diameter, ownership, FID,
-dates, endpoints, route), **try to find 2+ independent sources that agree** before
-treating it as settled. Record the tier and the corroborating sources in
-`ResearcherNotes`.
+dates, endpoints, route), **one ref that passes every validation check below is
+sufficient; 2+ independent sources that agree are preferred** (Baird 2026-09-30 —
+relaxed from a near-requirement, for time and efficiency). Record the tier and the
+sources in `ResearcherNotes`.
+
+### What "validated" means — the checklist a single ref must pass
+
+Machine checks (`scripts/url_verifier.py`, run on every URL, every batch):
+1. an http(s) URL — not GEM (`gem.wiki`, `globalenergymonitor`), not banned
+   (abarrelfull, theodora, wikidot, yingdodo) — re-tested against every redirect hop and
+   the landing URL, so a shortener can't smuggle one through;
+2. not a Save-Page-Now `/save/` instruction URL (a Wayback `/web/<ts>/` snapshot is fine),
+   and not navigation — a site search, tag/category listing or paginated index;
+3. it loads: HTTP 200 (bot walls escalate through `fetch.py`; a self-signed TLS chain or
+   SEC's UA policy retries once, labeled). 404/410 = dead; other failures are access
+   failures, never deletions;
+4. text is readable — a PDF or workbook with no text layer is "unreadable", not a miss;
+5. the **value is on the page** (`any_of=surface_forms(value)`, whole-number matching
+   against prose, not markup);
+6. the page **names this pipeline** (`name=` → `name_found`; `OtherLanguage*` names too).
+
+Judgment checks (the agent's, recorded in the verification `note` / `researcher_notes`):
+7. it names THIS segment — not a terminus, not the parent trunk (corollary a);
+8. the value agrees — within rounding, with unit equivalence ("6 BCM annually" = 6 bcm/y),
+   and status by inference (an inauguration confirms `operating`); a verifier miss on
+   those is a screen artifact the agent overrides with the matched text;
+9. it is a segment figure, not a system aggregate (else `__VALIDITY__`, not a ref);
+10. it is a real source — not GEM-derived, not a banned aggregator's restatement.
+
+Merge-time and delivery gates re-enforce these: `merge_qc.relevance_qc` caps an unnamed
+ref at `low`, and `sweep_gates.py` gates E (orphans), F (banned/GEM), I (relevance) and M
+(prose in a pasteable cell) list whatever slipped through.
 
 | Tier | Color | Meaning |
 |---|---|---|
-| **High** | green | 2+ **independent** sources agree, or one primary/regulatory source |
-| **Medium** | yellow | a single strong source (company filing, regulator, top-tier trade press), no contradictions |
+| **High** | green | one source that passes every validation check below (2+ independent preferred) — **sufficient; the unit is done**. Exception: a **status change** is green only on 2+ independent publishers |
+| **Medium** | yellow | a usable source with a caveat the agent flags, or a status change resting on one publisher |
 | **Low** | red | a single weak/secondary source, or sources partially conflict |
 | **Inferred / Presumed** | (blank + note) | no verifiable source — flag in `ResearcherNotes`; for status changes set `ShelvedCancelledType = inferred`, no fabricated URL |
 | **Re-verified** | blue | value unchanged from the existing GEM value but checked again this batch |
@@ -31,36 +60,39 @@ It is the yes/no column a researcher reads when deciding whether to paste a valu
 a wrong `yes` is worse than a missing one. It may be `true` only when the record
 actually carries **2+ surviving refs** — surviving meaning after merge-time QC has
 dropped the ones that failed verification, which is exactly when agents get it wrong
-(the flag used to outlive its own refs). A unit that loses the claim cannot stay at
-tier `high`; a single source is `medium` at best. Enforced in
+(the flag used to outlive its own refs). A unit that loses the claim keeps its tier
+unless it is a status change (below). Enforced in
 `merge_qc.independence_qc()` and applied by all three mergers, so no pass can restate
 it; `scripts/repair_independence.py` applies the same invariant to dirs merged before
 the fix.
 
-**The tier half of that invariant is unconditional — it does not depend on what the
-flag claims.** `<2` surviving publishers caps the tier at `medium` whether the record
-said `independent: true` or `false`. Enforcing it only on the `true` branch (as the
-code did until 2026-09-10) rewarded the wrong answer: an honest `false` kept its
-`high` on one publisher while an identical over-claiming record was demoted. That left
-72 records at `high` on a single publisher across the staged batches. Note this
-deliberately overrides the table's "or one primary/regulatory source" clause **for the
-staged tier**: a lone regulator filing is a strong `medium` here, because the flag and
-tier are read together as the paste/no-paste signal and the 2+ hunt stays owed.
+**The tier is a separate question from the flag (Baird 2026-09-30).** One validated ref
+is green: `independence_qc(..., high_min=1)` caps `high` only when no ref survives, and
+`merge_qc.validated_tier` promotes a `medium` to `high` when the record carries a
+surviving ref whose verification loaded and has `name_found: true` (run after
+`relevance_qc`, so an unnamed ref is already capped at `low`; `low` is never promoted).
+**Status changes are the exception:** a `__STATUS__` `change` verdict, or a FILL proposing
+a Status different from the snapshot's, is merged with
+`high_min=STATUS_CHANGE_MIN_PUBLISHERS` (2) and is never promoted — on one publisher it
+is `medium`/yellow. Both halves stay unconditional on what the flag claims (until
+2026-09-10 the tier half hung off `if not independent`, which rewarded an honest `false`
+with a `high` the over-claimer lost). Gate B mirrors this: a `high` with no verified ref,
+or a `high` status change on <2 hosts. So green = "one validated source or more";
+the `independent` column is what says two origins agree.
 
-**Single-source-that-confirms is fillable, not blank.** The 2+ target governs when a
-value is *settled* (green); it does **not** mean a lone source is discarded. If exactly
-one source can be found but its page **verifiably contains the precise data point**
-(the pipeline is named and the value/status is stated on the page), that ref is
-**sufficient to fill the `[ref]` cell at medium/yellow** — fill it, don't leave the cell
-blank. **The hunt for the second source is an obligation, not a suggestion:** a single-
-source unit's notes must say what was searched for the second and why it was not found
-(researcher feedback 2026-09-03 — the sweeps were reading as "limited range of sources").
-Aim for a different publisher AND a different document class (regulator approval ↔
-operator disclosure ↔ press ↔ EIA/acceptance notice). Only *fail to confirm on the page*
-drops to red / blank+note. "Prefer blank + a note" applies
+**A single validated source is sufficient — the unit is done.** If one source passes the
+checklist above (the pipeline is named and the value/status is stated on the page), that
+ref **fills the `[ref]` cell at high/green and closes the unit** — no second-source
+note is owed (a status change still needs 2 for green). A second source
+is **preferred**: take it when the document already open or one quick search offers one
+(ideally a different publisher AND document class — regulator approval ↔ operator
+disclosure ↔ press ↔ EIA/acceptance notice), because it sets `independent` and is what
+a status change needs for green. (This
+supersedes the 2026-09-03 "second source is an obligation" rule, Baird 2026-09-30.) Only
+*fail to confirm on the page* drops to red / blank+note. "Prefer blank + a note" applies
 to a **single weak source that does not actually confirm** the value — not to a single
 source that does. This holds regardless of the lone source's roster rank: a confirmed-
-on-page single source is yellow even if it isn't "top-tier."
+on-page single source is green even if it isn't "top-tier."
 
 **Status is inferred from context — don't require the literal word.** A source confirms a
 status when its prose *entails* it, even if the status token never appears. "Work on expanding

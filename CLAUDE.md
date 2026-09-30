@@ -56,21 +56,33 @@ Where things live — **read on demand as the workflow dictates, not all at once
    → `ShelvedCancelledType = inferred`, no fabricated URL.
 3. **Don't defend wrong findings.** Baird challenges data points actively.
    Acknowledge errors, revise on evidence, regenerate outputs.
-4. **Corroborate with 2+ independent sources (near-requirement).** For any data
-   point (status, capacity, length, diameter, ownership, FID, dates, locations,
-   route), try to find two *independent* sources that agree. 2+ independent → high;
-   single → medium/low; none verifiable → inferred/presumed. The same wire story
+4. **One fully validated ref is SUFFICIENT; 2+ independent sources are PREFERRED**
+   (Baird 2026-09-30 — relaxed from the old near-requirement for time and efficiency).
+   For any data point (status, capacity, length, diameter, ownership, FID, dates,
+   locations, route), a single ref that passes EVERY validation check closes the unit:
+   it clears `url_verifier` (http(s), not GEM, not banned — also after redirects — not a
+   Save-Page-Now/search/index page, loads, text readable), it NAMES this pipeline
+   (`name_found`, corollary a), it STATES the value (within rounding; unit equivalence and
+   status-by-inference count), and it is a segment-level figure, not a system aggregate.
+   Take a second independent source when it is cheap — the document already open, or one
+   quick search — it sets the `independent` flag; but it is no longer owed and is never
+   a reason to hold a unit open. **Tier/colour:** one validated ref → high (green) —
+   `merge_qc.validated_tier` promotes a `medium` whose ref loaded and names the pipeline;
+   **a STATUS CHANGE stays green only on 2+ independent publishers** (single-source change →
+   medium/yellow, `STATUS_CHANGE_MIN_PUBLISHERS`); weak/partial/conflicting → low; none
+   verifiable → inferred/presumed. A scraped Tier-2 dataset still never reaches green alone. The same wire story
    republished, multiple outlets tracing to one original, and anything citing GEM
-   do NOT count. Record the tier + sources in `ResearcherNotes`. Detail:
-   `docs/reference/confidence_tiers.md`. **Five corollaries from researcher feedback
+   do NOT count as a second. Record the tier + sources in `ResearcherNotes`. Detail:
+   `docs/reference/confidence_tiers.md` (the validation checklist lives there). **Five corollaries from researcher feedback
    (a)–(d) MZ 2026-09-03 on Jiangxi v2, (e) Baird 2026-09-09 on US gas — all encoded in the
    Sweep SOP + `sweep_gates.py`:**
    (a) a ref must NAME the pipeline (`url_verifier … name=`, `name_found`; a page about one
    terminus or the parent trunk is not a ref for the "A–B" row); (b) every document opened is
    read to exhaustion for EVERY column and sibling row (one approval notice sources
    Length/Diameter/Cost/Construction/Start at once); (c) blank values are OWED units
-   (`build_ref_worklist.py --owe-fills` → `MISSING_VALUE`), not skipped; (d) the second
-   source is owed for every unit — a single-source note says what was searched;
+   (`build_ref_worklist.py --owe-fills` → `MISSING_VALUE`), not skipped; (d) *superseded
+   2026-09-30:* a second source is preferred, not owed, and a single validated ref needs no
+   what-was-searched note — but a ref failing any validation check is no ref at all;
    (e) **AN UNCITED VALUE IS OWED A REF EXACTLY AS A BLANK IS OWED A VALUE, AND CONFIRMING
    IT IS AN OUTPUT, NOT A NO-OP.** A `MISSING_REF` unit (value on the sheet, `[ref]` cell
    empty) ends as a record carrying the ref that states the value — `class_out="REFS_ADDED"`
@@ -188,12 +200,12 @@ Routing notes:
   own run dir — don't try to run it as one sweep.
   Anything whole-country / "re-verify everything" is a Country Sweep with the
   right legs. The sweep's `refs` leg researches & stages refs across all
-  rows×ref-cells to the ≥2-independent target; both share one ref-pair model
+  rows×ref-cells (one validated ref per unit, a second preferred); both share one ref-pair model
   (`scripts/ref_pairs.py`).
 - **Lean pass = the token-budgeted deep/in-dev sweep** (`docs/sops/lean_pass.md`; "lean pass",
   "save tokens", "cheaper sweep"): agents work only uncited values + refs the script could not
   clear + one status/validity record per row, in family groups with a ≤20 k brief; blank-value
-  fills and second sources are DEFERRED into `deferred_units.json` — rule 4(c) debt recorded for a
+  fills (and value reads on non-numeric cleared refs) are DEFERRED into `deferred_units.json` — rule 4(c) debt recorded for a
   later fills pass, never silently skipped. One batch per session.
 - QC/handoff legs never edit: they detect and route ("QC detects, Update fixes").
   The tracker-wide mechanical audit ("rebuild the QC workbook", "data-health
