@@ -210,7 +210,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 - **Staged, NOT applied (gas):** batch 4, `batches/united-states-gas/staging/deepsweep-west-operating/`
   (46 operating West rows — the Rockies, Northern Plains, Pacific Northwest, Southwest and
   Upper Midwest remainder, sliced by the state audit's `derived` state; deliverable
-  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-west.xlsx` (re-tiered 2026-09-30)). 861 records over
+  `pipelines_batch_20260930_1703_ET_united-states-gas_deepsweep-west.xlsx` (re-tiered 2026-09-30)). 861 records over
   the 663-unit worklist -> REFS_ADDED 276, UNRESOLVED 123 on the refs leg, 332 fills
   (293 folded to ref-only — the highest fold rate of the four slices), 130 validity findings
   (75 `concern` + 2 `needs correction` — spec 43, attribution 28, classification 4, duplicate 2).
@@ -237,7 +237,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 - **Staged, NOT applied (gas):** batch 3, `batches/united-states-gas/staging/deepsweep-appalachian-operating/`
   (46 operating Appalachian Basin + Mid-Atlantic rows — OH/PA/WV/NY/MI/NJ/MD/DE/VA/IN, sliced by
   the state audit's `derived` state; deliverable
-  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-appalachian.xlsx` (re-tiered 2026-09-30)). 861 records over
+  `pipelines_batch_20260930_1703_ET_united-states-gas_deepsweep-appalachian.xlsx` (re-tiered 2026-09-30)). 861 records over
   the 663-unit worklist -> REFS_ADDED 384, REVERIFIED 6, DEAD_LINK 3, UNRESOLVED 318, 296 fills
   (248 folded to ref-only), 150 validity findings (83 `concern` — spec 45, attribution 33,
   classification 3, duplicate 2). 119 orange contested cells across 43 of the 46 rows on
