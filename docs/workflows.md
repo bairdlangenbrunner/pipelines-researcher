@@ -283,6 +283,7 @@ Reconciliation Additions feed here — **match-to-existing first**.
 STG=batches/<scope>/staging/<run>      # may share the annual dir (e.g. batches/egypt-gas/staging/annual)
 python scripts/build_discovery_context.py --tracker gas --country "<Country>" --staging $STG/
 #   → Workflow({ name: 'country-discovery', args: <the printed JSON> })
+#   (optional per-phase models: add modelSearch / modelConsolidate / modelVet to args; fall back to args.model)
 #     (strategy fan-out → consolidate/match-to-existing → one vetting agent per candidate)
 python scripts/merge_discovery_shards.py --staging $STG/
 python scripts/build_discovery_workbook.py --staging $STG/ \

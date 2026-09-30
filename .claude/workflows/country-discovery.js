@@ -21,8 +21,13 @@ const COMMODITY = A.commodity || 'gas'
 const COUNTRY = A.country || ''
 // Model is chosen by the orchestrator at dispatch time (standing rule: cheapest model
 // genuinely good enough for this run) and passed via args.model; 'sonnet' is only the
-// fallback when no choice is passed, not a pin.
+// fallback when no choice is passed, not a pin. Per-phase overrides (args.modelSearch /
+// modelConsolidate / modelVet) fall back to args.model — e.g. a top-tier consolidator
+// (Cyrillic/translit matching against the roster) with cheaper search + vet agents.
 const MODEL = A.model || 'sonnet'
+const MODEL_SEARCH = A.modelSearch || MODEL
+const MODEL_CONSOLIDATE = A.modelConsolidate || MODEL
+const MODEL_VET = A.modelVet || MODEL
 const ROSTER = A.roster.join("\n")
 
 const STRATEGIES = A.strategies || [
@@ -147,12 +152,12 @@ Return ONLY a 2-line summary (class + strongest evidence). The shard is the deli
 phase('Search')
 log(`Discovery sweep for ${COUNTRY} (${COMMODITY}): ${STRATEGIES.length} strategy agents vs a roster of ${A.roster.length} existing rows.`)
 await parallel(STRATEGIES.map(s => () =>
-  agent(searchContract(s), { label: `search:${s.key}`, phase: 'Search', agentType: 'general-purpose', model: MODEL })
+  agent(searchContract(s), { label: `search:${s.key}`, phase: 'Search', agentType: 'general-purpose', model: MODEL_SEARCH })
 ))
 
 phase('Consolidate')
 const consolidated = await agent(consolidateContract, {
-  label: 'consolidate', phase: 'Consolidate', agentType: 'general-purpose', schema: QUEUE_SCHEMA, model: MODEL,
+  label: 'consolidate', phase: 'Consolidate', agentType: 'general-purpose', schema: QUEUE_SCHEMA, model: MODEL_CONSOLIDATE,
 })
 if (!consolidated || !consolidated.queue.length) {
   log(`No candidates survived consolidation (matched: ${consolidated ? consolidated.matched : '?'}, dropped: ${consolidated ? consolidated.dropped : '?'}).`)
@@ -162,7 +167,7 @@ log(`${consolidated.queue.length} candidates queued for vetting (${consolidated.
 
 phase('Vet')
 const vetted = await parallel(consolidated.queue.map(q => () =>
-  agent(vetContract(q), { label: `vet:${q.slug}`, phase: 'Vet', agentType: 'general-purpose', model: MODEL })
+  agent(vetContract(q), { label: `vet:${q.slug}`, phase: 'Vet', agentType: 'general-purpose', model: MODEL_VET })
 ))
 const done = vetted.filter(Boolean).length
 log(`Vetting complete: ${done}/${consolidated.queue.length}. Shards in ${STAGING}/discovery/vetted/ — next: scripts/merge_discovery_shards.py`)
