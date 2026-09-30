@@ -373,8 +373,12 @@ building the actions workbook), `docs/sops/qc.md` handoff contract (`--decisions
 4. Bulk with confirm; Items tab with calls; session summary; sync backend.
 5. Suggest + `update_seed.py`; `build_ref_workbook.py --decisions`; `staged_summary` counts;
    `apply_route_candidates.py --decisions`.
-6. README + doc updates. Acceptance: Baird decides one real pending scope end to end and rebuilds
-   its handoff actions workbook from the decisions.
+6. README + doc updates; **self-resolving concerns** (Baird 2026-09-30): when an open concern's
+   `contested[col]` value equals a fill/status line's proposed value on that column, the fill IS
+   the resolution — the line is not locked, and accepting it records a `dismissed` call on the
+   concern (note "resolved by accepted <col> fill") so the other contested columns unlock too;
+   first seen on P2227 StartYear1 (R7). Acceptance: Baird decides one real pending scope end to
+   end and rebuilds its handoff actions workbook from the decisions.
 
 **Phase 1b** (ruling 1 passed): `push.py` + tests + CLAUDE.md wording; first push on a scope with
 < 50 accepted cells, backups committed.
