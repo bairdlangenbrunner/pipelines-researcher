@@ -154,6 +154,8 @@ Classification: `Fuel`, `PipelineType`, `CountriesOrAreas`, `Status`, `Disrupted
 Physical: `Diameter`, `LengthKnown`, `Capacity` (+ units + `[ref]` each).
 Endpoints: `StartLocation` / `StartState/Province` / `StartCountryOrArea`,
 `EndLocation` / `EndState/Province` / `EndCountryOrArea` (+ `[ref]`).
+Country / territory / subdivision names (incl. occupied or disputed territory — Crimea and the
+Donbas are Ukraine): GEM's naming-conventions sheet, `docs/reference/gem_naming_conventions/`.
 Lifecycle/finance: `ProposalYear`, `ConstructionYear`, `StartYear1`, `Cost`,
 `FIDStatus`, `FIDYear`, `Opposition`, `Delayed`, `ShelvedCancelledType`.
 Route: `RouteType`, `RouteAccuracy`, `RouteNotes`, `RouteCreator`, `Route [ref]`

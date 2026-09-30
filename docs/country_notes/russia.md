@@ -153,6 +153,9 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   legs exclude them, recon keeps them.
 
 ## Gotchas
+- **Occupied Ukraine is Ukraine, not Russia** (GEM naming-conventions sheet,
+  `docs/reference/gem_naming_conventions/`): a line into Crimea/Sevastopol/Donbas is a
+  Russia–Ukraine cross-border line, its terminus state a `UKR` subdivision. GGIT has no such row yet.
 - Diameters are metric (`1420` = mm, 56 in); capacities bcm/y; pressures MPa (7.5 / 9.8 /
   11.8 classes). `Pressure` is blank on 284 rows and is exactly what a Transgaz page states.
 - The I/II/III **string convention** is the dominant row model (49 segment families; up to 8
