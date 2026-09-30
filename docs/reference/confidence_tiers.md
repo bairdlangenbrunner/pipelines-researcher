@@ -32,7 +32,13 @@ Judgment checks (the agent's, recorded in the verification `note` / `researcher_
 7. it names THIS segment — not a terminus, not the parent trunk (corollary a);
 8. the value agrees — within rounding, with unit equivalence ("6 BCM annually" = 6 bcm/y),
    and status by inference (an inauguration confirms `operating`); a verifier miss on
-   those is a screen artifact the agent overrides with the matched text;
+   those is a screen artifact the agent overrides with the matched text. **But rounding
+   only decides whether the ref counts, never which value survives:** when 2+ independent
+   validated refs agree on one precise figure that differs from the sheet's uncited value,
+   the unit is staged as a value change to the refs' figure (Baird 2026-09-30; Sweep SOP
+   "Precise value over rounding"). Retaining the sheet value on a within-rounding ref is
+   the fallback for a single ref, refs that disagree, or a rounded/unit-converted/nominal
+   restatement of the same figure;
 9. it is a segment figure, not a system aggregate (else `__VALIDITY__`, not a ref);
 10. it is a real source — not GEM-derived, not a banned aggregator's restatement.
 
@@ -64,7 +70,8 @@ dropped the ones that failed verification, which is exactly when agents get it w
 unless it is a status change (below). Enforced in
 `merge_qc.independence_qc()` and applied by all three mergers, so no pass can restate
 it; `scripts/repair_independence.py` applies the same invariant to dirs merged before
-the fix.
+the fix. `scripts/repair_tiers.py` re-tiers stores merged before 2026-09-30 to the rule below
+(tier + notes only; carried handoff copies read their source store's verifications).
 
 **The tier is a separate question from the flag (Baird 2026-09-30).** One validated ref
 is green: `independence_qc(..., high_min=1)` caps `high` only when no ref survives, and
@@ -78,7 +85,8 @@ is `medium`/yellow. Both halves stay unconditional on what the flag claims (unti
 2026-09-10 the tier half hung off `if not independent`, which rewarded an honest `false`
 with a `high` the over-claimer lost). Gate B mirrors this: a `high` with no verified ref,
 or a `high` status change on <2 hosts. So green = "one validated source or more";
-the `independent` column is what says two origins agree.
+the `independent` column is what says two origins agree. An `UNRESOLVED` record or a `__VALIDITY__` concern is never promoted — a
+page naming the pipeline that does not settle the unit validates nothing.
 
 **A single validated source is sufficient — the unit is done.** If one source passes the
 checklist above (the pipeline is named and the value/status is stated on the page), that

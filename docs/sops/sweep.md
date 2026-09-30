@@ -478,11 +478,25 @@ Hand-fixed once on US gas batch 5 (`7e75f26`), recurred on Russia R2 P5539, now 
 alone sent Russia R2's single headline finding to no paste surface at all — the tracker Backend
 mirror excluded it by `ref_col in OO_PRIMARY` and the operators/owners tab did not draw it in.
 
-**A source that agrees within rounding is a ref, not a non-answer.** 51.97 mi + 0.5 mi against
-a recorded 52 mi, 38.5 against 39, $10.7M against $11M: `REFS_ADDED` at medium/high with the
-discrepancy in `researcher_notes` (and a validity `spec` concern if material). `UNRESOLVED`
-means nothing was found — never that something slightly different was found. The limit stays
-the aggregate-vs-segment rule: a SYSTEM figure is never a ref for a SEGMENT cell. Prioritise `operating` rows — a blank Length/Diameter/Capacity/
+**Precise value over rounding (Baird 2026-09-30).** When 2+ independent validated refs agree
+on one precise figure and the sheet's uncited value differs — P2227 recorded 842 km, the
+Turkish ministry page and the BOTAS annual report both 845 km; P4039 recorded 139.00 mi, an SEC
+exhibit and the FERC FEIS both 139.5 — the refs' figure is the finding: stage the unit as a
+VALUE CHANGE (`class_in: "FILL"`, `class_out: "REFS_ADDED"`, `values` = the refs' figure, both
+refs, the old value and its provenance in `researcher_notes`). "Within rounding, so the sheet
+value stays" is not a ruling available to the agent when two refs say the same thing. A ref
+that states the sheet's value exactly always stands (the sheet is then cited, not wrong), and
+refs that disagree among themselves, a single ref, a ref that only rounds ("approximately
+19.5"), a unit conversion of the same figure (70 mi ↔ 112.65 km) or a nominal-vs-outer
+diameter designation (DN1200 ↔ 1220 mm, 32 in ↔ 813 mm) are NOT two refs agreeing on a
+different figure — they fall through to the fallback below.
+
+**Fallback — a source that agrees within rounding is a ref, not a non-answer.** 51.97 mi +
+0.5 mi against a recorded 52 mi, 38.5 against 39, $10.7M against $11M: `REFS_ADDED` at
+medium/high carrying the SHEET's value, with the discrepancy in `researcher_notes` (and a
+validity `spec` concern if material). `UNRESOLVED` means nothing was found — never that
+something slightly different was found. The limit stays the aggregate-vs-segment rule: a
+SYSTEM figure is never a ref for a SEGMENT cell. Prioritise `operating` rows — a blank Length/Diameter/Capacity/
 StartYear on an operating line is the gap the researchers see first. Same standing rules —
 still read-and-stage only. **Operating-status rows are a legitimate deep-sweep target** (not
 just in-dev) — Baird often runs a deep sweep on operating pipelines specifically to catch

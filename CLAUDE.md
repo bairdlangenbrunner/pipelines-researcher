@@ -88,8 +88,16 @@ Where things live — **read on demand as the workflow dictates, not all at once
    empty) ends as a record carrying the ref that states the value — `class_out="REFS_ADDED"`
    with the SAME value when sources agree — or an `UNRESOLVED` saying what was searched.
    "Confirmed as recorded" in a summary and nowhere machine-readable is the same as never
-   checking it. A source agreeing within rounding (51.97 mi + 0.5 mi vs a recorded 52) IS a
-   ref, at medium/high with the discrepancy noted — `UNRESOLVED` means nothing was found,
+   checking it. **Precise value over rounding (Baird 2026-09-30):** when 2+ independent
+   validated refs agree on one precise figure and the sheet's uncited value differs (842 vs
+   two refs at 845 km, 139.00 vs two at 139.5 mi), PROPOSE THE REFS' FIGURE — stage the unit as
+   a value change (`class_in="FILL"`, `values` = the refs' figure, both refs, the old value in
+   `researcher_notes`), never "within rounding, sheet stays". Only when no two refs agree on
+   one figure (a single ref, refs that disagree among themselves, a ref that only rounds or
+   converts a unit, a nominal-vs-outer diameter designation such as DN1200/1220 mm or
+   32 in/813 mm) does a source agreeing within rounding (51.97 mi + 0.5 mi vs a recorded 52)
+   count as a ref for the SHEET's value, at medium/high with the discrepancy noted. A ref
+   that states the sheet's value exactly always stands. `UNRESOLVED` means nothing was found,
    never that something slightly different was found. Enforced by
    `scripts/check_shard_coverage.py` (per shard, blocking, before a subagent finishes) and
    `sweep_gates.py` gate L (per store, at delivery).
