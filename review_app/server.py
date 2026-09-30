@@ -1,5 +1,5 @@
 """
-Local review server: the phase 1 backend behind review_app/web/ (milestone 3: decisions).
+Local review server: the phase 1 backend behind review_app/web/ (milestone 4: items, refresh).
 
     python review_app/server.py --country Russia --commodity gas [--dirs DIR ...]
         [--exclude-pids P1,P2] [--data PATH] [--reviewer NAME] [--port 8766] [--no-open] [--no-build]
@@ -19,10 +19,18 @@ serves that file as it is.
                            from the client. Appends to <dir>/review_log.jsonl and regenerates
                            <dir>/review_decisions.json (store.decide). 400 = refused, nothing written;
                            409 = accept on a line a still-open validity concern contests.
-    POST /api/item         501 {"error": "milestone 4"}
+    POST /api/item         [{key, call, note?} | {key, undo: true}, ...] -> {"saved": [record, ...]};
+                           the call must be in store.ITEM_CALLS[kind]; same sidecars as /api/decide.
+                           400 = refused, nothing written.
+    POST /api/refresh      runs scripts/refresh_csvs.sh (App.refresh_cmd; pulls the LIVE sheet, read-only,
+                           ~1 min), rebuilds the dataset with the startup build args, then stamps a
+                           `backend sync` record on every line the new snapshot already holds and no
+                           person decided -> {"snapshot", "lines", "synced"}. 409 when the server
+                           was started with --no-build; 502 / 504 when the pull fails / times out.
 
-/api/refresh, /api/push/plan and /api/push do not exist yet (404). The only things written are
-the two decision sidecars inside the staging dirs named by the dataset.
+/api/push/plan and /api/push do not exist yet (404). The only things written are the two decision
+sidecars inside the staging dirs named by the dataset (and, on refresh, data/ snapshots by the pull
+script and the rebuilt dataset file).
 """
 import argparse
 import gzip
@@ -50,8 +58,9 @@ import review_data  # noqa: E402
 import store  # noqa: E402
 
 # what this server can do; the front end reads these and hides/disables the matching controls
-CAPS = {"decide": True, "refresh": False, "push": False}
-NOT_YET = {"/api/item"}
+CAPS = {"decide": True, "refresh": False, "push": False}    # refresh is switched on per App (built, not --no-build)
+REFRESH_CMD = [str(ROOT / "scripts" / "refresh_csvs.sh")]
+REFRESH_TIMEOUT = 600
 
 
 def ensure_loopback(host):
@@ -66,14 +75,27 @@ def ensure_loopback(host):
     raise ValueError(f"refusing to bind {host!r}: the review server is loopback-only")
 
 
+class Refusal(Exception):
+    """A refresh that cannot run or failed: (HTTP status, message)."""
+
+    def __init__(self, status, message):
+        super().__init__(message)
+        self.status = status
+
+
 class App:
     """Server state: the dataset bytes (plus a gzipped copy) and who is reviewing."""
 
-    def __init__(self, data_path, reviewer, batches_root=None):
+    def __init__(self, data_path, reviewer, batches_root=None, build_argv=None, refresh_cmd=None,
+                 refresh_timeout=REFRESH_TIMEOUT):
         self.data_path = Path(data_path)
         self.reviewer = reviewer
         self.batches_root = Path(batches_root) if batches_root else ROOT / "batches"
+        self.build_argv = list(build_argv) if build_argv else None    # review_data.main args; None = --no-build
+        self.refresh_cmd = list(refresh_cmd) if refresh_cmd else list(REFRESH_CMD)
+        self.refresh_timeout = refresh_timeout
         self.lock = threading.Lock()
+        self.refreshing = threading.Lock()
         self.load()
 
     def load(self):
@@ -94,9 +116,45 @@ class App:
 
     def decide(self, records):
         """store.decide under this server's lock; the dataset on disk is never rewritten (the
-        page overlays the returned records; a rebuild overlays the sidecars)."""
+        page overlays the returned records; a rebuild overlays the sidecars). The overlay runs
+        first so the contested lock sees item calls made since the last /api/data."""
         with self.lock:
+            store.overlay(self.data, self.dirs())
             return store.decide(records, self.data, self.reviewer, self.dirs())
+
+    def item(self, records):
+        with self.lock:
+            return store.record_items(records, self.data, self.reviewer, self.dirs())
+
+    def refresh(self):
+        """Pull the live sheet via refresh_cmd, rebuild, reload, backend-sync. Raises Refusal
+        (status, message) when it cannot run; returns {"snapshot", "lines", "synced"}."""
+        if not self.build_argv:
+            raise Refusal(409, "server started with --no-build: nothing to rebuild the dataset from")
+        if not self.refreshing.acquire(blocking=False):
+            raise Refusal(409, "a refresh is already running")
+        try:
+            try:
+                r = subprocess.run(self.refresh_cmd, cwd=ROOT, capture_output=True, text=True,
+                                   timeout=self.refresh_timeout)
+            except subprocess.TimeoutExpired:
+                raise Refusal(504, f"refresh timed out after {self.refresh_timeout} s")
+            except OSError as e:
+                raise Refusal(502, f"could not run {self.refresh_cmd[0]}: {e}")
+            if r.returncode != 0:
+                tail = (r.stderr or r.stdout or "").strip().splitlines()[-3:]
+                raise Refusal(502, f"refresh failed (exit {r.returncode}): " + " / ".join(tail))
+            with self.lock:
+                review_data.main(self.build_argv)
+                self.load()
+                store.overlay(self.data, self.dirs())
+                snap = self.data.get("scope", {}).get("snapshot", "")
+                synced = store.sync_backend(self.data, self.dirs(), snap)
+                store.overlay(self.data, self.dirs())
+                n = sum(len(p.get("lines", [])) for p in self.data.get("pipelines", []))
+            return {"snapshot": snap, "lines": n, "synced": len(synced)}
+        finally:
+            self.refreshing.release()
 
     def decisions(self, label):
         d = self.dirs().get(label)
@@ -105,7 +163,7 @@ class App:
         return store.latest(store.read_log(d))
 
     def whoami(self):
-        return {"reviewer": self.reviewer, "caps": dict(CAPS)}
+        return {"reviewer": self.reviewer, "caps": dict(CAPS, refresh=bool(self.build_argv))}
 
 
 def make_handler(app):
@@ -182,16 +240,22 @@ def make_handler(app):
             if not self._host_ok():
                 return self._json({"error": "bad host"}, HTTPStatus.FORBIDDEN)
             path = unquote(self.path.split("?", 1)[0])
-            if path in NOT_YET:
-                return self._json({"error": "milestone 4"}, HTTPStatus.NOT_IMPLEMENTED)
-            if path == "/api/decide":
+            if path == "/api/refresh":
+                try:
+                    return self._json(app.refresh())
+                except Refusal as e:
+                    return self._json({"error": str(e)}, e.status)
+                except (Exception, SystemExit) as e:
+                    print(f"review app: refresh failed: {e!r}", file=sys.stderr)
+                    return self._json({"error": f"refresh failed: {e}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            if path in ("/api/decide", "/api/item"):
                 try:
                     n = int(self.headers.get("Content-Length") or 0)
                     body = json.loads(self.rfile.read(n).decode("utf-8") or "null")
                 except (ValueError, UnicodeDecodeError):
                     return self._json({"error": "body is not JSON"}, HTTPStatus.BAD_REQUEST)
                 try:
-                    return self._json({"saved": app.decide(body)})
+                    return self._json({"saved": (app.decide if path == "/api/decide" else app.item)(body)})
                 except store.Contested as e:
                     return self._json({"error": str(e)}, HTTPStatus.CONFLICT)
                 except store.Invalid as e:
@@ -246,7 +310,7 @@ def main(argv=None):
         review_data.main(build)
     elif not data_path.exists():
         raise SystemExit(f"{data_path} not found: run without --no-build, or pass --data")
-    app = App(data_path, args.reviewer or git_user())
+    app = App(data_path, args.reviewer or git_user(), build_argv=None if args.no_build else build)
     httpd = make_server(app, args.host, args.port)
     url = f"http://{args.host}:{httpd.server_address[1]}/"
     print(f"review app: {url}  (reviewer: {app.reviewer}; decisions write to each staging dir's review_log.jsonl; Ctrl-C to stop)", file=sys.stderr)

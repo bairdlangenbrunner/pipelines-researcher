@@ -22,10 +22,20 @@ DECISIONS = {"accept", "hold", "reject", "suggest"}
 LOG_NAME = "review_log.jsonl"
 DERIVED_NAME = "review_decisions.json"
 # Reviewers that are machines, not people: their records are honest (they name what wrote
-# them) but are not a click, so `reviewed()` leaves the line undecided. Nothing writes
-# them yet (backend sync = milestone 4, push = phase 1b).
+# them) but are not a click, so `reviewed()` leaves the line undecided. `backend sync`
+# (sync_backend, after a refresh) writes them today; `push` arrives in phase 1b.
 MACHINE_REVIEWERS = {"backend sync", "push"}
+SYNC_REVIEWER = "backend sync"
 LINE_KINDS = ("ref", "fill", "status", "oo", "route", "new_row")
+ITEM_KINDS = ("concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
+              "unresolved", "confirmed", "other")
+# The call vocabulary per item kind. A concern's call settles the validity question
+# (confirmed = it stands, dismissed = closed, needs_research = goes to an Update worklist);
+# ANY call on a concern releases the contested lock on its columns. Everything else is
+# noted / todo / dismissed. Items never write a cell.
+CONCERN_CALLS = ("confirmed", "dismissed", "needs_research")
+OTHER_CALLS = ("noted", "todo", "dismissed")
+ITEM_CALLS = {k: (CONCERN_CALLS if k == "concern" else OTHER_CALLS) for k in ITEM_KINDS}
 
 _LOCK = threading.Lock()     # one process-wide lock around every read-modify-write of a sidecar
 
@@ -85,7 +95,9 @@ def overlay(data, dirs=None, root=None):
     """Fill `decision`, `reviewed`, `decided_by`, `decided_at` on every line and item of `data`
     (in place; returns it) from each dir's review_log.jsonl. `decision` is the latest record's
     call (None after an undo or with no record); `reviewed` says whether a person made it.
-    Items (milestone 4) get reviewed/decided_by/decided_at only; `call` is left to that milestone."""
+    Items get `call` / `call_note` (the latest item call; None after an undo or with no record)
+    plus reviewed / decided_by / decided_at. Run this before `validate` sees the dataset: the
+    contested lock reads the overlaid `call`."""
     dirs = dirs if dirs is not None else dir_paths(data, root)
     logs = {}
     for p in data.get("pipelines", []):
@@ -98,6 +110,9 @@ def overlay(data, dirs=None, root=None):
                 live = rec if rec and not rec.get("undecided") else None
                 if grp == "lines":
                     o["decision"] = live["decision"] if live else None
+                else:
+                    o["call"] = live.get("call") if live else None
+                    o["call_note"] = live.get("note", "") if live else None
                 o["reviewed"] = reviewed(rec)
                 o["decided_by"] = rec.get("reviewer") if live else None
                 o["decided_at"] = rec.get("ts") if live else None
@@ -142,10 +157,11 @@ def locked_by(pipeline, line):
     return sorted(c for c in cols & contested_cols(pipeline) if c)
 
 
-def validate(records, data, reviewer=None):
+def validate(records, data, reviewer=None, enforce_lock=True):
     """Normalised decision records (reviewer / ts stamped later), or Invalid; nothing is written
     for a bad request. A record is {key, decision, suggested_value?, note?} or {key, undo: true}
-    (an undo is stored as undecided: true)."""
+    (an undo is stored as undecided: true). `enforce_lock=False` is for the backend-sync machine
+    only: a line the sheet already holds is not refused because a concern contests it."""
     if not isinstance(records, list) or not records:
         raise Invalid("expected a non-empty list of decision records")
     idx = index(data)
@@ -158,7 +174,7 @@ def validate(records, data, reviewer=None):
             raise Invalid(f"record {i}: unknown key {key!r}")
         pipe, obj, grp = idx[key]
         if grp != "lines" or obj.get("kind") not in LINE_KINDS:
-            raise Invalid(f"record {i}: {key!r} is an item, not a line (item calls arrive in milestone 4)")
+            raise Invalid(f"record {i}: {key!r} is an item, not a line (use /api/item)")
         undo = bool(r.get("undo") or r.get("undecided"))
         decision = r.get("decision")
         if undo and not decision:
@@ -171,7 +187,7 @@ def validate(records, data, reviewer=None):
         sv = str(r.get("suggested_value") or "")
         if decision == "suggest" and not undo and not (sv.strip() or note.strip()):
             raise Invalid(f"record {i}: a suggestion needs a suggested_value or a note")
-        if decision == "accept" and not undo:
+        if decision == "accept" and not undo and enforce_lock:
             held = locked_by(pipe, obj)
             if held:
                 raise Contested(f"record {i}: {key!r} is held: a validity concern contests "
@@ -226,34 +242,100 @@ def write_derived(d, ts):
     atomic_write(Path(d) / DERIVED_NAME, json.dumps(body, indent=1, ensure_ascii=False) + "\n")
 
 
-def decide(records, data, reviewer, dirs=None, root=None):
-    """Validate, then per touched dir (under the process lock): append to review_log.jsonl,
-    regenerate review_decisions.json atomically; if that fails, roll the log back to its
-    previous byte length. Returns the records written (with reviewer and ts)."""
+def _write(recs, dirs):
+    """Per touched dir (caller holds _LOCK): append to review_log.jsonl and regenerate
+    review_decisions.json atomically; on failure roll every touched log back to its previous
+    byte length. `recs` already carry reviewer; ts is stamped here. Returns recs."""
+    ts = now()
+    by_dir = {}
+    for r in recs:
+        r["ts"] = ts
+        if r["dir"] not in dirs:
+            raise Invalid(f"staging dir not known to the server: {r['dir']}")
+        by_dir.setdefault(r["dir"], []).append(r)
+    done = []          # (dir, log path, prior size) of dirs touched so far, for a multi-dir rollback
+    try:
+        for label, rs in by_dir.items():
+            log = Path(dirs[label]) / LOG_NAME
+            size = append_jsonl(log, rs)
+            done.append((dirs[label], log, size))
+            write_derived(dirs[label], ts)
+    except Exception:
+        for d, log, size in done:
+            rollback(log, size)
+        for d, log, size in done[:-1]:      # dirs whose derived file already moved: re-derive
+            try:
+                write_derived(d, ts)
+            except Exception:
+                pass
+        raise
+    return recs
+
+
+def decide(records, data, reviewer, dirs=None, root=None, enforce_lock=True):
+    """Validate, then write (under the process lock) to each touched dir's sidecars. `data` must
+    already be overlaid (server.App does it) so the contested lock sees item calls. Returns the
+    records written (with reviewer and ts)."""
     dirs = dirs if dirs is not None else dir_paths(data, root)
     with _LOCK:
-        recs = validate(records, data, reviewer)
-        ts = now()
-        by_dir = {}
-        for r in recs:
-            r["ts"] = ts
-            if r["dir"] not in dirs:
-                raise Invalid(f"staging dir not known to the server: {r['dir']}")
-            by_dir.setdefault(r["dir"], []).append(r)
-        done = []          # (dir, log path, prior size) of dirs touched so far, for a multi-dir rollback
-        try:
-            for label, rs in by_dir.items():
-                log = Path(dirs[label]) / LOG_NAME
-                size = append_jsonl(log, rs)
-                done.append((dirs[label], log, size))
-                write_derived(dirs[label], ts)
-        except Exception:
-            for d, log, size in done:
-                rollback(log, size)
-            for d, log, size in done[:-1]:      # dirs whose derived file already moved: re-derive
-                try:
-                    write_derived(d, ts)
-                except Exception:
-                    pass
-            raise
-        return recs
+        return _write(validate(records, data, reviewer, enforce_lock), dirs)
+
+
+def validate_items(records, data, reviewer=None):
+    """Normalised item call records, or Invalid. A record is {key, call, note?} or {key, undo: true}.
+    The call must be in ITEM_CALLS for the item's kind."""
+    if not isinstance(records, list) or not records:
+        raise Invalid("expected a non-empty list of item records")
+    idx = index(data)
+    out = []
+    for i, r in enumerate(records):
+        if not isinstance(r, dict):
+            raise Invalid(f"record {i}: not an object")
+        key = r.get("key")
+        if key not in idx:
+            raise Invalid(f"record {i}: unknown key {key!r}")
+        pipe, obj, grp = idx[key]
+        if grp != "items":
+            raise Invalid(f"record {i}: {key!r} is a line, not an item (use /api/decide)")
+        undo = bool(r.get("undo") or r.get("undecided"))
+        call = "" if undo else str(r.get("call") or "")
+        vocab = ITEM_CALLS.get(obj.get("kind"), OTHER_CALLS)
+        if not undo and call not in vocab:
+            raise Invalid(f"record {i}: call {call!r} is not one of {', '.join(vocab)} for a {obj.get('kind')} item")
+        out.append({"key": key, "dir": obj["dir"], "pid": pipe["pid"], "kind": obj["kind"], "call": call,
+                    "note": str(r.get("note") or ""), "reviewer": reviewer, "ts": None, "undecided": undo})
+    return out
+
+
+def record_items(records, data, reviewer, dirs=None, root=None):
+    """Item calls into the SAME review_log.jsonl / review_decisions.json as line decisions (an item
+    key and a line key never coincide). Shape: {key, dir, pid, kind, call, note, reviewer, ts,
+    undecided}; an undo is a record with undecided: true. Returns the records written."""
+    dirs = dirs if dirs is not None else dir_paths(data, root)
+    with _LOCK:
+        return _write(validate_items(records, data, reviewer), dirs)
+
+
+def sync_backend(data, dirs, snapshot=""):
+    """After a fresh pull + rebuild: every line the snapshot already holds (`in_backend`) that no
+    person has decided gets a `backend sync` accept record. A machine record is not `reviewed`,
+    so the line stays undecided in the queue (the UI shows "in backend"). Lines that already
+    carry a live backend-sync record are left alone (idempotent). Returns the records written."""
+    note = f"already in backend after refresh {snapshot}".rstrip()
+    logs, recs = {}, []
+    with _LOCK:
+        for p in data.get("pipelines", []):
+            for l in p.get("lines", []):
+                if not l.get("in_backend"):
+                    continue
+                d = l.get("dir")
+                if d not in logs:
+                    logs[d] = latest(read_log(dirs[d])) if d in dirs else {}
+                rec = logs[d].get(l["key"])
+                if rec and not rec.get("undecided"):       # a person's call, or already synced
+                    continue
+                recs.append({"key": l["key"], "dir": d, "pid": p["pid"], "sheet_row": l.get("sheet_row"),
+                             "ref_col": l.get("ref_col") or l.get("column") or "", "kind": l["kind"],
+                             "decision": "accept", "suggested_value": "", "note": note,
+                             "reviewer": SYNC_REVIEWER, "ts": None, "undecided": False})
+        return _write(recs, dirs) if recs else []

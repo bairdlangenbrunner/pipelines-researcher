@@ -1,4 +1,4 @@
-/* Pipelines review app front end (milestone 3: decisions). Vanilla JS, no modules, no build step
+/* Pipelines review app front end (milestone 4: bulk, items, summary, refresh). Vanilla JS, no modules, no build step
    (phase 2 inlines this file into an Apps Script HtmlService page). All I/O goes through Store;
    controls that need a capability read Store.caps and hide / disable themselves. */
 (function () {
@@ -22,11 +22,16 @@
         return b.reviewer;
       });
     },
-    decide: function (records) {
+    _post: function (url, records) {
       if (!Store.caps.decide) return Promise.reject(new Error(NOT_YET));
-      return fetch("/api/decide", {method: "POST", headers: {"Content-Type": "application/json"},
-                                   body: JSON.stringify(records)}).then(Store._json)
-        .then(function (b) { return b.saved; });
+      return fetch(url, {method: "POST", headers: {"Content-Type": "application/json"},
+                         body: JSON.stringify(records)}).then(Store._json).then(function (b) { return b.saved; });
+    },
+    decide: function (records) { return Store._post("/api/decide", records); },
+    item: function (records) { return Store._post("/api/item", records); },
+    refresh: function () {
+      if (!Store.caps.refresh) return Promise.reject(new Error("this server cannot refresh the backend (started with --no-build)"));
+      return fetch("/api/refresh", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"}).then(Store._json);
     }
   };
   window.Store = Store;
@@ -44,8 +49,16 @@
     pin: -1,                 // a pipeline opened by link that the filters would hide
     shown: [],               // line indexes drawn on the current card, in order
     stay: {},                // line keys decided this session: kept in view even if the filter would drop them
-    saving: {}               // line keys with a save in flight
+    saving: {},              // line / item keys with a save in flight
+    tab: "lines",            // the card's tab: "lines" | "items"
+    igOpen: {},              // item kind -> details open state (survives a re-render)
+    session: {}              // key -> the latest non-undone record this reviewer saved in this page session
   };
+  var ITEM_BY_KEY = {};
+  var ITEM_CALLS = {concern: ["confirmed", "dismissed", "needs_research"]};
+  var OTHER_CALLS = ["noted", "todo", "dismissed"];
+  var CALL_HELP = {confirmed: "the concern stands", dismissed: "the concern is closed", needs_research: "goes to a research / Update worklist",
+                   noted: "seen, nothing to do", todo: "to do later"};
   var MACHINE = {"backend sync": 1, "push": 1};   // not people: their records never count as reviewed
   var LINE_BY_KEY = {};
   var VERB = {accept: "accepted", hold: "held", reject: "rejected", suggest: "suggested"};
@@ -82,6 +95,7 @@
   function timeOf(iso) { return String(iso || "").replace("T", " ").slice(11, 16); }
   function decisionText(l) {
     if (l.reviewed && l.decision) return (VERB[l.decision] || l.decision) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at);
+    if (l.decision && l.decided_by === "backend sync") return "in backend (synced by backend sync, not reviewed)";
     if (l.decision && l.decided_by) return "pre-filled by " + l.decided_by + " (not reviewed)";
     return "";
   }
@@ -123,11 +137,11 @@
 
   // ---- derived data, once per load ----
   function prepare() {
-    LINES = []; ITEMS = []; LINE_BY_KEY = {};
+    LINES = []; ITEMS = []; LINE_BY_KEY = {}; ITEM_BY_KEY = {};
     D.pipelines.forEach(function (p, pi) {
       p._cont = {};
       p.items.forEach(function (it) {
-        it._item = true; it._p = pi;
+        it._item = true; it._p = pi; it._i = ITEMS.length; ITEM_BY_KEY[it.key] = it;
         var c = it.contested || {};
         Object.keys(c).forEach(function (col) { if (!(col in p._cont) || c[col]) p._cont[col] = c[col] || ""; });
         ITEMS.push(it);
@@ -206,7 +220,7 @@
     $("count").textContent = nl + " line" + (nl === 1 ? "" : "s") + (ni ? " + " + ni + " item" + (ni === 1 ? "" : "s") : "") +
       " on " + S.visible.length + " pipeline" + (S.visible.length === 1 ? "" : "s");
     if (S.visible.indexOf(S.pipe) < 0) S.pipe = S.visible.length ? S.visible[0] : -1;
-    if (D.pipelines[S.pipe] !== sel) S.line = -1;
+    if (D.pipelines[S.pipe] !== sel) { S.line = -1; S.tab = "lines"; }
     renderChips();
     renderActive();
     renderProgress();
@@ -352,6 +366,7 @@
   }
   function selectPipe(i, lineIdx) {
     S.pipe = i;
+    S.tab = "lines";
     S.line = lineIdx == null ? -1 : lineIdx;
     var prev = $("pipes").querySelector("li.sel");
     if (prev) prev.classList.remove("sel");
@@ -554,7 +569,7 @@
   }
 
   // ---- items ----
-  var HIDE = {key: 1, dir: 1, also_in: 1, sheet_row: 1, sheet_row_moved: 1, contested: 1, "default": 1, call: 1, reviewed: 1,
+  var HIDE = {call_note: 1, decided_by: 1, decided_at: 1, decision_note: 1, key: 1, dir: 1, also_in: 1, sheet_row: 1, sheet_row_moved: 1, contested: 1, "default": 1, call: 1, reviewed: 1,
               kind: 1, project_id: 1, wiki: 1, pipeline_name: 1, segment_name: 1, value_cols: 1, values: 1, primary_value_col: 1,
               primary_value: 1, _item: 1, _p: 1, countries: 1};
   var BODY = ["recommendation", "action", "detail", "summary", "monitor_reason", "researcher_notes", "staged_note", "staleness_rule", "corridor_desc"];
@@ -623,17 +638,31 @@
       h += '<div class="concern-inline">' + chip("contested", "cont") + " <b>" + esc(c) + "</b>: " + (cont[c] ? esc(cont[c]) : "<i>no detail recorded</i>") + "</div>";
     });
     if (rows.length) h += "<details><summary>all fields</summary><table class=\"rowdata\">" + rows.join("") + "</table></details>";
-    return h + "</div>";
+    return h + itemControls(it) + "</div>";
+  }
+  function itemVocab(it) { return ITEM_CALLS[it.kind] || OTHER_CALLS; }
+  function itemStat(it) {
+    return it.call && it.reviewed ? (it.call.replace("_", " ") + " by " + (it.decided_by || "?") + " " + timeOf(it.decided_at)) : "";
+  }
+  function itemControls(it) {
+    var dis = !Store.caps.decide, v = itemVocab(it);
+    var opts = '<option value="">no call</option>' + v.map(function (c) {
+      return '<option value="' + c + '"' + (it.call === c ? " selected" : "") + ' title="' + esc(CALL_HELP[c] || "") + '">' + c.replace("_", " ") + "</option>";
+    }).join("");
+    var hint = it.kind === "concern" ? '<span class="faint">any call releases the lines this concern holds (confirmed: it stands; dismissed: closed; needs research: to an Update worklist)</span>' : "";
+    return '<div class="icall"><label>Call <select data-icall="' + it._i + '"' + (dis ? ' disabled title="' + esc(NOT_YET) + '"' : "") + ">" + opts + "</select></label>" +
+      '<input type="text" data-inote="' + it._i + '" placeholder="note" value="' + esc(it.call_note || "") + '"' + (dis ? " disabled" : "") + ">" +
+      '<span class="dstat" id="istat-' + it._i + '" role="status">' + esc(itemStat(it)) + "</span>" + hint + "</div>";
   }
   function itemsHtml(p) {
-    if (!p.items.length) return "";
+    if (!p.items.length) return '<div class="hiddennote">No items on this pipeline.</div>';
     var by = {};
     p.items.forEach(function (it) { (by[it.kind] = by[it.kind] || []).push(it); });
-    var h = '<section class="items"><h3>Items <span class="ro">(' + p.items.length + "; read-only until milestone 3)</span></h3>";
+    var h = '<section class="items">';
     ITEM_KINDS.forEach(function (k) {
       if (!by[k]) return;
-      var open = k !== "unresolved" && k !== "confirmed";
-      h += '<details class="igroup"' + (open ? " open" : "") + "><summary>" + esc(KIND_LABEL[k]) + ' <span class="n">(' + by[k].length + ")</span></summary>" +
+      var open = k in S.igOpen ? S.igOpen[k] : (k !== "unresolved" && k !== "confirmed");
+      h += '<details class="igroup" data-kind="' + k + '"' + (open ? " open" : "") + "><summary>" + esc(KIND_LABEL[k]) + ' <span class="n">(' + by[k].length + ")</span></summary>" +
         by[k].map(itemHtml).join("") + "</details>";
     });
     return h + "</section>";
@@ -661,6 +690,16 @@
       .filter(Boolean).map(function (x) { return "<span>" + x + "</span>"; }).join("");
     var h = "<h2>" + (isNew || isScope ? "" : '<span class="pid">' + esc(p.pid) + "</span>") + esc(p.name || "(no name)") + '</h2><div class="ctx">' + ctx + "</div>" +
       '<div class="ctx2">current values from snapshot ' + esc(D.scope.snapshot) + "</div>";
+    var nOpenItems = p.items.filter(function (it) { return !it.call; }).length;
+    h += '<div class="tabs" role="tablist">' +
+      '<button type="button" role="tab" data-tab="lines" aria-selected="' + (S.tab === "lines") + '">Lines (' + p.lines.length + ")</button>" +
+      '<button type="button" role="tab" data-tab="items" aria-selected="' + (S.tab === "items") + '" title="i: switch to the Items tab">Items (' + p.items.length +
+      (nOpenItems ? ", " + nOpenItems + " without a call" : "") + ")</button></div>";
+    if (S.tab === "items") {
+      S.shown = []; S.line = -1;
+      card.innerHTML = h + itemsHtml(p);
+      return;
+    }
     // lines the filter lets through, grouped by segment when the PID spans several sheet rows
     var keep = p.lines.filter(function (l) { return match(l, p, FS, null, ranges, q); });
     var hidden = p.lines.length - keep.length;
@@ -684,7 +723,6 @@
     if (hidden) h += '<div class="hiddennote">' + hidden + " more line" + (hidden === 1 ? "" : "s") + " on this pipeline " + (hidden === 1 ? "is" : "are") +
       ' hidden by the filter &mdash; <a href="#" class="only" data-showall="1">show all</a></div>';
     if (!keep.length && !hidden) h += '<div class="hiddennote">No lines on this pipeline.</div>';
-    h += itemsHtml(p);
     card.innerHTML = h;
     if (S.line < 0 || S.shown.indexOf(S.line) < 0) S.line = S.shown.length ? S.shown[0] : -1;
     var el = S.line >= 0 && $("line-" + S.line);
@@ -759,9 +797,59 @@
     l.decided_at = r.undecided ? null : r.ts;
     l.suggested_value = r.suggested_value || "";
     l.decision_note = r.note || "";
+    noteSession(r, "decision");
+  }
+  function noteSession(r, field) {
+    if (r.undecided) delete S.session[r.key];
+    else if (!MACHINE[r.reviewer]) S.session[r.key] = {key: r.key, dir: r.dir, kind: r.kind, what: r[field]};
+  }
+  function applyItemRecord(r) {
+    var it = ITEM_BY_KEY[r.key];
+    if (!it) return;
+    it.call = r.undecided ? null : r.call;
+    it.call_note = r.undecided ? null : r.note;
+    it.reviewed = !r.undecided && !MACHINE[r.reviewer];
+    it.decided_by = r.undecided ? null : r.reviewer;
+    it.decided_at = r.undecided ? null : r.ts;
+    noteSession(r, "call");
+  }
+  function lockedCount(p) { return p.lines.filter(function (l) { return lockCols(l, p).length; }).length; }
+  // Save one item's call. Same in-place feedback as a line; when a concern's call releases the
+  // lock, the card's lines unlock in the same re-render (no reload).
+  function saveItem(it, rec) {
+    if (!Store.caps.decide) return notYet();
+    if (S.saving[it.key]) return;
+    S.saving[it.key] = true;
+    var p = D.pipelines[it._p], before = lockedCount(p), el = $("istat-" + it._i);
+    if (el) { el.textContent = "Saving…"; el.className = "dstat saving"; }
+    Store.item([rec]).then(function (saved) {
+      saved.forEach(applyItemRecord);
+      banner("");
+      refilter(true);
+      var freed = before - lockedCount(p);
+      if (freed > 0) toast(freed + " line" + (freed === 1 ? "" : "s") + " on this card unlocked (the concern has a call)");
+      else if (freed < 0) toast(-freed + " line" + (freed === -1 ? "" : "s") + " locked again (the concern is open)");
+    }).catch(function (e) {
+      renderCard();
+      var e2 = $("istat-" + it._i);
+      if (e2) { e2.textContent = "Not saved: " + e.message; e2.className = "dstat err"; }
+      toast("Not saved: " + e.message);
+    }).then(function () { delete S.saving[it.key]; });
+  }
+  function onItemChange(e) {
+    var sel = e.target.closest("select[data-icall]"), inp = e.target.closest("input[data-inote]");
+    var t = sel || inp;
+    if (!t) return;
+    var it = ITEMS[+t.getAttribute(sel ? "data-icall" : "data-inote")];
+    if (!it) return;
+    var box = t.closest(".icall"), call = box.querySelector("select").value, note = box.querySelector("input").value;
+    if (!call) { if (sel && it.call) saveItem(it, {key: it.key, undo: true}); return; }
+    if (inp && call === it.call && note === (it.call_note || "")) return;
+    saveItem(it, {key: it.key, call: call, note: note});
   }
   function decideCurrent(decision, advance) {
     var l = LINES[S.line];
+    if (S.tab === "items") return toast("the Items tab takes calls, not line decisions: press i to go back to the lines");
     if (!l) return;
     var p = D.pipelines[l._p];
     if (decision === "accept") {
@@ -772,7 +860,7 @@
   }
   function undoCurrent() {
     var l = LINES[S.line];
-    if (!l) return;
+    if (S.tab === "items" || !l) return;
     if (!cur(l)) return toast("nothing to undo on this line");
     save(l, {key: l.key, undo: true}, false);
   }
@@ -783,7 +871,7 @@
     }
     stepPipe(1);
   }
-  function suggestKey() { toast(Store.caps.decide ? "suggest arrives in milestone 4" : NOT_YET); }
+  function suggestKey() { toast(Store.caps.decide ? "suggest arrives in milestone 5" : NOT_YET); }
   var KEYS = {
     j: function () { stepLine(1); }, k: function () { stepLine(-1); },
     J: function () { stepPipe(1); }, K: function () { stepPipe(-1); },
@@ -795,14 +883,26 @@
     a: function () { decideCurrent("accept", true); }, h: function () { decideCurrent("hold", true); },
     r: function () { decideCurrent("reject", true); }, s: suggestKey, u: undoCurrent,
     "/": function (e) { e.preventDefault(); $("f-q").focus(); $("f-q").select(); },
+    S: function () { showSummary(); },
+    A: function () { showBulk("defaults"); },
+    i: toggleItemsTab,
     "?": showHelp
   };
+  function toggleItemsTab() {
+    if (S.pipe < 0) return;
+    S.tab = S.tab === "items" ? "lines" : "items";
+    renderCard();
+    if (S.tab === "items") { var s1 = document.querySelector("#card select[data-icall]"); if (s1) s1.focus(); }
+  }
   var HELP = [["j / k", "next / previous line (runs on into the next pipeline)"], ["J / K", "next / previous pipeline"],
-              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value (milestone 4)"],
+              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value (milestone 5)"],
+              ["A", "accept every default-accept line in view (asks first, with the count)"], ["i", "switch the card between Lines and Items; calls save on change"],
+              ["S", "session summary (counts, this session, copy as markdown)"],
               ["u", "undo: the line goes back to undecided"], ["o", "open the line's first ref (new tab)"], ["d", "show / hide the line's details"],
               ["/", "search"], ["?", "this help"]];
   function showHelp() {
     var dlg = $("dialog");
+    dlg.setAttribute("data-kind", "help");
     dlg.innerHTML = "<h3>Keyboard</h3><table>" + HELP.map(function (r) { return "<tr><td><kbd>" + r[0] + "</kbd></td><td>" + r[1] + "</td></tr>"; }).join("") +
       '</table><div class="actions"><button type="button" id="dlg-close">Close</button></div>';
     $("dlg-close").onclick = function () { dlg.close(); };
@@ -810,7 +910,10 @@
   }
   function onKey(e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    if ($("dialog").open) return;
+    if ($("dialog").open) {
+      if (e.key === "S" && $("dialog").getAttribute("data-kind") === "summary") $("dialog").close();
+      return;
+    }
     var t = e.target;
     if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) { if (e.key === "Escape") t.blur(); return; }
     var f = KEYS[e.key];
@@ -834,6 +937,11 @@
       syncControls(); S.pin = keepPipe; refilter(true); writeRoute(false);
       return;
     }
+    var tb = e.target.closest("button[data-tab]");
+    if (tb) {
+      if (S.tab !== tb.getAttribute("data-tab")) { S.tab = tb.getAttribute("data-tab"); renderCard(); }
+      return;
+    }
     var b = e.target.closest("button[data-decide]");
     var ub = e.target.closest("button[data-undo]");
     var ln = e.target.closest(".line");
@@ -844,6 +952,162 @@
     // a click on the pressed button takes the call back (the same record an undo writes)
     if (b.getAttribute("aria-pressed") === "true") return undoCurrent();
     decideCurrent(b.getAttribute("data-decide"), false);
+  }
+
+  // ---- bulk ----
+  // The targets are the CURRENT filtered queue. Locked (contested) lines and lines a person already
+  // decided are skipped here; the server refuses a locked accept anyway (409, nothing written).
+  function bulkTargets(mode) {
+    var ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase();
+    var t = {lines: [], byKind: {}, decision: mode === "hold" ? "hold" : "accept", skip: {locked: 0, decided: 0, other: 0}};
+    D.pipelines.forEach(function (p, pi) {
+      if (mode === "pipe-high" && pi !== S.pipe) return;
+      p.lines.forEach(function (l) {
+        if (!match(l, p, FS, null, ranges, q)) return;
+        if (cur(l)) { t.skip.decided++; return; }
+        if (lockCols(l, p).length) { t.skip.locked++; return; }
+        if ((mode === "defaults" && (l.default || "hold") !== "accept") || (mode === "pipe-high" && tierOf(l) !== "high")) { t.skip.other++; return; }
+        t.lines.push(l);
+        t.byKind[l.kind] = (t.byKind[l.kind] || 0) + 1;
+      });
+    });
+    return t;
+  }
+  var BULK_TITLE = {defaults: "Accept all defaults in view", hold: "Hold all in view", "pipe-high": "Accept all high in this pipeline"};
+  function showBulk(mode) {
+    if (!Store.caps.decide) return notYet();
+    if (S.pipe < 0) return toast("nothing in view");
+    var t = bulkTargets(mode), dlg = $("dialog"), sk = t.skip;
+    var skipTxt = [sk.locked && sk.locked + " locked by an open concern", sk.decided && sk.decided + " already decided",
+                   sk.other && sk.other + (mode === "pipe-high" ? " not high tier" : " whose default is hold")].filter(Boolean).join(", ");
+    if (!t.lines.length) return toast("nothing to " + t.decision + " in view" + (skipTxt ? " (skipped: " + skipTxt + ")" : ""));
+    var kinds = Object.keys(t.byKind).map(function (k) { return "<tr><td>" + esc(KIND_LABEL[k]) + "</td><td>" + t.byKind[k] + "</td></tr>"; }).join("");
+    dlg.setAttribute("data-kind", "bulk");
+    dlg.innerHTML = "<h3>" + esc(BULK_TITLE[mode]) + "</h3><p><b>" + t.lines.length + " line" + (t.lines.length === 1 ? "" : "s") + "</b> will be " +
+      (t.decision === "accept" ? "accepted" : "held") + " as " + esc(ME) + ", in one save:</p><table>" + kinds + "</table>" +
+      (skipTxt ? '<p class="faint">Skipped: ' + esc(skipTxt) + ".</p>" : "") +
+      '<p class="faint" id="bulk-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">Cancel</button>' +
+      '<button type="button" id="dlg-ok">' + (t.decision === "accept" ? "Accept " : "Hold ") + t.lines.length + "</button></div>";
+    $("dlg-cancel").onclick = function () { dlg.close(); };
+    $("dlg-ok").onclick = function () {
+      var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "Saving…";
+      Store.decide(t.lines.map(function (l) { return {key: l.key, decision: t.decision}; })).then(function (saved) {
+        saved.forEach(applyRecord);
+        t.lines.forEach(function (l) { S.stay[l.key] = true; });
+        dlg.close();
+        refilter(true);
+        toast((t.decision === "accept" ? "accepted " : "held ") + saved.length + " line" + (saved.length === 1 ? "" : "s"));
+      }).catch(function (e) {
+        ok.disabled = false; ok.textContent = "Retry";
+        $("bulk-err").textContent = "Not saved: " + e.message;
+        $("bulk-err").className = "err";
+      });
+    };
+    dlg.showModal();
+  }
+
+  // ---- session summary ----
+  function summaryModel() {
+    var kinds = {}, tiers = {}, dirs = {}, ik = {};
+    function bump(m, k, f) { (m[k] = m[k] || {decided: 0, open: 0, backend: 0})[f]++; }
+    LINES.forEach(function (l) {
+      var f = cur(l) ? "decided" : (l.in_backend ? "backend" : "open");
+      bump(kinds, l.kind, f); bump(tiers, tierOf(l), f); bump(dirs, l.dir, f);
+    });
+    ITEMS.forEach(function (it) { bump(ik, it.kind, it.call ? "decided" : "open"); });
+    var sess = Object.keys(S.session).map(function (k) { return S.session[k]; }), sw = {}, sd = {};
+    sess.forEach(function (r) { sw[r.what] = (sw[r.what] || 0) + 1; sd[r.dir] = (sd[r.dir] || 0) + 1; });
+    return {kinds: kinds, tiers: tiers, dirs: dirs, itemKinds: ik, sessWhat: sw, sessDirs: sd, sessN: sess.length};
+  }
+  function sumRows(m, order, labels) {
+    return order.filter(function (k) { return m[k]; }).map(function (k) { return [labels && labels[k] || k, m[k].decided, m[k].open, m[k].backend]; });
+  }
+  function sumTable(head, rows) {
+    return "<table class=\"sumtab\"><tr>" + head.map(function (x) { return "<th>" + esc(x) + "</th>"; }).join("") + "</tr>" +
+      rows.map(function (r) { return "<tr>" + r.map(function (x, i) { return "<td" + (i ? ' class="num"' : "") + ">" + esc(x) + "</td>"; }).join("") + "</tr>"; }).join("") + "</table>";
+  }
+  function summaryMarkdown(m) {
+    function tab(head, rows) {
+      return "| " + head.join(" | ") + " |\n|" + head.map(function () { return "---"; }).join("|") + "|\n" + rows.map(function (r) { return "| " + r.join(" | ") + " |"; }).join("\n") + "\n";
+    }
+    var H = ["", "decided", "open", "in backend"];
+    var kinds = sumRows(m.kinds, LINE_KINDS, KIND_LABEL), tiers = sumRows(m.tiers, ["high", "medium", "low", "untiered"]);
+    var dirs = Object.keys(m.dirs).sort().map(function (d) { return [dirLabel(d), m.dirs[d].decided, m.dirs[d].open, m.dirs[d].backend, m.sessDirs[d] || 0]; });
+    var items = ITEM_KINDS.filter(function (k) { return m.itemKinds[k]; }).map(function (k) { return [KIND_LABEL[k], m.itemKinds[k].decided, m.itemKinds[k].open]; });
+    var out = "## Review summary: " + D.scope.country + " " + D.scope.commodity + " (snapshot " + D.scope.snapshot + ")\n\nReviewer: " + ME +
+      "  \nThis session: " + m.sessN + " saved (" + (Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + k; }).join(", ") || "none") + ")\n\n" +
+      "### Lines by kind\n\n" + tab(["kind"].concat(H.slice(1)), kinds) + "\n### Lines by tier\n\n" + tab(["tier"].concat(H.slice(1)), tiers) +
+      "\n### Items\n\n" + tab(["kind", "with a call", "without"], items) + "\n### By staging dir\n\n" + tab(["dir", "decided", "open", "in backend", "this session"], dirs);
+    return out;
+  }
+  function copyText(text) {
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      toast(ok ? "summary copied" : "could not copy: select the text by hand");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { toast("summary copied"); }, fallback);
+    else fallback();
+  }
+  function showSummary() {
+    var dlg = $("dialog");
+    if (dlg.open && dlg.getAttribute("data-kind") === "summary") return dlg.close();
+    if (dlg.open) return;
+    var m = summaryModel(), tot = LINES.length, dec = 0, bk = 0;
+    LINES.forEach(function (l) { if (cur(l)) dec++; else if (l.in_backend) bk++; });
+    var L = ["decided", "open", "in backend"];
+    var items = ITEM_KINDS.filter(function (k) { return m.itemKinds[k]; }).map(function (k) { return [KIND_LABEL[k], m.itemKinds[k].decided, m.itemKinds[k].open]; });
+    var dirs = Object.keys(m.dirs).sort().map(function (d) { return [dirLabel(d), m.dirs[d].decided, m.dirs[d].open, m.dirs[d].backend, m.sessDirs[d] || 0]; });
+    dlg.setAttribute("data-kind", "summary");
+    dlg.innerHTML = "<h3>Session summary</h3><p>" + dec + " of " + tot + " lines decided &middot; " + bk + " in the backend &middot; " + (tot - dec - bk) + " open. " +
+      "<b>This session (" + esc(ME) + "):</b> " + m.sessN + " saved" + (m.sessN ? " (" + Object.keys(m.sessWhat).map(function (k) { return m.sessWhat[k] + " " + esc(k); }).join(", ") + ")" : "") + ".</p>" +
+      "<h4>Lines by kind</h4>" + sumTable(["kind"].concat(L), sumRows(m.kinds, LINE_KINDS, KIND_LABEL)) +
+      "<h4>Lines by tier</h4>" + sumTable(["tier"].concat(L), sumRows(m.tiers, ["high", "medium", "low", "untiered"])) +
+      "<h4>Items</h4>" + sumTable(["kind", "with a call", "without"], items) +
+      "<h4>By staging dir</h4>" + sumTable(["dir", "decided", "open", "in backend", "this session"], dirs) +
+      '<div class="actions"><button type="button" class="ghost" id="dlg-copy">Copy summary as markdown</button><button type="button" id="dlg-close">Close</button></div>';
+    $("dlg-close").onclick = function () { dlg.close(); };
+    $("dlg-copy").onclick = function () { copyText(summaryMarkdown(m)); };
+    dlg.showModal();
+  }
+
+  // ---- refresh backend ----
+  function refreshBackend() {
+    if (!Store.caps.refresh) return toast("this server cannot refresh the backend (started with --no-build)");
+    var dlg = $("dialog");
+    dlg.setAttribute("data-kind", "refresh");
+    dlg.innerHTML = "<h3>Refresh backend</h3><p>This pulls the live sheet (read-only, about a minute), rebuilds this dataset from the new snapshot, " +
+      "and marks lines the sheet already holds as <i>in backend</i> (a machine record, not a review). Your decisions are kept.</p>" +
+      '<p class="faint" id="rf-err"></p><div class="actions"><button type="button" class="ghost" id="dlg-cancel">Cancel</button><button type="button" id="dlg-ok">Pull and rebuild</button></div>';
+    $("dlg-cancel").onclick = function () { dlg.close(); };
+    $("dlg-ok").onclick = function () {
+      var ok = $("dlg-ok"); ok.disabled = true; ok.textContent = "Pulling…"; $("dlg-cancel").disabled = true;
+      var btn = $("sync"); btn.disabled = true;
+      Store.refresh().then(function (r) {
+        return Store.load().then(function (data) {
+          dlg.close();
+          reload(data);
+          toast("refreshed: snapshot " + r.snapshot + ", " + r.lines + " lines, " + r.synced + " newly in backend");
+        });
+      }).catch(function (e) {
+        ok.disabled = false; ok.textContent = "Retry"; $("dlg-cancel").disabled = false;
+        $("rf-err").textContent = "Refresh failed: " + e.message; $("rf-err").className = "err";
+      }).then(function () { btn.disabled = !Store.caps.refresh; });
+    };
+    dlg.showModal();
+  }
+  function reload(data) {
+    var pid = D.pipelines[S.pipe] ? D.pipelines[S.pipe].pid : "";
+    D = data;
+    prepare();
+    S.pin = -1; S.stay = {}; S.line = -1;
+    S.pipe = -1;
+    D.pipelines.forEach(function (p, i) { if (p.pid === pid) S.pipe = i; });
+    $("scope").textContent = D.scope.country + " " + D.scope.commodity + " · " + D.scope.snapshot;
+    refilter(true);
   }
 
   // ---- routing: #/P0736 plus an optional ?query with the filters that differ from the defaults ----
@@ -913,7 +1177,8 @@
     $("whoami").textContent = reviewer;
     $("scope").textContent = D.scope.country + " " + D.scope.commodity + " · " + D.scope.snapshot;
     $("scope").title = "built " + et(D.built) + " · " + D.dirs.length + " staging dir" + (D.dirs.length === 1 ? "" : "s") + ": " + D.dirs.map(dirLabel).join(", ");
-    $("sync").hidden = !Store.caps.refresh;
+    $("sync").disabled = !Store.caps.refresh;
+    $("sync").title = Store.caps.refresh ? "Pull the live sheet (~1 min), rebuild, and mark lines it already holds" : "this server was started with --no-build: it cannot refresh";
     $("push").hidden = !Store.caps.push;
     initFilters();
     applyRoute();
@@ -931,6 +1196,16 @@
     if (li) selectPipe(+li.getAttribute("data-i"));
   });
   $("help-btn").onclick = showHelp;
+  $("sync").onclick = refreshBackend;
+  $("summary-btn").onclick = showSummary;
+  $("bulk-defaults").onclick = function () { showBulk("defaults"); };
+  $("bulk-hold").onclick = function () { showBulk("hold"); };
+  $("bulk-pipe").onclick = function () { showBulk("pipe-high"); };
+  $("card").addEventListener("change", onItemChange);
+  $("card").addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (d && d.classList && d.classList.contains("igroup")) S.igOpen[d.getAttribute("data-kind")] = d.open;
+  }, true);
   Promise.all([Store.whoami(), Store.load()]).then(function (r) { boot(r[0], r[1]); })
     .catch(function (e) { banner("Could not load the dataset: " + e.message); });
 })();

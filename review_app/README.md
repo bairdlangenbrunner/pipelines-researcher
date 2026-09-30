@@ -2,8 +2,8 @@
 
 Review app for staged pipeline research (plan: `docs/plans/2026-09-30_review-app.md`).
 
-**After milestone 3: data builder + server/UI with line decisions.** Item calls (milestone 4)
-and `s` (suggest) in the UI are not wired yet; `POST /api/item` returns 501.
+**After milestone 4: data builder + server/UI with line decisions, item calls, bulk, session
+summary, and backend refresh.** `s` (suggest) in the UI is not wired yet.
 
 ```bash
 python review_app/server.py --country Russia --commodity gas        # builds the dataset, opens the browser
@@ -44,13 +44,50 @@ Every staging dir gets two sidecars, committed with the batch:
 Latest record wins. **Undo** (`u`, or clicking the pressed button) appends a record with
 `undecided: true`; nothing is deleted. A line is reviewed only when its latest record is by a
 person (not `backend sync` / `push`) and not undecided. `suggest` needs a `suggested_value` or a
-note and applies to lines only; item keys are refused (milestone 4). `/api/data` re-overlays the
+note and applies to lines only; item keys are refused (use `/api/item`). `/api/data` re-overlays the
 sidecars on every request, so rebuilt datasets and reloads show decisions.
 
 **Contested lock.** A line whose column (`column`, `value_cols`, or `Status` for status lines) is
 named in the `contested` map of an open concern item (no call yet) shows "held: concern open";
 accept is refused with 409 server-side. Hold and reject stay allowed.
-No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the Russia gas data.
+Any call on the concern (including `needs research`) releases the lock, and the UI unlocks that
+card's lines in place. No Name/OtherEnglishNames linked-pair prompt: no such pairs exist in the
+Russia gas data.
+
+## Items and calls
+
+The card's **Items** tab (`i` toggles Lines/Items) gives every item a call selector and a note;
+a change saves immediately (`POST /api/item`, same sidecars, same latest-wins and undo rules; "no
+call" undoes). Call vocabulary per kind: `concern` takes `confirmed | dismissed | needs_research`
+(confirmed: it stands; dismissed: closed; needs research: goes to an Update worklist); every other
+kind takes `noted | todo | dismissed`. A wrong call is a 400. Item records are
+`{key, dir, pid, kind, call, note, reviewer, ts, undecided}`; items in the dataset carry
+`call`, `call_note`, `reviewed`, `decided_by`, `decided_at`.
+
+## Bulk
+
+Three header-bar buttons (and `A` for the first) act on the CURRENT filtered queue and always
+confirm with the exact count and a per-kind breakdown: accept all defaults in view, hold all in
+view, accept all high in this pipeline. They skip lines locked by an open concern and lines a
+person already decided, and send one `POST /api/decide`. The server is all-or-nothing: if any
+line is locked or invalid the request is refused (409/400) and nothing is written.
+
+## Session summary
+
+`S` or the header "summary" button: decided / open / in-backend counts by kind, tier and staging
+dir, item calls, and what this reviewer saved in this page session, with "copy summary as
+markdown".
+
+## Refresh backend
+
+"refresh backend" (header; confirm first, ~1 min) calls `POST /api/refresh`: runs the pull
+(`scripts/refresh_csvs.sh`, read-only against the sheet, 600 s timeout), rebuilds the dataset with
+the stored build args, reloads, then runs a `backend sync` pass and returns
+`{snapshot, lines, synced}`. Every line now `in_backend` with no live record gets a `backend sync`
+accept record ("already in backend after refresh <snapshot>"); lines a person decided or that are
+already synced are skipped, so it is idempotent. Such records are machine records, never
+`reviewed`. Servers started with `--no-build` answer 409 and the button is disabled
+(`caps.refresh` false).
 
 ```bash
 python review_app/review_data.py --country Russia --commodity gas \

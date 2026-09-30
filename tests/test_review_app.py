@@ -78,13 +78,14 @@ def test_whoami(live):
     assert w["caps"] == {"decide": True, "refresh": False, "push": False}
 
 
-def test_not_yet_and_absent_routes(live):
+def test_absent_routes_and_refresh_refused_without_build(live):
     base, _, _ = live
-    st, body = post(base + "/api/item")
-    assert st == 501 and body == {"error": "milestone 4"}
-    for p in ("/api/refresh", "/api/push/plan", "/api/push"):
+    for p in ("/api/push/plan", "/api/push"):
         assert post(base + p)[0] == 404
         assert get(base + p)[0] == 404
+    assert get(base + "/api/refresh")[0] == 404          # POST only
+    st, body = post(base + "/api/refresh")               # this App was not built (= --no-build)
+    assert st == 409 and "no-build" in body["error"]
 
 
 def test_static_files(live):

@@ -11,7 +11,8 @@
   <h1>Pipelines review</h1>
   <span id="scope" class="scope"></span>
   <div class="who"><span id="whoami"></span>
-    <button id="sync" class="ghost" hidden title="Re-pull the backend and settle what it already holds">&#8635; sync backend</button>
+    <button id="summary-btn" class="ghost" title="Session summary (S)">summary</button>
+    <button id="sync" class="ghost" title="Refresh backend">&#8635; refresh backend</button>
     <button id="push" class="ghost" hidden title="Write the accepted lines into the backend sheet">&#8682; push changes</button>
     <button id="theme" class="ghost" title="Toggle light / dark">&#9680;</button>
     <button id="help-btn" class="ghost" title="Keyboard shortcuts (?)">?</button>
@@ -47,6 +48,12 @@
     <span id="count"></span>
     <div class="progress" title="lines decided"><div id="progress-bar"></div></div>
     <span id="progress-text"></span>
+  </div>
+  <div class="bulkbar" id="bulkbar">
+    <span class="cl">Bulk (asks first)</span>
+    <button type="button" id="bulk-defaults" class="ghost" title="accept every undecided, unlocked line in view whose default is accept (A)">accept all defaults in view</button>
+    <button type="button" id="bulk-hold" class="ghost" title="hold every undecided, unlocked line in view">hold all in view</button>
+    <button type="button" id="bulk-pipe" class="ghost" title="accept every undecided, unlocked high-tier line on the open pipeline that the filters show">accept all high in this pipeline</button>
   </div>
   <div class="queue">
     <ol id="pipes" class="pipes" aria-label="Pipelines"></ol>
