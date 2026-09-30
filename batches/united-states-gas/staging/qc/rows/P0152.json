@@ -1,0 +1,30 @@
+{
+ "project_id": "P0152",
+ "pipeline_name": "ANR Gas Pipeline",
+ "sheet_row": 13,
+ "wiki": "https://www.gem.wiki/ANR_Gas_Pipeline",
+ "validity": [
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "fields": ["Diameter"],
+   "recommendation": "Do not paste the wiki's full multi-value diameter list ('12, 30, 36, 42 in; 14, 22, 30, 36 in; 24 in') onto this row as a blanket fill. Independently confirmed via a primary FERC docket that ANR operates 22-inch, 30-inch and 42-inch diameter mainline pipe (designated the '100 Line', '1-100 Line' and '2-100 Line') in Will County, Illinois -- consistent with 3 of the wiki's 9 listed values (22, 30, 42 in = 559 / 762 / 1067 mm). This is a partial, single-docket confirmation of a small piece of a 2896.82 km, Texas-to-Chicago trunk; it does not certify the remaining wiki-listed diameters (12, 14, 24, 36 in), which likely belong to other segments/laterals along the route. A human researcher should pull ANR's FERC Index of Customers or a fuller tariff facility inventory to build a genuine segment-by-segment diameter set before filling Diameter comprehensively on this system-level 'Main Line' row.",
+   "researcher_notes": "FERC Docket No. CP09-165-000, ANR Pipeline Company, Notice of Request Under Blanket Authorization (filed under blanket certificate CP82-480-000), published Federal Register Vol. 74, No. 88, May 8, 2009, p. 21674 (FR Doc. E9-10692): ANR proposed to 'rearrange and replace approximately 2000 feet of pipe on each of the following pipelines: the 22-inch diameter 100 line, the 30-inch diameter 1-100 line, and the 42-inch diameter 2-100 line, all located in Will County' -- i.e. genuine ANR mainline-family pipe at 22/30/42 inch = 559/762/1067 mm. Will County IL sits on ANR's route toward its Chicago terminus (sheet EndLocation=Chicago), so this is plausibly part of what GEM aggregates as 'Main Line', not a lateral. I deliberately did NOT use a separate 2002 ANR docket (CP02-434-000, WestLeg Project, FR Vol. 67 No. 183, Sept 20 2002, FR Doc. 02-23864) that documents 20-inch and 30-inch pipe, because that project is explicitly on ANR's Madison Lateral and Beloit Lateral in Wisconsin/Illinois -- distinct lateral segments, not the Main Line trunk -- and including it would risk conflating segment identity. I also saw a WebSearch AI-synthesized claim (offshore-technology.com) that 'ANR Pipeline has a maximum diameter of 36 inches', which directly conflicts with the FERC-documented 42-inch line; I did not use that source or figure, treating it as an imprecise trade-summary claim contradicted by the primary FERC record. Only one independent origin (govinfo.gov, the official Federal Register mirror) verified the 22/30/42-inch figures in this pass, so tier is medium, not high, even though the underlying document is a primary regulatory filing.",
+   "proposed_refs": ["https://www.govinfo.gov/content/pkg/FR-2009-05-08/pdf/E9-10692.pdf"],
+   "verifications": [{"url": "https://www.govinfo.gov/content/pkg/FR-2009-05-08/pdf/E9-10692.pdf", "ok": true, "contains_value": true}],
+   "tier": "medium",
+   "independent": false
+  },
+  {
+   "verdict": "concern",
+   "concern_type": "spec",
+   "fields": ["countries"],
+   "recommendation": "This is very likely a route-drawing/geometry artifact, not a missing CountriesOrAreas value -- do NOT add Canada to CountriesOrAreas without route review, and do not propose new coordinates here (that is a routes-repo human PR). A human should open this row's route geometry against a border-accurate basemap and check the ~7.0 km Canada excursion against the underlying vertex data; if it is a stray/mis-snapped vertex near the US-Canada line, the fix is a geometry correction in the routes repo, not a schema edit.",
+   "researcher_notes": "ANR Gas Pipeline's Main Line is a Texas-to-Chicago, Illinois interstate trunk; TC Energy's own system description and industry references consistently place ANR entirely within US territory (Texas, Oklahoma, Louisiana, Kansas, Missouri, Iowa, Wisconsin, Illinois, Michigan), with no international crossing on the mainline itself. The pipeline that DOES cross into Canada in the Michigan/Ontario corridor near the St. Clair River is the physically and corporately distinct Great Lakes Gas Transmission system (a joint TC Energy / TransCanada-affiliated pipeline separate from ANR), with which ANR merely interconnects as a shipper/customer point, not a through-route. A 7.0 km excursion into Canada on a route whose sheet-level CountriesOrAreas correctly says United States/United States is most consistent with a route-tracing or basemap-snap error rather than an actual omitted country. I was unable to re-run a web search to find and verify a fresh citable source for this specific claim in this pass (session web-search budget was exhausted), so I am not proposing a proposed_refs entry here and am flagging this as a recommendation for human geometry review rather than a sourced fill -- tier is low and independent is false, honestly reflecting that this is reasoned analysis, not a freshly-verified citation.",
+   "proposed_refs": [],
+   "verifications": [],
+   "tier": "low",
+   "independent": false
+  }
+ ]
+}

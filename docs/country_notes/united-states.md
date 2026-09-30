@@ -74,10 +74,11 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    `northeast-alaska`, `west`; each dir's `BRIEF.md` carries its route-first cases, duplicate
    families and status leads (passed as `extra_brief`).
    **Progress: ALL SEVEN BATCHES DELIVERED, slice 2 research closed 2026-09-15** (staged not
-   applied — seven workbooks to work). A5 `appalachian-indev` `_0656_ET`, A6 `northeast-alaska`
-   `_0629_ET`, A7 `west` `_0648_ET`; A1 `gulf-indev`, A2 `gulf-se-operating`, A3 `tx-indev` and
-   A4 `tx-midcon-operating` all rebuilt together at `20260915_1116_ET` (the `_1712_ET`,
-   `_0952_ET` and `_1022_ET` A1/A2/A3 workbooks are superseded and moved to `archive/`).
+   applied — seven workbooks to work). A5 `appalachian-indev` `_0656_ET`; A1 `gulf-indev`,
+   A2 `gulf-se-operating`, A3 `tx-indev` and A4 `tx-midcon-operating` all rebuilt together at
+   `20260915_1116_ET`; A6 `northeast-alaska` and A7 `west` rebuilt at `20260915_1212_ET` after
+   the fuel hold, with carried refs stamped `name_found`. Superseded and moved to `archive/`:
+   A1 `_1712_ET`, A2 `_0952_ET`, A3 `_1022_ET`, A6 `_0629_ET`, A7 `_0648_ET`.
    Every batch closes the required gates **E, F, I', J, L at 0**, is coverage-clean
    (0 unmergeable records, 0 silent UNRESOLVED) and recalc-clean; the advisory gates
    (A single-host, B/C/D/K, and gate I where a source supports the value without naming the

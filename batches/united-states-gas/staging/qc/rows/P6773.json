@@ -1,0 +1,39 @@
+{
+ "project_id": "P6773",
+ "pipeline_name": "Louisiana Energy Access Project Pipeline",
+ "sheet_row": 3680,
+ "wiki": "https://www.gem.wiki/Louisiana_Energy_Access_Project_Pipeline",
+ "fills": [
+  { "ref_col": "Operator [ref]",
+    "value_cols": ["Operator"],
+    "values": {"Operator": "DT Midstream"},
+    "primary_value_col": "Operator",
+    "primary_value": "DT Midstream",
+    "class_out": "REFS_ADDED",
+    "tab": "operators_owners",
+    "proposed_refs": [
+      "https://dtmidstream.com/asset/leap-gathering-system/",
+      "https://www.ogj.com/pipelines-transportation/pipelines/article/55240028/dt-midstream-expanding-haynesville-marcellus-natural-gas-pipeline-systems"
+    ],
+    "verifications": [
+      {"url": "https://dtmidstream.com/asset/leap-gathering-system/", "ok": true, "contains_value": true, "name_found": true},
+      {"url": "https://www.ogj.com/pipelines-transportation/pipelines/article/55240028/dt-midstream-expanding-haynesville-marcellus-natural-gas-pipeline-systems", "ok": true, "contains_value": true, "name_found": true}
+    ],
+    "tier": "high", "independent": true, "source_language": "en",
+    "researcher_notes": "Same company-level question as P5114 (brief gotcha 4: Operator is one question per company, not per row) — resolved once for the whole LEAP system in the P5114 shard and applied here without re-deriving it. DT Midstream's own asset page (dtmidstream.com/asset/leap-gathering-system/) lists LEAP under its operated assets; Oil & Gas Journal's independent reporting on the LEAP Phase 4 FID names DT Midstream Inc. (NYSE: DTM) as the operator sanctioning LEAP expansions. No merger churn applies — DT Midstream has operated LEAP continuously under that name since its July 2021 spinoff from DTE Energy, before this row's 2024 in-service date. Sheet Owner already reads 'DT Midstream [100.%]', consistent with the operator identity confirmed here."
+  }
+ ],
+ "validity": [
+  { "verdict": "concern",
+    "concern_type": "spec",
+    "fields": ["Diameter"],
+    "recommendation": "Do not fill Diameter from the gem.wiki '36 inches' claim without also revisiting the already-staged LengthKnownKm=0.00 for this row — the two are linked (brief gotcha 3) and current primary evidence contradicts the compression-only premise that would make blank/0 correct. Have a human pull DT Midstream's Phase 2 capital-project detail (10-Q/10-K footnotes for the quarter of in-service, or a Louisiana DNR/LDEQ right-of-way/permit record, since LEAP is intrastate) to determine whether Phase 2 specifically laid new looped pipe. If it did, fill Diameter at 914 mm (36 in, matching the corroborated LEAP mainline diameter) AND give LengthKnownKm this phase's share of new mileage in the same pass, per the compression-only-expansion rule. If Phase 2 turns out to be a pure compression-station addition with zero new pipe, confirm the current Diameter-blank/Length-0 pairing explicitly as correct.",
+    "researcher_notes": "Same underlying evidence as the P5114 concern, restated for Phase 2. DT Midstream's Aug 2023 investor presentation (https://s28.q4cdn.com/581450200/files/doc_presentations/2023/Aug/22/dtm-company-presentation-august-2023-vf.pdf, verified: contains 'LEAP') lists Phase 2 expansion (Q1 2024, +0.4 Bcf/d) alongside the same slide's statement that 'Project includes a combination of looping and compression,' and names 'LEAP pipeline looping' as a key project update positioned against the Phase 2 line in the growth-investment table. DT Midstream's FY2023 10-K (https://www.sec.gov/Archives/edgar/data/1842022/000184202224000003/dtm-20231231.htm, verified: contains '209-mile') confirms LEAP had grown to a '209-mile lateral pipeline' by Dec 31, 2023, immediately after Phase 1 was placed in service and while Phase 2 construction was underway — up from the ~150-155 miles reported before the phase program began, consistent with new pipe (not compression alone) being added. Oil & Gas Journal (https://www.ogj.com/pipelines-transportation/pipelines/article/55240028/dt-midstream-expanding-haynesville-marcellus-natural-gas-pipeline-systems, verified: contains 'looping') independently describes the same phased LEAP program as using 'incremental compression and looping.' This row's Capacity=400.00 MMcf/d matches the Phase 2 capacity figure (400 MMcf/d, 1.3->1.7 Bcf/d) reported in DT Midstream's Dec 2023 mechanical-completion announcement and Gas Compression Magazine's coverage of it, confirming the row-to-phase match is correct. I found no Phase-2-specific mileage or diameter breakdown isolating what portion (if any) of the 54-mile system growth belongs to Phase 2 versus Phase 1, so I am not filling Diameter directly rather than risk a fabricated per-phase figure (standing rule 2). Marking this a concern, not UNRESOLVED, because the evidence actively contradicts a 'compression-only, blank is correct' resolution.",
+    "proposed_refs": [
+      "https://s28.q4cdn.com/581450200/files/doc_presentations/2023/Aug/22/dtm-company-presentation-august-2023-vf.pdf",
+      "https://www.ogj.com/pipelines-transportation/pipelines/article/55240028/dt-midstream-expanding-haynesville-marcellus-natural-gas-pipeline-systems",
+      "https://www.sec.gov/Archives/edgar/data/1842022/000184202224000003/dtm-20231231.htm"
+    ],
+    "verifications": [], "tier": "medium", "independent": true }
+ ]
+}
