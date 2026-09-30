@@ -79,6 +79,11 @@ Lake County — not Illinois), P1997 `Masschusetts`, P0380 `Teaxs` — carried a
    `20260915_1116_ET`; A6 `northeast-alaska` and A7 `west` rebuilt at `20260915_1212_ET` after
    the fuel hold, with carried refs stamped `name_found`. Superseded and moved to `archive/`:
    A1 `_1712_ET`, A2 `_0952_ET`, A3 `_1022_ET`, A6 `_0629_ET`, A7 `_0648_ET`.
+   **Current workbooks (2026-09-30):** all US gas workbooks were re-tiered `20260930_1455_ET`; six of the
+   seven slice-2 batches (all but A7 `s2-west`) and slice-1 `west` + `appalachian` were rebuilt
+   `20260930_1703_ET` after 20 gate-M narrative `contested`/`values` cells became bare candidates (original
+   text kept in each record's `researcher_notes`, tagged `[gate M fix 2026-09-30]`). Older stamps are in
+   `archive/`. Gate M is 0 on every US store.
    Every batch closes the required gates **E, F, I', J, L at 0**, is coverage-clean
    (0 unmergeable records, 0 silent UNRESOLVED) and recalc-clean; the advisory gates
    (A single-host, B/C/D/K, and gate I where a source supports the value without naming the
