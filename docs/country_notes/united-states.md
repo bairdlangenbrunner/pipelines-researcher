@@ -188,7 +188,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 
 - **Staged, NOT applied (gas):** batch 5, `batches/united-states-gas/staging/deepsweep-remainder/`
   (45 rows: cohort remainder 30 + the 15 blank-`LastUpdated` rows; deliverable
-  `pipelines_batch_20260915_1231_ET_united-states-gas_deepsweep-remainder.xlsx`). 380 fills,
+  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-remainder.xlsx` (re-tiered 2026-09-30)). 380 fills,
   136 validity records (83 concerns: spec 44, attribution 34, classification 3, duplicate 2),
   43 status reviews (10 change, 33 confirm); refs leg REFS_ADDED 279, UNRESOLVED 114.
   **Rebuilt 2026-09-15** after a post-delivery audit of the shards found defects the per-shard
@@ -210,7 +210,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 - **Staged, NOT applied (gas):** batch 4, `batches/united-states-gas/staging/deepsweep-west-operating/`
   (46 operating West rows — the Rockies, Northern Plains, Pacific Northwest, Southwest and
   Upper Midwest remainder, sliced by the state audit's `derived` state; deliverable
-  `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-west.xlsx`). 861 records over
+  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-west.xlsx` (re-tiered 2026-09-30)). 861 records over
   the 663-unit worklist -> REFS_ADDED 276, UNRESOLVED 123 on the refs leg, 332 fills
   (293 folded to ref-only — the highest fold rate of the four slices), 130 validity findings
   (75 `concern` + 2 `needs correction` — spec 43, attribution 28, classification 4, duplicate 2).
@@ -237,7 +237,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
 - **Staged, NOT applied (gas):** batch 3, `batches/united-states-gas/staging/deepsweep-appalachian-operating/`
   (46 operating Appalachian Basin + Mid-Atlantic rows — OH/PA/WV/NY/MI/NJ/MD/DE/VA/IN, sliced by
   the state audit's `derived` state; deliverable
-  `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-appalachian.xlsx`). 861 records over
+  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-appalachian.xlsx` (re-tiered 2026-09-30)). 861 records over
   the 663-unit worklist -> REFS_ADDED 384, REVERIFIED 6, DEAD_LINK 3, UNRESOLVED 318, 296 fills
   (248 folded to ref-only), 150 validity findings (83 `concern` — spec 45, attribution 33,
   classification 3, duplicate 2). 119 orange contested cells across 43 of the 46 rows on
@@ -261,7 +261,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
   value found, so they carry a row-level flag for human review, not a candidate.
 - **Staged, NOT applied (gas):** batch 2, `batches/united-states-gas/staging/deepsweep-gulf-operating/`
   (50 operating Gulf Coast rows — LA/MS/AL/FL + offshore GoM; deliverable
-  `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-gulf.xlsx`). 926 records over
+  `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-gulf.xlsx` (re-tiered 2026-09-30)). 926 records over
   the 715-unit worklist -> REFS_ADDED 244, REVERIFIED 9, DEAD_LINK 10, UNRESOLVED 184,
   326 fills, 153 validity findings (60 `concern` — spec 34, attribution 24, classification 1,
   duplicate 1). 90 orange contested cells across 39 of the 50 rows, concentrated in
@@ -273,7 +273,7 @@ treating a FERC gap as a signal — P0268's operator name was settled by an RRC 
   segment-vs-system carefully: a system figure restated on a phase row is a `spec` concern,
   not a ref.
 - **Staged, NOT applied (gas):** batch 1, `batches/united-states-gas/staging/deepsweep-tx-operating/`
-  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260909_1906_ET_united-states-gas_deepsweep-tx.xlsx` — the 09-04 builds are superseded: 1144 predates the contested-cell fix and 1354 predates the recovery pass).
+  (45 operating TX-sliced rows; deliverable `pipelines_batch_20260930_1455_ET_united-states-gas_deepsweep-tx.xlsx` (re-tiered 2026-09-30) — the 09-04 builds are superseded: 1144 predates the contested-cell fix and 1354 predates the recovery pass).
   All 381 ref units carry an outcome -> REFS_ADDED 325, REVERIFIED 14, UNRESOLVED 42,
   595 proposed refs, 23 fills, 163 validity findings (74 `concern` verdicts; 90 records
   carry a `concern_type` — spec 65, attribution 23, classification 1, duplicate 1 — so
