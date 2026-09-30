@@ -1,0 +1,316 @@
+{
+ "project_id": "P4778",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "segment_name": "Phase I, Gao'an-Xinyu",
+ "sheet_row": 2667,
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "resolutions": [
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "1.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No source gives a per-trunk design annual throughput for Gao'an-Xinyu. System totals found across document vintages conflict and are all aggregate, not per-trunk: sohu-2008 (pre-construction estimate) 57亿立方米/年 (5.7 bcm/y) for the whole Phase I network; CCXI 2022 gives 48.5亿立方米/年 (4.85 bcm/y) for the whole province network (Phase I+II combined) as of 2022-03. None breaks capacity out per trunk. Staying UNRESOLVED rather than forcing a share of a system total onto this cell."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1"
+   ],
+   "values": {
+    "StartYear1": "2010",
+    "StartMonth1": "12"
+   },
+   "proposed_refs": [
+    "http://www.petrobest.com/success_info.php?cid=74"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.petrobest.com/success_info.php?cid=74",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "江西省天然气管网",
+     "name_level": "system",
+     "note": "Re-read in full 2026-09-04. States '2010年省天然气管网一期工程全线贯通，实现向南昌、九江、景德镇、新余、鹰潭、抚州6个设区市中心城市...供气' -- names Xinyu (新余) as ONE OF SIX cities newly served at full Phase I completion, but never names 高安 (Gao'an) or the trunk '高安-新余' itself. The SAME passage shows Phase I completed in stages (Jiujiang-Nanchang / Jiujiang-Jingdezhen already built by 2009, ahead of the 2010 network-wide milestone) -- so a segment's actual completion date can genuinely differ from the 2010 system milestone, unlike Owner/FuelSource which are uniform across the network. No month ('12') appears anywhere in this document for Phase I completion."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Re-verified per the relevance-reread task: petrobest names only the SYSTEM (via one served city, not the trunk), and -- unlike the Owner/FuelSource carve-out -- a completion date is exactly the kind of fact this document itself shows varies trunk-to-trunk (staged completion 2009 vs 2010), so the 'one integrated network' justification does NOT apply here. Searched for a segment-naming source: sina 2011 (gb18030-decoded, names 新余/丰城 but not 高安 -- fails the same relevance test as petrobest), sohu x2, toutiao (empty JS shell), bjx x2 (WAF blob), tt.jxnews, jxgajc wayback x2, ichinaenergy, wuning.gov.cn, yingdodo, china5e -- none names Gao'an-Xinyu with a date. Downgrading tier from medium to low (carried ref is real and live, but only bounds the trunk as operating no later than 2010, does not confirm StartMonth1=12 at all) rather than deleting -- petrobest is not dead. NOTE: the carried __REDUNDANCY__ concern with P5861 (see below) means this Start value may end up superseded by whichever PID the adjudication keeps; not re-litigated here."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "QCCOwner(业主单位)"
+   ],
+   "tab": "operators_owners",
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家管网集团东部原油储运有限公司 [46%]"
+   },
+   "proposed_refs": [
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same footnote-5 passage as the Owner record above: names the exact 54/46 split AND the specific 46%-holder subsidiary. System-level (江西省天然气管网), not this trunk by name."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Same CCXI ownership-table + footnote passage as the Owner record above -- independently confirms the 54% stake and names 天然气管道公司 as operator of '承接川气东送气源的一期管网' (this trunk's own Phase I network). System-level."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "relevance_reread resolution: payload flagged the carried SSE ref as system-only (name_level=system) with a task to either find a trunk-naming source or justify system-level sourcing. Same 'one integrated network operator' justification as the Owner fill above applies identically here (Owner1 is the operating company for this batch's rows). Added CCXI 2022 as a genuinely independent second source (different subject-company framing, date, author than SSE), satisfying second_source_owed for this ref_col too. Also refines the 46%-holder identity to the specific named subsidiary (国家管网集团东部原油储运有限公司) rather than the generic PipeChina parent carried from wiki_attributions -- same correction as the Owner record. qcc.com candidate (m.qcc.com/firm/632d7349...) remains HTTP 567 WAF access failure, re-confirmed, not reused.\n\n[INDEPENDENCE ADJUDICATED at merge 2026-09-10, orchestrator: independent true -> false. The 2 refs that state this value are not independent of each other: all of them trace to the 江西省投资集团/天然气集团 group's own disclosure: CCXI-20222923M-01 (2022 rating report); CCXI-20250789D-01 (2025 rating report). The rating reports are all 中诚信国际 products (serial numbers on their title pages), and CCXI's own declaration states the rating rests on issuer-supplied information whose accuracy is 由发行人负责 -- so the reports and the prospectus are one origin for a fact about the issuer's own assets, not a third party corroborating it. Rule 4 excludes sources tracing to one original. (The CCXI-vs-CCXI half of this is unambiguous; the rating-report-vs-prospectus half is a judgement call recorded here so it can be revisited on its own.) Refs kept, tier kept, value kept.]"
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "高安-新余",
+     "name_level": "segment",
+     "note": "Carried from already_sourced -- confirmed re-read 2026-09-04."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "second_source_owed: searched all 25 opened harvest_pool_live URLs, every dominant_document (SSE, petrobest, CCXI, huaon, quannan 2024, both jxgajc wayback captures) and targeted WebSearch/Chinese queries ('高安-新余 天然气管道', '高安至新余 输气干线', '高安 新余 天然气') for a second document naming this trunk by BOTH endpoints. The only two documents that mention either endpoint at all -- petrobest and sina (2011) -- each name only Xinyu (新余) as one served city among several, never Gao'an (高安) or the trunk pairing itself, so neither passes the relevance bar for a second segment-level source. Remains single-sourced on qianzhan (medium tier held, not downgraded -- this is a distinct 'searched, found nothing new' finding per rule (d), not a change to the existing value)."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "高安-新余",
+     "name_level": "segment",
+     "note": "Carried from already_sourced -- confirmed re-read 2026-09-04."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "second_source_owed: searched all 25 opened harvest_pool_live URLs, every dominant_document (SSE, petrobest, CCXI, huaon, quannan 2024, both jxgajc wayback captures) and targeted WebSearch/Chinese queries ('高安-新余 天然气管道', '高安至新余 输气干线', '高安 新余 天然气') for a second document naming this trunk by BOTH endpoints. The only two documents that mention either endpoint at all -- petrobest and sina (2011) -- each name only Xinyu (新余) as one served city among several, never Gao'an (高安) or the trunk pairing itself, so neither passes the relevance bar for a second segment-level source. Remains single-sourced on qianzhan (medium tier held, not downgraded -- this is a distinct 'searched, found nothing new' finding per rule (d), not a change to the existing value)."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "高安-新余",
+     "name_level": "segment",
+     "note": "Carried from already_sourced -- confirmed re-read 2026-09-04."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "second_source_owed: searched all 25 opened harvest_pool_live URLs, every dominant_document (SSE, petrobest, CCXI, huaon, quannan 2024, both jxgajc wayback captures) and targeted WebSearch/Chinese queries ('高安-新余 天然气管道', '高安至新余 输气干线', '高安 新余 天然气') for a second document naming this trunk by BOTH endpoints. The only two documents that mention either endpoint at all -- petrobest and sina (2011) -- each name only Xinyu (新余) as one served city among several, never Gao'an (高安) or the trunk pairing itself, so neither passes the relevance bar for a second segment-level source. Remains single-sourced on qianzhan (medium tier held, not downgraded -- this is a distinct 'searched, found nothing new' finding per rule (d), not a change to the existing value)."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Gao'an",
+    "StartPrefecture/District": "Yichun",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Xinyu",
+    "EndPrefecture/District": "Xinyu",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "高安-新余",
+     "name_level": "segment",
+     "note": "Carried from already_sourced -- confirmed re-read 2026-09-04."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "second_source_owed: searched all 25 opened harvest_pool_live URLs, every dominant_document (SSE, petrobest, CCXI, huaon, quannan 2024, both jxgajc wayback captures) and targeted WebSearch/Chinese queries ('高安-新余 天然气管道', '高安至新余 输气干线', '高安 新余 天然气') for a second document naming this trunk by BOTH endpoints. The only two documents that mention either endpoint at all -- petrobest and sina (2011) -- each name only Xinyu (新余) as one served city among several, never Gao'an (高安) or the trunk pairing itself, so neither passes the relevance bar for a second segment-level source. Remains single-sourced on qianzhan (medium tier held, not downgraded -- this is a distinct 'searched, found nothing new' finding per rule (d), not a change to the existing value).  [P5861-RETIREMENT-RULING-2026-09-10] FILLED an owed blank: EndPrefecture/District = 'Xinyu'. 新余市 IS a prefecture-level city (districts 渝水区 / 分宜县 per this record's own DRC-plan ref), so once that document sources the endpoint as 新余 the prefecture follows with no inference -- the same unambiguous-and-blank reasoning P4779 used to stage EndPrefecture/District = 'Jingdezhen'. Raised by the retired P5861, whose Location record recommended it and left it unstaged. StartPrefecture/District needs nothing: 'Yichun' is already here and already sourced."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "__VALIDITY__",
+   "values": {},
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+    "http://www.petrobest.com/success_info.php?cid=74",
+    "http://news.sohu.com/20081020/n260128393.shtml"
+   ],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "researcher_notes": "VALIDITY (aggregate-vs-segment, informational -- not a duplication/existence concern for THIS row): documents opened for P4778 give at least THREE mutually inconsistent Phase I NETWORK-WIDE totals, none of which can be apportioned to this trunk: qianzhan (2023, DRC plan) states 870 km built across 6 trunks + 1 branch; petrobest (contractor page, undated) states 876 km for the same network; sohu-2008 (pre-construction planning article) states a design-stage 680 km / 5.7 bcm/y capacity for the same network, superseded by the as-built figures once construction finished. This is the same kind of conflicting-aggregate situation already carried on P4777 (see shards/_carried_v2.json) -- flagging rather than re-adjudicating; no figure from any of the three was staged onto Length/Capacity for this cell (see those UNRESOLVED records above)."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "__REDUNDANCY__",
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "CONFIRMED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "[P5861-RETIREMENT-RULING-2026-09-10] ORCHESTRATOR RULING: RETIRE P5861 INTO P4778. The two rows are one physical pipeline -- the 江西省天然气管网一期工程 高安-新余 干线. This supplies the reciprocal adjudication this record was owed: the text below is the v2 record carried forward and marked 'NOT re-adjudicated', but shards/P5861.json reached verdict DUPLICATE this run on evidence that is new relative to this shard, so the question is no longer open. Three load-bearing items: (1) PipeChina's live 2026 公平开放 gas facility workbook enumerates all 34 facilities of 国家管网集团西气东输分公司 and contains no Xinyu branch and no 高安-新余 ('西气东输' is mechanically extractable from the file, '新余' is not) -- a WEP2 branch absent from PipeChina's own disclosure is not a WEP2 branch; (2) the 2014 provincial DRC plan names 高安-新余 as one of six 已建成 干线 of the 承接川气东送工程气源的江西省天然气管网一期工程, in the same sentence that names the segment; (3) CCXI 2022 separates the systems by operator -- 天然气管道公司 runs the 川气东送-fed Phase I network, 管道分公司 承接西气东输二线气源. P5861's WEP2 framing, its FuelSource and its PipeChina-100% ownership are one mis-attribution. THE SURVIVOR IS P4778, which already carries the sourced FuelSource (川气东送) and the sourced 54/46 ownership, so nothing from P5861's contradicted cells is to be pasted. What DOES transfer: Pressure 6.3 MPa (staged on this row's Pressure record) and EndPrefecture/District 'Xinyu' (staged on this row's Location record). What is flagged and NOT staged: LengthKnown 69.21 km, the retired row's Chinese name, and StartMonth1 -- one sentinel each on this row. This is not an obscurity call: the pipe exists and operates, the duplicate ROW is the artefact. --- CARRIED v2 TEXT FOLLOWS --- [carried from v2 deepsweep-20260902@2026-09-02, verdict unchanged -- NOT re-adjudicated per this run's instruction] REDUNDANCY: P4778 ('Jiangxi Natural Gas Pipeline Network Phase I, Gao'an-Xinyu', cap=1.00 bcm/y, sheet_row 2667) and P5861 ('West-East Gas Pipeline 2, XinYu Branch(Gao'an-Xinyu)', roster len=69.21km cap=1.00 bcm/y, sheet_row 3325) both carry a Gao'an-Xinyu trunk with an identical 1.00 bcm/y capacity -- open since v2, verdict still null/unresolved. NO NEW EVIDENCE found this run that bears on the redundancy question: nothing opened this pass (qianzhan Table 5, SSE, CCXI, petrobest re-read, all 25 harvest_pool_live URLs) mentions P5861, West-East Gas Pipeline 2, or distinguishes the two rows' identities -- the qianzhan DRC plan (province-DRC-authored) and P5861's presumed West-East-2 provenance (national-trunk-authored) appear to be entirely separate document families that never cross-reference each other. Carrying the open item forward unchanged for the orchestrator to adjudicate.",
+   "recommendation": "RETIRE P5861 (row 3325, 'West-East Gas Pipeline 2 / XinYu Branch(Gao'an-Xinyu)'). Adjudicated 2026-09-10: it is the same pipe as P4778, not a WEP2 branch. Decisive evidence is a negative in an exhaustive inventory -- PipeChina's live 2026 公平开放 workbook enumerates every 西气东输分公司 facility and its five Jiangxi entries contain no 新余支线, no 高安-新余 and no 69.21 km (checked mechanically: 西气东输 extracts from the file, 新余 does not; 高安 appears only as the start of the Nanchang-Shanghai branch). WEP2's actual Xinyu/Gao'an tie-ins are 3.46 km (2014-05) and 10.19 km, three orders of magnitude short of a 69.21 km branch. DO NOT paste P5861's contradicted cells onto P4778: the surviving row keeps its sourced 川气东送 FuelSource, and the 2024-12-31 WEP2 tie-in approval at 高安市大城镇 is a post-2025 supplementary source, not the 2010 feed. The three companion flags on this row (legacy 69.21 km length, the retired row's name, the StartMonth1=12 cross-phase paste) are filed separately and deliberately NOT staged. Orchestrator ruling."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "__VALIDITY__",
+   "value_col": null,
+   "value_cols": [],
+   "values": {},
+   "proposed_value": null,
+   "class_out": "CONFIRMED",
+   "kind": null,
+   "tier": "medium",
+   "independent": false,
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "[P5861-RETIREMENT-RULING-2026-09-10] LEGACY LENGTH 69.21 km -- FLAGGED, DELIBERATELY NOT STAGED AS A VALUE. The retired P5861 carries LengthKnown 69.21 km; this row's cell is blank and its own Length record is UNRESOLVED (no document gives a per-trunk length; the three Phase I figures found -- 870, 876 and a design-stage 680 km -- are all network aggregates). READ THE ASYMMETRY CAREFULLY, because P5861's own Length record argues the figure is impossible and that argument does NOT survive the retirement intact: its three proofs (PipeChina's 2026 inventory listing no Xinyu branch; the 2018-06 provincial table putting WEP2's actual Xinyu tie-in at 3.46 km and the whole Phase II network at 158.62 km province-wide; the DRC plan's 3.9 km WEP2 Xinyu spur) all refute a 69.21 km *WEP2* branch. They say nothing against a 69.21 km *Phase I* 高安-新余 trunk, which is the pipe the surviving row describes -- and Gao'an to Xinyu is roughly 55 km as the crow flies, so ~69 km of pipe is unremarkable. The 2-decimal precision is the signature of a figure someone once read off a filing, not of a round guess. SO: the number is plausible and unsourced, and its label was wrong rather than its magnitude. RECOMMENDATION -- a human call, two defensible answers. (a) Carry it into P4778's blank LengthKnown as unsourced legacy data, preserving a datum the retirement would otherwise destroy, and accept that it lands as a MISSING_REF owed unit for the next sweep to chase. (b) Let it die with the row, on the grounds that a retirement should not migrate unsourced numbers. NOT staged as a value either way, because staging it would paint an uncited number onto the paste surface -- the mirror of the no-orphan-[ref] rule. If it is carried, it must NEVER be cited to a WEP2 source, and any future document giving a per-trunk length for 高安-新余 overrides it outright."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "__VALIDITY__",
+   "value_col": null,
+   "value_cols": [],
+   "values": {},
+   "proposed_value": null,
+   "class_out": "CONFIRMED",
+   "kind": null,
+   "tier": "medium",
+   "independent": false,
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "[P5861-RETIREMENT-RULING-2026-09-10] THE RETIRED ROW'S NAME -- FLAGGED, AND THE PENDING-LIST PROPOSAL TO MOVE IT TO OtherEnglishNames IS DECLINED. P5861 carries OtherLanguageAlternativePipelineNames = '西气东输二线新余支线（高安-新余）' and SegmentName = 'XinYu Branch(Gao'an-Xinyu)'. Preserving a retired row's names as aliases on the survivor is the normal courtesy, but not here: that string is not an alias for this pipe, it IS the mis-attribution being retired. Promoting it to an alias column would republish 'this is a West-East Gas Pipeline 2 branch' as an alternative NAME for a provincial Phase I trunk, and would re-seed the next name-match/dedup/discovery run with the very string that produced the duplicate. Name columns are also a column-semantics call for the researcher rather than something a sweep stages (same convention as the OtherLanguageSegmentName paste defect on P4785-P4790). RECOMMENDED INSTEAD: keep this row's own 一期工程, 高安-新余输气干线 as the Chinese name, and record the retirement in ResearcherNotes as provenance -- 'row P5861 (West-East Gas Pipeline 2 / XinYu Branch, 西气东输二线新余支线（高安-新余）, LengthKnown 69.21 km) retired into this row 2026-09; its WEP2 attribution was incorrect' -- where a human reads it and no matcher indexes it as a name."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "__VALIDITY__",
+   "value_col": null,
+   "value_cols": [],
+   "values": {},
+   "proposed_value": null,
+   "class_out": "CONFIRMED",
+   "kind": null,
+   "tier": "medium",
+   "independent": false,
+   "proposed_refs": [],
+   "verifications": [],
+   "researcher_notes": "[P5861-RETIREMENT-RULING-2026-09-10] StartMonth1 = 12 IS PROBABLY A CROSS-PHASE PASTE -- flagged on this row, not just on the retired one. Both rows carry StartYear1 2010 / StartMonth1 12. P5861 found the provenance: '2010 年 12 月' appears in the 2023 SSE bond prospectus as the 开工 (construction-start) date of the Jiangxi PHASE II network -- the WEP2/WEP3-fed programme -- and nowhere as a commissioning date for anything in this corridor. The same document dates Phase I's FIRST commissioning to 2010年6月 (九江-南昌、九江-沙河段) and its construction start to 2008年10月. So on a Phase I trunk, a 2010-12 start month is most likely Phase II's 开工 date mis-carried -- and it would have arrived here via exactly the duplicate row this ruling retires, which was labelled 'West-East Gas Pipeline 2'. This row's own Start record found no segment-naming source and downgraded to tier low for that reason, but it did not have this provenance. THE YEAR SURVIVES INDEPENDENTLY: petrobest bounds Phase I full through-connection to 2010 with Xinyu named among the six cities served, so StartYear1 = 2010 stands. RECOMMENDATION: clear StartMonth1 unless a document is found dating this trunk's commissioning to a month. Not staged -- deleting a value is a human call, and the sweep's job here is to say why it is suspect."
+  },
+  {
+   "project_id": "P4778",
+   "sheet_row": 2667,
+   "ref_col": "__REDUNDANCY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "n/a",
+   "independent": false,
+   "researcher_notes": "[carried from v2 deepsweep-20260902@2026-09-02] REDUNDANCY: P4778 ('Jiangxi Natural Gas Pipeline Network Phase I, Gao'an-Xinyu', cap=1.00 bcm/y, sheet_row 2667) and P5861 ('West-East Gas Pipeline 2, XinYu Branch(Gao'an-Xinyu)', roster len=69.21km cap=1.00 bcm/y, sheet_row 3325, found in batch_11.json's payload -- flagged as in-scope this pass per this row's own prior_findings) describe the identical route (Gao'an->Xinyu) with the identical capacity figure (1.00 bcm/y), but are attributed to two different GEM pipeline-network parents: 'Jiangxi Natural Gas Pipeline Network Phase I' vs. 'West-East Gas Pipeline 2'. This matters because petrobest.com (independent, this shard's own source) explicitly distinguishes the two: Jiangxi's Phase I network received gas from 川气东送 (Sichuan-East Gas Transmission), while a SEPARATE 'Phase II' network is what receives West-East Pipeline 2/3 gas ('二期工程主要是承接西气东输二线、三线入赣天然气'). If that distinction holds, P4778 and P5861 could be two physically different lines on the same Gao'an-Xinyu corridor built for different gas sources/vintages -- OR GEM may have the same physical pipe indexed twice under conflicting system attribution, given the exact capacity match. I could not resolve this from my own payload alone (P5861's own record is in shard 11's scope, not mine) and did not find independent literature naming a second, separate Gao'an-Xinyu line. Recommend human cross-check against P5861's full record and route geometry (if any) before either row's ref cells are pasted, per the 'findings do not propagate across a fan-out' rule -- not recommending deletion of either row absent that check.",
+   "carried_from": "deepsweep-20260902@2026-09-02"
+  }
+ ]
+}

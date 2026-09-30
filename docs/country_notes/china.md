@@ -102,7 +102,7 @@ python scripts/build_ref_worklist.py --tracker gas --country China \
 | province | scope (grid rows) | status | batch |
 |---|---|---|---|
 | Guangxi | 43 (+9 trunk excluded) | pilot DELIVERED 2026-07-29, staged not applied | `pipelines_batch_20260904_1355_ET_china-guangxi-gas_deepsweep.xlsx` (rebuilt 09-04 so open validity concerns render orange on `Gas_Backend`; 07-29/07-30 builds archived); staging `batches/china-guangxi-gas/staging/deepsweep-pilot/` |
-| Jiangxi | **44** — all 41 Jiangxi-terminus rows + the 3 transiting national mainlines (P4657/P4934/P4947) | **v2 DELIVERED 2026-09-02, staged not applied** (supersedes v1); **v3 PLANNED** off MZ's 2026-09-03 feedback — `notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md` | `pipelines_batch_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx` (11 tabs); staging `batches/china-jiangxi-gas/staging/deepsweep-20260902/`; v1 archived at `archive/deepsweep-v1-20260826/` |
+| Jiangxi | **44** — all 41 Jiangxi-terminus rows + the 3 transiting national mainlines (P4657/P4934/P4947) | **v3 DELIVERED 2026-09-10, staged not applied** — SUPERSEDES v2, which supersedes v1. Built off MZ's 2026-09-03 feedback (`notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md`); delivery note `notes/delivery-2026-09-10-china-jiangxi-gas-deepsweep-v3.md` | `pipelines_batch_20260910_1154_ET_china-jiangxi-gas_deepsweep.xlsx` (10 tabs); staging `batches/china-jiangxi-gas/staging/deepsweep-20260903/`. `deliverables/` holds exactly one file: v2 (workbook + `archive/deepsweep-v2-20260902/`), v1 (`archive/deepsweep-v1-20260826/`) and the two intermediate 09-10 rebuilds are all archived |
 
 ## Route creation §8 — ALL 103 no-route gas rows (2026-07-30, staged NOT applied)
 
@@ -196,54 +196,84 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   UNRESOLVED; 75 refs re-verified live. Status review: 23 confirm / 10 stale /
   3 change / 7 unclear. Validity: 43 concerns incl. 6 existence, 2 duplicate,
   10 attribution. 89 fills. Baird reviews the workbook; nothing applied.
-- **Jiangxi v3 — PLANNED 2026-09-03, not run.** MZ reviewed v2 ("looks really good") with
-  four points: blanks on operating rows unfilled (241 owed `MISSING_VALUE` units on the 44 rows,
-  171 on `operating`; v2 staged 4 fills); facts in found sources not carried to the other
-  columns (P4777's 825 km / 3.1 bn RMB / Oct 2008 are in the Sina article staged on P4776);
-  refs that don't name the pipeline (keyword hits on "A" or "B" for an "A–B" row); and one
-  ref per data point (168 of 270 `REFS_ADDED` are single-source; 7 documents carry 166
-  units). Mechanisms now in the engine (`--owe-fills`, `name_found` + `relevance_qc`,
-  document-exhaustion + two-source rules in the SOP/contract, `sweep_gates.py` I/J/K); the
-  plan, the re-research list and the carry-forward rule:
-  `notes/plan-2026-09-03-china-jiangxi-gas-deepsweep-v3.md`. v3 carries v2 forward (re-key,
-  re-verify, don't re-discover) and SUPERSEDES it when delivered — one pending state.
-- **Jiangxi grid v2 — DELIVERED 2026-09-02, staged not applied; SUPERSEDES v1.** Baird
-  reset the scope ("it wasn't very comprehensive… include any trunk lines"): **44 rows** =
-  all 41 Jiangxi-terminus rows **plus** the three transiting national mainlines P4657,
-  P4934, P4947 that v1 excluded. Legs `refs` / `fills` / `validity` / **`status-review`**
-  (new); no OSM recon, no routes leg, no discovery. The 18 rows v1 swept were **carried
-  forward, not re-discovered** — every prior `REFS_ADDED` re-keyed onto the fresh worklist
-  (the gas tab re-sorted; all 18 moved -2 rows), its URLs re-verified, only the
-  `UNRESOLVED` re-researched. ONE file to work:
-  `…_20260902_1232_ET_china-jiangxi-gas_deepsweep.xlsx` (11 tabs); v1's workbook and
-  staging dir archived to `batches/china-jiangxi-gas/archive/deepsweep-v1-20260826/`, so
-  there is exactly one pending state. Store 453 = 411 ref units + 26 validity + 12 status
-  reviews + 4 fills. Ref-lane outcome **270 `REFS_ADDED` / 127 `UNRESOLVED` / 12 `REVERIFIED`
-  / 2 `DEAD_LINK`**, tiers 82 high / 175 medium / 14 low, **49 distinct verified hosts**;
-  status verdicts 6 stale / 4 unclear / 1 change / 1 confirm (16 records staged, 12 kept —
-  a row has ONE status, so `split_shards` keeps the last shard's verdict). Gates B/D/E/F clean, A=1 (P5888 on
-  `sohu.com` alone); **gate C's 33 flags are concentration, not a defect** — each is a `high`
-  whose second origin is one of six documents that carry 145 units between them (the qianzhan
-  DRC-plan rehost 50, `mee.gov.cn` 36, `quannan.gov.cn` 24, `static.sse.com.cn` 22, the
-  en.wikipedia WEP article 18, `trqi.sinopec.com` / `huaon.com` 16 each), so read them when
-  deciding whether "two sources" is really two. Delivery note:
-  `notes/delivery-2026-09-02-china-jiangxi-gas-deepsweep-v2.md`.
+- **Jiangxi v3 — DELIVERED 2026-09-10, staged not applied; SUPERSEDES v2 (which superseded
+  v1).** ONE file to work:
+  `…_20260910_1154_ET_china-jiangxi-gas_deepsweep.xlsx` (10 tabs); staging
+  `batches/china-jiangxi-gas/staging/deepsweep-20260903/`; delivery note
+  `notes/delivery-2026-09-10-china-jiangxi-gas-deepsweep-v3.md`. **ONE pending state** —
+  v2's workbook and staging dir are archived (`archive/deepsweep-v2-20260902/`), as v1's
+  were when v2 landed. Same 44 rows (all 41
+  Jiangxi-terminus + the three transiting mainlines P4657/P4934/P4947), legs
+  `refs` / `fills` / `validity` / `status-review`; no recon, no routes, no discovery.
+  v3 exists to answer MZ's four v2 points and each is now measured by a gate: **248 owed
+  blanks all reported on** (94 filled with a corroborated value, 154 honest `UNRESOLVED`,
+  gate J = 0) against v2's 4 fills; document-exhaustion enforced per shard by
+  `check_shard_coverage.py`; **relevance down to 5 units whose refs don't name the row's
+  pipeline** plus 1 unchecked (P4788 `Pressure [ref]`), via `name_found` +
+  `merge_qc.relevance_qc`; and **gate K counts the 72 single-ref `REFS_ADDED`** out of 194.
+  Store **772 records / 44 rows** = 411 ref units + 248 fills + 99 validity + 14 status
+  reviews. Ref lane **194 `REFS_ADDED` / 106 `REVERIFIED` / 109 `UNRESOLVED` / 2
+  `DEAD_LINK`** — the `REFS_ADDED` fall from v2's 270 is the carry-forward working (a
+  `REVERIFIED` is a v2 `REFS_ADDED` whose URLs still resolve and still state the value), so
+  **300 of 411 ref units are sourced** vs v2's 282. Tiers 125 high / 154 medium / 21 low,
+  **79 distinct verified hosts** (was 49). Status: 2 change (P5865 → `operating` +
+  `StartYear1` 2021, P5886 `proposed` → `construction`), 2 confirm, 6 stale, 4 unclear.
+  Gates B/D/E/F/J/L clean; A=2, C=60, G=41, H=39, I=5, I'=1, K=72. **Gate C is
+  concentration, not a defect** — eleven documents carry 404 units, listed in the delivery
+  note; the 19 wikipedia-cited units (P4657, P4793–P4797, P4934, P4947) are the ones to
+  challenge first. `Gas_Validity` carries a **specific `Recommendation` on 7 of 99 rows**
+  (P4778, P4931, P4944 ×2, P5861, P5862, P5866) — the other 92 keep the boilerplate on
+  purpose, because an orchestrator recommendation is not a licence to convert an open
+  question into an instruction. Four adjudicated rulings: **retire P5861 into P4778**
+  (the batch's one genuine duplicate, settled by a negative in PipeChina's exhaustive 2026
+  公平开放 inventory; the 2024-12-31 WEP2 tie-in may not rescue its `FuelSource`);
+  **P5866's 金沙湾 → 金砂湾**; **P5862's batch-wide phase sentinel** (ruling A applied, 20
+  rows normalized; B–E still owed); and **P4944's start location, 2 cells**. Deliberately
+  NOT staged, each carrying a "CANDIDATE VALUE CHANGE / decision owed at merge" concern:
+  P4928 `Capacity` 30 → 15 bcm/y and `LengthKnown` 817 → 832.40 km, P5865 0.13 vs 0.005
+  bcm/y, P5866 0.50 vs 0.492 and 19.12 vs 19.13, P5889 31.32 vs ~34 km — several published
+  figures are all true of something, so the convention is the decision, not the number.
   **The province's defining fact is still a 3.7% citation base** (v1 measured
   `MISSING_REF` 156 / `HAS_REF` 6) — calibrate this like India, not Pakistan: a blank here
-  means nobody looked, so an `UNRESOLVED` is an unfinished result, not a correct one. v1's
-  98 `REFS_ADDED` over 18 rows became 270 over 44.
-- **The Jiangxi cluster to adjudicate is P4778 ↔ P5861, and it arrived reciprocally.** Two
-  agents at opposite ends of the fan-out each filed a `__REDUNDANCY__` naming the other's
-  row — "Phase I, Gao'an–Xinyu" vs "West-East Gas Pipeline 2, XinYu Branch (Gao'an–Xinyu)",
-  identical corridor and StartYear. Reciprocity is **corroboration, not two findings**:
-  deliver it as ONE cluster or the same question gets adjudicated twice. `validate_shards.py`
-  now detects reciprocal filings, including when the counterpart is named only in prose.
+  means nobody looked, so an `UNRESOLVED` is an unfinished result, not a correct one.
+- **P4778 ↔ P5861 is ADJUDICATED (v3, 2026-09-10): retire P5861 into P4778.** It arrived
+  reciprocally — two agents at opposite ends of the fan-out each filed a `__REDUNDANCY__`
+  naming the other's row, "Phase I, Gao'an–Xinyu" vs "West-East Gas Pipeline 2, XinYu
+  Branch (Gao'an–Xinyu)", identical corridor and StartYear. Reciprocity is **corroboration,
+  not two findings**: deliver it as ONE cluster or the same question gets adjudicated twice
+  (`validate_shards.py` now detects reciprocal filings, including when the counterpart is
+  named only in prose). What settled it is a **negative in PipeChina's exhaustive 2026
+  公平开放 inventory** — an enumeration that omits the leg, which is evidence, not silence.
+  The 2024-12-31 WEP2 tie-in is explicitly barred from rescuing P5861's `FuelSource`. The
+  ruling is in `Gas_Validity`'s `Recommendation` on both rows; it is still a
+  recommendation, not applied.
 - **Phase I vs Phase II is an operator question across the whole grid, not a row defect.**
   The CCXI credit-rating PDF splits the operator by phase; cross-tabbing all 44 rows gives
   23 phase-labelled (15 Phase I / 8 Phase II), 12 blank `FuelSource`, 5 filled, **3 in
   tension**. It surfaced on ONE row buried inside a `FuelSource [ref]` record's notes on an
   `UNRESOLVED` unit — the Egypt P5121 burial pattern again — and was promoted to a
-  cohort-level sentinel on P5862. Not auto-corrected.
+  cohort-level sentinel on P5862. Not auto-corrected. **Ruling A applied in v3** (20 rows
+  normalized to the mapping below); rulings B–E still owed.
+- **The authoritative Jiangxi phase mapping** — CCXI 2022 fn1 + SSE disclosure 242696 fn5,
+  and the only version to write into a record:
+  - **PHASE I** = 一期管网, fed by 川气东送, project company **江西省天然气管道有限公司**,
+    owned **54% 江西省天然气集团有限公司 / 46% 国家管网集团东部原油储运有限公司**. That 46%
+    holder is the **SUBSIDIARY** — never the parent 国家石油天然气管网集团有限公司.
+  - **PHASE II** = 二期管网, fed by **WEP2/WEP3**, operated by
+    **江西省天然气集团有限公司管道分公司** — a **100%-group BRANCH, not a JV**, formed early
+    2016 to build ~1,500 km across 40 counties for 62.49亿元. So a Phase II row resolves to
+    **100% Group**, and `normalize_owner_entities.py`'s 54/46 gate must let it pass untouched.
+  - **The phase test** is the county list, not the label: CCXI fn2's 42 Phase I counties
+    (南昌、九江、景德镇、新余、宜春、抚州、鹰潭、上饶) vs fn3's 40 Phase II counties
+    (井冈山市、莲花县、永新县、大余县). **Phase comes from the sources' wording, never from
+    the sheet label and never from the `一期/二期` string in `segment_name`.**
+  - **Phase II's entity name is unstable in primary sources** — the same 管道分公司 appears
+    under four different parents across four tenders (two of them in ONE 2020-04 document),
+    so a name-match on the tender string alone mis-keys rows. Match on the phase, then the
+    entity.
+  - **P5863's phase is genuinely open:** geography reads Phase I, chronology reads Phase II
+    (it is a 2023 project, and 管道分公司 was formed in 2016 expressly to build the Phase II
+    remainder). Don't resolve it from geography alone.
 - **Two aggregate-vs-segment defects, and one adjudicated non-defect.** P4788's
   `SegmentCost` 2,172,600,000 CNY is the total for all four Ganzhou South branches; P4928's
   `Capacity` 30.00 bcm/y is the WEP3 *system* total, not the Ji'an–Fuzhou East Section.
@@ -279,12 +309,13 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   national trunks at the Hukou distribution station, so the sheet reads as flow direction.
 - **Watch for `fzggw.jiangsu.gov.cn` in a Jiangxi harvest — Jiangsu is not Jiangxi.** The
   wiki harvest surfaces it repeatedly and it is always a false lead.
-- **Jiangxi's `UNRESOLVED` fills are uncitable, not unknown.** All 8 unresolved fills sit on
-  rows that already carry route geometry (P4776 62.34 km/2 vtx, P4778 56.88/11, P4780
-  136.02/20, P4781 19.37/6, P4782 100.96/38, P5859 50.62/2). GEM's own geometry can't be
-  cited under standing rule 1, so the cells correctly stay unfilled on our side — but MZ owns
-  those routes and can fill them from her own lane. Carry the table, don't report bare
-  UNRESOLVEDs.
+- **A whole class of Jiangxi's `UNRESOLVED` fills is uncitable, not unknown.** The 8
+  unresolved **`Length`** fills all sit on rows that already carry route geometry (P4776
+  62.34 km/2 vtx, P4778 56.88/11, P4780 136.02/20, P4781 19.37/6, P4782 100.96/38, P5859
+  50.62/2). GEM's own geometry can't be cited under standing rule 1, so the cells correctly
+  stay unfilled on our side — but MZ owns those routes and can fill them from her own lane.
+  Carry the table, don't report bare UNRESOLVEDs. (v3's 154 unresolved fills span nine
+  columns; this reasoning applies to the Length ones, not to all of them.)
 - **Jiangxi route-vs-sheet length: 7 divergences, one of them not a defect.** P5862 30.10x,
   P5866 6.43x, P5887 2.12x, P4784 1.87x, P4783 0.57x, P4788 0.09x, P4777 0.07x. **P4777 is
   expected** — it is the Phase I network-granularity parent row (825 km system vs a 14-vertex
@@ -309,10 +340,30 @@ rule and the tooling that enforces it: `docs/sops/route_creation.md`.
   aggregator's own content, so it is citable — but it is a 2014 *planning* document, thin
   support for 2026 operating status unless paired (it backs 39 proposed refs, and `huaon.com`
   is the second source on the units that reach `high`).
-- `docs/reference/source_roster.md` has no China section yet — seed it from the
-  pilot's verified sources (live: news.bjx.com.cn, gx.chinanews.com.cn,
-  gx.xinhuanet.com, ndrc.gov.cn, pipechina.com.cn, cnpc.com.cn, sinopec.com,
-  sasac.gov.cn, wsbs.liuzhou.gov.cn; archive.org snapshots for fgw.gxzf.gov.cn).
+- **`docs/reference/source_roster.md` now HAS a China (zh) section** — seeded 2026-09-10
+  from the Guangxi pilot plus Jiangxi v3's 80 live-verified hosts, with the decoding and
+  IPv6 gotchas alongside. Add to it rather than re-deriving the roster per province.
+- **`www.quannan.gov.cn` returns 403 over IPv6 and 200 over IPv4 — that is not a deletion.**
+  42 v3 units cite one Quannan county PDF, and it reads fine with `curl --ipv4` +
+  `pdftotext -layout`. `url_verifier.py` has **no IPv4 retry on a 403**, so it reports the
+  host as blocked; never drop a ref on that signal (standing rule: only a confirmed 404/410
+  may drop one). Same family of defect: `chinanews.com.cn` decodes as a false negative
+  because strict `gb18030` *and* `utf-8` both reject its mixed bytes, while
+  `errors='replace'` reads cleanly.
+- **Canonical `FuelSource` forms for the WEP/Sichuan–Shanghai family** — write these
+  exactly, and don't invent variants: `Sichuan–Shanghai Gas Pipeline` and
+  `Sichuan–Shanghai Parallel Gas Pipeline` (**EN DASH**), `West-East Gas Pipeline 1` / `2` /
+  `3` (arabic numerals, ASCII hyphen), joined with `, `, **no CJK gloss** in the cell.
+- **One wrong character in a name costs twelve ref reads.** P5866's `segment_name` carried
+  金沙湾 for the real 金砂湾, and because every name-match on the wrong character missed, the
+  row's refs came back as twelve "system-only" reads that looked like a sourcing problem and
+  were actually an orthography problem. Check the CJK name against a primary document before
+  concluding a row is unsourceable.
+- **`worklist.json`'s name fields are English-only, and on a CJK batch that silently breaks
+  matching.** It is the mechanism behind P4790's false "no PID identified" — the Chinese name
+  never reached the matcher, so a correctly-identified row read as unidentifiable. Owed
+  before the next CJK batch; until it lands, cross-check a "no PID" verdict by hand against
+  `OtherLanguagePrimaryPipelineName`.
 - **`url_verifier.py` vs Chinese domains — smoke-tested 2026-07-29:** NDRC, 北极星,
   PipeChina, CNPC, Sinopec, Guangdong DRC, Zhejiang DRC all pass. **`fgw.gxzf.gov.cn`
   (Guangxi DRC) ConnectTimeouts on both schemes — likely overseas geo-blocking**, so

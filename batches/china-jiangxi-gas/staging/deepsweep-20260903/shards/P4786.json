@@ -1,0 +1,529 @@
+{
+ "batch": "P4786",
+ "harvest_opened": 24,
+ "resolutions": [
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "sentinel": "__STATUS__",
+   "ref_col": "__STATUS__",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+    "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+    "https://m.thepaper.cn/baijiahao_13415114?sdkver=e06426d6&clientprefetch=1",
+    "https://www.sohu.com/a/466792472_661255"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "OPERATOR emergency-response plan (预案编号 JXTRQ/AF/B0-2023, issued by 江西省天然气集团有限公司管道分公司, dated 2024-09-20) for a LIVE line: Table 3-1/narrative give 赣州南支线会昌-寻乌段 起始于会昌分输清管站(E115°49'57.41\",N25°36'55.63\")，止于寻乌门站(E115°40'6.40\",N24°55'39.88\")，线路长度约97.5km，管径DN250，设计压力6.3MPa，设计输量0.72×10^8Nm3/a; 埋深1.2~1.5m，巡线情况=每日 (daily line patrols); Table 3-8 lists an in-pipe gas inventory (物质贮存量) for this exact segment; section 8.5 states outright '江西省天然气管道分公司天然气管网赣州南（信丰-瑞金段）等4条支线运行未满三年' (all four branches, including this one, have been OPERATING for under three years as of the 2024-09-20 report date). A pipeline under construction or shelved has no daily patrols, no design throughput inventory, and cannot be described as 'operating for under three years'."
+    },
+    {
+     "url": "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "Huichang county government (会昌县发展改革委) press release, 2023-07 (recovered via a 2025-02-10 Wayback capture -- the live origin at www.huichang.gov.cn is a soft-404 that returns byte-identical bodies for nonsense slugs, confirmed independently). Names the segment directly: '省天然气管网工程赣州南支线会昌境内项目...线路全长105公里...会昌境内线路分为三段：瑞金-会昌段、会昌-安远段、会昌-寻乌段...该项目已于2022年11月份实现通气'. Independent of the operator (county DRC vs. company), and explicitly names 会昌-寻乌段 as one of the three named sub-sections, with gas flow achieved November 2022."
+    },
+    {
+     "url": "https://m.thepaper.cn/baijiahao_13415114?sdkver=e06426d6&clientprefetch=1",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌至寻乌段",
+     "note": "Xunwu county government report '百年芳华 | 寻乌：奋力谱写高质量发展新篇章' (republished via m.thepaper.cn baijiahao, dated 2021-07-01): '西气东输会昌至寻乌段支线基本具备通气条件' -- an independent THIRD source (a different county, Xunwu not Huichang) stating the segment basically met gas-supply conditions by mid-2021, consistent with actual gas-in by Nov 2022 per the Huichang release."
+    },
+    {
+     "url": "https://www.sohu.com/a/466792472_661255",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣州南支线（会昌-寻乌段）",
+     "note": "Jiangxi provincial 2021 key-projects roster (sohu.com, dated 2021-05-16, title '总投资15513亿元！江西省2021年实施重点项目2033项'): item 23 of the natural-gas project list is '赣州南支线（会昌-寻乌段）', confirming this exact segment was an ACTIVE provincial project in 2021, not a shelved one."
+    }
+   ],
+   "class_out": "CONFIRMED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "verdict: change -> operating. The sheet carries Status=shelved (roster note: updated=2023-08-30); batch_03/v2 already flagged this as questionable but left it tentative. This pass resolves the central contradiction the P4787 agent raised: the 2024 operator emergency plan treats 会昌-寻乌段 as one of four LIVE branches (daily patrols, design-pressure gas inventory, 'operating under three years' as of 2024-09-20), and THREE independent, agreeing, segment-naming sources place actual gas-in in November 2022: the Huichang county DRC (2023-07, Wayback), the Xunwu county government report (2021-07, 'basically ready for gas' -- consistent lead-up), and the 2021 provincial key-projects roster (confirms it was an active, funded project, not shelved, as of mid-2021). This satisfies the 2+ independent agreeing-source bar at tier high. Recommend Status=operating (lowercase) with StartYear1=2022 / StartMonth1=11 as staged in the Start record. If the sheet's row also carries ShelvedCancelledType/ShelvedYear cells (not visible in this payload's owed-unit list, so not staged here), those become owed CLEARS under the new status -- flagging for the orchestrator/Update leg rather than fabricating a clear against cells I cannot see. No source anywhere describes this segment as cancelled, abandoned, or halted; the 'shelved' status appears to originate from a 2024-09-26 screenshot citation (per sibling rows' notes) that predates or misreads the operator's own 2024-09-20 plan.",
+   "verdict": "change"
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Start [ref]",
+   "kind": "FILL",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1"
+   ],
+   "value_col": "StartYear1",
+   "proposed_value": "2022",
+   "values": {
+    "StartYear1": "2022",
+    "StartMonth1": "11"
+   },
+   "proposed_refs": [
+    "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+    "https://m.thepaper.cn/baijiahao_13415114?sdkver=e06426d6&clientprefetch=1"
+   ],
+   "verifications": [
+    {
+     "url": "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "'该项目已于2022年11月份实现通气' -- stated for the whole Huichang-county portion of 赣州南支线 (which the same paragraph splits into 瑞金-会昌段、会昌-安远段、会昌-寻乌段), so the November 2022 date covers this segment by name."
+    },
+    {
+     "url": "https://m.thepaper.cn/baijiahao_13415114?sdkver=e06426d6&clientprefetch=1",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌至寻乌段",
+     "note": "2021-07-01: '西气东输会昌至寻乌段支线基本具备通气条件' -- corroborates the timeline (near-ready mid-2021, actual gas-in Nov 2022), though it does not itself give the exact month."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "BLANK FILLED (StartYear1/StartMonth1 were empty). The Huichang county DRC source gives the specific month (2022-11) for the Huichang-county portion of 赣州南支线, of which 会昌-寻乌段 is one of three explicitly named sub-sections; the Xunwu source corroborates the lead-up timeline but not the exact month, so independent=false pending a second source that gives 2022-11 (or a different month) specifically for THIS segment rather than the Huichang-county project as a whole. Matches the pattern used on sibling P4787/P4788 (Nov/Dec 2022 gas-in across the four-branch package)."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "SegmentCost [ref]",
+   "kind": "FILL",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "value_col": "SegmentCost",
+   "proposed_value": null,
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "inferred",
+   "independent": false,
+   "researcher_notes": "NOT staging a value: the only cost figure found anywhere for this branch bundle is 2,172,600,000 CNY (217,260万元), which the Quannan county DRC 变更请示 (2021-08-30/2021-09-06, https://www.quannan.gov.cn/qnxxxgk/zdsjbg/202201/1a999e0f9d604224bcb03c694257d458.shtml -- confirmed by sibling P4788's independent read) identifies as the approved TOTAL investment for '赣州南（信丰-瑞金段）等4条支线' as one package: 信丰-瑞金段 340.3km + 龙南-全南段 56.7km + 会昌-寻乌段 97.5km + 上犹-崇义段 43km = 537.5km, originally 核准 213,691万元, revised to 217,260万元 in 2021. Staging this on P4786 alone would misattribute a four-branch aggregate to one 97.5 km segment and risk a quadruple count if the same figure lands on P4785/P4787/P4788 too (see RELAUNCH_NOTES item 3 and P4788's own __VALIDITY__/__REDUNDANCY__ records, which flag the identical risk on their row). Searched the quannan emergency plan (no per-branch cost breakdown anywhere in its 321 pages), the CCXI/qixin 2022 rating report (only system/corporate-level Phase II financials: 62.49亿元 total budget / 50.45亿元 invested as of 2022-03 -- a system aggregate, not this segment), and both jiangxi.gov.cn pool URLs (HTTP 000/dead today, no Wayback checked-in). No segment-level 核准批复 or 招标 cost figure exists in any source opened this pass. Genuinely UNRESOLVED, not merely unsearched."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Owner [ref]",
+   "kind": "FILL",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "primary_value_col": "Owner1",
+   "value_col": "Owner1",
+   "tab": "operators_owners",
+   "proposed_value": "Jiangxi Natural Gas Group Co., Ltd.",
+   "values": {
+    "Owner1": "Jiangxi Natural Gas Group Co., Ltd.",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+    "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "Table 3-1 (管道基本信息) gives 运行单位 江西省天然气集团有限公司 for the whole 赣州南支线 bundle including 会昌-寻乌段 by name; the plan itself is issued by 江西省天然气集团有限公司管道分公司 (预案编号 JXTRQ/AF/B0-2023, 2024-09-20)."
+    },
+    {
+     "url": "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "County regulator (会昌县发展改革委) names 江西省天然气集团有限公司管道分公司 (副总经理张安泽 quoted) as the party that built/operates 赣州南支线会昌境内项目, of which 会昌-寻乌段 is a named sub-section."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "江西省天然气集团有限公司",
+     "note": "中诚信国际 2022 tracking rating report, footnote 1: 管道分公司 is a BRANCH office (分公司) of 江西省天然气集团有限公司 carrying the Phase II network (西二线气源), not a separately-equitied subsidiary -- a 分公司 holds no independent shareholding, so the asset owner is the group itself, 100%. Contrasts with Phase I's 天然气管道公司, a 54%-held first-tier subsidiary (川气东送 sourced)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "researcher_notes": "BLANK FILLED (Owner1/Owner1% were empty). Two independent segment-naming sources (operator plan; Huichang county DRC) agree on the entity, with the qixin/CCXI rating report supplying the corporate-structure reasoning for 100%. This is the SAME correction RELAUNCH_NOTES item 2 and sibling P4788 establish for Phase II rows: this row's `name_forms.segment` marks it explicitly Phase II, so it must NOT carry the Phase I JV split. Deliberately not staging the wiki's '54%/46%' pair here -- see the paired __VALIDITY__ record on the Operator unit below. tier medium because the exact 100% figure is reasoned from corporate form, not literally quoted as a percentage in any source.  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: values.Owner1% '100' -> '100.00%'. Column names/format only, checked against the live tab header; no research finding altered.]"
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "FuelSource [ref]",
+   "kind": "FILL",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "value_col": "FuelSource",
+   "proposed_value": "West-East Gas Pipeline 2, West-East Gas Pipeline 3",
+   "values": {
+    "FuelSource": "West-East Gas Pipeline 2, West-East Gas Pipeline 3"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+    "https://tt.jxnews.com.cn/news/1266077"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣州南支线",
+     "note": "'本项目赣州南支线从西二线149#阀室或西三线瑞金分输清管站引出气源' -- 赣州南支线 (which includes 会昌-寻乌段 by name elsewhere in the same document) draws gas from WEP2 (Dayu 149# valve chamber) OR WEP3 (Ruijin distribution/pigging station), NOT 川气东送 (the Phase I source)."
+    },
+    {
+     "url": "https://tt.jxnews.com.cn/news/1266077",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌、寻乌",
+     "note": "江西日报/jxnews, 2021-04-05: '省天然气管网瑞金分输站...承接西气东输三线来气...另一路作为省网赣州南支线供气气源分输点，依次向会昌、寻乌、安远、定南、龙南、全南、信丰、大余等8个县（市）供气。未来省天然气集团管道分公司在完成与大余县西气东输二线149#阀室开口对接后，可实现...双气源双向供气' -- explicitly names 会昌 and 寻乌 (this segment's own endpoints) among the counties fed from the Ruijin WEP3 station, with the Dayu WEP2 valve as the second (then-future) source."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "[GANZHOU-SOUTH-FUELSOURCE-RULING-2026-09-10] ORCHESTRATOR RULING -- ONE BRANCH, TWO SOURCES. The four Ganzhou South Branch rows (P4785 大余-信丰段, P4786 会昌-寻乌段, P4787 龙南-全南段, P4788 信丰-瑞金段) are segments of one hydraulically connected branch fed at both ends, so FuelSource on all four is 'West-East Gas Pipeline 2, West-East Gas Pipeline 3' and the 川气东送 half of the sheet's P4787/P4788 value is dropped. Sourcing: the operator's own 2024 emergency plan states the branch's sources exhaustively as 西二线149#阀室 (Dayu) 或 西三线瑞金分输清管站, in the document that names three of these four segments, and 川气东送 does not occur once in its 321 pages; the 2021 江西日报/江西发布 announcement names all eight supplied counties off the Ruijin WEP3 station with the Dayu WEP2 tie-in as the second, then-future source and 双气源双向供气 as the end state; and 全南县's own 2024 reply records WEP2 as the gas the county actually started taking at end-2022. CCXI 2022 assigns 川气东送 to the PHASE I provincial network (天然气管道公司) while these are Phase II rows (管道分公司, 承接西气东输二线气源). The order is NUMERIC convention and the live sheet's own -- sibling P4789 already reads 'West-East Gas Pipeline 2, West-East Gas Pipeline 3, Sichuan-Shanghai Gas Pipeline' -- not a primacy claim: realized-vs-designed differs by end (会昌/寻乌 took WEP3 from 2021, 全南 took WEP2 from end-2022) and splitting the value per segment would publish an inference the operator's own 「或」 does not support. THIS ROW: refs unchanged -- both already name this segment (the operator plan's scope list, and the 2021 announcement's 会昌、寻乌 by name). Only the value's spelling changes, from 'West-East Gas Pipeline III/West-East Gas Pipeline II' to the canonical arabic comma form. This is the EASTERN end of the branch: WEP3 via Ruijin is the source it took first, in 2021. --- SUPERSEDED PRIOR NOTE: BLANK FILLED, and corrects RELAUNCH_NOTES item 4's original 'WEP2 not WEP3' guidance -- superseded by sibling P4788's finding, which this pass independently reconfirms: the Ganzhou-south branch bundle (赣州南支线, encompassing this segment) is primarily fed by WEP3 via the Ruijin station, with WEP2 at Dayu's 149# valve as a second, dual-source addition. The jxnews article is arguably the stronger of the two refs for THIS specific row since it names 会昌 and 寻乌 by name as supplied counties, not merely the parent branch. Matches the value staged on P4788."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Pressure [ref]",
+   "kind": "FILL",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "value_col": "Pressure",
+   "proposed_value": "6.3",
+   "values": {
+    "Pressure": "6.3",
+    "PressureUnits": "MPa"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "'赣州南支线会昌-寻乌段：起始于会昌分输清管站...止于寻乌门站...线路长度约97.5km，管径DN250，设计压力6.3MPa，设计输量为0.72×10^8Nm3/a' -- Table 3-8 (物质贮存量) repeats 运行气压 6.3MPa for this exact segment (row '赣州南支线会昌-寻乌段  97.5  250  6.3  0.72')."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "BLANK FILLED. Single-source (the quannan operator plan) but stated twice within the document (narrative + Table 3-8) with an exact segment name match; no second, independently-published source gives a pressure rating for this specific branch (searched: Huichang/Xunwu county releases give route/date only, no engineering specs; the qianzhan DRC plan and CCXI rating report are system-level only). tier medium per rule 4(d) -- single-source note recorded rather than left blank."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Proposal [ref]",
+   "kind": "FILL",
+   "value_cols": [
+    "ProposalYear"
+   ],
+   "primary_value_col": "ProposalYear",
+   "value_col": "ProposalYear",
+   "proposed_value": "2017",
+   "values": {
+    "ProposalYear": "2017"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "'江西省天然气（赣投气通）控股有限公司于2017年11月委托陕西中圣环境科技发展有限公司编制完成《江西省天然气管网工程赣州南（信丰-瑞金段）等4条支线项目环境影响报告书》，并报送赣州市环境保护局审批。赣州市环境保护局于2017年12月28日下达...（赣市环审字[2017]116号）' -- the SAME EIA package explicitly covers all four branches, including 会昌-寻乌段, by name elsewhere in the document (线路分别为...赣州南支线会昌-寻乌段...全长537.5km)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "BLANK FILLED at tier low with reasoning stated (Jiangxi calibration: a blank means nobody looked, per BRIEF). 2017 is the earliest date at which THIS segment exists as a named project within a formal government filing (the 2017-11 EIA commissioning / 2017-12-28 Ganzhou EPB approval, 赣市环审字[2017]116号), matching the value and reasoning P4788 staged for the same package. CAVEAT for the reviewer, carried from P4788's identical finding: the corridor's constituent county links may appear earlier in the 2014 provincial gas-utilisation plan (赣发改规划[2014]325号), which is not confirmed to name 会昌-寻乌 specifically -- a reviewer treating ProposalYear as 'first proposed at any level' might prefer 2014, but no segment-naming 2014 source was found this pass. ProposalMonth NOT staged (2017-11 is the EIA-commissioning month, not necessarily a proposal date).  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: value_cols ['ProposalYear', 'ProposalMonth'] -> ['ProposalYear']. Column names/format only, checked against the live tab header; no research finding altered.]"
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "tab": "operators_owners",
+   "values": {
+    "Operator": "Jiangxi Natural Gas Group Co., Ltd. Pipeline Branch",
+    "OperatorLocalLanguage": "江西省天然气集团有限公司管道分公司",
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司管道分公司 [100%]"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+    "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "预案编号 JXTRQ/AF/B0-2023, 编制单位/发布单位 江西省天然气集团有限公司管道分公司 (2024-09-20); Table 3-1 运行单位 江西省天然气集团有限公司 for the bundle including 会昌-寻乌段 by name."
+    },
+    {
+     "url": "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "County regulator names 江西省天然气集团有限公司管道分公司 (副总经理张安泽 quoted) as the operating party for 赣州南支线会昌境内项目, of which 会昌-寻乌段 is a named sub-section."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "江西省天然气集团有限公司",
+     "note": "Footnote 1: 管道分公司 承接西气东输二线气源的二期管网工程 -- distinguishes it from 天然气管道公司 (Phase I, 54%-held JV, 川气东送 sourced)."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "researcher_notes": "CORRECTED the carried value. The payload's owed_ref_units entry held '江西省天然气集团有限公司 [54%]; 国家石油天然气管网集团有限公司 [46%]' (class_in UNRESOLVED) -- this is the ownership of 江西省天然气管道有限公司, the PHASE I network operator (川气东送 sourced). This row is explicitly Phase II (name_forms.segment: 'Phase II, Ganzhou South Branch'), fed by WEP2/WEP3 (see FuelSource record), and built/run by 江西省天然气集团有限公司管道分公司 -- a branch office of the group, not the 54/46 joint venture. See the paired __VALIDITY__ record. Matches the correction RELAUNCH_NOTES item 2 documents and the value sibling P4788 staged for the same class of row."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "sentinel": "__VALIDITY__",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+    "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "江西省天然气集团有限公司",
+     "note": "Footnote 1: 天然气管道公司 (54%-held first-tier subsidiary) = PHASE I network (川气东送 source); 管道分公司 (a branch, no separate equity) = PHASE II network (西气东输二线/三线 source, ~1,500 km across 40 counties)."
+    },
+    {
+     "url": "http://web.archive.org/web/20250210065538/http://www.huichang.gov.cn/hcxxxgk/zqsw/202307/33b1f06f20184cad80d55f536a7bd120.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "County regulator names 江西省天然气集团有限公司管道分公司 for 赣州南支线会昌境内项目 (incl. 会昌-寻乌段)."
+    }
+   ],
+   "class_out": "CONFIRMED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "CLASSIFICATION/ATTRIBUTION issue, not existence: the wiki-carried and payload-carried '江西省天然气集团有限公司 54% / 国家石油天然气管网集团有限公司 46%' pair belongs to 江西省天然气管道有限公司, the PHASE I operator (a first-tier subsidiary the group holds 54% of, itself co-owned 46% by PipeChina's 国家管网集团东部原油储运有限公司 per RELAUNCH_NOTES item 2). This row is a Phase II segment (WEP2/WEP3-fed, built/run by 管道分公司, a BRANCH of the group with no separate equity) -- so Owner/Operator should read 江西省天然气集团有限公司 100% (through its 管道分公司), staged in the Owner/Operator records above. This is the same correction sibling P4788 makes and applies identically across P4786/P4787/P4788/P4789 (the four Phase II Ganzhou-south rows) -- consistent, not row-specific, so not filed as a __REDUNDANCY__. No existence or duplication concern: the row is real, and per the __STATUS__ record, operating."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "'赣州南支线会昌-寻乌段...设计压力6.3MPa' -- a 6.3MPa long-distance branch pipeline running between two county distribution gates (会昌分输清管站 to 寻乌门站) is unambiguously transmission-class, not distribution. The relevance re-read's earlier 'unchecked' name_found is resolved to true by this hand fetch (curl -4, HTTP 200; url_verifier gets a false-negative HTTP 403 on this host over IPv6, per BRIEF's Measured Conditions -- confirmed size 11,461,354 bytes matches the downloaded file exactly)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Relevance re-read RESOLVED (name_found hand-confirmed true). Second source still owed and not found this pass: searched the Huichang/Xunwu county releases (route/date only, no pipeline-class language), the qianzhan DRC plan and CCXI rating report (system-level only, no per-branch classification), and the harvest pool (no additional engineering-spec document for this exact segment). Single-source, tier medium, per rule 4(d) -- the search is documented rather than the cell left silently unactioned."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear"
+   ],
+   "values": {
+    "ConstructionYear": "2018"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "'江西省天然气（赣投气通）控股有限公司于2017年11月委托...编制完成《江西省天然气管网工程赣州南（信丰-瑞金段）等4条支线项目环境影响报告书》...赣州市环境保护局于2017年12月28日下达...（赣市环审字[2017]116号）' -- the 2017-12-28 EIA approval is a floor: construction could not have started before EIA clearance. name_found hand-confirmed true (see PipelineType record for the access-failure workaround)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Relevance re-read RESOLVED (name_found hand-confirmed true), but the carried ConstructionYear=2018 remains UNCONFIRMED at the exact-year level: the only dated evidence found is the 2017-12-28 EIA approval (which precedes construction, so 2017 would be the EIA-approval year, not a construction start) and the Nov-2022 gas-in date staged in the Start record. No source states a specific construction-commencement year for this segment; 2018 is plausible (construction typically follows EIA approval by a matter of months, and the package needed roughly 4 years to reach gas-in in Nov 2022) but not directly sourced. Searched the harvest pool and the Quannan zdsjbg 2021 amendment page (states construction 'in progress' as of 2021-09, not a start date) and the 2021 sohu/jxnews items (roster/date-of-supply, no construction-start date) -- none give a segment-specific start year. Kept at tier low/single-source rather than UNRESOLVED, per rule 4(d), since the carried value is not contradicted, only unconfirmed."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "0.07",
+    "CapacityUnits": "bcm/y"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "Table 3-8 (物质贮存量): 赣州南支线会昌-寻乌段 -- 长度97.5km，内径250mm，运行气压6.3MPa，输气量0.72×10^8m3/a (0.072 bcm/y, matching the carried 0.07 within rounding). name_found hand-confirmed true."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Relevance re-read RESOLVED. The wiki-supplied candidate (chongyi.gov.cn) is a genuine, confirmed dead end -- HTTP 403 with no Wayback snapshot at any timestamp -- and is suspicious on its face: Chongyi is a county not on this segment's route (会昌 and 寻乌 only), and the identical chongyi.gov.cn URL is reused across this row's Capacity/Length/Diameter wiki candidates, suggesting a wiki mis-citation rather than a genuine per-segment source. No second, independent numeric source was found for the exact 0.72×10^8 Nm3/a figure (Huichang/Xunwu releases give route and dates only, not throughput). tier medium/single-source, documented per rule 4(d)."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "97.50",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "'赣州南支线会昌-寻乌段：起始于会昌分输清管站(E115°49'57.41\",N25°36'55.63\")，止于寻乌门站(E115°40'6.40\",N24°55'39.88\")...线路长度约97.5km' -- also section 3's narrative route description gives '此段连接线线路全长约97.5km' (line-route figure 97.2km, connector length 97.5km). name_found hand-confirmed true."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Relevance re-read RESOLVED. Same chongyi.gov.cn dead-end/mis-citation issue as Capacity above. No independent second source gives a length figure for this exact segment (the Huichang release gives 105km for the WHOLE Huichang-county portion across three sub-sections, not 97.5km for this one alone, so it does not independently corroborate the number, only the route). tier medium/single-source, documented per rule 4(d)."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2675,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "250",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [
+    "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.quannan.gov.cn/qnxxxgk/wrfz/202411/b3adaed1adfe445db29769eaf2f7002b/files/faad1fb7c1214b8a8394299531ab10a8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "会昌-寻乌段",
+     "note": "Table 3-1 and Table 3-8 both give 管径 DN250 / 内径250mm for 赣州南支线会昌-寻乌段 specifically (distinct from the bundle's other diameters: 信丰-瑞金段 450mm, 龙南-全南段 250mm, 上犹-崇义段 250mm). name_found hand-confirmed true."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Relevance re-read RESOLVED. Same chongyi.gov.cn dead-end/mis-citation issue as Capacity/Length above. No independent second source gives a diameter for this exact segment. tier medium/single-source, documented per rule 4(d)."
+  },
+  {
+   "project_id": "P4786",
+   "sheet_row": 2673,
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "CONFIRMED",
+   "tier": null,
+   "independent": null,
+   "verdict": "concern",
+   "researcher_notes": "[OLSN-PASTE-DEFECT-2026-09-10] OtherLanguageSegmentName ON THIS ROW IS NOT A SEGMENT NAME. It is a 22-character slice of one prose sentence that was chunked at a fixed width and pasted down six consecutive rows, SheetRow 2672-2677 (P4785-P4790). This row holds '山支线、井开区支线；靖安支线、湘东支线、赣州'. The siblings hold P4785='目前开工建设井冈'; P4787='南支线大余信丰段；于都宁都石城段、宁都广昌南'; P4788='丰段、进贤段；赣州南支线信丰瑞金段、上犹崇义'; P4789='段、樟树新干峡江段、井开区吉水永丰段、赣州南'; P4790='支线（信丰-龙南-定南段）等项目'. Two proofs it is one sliced string, not six names: the four interior chunks are all exactly 22 characters (a width, not a name), and all five seams split a word (井冈|山支线, 赣州|南支线, 广昌南|丰段, 上犹崇义|段, 赣州南|支线（) so no chunk stands alone. Reassembled the 112 characters are one grammatical sentence: '目前开工建设井冈山支线、井开区支线；靖安支线、湘东支线、赣州南支线大余信丰段；于都宁都石城段、宁都广昌南丰段、进贤段；赣州南支线信丰瑞金段、上犹崇义段、樟树新干峡江段、井开区吉水永丰段、赣州南支线（信丰-龙南-定南段）等项目' -- a 'currently under construction' branch list. So the cell is corrupt on all six rows, including P4785's, whose chunk carries no separators and so looks less obviously broken; and the fragment does not even describe its own row (P4790's names 信丰-龙南-定南段 while the row is 井开区-吉水-永丰-乐安-宜黄). Anything keying on this column -- name matching, dedup, discovery guards -- is matching sentence debris; it already produced one false positive, the 靖安 hit that made the tendered 安义-靖安支线 look like it might already be tracked. RECOMMENDED for this row: '赣州南支线 (会昌-寻乌段)', taken from the row's own OtherLanguageAlternativePipelineNames ('二期工程, 赣州南支线 (会昌-寻乌段)'), the live convention in this cell being the bare branch name (cf. P4780 = 上高支线). Deliberately staged as detection only, with no proposed `values`: the exact form the cell should take is a column-semantics call, and the corrupt text is evidence of a paste, not of any research finding, so nothing here changes a sourced value. Verified against data/GGIT_gas_snapshot_20260910.csv."
+  }
+ ],
+ "cross_row_leads": []
+}

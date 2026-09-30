@@ -1,0 +1,312 @@
+{
+ "contract": [
+  "EVERY unit below is OWED a record — there is no such thing as a unit that needed no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is what this leg is FOR.",
+  "A unit whose class is UNREPORTED_BLANK is the INVERSE case — the sheet cell is blank, so there is no recorded value to agree with and you are proposing one. Put it in the record's `values` dict, keyed by the column names in that unit's `value_cols` (e.g. {\"Operator\": \"WBI Energy Transmission, Inc.\"}), alongside the refs. The schema DOES carry values — a proposed value stated only in researcher_notes leaves a ref with no value behind it, which is an orphan [ref] cell and gets stripped (2026-09-09: two of five recovered blanks arrived this way).",
+  "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state it. 'Confirmed as recorded' in your summary and nowhere machine-readable is indistinguishable from never having checked it.",
+  "A source agreeing within rounding IS a ref (51.97 mi + 0.5 mi against a recorded 52; 38.5 against 39): REFS_ADDED at medium/high with the discrepancy in researcher_notes, plus a validity `spec` concern if the gap is material. UNRESOLVED means nothing was found — never that something slightly different was found.",
+  "UNRESOLVED is a legitimate outcome ONLY with researcher_notes saying what you searched. An empty UNRESOLVED reads exactly like a dropped unit and is treated as one.",
+  "Read every document you open to exhaustion, for EVERY column and sibling row — one FERC notice routinely sources Length, Diameter, Cost, Construction and Start at once.",
+  "Two independent sources per data point is the target; the same wire story republished does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
+  "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — the research is done and vanishes.",
+  "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left unreported and every record that cannot merge. It is blocking: do not finish red."
+ ],
+ "write_shard_to": "batches/china-jiangxi-gas/staging/deepsweep-20260903/ref_shards_recovery/P4791.json",
+ "refs_already_on_this_row": [
+  {
+   "url": "http://www.jxganan.com/anquanyanshoupingjia/9273.html",
+   "sourced": [
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "https://tt.m.jxnews.com.cn/news/1193625?app=ycyztt",
+   "sourced": [
+    "Capacity [ref]",
+    "Construction [ref]",
+    "Fuel [ref]",
+    "Length [ref]",
+    "Location [ref]",
+    "SegmentCost [ref]"
+   ]
+  },
+  {
+   "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+   "sourced": [
+    "PipelineType [ref]"
+   ]
+  },
+  {
+   "url": "http://www.yingdodo.com/html/news/201852592751.html",
+   "sourced": [
+    "Diameter [ref]",
+    "Length [ref]"
+   ]
+  },
+  {
+   "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+   "sourced": [
+    "Operator [ref]"
+   ]
+  }
+ ],
+ "coverage_gate": "python scripts/check_shard_coverage.py --staging batches/china-jiangxi-gas/staging/deepsweep-20260903 --pid P4791",
+ "project_id": "P4791",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "n_units": 1,
+ "units": [
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2680,
+   "segment_name": "Phase II, Leping-Dexing-Wuyuan",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "97.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "97.00",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  }
+ ],
+ "seed_citations": [
+  {
+   "url": "http://www.xingguo.gov.cn/xgxxxgk/file/bmgkxx/fgw/fgwj/201507/P020150722365503400293.pdf",
+   "link_text": "\"江西省发改委关于江西省天然气利用规划（2013-2020）的通知\"",
+   "context": "↑ \"江西省发改委关于江西省天然气利用规划（2013-2020）的通知\" (PDF) . 2014-04-02 . Retrieved 2023-08-29 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://news.bjx.com.cn/html/20220518/1225876.shtml",
+   "link_text": "\"《江西省\"十四五\"能源发展规划》正式发布-北极星火力发电网\"",
+   "context": "↑ 2.0 2.1 \"《江西省\"十四五\"能源发展规划》正式发布-北极星火力发电网\" . news.bjx.com.cn (in 中文（中国大陆）). 2022-05-18. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.cnlng.com/bencandy.php?fid=2&id=19075",
+   "link_text": "\"天然气管网建设诞生\"江西速度\" \"",
+   "context": "↑ 3.0 3.1 3.2 3.3 3.4 \"天然气管网建设诞生\"江西速度\" \" . 2022-01-11 . Retrieved 2023-08-29 ."
+  },
+  {
+   "url": "https://www.zhaoqt.net/shixibaogao/328552.html",
+   "link_text": "\"江西省天然气项目调研报告\"",
+   "context": "↑ 4.0 4.1 4.2 4.3 4.4 4.5 \"江西省天然气项目调研报告\" . www.zhaoqt.net . Retrieved 2021-09-30 ."
+  },
+  {
+   "url": "https://www.nc.gov.cn/ncszf/jggl/201907/6a89f3a94e294aa0b8efe4957d9fb3b3/files/5860135c817f4c8e9ecaaee88d305729.pdf",
+   "link_text": "\"江西省发展和改革委员会文件\"",
+   "context": "↑ 5.0 5.1 5.2 \"江西省发展和改革委员会文件\" (PDF) . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://news.sohu.com/20081020/n260128393.shtml",
+   "link_text": "\"南昌明年底可通天然气 可拓展燃气汽车新领域-搜狐新闻\"",
+   "context": "↑ \"南昌明年底可通天然气 可拓展燃气汽车新领域-搜狐新闻\" . news.sohu.com . Retrieved 2021-10-04 ."
+  },
+  {
+   "url": "http://www.petrobest.com/success_info.php?cid=74",
+   "link_text": "\"博思特能源装备（天津）股份有限公司\"",
+   "context": "↑ \"博思特能源装备（天津）股份有限公司\" . www.petrobest.com . Retrieved 2021-10-05 ."
+  },
+  {
+   "url": "https://news.bjx.com.cn/html/20210511/1151893.shtml",
+   "link_text": "\"涉及多个电力项目！江西省重大基础设施\"项目大会战\"2021年度推进项目发布 - 北极星火力发电网\"",
+   "context": "↑ \"涉及多个电力项目！江西省重大基础设施\"项目大会战\"2021年度推进项目发布 - 北极星火力发电网\" . news.bjx.com.cn . Retrieved 2021-10-05 ."
+  },
+  {
+   "url": "https://m.qcc.com/firm/632d7349a9e0e3c5669434a8a5e5d2e2.html",
+   "link_text": "\"江西省天然气管道有限公司\"",
+   "context": "↑ 9.00 9.01 9.02 9.03 9.04 9.05 9.06 9.07 9.08 9.09 9.10 9.11 9.12 9.13 9.14 9.15 9.16 9.17 9.18 9.19 9.20 9.21 9.22 9.23 9.24 9.25 9.26 9.27 9.28 9.29 9.30 9.31 9.32 9.33 9.34 9.35 9.36 9.37 9.38 9.39 9.40 9.41 9.42 9.43 9.44 9.45 9.46 9.47 9.48 9.49 9.50 9.51 9.52 9.53 \"江西省天然气管道有限公司\" . QCC . Retri"
+  },
+  {
+   "url": "http://m.xinhuanet.com/jx/2019-07/12/c_1124742729.htm",
+   "link_text": "\"天然气：绿色能源拥抱生态江西 助力高质量发展\"",
+   "context": "↑ 10.0 10.1 \"天然气：绿色能源拥抱生态江西 助力高质量发展\" . 2019-07-12 . Retrieved 2023-08-30 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.jdzmc.com/Article/Class5/Class30/2009/11/19/13919.html",
+   "link_text": "\"九景天然气管道年底通气明年我市居民将陆续用上天然气last=\"",
+   "context": "↑ 11.0 11.1 11.2 11.3 11.4 \"九景天然气管道年底通气明年我市居民将陆续用上天然气last=\" . 2009-11-19 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://jndsb.jxnews.com.cn/system/2010/12/17/011544980.shtml",
+   "link_text": "\"新余高安丰城等地将用上管输天然气\"",
+   "context": "↑ 12.0 12.1 \"新余高安丰城等地将用上管输天然气\" . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://cx.jxgzwztb.com/detail/ann/477",
+   "link_text": "\"江西省天然气管网一期工程2020-2021年管道运行业务外包服务项目招标公告\"",
+   "context": "↑ \"江西省天然气管网一期工程2020-2021年管道运行业务外包服务项目招标公告\" . 2020-12-15 . Retrieved 2023-08-29 ."
+  },
+  {
+   "url": "https://news.sina.com.cn/o/2011-08-29/193423070729.shtml",
+   "link_text": "\"江西天然气管网丰城至抚州段试投产_新闻中心_新浪网\"",
+   "context": "↑ \"江西天然气管网丰城至抚州段试投产_新闻中心_新浪网\" . news.sina.com.cn . Retrieved 2021-10-01 ."
+  },
+  {
+   "url": "https://www.pipechina.com.cn/img/web/a5a6d9b8fd777bff30481360874596f4.xls",
+   "link_text": "国家管网集团西气东输分公司",
+   "context": "↑ 15.00 15.01 15.02 15.03 15.04 15.05 15.06 15.07 15.08 15.09 15.10 15.11 国家管网集团西气东输分公司 , 国家管网集团, 搜索日期：2024-09-26"
+  },
+  {
+   "url": "http://www.wuning.gov.cn/zwzx/wnyw/202104/t20210413_4831931.html",
+   "link_text": "\"江西省天然气管网工程永修—武宁—修水支线建设稳步推进\"",
+   "context": "↑ 16.0 16.1 16.2 \"江西省天然气管网工程永修—武宁—修水支线建设稳步推进\" . 2021-04-13 . Retrieved 2023-08-31 ."
+  },
+  {
+   "url": "https://www.skxox.com/20180618/1728460113.html",
+   "link_text": "\"江西省天然气管网一期工程永修—武宁—修水支线勘察设计服务项目招标公告\"",
+   "context": "↑ \"江西省天然气管网一期工程永修—武宁—修水支线勘察设计服务项目招标公告\" . 2018-06-18 . Retrieved 2023-08-31 ."
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-09-26-at-11.47.34-am",
+   "link_text": "江西省天然气管网一期工程永修—武宁—修水支线试产成功",
+   "context": "↑ 18.0 18.1 江西省天然气管网一期工程永修—武宁—修水支线试产成功 , 修水报, 2023-12-08"
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-09-26-at-2.12.34-pm",
+   "link_text": "关于市五届人大二次会议第167号建议的答复",
+   "context": "↑ 关于市五届人大二次会议第167号建议的答复 , 宜春市发展和改革委员会, 2022-07-11"
+  },
+  {
+   "url": "https://strq.jxngh.com/gsyw/359.htm",
+   "link_text": "\"省天然气管网一期工程奉新支线顺利实现通气试投产\"",
+   "context": "↑ \"省天然气管网一期工程奉新支线顺利实现通气试投产\" . ynb.nea.gov.cn . 2013-07-08 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+   "link_text": "\"江西省天然气管网一期工程樟树支线项目竣工环境保护验收公示\"",
+   "context": "↑ 21.0 21.1 21.2 21.3 \"江西省天然气管网一期工程樟树支线项目竣工环境保护验收公示\" . ynb.nea.gov.cn . 2022-06-10 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/web/20230902105154/http://jxgajc.com/Hr/show-10438.aspx",
+   "link_text": "\"江西省天然气管网一期工程湖口-金砂湾-彭泽支线（湖口-金砂湾段）项目\"",
+   "context": "↑ 22.0 22.1 22.2 22.3 22.4 \"江西省天然气管网一期工程湖口-金砂湾-彭泽支线（湖口-金砂湾段）项目\" . 2021-07-28 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.jiangxi.gov.cn/art/2023/2/28/art_15409_4373434.html",
+   "link_text": "\"江西省能源局关于江西省天然气管网一期工程沈贵里-彭泽支线项目核准的批复\"",
+   "context": "↑ 23.0 23.1 23.2 \"江西省能源局关于江西省天然气管网一期工程沈贵里-彭泽支线项目核准的批复\" . 2022-10-13 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-10-04-at-10.05.50-am",
+   "link_text": "危化项目审查月度公示（2024年3月）",
+   "context": "↑ 危化项目审查月度公示（2024年3月） , 九江市应急管理局, 2024-04-01"
+  },
+  {
+   "url": "https://gas.in-en.com/html/gas-3045223.shtml",
+   "link_text": "\"江西省天然气管网工程广丰-玉山支线打火开焊\"",
+   "context": "↑ 25.0 25.1 \"江西省天然气管网工程广丰-玉山支线打火开焊\" . 2019-03-12 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://gas.in-en.com/html/gas-3651243.shtml",
+   "link_text": "\"投资2.8亿元的江西省天然气管网工程万载—铜鼓支线项目正式开工\"",
+   "context": "↑ 26.0 26.1 26.2 \"投资2.8亿元的江西省天然气管网工程万载—铜鼓支线项目正式开工\" . 2021-12-20 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.toutiao.com/article/7394374433810432575/?channel=&source=search_tab",
+   "link_text": "奋战二季度丨中化华油建设集团不负春光好时节 项目建设正当时",
+   "context": "↑ 奋战二季度丨中化华油建设集团不负春光好时节 项目建设正当时 , 中化华油建设集团, 2024-07-22"
+  },
+  {
+   "url": "http://jxgajc.com/Hr/show-11464.aspx",
+   "link_text": "\"江西省天然气管网一期工程蔡岭-都昌支线工程项目竣工环境保护验收\"",
+   "context": "↑ 28.0 28.1 28.2 28.3 \"江西省天然气管网一期工程蔡岭-都昌支线工程项目竣工环境保护验收\" . 2022-09-29 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-10-04-at-10.17.45-am",
+   "link_text": "九江政务2021年第28期",
+   "context": "↑ 29.0 29.1 九江政务2021年第28期 , 九江市人民政府办公室, 2022-01-10"
+  },
+  {
+   "url": "http://www.jxgajc.com/Hr/show-7403.aspx",
+   "link_text": "江西省天然气管网工程井冈山支线, 井开区支线–期 (井冈山支线主干线) 项目竣工环境保护验收",
+   "context": "↑ 30.0 30.1 30.2 江西省天然气管网工程井冈山支线, 井开区支线–期 (井冈山支线主干线) 项目竣工环境保护验收 , Gan'an News, Jun. 11, 2020, accessed Aug. 23, 2021."
+  },
+  {
+   "url": "https://www.china5e.com/news/news-960906-1.html",
+   "link_text": "\"江西省天然气管网工程井冈山支线开建\"",
+   "context": "↑ 31.0 31.1 \"江西省天然气管网工程井冈山支线开建\" . 2016-09-21 . Retrieved 2023-08-30 ."
+  },
+  {
+   "url": "https://www.sohu.com/a/278468337_693503",
+   "link_text": "\"井冈山市管输天然气的全线贯通正式实现投产通气\"",
+   "context": "↑ 32.0 32.1 \"井冈山市管输天然气的全线贯通正式实现投产通气\" . 2018-11-21 . Retrieved 2023-08-30 ."
+  },
+  {
+   "url": "https://tt.m.jxnews.com.cn/news/1193625?app=ycyztt",
+   "link_text": "\"江西省天然气管网一期乐平—德兴—婺源支线项目开工建设 | 大江新闻\"",
+   "context": "↑ 33.0 33.1 33.2 \"江西省天然气管网一期乐平—德兴—婺源支线项目开工建设 | 大江新闻\" . tt.m.jxnews.com.cn . Retrieved 2021-10-01 ."
+  },
+  {
+   "url": "http://www.yingdodo.com/html/news/201852592751.html",
+   "link_text": "\"乐平-德兴-婺源支线工程\"",
+   "context": "↑ \"乐平-德兴-婺源支线工程\" . 2018-05-25 . Retrieved 2023-08-30 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/save/http://www.jxganan.com/anquanyanshoupingjia/9273.html",
+   "link_text": "江西省天然气管道有限公司江西省天然气管网一期工程乐平-德兴-婺源支线项目（乐平-德兴支线）安全验收评价",
+   "context": "↑ 35.0 35.1 江西省天然气管道有限公司江西省天然气管网一期工程乐平-德兴-婺源支线项目（乐平-德兴支线）安全验收评价 , 江西赣安安全生产科学技术咨询服务中心, 2024-04-28"
+  },
+  {
+   "url": "http://www.ghsafe.com/NewsView.aspx?id=1773",
+   "link_text": "\"广昌－南丰段、宁都—石城段、进贤段支线安全条件评价\"",
+   "context": "↑ 36.0 36.1 36.2 \"广昌－南丰段、宁都—石城段、进贤段支线安全条件评价\" . 2019-09-24 . Retrieved 2023-08-31 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-10-03-at-4.59.47-pm",
+   "link_text": "江西省天然气管网工程于都-宁都-广昌-南丰段等3条支线项目宁都-广昌段竣工环境保护验收",
+   "context": "↑ 江西省天然气管网工程于都-宁都-广昌-南丰段等3条支线项目宁都-广昌段竣工环境保护验收 , 采招网, 2024-06-11"
+  },
+  {
+   "url": "http://www.jiangxi.gov.cn/art/2020/11/9/art_15406_3197181.html",
+   "link_text": "\"江西省能源局关于江西省天然气管网工程于都-宁都-广昌-南丰段等3条支线项目核准变更的批复\"",
+   "context": "↑ \"江西省能源局关于江西省天然气管网工程于都-宁都-广昌-南丰段等3条支线项目核准变更的批复\" . 2020-11-09 . Retrieved 2023-08-31 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://ichinaenergy.com/News/1/102240.html",
+   "link_text": "\"江西省天然气管网项目井开区-吉水-永丰-乐安-宜黄段支线项目\"",
+   "context": "↑ 39.0 39.1 39.2 \"江西省天然气管网项目井开区-吉水-永丰-乐安-宜黄段支线项目\" . 2017-02-15 . Retrieved 2023-08-30 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.sohu.com/a/466792472_661255",
+   "link_text": "总投资15513亿元！江西省2021年实施重点项目2033项（附全名单）",
+   "context": "↑ 总投资15513亿元！江西省2021年实施重点项目2033项（附全名单） , 路桥网, 2021-05-16"
+  },
+  {
+   "url": "http://www.chongyi.gov.cn/cyxrmzf/myzj/201702/3aea8210d9044bea88df4b059a990daa.shtml",
+   "link_text": "\"江西省天然气管网工程赣州南支线（信丰-瑞金段）等项目第一次环境信息公示\"",
+   "context": "↑ 41.0 41.1 41.2 41.3 41.4 41.5 41.6 41.7 \"江西省天然气管网工程赣州南支线（信丰-瑞金段）等项目第一次环境信息公示\" . 2017-02-22 . Retrieved 2023-08-30 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.quannan.gov.cn/qnxxxgk/zdsjbg/202201/1a999e0f9d604224bcb03c694257d458.shtml",
+   "link_text": "\"关于申请核准江西省天然气管网工程赣州南（信丰-瑞金段）等4条支线项目（龙南-全南段）变更项目的请示\"",
+   "context": "↑ 42.0 42.1 42.2 \"关于申请核准江西省天然气管网工程赣州南（信丰-瑞金段）等4条支线项目（龙南-全南段）变更项目的请示\" . 2021-09-06 . Retrieved 2023-08-30 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-09-26-at-1.39.33-pm",
+   "link_text": "云山坝至茅溪天然气输气管道项目云山坝至茅溪天然气输气管道项目施工三标段评标结果公示",
+   "context": "↑ 云山坝至茅溪天然气输气管道项目云山坝至茅溪天然气输气管道项目施工三标段评标结果公示 , 采招网, 2024-09-06"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.ccpc360.com/bggg59218375210.html",
+   "link_text": "江西省天然气管网工程赣州南支线（149#阀室—大余分输清管站-大余阀室、大余分输清管站-信丰分输站、瑞金—会昌段）线路及场站施工招标公告变更公告",
+   "context": "↑ 江西省天然气管网工程赣州南支线（149#阀室—大余分输清管站-大余阀室、大余分输清管站-信丰分输站、瑞金—会昌段）线路及场站施工招标公告变更公告 , 中项网, 2024-07-27"
+  },
+  {
+   "url": "https://web.archive.org/save/https://m.thepaper.cn/baijiahao_13415114?sdkver=e06426d6&clientprefetch=1",
+   "link_text": "\"百年芳华 寻乌：奋力谱写高质量发展新篇章\"",
+   "context": "↑ \"百年芳华 寻乌：奋力谱写高质量发展新篇章\" . 2021-07-01 . Retrieved 2023-08-30 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://gas.in-en.com/html/gas-3672433.shtml",
+   "link_text": "\"江西省能源局批复省天然气管网工程干洲-奉新支线项目核准\"",
+   "context": "↑ 46.0 46.1 46.2 \"江西省能源局批复省天然气管网工程干洲-奉新支线项目核准\" . 2023-05-09 . Retrieved 2023-09-01 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://archive.org/details/screenshot-2024-10-03-at-5.08.57-pm",
+   "link_text": "江西省天然气管网工程干洲-奉新支线项目环境影响评价文件拟批准公示",
+   "context": "↑ 江西省天然气管网工程干洲-奉新支线项目环境影响评价文件拟批准公示 , 奉新县生态环境局, 2023-07-25"
+  }
+ ]
+}

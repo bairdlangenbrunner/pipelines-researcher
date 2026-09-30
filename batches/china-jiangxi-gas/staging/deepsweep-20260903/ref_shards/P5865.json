@@ -1,0 +1,387 @@
+{
+ "project_id": "P5865",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "segment_name": "Phase I Zhangshu Branch",
+ "sheet_row": 3329,
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "resolutions": [
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "__VALIDITY__",
+   "sentinel": "__VALIDITY__",
+   "flag": "capacity_discrepancy",
+   "values": {
+    "Capacity_sheet": "0.13",
+    "CapacityUnits_sheet": "bcm/y",
+    "Capacity_primary_doc": "0.005",
+    "CapacityUnits_primary_doc": "bcm/y (converted)"
+   },
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「供气规模5×10^6 Nm³/a」 = 5,000,000 Nm3/year = 0.005 bcm/y. The sheet's existing Capacity value is 0.13 bcm/y — a ~26x discrepancy, not a rounding difference. The wiki_attributions payload traces the 0.13 figure to a now-dead pipechina.com.cn .xls (404), so its original source can't be checked directly."
+    }
+   ],
+   "class_out": "CONFIRMED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "FLAG FOR MERGE, no value staged. The only segment-naming document found for this row (the jxgajc completion-acceptance filing) states 供气规模 (gas-supply scale) = 5×10^6 Nm3/a ≈ 0.005 bcm/y — roughly 1/26th of the sheet's current 0.13 bcm/y. This is NOT a rounding-tolerance disagreement (rule 4(e)), it is a material conflict, so per the BLANKS/UNRESOLVED convention I am NOT silently overwriting Capacity. The Capacity [ref] owed_ref_unit record below stays UNRESOLVED rather than either citing this document for the sheet's 0.13 value (it doesn't support that number) or overwriting to 0.005 off a single source without a second opinion. Possibilities for merge to weigh: (a) 0.13 bcm/y may be a whole-system or whole-Phase-I design capacity mis-attributed to this one 20.2 km branch; (b) the primary doc's 5×10^6 Nm3/a may itself describe only a design/planning-stage throughput distinct from the branch's actual full capacity. No second source was found stating a capacity figure for this branch specifically (see second-source search notes on the other units) — recommend Update search specifically for a capacity-bearing document before touching this cell."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Operator [ref]",
+   "tab": "operators_owners",
+   "kind": "RELEVANCE_REREAD",
+   "values": {
+    "Operator": "Jiangxi Natural Gas Pipeline Co., Ltd.",
+    "OperatorLocalLanguage": "江西省天然气管道有限公司"
+   },
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "RESOLVES the payload's relevance_reread task ('find a segment-naming source, or state why system-level is right'). This IS a segment-naming source: it names 樟树支线 throughout AND explicitly names 江西省天然气管道有限公司 as the commissioning/managing company for this exact project (see quotes on the Owner [ref] record above)."
+    },
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": null,
+     "name_level": "",
+     "note": "System-level corroboration kept alongside the segment-naming ref, per the relevance-reread task's own suggested resolution path."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": null,
+     "name_level": "",
+     "note": "System-level corroboration; also states 天然气管道公司 is the entity that invests in, builds, and OPERATES (负责投资建设及运营) the Phase I network."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "The two candidate refs already on this cell (qxb-pdf CCXI report, sse.com.cn bond report) name only the SYSTEM/company, not this segment — flagged by the payload as needing a segment-naming source. Found one: the jxgajc completion-acceptance filing (already the dominant document for nearly every other column on this row) explicitly names 江西省天然气管道有限公司 as the company that commissioned and manages THIS project. Keeping the two system-level refs alongside it as ownership/operator-identity corroboration, exactly as the payload's own task description suggested. Same company, same evidence base as the Owner [ref] record."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Fuel [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "Fuel": "Gas"
+   },
+   "value_cols": [
+    "Fuel"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「输气管道」(gas transmission pipeline) throughout; supply-scale given in Nm3 (natural gas units)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "PipelineType [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "value_cols": [
+    "PipelineType"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「项目建设一条高压管线」 (the project builds one HIGH-PRESSURE line) with DN508/L415 spec, described as running between a valve chamber tie-in and a new terminal station — a transmission-class configuration, not distribution."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Proposal [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "ProposalYear": "2017",
+    "ProposalMonth": "9"
+   },
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「2017年9月26日原宜春市环境保护局以宜环评字[2017]74号文对该项目办理了环评审批手续」 — EIA approval dated 2017-09-26, EIA approval reference number 宜环评字[2017]74号."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Construction [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "ConstructionYear": "2019",
+    "ConstructionMonth": "11"
+   },
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「工程于2019年11月开工建设」 — construction start, 2019-11 exactly."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Length [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "LengthKnown": "20.20",
+    "LengthKnownUnits": "km"
+   },
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「管道全长约20.2km，其中丰城市境内12.7km，樟树市境内7.5km」 — total length 20.2 km, split 12.7 km (Fengcheng) + 7.5 km (Zhangshu)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Diameter [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "Diameter": "508",
+    "DiameterUnits": "mm"
+   },
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「管线设计管径DN508，壁厚8mm」 — DN508, wall thickness 8mm, pipe grade L415 longitudinally-welded steel."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "SegmentCost [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "SegmentCost": "110000000.00",
+    "SegmentCostUnits": "RMB"
+   },
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「实际工程总投资11000万元，其中环保投资815万元，占工程实际总投资的7.4%」 — actual total investment 110,000,000 RMB (planned was 106,803,700 RMB, 10680.37万元)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED. This unit is currently single-sourced to the jxgajc completion-acceptance filing. Exhaustive second-source search performed this pass: (1) all 24 URLs in harvest_pool_live fetched and keyword-scanned — 23 are irrelevant to 樟树支线 specifically (different branches, soft-404s, or system-level-only content not naming this segment); the one weak hit, https://www.sohu.com/a/466792472_661255 (a 2021 Jiangxi provincial key-projects list article, verified live via url_verifier this pass), lists '36 樟树支线' as item #36 in a bare numbered project list — confirms the project's EXISTENCE as a named 2021 provincial key project (consistent with a 2019-2021 construction window) but carries NO per-item length/diameter/date/cost data, so it cannot independently corroborate this specific value; not cited as a ref for that reason. (2) two WebSearch passes for a second segment-naming document (tender award, provincial/municipal approval) turned up two live-looking leads that could not be verified this pass: a 江西省招标投标网 (jxtb.org.cn) construction tender-award notice for this exact line+station scope, currently returning HTTP 567 (WAF challenge — same signature as the documented m.qcc.com precedent), with the Wayback availability API persistently rate-limited (HTTP 429, 3 retries with increasing backoff) during this session; and a www.jxsks.com (江西省水利厅?) water-and-soil-conservation page returning a CMS business-logic error ('主键编号不能为空!' / primary key ID cannot be empty) on two URL-parameter variants, not a confirmed 404/410 so not treated as dead, but its content could not be read and is therefore not cited. Neither candidate is fabricated or cited — both are named here as leads for a future pass. Keeping class_out=REVERIFIED at medium/independent=false per the P4789 precedent for a single-source-confirmed, second-source-unavailable unit, rather than REFS_ADDED (no NEW ref was actually added — the same document was re-verified)."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Location [ref]",
+   "kind": "SECOND_SOURCE_OWED",
+   "values": {
+    "StartLocation": "Tuochuan Town",
+    "StartPrefecture/District": "Fengcheng",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Salt Chemical Industry Base",
+    "EndPrefecture/District": "Zhangshu",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "proposed_refs": [
+    "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx"
+   ],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「江西省天然气管网一期工程樟树支线项目位于樟树市、丰城市境内」 (the project lies within Zhangshu City and FENGCHENG City — no third county named) and 「其中丰城市境内12.7km，樟树市境内7.5km」 (12.7 km within Fengcheng, 7.5 km within Zhangshu). The pipeline starts at 拖船阀室 (Tuochuan Valve Chamber, in Tuochuan Town) and ends at the new 樟树末站 (Zhangshu Terminal Station) at the Zhangshu Salt Chemical Industry Base. Tuochuan Town (拖船镇) is administratively part of FENGCHENG, not Yifeng — the sheet's current StartPrefecture/District value."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SECOND SOURCE OWED for Location, carrying forward the payload's own flagged PROPOSED CORRECTION: StartPrefecture/District currently reads 'Yifeng' on the sheet; the primary document states the project runs only through Zhangshu and Fengcheng (never naming Yifeng), with the 12.7 km / 7.5 km county split matching Fengcheng (start side) / Zhangshu (end side). This is a correction sourced from the SAME single document already cited for the row (not a second independent source), so I am staging it as REVERIFIED with the corrected value rather than REFS_ADDED, and calling it out explicitly here rather than silently changing it, per the standing rule that a ResearcherNotes cell can flag a deliberate GEM divergence for a human to verify before applying. Second-source search for an independent confirmation of the Fengcheng correction specifically: same exhaustive search as the other second_source_owed items above (harvest pool + 2 WebSearch passes) found no additional segment-naming document; the two new-but-blocked leads (jxtb.org.cn tender notice, jxsks.com page) are noted there and would be the next things to check for this cell too, since a tender notice would likely restate the route/county breakdown."
+  },
+  {
+   "project_id": "P5865",
+   "sheet_row": 3329,
+   "ref_col": "Capacity [ref]",
+   "kind": "OWED_REF_UNIT",
+   "values": {
+    "Capacity": "0.13",
+    "CapacityUnits": "bcm/y"
+   },
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "proposed_refs": [],
+   "verifications": [
+    {
+     "url": "https://web.archive.org/web/20230902005946/http://jxgajc.com/Hr/show-11456.aspx",
+     "ok": true,
+     "contains_value": false,
+     "name_found": true,
+     "name_matched": "樟树支线",
+     "name_level": "segment",
+     "note": "「供气规模5×10^6 Nm3/a」 = 0.005 bcm/y, NOT 0.13 bcm/y — does not support the sheet's current Capacity value. See the __VALIDITY__ sentinel above for the full discrepancy writeup."
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "OWED_REF_UNIT: sheet carries Capacity=0.13 bcm/y with no [ref]. The only segment-naming document found for this row states a materially different figure (0.005 bcm/y, ~26x smaller) — see the __VALIDITY__ sentinel record above. Not citing the primary document for the existing 0.13 value (it doesn't support that number), and not overwriting to 0.005 off a single source without a second opinion on a ~26x swing. Searched the full 24-URL harvest pool and both WebSearch passes for any other capacity-bearing document for this branch specifically; found none. Leaving UNRESOLVED; the __VALIDITY__ record carries the merge-facing flag."
+  }
+ ]
+}

@@ -1,0 +1,276 @@
+{
+ "project_id": "P4784",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "segment_name": "Phase I, Yongxiu-Wuning-Xiushui Branch",
+ "sheet_row": 2673,
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "resolutions": [
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "http://jxganan.com/anquanyanshoupingjia/9746.html",
+    "https://news.cnr.cn/native/city/20201022/t20201022_525306219.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "http://jxganan.com/anquanyanshoupingjia/9746.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK. Segment-level: '项目名称：江西省天然气管网一期工程永修－武宁－修水支线项目'; describes it as a gas-transmission line (设计输气规模, D323.9mm, 6.3MPa). Confirms Fuel=Gas at segment level."
+    },
+    {
+     "url": "https://news.cnr.cn/native/city/20201022/t20201022_525306219.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "HAND-CONFIRMED UPGRADE: url_verifier reports 200 but fails the fuzzy name check because the page serves GBK-encoded bytes that a UTF-8 read renders as mojibake (both the tool's default decode and my first curl attempt hit this). Re-decoded the raw bytes as GBK myself and the page headline reads '江西省天然气管网一期工程在九江修水开工' with body text '江西省天然气管网一期工程（永修——武宁——修水支线工程）开工建设...央广网九江10月22日消息...随着江西省天然气管道有限公司总经理陈东的一声指令，江西省天然气管网一期工程（永修——武宁——修水支线工程）在修水县庙岭乡大路村开工'. This is SEGMENT-level naming (uses the double-em-dash form of the branch's own name twice), not system-only as the payload's automated name_check assumed -- that check evidently ran on the same mis-decoded bytes. Confirms Fuel=Gas (天然气) at segment level too. FLAG FOR ORCHESTRATOR: this cnr.cn URL is cited system-level-only across several sibling shards in this batch (P4783, P4781, P4792 all touch it) -- the GBK charset issue likely affected those name_checks identically; worth a batch-wide re-check of this one URL's name_level."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Both refs re-verified live and re-read by hand. No change to the value. Upgraded cnr.cn from system-level to segment-level naming per the GBK-decode finding above -- both sources are now independently segment-level, which is stronger than the payload's own tier-high justification assumed."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+    "http://swj.jiujiang.gov.cn/zwzx_213/ztzl/ysznzl/202306/t20230609_6056040.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Re-verified live (url_verifier OK). System-level DRC plan classification, as in the payload -- kept alongside the new segment-level ref below rather than replaced."
+    },
+    {
+     "url": "http://swj.jiujiang.gov.cn/zwzx_213/ztzl/ysznzl/202306/t20230609_6056040.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "NEW SEGMENT-LEVEL SOURCE (from leads_by_target.json, verified myself with url_verifier --name, then read the full body by curl). Jiujiang municipal '十四五' energy development plan, dated 2023-06-09: '继续完成省级天然气长输管网永修—武宁—修水支线、湖口—彭泽支线建设' -- explicitly calls this named branch part of the 省级天然气长输管网 (provincial natural-gas LONG-DISTANCE TRANSMISSION network, i.e. 长输 = transmission), resolving the relevance-reread directly: a segment-naming source using the transmission classification term itself, not just system-level DRC-plan inference."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Relevance-reread resolved with a genuine segment-naming source (not just the 'one integrated network' justification): the Jiujiang 十四五 energy plan names this exact branch as part of the 长输 (long-distance transmission) network. Tier raised from medium to high: one system-level + one segment-level source, independent origins (industry policy compiler vs. municipal government), agree."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "values": {
+    "ConstructionYear": "2020",
+    "ConstructionMonth": "10"
+   },
+   "proposed_refs": [
+    "https://news.cnr.cn/native/city/20201022/t20201022_525306219.shtml",
+    "http://www.wuning.gov.cn/zwzx/wnyw/202104/t20210413_4831931.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://news.cnr.cn/native/city/20201022/t20201022_525306219.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "HAND-CONFIRMED (see Fuel unit above for the GBK-decode explanation). Datelined 2020-10-22, on the groundbreaking day itself: '10月22日上午...江西省天然气管网一期工程（永修——武宁——修水支线工程）在修水县庙岭乡大路村开工'. Now segment-level (not system-only as the payload's automated check found), and gives the exact day (Oct 22, 2020), not just the month."
+    },
+    {
+     "url": "http://www.wuning.gov.cn/zwzx/wnyw/202104/t20210413_4831931.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier FAILs on literal substring '2020' because the article (dated 2021-04-13) uses the relative date '去年10月份' ('last October', i.e. October 2020 relative to the April 2021 publication date) rather than the literal digits. HAND-CONFIRMED by reading the full body: '江西省天然气管网一期工程永修—武宁—修水支线工程自去年10月份开工以来...总投资5.98亿元，规划建设管道全长138千米，年输气能力3.13亿立方米...整个工程预计明年10月竣工。' This is a genuine, segment-level, independently-dated (different publisher, 6 months later) corroboration of the Oct 2020 construction start."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "researcher_notes": "Relevance-reread resolved with TWO segment-level sources (cnr.cn news wire on the groundbreaking day + Wuning county government follow-up 6 months later), both independently naming this branch and agreeing on October 2020. Tier raised from medium to high."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "values": {
+    "Pressure": "6.30",
+    "PressureUnits": "MPa"
+   },
+   "proposed_refs": [
+    "http://jxganan.com/anquanyanshoupingjia/9746.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://jxganan.com/anquanyanshoupingjia/9746.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK for '6.3MPa' + name. Hand-read body: '该工程设计输气规模为3.1×108Nm3/a，设计压力6.3MPa，线路长约138km，管径D323.9mm' -- exact segment-level match, confirming the payload's REPOINT (cnr.cn does not mention pressure in any form, confirmed again by hand on the GBK-decoded body)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "REPOINT confirmed by hand (name_found was 'unchecked' in the payload; now confirmed segment-level). Second-source search attempted: read all 25 harvest URLs, the CCXI report (no pressure figure), the qianzhan DRC plan (no per-segment pressure), and the new jiujiang.gov.cn/swj document (no pressure figure) -- no second document states this segment's design pressure. Left single-sourced at medium; flagging second_source_owed as searched-not-found rather than silently dropping it."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "300",
+    "DiameterUnits": "mm"
+   },
+   "proposed_refs": [
+    "http://jxganan.com/anquanyanshoupingjia/9746.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://jxganan.com/anquanyanshoupingjia/9746.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "url_verifier OK for 'D323.9' + name. Body states '管径D323.9mm' -- the standard OD figure for nominal DN300 pipe (OD 323.9mm = DN300 in Chinese pipe convention). Judgment call already documented in the payload; re-confirmed segment-level by hand."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Same second-source search as Pressure above (all harvest URLs, CCXI, qianzhan, jiujiang.gov.cn/swj) -- none give a segment-specific diameter figure. Left single-sourced at medium."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "Operator [ref]",
+   "tab": "operators_owners",
+   "value_cols": [
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家管网集团东部原油储运有限公司 [46%]"
+   },
+   "proposed_refs": [
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+    "http://jxganan.com/anquanyanshoupingjia/9746.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Re-verified live. '天然气集团持有天然气管道公司54%的股权，剩余46%股权由国家管网集团东部原油储运有限公司（原'中国石化管道储运有限公司'）持' -- names the exact 54/46 split AND the specific 46%-holder subsidiary (not the generic PipeChina parent). System-level (names 江西省天然气管网), per RELAUNCH_NOTES item 2 this is the PHASE I network company (this row's segment_name says 'Phase I')."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "CCXI 2022 credit rating report (different subject/date/author than the SSE bond tracker -- genuinely independent). Confirms 天然气管道公司 54% stake and that this entity operates the Phase I network. Checked for a segment-level mention of 永修/武宁 -- none found (system-level only)."
+    },
+    {
+     "url": "http://jxganan.com/anquanyanshoupingjia/9746.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "SEGMENT-LEVEL identity confirmation: '项目简介 建设单位：江西省天然气管道有限公司 项目名称：江西省天然气管网一期工程永修－武宁－修水支线项目' -- names THIS exact segment's operating/constructing entity as 江西省天然气管道有限公司, which is the Phase I JV company that the SSE/CCXI sources establish is 54% owned by 江西省天然气集团 / 46% by 国家管网集团东部原油储运有限公司."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "researcher_notes": "Phase I row (segment_name explicitly says 'Phase I') -> the 54/46 JV model applies per RELAUNCH_NOTES item 2. VALUE CHANGE from the payload's carried value: the 46% holder was recorded as the generic 'National Petroleum and Natural Gas Pipeline Network Group' (国家石油天然气管网集团有限公司, the PipeChina parent); both independent primary sources actually name the SPECIFIC SUBSIDIARY 国家管网集团东部原油储运有限公司 (formerly 中国石化管道储运有限公司). Corrected to the specific subsidiary, consistent with sibling rows P4783/P4791 in this same batch. Tier held at medium (not high) because the 54/46 split itself is still sourced system-level only; the new jxganan.com ref adds segment-level operator-identity corroboration but not a segment-level ownership percentage."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [
+    "http://jxganan.com/anquanyanshoupingjia/9746.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://jxganan.com/anquanyanshoupingjia/9746.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Re-verified live. Safety-acceptance EVALUATION report dated 2024-11-14, roughly a year after the 2023-10-27 trial-production start -- its own existence (a completion/acceptance evaluation, not a pre-construction document) is strong indirect evidence of operating status, and it states the evaluation reached a positive conclusion ('综上所述...') for the completed segment."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "second_source_owed: searched the CCXI report (no 永修/武宁 mention, pdftotext-checked directly, system-level only), the unreachable jxic.yingcaicheng.com completion-acceptance procurement notices (see Start unit), and multiple WebSearch queries for a gas-connection/通气仪式 news article -- none found. Kept the existing archive.org screenshot item alongside (not a 404, not droppable) plus this live citable source. Tier held at medium (single citable source for the operating-status VALUE itself, though corroborated indirectly by the Jiujiang 2023-06 plan showing active completion work and the Construction unit's Oct 2020 start)."
+  },
+  {
+   "project_id": "P4784",
+   "sheet_row": 2673,
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [
+    "http://jxganan.com/anquanyanshoupingjia/9746.html",
+    "http://www.wuning.gov.cn/zwzx/wnyw/202104/t20210413_4831931.html",
+    "http://news.cnr.cn/native/city/20201022/t20201022_525306219.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.wuning.gov.cn/zwzx/wnyw/202104/t20210413_4831931.html",
+     "ok": true,
+     "contains_value": true,
+     "note": "Re-fetched 2026-09-02, live. States 规划建设管道全长138千米 (138km) and 年输气能力3.13亿立方米 (0.313 bcm/y, matches staged 0.31), plus investment 598M yuan — matching all three of the sheet's already-staged values."
+    },
+    {
+     "url": "http://jxganan.com/anquanyanshoupingjia/9746.html",
+     "ok": false,
+     "contains_value": null,
+     "note": "Re-fetch attempt 2026-09-02 got ECONNREFUSED — host currently unreachable. This is an access failure (standing rule 5), not a 404; the ref is already carried in already_sourced and is NOT dropped."
+    }
+   ],
+   "class_out": "CONFIRMED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "[carried from v2 deepsweep-20260902@2026-09-02] v1's prior_finding flagged that the route-vs-sheet length ratio is 1.87x and asked to re-check whether the existing refs actually support 138.00km / 0.31 bcm/y before trusting them. Re-verified: wuning.gov.cn (county government, independent host, re-fetched live 2026-09-02) explicitly states 138km and 0.313 bcm/y capacity in its own text, corroborating jxganan.com's already-carried figures via a genuinely separate origin (government vs. safety-association site vs. news.cnr.cn state radio, 3 distinct hosts total). Conclusion: the CELL VALUES ARE well-sourced — the 1.87x discrepancy is very likely a route-geometry (GIS line-drawing) artifact, not a ref-sourcing defect. Out of scope to fix the route itself (standing rule 6); flagging here so the geometry, not the sourced length value, is what gets queued for redraw. jxganan.com itself could not be re-confirmed today (ECONNREFUSED) but is kept per standing rule 5.",
+   "carried_from": "deepsweep-20260902@2026-09-02"
+  }
+ ]
+}

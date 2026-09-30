@@ -1,0 +1,133 @@
+{
+ "contract": [
+  "EVERY unit below is OWED a record — there is no such thing as a unit that needed no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is what this leg is FOR.",
+  "A unit whose class is UNREPORTED_BLANK is the INVERSE case — the sheet cell is blank, so there is no recorded value to agree with and you are proposing one. Put it in the record's `values` dict, keyed by the column names in that unit's `value_cols` (e.g. {\"Operator\": \"WBI Energy Transmission, Inc.\"}), alongside the refs. The schema DOES carry values — a proposed value stated only in researcher_notes leaves a ref with no value behind it, which is an orphan [ref] cell and gets stripped (2026-09-09: two of five recovered blanks arrived this way).",
+  "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state it. 'Confirmed as recorded' in your summary and nowhere machine-readable is indistinguishable from never having checked it.",
+  "A source agreeing within rounding IS a ref (51.97 mi + 0.5 mi against a recorded 52; 38.5 against 39): REFS_ADDED at medium/high with the discrepancy in researcher_notes, plus a validity `spec` concern if the gap is material. UNRESOLVED means nothing was found — never that something slightly different was found.",
+  "UNRESOLVED is a legitimate outcome ONLY with researcher_notes saying what you searched. An empty UNRESOLVED reads exactly like a dropped unit and is treated as one.",
+  "Read every document you open to exhaustion, for EVERY column and sibling row — one FERC notice routinely sources Length, Diameter, Cost, Construction and Start at once.",
+  "Two independent sources per data point is the target; the same wire story republished does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
+  "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — the research is done and vanishes.",
+  "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left unreported and every record that cannot merge. It is blocking: do not finish red."
+ ],
+ "write_shard_to": "batches/china-jiangxi-gas/staging/deepsweep-20260903/ref_shards_recovery/P4946.json",
+ "refs_already_on_this_row": [
+  {
+   "url": "https://www.mee.gov.cn/gkml/sthjbgw/spwj1/201612/t20161222_369429.htm",
+   "sourced": [
+    "Capacity [ref]",
+    "Diameter [ref]",
+    "Fuel [ref]",
+    "FuelSource [ref]",
+    "Start [ref]",
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "http://hunan.gov.cn/hnszf/szf/hnzb_18/2013_98309_18/2013nd8q_18/szfbgtwj_98451_18/201304/t20130428_4700588.html",
+   "sourced": [
+    "Capacity [ref]",
+    "Diameter [ref]",
+    "Fuel [ref]",
+    "Length [ref]",
+    "Start [ref]",
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "https://www.pipechina.com.cn/front/news/3002597.html",
+   "sourced": [
+    "Operator [ref]",
+    "Owner [ref]"
+   ]
+  }
+ ],
+ "coverage_gate": "python scripts/check_shard_coverage.py --staging batches/china-jiangxi-gas/staging/deepsweep-20260903 --pid P4946",
+ "project_id": "P4946",
+ "pipeline_name": "West-East Gas Pipeline 2",
+ "wiki": "https://www.gem.wiki/West-East_Gas_Pipeline_2_Zhangshu-Xiangtan_Branch",
+ "n_units": 5,
+ "units": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2832,
+   "segment_name": "Zhangshu-Xiangtan Branch",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 2832,
+   "segment_name": "Zhangshu-Xiangtan Branch",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 2832,
+   "segment_name": "Zhangshu-Xiangtan Branch",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "values": {
+    "StartYear1": "2011",
+    "StartMonth1": "7"
+   },
+   "primary_value": "2011",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 2832,
+   "segment_name": "Zhangshu-Xiangtan Branch",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "4.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "4.00",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 2832,
+   "segment_name": "Zhangshu-Xiangtan Branch",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "660",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "660",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  }
+ ],
+ "seed_citations": []
+}

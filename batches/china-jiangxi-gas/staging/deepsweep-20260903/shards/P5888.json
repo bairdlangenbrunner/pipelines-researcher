@@ -1,0 +1,327 @@
+{
+ "batch": "P5888",
+ "harvest_opened": 24,
+ "resolutions": [
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "construction"
+   },
+   "proposed_refs": [
+    "https://www.sohu.com/a/466792472_661255"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sohu.com/a/466792472_661255",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "万载-铜鼓支线",
+     "note": "Re-verified fresh this pass with url_verifier.py --name '万载-铜鼓支线' -> OK, 200 + expected content present. Direct read confirms: article '总投资15513亿元！江西省2021年实施重点项目2033项（附全名单）' (dated 2021), section (三) 能源基础设施领域（44项） [Energy Infrastructure sector, 44 items], numbered list item 35 = '万载-铜鼓支线' -- an exact name match to this row. This is a mixed-commodity provincial project roster (the same 44-item list also contains #40 樟树-萍乡成品油管道工程 [oil products pipeline], #42 新昌电厂...煤炭吞吐储运 [coal handling], #43 奉新抽水蓄能 [pumped hydro storage], #44 湖口LNG) -- so while it corroborates the project's EXISTENCE and active-implementation status as of 2021 (supporting Status=construction), it is a name-only roster entry and does NOT itself state Fuel=Gas or PipelineType=transmission for this specific item (see Fuel/PipelineType records below)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "value_col": "Status",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Second source owed and NOT found despite exhaustive search this pass. The single most promising lead (from cross_row_leads in shards/P4792.json, also duplicated in leads_by_target.json) is http://www.tonggu.gov.cn/tgxrmzf/rdxx/202412/409e0f15a6f947a39c39692316d81d5c.shtml, a county-government article reportedly titled '铜鼓支线，开通！' describing construction starting 2022-03-21 and gas delivered to a new Tonggu distribution station 2024-10-30. leads_by_target.json's stored verification for this URL (ok:true, name_found:true) is STALE/WRONG -- I independently re-ran url_verifier.py --name and got a FAIL ('200 but name not found (fuzzy)'), then confirmed by hand: the URL now returns HTTP 302 -> redirects to the bare homepage http://www.tonggu.gov.cn/ (site relaunched 2026-04-09, confirmed via curl -L this session, 385704 bytes, title '铜鼓县人民政府', MD5 48459268337b9b462bbbc104069e865b -- a pure homepage JSON news-feed shell with only unrelated articles, no '铜鼓支线' or '万载' content; the two apparent '开通' substring hits are false positives inside an unrelated headline '...被公开通报!'). Tried a second candidate path for the same article id (tgxrmzf/ldxxhdyjh46/202412/...) -- byte-identical homepage shell. No Wayback Machine capture exists for either URL (CDX API queries, matchType=exact and domain+date-range, both returned [] every time tried); archive.today also returns 404/no snapshot. This is therefore a genuine, confirmed access failure (soft-404 via site redesign), NOT evidence the article never existed -- per standing rule this is documented in prose rather than treated as a dead ref or as corroboration. A second, NEW candidate second-host source was also found and chased: https://jxic.jczh.com/notice/1807 (Jiangxi Investment Group e-procurement tender-bulletin platform), whose search-snippet explicitly names '万载-铜鼓支线' in a construction/NDT tender context -- but it is blocked by an Aliyun WAF slider-CAPTCHA interstitial (HTTP 200, ~16KB, no real content) on every attempt, including a fresh recheck this session, 4 guessed API-endpoint variants, and a Wayback capture from 2026-09-09 (which itself only archived the CAPTCHA shell, confirming this is a persistent access failure at the CDN/WAF level, not a dead link). Internet Archive's own services were confirmed TEMPORARILY OFFLINE site-wide during part of this session (its own status page returned 'Internet Archive services are temporarily offline' plus repeated 429s on the CDX/availability APIs) -- an independent confirmation that blocked archive lookups this pass are a tooling/outage issue, not evidence about the target URLs. Exhaustively opened all 24 harvest_pool_live URLs plus the 7 GEM-internal archive.org screenshot items (uncitable per standing rule 1 regardless) -- none besides sohu.com name '万载-铜鼓' in a way relevant to this segment specifically. 2-HOST FLOOR NOT CLEARED: only sohu.com is verified/citable this pass; the reasons a second host could not be added are the specific, exhaustively-documented access failures above (soft-404 site redesign + persistent WAF block + temporary IA outage), not a lack of searching."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "__STATUS__",
+   "value_cols": [],
+   "values": {
+    "Status": "construction"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "CONFIRMED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "verdict: unclear (carried forward from v2/carried_sentinels_v2, substantially deepened this pass, not a repeat). The carried 'construction' status is NOT contradicted by anything citable found this pass, and IS consistent with strong-but-uncitable evidence: a WebSearch-surfaced (never independently confirmed against a live/archived page) county-government article describes the Wanzai-Tonggu branch beginning construction 2022-03-21 and delivering gas to a new Tonggu distribution station on 2024-10-30, which -- if it could be verified -- would move this row to 'operating' with a 2024-10-30 completion date. I exhausted every avenue to independently verify this (see Status [ref] record for the full access-failure chain: tonggu.gov.cn now 302-redirects to a homepage shell with no matching content, no Wayback capture under matchType=exact or a domain+date-range CDX query, no archive.today snapshot, and a second candidate document -- a jxic.jczh.com tender bulletin also naming this branch -- is WAF-CAPTCHA-blocked on every attempt including a fresh recheck). Per standing rule ('cannot verify a URL? mark UNRESOLVED, describe in prose'), I am NOT staging a Status change to 'operating' and NOT citing the tonggu.gov.cn or jxic.jczh.com content anywhere, despite it being facially plausible and internally consistent (dates postdate the qianzhan 2014 DRC plan, which does NOT name this segment at all -- see __VALIDITY__ -- consistent with Wanzai-Tonggu being a later, ~2022-onward planning addition not captured by the 2014-era planning document). Recommend at merge: if a human researcher can reach tonggu.gov.cn through a different network path/VPN, or locate a Baidu/Sogou cache of the original article, or get past the jxic.jczh.com WAF, this row should very likely be re-reviewed for a Status change to 'operating' (2024-10-30)."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "CONFIRMED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Reinforcing/updating shards/P4792.json's __VALIDITY__ flag from this row's side, for human review, not acted on unilaterally: P4792 (宜丰-铜鼓-修水, sourced only from the 2014 DRC plan's bundled 110km Yifeng-Tonggu-Xiushui table row, never confirmed built) raised the possibility that this row (P5888, Wanzai-Tonggu, a DIFFERENT routing into Tonggu county from the west/Wanzai side rather than Yifeng) may represent the ROUTE THAT ACTUALLY GOT BUILT, superseding the 2014-era Yifeng-Tonggu proposal. I independently confirm from this row's side: (1) the qianzhan 2014 DRC plan PDF (dominant_document, re-checked by direct pdftotext extraction this pass) does NOT name '万载-铜鼓' anywhere in its Table 5 segment list (only '宜丰-铜鼓-修水' 110km and '宜春-万载' 31.9km appear), and its Table 4 places both 万载县 and 铜鼓县 in the 'not yet connected, expected near-term' category as of 2014 -- consistent with Wanzai-Tonggu being a LATER planning addition not captured by the 2014 document, i.e. plausibly the eventual real routing that connected Tonggu county. (2) I could NOT independently verify the tonggu.gov.cn completion-notice lead that would confirm this (see __STATUS__ and Status [ref] records for the full, exhaustively-documented access-failure chain). Recommend: a human pass across P4792/P5888/P4784 (the qianzhan plan's three adjacent 2014-era northwest-Jiangxi routing options) once someone can access the blocked tonggu.gov.cn/jxic.jczh.com sources, to determine whether P4792 should move to shelved/cancelled or whether both routes were in fact built as separate, non-overlapping segments (Tonggu could plausibly be fed from two directions). Not recommending any status/existence change on either row from this evidence alone."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "Fuel",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No document found that explicitly states this specific segment ('万载-铜鼓支线') carries natural gas, as opposed to merely being a member of the 'Jiangxi Natural Gas Pipeline Network' family. The qianzhan 2014 DRC gas-utilization plan (this row's most-cited dominant_document) does NOT name Wanzai-Tonggu at all (see __VALIDITY__). The only source that names this segment directly (sohu.com 2021 provincial project roster) lists it as item 35 of a 44-item MIXED energy-infrastructure roster that also includes an oil-products pipeline (#40), coal handling (#42), and pumped hydro storage (#43) -- so its presence on that list does not itself establish Fuel=Gas (a value contextually inherited from the row's own GEM classification/wiki, which per standing rule cannot be used as the ref). Contextual signal worth recording but not citable: roster items #32 (乐平德兴婺源支线) and #33 (永修武宁修水支线), immediately adjacent to #35 on the same list, are confirmed GEM gas-network branch rows (P4791, P4784) -- suggesting #35 sits within a gas-branch cluster, but this is inference, not a stated fact. Not forced; left UNRESOLVED per standing rule rather than defaulted."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "PipelineType",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Same search and same reasoning as Fuel [ref] above -- no document states this segment is a transmission (vs. distribution/gathering) line specifically. Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "ConstructionYear",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No citable source states a construction start date for this segment. FLAG FOR HUMAN REVIEW: the row's carried default (2021-12) is NOT corroborated by anything found this pass, and the uncitable tonggu.gov.cn WebSearch lead (see Status [ref] notes) instead describes construction beginning 2022-03-21 -- a different year/month than the carried default. I cannot verify the 2022-03-21 date (same access-failure chain as the Status lead) so I am not proposing it as a replacement value, but flagging the discrepancy so a human with better access to tonggu.gov.cn can adjudicate which date is right. Exhaustive search: all dominant_documents, all 24 harvest_pool_live URLs, and the two new leads (tonggu.gov.cn, jxic.jczh.com) all chased down; none citable for this specific value."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "LengthKnown",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No document opened this pass states a length for this segment. The wiki's own candidate source for this value (gas.in-en.com/html/gas-3651243.shtml) is in harvest_pool_failed (HTTP 403) and was re-attempted fresh this pass via direct curl with a browser UA -- connection failed outright (curl exit, no response). Wayback lookup for that URL could not be completed this pass (archive.org's own services were confirmed temporarily offline / rate-limiting site-wide during this session -- 429s and an 'Internet Archive services are temporarily offline' status page, an access failure, not a dead-link finding). Not forced; recommend a human retry gas.in-en.com or its Wayback capture once IA/the origin are reachable again."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Diameter [ref]",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "Diameter",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Same access-failure chain as Length [ref] above (gas.in-en.com is the wiki's candidate source for this value too, and is currently unreachable + IA temporarily offline this session). Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "StartLocation",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No citable document gives endpoint detail (Gaolingxia/Sanxing Town, Wanzai -> Wujiachong/Yongning Town, Tonggu) for this segment. Note for human review only, NOT staged: the uncitable tonggu.gov.cn lead describes a Tonggu-side terminus at 'Huangxi Village, Paibu Town' (黄溪村, 派埠镇) -- a DIFFERENT township than this row's carried 'Yongning Town' -- which, if the lead were verifiable, might indicate the carried Location values need revision. Cannot act on this without a citable source. Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "SegmentCost [ref]",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "SegmentCost",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Same access-failure chain as Length/Diameter above (gas.in-en.com, the wiki's likely source for the carried 280,000,000 RMB figure, is unreachable this session; IA also temporarily offline). Note for human review only: the uncitable tonggu.gov.cn lead separately mentions a much smaller figure, ~14,000,000 RMB, but explicitly as the investment for ONE new Tonggu-side distribution station, not the whole branch pipeline -- likely a different cost scope than SegmentCost (whole-segment construction cost), not necessarily a conflicting figure, but noted so nobody conflates the two if the lead is later confirmed. Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "values": {},
+   "tab": "operators_owners",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "value_col": "Operator",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "DECISION OWED AT MERGE -- Phase I vs Phase II ambiguity, same defect pattern RELAUNCH_NOTES item 9 flagged for P4791. The row's carried default (inherited from the GEM wiki page, NOT independently verified by me) is the Phase I JV split: 江西省天然气集团有限公司 [54%] / 国家石油天然气管网集团有限公司 [46%] (i.e. 江西省天然气管道有限公司). I fetched and read the SSE bond tracking report myself (dominant_document, https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf, prose around lines 595-665) and confirmed the Jiangxi network is explicitly run by TWO SEPARATE ENTITIES: 江西省天然气管道有限公司 (the 54/46 JV -- Phase I) and 江西省天然气集团有限公司管道分公司 (100% Group-owned Pipeline Branch Company -- Phase II), with the report's own footnote 5 confirming the 54/46 split applies ONLY to the former. The SSE report does not name this specific branch, so it cannot resolve which entity applies here. The uncitable jxic.jczh.com tender bulletin (WAF-blocked, see Status [ref]) explicitly names '管道分公司' -- the wholly Group-owned Phase II entity, NOT the 54/46 JV -- as the tendering owner for a project matching this branch's name, which would mean the carried default is WRONG for this row (mirroring exactly the P4791 defect RELAUNCH_NOTES flagged). I cannot stage either value (the carried default or the alternative) without a citable segment-naming source, so leaving this UNRESOLVED rather than guessing. Flagging explicitly for merge-time human decision: if/when someone can read the jxic.jczh.com bulletin (or find another source naming this branch's specific operating entity), resolve Operator/Owner toward whichever entity it actually names -- do not default to copying the wiki's 54/46 split onto this row without that check."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Capacity [ref]",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "kind": "FILL",
+   "value_col": "Capacity",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No source states a transmission capacity for this segment specifically. The uncitable tonggu.gov.cn lead mentions a 'design capacity 20,000 m3/hour' but explicitly for the new Tonggu DISTRIBUTION STATION, not the transmission pipeline itself, and is unverifiable regardless. Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "kind": "FILL",
+   "value_col": "StartYear1",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No citable evidence this segment has begun commercial gas flow (row remains 'construction'). The uncitable tonggu.gov.cn lead describes gas delivered to Tonggu's new distribution station 2024-10-30 -- if verified, this would be the Start date and would also move Status to 'operating' -- but per the exhaustively documented access-failure chain (see Status [ref]) I cannot cite it. Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%",
+    "Owner2",
+    "Owner2%"
+   ],
+   "values": {},
+   "tab": "operators_owners",
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "kind": "FILL",
+   "value_col": "Owner1",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "Same Phase I/Phase II ownership-structure ambiguity as Operator [ref] above -- see that record for the full reasoning (SSE report's two-entity structure; uncitable jxic.jczh.com bulletin naming the Phase II 管道分公司 for this specific project, in tension with the wiki-inherited Phase I 54/46 split). Left UNRESOLVED rather than defaulting to the unverified wiki value; same decision owed at merge."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "kind": "FILL",
+   "value_col": "FuelSource",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "FuelSource is the upstream field/plant feeding the line, not the commodity (gem_schema.md gotcha, also documented in shards/P4792.json) -- never defaulted to 'Natural Gas'. No document found attributes a specific upstream field/interconnection to this branch; the province's gas is fed from multiple trunk interconnections (川气东送, 西气东输二线/三线, 湖口 LNG per the SSE report) without segment-specific attribution to Wanzai-Tonggu. Left blank per the documented gotcha rather than defaulted."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "kind": "FILL",
+   "value_col": "Pressure",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No EIA/completion-acceptance document exists for this segment (the document class that would normally state 设计压力). Quannan 2024 emergency plan gives pressures only for the four Ganzhou-south branches (P4785-P4788), not this row. Not forced."
+  },
+  {
+   "project_id": "P5888",
+   "sheet_row": 3351,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "kind": "FILL",
+   "value_col": "ProposalYear",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No proposal-stage document found for this specific segment. Notably, the qianzhan 2014 DRC plan (the source that supplies ProposalYear for most other Jiangxi grid rows including sibling P4792) does NOT name '万载-铜鼓' anywhere in its 72-segment Table 5 list -- confirmed by direct pdftotext re-extraction this pass -- meaning this branch is not covered by that 2014-era planning document at all and is very likely a later (post-2014, plausibly ~2021-2022 per the sohu.com roster and the uncitable tonggu.gov.cn lead) planning addition. No earlier proposal-stage document was found to fill this. Not forced."
+  }
+ ],
+ "cross_row_leads": [
+  {
+   "project_id": "P4792",
+   "url": "http://www.tonggu.gov.cn/tgxrmzf/rdxx/202412/409e0f15a6f947a39c39692316d81d5c.shtml",
+   "facts": "UPDATE to the lead P4792's shard filed toward P5888 (same URL, reversed direction): independently re-checked this URL fresh this session. It now returns HTTP 302, redirecting to the bare homepage http://www.tonggu.gov.cn/ (385704 bytes, title '铜鼓县人民政府', MD5 48459268337b9b462bbbc104069e865b), which contains NO '万载' or '铜鼓支线' content (the two superficial '开通' substring hits are false positives inside an unrelated headline about a disciplinary notice). No Wayback capture exists for this URL under either matchType=exact or a domain+date-range CDX query (checked repeatedly this session; Internet Archive's own services were also confirmed temporarily offline site-wide for part of this session, an independent tooling-outage confirmation, not a dead-link finding). No archive.today snapshot either. This CONFIRMS (does not merely repeat) that the completion-announcement lead for P5888/Wanzai-Tonggu is currently unverifiable through any channel tried -- relevant to P4792's own __VALIDITY__ question about whether the Yifeng-Tonggu (P4792) route was superseded by this Wanzai-Tonggu (P5888) route: the supersession hypothesis remains plausible (P5888's segment is absent from the 2014 qianzhan plan entirely, consistent with being a later, separately-built connection) but still cannot be confirmed as COMPLETED without this source. Recommend whoever revisits P4792/P5888 try a different network path/VPN for tonggu.gov.cn, or a Baidu/Sogou cache search for '铜鼓支线，开通' or '万载 铜鼓 支线 通气'."
+  }
+ ]
+}

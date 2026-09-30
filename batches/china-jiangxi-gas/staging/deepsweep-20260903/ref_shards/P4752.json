@@ -1,0 +1,229 @@
+{
+ "project_id": "P4752",
+ "pipeline_name": "Xinjiang Coal-to-Gas Pipeline",
+ "segment_name": "Jiangxi-Fujian-Zhejiang Branch",
+ "sheet_row": 2641,
+ "wiki": "https://www.gem.wiki/Xinjiang_Coal-to-Gas_Pipeline_Project",
+ "resolutions": [
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "sentinel": "__VALIDITY__",
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+    "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣闽浙支线",
+     "note": "Same passage as __STATUS__: names 赣闽浙支线 with Jiangxi-portion length 743km and capacity 100亿m3/y (=10.00 bcm/y), vs. the sheet's Capacity=8.50 bcm/y and LengthKnown=1002.00 km. This is the ONLY segment-naming source found for either figure."
+    },
+    {
+     "url": "https://www.ndrc.gov.cn/xxgk/zcfb/tz/202312/P020231205363278799826.pdf",
+     "ok": true,
+     "contains_value": false,
+     "name_found": false,
+     "name_matched": null,
+     "note": "Confirms via absence that no currently-tariffed branch corresponds to this row (see __STATUS__)."
+    }
+   ],
+   "class_out": "CONFIRMED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Identity/scope check requested by the work order. (1) EXISTENCE: this branch was a real, distinctly-planned sub-project (see __STATUS__) -- not a data-entry phantom. (2) CROSS-ROW DUPLICATE CHECK (required before filing this sentinel): grepped every other shard and payload in this run dir for 赣闽浙/株洲.*抚州/抚州.*南平/Jiangxi-Fujian -- no hits outside this row's own carried v2 record and this shard. No other PID in this batch claims this branch's name or endpoints; no redundancy/duplicate-row concern found. (3) AGGREGATE-VS-SEGMENT / VALUE CONFLICT ON CAPACITY: the sheet's Capacity=8.50 bcm/y is UNCORROBORATED by any source found. The only segment-naming document (qianzhan 2014 DRC plan) states a DIFFERENT value: 设计输气能力100亿立方米/年 = 10.00 bcm/y for 赣闽浙支线 specifically -- not a rounding difference (8.50 vs 10.00). Per standing practice on this run (do not silently confirm a sheet value against a conflicting found source), NOT staging a REFS_ADDED for 8.50; the Capacity [ref] resolution below is UNRESOLVED with this conflict flagged. DECISION OWED AT MERGE: either correct Capacity to 10.00 bcm/y (sourced) or keep 8.50 with the conflict documented and no ref attached -- a human call, not made here. (4) LENGTH PARTIAL-VS-WHOLE: the sheet's LengthKnown=1002.00 km is a multi-province total (this branch nominally crossed Hunan-Jiangxi-Fujian-Zhejiang per the segment name and OtherLanguageAlternativePipelineNames routing 株洲-抚州-江山/抚州-南平). The qianzhan plan's 743km figure is explicitly labeled as the JIANGXI-INTERNAL PORTION ONLY ('途经江西省境内的...,管道长743公里'), not the full route -- so it is a PARTIAL figure, not directly comparable to 1002km, and cannot serve as a direct ref for the whole-route total (though the two are not necessarily contradictory: 743km + Hunan/Fujian/Zhejiang portions could plausibly sum near 1002km, unverified). (5) BRANCH-COUNT VARIANCE ACROSS SOURCES (context, not a red flag): different documents across different years describe the parent system as '一干五支' (qianzhan 2014; NetEase 2025) vs '一干六支' (cctd.com.cn 2015-10-15 mirror of a 证券日报 article; mee.gov.cn 2021 Guangxi-branch notice) -- the branch count appears to have been revised over time (a branch added or re-scoped between 2014 and 2015), not a data error on GEM's part; this row's own branch (赣闽浙) appears by name only in the '五支' (2014/2025) framings, never enumerated by name in a '六支' source. (6) SCOPE CONCLUSION: GEM's roster figures (1002km / 8.50 bcm/y / 1016/813mm) describe THIS BRANCH specifically (segment-level), not the whole 新粤浙/Xinjiang system (which runs ~8280-8400km at 300亿m3/y per multiple system-level sources) -- confirmed correctly scoped as a segment row, just under-sourced and partially conflicting on Capacity as detailed above."
+  },
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣闽浙支线",
+     "note": "Replaces the two carried refs (see notes). Jiangxi DRC gas-utilization plan names 赣闽浙支线 directly in a passage about '设计输气能力' (gas transport design capacity) inside a province-wide NATURAL GAS (天然气) utilization plan -- the whole document's subject is gas pipelines, and the branch is one of its named line items. Trivial fact (Fuel=Gas), now segment-named at the source."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "kind": "RELEVANCE_REREAD",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "relevance_reread resolved: neither carried ref actually names this segment. Re-checked http://cnenergy.org/mt/mhg/201510/t20151016_193097.html directly via curl -- the domain is now DEAD, serving a domain-for-sale parking page (1,781 bytes, '[cnenergy.org] is for sale'), not the original 2015 article; confirmed no Wayback snapshot exists for this exact URL (CDX query returned an empty result set) and no live mirror was found (the CCTD.com.cn mirror of a similar 2015-10-15 NDRC-approval article, https://www.cctd.com.cn/show-37-707-1.html, was checked and does NOT name 赣闽浙 either -- it is a different, system-level article). Re-checked https://www.sohu.com/a/164824932_747560 (harvest pool_8) directly -- confirmed it is actually about the GANSU segment of this system (甘肃段社会稳定风险分析), names '一条干线、五条支线' but does not name any branch individually; does not name 赣闽浙. Both carried refs correctly downgrade to unnamed/unusable; replaced with the qianzhan DRC plan, which does name the segment and trivially supports Fuel=Gas. Single-origin document (per this batch's own dominant_documents note, stays medium until a second class lands) -- no second source found naming this segment for Fuel specifically."
+  },
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣闽浙支线",
+     "note": "Same document names 赣闽浙支线 directly (743km branch, 100亿m3/y) AND separately classifies its parent 新粤浙线工程 under '长输管道天然气' (long-distance transmission pipeline gas) in the province's十三五-period gas-supply-growth narrative (qianzhan.txt line 360-361: '十三五期间，新增西气东输三线、新粤浙线工程等长输管道天然气入赣'). A 743km, 100亿m3/y provincial branch of a named 长输管道 system is transmission-scale by the same source's own classification."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "kind": "RELEVANCE_REREAD",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Same cnenergy.org dead-link finding as Fuel above applies -- carried ref unusable, replaced. Held at low/independent:false: the '长输管道' classification is stated for the PARENT 新粤浙线工程 in a different sentence than the one naming 赣闽浙支线 specifically (same document, same DRC plan, not the same sentence) -- a deliberate, disclosed inference rather than a literal segment-level label. No second source found; second_source_owed remains genuinely unresolved for this cell despite the search (see second_source_owed entry below)."
+  },
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear"
+   ],
+   "values": {
+    "ProposalYear": "2013"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣闽浙支线",
+     "note": "Re-read in full via pdftotext -layout (not the stale local_text path, which no longer exists on disk -- re-fetched the PDF fresh from its origin URL). Confirmed name_found:true, matched '赣闽浙支线' (line 415 of the extraction). The document itself is dated as Jiangxi DRC plan 赣发改规划[2014]325号 (2014), so it corroborates the branch being on the planning table by 2014 at the latest -- consistent with, but not a precise dated corroboration of, a 2013 proposal filing specifically."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "kind": "RELEVANCE_REREAD",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Upgraded name_found from false to true (the payload's relevance_reread had this at 'unnamed' -- re-reading the source directly, past the stale local_text pointer, resolves that: it does name the segment). Tier held at low: single source, and it dates the PLAN (2014 document) rather than a discrete 2013 proposal filing -- supportive but not precise. Searched dominant_documents, all 9 harvest_pool_live URLs, and the CCTD.com.cn 2015-10-15 NDRC-approval mirror for a 2013-specific proposal date naming this branch -- none found (the CCTD article covers the whole-system Oct-2015 NDRC approval, not a segment-level 2013 filing). No second source found; remains single-sourced."
+  },
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartPrefecture/District": "Nanping",
+    "StartState/Province": "Fujian",
+    "StartCountryOrArea": "China",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "赣闽浙支线",
+     "note": "Re-confirmed name_found:true, matched '赣闽浙支线'. The passage supports only the Jiangxi (end-state) side of the geography: '途经江西省境内的萍乡市、宜春市、新余市、抚州市、鹰潭市、上饶市' (Pingxiang, Yichun, Xinyu, Fuzhou, Yingtan, Shangrao prefectures, Jiangxi). It does NOT name Nanping or Fujian anywhere -- StartPrefecture/District=Nanping, StartState/Province=Fujian remain UNCORROBORATED by this or any other source found."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "kind": "RELEVANCE_REREAD",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Upgraded name_found from false to true (same re-read as Proposal above). Tier stays low, not medium, because the source only supports HALF the cell's claimed geography (the Jiangxi end) -- the Nanping/Fujian start point is not named by this or any other document found in this pass. Searched all 9 harvest_pool_live URLs and the dominant documents for any source naming Nanping/南平 in connection with this branch -- none found (南平/Nanping did not appear in any of the 9 harvest pages per the keyword pass). No second source found for either half of the geography."
+  },
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "国家管网集团新疆煤制天然气外输管道有限责任公司"
+   },
+   "proposed_refs": [
+    "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/202104/t20210428_831132.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/202104/t20210428_831132.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": null,
+     "note": "CORRECTION to the payload's already_sourced name_check, which claimed name_found:true / name_matched 'Jiangxi-Fujian' for this URL -- re-read the full document directly via curl (70,687 bytes) and url_verifier confirms: FAIL, name '赣闽浙支线' not found (fuzzy). This MEE public-notice document (2021-04-28生态环境部...广西支干线段变更等2项环境影响评价文件拟进行审查公示) is entirely about the GUANGXI branch's EIA variance -- it never mentions 江西/福建/赣闽浙/抚州/南平 in connection with this project (the one '江西' hit in the full text is a boilerplate list of provincial environment-department names in an unrelated footer). It DOES confirm the company-level fact that 国家管网集团新疆煤制天然气外输管道有限责任公司 is the single project-wide SPV builder/operator for the WHOLE 新疆煤制气外输管道工程 (新粤浙管道), stated explicitly: '原环境保护部于2015年6月以环审[2015]149号文批复了中国石化新疆煤制气外输管道工程（新粤浙管道）环境影响报告书，整体工程包括1条主干线和6条支干线，广西支干线为整体项目支线之一' -- i.e. this SPV is named as builder for the trunk + all 6 branches as a whole, of which our branch would be one."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "kind": "SECOND_SOURCE",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "The payload's already_sourced name_check for this URL was INCORRECT (claimed name_matched:'Jiangxi-Fujian'; the document contains no such string in Chinese or English). Corrected here to name_found:false. The Operator value itself is not necessarily wrong -- this document does establish the SPV is the single builder/operator across the whole trunk+6-branch project, which is the same aggregate-vs-segment EXCEPTION already invoked by the payload's own already_sourced note (a company-level fact, not a physically segment-specific one) -- but the document does NOT specifically name THIS branch, so tier is downgraded from medium to low pending a source that does. Searched all 9 harvest_pool_live URLs for a second source naming the operator for this specific branch: none found (the other 8 cover Hunan/Guangxi/Gansu segments or unrelated system news). No second, independent source found for Operator on this row despite the search -- remains single-sourced, and that single source is itself scoped to a different branch.  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: tab None -> 'operators_owners'. Column names/format only, checked against the live tab header; no research finding altered.]",
+   "tab": "operators_owners"
+  },
+  {
+   "project_id": "P4752",
+   "sheet_row": 2641,
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "values": {
+    "Owner1": "State Pipe Network Group Xinjiang Coal To Natural Gas Export Pipeline Co Ltd",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [
+    "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/202104/t20210428_831132.shtml"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/202104/t20210428_831132.shtml",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "name_matched": null,
+     "note": "Same correction and same document as Operator above -- re-verified this MEE notice is about the Guangxi branch specifically and does not name 赣闽浙/Jiangxi-Fujian-Zhejiang. Supports Owner1 only as the same company-level, whole-project-SPV exception."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "kind": "SECOND_SOURCE",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "Same correction as Operator [ref]: payload's already_sourced name_check for this URL was incorrect (no 'Jiangxi-Fujian' string in the document). Corrected to name_found:false; tier downgraded medium->low for the same reason. No second source found naming the owner for this specific branch despite searching all 9 harvest_pool_live URLs and the dominant documents.  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: tab None -> 'operators_owners'. Column names/format only, checked against the live tab header; no research finding altered.]",
+   "tab": "operators_owners"
+  }
+ ]
+}

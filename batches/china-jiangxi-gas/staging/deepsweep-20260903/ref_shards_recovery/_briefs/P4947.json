@@ -1,0 +1,316 @@
+{
+ "contract": [
+  "EVERY unit below is OWED a record — there is no such thing as a unit that needed no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is what this leg is FOR.",
+  "A unit whose class is UNREPORTED_BLANK is the INVERSE case — the sheet cell is blank, so there is no recorded value to agree with and you are proposing one. Put it in the record's `values` dict, keyed by the column names in that unit's `value_cols` (e.g. {\"Operator\": \"WBI Energy Transmission, Inc.\"}), alongside the refs. The schema DOES carry values — a proposed value stated only in researcher_notes leaves a ref with no value behind it, which is an orphan [ref] cell and gets stripped (2026-09-09: two of five recovered blanks arrived this way).",
+  "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state it. 'Confirmed as recorded' in your summary and nowhere machine-readable is indistinguishable from never having checked it.",
+  "A source agreeing within rounding IS a ref (51.97 mi + 0.5 mi against a recorded 52; 38.5 against 39): REFS_ADDED at medium/high with the discrepancy in researcher_notes, plus a validity `spec` concern if the gap is material. UNRESOLVED means nothing was found — never that something slightly different was found.",
+  "UNRESOLVED is a legitimate outcome ONLY with researcher_notes saying what you searched. An empty UNRESOLVED reads exactly like a dropped unit and is treated as one.",
+  "Read every document you open to exhaustion, for EVERY column and sibling row — one FERC notice routinely sources Length, Diameter, Cost, Construction and Start at once.",
+  "Two independent sources per data point is the target; the same wire story republished does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
+  "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — the research is done and vanishes.",
+  "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left unreported and every record that cannot merge. It is blocking: do not finish red."
+ ],
+ "write_shard_to": "batches/china-jiangxi-gas/staging/deepsweep-20260903/ref_shards_recovery/P4947.json",
+ "refs_already_on_this_row": [
+  {
+   "url": "http://paper.people.com.cn/zgnyb/html/2023-03/27/content_25973601.htm",
+   "sourced": [
+    "Fuel [ref]",
+    "Length [ref]",
+    "Location [ref]",
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "https://www.mee.gov.cn/gkml/sthjbgw/spwj1/201512/t20151215_319178.htm",
+   "sourced": [
+    "Capacity [ref]",
+    "Diameter [ref]",
+    "Fuel [ref]",
+    "Start [ref]",
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "https://zh.wikipedia.org/zh-hans/%E8%A5%BF%E6%B0%94%E4%B8%9C%E8%BE%93",
+   "sourced": [
+    "Start [ref]"
+   ]
+  },
+  {
+   "url": "https://en.wikipedia.org/wiki/West%E2%80%93East_Gas_Pipeline",
+   "sourced": [
+    "Capacity [ref]",
+    "Length [ref]",
+    "Location [ref]"
+   ]
+  },
+  {
+   "url": "https://www.ncsti.gov.cn/kjdt/ztbd/dsxs/dsxsssm/202204/t20220428_75981.html",
+   "sourced": [
+    "Diameter [ref]"
+   ]
+  },
+  {
+   "url": "https://jdjyw.jlu.edu.cn/portal/company/details?id=d012c2bc0daa4a51814be27f161d3363",
+   "sourced": [
+    "Operator [ref]"
+   ]
+  }
+ ],
+ "coverage_gate": "python scripts/check_shard_coverage.py --staging batches/china-jiangxi-gas/staging/deepsweep-20260903 --pid P4947",
+ "project_id": "P4947",
+ "pipeline_name": "West-East Gas Pipeline 2",
+ "wiki": "https://www.gem.wiki/West-East_Gas_Pipeline_2",
+ "n_units": 7,
+ "units": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Start [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1",
+    "StartYear2",
+    "StartYear2Month",
+    "StartYear3",
+    "StartYear3Month"
+   ],
+   "values": {
+    "StartYear1": "2012"
+   },
+   "primary_value": "2012",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Capacity [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "Capacity",
+    "CapacityUnits"
+   ],
+   "values": {
+    "Capacity": "30.00",
+    "CapacityUnits": "bcm/y"
+   },
+   "primary_value": "30.00",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "9102.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "9102.00",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Diameter [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "Diameter",
+    "DiameterUnits"
+   ],
+   "values": {
+    "Diameter": "1219",
+    "DiameterUnits": "mm"
+   },
+   "primary_value": "1219",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 2833,
+   "segment_name": "",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Khorgas",
+    "StartState/Province": "Xinjiang",
+    "StartCountryOrArea": "China",
+    "EndPrefecture/District": "Guangzhou",
+    "EndState/Province": "Guangdong",
+    "EndCountryOrArea": "China"
+   },
+   "primary_value": "Khorgas",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  }
+ ],
+ "seed_citations": [
+  {
+   "url": "https://en.wikipedia.org/wiki/West%E2%80%93East_Gas_Pipeline",
+   "link_text": "West-East Gas Pipeline",
+   "context": "↑ West-East Gas Pipeline , Wikipedia, accessed March 2018"
+  },
+  {
+   "url": "http://www.downstreamtoday.com/news/article.aspx?a_id=8868",
+   "link_text": "\"China Starts Work on $20B Pipeline for Turkmen Gas\"",
+   "context": "↑ 2.0 2.1 \"China Starts Work on $20B Pipeline for Turkmen Gas\" . Downstream Today. Xinhua . 2008-02-22 . Retrieved 2008-02-23 ."
+  },
+  {
+   "url": "http://www.scmp.com/lifestyle/technology/article/1261619/second-west-east-gas-pipeline-set-start-hong-kong-supplies",
+   "link_text": "Second West-East Gas Pipeline set to start Hong Kong supplies this summer",
+   "context": "↑ Second West-East Gas Pipeline set to start Hong Kong supplies this summer , South China Morning Post, Jun. 16, 2013"
+  },
+  {
+   "url": "http://news.xinhuanet.com/english/2007-04/06/content_5942133.htm",
+   "link_text": "\"CNPC plans to build longest LNG pipeline\"",
+   "context": "↑ \"CNPC plans to build longest LNG pipeline\" . Xinhua. 2007-04-06 . Retrieved 2007-05-12 ."
+  },
+  {
+   "url": "http://www.neurope.eu/articles/81535.php",
+   "link_text": "\"PetroChina, CNODC to invest in gas pipeline\"",
+   "context": "↑ \"PetroChina, CNODC to invest in gas pipeline\" . Xinhua. 2008-01-05 . Retrieved 2010-10-24 ."
+  },
+  {
+   "url": "http://dbnyb.com/05/ranqiyaowen/2017/0112/15653.html",
+   "link_text": "轮吐线二期增输工程全线投产 最大年输气能力达170亿方",
+   "context": "↑ 6.0 6.1 6.2 6.3 6.4 6.5 轮吐线二期增输工程全线投产 最大年输气能力达170亿方 , dbnyb.com, Jan. 12, 2017, accessed Aug. 19, 2021."
+  },
+  {
+   "url": "https://www.reuters.com/article/china-pipeline-idINKCN24P0SS",
+   "link_text": "PipeChina to take on $56 billion of pipelines to boost network access",
+   "context": "↑ PipeChina to take on $56 billion of pipelines to boost network access , Reuters, Jul. 23, 2020, accessed Aug. 19, 2021."
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.zgbk.com/ecph/words?SiteID=1&ID=398550",
+   "link_text": "西气东输二线管道",
+   "context": "↑ 西气东输二线管道 ，中国大百科全书，2023-05-30"
+  },
+  {
+   "url": "https://web.archive.org/web/20230311154606/https://www.gov.cn/gzdt/2012-12/31/content_2302612.htm",
+   "link_text": "西气东输二线工程广州至南宁段正式建成通气",
+   "context": "↑ 9.0 9.1 9.2 9.3 9.4 西气东输二线工程广州至南宁段正式建成通气 , 广西日报, 2012-12-31"
+  },
+  {
+   "url": "https://web.archive.org/save/https://zzsl.zhengzhou.gov.cn/gzdt/2744773.jhtml",
+   "link_text": "西气东输二线管道工程（平顶山—泰安支线）水土保持设施通过水利部验收",
+   "context": "↑ 西气东输二线管道工程（平顶山—泰安支线）水土保持设施通过水利部验收 , 郑州市水利局, 2016-08-01"
+  },
+  {
+   "url": "http://fgw.hubei.gov.cn/fbjd/xxgkml/xkfw/xzxkjg/xmhzqk/201301/t20130106_3758890.shtml",
+   "link_text": "\"省发改委核准孝昌-大悟（广水）天然气输气管道工程项目的通知\"",
+   "context": "↑ 11.0 11.1 11.2 11.3 11.4 11.5 \"省发改委核准孝昌-大悟（广水）天然气输气管道工程项目的通知\" . 2012-12-31 . Retrieved 2023-09-07 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.hubeitoday.com.cn/post/44/77633",
+   "link_text": "\"湖北人出行将加速 高铁2小时可达鄂九成市州\"",
+   "context": "↑ \"湖北人出行将加速 高铁2小时可达鄂九成市州\" . 2018-07-09. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://m.qcc.com/firm/6c63365729b0e9557aa6c88069efe551.html",
+   "link_text": "\"中国石油天然气集团有限公司\"",
+   "context": "↑ 13.0 13.1 \"中国石油天然气集团有限公司\" . QCC . Retrieved 2023-09-07 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.0719house.com/news/news_3396_1.html",
+   "link_text": "\"把十堰天然气项目建成利民环保工程\"",
+   "context": "↑ \"把十堰天然气项目建成利民环保工程\" . Retrieved 2023-09-07 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://syrb.10yan.com/html/20081125/31141.html",
+   "link_text": "\"西气东输枣阳十堰段获国家发改委批准\"",
+   "context": "↑ 15.0 15.1 15.2 \"西气东输枣阳十堰段获国家发改委批准\" . 2008.11.25 . Retrieved 2023-09-07 . {{ cite web }} : Check date values in: |date= ( help ) CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://paper.ce.cn/jjrb/html/2010-09/09/content_119449.htm",
+   "link_text": "\"经济日报 横贯东西的能源大动脉\"",
+   "context": "↑ 16.0 16.1 \"经济日报 横贯东西的能源大动脉\" . 2008.11.25 . Retrieved 2023-09-07 . {{ cite web }} : Check date values in: |date= ( help ) CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://news.sina.com.cn/c/2003-01-24/0832886009.html",
+   "link_text": "西气东输豫北支线工程开工",
+   "context": "↑ 西气东输豫北支线工程开工 , Sina, Jan. 24, 2003"
+  },
+  {
+   "url": "http://www.shangqiu.gov.cn/Item/60227.aspx",
+   "link_text": "商丘市发展和改革委员会对市政协五届三次会议第53026号提案的答复",
+   "context": "↑ 商丘市发展和改革委员会对市政协五届三次会议第53026号提案的答复 , shangqiu.gov, Sep. 9, 2019"
+  },
+  {
+   "url": "http://www.hnlt.com.cn/lantianchanye/lantianranqi/2013-01-17/11.html",
+   "link_text": "蓝天燃气",
+   "context": "↑ 蓝天燃气 , Blue Sky Gas, Jan. 17, 2013"
+  },
+  {
+   "url": "http://henb.nea.gov.cn/upfiles/2016/1.xls",
+   "link_text": "\"河南省油气管网设施运营企业输气管网信息\"",
+   "context": "↑ \"河南省油气管网设施运营企业输气管网信息\" . henb.nea.gov.cn . 2016. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://q.stock.sohu.com/newpdf/202142933334.pdf",
+   "link_text": "\"河南蓝天燃气股份有限公司\"首次公开发行股票招股说明书摘要\" \"",
+   "context": "↑ 21.0 21.1 21.2 21.3 \"河南蓝天燃气股份有限公司\"首次公开发行股票招股说明书摘要\" \" (PDF) . 2021-01-19. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.sasac.gov.cn/n2588025/n2588124/c3826402/content.html",
+   "link_text": "中国石油建设的西气东输二线香港支线竣工投产",
+   "context": "↑ 22.0 22.1 22.2 22.3 22.4 22.5 中国石油建设的西气东输二线香港支线竣工投产 ,中国石油天然气集团公司, 2016-08-04"
+  },
+  {
+   "url": "https://web.archive.org/save/http://news.china.com.cn/mts/2022-12/19/content_1182748.htm",
+   "link_text": "以初心兑现承诺，国家管网西气东输香港支线供气香港十周年",
+   "context": "↑ 23.0 23.1 23.2 以初心兑现承诺，国家管网西气东输香港支线供气香港十周年 , 中国网，2022-12-19"
+  },
+  {
+   "url": "http://ynb.nea.gov.cn/front/article/107157.html",
+   "link_text": "\"国家管网集团油气管网设施基础信息\"",
+   "context": "↑ 24.00 24.01 24.02 24.03 24.04 24.05 24.06 24.07 24.08 24.09 24.10 24.11 24.12 24.13 24.14 24.15 24.16 24.17 24.18 24.19 24.20 24.21 24.22 24.23 24.24 24.25 24.26 24.27 24.28 24.29 24.30 24.31 24.32 24.33 24.34 24.35 国家能源局云南监管办公室 (2022-07-06). \"国家管网集团油气管网设施基础信息\" . ynb.nea.gov.cn . Retrieved 2023-08"
+  },
+  {
+   "url": "https://m.qcc.com/firm/131ce398f39327c302561cc1cb244a24.html",
+   "link_text": "\"国家石油天然气管网集团有限公司西气东输分公司\"",
+   "context": "↑ 25.00 25.01 25.02 25.03 25.04 25.05 25.06 25.07 25.08 25.09 25.10 25.11 \"国家石油天然气管网集团有限公司西气东输分公司\" . QCC . Retrieved 2023-08-31 . {{ cite web }} : CS1 maint: url-status ( link )"
+  }
+ ]
+}

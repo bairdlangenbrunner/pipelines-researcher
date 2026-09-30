@@ -1,0 +1,274 @@
+{
+ "project_id": "P5887",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "segment_name": "Guangfeng-Yushan Branch",
+ "sheet_row": 3350,
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "resolutions": [
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "Operator [ref]",
+   "value_cols": [
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "江西省天然气集团有限公司 [54%]; 国家管网集团东部原油储运有限公司 [46%]"
+   },
+   "proposed_refs": [
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+    "https://www.chndaqi.com/news/346283.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Carried from the payload: names the JV composition at SYSTEM level only (name_level: system)."
+    },
+    {
+     "url": "https://www.chndaqi.com/news/346283.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "NEW this pass. '加快天然气管网一期乐平—德兴—婺源支线管道、广丰-玉山支线管道的天然气管网工程建设' -- names THIS segment ('广丰-玉山支线管道') directly and assigns it to Phase I ('天然气管网一期'), which is the network the SSE bond report's 54/46 JV operates. This satisfies the relevance_rereads task: it is the segment-naming source justifying use of the system-level Operator source for this cell."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": true,
+   "researcher_notes": "This resolves the carried relevance_reread (system-only name check on the SSE bond report). chndaqi.com is a genuinely different source (municipal government energy-plan disclosure vs. a Shanghai Stock Exchange bond filing; different host, different publisher class) that names this specific segment and its phase, which is why I mark independent:true even though tier stays medium (a two-step chain, as explained on the Owner [ref] record above, rather than two sources stating the identical ownership fact). m.qcc.com wiki candidate re-checked this session: still HTTP 567 (WAF), an access failure per BRIEF host notes, not reused as a ref.  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: tab None -> 'operators_owners'. Column names/format only, checked against the live tab header; no research finding altered.]  [ENTITY NORMALIZED at merge 2026-09-10, orchestrator: QCCOwner(业主单位): '江西省天然气集团有限公司 [54%]; 国家石油天然气管网集团有限公司 [46%]' -> '江西省天然气集团有限公司 [54%]; 国家管网集团东部原油储运有限公司 [46%]'. Per the batch-level ruling in orchestrator_notes.md: the 46% holder is 国家管网集团东部原油储运有限公司 (SSE bond report 242696_20250403_SXBW.pdf footnote 5, the sheet's own Operator [ref]), not the PipeChina parent; model=projco. Research finding unchanged -- string/shape only.]",
+   "tab": "operators_owners"
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "Status [ref]",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No source found stating this segment is operating -- and the one primary document that discusses its commissioning status actively CONTRADICTS it: chndaqi.com (Shangrao municipal 14th-FYP energy plan) states '天然气管道设施建设不足...截止2021年底仍有德兴市、婺源县、玉山县、广丰区4个县(市、区)未通管道天然气' (as of end-2021, Dexing, Wuyuan, Yushan, and Guangfeng districts/counties still had NO piped gas connection), even though the same document dates this segment's CONSTRUCTION START to 2019-03. This is a genuine tension with the sheet's 'operating' status, not a rounding/near-miss disagreement, so I am not staging a ref that would falsely confirm 'operating' -- per the 'never force a number/value to match' rule. I also cannot independently confirm the segment is NOT operating (chndaqi.com's text is dated to end-2021; the sheet's operating status may reflect a later commissioning I could not verify -- two 2024-11 Shangrao EPB EIA public-comment notices for a related '省天然气管网工程广丰支线延长线项目' (an EXTENSION project on the same corridor) exist and might resolve this either way, but both are blocked by a WAF (HTTP 405, 'NWAF页面', Server: CT2-WAAP) on every fetch attempt including WebFetch; Wayback/SPN could not capture them either (persistent HTTP 429 on archive.org across many retries). status_review_owed is false for this row so I am not proposing a status change -- see the restated __STATUS__ sentinel below, which carries this same evidence forward as 'unclear' rather than 'confirm'."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "Length [ref]",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "23.30",
+    "LengthKnownUnits": "km"
+   },
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "researcher_notes": "No source directly states 23.30 km for this segment, and I am deliberately NOT forcing a near match. The qianzhan DRC provincial plan PDF's Table 5 (72-segment list, this row flagged as segment-level in dominant_documents) has THREE candidate rows near '广丰': '西二线上海支干线14#阀室-广丰' (0.9 km, a WEP2 trunk-to-Guangfeng connector), '广丰-广丰门站' (10 km, Guangfeng town to its own gate station), and '广丰-玉山门站' (12 km, Guangfeng to Yushan's gate station). 10+12=22 km is close to but not the same as 23.30 km, and it is unclear these two differently-named legs (one ending at Guangfeng's own gate station, the other at Yushan's) are the same physical corridor as the sheet's single 'Guangfeng-Yushan Branch' row -- they may be two of the two separately-numbered projects flagged in the __VALIDITY__ sentinel below (items 25 '广丰支线' / 26 '玉山支线' in the 2021 provincial project roster). Given that ambiguity, I recorded the candidate figures here for the merge reviewer rather than staging any of them as a ref for 23.30 km."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "values": {
+    "FuelSource": "West-East Gas Pipeline 2"
+   },
+   "proposed_refs": [
+    "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf"
+   ],
+   "verifications": [
+    {
+     "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Table 5 row: '西二线上海支干线14#阀室-广丰, 0.9[km]' -- names a 0.9 km connector from West-East Gas Pipeline Line 2's ('西二线') Shanghai branch-trunk valve chamber #14 directly to Guangfeng ('广丰'), i.e. WEP2 is the immediate upstream trunk feed at the Guangfeng end of this branch."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "low",
+   "independent": false,
+   "researcher_notes": "This names an ADJACENT connector segment (trunk-to-Guangfeng, 0.9 km) rather than the 'Guangfeng-Yushan' branch itself, so I am capping tier at low per the RELEVANCE rule rather than treating it as a direct segment-naming source. It is nonetheless real evidence for WEP2 as the fuel source: the document's own framing (72 provincial segments 'either supplementing Phase I/II or receiving West-East Line 3 gas') means not every segment in the table is WEP2-fed, but this ONE row explicitly names 西二线 as the immediate trunk feeding into Guangfeng, which is this branch's own starting point. Per RELAUNCH_NOTES item 4, WEP2 is confirmed only for the Ganzhou-south branches in prior work -- I am not carrying that forward for this row; this ref is a new, independent finding specific to Guangfeng. Single source, hence not independent.  [JIANGXI-FUELSOURCE-ORTHOGRAPHY-2026-09-10] SPELLING CANONICALISED, referent unchanged: 'West-East Gas Pipeline Line 2' -> 'West-East Gas Pipeline 2'. The target is the tracker's own PipelineName vocabulary (Sichuan–Shanghai Gas Pipeline with an EN DASH, 19 rows; West-East Gas Pipeline 1/2/3 with arabic numerals, 10/27/15 rows), so the cell now names a system the tracker actually holds. CJK glosses are deliberately out of the CELL and stay in these notes -- the batch's other FuelSource cells (the four Ganzhou rows, P4944, P4946) carry bare English and the column cannot be half glossed. NOTHING about the evidence changed: contains_value on the refs below was set by reading a Chinese-language document, never by substring-matching the English cell, so a mechanical re-check with --expected on the new value will come back FALSE against these Chinese pages. That is a false negative, not a lost ref. name_found is unaffected -- it is a claim about the PIPELINE name, not the FuelSource value."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "Fuel [ref]",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "proposed_refs": [
+    "https://www.chndaqi.com/news/346283.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chndaqi.com/news/346283.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Carried, re-verified live this session (HTTP 200, name '广丰-玉山' found)."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Second source searched and not found this pass: solidwaste.com.cn/news/346283.html is a byte-for-byte republish of the same chndaqi.com article on a different domain (same publisher network -- confirmed by direct text comparison of the '广丰-玉山' passage, verbatim identical, so NOT independent, ONE origin per the standing rule). bjx.com.cn pages (3 URLs tried) returned near-empty JS-stub content (~3550-3570 chars, no 广丰/玉山 text) -- inconclusive due to apparent JS rendering, not a confirmed miss. The two 2024-11 Shangrao EPB EIA notices for the related extension project remain WAF-blocked (HTTP 405). No usable second-class source found."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "PipelineType [ref]",
+   "value_cols": [
+    "PipelineType"
+   ],
+   "values": {
+    "PipelineType": "transmission"
+   },
+   "proposed_refs": [
+    "https://www.chndaqi.com/news/346283.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chndaqi.com/news/346283.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Carried, re-verified live this session."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Same second-source search as Fuel [ref] above (solidwaste.com.cn ruled out as duplicate origin; bjx.com.cn inconclusive; EIA notices WAF-blocked) -- no independent second source found for this unit either."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "Construction [ref]",
+   "value_cols": [
+    "ConstructionYear",
+    "ConstructionMonth"
+   ],
+   "values": {
+    "ConstructionYear": "2019",
+    "ConstructionMonth": "3"
+   },
+   "proposed_refs": [
+    "https://www.chndaqi.com/news/346283.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chndaqi.com/news/346283.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'2019年3月，广丰-玉山天然气管网支线项目开工' -- names the segment and states the construction-start date directly. Re-verified live this session."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Same second-source search as above -- no independent second source found. Note (corrects a stale line in the payload): this is a construction-START date only, and should not be read as confirming operational status -- see the Status [ref] and __STATUS__ records, which document that the same source says Guangfeng/Yushan were still unconnected as of end-2021."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "Location [ref]",
+   "value_cols": [
+    "StartLocation",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Guangfeng",
+    "StartState/Province": "Jiangxi",
+    "StartCountryOrArea": "China",
+    "EndLocation": "Yushan",
+    "EndState/Province": "Jiangxi",
+    "EndCountryOrArea": "China"
+   },
+   "proposed_refs": [
+    "https://www.chndaqi.com/news/346283.html"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.chndaqi.com/news/346283.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "Carried, re-verified live this session."
+    }
+   ],
+   "class_out": "REVERIFIED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "Same second-source search as above -- no independent second source found for place names beyond the single chndaqi.com article."
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "sentinel": "__VALIDITY__",
+   "verdict": null,
+   "class_out": "CONFIRMED",
+   "proposed_refs": [
+    "https://www.sohu.com/a/466792472_661255"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sohu.com/a/466792472_661255",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "note": "'（三）能源基础设施领域（44项）' itemized list: '...24 上犹-崇义段 25 广丰支线 26 玉山支线 27 兴国支线...' -- '广丰支线' and '玉山支线' are listed as TWO SEPARATE, independently numbered projects (items 25 and 26) in this 2021 provincial major-project roster ('江西省2021年实施重点项目2033项'), not as one combined 'Guangfeng-Yushan' project as GEM's segment_name implies. No lengths/costs are given for either item in this list."
+    }
+   ],
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "SPEC/CONCERN carried from v2, RE-VERIFIED this session by fetching the sohu.com article myself (not relying on the carried note text). This is not, on its own, evidence that GEM's single combined row is wrong -- chndaqi.com's own text (the Owner/Fuel/Construction source) DOES combine them into one clause ('广丰-玉山支线管道'/'广丰-玉山天然气管网支线项目'), and the qianzhan DRC plan's Table 5 likewise treats '广丰-广丰门站' (10 km) and '广丰-玉山门站' (12 km) as two distinct legs feeding out of a shared Guangfeng hub, which is broadly consistent with 'two named projects sharing one origin point.' I am not recommending a row split; flagging only so the merge reviewer has the roster's separate naming on record alongside the Length [ref] ambiguity noted above (10+12=22 km vs. the sheet's 23.30 km).  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: ref_col missing -> '__VALIDITY__' (was colliding as a dup unit). Column names/format only, checked against the live tab header; no research finding altered.]",
+   "ref_col": "__VALIDITY__"
+  },
+  {
+   "project_id": "P5887",
+   "sheet_row": 3350,
+   "ref_col": "__VALIDITY__",
+   "value_cols": [],
+   "values": {},
+   "proposed_refs": [
+    "https://www.sohu.com/a/466792472_661255"
+   ],
+   "verifications": [
+    {
+     "url": "https://www.sohu.com/a/466792472_661255",
+     "ok": true,
+     "contains_value": true,
+     "note": "lines ~530-565 of the itemized list: item 25 = 广丰支线, item 26 = 玉山支线, listed as two separate entries; item 21/23/35 confirm the roster's single-item convention for P4788/P4786/P5888 by contrast"
+    }
+   ],
+   "class_out": "UNRESOLVED",
+   "tier": "medium",
+   "independent": false,
+   "researcher_notes": "[carried from v2 deepsweep-20260902@2026-09-02] SPEC/CONCERN, new this pass. The Jiangxi provincial 14th-FYP energy-infrastructure project roster (sohu.com, dated 2021, '（三）能源基础设施领域（44项）' itemized list of 44 named projects, opened as one of the 12 previously-unopened harvest_pool_live URLs) lists '广丰支线' (Guangfeng branch) as item 25 and '玉山支线' (Yushan branch) as item 26 -- TWO SEPARATE line items, not one combined 'Guangfeng-Yushan Branch'. This is the same provincial roster that separately and exactly matches P4786 (item 23, 赣州南支线（会昌-寻乌段）), P4788 (item 21, 赣州南支线（信丰-瑞金段）) and P5888 (item 35, 万载-铜鼓支线) as single combined items each -- so the list's convention for a genuinely single/combined project is to give it ONE item number, which sharpens the significance of Guangfeng and Yushan getting TWO. Combined with the already-known tension that no source has ever been found giving a single length/status figure for a combined 'Guangfeng-Yushan Branch' as GEM models it (batch_07's Length/FuelSource both UNRESOLVED, Status only 'unclear'), this raises a genuine existence/classification question: is GEM's P5887 actually two separate provincial branches merged into one row+route, or one row correctly representing a single physical branch that the province's own roster happens to list in two administrative pieces (Guangfeng District and Yushan County each getting a line item for their own portion of one continuous pipe)? Cross-shard check performed (grepped all of batch_01/03/04/07/08/14/99_crossshard.json for 'P5887', '广丰', '玉山', 'Guangfeng', 'Yushan') -- no existing __VALIDITY__ record for this row despite batch_07's Length note referencing '(see __VALIDITY__ below)', which was never actually filed; this record fills that gap. NOT recommending a split or deletion -- flagging for human review given the roster evidence is suggestive, not dispositive (a two-item roster listing is consistent with either reading). [QC 2026-09-02] citation form repaired: the shard had written a PROSE DESCRIPTION into proposed_refs ('https://www.sohu.com (…roster, item N)') and into verifications[].url, which is not a resolvable citation. Substituted the actual article URL from the harvest pool and re-verified it directly: the page is live (84,769 bytes) and its numbered list carries items 21/22/23 赣州南支线（信丰-瑞金/龙南-全南/会昌-寻乌段）, items 25 广丰支线 and 26 玉山支线 as SEPARATE entries, and item 35 万载-铜鼓支线 -- the shard's reading is confirmed exactly. Form caveat: this sohu page is a repost of the Jiangxi provincial 2021 key-projects roster; the provincial original was not reachable (jiangxi.gov.cn 404s confirmed this pass), so the repost is cited as the readable instance of that document.",
+   "carried_from": "deepsweep-20260902@2026-09-02"
+  }
+ ]
+}

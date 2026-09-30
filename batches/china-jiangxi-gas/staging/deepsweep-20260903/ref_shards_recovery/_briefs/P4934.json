@@ -1,0 +1,369 @@
+{
+ "contract": [
+  "EVERY unit below is OWED a record — there is no such thing as a unit that needed no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is what this leg is FOR.",
+  "A unit whose class is UNREPORTED_BLANK is the INVERSE case — the sheet cell is blank, so there is no recorded value to agree with and you are proposing one. Put it in the record's `values` dict, keyed by the column names in that unit's `value_cols` (e.g. {\"Operator\": \"WBI Energy Transmission, Inc.\"}), alongside the refs. The schema DOES carry values — a proposed value stated only in researcher_notes leaves a ref with no value behind it, which is an orphan [ref] cell and gets stripped (2026-09-09: two of five recovered blanks arrived this way).",
+  "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state it. 'Confirmed as recorded' in your summary and nowhere machine-readable is indistinguishable from never having checked it.",
+  "A source agreeing within rounding IS a ref (51.97 mi + 0.5 mi against a recorded 52; 38.5 against 39): REFS_ADDED at medium/high with the discrepancy in researcher_notes, plus a validity `spec` concern if the gap is material. UNRESOLVED means nothing was found — never that something slightly different was found.",
+  "UNRESOLVED is a legitimate outcome ONLY with researcher_notes saying what you searched. An empty UNRESOLVED reads exactly like a dropped unit and is treated as one.",
+  "Read every document you open to exhaustion, for EVERY column and sibling row — one FERC notice routinely sources Length, Diameter, Cost, Construction and Start at once.",
+  "Two independent sources per data point is the target; the same wire story republished does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
+  "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — the research is done and vanishes.",
+  "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left unreported and every record that cannot merge. It is blocking: do not finish red."
+ ],
+ "write_shard_to": "batches/china-jiangxi-gas/staging/deepsweep-20260903/ref_shards_recovery/P4934.json",
+ "refs_already_on_this_row": [
+  {
+   "url": "http://en.sasac.gov.cn/2018/12/14/c_714.htm",
+   "sourced": [
+    "FuelSource [ref]",
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "http://fz.lanfw.com/2016/1213/355500.html",
+   "sourced": [
+    "Status [ref]"
+   ]
+  },
+  {
+   "url": "https://en.wikipedia.org/wiki/West%E2%80%93East_Gas_Pipeline",
+   "sourced": [
+    "Fuel [ref]",
+    "Length [ref]",
+    "Location [ref]"
+   ]
+  },
+  {
+   "url": "http://www.ogj.com/articles/2012/10/china-starts-construction-on-third-west-east-gas-pipeline.html",
+   "sourced": [
+    "Capacity [ref]",
+    "Fuel [ref]",
+    "FuelSource [ref]",
+    "Length [ref]"
+   ]
+  },
+  {
+   "url": "https://www.cpnn.com.cn/news/nytt/202109/t20210924_1434107.html",
+   "sourced": [
+    "Diameter [ref]",
+    "Operator [ref]"
+   ]
+  },
+  {
+   "url": "http://fgw.fujian.gov.cn/zfxxgkzl/zfxxgkml/xzxk/201901/t20190118_4747289.htm",
+   "sourced": [
+    "Location [ref]",
+    "Operator [ref]"
+   ]
+  },
+  {
+   "url": "https://www.chinanews.com.cn/ny/2012/10-22/4264426.shtml",
+   "sourced": [
+    "SegmentCost [ref]"
+   ]
+  },
+  {
+   "url": "https://www.cup.edu.cn/heavyoil/News/nydt/71073.htm",
+   "sourced": [
+    "SegmentCost [ref]"
+   ]
+  }
+ ],
+ "coverage_gate": "python scripts/check_shard_coverage.py --staging batches/china-jiangxi-gas/staging/deepsweep-20260903 --pid P4934",
+ "project_id": "P4934",
+ "pipeline_name": "West-East Gas Pipeline 3",
+ "wiki": "https://www.gem.wiki/West-East_Gas_Pipeline_3",
+ "n_units": 7,
+ "units": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "operating"
+   },
+   "primary_value": "operating",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Fuel [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "Fuel"
+   ],
+   "values": {
+    "Fuel": "Gas"
+   },
+   "primary_value": "Gas",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Length [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "LengthKnown",
+    "LengthKnownUnits"
+   ],
+   "values": {
+    "LengthKnown": "7378.00",
+    "LengthKnownUnits": "km"
+   },
+   "primary_value": "7378.00",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "FuelSource [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "values": {
+    "FuelSource": "the gas imported from Turkmenistan, Uzbekistan, and Kazakhstan; Coal-to-gas in Xinjiang (produced by Xinwen Company and Qinghua Company)"
+   },
+   "primary_value": "the gas imported from Turkmenistan, Uzbekistan, and Kazakhstan; Coal-to-gas in Xinjiang (produced by Xinwen Company and Qinghua Company)",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Location [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "StartLocation",
+    "StartPrefecture/District",
+    "StartState/Province",
+    "StartCountryOrArea",
+    "EndLocation",
+    "EndPrefecture/District",
+    "EndState/Province",
+    "EndCountryOrArea"
+   ],
+   "values": {
+    "StartLocation": "Khorgas",
+    "StartPrefecture/District": "Ili",
+    "StartState/Province": "Xinjiang",
+    "StartCountryOrArea": "China",
+    "EndPrefecture/District": "Fuzhou",
+    "EndState/Province": "Fujian",
+    "EndCountryOrArea": "China"
+   },
+   "primary_value": "Khorgas",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "SegmentCost [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "SegmentCost",
+    "SegmentCostUnits",
+    "SegmentCostYear"
+   ],
+   "values": {
+    "SegmentCost": "125000000000.00",
+    "SegmentCostUnits": "RMB"
+   },
+   "primary_value": "125000000000.00",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  },
+  {
+   "ref_col": "Operator [ref]",
+   "sheet_row": 2820,
+   "segment_name": "",
+   "value_cols": [
+    "Operator",
+    "OperatorLocalLanguage",
+    "QCCOwner(业主单位)"
+   ],
+   "values": {
+    "QCCOwner(业主单位)": "国家管网集团西部管道有限责任公司; 国家石油天然气管网集团有限公司西气东输分公司"
+   },
+   "primary_value": "国家管网集团西部管道有限责任公司; 国家石油天然气管网集团有限公司西气东输分公司",
+   "current_ref": "",
+   "class_out": "REFS_ADDED"
+  }
+ ],
+ "seed_citations": [
+  {
+   "url": "https://en.wikipedia.org/wiki/West%E2%80%93East_Gas_Pipeline",
+   "link_text": "West-East Gas Pipeline",
+   "context": "↑ West-East Gas Pipeline , Wikipedia, accessed March 2018"
+  },
+  {
+   "url": "https://www.woodmac.com/reports/upstream-oil-and-gas-west-east-gas-pipeline-iii-37188828",
+   "link_text": "West East Gas Pipeline III",
+   "context": "↑ West East Gas Pipeline III , Wood McKenzie, Nov. 1, 2017."
+  },
+  {
+   "url": "http://www.downstreamtoday.com/news/article.aspx?a_id=12755",
+   "link_text": "\"China Studying Third West-East Gas Pipeline - Report\"",
+   "context": "↑ \"China Studying Third West-East Gas Pipeline - Report\" . Downstream Today. AFX News Limited . 2008-09-11 . Retrieved 2008-12-25 ."
+  },
+  {
+   "url": "http://www.gov.cn/xinwen/2014-08/25/content_2739430.htm",
+   "link_text": "\"西气东输三线西段全线贯通_要闻_新闻_中国政府网\"",
+   "context": "↑ 4.0 4.1 4.2 \"西气东输三线西段全线贯通_要闻_新闻_中国政府网\" . www.gov.cn . Retrieved 2021-10-28 ."
+  },
+  {
+   "url": "http://fz.lanfw.com/2016/1213/355500.html",
+   "link_text": "\"西气东输三线东段建成通气 福州形成双气源供应\"",
+   "context": "↑ 5.0 5.1 \"西气东输三线东段建成通气 福州形成双气源供应\" . Retrieved 2021-10-27 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://www.ogj.com/articles/2012/10/china-starts-construction-on-third-west-east-gas-pipeline.html",
+   "link_text": "\"China starts construction on third West-East Gas Pipeline\"",
+   "context": "↑ Smith, Christopher E. (2012-10-23). \"China starts construction on third West-East Gas Pipeline\" . Oil & Gas Journal . Pennwell Corporation . Retrieved 2012-10-24 ."
+  },
+  {
+   "url": "http://www.cpnn.com.cn/news/nytt/202109/t20210924_1434107.html",
+   "link_text": "\"中国电力新闻网\"",
+   "context": "↑ \"中国电力新闻网\" . www.cpnn.com.cn . Retrieved 2021-10-28 ."
+  },
+  {
+   "url": "http://en.sasac.gov.cn/2018/12/14/c_714.htm",
+   "link_text": "Third West-East Gas Pipeline fully completed",
+   "context": "↑ 9.0 9.1 9.2 9.3 9.4 9.5 9.6 9.7 9.8 Third West-East Gas Pipeline fully completed , State-owned Assets Supervision and Administration Commission of the State Council, Dec. 14, 2018"
+  },
+  {
+   "url": "https://www.hydrocarbons-technology.com/projects/west-east/",
+   "link_text": "\"West-East Gas Pipeline Project\"",
+   "context": "↑ \"West-East Gas Pipeline Project\" . Hydrocarbons Technology . Retrieved 2021-11-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.cnpc.com.cn/cnpc/zgscgg/201207/546fc1742b654810a2f3d6c2d8d0e85d.shtml",
+   "link_text": "\"Supervision of the West Section (Khorgos-Zhongwei) Pipeline Project of the Third West-East Gas Pipeline\"",
+   "context": "↑ \"Supervision of the West Section (Khorgos-Zhongwei) Pipeline Project of the Third West-East Gas Pipeline\" . CNPC . Retrieved 2021-11-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.cnpc.com.cn/en/environmentcase/201710/c884e91241d74ca8bfbc558c8e98d3c7.shtml",
+   "link_text": "\"West-East Gas Pipeline Project Delivering Clean Energy and Facilitating Low-carbon Transition\"",
+   "context": "↑ \"West-East Gas Pipeline Project Delivering Clean Energy and Facilitating Low-carbon Transition\" . CNPC . Retrieved 2021-11-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.mee.gov.cn/xxgk2018/xxgk/xxgk11/202112/t20211215_964280.html",
+   "link_text": "\"关于西气东输三线中段(中卫-吉安)工程重大变动环境影响报告书的批复\"",
+   "context": "↑ \"关于西气东输三线中段(中卫-吉安)工程重大变动环境影响报告书的批复\" . www.mee.gov.cn . 2021-12-13. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/mdyqy/202109/t20210929_1298269.html?code=&state=123",
+   "link_text": "\"【西气东输三线中段工程开工建设】-国家发展和改革委员会\"",
+   "context": "↑ 14.0 14.1 \"【西气东输三线中段工程开工建设】-国家发展和改革委员会\" . www.ndrc.gov.cn . Retrieved 2021-11-18 ."
+  },
+  {
+   "url": "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.seetao.com%2Fdetails%2F113923.html",
+   "link_text": "\"The middle section of the third West-East Gas Pipeline project started--Seetao\"",
+   "context": "↑ \"The middle section of the third West-East Gas Pipeline project started--Seetao\" . www.facebook.com . Retrieved 2021-11-18 ."
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.ndrc.gov.cn/fgsj/tjsj/jjyx/mdyqy/202109/t20210929_1298269.html",
+   "link_text": "西气东输三线中段工程开工建设",
+   "context": "↑ 西气东输三线中段工程开工建设 , 国家管网, 2021/09/29"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.163.com/dy/article/ISLRUIGG0518U6M1.html",
+   "link_text": "百日安全无事故丨推进重点项目安全平稳运行，石油工程建设公司在行动",
+   "context": "↑ 百日安全无事故丨推进重点项目安全平稳运行，石油工程建设公司在行动 , 中石化石油工程建设有限公司, 2024-03-07"
+  },
+  {
+   "url": "https://archive.org/details/2023-08-26-180111",
+   "link_text": "中石油输气管道再开放 西气东输三线将引入民资",
+   "context": "↑ 中石油输气管道再开放 西气东输三线将引入民资 ，网易财经，2014/05/12"
+  },
+  {
+   "url": "http://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/201708/W020170811558636175834.pdf",
+   "link_text": "西气东输三线闽粤支干线工程环境影响报告书",
+   "context": "↑ 西气东输三线闽粤支干线工程环境影响报告书 Ministry of Ecology and Environment of China, August 2017."
+  },
+  {
+   "url": "http://www.gd.gov.cn/gdywdt/tzdt/content/post_2877730.html",
+   "link_text": "西气东输三线闽粤支干线（广州—潮州段）投产",
+   "context": "↑ 西气东输三线闽粤支干线（广州—潮州段）投产 《南方日报》网络版. January 22,2020"
+  },
+  {
+   "url": "https://web.archive.org/save/https://kw.beijing.gov.cn/art/2024/1/11/art_9884_672614.html",
+   "link_text": "国产油气管道焊丝一次焊接合格率超98%",
+   "context": "↑ 国产油气管道焊丝一次焊接合格率超98% , 科技日报, 2024-01-11"
+  },
+  {
+   "url": "http://www.xinhuanet.com//fortune/2017-11/28/c_1122019776.htm",
+   "link_text": "西气东输中靖联络线成功投产 保障京津冀等区域供气",
+   "context": "↑ 23.0 23.1 Song Mintao He Zhidan 西气东输中靖联络线成功投产 保障京津冀等区域供气 China News Network/M.news.cn, Nov 28, 2017"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.dlnyzb.com/detail/23806458",
+   "link_text": "盐池-长宁联络线工程地质灾害危险性评估技术服务",
+   "context": "↑ 24.0 24.1 24.2 24.3 24.4 24.5 盐池-长宁联络线工程地质灾害危险性评估技术服务 , 电力能源招标网，2025-02-26"
+  },
+  {
+   "url": "http://hraes.cn/assets/plugins/ebeditor/uploadfile/20200424095016295.pdf",
+   "link_text": "\"西气东输三线长沙支线工程竣工环境保护验收调查报告\"",
+   "context": "↑ 25.0 25.1 \"西气东输三线长沙支线工程竣工环境保护验收调查报告\" (PDF) . http://hraes.cn . 2020-04-22. {{ cite web }} : External link in |website= ( help ) CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://hraes.cn",
+   "link_text": "http://hraes.cn",
+   "context": "↑ 25.0 25.1 \"西气东输三线长沙支线工程竣工环境保护验收调查报告\" (PDF) . http://hraes.cn . 2020-04-22. {{ cite web }} : External link in |website= ( help ) CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://ynb.nea.gov.cn/front/article/107157.html",
+   "link_text": "\"国家管网集团油气管网设施基础信息-国家能源局云南监管办公室\"",
+   "context": "↑ \"国家管网集团油气管网设施基础信息-国家能源局云南监管办公室\" . ynb.nea.gov.cn . 2022-06-22. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://sthjt.hubei.gov.cn/fbjd/xxgkml/xkfw/xzxkjg/202108/t20210825_3720987.shtml",
+   "link_text": "\"省生态环境厅关于西气东输三线仙桃-潜江联络线工程环境影响报告书的批复-湖北省生态环境厅\"",
+   "context": "↑ \"省生态环境厅关于西气东输三线仙桃-潜江联络线工程环境影响报告书的批复-湖北省生态环境厅\" . sthjt.hubei.gov.cn . 2021-08-19. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://fgw.hubei.gov.cn/fbjd/xxgkml/xkfw/xzxkjg/xmhzqk/202108/t20210812_3756888.shtml",
+   "link_text": "\"省发改委关于西气东输三线仙桃—潜江联络线工程项目核准的批复\"",
+   "context": "↑ 28.0 28.1 28.2 28.3 28.4 \"省发改委关于西气东输三线仙桃—潜江联络线工程项目核准的批复\" . 2021-07-20 . Retrieved 2022-09-08 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://web.archive.org/save/http://www.cnpclwpmc.com/?news_3/1314.html",
+   "link_text": "西气东输三线仙桃-潜江联络线工程通气投产",
+   "context": "↑ 29.0 29.1 西气东输三线仙桃-潜江联络线工程通气投产 , 廊坊中油朗威工程项目管理有限公司, 2023-12-11"
+  },
+  {
+   "url": "https://web.archive.org/save/https://finance.sina.com.cn/tech/2021-04-27/doc-ikmxzfmk9213269.shtml#:~:text=%E6%88%AA%E8%87%B3%E7%9B%AE%E5%89%8D%EF%BC%8C%E7%A6%8F%E5%BB%BA%E7%9C%81%E5%86%85%E5%B7%B2",
+   "link_text": "福建省网融入国家管网集团",
+   "context": "↑ 30.0 30.1 30.2 30.3 福建省网融入国家管网集团 , 界面新闻, 2021-04-27"
+  },
+  {
+   "url": "https://web.archive.org/web/20230914121734/https://sthjj.ningde.gov.cn/zwgk/ywxx/ghcw/201703/P020181030675273859129.pdf",
+   "link_text": "\"福建省\"十三五\"环保重大项目规划汇总表\"",
+   "context": "↑ 31.0 31.1 31.2 31.3 31.4 \"福建省\"十三五\"环保重大项目规划汇总表\" (PDF) . finance.sina.com.cn . Retrieved 2023-09-16 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://news.h0591.com/2012/1130/163886.htm",
+   "link_text": "\"西气东输三线福建段3条线路选址公示 2015年贯通\"",
+   "context": "↑ 32.0 32.1 32.2 32.3 32.4 32.5 \"西气东输三线福建段3条线路选址公示 2015年贯通\" . 2012-11-30 . Retrieved 2023-09-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.gov.cn/xinwen/2016-12/12/content_5147014.htm",
+   "link_text": "\"西气东输三线东段工程建成通气\"",
+   "context": "↑ 33.0 33.1 \"西气东输三线东段工程建成通气\" . 2016-12-12 . Retrieved 2023-09-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://fgw.fujian.gov.cn/zfxxgkzl/zfxxgkml/xzxk/201901/t20190118_4747289.htm",
+   "link_text": "\"福建省发展和改革委员会关于天然气基础设施互联互通福州联络线项目核准的批复\"",
+   "context": "↑ 34.0 34.1 \"福建省发展和改革委员会关于天然气基础设施互联互通福州联络线项目核准的批复\" . 2019-01-18 . Retrieved 2023-09-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://finance.sina.cn/tech/2020-10-30/detail-iiznctkc8613382.d.html?fromtech=1&from=wap",
+   "link_text": "\"国家管网西气东输互联互通工程福州联络线投产\"",
+   "context": "↑ 35.0 35.1 35.2 35.3 \"国家管网西气东输互联互通工程福州联络线投产\" . 2020-10-30 . Retrieved 2023-09-18 . {{ cite web }} : CS1 maint: url-status ( link )"
+  }
+ ]
+}

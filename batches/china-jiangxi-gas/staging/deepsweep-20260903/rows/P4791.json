@@ -1,0 +1,178 @@
+{
+ "project_id": "P4791",
+ "pipeline_name": "Jiangxi Natural Gas Pipeline Network",
+ "sheet_row": 2680,
+ "wiki": "https://www.gem.wiki/Jiangxi_Natural_Gas_Pipeline_Network",
+ "validity": [],
+ "fills": [
+  {
+   "sheet_row": 2680,
+   "segment_name": "Phase II, Leping-Dexing-Wuyuan",
+   "ref_col": "Owner [ref]",
+   "value_cols": [
+    "Owner1",
+    "Owner1%"
+   ],
+   "values": {
+    "Owner1": "Jiangxi Natural Gas Pipeline Co Ltd",
+    "Owner1%": "100.00%"
+   },
+   "proposed_refs": [
+    "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+    "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+    "http://www.jxganan.com/anquanyanshoupingjia/9273.html",
+    "https://tt.m.jxnews.com.cn/news/1193625?app=ycyztt"
+   ],
+   "verifications": [
+    {
+     "url": "https://static.sse.com.cn/disclosure/bond/announcement/company/c/new/2025-04-03/242696_20250403_SXBW.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "江西省天然气管网",
+     "name_level": "system",
+     "note": "Footnote 5 (source text, line ~613): '天然气集团持有天然气管道公司54%的股权，剩余46%股权由国家管网集团东部原油储运有限公司（原“中国石化管道储运有限公司”）持有。' This NAMES the 46% holder precisely as the PipeChina SUBSIDIARY 国家管网集团东部原油储运有限公司 (formerly Sinopec Pipeline Storage & Transportation Co.) -- NOT the PipeChina parent (国家石油天然气管网集团有限公司), which is the (incorrect) name already carried in this row's staged QCCOwner value. This corrects that entity name. System-level document (names the Group/JV structure, not this segment)."
+    },
+    {
+     "url": "http://qxb-pdf-osscache.qixin.com/AnBaseinfo/85599868a5a6e3c2fc8db704da8180b8.pdf",
+     "ok": true,
+     "contains_value": true,
+     "name_found": false,
+     "name_level": "system",
+     "note": "2022 CCXI credit rating report, Table 1 (line 262): '江西省天然气管道有限公司 天然气管道公司 54.00% 33.68 8.76 4.02 0.68' -- independently confirms the 54% stake (different host/publisher/document class than SSE: a credit-rating agency report vs. a bond-prospectus tracking report). Footnote 1 (lines 536-538): '天然气集团...持股比例54.00%...天然气管道公司负责投资建设及运营承接川气东送气源的一期管网，为公司控股54%股权的一级子公司'."
+    },
+    {
+     "url": "http://www.jxganan.com/anquanyanshoupingjia/9273.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "德兴-婺源",
+     "name_level": "segment",
+     "note": "Official 2024-04-28 安全验收评价 (safety-acceptance evaluation) report for THIS exact project ('江西省天然气网一期工程乐平-德兴-婺源支线项目'): '该工程...由江西省天然气管道有限公司建设、运营和管理' -- segment-level naming of 江西省天然气管道有限公司 (the 54/46 JV entity) as builder/operator/manager, and states trial production ('试生产') under this same company name began 2022-09-05."
+    },
+    {
+     "url": "https://tt.m.jxnews.com.cn/news/1193625?app=ycyztt",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "德兴-婺源",
+     "name_level": "segment",
+     "note": "2020-12-10 municipal news article on the groundbreaking: '江西省天然气管道有限公司总经理陈东参加开工仪式' -- names the same JV entity (天然气管道公司) as the company whose general manager attended the segment's own groundbreaking ceremony."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "high",
+   "independent": true,
+   "source_language": "en",
+   "researcher_notes": "IMPORTANT DEPARTURE FROM THE DEFAULT PHASE-II RULE (RELAUNCH_NOTES item 2): the default sweep instruction for Phase II segments is to attribute Owner/Operator to 江西省天然气集团有限公司管道分公司 (100%, no JV split), not the 54/46 JV. I did NOT apply that default here. THREE independent, differently-classed, segment-naming primary sources (jxnews municipal press 2020-12-10, jxganan official safety-acceptance evaluation 2024-04-28, and yingdodo contractor project-reference page 2018-05-25) all name the operating/building entity for 乐平-德兴-婺源 as 江西省天然气管道有限公司 (天然气管道公司) -- the Phase I JV entity, per CCXI's own footnote 1, NOT the wholly-Group-owned Phase II 管道分公司. This is consistent with a broader finding staged as __VALIDITY__ below: this row's segment_name ('Phase II') itself appears to be mislabeled -- see that record. Given the operator-identity evidence points to the Phase I JV, I am staging the 54%/46% split (matching what was already on this row's QCCOwner value, just with the 46%-holder's name corrected from the payload's incorrect parent-company name to the verified subsidiary name from SSE footnote 5). Owner1% and Owner2% are network-wide JV percentages (SSE/CCXI, system-level), not segment-specific equity in this branch alone -- flagged for awareness, consistent with how ownership stakes work for an integrated JV operating company.  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: values.Owner1% '54' -> '54.00%'; values.Owner2% '46' -> '46.00%'. Column names/format only, checked against the live tab header; no research finding altered.]  [ENTITY NORMALIZED at merge 2026-09-10, orchestrator: Owner cols: {\"Owner1\": \"Jiangxi Natural Gas Group Co., Ltd.\", \"Owner1%\": \"54.00%\", \"Owner2\": \"PipeChina Eastern Crude Oil Storage and Transportation Co., Ltd. (国家管网集团东部原油储运有限公司)\", \"Owner2%\": \"46.00%\"} -> {\"Owner1\": \"Jiangxi Natural Gas Pipeline Co Ltd\", \"Owner1%\": \"100.00%\"}. Per the batch-level ruling in orchestrator_notes.md: the 46% holder is 国家管网集团东部原油储运有限公司 (SSE bond report 242696_20250403_SXBW.pdf footnote 5, the sheet's own Operator [ref]), not the PipeChina parent; model=projco. Research finding unchanged -- string/shape only.]  [SCHEMA NORMALIZED at merge 2026-09-10, orchestrator: value_cols ['Owner1', 'Owner1%', 'Owner2', 'Owner2%'] -> ['Owner1', 'Owner1%']. Column names/format only, checked against the live tab header; no research finding altered.]",
+   "primary_value_col": "Owner1",
+   "primary_value": "Jiangxi Natural Gas Group Co., Ltd."
+  },
+  {
+   "sheet_row": 2680,
+   "segment_name": "Phase II, Leping-Dexing-Wuyuan",
+   "ref_col": "Pressure [ref]",
+   "value_cols": [
+    "Pressure",
+    "PressureUnits"
+   ],
+   "values": {
+    "Pressure": "6.3",
+    "PressureUnits": "MPa"
+   },
+   "proposed_refs": [
+    "http://www.jxganan.com/anquanyanshoupingjia/9273.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.jxganan.com/anquanyanshoupingjia/9273.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "德兴-婺源",
+     "name_level": "segment",
+     "note": "'设计压力6.3MPa' -- official safety-acceptance evaluation states the same 6.3MPa figure, but explicitly for the '乐平-德兴支线' 61.64km leg only (line约长61.64km), not confirmed as stated uniform across the full 97km to Wuyuan."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Two independent, differently-classed sources (a contractor/tender-info aggregator and an official safety-acceptance evaluation report) agree on 6.3MPa. CAVEAT: yingdodo states this for the full 97km route; jxganan states it specifically for the shorter 61.64km 乐平-德兴 leg (jxganan's own scope note: '线路长约61.64km' vs. the sheet's 97km LengthKnown). Since design pressure is normally uniform along one continuously-designed pipe run and no document states a DIFFERENT pressure for the Dexing-Wuyuan extension, staging at tier high with this caveat documented rather than downgrading. [banned-source strip 2026-09-10] Dropped 1 ref(s) on banned tertiary-aggregator host(s) (yingdodo.com) per standing rule 5. yingdodo.com is 小柱工程, a commercial construction-leads database, and the cited page is an explicit marketing sample (项目样例…以下样例非最新项目，仅表示内容格式) with no attribution -- the abarrelfull/theodora source class, barred even alongside corroborating sources. Its figures are a LEAD to the underlying Jiangxi 立项备案 filing, not a citation. tier high->medium (strip leaves a single source). independent true->false. Refs remaining: 1.",
+   "primary_value_col": "Pressure",
+   "primary_value": "6.3"
+  },
+  {
+   "sheet_row": 2680,
+   "segment_name": "Phase II, Leping-Dexing-Wuyuan",
+   "ref_col": "Start [ref]",
+   "value_cols": [
+    "StartYear1",
+    "StartMonth1"
+   ],
+   "values": {
+    "StartYear1": "2022",
+    "StartMonth1": "9"
+   },
+   "proposed_refs": [
+    "http://www.jxganan.com/anquanyanshoupingjia/9273.html"
+   ],
+   "verifications": [
+    {
+     "url": "http://www.jxganan.com/anquanyanshoupingjia/9273.html",
+     "ok": true,
+     "contains_value": true,
+     "name_found": true,
+     "name_matched": "德兴-婺源",
+     "name_level": "segment",
+     "note": "'2022年8月10日由江西省天然气管道有限公司组织有关专家对公司编制的《...乐平-德兴段管道试生产（使用）方案》进行了技术评审，并报江西省应急管理厅，2022年9月5日开始进行试生产。' -- trial production (试生产) on the 乐平-德兴 leg began 2022-09-05."
+    }
+   ],
+   "class_out": "REFS_ADDED",
+   "tier": "medium",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "Single source (no second, differently-classed document found stating a start/commissioning date). Candidate dates considered and rejected: (a) wiki_attributions carries a tentative '2024' start-year candidate sourced from a web.archive.org/save/ URL for jxganan -- that is a save-request URL, not a live verifiable capture, so not used; (b) yingdodo's '开工时间:2018-06-13完工时间:2020-02-13' is an internally-inconsistent planned/tender-era schedule that conflicts with jxnews's clean, first-hand 2020-12 groundbreaking account already staged as Construction -- not used for Start; (c) jxganan's own 2024-04-28 报告 date (the safety-acceptance evaluation publication) is a REVIEW/evaluation date, not a start-of-operations date. Staged 2022-09 (trial production start) as the best-supported candidate for StartYear1/StartMonth1, distinct from the already-staged 2020-12 Construction date and consistent with Status=operating (jxganan, medium tier). Note this figure is explicitly for the '乐平-德兴' leg only, per the same scope caveat as Pressure/Diameter above; no separate date found for the Dexing-Wuyuan extension specifically.",
+   "primary_value_col": "StartYear1",
+   "primary_value": "2022"
+  },
+  {
+   "sheet_row": 2680,
+   "segment_name": "Phase II, Leping-Dexing-Wuyuan",
+   "ref_col": "Proposal [ref]",
+   "value_cols": [
+    "ProposalYear",
+    "ProposalMonth"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No document opened for this row (jxganan, jxnews, yingdodo, SSE, CCXI, qianzhan, petrobest, or any of the 25 harvest_pool_live URLs) states an explicit proposal/立项 date or a formal approval-application date distinct from the construction/safety-review timeline. Earliest documented activity found: jxganan's 2017-08 安全条件评价报告 compilation date (implying the project design already existed by then) and yingdodo's page-publish date of 2018-05-25 with a then-planned '开工时间:2018-06-13' (never realized -- actual groundbreaking was 2020-12-09 per jxnews). Neither is a genuine 'proposed' date in the GEM sense (first public announcement/planning-stage date); staged UNRESOLVED rather than guessing.",
+   "primary_value_col": "ProposalYear",
+   "primary_value": ""
+  },
+  {
+   "sheet_row": 2680,
+   "segment_name": "Phase II, Leping-Dexing-Wuyuan",
+   "ref_col": "FuelSource [ref]",
+   "value_cols": [
+    "FuelSource"
+   ],
+   "values": {},
+   "proposed_refs": [],
+   "verifications": [],
+   "class_out": "UNRESOLVED",
+   "tier": "presumed",
+   "independent": false,
+   "source_language": "en",
+   "researcher_notes": "No document opened for this row states a gas source (originating trunk pipeline) directly for the 乐平-德兴-婺源 segment itself. An inferential chain exists but is not staged as a value: this segment's operator is 江西省天然气管道有限公司 (see Owner/Operator resolutions above), and per CCXI 2022 footnote 1, that entity '负责投资建设及运营承接川气东送气源的一期管网' -- i.e. the JV company's network-wide portfolio is fed by 川气东送/Sichuan-Shanghai Gas Pipeline (Chuan-qi-dong-song), as distinct from the Phase II 管道分公司's West-East-2-sourced network. This is an operator-level inference, not a segment-specific statement, and China's provincial gas networks commonly draw from multiple trunk sources at different injection points along one operator's system -- so it is not staged as a value. Recommend Update review consider 'Sichuan-Shanghai Gas Pipeline' as a candidate FuelSource pending a document that states the segment's actual supply point/injection source.",
+   "primary_value_col": "FuelSource",
+   "primary_value": ""
+  }
+ ],
+ "status_reviews": []
+}

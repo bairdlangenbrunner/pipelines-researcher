@@ -1,0 +1,131 @@
+{
+ "contract": [
+  "EVERY unit below is OWED a record — there is no such thing as a unit that needed no work. The sheet already holds the value; its [ref] cell is empty; sourcing it is what this leg is FOR.",
+  "A unit whose class is UNREPORTED_BLANK is the INVERSE case — the sheet cell is blank, so there is no recorded value to agree with and you are proposing one. Put it in the record's `values` dict, keyed by the column names in that unit's `value_cols` (e.g. {\"Operator\": \"WBI Energy Transmission, Inc.\"}), alongside the refs. The schema DOES carry values — a proposed value stated only in researcher_notes leaves a ref with no value behind it, which is an orphan [ref] cell and gets stripped (2026-09-09: two of five recovered blanks arrived this way).",
+  "Sources AGREEING with the recorded value is the deliverable, not a no-op: emit class_out='REFS_ADDED' carrying the SAME value plus the verified ref(s) that state it. 'Confirmed as recorded' in your summary and nowhere machine-readable is indistinguishable from never having checked it.",
+  "A source agreeing within rounding IS a ref (51.97 mi + 0.5 mi against a recorded 52; 38.5 against 39): REFS_ADDED at medium/high with the discrepancy in researcher_notes, plus a validity `spec` concern if the gap is material. UNRESOLVED means nothing was found — never that something slightly different was found.",
+  "UNRESOLVED is a legitimate outcome ONLY with researcher_notes saying what you searched. An empty UNRESOLVED reads exactly like a dropped unit and is treated as one.",
+  "Read every document you open to exhaustion, for EVERY column and sibling row — one FERC notice routinely sources Length, Diameter, Cost, Construction and Start at once.",
+  "Two independent sources per data point is the target; the same wire story republished does not count, and NEVER cite GEM (gem.wiki, globalenergymonitor.org) or the banned aggregators (abarrelfull, theodora.com). Never fabricate a URL.",
+  "Key every record with `ref_col` and a `class_out` of REFS_ADDED / REVERIFIED / UNRESOLVED / DEAD_LINK. Anything else is dropped without a word at workbook build — the research is done and vanishes.",
+  "BEFORE YOU FINISH run the coverage_gate command above. It names every unit you left unreported and every record that cannot merge. It is blocking: do not finish red."
+ ],
+ "write_shard_to": "batches/china-jiangxi-gas/staging/deepsweep-20260903/ref_shards_recovery/P4752.json",
+ "refs_already_on_this_row": [
+  {
+   "url": "http://cnenergy.org/mt/mhg/201510/t20151016_193097.html",
+   "sourced": [
+    "Fuel [ref]",
+    "PipelineType [ref]"
+   ]
+  },
+  {
+   "url": "https://www.sohu.com/a/164824932_747560",
+   "sourced": [
+    "Fuel [ref]"
+   ]
+  },
+  {
+   "url": "https://img9.qianzhan.com/policy/202307/14/20230714-d7d735aa6fb9eae9.pdf",
+   "sourced": [
+    "Location [ref]",
+    "Proposal [ref]"
+   ]
+  },
+  {
+   "url": "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/202104/t20210428_831132.shtml",
+   "sourced": [
+    "Operator [ref]",
+    "Owner [ref]"
+   ]
+  }
+ ],
+ "coverage_gate": "python scripts/check_shard_coverage.py --staging batches/china-jiangxi-gas/staging/deepsweep-20260903 --pid P4752",
+ "project_id": "P4752",
+ "pipeline_name": "Xinjiang Coal-to-Gas Pipeline",
+ "wiki": "https://www.gem.wiki/Xinjiang_Coal-to-Gas_Pipeline_Project",
+ "n_units": 1,
+ "units": [
+  {
+   "ref_col": "Status [ref]",
+   "sheet_row": 2641,
+   "segment_name": "Jiangxi-Fujian-Zhejiang Branch",
+   "value_cols": [
+    "Status"
+   ],
+   "values": {
+    "Status": "cancelled"
+   },
+   "primary_value": "cancelled",
+   "current_ref": "",
+   "class_out": "UNRESOLVED"
+  }
+ ],
+ "seed_citations": [
+  {
+   "url": "http://finance.sina.com.cn/stock/s/2017-09-28/doc-ifymkwwk6505882.shtml",
+   "link_text": "中国石化潜江至韶关输气管道工程（湖南段）开工",
+   "context": "↑ 1.0 1.1 中国石化潜江至韶关输气管道工程（湖南段）开工 , Sina, Sep. 28, 2017"
+  },
+  {
+   "url": "http://cnenergy.org/mt/mhg/201510/t20151016_193097.html",
+   "link_text": "新疆煤制气外输管道项目四年后终获批",
+   "context": "↑ 新疆煤制气外输管道项目四年后终获批 October 16, 2015"
+  },
+  {
+   "url": "http://hps.mee.gov.cn/jsxm/xmsl/201504/W020150413379169320946.pdf",
+   "link_text": "中国石化新疆煤制气外输管道工程（新粤浙管道）环境影响报告书",
+   "context": "↑ 中国石化新疆煤制气外输管道工程（新粤浙管道）环境影响报告书 Ministry of Ecology and Environment of People’s Republic of China, April 2015"
+  },
+  {
+   "url": "https://web.archive.org/save/https://www.toutiao.com/article/7296126036092305930/?channel=&source=search_tab",
+   "link_text": "国内煤炭基地和煤电基地",
+   "context": "↑ 国内煤炭基地和煤电基地 , 今日头条, 2023-11-04"
+  },
+  {
+   "url": "https://baike.baidu.com/item/%E6%96%B0%E7%B2%A4%E6%B5%99%E7%AE%A1%E9%81%93%E5%B7%A5%E7%A8%8B/5186125",
+   "link_text": "\"新粤浙管道工程_百度百科\"",
+   "context": "↑ 5.0 5.1 \"新粤浙管道工程_百度百科\" . 百度百科 . {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "http://news.cntv.cn/20120102/109074.shtml",
+   "link_text": "\"新粤浙与新鲁输气管道将开建_新闻台_中国网络电视台\"",
+   "context": "↑ \"新粤浙与新鲁输气管道将开建_新闻台_中国网络电视台\" . news.cntv.cn . 2012-01-02. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.reuters.com/article/sinopec-gas-pipeline-1590-idCNCNE89H00N20121018",
+   "link_text": "\"中石化新粤浙管道工程获得\"路条\" 总投资1,590亿元--报载\"",
+   "context": "↑ \"中石化新粤浙管道工程获得\"路条\" 总投资1,590亿元--报载\" . 中国财经--Reuters . 2012-10-18."
+  },
+  {
+   "url": "http://www.gov.cn/gzdt/2013-04/07/content_2371494.htm",
+   "link_text": "\"中石化将在新疆准东建世界最大规模煤制气基地\"",
+   "context": "↑ \"中石化将在新疆准东建世界最大规模煤制气基地\" . www.gov.cn . 2013-04-07. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/202104/t20210428_831132.shtml",
+   "link_text": "\"2021年4月28日生态环境部关于新疆煤制气外输管道工程（新粤浙管道）广西支干线段变更等2项环境影响评价文件拟进行审查公示_中华人民共和国生态环境部\"",
+   "context": "↑ 9.0 9.1 \"2021年4月28日生态环境部关于新疆煤制气外输管道工程（新粤浙管道）广西支干线段变更等2项环境影响评价文件拟进行审查公示_中华人民共和国生态环境部\" . www.mee.gov.cn . 2021-04-28. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://www.sohu.com/a/164824932_747560",
+   "link_text": "\"中国石化新疆煤制天然气外输管道工程新粤浙管道甘肃段社会稳定风险分析公众参与信息公示\"",
+   "context": "↑ \"中国石化新疆煤制天然气外输管道工程新粤浙管道甘肃段社会稳定风险分析公众参与信息公示\" . www.sohu.com . 2017-08-15. {{ cite web }} : CS1 maint: url-status ( link )"
+  },
+  {
+   "url": "https://finance.sina.com.cn/stock/s/2019-09-23/doc-iicezzrq7848316.shtml",
+   "link_text": "中石化最大单体工程一期项目或明年投产 投资超千亿",
+   "context": "↑ 中石化最大单体工程一期项目或明年投产 投资超千亿 , Sina, Sep. 23, 2019"
+  },
+  {
+   "url": "https://finance.sina.com.cn/money/future/roll/2020-06-25/doc-iircuyvk0439644.shtml",
+   "link_text": "湖南首条国家天然气干线管道正式投产进气",
+   "context": "↑ 湖南首条国家天然气干线管道正式投产进气 红网，June 25, 2020"
+  },
+  {
+   "url": "https://www.shpgx.com/html/xyzx/20210826/4159.html",
+   "link_text": "\"抢抓机遇 油气管网基础设施建设跑出加速- 来源：国家管网集团-上海石油天然气交易中心\"",
+   "context": "↑ \"抢抓机遇 油气管网基础设施建设跑出加速- 来源：国家管网集团-上海石油天然气交易中心\" . www.shpgx.com . 2021-08-26. {{ cite web }} : CS1 maint: url-status ( link )"
+  }
+ ]
+}
