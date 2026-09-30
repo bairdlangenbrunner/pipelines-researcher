@@ -31,7 +31,6 @@ const MODEL_VET = A.modelVet || MODEL
 // args.scopeRule replaces the default transmission-only rule (e.g. a length threshold);
 // args.extra is a block of run-specific context (territory rules, seeds, window) for every search agent.
 const SCOPE_RULE = A.scopeRule || 'Transmission lines only — skip gathering/process/feeder lines and distribution networks.'
-const EXTRA_VET_NOTE = null // vet rule lives in args.vetRule (appended to the add-threshold)
 const EXTRA = A.extra ? `\n${A.extra}\n` : ''
 const ROSTER = A.roster.join("\n")
 
