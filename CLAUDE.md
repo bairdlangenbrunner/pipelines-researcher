@@ -7,7 +7,7 @@ maintain Global Energy Monitor's open-access pipeline databases:
 - **GGIT** — Global Gas Infrastructure Tracker (gas pipelines)
 
 Deeper coverage in MENA, US, Iran, Iraq, Saudi Arabia. Researcher initials in the
-tracker: **CB**. The agent **never writes to the routes repo or the live Google
+tracker: **CB** (Claude bot — the agent's own initials, not a human researcher). The agent **never writes to the routes repo or the live Google
 Sheet by default** — every batch produces a reviewable Excel deliverable + staged
 JSON that Baird applies manually. Both are writable only on **explicit per-batch
 authorization** (see the hard requirement below): sheet writes as a mechanical
@@ -279,7 +279,10 @@ diff. **Adding a dataset is config, not engine code** — drop a new manifest an
   **The live GEM Sheet is writable only on explicit
   authorization** — Baird asks for the edit, or the agent asks permission and gets a
   yes, *for that specific edit*. Approval never carries to the next task. Never write
-  the sheet to "apply" a batch: batches go through the deliverable, always. An
+  the sheet to "apply" a batch: batches go through the deliverable, always — with ONE
+  exception (Baird 2026-09-30): a review-app push of *clicked accepts* is the mechanical
+  pre-verified write, authorized per push run, and produces the same cell text the
+  workbook would paste (`docs/plans/2026-09-30_review-app.md` §5; not built yet). An
   authorized write must be **mechanical and pre-verified** (a fix whose correctness is
   established before writing, not a research judgment applied live), and must:
   (1) read the target range with `valueRenderOption: FORMULA` first and abort on any
@@ -387,7 +390,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/egypt.md`. Gas researched only 40 of 127 rows — the other 87 carry unapplied
   July/August staged work (`--exclude-pids`); the deep sweeps do NOT subsume the four recon workbooks.
 - **United States (gas: slice 1 batches 1-5 staged not applied, 5 files to work — batches 1-4
-  rebuilt on the rule-4(e) recovery pass (`_1906_ET`), batch 5 closed slice 1 (rebuilt 2026-09-15, `20260915_1231_ET`). Campaign order fixed
+  rebuilt on the rule-4(e) recovery pass, batch 5 closed slice 1; all US deep-sweep workbooks re-tiered 2026-09-30 (`20260930_1455_ET`). Campaign order fixed
   2026-09-10: batch 5 -> slice 2 -> in-dev/status-review -> discovery -> maybe routes/recon.
   **OIL IS OUT OF SCOPE for this cycle** — don't fold it in or propose it; its two staged update
   batches and the deepwater-export item just wait):** `docs/country_notes/united-states.md`.
@@ -400,7 +403,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   `docs/country_notes/india.md`. Recons standalone; India is the INVERSE of Pakistan — a blank ref
   means nobody looked, so `UNRESOLVED` is unfinished, not correct.
 - **Kazakhstan (gas: first-ever full pass 2026-08-11, staged not applied; 3 files to work):**
-  `docs/country_notes/kazakhstan.md`. Work the 08-12 handoff (the 08-11 pair is superseded after
+  `docs/country_notes/kazakhstan.md`. Work the handoff re-tiered 2026-09-30 (`20260930_1455_ET`; the 08-11 pair is superseded after
   cluster A's reversal); recons standalone and both re-run (GulfPub 08-12, OSM 08-14).
 - **Malaysia (gas: first-ever full pass 2026-08-12, staged not applied; 5 files to work):**
   `docs/country_notes/malaysia.md`. Recons standalone; the headline is a SCOPE ruling (5 GEM rows vs
@@ -410,7 +413,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   of Kazakhstan: a blank means nobody looked.
 - **Uzbekistan (gas: first-ever full pass 2026-08-26, staged not applied; 3 files to work):**
   `docs/country_notes/uzbekistan.md`. 13 of its 31 gas rows ARE Kazakhstan's (research legs scoped to
-  the 18 domestic rows, recon keeps all 31); recons standalone; work the 08-27 `0931_ET` handoff only.
+  the 18 domestic rows, recon keeps all 31); recons standalone; work the `20260930_1455_ET` handoff only (the 08-27 `0931_ET` one, re-tiered).
 - **Nigeria (divestiture ownership sweep not started):** `docs/country_notes/nigeria.md`.
 - **Russia (gas: campaign running — 8 regional deep-sweep batches with status review; R1 Far Eastern,
   R2 NW-operating and R3 NW in-dev delivered 2026-09-15 staged not applied; **R5 Volga delivered
@@ -418,7 +421,7 @@ staged counts regenerate via `python scripts/staged_summary.py --country <C>
   not thinned); **R4a Urals-YaNAO delivered 2026-09-21** (lean, ~45 k/row; 1 status change, P5404);
   **R4b Urals-south delivered 2026-09-22** (lean, ~55 k/row; 1 status change, P3977); **R6 Siberia
   delivered 2026-09-22** (lean, ~36 k/row; 4 status changes, 4 existence questions); **R7 Central+South
-  delivered 2026-09-30** (lean, ~34 k/row; 9 status changes, 2 duplicates) — regional pass complete; next is
+  delivered 2026-09-30** (lean, ~34 k/row; 9 status changes, 2 duplicates) — regional pass complete, all R1–R7 workbooks re-tiered 2026-09-30 (`20260930_1455_ET`); next is
   the campaign-wide fills pass over the five lean `deferred_units.json` ledgers (R4a–R7);
   GulfPub recon delivered standalone
   `20260914_1648_ET`; 33 rows carried from Ukraine/Kazakhstan/Uzbekistan/Iran/China passes excluded
