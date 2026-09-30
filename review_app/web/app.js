@@ -1,4 +1,4 @@
-/* Pipelines review app front end (milestone 2: read-only). Vanilla JS, no modules, no build step
+/* Pipelines review app front end (milestone 3: decisions). Vanilla JS, no modules, no build step
    (phase 2 inlines this file into an Apps Script HtmlService page). All I/O goes through Store;
    controls that need a capability read Store.caps and hide / disable themselves. */
 (function () {
@@ -6,7 +6,7 @@
   var T0 = performance.now();
 
   // ---- Store adapter (phase 1: local HTTP; phase 2 swaps in google.script.run) ----
-  var NOT_YET = "decisions arrive in milestone 3";
+  var NOT_YET = "this server cannot record decisions";
   var Store = {
     caps: {decide: false, refresh: false, push: false},
     _json: function (r) {
@@ -42,8 +42,13 @@
     pipe: -1,                // index into D.pipelines
     line: -1,                // selected line index (LINES)
     pin: -1,                 // a pipeline opened by link that the filters would hide
-    shown: []                // line indexes drawn on the current card, in order
+    shown: [],               // line indexes drawn on the current card, in order
+    stay: {},                // line keys decided this session: kept in view even if the filter would drop them
+    saving: {}               // line keys with a save in flight
   };
+  var MACHINE = {"backend sync": 1, "push": 1};   // not people: their records never count as reviewed
+  var LINE_BY_KEY = {};
+  var VERB = {accept: "accepted", hold: "held", reject: "rejected", suggest: "suggested"};
   var $ = function (id) { return document.getElementById(id); };
   var LINE_KINDS = ["ref", "fill", "status", "oo", "route", "new_row"];
   var ITEM_KINDS = ["concern", "wikidiff", "routeqc", "route_suggestion", "monitor", "flag", "escalation",
@@ -67,9 +72,29 @@
   function blankv(v) { return v == null || String(v).trim() === ""; }
   function dirLabel(d) { return String(d || "").split("/").pop(); }
   function tierOf(l) { return l.tier === "high" || l.tier === "medium" || l.tier === "low" ? l.tier : "untiered"; }
+  // a line is decided only by a person's latest record; a machine record (backend sync, push)
+  // leaves it undecided (the pre-fill is shown, nothing is pushed)
+  function cur(l) { return l.reviewed && l.decision ? l.decision : null; }
   function dstate(o) {
-    var d = o._item ? o.call : o.decision;
+    var d = o._item ? o.call : cur(o);
     return d ? d : "undecided";
+  }
+  function timeOf(iso) { return String(iso || "").replace("T", " ").slice(11, 16); }
+  function decisionText(l) {
+    if (l.reviewed && l.decision) return (VERB[l.decision] || l.decision) + " by " + (l.decided_by || "?") + " " + timeOf(l.decided_at);
+    if (l.decision && l.decided_by) return "pre-filled by " + l.decided_by + " (not reviewed)";
+    return "";
+  }
+  // contested linking: a line on a column that an OPEN validity concern (no call yet) names is held
+  function lockCols(l, p) {
+    var open = {};
+    p.items.forEach(function (it) {
+      if (it.kind !== "concern" || it.call || !it.contested || typeof it.contested !== "object") return;
+      Object.keys(it.contested).forEach(function (c) { open[c] = 1; });
+    });
+    var cols = [l.column].concat(l.value_cols || []);
+    if (l.kind === "status") cols.push("Status");
+    return cols.filter(function (c, i) { return c && cols.indexOf(c) === i && open[c]; });
   }
   function rowLabel(l) {
     if (l.kind === "new_row") return "new row";
@@ -98,7 +123,7 @@
 
   // ---- derived data, once per load ----
   function prepare() {
-    LINES = []; ITEMS = [];
+    LINES = []; ITEMS = []; LINE_BY_KEY = {};
     D.pipelines.forEach(function (p, pi) {
       p._cont = {};
       p.items.forEach(function (it) {
@@ -108,7 +133,7 @@
         ITEMS.push(it);
       });
       p.lines.forEach(function (l) {
-        l._p = pi; l._i = LINES.length;
+        l._p = pi; l._i = LINES.length; LINE_BY_KEY[l.key] = l;
         var cols = [l.column].concat(l.value_cols || []);
         if (l.kind === "status") cols.push("Status");
         l._contCols = cols.filter(function (c, i) { return c && cols.indexOf(c) === i && (c in p._cont); });
@@ -142,7 +167,7 @@
       if (fs.kind) { if (o.kind !== fs.kind) return false; }
       else if (item) return false;
     }
-    if (skip !== "decision" && fs.decision && dstate(o) !== fs.decision) return false;
+    if (skip !== "decision" && fs.decision && dstate(o) !== fs.decision && !(!item && S.stay[o.key])) return false;
     if (skip !== "tier" && fs.tier && (item || tierOf(o) !== fs.tier)) return false;
     if (fs.class_out && o.class_out !== fs.class_out) return false;
     if (fs.dir && o.dir !== fs.dir) return false;
@@ -163,7 +188,7 @@
     p.lines.forEach(function (l) {
       if (!match(l, p, FS, null, ranges, q)) return;
       n++;
-      if (!l.decision) todo++;
+      if (!cur(l)) todo++;
     });
     p.items.forEach(function (it) { if (match(it, p, FS, null, ranges, q)) ni++; });
     p._n = n; p._todo = todo; p._ni = ni;
@@ -258,7 +283,7 @@
     $("f-more").onclick = function () { toggleMore(); };
     $("f-reset").onclick = function () { FS = defaults(); syncControls(); changed(); };
   }
-  function changed(replace) { S.pin = -1; refilter(true); writeRoute(replace === true); }
+  function changed(replace) { S.pin = -1; S.stay = {}; refilter(true); writeRoute(replace === true); }
   function clearOne(id) {
     var d = defaults();
     FS[id] = d[id];
@@ -300,7 +325,7 @@
   }
   function renderProgress() {
     var total = 0, done = 0;
-    LINES.forEach(function (l) { if (!l.in_backend || FS.landed) { total++; if (l.decision) done++; } });
+    LINES.forEach(function (l) { if (!l.in_backend || FS.landed) { total++; if (cur(l)) done++; } });
     $("progress-bar").style.width = total ? (100 * done / total) + "%" : "0";
     $("progress-text").textContent = done + " of " + total + " lines decided";
   }
@@ -504,7 +529,9 @@
       chips.push(chip(l.independent ? "independent" : "not independent", l.independent ? "ok" : "", "a second, independent publisher (preferred, never owed)"));
       if (l.source_language) chips.push(chip("lang " + l.source_language));
     }
+    var lock = lockCols(l, p);
     if (l._cont) chips.push(chip("contested", "cont", "a validity concern contests a value on this line"));
+    if (lock.length) chips.push(chip("held: concern open", "warn", "a validity concern contests " + lock.join(", ") + " and has no call yet; accept is refused until it does (hold / reject are still allowed)"));
     if (l.in_backend) chips.push(chip("in backend", "", "the snapshot already holds this value and these refs"));
     if (l.sheet_row_moved) chips.push(chip("row re-resolved", "", "the record's sheet_row was stale; this is the live row"));
     var title = l.kind === "new_row" ? (l.name || "candidate") : lineCols(l);
@@ -517,9 +544,12 @@
     h += detailsHtml(l);
     var dis = !Store.caps.decide;
     h += '<div class="controls">' + [["accept", "a"], ["hold", "h"], ["reject", "r"]].map(function (b) {
-      return '<button type="button" class="b-' + b[0] + '" data-decide="' + b[0] + '"' + (dis ? ' aria-disabled="true" title="' + NOT_YET + '"' : "") +
-        ' aria-pressed="' + (l.decision === b[0]) + '">' + b[0] + " (" + b[1] + ")</button>";
-    }).join("") + "</div>";
+      var off = dis || (b[0] === "accept" && lock.length);
+      return '<button type="button" class="b-' + b[0] + '" data-decide="' + b[0] + '"' +
+        (off ? ' aria-disabled="true" title="' + esc(dis ? NOT_YET : "held: a concern on " + lock.join(", ") + " is open") + '"' : "") +
+        ' aria-pressed="' + (cur(l) === b[0]) + '">' + b[0] + " (" + b[1] + ")</button>";
+    }).join("") + '<button type="button" class="ghost" data-undo="1"' + (cur(l) ? "" : " disabled") + ' title="back to undecided (u)">undo (u)</button>' +
+      '<span class="dstat" id="dstat-' + l._i + '" role="status">' + esc(decisionText(l)) + "</span></div>";
     return h;
   }
 
@@ -622,7 +652,7 @@
     var p = D.pipelines[S.pipe], ranges = parseRows(FS.row), q = FS.q.trim().toLowerCase();
     var isNew = p.pid.indexOf("new:") === 0, isScope = p.pid === "scope";
     var segs = p.segments;
-    var open = p.lines.filter(function (l) { return !l.decision; }).length;
+    var open = p.lines.filter(function (l) { return !cur(l); }).length;
     var segTxt = segs.length ? segs.map(function (s) { return "row " + s.sheet_row + (s.segment ? " (" + s.segment + ")" : ""); }).join(", ") : "";
     var ctx = ['<b>' + esc(isNew ? "new candidate, not in the sheet" : (isScope ? "scope-level" : segTxt || "no sheet row")) + "</b>",
                p.country && esc(p.country), p.status && "Status: " + esc(p.status),
@@ -647,7 +677,7 @@
       if (!g.plain) h += '<div class="segdiv">' + (g.seg ? "row " + esc(g.seg.sheet_row) + (g.seg.segment ? ' <span class="seg">' + esc(g.seg.segment) + "</span>" : "") : "other rows") + "</div>";
       g.lines.forEach(function (l) {
         S.shown.push(l._i);
-        h += '<div class="line tier-' + tierOf(l) + (l.decision ? " d-" + l.decision : "") + (l.in_backend ? " dim" : "") +
+        h += '<div class="line tier-' + tierOf(l) + (cur(l) ? " d-" + cur(l) : "") + (lockCols(l, p).length ? " locked" : "") + (l.in_backend ? " dim" : "") +
           (l.kind === "new_row" ? " newcard" : "") + (l._i === S.line ? " cur" : "") + '" id="line-' + l._i + '" data-i="' + l._i + '">' + lineHtml(l, p) + "</div>";
       });
     });
@@ -696,7 +726,64 @@
     if (u) window.open(u, "_blank", "noopener"); else toast("this line has no ref to open");
   }
   function notYet() { toast(NOT_YET); }
-  function decisionKey() { if (!Store.caps.decide) return notYet(); }
+  function setStat(i, text, failed) {
+    var e = $("dstat-" + i);
+    if (e) { e.textContent = text; e.className = "dstat" + (failed ? " err" : (text === "Saving…" ? " saving" : "")); }
+  }
+  // Save one line's call. The UI changes only after the server confirms; while it is in flight the
+  // line says "Saving…", then "accepted by <reviewer> <time>" (or the refusal). No confirm dialog.
+  function save(l, rec, advance) {
+    if (!Store.caps.decide) return notYet();
+    if (S.saving[l.key]) return;
+    S.saving[l.key] = true;
+    setStat(l._i, "Saving…");
+    Store.decide([rec]).then(function (saved) {
+      saved.forEach(applyRecord);
+      S.stay[l.key] = true;
+      banner("");
+      var keepLine = S.line;
+      refilter(true);
+      if (keepLine >= 0 && $("line-" + keepLine)) setLine(keepLine, true);
+      if (advance && S.line === l._i) nextUndecided();
+    }).catch(function (e) {
+      setStat(l._i, "Not saved: " + e.message, true);
+      toast("Not saved: " + e.message);
+    }).then(function () { delete S.saving[l.key]; });
+  }
+  function applyRecord(r) {
+    var l = LINE_BY_KEY[r.key];
+    if (!l) return;
+    l.decision = r.undecided ? null : r.decision;
+    l.reviewed = !r.undecided && !MACHINE[r.reviewer];
+    l.decided_by = r.undecided ? null : r.reviewer;
+    l.decided_at = r.undecided ? null : r.ts;
+    l.suggested_value = r.suggested_value || "";
+    l.decision_note = r.note || "";
+  }
+  function decideCurrent(decision, advance) {
+    var l = LINES[S.line];
+    if (!l) return;
+    var p = D.pipelines[l._p];
+    if (decision === "accept") {
+      var lk = lockCols(l, p);
+      if (lk.length) return toast("held: a validity concern on " + lk.join(", ") + " is open; give it a call before accepting (hold / reject are fine)");
+    }
+    save(l, {key: l.key, decision: decision}, advance);
+  }
+  function undoCurrent() {
+    var l = LINES[S.line];
+    if (!l) return;
+    if (!cur(l)) return toast("nothing to undo on this line");
+    save(l, {key: l.key, undo: true}, false);
+  }
+  function nextUndecided() {       // after a keypress decision: the next open line, then the next pipeline
+    var at = S.shown.indexOf(S.line);
+    for (var n = at + 1; n < S.shown.length; n++) {
+      if (!cur(LINES[S.shown[n]])) return setLine(S.shown[n]);
+    }
+    stepPipe(1);
+  }
+  function suggestKey() { toast(Store.caps.decide ? "suggest arrives in milestone 4" : NOT_YET); }
   var KEYS = {
     j: function () { stepLine(1); }, k: function () { stepLine(-1); },
     J: function () { stepPipe(1); }, K: function () { stepPipe(-1); },
@@ -705,13 +792,14 @@
       var l = S.line >= 0 && $("line-" + S.line), m = l && l.querySelector("details[data-more]");
       if (m) m.open = !m.open;
     },
-    a: decisionKey, h: decisionKey, r: decisionKey, s: decisionKey, u: decisionKey,
+    a: function () { decideCurrent("accept", true); }, h: function () { decideCurrent("hold", true); },
+    r: function () { decideCurrent("reject", true); }, s: suggestKey, u: undoCurrent,
     "/": function (e) { e.preventDefault(); $("f-q").focus(); $("f-q").select(); },
     "?": showHelp
   };
   var HELP = [["j / k", "next / previous line (runs on into the next pipeline)"], ["J / K", "next / previous pipeline"],
-              ["a / h / r", "accept / hold / reject the line (milestone 3)"], ["s", "suggest a different value (milestone 3)"],
-              ["u", "undo (milestone 3)"], ["o", "open the line's first ref (new tab)"], ["d", "show / hide the line's details"],
+              ["a / h / r", "accept / hold / reject the line; saved at once, then on to the next open line"], ["s", "suggest a different value (milestone 4)"],
+              ["u", "undo: the line goes back to undecided"], ["o", "open the line's first ref (new tab)"], ["d", "show / hide the line's details"],
               ["/", "search"], ["?", "this help"]];
   function showHelp() {
     var dlg = $("dialog");
@@ -747,9 +835,15 @@
       return;
     }
     var b = e.target.closest("button[data-decide]");
+    var ub = e.target.closest("button[data-undo]");
     var ln = e.target.closest(".line");
     if (ln) setLine(+ln.getAttribute("data-i"), true);
-    if (b && !Store.caps.decide) notYet();
+    if (ub && !ub.disabled) return undoCurrent();
+    if (!b) return;
+    if (!Store.caps.decide) return notYet();
+    // a click on the pressed button takes the call back (the same record an undo writes)
+    if (b.getAttribute("aria-pressed") === "true") return undoCurrent();
+    decideCurrent(b.getAttribute("data-decide"), false);
   }
 
   // ---- routing: #/P0736 plus an optional ?query with the filters that differ from the defaults ----

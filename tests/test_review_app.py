@@ -1,4 +1,4 @@
-"""Review app server tests (milestone 2: read-only). Real server on an ephemeral loopback port."""
+"""Review app server tests (read routes; decisions are in test_review_store.py). Real server on an ephemeral loopback port."""
 import gzip
 import json
 import threading
@@ -75,14 +75,13 @@ def test_whoami(live):
     st, body, _h = get(base + "/api/whoami")
     w = json.loads(body)
     assert st == 200 and w["reviewer"] == "tester"
-    assert w["caps"] == {"decide": False, "refresh": False, "push": False}
+    assert w["caps"] == {"decide": True, "refresh": False, "push": False}
 
 
-def test_writes_not_implemented(live):
+def test_not_yet_and_absent_routes(live):
     base, _, _ = live
-    for p in ("/api/decide", "/api/item"):
-        st, body = post(base + p)
-        assert st == 501 and body == {"error": "milestone 3"}
+    st, body = post(base + "/api/item")
+    assert st == 501 and body == {"error": "milestone 4"}
     for p in ("/api/refresh", "/api/push/plan", "/api/push"):
         assert post(base + p)[0] == 404
         assert get(base + p)[0] == 404

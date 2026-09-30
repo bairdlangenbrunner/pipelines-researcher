@@ -32,11 +32,13 @@ from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parent.parent
-if str(ROOT / "scripts") not in sys.path:
-    sys.path.insert(0, str(ROOT / "scripts"))
+for _p in (ROOT / "scripts", ROOT / "review_app"):
+    if str(_p) not in sys.path:
+        sys.path.insert(0, str(_p))
 
 import paths  # noqa: E402
 import staged_store  # noqa: E402
+import store  # noqa: E402
 from ref_pairs import OO_PRIMARY  # noqa: E402
 from build_ref_workbook import J, _annotate_kept_refs, _ref_cell_text  # noqa: E402
 
@@ -94,26 +96,31 @@ class Snapshot:
 
 
 def _pick_snapshot(commodity, recorded, data_dir, override=None):
+    """The NEWEST data/<commodity> snapshot (current values should be live-ish; sheet rows are
+    re-resolved by ProjectID anyway), or --snapshot. `recorded` (what the staging dirs named)
+    is kept on the dataset as scope.recorded_snapshot and is only the fallback when the data
+    dir holds no snapshot for the commodity."""
     if override:
         return Path(override)
-    cands = [Path(data_dir) / c for c in recorded if c and (Path(data_dir) / c).exists()]
-    if cands:
-        return max(cands, key=lambda p: p.name)
     found = sorted(Path(data_dir).glob(COMMODITY_GLOB[commodity]))
-    return found[-1] if found else None
+    if found:
+        return found[-1]
+    cands = [Path(data_dir) / c for c in recorded if c and (Path(data_dir) / c).exists()]
+    return max(cands, key=lambda p: p.name) if cands else None
 
 
 def _pick_owners(recorded, tracker_path, data_dir):
-    cands = [Path(data_dir) / c for c in recorded if c and (Path(data_dir) / c).exists()]
-    if cands:
-        return max(cands, key=lambda p: p.name)
+    """Owners snapshot with the tracker snapshot's stamp, else the newest, else a recorded one."""
     if tracker_path:
         stamp = tracker_path.stem.rsplit("_", 1)[-1]
         p = Path(data_dir) / f"GEM_operators_owners_snapshot_{stamp}.csv"
         if p.exists():
             return p
     found = sorted(Path(data_dir).glob("GEM_operators_owners_snapshot_*.csv"))
-    return found[-1] if found else None
+    if found:
+        return found[-1]
+    cands = [Path(data_dir) / c for c in recorded if c and (Path(data_dir) / c).exists()]
+    return max(cands, key=lambda p: p.name) if cands else None
 
 
 # ---------------------------------------------------------------- helpers
@@ -351,7 +358,7 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
         rec_csv += c
         rec_own += o
 
-    # keep the first-seen primary dir's csv preference: newest recorded that exists
+    recorded_snapshot = max((c for c in rec_csv if c), default="")   # what the staging dirs named
     snap_path = _pick_snapshot(commodity.lower(), rec_csv, data_dir, snapshot)
     snap = Snapshot(snap_path, 2)
     own_path = _pick_owners(rec_own, snap_path, data_dir)
@@ -466,22 +473,23 @@ def build(dirs, country, commodity, snapshot=None, owners=None, data_dir=None,
     data = {
         "built": datetime.now(ZoneInfo("America/New_York")).isoformat(timespec="seconds"),
         "scope": {"country": country, "commodity": commodity,
-                  "snapshot": snap_path.name if snap_path else ""},
+                  "snapshot": snap_path.name if snap_path else "",
+                  "recorded_snapshot": recorded_snapshot},
         "dirs": [_rel(d, root) for d in sorted(ordered)],
         "columns": snap.header,
         "pipelines": pipelines,
     }
-    overlay_decisions(data)
+    overlay_decisions(data, root)
     stats["owners_snapshot"] = own_path.name if own_path else ""
     return data, stats
 
 
-def overlay_decisions(data):
-    """MILESTONE 3 HOOK: overlay the decision sidecar (review_decisions.json per dir,
-    derived from review_log.jsonl) onto `decision` / `reviewed` for every line and
-    `call` for every item. Milestone 1 has no sidecar, so this is a deliberate no-op:
-    lines ship decision=None, reviewed=False; items ship call=None."""
-    return data
+def overlay_decisions(data, root=None):
+    """Lay each dir's review_log.jsonl over the dataset (store.overlay): every line carries
+    decision / reviewed / decided_by / decided_at. `root` is the batches root (dir labels are
+    relative to its parent). A rebuilt dataset therefore keeps every decision made so far."""
+    base = Path(root).parent if root else ROOT
+    return store.overlay(data, root=base)
 
 
 # ---------------------------------------------------------------- line / item objects
@@ -607,7 +615,7 @@ def summary(data, stats):
         for i in p["items"]:
             items[i["kind"]] += 1
     out = [f"dirs: {len(data['dirs'])}  ({', '.join(Path(d).name for d in data['dirs'])})",
-           f"snapshot: {data['scope']['snapshot']}   owners: {stats.get('owners_snapshot', '')}",
+           f"snapshot: {data['scope']['snapshot']} (staging named {data['scope']['recorded_snapshot'] or 'none'})   owners: {stats.get('owners_snapshot', '')}",
            f"pipelines: {len(data['pipelines'])}",
            f"lines: {sum(lines.values())}  " + ", ".join(f"{k}={lines[k]}" for k in LINE_KINDS if lines[k]),
            f"items: {sum(items.values())}  " + ", ".join(f"{k}={items[k]}" for k in ITEM_KINDS if items[k]),
@@ -628,8 +636,8 @@ def main(argv=None):
     ap.add_argument("--commodity", required=True, choices=["gas", "oil"])
     ap.add_argument("--dirs", nargs="*", default=None, help="explicit staging dirs (skips discovery)")
     ap.add_argument("--exclude-pids", default="", help="comma-separated ProjectIDs to drop")
-    ap.add_argument("--snapshot", default=None, help="tracker snapshot CSV (default: meta.scope.csv, else newest)")
-    ap.add_argument("--owners", default=None, help="owners snapshot CSV (default: meta.scope.owners_csv / same stamp)")
+    ap.add_argument("--snapshot", default=None, help="tracker snapshot CSV (default: the newest data/ snapshot)")
+    ap.add_argument("--owners", default=None, help="owners snapshot CSV (default: same stamp as the tracker snapshot, else newest)")
     ap.add_argument("--batches-root", default=None, help="batches root (default: repo batches/)")
     ap.add_argument("--data-dir", default=None, help="snapshot dir (default: repo data/)")
     ap.add_argument("--out", default=None, help="default: work/review_data.json")

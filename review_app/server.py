@@ -1,5 +1,5 @@
 """
-Local review server: the phase 1 backend behind review_app/web/ (milestone 2: read-only).
+Local review server: the phase 1 backend behind review_app/web/ (milestone 3: decisions).
 
     python review_app/server.py --country Russia --commodity gas [--dirs DIR ...]
         [--exclude-pids P1,P2] [--data PATH] [--reviewer NAME] [--port 8766] [--no-open] [--no-build]
@@ -11,12 +11,18 @@ serves that file as it is.
 
     GET  /                 static front end (review_app/web/)
     GET  /api/data         the dataset JSON (gzip when the browser accepts it)
-    GET  /api/whoami       {"reviewer": ..., "caps": {"decide": false, "refresh": false, "push": false}}
+    GET  /api/whoami       {"reviewer": ..., "caps": {"decide": true, "refresh": false, "push": false}}
+    GET  /api/decisions?dir=<label>   that staging dir's current latest-per-key records (review_decisions.json)
     GET  /geo/<path>       a *.geojson / *.json under batches/ (the route lines' candidate geometry)
-    POST /api/decide       501 {"error": "milestone 3"}
-    POST /api/item         501 {"error": "milestone 3"}
+    POST /api/decide       [{key, decision, suggested_value?, note?} | {key, undo: true}, ...]
+                           -> {"saved": [record, ...]}; reviewer and ts are stamped here, never taken
+                           from the client. Appends to <dir>/review_log.jsonl and regenerates
+                           <dir>/review_decisions.json (store.decide). 400 = refused, nothing written;
+                           409 = accept on a line a still-open validity concern contests.
+    POST /api/item         501 {"error": "milestone 4"}
 
-/api/refresh, /api/push/plan and /api/push do not exist yet (404). Nothing here writes.
+/api/refresh, /api/push/plan and /api/push do not exist yet (404). The only things written are
+the two decision sidecars inside the staging dirs named by the dataset.
 """
 import argparse
 import gzip
@@ -30,7 +36,7 @@ import webbrowser
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from urllib.parse import unquote
+from urllib.parse import parse_qs, unquote, urlsplit
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -41,10 +47,11 @@ for p in (ROOT / "scripts", HERE):
 
 import paths  # noqa: E402
 import review_data  # noqa: E402
+import store  # noqa: E402
 
 # what this server can do; the front end reads these and hides/disables the matching controls
-CAPS = {"decide": False, "refresh": False, "push": False}
-NOT_YET = {"/api/decide", "/api/item"}
+CAPS = {"decide": True, "refresh": False, "push": False}
+NOT_YET = {"/api/item"}
 
 
 def ensure_loopback(host):
@@ -72,8 +79,30 @@ class App:
     def load(self):
         raw = self.data_path.read_bytes()
         json.loads(raw.decode("utf-8"))            # refuse to serve a file that is not JSON
-        self.raw = raw
-        self.gz = gzip.compress(raw, 6)
+        self.data = json.loads(raw.decode("utf-8"))
+
+    def current(self):
+        """(raw, gz) of the dataset with every staging dir's sidecars laid over it right now,
+        so a page reload (or a rebuilt dataset) shows the decisions made so far."""
+        with self.lock:
+            store.overlay(self.data, self.dirs())
+            raw = json.dumps(self.data, ensure_ascii=False).encode("utf-8")
+        return raw, gzip.compress(raw, 6)
+
+    def dirs(self):
+        return store.dir_paths(self.data, self.batches_root.parent)
+
+    def decide(self, records):
+        """store.decide under this server's lock; the dataset on disk is never rewritten (the
+        page overlays the returned records; a rebuild overlays the sidecars)."""
+        with self.lock:
+            return store.decide(records, self.data, self.reviewer, self.dirs())
+
+    def decisions(self, label):
+        d = self.dirs().get(label)
+        if d is None:
+            return None
+        return store.latest(store.read_log(d))
 
     def whoami(self):
         return {"reviewer": self.reviewer, "caps": dict(CAPS)}
@@ -130,12 +159,19 @@ def make_handler(app):
                 return self._json({"error": "bad host"}, HTTPStatus.FORBIDDEN)
             path = unquote(self.path.split("?", 1)[0])
             if path == "/api/data":
+                raw, gz = app.current()
                 if "gzip" in (self.headers.get("Accept-Encoding") or ""):
-                    return self._send(app.gz, "application/json; charset=utf-8",
+                    return self._send(gz, "application/json; charset=utf-8",
                                       extra={"Content-Encoding": "gzip"})
-                return self._send(app.raw, "application/json; charset=utf-8")
+                return self._send(raw, "application/json; charset=utf-8")
             if path == "/api/whoami":
                 return self._json(app.whoami())
+            if path == "/api/decisions":
+                label = (parse_qs(urlsplit(self.path).query).get("dir") or [""])[0]
+                recs = app.decisions(label)
+                if recs is None:
+                    return self._json({"error": "unknown dir"}, HTTPStatus.NOT_FOUND)
+                return self._json({"dir": label, "decisions": recs})
             if path.startswith("/geo/"):
                 return self._file(app.batches_root, path[len("/geo/"):], {".geojson", ".json"})
             if path.startswith("/api/"):
@@ -147,7 +183,22 @@ def make_handler(app):
                 return self._json({"error": "bad host"}, HTTPStatus.FORBIDDEN)
             path = unquote(self.path.split("?", 1)[0])
             if path in NOT_YET:
-                return self._json({"error": "milestone 3"}, HTTPStatus.NOT_IMPLEMENTED)
+                return self._json({"error": "milestone 4"}, HTTPStatus.NOT_IMPLEMENTED)
+            if path == "/api/decide":
+                try:
+                    n = int(self.headers.get("Content-Length") or 0)
+                    body = json.loads(self.rfile.read(n).decode("utf-8") or "null")
+                except (ValueError, UnicodeDecodeError):
+                    return self._json({"error": "body is not JSON"}, HTTPStatus.BAD_REQUEST)
+                try:
+                    return self._json({"saved": app.decide(body)})
+                except store.Contested as e:
+                    return self._json({"error": str(e)}, HTTPStatus.CONFLICT)
+                except store.Invalid as e:
+                    return self._json({"error": str(e)}, HTTPStatus.BAD_REQUEST)
+                except Exception as e:     # a failed write (the log was rolled back): say so loudly
+                    print(f"review app: write failed: {e!r}", file=sys.stderr)
+                    return self._json({"error": f"write failed: {e}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
             return self._json({"error": "not found"}, HTTPStatus.NOT_FOUND)
 
     return Handler
@@ -198,7 +249,7 @@ def main(argv=None):
     app = App(data_path, args.reviewer or git_user())
     httpd = make_server(app, args.host, args.port)
     url = f"http://{args.host}:{httpd.server_address[1]}/"
-    print(f"review app: {url}  (reviewer: {app.reviewer}; read-only; Ctrl-C to stop)", file=sys.stderr)
+    print(f"review app: {url}  (reviewer: {app.reviewer}; decisions write to each staging dir's review_log.jsonl; Ctrl-C to stop)", file=sys.stderr)
     if not args.no_open:
         webbrowser.open(url)
     try:
