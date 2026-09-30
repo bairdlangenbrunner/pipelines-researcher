@@ -88,6 +88,9 @@
   // a line is decided only by a person's latest record; a machine record (backend sync, push)
   // leaves it undecided (the pre-fill is shown, nothing is pushed)
   function cur(l) { return l.reviewed && l.decision ? l.decision : null; }
+  // drawn grayed once a person has decided it (hold stays bright — still open) or it is already in the backend
+  function settled(l) { var d = cur(l); return d === "accept" || d === "reject" || d === "suggest"; }
+  function dimmed(l) { return settled(l) || !!l.in_backend; }
   function dstate(o) {
     var d = o._item ? o.call : cur(o);
     return d ? d : "undecided";
@@ -659,7 +662,7 @@
     var cont = it.contested || {}, ck = Object.keys(cont);
     var b = itemBody(it), rows = fieldRows(it, b.used);
     var row = it.sheet_row == null ? "" : "row " + it.sheet_row + " &middot; ";
-    var h = '<div class="item' + (ck.length ? " conts" : "") + '"><div class="row1">' + chip(KIND_LABEL[it.kind], "") +
+    var h = '<div class="item' + (ck.length ? " conts" : "") + (it.call && it.reviewed ? " done" : "") + '"><div class="row1">' + chip(KIND_LABEL[it.kind], "") +
       " <b>" + esc(itemHead(it)) + "</b>" + (it.tier ? " " + tierChip(it) : "") +
       '<span class="where">' + row + esc(dirLabel(it.dir)) + (it.also_in && it.also_in.length ? " (also " + it.also_in.map(dirLabel).join(", ") + ")" : "") + "</span></div>";
     h += b.html;
@@ -745,7 +748,7 @@
       if (!g.plain) h += '<div class="segdiv">' + (g.seg ? "row " + esc(g.seg.sheet_row) + (g.seg.segment ? ' <span class="seg">' + esc(g.seg.segment) + "</span>" : "") : "other rows") + "</div>";
       g.lines.forEach(function (l) {
         S.shown.push(l._i);
-        h += '<div class="line tier-' + tierOf(l) + (cur(l) ? " d-" + cur(l) : "") + (lockCols(l, p).length ? " locked" : "") + (l.in_backend ? " dim" : "") +
+        h += '<div class="line tier-' + tierOf(l) + (cur(l) ? " d-" + cur(l) : "") + (lockCols(l, p).length ? " locked" : "") + (dimmed(l) ? " dim" : "") +
           (l.kind === "new_row" ? " newcard" : "") + (l._i === S.line ? " cur" : "") + '" id="line-' + l._i + '" data-i="' + l._i + '">' + lineHtml(l, p) + "</div>";
       });
     });

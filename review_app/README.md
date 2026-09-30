@@ -21,7 +21,9 @@ Routes: `GET /`, `/api/data`, `/api/decisions?dir=`, `/geo/<path>`, `POST /api/d
 `/api/refresh`, `/api/whoami` (`{reviewer, caps}`; `caps` drive which controls the
 UI shows). Keyboard: `j/k` next/previous line, `J/K` next/previous pipeline, `o` open the line's
 first ref, `d` toggle details, `/` search, `?` help. Filters combine; `in_backend` lines are
-hidden by default. Tier colours are the workbook's (`docs/reference/workbook_conventions.md`).
+hidden by default. A line is drawn grayed once it is settled — accepted, rejected or suggested by a
+person, or `in_backend` — while hold stays bright (still open); an item grays once it carries a
+reviewed call (same convention as the LNG carriers app). Tier colours are the workbook's (`docs/reference/workbook_conventions.md`).
 
 - `review_data.py` turns one scope's pending staging dirs into `work/review_data.json`:
   one card per pipeline, with `lines` (ref / fill / status / oo / route / new_row: one
