@@ -51,3 +51,17 @@ Per slice: 5 search agents (Sonnet) → consolidator (top tier — Cyrillic/tran
 name matching against 285 rows; the workflow's single `MODEL` needs a per-phase option) → one
 vetting agent per candidate → `merge_discovery_shards.py` → `build_discovery_workbook.py` →
 `recalc.py`. ~6 + 10–25 agents per slice; no measured discovery token cost on file — D1 sets it.
+
+## Step 0 results (2026-09-30)
+- **Pull:** fresh snapshots `*_20260930.csv` (Oil/NGL, Gas, operators/owners).
+- **OSM recon** (`gas_ru`, standalone, 285-row roster): 5,520 features → 135 overlaps, 5,385 additions
+  (3,078 DISCOVERY_CANDIDATE / 2,249 FRAGMENT / 58 NEAR_MISS), 224 GEM-only, 8 status conflicts. Workbook
+  `deliverables/pipelines_batch_20260930_1504_ET_russia-gas_reconciliation-osm.xlsx`. Health:
+  `MATCH_CONCENTRATION` — routeless P3894 (Main Line Capacity Upgrade, SKhV) is nearest row for 1,822 records
+  on diameter/length alone; it has 0 overlaps and dispositions are geometry-based, so counts stand, but "nearest
+  PID" is arithmetic. 32.9% named, 100% with geometry. The >30-additions gate fired as expected.
+- **Seeds:** `staging/discovery-seeds-20260930/` — 88 seeds + 3 length-unknown store leads; D1 1+1, D2 3, D3 33+1,
+  D4 17+1, D5 32, D6 2; 148 to monitor, 53 already tracked. Method and caveats in its `SUMMARY.md`.
+- **Corrections to the plan above:** the two GulfPub candidates are *not* D2 Siberian (Tuchevo–Tver → D5,
+  Valday–Borovichi → D4); D1 has almost no OSM signal; 2,214 unnamed OSM candidates (74 ≥ 25 km) are outside the
+  named-only seed rule.

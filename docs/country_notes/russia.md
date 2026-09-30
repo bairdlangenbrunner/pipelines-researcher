@@ -102,6 +102,18 @@ and a Russian-side re-look at the 33 carried rows as a §5 Update.
   546 overlaps, 193 additions (190 NEAR_MISS, 2 DISCOVERY_CANDIDATE, 1 FRAGMENT), 142 GEM-only, 113
   status conflicts (71 GEM `proposed` vs GulfPub `operating` — a lead, not a verdict), 1
   route-replacement candidate; health clean. Not picked up by a handoff packet.
+- **OSM recon** (standalone §2, dataset `gas_ru`, full 285-row roster, 2026-09-30):
+  `deliverables/pipelines_batch_20260930_1504_ET_russia-gas_reconciliation-osm.xlsx` — 5,520 features,
+  135 overlaps, 5,385 additions (3,078 DISCOVERY_CANDIDATE, 2,249 FRAGMENT, 58 NEAR_MISS), 224 GEM-only,
+  8 status conflicts, 4 route-replacement candidates. **Health: `MATCH_CONCENTRATION`** — routeless
+  capacity-expansion row P3894 is the nearest row for 1,822 records (33%) on length/diameter alone, so
+  read every "nearest PID" as arithmetic, not geography; dispositions are geometry-based and unaffected
+  (P3894 has 0 overlaps). Only 32.9% of features are named. Staging `staging/recon-osm-20260930/`. Not
+  picked up by a handoff packet.
+- **Discovery seeds (Step 0)** `staging/discovery-seeds-20260930/` — `seeds_by_district.{csv,json}` +
+  `SUMMARY.md`: 88 seeds + 3 length-unknown store leads, 148 monitor, 53 already tracked; per slice D1–D6
+  in the summary. Triage memo: `notes/triage-2026-09-30-russia-gas-discovery.md` → Step 0 results.
+
 
 ## Regulators / official data
 - **Gazprom PJSC** (`gazprom.ru`) — project pages, annual + sustainability reports, IFRS,
